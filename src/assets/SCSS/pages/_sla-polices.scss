@@ -1,0 +1,16 @@
+.sla-chart-section{
+    margin: 0 -126px;
+}
+.sla-chart-body{
+    .dropdown{
+        .dropdown-toggle{
+            height: auto;
+        }
+    }
+    .form-control{
+        &::placeholder{
+            color: $coal;
+            white-space: normal;
+        }
+    }
+}

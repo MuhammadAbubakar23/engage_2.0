@@ -1,0 +1,280 @@
+.pagination-bar {
+  position: absolute;
+  right: 0;
+  top: 12px;
+  display: flex;
+  width: 200px;
+  justify-content: space-around;
+  .btn{
+    color: #5f6368;
+    &:hover{
+      color: rgba(0, 0, 0, 0.8);
+  background-color: #e0e0e0;
+    }
+  }
+  &.snooze-bar{
+    width: 50px;
+  }
+  &.other-count{
+    width: 50px;
+  }
+}
+.filter-container {
+  border-bottom: 1px solid $metal;
+  padding: 10px 0;
+  position: relative;
+  .list-group-horizontal > .list-group-item:last-child:not(:first-child){
+    border-radius: 50%;
+  }
+
+  .form-check-input[type="checkbox"] {
+    background-color: transparent;
+    border: 2px solid rgba($coal, 0.58) !important;
+  }
+  .form-check-input[type="checkbox"]:checked {
+    background-color: $inkblue;
+    border: 2px solid $inkblue !important;
+  }
+  .square-btn{
+    background: $silver10;
+    border-radius: 5px;
+    margin-right: 5px;
+  }
+}
+.inbox-container {
+  .agent-page-main-content{
+    padding: 0px 15px;
+  }
+  .bookmark-dropdown{
+    >.btn {
+      height: auto;
+      padding: 0;
+      color:#832029;
+  }
+   }
+  .tab-content {
+    .query-container{
+      height: calc(100vh - 200px);
+      overflow: hidden;
+      &.active{
+        height: calc(100vh - 140px);
+      }
+      .table{
+       tr{
+         &:hover{
+          &:first-child{
+            box-shadow: none;
+          }
+          box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60, 64, 67, 0.28), 0 1px 3px 1px rgba(60, 64, 67, 0.18);
+          z-index: 2;
+          border-radius: 0;
+         }
+         td{
+          &:nth-child(4){
+            max-width: 550px
+          }
+         }
+          .maintext{
+            @include text-truncate();
+            max-width: 700px;
+          }
+       } 
+      
+      
+      }
+    }
+    .tab-pane{
+      height: 100%;
+    }
+  }
+  table {
+    position: relative;
+    box-sizing: border-box;
+    tbody {
+      tr {
+        position: relative;
+        &.alert.alert-danger {
+          td {
+            color: $mehroon;
+            &.more-action-container {
+              background-color: #f8d7da;
+            }
+            .emailer-name {
+              font-weight: 500;
+            }
+          }
+        }
+        &.alert.alert-light {
+          td {
+            .emailer-name {
+              font-weight: 500;
+            }
+          }
+        }
+        &.alert.alert-warning {
+          td {
+            color: $darkbrown;
+            &.more-action-container {
+              background-color: #fff3cd;
+            }
+            .emailer-name {
+              font-weight: 500;
+            }
+          }
+        }
+        &.unread {
+          background-color: $white;
+          td {
+            &.more-action-container {
+              background-color: $white;
+            }
+            .emailer-name {
+              font-weight: 500;
+            }
+          }
+        }
+        &.selected {
+          background-color: $lightblue;
+          td {
+            color: $darkerblue;
+            &.more-action-container {
+              background-color: $lightblue !important;
+            }
+            .emailer-name {
+              font-weight: 500;
+            }
+          }
+        }
+        td {
+          transition: 0.5s;
+          // border-bottom: 1px solid $powder;
+          .email-date{
+            font-weight: 500;
+          }
+          >.form-check-input[type="checkbox"] {
+            background-color: transparent;
+            border: 2px solid rgba($coal, 0.58) !important;
+          }
+          >.form-check-input[type="checkbox"]:checked {
+            background-color: $inkblue;
+            border: 2px solid $inkblue !important;
+          }
+          &.more-action-container {
+            position: absolute;
+            right: 0;
+            display: none;
+            padding: 0px;
+            border: none;
+            margin-top: 0px;
+            background-color: $salt;
+          }
+          .action-btns {
+            visibility: hidden;
+          }
+        }
+        &:hover {
+          //  box-shadow: 0 0.125rem 0.25rem rgba($black, 0.5);
+          cursor: pointer;
+          td {
+            &.more-action-container {
+              position: absolute;
+              right: 40px;
+              top: 0;
+              display: block;
+              padding-top: 8px;
+            }
+            .action-btns {
+              visibility: visible;
+            }
+          }
+        }
+      }
+    }
+  }
+  &.console-body-wrapper{
+     .tab-content .query-container .table tr td:nth-child(4) {
+      width: auto;
+  }
+  }
+}
+.main-navbar {
+  z-index: 6 !important;
+  left: 0;
+  padding: 5px 0;
+}
+.list-group-followup {
+  a {
+    position: relative;
+    svg,
+    i {
+      margin-right: 10px;
+    }
+    .badge {
+      position: absolute;
+      right: 15px;
+    }
+  }
+}
+
+.email-info-alert {
+  display: none;
+  background-color: $white;
+  border-color: $white;
+  margin: 10px 0 5px 0;
+}
+.all-check-boxes {
+  padding-left: 10px !important;
+  i {
+    position: relative;
+    top: 5px;
+  }
+
+  .dropdown {
+    width: auto;
+    display: inline-block;
+    button {
+      height: auto;
+      padding: 0;
+    }
+  }
+}
+
+a[data-toggle="tooltip"] {
+  & + .tooltip {
+    position: absolute;
+    bottom: 30px;
+  }
+}
+
+.selected-row {
+  position: absolute;
+  right: 200px;
+  top: 12px;
+}
+
+
+// CHECKBOX & RADIO BUTTONS
+.theme-check {
+  .form-check-input {
+    border-radius: 50% !important;
+    &:checked{
+        background-color: #52bdff;
+        border-color: #52bdff !important;
+    }
+    &:checked[type="radio"]{
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+    }
+  }
+}
+.all-conversation{
+  &:hover{
+    background-color: #fafafa;
+    color: #1f7ec7 !important;
+  }
+}
+.filtericon {
+  &.collapsed{
+    background-color: $white !important;
+    color: $darkerblue !important;
+  }
+}

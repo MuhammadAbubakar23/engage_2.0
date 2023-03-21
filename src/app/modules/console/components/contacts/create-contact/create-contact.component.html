@@ -1,0 +1,271 @@
+<div class="wider-container console-create-contact pt-3" id="create-new-contact">
+    <header class="tab-header rightbar-tab-header">
+        <nav class="mb-0">
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active d-flex align-items-center" id="create-new-contact" data-bs-toggle="tab"
+                    data-bs-target="#create-new-contact-tab" type="button" role="tab"
+                    aria-controls="create-new-contact-tab" aria-selected="false">
+                    <i class="far fa-arrow-left coal me-2 mb-0"></i>
+                    Add New Contact
+                </button>
+            </div>
+        </nav>
+    </header>
+    <div class="rightbar-body-wrapper profile" data-scrollbar="true" tabindex="-1"
+        style="overflow-y:auto; outline: none;">
+        <div class="scroll-content">
+            <div class="tab-content" id="nav-tabContent">
+                <div id="create-new-contact-tab" class="tab-pane fade active show" role="tabpanel"
+                    aria-labelledby="create-new-contact">
+                    <table class="table m-0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="card m-4 p-2">
+                                        <div class="row g-0">
+                                            <div class="col-md-2">
+                                                <div class="file-input select-new-user-img" id="select-img">
+                                                    <i class="fal fa-camera-alt ice img-icon"></i>
+                                                    <img src="../../../../../../assets/images/avatar-2.jpg" alt="-"
+                                                        class="selected-group-img d-none">
+                                                    <span class="fileSelected d-none">
+                                                        <i class="fal fa-pen ice"></i>
+                                                    </span>
+                                                </div>
+                                                <input class="form-control d-none" type="file" id="upload-user-img">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="profile-form mt-5 me-3 pb-4">
+                        <div class="section-heading">
+                            <h6 class="silver mt-3">Personal</h6>
+                        </div>
+                        <form>
+                            <div class="row mb-3">
+                                <label for="inputName" class="col-sm-3 col-form-label">Full Name </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="inputName">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputOrganization" class="col-sm-3 col-form-label">Organization </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="inputOrganization">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputRole" class="col-sm-3 col-form-label">Role</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="inputRole">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail" class="col-sm-3 col-form-label"> Email</label>
+                                <div class="col-sm-9">
+                                    <input type="email" class="form-control" id="inputEmail">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputMobile" class="col-sm-3 col-form-label"> Mobile</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="inputMobile">
+                                            <img class="me-1" src="../../../../../../assets/images/pakistanflag.svg" alt="..."
+                                                style="width:15px;">
+                                            +92
+                                            <i class="fas fa-sort-down coal ms-1"></i>
+                                        </span>
+                                        <input type="number" class="form-control" id="inputMobile">
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputAddress" class="col-sm-3 col-form-label"> Address</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="inputAddress">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputAddress" class="col-sm-3 col-form-label">City</label>
+                                <div class="col-sm-9 country-dropdown">
+                                    <select class="js-country select2-hidden-accessible" name="time-from"
+                                        data-select2-id="select2-data-1-uhga" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-3-sthv">Choose the City</option>
+                                        <option>1
+                                        </option>
+                                        <option>2
+                                        </option>
+                                        <option>3
+                                        </option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-2-0joy" style="width: 135.6px;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-time-from-q7-container"
+                                                aria-controls="select2-time-from-q7-container"><span
+                                                    class="select2-selection__rendered"
+                                                    id="select2-time-from-q7-container" role="textbox"
+                                                    aria-readonly="true" title="Choose the City">Choose the
+                                                    City</span><span class="select2-selection__arrow"
+                                                    role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputAddress" class="col-sm-3 col-form-label">Country</label>
+                                <div class="col-sm-9 country-dropdown">
+                                    <select class="js-country select2-hidden-accessible" name="time-from"
+                                        data-select2-id="select2-data-4-xh68" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-6-w9qv">Choose the Country</option>
+                                        <option>1
+                                        </option>
+                                        <option>2
+                                        </option>
+                                        <option>3
+                                        </option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-5-hpm1" style="width: 164.4px;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-time-from-wo-container"
+                                                aria-controls="select2-time-from-wo-container"><span
+                                                    class="select2-selection__rendered"
+                                                    id="select2-time-from-wo-container" role="textbox"
+                                                    aria-readonly="true" title="Choose the Country">Choose the
+                                                    Country</span><span class="select2-selection__arrow"
+                                                    role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="section-heading">
+                            <h6 class="silver mb-3">Channels</h6>
+                        </div>
+                        <form>
+                            <div class="row mb-3">
+                                <label for="inputFacebook" class="col-sm-3 col-form-label">Facebook </label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="inputFacebook">facebook.com</span>
+                                        <input class="form-control" id="inputFacebook">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputInstagram" class="col-sm-3 col-form-label">Instagram</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="inputInstagram">instagram.com</span>
+                                        <input class="form-control" id="inputInstagram">
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputTwitter" class="col-sm-3 col-form-label"> Twitter </label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="inputTwitter">@</span>
+                                        <input class="form-control" id="inputTwitter">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputYoutube" class="col-sm-3 col-form-label"> Youtube </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="inputYoutube">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputWhatsapp" class="col-sm-3 col-form-label">Whatsapp </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="inputWhatsapp">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputSMS" class="col-sm-3 col-form-label">SMS</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="inputSMS">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail2" class="col-sm-3 col-form-label">Email</label>
+                                <div class="col-sm-9">
+                                    <input type="email" class="form-control" id="inputEmail2">
+                                </div>
+                            </div>
+                        </form>
+                        <div class="section-heading">
+                            <h6 class="silver mb-3">Other</h6>
+                        </div>
+                        <form>
+                            <div class="row mb-3">
+                                <label for="inputFatherName" class="col-sm-3 col-form-label">Father Name </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="inputFatherName">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEducation" class="col-sm-3 col-form-label">Education </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="inputEducation">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputBloodGroup" class="col-sm-3 col-form-label">Blood Group</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="inputBloodGroup">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div for="inputBloodGroup" class="col-sm-3 col-form-label">
+                                    <a href="#" class="btn iconButton add-more-field">
+                                        <i class="fal fa-plus me-1"></i>
+                                        Add More
+                                    </a>
+                                </div>
+                                <div class="col-sm-9 select-type-field d-none">
+                                    <select class="select-type select2-hidden-accessible" name="time-from"
+                                        data-select2-id="select2-data-7-zb6y" tabindex="-1" aria-hidden="true">
+                                        <option data-select2-id="select2-data-9-ir52"></option>
+                                        <option>CNIC</option>
+                                        <option>Phone</option>
+                                        <option>Customer ID</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-8-s3s8" style="width: auto;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-time-from-bh-container"
+                                                aria-controls="select2-time-from-bh-container"><span
+                                                    class="select2-selection__rendered"
+                                                    id="select2-time-from-bh-container" role="textbox"
+                                                    aria-readonly="true" title="Select type"><span
+                                                        class="select2-selection__placeholder">Select
+                                                        type</span></span><span class="select2-selection__arrow"
+                                                    role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+            <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 850px; transform: translate3d(0px, 0px, 0px);">
+            </div>
+        </div>
+        <div class="scrollbar-track scrollbar-track-y" style="display: block;">
+            <div class="scrollbar-thumb scrollbar-thumb-y"
+                style="height: 42.7204px; transform: translate3d(0px, 0px, 0px);"></div>
+        </div>
+    </div> -->
+</div>

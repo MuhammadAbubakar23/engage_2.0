@@ -1,0 +1,13 @@
+    {{display}}
+    <!-- <span *ngFor="let ro of tm.roleId">{{ro}}, </span> -->
+    <div class="d-inline-block dropdown w-auto" *ngIf="show">
+        <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
+            id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="silver">+ {{overflow}}</span>
+        </button>
+        <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
+            <li *ngFor="let rohi of hidden">
+                <a class="dropdown-item" href="javascript:void(0);">{{rohi}}</a>
+            </li>            
+        </ul>
+    </div>

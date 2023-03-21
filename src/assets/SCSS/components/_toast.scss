@@ -1,0 +1,48 @@
+.toast-bar{
+    height: 40px;
+    bottom: 65px;
+    left: 80px;
+    p{
+        // font-size: 13px;
+    }
+    .btn-close{
+        // font-size: 10px;
+        opacity: 1;
+    }
+    .btn-outline-light{
+        // font-size: 11px;
+    }
+    
+}
+
+.toast-btn{
+    .btn{
+        color: $white;
+    }
+}
+.notificationtoast{
+    z-index: 99;
+    .toast{
+        min-width: 480px;
+        .toast-body{
+            background-color: $white;
+        }
+        .toast-header{
+            background-color: $white;
+        }
+        .toast-actions{
+            border-left: 1px solid #dee2e6;
+            .btn{
+                text-align: center;
+                width: 100%;
+                border-radius: 0;
+                padding: 10px 15px;
+            }
+        }
+        .iconButton{
+            min-width: 65px;
+            font-size: 24px;
+        }
+    }
+   
+}

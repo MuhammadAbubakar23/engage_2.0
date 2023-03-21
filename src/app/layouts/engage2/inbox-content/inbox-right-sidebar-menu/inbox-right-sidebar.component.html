@@ -1,0 +1,69 @@
+<div class="rightbarNav dashboard">
+    <div class="navUpper">
+
+        <div *ngFor="let menu of menus$" (click)="toggleRightBar(menu.link)" class="rightbar-btn-group panelToggle" 
+        [attr.value]="menu.slug+'-rightbar-dashboard'">
+            <button class="iconButton btn medium iconHover" data-bs-toggle="tooltip" 
+            data-bs-placement="left" [attr.data-bs-original-title]="menu.name">
+               <div [innerHTML]="menu.icon"></div>
+            </button>
+        </div>
+        <!-- <div (click)="toggle('contacts')" class="rightbar-btn-group panelToggle" value="contacts-rightbar-dashboard">
+            <button class="iconButton btn medium iconHover" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Contacts">
+                <i class="fal fa-address-book"></i>
+            </button>
+        </div>
+        <div  (click)="toggle('engagements')" class="rightbar-btn-group panelToggle" value="engagements-rightbar-dashboard">
+            <button class="iconButton btn medium iconHover" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Engagements">
+                <i class="fal fa-tachometer-alt-fast"></i>
+            </button>
+        </div>
+        <div (click)="toggle('task')" class="rightbar-btn-group panelToggle" value="task-rightbar-dashboard">
+            <button class="iconButton btn medium iconHover" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Task">
+                <i class="fal fa-clipboard-check"></i>
+            </button>
+        </div>
+        <div (click)="toggle('schedule')" class="rightbar-btn-group panelToggle" value="new-event-rightbar-dashboard">
+            <button class="iconButton btn medium iconHover" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Schedule">
+                <i class="fal fa-calendar-check"></i>
+            </button>
+        </div>
+        <div (click)="toggle('documents')" class="rightbar-btn-group panelToggle documentsRightBar" value="documents-rightbar-dashboard">
+            <button class="iconButton btn medium iconHover" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Documents">
+                <i class="fal fa-folder"></i>
+            </button>
+        </div>
+        <div (click)="toggle('knowledgeBase')" class="rightbar-btn-group panelToggle" value="knowledge-base-dashboard">
+            <button class="iconButton btn medium iconHover" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Knowledge Base">
+                <i class="fal fa-book"></i>
+            </button>
+        </div>
+        <div (click)="toggle('keyboardShortcuts')" class="rightbar-btn-group panelToggle" value="keyboard-shortcuts-rightbar-dashboard">
+            <button class="iconButton btn medium iconHover" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Keyboard Shortcuts">
+                <i class="fal fa-keyboard"></i>
+            </button>
+        </div>
+         <div (click)="toggle('phoneDialer')" class="rightbar-btn-group panelToggle" value="dialer-rightbar">
+            <button class="iconButton btn medium iconHover" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Phone Dialer">
+                <i class="fal fa-phone-alt"></i>
+            </button>
+        </div>
+        <div (click)="toggle('help')" class="rightbar-btn-group panelToggle" value="help-rightbar-dashboard">
+            <button class="iconButton btn medium iconHover" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Help">
+                <i class="fal fa-question-circle"></i>
+            </button>
+        </div>
+        <div (click)="toggle('createNew')" class="rightbar-btn-group panelToggle" value="create-new-social">
+            <button class="iconButton btn medium iconHover" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Create New">
+                <i class="fal fa-plus"></i>
+            </button>
+        </div>
+        <div (click)="toggle('chats')" class="rightbar-btn-group chat-room panelToggle" value="chat-rightbar-social">
+            <button class="iconButton btn medium char-btn" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Chat">
+                <i class="fas fa-comments-alt"></i>
+                <div class="count">2</div>
+            </button>
+        </div> -->
+    </div>
+    
+</div>

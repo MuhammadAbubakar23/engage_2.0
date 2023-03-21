@@ -1,0 +1,505 @@
+<div class="agent-page-main-content">
+  <form class="user-detail-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="create-user console-body-wrapper footerheight" data-scrollbar="true" tabindex="-1"
+      style="overflow-y: auto; outline: none;">
+      <div class="console-contact-detail page-details perfect-scrollbar" data-scrollbar="data-scrollbar">
+        <div class="scroll-content perfect-scrollbar" data-scrollbar="data-scrollbar">
+          <div class="wider-container pt-3">
+            <header class="tab-header">
+              <nav>
+                <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                  <button class="nav-link active" id="user-tab" data-bs-toggle="tab" data-bs-target="#user-detail"
+                    type="button" role="tab" aria-controls="user-detail" aria-selected="false">
+                    <h6>Details</h6>
+                  </button>
+                  <button class="nav-link" id="team-tab" data-bs-toggle="tab" data-bs-target="#user-preference"
+                    type="button" role="tab" aria-controls="user-preference" aria-selected="false">
+                    <h6>Preferences
+                    </h6>
+                  </button>
+                </div>
+              </nav>
+            </header>
+            <div class="tab-body">
+              <div class="tab-content" id="nav-tabContent">
+                <div id="user-detail" class="tab-pane fade active show" role="tabpanel" aria-labelledby="user-tab">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="team-detail-form-box mb-5">
+                        <div class="floating-item mb-4">
+                          <div [ngClass]="{'was-validated':f['firstname']!.valid && f['firstname']!.touched}" class="form-floating mb-2">
+                            <input [ngClass]="{'is-invalid' : (f['firstname']!.errors && (f['firstname']!.touched ||
+                                            f['firstname']!.dirty))}" class="form-control" id="firstname"
+                              formControlName="firstname" placeholder="Enter First Name">
+                            <label for="firstname">First Name</label>
+                            <div class="invalid-feedback" 
+                              *ngIf="(f['firstname']!.errors && (f['firstname']!.touched ||
+                                      f['firstname']!.dirty))">
+                              <div
+                                *ngIf="f['firstname']!.errors?.['maxlength'] || f['firstname']!.errors?.['minlength']">
+                                First name must be grater than 1 character and less than 25 characters!
+                              </div>
+                              <div *ngIf="f['firstname']!.errors?.['required']">
+                                First Name is required!
+                              </div>
+                            </div>
+                            <div class="valid-feedback"
+                              *ngIf="f['firstname']!.valid && f['firstname']!.touched">
+                              Looks Good!
+                            </div>
+                          </div>
+                        </div>                        
+                        <div class="floating-item mb-4">
+                          <div
+                            [ngClass]="{'was-validated' : f['lastname']!.valid && f['lastname']!.touched}"
+                            class="form-floating mb-2">
+                            <input [ngClass]="{'is-invalid' : (f['lastname']!.errors && (f['lastname']!.touched ||
+                        f['lastname']!.dirty))}" class="form-control" id="lastname"
+                              formControlName="lastname" placeholder="Enter Last Name">
+                            <label for="lastname">Last Name</label>
+                            <div class="invalid-feedback" *ngIf="(f['lastname']!.errors && (f['lastname']!.touched ||
+                                                                                    f['lastname']!.dirty))">
+                              <div
+                                *ngIf="f['lastname']!.errors?.['maxlength'] || f['lastname']!.errors?.['minlength']">
+                                Last name must be grater than 1 character and less than 25 characters!
+                              </div>
+                              <div *ngIf="f['lastname']!.errors?.['required']">
+                                Last Name is required!
+                              </div>
+                            </div>
+                            <div class="valid-feedback"
+                              *ngIf="f['lastname']!.valid && f['lastname']!.touched">
+                              Looks Good!
+                            </div>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div
+                            [ngClass]="{'was-validated' : f['phone']!.valid && f['phone']!.touched}"
+                            class="form-floating mb-2 ">
+                            <input [ngClass]="{'is-invalid' : (f['phone']!.errors && (f['phone']!.touched ||
+                        f['phone']!.dirty))}" class="form-floating mb-2" class="form-control" id="phone"
+                              formControlName="phone" placeholder="enter phone">
+                            <label for="phone">Phone</label>
+                            <div class="invalid-feedback" *ngIf="(f['phone']!.errors && (f['phone']!.touched ||
+                                                                f['phone']!.dirty))">
+                              <div
+                                *ngIf="f['phone']!.errors?.['maxlength'] || f['phone']!.errors?.['minlength']">
+                                Enter number between 11-14 numbers
+                              </div>
+                              <div *ngIf="f['phone']!.errors?.['required']">
+                                phone is required!
+                              </div>
+                            </div>
+                            <div class="valid-feedback"
+                              *ngIf="f['phone']!.valid && f['phone']!.touched">
+                              Looks Good!
+                            </div>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div
+                            [ngClass]="{'was-validated' : f['email']!.valid && f['email']!.touched}"
+                            class="form-floating mb-2">
+                            <input [ngClass]="{'is-invalid' : (f['email']!.errors && (f['email']!.touched ||
+                          f['email']!.dirty))}" type="email" class="form-control" id="email"
+                              formControlName="email" placeholder="enter email">
+                            <label for="email">Email address</label>
+                            <div class="example-text">
+                              e.g. xyz@domain.com
+                            </div>
+                            <div class="invalid-feedback"
+                              *ngIf="(f['email']!.errors && (f['email']!.touched ||
+                                      f['email']!.dirty))">
+                              <div *ngIf="f['email']!.errors?.['email']">
+                                Please enter a valid email address
+                              </div>
+                              <div *ngIf="f['email']!.errors?.['required']">
+                                Email is required!
+                              </div>
+                            </div>
+                            <div class="valid-feedback" *ngIf="f['email']!.valid && f['email']!.touched">
+                              Looks Good!
+                            </div>
+                          </div>
+                        </div>
+                        <div class="floating-item mb-4">
+                          <div [ngClass]="{'was-validated':f['password']!.valid && f['password']!.touched}" class="form-floating mb-2">
+                            <input type="password" [ngClass]="{'is-invalid' : (f['password']!.errors && (f['password']!.touched || f['password']!.dirty))}"
+                                      class="form-control" id="password" formControlName="password" placeholder="Enter password">
+                            <label for="password">Password</label>
+                            <div class="invalid-feedback" *ngIf="(f['password']!.errors && (f['password']!.touched || f['password']!.dirty))">
+                              <div *ngIf="f['password']!.errors?.['maxlength'] || f['password']!.errors?.['minlength']">
+                                Password must be grater than 7 character and less than 15 characters!
+                              </div>
+                              <div *ngIf="f['password']!.errors?.['required']">
+                                Password is required!
+                              </div>
+                            </div>
+                            <div class="valid-feedback" *ngIf="f['password']!.valid && f['password']!.touched">
+                              Looks Good!
+                            </div>
+                          </div>
+                        </div>                        
+                        <div class="floating-item mb-4">
+                          <div [ngClass]="{'was-validated' : f['confirmpassword']!.valid && f['confirmpassword']!.touched}" class="form-floating mb-2">
+                            <input type="password" [ngClass]="{'is-invalid' : (f['confirmpassword']!.errors && (f['confirmpassword']!.touched ||
+                              f['confirmpassword']!.dirty))}" class="form-control" id="confirmpassword"
+                              formControlName="confirmpassword" placeholder="Enter Confirm Password">
+                            <label for="confirmpassword">Confirm Password</label>
+                            <div class="invalid-feedback" 
+                              *ngIf="(f['confirmpassword']!.errors && (f['confirmpassword']!.touched ||
+                                                                                    f['confirmpassword']!.dirty))">
+                              <div
+                                *ngIf="f['confirmpassword']!.errors?.['maxlength'] || f['confirmpassword']!.errors?.['minlength']">
+                                Confirm Password must be grater than 7 character and less than 15 characters!
+                              </div>
+                              <div *ngIf="f['confirmpassword']!.errors?.['required']">
+                                Confirm Password is required!
+                              </div>
+                            </div>
+                            <div class="valid-feedback"
+                              *ngIf="f['confirmpassword']!.valid && f['confirmpassword']!.touched">
+                              Looks Good!
+                            </div>
+                            <div *ngIf="f['confirmpassword']!.errors?.['matching']">
+                              Confirm Password does not match
+                            </div>
+                          </div>
+                        </div>
+                        <!-- <div class="floating-item mb-4">
+                          <div
+                            [ngClass]="{'was-validated' : userForm.get('team')!.valid && userForm.get('team')!.touched}"
+                            class="form-floating mb-2">
+                            <select [ngClass]="{'is-invalid' : (userForm.get('team')!.errors && (userForm.get('team')!.touched ||
+                          userForm.get('team')!.dirty))}" class="form-select " id="team" formControlName="team"
+                              aria-label="Default select  example">
+                              <option disabled>Select Team</option>
+                              <option value="1">Corporate Teams</option>
+                              <option value="2">Sales Teams</option>
+                              <option value="3">Add Channels</option>
+                            </select>
+                            <label for="floatingSelect">Select Team</label>
+
+                            <div class="invalid-feedback" *ngIf="(userForm.get('team')!.errors && (userForm.get('team')!.touched ||
+                              userForm.get('team')!.dirty))">
+                              <div *ngIf="userForm.get('team')!.errors?.['required']">
+                                Please select atleast one Team
+                              </div>
+                            </div>
+                            <div class="valid-feedback" *ngIf="userForm.get('team')!.valid && userForm.get('team')!.touched">
+                              Looks Good!
+                            </div>
+
+                          </div>
+                        </div> -->
+                        <div class="floating-item select-pills mb-4 bg-white">
+                          <div class="form-floating"[ngClass]="{'was-validated' : RolesControl.valid && RolesControl.touched}">
+                            <p style="margin-bottom: 0px;">Roles</p>
+
+                            <mat-select [ngClass]="{'is-invalid' : (RolesControl.errors && (RolesControl.touched || RolesControl.dirty))}" 
+                              [formControl]="RolesControl" multiple id="role" style="margin: 5px;">
+                                <mat-select-trigger>
+                                  <mat-chip-list>
+                                    <mat-chip *ngFor="let role of RolesControl.value" [removable]="true" (removed)="onCatRemovedRole(role)"
+                                      style="background-color:#2F9DF2; color:#ffffff; border-radius: 5px!important;" selected>
+                                      {{ role.name }}
+                                      <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                  </mat-chip-list>
+                                </mat-select-trigger>
+                                <mat-option *ngFor="let role of Roles" [value]="role">{{ role.name }}</mat-option>
+                              </mat-select>                           
+                              <div class="invalid-feedback" *ngIf="(RolesControl.errors && (RolesControl.touched || RolesControl.dirty))">
+                                <div>Please select atleast one Role</div>
+                              </div>
+                              <div class="valid-feedback" *ngIf=" RolesControl.valid && RolesControl.touched">Looks Good!</div>
+                          </div>
+                        </div>
+                        <div class="floating-item select-pills mb-4 bg-white">
+                          <div class="form-floating"[ngClass]="{'was-validated' : TeamsControl.valid && TeamsControl.touched}">
+                            <p style="margin-bottom: 0px;">Teams</p>
+
+                            <mat-select [ngClass]="{'is-invalid' : (TeamsControl.errors && (TeamsControl.touched || TeamsControl.dirty))}" 
+                              [formControl]="TeamsControl" multiple id="role" style="margin: 5px;">
+                                <mat-select-trigger>
+                                  <mat-chip-list>
+                                    <mat-chip *ngFor="let team of TeamsControl.value" [removable]="true" (removed)="onCatRemovedRole(team)"
+                                      style="background-color:#2F9DF2; color:#ffffff; border-radius: 5px!important;" selected>
+                                      {{ team.name }}
+                                      <mat-icon matChipRemove>cancel</mat-icon>
+                                    </mat-chip>
+                                  </mat-chip-list>
+                                </mat-select-trigger>
+                                <mat-option *ngFor="let team of Teams" [value]="team">{{ team.name }}</mat-option>
+                              </mat-select>                           
+                              <div class="invalid-feedback" *ngIf="(TeamsControl.errors && (TeamsControl.touched || TeamsControl.dirty))">
+                                <div>Please select atleast one Team</div>
+                              </div>
+                              <div class="valid-feedback" *ngIf=" TeamsControl.valid && TeamsControl.touched">Looks Good!</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="user-preference" class="tab-pane fade list-group-section" role="tabpanel"
+                  aria-labelledby="team-tab">
+                  <div class="row mb-5">
+                    <div class="col-lg-12">
+                      <ul class="list-group list-group-flush mb-5">
+                        <li class="list-group-item d-flex justify-content-between align-items-sm-center">
+                          <div class="ms-2 me-auto coal">
+                            <div class="fw-bold night">Clone Setting</div>
+                            Create Shared inboxes for teammates to work together
+                          </div>
+                          <span>
+                            <i class="fal fa-user sky me-3"></i>
+                            <a href="#" class="text-decoration-underline">
+                              Select User
+                            </a>
+                          </span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-sm-center">
+                          <div class="ms-2 me-auto coal">
+                            <div class="fw-bold night">Set as admin</div>
+                            Admin can add new users and edit team settings
+                          </div>
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                          </div>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-sm-center">
+                          <div class="ms-2 me-auto coal">
+                            <div class="fw-bold night">Clone Setting</div>
+                            Create Shared inboxes for teammates to work together
+                          </div>
+                          <span>
+                            <i class="fal fa-user sky me-3"></i>
+                            <a href="javascript:" class="text-decoration-underline">
+                              Select User</a>
+                          </span>
+                        </li>
+                      </ul>
+
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+      <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 1560px; transform: translate3d(0px, 0px, 0px);">
+      </div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-y" style="display: block;">
+      <div class="scrollbar-thumb scrollbar-thumb-y" style="height: 145.541px; transform: translate3d(0px, 0px, 0px);">
+      </div>
+    </div> -->
+      </div>
+      <footer class="footer">
+        <div class="ps-3 pe-3">
+          <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+            <div class="row w-100">
+              <div class="col-md-4">
+
+
+              </div>
+              <div class="col-md-8 justify-content-end d-flex">
+                <div class="buttons-wrap d-flex">
+                  <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4" data-bs-toggle="modal"
+                    data-bs-target="">Cancel </button>
+                  <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"></button>
+
+                  <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn">{{btnText}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </form>
+
+</div>
+
+<div [class.show]="isShow==true" class="offcanvas offcanvas-end" tabindex="-1" id="manageSkill"
+  aria-labelledby="offcanvasRightLabel" aria-modal="true" role="dialog" style="visibility: visible;">
+  <div class="offcanvas-header align-items-center saltBg">
+    <button class="iconButton medium">
+      <i class="fal fa-clone"></i>
+    </button>
+    <h5 id="offcanvasRightLabel" class="darkblue fw-bold m-0">Manage Skills</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="off-canvas-wrap d-flex flex-column h-100">
+    <div class="offcanvas-body pb-0">
+      <p class="silver ps-3 mb-4">An User can have up-to 35 skills, drag and drop skills to reorder them by order
+        of preference</p>
+      <div class="row">
+        <div class="col-lg-6 select-skill-list border-end">
+          <div class="skill-select-wrapper">
+            <div
+              class="skill-head d-flex justify-content-between align-items-center border-bottom border-primary pb-2 ps-3">
+              <h6 class="m-0 charcoal fw-bold">28 Skills</h6>
+              <div class="skill-head-search d-flex">
+                <div class="search-btn small-search-btn">
+                  <button class="iconButton medium searchButton">
+                    <i class="fal fa-search silver"></i>
+                  </button>
+                  <input placeholder="Search">
+                </div>
+                <div class="iconButton medium">
+                  <label class="list-group-item checkbox-tick border-0" id="skillAll">
+                    <input class="form-check-input me-1 m-0 check-all" type="checkbox">
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="skill-list" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
+              <div class="scroll-content">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item checkbox-tick">
+                    <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                    <label class="form-check-label checkbox-txt" for="flexCheckDefault">
+                      Technical Support
+                    </label>
+
+                  </li>
+                  <li class="list-group-item checkbox-tick">
+                    <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                    <label class="checkbox-txt" for="select-skill-2"> Sales</label>
+                  </li>
+                  <li class="list-group-item checkbox-tick">
+                    <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                    <label class="checkbox-txt" for="select-skill-3">MNP</label>
+                  </li>
+                  <li class="list-group-item checkbox-tick">
+                    <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                    <label class="checkbox-txt" for="select-skill-4"> Product Support</label>
+                  </li>
+                  <li class="list-group-item checkbox-tick">
+                    <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                    <label class="checkbox-txt" for="select-skill-5">Online Order</label>
+                  </li>
+                  <li class="list-group-item checkbox-tick">
+                    <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                    <label class="checkbox-txt" for="select-skill-6">Complaint Deals</label>
+                  </li>
+                  <li class="list-group-item checkbox-tick">
+                    <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                    <label class="checkbox-txt" for="select-skill-7">Technical Support</label>
+                  </li>
+                  <li class="list-group-item checkbox-tick">
+                    <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                    <label class="checkbox-txt" for="select-skill-8">Sales</label>
+                  </li>
+                  <li class="list-group-item checkbox-tick">
+                    <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                    <label class="checkbox-txt" for="select-skill-9"> MNP</label>
+                  </li>
+                  <li class="list-group-item checkbox-tick">
+                    <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                    <label class="checkbox-txt" for="select-skill-10"> Product Support</label>
+                  </li>
+
+                  <li class="list-group-item checkbox-tick">
+                    <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                    <label class="checkbox-txt" for="select-skill-11"> Online Order</label>
+                  </li>
+                  <li class="list-group-item checkbox-tick">
+                    <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                    <label class="checkbox-txt" for="checkbox">Complaint Deals</label>
+                  </li>
+                </ul>
+              </div>
+              <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                <div class="scrollbar-thumb scrollbar-thumb-x"
+                  style="width: 650px; transform: translate3d(0px, 0px, 0px);"></div>
+              </div>
+              <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                <div class="scrollbar-thumb scrollbar-thumb-y"
+                  style="height: 491px; transform: translate3d(0px, 0px, 0px);"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="skill-select-wrapper selected_box">
+            <div
+              class="skill-head d-flex justify-content-between align-items-center border-bottom border-success pb-3 ps-3">
+              <h6 class="m-0 fw-bold mint mt-1 pt-2">4 Selected</h6>
+              <div class="skill-head-search d-flex" id="skillAllRemove">
+                <label class="list-group-item checkbox-minus checkbox-tick border-0">
+                  <input class="form-check-input me-1 m-0 check-all" type="checkbox">
+                </label>
+              </div>
+            </div>
+            <div class="selected-skill-list" data-scrollbar="true" tabindex="-1"
+              style="overflow: auto; outline: none;">
+              <div class="scroll-content">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item checkbox-minus checkbox-tick">
+                    <input class="form-check-input me-2 rounded-circle" type="checkbox" aria-label="...">
+                    <label class="checkbox-txt" for="checkbox"></label>
+                    <p class="flex-grow-1 m-0 checkbox-txt night">English</p>
+                    <span class="coal">4</span>
+                  </li>
+                  <li class="list-group-item checkbox-minus checkbox-tick">
+                    <input class="form-check-input me-2 rounded-circle" type="checkbox" aria-label="...">
+                    <label class="checkbox-txt" for="checkbox"></label>
+                    <p class="flex-grow-1 m-0 checkbox-txt night">Urdu</p>
+                    <span class="coal">8</span>
+                  </li>
+                  <li class="list-group-item checkbox-minus checkbox-tick">
+                    <input class="form-check-input me-2 rounded-circle" type="checkbox" aria-label="...">
+                    <label class="checkbox-txt" for="checkbox"></label>
+                    <p class="flex-grow-1 m-0 checkbox-txt night">Support</p>
+                    <span class="coal">7</span>
+                  </li>
+                  <li class="list-group-item checkbox-minus checkbox-tick">
+                    <input class="form-check-input me-2 rounded-circle" type="checkbox" aria-label="...">
+                    <label class="checkbox-txt" for="checkbox"></label>
+                    <p class="flex-grow-1 m-0 checkbox-txt night">Roman English</p>
+                    <span class="coal">4</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                <div class="scrollbar-thumb scrollbar-thumb-x"
+                  style="width: 651px; transform: translate3d(0px, 0px, 0px);"></div>
+              </div>
+              <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                <div class="scrollbar-thumb scrollbar-thumb-y"
+                  style="height: 163px; transform: translate3d(0px, 0px, 0px);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="off-canvaas-footer border-top p-3">
+      <div class="icon-buttons-wrapper d-flex justify-content-between">
+        <div class="f-icon-txt-wrapper d-flex align-items-center">
+          <button class="iconButton medium iconHover" id="btnShowModal">
+            <i class="fal fa-trash radical"></i>
+          </button>
+          <p class="f-icon-txt ms-1 m-0 radical">Delete Manage Skills </p>
+        </div>
+        <div class="buttons-wrap d-flex">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas"
+            aria-label="Close">Cancel</button>
+          <button type="button" class="btn btn-success ms-2 f-nextBtn" data-bs-dismiss="offcanvas" aria-label="Close"
+            id="saveSkills ">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

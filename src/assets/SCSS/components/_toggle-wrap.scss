@@ -1,0 +1,16 @@
+.toggle-wrap{
+    .toggle-head{
+        .list-group{
+            .list-group-item{
+                padding: 1.5rem;
+            }
+        }
+    }
+    .collapse, .collapsing {
+        .card-body{
+            border-radius: 0;
+            border: 0;
+            padding: 20px 20px 30px;
+        }
+    }
+}
