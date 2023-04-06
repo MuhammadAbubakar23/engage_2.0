@@ -1,0 +1,91 @@
+<div id="loginWrapper">
+    <div class="main-body">
+       <div class="login-logo">
+          <img src=".../../../assets/images/login-image-1.svg" alt="-">
+       </div>
+       <div class="login-form main-login-form agentExtensionWrapper">
+          <div class="logo mb-5">
+             <img src="../../../assets/images/ibex-enteract-engage.svg" width="300" alt="">
+          </div>
+          <h4>Glad to see you!</h4>
+          <h6 class="coal mb-5">
+             Create your account
+          </h6>
+          <form [formGroup]="SignupForm" (submit)="submit()" style="width: -webkit-fill-available;">
+ 
+ 
+             <div class="row form w-100" >
+                <!-- <div class="row"> -->
+                    <div class="form-floating mb-3 col-6" style="padding-left: inherit!important;">
+                        <input formControlName="firstName" class="form-control" id="firstname"
+                           placeholder="Enter First Name">
+                        <label for="firstname-email" >First Name</label>
+                     </div>
+                     <div class="form-floating mb-3 col-6" style="padding-left: inherit!important;">
+                        <input formControlName="lastName" class="form-control" id="lastname"
+                           placeholder="Enter Last Name">
+                        <label for="lastname-email">Last Name</label>
+                     </div>
+
+                <!-- </div> -->
+                
+                <!-- <div class="form-floating mb-3" style="padding-left: inherit!important;">
+                   <input formControlName="UserName" class="form-control" id="username"
+                      placeholder="enter username">
+                   <label for="username">Username</label>
+                   
+                </div> -->
+                <div class="form-floating mb-3" style="padding-left: inherit!important;">
+                    <input formControlName="email" class="form-control" id="email"
+                       placeholder="Enter your Email">
+                    <label for="email">Email</label>
+                 </div>
+                <div class="form-floating mb-3 col-6" style="padding-left: inherit!important;">
+                   <input formControlName="password" type="password" class="form-control" id="password"
+                      placeholder="Password">
+                   <label for="password">Password</label>
+                   
+                </div>
+                <div class="form-floating mb-3 col-6" style="padding-left: inherit!important;">
+                    <input formControlName="confirmPassword" type="password" class="form-control" id="confirmpassword"
+                       placeholder="Confirm Password">
+                    <label for="confirmpassword">Confirm Password</label>
+                    
+                 </div>
+                 <div class="form-floating mb-3" style="padding-left: inherit!important;">
+                    <input formControlName="phone" class="form-control" id="phone"
+                       placeholder="Enter Phone Number" type="text">
+                    <label for="phone">Phone Number</label>
+                 </div>
+                     <div class="form-btn d-flex justify-content-center mt-3" >
+                        <button type="submit" class="btn btn-success" id="loginBtn" tabindex="-1" role="button" style="width: 131.59px;">Sign
+                           Up</button>
+                     </div>
+                     <div class="justify-content-center pt-3 text-center">
+                        <a routerLink="/login">Back to Sign in</a>
+                    </div>
+             </div>
+          </form>
+       </div>
+       <div class="login-logo">
+          <img src="../../../assets/images/login-image-1.svg" alt="-">
+       </div>
+    </div>
+    <footer class="login-footer">
+       <ul class="footer-links">
+          <li>
+             <a href="#">Technical Support</a>
+          </li>
+          <li>
+             <a href="#">Privacy Policy</a>
+          </li>
+          <li>
+             <a href="#">Terms &amp; Conditions</a>
+          </li>
+       </ul>
+       <div class="copyright">
+          2022 All Rights Reserved.
+          <a href="#">ibex.co</a>
+       </div>
+    </footer>
+ </div>

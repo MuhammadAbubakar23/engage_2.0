@@ -1,0 +1,559 @@
+<div class="tags-wrap console-body-wrapper" data-scrollbar="true" tabindex="-1"
+    style="overflow-y: auto; outline: none;">
+    <div class="scroll-content">
+        <div class="wider-container pt-3">
+            <div id="nav-team">
+                <div class="searchBar-wrapper mb-4">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="d-flex align-items-lg-center">
+                                <p class="coal m-0">Status:</p>
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle coal" type="button" id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        All
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Ascending</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Descending</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Tickets</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Contacts</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 d-flex align-items-center justify-content-end">
+                            <a href="javascript:" class="search-btn">
+                                <button class="iconButton medium">
+                                    <i class="fal fa-search silver"></i>
+                                </button>
+                                <input placeholder="Search">
+                            </a>
+                            <a (click)="updatevalue('consoleCreateTagsHeader')" [routerLink]="['/console/tags:create-tags']" class="ms-2">
+                                <button type="button" class="btn btn-success">
+                                    <i class="fal fa-plus me-2"></i>
+                                    Create Tags
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-section">
+                    <table class="table mb-5 align-middle">
+                        <thead>
+                            <tr>
+                                <th>
+                                    190 Tags
+                                </th>
+                                <th>
+                                    <a href="javascript:" class="charcoal hover-icon">
+                                        Tickets
+                                        <i class="fas fa-long-arrow-alt-down"></i>
+                                    </a>
+                                </th>
+                                <th>
+                                    <a href="javascript:" class="charcoal hover-icon">
+                                        Contacts
+                                        <i class="fas fa-long-arrow-alt-down"></i>
+                                    </a>
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>
+                                    <a href="#" class="night">Complaint</a>
+                                </th>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-ticket coal coal me-2"></i>
+                                        3
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-id-card coal me-2"></i>
+                                        7
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icons-list d-flex justify-content-end dropstart">
+                                        <button class="btn iconButton medium iconHover">
+                                            <i class="fal fa-edit"></i>
+                                        </button>
+                                        <button class="btn iconButton medium iconHover btn-group" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="far fa-ellipsis-v dropdown-toggle"></i>
+                                        </button>
+                                        <ul class="dropdown-menu fade">
+                                            <li>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Disable</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Clone</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <a href="#" class="night">Feedback</a>
+                                </th>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-ticket coal coal me-2"></i>
+                                        7
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-id-card coal me-2"></i>
+                                        12
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icons-list d-flex justify-content-end dropstart">
+                                        <button class="btn iconButton medium iconHover">
+                                            <i class="fal fa-edit"></i>
+                                        </button>
+                                        <button class="btn iconButton medium iconHover btn-group" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="far fa-ellipsis-v dropdown-toggle"></i>
+                                        </button>
+                                        <ul class="dropdown-menu fade">
+                                            <li>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Disable</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Clone</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <a href="#" class="night">Sales</a>
+                                </th>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-ticket coal coal me-2"></i>
+                                        5
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-id-card coal me-2"></i>
+                                        34
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icons-list d-flex justify-content-end dropstart">
+                                        <button class="btn iconButton medium iconHover">
+                                            <i class="fal fa-edit"></i>
+                                        </button>
+                                        <button class="btn iconButton medium iconHover btn-group" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="far fa-ellipsis-v dropdown-toggle"></i>
+                                        </button>
+                                        <ul class="dropdown-menu fade">
+                                            <li>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Disable</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Clone</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <a href="#" class="night">Order</a>
+                                </th>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-ticket coal coal me-2"></i>
+                                        12
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-id-card coal me-2"></i>
+                                        64
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icons-list d-flex justify-content-end dropstart">
+                                        <button class="btn iconButton medium iconHover">
+                                            <i class="fal fa-edit"></i>
+                                        </button>
+                                        <button class="btn iconButton medium iconHover btn-group" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="far fa-ellipsis-v dropdown-toggle"></i>
+                                        </button>
+                                        <ul class="dropdown-menu fade">
+                                            <li>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Disable</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Clone</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <a href="#" class="night">Contact</a>
+                                </th>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-ticket coal coal me-2"></i>
+                                        46
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-id-card coal me-2"></i>
+                                        23
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icons-list d-flex justify-content-end dropstart">
+                                        <button class="btn iconButton medium iconHover">
+                                            <i class="fal fa-edit"></i>
+                                        </button>
+                                        <button class="btn iconButton medium iconHover btn-group" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="far fa-ellipsis-v dropdown-toggle"></i>
+                                        </button>
+                                        <ul class="dropdown-menu fade">
+                                            <li>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Disable</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Clone</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <a href="#" class="night">Online Order</a>
+                                </th>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-ticket coal coal me-2"></i>
+                                        91
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-id-card coal me-2"></i>
+                                        83
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icons-list d-flex justify-content-end dropstart">
+                                        <button class="btn iconButton medium iconHover">
+                                            <i class="fal fa-edit"></i>
+                                        </button>
+                                        <button class="btn iconButton medium iconHover btn-group" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="far fa-ellipsis-v dropdown-toggle"></i>
+                                        </button>
+                                        <ul class="dropdown-menu fade">
+                                            <li>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Disable</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Clone</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <a href="#" class="night">Refund</a>
+                                </th>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-ticket coal coal me-2"></i>
+                                        51
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-id-card coal me-2"></i>
+                                        1
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icons-list d-flex justify-content-end dropstart">
+                                        <button class="btn iconButton medium iconHover">
+                                            <i class="fal fa-edit"></i>
+                                        </button>
+                                        <button class="btn iconButton medium iconHover btn-group" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="far fa-ellipsis-v dropdown-toggle"></i>
+                                        </button>
+                                        <ul class="dropdown-menu fade">
+                                            <li>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Disable</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Clone</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <a href="#" class="night">Cancel</a>
+                                </th>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-ticket coal coal me-2"></i>
+                                        83
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-id-card coal me-2"></i>
+                                        65
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icons-list d-flex justify-content-end dropstart">
+                                        <button class="btn iconButton medium iconHover">
+                                            <i class="fal fa-edit"></i>
+                                        </button>
+                                        <button class="btn iconButton medium iconHover btn-group" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="far fa-ellipsis-v dropdown-toggle"></i>
+                                        </button>
+                                        <ul class="dropdown-menu fade">
+                                            <li>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Disable</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Clone</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <a href="#" class="night">Important</a>
+                                </th>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-ticket coal coal me-2"></i>
+                                        26
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-id-card coal me-2"></i>
+                                        0
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icons-list d-flex justify-content-end dropstart">
+                                        <button class="btn iconButton medium iconHover">
+                                            <i class="fal fa-edit"></i>
+                                        </button>
+                                        <button class="btn iconButton medium iconHover btn-group" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="far fa-ellipsis-v dropdown-toggle"></i>
+                                        </button>
+                                        <ul class="dropdown-menu fade">
+                                            <li>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Disable</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Clone</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <a href="#" class="night">Black List</a>
+                                </th>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-ticket coal coal me-2"></i>
+                                        23
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center darkblue">
+                                        <i class="fal fa-id-card coal me-2"></i>
+                                        11
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="icons-list d-flex justify-content-end dropstart">
+                                        <button class="btn iconButton medium iconHover">
+                                            <i class="fal fa-edit"></i>
+                                        </button>
+                                        <button class="btn iconButton medium iconHover btn-group" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="far fa-ellipsis-v dropdown-toggle"></i>
+                                        </button>
+                                        <ul class="dropdown-menu fade">
+                                            <li>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Disable</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Clone</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>
+                                    <nav aria-label="Page navigation example"
+                                        class="d-flex align-items-center mt-3 mb-3">
+                                        <ul class="pagination m-0">
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">Previous</a>
+                                            </li>
+                                            <li class="page-item active">
+                                                <a class="page-link" href="#">1</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">2</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">3</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#">Next</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div
+                                        class="tags-per-page d-flex align-items-center justify-content-end mt-3 mb-3 coal">
+                                        Per page
+                                        <div class="dropdown simple-dropdown w-auto">
+                                            <button class="dropdown-toggle chevron-icon down ps-2 pe-4" type="button"
+                                                id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                                50
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">15</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">30</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">45</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+        <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 1560px; transform: translate3d(0px, 0px, 0px);">
+        </div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-y" style="display: block;">
+        <div class="scrollbar-thumb scrollbar-thumb-y"
+            style="height: 237.085px; transform: translate3d(0px, 0px, 0px);"></div>
+    </div> -->
+</div>

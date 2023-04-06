@@ -1,0 +1,59 @@
+.rightbarNav {
+  width: 60px;
+  height: calc(100vh - 70px);
+  background: $ice;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 20px 0;
+  position: absolute;
+  top:0px;
+  right:0;
+  z-index: 9;
+  .navUpper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    .rightbar-btn-group {
+      border-radius: 100%;
+      &.active {
+        button {
+          background: $mint;
+          color: $ice;
+        }
+      }
+    }
+  }
+}
+
+.chat-room{
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+}
+
+.activity-wrap{
+  .more-text{
+    transition: all .5s ease-in-out;
+    display: none;
+  }
+  &.active{
+    .more-text{
+      display: inline;
+    }
+  }
+}
+
+.file-history{
+  p{
+   margin:0;
+   line-height: normal;
+   small{
+     font-size:12px;
+   }
+  }
+ 
+}

@@ -1,0 +1,263 @@
+#loginWrapper {
+  background-color: #F2F4F8;
+  height: 100vh;
+  @include flex();
+  flex-direction: row;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  a{
+    color: #DD0041;
+  }
+  .circlebg{
+    width: 130px;
+    height: 130px;
+    background: linear-gradient(221.46deg, #F6448A 11.63%, #FA8971 92.27%);
+    border-radius: 100px;
+    position: absolute;
+   
+    &.topleft{
+      left: -10px;
+      top: -30px;
+    }
+    &.bottomright{
+      right: -40px;
+      bottom: -40px;
+      width: 186px;
+      height: 186px;
+      p{
+        background: #f2eaef !important;
+        width: 140px;
+        height: 140px;
+        border-radius: 100px;
+        display: block;
+        left: 25px;
+        position: absolute;
+        top: 25px;
+        margin: 0;
+      }
+     
+    }
+  
+   
+  }
+  aside{
+    position: relative;
+    height: 100%;
+    
+   
+    .logo{
+      text-align: center;
+      img{
+        max-width: 280px;
+        display: inline-block;
+
+      }
+    }
+    .illustration{
+      text-align: center;
+      img{
+        max-width: 200px;
+        display: inline-block;
+
+      }
+    }
+    .iconButton{
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      display: block;
+      background: #fff;
+      text-align: center;
+      line-height: 40px;
+      color: #fff;
+      font-size: 20px;
+      &.iconfacebook{
+        background: #3C5A9A;
+        top: 230px;
+        left: 40px;
+      }
+      &.icongoogle{
+        background: #EB4335;
+        top: 180px;
+        left: 70px;
+      }
+      &.icontwitter{
+
+      }
+      &.icontiktok{
+        background: #000000;
+        top: 290px;
+        left: 70px;
+      }
+      &.iconinstagram{
+        background: linear-gradient(45deg, #FFC107 9.15%, #F44336 50.57%, #9C27B0 90.03%);
+        top: 320px;
+        right: 120px;
+      }
+      &.iconwhatsapp{
+        background: linear-gradient(0deg, #20B038 0%, #60D66A 100%);
+        top: 160px;
+        right: 100px;
+      }
+      &.iconlinkedin{
+        background: #1976D2;
+        top: 270px;
+        right: 80px;
+        width: 44px;
+        height: 44px;
+        line-height: 44px;
+      }
+      &.iconyoutube{
+        background: #F44336;
+        top: 200px;
+        right: 50px;
+        width: 52px;
+        height: 52px;
+        line-height: 52px;
+        font-size: 24px;
+      }
+    }
+    .left-body{
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(25px);
+      padding: 24px;
+      border-radius: 20px;
+      margin: 30px;
+      height: calc(100% - 60px);
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 340px;
+      text-align: center;
+    }
+    &:before{
+      content:'';
+      background: linear-gradient(221.46deg, #F6448A 11.63%, #FA8971 92.27%);
+      opacity: 0.1;
+      filter: blur(250px);
+      width: 840px;
+      height: 840px;
+      position:absolute;
+      left: -16.62%;
+      top: -4.69%;
+    }
+  }
+  .main-body {
+    flex: 1 0;
+    width: 100%;
+    @include flex();
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
+    z-index: 99;
+    .loginbtn{
+      background: #EF6179;
+      box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05); 
+      color: $white; 
+      padding: 12px;
+    }
+    .social-list{
+      >li{
+        >a{
+          background: #FFFFFF;
+          border: 1px solid #CED4DA;
+        }
+      }
+    }
+
+  }
+
+
+
+  .login-form,.signup-form {
+    display: inline-flex;
+    align-self: center;
+    max-width: 460px;
+    min-width: 460px;
+    @include flex();
+    flex-direction: column;
+    align-items: center;
+    margin: 0px 20px;
+    .signup-btn{
+      color: #3cc2cc;
+      border-color: #3cc2cc;
+      &:hover{
+       background-color:#3cc2cc ;
+       color: $white;
+       border-color: #3cc2cc;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+.center-section{
+  display: flex;
+  margin: 16px auto;
+  color: $coal;
+  .line{
+    width: 100%;
+    height: 1px;
+    background: $powder;
+    display: block;
+    margin: 10px;
+  }
+  &:first-child{
+    margin-left: 0;
+  }
+  &:last-child{
+    margin-right: 0;
+  }
+}
+
+.another-account-accordion{
+  .dropdown-toggle{
+    width: 100%;
+    padding: 1rem 0.75rem;
+    line-height: 1.5;
+    color: #212529;
+    background-color: $ice;
+    border-radius: 0.25rem;
+    border: 1px solid $powder;
+    
+  }
+  .another-login-info{
+    border: 1px solid $powder;
+    border-bottom: 0;
+    padding: 0;
+    width: 100%;
+    .info-head{
+      padding: 16px;
+      margin-bottom: 0;
+      background: #eee;
+    }
+    .info-box{
+    
+      .account-info{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid $powder;
+        .user-number{
+          filter: blur(4px);
+          cursor: not-allowed;
+        }
+        .left,
+        .right{
+          width: 50%;
+        }
+      }
+    }
+  }
+}
