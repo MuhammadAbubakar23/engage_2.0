@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { RequestService } from 'src/app/shared/services/request/request.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SocialLoginService } from '../../services/sociallogin.service';
+
 @Component({
   selector: 'app-support-channels',
   standalone: true,
@@ -22,7 +23,7 @@ export class SupportChannelsComponent implements OnInit {
     , private route: Router
     , private http: HttpClient
     , private socialService: SocialLoginService
-  ){
+  ) {
 
   }
 
@@ -31,49 +32,47 @@ export class SupportChannelsComponent implements OnInit {
     const socialtype = localStorage.getItem('socialtype')
     console.log("authorizationCodebefore", authorizationCode, socialtype)
 
-     if (authorizationCode && socialtype == 'facebook') {
-       this.socialService.getFaceBookData(authorizationCode).subscribe((response: any) => {
+    if (authorizationCode && socialtype == 'facebook') {
+      this.socialService.getFaceBookData(authorizationCode).subscribe((response: any) => {
+        console.log("Profile===>", response);
+      }, (error: any) => {
+        console.log("Error==>", error)
+      })
+    }
+    if (authorizationCode && socialtype == 'instagram') {
+      this.socialService.getInstagramData(authorizationCode).subscribe((response: any) => {
+        console.log("Profile===>", response);
+      }, (error: any) => {
+        console.log("Error==>", error)
+      })
+    }
+     if (authorizationCode && socialtype == 'google') {
+      this.socialService.getGoogleData(authorizationCode).subscribe((response: any) => {
+        console.log("Profile===>", response);
+      }, (error: any) => {
+        console.log("Error==>", error)
+      })
+    }
+     if (authorizationCode && socialtype == 'linkdin') {
+       this.socialService.getLinkdinData(authorizationCode).subscribe((response: any) => {
          console.log("Profile===>", response);
        }, (error: any) => {
          console.log("Error==>", error)
        })
      }
-
-     
-    // if (authorizationCode && socialtype == 'instagram') {
-    //   this.socialService.getInstagramData(authorizationCode).subscribe((response: any) => {
-    //     console.log("Profile===>", response);
-    //   }, (error: any) => {
-    //     console.log("Error==>", error)
-    //   })
-    // }
-    //  if (authorizationCode && socialtype == 'google') {
-    //   this.socialService.getGoogleData(authorizationCode).subscribe((response: any) => {
-    //     console.log("Profile===>", response);
-    //   }, (error: any) => {
-    //     console.log("Error==>", error)
-    //   })
-    // }
-    //  if (authorizationCode && socialtype == 'linkdin') {
-    //    this.socialService.getLinkdinData(authorizationCode).subscribe((response: any) => {
-    //      console.log("Profile===>", response);
-    //    }, (error: any) => {
-    //      console.log("Error==>", error)
-    //    })
-    //  }
-     //  if (authorizationCode && socialtype == 'utube') {
-    //    this.socialService.getUtubeData(authorizationCode).subscribe((response: any) => {
-    //      console.log("Profile===>", response);
-    //    }, (error: any) => {
-    //      console.log("Error==>", error)
-    //    })
-    //  }
+     if (authorizationCode && socialtype == 'utube') {
+       this.socialService.getUtubeData(authorizationCode).subscribe((response: any) => {
+         console.log("Profile===>", response);
+       }, (error: any) => {
+         console.log("Error==>", error)
+       })
+     }
   }
 
   connectFacebook(): void {
     localStorage.setItem('socialtype', 'facebook');
     const clientId = environment.facebookclientId;
-    const scope="email,read_insights,ads_management,instagram_basic,pages_manage_engagement,pages_manage_posts,pages_messaging,pages_read_user_content,pages_manage_metadata,pages_manage_ads,instagram_manage_comments,instagram_manage_insights,pages_read_engagement"
+    const scope = "email,read_insights,ads_management,instagram_basic,pages_manage_engagement,pages_manage_posts,pages_messaging,pages_read_user_content,pages_manage_metadata,pages_manage_ads,instagram_manage_comments,instagram_manage_insights,pages_read_engagement"
     //const scope="email"
     const redirectUri = 'https://localhost:4200/console/channels';
     const loginUrl = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code`;
@@ -87,7 +86,6 @@ export class SupportChannelsComponent implements OnInit {
     const loginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&&scope=https://www.googleapis.com/auth/userinfo.profile&response_type=code`;
     window.open(loginUrl, '_blank');
   }
-
   connectUtube() {
     localStorage.setItem('socialtype', 'utube');
     const clientId = environment.googleclientId;
@@ -100,7 +98,7 @@ export class SupportChannelsComponent implements OnInit {
     localStorage.setItem('socialtype', 'instagram');
     const clientId = environment.instagramclientId;
     const redirectUri = 'https://localhost:4200/console/channels';
-    const loginUrl = `https://api.instagram.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=user_profile,user_media&response_type=code`;
+    const loginUrl = `https://api.instagram.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=user_profile,user_media,basic+public_content&response_type=code`;
     window.open(loginUrl, '_blank');
   }
 
@@ -108,11 +106,10 @@ export class SupportChannelsComponent implements OnInit {
     localStorage.setItem('socialtype', 'linkdin');
     const clientId = environment.linkdinclientId;
     const redirectUri = 'https://localhost:4200/console/channels';
-    const scope = 'r_liteprofile r_emailaddress'; // Add any additional scopes as needed
+    const scope = 'r_ads_reporting,r_liteprofile,r_organization_social,rw_organization_admin,w_member_social,r_ads,r_emailaddress,w_organization_social,rw_ads,r_basicprofile,r_organization_admin,r_1st_connections_size'; // Add any additional scopes as needed
     const authUrl = `https://www.linkedin.com/oauth/v2/authorization?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code`;
     window.location.href = authUrl;
   }
-
   connectTwitter() {
     localStorage.setItem('socialtype', 'twitter');
     const clientId = environment.twitterclientId;
@@ -121,7 +118,6 @@ export class SupportChannelsComponent implements OnInit {
     const authUrl = `https://api.twitter.com/oauth2/authenticate?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope}`;
     window.location.href = authUrl;
   }
-
 
 }
 

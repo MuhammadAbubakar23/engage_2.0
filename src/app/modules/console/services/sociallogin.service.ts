@@ -12,8 +12,9 @@ export class SocialLoginService {
     const clientId = environment.facebookclientId;
     const clientSecret = environment.facebookclientSecret;
     const redirectUri = 'https://localhost:4200/console/channels';
-    const tokenUrl = `https://graph.facebook.com/v12.0/oauth/access_token`;
-    return this.http.post(tokenUrl, {code: authorizationCode});
+    //const tokenUrl = `https://graph.facebook.com/v12.0/oauth/access_token`;
+    const apiUrl = 'please put your api url here';
+    return this.http.post(apiUrl, { code: authorizationCode });
     // return this.http.post(tokenUrl, {
     //   code: authorizationCode,
     //   client_id: clientId,
@@ -27,29 +28,33 @@ export class SocialLoginService {
     const clientId = environment.instagramclientId;
     const clientSecret = environment.instagramclientSecret;
     const redirectUri = 'https://localhost:4200/console/channels';
-    const tokenUrl = `https://api.instagram.com/oauth/access_token`;
-    return this.http.post(tokenUrl, {code: authorizationCode});
+    //const tokenUrl = `https://api.instagram.com/oauth/access_token`;
+    const apiUrl = 'please put your api url here';
+    return this.http.post(apiUrl, { code: authorizationCode });
   }
 
   getGoogleData(authorizationCode: any) {
     const clientId = environment.googleclientId;
     const clientSecret = environment.googleclientSecret;
     const redirectUri = 'https://localhost:4200/console/channels';
-    const tokenUrl = `https://oauth2.googleapis.com/token`;
-    return this.http.post(tokenUrl, {code: authorizationCode});
+    //const tokenUrl = `https://oauth2.googleapis.com/token`;
+    const apiUrl = 'please put your api url here';
+    return this.http.post(apiUrl, { code: authorizationCode });
   }
   getLinkdinData(authorizationCode: any) {
     const clientId = environment.linkdinclientId;
     const clientSecret = environment.linkdinclientSecret;
     const redirectUri = 'https://localhost:4200/console/channels';
-    const tokenUrl = `https://www.linkedin.com/oauth/v2/accessToken?`;
-    return this.http.post(tokenUrl, {code: authorizationCode});
+    //const tokenUrl = `https://www.linkedin.com/oauth/v2/accessToken?`;
+    const apiUrl = 'please put your api url here';
+    return this.http.post(apiUrl, { code: authorizationCode });
   }
   getUtubeData(authorizationCode: any) {
     const clientId = environment.googleclientId;
     const clientSecret = environment.googleclientSecret;
     const redirectUri = 'https://localhost:4200/console/channels';
-    const tokenUrl = `https://oauth2.googleapis.com/token`;
-    return this.http.post(tokenUrl, {code: authorizationCode});
+    //const tokenUrl = `https://oauth2.googleapis.com/token`;
+    const apiUrl = 'please put your api url here';
+    return this.http.post(apiUrl, { code: authorizationCode });
   }
 }
