@@ -56,6 +56,8 @@ export class LoginComponent implements OnInit {
       this.router.navigateByUrl("/all-inboxes/conversation");
       this.spinnerService.hide();
 
+      //signalRRequests
+
       this.signalRService.startConnection();
 
       this.signalRService.removeTagDataListener();
