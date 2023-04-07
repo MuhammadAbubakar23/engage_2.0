@@ -1,0 +1,233 @@
+<div class="support-channel-wrapper console-body-wrapper" data-scrollbar="true" tabindex="-1"
+    style="overflow-y: auto; outline: none;">
+    <div class="scroll-content">
+        <div class="wider-container skybg">
+            <div class="bodyWrapper">
+                <div class="d-flex align-items-center pb-3 justify-content-between border-2 border-bottom border-info">
+                    <h5 class="fw-bold m-0">
+                        Knowledge Base
+                    </h5>
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#creat-knowledgebase"><i
+                            class="fal fa-plus me-1"></i> Create New</button>
+                </div>
+                <div class="list-group-section">
+                    <div class="list-group list-group-flush">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex align-items-center">
+                                <a href="#0" class="w-100 d-flex justify-content-between align-items-center"
+                                    data-bs-toggle="collapse" role="button" data-bs-target="#emailcollapse"
+                                    aria-expanded="false" aria-controls="emailcollapse">
+
+                                    <div class="list-down-icon">
+                                        <span class="btn iconButton iconHover medium cherryTransBg me-3">
+                                            <i class="fal fa-pizza"></i>
+                                        </span>
+                                    </div>
+                                    <div class="ms-2 me-auto coal">
+                                        <div class="fw-bold">Getting Started </div>
+                                        Here's some quick tips to get you started.
+                                    </div>
+
+                                </a>
+                                <span type="button" class="iconButton iconHover medium btn ms-auto rounded-circle"
+                                    id="addMore-btn" data-bs-toggle="modal" data-bs-target="#creat-category"
+                                    data-bs-placement="top" title="Create Category">
+                                    <i class="far fa-plus"></i>
+                                </span>
+
+                            </li>
+
+                            <div class="collapse-wrap collapse" id="emailcollapse">
+                                <div class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                                        <a (click)="updatevalue('consolePostListHeader')" [routerLink]="['/console/console-knowledgeBase:posts']" class="w-100" value="User Access Restriction">
+                                            <span> User Access Restriction</span>
+                                        </a>
+                                        <span type="button" class="iconButton iconHover medium btn rounded-circle"
+                                            id="addMore-btn" data-bs-toggle="modal" data-bs-target="#creat-post"
+                                            data-bs-placement="top" title="Create Post">
+                                            <i class="far fa-plus"></i>
+                                        </span>
+                                    </li>
+                                    <li
+                                        class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                                        <a (click)="updatevalue('consolePostListHeader')" [routerLink]="['/console/console-knowledgeBase:posts']" class="w-100" value="Organise Information....">
+                                            <span> Organise Information based on Topics</span>
+                                        </a>
+                                        <span type="button" class="iconButton iconHover medium btn rounded-circle"
+                                            id="addMore-btn" data-bs-toggle="modal" data-bs-target="#creat-post"
+                                            data-bs-placement="top" title="Create Post">
+                                            <i class="far fa-plus"></i>
+                                        </span>
+                                    </li>
+                                    <li
+                                        class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                                        <a (click)="updatevalue('consolePostListHeader')" [routerLink]="['/console/console-knowledgeBase:posts']" class="w-100" value="Allowing any...">
+                                            <span> Allowing any users to add content</span>
+                                        </a>
+                                        <span type="button" class="iconButton iconHover medium btn rounded-circle"
+                                            id="addMore-btn" data-bs-toggle="modal" data-bs-target="#creat-post"
+                                            data-bs-placement="top" title="Create Post">
+                                            <i class="far fa-plus"></i>
+                                        </span>
+                                    </li>
+                                    <li
+                                        class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                                        <a (click)="updatevalue('consolePostListHeader')" [routerLink]="['/console/console-knowledgeBase:posts']" class="w-100" value="A Central ..">
+                                            <span> A Central repository of your KB/Wiki</span>
+                                        </a>
+                                        <span type="button" class="iconButton iconHover medium btn rounded-circle"
+                                            id="addMore-btn" data-bs-toggle="modal" data-bs-target="#creat-post"
+                                            data-bs-placement="top" title="Create Post">
+                                            <i class="far fa-plus"></i>
+                                        </span>
+                                    </li>
+                                    <li
+                                        class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                                        <a (click)="updatevalue('consolePostListHeader')" [routerLink]="['/console/console-knowledgeBase:posts']" class="w-100" value="Reset Password">
+                                            <span> How to reset your password</span>
+                                        </a>
+                                        <span type="button" class="iconButton iconHover medium btn rounded-circle"
+                                            id="addMore-btn" data-bs-toggle="modal" data-bs-target="#creat-post"
+                                            data-bs-placement="top" title="Create Post">
+                                            <i class="far fa-plus"></i>
+                                        </span>
+                                    </li>
+                                    <li
+                                        class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                                        <a (click)="updatevalue('consolePostListHeader')" [routerLink]="['/console/console-knowledgeBase:posts']" class="w-100" value="Adding PDF's">
+                                            <span> Adding PDF's to your articles</span>
+                                        </a>
+                                        <span type="button" class="iconButton iconHover medium btn rounded-circle"
+                                            id="addMore-btn" data-bs-toggle="modal" data-bs-target="#creat-post"
+                                            data-bs-placement="top" title="Create Post">
+                                            <i class="far fa-plus"></i>
+                                        </span>
+                                    </li>
+                                    <li
+                                        class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                                        <a (click)="updatevalue('consolePostListHeader')" [routerLink]="['/console/console-knowledgeBase:posts']" class="w-100" value="A Central ..">
+                                            <span> A Central repository of your KB/Wiki</span>
+                                        </a>
+                                        <span type="button" class="iconButton iconHover medium btn rounded-circle"
+                                            id="addMore-btn" data-bs-toggle="modal" data-bs-target="#creat-post"
+                                            data-bs-placement="top" title="Create Post">
+                                            <i class="far fa-plus"></i>
+                                        </span>
+                                    </li>
+                                    <li
+                                        class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                                        <a (click)="updatevalue('consolePostListHeader')" [routerLink]="['/console/console-knowledgeBase:posts']" class="w-100" value="Reset Password">
+                                            <span> How to reset your password</span>
+                                        </a>
+                                        <span type="button" class="iconButton iconHover medium btn rounded-circle"
+                                            id="addMore-btn" data-bs-toggle="modal" data-bs-target="#creat-post"
+                                            data-bs-placement="top" title="Create Post">
+                                            <i class="far fa-plus"></i>
+                                        </span>
+                                    </li>
+                                    <li
+                                        class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
+                                        <a (click)="updatevalue('consolePostListHeader')" [routerLink]="['/console/console-knowledgeBase:posts']" class="w-100" value="Adding PDF's">
+                                            <span> Adding PDF's to your articles</span>
+                                        </a>
+                                        <span type="button" class="iconButton iconHover medium btn rounded-circle"
+                                            id="addMore-btn" data-bs-toggle="modal" data-bs-target="#creat-post"
+                                            data-bs-placement="top" title="Create Post">
+                                            <i class="far fa-plus"></i>
+                                        </span>
+                                    </li>
+                                </div>
+                            </div>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span class="btn iconButton iconHover medium skyTransBg me-3">
+                                    <i class="fal fa-cog"></i>
+                                </span>
+                                <div class="ms-2 me-auto coal">
+                                    <div class="fw-bold night">Setting Up Integrations</div> Here's some quick tips to
+                                    get you started.
+                                </div>
+                                <div class="icons-list">
+                                    <span type="button" class="iconButton iconHover medium btn rounded-circle"
+                                        id="addMore-btn">
+                                        <i class="far fa-plus"></i>
+                                    </span>
+                                </div>
+                            </li>
+                        </ul>
+                        <a class="list-group-item list-group-item-action d-flex level1Btn"
+                            value="Multilingual Translation ">
+                            <div class="list-down-icon">
+                                <span class="btn iconButton iconHover medium pearlTransBg me-3">
+                                    <i class="fal fa-map"></i>
+                                </span>
+                            </div>
+                            <div class="w-100 list-txt">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1 darkblue">Multilingual Translation
+                                    </h6>
+                                </div>
+                                <p class="mb-1 coal">Here's some quick tips to get you started.</p>
+                            </div>
+                        </a>
+                        <a class="list-group-item list-group-item-action d-flex level1Btn"
+                            value="Authentication">
+                            <div class="list-down-icon">
+                                <span class="btn iconButton iconHover medium emeraldTransBg me-3">
+                                    <i class="fal fa-file-check"></i>
+                                </span>
+                            </div>
+                            <div class="w-100 list-txt">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1 darkblue">Authentication
+                                    </h6>
+                                </div>
+                                <p class="mb-1 coal"> Here's some quick tips to get you started. </p>
+                            </div>
+                        </a>
+                        <a class="list-group-item list-group-item-action d-flex level1Btn"
+                            value="Billing">
+                            <div class="list-down-icon">
+                                <span class="btn iconButton iconHover medium radicalTransBg me-3">
+                                    <i class="far fa-ballot"></i>
+                                </span>
+                            </div>
+                            <div class="w-100 list-txt">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1 darkblue">Billing
+                                    </h6>
+                                </div>
+                                <p class="mb-1 coal"> Here's some quick tips to get you started.</p>
+                            </div>
+                        </a>
+                        <a class="list-group-item list-group-item-action d-flex level1Btn"
+                            value="Guides">
+                            <div class="list-down-icon">
+                                <span class="btn iconButton iconHover medium skyTransBg me-3">
+                                    <i class="fal fa-list-alt"></i>
+                                </span>
+                            </div>
+                            <div class="w-100 list-txt">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1 darkblue">Guides
+                                    </h6>
+                                </div>
+                                <p class="mb-1 coal">Here's some quick tips to get you started.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+        <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 1560px; transform: translate3d(0px, 0px, 0px);">
+        </div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-y" style="display: block;">
+        <div class="scrollbar-thumb scrollbar-thumb-y"
+            style="height: 429.959px; transform: translate3d(0px, 0px, 0px);">
+        </div>
+    </div> -->
+</div>

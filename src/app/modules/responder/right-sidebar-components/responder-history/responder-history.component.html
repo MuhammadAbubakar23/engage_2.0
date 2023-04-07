@@ -1,0 +1,135 @@
+<nav id="history-rightbar-social" class="expended-rigth-sidebar open">
+    <div class="right-bar-wrapper">
+        <div class="bodyWrapper">
+            <header class="tab-header rightbar-tab-header">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="activity" data-bs-toggle="tab"
+                            data-bs-target="#activity-tab" type="button" role="tab" aria-controls="activity-tab"
+                            aria-selected="true">
+                            Activity
+                        </button>
+                    </div>
+                    <div class="icons-list">
+                        <!-- <div class="dropdown w-auto" data-bs-toggle="tooltip" data-bs-placement="top">
+                    <button class="iconButton medium notification iconHover" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fal fa-plus"></i>
+                    </button>
+                    <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1" >
+                        <li>
+                            <a class="dropdown-item p-1 active logCallModalBtn" href="#">
+                                <button class="iconButton dropdown-iconBtn small active" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fal fa-phone-alt"></i>
+                                </button>log a call
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item p-1" href="#">
+                                <button class="iconButton dropdown-iconBtn small" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fal fa-envelope"></i>
+                                </button>log a Email
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item p-1" href="#">
+                                <button class="iconButton dropdown-iconBtn small" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fal fa-comment-alt-lines"></i>
+                                </button>log a message
+                            </a>
+                        </li>
+                    </ul>
+                </div> -->
+                <!-- <div class="searchbar-click">
+                    <form [ngClass]="show == true ? 'searchbox-open' : ''" class="searchbox">
+                        <input placeholder="What are you looking for?" name="search" class="searchbox-input"
+                            required="" [(ngModel)]="searchText">
+                        <span class="searchbox-icon medium iconButton iconHover" (click)="click(show)"><i
+                                [ngClass]="show == false ? 'fa fa-search': 'fa fa-times'"></i></span>
+                    </form>
+                </div> -->
+                    </div>
+                </nav>
+            </header>
+            <div class="rightbar-body-wrapper" data-scrollbar="true" tabindex="-1"
+                style="overflow-y: auto; outline: none;">
+                <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div id="activity-tab" class="tab-pane fade active show" role="tabpanel"
+                            aria-labelledby="activity">
+                            <!-- <div class="filter-wrapper pt-2">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="d-flex align-items-lg-center justify-content-end">
+                                <div class="dropdown w-auto">
+                                    <button class="btn dropdown-toggle coal" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Filter activity (18/21)
+                            </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Ascending</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Descending</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="dropdown w-auto">
+                                    <button class="btn dropdown-toggle coal" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                All users
+                            </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Ascending</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Descending</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                            <div class="list-group-section pe-3">
+
+                                <div class="main_timeline mt-3">
+                                    <div class="pb-3 d-flex align-items-start timeline_item activity-wrap"
+                                    *ngFor="let history of dispositionHistory | filter: searchText">
+                                        <div class="timeline_icon iconButton medium border">
+                                            <i *ngIf="history.platform == 'Facebook'" class="fa-brands fa-facebook-f"></i>
+                                            <i *ngIf="history.platform == 'Instagram'" class="fa-brands fa-instagram"></i>
+                                            <i *ngIf="history.platform == 'Twitter'" class="fab fa-twitter"></i>
+                                            <i *ngIf="history.platform == 'LinkedIn'" class="fa-brands fa-linkedin-in"></i>
+                                            <i *ngIf="history.platform == 'Youtube'" class="fab fa-youtube"></i>
+                                            <i *ngIf="history.platform == 'Email'" class="fa-light coal fa-envelope"></i>
+                                            <i *ngIf="history.platform == 'SMS'" class="fa-light coal fa-message-sms"></i>
+                                            <i *ngIf="history.platform == 'WhatsApp'" class="fa-brands fa-whatsapp"></i>
+                                            <i *ngIf="history.platform == 'WebChat'" class="fa-light fa-messages coal"></i>
+                                        </div>
+                                        <div class="ps-5 timeline_content">
+                                            <small class="silver"><span class="berry">{{history.createdDate | date:'MMM dd, YYYY'}}
+                                            </span> {{history.createdDate | date:'hh:mm a'}}</small>
+                                            <h6 class="mb-1 darkblue" *ngIf="history.disposition == 1">Follow Up</h6>
+                                            <h6 class="mb-1 darkblue" *ngIf="history.disposition == 2">Completed</h6>
+                                            <h6 class="mb-1 darkblue" *ngIf="history.disposition == 3">Responded</h6>
+                                            <p class="mb-1 coal">
+                                                {{history.comment}}
+                                                <!-- <span class="more-text">11111Fatima Ahmed to visit ibex to submit all
+                                                    the documents and sign the Employment Contract.</span>
+                                                <span class="read-more sky"> read more....</span> -->
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</nav>

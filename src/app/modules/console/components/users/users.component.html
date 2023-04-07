@@ -1,0 +1,72 @@
+<div class="team-user-wrap console-body-wrapper inbox-container" data-scrollbar="true" tabindex="-1"
+    style="overflow-y:auto; outline: none;">
+    <div class="scroll-content">
+        <div class="p-4">
+
+            <div class="filter-toolbar">
+                <div class="row">
+                    <div class="col-md-8">
+                        <ul class="list-inline m-0 d-flex align-items-center">
+                            <li class="list-inline-item">
+                                <a href="javascript:" class="search-btn">
+                                    <button class="iconButton medium">
+                                        <i class="fal fa-search silver"></i>
+                                    </button>
+                                    <input placeholder="Search">
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <select class="js-example-basic-single form-select"
+                                    data-select2-id="select2-data-1-h8d3" tabindex="-1" aria-hidden="true">
+                                    <option data-select2-id="select2-data-3-z8sv">All </option>
+                                    <option>Ascending </option>
+                                    <option> Descending</option>
+                                    <option>Roles</option>
+                                    <option>Teams</option>
+                                </select>
+                                
+                                <!-- <span class="select2 select2-container select2-container--default" dir="ltr"
+                                    data-select2-id="select2-data-2-3v09" style="width: 107px;"><span
+                                        class="selection"><span class="select2-selection select2-selection--single"
+                                            role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                            aria-disabled="false" aria-labelledby="select2-30ba-container"
+                                            aria-controls="select2-30ba-container"><span
+                                                class="select2-selection__rendered" id="select2-30ba-container"
+                                                role="textbox" aria-readonly="true" title="All ">All </span><span
+                                                class="select2-selection__arrow" role="presentation"><b
+                                                    role="presentation"></b></span></span></span><span
+                                        class="dropdown-wrapper" aria-hidden="true"></span></span> -->
+
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-center justify-content-end">
+                        <a (click)="updatevalue('createUserHeader')" routerLink='create/0' class="ms-2">
+                            <button type="button" class="btn btn-success">
+                                <i class="fal fa-plus me-2"></i>
+                                Create User
+                            </button>
+                        </a>
+                        <!-- <a (click)="updatevalue('consoleCreateBulkUserHeader')" [routerLink]="['/console/users/bulk-user-upload']" class="ms-2">
+                            <button type="button" class="btn btn-success">
+                                <i class="fal fa-user-friends me-2"></i>
+                                Create Bulk User
+                            </button>
+                        </a> -->
+
+                    </div>
+                </div>
+            </div>
+            <console-table-toolbar></console-table-toolbar>
+            <console-table [header]="header" [url]="url" [filter]="filter" [TableModel]="model" [TableAction]="actions"></console-table>
+        </div>
+    </div>
+    <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+        <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 1560px; transform: translate3d(0px, 0px, 0px);">
+        </div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-y" style="display: block;">
+        <div class="scrollbar-thumb scrollbar-thumb-y"
+            style="height: 248.526px; transform: translate3d(0px, 0px, 0px);"></div>
+    </div> -->
+</div>

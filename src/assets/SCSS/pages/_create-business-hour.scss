@@ -1,0 +1,68 @@
+.set-time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $metal;
+  border-radius: 5px;
+
+  .iconButton {
+    border-radius: 0;
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .select2-container--default {
+    .select2-selection--single {
+      border: 0;
+
+      &:focus {
+        border: 0;
+        outline: 0;
+      }
+    }
+  }
+}
+
+.select-day-item {
+  &:hover {
+    .icon-anchor-wrap {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  p {
+    color: $night;
+  }
+
+  .icon-anchor-wrap {
+    // font-size: 14px;
+  }
+
+  .icon-anchor-wrap {
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+  }
+}
+
+.holiday-body {
+  height: 70vh;
+}
+
+.holiday-box {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.holiday-img {
+  width: 35px;
+  height: 40px;
+
+  svg {
+    width: 100% !important;
+    height: 100%;
+  }
+}

@@ -1,0 +1,51 @@
+.breadcrumb {
+    .breadcrumb-item {
+      +.breadcrumb-item {
+        &::before {
+          content: '\f054';
+          // font-size: 12px;
+          font-family: "Font Awesome 5 Pro";
+          color: $coal;
+          display: flex;
+          align-items: center;
+          height: 100%;
+          width: auto;
+          font-weight: 100;
+        }
+      }
+  
+      // font-size: 16px;
+      color: $night;
+      font-weight: normal;
+  
+      a {
+        color: $coal;
+      }
+  
+      &:first-child {
+        color: $night;
+        font-weight: 600;
+        // font-size: 16px;
+  
+        a {
+          color: $night;
+          font-weight: 600;
+          // font-size: 16px;
+        }
+      }
+    }
+  }
+
+  //Right Panel BreadCrumb
+  .right-bar-wrapper .bodyWrapper .bd-crumb{
+    .breadcrumb-item {
+      color: #bab8b8;
+      font-size: 14px;
+      cursor: pointer;
+  }
+  i {
+    font-size: 14px ;
+    font-weight: 300 ;
+  
+}
+  } 

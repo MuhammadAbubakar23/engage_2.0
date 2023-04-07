@@ -1,0 +1,378 @@
+<div class="agent-page-main-content">
+    <form class="connect-form" [formGroup]="connectForm" (ngSubmit)="onSubmit()">
+      <div class="create-user console-body-wrapper footerheight" data-scrollbar="true" tabindex="-1"
+        style="overflow-y: auto; outline: none;">
+        <div class="console-contact-detail page-details perfect-scrollbar" data-scrollbar="data-scrollbar">
+          <div class="scroll-content perfect-scrollbar" data-scrollbar="data-scrollbar">
+            <div class="wider-container pt-3">
+              <header class="tab-header">
+                <nav>
+                  <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="user-tab" data-bs-toggle="tab" data-bs-target="#connect"
+                      type="button" role="tab" aria-controls="connect" aria-selected="false">
+                      <h6>Connect Channel</h6>
+                    </button>
+                   
+                  </div>
+                </nav>
+              </header>
+              <div class="tab-body">
+                <div class="tab-content" id="nav-tabContent">
+  
+                  <div id="connect" class="tab-pane fade active show" role="tabpanel" aria-labelledby="user-tab">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="team-detail-form-box mb-5">
+  
+  
+                          <div class="floating-item mb-4">
+                            <div [ngClass]="{'was-validated' : connectForm.get('name')!.valid && connectForm.get('name')!.touched}"
+                              class="form-floating mb-2">
+                              <input [ngClass]="{'is-invalid' : (connectForm.get('name')!.errors && (connectForm.get('name')!.touched ||
+                                                                    connectForm.get('name')!.dirty))}" class="form-control" id="name"
+                                formControlName="name" placeholder="Enter First Name">
+                              <label for="name">Name *</label>
+                              <div class="invalid-feedback" *ngIf="(connectForm.get('name')!.errors && (connectForm.get('name')!.touched ||
+                                                                  connectForm.get('name')!.dirty))">
+                                <div *ngIf="connectForm.get('name')!.errors?.['maxlength'] || connectForm.get('name')!.errors?.['minlength']">
+                                  Name must be grater than 1 character and less than 50 characters!
+                                </div>
+                                <div *ngIf="connectForm.get('name')!.errors?.['required']">
+                                  Name is required!
+                                </div>
+                              </div>
+                              <div class="valid-feedback" *ngIf="connectForm.get('name')!.valid && connectForm.get('name')!.touched">
+                          
+                                Looks Good!
+                              </div>
+                            </div>
+                          </div>
+                          <div class="floating-item mb-4">
+                            <div [ngClass]="{'was-validated' : connectForm.get('status')!.valid && connectForm.get('status')!.touched}"
+                              class="form-floating mb-2">
+                              <select [ngClass]="{'is-invalid' : (connectForm.get('status')!.errors && (connectForm.get('status')!.touched ||
+                                                  connectForm.get('status')!.dirty))}" formControlName="status" class="form-select multi-select"
+                                id="status" aria-label="Floating label select">
+                                <option disabled>Select Status</option>
+                                <option value="1">Active</option>
+                                <option value="2">Inactive</option>
+                              </select>
+                              <label for="floatingSelect">Status *</label>
+                              <div class="invalid-feedback" *ngIf="(connectForm.get('status')!.errors && (connectForm.get('status')!.touched ||
+                                                      connectForm.get('status')!.dirty))">
+                                <div *ngIf="connectForm.get('status')!.errors?.['required']">
+                                  Please select atleast one status
+                                </div>
+                                <!-- <div *ngIf="connectForm.get('status')!.errors?.['required']">
+                                                      status is required!
+                                                    </div> -->
+                          
+                              </div>
+                              <div class="valid-feedback" *ngIf="connectForm.get('status')!.valid && connectForm.get('status')!.touched">
+                          
+                                Looks Good!
+                              </div>
+                          
+                            </div>
+                          </div>
+                          <div class="floating-item mb-4">
+                            <div
+                              [ngClass]="{'was-validated' : connectForm.get('websiteurl')!.valid && connectForm.get('websiteurl')!.touched}"
+                              class="form-floating mb-2">
+                              <input [ngClass]="{'is-invalid' : (connectForm.get('websiteurl')!.errors && (connectForm.get('websiteurl')!.touched ||
+                          connectForm.get('websiteurl')!.dirty))}" class="form-control" id="websiteurl"
+                                formControlName="websiteurl" placeholder="Enter Website URL">
+                              <label for="websiteurl">Website URL</label>
+  
+                              <div class="invalid-feedback" *ngIf="(connectForm.get('websiteurl')!.errors && (connectForm.get('websiteurl')!.touched ||
+                                                                                      connectForm.get('websiteurl')!.dirty))">
+                                <div *ngIf="connectForm.get('websiteurl')!.errors?.['required']">
+                                  Website URL is required!
+                                </div>
+                              </div>
+                              <div class="valid-feedback"
+                                *ngIf="connectForm.get('websiteurl')!.valid && connectForm.get('websiteurl')!.touched">
+  
+                                Looks Good!
+                              </div>
+                            </div>
+                          </div>  
+                          <div class="floating-item mb-4">
+                            <div
+                              [ngClass]="{'was-validated' : connectForm.get('numberofseats')!.valid && connectForm.get('numberofseats')!.touched}"
+                              class="form-floating mb-2 ">
+                              <input [ngClass]="{'is-invalid' : (connectForm.get('numberofseats')!.errors && (connectForm.get('numberofseats')!.touched ||
+                          connectForm.get('numberofseats')!.dirty))}" class="form-floating mb-2" class="form-control" id="numberofseats"
+                                formControlName="numberofseats" placeholder="enter numberofseats">
+                              <label for="numberofseats">Number of seats</label>
+                              <div class="invalid-feedback" *ngIf="(connectForm.get('numberofseats')!.errors && (connectForm.get('numberofseats')!.touched ||
+                                                                  connectForm.get('numberofseats')!.dirty))">
+                                <div *ngIf="connectForm.get('numberofseats')!.errors?.['required']">
+                                  Number of Seats are required!
+                                </div>
+  
+                              </div>
+                              <div class="valid-feedback"
+                                *ngIf="connectForm.get('numberofseats')!.valid && connectForm.get('numberofseats')!.touched">
+  
+                                Looks Good!
+                              </div>
+                            </div>
+                          </div>
+                          <div class="floating-item mb-4">
+                            <div
+                              [ngClass]="{'was-validated' : connectForm.get('business')!.valid && connectForm.get('business')!.touched}"
+                              class="form-floating mb-2">
+                              <input [ngClass]="{'is-invalid' : (connectForm.get('business')!.errors && (connectForm.get('business')!.touched ||
+                                              connectForm.get('business')!.dirty))}" class="form-control" id="business"
+                                formControlName="business" placeholder="Enter First Name">
+                              <label for="business">Business *</label>
+                              <div class="invalid-feedback"
+                                *ngIf="(connectForm.get('business')!.errors && (connectForm.get('business')!.touched ||
+                                        connectForm.get('business')!.dirty))">
+                                <div *ngIf="connectForm.get('business')!.errors?.['required']">
+                                  Business is required!
+                                </div>
+                              </div>
+                              <div class="valid-feedback"
+                                *ngIf="connectForm.get('business')!.valid && connectForm.get('business')!.touched">
+  
+                                Looks Good!
+                              </div>
+                            </div>
+                          </div>
+                          <div class="floating-item mb-4">
+                            <div
+                              [ngClass]="{'was-validated' : connectForm.get('information')!.valid && connectForm.get('information')!.touched}"
+                              class="form-floating mb-2">
+                              <input [ngClass]="{'is-invalid' : (connectForm.get('information')!.errors && (connectForm.get('information')!.touched ||
+                                              connectForm.get('information')!.dirty))}" class="form-control" id="information"
+                                formControlName="information" placeholder="Enter Information">
+                              <label for="information">Information *</label>
+                              <div class="invalid-feedback"
+                                *ngIf="(connectForm.get('information')!.errors && (connectForm.get('information')!.touched ||
+                                        connectForm.get('information')!.dirty))">
+                                <div *ngIf="connectForm.get('information')!.errors?.['required']">
+                                  Information is required!
+                                </div>
+                              </div>
+                              <div class="valid-feedback"
+                                *ngIf="connectForm.get('information')!.valid && connectForm.get('information')!.touched">
+  
+                                Looks Good!
+                              </div>
+                            </div>
+                          </div>
+                          
+                        </div>
+                       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+          </div>
+        </div>
+        <footer class="footer">
+          <div class="ps-3 pe-3">
+            <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+              <div class="row w-100">
+                <div class="col-md-4">
+  
+  
+                </div>
+                <div class="col-md-8 justify-content-end d-flex">
+                  <div class="buttons-wrap d-flex">
+                    <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4" data-bs-toggle="modal"
+                      data-bs-target="">Cancel </button>
+                    <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"></button>
+  
+                    <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn">Next</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </form>
+  
+  </div>
+  
+  <!-- <div [class.show]="isShow==true" class="offcanvas offcanvas-end" tabindex="-1" id="manageSkill"
+    aria-labelledby="offcanvasRightLabel" aria-modal="true" role="dialog" style="visibility: visible;">
+    <div class="offcanvas-header align-items-center saltBg">
+      <button class="iconButton medium">
+        <i class="fal fa-clone"></i>
+      </button>
+      <h5 id="offcanvasRightLabel" class="darkblue fw-bold m-0">Manage Skills</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="off-canvas-wrap d-flex flex-column h-100">
+      <div class="offcanvas-body pb-0">
+        <p class="silver ps-3 mb-4">An User can have up-to 35 skills, drag and drop skills to reorder them by order
+          of preference</p>
+        <div class="row">
+          <div class="col-lg-6 select-skill-list border-end">
+            <div class="skill-select-wrapper">
+              <div
+                class="skill-head d-flex justify-content-between align-items-center border-bottom border-primary pb-2 ps-3">
+                <h6 class="m-0 charcoal fw-bold">28 Skills</h6>
+                <div class="skill-head-search d-flex">
+                  <div class="search-btn small-search-btn">
+                    <button class="iconButton medium searchButton">
+                      <i class="fal fa-search silver"></i>
+                    </button>
+                    <input placeholder="Search">
+                  </div>
+                  <div class="iconButton medium">
+                    <label class="list-group-item checkbox-tick border-0" id="skillAll">
+                      <input class="form-check-input me-1 m-0 check-all" type="checkbox">
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="skill-list" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
+                <div class="scroll-content">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item checkbox-tick">
+                      <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                      <label class="form-check-label checkbox-txt" for="flexCheckDefault">
+                        Technical Support
+                      </label>
+  
+                    </li>
+                    <li class="list-group-item checkbox-tick">
+                      <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                      <label class="checkbox-txt" for="select-skill-2"> Sales</label>
+                    </li>
+                    <li class="list-group-item checkbox-tick">
+                      <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                      <label class="checkbox-txt" for="select-skill-3">MNP</label>
+                    </li>
+                    <li class="list-group-item checkbox-tick">
+                      <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                      <label class="checkbox-txt" for="select-skill-4"> Product Support</label>
+                    </li>
+                    <li class="list-group-item checkbox-tick">
+                      <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                      <label class="checkbox-txt" for="select-skill-5">Online Order</label>
+                    </li>
+                    <li class="list-group-item checkbox-tick">
+                      <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                      <label class="checkbox-txt" for="select-skill-6">Complaint Deals</label>
+                    </li>
+                    <li class="list-group-item checkbox-tick">
+                      <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                      <label class="checkbox-txt" for="select-skill-7">Technical Support</label>
+                    </li>
+                    <li class="list-group-item checkbox-tick">
+                      <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                      <label class="checkbox-txt" for="select-skill-8">Sales</label>
+                    </li>
+                    <li class="list-group-item checkbox-tick">
+                      <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                      <label class="checkbox-txt" for="select-skill-9"> MNP</label>
+                    </li>
+                    <li class="list-group-item checkbox-tick">
+                      <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                      <label class="checkbox-txt" for="select-skill-10"> Product Support</label>
+                    </li>
+  
+                    <li class="list-group-item checkbox-tick">
+                      <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                      <label class="checkbox-txt" for="select-skill-11"> Online Order</label>
+                    </li>
+                    <li class="list-group-item checkbox-tick">
+                      <input class="form-check-input me-1 rounded-circle" type="checkbox" aria-label="...">
+                      <label class="checkbox-txt" for="checkbox">Complaint Deals</label>
+                    </li>
+                  </ul>
+                </div>
+                <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                  <div class="scrollbar-thumb scrollbar-thumb-x"
+                    style="width: 650px; transform: translate3d(0px, 0px, 0px);"></div>
+                </div>
+                <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                  <div class="scrollbar-thumb scrollbar-thumb-y"
+                    style="height: 491px; transform: translate3d(0px, 0px, 0px);"></div>
+                </div>
+              </div>
+  
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="skill-select-wrapper selected_box">
+              <div
+                class="skill-head d-flex justify-content-between align-items-center border-bottom border-success pb-3 ps-3">
+                <h6 class="m-0 fw-bold mint mt-1 pt-2">4 Selected</h6>
+                <div class="skill-head-search d-flex" id="skillAllRemove">
+                  <label class="list-group-item checkbox-minus checkbox-tick border-0">
+                    <input class="form-check-input me-1 m-0 check-all" type="checkbox">
+                  </label>
+                </div>
+              </div>
+              <div class="selected-skill-list" data-scrollbar="true" tabindex="-1"
+                style="overflow: auto; outline: none;">
+                <div class="scroll-content">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item checkbox-minus checkbox-tick">
+                      <input class="form-check-input me-2 rounded-circle" type="checkbox" aria-label="...">
+                      <label class="checkbox-txt" for="checkbox"></label>
+                      <p class="flex-grow-1 m-0 checkbox-txt night">English</p>
+                      <span class="coal">4</span>
+                    </li>
+                    <li class="list-group-item checkbox-minus checkbox-tick">
+                      <input class="form-check-input me-2 rounded-circle" type="checkbox" aria-label="...">
+                      <label class="checkbox-txt" for="checkbox"></label>
+                      <p class="flex-grow-1 m-0 checkbox-txt night">Urdu</p>
+                      <span class="coal">8</span>
+                    </li>
+                    <li class="list-group-item checkbox-minus checkbox-tick">
+                      <input class="form-check-input me-2 rounded-circle" type="checkbox" aria-label="...">
+                      <label class="checkbox-txt" for="checkbox"></label>
+                      <p class="flex-grow-1 m-0 checkbox-txt night">Support</p>
+                      <span class="coal">7</span>
+                    </li>
+                    <li class="list-group-item checkbox-minus checkbox-tick">
+                      <input class="form-check-input me-2 rounded-circle" type="checkbox" aria-label="...">
+                      <label class="checkbox-txt" for="checkbox"></label>
+                      <p class="flex-grow-1 m-0 checkbox-txt night">Roman English</p>
+                      <span class="coal">4</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                  <div class="scrollbar-thumb scrollbar-thumb-x"
+                    style="width: 651px; transform: translate3d(0px, 0px, 0px);"></div>
+                </div>
+                <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                  <div class="scrollbar-thumb scrollbar-thumb-y"
+                    style="height: 163px; transform: translate3d(0px, 0px, 0px);"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="off-canvaas-footer border-top p-3">
+        <div class="icon-buttons-wrapper d-flex justify-content-between">
+          <div class="f-icon-txt-wrapper d-flex align-items-center">
+            <button class="iconButton medium iconHover" id="btnShowModal">
+              <i class="fal fa-trash radical"></i>
+            </button>
+            <p class="f-icon-txt ms-1 m-0 radical">Delete Manage Skills </p>
+          </div>
+          <div class="buttons-wrap d-flex">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas"
+              aria-label="Close">Cancel</button>
+            <button type="button" class="btn btn-success ms-2 f-nextBtn" data-bs-dismiss="offcanvas" aria-label="Close"
+              id="saveSkills ">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </div> -->

@@ -1,0 +1,1193 @@
+<div class="create-business-hour console-body-wrapper" data-scrollbar="true" tabindex="-1"
+    style="overflow-y:auto; outline: none;">
+    <div class="scroll-content">
+        <div class="wider-container pt-3">
+            <div class="tab-header">
+                <nav>
+                    <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="role-detail-tab" data-bs-toggle="tab"
+                            data-bs-target="#role-detail" type="button" role="tab" aria-controls="role-detail"
+                            aria-selected="false">
+                            <h6>Details</h6>
+                        </button>
+                        <button class="nav-link" id="permission-sec-tab" data-bs-toggle="tab"
+                            data-bs-target="#permission-sec" type="button" role="tab" aria-controls="permission-sec"
+                            aria-selected="false">
+                            <h6>Permissions</h6>
+                        </button>
+                        <button class="nav-link" id="holiday-tab" data-bs-toggle="tab" data-bs-target="#holiday-sec"
+                            type="button" role="tab" aria-controls="holiday-sec" aria-selected="false">
+                            <h6>Users</h6>
+                        </button>
+                    </div>
+                </nav>
+            </div>
+            <div class="tab-body">
+                <div class="tab-content" id="nav-tabContent">
+                    <div id="role-detail" class="tab-pane fade active show" role="tabpanel"
+                        aria-labelledby="role-detail-tab">
+                        <div class="role-detail-wrap">
+                            <p class="line-txt mb-4">
+                                The permissions of default roles cannot be edited. Create a new role to select custom
+                                permissions.
+                            </p>
+                            <div class="floating-list">
+                                <div class="floating-item mb-3">
+                                    <div class="floating-wrap form-floating">
+                                        <input type="email" class="form-control" id="floatingInput"
+                                            placeholder="Team Members" value="Team Members">
+                                        <label for="floatingInputValue">Name</label>
+                                    </div>
+                                    <div class="example-text">
+                                        <small>e.g. Customer Support Team</small>
+                                    </div>
+
+                                </div>
+                                <div class="floating-item mb-4">
+                                    <div class="floating-wrap form-floating">
+                                        <textarea class="form-control" placeholder="This roles &amp; permissions belong to agent and
+                team members" id="floatingTextarea2" style="height: 100px"></textarea>
+                                        <label for="floatingTextarea2">Description</label>
+                                    </div>
+                                    <div class="example-text">
+                                        <small>e.g. This roles &amp; permissions belong to agent and team
+                                            members</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Permission Section -->
+
+                    <div id="permission-sec" class="tab-pane fade" role="tabpanel" aria-labelledby="permission-sec-tab">
+                        <p class="coal mb-4">
+                            The permissions of default roles cannot be edited. Create a new role to select custom
+                            permissions.
+                        </p>
+                        <div class="border mb-3"></div>
+                        <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                            <div class="toggle-head">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                                        <span class="iconButton chevron-icon ms-4 me-2"></span>
+                                        <div class="ms-2 me-auto darkblue">
+                                            <div class="fw-bold darkblue">Conversations</div>
+                                            Select permissions for conversations
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                                data-bs-toggle="collapse" data-bs-target="#permissioncard1"
+                                                aria-expanded="true" aria-controls="permissioncard1">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="permissioncard1">
+                                <div class="card card-body darkblue">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item active text-decoration-underline night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            5 Of 7 Permissions
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Messages -
+                                            <small class="fw-normal">Send</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Conversation -
+                                            <small class="fw-normal">Assign</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Conversation -
+                                            <small class="fw-normal">archive</small>
+
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Conversation -<small class="fw-normal">
+                                                delete / mark as spam</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold disabled" aria-disabled="true">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Conversation -
+                                            <small class="fw-normal">
+                                                Move</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold disabled" aria-disabled="true">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Conversation / Messages -
+                                            <small class="fw-normal">
+                                                delete permanently</small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                            <div class="toggle-head">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                                        <span class="iconButton chevron-icon ms-4 me-2"></span>
+                                        <div class="ms-2 me-auto darkblue">
+                                            <div class="fw-bold darkblue">Conversations</div>
+                                            Select permissions for conversations
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                                data-bs-toggle="collapse" data-bs-target="#permissioncard2"
+                                                aria-expanded="true" aria-controls="permissioncard2">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="permissioncard2">
+                                <div class="card card-body darkblue">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item active text-decoration-underline night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            3 permissions
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">create</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">edit / delete</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">manage access</small>
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                            <div class="toggle-head">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                                        <span class="iconButton chevron-icon ms-4 me-2"></span>
+                                        <div class="ms-2 me-auto darkblue">
+                                            <div class="fw-bold darkblue">Users &amp; Teams</div>
+                                            Select permissions for users &amp; teams
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                                data-bs-toggle="collapse" data-bs-target="#permissioncard3"
+                                                aria-expanded="true" aria-controls="permissioncard3">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="permissioncard3">
+                                <div class="card card-body darkblue">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item active text-decoration-underline night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            3 permissions
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">create</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">edit / delete</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">manage access</small>
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                            <div class="toggle-head">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                                        <span class="iconButton chevron-icon ms-4 me-2"></span>
+                                        <div class="ms-2 me-auto darkblue">
+                                            <div class="fw-bold darkblue">Rules</div>
+                                            Select permissions for rules
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                                data-bs-toggle="collapse" data-bs-target="#permissioncard4"
+                                                aria-expanded="true" aria-controls="permissioncard4">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="permissioncard4">
+                                <div class="card card-body darkblue">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item active text-decoration-underline night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            3 permissions
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">create</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">edit / delete</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">manage access</small>
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                            <div class="toggle-head">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                                        <span class="iconButton chevron-icon ms-4 me-2"></span>
+                                        <div class="ms-2 me-auto darkblue">
+                                            <div class="fw-bold darkblue">EnteractRoute
+                                            </div>
+                                            Select permissions for EnteractRoute
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                                data-bs-toggle="collapse" data-bs-target="#permissioncard5"
+                                                aria-expanded="true" aria-controls="permissioncard5">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="permissioncard5">
+                                <div class="card card-body darkblue">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item active text-decoration-underline night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            3 permissions
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">create</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">edit / delete</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">manage access</small>
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                            <div class="toggle-head">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                                        <span class="iconButton chevron-icon ms-4 me-2"></span>
+                                        <div class="ms-2 me-auto darkblue">
+                                            <div class="fw-bold darkblue">Templates
+                                            </div>
+                                            Select permissions for message, signatures and quick response templates
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                                data-bs-toggle="collapse" data-bs-target="#permissioncard6"
+                                                aria-expanded="true" aria-controls="permissioncard6">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="permissioncard6">
+                                <div class="card card-body darkblue">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item active text-decoration-underline night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            3 permissions
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">create</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">edit / delete</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">manage access</small>
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                            <div class="toggle-head">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                                        <span class="iconButton chevron-icon ms-4 me-2"></span>
+                                        <div class="ms-2 me-auto darkblue">
+                                            <div class="fw-bold darkblue">Business hours
+                                            </div>
+                                            Select permissions for business hours
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                                data-bs-toggle="collapse" data-bs-target="#permissioncard7"
+                                                aria-expanded="true" aria-controls="permissioncard7">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="permissioncard7">
+                                <div class="card card-body darkblue">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item active text-decoration-underline night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            3 permissions
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">create</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">edit / delete</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">manage access</small>
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                            <div class="toggle-head">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                                        <span class="iconButton chevron-icon ms-4 me-2"></span>
+                                        <div class="ms-2 me-auto darkblue">
+                                            <div class="fw-bold darkblue">Tags
+                                            </div>
+                                            Select permissions for tags
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                                data-bs-toggle="collapse" data-bs-target="#permissioncard8"
+                                                aria-expanded="true" aria-controls="permissioncard8">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="permissioncard8">
+                                <div class="card card-body darkblue">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item active text-decoration-underline night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            3 permissions
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">create</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">edit / delete</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">manage access</small>
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                            <div class="toggle-head">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                                        <span class="iconButton chevron-icon ms-4 me-2"></span>
+                                        <div class="ms-2 me-auto darkblue">
+                                            <div class="fw-bold darkblue">Notification
+                                            </div>
+                                            Select permissions for notification
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                                data-bs-toggle="collapse" data-bs-target="#permissioncard9"
+                                                aria-expanded="true" aria-controls="permissioncard9">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="permissioncard9">
+                                <div class="card card-body darkblue">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item active text-decoration-underline night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            3 permissions
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">create</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">edit / delete</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">manage access</small>
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                            <div class="toggle-head">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                                        <span class="iconButton chevron-icon ms-4 me-2"></span>
+                                        <div class="ms-2 me-auto darkblue">
+                                            <div class="fw-bold darkblue">Roles &amp; Permissions
+                                            </div>
+                                            Select permissions for roles &amp; permissions
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                                data-bs-toggle="collapse" data-bs-target="#permissioncard10"
+                                                aria-expanded="true" aria-controls="permissioncard10">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="permissioncard10">
+                                <div class="card card-body darkblue">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item active text-decoration-underline night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            3 permissions
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">create</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">edit / delete</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">manage access</small>
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                            <div class="toggle-head">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                                        <span class="iconButton chevron-icon ms-4 me-2"></span>
+                                        <div class="ms-2 me-auto darkblue">
+                                            <div class="fw-bold darkblue">SLA Policies</div>
+                                            Select permissions for SLA’s Policies
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                                data-bs-toggle="collapse" data-bs-target="#permissioncard11"
+                                                aria-expanded="true" aria-controls="permissioncard11">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="permissioncard11">
+                                <div class="card card-body darkblue">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item active text-decoration-underline night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            3 permissions
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">create</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">edit / delete</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">manage access</small>
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                            <div class="toggle-head">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                                        <span class="iconButton chevron-icon ms-4 me-2"></span>
+                                        <div class="ms-2 me-auto darkblue">
+                                            <div class="fw-bold darkblue">Contacts</div>
+                                            Select permissions for contacts
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                                data-bs-toggle="collapse" data-bs-target="#permissioncard12"
+                                                aria-expanded="true" aria-controls="permissioncard12">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="permissioncard12">
+                                <div class="card card-body darkblue">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item active text-decoration-underline night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            3 permissions
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">create</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">edit / delete</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">manage access</small>
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                            <div class="toggle-head">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                                        <span class="iconButton chevron-icon ms-4 me-2"></span>
+                                        <div class="ms-2 me-auto darkblue">
+                                            <div class="fw-bold darkblue">Case Management
+                                            </div>
+                                            Select permissions for case management
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                                data-bs-toggle="collapse" data-bs-target="#permissioncard13"
+                                                aria-expanded="true" aria-controls="permissioncard13">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="permissioncard13">
+                                <div class="card card-body darkblue">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item active text-decoration-underline night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            3 permissions
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">create</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">edit / delete</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">manage access</small>
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                            <div class="toggle-head">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                                        <span class="iconButton chevron-icon ms-4 me-2"></span>
+                                        <div class="ms-2 me-auto darkblue">
+                                            <div class="fw-bold darkblue">Documents
+                                            </div>
+                                            Select permissions for documents
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                                data-bs-toggle="collapse" data-bs-target="#permissioncard14"
+                                                aria-expanded="true" aria-controls="permissioncard14">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="permissioncard14">
+                                <div class="card card-body darkblue">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item active text-decoration-underline night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            3 permissions
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">create</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">edit / delete</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">manage access</small>
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                            <div class="toggle-head">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                                        <span class="iconButton chevron-icon ms-4 me-2"></span>
+                                        <div class="ms-2 me-auto darkblue">
+                                            <div class="fw-bold darkblue">Knowledge base
+                                            </div>
+                                            Select permissions for Knowledge base
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                                data-bs-toggle="collapse" data-bs-target="#permissioncard15"
+                                                aria-expanded="true" aria-controls="permissioncard15">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="permissioncard15">
+                                <div class="card card-body darkblue">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item active text-decoration-underline night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            3 permissions
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">create</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">edit / delete</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">manage access</small>
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                            <div class="toggle-head">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                                        <span class="iconButton chevron-icon ms-4 me-2"></span>
+                                        <div class="ms-2 me-auto darkblue">
+                                            <div class="fw-bold darkblue">Preferences
+                                            </div>
+                                            Select permissions for preferences
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                                data-bs-toggle="collapse" data-bs-target="#permissioncard16"
+                                                aria-expanded="true" aria-controls="permissioncard16">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="permissioncard16">
+                                <div class="card card-body darkblue">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item active text-decoration-underline night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            3 permissions
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">create</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">edit / delete</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">manage access</small>
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                            <div class="toggle-head">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                                        <span class="iconButton chevron-icon ms-4 me-2"></span>
+                                        <div class="ms-2 me-auto darkblue">
+                                            <div class="fw-bold darkblue">Analytics
+                                            </div>
+                                            Select permissions for reporting and analytics
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                                data-bs-toggle="collapse" data-bs-target="#permissioncard17"
+                                                aria-expanded="true" aria-controls="permissioncard17">
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="collapse" id="permissioncard17">
+                                <div class="card card-body darkblue">
+                                    <div class="list-group list-group-flush">
+                                        <label class="list-group-item active text-decoration-underline night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            3 permissions
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">create</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">edit / delete</small>
+                                        </label>
+                                        <label class="list-group-item night fw-bold">
+                                            <input class="form-check-input me-2" type="checkbox">
+                                            Team inboxes -
+                                            <small class="fw-normal">manage access</small>
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User Section -->
+                    <div id="holiday-sec" class="tab-pane fade" role="tabpanel" aria-labelledby="holiday-tab">
+                        <p class="silver mb-4">
+                            The permissions of default roles cannot be edited. Create a new role to select custom
+                            permissions.
+                        </p>
+                        <div class="searchBar-wrapper mb-4">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="d-flex align-items-lg-center">
+                                        <p class="coal m-0">Status:</p>
+                                        <div class="dropdown">
+                                            <button class="btn dropdown-toggle coal" type="button"
+                                                id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                                All
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:">Ascending</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:">Descending</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:">Roles</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="javascript:">Teams</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 d-flex align-items-center justify-content-end pe-2">
+                                    <a href="javascript:" class="search-btn pe-1">
+                                        <button class="iconButton medium">
+                                            <i class="fal fa-search silver"></i>
+                                        </button>
+                                        <input placeholder="Search">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-section">
+                            <table class="table mb-5 align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            1 of 36 Users
+                                        </th>
+                                        <th>
+                                            <a href="javascript:" class="darkblue hover-icon">
+                                                Roles
+                                                <i class="fas fa-long-arrow-alt-down"></i>
+                                            </a>
+                                        </th>
+                                        <th>
+                                            <a href="javascript:" class="darkblue hover-icon">
+                                                Other Teams
+                                                <i class="fas fa-long-arrow-alt-down"></i>
+                                            </a>
+                                        </th>
+                                        <th class="col d-flex justify-content-end pe-4">
+                                            <div class="round">
+                                                <input type="checkbox" class="check-all" id="checkbox">
+                                                <label for="checkbox"></label>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <a href="javascript:">
+                                                <ul class="list-group list-group-flush">
+                                                    <li
+                                                        class="list-group-item d-flex justify-content-between align-items-sm-center">
+
+                                                        <span class="iconButton large">
+                                                            <img src="../../../../../../assets/images/avatar-16.jpg" alt="-"
+                                                                class="rounded-circle w-100">
+                                                        </span>
+                                                        <div class="ms-2 me-auto coal">
+                                                            <div class="fw-bold night">Ahmed Khan</div>
+                                                            EMP-1254894
+                                                        </div>
+
+                                                    </li>
+                                                </ul>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <p class="d-inline-block">Agent, Admin</p>
+                                            <div class="d-inline-block dropdown w-auto">
+                                                <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
+                                                    id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <span class="silver">+4</span>
+                                                </button>
+                                                <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">
+                                                            <span>Agent</span>
+
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">
+                                                            Admin</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Accounts</a>
+                                                    </li>
+
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">
+                                                            Subscriber
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">
+                                                            Editor
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">
+                                                            Contributor
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p>Support,Sales
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <div class="check-icon d-flex justify-content-end pe-3">
+                                                <div class="round">
+                                                    <input type="checkbox" class="check-all" id="checkbox1" checked="">
+                                                    <label for="checkbox1"></label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="javascript:">
+                                                <ul class="list-group list-group-flush">
+                                                    <li
+                                                        class="list-group-item d-flex justify-content-between align-items-sm-center">
+                                                        <span class="iconButton large">
+                                                            <img src="../../../../../../assets/images/avatar-2.jpg" alt="-"
+                                                                class="rounded-circle w-100">
+                                                        </span>
+                                                        <div class="ms-2 me-auto coal">
+                                                            <div class="fw-bold night">Nabeel Naseem</div>
+                                                            EMP-895894
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <p class="d-inline-block">Agent, Subscriber</p>
+                                            <div class="d-inline-block dropdown w-auto">
+                                                <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
+                                                    id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <span class="silver">+2</span>
+                                                </button>
+                                                <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">
+                                                            <span>Agent</span>
+
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Subscriber</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Accounts</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Contributor</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="d-inline-block">Support, Marketing
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <div class="check-icon d-flex justify-content-end pe-3">
+                                                <div class="round">
+                                                    <input type="checkbox" class="check-all" id="checkbox2">
+                                                    <label for="checkbox2"></label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="javascript:">
+                                                <ul class="list-group list-group-flush">
+                                                    <li
+                                                        class="list-group-item d-flex justify-content-between align-items-sm-center">
+                                                        <span class="iconButton large">
+                                                            <img src="../../../../../../assets/images/avatar-3.jpg" alt="-"
+                                                                class="rounded-circle w-100">
+                                                        </span>
+                                                        <div class="ms-2 me-auto coal">
+                                                            <div class="fw-bold night">Ijteba Sultan</div>
+                                                            EMP-59894
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <p class="d-inline-block">Agent, Accounts</p>
+                                            <div class="d-inline-block dropdown w-auto">
+                                                <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
+                                                    id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <span class="silver">+2</span>
+                                                </button>
+                                                <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">
+                                                            <span>Agent</span>
+
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Accounts</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Subscriber</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Admin</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="d-inline-block">Support,Sales
+                                            </p>
+                                            <div class="d-inline-block dropdown w-auto">
+                                                <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
+                                                    id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <span class="silver">+2</span>
+                                                </button>
+                                                <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">
+                                                            Support
+
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Sales</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Marketing</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Technical Support</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="check-icon d-flex justify-content-end pe-3">
+                                                <div class="round">
+                                                    <input type="checkbox" class="check-all" id="checkbox3">
+                                                    <label for="checkbox3"></label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+        <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 1176px; transform: translate3d(0px, 0px, 0px);">
+        </div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-y" style="display: block;">
+        <div class="scrollbar-thumb scrollbar-thumb-y"
+            style="height: 165.253px; transform: translate3d(0px, 0px, 0px);"></div>
+    </div> -->
+</div>

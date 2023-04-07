@@ -1,0 +1,722 @@
+<div class="tab-content position-relative" id="myTabContent">
+    
+    <div class="tab-pane fade  show active socila-channels-tab" id="emails" role="tabpanel"
+        aria-labelledby="emails-tab">
+        <div *ngIf="spinner1running">
+            <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+                <p style="color: white"> Loading... </p>
+            </ngx-spinner>
+            </div>
+        <div class="headerWrap berryBg d-flex align-items-center shadow-sm">
+            <div class="titleIcon d-flex align-items-center">
+                <i class="fal fa-envelope"></i>
+                <div class="titleLink ms-1">
+                    /{{To}}</div>
+            </div>
+            <ul class="nav nav-tabs ms-3 h-100" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link h-100 active" id="post-tab" data-bs-toggle="tab" data-bs-target="#post"
+                        type="button" role="tab" aria-controls="post" aria-selected="false">
+                        <div class="chat-tab-title d-flex align-items-center">
+                            <span class="iconButton medium btn">
+                                <i class="fal fa-bookmark ice"></i>
+                            </span>
+                            Mails
+                            <span class="badge rounded-pill bg-light text-dark ms-3"
+                                *ngIf="totalUnrespondedCmntCountByCustomer>0">{{totalUnrespondedCmntCountByCustomer}}</span>
+                        </div>
+                    </button>
+                </li>
+            </ul>
+            <!-- <ul class="list-group list-group-horizontal email-list-item ms-auto">
+                <li class="list-group-item border-0" aria-label="..." data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" data-bs-original-title="" title="">
+                    <i class="fas fa-exclamation-circle ice"></i>
+                </li>
+                <li class="list-group-item border-0" aria-label="..." data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" data-bs-original-title="" title="">
+                    <i class="fal fa-star ice"></i>
+                </li>
+                <li class="list-group-item border-0" aria-label="..." data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" data-bs-original-title="" title="">
+                    <i class="fal fa-alarm-clock ice"></i>
+                </li>
+                <li class="list-group-item border-0" aria-label="..." data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" data-bs-original-title="" title="">
+                    <i class="fal fa-calendar-check ice"></i>
+                </li>
+                <li class="list-group-item border-0" aria-label="..." data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" data-bs-original-title="" title="">
+                    <i class="fal fa-share-square ice"></i>
+                </li>
+                <li class="list-group-item border-0" aria-label="..." data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" data-bs-original-title="" title="">
+                    <i class="fal fa-ellipsis-v-alt ice"></i>
+                </li>
+            </ul> -->
+        </div>
+        <div class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow-y: auto; outline: none;" infinite-scroll
+        [scrollWindow]="false" [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5" [infiniteScrollThrottle]="10"
+        (scrolled)="onScroll()">
+            <div class="scroll-content">
+                <div class="tab-content m-4" id="myTabContent">
+                    <div class="tab-pane fade show active" id="post" role="tabpanel" aria-labelledby="post-tab">
+                        <div *ngFor="let list of Emails">
+                            <div *ngFor="let group of list.groupedComments">
+                                <div class="email-content-header">
+                                    <div class="header-subheading text silver"> {{group.createdDate | date:'MMMM dd, YYYY'}}
+
+                                        <!-- <span class="tag-icon">
+                                    <i class="fas fa-bookmark"></i>
+                                </span>
+                                <small class="tag skyTransBg charcoal">
+                                    Sales Inquires
+                                    <i class="fal fa-times"></i>
+                                </small>
+                                <small class="tag mintTransBg charcoal">
+                                    Feedback
+                                    <i class="fal fa-times"></i>
+                                </small> -->
+                                    </div>
+                                    <!-- <div class="heading-text">
+                                We're happy about your cooperation
+                            </div> -->
+                                </div>
+                                <ng-container *ngFor="let email of group.items ; let i = index">
+                                    <ng-container *ngIf="email.queryStatus != 'QueryCompleted'">
+                                <div class="accordion email-accordion" id="abc">
+
+                                    <div class="accordion-item email-wrap mb-3">
+                                        <div class="accordion-header " [id]="'heading'+i">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                                            [attr.data-bs-target]="'#collapse'+i" aria-expanded="true" [attr.aria-controls]="'collapse'+i"
+                                            [ngClass]="email.queryStatus == 'Unresponded'?'unread':''">
+                                                <div class="avatar large">
+                                                    <img src={{list.user.profilePic}}>
+                                                </div>
+                                                <div class="card-header-content">
+                                                    <div class="card-header-top">
+                                                        <h6 class="mb-1 darkblue">{{email.userName.split('<')[0]}}
+                                                        </h6>
+                                                        <!-- <small class="silver me-2 full-date">{{email.createdDate |  date:'MMMM d, y, h:mm:ss a'}}</small> -->
+                                                    </div>
+                                                    <div class="msg-snippet show-text">
+                                                        <p class="mb-1 coal" data-maxlength="240" [innerHTML]="email.body"></p>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                            <div class="top-right">
+                                                <!-- expanded header -->
+                                                <div class="expanded-card-header-actions icons-list">
+                                                    <small class="silver ms-2 me-2">{{email.createdDate |  date:'MMMM d, y, h:mm:ss a'}}</small>
+                                                    <small>{{email.queryStatus}}
+                                                    </small>
+                                                    <div class="dropdown w-auto">
+                                                        <button class="btn icon p-0 iconHover" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <span class="iconButton small btn">
+                                                                <i class="far fa-ellipsis-v charcoal"></i>
+                                                            </span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                            
+                                                            <a class="dropdown-item" *ngIf="email.queryStatus != 'Responded'" (click)="commentStatus(email.id, 'Mail')">Read</a>
+                                                                        <a class="dropdown-item" *ngIf="email.queryStatus == 'Responded'" (click)="queryCompleted(email.id, 'Mail')">Completed</a>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div [id]="'collapse'+i" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading'+i" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body">
+                                                <div class="mail-recepients silver mb-3">
+                                                        <small>to: {{email.to}}</small>
+                                                    </div>
+                                                    <p [innerHTML]="email.body"></p>
+                                                    <div class="email-attachments" *ngIf="email.attachmentUrl != null">
+                                                        <div class="whatsapp-single-img whatsappImgModalBtn" type="button">
+                                                            <img src={{email.attachmentUrl}} class="card-img-top rounded-3">
+                                                        </div>
+                                                    </div>
+                                                    <button class="expand-referenced-msg badge btn rounded-pill "
+                                                    (click)="expandEmailBody()">
+                                                    <i class="fal fa-ellipsis-h"></i>
+                                                </button>
+                                                <div class="mail-reference-msg-wrap" [ngClass]="expandedEmailBody == false? 'd-none':''"
+                                                >
+                                                <div class="msg-ref-info">
+                                                    <strong>From:</strong>
+                                                    {{email.userName}}
+                                                </div>
+                                                <div class="msg-ref-info">
+                                                    <strong>Sent:</strong>
+                                                    {{email.createdDate | date:'EEEE d, y'}}
+                                                </div>
+                                                <div class="msg-ref-info">
+                                                    <strong>To:</strong>
+                                                    {{email.to}}
+                                                </div>
+                                                <div class="msg-ref-info">
+                                                    <strong>Cc:</strong>
+                                                    {{email.cc}}
+                                                </div>
+                                                <div class="msg-ref-info">
+                                                    <strong>Bcc:</strong>
+                                                    {{email.bcc}}
+                                                </div>
+                                                <div class="msg-ref-info">
+                                                    <strong>Subject:</strong>
+                                                    {{email.message}}
+                                                </div>
+                                                <div class="ref-msg" [innerHTML]="email.body">
+                                                    {{email.body}}
+                                                </div>
+                                            </div>
+                                            <div class="tags" *ngFor="let tag of email.tags">
+                                                <span (click)="removeTag(tag.id, email.id)"
+                                                    class="badge rounded-pill whatsapp tag tag1 selected">{{tag.name}}</span>
+
+                                            </div>
+                                                    <button class="expand-referenced-msg badge btn rounded-pill d-none">
+                                                        <i class="fal fa-ellipsis-h"></i>
+                                                    </button>
+                                                    <div class="btn-groups">
+                                                        <button (click)="sendEmailInformation(email.id)" type="button"
+                                                            class="btn btn-outline-secondary me-2 emailModalBtn"
+                                                            data-bs-toggle="modal" data-bs-target="#emailModalBtn"><i
+                                                                class="fal fa-reply"></i>
+                                                            Reply</button>
+                                                        <!-- <button type="button"
+                                                            class="btn btn-outline-secondary me-2 emailModalBtn"><i
+                                                                class="fal fa-reply-all"></i>
+                                                            Reply all </button>
+                                                        <button type="button" class="btn btn-outline-secondary me-2"><i
+                                                                class="fal fa-arrow-alt-to-right"></i>
+                                                            Forword</button> -->
+    
+                                                        <button type="button" class="btn btn-outline-secondary me-2"
+                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                            data-bs-auto-close="outside"><i class="fal fa-tag"></i>
+                                                            Tag</button>
+                                                        <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                            aria-labelledby="dropdownMenuButton2">
+                                                            <ul class="dropdown-listing">
+                                                                <li class="dropdown-listing-header">
+                                                                    <div class="head-section">
+                                                                        <div class="left">
+                                                                            <h6>Tags
+                                                                            </h6>
+                                                                        </div>
+                                                                        <a href="#"
+                                                                            class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
+                                                                            id="dropdownMenuButton3"
+                                                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                                                            <i class="fal fa-times silver"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                    <form class="custom-searchbar">
+                                                                        <input class="form-control rounded-pill shadow-sm"
+                                                                            placeholder="Search" aria-label="Search">
+                                                                        <span class="btn searchbar-btn" type="submit">
+                                                                            <i class="fal fa-search silver"></i>
+                                                                        </span>
+                                                                    </form>
+                                                                </li>
+                                                                <li class="dropend">
+                                                                    <div *ngFor="let tag of TagsList"
+                                                                        class="list-group list-group-flush dropend">
+                                                                        <a data-bs-toggle="dropdown"
+                                                                            class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
+    
+                                                                            <div class="w-100 list-txt">
+                                                                                <div
+                                                                                    class="d-flex w-100 justify-content-between">
+                                                                                    <h6 class="mb-1 darkblue">
+                                                                                        {{tag.name}}
+                                                                                    </h6>
+                                                                                </div>
+                                                                            </div>
+    
+                                                                        </a>
+                                                                        <ul class="dropdown-menu shadow">
+                                                                            <li class="list-body small-list"
+                                                                                data-scrollbar="true" tabindex="-1"
+                                                                                style="overflow: auto; outline: none;">
+                                                                                <div class="list-group list-group-flush">
+                                                                                    <a (click)="insertTags(keyword.id, email.id)"
+                                                                                        [ngClass]="activeTag==true?'active':''"
+                                                                                        class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                        *ngFor="let keyword of tag.keywordList">
+                                                                                        <div class="list-down-icon">
+                                                                                            <span
+                                                                                                class="btn iconButton iconHover medium">
+                                                                                                <i
+                                                                                                    class="fal fa-tag coal"></i>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                        <div class="w-100 list-txt">
+                                                                                            <div
+                                                                                                class="d-flex w-100 justify-content-between">
+                                                                                                <h6 class="mb-1 darkblue">
+                                                                                                    {{keyword.name}}
+                                                                                                </h6>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <small *ngIf="keyword.id == tag.id">
+                                                                                            <i [ngClass]="checkTag==true?'fa-check-circle':''"
+                                                                                                class="fal sky"></i>
+                                                                                        </small>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </li>
+    
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div class="scrollbar-track scrollbar-track-x"
+                                                                        style="display: none;">
+                                                                        <div class="scrollbar-thumb scrollbar-thumb-x">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="scrollbar-track scrollbar-track-y"
+                                                                        style="display: none;">
+                                                                        <div class="scrollbar-thumb scrollbar-thumb-y">
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </ul>
+    
+                                                        <span>
+                                                            <button type="button" class="btn btn-outline-secondary me-2"
+                                                                id="sentimentButton" data-bs-toggle="dropdown"
+                                                                aria-expanded="true"><i class="fal fa-smile"></i>
+                                                                Sentiment </button>
+                                                            <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                                aria-labelledby="dropdownMenuButton2"
+                                                                style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 42px);"
+                                                                data-popper-placement="bottom-start">
+                                                                <ul class="dropdown-listing">
+                                                                    <li class="list-body small-list" data-scrollbar="true"
+                                                                        tabindex="-1"
+                                                                        style="overflow: auto; outline: none;">
+                                                                        <div class="scroll-content">
+                                                                            <div class="list-group list-group-flush"
+                                                                                *ngFor="let sentiment of Sentiments">
+                                                                                <a (click)="insertSentiment(email.id, sentiment.name, 'Mail')"
+                                                                                    class="list-group-item d-flex level1Btn ">
+                                                                                    <div class="list-down-icon">
+                                                                                        <span
+                                                                                            class="btn iconButton iconHover medium">
+                                                                                            <i class={{sentiment.icon}}></i>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <div class="w-100 list-txt">
+                                                                                        <div
+                                                                                            class="d-flex w-100 justify-content-between">
+                                                                                            <h6 class="mb-1 darkblue">
+                                                                                                {{sentiment.name}}
+                                                                                            </h6>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!-- <small>
+                                                                                <i class="fal fa-check-circle sky"></i>
+                                                                            </small> -->
+                                                                                </a>
+    
+    
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </ul>
+                                                        </span>
+    
+    
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="accordion email-accordion " id="accordionExampleReply">
+                                    <div class="accordion-item email-wrap mb-3 email-reply"
+                                        *ngFor="let reply of email.replies; let i =index">
+                                        <div class="accordion-header"
+                                            [ngClass]="{ 'open': i === email.id }" >
+                                            <button class="accordion-button " (click)="openEmail(i)"
+                                                [ngClass]="{ '': i === email.id }" type="button"
+                                                data-bs-toggle="collapse" [attr.data-bs-target]="'#reply'+i" aria-expanded="true" [attr.aria-controls]="'reply'+i">
+                                                <div class="avatar large" *ngIf="reply.profilePic != null">
+                                                    <img src={{reply.profilePic}}>
+                                                </div>
+                                                <div class="card-header-content" style="padding: 10px;">
+                                                    <div class="card-header-top">
+                                                       
+                                                        <h6 class="mb-1 darkblue">
+                                                            <small class="silver font-italic">
+                                                                <i class="fal fa-reply"></i>
+                                                                &nbsp;Reply by:&nbsp;
+                                                            </small>
+                                                            {{To}}
+                                                         </h6>
+                                                        
+                                                    </div>
+                                                    <div class="msg-snippet show-text">
+                                                        <p class="mb-1 coal" data-maxlength="240">{{reply.subject}}</p>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                            <div class="top-right">
+                                                <div class="expanded-card-header-actions icons-list">
+                                                    <small class="silver ms-2 me-2">{{reply.createdDate | date:'MMMM dd, YYYY, h:mm a'}}</small>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div [id]="'reply'+i" class="accordion-collapse collapse" [attr.aria-labelledby]="'reply'+i" data-bs-parent="#accordionExample"
+                                            >
+                                            <div class="accordion-body" >
+                                                <div class="mail-recepients silver mb-3">
+                                                    <small>to: {{email.userName}}</small>
+                                                </div>
+                                                <p [innerHTML]="reply.message">
+                                                    {{reply.message}}
+                                                </p>
+                                                <div class="email-attachments" *ngIf="reply.attachmentUrl != null">
+                                                    <!-- <div class="whatsapp-single-img whatsappImgModalBtn" type="button"> -->
+                                                    <img style="width: 375px;" src={{reply.attachmentUrl}}>
+                                                    <!-- </div> -->
+
+                                                </div>
+                                                <button class="expand-referenced-msg badge btn rounded-pill "
+                                                    (click)="expandEmailBody()">
+                                                    <i class="fal fa-ellipsis-h"></i>
+                                                </button>
+                                                <div [ngClass]="expandedEmailBody == false? 'd-none':''"
+                                                    class="mail-reference-msg-wrap">
+                                                    <div class="msg-ref-info">
+                                                        <strong>From:</strong>
+                                                        {{To}}
+                                                    </div>
+                                                    <div class="msg-ref-info">
+                                                        <strong>Sent:</strong>
+                                                        {{reply.createdDate | date:'EEEE d, y'}}
+                                                    </div>
+                                                    <div class="msg-ref-info">
+                                                        <strong>To:</strong>
+                                                        {{email.userName}}
+                                                    </div>
+                                                    <!-- <div class="msg-ref-info">
+                                            <strong>Cc:</strong>
+                                            {{reply.cc}}
+                                        </div>
+                                        <div class="msg-ref-info">
+                                            <strong>Bcc:</strong>
+                                            {{reply.bcc}}
+                                        </div>
+                                        <div class="msg-ref-info">
+                                            <strong>Subject:</strong>
+                                            {{reply.body}}
+                                        </div> -->
+                                                    <div class="ref-msg" [innerHTML]="reply.message">
+                                                        {{reply.message}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container  *ngIf="email.queryStatus == 'QueryCompleted'">
+                                <div class="accordion email-accordion" id="accordionExample"
+                                    (click)="markAsCompleteExpanded(email.id)" style="display:block">
+                                    <div class="accordion-item email-wrap marked-wrap mt-3 mb-3">
+                                        <div [ngClass]="markAsComplete == true?'open':'collaps-wrap'" class="accordion-header"
+                                            id="emailwrap7">
+                                            <button [ngClass]="markAsComplete == true?'':'collapsed'" class="accordion-button"
+                                                type="button">
+                                                <div class="avatar large coal">
+                                                    <i class="fal fa-check-double"></i>
+                                                </div>
+                                                <div class="card-header-content p-0">
+                                                    <div class="card-header-top">
+                                                        <div class="d-block">
+                                                            <h6 class="mb-1 night">
+                                                                Marked as Completed
+                                                            </h6>
+                                                            <small class="night">
+                                                                <span>by: <h6 class="d-inline fw-bold charcoal">
+                                                                        Agent Name </h6>
+                                                                </span>
+                                                                <span>Complaint Id <a class="sky" href="">FP-325687</a>
+                                                                </span>
+                                                            </small>
+                                                        </div>
+                                                        <small class="silver full-date">{{ TodayDate | date:'MMMM dd, yyyy, h:mm a'}}</small>
+                                                    </div>
+                                                    <div class="msg-snippet show-text">
+                                                        <p class="mb-1 coal" data-maxlength="240" [innerHTML]="email.body.length < 80 ? email.body: (email.body | slice:0:80) +'...'"></p>
+                                                    </div>
+                                                    <div class="marked-info">
+                                                        <p class="card-text mb-0 coal">
+                                                            <small>First Response: <span class="night"> July
+                                                                    7, 2021, 2:30 PM (4
+                                                                    days
+                                                                    ago)</span></small>
+                                                        </p>
+                                                        <p class="card-text mb-0 coal">
+                                                            <small>Last Response: <span class="night"> July
+                                                                    14, 2021, 9:30 AM (6
+                                                                    days
+                                                                    ago)</span></small>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                            <div class="top-right">
+                                                <div class="expanded-card-header-actions icons-list">
+                                                    <small class="silver ms-2 me-2">{{ TodayDate
+                                                        | date:'MMMM dd, yyyy, h:mm a'}}</small>
+                    
+                                                </div>
+                                            </div>
+                                        </div>
+                    
+                                        <div class="accordion-collapse collapse" [ngClass]="markAsComplete == true?'show':''">
+                                            <div class="accordion-body">
+                                                <p [innerHTML]="email.body">
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+            <div class="toast-btn d-flex align-items-center">
+
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div [ngClass]="show == true? 'show':''" class="modal fade email-modal" id="emailModalBtn" tabindex="-1"
+    aria-labelledby="deleteModalLabel" style="display: none;" aria-modal="true" role="dialog">
+    <div class="modal-dialog modal-lg delete-modal">
+        <div class="modal-content">
+            <div class="modal-header charcoalBg shadow-sm saltBg">
+                <h5 class="modal-title line-head" id="deleteModalLabel">Email</h5>
+                <div class="icons-list p-0">
+                    <button class="iconButton medium btn">
+                        <i class="fal fa-external-link ice"></i>
+                        <div class="ripple-container"></div>
+                    </button>
+                    <button type="button" class="btn iconHover pt-0 pb-0" (click)="closeReplyModal()"
+                        data-bs-dismiss="modal" aria-label="Close"><i class="fal fa-times ice"></i></button>
+                </div>
+            </div>
+            <form [formGroup]="emailReplyForm" (submit)="submitEmailReply()">
+                <div class="modal-body p-4 pt-2 pb-2">
+                    <div class="email-reply-section">
+
+                        <div class="reply-wrapper">
+                            <div class="reply-header">
+                                <div class="reply-header-left">
+                                    <div class="input-group">
+                                        <strong class="input-group-text charcoal fw-bold" id="basic-addon1">To:</strong>
+                                        <input formControlName="to" id="to" value={{emailFrom}} class="form-control"
+                                            placeholder="email" aria-label="email" aria-describedby="basic-addon1">
+                                    </div>
+                                </div>
+                                <div class="reply-header-right">
+                                    <a class="cc-btn iconButton medium btn" (click)="OpenCc()"
+                                        [ngStyle]="{'display': showCcBtn == true ? 'block':'none'}">
+                                        CC
+                                    </a>
+                                    <a class="bcc-btn iconButton medium btn" (click)="OpenBcc()"
+                                        [ngStyle]="{'display': showBccBtn == true ? 'block':'none'}">
+                                        BCC
+                                    </a>
+
+                                </div>
+                            </div>
+                            <div class="reply-header copy-to-concern" [ngClass]="showCcInput==true?'':'d-none'">
+                                <div class="reply-header-left">
+                                    <div class="input-group">
+                                        <strong class="input-group-text charcoal fw-bold" id="basic-addon1">CC:</strong>
+                                        <input formControlName="cc" id="cc" value={{emailCc}} class="form-control"
+                                            aria-label="css" aria-describedby="basic-addon1">
+                                        <!-- <div class="tags m-0">
+                                            <span
+                                                class="badge rounded-pill tag tag1 email selected">nabeel.naseem@gmail.com
+                                                <span class="ice ms-2"><i class="fal fa-times"></i></span></span>
+                                            <span class="badge rounded-pill tag tag2 email selected">ameer.adil
+                                                <span class="ice ms-2"><i class="fal fa-times"></i></span></span>
+                                            <span
+                                                class="badge rounded-pill tag tag2 email selected">farhan.ahmed@gmail.com
+                                                <span class="ice ms-2"><i class="fal fa-times"></i></span></span>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="reply-header blind-carbon-copy" [ngClass]="showBccInput==true?'':'d-none'">
+                                <div class="reply-header-left">
+                                    <div class="input-group">
+                                        <strong class="input-group-text charcoal fw-bold"
+                                            id="basic-addon1">BCC:</strong>
+                                        <input formControlName="bcc" id="bcc" value={{emailBcc}} class="form-control"
+                                            aria-label="bcc" aria-describedby="basic-addon1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="reply-header blind-carbon-copy">
+                                <div class="reply-header-left">
+                                    <div class="input-group">
+                                        <strong class="input-group-text charcoal fw-bold"
+                                            id="basic-addon1">Subject:</strong>
+                                        <input formControlName="subject" id="subject" value={{emailSubject}}
+                                            class="form-control" aria-label="bcc" aria-describedby="basic-addon1">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-textarea">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <textarea formControlName="text" id="text" class="form-control"
+                                            placeholder="Take notes for users in your account...."
+                                            id="floatingTextarea"></textarea>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <span class="iconButton medium notification iconHover">
+                                            <i class="far fa-redo"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-9">
+                                        <div class="text-editor-btn d-flex">
+                                            <span class="iconButton medium notification iconHover">
+                                                <i class="fas fa-bold"></i>
+                                            </span>
+                                            <span class="iconButton medium notification iconHover">
+                                                <i class="fas fa-underline"></i>
+                                            </span>
+                                            <span class="iconButton medium notification iconHover">
+                                                <i class="fas fa-italic"></i>
+                                            </span>
+                                            <span class="iconButton medium notification iconHover">
+                                                <i class="fas fa-superscript"></i>
+                                            </span>
+                                            <div class="d-inline-block">
+                                                <button id="btnGroupDrop1" type="button" class="btn sky dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                    More
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Dropdown link</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Dropdown link</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <span class="iconButton medium notification iconHover">
+                                                <i class="fal fa-link"></i>
+                                            </span>
+                                            <span class="iconButton medium notification iconHover">
+                                                <i class="far fa-image"></i>
+                                            </span> -->
+                                <div class="upload-btn-wrapper">
+                                    <button class="iconButton small notification iconHover channels-attachment-btn">
+                                        <i class="fal fa-paperclip"></i></button>
+                                    <input type="file" formControlName="Image" class="form-control uplaoded-box"
+                                        multiple (change)="onFileChanged($event)">
+                                </div>
+                                <!--  <div class="d-inline-block">
+                                                <button id="btnGroupDrop1" type="button" class="btn sky dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Insert
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Dropdown link</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Dropdown link</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="d-inline-block">
+                                            <button id="btnGroupDrop1" type="button" class="btn sky dropdown-toggle"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                2 associations
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Dropdown
+                                                        link</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">Dropdown
+                                                        link</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer shadow-sm saltBg justify-content-lg-start">
+                    <button type="submit" class="btn pearlBg" data-bs-dismiss="modal" id="liveToastBtn"><i
+                            class="fal fa-paper-plane">
+
+                        </i> Send</button>
+                    <!-- <div class="form-check p-2">
+                        <input type="checkbox" id="flexCheckChecked" checked="">
+                    </div>
+                    <p> Create a task to follow up </p>
+                    <div class="d-inline-block">
+                        <button id="btnGroupDrop1" type="button" class="btn sky dropdown-toggle"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            in 3 business days (Wednesday)
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <li>
+                                <a class="dropdown-item" href="#">Dropdown link</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Dropdown link</a>
+                            </li>
+                        </ul>
+                    </div> -->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

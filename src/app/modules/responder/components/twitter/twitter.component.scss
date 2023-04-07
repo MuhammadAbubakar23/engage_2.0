@@ -1,0 +1,18 @@
+.dropdown-item{
+   position: relative;
+}
+
+.dropend .dropdown-toggle:after{
+   position: absolute;
+   right: 13px;
+   top: 10px;
+}
+
+.dropdown-menu{
+   animation: drop 0.5s ease 1;
+   min-width: 13rem;
+}
+
+.card-footer {
+   background-color: rgba(255, 255, 255, 0);
+}

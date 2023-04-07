@@ -1,0 +1,200 @@
+<nav id="tickets-info-rightbar-dashboard" class="expended-rigth-sidebar p-0 open">
+    <div class="right-bar-wrapper">
+        <div class="bodyWrapper position-relative">
+            <div *ngIf="spinner2running">
+            <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                [fullScreen]="false">
+                <p style="color: white"> Loading... </p>
+            </ngx-spinner>
+        </div>
+            <header class="tab-header rightbar-tab-header pe-3">
+                <nav>
+                    <div class="nav nav-tabs align-items-center" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="app-social1" data-bs-toggle="tab"
+                            data-bs-target="#app-social1-tab" type="button" role="tab" aria-controls="app-social1-tab"
+                            aria-selected="true"> <i class="fas fa-times-circle closeTab radical"></i>
+                            <div href="javascript:;" class="breadcrumbs">Ticket Information</div>
+                        </button>
+                    </div>
+
+                    <!-- <div class="icons-list">
+                        <div class="searchbar-click">
+                            <form class="searchbox">
+                                <input placeholder="What are you looking for?" name="search" class="searchbox-input"
+                                    required="">
+                                <span class="searchbox-icon medium iconButton iconHover"><i
+                                        class="fa fa-search"></i></span>
+                            </form>
+                        </div>
+                    </div> -->
+                </nav>
+            </header>
+            <form [formGroup]="createTicketForm" (submit)="createTicket()">
+
+                <div class="rightbar-scroll-wrap" data-scrollbar="true" tabindex="-1"
+                    style="overflow-y: auto; outline: none;">
+                    <div class="scroll-content">
+                        <div class="tab-content" id="nav-tabContent">
+
+                            <div id="app-social1-tab" class="tab-pane fade active show" role="tabpanel"
+                                aria-labelledby="app-files">
+
+                                <div class="list-group-section pe-3 pb-4">
+                                    <div class="bg-light p-3 mb-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="floatingSelect"
+                                                (change)="getMainReasons($event)" formControlName="ticketType"
+                                                aria-label="No conference">
+
+                                                <option *ngFor="let reason of Information" [value]="reason.name"
+                                                    selected="">
+                                                    {{reason.name}}</option>
+                                            </select>
+                                            <label for="floatingSelect">Information </label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <div class="col-sm-6" *ngIf="Reasons.length > 0">
+                                            <div class="form-floating">
+                                                <select class="form-select" id="floatingSelect"
+                                                    (change)="getSubReasons($event)" formControlName="reasonName"
+                                                    aria-label="No conference" >
+                                                    <option *ngFor="let resonName of Reasons" [value]="resonName.id"
+                                                        selected="">
+                                                        {{resonName.name}}</option>
+                                                </select>
+                                                <label for="floatingSelect">Reason </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6" *ngIf="SubReasons.length > 0">
+                                            <div class="form-floating">
+                                                <div class="form-floating">
+                                                    <select class="form-select" id="floatingSelect"
+                                                        aria-label="No conference" formControlName="subReasonName">
+                                                        <option *ngFor="let SubresonName of SubReasons"
+                                                            [value]="SubresonName.name" selected="">
+
+                                                            {{SubresonName.name}}
+                                                        </option>
+                                                    </select>
+                                                    <label for="floatingSelect">Sub Reason </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" id="floatingSelect" formControlName="status"
+                                            aria-label="Floating label select example">
+                                            <option *ngFor="let status of ticketStatuses" selected="">{{status.name}}
+                                            </option>
+                                        </select>
+                                        <label for="floatingSelect"> Status</label>
+                                    </div>
+                                    <hr>
+                                    <form [formGroup]="getOrderDetailForm"
+                                        (submit)="getOrderByCustomerEmailAddressOrPhoneNumber()">
+                                        <div class="row">
+                                            <div class="floating-item mb-4 col-6">
+                                                <label for="firstname">Search Order By Email</label>
+                                                <a class="search-btn">
+                                                    <input class="form-control" id="email"
+                                                        formControlName="emailAddressOrPhoneNumberOrProfileId"
+                                                        placeholder="Search Order By Email">
+                                                    <button type="submit" class="iconButton medium"><i
+                                                            class="fal fa-search silver"></i></button>
+                                                </a>
+                                            </div>
+                                            <div class="floating-item mb-4 col-6">
+                                                <label for="firstname">Search Order By Phone</label>
+                                                <a class="search-btn">
+                                                    <input class="form-control" id="phone"
+                                                        formControlName="emailAddressOrPhoneNumberOrProfileId"
+                                                        placeholder="Search Order By Phone">
+                                                    <button type="submit" class="iconButton medium"><i
+                                                            class="fal fa-search silver"></i></button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="form-floating mb-3" *ngIf="OrderDetails.length > 0">
+                                        <select class="form-select" id="floatingSelect" (change)="getLineItems($event)"
+                                            aria-label="Floating label select example">
+                                            <option *ngFor="let order of OrderDetails" [value]="order.id" selected="">
+                                                Order #: {{order.name}} | Date: {{order.createdAt | date:'dd-MMM-YYYY hh:mm a'}}</option>
+                                        </select>
+                                        <label for="floatingSelect"> Select Orders</label>
+                                    </div>
+                                    <table class="table table-sm table-hover my-3">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>SKU</th>
+                                                <th>Unit Price</th>
+                                                <th>Qty</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of LineItems">
+                                                <td>{{item.title}}</td>
+                                                <td>{{item.sku}}</td>
+                                                <td>{{item.price}} PKR</td>
+                                                <td>{{item.quantity}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="form-floating mb-3" *ngIf="!address">
+                                        <textarea name="" disabled class="form-control" cols="30"
+                                            [value]="address"></textarea>
+                                        <label for="first-name">Address </label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <textarea name="" class="form-control" cols="30"
+                                            formControlName="resolutionComments" rows="10"></textarea>
+                                        <label for="first-name">Issue Detail </label>
+                                    </div>
+
+
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <footer class="footer">
+                    <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+                        <div class="row w-100">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-8 justify-content-end d-flex">
+                                <div class="buttons-wrap d-flex">
+                                    <button type="button" (click)="closeTicketComponent('ticket')"
+                                        class="btn btn-outline-secondary">Cancel</button>
+                                    <button type="submit" class="btn btn-success ms-2" data-bs-toggle="modal"
+                                        data-bs-target="#ticketSaveModal">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </form>
+
+        </div>
+    </div>
+</nav>
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+            <div class="toast-btn d-flex align-items-center">
+
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,472 @@
+<div class="multiple-screens">
+    <div id="all-inboxes-wrapper">
+        <div class="sidebar-header border-bottom ps-4 pe-3 pt-3 pb-3">
+            <h6 class="fw-bold m-0">Assign To Me <span class="badge twltte-bg rounded-pill">569</span></h6>
+            <button (click)="FilterOpen()" [class.active]="filterOpen === true" class="iconButton small btn coal active"
+                id="filterBtn">
+                <i class="fa-light fa-filter"></i>
+                <div class="ripple-container"></div>
+            </button>
+        </div>
+        <div [class.open]="filterOpen === true" class="filterWrapper">
+
+            <div class="perfect-scrollbar h-100" data-scrollbar="true" tabindex="-1"
+                style="overflow: auto; outline: none;">
+                <div class="scroll-content">
+                    <div class="filterRow">
+                        <select class="form-select">
+                            <option value="0">Load Filters</option>
+                            <option value="1">Filter 1</option>
+                            <option value="2">Filter 2</option>
+                            <option value="3">Filter 3</option>
+                            <option value="4">Filter 4</option>
+                        </select>
+                    </div>
+                    <div class="filterRow">
+                        <div class="dropdown bg-white border rounded">
+                            <button class="btn dropdown-toggle w-100 text-start" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fal fa-user"></i> Channels
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li class="dropdown-listing-header">
+                                    <form class="custom-searchbar my-2 mx-0">
+                                        <input class="form-control bg-light border-0 py-2" placeholder="Search"
+                                            aria-label="Search">
+                                        <span class="btn searchbar-btn" type="submit">
+                                            <i class="fal fa-search silver"></i>
+                                        </span>
+                                    </form>
+                                </li>
+                                <div class="perfect-scrollbar dd-scroll" data-scrollbar="true" tabindex="-1"
+                                    style="overflow: auto; outline: none;">
+                                    <div class="scroll-content">
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                                <div class="list-down-icon">
+                                                    <div class="iconButton small fs-6 me-1">
+                                                        <i class="fa-brands fa-facebook navytext"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="w-100 list-txt d-flex">
+                                                    <div class="w-100">
+                                                        <h6 class="mb-1 darkblue">Facebook</h6>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                                <div class="list-down-icon">
+                                                    <div class="iconButton small fs-6 me-1">
+                                                        <i class="fa-brands fa-twitter sky"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="w-100 list-txt d-flex">
+                                                    <div class="w-100">
+                                                        <h6 class="mb-1 darkblue">Twitter</h6>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                                <div class="list-down-icon">
+                                                    <div class="iconButton small fs-6 me-1">
+                                                        <i class="fa-brands fa-linkedin-in linkedinTxt"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="w-100 list-txt d-flex">
+                                                    <div class="w-100">
+                                                        <h6 class="mb-1 darkblue">Linkedin</h6>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                                <div class="list-down-icon">
+                                                    <div class="iconButton small fs-6 me-1">
+                                                        <i class="fa-brands fa-instagram navytext"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="w-100 list-txt d-flex">
+                                                    <div class="w-100">
+                                                        <h6 class="mb-1 darkblue">Instagram</h6>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                                <div class="list-down-icon">
+                                                    <div class="iconButton small fs-6 me-1">
+                                                        <i class="fa-brands fa-whatsapp emerald"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="w-100 list-txt d-flex">
+                                                    <div class="w-100">
+                                                        <h6 class="mb-1 darkblue">whatsapp</h6>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                                <div class="list-down-icon">
+                                                    <div class="iconButton small fs-6 me-1">
+                                                        <i class="fa-light fa-envelope cherry"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="w-100 list-txt d-flex">
+                                                    <div class="w-100">
+                                                        <h6 class="mb-1 darkblue">Email</h6>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                                <div class="list-down-icon">
+                                                    <div class="iconButton small fs-6 me-1">
+                                                        <i class="fa-light fa-comment-alt-lines berry"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="w-100 list-txt d-flex">
+                                                    <div class="w-100">
+                                                        <h6 class="mb-1 darkblue">SMS</h6>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                                <div class="list-down-icon">
+                                                    <div class="iconButton small fs-6 me-1">
+                                                        <i class="fa-light fa-phone-alt pearl"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="w-100 list-txt d-flex">
+                                                    <div class="w-100">
+                                                        <h6 class="mb-1 darkblue">Phone</h6>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                                <div class="list-down-icon">
+                                                    <div class="iconButton small fs-6 me-1">
+                                                        <i class="fa-brands fa-youtube radical"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="w-100 list-txt d-flex">
+                                                    <div class="w-100">
+                                                        <h6 class="mb-1 darkblue">Youtube</h6>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </div>
+                                    <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                                        <div class="scrollbar-thumb scrollbar-thumb-x"></div>
+                                    </div>
+                                    <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                                        <div class="scrollbar-thumb scrollbar-thumb-y"></div>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="filterRow">
+                        <label> Date</label>
+                        <input type="date" class="form-control">
+
+                    </div>
+                    <div class="filterRow">
+                        <div class="filterLabel">Tags</div>
+                        <div class="filterText w-100">Select status for feeds to be displayed</div>
+                        <div class="select-pills mb-1 bg-white">
+                            <select class="js-example-theme-multiple select2-hidden-accessible"
+                                data-select2-id="select2-data-1-q9g0" multiple="" tabindex="-1" aria-hidden="true">
+                                <option value="0" data-select2-id="select2-data-3-g3nq">Discounts</option>
+                                <option value="1">Bank card</option>
+                                <option value="2">Tags 1</option>
+                                <option value="3">Tags 2</option>
+                                <option value="4">Tags 3</option>
+                                <option value="5">Tags 4</option>
+                                <option value="6">Tags 5</option>
+                            </select><span class="select2 select2-container select2-container--classic" dir="ltr"
+                                data-select2-id="select2-data-2-ix1w" style="width: auto;"><span class="selection"><span
+                                        class="select2-selection select2-selection--multiple" role="combobox"
+                                        aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false">
+                                        <ul class="select2-selection__rendered" id="select2-cynb-container">
+                                            <li class="select2-selection__choice" title="Discounts"
+                                                data-select2-id="select2-data-4-vwcw"><button type="button"
+                                                    class="select2-selection__choice__remove" tabindex="-1"
+                                                    title="Remove item" aria-label="Remove item"
+                                                    aria-describedby="select2-cynb-container-choice-suf4-0"><span
+                                                        aria-hidden="true">×</span></button><span
+                                                    class="select2-selection__choice__display"
+                                                    id="select2-cynb-container-choice-suf4-0">Discounts</span></li>
+                                        </ul><span class="select2-search select2-search--inline"><textarea
+                                                class="select2-search__field" type="search" tabindex="0"
+                                                autocorrect="off" autocapitalize="none" spellcheck="false"
+                                                role="searchbox" aria-autocomplete="list" autocomplete="off"
+                                                aria-label="Search" aria-describedby="select2-cynb-container"
+                                                placeholder="" style="width: 0.75em;"></textarea></span>
+                                    </span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                        </div>
+                    </div>
+                    <div class="filterRow">
+                        <div class="filterLabel">Sentiments</div>
+                        <div class="filterText w-100">Select status for feeds to be displayed</div>
+                        <div class="calendarList">
+                            <button class="btn active">
+                                <i class="far fa-smile emerald"></i>Happy</button>
+                            <button class="btn">
+                                <i class="far fa-frown mango"></i>Sad</button>
+                            <button class="btn">
+                                <i class="far fa-angry radical"></i>Angry</button>
+                            <button class="btn">
+                                <i class="far fa-meh cherry"></i>Neutral</button>
+                        </div>
+                    </div>
+                    <div class="filterRow">
+                        <div class="filterLabel">Conversation Topics</div>
+                        <div class="filterText w-100">Select status for feeds to be displayed</div>
+
+                        <div class="select-pills mb-1 bg-white">
+                            <select class="js-example-theme-multiple select2-hidden-accessible"
+                                data-select2-id="select2-data-5-ijlk" multiple="" tabindex="-1" aria-hidden="true">
+                                <option value="0" data-select2-id="select2-data-7-3rd6">Conversation 1</option>
+                                <option value="1">Conversation 2</option>
+                                <option value="2">Conversation 3</option>
+                                <option value="3">Conversation 4</option>
+                                <option value="4">Conversation 5</option>
+                                <option value="5">Conversation 6</option>
+                                <option value="6">Conversation 7</option>
+                            </select><span class="select2 select2-container select2-container--classic" dir="ltr"
+                                data-select2-id="select2-data-6-429j" style="width: auto;"><span class="selection"><span
+                                        class="select2-selection select2-selection--multiple" role="combobox"
+                                        aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false">
+                                        <ul class="select2-selection__rendered" id="select2-y5ls-container">
+                                            <li class="select2-selection__choice" title="Conversation 1"
+                                                data-select2-id="select2-data-8-5t6x"><button type="button"
+                                                    class="select2-selection__choice__remove" tabindex="-1"
+                                                    title="Remove item" aria-label="Remove item"
+                                                    aria-describedby="select2-y5ls-container-choice-qgva-0"><span
+                                                        aria-hidden="true">×</span></button><span
+                                                    class="select2-selection__choice__display"
+                                                    id="select2-y5ls-container-choice-qgva-0">Conversation 1</span></li>
+                                        </ul><span class="select2-search select2-search--inline"><textarea
+                                                class="select2-search__field" type="search" tabindex="0"
+                                                autocorrect="off" autocapitalize="none" spellcheck="false"
+                                                role="searchbox" aria-autocomplete="list" autocomplete="off"
+                                                aria-label="Search" aria-describedby="select2-y5ls-container"
+                                                placeholder="" style="width: 0.75em;"></textarea></span>
+                                    </span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                        </div>
+                    </div>
+                    <div class="filterRow">
+                        <div class="filterLabel">SLA Range</div>
+                        <div class="filterText w-100">Select status for feeds to be displayed</div>
+
+                        <div class="select-pills mb-1 bg-white">
+                            <select class="js-example-theme-multiple select2-hidden-accessible"
+                                data-select2-id="select2-data-9-gtam" multiple="" tabindex="-1" aria-hidden="true">
+                                <option value="0" data-select2-id="select2-data-11-bvbn">SLA 1</option>
+                                <option value="1">SLA 2</option>
+                                <option value="2">SLA 3</option>
+                                <option value="3">SLA 4</option>
+                                <option value="4">SLA 5</option>
+                                <option value="5">SLA 6</option>
+                                <option value="6">SLA 7</option>
+                            </select><span class="select2 select2-container select2-container--classic" dir="ltr"
+                                data-select2-id="select2-data-10-sozu" style="width: auto;"><span
+                                    class="selection"><span class="select2-selection select2-selection--multiple"
+                                        role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"
+                                        aria-disabled="false">
+                                        <ul class="select2-selection__rendered" id="select2-zubs-container">
+                                            <li class="select2-selection__choice" title="SLA 1"
+                                                data-select2-id="select2-data-12-e1mh"><button type="button"
+                                                    class="select2-selection__choice__remove" tabindex="-1"
+                                                    title="Remove item" aria-label="Remove item"
+                                                    aria-describedby="select2-zubs-container-choice-lspa-0"><span
+                                                        aria-hidden="true">×</span></button><span
+                                                    class="select2-selection__choice__display"
+                                                    id="select2-zubs-container-choice-lspa-0">SLA 1</span></li>
+                                        </ul><span class="select2-search select2-search--inline"><textarea
+                                                class="select2-search__field" type="search" tabindex="0"
+                                                autocorrect="off" autocapitalize="none" spellcheck="false"
+                                                role="searchbox" aria-autocomplete="list" autocomplete="off"
+                                                aria-label="Search" aria-describedby="select2-zubs-container"
+                                                placeholder="" style="width: 0.75em;"></textarea></span>
+                                    </span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                    <div class="scrollbar-thumb scrollbar-thumb-x"></div>
+                </div>
+                <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                    <div class="scrollbar-thumb scrollbar-thumb-y"></div>
+                </div>
+            </div>
+            <div class="filterActionWrap">
+                <button class="btn btn-success me-2" id="applyBtn">Apply</button>
+                <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+
+
+                <div class="d-none">
+                    <div class="filterSaveWrap">
+                        <input placeholder="Save Filter" class="textField">
+                        <div class="filterSaveClose">
+                            <i class="fal fa-times"></i>
+                        </div>
+                    </div>
+                    <button class="btn emeraldBg">Save</button>
+                </div>
+            </div>
+        </div>
+        <div class="panelMain">
+
+            <div class="listing-wrap" data-scrollbar="true" tabindex="-1" style="overflow-y: auto; outline: none;">
+                <div class="scroll-content">
+                    <ng-container *ngIf="SlaList.length > 0">
+                    <ul class="list-group-followup list-group-flush">
+                        <a href="javascript:"
+                            class="list-group-item list-group-item-action d-flex align-items-center radical fw-bold"
+                            value="itProcurement">
+                            SLAs Imminently
+                            <span class="badge radicalBg rounded-pill">4</span>
+                        </a>
+                    </ul>
+                    <ul class="list-group list-group-flush" id="inboxes-list">
+
+                        <li class="postBox isSla slaHigh">
+                            <a href="conversation.html">
+                                <div class="avatar medium navyBg">
+                                    <img src="../../../../../../assets/images/avatar-2.jpg" alt="-">
+                                </div>
+                            </a>
+                            <div class="boxMiddle"><a href="conversation.html">
+                                    <div class="boxHeading">
+                                        <div class="left">
+                                            <div class="boxId">9632587</div>
+                                        </div>
+                                        <div class="right">
+                                            <div class="postDate">10:30 PM</div>
+                                            <span class="badge radicalBg rounded-pill">2</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="subHeading"><a href="conversation.html">
+                                        <div class="channel navy">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </div>
+                                    </a><a class="businessName navy">/foodpanda.pk</a>
+                                    <a class="skill">@Feedback</a>
+                                </div>
+                                <div class="boxContent"> Can i get discount after purchasing more than 5 i..
+                                </div>
+                            </div>
+
+                        </li>
+                        <li class="postBox isSla slaMedium">
+                            <a href="conversation.html">
+                                <div class="iconButton medium skyBg">
+                                    <i class="fab fa-twitter"></i>
+                                </div>
+                            </a>
+                            <div class="boxMiddle"><a href="conversation.html">
+                                    <div class="boxHeading">
+                                        <div class="left">
+                                            <div class="boxId">9632587</div>
+                                        </div>
+                                        <div class="right">
+                                            <div class="postDate">10:30 PM</div>
+                                            <span class="badge radicalBg rounded-pill">6</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="subHeading"><a href="conversation.html">
+                                        <div class="channel">
+                                            <i class="far fa-tag ocean"></i>
+                                        </div>
+                                    </a><a class="businessName ocean">/foodpanda.pk</a>
+                                    <a class="skill">@Complaint</a>
+                                </div>
+                                <div class="boxContent"> Hi, I would like to place my order complaint Order number...
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+                </ng-container >
+                    <ng-container >
+                    <ul class="list-group-followup list-group-flush">
+                        <a class="list-group-item list-group-item-action d-flex align-items-center fw-bold"
+                            value="itProcurement">
+                            Conversation Queue
+                            <span class="badge berryBg rounded-pill">{{TotalUnresponded}}</span>
+                        </a>
+                    </ul>
+                    <ul class="list-group list-group-flush" id="inboxes-list" *ngFor="let user of ConversationList">
+                        <li class="postBox" 
+                        (click)="updatevalue('socialHeader', user.user, user.postType, user.userId,'assignToMe', user.platform, user.profileId)">
+                            <!-- <a [routerLink]="['/responder']">
+                                <div class="avatar medium navyBg">
+                                    <img src={{user.profilePic}}>
+                                </div>
+                            </a> -->
+                            <div class="boxMiddle">
+                                <!-- <a href="conversation.html"> -->
+                                    <div class="boxHeading">
+                                        <div class="left">
+                                            <div class="boxId">{{user.userName}}</div>
+                                        </div>
+                                        <div class="right">
+                                            <div class="postDate">{{user.createdDate | date:'hh:mm a'}}</div>
+                                            <span class="badge navyBg rounded-pill">{{user.unrespondedCount}}</span>
+                                        </div>
+                                    </div>
+                                <!-- </a> -->
+                                <div class="subHeading">
+                                    <!-- <a href="conversation.html"> -->
+                                        <div class="channel">
+                                            <!-- <i class="fab fa-facebook-f navy"></i> -->
+                                        </div>
+                                    <!-- </a> -->
+                                    <a class="businessName">/{{user.platform}}</a>
+                                    <!-- <a class="skill">@Feedback</a> -->
+                                </div>
+                                <div class="boxContent">
+                                    {{user.message}}
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+                </ng-container>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+            <div class="toast-btn d-flex align-items-center">
+
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,125 @@
+.quickResWrapper{
+    .offcanvas{
+        width: 50%;
+        overflow-y: auto;
+        .offcanvas-header{
+            padding: 1rem 1.5rem 0;
+            button{
+                position: absolute;
+                right: 22px;
+                top: 24px;
+                i{
+                    font-size: 20px;
+                }
+            }
+        }
+        .offcanvas-body{
+            padding: 1rem;
+            overflow-y: visible;
+            .accordion-item{
+                border-width:1px 0;
+                h6{
+                    margin: 0;
+                }
+                .accordion-button {
+                   
+                    &:not(.collapsed){
+                        &:after{
+                            background-image: url(/2.0/images/minus.svg);
+
+                        }
+                    }
+                    &:after{
+                        width: 15px;
+                        height: 15px;
+                        background-size: cover;
+                        background-position: center;
+                        background-image: url(/2.0/images/plus.svg);
+                    }
+                }
+                .accordion-body{
+                    padding: 0rem 0rem 0rem 1.25rem;
+                    .list-group{
+                        .list-group-item{
+                            padding: 0.9rem 1rem 0.9rem 2.5rem;
+
+                            &.qrItem{
+                                transition: 0.5s;
+                                i{
+                                    display: none;
+                                }
+                                &:hover{
+                                    background-color: $ice;
+                                    p{
+                                        color: $sky !important;
+                                    }
+                                    i{
+                                        display: block;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+
+        .card-header{
+            display: flex;
+            align-items: center !important;
+            padding: 0 5px 0px;
+            background: $ice;
+            border-radius: none;
+            background: gainsboro;
+            border: 1px solid gainsboro;
+            margin: 20px 0;
+            position: relative;
+            .tagHeading{
+                width: 100%;
+            }
+            .searchToggleWrap2{
+                &.opened{
+                    .searchField{
+                        visibility: visible;
+                    }
+                }
+                .searchField{
+                    position: absolute;
+                    top: 0;
+                    padding: 0;
+                    width: 100%;
+                    overflow: hidden;
+                    align-items: center;
+                    left: 0;
+                    background-color: $ice;
+                    visibility: hidden;
+                    -webkit-transition: all .2s ease;
+                    transition: all .2s ease;
+                    transform: translateX(0);
+                    border-radius: 5px;
+                    input{
+                        border: 0;
+                        margin: 0;
+                        &:focus{
+                            box-shadow: none;
+                        }
+                        &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+                            font-size: 1.2rem;
+                          }
+                    }
+                    button{
+                        top: -2px;
+                        position: relative;
+                        font-size: 1.4rem;
+                        right: 11px;
+                        // background-color: $ice;
+                    }
+                }
+            }
+            
+        }
+    }
+}
+
+

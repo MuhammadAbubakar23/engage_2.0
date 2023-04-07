@@ -1,0 +1,65 @@
+<div id="leftBarWrapper">
+
+    <div class="logo">
+        <a href="list.html">
+            <p class="logoText">
+                <img src="../assets/images/enteract-full-logo.svg" alt="...">
+            </p>
+            <p class="logoText">
+                <img src="../assets/images/enteract-logo.svg" alt="...">
+            </p>
+        </a>
+    </div>
+
+    <ul class="list-group agent_nav_bar" id="agent-list">
+        <team-menu></team-menu>
+
+        <div class="leftBarDivider"></div>
+        <role-menu></role-menu>
+    </ul>
+    <div class="user-chat-widget">
+        <!-- <div class="chat-options" >
+            <a class="show-options" *ngIf="UserDetails">
+                <i class="far fa-ellipsis-h"></i>
+            </a>
+            <div class="all-options">
+                <a class="minimize-chats">
+                    <i class="fal fa-minus-circle"></i>
+                    Minimize open chats
+                </a>
+            </div>
+        </div> -->
+        <div class="img-box" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title=""
+            data-chat="1" *ngIf="UserDetails[0]">
+                <div class="left-img">
+                        <img src={{UserDetails[0]?.profilePic}}>
+                    <div class="chat-count">{{UserDetails[0]?.totalCount}}</div>
+                </div>
+                <div class="user-name" (click)="maximizeChat(UserDetails[0]?.userId, UserDetails[0]?.platform)">
+                    {{UserDetails[0]?.userName}}</div>
+
+        </div>
+        <div class="img-box" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title=""
+            data-chat="1" *ngIf="UserDetails[1]">
+                <div class="left-img">
+                        <img src={{UserDetails[1]?.profilePic}}>
+                    <div class="chat-count">{{UserDetails[1]?.totalCount}}</div>
+                </div>
+                <div class="user-name" (click)="maximizeChat(UserDetails[1]?.userId, UserDetails[1]?.platform)">
+                    {{UserDetails[1]?.userName}}</div>
+        </div>
+
+        <div class="img-box" *ngIf="UserDetails.length > 2">
+            <div class="left-img">
+                <img src="../../../assets/images/avatar-2.jpg" alt="-">
+                <div class="plus-count">+{{UserDetails.length - 2}}</div>
+            </div>
+            <div class="more-users">
+                <span data-chat="4" *ngFor="let user of UserDetails | slice:2"
+                (click)="maximizeChat(user.userId, user.platform)">
+                    {{user.userName}}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
