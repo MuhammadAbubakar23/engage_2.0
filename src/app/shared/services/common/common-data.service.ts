@@ -53,6 +53,7 @@ export class CommonDataService {
   saveAsCompleted = environment.links.common.SaveAsCompleted;
   dispositionHistory = environment.links.common.dispositionHistory;
   markAllAsRead = environment.links.common.markAllAsRead;
+  getAgentReport = environment.links.common.getAgentReport;
 
   constructor(private http : HttpClient) { }
 
@@ -232,6 +233,11 @@ export class CommonDataService {
  }
  MarkAllAsRead(profileId:any){
   return this.http.get(this.CommonBaseUrl+this.markAllAsRead+'?CustomerProfileId='+profileId)
+ }
+
+ GetAgentReport(body:any){
+  debugger
+  return this.http.post(this.CommonBaseUrl+this.getAgentReport,body)
  }
 
 }

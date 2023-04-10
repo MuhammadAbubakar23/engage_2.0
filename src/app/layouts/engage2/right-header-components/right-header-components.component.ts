@@ -53,6 +53,8 @@ export class RightHeaderComponentsComponent implements OnInit {
           );
       }
     }, 5000);
+
+    this.clickHandler();
   }
 
   Searchfiltercheck() {
@@ -87,6 +89,7 @@ export class RightHeaderComponentsComponent implements OnInit {
 
   assignedProfile = localStorage.getItem('assignedProfile');
   updateBreak() {
+    debugger
     if (
       this.assignedProfile == null ||
       this.assignedProfile == '' ||
@@ -94,17 +97,22 @@ export class RightHeaderComponentsComponent implements OnInit {
     ) {
       this.startBreak = !this.startBreak;
       
-      this.AgentDetails.onBreak = !this.AgentDetails.onBreak;
+    //  this.AgentDetails.onBreak = !this.AgentDetails.onBreak;
       this.commonService
-        .UpdateBreak(this.AgentDetails.onBreak)
+        .UpdateBreak(this.startBreak)
         .subscribe((res: any) => {
-          if (this.AgentDetails.onBreak == true) {
+          debugger
+          if (res.message === "Data Update Successfully") {
+            this.clickHandler();
             this.reloadComponent('breakStarted');
-          } else if (this.AgentDetails.onBreak == false) {
+            
+          } 
+          else if (res.message === "Data Update Successfully") {
             this.reloadComponent('breakOff');
           }
         });
-    } else {
+    } 
+    else {
       this.reloadComponent('querryAssigned');
     }
   }
@@ -138,4 +146,41 @@ export class RightHeaderComponentsComponent implements OnInit {
   closeToaster() {
     this.toastermessage = false;
   }
-}
+
+  hh = 0;
+  mm = 0;
+  ss = 0;
+  ms = 0;
+  isRunning = false;
+  timerId : any = 0;
+
+  clickHandler() {
+    debugger
+    if (!this.isRunning) {
+      // Stop => Running
+      this.timerId = setInterval(() => {
+        this.ms++;
+
+        if (this.ms >= 100) {
+          this.ss++;
+          this.ms = 0;
+        }
+        if (this.ss >= 60) {
+          this.mm++;
+          this.ss = 0
+        }
+        if (this.mm >= 60) {
+          this.hh++;
+          this.mm = 0
+        }
+      }, 10);
+    } else {
+      clearInterval(this.timerId);
+    }
+    this.isRunning = !this.isRunning;
+  }
+
+  format(num: number) {
+    return (num + '').length === 1 ? '0' + num : num + '';
+  }
+} 

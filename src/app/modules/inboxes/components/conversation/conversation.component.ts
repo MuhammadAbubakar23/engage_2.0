@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { Tooltip } from 'bootstrap';
 import { UpdateListService } from 'src/app/services/UpdateListService/update-list.service';
 import { DatePipe } from '@angular/common';
+import { GetAgentReportDto } from 'src/app/shared/Models/GetAgentReportDto';
 
 @Component({
   selector: 'app-conversation',
@@ -175,6 +176,7 @@ export class ConversationComponent implements OnInit {
       );
       if (index >= 0) {
         this.ConversationList.forEach((main: any) => {
+          debugger
           if (newMsg.user == main.user) {
             this.listingDto = newMsg;
             this.listingDto.unrespondedCount =
@@ -415,5 +417,16 @@ export class ConversationComponent implements OnInit {
 
   closeToaster() {
     this.toastermessage = false;
+  }
+
+  getAgentReportDto = new GetAgentReportDto
+
+  download(){
+    debugger
+    this.getAgentReportDto.agentId = 1;
+    this.commondata.GetAgentReport(this.getAgentReportDto).subscribe((res:any)=>{
+      debugger
+      console.log(res)
+    })
   }
 }

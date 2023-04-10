@@ -1300,6 +1300,8 @@ export class ResponderHeaderComponent implements OnInit {
         this.reloadComponent('queryallocatedtoanotheruser');
         //  alert(res.message);
         this.closeTeamList();
+        this.route.navigateByUrl('/all-inboxes/conversation');
+      localStorage.setItem('assignedProfile','')
       },
       (error) => {
         
@@ -1349,7 +1351,7 @@ export class ResponderHeaderComponent implements OnInit {
       }, 4000);
     }
     if (type == 'queryallocatedtoanotheruser') {
-      this.AlterMsg = 'Profile Already Allocated to Another Aggent';
+      this.AlterMsg = 'Profile Allocated to Another Ag ent';
       this.toastermessage = true;
       setTimeout(() => {
         this.toastermessage = false;
