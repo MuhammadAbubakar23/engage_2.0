@@ -22,6 +22,7 @@ import { RemovewhitespacesPipe } from 'src/app/shared/CustomPipes/removewhitespa
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { DispositionFormComponent } from './components/disposition-form/disposition-form.component';
 import { FilterPipe } from 'src/app/shared/CustomPipes/filter.pipe';
+import { PostStatsComponent } from './sharedComponents/post-stats/post-stats.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { FilterPipe } from 'src/app/shared/CustomPipes/filter.pipe';
     WhatsappDetailsComponent,
     YoutubeComponent,
     RemovewhitespacesPipe,
-    DispositionFormComponent
+    DispositionFormComponent,
+    PostStatsComponent
   ],
   imports: [
     CommonModule,

@@ -35,22 +35,25 @@ export class RightHeaderComponentsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    debugger
+    
     let data = this.storage.retrive('main', 'O').local;
     this.fullName = data.username;
     console.table(data);
     this.email = data.originalUserName;
 
     this.timer = setInterval(() => {
+      // console.log("signalR state",this.signalR.hubconnection.state)
+      // console.log("signalR conId",this.signalR.hubconnection.connectionId)
       if (this.signalR.hubconnection.state == "Disconnected") {
-        debugger
-        this.signalR.hubconnection
-          .start()
-          .then(() => console.log('Connection started'))
-          .then(() => this.signalR.getConnectionId())
-          .catch((err) =>
-             console.log('Error while starting connection: ' + err)
-          );
+        
+        // this.signalR.hubconnection
+        //   .start()
+        //   .then(() => console.log('Connection started'))
+        //   .then(() => this.signalR.getConnectionId())
+        //   .catch((err) =>
+        //      console.log('Error while starting connection: ' + err)
+        //   );
+        this.signalR.startConnection();
       }
     }, 5000);
 
@@ -62,7 +65,7 @@ export class RightHeaderComponentsComponent implements OnInit {
   }
 
   signOut() {
-    debugger
+    
     if (
       this.assignedProfile == null ||
       this.assignedProfile == '' ||
@@ -89,7 +92,7 @@ export class RightHeaderComponentsComponent implements OnInit {
 
   assignedProfile = localStorage.getItem('assignedProfile');
   updateBreak() {
-    debugger
+    
     if (
       this.assignedProfile == null ||
       this.assignedProfile == '' ||
@@ -101,7 +104,7 @@ export class RightHeaderComponentsComponent implements OnInit {
       this.commonService
         .UpdateBreak(this.startBreak)
         .subscribe((res: any) => {
-          debugger
+          
           if (res.message === "Data Update Successfully") {
             this.clickHandler();
             this.reloadComponent('breakStarted');
@@ -151,11 +154,13 @@ export class RightHeaderComponentsComponent implements OnInit {
   mm = 0;
   ss = 0;
   ms = 0;
+  dd = 0;
+  // aaa = "";
   isRunning = false;
   timerId : any = 0;
 
   clickHandler() {
-    debugger
+    
     if (!this.isRunning) {
       // Stop => Running
       this.timerId = setInterval(() => {
@@ -173,6 +178,20 @@ export class RightHeaderComponentsComponent implements OnInit {
           this.hh++;
           this.mm = 0
         }
+        if(this.hh > 24){
+          this.dd++;
+          this.hh = 0
+        }
+        // if(this.hh > 24){
+        //   this.aaa = this.dd+" d"
+        // } else if (this.hh > 0 && this.hh <= 24) {
+        //   this.aaa = this.hh+" h"
+        // } else if (this.mm > 0 && this.mm <= 60){
+        //   this.aaa = this.mm+" m"
+        // } 
+        // else if (this.ss <= 60){
+        //   this.aaa = this.ss+" s"
+        // }
       }, 10);
     } else {
       clearInterval(this.timerId);

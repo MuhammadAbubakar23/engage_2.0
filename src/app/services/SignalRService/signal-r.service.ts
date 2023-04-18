@@ -41,7 +41,7 @@ export class SignalRService {
   ) {}
 
   startConnection() {
-    debugger
+    
      let team = this.storage.retrive("nocompass","O").local;
     const options: IHttpConnectionOptions = {
       accessTokenFactory: () => {
@@ -50,7 +50,6 @@ export class SignalRService {
       headers : {"X-Super-Team": JSON.stringify(team.id)}
     };
     
-  //  setTimeout(() => {
       this.hubconnection = new signalR.HubConnectionBuilder()
       .withUrl('https://common-engage.enteract.app/ConnectionHub', options)
       .withAutomaticReconnect()
@@ -61,14 +60,10 @@ export class SignalRService {
       .then(() => console.log('Connection started'))
       .then(() => this.getConnectionId())
       .catch((err) => console.log('Error while starting connection: ' + err));
-  //  }, 5000);
     
-
-      
-
     //   setInterval(() => {
     //   if (this.hubconnection.state == "Disconnected") {
-    //     debugger
+    //     
     //     // ConnectionState.Connected
     //     // console.log('SignalR connection lost. Attempting to reconnect...');
     //     this.hubconnection
@@ -83,7 +78,7 @@ export class SignalRService {
   }
 
   reConnect(){
-    debugger
+    
 
     var conId = localStorage.getItem('signalRConnectionId')
     if(conId){
@@ -112,7 +107,7 @@ export class SignalRService {
   
 
   public updateListDataListener = () => {
-    debugger
+    
     this.hubconnection.on('SendData', (data) => {
       if(data.conversationQueues !=null){
         this.updateListService.sendList(data.conversationQueues)
@@ -164,9 +159,22 @@ export class SignalRService {
   public bulkQueryStatusDataListener = () => {
     
     this.hubconnection.on('ListQueryStatusProcess', (queryStatus) => {
-    console.log('SignalR ListQueryStatusProcess ==> ', queryStatus);
+    // console.log('SignalR ListQueryStatusProcess ==> ', queryStatus);
     this.queryStatusService.bulkSendQueryStatus(queryStatus);
   });
+};
+
+public checkConnectionStatusListener = () => {
+  debugger
+  this.hubconnection.on('GetMessage', (status) => {
+    debugger
+    this.hubconnection.invoke('SetConnection').then((data) => {
+      debugger
+      // console.log('setconnection data', data)
+    });
+  // console.log('SignalR Status ==> ', status);
+ // this.queryStatusService.bulkSendQueryStatus(status);
+});
 };
 
   getConnectionId = () => {

@@ -54,6 +54,7 @@ export class CommonDataService {
   dispositionHistory = environment.links.common.dispositionHistory;
   markAllAsRead = environment.links.common.markAllAsRead;
   getAgentReport = environment.links.common.getAgentReport;
+  getAllocatedProfiles = environment.links.common.getAllocatedProfiles;
 
   constructor(private http : HttpClient) { }
 
@@ -236,8 +237,12 @@ export class CommonDataService {
  }
 
  GetAgentReport(body:any){
-  debugger
-  return this.http.post(this.CommonBaseUrl+this.getAgentReport,body)
+  
+  return this.http.post(this.CommonBaseUrl+this.getAgentReport,body, { responseType: 'text' })
+ }
+
+ GetAllocatedProfiles(){
+  return this.http.get(this.CommonBaseUrl+this.getAllocatedProfiles)
  }
 
 }

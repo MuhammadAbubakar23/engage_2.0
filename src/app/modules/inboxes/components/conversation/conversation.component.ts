@@ -87,6 +87,7 @@ export class ConversationComponent implements OnInit {
     this.subscription = this.updateListService
       .receiveList()
       .subscribe((res) => {
+        
         this.updatedList = res;
         this.updateListDataListener();
       });
@@ -170,13 +171,15 @@ export class ConversationComponent implements OnInit {
   }
 
   updateListDataListener() {
+    
     this.updatedList.forEach((newMsg: any) => {
+      
       const index = this.ConversationList?.findIndex(
         (obj: any) => obj.user === newMsg.user
       );
       if (index >= 0) {
         this.ConversationList.forEach((main: any) => {
-          debugger
+          
           if (newMsg.user == main.user) {
             this.listingDto = newMsg;
             this.listingDto.unrespondedCount =
@@ -422,10 +425,15 @@ export class ConversationComponent implements OnInit {
   getAgentReportDto = new GetAgentReportDto
 
   download(){
-    debugger
+    
     this.getAgentReportDto.agentId = 1;
     this.commondata.GetAgentReport(this.getAgentReportDto).subscribe((res:any)=>{
-      debugger
+      const a = document.createElement('a');
+      a.href = res;
+      a.download = 'AgentReport.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
       console.log(res)
     })
   }

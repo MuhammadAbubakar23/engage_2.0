@@ -12,15 +12,15 @@ export class AppComponent {
 
   constructor(private signalRService: SignalRService,
     private router: Router) {
-      debugger
+      
     
   }
 
   ngOnInit() {
-    debugger
+    
 
     // if (this.signalRService.hubconnection == undefined) {
-    //   debugger
+    //   
     //   localStorage.clear();
     //   this.router.navigateByUrl('/login');
     // }

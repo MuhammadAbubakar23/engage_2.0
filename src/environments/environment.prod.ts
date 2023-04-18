@@ -55,7 +55,7 @@ export const environment = {
       LikedByAdmin: 'Social/LikeByAdmin',
       QuickReplyList: 'Social/GetQuickReplyList',
       AssignQuerry: 'Query/AssignQuery',
-      AgentsTeamList: 'Team/GetAllTeams',
+      AgentsTeamList: 'Query/GetActiveAgent',
       AssignToAnotherAgent: 'Query/QueryAssignMultiUser',
       SlaList:"Report/GetSLAChannelList",
       SlaDetail:"Report/GetSLADetailList",
@@ -80,7 +80,8 @@ export const environment = {
       allChannelsUnrespondedCounts: 'Channel/GetChannelUnrespondedCount',
       getOrderByCustomerEmailAddressOrPhoneNumber: 'Order/GetOrdersByCustomerEmailAddress',
       dispositionHistory : 'Channel/GetDispositionHistory',
-      markAllAsRead : 'Channel/ReadAllUnrespondedQuries'
+      markAllAsRead : 'Channel/ReadAllUnrespondedQuries',
+      getAgentReport : 'Report/GetAgentReport'
       
     },
     facebook: {

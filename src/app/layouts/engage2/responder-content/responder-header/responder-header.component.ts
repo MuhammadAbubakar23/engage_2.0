@@ -48,8 +48,10 @@ export class ResponderHeaderComponent implements OnInit {
 
   FbUnrespondedMsgCountByCustomer: number = 0;
   TwitterUnrespondedMsgCountByCustomer: number = 0;
+  InstaUnrespondedMsgCountByCustomer: number = 0;
 
   totalFbUnrespondedCountByCustomer: number = 0;
+  totalInstaUnrespondedCountByCustomer: number = 0;
   totalTwitterUnrespondedCountByCustomer: number = 0;
 
   headerDto = new HeaderDto();
@@ -154,6 +156,10 @@ export class ResponderHeaderComponent implements OnInit {
               this.totalTwitterUnrespondedCountByCustomer =
                 this.totalTwitterUnrespondedCountByCustomer + 1;
             }
+            if (msg.contentType == 'IM') {
+              this.totalInstaUnrespondedCountByCustomer =
+                this.totalInstaUnrespondedCountByCustomer + 1;
+            }
           }
         });
       });
@@ -172,8 +178,8 @@ export class ResponderHeaderComponent implements OnInit {
                 this.totalTwitterUnrespondedCountByCustomer + 1;
             }
             if (msg.contentType == 'IC') {
-              this.InstaUnrespondedCmntCountByCustomer =
-                this.InstaUnrespondedCmntCountByCustomer + 1;
+              this.totalInstaUnrespondedCountByCustomer =
+                this.totalInstaUnrespondedCountByCustomer + 1;
             }
             if (msg.contentType == 'Mail') {
               this.EmailUnrespondedCmntCountByCustomer =
@@ -226,10 +232,22 @@ export class ResponderHeaderComponent implements OnInit {
             res.contentCount.unrespondedCount +
             this.TwitterUnrespondedCmntCountByCustomer;
         }
+        // if (res.contentCount.contentType == 'IC') {
+        //   this.InstaUnrespondedCmntCountByCustomer =
+        //     res.contentCount.unrespondedCount;
+        // }
+
         if (res.contentCount.contentType == 'IC') {
-          this.InstaUnrespondedCmntCountByCustomer =
-            res.contentCount.unrespondedCount;
+          this.totalInstaUnrespondedCountByCustomer =
+            res.contentCount.unrespondedCount +
+            this.InstaUnrespondedMsgCountByCustomer;
         }
+        if (res.contentCount.contentType == 'IM') {
+          this.totalInstaUnrespondedCountByCustomer =
+            res.contentCount.unrespondedCount +
+            this.InstaUnrespondedCmntCountByCustomer;
+        }
+
         if (res.contentCount.contentType == 'Mail') {
           this.EmailUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
@@ -472,6 +490,7 @@ export class ResponderHeaderComponent implements OnInit {
             this.LinkedInUnrespondedCmntCountByCustomer = 0;
             this.totalFbUnrespondedCountByCustomer = 0;
             this.totalTwitterUnrespondedCountByCustomer = 0;
+            this.totalInstaUnrespondedCountByCustomer = 0;
             // this.FbUnrespondedMsgCountByCustomer = 0;
             // this.TwitterUnrespondedMsgCountByCustomer = 0;
 
@@ -514,9 +533,25 @@ export class ResponderHeaderComponent implements OnInit {
                   this.TwitterUnrespondedMsgCountByCustomer;
               }
             }
+            // if (this.fetchId.platform == 'Instagram') {
+            //   this.InstaUnrespondedCmntCountByCustomer = res.TotalCount;
+            // }
+
             if (this.fetchId.platform == 'Instagram') {
               this.InstaUnrespondedCmntCountByCustomer = res.TotalCount;
+              if (this.InstaUnrespondedMsgCountByCustomer == undefined) {
+                this.totalInstaUnrespondedCountByCustomer =
+                  this.InstaUnrespondedCmntCountByCustomer;
+              } else if (this.InstaUnrespondedCmntCountByCustomer == undefined) {
+                this.totalInstaUnrespondedCountByCustomer =
+                  this.InstaUnrespondedMsgCountByCustomer;
+              } else {
+                this.totalInstaUnrespondedCountByCustomer =
+                  this.InstaUnrespondedCmntCountByCustomer +
+                  this.InstaUnrespondedMsgCountByCustomer;
+              }
             }
+
             if (this.fetchId.platform == 'Email') {
               this.EmailUnrespondedCmntCountByCustomer = res.TotalCount;
             }
@@ -621,6 +656,7 @@ export class ResponderHeaderComponent implements OnInit {
             this.YoutubeUnrespondedCmntCountByCustomer = 0;
             this.LinkedInUnrespondedCmntCountByCustomer = 0;
             this.totalFbUnrespondedCountByCustomer = 0;
+            this.totalInstaUnrespondedCountByCustomer = 0
             this.totalTwitterUnrespondedCountByCustomer = 0;
             this.FbUnrespondedMsgCountByCustomer = 0;
             this.TwitterUnrespondedMsgCountByCustomer = 0;
@@ -653,6 +689,20 @@ export class ResponderHeaderComponent implements OnInit {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedCmntCountByCustomer +
                   this.TwitterUnrespondedMsgCountByCustomer;
+              }
+            }
+            if (this.fetchId.platform == 'Instagram') {
+              this.InstaUnrespondedMsgCountByCustomer = res.TotalCount;
+              if (this.InstaUnrespondedMsgCountByCustomer == undefined) {
+                this.totalInstaUnrespondedCountByCustomer =
+                  this.InstaUnrespondedCmntCountByCustomer;
+              } else if (this.InstaUnrespondedCmntCountByCustomer == undefined) {
+                this.totalInstaUnrespondedCountByCustomer =
+                  this.InstaUnrespondedMsgCountByCustomer;
+              } else {
+                this.totalInstaUnrespondedCountByCustomer =
+                  this.InstaUnrespondedCmntCountByCustomer +
+                  this.InstaUnrespondedMsgCountByCustomer;
               }
             }
           }
@@ -736,6 +786,7 @@ export class ResponderHeaderComponent implements OnInit {
         this.YoutubeUnrespondedCmntCountByCustomer = 0;
         this.LinkedInUnrespondedCmntCountByCustomer = 0;
         this.totalFbUnrespondedCountByCustomer = 0;
+        this.totalInstaUnrespondedCountByCustomer = 0;
         this.totalTwitterUnrespondedCountByCustomer = 0;
         this.FbUnrespondedMsgCountByCustomer = 0;
         this.TwitterUnrespondedMsgCountByCustomer = 0;
@@ -874,6 +925,7 @@ export class ResponderHeaderComponent implements OnInit {
             this.YoutubeUnrespondedCmntCountByCustomer = 0;
             this.LinkedInUnrespondedCmntCountByCustomer = 0;
             this.totalFbUnrespondedCountByCustomer = 0;
+            this.totalInstaUnrespondedCountByCustomer = 0;
             this.totalTwitterUnrespondedCountByCustomer = 0;
             this.FbUnrespondedMsgCountByCustomer = 0;
             this.TwitterUnrespondedMsgCountByCustomer = 0;
@@ -1007,6 +1059,7 @@ export class ResponderHeaderComponent implements OnInit {
             this.YoutubeUnrespondedCmntCountByCustomer = 0;
             this.LinkedInUnrespondedCmntCountByCustomer = 0;
             this.totalFbUnrespondedCountByCustomer = 0;
+            this.totalInstaUnrespondedCountByCustomer = 0;
             this.totalTwitterUnrespondedCountByCustomer = 0;
             this.FbUnrespondedMsgCountByCustomer = 0;
             this.TwitterUnrespondedMsgCountByCustomer = 0;
@@ -1050,7 +1103,7 @@ export class ResponderHeaderComponent implements OnInit {
 
   ActiveAgents: any[] = [];
   getAgentsTeamList() {
-    debugger
+    
     this.commondata.GetAgentsTeamList().subscribe((res: any) => {
       this.AgentsTeamList = res;
       this.ActiveAgents = []
@@ -1431,6 +1484,7 @@ export class ResponderHeaderComponent implements OnInit {
             this.YoutubeUnrespondedCmntCountByCustomer = 0;
             this.LinkedInUnrespondedCmntCountByCustomer = 0;
             this.totalFbUnrespondedCountByCustomer = 0;
+            this.totalInstaUnrespondedCountByCustomer = 0;
             this.totalTwitterUnrespondedCountByCustomer = 0;
             this.FbUnrespondedMsgCountByCustomer = 0;
             this.TwitterUnrespondedMsgCountByCustomer = 0;

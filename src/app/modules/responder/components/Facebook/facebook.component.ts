@@ -39,6 +39,7 @@ import { UpdateMessagesService } from 'src/app/services/UpdateMessagesService/up
 import { ReplyService } from 'src/app/services/replyService/reply.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
+import { ShareFacebookResponseService } from 'src/app/services/share-facebook-response.service';
 
 declare var toggleEmojis: any;
 @Component({
@@ -143,7 +144,8 @@ export class FacebookComponent implements OnInit {
     private updateMessagesService: UpdateMessagesService,
     private replyService: ReplyService,
     private queryStatusService: QueryStatusService,
-    private createTicketService: CreateTicketService
+    private createTicketService: CreateTicketService,
+    private shareFbResService : ShareFacebookResponseService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -277,7 +279,7 @@ export class FacebookComponent implements OnInit {
           });
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-          // this.fbStats();
+          this.fbStats();
           // console.log('Facebook data', this.FacebookData);
         });
     } else if (this.slaId != null || this.slaId != undefined) {
@@ -328,7 +330,7 @@ export class FacebookComponent implements OnInit {
         });
 
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-        // this.fbStats();
+        this.fbStats();
       });
     }
     // if ((this.id == null || this.id == undefined) && (this.slaId == null || this.slaId == undefined))
@@ -385,7 +387,7 @@ export class FacebookComponent implements OnInit {
           });
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-          // this.fbStats();
+          this.fbStats();
           // console.log('Facebook data', this.FacebookData);
         });
     }
@@ -832,6 +834,7 @@ export class FacebookComponent implements OnInit {
   }
 
   fbStats() {
+    // this.shareFbResService.updateMessage(this.FacebookData);
     if (this.FacebookData != null || undefined) {
       this.FacebookData.forEach(async (post: any): Promise<void> => {
         this.postIdForStats = post.post.postId;
@@ -952,7 +955,7 @@ export class FacebookComponent implements OnInit {
   }
 
   submitFacebookReply() {
-    debugger
+    
     if(this.commentId == undefined || this.commentId == '' || this.commentId == null){
       this.reloadComponent('selectComment');
     } else {
@@ -1443,7 +1446,7 @@ export class FacebookComponent implements OnInit {
     // console.log(this.textarea.nativeElement.value);
   }
   onScroll() {
-    debugger
+    
     this.pageSize = this.pageSize + 10;
     this.getFacebookComments();
     this.getFacebookMessages();

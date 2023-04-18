@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
     this.spinnerService.show();
     this.authService.login(this.loginForm.value).subscribe((res : any) =>{
       
-      debugger
+      
       // localStorage.setItem("token", res.accessToken)
       this.agentDetailsService.sendAgentDetails(res);
       this.stor.store("token", res.accessToken);
@@ -64,9 +64,10 @@ export class LoginComponent implements OnInit {
     this.signalRService.addTagDataListner();
     this.signalRService.unRespondedCountDataListener();
     this.signalRService.updateListDataListener();
-    this.signalRService.replyDataListener();
+    this.signalRService.replyDataListener(); 
     this.signalRService.queryStatusDataListener();
     this.signalRService.bulkQueryStatusDataListener();
+    this.signalRService.checkConnectionStatusListener();
       
     },
     (error:any) =>{

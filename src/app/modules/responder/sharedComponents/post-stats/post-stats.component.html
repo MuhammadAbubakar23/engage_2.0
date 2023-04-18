@@ -1,0 +1,62 @@
+<ng-container *ngFor="let facebookdata of FacebookData">
+<p class="card-text ms-3 single-img-time">
+</p>
+<div class="silver" *ngIf="!facebookdata.post.postStats">
+    <a class="message-actionItem coal me-3">
+        0 Comments
+    </a>
+    <a class="message-actionItem coal me-3">
+        0 Shares
+    </a>
+    <div class="reactionsWrap d-inline-flex align-items-center me-3">
+        <div class="reactImg happy emoji">
+            <img class="me-1"
+                src="../../../../assets/images/wow-emoji.svg" alt="...">
+        </div>
+        <div class="reactImg sad emoji">
+            <img class="me-1"
+                src="../../../../assets/images/haha-emoji.svg"
+                alt="...">
+        </div>
+        <p class="m-0 coal ps-2">0
+        </p>
+    </div>
+    <!-- <a class="message-actionItem coal me-2">
+        549,017 Views
+    </a> -->
+</div>
+<div class="silver" *ngIf="facebookdata.post.postStats">
+    <a class="message-actionItem coal me-3">
+        {{facebookdata.post.postStats?.comments}} Comments
+    </a>
+    <a class="message-actionItem coal me-3">
+        {{facebookdata.post.postStats?.shares}} Shares
+    </a>
+    <div class="reactionsWrap d-inline-flex align-items-center me-3">
+        <div class="reactImg happy emoji">
+            <img class="me-1"
+                src="../../../../assets/images/wow-emoji.svg" alt="...">
+        </div>
+        <div class="reactImg sad emoji">
+            <img class="me-1"
+                src="../../../../assets/images/haha-emoji.svg"
+                alt="...">
+        </div>
+        <p class="m-0 coal ps-2">{{facebookdata.post?.postStats.reactioinsLIst?.like +
+            facebookdata.post?.postStats.reactioinsLIst?.love +
+            facebookdata.post?.postStats.reactioinsLIst?.wow +
+            facebookdata.post?.postStats.reactioinsLIst?.haha +
+            facebookdata.post?.postStats.reactioinsLIst?.sorry +
+            facebookdata.post?.postStats.reactioinsLIst?.anger +
+            facebookdata.post?.postStats.reactioinsLIst?.sad +
+            facebookdata.post?.postStats.reactioinsLIst?.thankful +
+            facebookdata.post?.postStats.reactioinsLIst?.pride +
+            facebookdata.post?.postStats.reactioinsLIst?.cARE}}
+        </p>
+    </div>
+    <!-- <a class="message-actionItem coal me-2">
+        549,017 Views
+    </a> -->
+</div>
+
+</ng-container>
