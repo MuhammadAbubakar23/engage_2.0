@@ -81,7 +81,8 @@ export const environment = {
       getOrderByCustomerEmailAddressOrPhoneNumber: 'Order/GetOrdersByCustomerEmailAddress',
       dispositionHistory : 'Channel/GetDispositionHistory',
       markAllAsRead : 'Channel/ReadAllUnrespondedQuries',
-      getAgentReport : 'Report/GetAgentReport'
+      getAgentReport : 'Report/GetAgentReport',
+      getAllocatedProfiles : 'Query/GetAllocatedProfiles'
       
     },
     facebook: {
