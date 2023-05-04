@@ -32,6 +32,7 @@ import { ConsoleTableWrapComponent } from './engage2/console-table/console-table
 import { ConsoleTableComponent } from './engage2/console-table/console-table.component';
 import { SelectOptionComponent } from './engage2/select-option/select-option.component';
 import { RightHeaderComponentsComponent } from './engage2/right-header-components/right-header-components.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -66,6 +67,7 @@ import { RightHeaderComponentsComponent } from './engage2/right-header-component
     CommonModule,
     RouterModule,
     SharedModule,
+    ReactiveFormsModule,
     StoreModule.forFeature('menus', menuReducer ),
     EffectsModule.forFeature([MenusEffects]),
     NgxSpinnerModule,

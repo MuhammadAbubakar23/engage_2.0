@@ -311,3 +311,24 @@
       </div>
   </div>
 </div>
+<ng-container *ngIf="break == true">
+  <div class="" [ngClass]="break == true ? 'backdrop':''"></div>
+  <div class="" [ngClass]="break == true ? 'countdown':''">
+    <div class="timer">
+      <!-- {{display}} -->
+      {{format(hour)}}:{{format(minute)}}:{{format(second)}}
+      <form [formGroup]="loginForm" (submit)="submit()">
+        <div class="form w-100">
+          <div class="form-floating mb-3">
+            <input formControlName="password" type="password" class="form-control" id="password"
+              placeholder="Enter your Password">
+            <label for="password">Password</label>
+          </div>
+          <div class="form-btn">
+            <button type="submit" class="w-100 btn loginbtn" id="loginBtn" tabindex="-1" role="button">Continue</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-container>

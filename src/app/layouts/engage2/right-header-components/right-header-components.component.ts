@@ -7,6 +7,9 @@ import { Subscription } from 'rxjs';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { LoginDto } from 'src/app/shared/Models/LoginDto';
+import { AuthService } from 'src/app/identity/AuthService/auth.service';
 
 @Component({
   selector: 'right-header-components',
@@ -31,7 +34,8 @@ export class RightHeaderComponentsComponent implements OnInit {
     private router: Router,
     private commonService: CommonDataService,
     private agentDetailsService: AgentDetailsService,
-    private signalR: SignalRService
+    private signalR: SignalRService,
+    private authService : AuthService
   ) {}
 
   ngOnInit(): void {
@@ -114,10 +118,78 @@ export class RightHeaderComponentsComponent implements OnInit {
             this.reloadComponent('breakOff');
           }
         });
+
+        this.timerStart();
     } 
     else {
       this.reloadComponent('querryAssigned');
     }
+  }
+
+  logindto = new LoginDto;
+
+  loginForm=new UntypedFormGroup({
+    email:new UntypedFormControl(this.logindto.userName),    
+    userName:new UntypedFormControl(this.logindto.userName),
+    password: new UntypedFormControl(this.logindto.password),
+    rememberMe: new UntypedFormControl(this.logindto.rememberMe)
+  });
+
+  submit(){
+    debugger
+    this.authService.login(this.loginForm.value).subscribe((res : any) =>{
+      this.router.navigateByUrl("/all-inboxes/conversation");
+      
+    },
+    (error:any) =>{
+      this.reloadComponent('loginFailed')
+    });
+
+    
+    
+    
+  }
+
+  display: any;
+  public timerInterval: any;
+  break=false;
+  milisecond=0;
+  second=0;
+  minute=0;
+  hour=0
+  day=0
+
+  isBreak = false;
+  breakTimer : any = 0;
+
+  timerStart() {
+    debugger
+    this.break = true
+    // let minute = 1;
+    if (!this.isBreak) {
+    this.breakTimer = setInterval(() => {
+      this.milisecond++;
+
+      if (this.milisecond >= 100) {
+        this.second++;
+        this.milisecond = 0;
+      }
+      if (this.second >= 60) {
+        this.minute++;
+        this.second = 0
+      }
+      if (this.minute >= 60) {
+        this.hour++;
+        this.minute = 0
+      }
+      if(this.hour > 24){
+        this.day++;
+        this.hour = 0
+      }
+    }, 10);
+  } else {
+    clearInterval(this.breakTimer);
+  }
   }
 
   AlterMsg: any;
