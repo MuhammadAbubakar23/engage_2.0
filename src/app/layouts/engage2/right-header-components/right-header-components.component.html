@@ -217,10 +217,10 @@
 
             </a>
           </li> -->
-          <li *ngIf="startBreak == false">
+          <li>
             <a class="dropdown-item" >
               <div class="form-check theme-check w-100 p-0">
-                <input class="form-check-input float-end" type="radio" name="flexRadioDefault" id="flexCheckDefault2">
+                <input class="form-check-input float-end" name="flexRadioDefault" id="flexCheckDefault2">
                 <label class="form-check-label d-flex align-items-center" for="flexCheckDefault2" (click)="updateBreak()">
                   <span class="btn iconButton iconHover medium radicalBg me-1 mt-2">
                     <i class="fal fa-pizza"></i>
@@ -233,7 +233,7 @@
               </div>
             </a>
           </li>
-          <li *ngIf="startBreak == true">
+          <!-- <li *ngIf="startBreak == true">
             <a class="dropdown-item" >
               <div class="form-check theme-check w-100 p-0">
                 <input class="form-check-input float-end" type="radio" name="flexRadioDefault" id="flexCheckDefault2">
@@ -248,7 +248,7 @@
                 </label>
               </div>
             </a>
-          </li>
+          </li> -->
           <li>
             <a class="dropdown-item" >
               <div class="form-check theme-check w-100 p-0">

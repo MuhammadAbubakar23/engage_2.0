@@ -35,7 +35,8 @@ export class RightHeaderComponentsComponent implements OnInit {
     private commonService: CommonDataService,
     private agentDetailsService: AgentDetailsService,
     private signalR: SignalRService,
-    private authService : AuthService
+    private authService : AuthService,
+    private stor : StorageService
   ) {}
 
   ngOnInit(): void {
@@ -83,12 +84,7 @@ export class RightHeaderComponentsComponent implements OnInit {
         .stop()
         .then(() => console.log('Connection stoped'))
         .catch((err) => console.log('Error while stopping connection: ' + err));
-      }
-      
-      
-      
-
-      
+      }      
     } else {
       this.reloadComponent('querryAssigned');
     }
@@ -96,30 +92,32 @@ export class RightHeaderComponentsComponent implements OnInit {
 
   assignedProfile = localStorage.getItem('assignedProfile');
   updateBreak() {
-    
+    debugger
     if (
       this.assignedProfile == null ||
       this.assignedProfile == '' ||
       this.assignedProfile == undefined
     ) {
-      this.startBreak = !this.startBreak;
+      this.startBreak = true;
       
     //  this.AgentDetails.onBreak = !this.AgentDetails.onBreak;
       this.commonService
         .UpdateBreak(this.startBreak)
         .subscribe((res: any) => {
           
-          if (res.message === "Data Update Successfully") {
+          if (res.status === "BreakOn") {
             this.clickHandler();
             this.reloadComponent('breakStarted');
+            this.timerStart();
             
           } 
-          else if (res.message === "Data Update Successfully") {
+          else if (res.message === "Breakoff") {
             this.reloadComponent('breakOff');
+            this.timerStop();
           }
         });
 
-        this.timerStart();
+        
     } 
     else {
       this.reloadComponent('querryAssigned');
@@ -127,27 +125,38 @@ export class RightHeaderComponentsComponent implements OnInit {
   }
 
   logindto = new LoginDto;
+  activeAgent = this.stor.retrive("originalUserName")
 
   loginForm=new UntypedFormGroup({
     email:new UntypedFormControl(this.logindto.userName),    
-    userName:new UntypedFormControl(this.logindto.userName),
+    userName:new UntypedFormControl("muhammad.rixvan.waheed@gmail.com"),
     password: new UntypedFormControl(this.logindto.password),
     rememberMe: new UntypedFormControl(this.logindto.rememberMe)
   });
 
   submit(){
     debugger
+  //  let activeAgent = this.stor.retrive("originalUserName")
     this.authService.login(this.loginForm.value).subscribe((res : any) =>{
       this.router.navigateByUrl("/all-inboxes/conversation");
-      
+      this.resetTimer();
+      this.timerStop();
+      this.clickHandler();
     },
     (error:any) =>{
       this.reloadComponent('loginFailed')
     });
+  }
 
-    
-    
-    
+  resetTimer(){
+    this.break=false;
+    this.isBreak = false;
+    this.milisecond=0;
+  this.second=0;
+  this.minute=0;
+  this.hour=0
+  this.day=0
+  // this.breakTimer = 0;
   }
 
   display: any;
@@ -159,14 +168,22 @@ export class RightHeaderComponentsComponent implements OnInit {
   hour=0
   day=0
 
-  isBreak = false;
+  isBreak :any = false;
   breakTimer : any = 0;
+
+  timerStop(){
+    this.break = false
+    this.isBreak = false;
+    this.startBreak = false;
+    clearInterval(this.breakTimer);
+  }
 
   timerStart() {
     debugger
     this.break = true
+    this.isBreak = true;
     // let minute = 1;
-    if (!this.isBreak) {
+    if (this.isBreak) {
     this.breakTimer = setInterval(() => {
       this.milisecond++;
 
@@ -190,12 +207,20 @@ export class RightHeaderComponentsComponent implements OnInit {
   } else {
     clearInterval(this.breakTimer);
   }
+  
   }
 
   AlterMsg: any;
   toastermessage: any;
 
   reloadComponent(type: any) {
+    if (type == 'loginFailed') {
+      this.AlterMsg = 'You entered a wrong Password!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'breakStarted') {
       this.AlterMsg = 'Break status is ON now!';
       this.toastermessage = true;
@@ -254,16 +279,6 @@ export class RightHeaderComponentsComponent implements OnInit {
           this.dd++;
           this.hh = 0
         }
-        // if(this.hh > 24){
-        //   this.aaa = this.dd+" d"
-        // } else if (this.hh > 0 && this.hh <= 24) {
-        //   this.aaa = this.hh+" h"
-        // } else if (this.mm > 0 && this.mm <= 60){
-        //   this.aaa = this.mm+" m"
-        // } 
-        // else if (this.ss <= 60){
-        //   this.aaa = this.ss+" s"
-        // }
       }, 10);
     } else {
       clearInterval(this.timerId);
