@@ -74,6 +74,17 @@ const routes: Routes = [
         loadComponent: () => import('./components/tags/tags.component').then(c => c.TagsComponent)
         
       },{
+        path:'tags/create/:id',
+        loadComponent: () => import('./components/tags/create-tags/create-tags.component').then(c => c.CreateTagsComponent),
+        data: { breadcrumb: 'Tags > Create' },
+        //canActivate: [ConsoleRoutingGuard],
+        canMatch: [ConsoleRoutingGuard],
+        // canLoad: [ConsoleRoutingGuard],
+        resolve: {
+          roles: RolesResolver,
+          teams: TeamsResolver,
+        },
+      },{
         path:'rules',
         loadComponent: () => import('./components/rules/rules.component').then(c => c.RulesComponent)
         

@@ -19,6 +19,7 @@ const routes: Routes = [
       import('./modules/modules.module').then((f) => f.ModulesModule), canActivate: [AuthGuard],
       data: { preload: true },
   },
+  
 ];
 
 @NgModule({

@@ -64,7 +64,7 @@ import { ConsoleTableComponent } from 'src/app/layouts/engage2/console-table/con
     // CreateUserComponent,
     // CreateTeamComponent,
     // AddTeamMembersComponent,
-    CreateTagsComponent,
+    // CreateTagsComponent,
     // CreateRolesComponent,
     AddPolicyComponent,
     CreateContactComponent,

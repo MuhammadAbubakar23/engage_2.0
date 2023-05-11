@@ -30,6 +30,7 @@ import { ResponderComplaintTicketPanelComponent } from './right-sidebar-componen
 import { ResponderHistoryComponent } from './right-sidebar-components/responder-history/responder-history.component';
 import { ResponderProfileComponent } from './right-sidebar-components/responder-profile/responder-profile.component';
 import { DispositionFormComponent } from './components/disposition-form/disposition-form.component';
+import { WebPhoneComponent } from '../web-phone/web-phone.component';
 
 
 @Component({
@@ -294,7 +295,7 @@ export class ResponderComponent implements OnInit {
         break;
       case 'phone-dialer':
         componentFactory =
-          this.resolver.resolveComponentFactory(ResponderPhoneDialerComponent);
+          this.resolver.resolveComponentFactory(WebPhoneComponent);
         this.rightcontainer?.createComponent(componentFactory);
         break;
       case 'documents':

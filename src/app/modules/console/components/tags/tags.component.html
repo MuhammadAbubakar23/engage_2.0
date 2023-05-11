@@ -31,13 +31,13 @@
                             </div>
                         </div>
                         <div class="col-lg-8 d-flex align-items-center justify-content-end">
-                            <a href="javascript:" class="search-btn">
+                            <a class="search-btn">
                                 <button class="iconButton medium">
                                     <i class="fal fa-search silver"></i>
                                 </button>
                                 <input placeholder="Search">
                             </a>
-                            <a (click)="updatevalue('consoleCreateTagsHeader')" [routerLink]="['/console/tags:create-tags']" class="ms-2">
+                            <a (click)="updatevalue('consoleCreateTagsHeader')" routerLink='create/0' class="ms-2">
                                 <button type="button" class="btn btn-success">
                                     <i class="fal fa-plus me-2"></i>
                                     Create Tags
@@ -54,13 +54,13 @@
                                     190 Tags
                                 </th>
                                 <th>
-                                    <a href="javascript:" class="charcoal hover-icon">
+                                    <a class="charcoal hover-icon">
                                         Tickets
                                         <i class="fas fa-long-arrow-alt-down"></i>
                                     </a>
                                 </th>
                                 <th>
-                                    <a href="javascript:" class="charcoal hover-icon">
+                                    <a class="charcoal hover-icon">
                                         Contacts
                                         <i class="fas fa-long-arrow-alt-down"></i>
                                     </a>
