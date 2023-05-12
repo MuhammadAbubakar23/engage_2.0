@@ -2,6 +2,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -31,6 +32,12 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
   styleUrls: ['./email.component.scss'],
 })
 export class EmailComponent implements OnInit {
+
+  @Input() name:string="";
+  @Input() subname:string="";
+  @Input() imagename:string="";
+  @Input() linkname:string="javascript:;";
+  
   Emails: any;
 
   id = this.fetchId.getOption();
@@ -55,6 +62,8 @@ export class EmailComponent implements OnInit {
 
   public Subscription!: Subscription;
   public criteria!: SortCriteria;
+  searchText: string='';
+  
 
   constructor(
     private fetchId: FetchIdService,
@@ -175,8 +184,10 @@ export class EmailComponent implements OnInit {
 
   commentsArray: any[] = [];
   groupArrays: any[] = [];
+  fullName: string = '';
 
   getEmails() {
+    debugger
     if (this.id != null || undefined) {
       this.filterDto = {
         // fromDate: new Date(),
@@ -197,6 +208,7 @@ export class EmailComponent implements OnInit {
           this.SpinnerService.hide();
           this.spinner1running=false;
           this.Emails = res.List;
+          this.fullName = this.Emails[0].user.userName.split('<')[0]
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
 
           this.commentsArray = []
@@ -836,5 +848,16 @@ export class EmailComponent implements OnInit {
       this.pageSize = this.pageSize + 10
       this.getEmails();
     }
+  }
+
+  tagsListDropdown =false
+  
+  openTagListDropdown() {
+    this.searchText ='';
+    this.tagsListDropdown = true;
+  }
+  closeTagListDropdown() {
+    this.tagsListDropdown = false
+    this.searchText = ''
   }
 }

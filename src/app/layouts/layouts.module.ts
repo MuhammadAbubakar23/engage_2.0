@@ -81,7 +81,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ResponderRightSidebarMenuComponent,
     ConsoleTableComponent,
     ConsoleTableToolbarComponent,
-    AvatarPhotoComponent
+    AvatarPhotoComponent,
+    ConsoleTableWithImageComponent
   ]
 })
 export class LayoutsModule { }

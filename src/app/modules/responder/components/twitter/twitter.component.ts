@@ -1348,4 +1348,15 @@ export class TwitterComponent implements OnInit {
     });
     this.changeDetect.detectChanges();
   }
+
+  tagsListDropdown =false
+  
+  openTagListDropdown() {
+    this.searchText ='';
+    this.tagsListDropdown = true;
+  }
+  closeTagListDropdown() {
+    this.tagsListDropdown = false
+    this.searchText = ''
+  }
 }

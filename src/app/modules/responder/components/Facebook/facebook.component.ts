@@ -1451,4 +1451,15 @@ export class FacebookComponent implements OnInit {
     this.getFacebookComments();
     this.getFacebookMessages();
   }
+
+  tagsListDropdown =false
+  
+  openTagListDropdown() {
+    this.searchText ='';
+    this.tagsListDropdown = true;
+  }
+  closeTagListDropdown() {
+    this.tagsListDropdown = false
+    this.searchText = ''
+  }
 }

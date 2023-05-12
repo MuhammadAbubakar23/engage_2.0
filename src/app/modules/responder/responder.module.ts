@@ -23,6 +23,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { DispositionFormComponent } from './components/disposition-form/disposition-form.component';
 import { FilterPipe } from 'src/app/shared/CustomPipes/filter.pipe';
 import { PostStatsComponent } from './sharedComponents/post-stats/post-stats.component';
+import { ConsoleTableWithImageComponent } from 'src/app/layouts/engage2/console-table/console-table-with-image/console-table-with-image.component';
 
 
 @NgModule({
@@ -52,7 +53,7 @@ import { PostStatsComponent } from './sharedComponents/post-stats/post-stats.com
     RouterModule,
     ResponderRightSidebarComponentsModule,
     InfiniteScrollModule,
-    FormsModule
+    FormsModule,
   ],
   exports:[
     ResponderComponent

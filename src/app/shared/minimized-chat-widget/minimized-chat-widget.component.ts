@@ -499,4 +499,15 @@ export class MinimizedChatWidgetComponent implements OnInit {
    this.fetchId.setOption(id);
    this.sharedService.updateMessage(component)
   }
+  tagsListDropdown =false
+  searchText : string = '';
+  
+  openTagListDropdown() {
+    this.searchText ='';
+    this.tagsListDropdown = true;
+  }
+  closeTagListDropdown() {
+    this.tagsListDropdown = false
+    this.searchText = ''
+  }
 }

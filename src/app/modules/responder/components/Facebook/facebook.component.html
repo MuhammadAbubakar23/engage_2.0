@@ -222,7 +222,7 @@
                                                                     </a>
                                                                     <div class="dropdown w-auto">
                                                                         <button class="iconButton medium" id="dropdownMenuButton1"
-                                                                            data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                                                                            data-bs-toggle="dropdown" data-bs-auto-close="outside" (click)="openTagListDropdown()">
                                                                             <span class="iconButton small btn mx-2">
                                                                                 <i class="fal fa-tag coal"></i>
                                                                             </span>
@@ -238,6 +238,7 @@
                                                                                             </h6>
                                                                                         </div>
                                                                                         <!-- <a class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
+                                                                                        (click)="closeTagListDropdown()"
                                                                                             id="dropdownMenuButton3" data-bs-toggle="dropdown"
                                                                                             aria-expanded="false">
                                                                                             <i class="fal fa-times silver"></i>
@@ -563,7 +564,7 @@
                                                                         Reply
                                                                     </a>
                                                                     <div class="dropdown w-auto">
-                                                                        <button class="iconButton medium" id="dropdownMenuButton1"
+                                                                        <button class="iconButton medium" id="dropdownMenuButton1" (click)="openTagListDropdown()"
                                                                             data-bs-toggle="dropdown" data-bs-auto-close="outside">
                                                                             <span class="iconButton small btn mx-2">
                                                                                 <i class="fal fa-tag coal"></i>
@@ -579,13 +580,14 @@
                                                                                             <h6>Tags
                                                                                             </h6>
                                                                                         </div>
-                                                                                        <a href="#"
+                                                                                        <!-- <a href="#"
                                                                                             class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
+                                                                                            (click)="closeTagListDropdown()"
                                                                                             id="dropdownMenuButton3"
                                                                                             data-bs-toggle="dropdown"
                                                                                             aria-expanded="false">
                                                                                             <i class="fal fa-times silver"></i>
-                                                                                        </a>
+                                                                                        </a> -->
                                                                                     </div>
                                                                                     <form class="custom-searchbar">
                                                                                         <input

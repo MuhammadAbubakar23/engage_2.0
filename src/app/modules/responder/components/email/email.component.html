@@ -84,7 +84,7 @@
                                 </div>
                                 <ng-container *ngFor="let email of group.items ; let i = index">
                                     <ng-container *ngIf="email.queryStatus != 'QueryCompleted'">
-                                <div class="accordion email-accordion" id="abc">
+                                <div class="accordion email-accordion" id="abc" style="margin-bottom: 100px;">
 
                                     <div class="accordion-item email-wrap mb-3">
                                         <div class="accordion-header " [id]="'heading'+i">
@@ -92,7 +92,21 @@
                                             [attr.data-bs-target]="'#collapse'+i" aria-expanded="true" [attr.aria-controls]="'collapse'+i"
                                             [ngClass]="email.queryStatus == 'Unresponded'?'unread':''">
                                                 <div class="avatar large">
-                                                    <img src={{list.user.profilePic}}>
+                                                    <!-- <img src={{list.user.profilePic}}> -->
+                                                    <!-- <console-table-with-image [name]="fullName" [subname]="''" [imagename]="''"></console-table-with-image> -->
+                                                    <a [href]="linkname">
+                                                        <ul class="list-group list-group-flush">
+                                                            <li class="list-group-item d-flex justify-content-between align-items-sm-center ps-0">
+                                                                <span class="iconButton large" style="margin-right: 5px;">
+                                                                    <app-avatar-photo [photoUrl]="imagename" [name]="fullName"></app-avatar-photo>
+                                                                    <!-- <img [src]="imagename" alt="-" class="rounded-circle w-100 h-100"> -->
+                                                                </span>
+                                                                <!-- <div class="ms-2 me-auto coal">
+                                                                    <div class="fw-bold night">{{name}}</div>{{subname}}
+                                                                </div> -->
+                                                            </li>
+                                                        </ul>
+                                                    </a>
                                                 </div>
                                                 <div class="card-header-content">
                                                     <div class="card-header-top">
@@ -194,11 +208,11 @@
                                                                 class="fal fa-arrow-alt-to-right"></i>
                                                             Forword</button> -->
     
-                                                        <button type="button" class="btn btn-outline-secondary me-2"
+                                                        <button type="button" class="btn btn-outline-secondary me-2" [ngClass]="tagsListDropdown == true?'show':''" (click)="openTagListDropdown()"
                                                             id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                             data-bs-auto-close="outside"><i class="fal fa-tag"></i>
                                                             Tag</button>
-                                                        <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                        <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList" [ngClass]="tagsListDropdown == true?'show':''"
                                                             aria-labelledby="dropdownMenuButton2">
                                                             <ul class="dropdown-listing">
                                                                 <li class="dropdown-listing-header">
@@ -207,15 +221,14 @@
                                                                             <h6>Tags
                                                                             </h6>
                                                                         </div>
-                                                                        <a href="#"
-                                                                            class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
+                                                                        <!-- <a class="iconButton dropdown-iconBtn small active dropdownCrossBtn" (click)="closeTagListDropdown()"
                                                                             id="dropdownMenuButton3"
                                                                             data-bs-toggle="dropdown" aria-expanded="false">
                                                                             <i class="fal fa-times silver"></i>
-                                                                        </a>
+                                                                        </a> -->
                                                                     </div>
                                                                     <form class="custom-searchbar">
-                                                                        <input class="form-control rounded-pill shadow-sm"
+                                                                        <input class="form-control rounded-pill shadow-sm" [(ngModel)]="searchText"
                                                                             placeholder="Search" aria-label="Search">
                                                                         <span class="btn searchbar-btn" type="submit">
                                                                             <i class="fal fa-search silver"></i>
@@ -223,7 +236,7 @@
                                                                     </form>
                                                                 </li>
                                                                 <li class="dropend">
-                                                                    <div *ngFor="let tag of TagsList"
+                                                                    <div *ngFor="let tag of TagsList  | filter: searchText"
                                                                         class="list-group list-group-flush dropend">
                                                                         <a data-bs-toggle="dropdown"
                                                                             class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
@@ -524,10 +537,10 @@
             <div class="modal-header charcoalBg shadow-sm saltBg">
                 <h5 class="modal-title line-head" id="deleteModalLabel">Email</h5>
                 <div class="icons-list p-0">
-                    <button class="iconButton medium btn">
+                    <!-- <button class="iconButton medium btn">
                         <i class="fal fa-external-link ice"></i>
                         <div class="ripple-container"></div>
-                    </button>
+                    </button> -->
                     <button type="button" class="btn iconHover pt-0 pb-0" (click)="closeReplyModal()"
                         data-bs-dismiss="modal" aria-label="Close"><i class="fal fa-times ice"></i></button>
                 </div>
