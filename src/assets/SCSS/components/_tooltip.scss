@@ -1,0 +1,60 @@
+.tooltip-btn{
+.tooltip {
+    background-color: $charcoal;
+    color: $ice;
+    position: absolute;
+    font-size: 10px;
+    border-radius: 5px;
+    padding: 2px 10px;
+    text-align: center;
+    right: 55px;
+    top: -8px;
+    margin-top: 12px;
+    width: max-content;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 99999;
+    &.left_btn{
+        top: 0px;
+    }
+    &.tooltip-twitter-icons{
+      right: 0px;
+      top: -9px;
+      left: 17rem;
+    }
+    &.tooltip-whatapp-icons{
+      right: 0px;
+      top: -9px;
+      left: 17rem;
+    }
+    &.tooltip-email-icons{
+      right: 0px;
+      top: -9px;
+      left: 17rem;
+    }
+    &.tooltip-sms-icons{
+      right: 0px;
+      top: -9px;
+      left: 17rem;
+    }
+    &.tooltip-call-icons{
+      right: 0px;
+      top: -9px;
+      left: 17rem;
+    }
+  }
+  &:hover {
+    .tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+.tooltip {
+  z-index: 99999;
+}

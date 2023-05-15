@@ -1,0 +1,26 @@
+<main>
+    <div class="main-wrapper d-flex">
+        <main-menu></main-menu>
+        <div class="user-comment-widget-container">
+            <template #maximizeChat></template>
+        </div>
+        <nav id="left-sidebar-expand" class="conversation-list all-conversation"
+            [ngClass]="toggleLeftBar ? 'toggled':'' ">
+            <inbox-menu></inbox-menu>
+            <a class="panelToggle" (click)="toggleSubLeftBar()"></a>
+        </nav>
+        <div class="middle-wrapper d-flex w-100 flex-column">
+            <inbox-header></inbox-header>
+            <div class="content-box-wrapper d-flex w-100">
+                <div class="middle-content d-flex">
+                    <div class="page-content-wrapper social">
+                        <div class="w-auto chat-message-component w-100 inbox-container" [ngClass]="showPanel?'panelToggled':''">
+                             <ng-content></ng-content>
+                             <inbox-right-sidebar (toggleRightPanel)="toggleRightPanel()"></inbox-right-sidebar>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

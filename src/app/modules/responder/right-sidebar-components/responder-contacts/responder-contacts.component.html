@@ -1,0 +1,758 @@
+<nav id="contacts-rightbar-dashboard" class="expended-rigth-sidebar open">
+    <div class="right-bar-wrapper">
+        <div class="bodyWrapper">
+            <div class="contacts-list">
+                <header class="tab-header rightbar-tab-header pe-3">
+                    <nav class="knowledgeBase nav">
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="contacts-rightbar" data-bs-toggle="" data-bs-target=""
+                                type="button" role="tab" aria-controls="" aria-selected="true">
+                                Contacts
+                            </button>
+                        </div>
+                        <div class="icons-list">
+
+                            <button class="iconButton medium iconHover" id="create-user">
+                                <i class="fal fa-plus silver"></i>
+                            </button>
+                            <button class="iconButton medium iconHover" id="merge-user">
+                                <i class="fal fa-code-merge silver"></i>
+                            </button>
+                            <div class="searchbar-click">
+                                <form [ngClass]="show == true ? 'searchbox-open' : ''" class="searchbox">
+                                    <input placeholder="What are you looking for?" name="search" class="searchbox-input"
+                                        required="">
+                                    <span class="searchbox-icon medium iconButton iconHover" (click)="click(show)"><i
+                                        [ngClass]="show == false ? 'fa fa-search': 'fa fa-times'"></i></span>
+                                </form>
+
+                            </div>
+                        </div>
+                    </nav>
+
+                </header>
+               <div class="rightbar-body-wrapper" data-scrollbar="true" tabindex="-1"
+                    style="outline: none;">
+                    <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
+
+                       <div class="tab-content" id="nav-tabContent">
+                            <div id="contacts-rightbar" class="tab-pane fade active show" role="tabpanel"
+                                aria-labelledby="">
+
+                                <div class="list-group-section pt-3 pe-3">
+                                    <div class="list-group list-group-flush">
+                                        <a  class="list-group-item d-flex contact-user"
+                                            value="Amin Khan">
+                                            <div class="list-down-icon">
+                                                <div class="iconButton medium mintBg me-3">
+                                                    AK
+                                                </div>
+                                            </div>
+                                            <div class="w-100 list-txt d-flex">
+                                                <div class="w-100">
+                                                    <h6 class="mb-1 darkblue">Amin Khan
+                                                    </h6>
+                                                    <p class="mb-1 coal">amin.khan@gmail.com</p>
+                                                </div>
+
+                                                <div class="icons-list d-flex">
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-envelope"></i>
+                                                    </span>
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-ellipsis-v-alt"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="list-group-item d-flex contact-user"
+                                            value="Aniqa Khan">
+                                            <div class="list-down-icon avatar medium me-3">
+                                                <img src="../../../../assets/images/avatar-18.png" alt="...">
+                                            </div>
+                                            <div class="w-100 list-txt d-flex">
+                                                <div class="w-100">
+                                                    <h6 class="mb-1 darkblue">Aniqa Khan
+                                                    </h6>
+                                                    <p class="mb-1 coal">aniqa@gmail.com</p>
+                                                </div>
+
+                                                <div class="icons-list d-flex">
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-envelope"></i>
+                                                    </span>
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-ellipsis-v-alt"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="list-group-item d-flex contact-user"
+                                            value="Bilal Ali">
+                                            <div class="list-down-icon">
+                                                <div class="iconButton medium berryBg me-3">
+                                                    BA
+                                                </div>
+                                            </div>
+                                            <div class="w-100 list-txt d-flex">
+                                                <div class="w-100">
+                                                    <h6 class="mb-1 darkblue">Bilal Ali
+                                                    </h6>
+                                                    <p class="mb-1 coal">bilal.ali@gmail.com</p>
+                                                </div>
+
+                                                <div class="icons-list d-flex">
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-envelope"></i>
+                                                    </span>
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-ellipsis-v-alt"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="list-group-item d-flex contact-user"
+                                            value="Jawad Khan">
+                                            <div class="list-down-icon avatar medium me-3">
+                                                <img src="../../../../assets/images/avatar-16.jpg" alt="...">
+                                            </div>
+                                            <div class="w-100 list-txt d-flex">
+                                                <div class="w-100">
+                                                    <h6 class="mb-1 darkblue">Jawad Khan
+                                                    </h6>
+                                                    <p class="mb-1 coal">jawadkhan@gmail.com</p>
+                                                </div>
+
+                                                <div class="icons-list d-flex">
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-envelope"></i>
+                                                    </span>
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-ellipsis-v-alt"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="list-group-item d-flex contact-user"
+                                            value="Sana Khan">
+                                            <div class="list-down-icon">
+                                                <div class="iconButton medium mintBg me-3">
+                                                    SK
+                                                </div>
+                                            </div>
+                                            <div class="w-100 list-txt d-flex">
+                                                <div class="w-100">
+                                                    <h6 class="mb-1 darkblue">Sana Khan
+                                                    </h6>
+                                                    <p class="mb-1 coal">sana.khan@gmail.com</p>
+                                                </div>
+
+                                                <div class="icons-list d-flex">
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-envelope"></i>
+                                                    </span>
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-ellipsis-v-alt"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="list-group-item d-flex contact-user"
+                                            value="Tabish Ali">
+                                            <div class="list-down-icon">
+                                                <div class="iconButton medium cherryBg me-3">
+                                                    TA
+                                                </div>
+                                            </div>
+                                            <div class="w-100 list-txt d-flex">
+                                                <div class="w-100">
+                                                    <h6 class="mb-1 darkblue">Tabish Ali
+                                                    </h6>
+                                                    <p class="mb-1 coal">tabish.ali@gmail.com</p>
+                                                </div>
+
+                                                <div class="icons-list d-flex">
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-envelope"></i>
+                                                    </span>
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-ellipsis-v-alt"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="list-group-item d-flex contact-user"
+                                            value="Talha Iqbal">
+                                            <div class="list-down-icon avatar medium me-3">
+                                                <img src="../../../../assets/images/avatar-3.jpg" alt="...">
+                                            </div>
+                                            <div class="w-100 list-txt d-flex">
+                                                <div class="w-100">
+                                                    <h6 class="mb-1 darkblue">Talha Iqbal
+                                                    </h6>
+                                                    <p class="mb-1 coal">talhaiqbal@gmail.com</p>
+                                                </div>
+
+                                                <div class="icons-list d-flex">
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-envelope"></i>
+                                                    </span>
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-ellipsis-v-alt"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="list-group-item d-flex contact-user"
+                                            value="Umair Khan">
+                                            <div class="list-down-icon avatar medium me-3">
+                                                <img src="../../../../assets/images/avatar-2.jpg" alt="...">
+                                            </div>
+                                            <div class="w-100 list-txt d-flex">
+                                                <div class="w-100">
+                                                    <h6 class="mb-1 darkblue">Umair Khan
+                                                    </h6>
+                                                    <p class="mb-1 coal">umairkhan@gmail.com</p>
+                                                </div>
+
+                                                <div class="icons-list d-flex">
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-envelope"></i>
+                                                    </span>
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-ellipsis-v-alt"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="list-group-item d-flex contact-user"
+                                            value="Uroosa Ahmed">
+                                            <div class="list-down-icon">
+                                                <div class="iconButton medium berryBg me-3">
+                                                    UA
+                                                </div>
+                                            </div>
+                                            <div class="w-100 list-txt d-flex">
+                                                <div class="w-100">
+                                                    <h6 class="mb-1 darkblue">Uroosa Ahmed
+                                                    </h6>
+                                                    <p class="mb-1 coal">uroosaahmed@gmail.com</p>
+                                                </div>
+
+                                                <div class="icons-list d-flex">
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-envelope"></i>
+                                                    </span>
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-ellipsis-v-alt"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="list-group-item d-flex contact-user"
+                                            value="Zara Khan">
+                                            <div class="list-down-icon avatar medium me-3">
+                                                <img src="../../../../assets/images/avatar-18.png" alt="...">
+                                            </div>
+                                            <div class="w-100 list-txt d-flex">
+                                                <div class="w-100">
+                                                    <h6 class="mb-1 darkblue">Zara Khan
+                                                    </h6>
+                                                    <p class="mb-1 coal">zarakhan@gmail.com</p>
+                                                </div>
+
+                                                <div class="icons-list d-flex">
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-envelope"></i>
+                                                    </span>
+                                                    <span type="button"
+                                                        class="iconButton iconHover medium btn rounded-circle">
+                                                        <i class="fal fa-ellipsis-v-alt"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                       </div>
+                   </div>
+               </div>
+            </div>
+            <div class="d-none" id="create-new-contact">
+                <header class="tab-header rightbar-tab-header">
+                    <nav class="mb-0">
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active d-flex align-items-center" id="create-new-contact"
+                                data-bs-toggle="tab" data-bs-target="#create-new-contact-tab" type="button" role="tab"
+                                aria-controls="create-new-contact-tab" aria-selected="false">
+                                <i class="far fa-arrow-left coal me-2 mb-0 breadcrumb"></i>
+                                Add New Contact
+                            </button>
+                        </div>
+                    </nav>
+                </header>
+                <div class="rightbar-body-wrapper profile" data-scrollbar="true" tabindex="-1"
+                    style="outline: none;">
+                    <div class="scroll-content" >
+                        <div class="tab-content" id="nav-tabContent">
+                            <div id="create-new-contact-tab" class="tab-pane fade active show" role="tabpanel"
+                                aria-labelledby="create-new-contact" style="overflow-y: auto; outline: none;">
+                                <table class="table m-0" >
+                                    <tbody>
+                                        <tr class="">
+                                            <td>
+                                                <div class="card m-4 p-2">
+                                                    <div class="row g-0">
+                                                        <div class="col-md-2">
+                                                            <div class="file-input select-new-user-img" id="select-img">
+                                                                <i class="fal fa-camera-alt ice img-icon"></i>
+                                                                <img src="../../../../assets/images/avatar-2.jpg" alt="-"
+                                                                    class="selected-group-img d-none">
+                                                                <span class="fileSelected d-none"><i
+                                                                        class="fal fa-pen ice"></i></span>
+                                                            </div>
+                                                            <input class="form-control d-none" type="file"
+                                                                id="upload-user-img">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="profile-form mt-5 me-3 pb-4">
+                                    <div class="section-heading">
+                                        <h6 class="silver mt-3">Personal</h6>
+                                    </div>
+                                    <form>
+                                        <div class="row mb-3">
+                                            <label for="inputName" class="col-sm-3 col-form-label">Full Name </label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="inputName">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputOrganization" class="col-sm-3 col-form-label">Organization
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="inputOrganization">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputRole" class="col-sm-3 col-form-label">Role</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="inputRole">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputEmail" class="col-sm-3 col-form-label"> Email</label>
+                                            <div class="col-sm-9">
+                                                <input type="email" class="form-control" id="inputEmail">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputMobile" class="col-sm-3 col-form-label"> Mobile</label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-text" id="inputMobile">
+                                                        <img class="me-1" src="../../../../assets/images/pakistanflag.svg" alt="..."
+                                                            style="width:15px;">
+                                                        +92
+                                                        <i class="fas fa-sort-down coal ms-1"></i>
+                                                    </span>
+                                                    <input type="number" class="form-control" id="inputMobile">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label"> Address</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="inputAddress">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">City</label>
+                                            <div class="col-sm-9 country-dropdown">
+                                                <select class="js-country select2-hidden-accessible" name="time-from"
+                                                    data-select2-id="select2-data-1-3iyy" tabindex="-1"
+                                                    aria-hidden="true">
+                                                    <option data-select2-id="select2-data-3-awcw">Choose the City
+                                                    </option>
+                                                    <option>1
+                                                    </option>
+                                                    <option>2
+                                                    </option>
+                                                    <option>3
+                                                    </option>
+                                                </select><span
+                                                    class="select2 select2-container select2-container--default"
+                                                    dir="ltr" data-select2-id="select2-data-2-4ox2"
+                                                    style="width: auto;"><span class="selection"><span
+                                                            class="select2-selection select2-selection--single"
+                                                            role="combobox" aria-haspopup="true" aria-expanded="false"
+                                                            tabindex="0" aria-disabled="false"
+                                                            aria-labelledby="select2-time-from-lr-container"
+                                                            aria-controls="select2-time-from-lr-container"><span
+                                                                class="select2-selection__rendered"
+                                                                id="select2-time-from-lr-container" role="textbox"
+                                                                aria-readonly="true" title="Choose the City">Choose the
+                                                                City</span><span class="select2-selection__arrow"
+                                                                role="presentation"><b
+                                                                    role="presentation"></b></span></span></span><span
+                                                        class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputAddress" class="col-sm-3 col-form-label">Country</label>
+                                            <div class="col-sm-9 country-dropdown">
+                                                <select class="js-country select2-hidden-accessible" name="time-from"
+                                                    data-select2-id="select2-data-4-hxj9" tabindex="-1"
+                                                    aria-hidden="true">
+                                                    <option data-select2-id="select2-data-6-ngiu">Choose the Country
+                                                    </option>
+                                                    <option>1
+                                                    </option>
+                                                    <option>2
+                                                    </option>
+                                                    <option>3
+                                                    </option>
+                                                </select><span
+                                                    class="select2 select2-container select2-container--default"
+                                                    dir="ltr" data-select2-id="select2-data-5-ztzd"
+                                                    style="width: auto;"><span class="selection"><span
+                                                            class="select2-selection select2-selection--single"
+                                                            role="combobox" aria-haspopup="true" aria-expanded="false"
+                                                            tabindex="0" aria-disabled="false"
+                                                            aria-labelledby="select2-time-from-xp-container"
+                                                            aria-controls="select2-time-from-xp-container"><span
+                                                                class="select2-selection__rendered"
+                                                                id="select2-time-from-xp-container" role="textbox"
+                                                                aria-readonly="true" title="Choose the Country">Choose
+                                                                the Country</span><span class="select2-selection__arrow"
+                                                                role="presentation"><b
+                                                                    role="presentation"></b></span></span></span><span
+                                                        class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="section-heading">
+                                        <h6 class="silver mb-3">Channels</h6>
+                                    </div>
+                                    <form>
+                                        <div class="row mb-3">
+                                            <label for="inputFacebook" class="col-sm-3 col-form-label">Facebook </label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-text"
+                                                        id="inputFacebook">facebook.com</span>
+                                                    <input class="form-control" id="inputFacebook">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputInstagram"
+                                                class="col-sm-3 col-form-label">Instagram</label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-text"
+                                                        id="inputInstagram">instagram.com</span>
+                                                    <input class="form-control" id="inputInstagram">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputTwitter" class="col-sm-3 col-form-label"> Twitter </label>
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-text" id="inputTwitter">@</span>
+                                                    <input class="form-control" id="inputTwitter">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputYoutube" class="col-sm-3 col-form-label"> Youtube </label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="inputYoutube">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputWhatsapp" class="col-sm-3 col-form-label">Whatsapp </label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="inputWhatsapp">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputSMS" class="col-sm-3 col-form-label">SMS</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="inputSMS">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputEmail2" class="col-sm-3 col-form-label">Email</label>
+                                            <div class="col-sm-9">
+                                                <input type="email" class="form-control" id="inputEmail2">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="section-heading">
+                                        <h6 class="silver mb-3">Other</h6>
+                                    </div>
+                                    <form>
+                                        <div class="row mb-3">
+                                            <label for="inputFatherName" class="col-sm-3 col-form-label">Father Name
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="inputFatherName">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputEducation" class="col-sm-3 col-form-label">Education
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="inputEducation">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="inputBloodGroup" class="col-sm-3 col-form-label">Blood
+                                                Group</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="inputBloodGroup">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div for="inputBloodGroup" class="col-sm-3 col-form-label">
+                                                <a href="#" class="btn iconButton add-more-field">
+                                                    <i class="fal fa-plus me-1"></i>
+                                                    Add More
+                                                </a>
+                                            </div>
+                                            <div class="col-sm-9 select-type-field d-none">
+                                                <select class="select-type select2-hidden-accessible" name="time-from"
+                                                    data-select2-id="select2-data-19-nty6" tabindex="-1"
+                                                    aria-hidden="true">
+                                                    <option data-select2-id="select2-data-21-z78m"></option>
+                                                    <option>CNIC</option>
+                                                    <option>Phone</option>
+                                                    <option>Customer ID</option>
+                                                </select><span
+                                                    class="select2 select2-container select2-container--default"
+                                                    dir="ltr" data-select2-id="select2-data-20-5rvf"
+                                                    style="width: auto;"><span class="selection"><span
+                                                            class="select2-selection select2-selection--single"
+                                                            role="combobox" aria-haspopup="true" aria-expanded="false"
+                                                            tabindex="0" aria-disabled="false"
+                                                            aria-labelledby="select2-time-from-iq-container"
+                                                            aria-controls="select2-time-from-iq-container"><span
+                                                                class="select2-selection__rendered"
+                                                                id="select2-time-from-iq-container" role="textbox"
+                                                                aria-readonly="true" title="Select type"><span
+                                                                    class="select2-selection__placeholder">Select
+                                                                    type</span></span><span
+                                                                class="select2-selection__arrow" role="presentation"><b
+                                                                    role="presentation"></b></span></span></span><span
+                                                        class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                        <div class="scrollbar-thumb scrollbar-thumb-x"></div>
+                    </div>
+                    <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                        <div class="scrollbar-thumb scrollbar-thumb-y"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="megre-contacts d-none">
+                <header class="tab-header rightbar-tab-header">
+                    <nav class="mb-0">
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active d-flex align-items-center" id="user-profile"
+                                data-bs-toggle="tab" data-bs-target="#user-profile-tab" type="button" role="tab"
+                                aria-controls="user-profile-tab" aria-selected="false">
+                                <i class="far fa-arrow-left coal me-2 mb-0 m-0 breadcrumb"></i>
+                                Merge Contacts
+                            </button>
+                        </div>
+                    </nav>
+                </header>
+                <div class="rightbar-body-wrapper profile" data-scrollbar="true" tabindex="-1"
+                    style="overflow-y: auto; outline: none;">
+                    <div class="scroll-content">
+                        <div class="tab-content" id="nav-tabContent">
+                            <div id="user-profile-tab" class="tab-pane fade active show" role="tabpanel"
+                                aria-labelledby="user-profile">
+                                <table class="table">
+                                    <tbody>
+                                        <tr class="">
+                                            <td class="p-3">
+                                                <div class="card">
+                                                    <div class="row g-0">
+                                                        <div class="col-md-2">
+                                                            <div class="file-input select-user-img skyBg">
+                                                                <i class="fal fa-user"></i>
+                                                                <img src="../../../../assets/images/avatar-2.jpg" alt="-"
+                                                                    class="selected-group-img d-none">
+                                                                <span class="fileSelected d-none">
+                                                                    <i class="fal fa-pen ice"></i>
+                                                                </span>
+                                                            </div>
+                                                            <input class="form-control d-none" type="file"
+                                                                id="upload-user-img">
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title mb-0 darkblue username">AE7884747
+                                                                </h5>
+                                                                <div class="dropdown w-auto" data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top" title=""
+                                                                    data-bs-original-title="Add Social Channels">
+                                                                    <button class="btn charcoal pb-2 ps-0 pt-0"
+                                                                        id="dropdownMenuButton1"
+                                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        Customer
+                                                                        <small>
+                                                                            <i class="far fa-chevron-down ms-2"></i>
+                                                                        </small>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu custom-dropdown"
+                                                                        aria-labelledby="dropdownMenuButton1">
+                                                                        <li>
+                                                                            <a class="dropdown-item active p-1"
+                                                                                href="#"> Customer </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a class="dropdown-item p-1" href="#"> Agent
+                                                                            </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a class="dropdown-item p-1" href="#">
+                                                                                Marketing Team </a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a class="dropdown-item p-1" href="#"> VIPs
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="merge-search-sec m-4 mt-5 pb-4">
+                                    <select class="merge-search-field select2-hidden-accessible" name="time-from"
+                                        data-select2-id="select2-data-13-3pbm" tabindex="-1" aria-hidden="true">
+                                        <option></option>
+                                        <option selected="" value="Amin Khan" data-select2-id="select2-data-15-j851">
+                                            Amin Khan</option>
+                                        <option value="Aniqa Khan">Aniqa Khan</option>
+                                        <option value="Bilal Ali">Bilal Ali</option>
+                                        <option value="Jawad Khan">Jawad Khan</option>
+                                        <option value="Sana Khan">Sana Khan</option>
+                                        <option value="Tabish Ali">Tabish Ali</option>
+                                        <option value="Talha Iqbal">Talha Iqbal</option>
+                                        <option value="Umair Khan">Umair Khan</option>
+                                        <option value="Uroosa Ahmed">Uroosa Ahmed</option>
+                                        <option value="Zara Khan">Zara Khan</option>
+                                    </select><span class="select2 select2-container select2-container--default"
+                                        dir="ltr" data-select2-id="select2-data-14-g8ro" style="width: auto;"><span
+                                            class="selection"><span class="select2-selection select2-selection--single"
+                                                role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                aria-disabled="false" aria-labelledby="select2-time-from-fb-container"
+                                                aria-controls="select2-time-from-fb-container"><span
+                                                    class="select2-selection__rendered"
+                                                    id="select2-time-from-fb-container" role="textbox"
+                                                    aria-readonly="true" title="Amin Khan">Amin Khan</span><span
+                                                    class="select2-selection__arrow" role="presentation"><b
+                                                        role="presentation"></b></span></span></span><span
+                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    <span class="btn searchbar-btn" type="submit">
+                                        <i class="fal fa-search silver"></i>
+                                    </span>
+
+                                    <div class="merge-user-info">
+                                        <div class="card w-100">
+                                            <div class="card-body">
+                                                <h5 class="card-title night merge-user">
+                                                    AE7884747 will be Merged into
+                                                    <input class="form-control print-user-name" disabled=""
+                                                        id="exampleInputEmail1" value="Amin Khan">
+                                                </h5>
+                                            </div>
+                                            <div class="card-footer">
+                                                <ol>
+                                                    <li>Timeline activity for both contact records will be preserved in
+                                                        the new record</li>
+                                                    <li>The most recent value for each property (e.g., "Frist name")
+                                                        will be used for the new record</li>
+                                                </ol>
+                                                <p class="fw-bold m-0">Read more: <a href="javascript;;"
+                                                        class="sky text-decoration-underline"> What happens when i merge
+                                                        tow contacts?</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <footer class="footer">
+                                    <div class="ps-3 pe-3">
+                                        <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+                                            <div class="row w-100">
+                                                <div class="col-md-6 radical">
+                                                    <i class="fal fa-exclamation-circle radical"></i>
+                                                    This action can't be undone
+                                                </div>
+                                                <div class="col-md-6 justify-content-end d-flex">
+                                                    <div class="buttons-wrap d-flex">
+                                                        <button type="button" class="btn btn-success">Merge</button>
+                                                        <button type="button"
+                                                            class="btn btn-outline-secondary ms-2">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                        <div class="scrollbar-thumb scrollbar-thumb-x"></div>
+                    </div>
+                    <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                        <div class="scrollbar-thumb scrollbar-thumb-y"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

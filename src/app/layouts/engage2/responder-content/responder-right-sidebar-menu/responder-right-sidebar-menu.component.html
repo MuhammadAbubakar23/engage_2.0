@@ -1,0 +1,9 @@
+<div class="rightbarNav dashboard">
+    <div class="navUpper">
+        <div *ngFor="let menu of menus$" (click)="toggleRightBar(menu.link)" class="rightbar-btn-group panelToggle" [attr.value]="menu.slug+'-rightbar-dashboard'">
+            <button class="iconButton btn medium iconHover" data-bs-toggle="tooltip" data-bs-placement="left" [attr.data-bs-original-title]="menu.name">
+               <div [innerHTML]="menu.icon"></div>
+            </button>
+        </div>
+    </div>    
+</div>

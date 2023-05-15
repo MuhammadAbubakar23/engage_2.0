@@ -1,0 +1,188 @@
+<div class="role-and-permission-wrap console-body-wrapper inbox-container" data-scrollbar="true" tabindex="-1"
+style="overflow-y: auto; outline: none;">
+<div class="scroll-content">
+    <div class="wider-container pt-3">
+        <div class="searchBar-wrapper mb-2 p-0">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="d-flex align-items-lg-center">
+                        <p class="coal m-0">Status:</p>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle coal" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                All
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li>
+                                    <a class="dropdown-item" href="#">Ascending</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">Descending</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 d-flex align-items-center justify-content-end">
+                    <a href="javascript:" class="search-btn">
+                        <button class="iconButton medium">
+                            <i class="fal fa-search silver"></i>
+                        </button>
+                        <input placeholder="Search" class="me-1">
+                    </a>
+                    <a (click)="updatevalue('consoleCreateRolesHeader')" [routerLink]="['/console/roles-permissions/create/0']" class="ms-2">
+                        <button type="button" class="btn btn-success">
+                            <i class="fal fa-plus"></i>
+                            Create Roles
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-section">
+            <table class="table mb-5 align-middle">
+                <thead>
+                    <tr>
+                        <th class="border-0">
+                            {{RolesCount}} Roles
+                        </th>
+                        <th class="border-0"></th>
+
+                    </tr>
+                    <tr>
+                        <td class="silver pt-0">The first matching roles &amp; permissions will be applied to user with
+                            matching conditions</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr *ngFor="let role of Roles">
+                        <th>
+                            <ul class="list-group list-group-flush">
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-start p-0 pt-2 pb-2">
+                                    <div class="ms-2 me-auto fw-normal coal">
+                                        <div class="fw-bold night">{{role.name}}
+                                            <span class="badge rounded-pill bg-secondary">{{role.desc}}</span>
+                                        </div>
+                                        {{role.link}}
+                                        <!-- This roles &amp; permissions belong to team admin or supervisor -->
+                                    </div>
+                                </li>
+                            </ul>
+                        </th>
+                        <!-- <td>
+                            <div class="icons-list d-flex justify-content-end dropstart">
+                                <button class="btn iconButton medium iconHover">
+                                    <i class="fal fa-edit"></i>
+                                </button>
+
+                                <button class="btn iconButton medium iconHover btn-group" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="far fa-ellipsis-v dropdown-toggle"></i>
+                                </button>
+                                <ul class="dropdown-menu fade">
+                                    <li>
+                                        <a class="dropdown-item" href="#">Edit</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Delete</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Disable</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Clone</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td> -->
+                    </tr>
+                    <!-- <tr>
+                        <th>
+                            <ul class="list-group list-group-flush">
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-start p-0 pt-2 pb-2">
+                                    <div class="ms-2 me-auto fw-normal coal">
+                                        <div class="fw-bold night">Team Members
+                                            <span class="badge rounded-pill bg-secondary">Default</span>
+                                        </div>
+                                        This roles &amp; permissions belong to team member
+                                    </div>
+                                </li>
+                            </ul>
+                        </th>
+                        <td>
+                            <div class="icons-list d-flex justify-content-end dropstart">
+                                <button class="btn iconButton medium iconHover">
+                                    <i class="fal fa-edit"></i>
+                                </button>
+
+                                <button class="btn iconButton medium iconHover btn-group" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="far fa-ellipsis-v dropdown-toggle"></i>
+                                </button>
+                                <ul class="dropdown-menu fade">
+                                    <li>
+                                        <a class="dropdown-item" href="#">Edit</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Delete</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Disable</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Clone</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <ul class="list-group list-group-flush">
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-start p-0 pt-2 pb-2">
+                                    <div class="ms-2 me-auto fw-normal coal">
+                                        <div class="fw-bold night">Support Team</div>
+                                        This roles &amp; permissions belong to support team members
+                                    </div>
+                                </li>
+                            </ul>
+                        </th>
+                        <td>
+                            <div class="icons-list d-flex justify-content-end dropstart">
+                                <button class="btn iconButton medium iconHover">
+                                    <i class="fal fa-edit"></i>
+                                </button>
+
+                                <button class="btn iconButton medium iconHover btn-group" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="far fa-ellipsis-v dropdown-toggle"></i>
+                                </button>
+                                <ul class="dropdown-menu fade">
+                                    <li>
+                                        <a class="dropdown-item" href="#">Edit</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Delete</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Disable</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Clone</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>    
+</div>

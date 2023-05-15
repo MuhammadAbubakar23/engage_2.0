@@ -1,0 +1,20 @@
+<main>
+    <div class="main-wrapper d-flex">
+        <main-menu></main-menu>
+        <div class="user-comment-widget-container">
+            <template #maximizeChat></template>
+        </div>
+        <nav id="left-sidebar-expand" [ngClass]="toggleLeftBar ? 'toggled':'' ">
+            <console-menu></console-menu>
+            <a class="panelToggle" (click)="toggle()"></a>
+        </nav>
+        <div class="middle-wrapper d-flex w-100 flex-column">
+            <console-header></console-header>
+            <div class="content-box-wrapper d-flex w-100">
+                <div class="middle-content">
+                    <ng-content></ng-content>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

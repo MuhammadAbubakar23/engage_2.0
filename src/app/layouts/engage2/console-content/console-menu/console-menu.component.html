@@ -1,0 +1,39 @@
+<div class="leftbar-console-expanded">
+    <div class="sidebar-header pe-3 ps-3 row">
+       <h5 class="fw-bold mt-3 ms-1 col-8">
+            <a (click)="updatevalue('consoleHeader')" [routerLink]="['/console/home']">Console</a>
+        </h5>
+        <div class="create-button mt-3 col-3">
+            <button id="connectFormButton" class="iconButton medium notification iconHover custom-fa-col show"
+                (click)="updatevalue('consoleConnectFormHeader')" [routerLink]="['/console/connect-form']">
+                <i class="fal fa-plus" style="color: white;"></i></button>
+        </div>
+    </div>
+    <ul class="list-group console-list mt-2" data-scrollbar="true" tabindex="-1"
+        style="overflow-y: auto; outline: none;" >
+        <!-- <ng-select [items]="SuperTeamOptions"
+           bindLabel="name" 
+           bindValue="id"
+           [(ngModel)]="SuperTeamSelected"
+           [searchable]="false"
+           [clearable]="false"
+           >
+        </ng-select> -->
+        <div [hidden]="SuperTeamShow">
+            <li class="list-group-item list-group-item-action">
+                <app-select-option></app-select-option>
+            </li>
+        </div>
+        
+        <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);" *ngFor="let menu of menus$">
+
+            <li class="list-group-item list-group-item-action">
+                <a (click)="updatevalue(menu.link)" [routerLink]="['/console/'+menu.link]" class="d-flex align-items-center">
+                    <i class=" pe-2" [innerHTML]="menu.icon"></i>
+                    {{menu.name}}
+                </a>
+            </li>
+        </div>
+    </ul>
+</div>
+<a href="javascript:void;" class="panelToggle"></a>

@@ -1,0 +1,380 @@
+
+<div class="tab-content position-relative" id="myTabContent">
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+        <p style="color: white"> Loading... </p>
+    </ngx-spinner>
+    <div class="tab-pane fade  show active socila-channels-tab" id="sms" role="tabpanel" aria-labelledby="sms-tab">
+        <div class="headerWrap cherryBg d-flex align-items-center shadow-sm">
+            <div class="titleIcon d-flex align-items-center">
+                <i class="fal fa-comment-alt-lines"></i>
+                <div class="titleLink ms-1" >
+                    /{{To}}
+                </div>
+            </div>
+            <ul class="nav nav-tabs ms-3 h-100" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link h-100 active" id="post-tab" data-bs-toggle="tab" data-bs-target="#post"
+                        type="button" role="tab" aria-controls="post" aria-selected="false">
+                        <div class="chat-tab-title d-flex align-items-center">
+                            <span class="iconButton medium btn">
+                                <i class="fal fa-bookmark ice"></i>
+                            </span>
+                            Messages
+                            <span class="badge rounded-pill bg-light text-dark ms-3" *ngIf="totalUnrespondedCmntCountByCustomer>0">{{totalUnrespondedCmntCountByCustomer}}</span>
+
+                        </div>
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
+            <div class="scroll-content">
+                <div class="tab-content m-4" id="myTabContent">
+                    <div class="tab-pane fade show active" id="post" role="tabpanel" aria-labelledby="post-tab">
+                        <div class="chat-box-wrap" *ngFor="let smsdata of SmsData">
+                            <div *ngFor="let sms of smsdata.comments">
+                            <div class="date-wrap">
+                                <p class="date">{{sms.createdDate | date:'EEEE, MMMM d, y, h:mm a'}}</p>
+                            </div>
+                            <div class="message-wrap agent-message-wrap right">
+                                <div class="application-wrap d-flex align-items-center mb-1">
+                                    <p class="m-0 silver me-2 ms-1">Application ID
+                                    </p>
+                                    <p class="app-no navy m-0 me-2">2354545</p>
+                                </div>
+                                <div class="d-flex align-items-center agent-container">
+                                    <div class="card w-d-inline shadow-sm messageUpper">
+                                        <div class="card-body unread-msg">
+                                            <div class="d-flex msg-user-info">
+                                                <div class="d-flex align-items-center">
+                                                    <h6 class="card-title cherry m-0">
+                                                        {{sms.userName}}</h6>
+                                                    <p class="card-text ms-3"><small class="silver">{{sms.createdDate | date:'hh:mm a'}}</small></p>
+                                                </div>
+                                                <div class="dropdown w-auto">
+                                                    <button class="btn coal" type="button" id="dropdownMenuButton1"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <small>Unread <i
+                                                                class="far fa-chevron-down ms-2"></i></small>
+                                                    </button>
+                                                    <ul class="dropdown-menu custom-dropdown"
+                                                        aria-labelledby="dropdownMenuButton1">
+                                                        <li>
+                                                            <a class="dropdown-item" (click)="smsStatus(sms.id)">Read</a>
+                                                        </li>
+                                                        
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <p class="card-textnignt p-0">{{sms.message}}</p>
+                                            <div class="tags" *ngFor="let tag of sms.tags">
+                                                <span (click)="removeTag(tag.id, sms.id)"
+                                                     class="badge rounded-pill tag sms tag1 selected">{{tag.name}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="complaintBtn" type="button"><i
+                                            class="fal fa-plus-circle sky"></i></span>
+                                </div>
+                                <div class="message-bottom">
+                                    <div class="row">
+                                        <div class="col-lg-9 ps-4 d-flex align-items-center">
+                                            <div class="message-actionlist d-flex align-items-center">
+                                                <a (click)="SendSmsInformation(sms.id)" class="message-actionItem replyBtn coal">
+                                                    <span class="iconButton small btn">
+                                                        <i class="fal fa-reply coal"></i>
+                                                    </span>
+                                                    Reply
+                                                </a>
+                                                <div class="dropdown w-auto">
+                                                    <button class="iconButton medium" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                        data-bs-auto-close="outside">
+                                                        <span class="iconButton small btn mx-2">
+                                                            <i class="fal fa-tag coal"></i>
+                                                        </span>
+                                                        Tag
+                                                    </button>
+                                                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                        aria-labelledby="dropdownMenuButton2">
+                                                        <ul class="dropdown-listing">
+                                                            <li class="dropdown-listing-header">
+                                                                <div class="head-section">
+                                                                    <div class="left">
+                                                                        <h6>Tags
+                                                                        </h6>
+                                                                    </div>
+                                                                    <a href="#"
+                                                                        class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
+                                                                        id="dropdownMenuButton3" data-bs-toggle="dropdown"
+                                                                        aria-expanded="false">
+                                                                        <i class="fal fa-times silver"></i>
+                                                                    </a>
+                                                                </div>
+                                                                <form class="custom-searchbar">
+                                                                    <input class="form-control rounded-pill shadow-sm"
+                                                                        placeholder="Search" aria-label="Search">
+                                                                    <span class="btn searchbar-btn" type="submit">
+                                                                        <i class="fal fa-search silver"></i>
+                                                                    </span>
+                                                                </form>
+                                                            </li>
+                                                            <li class="dropend">
+                                                                <div *ngFor="let tag of TagsList"
+                                                                    class="list-group list-group-flush dropend">
+                                                                    <a data-bs-toggle="dropdown"
+                                                                        class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
+                
+                                                                        <div class="w-100 list-txt">
+                                                                            <div class="d-flex w-100 justify-content-between">
+                                                                                <h6 class="mb-1 darkblue">
+                                                                                    {{tag.name}}
+                                                                                </h6>
+                                                                            </div>
+                                                                        </div>
+                
+                                                                    </a>
+                                                                    <ul class="dropdown-menu shadow">
+                                                                        <li class="list-body small-list" data-scrollbar="true"
+                                                                            tabindex="-1" style="overflow: auto; outline: none;">
+                                                                            <div class="list-group list-group-flush">
+                                                                                <a (click)="insertTags(keyword.id, sms.id)"
+                                                                                    [ngClass]="activeTag==true?'active':''"
+                                                                                    class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                    *ngFor="let keyword of tag.keywordList">
+                                                                                    <div class="list-down-icon">
+                                                                                        <span class="btn iconButton iconHover medium">
+                                                                                            <i class="fal fa-tag coal"></i>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <div class="w-100 list-txt">
+                                                                                        <div
+                                                                                            class="d-flex w-100 justify-content-between">
+                                                                                            <h6 class="mb-1 darkblue">
+                                                                                                {{keyword.name}}
+                                                                                            </h6>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <small *ngIf="keyword.id == tag.id">
+                                                                                        <i [ngClass]="checkTag==true?'fa-check-circle':''"
+                                                                                            class="fal sky"></i>
+                                                                                    </small>
+                                                                                </a>
+                                                                            </div>
+                                                                        </li>
+                
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                                                                    <div class="scrollbar-thumb scrollbar-thumb-x">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                                                                    <div class="scrollbar-thumb scrollbar-thumb-y">
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </ul>
+                                                </div>
+                                                <div class="dropdown w-auto">
+                                                    <button class="iconButton medium show" id="sentimentButton"
+                                                        data-bs-toggle="dropdown" aria-expanded="true" style="margin-left:43px">
+                                                        <span class="iconButton small btn mx-2">
+                                                            <i class="fal fa-smile"></i>
+                                                        </span>
+                                                        Sentiment
+                                                    </button>
+                                                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                        aria-labelledby="dropdownMenuButton2"
+                                                        style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 42px);"
+                                                        data-popper-placement="bottom-start">
+                                                        <ul class="dropdown-listing">
+                                                            <li class="list-body small-list" data-scrollbar="true" tabindex="-1"
+                                                                style="overflow: auto; outline: none;">
+                                                                <div class="scroll-content">
+                                                                    <div class="list-group list-group-flush"
+                                                                        *ngFor="let sentiment of Sentiments">
+                                                                        <a (click)="insertSentiment(sms.id, sentiment.name, 'SMS')"
+                                                                            class="list-group-item d-flex level1Btn ">
+                                                                            <div class="list-down-icon">
+                                                                                <span class="btn iconButton iconHover medium">
+                                                                                    <i class={{sentiment.icon}}></i>
+                                                                                </span>
+                                                                            </div>
+                                                                            <div class="w-100 list-txt">
+                                                                                <div class="d-flex w-100 justify-content-between">
+                                                                                    <h6 class="mb-1 darkblue">
+                                                                                        {{sentiment.name}}
+                                                                                    </h6>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- <small>
+                                                                                <i class="fal fa-check-circle sky"></i>
+                                                                            </small> -->
+                                                                        </a>
+                
+                
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngFor="let reply of sms.replies">
+                                <div class="date-wrap">
+                                    <p class="date">{{reply.createdDate | date:'EEEE, MMMM d, y'}}</p>
+                                </div>
+                            <div class="message-wrap agent-message-wrap left">
+                                <div class="agent-container">
+                                    <div class="card w-d-inline card-txt ms-auto shadow-sm">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center mb-2">
+                                                <h6 class="card-title m-0">{{To}}</h6>
+                                                <p class="card-text ms-3"><small class="silver">{{reply.createdDate | date:'hh:mm a'}}</small></p>
+                                            </div>
+                                            <p class="card-text nignt mb-1">{{reply.message}}</p>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="message-bottom w-100">
+                                        <div class="row">
+                                            <div class="col-lg-12 ps-4 d-flex align-items-center">
+                                                <div class="commentWrap">
+                                                    Commented on by
+                                                    <a class="fw-bold">Syed
+                                                        Ahmed</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                <div class="scrollbar-thumb scrollbar-thumb-x"></div>
+            </div>
+            <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                <div class="scrollbar-thumb scrollbar-thumb-y"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="msgTypingField shadow-lg">
+    <div *ngFor="let list of SmsData">
+    <div class="attachment-block d-none">
+        <div class="card-body p-3">
+            <span class="close-icon"><i class="fas fa-times"></i></span>
+            <i class="far fa-file"></i>
+            <h5 class="card-title coal">Backup File</h5>
+            <p>242 KB</p>
+        </div>
+        <div class="card-body p-3">
+            <span class="close-icon"><i class="fas fa-times"></i></span>
+            <i class="far fa-file"></i>
+            <h5 class="card-title coal">Backup File</h5>
+            <p>242 KB</p>
+        </div>
+        <div class="card-body p-3">
+            <span class="close-icon"><i class="fas fa-times"></i></span>
+            <i class="far fa-file"></i>
+            <h5 class="card-title coal">Backup File</h5>
+            <p>242 KB</p>
+        </div>
+    </div>
+
+    <div *ngFor="let sms of list.comments">
+        <div *ngIf="sms.id == smsId">
+            <div [ngClass]="show == true? 'show':''" class="card hideMsg">
+                <div class="card-body">
+                    <div class="card-text">
+                        <span class="fw-bold navy">2354545</span>
+                        {{sms.message}}
+
+                    </div>
+                    <button (click)="closeMentionedReply()" class="iconButton small closeMsgBtn"
+                        data-bs-toggle="tooltip" data-bs-placement="top" id="searchbtn" data-bs-original-title="Close">
+                        <i class="fal fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <form [formGroup]="SmsReplyForm" (submit)="submitSmsReply()">
+        <div class="input-group input-group-lg">
+            <div class="icons-list align-items-md-center d-flex pe-2">
+                <button class="iconButton small notification iconHover" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" id="searchbtn">
+                    <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></button>
+            </div>
+            <div class="form-floating textarea-field">
+                <textarea formControlName="text" class="form-control auto" rows="1" id="text"
+                    placeholder="Write a response here" [(ngModel)]="smsText" style="height: 0px"></textarea>
+
+            </div>
+            <div class="icons-list align-items-md-center d-flex ps-2">
+                <button class="iconButton small notification iconHover" type="button" data-bs-toggle="tooltip"
+                    data-bs-placement="top" title="" id="searchbtn" data-bs-original-title="Choose an emoji">
+                    <i class="far fa-smile"></i>
+                </button>
+
+                <button class="iconButton small notification iconHover" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="" type="button" id="commentSendbtn" type="submit" data-bs-original-title="Send">
+                    <i class="fal fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+   
+</div>
+
+<div class="quickResWrapper">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"
+        style="visibility: visible;" aria-modal="true" role="dialog">
+        <div class="offcanvas-header">
+            <div class="section-heading">
+                <h6 class="silver pt-3 mb-0">Quick Response</h6>
+            </div>
+            <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas"
+                aria-label="Close"><i class="fal fa-times"></i></button>
+        </div>
+        <div class="offcanvas-body">
+
+            <form class="custom-searchbar">
+                <input class="form-control me-2 rounded-pill shadow-sm" placeholder="Search" aria-label="Search">
+                <span class="btn searchbar-btn" type="submit">
+                    <i class="fal fa-search silver"></i>
+                </span>
+            </form>
+            <div class="list-group-section quick-response" id="accordionExample">
+                <div class="collapse-toggle-card">
+                    <div class="list-group list-group-flush">
+                        
+                        <div class="collapse-wrap mx-3" id="qr-ques1" *ngFor="let qr of QuickReplies">
+                            <div class="list-group list-group-flush mb-4 ms-4 ps-1" (click)="sendQuickReply(qr.value)">
+                                <div class="form-check list-group-item theme-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id={{qr.value}}>
+                                    <label class="form-check-label" for={{qr.value}}>{{qr.text}}
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

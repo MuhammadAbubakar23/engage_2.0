@@ -1,0 +1,599 @@
+<div class="team-user-wrap console-body-wrapper" data-scrollbar="true" tabindex="-1"
+    style="overflow-y:auto; outline: none;">
+    <div class="scroll-content">
+        <div class="wider-container pt-3 console-document">
+            <div class="searchBar-wrapper mb-4 position-relative">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <nav class="d-flex align-items-center mb-2 bd-crumb" style="--bs-breadcrumb-divider: '>';"
+                            aria-label="breadcrumb">
+                            <a href="documents.html">
+                                <i class="silver fas fa-arrow-left"></i>
+                            </a>
+                            <ol class="nav nav-tabs breadcrumb m-0 mx-2" id="nav-tab" role="tablist">
+                                <li class="breadcrumb-item active subHeading" aria-current="page">Videos <small
+                                        class="metal">(12
+                                        files)</small>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-lg-8 d-flex align-items-center justify-content-end">
+                        <div class="icons-list">
+                            <button class="btn btn-primary btn-sm add-file">
+                                <i class="fal fa-file-upload"></i> Upload Files
+                                <input type="file" name="file" class="add-file-input">
+                            </button>
+                            <button (click)="GridView()" class="iconButton medium iconHover gridicon">
+                                <i class="fas fa-th-large"></i>
+                            </button>
+                            <button (click)="ListView()" class="iconButton medium iconHover listicon">
+                                <i class="fas fa-list"></i>
+                            </button>
+                            <div class="searchbar-click">
+                                <form class="searchbox">
+                                    <input placeholder="What are you looking for?" name="search" class="searchbox-input"
+                                        required="">
+                                    <span class="searchbox-icon medium iconButton iconHover">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div [class.d-none]="isListView==false" class="table-section" id="tableview">
+                <table class="table mb-5 align-middle">
+                    <thead>
+                        <tr>
+                            <th> NAME </th>
+                            <th>
+                                <a href="javascript:" class="darkblue hover-icon">
+                                    SIZE
+                                    <i class="fas fa-long-arrow-alt-down"></i>
+                                </a>
+                            </th>
+                            <th> LAST MODIFIED </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <a>
+                                    <div class="d-flex align-items-center">
+                                        <span class="btn iconButton iconHover medium me-2">
+                                            <i class="fal fa-file-pdf"></i>
+                                        </span>
+                                        <p class="mb-1 darkblue">Bank statement.pdf</p>
+                                    </div>
+                                </a>
+                            </td>
+                            <td> 489 KB </td>
+                            <td> 25 Jul 2021, 9:23 pm </td>
+                            <td>
+                                <div class="d-flex justify-content-end dropstart">
+                                    <button class="btn iconButton medium iconHover">
+                                        <i class="fal fa-link"></i>
+                                    </button>
+                                    <button class="btn iconButton medium iconHover btn-group" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="far fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu fade">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Download File</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Rename</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Clone</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="#">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a>
+                                    <div class="d-flex align-items-center">
+                                        <span class="btn iconButton iconHover medium me-2">
+                                            <i class="fal fa-file-alt"></i>
+                                        </span>
+                                        <p class="mb-1 darkblue">Credit card receipt.doc </p>
+                                    </div>
+                                </a>
+                            </td>
+                            <td> 489 KB </td>
+                            <td> 25 Jul 2021, 9:23 pm </td>
+                            <td>
+                                <div class="d-flex justify-content-end dropstart">
+                                    <button class="btn iconButton medium iconHover">
+                                        <i class="fal fa-link"></i>
+                                    </button>
+                                    <button class="btn iconButton medium iconHover btn-group" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="far fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu fade">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Download File</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Rename</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Clone</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="#">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a>
+                                    <div class="d-flex align-items-center">
+                                        <span class="btn iconButton iconHover medium me-2">
+                                            <i class="fal fa-image"></i>
+                                        </span>
+                                        <p class="mb-1 darkblue">Lockbox check images.png</p>
+                                    </div>
+                                </a>
+                            </td>
+                            <td> 489 KB </td>
+                            <td> 25 Jul 2021, 9:23 pm </td>
+                            <td>
+                                <div class="d-flex justify-content-end dropstart">
+                                    <button class="btn iconButton medium iconHover">
+                                        <i class="fal fa-link"></i>
+                                    </button>
+                                    <button class="btn iconButton medium iconHover btn-group" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="far fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu fade">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Download File</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Rename</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Clone</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="#">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a>
+                                    <div class="d-flex align-items-center">
+                                        <span class="btn iconButton iconHover medium me-2">
+                                            <i class="fal fa-file-pdf"></i>
+                                        </span>
+                                        <p class="mb-1 darkblue">Bank statement.pdf</p>
+                                    </div>
+                                </a>
+                            </td>
+                            <td> 489 KB </td>
+                            <td> 25 Jul 2021, 9:23 pm </td>
+                            <td>
+                                <div class="d-flex justify-content-end dropstart">
+                                    <button class="btn iconButton medium iconHover">
+                                        <i class="fal fa-link"></i>
+                                    </button>
+                                    <button class="btn iconButton medium iconHover btn-group" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="far fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu fade">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Download File</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Rename</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Clone</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="#">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a>
+                                    <div class="d-flex align-items-center">
+                                        <span class="btn iconButton iconHover medium me-2">
+                                            <i class="fal fa-file-alt"></i>
+                                        </span>
+                                        <p class="mb-1 darkblue">Credit card receipt.doc </p>
+                                    </div>
+                                </a>
+                            </td>
+                            <td> 489 KB </td>
+                            <td> 25 Jul 2021, 9:23 pm </td>
+                            <td>
+                                <div class="d-flex justify-content-end dropstart">
+                                    <button class="btn iconButton medium iconHover">
+                                        <i class="fal fa-link"></i>
+                                    </button>
+                                    <button class="btn iconButton medium iconHover btn-group" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="far fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu fade">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Download File</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Rename</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Clone</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="#">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a>
+                                    <div class="d-flex align-items-center">
+                                        <span class="btn iconButton iconHover medium me-2">
+                                            <i class="fal fa-image"></i>
+                                        </span>
+                                        <p class="mb-1 darkblue">Lockbox check images.png</p>
+                                    </div>
+                                </a>
+                            </td>
+                            <td> 489 KB </td>
+                            <td> 25 Jul 2021, 9:23 pm </td>
+                            <td>
+                                <div class="d-flex justify-content-end dropstart">
+                                    <button class="btn iconButton medium iconHover">
+                                        <i class="fal fa-link"></i>
+                                    </button>
+                                    <button class="btn iconButton medium iconHover btn-group" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="far fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu fade">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Download File</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Rename</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Clone</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="#">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a>
+                                    <div class="d-flex align-items-center">
+                                        <span class="btn iconButton iconHover medium me-2">
+                                            <i class="fal fa-file-pdf"></i>
+                                        </span>
+                                        <p class="mb-1 darkblue">Bank statement.pdf</p>
+                                    </div>
+                                </a>
+                            </td>
+                            <td> 489 KB </td>
+                            <td> 25 Jul 2021, 9:23 pm </td>
+                            <td>
+                                <div class="d-flex justify-content-end dropstart">
+                                    <button class="btn iconButton medium iconHover">
+                                        <i class="fal fa-link"></i>
+                                    </button>
+                                    <button class="btn iconButton medium iconHover btn-group" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="far fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu fade">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Download File</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Rename</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Clone</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="#">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a>
+                                    <div class="d-flex align-items-center">
+                                        <span class="btn iconButton iconHover medium me-2">
+                                            <i class="fal fa-file-alt"></i>
+                                        </span>
+                                        <p class="mb-1 darkblue">Credit card receipt.doc </p>
+                                    </div>
+                                </a>
+                            </td>
+                            <td> 489 KB </td>
+                            <td> 25 Jul 2021, 9:23 pm </td>
+                            <td>
+                                <div class="d-flex justify-content-end dropstart">
+                                    <button class="btn iconButton medium iconHover">
+                                        <i class="fal fa-link"></i>
+                                    </button>
+                                    <button class="btn iconButton medium iconHover btn-group" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="far fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu fade">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Download File</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Rename</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Clone</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="#">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a>
+                                    <div class="d-flex align-items-center">
+                                        <span class="btn iconButton iconHover medium me-2">
+                                            <i class="fal fa-image"></i>
+                                        </span>
+                                        <p class="mb-1 darkblue">Lockbox check images.png</p>
+                                    </div>
+                                </a>
+                            </td>
+                            <td> 489 KB </td>
+                            <td> 25 Jul 2021, 9:23 pm </td>
+                            <td>
+                                <div class="d-flex justify-content-end dropstart">
+                                    <button class="btn iconButton medium iconHover">
+                                        <i class="fal fa-link"></i>
+                                    </button>
+                                    <button class="btn iconButton medium iconHover btn-group" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="far fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu fade">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Download File</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Rename</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Clone</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="#">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a>
+                                    <div class="d-flex align-items-center">
+                                        <span class="btn iconButton iconHover medium me-2">
+                                            <i class="fal fa-file-pdf"></i>
+                                        </span>
+                                        <p class="mb-1 darkblue">project.zip</p>
+                                    </div>
+                                </a>
+                            </td>
+                            <td> 489 KB </td>
+                            <td> 25 Jul 2021, 9:23 pm </td>
+                            <td>
+                                <div class="d-flex justify-content-end dropstart">
+                                    <button class="btn iconButton medium iconHover">
+                                        <i class="fal fa-link"></i>
+                                    </button>
+                                    <button class="btn iconButton medium iconHover btn-group" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="far fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu fade">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Download File</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Rename</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Clone</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="#">Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div [class.d-none]="isGridView==false" class="file-card-view" id="cardview">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <span class="btn iconButton">
+                                    <i class="fal fa-file-pdf"></i>
+                                </span>
+                                <h6 class="text-truncate">Admin_Panel.pdf</h6>
+                                <p class="darkblue m-0">
+                                    <small>06 March 2019 / 5MB</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <span class="btn iconButton">
+                                    <i class="fal fa-file-alt"></i>
+                                </span>
+                                <h6 class="text-truncate">document.doc</h6>
+                                <p class="darkblue m-0">
+                                    <small>06 March 2019 / 5MB</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <span class="btn iconButton">
+                                    <i class="fal fa-file-archive"></i>
+                                </span>
+                                <h6 class="text-truncate">project.zip</h6>
+                                <p class="darkblue m-0">
+                                    <small>19 March 2021 / 3MB</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <span class="btn iconButton">
+                                    <i class="fal fa-file-pdf"></i>
+                                </span>
+                                <h6 class="text-truncate">Admin_Panel.pdf</h6>
+                                <p class="darkblue m-0">
+                                    <small>06 March 2019 / 5MB</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <span class="btn iconButton">
+                                    <i class="fal fa-file-alt"></i>
+                                </span>
+                                <h6 class="text-truncate">document.doc</h6>
+                                <p class="darkblue m-0">
+                                    <small>06 March 2019 / 5MB</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <span class="btn iconButton">
+                                    <i class="fal fa-file-pdf"></i>
+                                </span>
+                                <h6 class="text-truncate">Admin_Panel.pdf</h6>
+                                <p class="darkblue m-0">
+                                    <small>06 March 2019 / 5MB</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <span class="btn iconButton">
+                                    <i class="fal fa-file-alt"></i>
+                                </span>
+                                <h6 class="text-truncate">document.doc</h6>
+                                <p class="darkblue m-0">
+                                    <small>06 March 2019 / 5MB</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <span class="btn iconButton">
+                                    <i class="fal fa-file-pdf"></i>
+                                </span>
+                                <h6 class="text-truncate">Admin_Panel.pdf</h6>
+                                <p class="darkblue m-0">
+                                    <small>06 March 2019 / 5MB</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <span class="btn iconButton">
+                                    <i class="fal fa-file-archive"></i>
+                                </span>
+                                <h6 class="text-truncate">project.zip</h6>
+                                <p class="darkblue m-0">
+                                    <small>19 March 2021 / 3MB</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <span class="btn iconButton">
+                                    <i class="fal fa-image"></i>
+                                </span>
+                                <h6 class="text-truncate">fileimage.png</h6>
+                                <p class="darkblue m-0">
+                                    <small>05 April 2019 / 2MB</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+        <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 1176px; transform: translate3d(0px, 0px, 0px);">
+        </div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-y" style="display: block;">
+        <div class="scrollbar-thumb scrollbar-thumb-y"
+            style="height: 106.589px; transform: translate3d(0px, 0px, 0px);"></div>
+    </div> -->
+</div>

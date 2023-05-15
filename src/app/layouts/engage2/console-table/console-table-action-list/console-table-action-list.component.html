@@ -1,0 +1,21 @@
+<div class="icons-list d-flex justify-content-end dropstart">
+    <button class="btn iconButton medium iconHover btn-group" type="button"
+        data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+        <i class="far fa-ellipsis-v"></i>
+    </button>
+    <!-- <ul class="dropdown-menu fade" [innerHTML]="actionli| safe:'html'"></ul> -->
+    <!-- <ul class="dropdown-menu fade" [innerHTML]="actionlisenit"> -->
+        <!-- <li *ngfor="let ta of listaction">
+            {<a class="dropdown-item" href="javascript:void(0);"><i class="" [ngClass]="ta.icon"></i>{{ta.name}}</a>
+        </li>
+        <li>
+            <a class="dropdown-item delete-dd" href="#"><i class="fal fa-trash me-2"></i> Delete</a>
+        </li>
+        {{actionli|safe}} -->
+    <!-- </ul> {{ta.actionUrl}} -->
+    <ul class="dropdown-menu fade">
+        <li *ngFor="let ta of actions">
+            <button class="dropdown-item" (click)="funcAction(ta)" ><i [ngClass]="ta.icon"></i>{{ta.name}}</button>
+        </li>
+    </ul>
+</div>
