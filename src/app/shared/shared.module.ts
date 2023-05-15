@@ -6,7 +6,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { MinimizedChatWidgetComponent } from './minimized-chat-widget/minimized-chat-widget.component';
 import { GroupbydatePipe } from './CustomPipes/groupbydate.pipe';
-import { RightHeaderComponentsComponent } from './right-header-components/right-header-components.component';
 import { FilterPipe } from './CustomPipes/filter.pipe';
 import { QuickReplySearchFilterPipe } from './CustomPipes/quick-reply-search-filter.pipe';
 import { SafePipe } from './pipes/safe.pipe';
@@ -18,7 +17,6 @@ import { SafePipe } from './pipes/safe.pipe';
     SortPipe,
     MinimizedChatWidgetComponent,
     GroupbydatePipe,
-    // RightHeaderComponentsComponent,
     FilterPipe,
     QuickReplySearchFilterPipe,
     SafePipe,
@@ -35,7 +33,6 @@ import { SafePipe } from './pipes/safe.pipe';
   exports:[
     SortPipe,
     GroupbydatePipe,
-    // RightHeaderComponentsComponent,
     FilterPipe,
     QuickReplySearchFilterPipe,
     SafePipe,

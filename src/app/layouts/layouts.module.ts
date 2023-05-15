@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgSelectModule } from '@ng-select/ng-select';
 
 import { InboxContentComponent } from './engage2/inbox-content/inbox-content.component';
 import { ResponderContentComponent } from './engage2/responder-content/responder-content.component';
@@ -38,7 +37,9 @@ import { CardBoxListCheckboxComponent } from './engage2/card-box-list/card-box-l
 import { permissionReducer } from './engage2/permission-state/permission.reducer';
 import { AdminContentComponent } from './engage2/admin-content/admin-content.component';
 import { AdminMenuComponent } from './engage2/admin-content/admin-menu/admin-menu.component';
-import { RightHeaderComponentsComponent } from '../shared/right-header-components/right-header-components.component';
+import { RightHeaderComponentsComponent } from './engage2/right-header-components/right-header-components.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+// import { NgSelectModule } from '@ng-select/ng-select/lib/ng-select.module';
 
 
 
@@ -75,7 +76,6 @@ import { RightHeaderComponentsComponent } from '../shared/right-header-component
   ],
   imports: [
     CommonModule,
-    // NgSelectModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
@@ -84,6 +84,7 @@ import { RightHeaderComponentsComponent } from '../shared/right-header-component
     StoreModule.forFeature('menus', menuReducer),
     StoreModule.forFeature('permissions', permissionReducer),
     EffectsModule.forFeature([MenusEffects, PermissionsEffects]),
+    NgSelectModule
   ],
   exports:[
     ResponderContentComponent,
@@ -98,7 +99,7 @@ import { RightHeaderComponentsComponent } from '../shared/right-header-component
     ConsoleTableWithImageComponent,
     BreadcrumbComponent,
     CardBoxListComponent,
-    RightHeaderComponentsComponent
+    
   ]
 })
 export class LayoutsModule { }

@@ -40,6 +40,7 @@ export class InboxRightSidebarComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.menus$ =[];
     this.menu$ = this.store.select(getEmargingEqual("team_inbox_right_menu")).subscribe((item:any) => {
       for(let key in item) {
        // // console.log(item)
@@ -55,21 +56,16 @@ export class InboxRightSidebarComponent implements OnInit {
       }
       
       // this.menus$ = item;
-    })
-   // // console.log(this.menus$);
+    });
+    // // console.log(this.menus$);
     // Array.from(document.querySelectorAll('[data-bs-toggle]'))
-    // .forEach(tooltipNode => new Tooltip(tooltipNode));
-
-   // this.getRightMenu();
+    // .forEach(tooltipNode => new Tooltip(tooltipNode))
+    // this.getRightMenu();
     
-   let parent = localStorage.getItem("parent");
-   {
-   }
+    let parent = localStorage.getItem("parent");   
 
     this.subscription2 = this.rightNavService.getChildComponent().subscribe(msg2 => { 
-    
-      
-    this.dynamicChildPath = msg2;
+      this.dynamicChildPath = msg2;
     });
   }
 

@@ -19,14 +19,14 @@ export class TeamMenuComponent implements OnInit {
   menu$: any;
   loading$: any;
   constructor(private store: Store<MenuState>, private _route: Router) {
-    this.menu$ = this.store.select(getEmargingEqual('team_left_menu'));
+    this.menu$ = this.store.select(getEmargingEqual('team_main_left_menu'));
     this.loading$ = this.store.select(getMenusLoading);
     this.store.dispatch(loadMenusList());
   }
 
   ngOnInit(): void {
     this.menu$ = this.store
-      .select(getEmargingEqual('team_left_menu'))
+      .select(getEmargingEqual('team_main_left_menu'))
       .subscribe((item) => {
         this.menus$ = item;
       });

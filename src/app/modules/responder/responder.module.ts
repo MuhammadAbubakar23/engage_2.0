@@ -52,7 +52,7 @@ import { ConsoleTableWithImageComponent } from 'src/app/layouts/engage2/console-
     NgxSpinnerModule,
     RouterModule,
     ResponderRightSidebarComponentsModule,
-    // InfiniteScrollModule,
+    InfiniteScrollModule,
     FormsModule,
   ],
   exports:[
