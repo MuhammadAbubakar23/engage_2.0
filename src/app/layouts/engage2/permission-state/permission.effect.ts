@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, exhaustMap, map, mergeMap, of} from 'rxjs'; 
+import { catchError, exhaustMap, map, mergeMap, Observable, of} from 'rxjs'; 
 import { PermissionService } from './permission.service';
-import { loadPermissionsList, loadPermissionsListSuccess } from './permission.actions';
+import { loadPermissionsLetters, loadPermissionsLettersFail, loadPermissionsLettersSuccess, updatePermissionsLetters, updatePermissionsLettersFail, updatePermissionsLettersSuccess } from './permission.actions';
+import { PermissionModel } from './permission.state';
 
 @Injectable()
 export class PermissionsEffects {
@@ -10,19 +11,24 @@ export class PermissionsEffects {
     private action$: Actions,
     private permissionService: PermissionService
   ) {}
-  loadPermissions$ = createEffect(() => {
+  loadPermissions$ : Observable<any> = createEffect(() => {
     return this.action$.pipe(
-      ofType(loadPermissionsList),
+      ofType(loadPermissionsLetters),
       mergeMap((action) => {
-        return this.permissionService.getPermissionList().pipe(
-          map((permissions: any) => loadPermissionsListSuccess({ permissions })),
-        //  catchError(error => of(loadPermissionsList(),fail({ error })))
-        //   return this.actions$.pipe(
-        //     ofType(MemberActions.loadMembers),
-        //     mergeMap(() => this.memberService.getMembers().pipe(
-        //         map(members=> MemberActions.loadMembersSuccess({ members })),
-        //         catchError(error => of(MemberActions.loadMembers()Fail({ error })))
-        //     )));
+        return this.permissionService.getTeamsLetters().pipe(
+          map((permissions: any) => loadPermissionsLettersSuccess({ permissions })),
+          catchError((error: string ) => of(loadPermissionsLettersFail({ error })))
+        );
+      })
+    );
+  });
+  updatePermissions$: Observable<any> = createEffect(() => {
+    return this.action$.pipe(
+      ofType(updatePermissionsLetters),
+      mergeMap((action) => {
+        return this.permissionService.getRolesLetters().pipe(
+          map((permissions: any) => updatePermissionsLettersSuccess({ permissions })),
+          catchError((error: string ) => of(updatePermissionsLettersFail({ error })))
         );
       })
     );
@@ -35,13 +41,14 @@ export class PermissionsEffects {
 // import { Effect, EffectsModule, Actions, ofType, createEffect } from "@ngrx/effects";
 // import { Observable } from "rxjs";
 // import { switchMap, catchError, map, mergeMap } from "rxjs/operators";
-// import  {GetPermissionListAction, GetPermissionListActionSuccess, PermissionActionType} from "./permission.actions";
+// import  {GetPermissionLettersAction, GetPermissionLettersActionSuccess, PermissionActionType} from "./permission.actions";
 // import { PermissionService } from "./permission.service";
 
 // @Injectable()
 // export class PermissionEffect {
 //   constructor(private actions$: Actions, private ser: PermissionService) {}
 // //   @Effect()
+
 // //   sgetPermissionList$: Observable<Action> = this.actions$
 // //     .ofType(PermissionActionType.GET_PERMISSION_LIST)
 // //     .pipe(switchMap((action: GetPermissionListAction) => {
@@ -52,7 +59,16 @@ export class PermissionsEffects {
 //         return this.actions$.pipe(
 //           ofType(PermissionActionType.GET_PERMISSION_LIST),
 //           mergeMap((action:GetPermissionListAction) => {
-//             return this.ser.getPermissionList().pipe()
+// //     .ofType(PermissionActionType.GET_PERMISSION_LETTERS)
+// //         return this.ser.getPermissionLetters()
+// //     }));
+
+//     getPermissionLetters$ = createEffect(() =>  {
+//         return this.actions$.pipe(
+//           ofType(PermissionActionType.GET_PERMISSION_LETTERS),
+//           mergeMap((action:GetPermissionLettersAction) => {
+//             return this.ser.getPermissionLetters().pipe()
+
 //           })
 //         );
 //       });  

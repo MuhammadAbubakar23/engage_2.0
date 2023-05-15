@@ -41,7 +41,7 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
   
   }
   private _fetchData(){ //: Observable<T> (page: number, pagesize: number)  {
-   // 
+   // debugger;
     this._request.get<T[]>(this.url,  this.filter).pipe(
       takeUntil(this.unsubscribe)).subscribe(
       (next:T[]) => {//...next:T[]

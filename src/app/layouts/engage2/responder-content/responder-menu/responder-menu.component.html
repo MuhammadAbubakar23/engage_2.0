@@ -348,7 +348,6 @@
                     <ng-container *ngIf="profile.slaFlag == 'danger' || profile.slaFlag == 'warning'">
                         <ul class="list-group list-group-flush" id="inboxes-list">
 
-                            <li class="postBox isSla"
                                 [ngClass]="[profile.slaFlag == 'warning'?'slaMedium':'' || profile.slaFlag == 'danger'?'slaHigh':'']"
                                 (click)="updatevalue(profile.fromId, profile.platform, profile.profileId)">
 
@@ -408,7 +407,7 @@
                                     </div>
                                 </div>
 
-                            </li>
+                            <!-- </li> -->
                         </ul>
                     </ng-container>
                 </ng-container>
@@ -490,23 +489,6 @@
                                 </div>
                             </a>
                             <div class="boxMiddle"><a >
-                                    <div class="boxHeading">
-                                        <div class="left">
-                                            <div class="boxId">9632587</div>
-                                        </div>
-                                        <div class="right">
-                                            <div class="postDate">10:30 PM</div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="subHeading"><a >
-                                        <div class="channel">
-                                            <i class="fab fa-youtube"></i>
-                                        </div>
-                                    </a><a href="javascript:;" class="businessName radical">/foodpanda.pk</a>
-                                    <a href="javascript:;" class="skill">@Feedback</a>
-                                </div>
-                                <div class="boxContent">...چند گھنٹے میں رپورٹ آ جائے گی تو آفیشل چینلز کے ذریعے ریلیز
                                 </div>
                             </div>
 

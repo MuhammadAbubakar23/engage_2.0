@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { IdNameDto } from 'src/app/shared/Models/IdNameDto';
+import { MenuDto } from 'src/app/shared/Models/MenuDto';
 import { RequestService } from 'src/app/shared/services/request/request.service';
 import { Roles } from './roles';
 
@@ -34,5 +35,17 @@ export class RolesAndPermissionsService {
     //    return response;  
     //  })
     //);
+  }
+  getMyRolesPermissions(): Observable<MenuDto[]> {
+    return this.request.get<MenuDto[]>("RolesPermissions",{}).pipe(
+      map((response: any) => {
+        // if(response.length>=1) this.stor.store(storekey, response);
+        // else this.stor.delete(storekey);
+        return response;  
+      })
+    );
+  }
+  save(route:string, form:any ):any{
+    return this.request.post<any>(route, form);
   }
 }

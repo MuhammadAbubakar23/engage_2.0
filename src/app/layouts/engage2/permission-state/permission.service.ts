@@ -9,6 +9,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { EnvService } from 'src/app/shared/services/env/env.service';
 import { RequestService } from 'src/app/shared/services/request/request.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
+import { PermissionModel } from './permission.state';
 // import { PermissionModel } from './permission.state';
 
 @Injectable({
@@ -20,30 +21,50 @@ export class PermissionService {
             private http: HttpClient, 
             private env: EnvService, 
             private reqs: RequestService,
-            private stor: StorageService) {
+            private storage: StorageService) {
   }
-
-  getPermissionList(): Observable<string> {
+  getLetters(type:string): Observable<any>{
+    let permissions : string = '__';
+    //let subpermissions : PermissionModel[] = [];
+    //alert("We need processor");
+    permissions = this.storage.retrive(type).local;
+    if(permissions != null && permissions.length>=1) 
+      return of(permissions);
+    else
+      return this.reqs.post<PermissionModel>(type, {"Emerging":"permission", "Inline":true}).pipe(
+        map((response: any) => {
+          if(typeof response === "undefined" || response === null) return "_";
+          else if(response.length>=1) this.storage.store(type, response?.priviledge);
+          else this.storage.delete(type);
+          return response;  
+        })
+      );
+  }
+  getRolesLetters(): Observable<string> {
+    return this.getLetters("accessrole");
+  }
+  getTeamsLetters(): Observable<string> {
+    return this.getLetters("accessteam");
     //this.ers.PermissionModel('PermissionModel', {"equal":1, "role":2}, 'mecho');
     // console.log(this.env.baseUrl);
     // console.log(route);
     // console.log(this.env.paths);
     // console.log(this.env.paths[route]);
-    let permissions : string = '__';
-    //let subpermissions : PermissionModel[] = [];
-    //alert("We need processor");
-    permissions = this.stor.retrive("subpermission", 'O').local;
-    if(permissions != null && permissions.length>=1) 
-      return of(permissions);
-    else
-      return this.reqs.put<string>('access', {"Emerging":"permission", "Inline":true}).pipe(
-        map((response: any) => {
-          if(typeof response === "undefined" || response === null) return "_";
-          else if(response.length>=1) this.stor.store("subpermission", response);
-          else this.stor.delete("subpermission");
-          return response;  
-        })
-      );
+    // let permissions : string = '__';
+    // //let subpermissions : PermissionModel[] = [];
+    // //alert("We need processor");
+    // permissions = this.stor.retrive("subpermission").local;
+    // if(permissions != null && permissions.length>=1) 
+    //   return of(permissions);
+    // else
+    //   return this.reqs.post<string>('access', {"Emerging":"permission", "Inline":true}).pipe(
+    //     map((response: any) => {
+    //       if(typeof response === "undefined" || response === null) return "_";
+    //       else if(response.length>=1) this.stor.store("subpermission", response.data);
+    //       else this.stor.delete("subpermission");
+    //       return response;  
+    //     })
+    //   );
 
       // for(let res in response){
             //   if(response[res].parentId === response[res].baseId)

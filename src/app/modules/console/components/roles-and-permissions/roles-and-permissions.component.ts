@@ -17,6 +17,7 @@ export class RolesAndPermissionsComponent implements OnInit {
   Roles: Array<any> = [];
   RolesCount: number = 0;  
   //Teams: Array<any> = [];
+  
   constructor(private headerService: HeaderService, private _Activatedroute:ActivatedRoute) { }
 
   ngOnInit(): void {

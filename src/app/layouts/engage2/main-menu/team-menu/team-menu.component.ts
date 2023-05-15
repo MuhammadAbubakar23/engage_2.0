@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { MenuDto } from 'src/app/shared/Models/MenuDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-import { loadMenusList } from '../../state/menu.actions';
-import { MenuModel } from '../../state/menu.model';
-import { getEmargingEqual, getMenusLoading } from '../../state/menu.selectors';
-import { MenuState } from '../../state/menu.state';
+import { loadMenusList } from '../../menu-state/menu.actions';
+import { MenuModel } from '../../menu-state/menu.model';
+import { getEmargingEqual, getMenusLoading } from '../../menu-state/menu.selectors';
+import { MenuState } from '../../menu-state/menu.state';
+import { loadPermissionsLetters } from '../../permission-state/permission.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'team-menu',

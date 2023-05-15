@@ -36,6 +36,8 @@ import { ConnectFormComponent } from './components/connect-form/connect-form.com
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ConsoleTableComponent } from 'src/app/layouts/engage2/console-table/console-table.component';
+// import { CreateSkillsComponent } from './components/skills/create-skills/create-skills.component';
+// import { AddSkillMembersComponent } from './components/skills/add-skill-members/add-skill-members.component';
 
 
 @NgModule({
@@ -75,7 +77,9 @@ import { ConsoleTableComponent } from 'src/app/layouts/engage2/console-table/con
     CreateMessageTemplatesComponent,
     SignaturesComponent,
     CreateSignatureTemplatesComponent,
-    ConnectFormComponent
+    ConnectFormComponent,
+    // CreateSkillsComponent,
+    //AddSkillMembersComponent
   ],
   imports: [
     CommonModule,

@@ -2,17 +2,17 @@
     <table class="table align-middle">
         <thead>
             <tr>
-                <!-- <th>
-                    <div class="filter-container checkbox-reset">
-                        <ul class="list-group list-group-horizontal border-0">
+                <th>
+                     <div class="filter-container checkbox-reset">
+                        <!--<ul class="list-group list-group-horizontal border-0">
                             <li class="list-group-item border-0 all-check-boxes">
                                 <input class="form-check-input me-1" type="checkbox" aria-label="..."
                                     data-bs-toggle="tooltip" data-bs-placement="bottom"
                                     data-bs-original-title="Check All">
                             </li>
-                        </ul>
+                        </ul>--> 
                     </div>
-                </th> -->
+                </th>
                 <th *ngFor="let head of header">
                     {{head}}
                 </th>
@@ -20,9 +20,9 @@
         </thead>
         <tbody>
             <tr *ngFor="let tm of data">
-                <!-- <td>
-                    <input class="form-check-input me-1" type="checkbox" aria-label="...">
-                </td> -->
+                 <td>
+                 <!--   <input class="form-check-input me-1" type="checkbox" aria-label="...">-->
+                </td> 
                 <td><console-table-with-image [name]="tm.fullName" [subname]="tm.email" [imagename]="''"></console-table-with-image></td>
                 <td><console-table-wrap [wrapdata]="tm.roleId" [wrapflow]="2"></console-table-wrap></td>
                 <td><console-table-wrap [wrapdata]="tm.teamId" [wrapflow]="2"></console-table-wrap></td>

@@ -9,6 +9,7 @@ import { GroupbydatePipe } from './CustomPipes/groupbydate.pipe';
 import { RightHeaderComponentsComponent } from './right-header-components/right-header-components.component';
 import { FilterPipe } from './CustomPipes/filter.pipe';
 import { QuickReplySearchFilterPipe } from './CustomPipes/quick-reply-search-filter.pipe';
+import { SafePipe } from './pipes/safe.pipe';
 
 
 
@@ -17,9 +18,12 @@ import { QuickReplySearchFilterPipe } from './CustomPipes/quick-reply-search-fil
     SortPipe,
     MinimizedChatWidgetComponent,
     GroupbydatePipe,
-    RightHeaderComponentsComponent,
+    // RightHeaderComponentsComponent,
     FilterPipe,
-    QuickReplySearchFilterPipe
+    QuickReplySearchFilterPipe,
+    SafePipe,
+    
+    
   ],
   imports: [
     CommonModule,
@@ -31,9 +35,10 @@ import { QuickReplySearchFilterPipe } from './CustomPipes/quick-reply-search-fil
   exports:[
     SortPipe,
     GroupbydatePipe,
-    RightHeaderComponentsComponent,
+    // RightHeaderComponentsComponent,
     FilterPipe,
-    QuickReplySearchFilterPipe
+    QuickReplySearchFilterPipe,
+    SafePipe,
   ]
 })
 export class SharedModule { }

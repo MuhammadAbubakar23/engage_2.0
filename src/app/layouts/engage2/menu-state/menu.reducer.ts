@@ -1,6 +1,7 @@
-import { createReducer, on } from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
 import { never } from 'rxjs';
-import { loadMenusList, loadMenusListFail, loadMenusListSuccess } from './menu.actions';
+import { loadMenusList, loadMenusListFail, loadMenusListSuccess, updateMenusList, updateMenusListFail, updateMenusListSuccess } from './menu.actions';
+import { MenuModel } from './menu.model';
 import { initialMenuState, MenuState } from './menu.state';
 
 const _menuReducer = createReducer(
@@ -29,13 +30,31 @@ const _menuReducer = createReducer(
   on(loadMenusListFail, (state, action): MenuState => {
     return {
       ...state,
-      menus: [],
+    //  menus: [],
       loading:false,
       error: action.error
     }
-  })
+  }),
+
+  on(updateMenusList, (state): MenuState => ({  ...state, loading: true })),
+  on(updateMenusListSuccess, (state, action): MenuState => {
+    let menus = [...state.menus];
+    console.log(action.menus);
+    action.menus.forEach(function (menu:MenuModel) {
+      menus.push(menu);
+    })    
+    return {
+      ...state,
+      menus: menus,
+      loading: true,
+      error: null,
+    };
+  }),
+  on(updateMenusListFail, (state, action) => ({ ...state, loading: false, error: action.error }))
+
+
 );
-export function menuReducer(state: any, action: any) {
+export function menuReducer(state: MenuState | undefined, action: Action) {
   return _menuReducer(state, action);
 }
 

@@ -45,11 +45,7 @@ export class InboxRightSidebarComponent implements OnInit {
        // // console.log(item)
         let obj = {
           mainId : item[key].mainId,
-          name: item[key].name,
           emerging:item[key].emerging,
-          slug:item[key].slug,
-          link:item[key].link,
-          parentId:item[key].parentId,
           baseId:item[key].baseId,
           icon:item[key].icon,
           indexNo:item[key].indexNo
@@ -67,11 +63,7 @@ export class InboxRightSidebarComponent implements OnInit {
    // this.getRightMenu();
     
    let parent = localStorage.getItem("parent");
-   if(parent != "undefined")
    {
-       this.subscription = this.sharedService.getMessage().subscribe(msg => { 
-          this.dynamicPath = msg;
-       });
    }
 
     this.subscription2 = this.rightNavService.getChildComponent().subscribe(msg2 => { 

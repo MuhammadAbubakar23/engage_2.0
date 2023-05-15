@@ -42,7 +42,6 @@ export class ResponderContentComponent implements OnInit {
   maximizeChat(maximizeChatComponent: string) {
     
     let componentFactory = null;
-
     switch (maximizeChatComponent) {
       case 'maximizeChat':
         componentFactory =

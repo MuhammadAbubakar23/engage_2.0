@@ -116,7 +116,7 @@ export class ResponderMenuComponent implements OnInit {
   }
 
   public addTransferChatDataListener = () => {
-    this.signalRService.hubconnection.on('UnrespondedTweetsChats', (data) => {
+    this.signalRService.hubconnection.on('UnrespondedTweetsChats', (data:any) => {
       // this.TwitterList.forEach((abc: any) => {
       //   this.TwitterIds.push(abc.id);
       // });

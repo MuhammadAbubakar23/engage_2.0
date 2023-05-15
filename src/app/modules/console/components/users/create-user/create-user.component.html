@@ -1,5 +1,5 @@
 <div class="agent-page-main-content">
-  <form class="user-detail-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <form class="user-detail-form" [formGroup]="userForm" (ngSubmit)="onSubmit()" (ngReset)="onReset()">
     <div class="create-user console-body-wrapper footerheight" data-scrollbar="true" tabindex="-1"
       style="overflow-y: auto; outline: none;">
       <div class="console-contact-detail page-details perfect-scrollbar" data-scrollbar="data-scrollbar">
@@ -312,9 +312,9 @@
               </div>
               <div class="col-md-8 justify-content-end d-flex">
                 <div class="buttons-wrap d-flex">
-                  <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4" data-bs-toggle="modal"
+                  <button type="reset" class="btn btn-outline-secondary btn-medium me-2 px-4" data-bs-toggle="modal"
                     data-bs-target="">Cancel </button>
-                  <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"></button>
+                  <!-- <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"></button> -->
 
                   <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn">{{btnText}}</button>
                 </div>

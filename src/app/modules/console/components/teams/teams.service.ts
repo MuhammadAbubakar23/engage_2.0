@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { IdNameDto } from 'src/app/shared/Models/IdNameDto';
+import { MenuDto } from 'src/app/shared/Models/MenuDto';
 import { RequestService } from 'src/app/shared/services/request/request.service';
 
 @Injectable({
@@ -21,7 +22,7 @@ export class TeamsService {
     return this.request.getBy<IdNameDto[]>("AllTeams","Compwith").pipe(
       map((response: any) => {
         // if(response.length>=1) this.stor.store(storekey, response);
-        // else this.stor.delete(storekey);
+        // else this.stor.delete(storekey); 
         return response;  
       })
     );
@@ -32,5 +33,17 @@ export class TeamsService {
     //    return response;  
     //  })
     //);
+  }
+  getMyTeamsPermissions(): Observable<MenuDto[]> {
+    return this.request.get<MenuDto[]>("TeamsAccesses",{}).pipe(
+      map((response: any) => {
+        // if(response.length>=1) this.stor.store(storekey, response);
+        // else this.stor.delete(storekey);
+        return response;  
+      })
+    );
+  }
+  save(route:string, form:any ):any{
+    return this.request.post<any>(route, form);
   }
 }

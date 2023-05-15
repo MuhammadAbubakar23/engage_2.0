@@ -1,11 +1,9 @@
 .dropdown {
   width: 100%;
-
   &.markAs-dropdown {
     .dropdown-toggle {
       height: auto;
     }
-
     .chevron-icon {
       &:after {
         right: 1rem;
@@ -73,7 +71,6 @@
   padding: 0.5rem 0.7rem;
   box-shadow: 0 0 50px 0 rgba(82, 63, 105, 0.1);
   border: 0;
-
   .dropdown-item {
     padding: 0.5rem 0.7rem;
   }
@@ -81,12 +78,10 @@
 
 .custom-dropdown {
   padding: 0.5rem 0.7rem;
-
   li {
     .dropdown-item {
       padding: 0.5rem 0.7rem;
     }
-
     &.important-option {
       border-top: 1px solid $metal;
       margin: 0.5rem 0;
@@ -138,13 +133,11 @@
   .dropdown-footer {
     ul {
       padding: 0;
-
       li {
         padding: 0;
       }
     }
   }
-
   .dropdown-body {
     ul {
       li {
@@ -160,7 +153,6 @@
   flex-direction: column;
   padding: 0;
   list-style: none;
-
   li {
     &.dropdown-listing-header {
       display: flex;
@@ -178,12 +170,10 @@
             margin: 0 5px;
           }
         }
-
         a:hover {
           background-color: $silver20 !important;
         }
       }
-
       .custom-searchbar {
         margin: 15px 5px;
       }
@@ -200,20 +190,17 @@
         }
       }
     }
-
     &.card-footer {
       position: absolute;
       bottom: 0;
       width: 100%;
       left: 0;
       right: 0;
-
       .dropdown-item {
         display: flex;
         justify-content: center;
         text-align: center;
         margin: auto;
-
         &:hover {
           background-color: #f7f7f7;
         }

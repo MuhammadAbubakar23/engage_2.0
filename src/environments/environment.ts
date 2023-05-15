@@ -37,8 +37,10 @@ export const environment = {
     identity:{
       login:"Authentication/Login",
       access:"Authorization/Accesses/team_role",
-      accessteam:"Authorization/Accesses/team",
-      accessrole:"Authorization/Accesses/role",
+      // accessteam:"Authorization/Accesses/team",
+      // accessrole:"Authorization/Accesses/role",
+      accessteam:"Accesses/team",
+      accessrole:"Permissions/role",
       AddUser:"Users/CreateUser",
       UpdateUser:"Users/UpdateUser",
       AllRoles:"Roles/GetAll",
@@ -46,6 +48,11 @@ export const environment = {
       GetAllUsers:"Users/GetAllUser",
       DeleteUser:"Users/DeleteUser",
       GetUserById:"Users/GetUserById",
+      RolesPermissions:"Permissions",
+      AddRole:"Permissions",
+      TeamsAccesses:"Accesses",
+      AddTeam:"Accesses",
+      
 
     },
     console:{
@@ -69,7 +76,7 @@ export const environment = {
       LikedByAdmin: 'Social/LikeByAdmin',
       QuickReplyList: 'Social/GetQuickReplyList',
       AssignQuerry: 'Query/AssignQuery',
-      AgentsTeamList: 'Query/GetActiveAgent',
+      AgentsTeamList: 'Team/GetAllTeams',
       AssignToAnotherAgent: 'Query/QueryAssignMultiUser',
       SlaList:"Report/GetSLAChannelList",
       SlaDetail:"Report/GetSLADetailList",

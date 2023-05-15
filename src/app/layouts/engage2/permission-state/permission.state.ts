@@ -2,12 +2,12 @@ export interface PermissionModel {
     priviledge: string
 }
 export interface PermissionState {
-    permissions: string
+    permissions: string | null
     loading: boolean
-    error: string
+    error: string | null
 }
 export const initialPermissionState: PermissionState = {
-    permissions: '',
+    permissions: null,
     loading: false,
-    error: ''
+    error: null
 };

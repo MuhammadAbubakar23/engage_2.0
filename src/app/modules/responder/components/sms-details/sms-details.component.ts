@@ -101,16 +101,12 @@ export class SmsDetailsComponent implements OnInit {
     }
 
   ngOnInit(): void {
-
     this.criteria = {
       property: 'createdDate',
       descending: true,
     };
     
     this.TodayDate = new Date();
-
-    this.getSmsData();
-    this.getTagList();
     this.quickReplyList();
 
    this.Subscription = this.addTagService.receiveTags().subscribe((res) => {

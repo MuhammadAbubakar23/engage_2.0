@@ -65,10 +65,6 @@ export class ResponderRightSidebarMenuComponent implements OnInit {
   toggleRightBar(child:string) {
   if(localStorage.getItem('child') == child){
     this.toggleService.addTogglePanel('');
-  } else{
-    this.toggleService.addTogglePanel(child);
-  }
-  
   
 
 //     let routr = this._route.url.split('/')[1];
@@ -95,4 +91,5 @@ export class ResponderRightSidebarMenuComponent implements OnInit {
     
   }
 
+}
 }

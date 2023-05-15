@@ -72,7 +72,7 @@ export class CreateUserComponent implements OnInit {
     this._Activatedroute.paramMap.subscribe(paramMap => { 
       this.identity = Number(paramMap.get('id'));
     });
-   // 
+   // debugger;
     if(this.identity > 0){//.pipe(takeUntil(this.unsubscribe))
       this._request.getBy<userDto>("GetUserById",  this.identity.toString()).subscribe(
         (next:userDto) => {//...next:T[]
@@ -174,6 +174,8 @@ export class CreateUserComponent implements OnInit {
   onReset(): void {
     this.submitted = false;
     this.userForm.reset();
+    this.userForm.controls['roleId'].reset();
+    this.userForm.controls['teamId'].reset();
   }
   onSubmit() : void {
     this.userForm.controls['roleId'].reset();

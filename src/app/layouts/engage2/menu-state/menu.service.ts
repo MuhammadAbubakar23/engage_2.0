@@ -20,7 +20,7 @@ export class MenuService {
             private http: HttpClient, 
             private env: EnvService, 
             private reqs: RequestService,
-            private stor: StorageService) {
+            private storage: StorageService) {
     // router.events.subscribe((event: Event) => {
     //   if (event instanceof NavigationStart) {
     //     console.clear();
@@ -89,27 +89,65 @@ export class MenuService {
     //   }
     // });
   }
-
-  getMenuList(): Observable<MenuModel[]> {
+  getList(type:string):Observable<MenuModel[]>{
+    let menus : MenuModel[] = [];
+    //let submenus : MenuModel[] = [];
+    //alert("We need processor");
+    menus = this.storage.retrive(type, 'O').local;
+    if(menus != null && menus.length>=1) 
+      return of(menus);
+    else
+      return this.reqs.post<MenuModel[]>(type, {"Emerging":"menu", "Inline":false}).pipe(
+        map((response: any) => {
+          if(response.length>=1) this.storage.store(type, response);
+          else this.storage.delete(type);
+          return response;  
+        })
+      );
+  }
+  getRolesList(): Observable<MenuModel[]> {
+    return this.getList("accessrole");
     //this.ers.MenuModel('MenuModel', {"equal":1, "role":2}, 'mecho');
     // console.log(this.env.baseUrl);
     // console.log(route);
     // console.log(this.env.paths);
     // console.log(this.env.paths[route]);
-    let menus : MenuModel[] = [];
-    //let submenus : MenuModel[] = [];
-    //alert("We need processor");
-    menus = this.stor.retrive("menu", 'O').local;
-    if(menus != null && menus.length>=1) 
-      return of(menus);
-    else
-      return this.reqs.put<MenuModel[]>('access', {"Emerging":"menu", "Inline":false}).pipe(
-        map((response: any) => {
-          if(response.length>=1) this.stor.store("menu", response);
-          else this.stor.delete("menu");
-          return response;  
-        })
-      );
+    // let menus : MenuModel[] = [];
+    // //let submenus : MenuModel[] = [];
+    // //alert("We need processor");
+    // menus = this.stor.retrive("menu", 'O').local;
+    // if(menus != null && menus.length>=1) 
+    //   return of(menus);
+    // else
+    //   return this.reqs.post<MenuModel[]>('access', {"Emerging":"menu", "Inline":false}).pipe(
+    //     map((response: any) => {
+    //       if(response.length>=1) this.stor.store("menu", response);
+    //       else this.stor.delete("menu");
+    //       return response;  
+    //     })
+    //   );
+  }
+  getTeamsList(): Observable<MenuModel[]> {
+    return this.getList("accessteam");
+    //this.ers.MenuModel('MenuModel', {"equal":1, "role":2}, 'mecho');
+    // console.log(this.env.baseUrl);
+    // console.log(route);
+    // console.log(this.env.paths);
+    // console.log(this.env.paths[route]);
+    // let menus : MenuModel[] = [];
+    // //let submenus : MenuModel[] = [];
+    // //alert("We need processor");
+    // menus = this.stor.retrive("menu", 'O').local;
+    // if(menus != null && menus.length>=1) 
+    //   return of(menus);
+    // else
+    //   return this.reqs.post<MenuModel[]>('access', {"Emerging":"menu", "Inline":false}).pipe(
+    //     map((response: any) => {
+    //       if(response.length>=1) this.stor.store("menu", response);
+    //       else this.stor.delete("menu");
+    //       return response;  
+    //     })
+    //   );
 
       // for(let res in response){
             //   if(response[res].parentId === response[res].baseId)

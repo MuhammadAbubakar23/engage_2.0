@@ -47,9 +47,9 @@ export class LoginComponent implements OnInit {
       
       
       // localStorage.setItem("token", res.accessToken)
-      this.agentDetailsService.sendAgentDetails(res);
       this.stor.store("token", res.accessToken);
       this.stor.store("main", res);
+      // console.log(res);
       this.stor.store("nocompass", res.roles[0]);
       localStorage.setItem("agentId", res.userId)
       localStorage.setItem("agentName", res.username)

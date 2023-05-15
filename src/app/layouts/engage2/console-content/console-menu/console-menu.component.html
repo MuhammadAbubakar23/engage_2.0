@@ -11,7 +11,20 @@
     </div>
     <ul class="list-group console-list mt-2" data-scrollbar="true" tabindex="-1"
         style="overflow-y: auto; outline: none;" >
-        <app-select-option></app-select-option>
+        <!-- <ng-select [items]="SuperTeamOptions"
+           bindLabel="name" 
+           bindValue="id"
+           [(ngModel)]="SuperTeamSelected"
+           [searchable]="false"
+           [clearable]="false"
+           >
+        </ng-select> -->
+        <div [hidden]="SuperTeamShow">
+            <li class="list-group-item list-group-item-action">
+                <app-select-option></app-select-option>
+            </li>
+        </div>
+        
         <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);" *ngFor="let menu of menus$">
 
             <li class="list-group-item list-group-item-action">

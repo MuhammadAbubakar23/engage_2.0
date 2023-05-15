@@ -5,6 +5,8 @@ import { UsersResolver } from './components/users/users.resolver';
 import { ConsoleRoutingGuard } from './console-routing.guard';
 import { ConsoleComponent } from './console.component';
 import { RolesResolver } from './resolvers/roles.resolver';
+import { RolesPermissionsResolver } from './resolvers/roles-permissions.resolver';
+import { TeamsPermissionsResolver } from './resolvers/teams-permissions.resolver';
 import { TeamsResolver } from './resolvers/teams.resolver';
 
 const routes: Routes = [
@@ -55,16 +57,26 @@ const routes: Routes = [
         canMatch: [ConsoleRoutingGuard],
         resolve: {
           //roles: RolesResolver,
+          rolesnpermission: RolesPermissionsResolver,
           // teams: TeamsResolver,
         },
       },{
         path:'teams',
         loadComponent: () => import('./components/teams/teams.component').then(c => c.TeamsComponent),
+        data: { breadcrumb: 'Teams N` Accesses ' },
         canMatch: [ConsoleRoutingGuard],
+        resolve: {
+          teams: TeamsResolver
+        },
       },{
         path:'teams/create/:id',
         loadComponent: () => import('./components/teams/create-team/create-team.component').then(c => c.CreateTeamComponent),
+        data: { breadcrumb: 'Teams N` Accesses > Create' },
         canMatch: [ConsoleRoutingGuard],
+        resolve: {
+          teamsnpermission: TeamsPermissionsResolver,
+          // teams: TeamsResolver,
+        },
       },{
         path:'channels',
         loadComponent: () => import('./components/support-channels/support-channels.component').then(c => c.SupportChannelsComponent),
@@ -90,8 +102,12 @@ const routes: Routes = [
         
       },{
         path:'skills',
-        loadComponent: () => import('./components/skills/skills.component').then(c => c.SkillsComponent)
-        
+        loadComponent: () => import('./components/skills/skills.component').then(c => c.SkillsComponent),
+        canMatch: [ConsoleRoutingGuard]
+      },{
+        path:'skills/create/:id',
+        loadComponent: () => import('./components/skills/create-skills/create-skills.component').then(c => c.CreateSkillsComponent),
+        canMatch: [ConsoleRoutingGuard],  
       },{
         path:'routes',
         loadComponent: () => import('./components/enteract-route/enteract-route.component').then(c => c.EnteractRouteComponent)
