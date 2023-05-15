@@ -49,6 +49,9 @@ export class InboxRightSidebarComponent implements OnInit {
           emerging:item[key].emerging,
           baseId:item[key].baseId,
           icon:item[key].icon,
+          name:item[key].name,
+          slug:item[key].slug,
+          link:item[key].link,
           indexNo:item[key].indexNo
         };
         Object.assign(obj, {dival: item[key].slug+"-rightbar-dashboard"});
@@ -57,7 +60,7 @@ export class InboxRightSidebarComponent implements OnInit {
       
       // this.menus$ = item;
     });
-    // // console.log(this.menus$);
+     console.log(this.menus$);
     // Array.from(document.querySelectorAll('[data-bs-toggle]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode))
     // this.getRightMenu();
@@ -92,6 +95,7 @@ export class InboxRightSidebarComponent implements OnInit {
   // }
 
   toggleRightBar(child:string) {  
+    debugger
     // this.parentFun.emit();
     if(localStorage.getItem('child') == child){
       this.toggleRightPanelParent.emit();
