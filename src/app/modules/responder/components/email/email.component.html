@@ -58,7 +58,7 @@
         <div class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow-y: auto; outline: none;" infinite-scroll
         [scrollWindow]="false" [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5" [infiniteScrollThrottle]="10"
         (scrolled)="onScroll()">
-            <div class="scroll-content">
+            <div class="scroll-content" style="margin-bottom: 100px;">
                 <div class="tab-content m-4" id="myTabContent">
                     <div class="tab-pane fade show active" id="post" role="tabpanel" aria-labelledby="post-tab">
                         <div *ngFor="let list of Emails">
@@ -84,7 +84,7 @@
                                 </div>
                                 <ng-container *ngFor="let email of group.items ; let i = index">
                                     <ng-container *ngIf="email.queryStatus != 'QueryCompleted'">
-                                <div class="accordion email-accordion" id="abc" style="margin-bottom: 100px;">
+                                <div class="accordion email-accordion" id="abc" >
 
                                     <div class="accordion-item email-wrap mb-3">
                                         <div class="accordion-header " [id]="'heading'+i">
