@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FilterService } from 'src/app/services/FilterService/filter.service';
-import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateListService } from 'src/app/services/UpdateListService/update-list.service';
 

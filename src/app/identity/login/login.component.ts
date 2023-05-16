@@ -44,9 +44,6 @@ export class LoginComponent implements OnInit {
   submit(){
     this.spinnerService.show();
     this.authService.login(this.loginForm.value).subscribe((res : any) =>{
-      
-      
-      // localStorage.setItem("token", res.accessToken)
       this.stor.store("token", res.accessToken);
       this.stor.store("main", res);
       // console.log(res);

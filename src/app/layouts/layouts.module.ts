@@ -39,6 +39,10 @@ import { AdminContentComponent } from './engage2/admin-content/admin-content.com
 import { AdminMenuComponent } from './engage2/admin-content/admin-menu/admin-menu.component';
 import { RightHeaderComponentsComponent } from './engage2/right-header-components/right-header-components.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AnalyticsContentComponent } from './engage2/analytics-content/analytics-content.component';
+import { AnalyticsHeaderComponent } from './engage2/analytics-content/analytics-header/analytics-header.component';
+import { AnalyticsMenuComponent } from './engage2/analytics-content/analytics-menu/analytics-menu.component';
+import { AnalyticsRightSidebarMenuComponent } from './engage2/analytics-content/analytics-right-sidebar-menu/analytics-right-sidebar-menu.component';
 // import { NgSelectModule } from '@ng-select/ng-select/lib/ng-select.module';
 
 
@@ -72,7 +76,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
     CardBoxListCheckboxComponent,
     AdminContentComponent,
     AdminMenuComponent,
-    RightHeaderComponentsComponent
+    RightHeaderComponentsComponent,
+    AnalyticsContentComponent,
+    AnalyticsHeaderComponent,
+    AnalyticsMenuComponent,
+    AnalyticsRightSidebarMenuComponent
   ],
   imports: [
     CommonModule,
@@ -99,7 +107,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ConsoleTableWithImageComponent,
     BreadcrumbComponent,
     CardBoxListComponent,
-    
+    AnalyticsContentComponent,
+    AnalyticsRightSidebarMenuComponent
   ]
 })
 export class LayoutsModule { }

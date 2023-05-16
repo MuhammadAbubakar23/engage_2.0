@@ -30,6 +30,11 @@ const routes: Routes = [
     loadChildren : () => import('./multitenant/multitenant.module').then(f=>f.MultitenantModule),
     data: {preload: true}
   },
+  {
+    path:'analytics',
+    loadChildren : () => import('./analytics/analytics.module').then(f=>f.AnalyticsModule),
+    data: {preload: false}
+  },
 ];
 
 @NgModule({
