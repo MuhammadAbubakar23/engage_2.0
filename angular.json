@@ -39,6 +39,7 @@
               "./node_modules/ngx-spinner/animations/square-jelly-box.css"
             ],
             "scripts": [
+              "src/assets/JS/sip015.js"
             ]
           },
           "configurations": {
@@ -114,6 +115,7 @@
               "./node_modules/ngx-spinner/animations/square-jelly-box.css"
             ],
             "scripts": [
+              "src/assets/JS/sip015.js"
             ]
           }
         }

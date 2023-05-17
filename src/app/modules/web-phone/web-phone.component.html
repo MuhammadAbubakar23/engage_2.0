@@ -1,1380 +1,1265 @@
 <nav id="dialer-rightbar" class="expended-rigth-sidebar open ps-0">
-    <div class="right-bar-wrapper">
-        <div class="dialerWrapper incomingCall">
-            <div class="dialerBgHead">
-                <img src="../../../../assets/images/wave.svg" alt="">
-            </div>
-            <div class="dialerContent">
-                <div class="tab-content">
-                    <div id="contacts" class="tab-pane dialerMainTabs" role="tabpanel" aria-labelledby="contacts">
-                        <div class="contactsTab-Content tab-body">
-
-                            <div class="bodywrapper">
-
-                                <div class="Contacts-list">
-                                    <div class="tab-header">
-                                        <div class="header-title">
-                                            <div class="back-to-call goBackToConnectedCall d-none">
-                                                <i class="far fa-long-arrow-left night"></i>
-                                            </div>
-                                            <div class="heading">Contacts</div>
-                                        </div>
-                                        <div class="header-action-btns">
-                                            <div class="icons-list">
-                                                <div class="searchbar-click">
-                                                    <form [ngClass]="show == true ? 'searchbox-open' : ''" class="searchbox">
-                                                        <input placeholder="What are you looking for?" name="search"
-                                                            class="searchbox-input" required="">
-                                                            <span class="searchbox-icon medium iconButton iconHover" (click)="click(show)"><i
-                                                                [ngClass]="show == false ? 'fa fa-search': 'fa fa-times'"></i></span>
-                                                    </form>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="animated-border">
-                                        <div class="border-line"></div>
-                                    </div>
-                                    <div class="found-wrapper d-none">
-                                        4 results found
-                                    </div>
-                                    <div class="tab-header rightbar-tab-header nav nav-tabs tabs iceBg" role="tablist"
-                                        id="myTab">
-                                        <nav>
-                                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                <button class="nav-link active" id="recent-contacts-tab"
-                                                    data-bs-toggle="tab" href="#recent-contacts" role="tab"
-                                                    aria-controls="recent-contacts" aria-selected="false">
-                                                    Recent
-                                                </button>
-                                                <button class="nav-link" id="favourite-contacts-tab"
-                                                    data-bs-toggle="tab" href="#favourite-contacts" role="tab"
-                                                    aria-controls="favourite-contacts" aria-selected="true">
-                                                    Favourite
-                                                </button>
-
-                                            </div>
-                                        </nav>
-                                    </div>
-                                    <div class="bodySection perfect-scrollbar">
-                                        <div class="tab-content" id="nav-tabContent">
-                                            <div id="recent-contacts" class="tab-pane active show" role="tabpanel"
-                                                aria-labelledby="recents">
-                                                <div class="mt-3 list-group list-group-flush">
-                                                    <a class="list-group-item d-flex"
-                                                        value="Sajjad Akber">
-                                                        <div class="avatar large">
-                                                            <img src="../../../../assets/images/avatar-1.jpg" alt="-"
-                                                                class="rounded-circle w-100">
-                                                        </div>
-                                                        <div
-                                                            class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
-                                                            <div>
-                                                                <h6 class="mb-0 darkblue">Sajjad Akber</h6>
-                                                                <small class="silver">+923011234567</small>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="medium iconButton iconHover dialBtn"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                    title="" data-bs-original-title="Dial">
-                                                                    <i class="fal fa-phone-alt"></i>
-                                                                </div>
-                                                                <div class="dropdown">
-                                                                    <button class="medium iconButton iconHover"
-                                                                        id="menu-button" data-bs-toggle="dropdown"
-                                                                        aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="far fa-ellipsis-v"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu-right"
-                                                                        aria-labelledby="menu-button">
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 1</div>
-                                                                            </div>
-                                                                        </button>
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 2</div>
-                                                                            </div>
-                                                                        </button>
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 3</div>
-                                                                            </div>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                    <a class="list-group-item d-flex"
-                                                        value="Sajjad Akber">
-                                                        <div class="avatar large">
-                                                            <img src="../../../../assets/images/avatar-3.jpg" alt="-"
-                                                                class="rounded-circle w-100">
-                                                        </div>
-                                                        <div
-                                                            class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
-                                                            <div>
-                                                                <h6 class="mb-0 darkblue">Tahir Ahmed</h6>
-                                                                <small class="silver">+923011234845</small>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="medium iconButton iconHover dialBtn"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                    title="" data-bs-original-title="Dial">
-                                                                    <i class="fal fa-phone-alt"></i>
-                                                                </div>
-                                                                <div class="dropdown">
-                                                                    <button class="medium iconButton iconHover"
-                                                                        id="menu-button" data-bs-toggle="dropdown"
-                                                                        aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="far fa-ellipsis-v"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu-right"
-                                                                        aria-labelledby="menu-button">
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 1</div>
-                                                                            </div>
-                                                                        </button>
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 2</div>
-                                                                            </div>
-                                                                        </button>
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 3</div>
-                                                                            </div>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                    <a class="list-group-item d-flex"
-                                                        value="Sajjad Akber">
-                                                        <div class="avatar large">
-                                                            <img src="../../../../assets/images/avatar-6.jpg" alt="-"
-                                                                class="rounded-circle w-100">
-                                                        </div>
-                                                        <div
-                                                            class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
-                                                            <div>
-                                                                <h6 class="mb-0 darkblue">Ahmed Ali</h6>
-                                                                <small class="silver">+923124565874</small>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="medium iconButton iconHover dialBtn"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                    title="" data-bs-original-title="Dial">
-                                                                    <i class="fal fa-phone-alt"></i>
-                                                                </div>
-                                                                <div class="dropdown">
-                                                                    <button class="medium iconButton iconHover"
-                                                                        id="menu-button" data-bs-toggle="dropdown"
-                                                                        aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="far fa-ellipsis-v"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu-right"
-                                                                        aria-labelledby="menu-button">
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 1</div>
-                                                                            </div>
-                                                                        </button>
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 2</div>
-                                                                            </div>
-                                                                        </button>
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 3</div>
-                                                                            </div>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                    <a class="list-group-item d-flex"
-                                                        value="Sajjad Akber">
-                                                        <div class="avatar large berryBg">
-                                                            AK
-                                                        </div>
-                                                        <div
-                                                            class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
-                                                            <div>
-                                                                <h6 class="mb-0 darkblue">Aniqa Khan</h6>
-                                                                <small class="silver">+923011234458</small>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="medium iconButton iconHover dialContact"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                    title="" data-bs-original-title="Dial">
-                                                                    <i class="fal fa-phone-alt"></i>
-                                                                </div>
-                                                                <div class="dropdown">
-                                                                    <button class="medium iconButton iconHover"
-                                                                        id="menu-button" data-bs-toggle="dropdown"
-                                                                        aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="far fa-ellipsis-v"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu-right"
-                                                                        aria-labelledby="menu-button">
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 1</div>
-                                                                            </div>
-                                                                        </button>
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 2</div>
-                                                                            </div>
-                                                                        </button>
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 3</div>
-                                                                            </div>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div id="favourite-contacts" class="tab-pane" role="tabpanel"
-                                                aria-labelledby="favourites">
-                                                <div class="mt-3 list-group list-group-flush">
-                                                    <a class="list-group-item d-flex"
-                                                        value="Sajjad Akber">
-                                                        <div class="avatar large">
-                                                            <img src="../../../../assets/images/avatar-2.jpg" alt="-"
-                                                                class="rounded-circle w-100">
-                                                        </div>
-                                                        <div
-                                                            class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
-                                                            <div>
-                                                                <h6 class="mb-0 darkblue">Anis Khan</h6>
-                                                                <small class="silver">+923011234545</small>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="medium iconButton iconHover dialBtn"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                    title="" data-bs-original-title="Dial">
-                                                                    <i class="fal fa-phone-alt"></i>
-                                                                </div>
-                                                                <div class="dropdown">
-                                                                    <button class="medium iconButton iconHover"
-                                                                        id="menu-button" data-bs-toggle="dropdown"
-                                                                        aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="far fa-ellipsis-v"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu-right"
-                                                                        aria-labelledby="menu-button">
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 1</div>
-                                                                            </div>
-                                                                        </button>
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 2</div>
-                                                                            </div>
-                                                                        </button>
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 3</div>
-                                                                            </div>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                    <a class="list-group-item d-flex"
-                                                        value="Sajjad Akber">
-                                                        <div class="avatar large">
-                                                            <img src="../../../../assets/images/avatar-3.jpg" alt="-"
-                                                                class="rounded-circle w-100">
-                                                        </div>
-                                                        <div
-                                                            class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
-                                                            <div>
-                                                                <h6 class="mb-0 darkblue">Tahir Ahmed</h6>
-                                                                <small class="silver">+923011234845</small>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="medium iconButton iconHover dialBtn"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                    title="" data-bs-original-title="Dial">
-                                                                    <i class="fal fa-phone-alt"></i>
-                                                                </div>
-                                                                <div class="dropdown">
-                                                                    <button class="medium iconButton iconHover"
-                                                                        id="menu-button" data-bs-toggle="dropdown"
-                                                                        aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="far fa-ellipsis-v"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu-right"
-                                                                        aria-labelledby="menu-button">
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 1</div>
-                                                                            </div>
-                                                                        </button>
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 2</div>
-                                                                            </div>
-                                                                        </button>
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 3</div>
-                                                                            </div>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                    <a class="list-group-item d-flex"
-                                                        value="Sajjad Akber">
-                                                        <div class="avatar large">
-                                                            <img src="../../../../assets/images/avatar-7.jpg" alt="-"
-                                                                class="rounded-circle w-100">
-                                                        </div>
-                                                        <div
-                                                            class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
-                                                            <div>
-                                                                <h6 class="mb-0 darkblue">Saima Ali</h6>
-                                                                <small class="silver">+923124565458</small>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="medium iconButton iconHover dialBtn"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                    title="" data-bs-original-title="Dial">
-                                                                    <i class="fal fa-phone-alt"></i>
-                                                                </div>
-                                                                <div class="dropdown">
-                                                                    <button class="medium iconButton iconHover"
-                                                                        id="menu-button" data-bs-toggle="dropdown"
-                                                                        aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="far fa-ellipsis-v"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu-right"
-                                                                        aria-labelledby="menu-button">
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 1</div>
-                                                                            </div>
-                                                                        </button>
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 2</div>
-                                                                            </div>
-                                                                        </button>
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 3</div>
-                                                                            </div>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                    <a class="list-group-item d-flex"
-                                                        value="Sajjad Akber">
-                                                        <div class="avatar large berryBg">
-                                                            AK
-                                                        </div>
-                                                        <div
-                                                            class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
-                                                            <div>
-                                                                <h6 class="mb-0 darkblue">Aniqa Khan</h6>
-                                                                <small class="silver">+923011234458</small>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="medium iconButton iconHover dialContact"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                    title="" data-bs-original-title="Dial">
-                                                                    <i class="fal fa-phone-alt"></i>
-                                                                </div>
-                                                                <div class="dropdown">
-                                                                    <button class="medium iconButton iconHover"
-                                                                        id="menu-button" data-bs-toggle="dropdown"
-                                                                        aria-haspopup="true" aria-expanded="false">
-                                                                        <i class="far fa-ellipsis-v"></i>
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu-right"
-                                                                        aria-labelledby="menu-button">
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 1</div>
-                                                                            </div>
-                                                                        </button>
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 2</div>
-                                                                            </div>
-                                                                        </button>
-                                                                        <button class="dropdown-item" type="button">
-                                                                            <div class="iconLabelWrap noMargin">
-                                                                                <div class="label">Option 3</div>
-                                                                            </div>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="createNewProfile-Form saltBg d-none">
-                                    <div class="createProfileBg">
-                                        <img src="../../../../assets/images/profile_background.png" alt="">
-                                    </div>
-                                    <div class="createProfileContent perfect-scrollbar">
-                                        <div class="avatar large profileAvatar">
-                                            <img src="../../../../assets/images/avatar-8.jpg" alt="">
-                                        </div>
-                                        <div class="field-label">First Name</div>
-                                        <div class="inputField">
-                                            <input class="textInput" value="Fatima">
-                                        </div>
-                                        <div class="field-label">Last Name</div>
-                                        <div class="inputField">
-                                            <input class="textInput" value="Ahmed">
-                                        </div>
-                                        <div class="field-label">CNIC</div>
-                                        <div class="inputField">
-                                            <input class="textInput" value="00000-0000000-0">
-                                        </div>
-                                        <div class="field-label">Address</div>
-                                        <div class="inputField">
-                                            <input class="textInput" value="Karachi,Pakistan">
-                                        </div>
-                                        <div class="field-label">Phone</div>
-                                        <div class="inputField">
-                                            <input class="textInput" value="+923001234567">
-                                        </div>
-                                        <div class="field-label">Phone</div>
-                                        <div class="inputField">
-                                            <input class="textInput" value="+923001234567">
-                                        </div>
-                                        <div class="field-label">Phone</div>
-                                        <div class="inputField">
-                                            <input class="textInput" value="+923001234567">
-                                        </div>
-                                        <div class="field-label">Phone</div>
-                                        <div class="inputField">
-                                            <input class="textInput" value="+923001234567">
-                                        </div>
-                                        <div class="field-label">Phone</div>
-                                        <div class="inputField">
-                                            <input class="textInput" value="+923001234567">
-                                        </div>
-                                        <div class="newly-added d-none">
-                                            <div class="field-label">Customer ID</div>
-                                            <div class="inputField">
-                                                <input class="textInput" value="3215468">
-                                            </div>
-                                        </div>
-                                        <div class="addNewField d-none">
-                                            <div class="dropdown rightBarProfile-SelectField">
-                                                <div class="field-title" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    <div class="type">Select Type</div>
-                                                    <div class="dropdownBtn">
-                                                        <i class="fas fa-chevron-down"></i>
-                                                    </div>
-                                                    <div class="dropdown-menu" aria-labelledby="menu-button">
-                                                        <button class="dropdown-item" type="button" value="CNIC">
-                                                            <div class="iconLabelWrap noMargin">
-                                                                <div class="label">CNIC</div>
-                                                            </div>
-                                                        </button>
-                                                        <button class="dropdown-item" type="button" value="Phone">
-                                                            <div class="iconLabelWrap noMargin">
-                                                                <div class="label">Phone</div>
-                                                            </div>
-                                                        </button>
-                                                        <button class="dropdown-item" type="button" value="ID">
-                                                            <div class="iconLabelWrap noMargin">
-                                                                <div class="label">Customer ID</div>
-                                                            </div>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="fieldValue">
-                                                <input class="textInput" placeholder="Value...">
-                                            </div>
-                                        </div>
-                                        <div class="addMore">
-                                            <i class="fas fa-plus"></i>
-                                            Add More
-                                        </div>
-                                    </div>
-                                    <div class="createProfileFooter">
-                                        <div class="btn blockBtn emeraldBg saveBtn">
-                                            Save
-                                        </div>
-                                        <div class="btn blockBtn discardBtn">
-                                            Discard
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div id="callList" class="tab-pane dialerMainTabs" role="tabpanel" aria-labelledby="callList">
-                        <div class="callListTab-Content tab-body">
-
-                            <div class="tab-header px-3">
-                                <div class="header-title">
-                                    <div class="back-to-call goBackToConnectedCall d-none">
-                                        <i class="far fa-long-arrow-left night"></i>
-                                    </div>
-                                    <div>
-                                        <div class="d-flex">
-                                            <div class="goBackExpandedGroup d-none">
-                                                <i class="fal fa-chevron-left"></i>
-                                            </div>
-                                            <div class="heading">Calling List</div>
-                                        </div>
-                                        <div class="sub-heading">23 Lists</div>
-                                    </div>
-                                </div>
-                                <div class="header-action-btns">
-                                    <div class="icons-list">
-                                        <div class="searchbar-click">
-                                            <form class="searchbox">
-                                                <input placeholder="What are you looking for?" name="search"
-                                                    class="searchbox-input" required="">
-                                                <span class="searchbox-icon medium iconButton iconHover"><i
-                                                        class="fa fa-search"></i></span>
-                                            </form>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="animated-border">
-                                <div class="border-line"></div>
-                            </div>
-                            <div class="found-wrapper d-none">
-                                4 results found
-                            </div>
-                            <div class="bodySection perfect-scrollbar" data-scrollbar="true" tabindex="-1"
-                                style="overflow: auto; outline: none;">
-                                <div class="scroll-content">
-                                    <div class="groups-list">
-                                        <div class="listItem expandGroupBtn">
-                                            <div class="contact-details">
-                                                <div class="person-details">
-                                                    <div class="name">Sales Follow Up</div>
-                                                    <div class="number">4 Contacts</div>
-                                                </div>
-                                            </div>
-                                            <div class="actionBtns">
-                                                <div class="btn iconButton small">
-                                                    <i class="far fa-plus"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listItem expandGroupBtn">
-                                            <div class="contact-details">
-                                                <div class="person-details">
-                                                    <div class="name">Sales Follow Up</div>
-                                                    <div class="number">4 Contacts</div>
-                                                </div>
-                                            </div>
-                                            <div class="actionBtns">
-                                                <div class="btn iconButton small">
-                                                    <i class="far fa-plus"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listItem expandGroupBtn">
-                                            <div class="contact-details">
-                                                <div class="person-details">
-                                                    <div class="name">Sales Follow Up</div>
-                                                    <div class="number">53 Contacts</div>
-                                                </div>
-                                            </div>
-                                            <div class="actionBtns">
-                                                <div class="btn iconButton small">
-                                                    <i class="far fa-plus"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listItem expandGroupBtn">
-                                            <div class="contact-details">
-                                                <div class="person-details">
-                                                    <div class="name">Sales Follow Up</div>
-                                                    <div class="number">53 Contacts</div>
-                                                </div>
-                                            </div>
-                                            <div class="actionBtns">
-                                                <div class="btn iconButton small addContact">
-                                                    <i class="far fa-plus"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listItem expandGroupBtn">
-                                            <div class="contact-details">
-                                                <div class="person-details">
-                                                    <div class="name">Sales Follow Up</div>
-                                                    <div class="number">53 Contacts</div>
-                                                </div>
-                                            </div>
-                                            <div class="actionBtns">
-                                                <div class="btn iconButton small addContact">
-                                                    <i class="far fa-plus"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listItem expandGroupBtn">
-                                            <div class="contact-details">
-                                                <div class="person-details">
-                                                    <div class="name">Sales Follow Up</div>
-                                                    <div class="number">53 Contacts</div>
-                                                </div>
-                                            </div>
-                                            <div class="actionBtns">
-                                                <div class="iconButton small addContact">
-                                                    <i class="far fa-plus"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listItem expandGroupBtn">
-                                            <div class="contact-details">
-                                                <div class="person-details">
-                                                    <div class="name">Sales Follow Up</div>
-                                                    <div class="number">53 Contacts</div>
-                                                </div>
-                                            </div>
-                                            <div class="actionBtns">
-                                                <div class="btn iconButton small addContact">
-                                                    <i class="far fa-plus"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listItem expandGroupBtn">
-                                            <div class="contact-details">
-                                                <div class="person-details">
-                                                    <div class="name">Sales Follow Up</div>
-                                                    <div class="number">53 Contacts</div>
-                                                </div>
-                                            </div>
-                                            <div class="actionBtns">
-                                                <div class="btn iconButton small addContact">
-                                                    <i class="far fa-plus"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listItem expandGroupBtn">
-                                            <div class="contact-details">
-                                                <div class="person-details">
-                                                    <div class="name">Sales Follow Up</div>
-                                                    <div class="number">53 Contacts</div>
-                                                </div>
-                                            </div>
-                                            <div class="actionBtns">
-                                                <div class="btn iconButton small addContact">
-                                                    <i class="far fa-plus"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listItem expandGroupBtn">
-                                            <div class="contact-details">
-                                                <div class="person-details">
-                                                    <div class="name">Sales Follow Up</div>
-                                                    <div class="number">53 Contacts</div>
-                                                </div>
-                                            </div>
-                                            <div class="actionBtns">
-                                                <div class="btn iconButton small addContact">
-                                                    <i class="far fa-plus"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listItem expandGroupBtn">
-                                            <div class="contact-details">
-                                                <div class="person-details">
-                                                    <div class="name">Sales Follow Up</div>
-                                                    <div class="number">53 Contacts</div>
-                                                </div>
-                                            </div>
-                                            <div class="actionBtns">
-                                                <div class="btn iconButton small addContact">
-                                                    <i class="far fa-plus"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listItem expandGroupBtn">
-                                            <div class="contact-details">
-                                                <div class="person-details">
-                                                    <div class="name">Sales Follow Up</div>
-                                                    <div class="number">53 Contacts</div>
-                                                </div>
-                                            </div>
-                                            <div class="actionBtns">
-                                                <div class="btn iconButton small addContact">
-                                                    <i class="far fa-plus"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listItem expandGroupBtn">
-                                            <div class="contact-details">
-                                                <div class="person-details">
-                                                    <div class="name">Sales Follow Up</div>
-                                                    <div class="number">53 Contacts</div>
-                                                </div>
-                                            </div>
-                                            <div class="actionBtns">
-                                                <div class="btn iconButton small addContact">
-                                                    <i class="far fa-plus"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listItem expandGroupBtn">
-                                            <div class="contact-details">
-                                                <div class="person-details">
-                                                    <div class="name">Sales Follow Up</div>
-                                                    <div class="number">53 Contacts</div>
-                                                </div>
-                                            </div>
-                                            <div class="actionBtns">
-                                                <div class="btn iconButton small addContact">
-                                                    <i class="far fa-plus"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listItem expandGroupBtn">
-                                            <div class="contact-details">
-                                                <div class="person-details">
-                                                    <div class="name">Sales Follow Up</div>
-                                                    <div class="number">53 Contacts</div>
-                                                </div>
-                                            </div>
-                                            <div class="actionBtns">
-                                                <div class="btn iconButton small addContact">
-                                                    <i class="far fa-plus"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listItem expandGroupBtn">
-                                            <div class="contact-details">
-                                                <div class="person-details">
-                                                    <div class="name">Sales Follow Up</div>
-                                                    <div class="number">53 Contacts</div>
-                                                </div>
-                                            </div>
-                                            <div class="actionBtns">
-                                                <div class="btn iconButton small addContact">
-                                                    <i class="far fa-plus"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="scrollbar-track scrollbar-track-x" style="display: none;">
-                                    <div class="scrollbar-thumb scrollbar-thumb-x"></div>
-                                </div>
-                                <div class="scrollbar-track scrollbar-track-y" style="display: none;">
-                                    <div class="scrollbar-thumb scrollbar-thumb-y"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div id="dialer" class="tab-pane dialerTab fade show active dialerMainTabs" role="tabpanel"
-                        aria-labelledby="dialer">
-                        <div class="dialerTab-Content inboundCall">
-                            <div class="call-without-transfered dialerScreen">
-
-
-
-                                <div class="header dialerHeader">
-                                    <div class="dialer-title">
-                                        Smart Dialer
-                                    </div>
-                                    <div class="call-type">
-                                        Incoming Call
-                                    </div>
-                                    <div class="call-avatar dialer-call-avatar">
-                                        <div class="avatar large person-image">
-                                            <img src="../../../../assets/images/avatar-8.jpg" alt="">
-                                        </div>
-                                        <div class="avatar large callIcon">
-                                            <i class="far fa-user"></i>
-                                        </div>
-                                        <div class="avatar large person-name">
-                                            AK
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="numberInputWrapper dialer-numberInputWrapper show">
-                                    <div class="dialer-numberInput">
-                                        <div class="person-number-input">
-                                            <input class="numberInput" value="+92 300 1234567">
-                                        </div>
-                                        <div class="number-backspace">
-                                            <i class="fal fa-backspace"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="contact-details-wrapper accordion md-accordion" id="accordionExample"
-                                    role="tablist" aria-multiselectable="true">
-                                    <div class="contact-details">
-                                        <div class="person-numbers-dropdown collapsed"
-                                            data-bs-parent="#accordionExample" data-bs-toggle="collapse"
-                                            data-bs-target="#ContactOtherNum" aria-expanded="true"
-                                            aria-controls="ContactOtherNum">
-                                            <i class="far fa-chevron-down ice"></i>
-                                        </div>
-                                        <div class="person-details">
-                                            <div class="person-name">
-                                                <div class="name">Fatima Ahmed</div>
-                                                <div class="person-designation d-none">Technical Support Consultant
-                                                </div>
-                                            </div>
-                                            <div class="number-count" data-bs-parent="#accordionExample"
-                                                data-bs-toggle="collapse" data-bs-target="#ContactOtherNum"
-                                                aria-expanded="true" aria-controls="ContactOtherNum">
-                                                +3
-                                            </div>
-                                        </div>
-                                        <div class="contact-action hide">
-                                            <i class="fal fa-plus ice"></i>
-                                        </div>
-                                    </div>
-                                    <div class="person-numbers-list collapse" id="ContactOtherNum" role="tabpanel"
-                                        aria-labelledby="headingOne1" data-bs-parent="#accordionExample">
-                                        <div class="listItem">
-                                            <div class="number">0300 1234567</div>
-                                            <div class="d-flex actionWrapper">
-                                                <div class="number-action">
-                                                    <i class="fal fa-comment-alt"></i>
-                                                </div>
-                                                <div class="number-action">
-                                                    <i class="fal fa-phone-alt"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listItem">
-                                            <div class="number">0300 1234567</div>
-                                            <div class="d-flex actionWrapper">
-                                                <div class="number-action">
-                                                    <i class="fal fa-comment-alt"></i>
-                                                </div>
-                                                <div class="number-action">
-                                                    <i class="fal fa-phone-alt"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="listItem">
-                                            <div class="number">0213 1234567</div>
-                                            <div class="d-flex actionWrapper">
-                                                <div class="number-action">
-                                                    <i class="fal fa-phone-alt"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="number-dialing">
-                                    <div class="number">
-                                        +92 321 9112233
-                                    </div>
-                                    <div class="dialing-status">
-                                        <div class="status">Dialing</div>
-                                        <div class="dialingLoader">
-                                            <div class="loading"></div>
-                                        </div>
-                                        <div class="status-time d-none">1:48</div>
-                                    </div>
-
-                                    <div class="dialing-time">
-                                        1:48
-                                    </div>
-                                </div>
-
-
-                                <div class="inbound-call-transfer">
-                                    <div class="inbound-attended-transfer transfer-types-btn active btn"
-                                        value="attended-transfer">Attended Transfer</div>
-                                    <div class="inbound-conference-transfer transfer-types-btn btn" value="conference">
-                                        Conference</div>
-                                    <div class="inbound-direct-transfer transfer-types-btn btn" value="direct-transfer">
-                                        Direct Transfer</div>
-                                </div>
-
-
-
-                                <div class="keypad dialer-keypad open">
-                                    <div class="d-flex keypad-row">
-                                        <button class="keypad-btn btn">1</button>
-                                        <button class="keypad-btn btn">2</button>
-                                        <button class="keypad-btn btn">3</button>
-                                    </div>
-                                    <div class="d-flex keypad-row">
-                                        <button class="keypad-btn btn">4</button>
-                                        <button class="keypad-btn btn">5</button>
-                                        <button class="keypad-btn btn">6</button>
-                                    </div>
-                                    <div class="d-flex keypad-row">
-                                        <button class="keypad-btn btn">7</button>
-                                        <button class="keypad-btn btn">8</button>
-                                        <button class="keypad-btn btn">9</button>
-                                    </div>
-                                    <div class="d-flex keypad-row">
-                                        <button class="keypad-btn btn">*</button>
-                                        <button class="keypad-btn btn">0</button>
-                                        <button class="keypad-btn btn">#</button>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="buttons-section">
-
-
-
-                                    <div class="mainBtns-group show">
-                                        <button class="actionBtn cancelCallBtn iceBg" data-bs-toggle="tooltip"
-                                            data-bs-placement="bottom" title="" data-bs-original-title="Cancel">
-                                            <i class="fal fa-times ocean"></i>
-                                        </button>
-                                        <button class="actionBtn dialBtn show" data-bs-toggle="tooltip"
-                                            data-bs-placement="bottom" title="" data-bs-original-title="Dial">
-                                            <i class="fal fa-phone-alt ice"></i>
-                                        </button>
-                                        <button class="actionBtn leaveMsgBtn iceBg" data-bs-toggle="tooltip"
-                                            data-bs-placement="bottom" title=""
-                                            data-bs-original-title="Leave a Message">
-                                            <i class="fal fa-comment-alt ocean"></i>
-                                        </button>
-                                        <button class="actionBtn disconnectBtn" data-bs-toggle="tooltip"
-                                            data-bs-placement="bottom" title="" data-bs-original-title="Disconnect">
-                                            <i class="fal fa-phone-alt ice disconnectIcon"></i>
-                                        </button>
-                                    </div>
-
-                                    <div class="callConnected-btns">
-                                        <button class="smallBtn trans muteCallButton" data-bs-toggle="tooltip"
-                                            data-bs-placement="bottom" title="" data-bs-original-title="Mute">
-                                            <i class="fal fa-microphone-slash"></i>
-                                        </button>
-                                        <button class="smallBtn disconnectMergedBtn radicalBg d-none"
-                                            data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-                                            data-bs-original-title="Disconnect">
-                                            <i class="fal fa-phone-alt disconnectIcon"></i>
-                                        </button>
-                                        <button class="smallBtn trans transferBtn" data-bs-toggle="tooltip"
-                                            data-bs-placement="bottom" title="" data-bs-original-title="Transfer Call">
-                                            <i class="fal fa-share"></i>
-                                        </button>
-                                        <button class="smallBtn trans holdCallButton" data-bs-toggle="tooltip"
-                                            data-bs-placement="bottom" title="" data-bs-original-title="Hold">
-                                            <i class="fal fa-pause"></i>
-                                        </button>
-                                        <button class="smallBtn trans IVRBtn" data-bs-toggle="tooltip"
-                                            data-bs-placement="bottom" title="" data-bs-original-title="IVR">
-                                            <i class="fal fa-wave-triangle"></i>
-                                        </button>
-                                    </div>
-
-
-
-
-                                </div>
-
-
-
-                                <div class="call-transfer-types d-none">
-                                    <div class="transfer-pill btn active attended">
-                                        Attended Transfer
-                                    </div>
-                                    <div class="transfer-pill btn">
-                                        Conference
-                                    </div>
-                                    <div class="transfer-pill btn">
-                                        Direct Transfer
-                                    </div>
-                                </div>
-
-
-
-                                <div class="keypad IVR-keypad d-none">
-                                    <div class="d-flex keypad-row">
-                                        <button class="keypad-btn btn">1</button>
-                                        <button class="keypad-btn btn">2</button>
-                                        <button class="keypad-btn btn">3</button>
-                                    </div>
-                                    <div class="d-flex keypad-row">
-                                        <button class="keypad-btn btn">4</button>
-                                        <button class="keypad-btn btn">5</button>
-                                        <button class="keypad-btn btn">6</button>
-                                    </div>
-                                    <div class="d-flex keypad-row">
-                                        <button class="keypad-btn btn">7</button>
-                                        <button class="keypad-btn btn">8</button>
-                                        <button class="keypad-btn btn">9</button>
-                                    </div>
-                                    <div class="d-flex keypad-row">
-                                        <button class="keypad-btn btn">*</button>
-                                        <button class="keypad-btn btn">0</button>
-                                        <button class="keypad-btn btn">#</button>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="transfer-status-wrapper d-none">
-                                    <div class="content-wrapper">
-                                        <div class="transfer-type text">Attended Transfer</div>
-                                        <div class="transfer-time text">05:48</div>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="input-number-status d-none">
-                                    <div class="number-status">Number Not Found</div>
-                                </div>
-
-
-
-                                <div class="dial-btn-inbound-transfer">
-                                    <div class="btn emeraldBg dialContact">
-                                        <i class="fal fa-phone-alt"></i>
-                                    </div>
-                                </div>
-
-                                <div class="call-dialer-component" id="callDialerComponent">
-                                    <div class="dialerComponentBg">
-                                        <img src="../../../../assets/images/wave.svg" alt="">
-                                    </div>
-                                    <div class="dialerComponent-Content">
-                                        <div class="header">
-                                            <div class="dialer-title">
-                                                Smart Dialer
-                                            </div>
-                                            <div class="call-type">
-                                                Outgoing Call
-                                            </div>
-                                        </div>
-
-                                        <div class="numberInputWrapper show">
-                                            <div class="dialer-numberInput">
-                                                <div class="person-number-input">
-                                                    <input ngModel="for" (change)="method()" class="numberInput" value="+92 300 1234567">
-                                                </div>
-                                                <div class="number-backspace">
-                                                    <i class="fal fa-backspace"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="keypad dialer-component-keypad open">
-                                            <div class="d-flex keypad-row">
-                                                <button class="keypad-btn btn">1</button>
-                                                <button class="keypad-btn btn">2</button>
-                                                <button class="keypad-btn btn">3</button>
-                                            </div>
-                                            <div class="d-flex keypad-row">
-                                                <button class="keypad-btn btn">4</button>
-                                                <button class="keypad-btn btn">5</button>
-                                                <button class="keypad-btn btn">6</button>
-                                            </div>
-                                            <div class="d-flex keypad-row">
-                                                <button class="keypad-btn btn">7</button>
-                                                <button class="keypad-btn btn">8</button>
-                                                <button class="keypad-btn btn">9</button>
-                                            </div>
-                                            <div class="d-flex keypad-row">
-                                                <button class="keypad-btn btn">*</button>
-                                                <button class="keypad-btn btn">0</button>
-                                                <button class="keypad-btn btn">#</button>
-                                            </div>
-                                        </div>
-                                        <div class="buttons-section">
-
-                                            <div class="mainBtns-group show">
-                                                <div class="actionBtn dialContact btn show">
-                                                    <i class="fas fa-phone-alt ice"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="cancel-dialer-wrapper">
-                                            <div class="cancel-dialer-btn back-to-call">
-                                                <i class="far fa-long-arrow-left ice"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <div class="call-transfered">
-
-                                <div class="connected-person-box-wrapper">
-                                    <div class="connected-person-box box1">
-                                        <div class="boxWrapper">
-                                            <div class="boxBody">
-                                                <div class="detailWrapper">
-                                                    <div class="avatarWrapper">
-                                                        <div class="avatar medium">
-                                                            <img src="../../../../assets/images/avatar-8.jpg" alt="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="contact-details">
-                                                        <div class="name">Fatima Ahmed</div>
-                                                        <div class="number">+92 300 1234567</div>
-                                                    </div>
-                                                </div>
-                                                <div class="actionWrapper">
-                                                    <div class="actionBtn">
-                                                        <i class="fal fa-pause mango"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="boxBottom">
-                                                <div class="callStatus">
-                                                    On-Hold
-                                                    <span>01:17</span>
-                                                </div>
-                                                <div class="call-actionButtons d-flex">
-                                                    <button class="smallBtn trans transBgActive callResumeButton"
-                                                        data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-                                                        data-bs-original-title="Resume">
-                                                        <i class="fal fa-phone-alt ice"></i>
-                                                    </button>
-                                                    <button class="smallBtn trans transBgActive callHoldButton"
-                                                        data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-                                                        data-bs-original-title="Hold">
-                                                        <i class="fal fa-pause mango ice"></i>
-                                                    </button>
-                                                    <button class="smallBtn trans transBgActive callDisconnectButton"
-                                                        data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-                                                        data-bs-original-title="Diconnect">
-                                                        <i class="fal fa-phone-alt disconnectIcon ice"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="call-merged-dots d-none">
-                                        <div class="dot1 dot">.</div>
-                                        <div class="dot2 dot">.</div>
-                                        <div class="dot3 dot">.</div>
-                                        <div class="dot4 dot">.</div>
-                                        <div class="dot5 dot">.</div>
-                                    </div>
-                                    <div class="connected-person-box box2">
-                                        <div class="boxWrapper">
-                                            <div class="boxBody">
-                                                <div class="detailWrapper">
-                                                    <div class="avatarWrapper">
-                                                        <div class="avatar medium berryBg">
-                                                            <div class="person-name">AK</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="contact-details">
-                                                        <div class="name">Aniqa Khan</div>
-                                                        <div class="number">+92 300 8957452</div>
-                                                    </div>
-                                                </div>
-                                                <div class="actionWrapper">
-                                                    <div class="actionBtn">
-                                                        <i class="fal fa-phone-alt emerald"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="boxBottom">
-                                                <div class="callStatus">
-                                                    Connected
-                                                    <span>02:32</span>
-                                                </div>
-                                                <div class="call-actionButtons d-flex">
-                                                    <button class="smallBtn trans transBgActive callResumeButton"
-                                                        data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-                                                        data-bs-original-title="Resume">
-                                                        <i class="fal fa-phone-alt"></i>
-                                                    </button>
-                                                    <button class="smallBtn trans transBgActive callHoldButton"
-                                                        data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-                                                        data-bs-original-title="Hold">
-                                                        <i class="fal fa-pause mango ice"></i>
-                                                    </button>
-                                                    <button
-                                                        class="smallBtn trans transBgActive mergedCallHangUpBtn callDisconnectButton"
-                                                        data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-                                                        data-bs-original-title="Diconnect">
-                                                        <i class="fal fa-phone-alt disconnectIcon"></i>
-                                                    </button>
-                                                    <button class="smallBtn trans IVRBtnSecond" data-bs-toggle="tooltip"
-                                                        data-bs-placement="bottom" title=""
-                                                        data-bs-original-title="IVR">
-                                                        <i class="fal fa-wave-triangle"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="keypad IVRSecond-keypad secondCallDTMP-keypad">
-                                        <div class="d-flex keypad-row">
-                                            <button class="keypad-btn btn">1</button>
-                                            <button class="keypad-btn btn">2</button>
-                                            <button class="keypad-btn btn">3</button>
-                                        </div>
-                                        <div class="d-flex keypad-row">
-                                            <button class="keypad-btn btn">4</button>
-                                            <button class="keypad-btn btn">5</button>
-                                            <button class="keypad-btn btn">6</button>
-                                        </div>
-                                        <div class="d-flex keypad-row">
-                                            <button class="keypad-btn btn">7</button>
-                                            <button class="keypad-btn btn">8</button>
-                                            <button class="keypad-btn btn">9</button>
-                                        </div>
-                                        <div class="d-flex keypad-row">
-                                            <button class="keypad-btn btn">*</button>
-                                            <button class="keypad-btn btn">0</button>
-                                            <button class="keypad-btn btn">#</button>
-                                        </div>
-                                    </div>
-
-                                    <div class="merged-call-hanged-up connected-person-box">
-                                        <div class="boxWrapper">
-                                            <div class="boxBody">
-                                                <div class="detailWrapper">
-                                                    <div class="avatarWrapper">
-                                                        <div class="avatar medium berryBg">
-                                                            <div class="person-name">AK</div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="contact-details">
-                                                        <div class="name">Aniqa Khan</div>
-                                                        <div class="number">+92 300 8957452</div>
-                                                    </div>
-                                                </div>
-                                                <div class="actionWrapper callHangedUp">
-                                                    <button class="emeraldBg dialContact">
-                                                        <i class="fal fa-phone-alt"></i>
-                                                    </button>
-                                                    <div class="btnLabel">
-                                                        Redial
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="boxBottom">
-                                                <div class="callStatus radical">
-                                                    <span>Call has been dropped</span>
-                                                </div>
-                                                <div class="call-actionButtons d-flex">
-                                                    <button class="smallBtn transparent close-merged-call-hanged-up">
-                                                        <i class="fal fa-times"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="merge-split-call-btns">
-                                    <div class="mergeCallBtn btnWrap">
-                                        <div class="btn">
-                                            <img src="../../../../assets/images/icon-merge.svg" alt="">
-                                        </div>
-                                        <div class="btn-label">
-                                            <div class="label">Merge</div>
-                                            <div class="sub-label">Conference</div>
-                                        </div>
-                                    </div>
-                                    <div class="splitCallBtn btnWrap">
-                                        <div class="btn">
-                                            <img src="../../../../assets/images/icon-split.svg" alt="">
-                                        </div>
-                                        <div class="btn-label">
-                                            <div class="label">Split</div>
-                                            <div class="sub-label">Conference</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="leave-call-btn">
-                                    <div class="btn leaveCallBtn">
-                                        Leave
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="dialerActions">
-                    <ul class="tabs nav nav-tabs show" id="nav-tab" role="tablist">
-                        <li class="tab nav-item contactBtn">
-                            <button class="nav-link" id="contacts-tab" data-bs-toggle="tab" data-bs-target="#contacts"
-                                type="button" role="tab" aria-controls="contacts" aria-selected="true">
-                                <i class="far fa-user coal"></i>
-                                <div class="tab-heading coal">Contacts</div>
+  <div class="right-bar-wrapper">
+      <div class="dialerWrapper" [ngClass]="{'incomingCall': inboundCall, 'call-connected': OBCallConnected}">
+          <div class="dialerBgHead">
+              <img src="../../../../assets/images/wave.svg" alt="">
+          </div>
+          <div class="dialerContent">
+
+              <div class="tab-content" #dialerTabContent>
+                  <div id="callList" class="tab-pane dialerMainTabs" role="tabpanel" aria-labelledby="callList">
+                      <div class="callListTab-Content tab-body">
+
+                          <div class="tab-header px-3">
+                              <div class="header-title">
+                                  <div class="back-to-call goBackToConnectedCall d-none">
+                                      <i class="far fa-long-arrow-left night"></i>
+                                  </div>
+                                  <div>
+                                      <div class="d-flex">
+                                          <div class="goBackExpandedGroup d-none">
+                                              <i class="fal fa-chevron-left"></i>
+                                          </div>
+                                          <div class="heading">Calling List</div>
+                                      </div>
+                                      <div class="sub-heading">23 Lists</div>
+                                  </div>
+                              </div>
+                              <div class="header-action-btns">
+                                  <div class="icons-list">
+                                      <div class="searchbar-click">
+                                          <form class="searchbox">
+                                              <input placeholder="What are you looking for?" name="search" class="searchbox-input" required="">
+                                              <span class="searchbox-icon medium iconButton iconHover"><i class="fa fa-search"></i></span>
+                                          </form>
+
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="animated-border">
+                              <div class="border-line"></div>
+                          </div>
+                          <div class="found-wrapper d-none">
+                              4 results found
+                          </div>
+                          <div class="bodySection perfect-scrollbar" data-scrollbar="true" tabindex="-1" style="overflow: hidden; outline: none;">
+                              <div class="scroll-content">
+                                  <div class="groups-list">
+                                      <div class="listItem expandGroupBtn">
+                                          <div class="contact-details">
+                                              <div class="person-details">
+                                                  <div class="name">Sales Follow Up</div>
+                                                  <div class="number">4 Contacts</div>
+                                              </div>
+                                          </div>
+                                          <div class="actionBtns">
+                                              <div class="btn iconButton small">
+                                                  <i class="far fa-plus"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="listItem expandGroupBtn">
+                                          <div class="contact-details">
+                                              <div class="person-details">
+                                                  <div class="name">Sales Follow Up</div>
+                                                  <div class="number">4 Contacts</div>
+                                              </div>
+                                          </div>
+                                          <div class="actionBtns">
+                                              <div class="btn iconButton small">
+                                                  <i class="far fa-plus"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="listItem expandGroupBtn">
+                                          <div class="contact-details">
+                                              <div class="person-details">
+                                                  <div class="name">Sales Follow Up</div>
+                                                  <div class="number">53 Contacts</div>
+                                              </div>
+                                          </div>
+                                          <div class="actionBtns">
+                                              <div class="btn iconButton small">
+                                                  <i class="far fa-plus"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="listItem expandGroupBtn">
+                                          <div class="contact-details">
+                                              <div class="person-details">
+                                                  <div class="name">Sales Follow Up</div>
+                                                  <div class="number">53 Contacts</div>
+                                              </div>
+                                          </div>
+                                          <div class="actionBtns">
+                                              <div class="btn iconButton small addContact">
+                                                  <i class="far fa-plus"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="listItem expandGroupBtn">
+                                          <div class="contact-details">
+                                              <div class="person-details">
+                                                  <div class="name">Sales Follow Up</div>
+                                                  <div class="number">53 Contacts</div>
+                                              </div>
+                                          </div>
+                                          <div class="actionBtns">
+                                              <div class="btn iconButton small addContact">
+                                                  <i class="far fa-plus"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="listItem expandGroupBtn">
+                                          <div class="contact-details">
+                                              <div class="person-details">
+                                                  <div class="name">Sales Follow Up</div>
+                                                  <div class="number">53 Contacts</div>
+                                              </div>
+                                          </div>
+                                          <div class="actionBtns">
+                                              <div class="iconButton small addContact">
+                                                  <i class="far fa-plus"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="listItem expandGroupBtn">
+                                          <div class="contact-details">
+                                              <div class="person-details">
+                                                  <div class="name">Sales Follow Up</div>
+                                                  <div class="number">53 Contacts</div>
+                                              </div>
+                                          </div>
+                                          <div class="actionBtns">
+                                              <div class="btn iconButton small addContact">
+                                                  <i class="far fa-plus"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="listItem expandGroupBtn">
+                                          <div class="contact-details">
+                                              <div class="person-details">
+                                                  <div class="name">Sales Follow Up</div>
+                                                  <div class="number">53 Contacts</div>
+                                              </div>
+                                          </div>
+                                          <div class="actionBtns">
+                                              <div class="btn iconButton small addContact">
+                                                  <i class="far fa-plus"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="listItem expandGroupBtn">
+                                          <div class="contact-details">
+                                              <div class="person-details">
+                                                  <div class="name">Sales Follow Up</div>
+                                                  <div class="number">53 Contacts</div>
+                                              </div>
+                                          </div>
+                                          <div class="actionBtns">
+                                              <div class="btn iconButton small addContact">
+                                                  <i class="far fa-plus"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="listItem expandGroupBtn">
+                                          <div class="contact-details">
+                                              <div class="person-details">
+                                                  <div class="name">Sales Follow Up</div>
+                                                  <div class="number">53 Contacts</div>
+                                              </div>
+                                          </div>
+                                          <div class="actionBtns">
+                                              <div class="btn iconButton small addContact">
+                                                  <i class="far fa-plus"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="listItem expandGroupBtn">
+                                          <div class="contact-details">
+                                              <div class="person-details">
+                                                  <div class="name">Sales Follow Up</div>
+                                                  <div class="number">53 Contacts</div>
+                                              </div>
+                                          </div>
+                                          <div class="actionBtns">
+                                              <div class="btn iconButton small addContact">
+                                                  <i class="far fa-plus"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="listItem expandGroupBtn">
+                                          <div class="contact-details">
+                                              <div class="person-details">
+                                                  <div class="name">Sales Follow Up</div>
+                                                  <div class="number">53 Contacts</div>
+                                              </div>
+                                          </div>
+                                          <div class="actionBtns">
+                                              <div class="btn iconButton small addContact">
+                                                  <i class="far fa-plus"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="listItem expandGroupBtn">
+                                          <div class="contact-details">
+                                              <div class="person-details">
+                                                  <div class="name">Sales Follow Up</div>
+                                                  <div class="number">53 Contacts</div>
+                                              </div>
+                                          </div>
+                                          <div class="actionBtns">
+                                              <div class="btn iconButton small addContact">
+                                                  <i class="far fa-plus"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="listItem expandGroupBtn">
+                                          <div class="contact-details">
+                                              <div class="person-details">
+                                                  <div class="name">Sales Follow Up</div>
+                                                  <div class="number">53 Contacts</div>
+                                              </div>
+                                          </div>
+                                          <div class="actionBtns">
+                                              <div class="btn iconButton small addContact">
+                                                  <i class="far fa-plus"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="listItem expandGroupBtn">
+                                          <div class="contact-details">
+                                              <div class="person-details">
+                                                  <div class="name">Sales Follow Up</div>
+                                                  <div class="number">53 Contacts</div>
+                                              </div>
+                                          </div>
+                                          <div class="actionBtns">
+                                              <div class="btn iconButton small addContact">
+                                                  <i class="far fa-plus"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="listItem expandGroupBtn">
+                                          <div class="contact-details">
+                                              <div class="person-details">
+                                                  <div class="name">Sales Follow Up</div>
+                                                  <div class="number">53 Contacts</div>
+                                              </div>
+                                          </div>
+                                          <div class="actionBtns">
+                                              <div class="btn iconButton small addContact">
+                                                  <i class="far fa-plus"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                              </div>
+                              <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                                  <div class="scrollbar-thumb scrollbar-thumb-x"></div>
+                              </div>
+                              <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                                  <div class="scrollbar-thumb scrollbar-thumb-y"></div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div id="dialer" class="tab-pane dialerTab dialerMainTabs show active" role="tabpanel" aria-labelledby="dialer">
+                      <div class="dialerTab-Content" [ngClass]="{'inboundCall' : inboundCall ,'on-transfered' : box2Show}">
+                          <div class="call-without-transfered" [ngClass]="{'dialerScreen' : !inManualCall || (!inboundCall && transferringCall),'compress': !OBCallConnected && showManualTransferButtons && !callTransferred}">
+
+                              <div class="header dialerHeader" [ngClass]="{'compress' : callTransferred}">
+                                  <div class="dialer-title">
+                                      Smart Dialer
+                                  </div>
+                                  <div class="call-type">
+                                      Incoming Call
+                                  </div>
+                                  <div class="call-avatar dialer-call-avatar" [ngClass]="{'d-none': callTransferred}">
+                                      <div *ngIf="userInfo.image" class="avatar large person-image" [ngClass]="{'show' : inManualCall && !transferringCall}">
+                                          <img src="../images/avatar-8.jpg" alt="">
+                                      </div>
+                                      <div *ngIf="!userInfo.name" class="avatar large callIcon" [ngClass]="{'show' : inManualCall && !transferringCall}">
+                                          <i class="far fa-user"></i>
+                                      </div>
+                                      <div *ngIf="userInfo.name" class="avatar large person-name" [ngClass]="{'show' : inManualCall && !transferringCall}">
+                                          AK
+                                      </div>
+                                  </div>
+                              </div>
+
+
+                              <div class="numberInputWrapper dialer-numberInputWrapper show" [ngClass]="{'d-none' : inManualCall || transferringCall}">
+                                  <div class="dialer-numberInput">
+                                      <div class="person-number-input">
+                                          <input class="numberInput second" value="" [(ngModel)]="manualDialNum">
+                                      </div>
+                                      <div class="number-backspace">
+                                          <i class="fal fa-backspace"></i>
+                                      </div>
+                                  </div>
+                              </div>
+
+
+
+                              <div class="contact-details-wrapper accordion md-accordion" [ngClass]="{'show' : inManualCall || (transferringCall && !callTransferred)}" id="accordionExample" role="tablist" aria-multiselectable="true">
+                                  <div class="contact-details">
+                                      <div class="person-numbers-dropdown collapsed" [ngClass]="{'hide': transferringCall}" data-bs-parent="#accordionExample" data-bs-toggle="collapse" data-bs-target="#ContactOtherNum" aria-expanded="true" aria-controls="ContactOtherNum">
+                                          <i class="far fa-chevron-down ice"></i>
+                                      </div>
+                                      <div class="person-details">
+                                          <div class="person-name">
+                                              <div class="name">{{ userInfo.name }}</div>
+                                              <div class="person-designation" [ngClass]="{'d-none' : inManualCall && !transferringCall}">Technical Support Consultant</div>
+                                          </div>
+                                          <div class="number-count" [ngClass]="{'d-none' : !inManualCall || transferringCall}" data-bs-parent="#accordionExample" data-bs-toggle="collapse" data-bs-target="#ContactOtherNum" aria-expanded="true" aria-controls="ContactOtherNum">
+                                              +3
+                                          </div>
+                                      </div>
+                                      <div class="contact-action hide">
+                                          <i class="fal fa-plus ice"></i>
+                                      </div>
+                                  </div>
+                                  <div class="person-numbers-list collapse" id="ContactOtherNum" role="tabpanel" aria-labelledby="headingOne1" data-bs-parent="#accordionExample">
+                                      <div class="listItem">
+                                          <div class="number">0300 1234567</div>
+                                          <div class="d-flex actionWrapper">
+                                              <div class="number-action">
+                                                  <i class="fal fa-comment-alt"></i>
+                                              </div>
+                                              <div class="number-action">
+                                                  <i class="fal fa-phone-alt"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="listItem">
+                                          <div class="number">0300 1234567</div>
+                                          <div class="d-flex actionWrapper">
+                                              <div class="number-action">
+                                                  <i class="fal fa-comment-alt"></i>
+                                              </div>
+                                              <div class="number-action">
+                                                  <i class="fal fa-phone-alt"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="listItem">
+                                          <div class="number">0213 1234567</div>
+                                          <div class="d-flex actionWrapper">
+                                              <div class="number-action">
+                                                  <i class="fal fa-phone-alt"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+
+
+
+                              <div class="number-dialing" [ngClass]="{'show' : inManualCall || (transferringCall && !callTransferred)}">
+                                  <div class="number">
+                                      {{ manualDialNum }}
+                                  </div>
+                                  <div class="dialing-status wide" [ngClass]="{'wide' : inManualCall && OBCallConnected && !transferringCall}">
+                                      <div class="status">{{ dialingStatus }}</div>
+                                      <div class="dialingLoader" [ngClass]="{'d-none' : inManualCall && OBCallConnected && !transferringCall}">
+                                          <div class="loading"></div>
+                                      </div>
+                                      <div class="status-time" [ngClass]="{'d-none' : !OBCallConnected || transferringCall}">0:00</div>
+                                  </div>
+
+                                  <div class="dialing-time" [ngClass]="{'hide' : inManualCall && OBCallConnected && !transferringCall}">
+                                      0:00
+                                  </div>
+                              </div>
+
+
+                              <div class="inbound-call-transfer" [ngClass]="{'d-none' : transferringCall}">
+                                  <div class="inbound-attended-transfer transfer-types-btn active btn" value="attended-transfer">
+                                      Attended Transfer</div>
+                                  <div class="inbound-conference-transfer transfer-types-btn btn" value="conference">Conference</div>
+                                  <div class="inbound-direct-transfer transfer-types-btn btn" value="direct-transfer">Direct Transfer
+                                  </div>
+                              </div>
+
+
+
+                              <div class="keypad dialer-keypad open" [ngClass]="{'d-none' : inManualCall || transferringCall}">
+                                  <div class="d-flex keypad-row">
+                                      <button class="keypad-btn btn">1</button>
+                                      <button class="keypad-btn btn">2</button>
+                                      <button class="keypad-btn btn">3</button>
+                                  </div>
+                                  <div class="d-flex keypad-row">
+                                      <button class="keypad-btn btn">4</button>
+                                      <button class="keypad-btn btn">5</button>
+                                      <button class="keypad-btn btn">6</button>
+                                  </div>
+                                  <div class="d-flex keypad-row">
+                                      <button class="keypad-btn btn">7</button>
+                                      <button class="keypad-btn btn">8</button>
+                                      <button class="keypad-btn btn">9</button>
+                                  </div>
+                                  <div class="d-flex keypad-row">
+                                      <button class="keypad-btn btn">*</button>
+                                      <button class="keypad-btn btn">0</button>
+                                      <button class="keypad-btn btn">#</button>
+                                  </div>
+                              </div>
+
+
+
+                              <div class="buttons-section">
+
+
+
+                                  <div class="mainBtns-group show" [ngClass]="{'d-none': callTransferred}">
+                                      <button class="actionBtn cancelCallBtn iceBg" (click)="confirmCancelCall()" [ngClass]="{'show' : manualDisconnect}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Cancel">
+                                        <i class="fal fa-times ocean"></i>
+                                      </button>
+                                      <button class="actionBtn dialBtn" [ngClass]="{'show' : !inManualCall || manualDisconnect}" (click)="manualDial()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Dial">
+                                        <i class="fal fa-phone-alt ice"></i>
+                                      </button>
+                                      <button class="actionBtn leaveMsgBtn iceBg" [ngClass]="{'show' : manualDisconnect}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Leave a Message">
+                                        <i class="fal fa-comment-alt ocean"></i>
+                                      </button>
+                                      <button class="actionBtn disconnectBtn" (click)="hangUpCall(1)" [ngClass]="{'show' : inManualCall && !manualDisconnect}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Disconnect">
+                                        <i class="fal fa-phone-alt ice disconnectIcon"></i>
+                                      </button>
+                                  </div>
+
+                                  <div class="callConnected-btns" [ngClass]="{'show' : OBCallConnected || box2Show, 'hide': transferringCall, 'd-none': transferringCall && !callTransferred}">
+                                      <button class="smallBtn trans muteCallButton" (click)="toggleMute()" [ngClass]="{'active': isMute}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ isMute? 'Unmute' : 'Mute' }}">
+                                        <i class="fal" [ngClass]="{'fa-microphone-slash' : isMute, 'fa-microphone' : !isMute }"></i>
+                                      </button>
+                                      <button class="smallBtn disconnectMergedBtn radicalBg d-none" [ngClass]="{'d-none': !callMerged}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Disconnect">
+                                        <i class="fal fa-phone-alt disconnectIcon"></i>
+                                      </button>
+                                      <button class="smallBtn trans transferBtn" [ngClass]="{'active': showManualTransferButtons, 'd-none': callTransferred}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Transfer Call" (click)="transferBtnClick()">
+                                        <i class="fal fa-share"></i>
+                                      </button>
+                                      <button class="smallBtn trans holdCallButton" [ngClass]="{'active': isHold}" (click)="toggleHold(1)" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ isMute? 'Unhold' : 'Hold' }}" data-bs-original-title="Hold">
+                                        <i class="fal fa-pause"></i>
+                                      </button>
+                                      <button class="smallBtn trans IVRBtn" [ngClass]="{'d-none': callTransferred}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="IVR">
+                                        <i class="fal fa-wave-triangle"></i>
+                                      </button>
+                                  </div>
+
+
+
+
+                              </div>
+
+
+
+                              <div class="call-transfer-types d-none" [ngClass]="{'d-none': !showManualTransferButtons || transferringCall}">
+                                  <div class="transfer-pill btn attended" [ngClass]="{'active' : transferType =='attended'}" (click)="setTransferType('attended')">
+                                      Attended Transfer
+                                  </div>
+                                  <div class="transfer-pill btn" [ngClass]="{'active' : transferType =='conference'}" (click)="setTransferType('conference')">
+                                      Conference
+                                  </div>
+                                  <div class="transfer-pill btn" [ngClass]="{'active' : transferType =='blind'}" (click)="setTransferType('blind')">
+                                      Blind Transfer
+                                  </div>
+                              </div>
+
+
+
+                              <div class="keypad IVR-keypad d-none" [ngClass]="{'d-none': !OBCallConnected || callTransferred, 'open': !OBCallConnected && !showManualTransferButtons}">
+                                  <div class="d-flex keypad-row">
+                                      <button class="keypad-btn btn">1</button>
+                                      <button class="keypad-btn btn">2</button>
+                                      <button class="keypad-btn btn">3</button>
+                                  </div>
+                                  <div class="d-flex keypad-row">
+                                      <button class="keypad-btn btn">4</button>
+                                      <button class="keypad-btn btn">5</button>
+                                      <button class="keypad-btn btn">6</button>
+                                  </div>
+                                  <div class="d-flex keypad-row">
+                                      <button class="keypad-btn btn">7</button>
+                                      <button class="keypad-btn btn">8</button>
+                                      <button class="keypad-btn btn">9</button>
+                                  </div>
+                                  <div class="d-flex keypad-row">
+                                      <button class="keypad-btn btn">*</button>
+                                      <button class="keypad-btn btn">0</button>
+                                      <button class="keypad-btn btn">#</button>
+                                  </div>
+                              </div>
+
+
+
+                              <div class="transfer-status-wrapper d-none" [ngClass]="{'hide': callTransferred && !box2Show}">
+                                  <div class="content-wrapper">
+                                      <div class="transfer-type text">Attended Transfer</div>
+                                      <div class="transfer-time text">05:48</div>
+                                  </div>
+                              </div>
+
+
+
+                              <div class="input-number-status d-none">
+                                  <div class="number-status">Number Not Found</div>
+                              </div>
+
+
+
+                              <div class="dial-btn-inbound-transfer" [ngClass]="{'d-none': transferringCall}">
+                                  <div class="btn emeraldBg dialContact" (click)="transferCall()">
+                                      <i class="fal fa-phone-alt"></i>
+                                  </div>
+                              </div>
+
+                              <div class="call-dialer-component" [ngClass]="{'show' : showSecondCallDialer}" id="callDialerComponent">
+                                  <div class="dialerComponentBg">
+                                      <img src="../../../../assets/images/wave.svg" alt="">
+                                  </div>
+                                  <div class="dialerComponent-Content">
+                                      <div class="header">
+                                          <div class="dialer-title">
+                                              Smart Dialer
+                                          </div>
+                                          <div class="call-type">
+                                              Outgoing Call
+                                          </div>
+                                      </div>
+
+                                      <div class="numberInputWrapper show">
+                                          <div class="dialer-numberInput">
+                                              <div class="person-number-input">
+                                                  <input class="numberInput first" [(ngModel)]="transferNum">
+                                              </div>
+                                              <div class="number-backspace">
+                                                  <i class="fal fa-backspace"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                      <div class="keypad dialer-component-keypad open">
+                                          <div class="d-flex keypad-row">
+                                              <button class="keypad-btn btn">1</button>
+                                              <button class="keypad-btn btn">2</button>
+                                              <button class="keypad-btn btn">3</button>
+                                          </div>
+                                          <div class="d-flex keypad-row">
+                                              <button class="keypad-btn btn">4</button>
+                                              <button class="keypad-btn btn">5</button>
+                                              <button class="keypad-btn btn">6</button>
+                                          </div>
+                                          <div class="d-flex keypad-row">
+                                              <button class="keypad-btn btn">7</button>
+                                              <button class="keypad-btn btn">8</button>
+                                              <button class="keypad-btn btn">9</button>
+                                          </div>
+                                          <div class="d-flex keypad-row">
+                                              <button class="keypad-btn btn">*</button>
+                                              <button class="keypad-btn btn">0</button>
+                                              <button class="keypad-btn btn">#</button>
+                                          </div>
+                                      </div>
+                                      <div class="buttons-section">
+
+                                          <div class="mainBtns-group show" [ngClass]="{'d-none': callTransferred}">
+                                              <div class="actionBtn dialContact btn show" (click)="transferCall()">
+                                                  <i class="fas fa-phone-alt ice"></i>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                      <div class="cancel-dialer-wrapper">
+                                          <div class="cancel-dialer-btn back-to-call" (click)="showSecondDialer(false)">
+                                              <i class="far fa-long-arrow-left ice"></i>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                              </div>
+
+                          </div>
+                          <div class="call-transfered" [ngClass]="{'flex' : callTransferred}">
+
+                              <div class="connected-person-box-wrapper">
+                                  <div class="connected-person-box box1" [ngClass]="{'show': transferringCall}">
+                                      <div class="boxWrapper">
+                                          <div class="boxBody">
+                                              <div class="detailWrapper">
+                                                  <div class="avatarWrapper">
+                                                      <div class="avatar medium">
+                                                          <img src="../images/avatar-8.jpg" alt="">
+                                                      </div>
+                                                  </div>
+                                                  <div class="contact-details">
+                                                      <div class="name">Fatima Ahmed</div>
+                                                      <div class="number">+92 300 1234567</div>
+                                                  </div>
+                                              </div>
+                                              <div class="actionWrapper">
+                                                  <div class="actionBtn">
+                                                      <i class="fal fa-pause mango"></i>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="boxBottom">
+                                              <div class="callStatus">
+                                                  On-Hold
+                                                  <span>01:17</span>
+                                              </div>
+                                              <div class="call-actionButtons d-flex">
+                                                  <button class="smallBtn trans transBgActive callResumeButton" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Resume">
+                        <i class="fal fa-phone-alt ice"></i>
+                      </button>
+                                                  <button class="smallBtn trans transBgActive callHoldButton" [ngClass]="{'d-none': transferringCall}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Hold">
+                        <i class="fal fa-pause mango ice"></i>
+                      </button>
+                                                  <button class="smallBtn trans transBgActive callDisconnectButton" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Diconnect">
+                        <i class="fal fa-phone-alt disconnectIcon ice"></i>
+                      </button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="call-merged-dots d-none">
+                                      <div class="dot1 dot">.</div>
+                                      <div class="dot2 dot">.</div>
+                                      <div class="dot3 dot">.</div>
+                                      <div class="dot4 dot">.</div>
+                                      <div class="dot5 dot">.</div>
+                                  </div>
+                                  <div class="connected-person-box box2" [ngClass]="{'show': box2Show}">
+                                      <div class="boxWrapper">
+                                          <div class="boxBody">
+                                              <div class="detailWrapper">
+                                                  <div class="avatarWrapper">
+                                                      <div class="avatar medium berryBg">
+                                                          <div class="person-name">AK</div>
+                                                      </div>
+                                                  </div>
+                                                  <div class="contact-details">
+                                                      <div class="name">Aniqa Khan</div>
+                                                      <div class="number">+92 300 8957452</div>
+                                                  </div>
+                                              </div>
+                                              <div class="actionWrapper">
+                                                  <div class="actionBtn">
+                                                      <i class="fal fa-phone-alt emerald"></i>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="boxBottom">
+                                              <div class="callStatus">
+                                                  Connected
+                                                  <span>02:32</span>
+                                              </div>
+                                              <div class="call-actionButtons d-flex">
+                                                  <button class="smallBtn trans transBgActive callResumeButton" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Resume">
+                        <i class="fal fa-phone-alt"></i>
+                      </button>
+                                                  <button class="smallBtn trans transBgActive callHoldButton" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Hold">
+                        <i class="fal fa-pause mango ice"></i>
+                      </button>
+                                                  <button class="smallBtn trans transBgActive mergedCallHangUpBtn callDisconnectButton" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Diconnect">
+                        <i class="fal fa-phone-alt disconnectIcon"></i>
+                      </button>
+                                                  <button class="smallBtn trans IVRBtnSecond" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="IVR">
+                        <i class="fal fa-wave-triangle"></i>
+                      </button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+
+
+                                  <div class="keypad IVRSecond-keypad secondCallDTMP-keypad">
+                                      <div class="d-flex keypad-row">
+                                          <button class="keypad-btn btn">1</button>
+                                          <button class="keypad-btn btn">2</button>
+                                          <button class="keypad-btn btn">3</button>
+                                      </div>
+                                      <div class="d-flex keypad-row">
+                                          <button class="keypad-btn btn">4</button>
+                                          <button class="keypad-btn btn">5</button>
+                                          <button class="keypad-btn btn">6</button>
+                                      </div>
+                                      <div class="d-flex keypad-row">
+                                          <button class="keypad-btn btn">7</button>
+                                          <button class="keypad-btn btn">8</button>
+                                          <button class="keypad-btn btn">9</button>
+                                      </div>
+                                      <div class="d-flex keypad-row">
+                                          <button class="keypad-btn btn">*</button>
+                                          <button class="keypad-btn btn">0</button>
+                                          <button class="keypad-btn btn">#</button>
+                                      </div>
+                                  </div>
+
+                                  <div class="merged-call-hanged-up connected-person-box">
+                                      <div class="boxWrapper">
+                                          <div class="boxBody">
+                                              <div class="detailWrapper">
+                                                  <div class="avatarWrapper">
+                                                      <div class="avatar medium berryBg">
+                                                          <div class="person-name">AK</div>
+                                                      </div>
+                                                  </div>
+                                                  <div class="contact-details">
+                                                      <div class="name">Aniqa Khan</div>
+                                                      <div class="number">+92 300 8957452</div>
+                                                  </div>
+                                              </div>
+                                              <div class="actionWrapper callHangedUp">
+                                                  <button class="emeraldBg dialContact">
+                        <i class="fal fa-phone-alt"></i>
+                      </button>
+                                                  <div class="btnLabel">
+                                                      Redial
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="boxBottom">
+                                              <div class="callStatus radical">
+                                                  <span>Call has been dropped</span>
+                                              </div>
+                                              <div class="call-actionButtons d-flex">
+                                                  <button class="smallBtn transparent close-merged-call-hanged-up">
+                        <i class="fal fa-times"></i>
+                      </button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+
+
+
+                              <div class="merge-split-call-btns">
+                                  <div class="mergeCallBtn btnWrap" [ngClass]="{'show': !callMerged && callTransferred}">
+                                      <div class="btn">
+                                          <img src="../images/icon-merge.svg" alt="">
+                                      </div>
+                                      <div class="btn-label">
+                                          <div class="label">Merge</div>
+                                          <div class="sub-label">Conference</div>
+                                      </div>
+                                  </div>
+                                  <div class="splitCallBtn btnWrap">
+                                      <div class="btn">
+                                          <img src="../images/icon-split.svg" alt="">
+                                      </div>
+                                      <div class="btn-label">
+                                          <div class="label">Split</div>
+                                          <div class="sub-label">Conference</div>
+                                      </div>
+                                  </div>
+                              </div>
+
+
+
+                              <div class="leave-call-btn">
+                                  <div class="btn leaveCallBtn" [ngClass]="{'show': box2Show}">
+                                      Leave
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div id="contacts" class="tab-pane dialerMainTabs" role="tabpanel" aria-labelledby="contacts">
+                      <div class="contactsTab-Content tab-body">
+
+                          <div class="bodywrapper">
+
+                              <div class="Contacts-list">
+                                  <div class="tab-header">
+                                      <div class="header-title">
+                                          <div class="back-to-call goBackToConnectedCall d-none">
+                                              <i class="far fa-long-arrow-left night"></i>
+                                          </div>
+                                          <div class="heading">Contacts</div>
+                                      </div>
+                                      <div class="header-action-btns">
+                                          <div class="icons-list">
+                                              <div class="searchbar-click">
+                                                  <form class="searchbox">
+                                                      <input placeholder="What are you looking for?" name="search" class="searchbox-input" required="">
+                                                      <span class="searchbox-icon medium iconButton iconHover"><i class="fa fa-search"></i></span>
+                                                  </form>
+
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="animated-border">
+                                      <div class="border-line"></div>
+                                  </div>
+                                  <div class="found-wrapper d-none">
+                                      4 results found
+                                  </div>
+                                  <div class="tab-header rightbar-tab-header nav nav-tabs tabs iceBg" role="tablist" id="myTab">
+                                      <nav>
+                                          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+
+                                              <button class="nav-link active" id="recent-contacts-tab" data-bs-toggle="tab" href="#recent-contacts" role="tab" aria-controls="recent-contacts" aria-selected="false">
+                    Recent
+                  </button>
+
+
+                                              <button class="nav-link" id="favourite-contacts-tab" data-bs-toggle="tab" href="#favourite-contacts" role="tab" aria-controls="favourite-contacts" aria-selected="true">
+                    Favourite
+                  </button>
+
+                                          </div>
+                                      </nav>
+                                  </div>
+                                  <div class="bodySection perfect-scrollbar">
+                                      <div class="tab-content" id="nav-tabContent">
+                                          <div id="recent-contacts" class="tab-pane active show" role="tabpanel" aria-labelledby="recents">
+                                              <div class="mt-3 list-group list-group-flush">
+                                                  <a href="javascript:;" class="list-group-item d-flex" value="Sajjad Akber">
+                                                      <div class="avatar large">
+                                                          <img src="/2.0/images/avatar-1.jpg" alt="-" class="rounded-circle w-100">
+                                                      </div>
+                                                      <div class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
+                                                          <div>
+                                                              <h6 class="mb-0 darkblue">Sajjad Akber</h6>
+                                                              <small class="silver">+923011234567</small>
+                                                          </div>
+                                                          <div class="d-flex">
+                                                              <div class="medium iconButton iconHover dialBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Dial">
+                                                                  <i class="fal fa-phone-alt"></i>
+                                                              </div>
+                                                              <div class="dropdown">
+                                                                  <button class="medium iconButton iconHover" id="menu-button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="far fa-ellipsis-v"></i>
                             </button>
-                        </li>
-                        <li class="tab nav-item callListBtn">
-                            <button class="nav-link" id="callList-tab" data-bs-toggle="tab" data-bs-target="#callList"
-                                type="button" role="tab" aria-controls="callList" aria-selected="true">
-                                <i class="far fa-bars coal"></i>
-                                <div class="tab-heading coal">Call List</div>
-                            </button>
-                        </li>
-                        <li class="tab nav-item dialerTabBtn">
-                            <button class="nav-link active" id="dialer-tab" data-bs-toggle="tab"
-                                data-bs-target="#dialer" type="button" role="tab" aria-controls="dialer"
-                                aria-selected="true">
-                                <div class="phoneDialerIcon">
-                                    <i class="fas fa-ellipsis-h coal"></i>
-                                    <i class="fas fa-ellipsis-h coal"></i>
-                                    <i class="fas fa-ellipsis-h coal"></i>
-                                    <i class="fas fa-circle circle coal"></i>
+                                                                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menu-button">
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 1</div>
                                 </div>
-                                <div class="tab-heading">Dial</div>
+                              </button>
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 2</div>
+                                </div>
+                              </button>
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 3</div>
+                                </div>
+                              </button>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </a>
+                                                  <a href="javascript:;" class="list-group-item d-flex" value="Sajjad Akber">
+                                                      <div class="avatar large">
+                                                          <img src="/2.0/images/avatar-3.jpg" alt="-" class="rounded-circle w-100">
+                                                      </div>
+                                                      <div class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
+                                                          <div>
+                                                              <h6 class="mb-0 darkblue">Tahir Ahmed</h6>
+                                                              <small class="silver">+923011234845</small>
+                                                          </div>
+                                                          <div class="d-flex">
+                                                              <div class="medium iconButton iconHover dialBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Dial">
+                                                                  <i class="fal fa-phone-alt"></i>
+                                                              </div>
+                                                              <div class="dropdown">
+                                                                  <button class="medium iconButton iconHover" id="menu-button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="far fa-ellipsis-v"></i>
                             </button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+                                                                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menu-button">
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 1</div>
+                                </div>
+                              </button>
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 2</div>
+                                </div>
+                              </button>
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 3</div>
+                                </div>
+                              </button>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </a>
+                                                  <a href="javascript:;" class="list-group-item d-flex" value="Sajjad Akber">
+                                                      <div class="avatar large">
+                                                          <img src="/2.0/images/avatar-6.jpg" alt="-" class="rounded-circle w-100">
+                                                      </div>
+                                                      <div class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
+                                                          <div>
+                                                              <h6 class="mb-0 darkblue">Ahmed Ali</h6>
+                                                              <small class="silver">+923124565874</small>
+                                                          </div>
+                                                          <div class="d-flex">
+                                                              <div class="medium iconButton iconHover dialBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Dial">
+                                                                  <i class="fal fa-phone-alt"></i>
+                                                              </div>
+                                                              <div class="dropdown">
+                                                                  <button class="medium iconButton iconHover" id="menu-button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="far fa-ellipsis-v"></i>
+                            </button>
+                                                                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menu-button">
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 1</div>
+                                </div>
+                              </button>
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 2</div>
+                                </div>
+                              </button>
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 3</div>
+                                </div>
+                              </button>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </a>
+                                                  <a href="javascript:;" class="list-group-item d-flex" value="Sajjad Akber">
+                                                      <div class="avatar large berryBg">
+                                                          AK
+                                                      </div>
+                                                      <div class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
+                                                          <div>
+                                                              <h6 class="mb-0 darkblue">Aniqa Khan</h6>
+                                                              <small class="silver">+923011234458</small>
+                                                          </div>
+                                                          <div class="d-flex">
+                                                              <div class="medium iconButton iconHover dialContact" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Dial">
+                                                                  <i class="fal fa-phone-alt"></i>
+                                                              </div>
+                                                              <div class="dropdown">
+                                                                  <button class="medium iconButton iconHover" id="menu-button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="far fa-ellipsis-v"></i>
+                            </button>
+                                                                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menu-button">
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 1</div>
+                                </div>
+                              </button>
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 2</div>
+                                </div>
+                              </button>
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 3</div>
+                                </div>
+                              </button>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </a>
+                                              </div>
+                                          </div>
+                                          <div id="favourite-contacts" class="tab-pane" role="tabpanel" aria-labelledby="favourites">
+                                              <div class="mt-3 list-group list-group-flush">
+                                                  <a href="javascript:;" class="list-group-item d-flex" value="Sajjad Akber">
+                                                      <div class="avatar large">
+                                                          <img src="/2.0/images/avatar-2.jpg" alt="-" class="rounded-circle w-100">
+                                                      </div>
+                                                      <div class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
+                                                          <div>
+                                                              <h6 class="mb-0 darkblue">Anis Khan</h6>
+                                                              <small class="silver">+923011234545</small>
+                                                          </div>
+                                                          <div class="d-flex">
+                                                              <div class="medium iconButton iconHover dialBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Dial">
+                                                                  <i class="fal fa-phone-alt"></i>
+                                                              </div>
+                                                              <div class="dropdown">
+                                                                  <button class="medium iconButton iconHover" id="menu-button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="far fa-ellipsis-v"></i>
+                            </button>
+                                                                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menu-button">
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 1</div>
+                                </div>
+                              </button>
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 2</div>
+                                </div>
+                              </button>
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 3</div>
+                                </div>
+                              </button>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </a>
+                                                  <a href="javascript:;" class="list-group-item d-flex" value="Sajjad Akber">
+                                                      <div class="avatar large">
+                                                          <img src="/2.0/images/avatar-3.jpg" alt="-" class="rounded-circle w-100">
+                                                      </div>
+                                                      <div class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
+                                                          <div>
+                                                              <h6 class="mb-0 darkblue">Tahir Ahmed</h6>
+                                                              <small class="silver">+923011234845</small>
+                                                          </div>
+                                                          <div class="d-flex">
+                                                              <div class="medium iconButton iconHover dialBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Dial">
+                                                                  <i class="fal fa-phone-alt"></i>
+                                                              </div>
+                                                              <div class="dropdown">
+                                                                  <button class="medium iconButton iconHover" id="menu-button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="far fa-ellipsis-v"></i>
+                            </button>
+                                                                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menu-button">
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 1</div>
+                                </div>
+                              </button>
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 2</div>
+                                </div>
+                              </button>
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 3</div>
+                                </div>
+                              </button>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </a>
+                                                  <a href="javascript:;" class="list-group-item d-flex" value="Sajjad Akber">
+                                                      <div class="avatar large">
+                                                          <img src="/2.0/images/avatar-7.jpg" alt="-" class="rounded-circle w-100">
+                                                      </div>
+                                                      <div class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
+                                                          <div>
+                                                              <h6 class="mb-0 darkblue">Saima Ali</h6>
+                                                              <small class="silver">+923124565458</small>
+                                                          </div>
+                                                          <div class="d-flex">
+                                                              <div class="medium iconButton iconHover dialBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Dial">
+                                                                  <i class="fal fa-phone-alt"></i>
+                                                              </div>
+                                                              <div class="dropdown">
+                                                                  <button class="medium iconButton iconHover" id="menu-button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="far fa-ellipsis-v"></i>
+                            </button>
+                                                                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menu-button">
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 1</div>
+                                </div>
+                              </button>
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 2</div>
+                                </div>
+                              </button>
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 3</div>
+                                </div>
+                              </button>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </a>
+                                                  <a href="javascript:;" class="list-group-item d-flex" value="Sajjad Akber">
+                                                      <div class="avatar large berryBg">
+                                                          AK
+                                                      </div>
+                                                      <div class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
+                                                          <div>
+                                                              <h6 class="mb-0 darkblue">Aniqa Khan</h6>
+                                                              <small class="silver">+923011234458</small>
+                                                          </div>
+                                                          <div class="d-flex">
+                                                              <div class="medium iconButton iconHover dialContact" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Dial">
+                                                                  <i class="fal fa-phone-alt"></i>
+                                                              </div>
+                                                              <div class="dropdown">
+                                                                  <button class="medium iconButton iconHover" id="menu-button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="far fa-ellipsis-v"></i>
+                            </button>
+                                                                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="menu-button">
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 1</div>
+                                </div>
+                              </button>
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 2</div>
+                                </div>
+                              </button>
+                                                                      <button class="dropdown-item" type="button">
+                                <div class="iconLabelWrap noMargin">
+                                  <div class="label">Option 3</div>
+                                </div>
+                              </button>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </a>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+
+
+                              <div class="createNewProfile-Form saltBg d-none">
+                                  <div class="createProfileBg">
+                                      <img src="../images/profile_background.png" alt="">
+                                  </div>
+                                  <div class="createProfileContent perfect-scrollbar">
+                                      <div class="avatar large profileAvatar">
+                                          <img src="../images/avatar-8.jpg" alt="">
+                                      </div>
+                                      <div class="field-label">First Name</div>
+                                      <div class="inputField">
+                                          <input class="textInput" value="Fatima">
+                                      </div>
+                                      <div class="field-label">Last Name</div>
+                                      <div class="inputField">
+                                          <input class="textInput" value="Ahmed">
+                                      </div>
+                                      <div class="field-label">CNIC</div>
+                                      <div class="inputField">
+                                          <input class="textInput" value="00000-0000000-0">
+                                      </div>
+                                      <div class="field-label">Address</div>
+                                      <div class="inputField">
+                                          <input class="textInput" value="Karachi,Pakistan">
+                                      </div>
+                                      <div class="field-label">Phone</div>
+                                      <div class="inputField">
+                                          <input class="textInput" value="+923001234567">
+                                      </div>
+                                      <div class="field-label">Phone</div>
+                                      <div class="inputField">
+                                          <input class="textInput" value="+923001234567">
+                                      </div>
+                                      <div class="field-label">Phone</div>
+                                      <div class="inputField">
+                                          <input class="textInput" value="+923001234567">
+                                      </div>
+                                      <div class="field-label">Phone</div>
+                                      <div class="inputField">
+                                          <input class="textInput" value="+923001234567">
+                                      </div>
+                                      <div class="field-label">Phone</div>
+                                      <div class="inputField">
+                                          <input class="textInput" value="+923001234567">
+                                      </div>
+                                      <div class="newly-added d-none">
+                                          <div class="field-label">Customer ID</div>
+                                          <div class="inputField">
+                                              <input class="textInput" value="3215468">
+                                          </div>
+                                      </div>
+                                      <div class="addNewField d-none">
+                                          <div class="dropdown rightBarProfile-SelectField">
+                                              <div class="field-title" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                  <div class="type">Select Type</div>
+                                                  <div class="dropdownBtn">
+                                                      <i class="fas fa-chevron-down"></i>
+                                                  </div>
+                                                  <div class="dropdown-menu" aria-labelledby="menu-button">
+                                                      <button class="dropdown-item" type="button" value="CNIC">
+                        <div class="iconLabelWrap noMargin">
+                          <div class="label">CNIC</div>
+                        </div>
+                      </button>
+                                                      <button class="dropdown-item" type="button" value="Phone">
+                        <div class="iconLabelWrap noMargin">
+                          <div class="label">Phone</div>
+                        </div>
+                      </button>
+                                                      <button class="dropdown-item" type="button" value="ID">
+                        <div class="iconLabelWrap noMargin">
+                          <div class="label">Customer ID</div>
+                        </div>
+                      </button>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="fieldValue">
+                                              <input class="textInput" placeholder="Value...">
+                                          </div>
+                                      </div>
+                                      <div class="addMore">
+                                          <i class="fas fa-plus"></i> Add More
+                                      </div>
+                                  </div>
+                                  <div class="createProfileFooter">
+                                      <div class="btn blockBtn emeraldBg saveBtn">
+                                          Save
+                                      </div>
+                                      <div class="btn blockBtn discardBtn">
+                                          Discard
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+
+              <div class="dialerActions" #dialerTabs>
+                  <ul class="tabs nav nav-tabs" [ngClass]="{'show' : !inManualCall || (showManualTransferButtons && !transferringCall)}" id="nav-tab" role="tablist">
+                      <li class="tab nav-item contactBtn">
+                          <button class="nav-link" id="contacts-tab" data-bs-toggle="tab" data-bs-target="#contacts" type="button" role="tab" aria-controls="contacts" aria-selected="true">
+                              <i class="far fa-user coal"></i>
+                              <div class="tab-heading coal">Contacts</div>
+                          </button>
+                      </li>
+                      <li class="tab nav-item callListBtn">
+                          <button class="nav-link" id="callList-tab" data-bs-toggle="tab" data-bs-target="#callList" type="button" role="tab" aria-controls="callList" aria-selected="true">
+                              <i class="far fa-bars coal"></i>
+                              <div class="tab-heading coal">Call List</div>
+                          </button>
+                      </li>
+                      <li class="tab nav-item dialerTabBtn" (click)="showSecondDialer(true)">
+                          <button class="nav-link active" id="dialer-tab" data-bs-toggle="tab" data-bs-target="#dialer" type="button" role="tab" aria-controls="dialer" aria-selected="true">
+                              <div class="phoneDialerIcon">
+                                  <i class="fas fa-ellipsis-h coal"></i>
+                                  <i class="fas fa-ellipsis-h coal"></i>
+                                  <i class="fas fa-ellipsis-h coal"></i>
+                                  <i class="fas fa-circle circle coal"></i>
+                              </div>
+                              <div class="tab-heading">Dial</div>
+                          </button>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
 </nav>

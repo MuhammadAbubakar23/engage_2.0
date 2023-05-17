@@ -33,7 +33,7 @@ export class InboxRightSidebarComponent implements OnInit {
   constructor(private store: Store<MenuState>,
     private sharedService : SharedService,
     private toggleService : ToggleService,
-    private rightNavService : RightNavService) { 
+    private rightNavService : RightNavService) {
       this.menu$ = this.store.select(getEmargingEqual("team_inbox_right_menu"));
       this.loading$ = this.store.select(getMenusLoading)
       this.store.dispatch(loadMenusList())
@@ -57,25 +57,25 @@ export class InboxRightSidebarComponent implements OnInit {
         Object.assign(obj, {dival: item[key].slug+"-rightbar-dashboard"});
         this.menus$.push(obj);
       }
-      
+
       // this.menus$ = item;
     });
      console.log(this.menus$);
     // Array.from(document.querySelectorAll('[data-bs-toggle]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode))
     // this.getRightMenu();
-    
-    let parent = localStorage.getItem("parent");   
 
-    this.subscription2 = this.rightNavService.getChildComponent().subscribe(msg2 => { 
+    let parent = localStorage.getItem("parent");
+
+    this.subscription2 = this.rightNavService.getChildComponent().subscribe(msg2 => {
       this.dynamicChildPath = msg2;
     });
   }
 
   isOpen = false;
-  
+
   // getRightMenu(){
-    
+
   //   this.menuDto = {
   //     emerging : "",
   //     equal : 0,
@@ -84,7 +84,7 @@ export class InboxRightSidebarComponent implements OnInit {
   //     base : ""
   //   }
   //   this.commonService.GetMenu("team", this.menuDto).subscribe((res:any)=> {
-      
+
   //     res.forEach((menu:any) => {
   //       if(menu.emerging == "right_menu" && (menu.name != "Complaints")){
   //         this.menus$.push(menu)
@@ -94,8 +94,8 @@ export class InboxRightSidebarComponent implements OnInit {
   //   })
   // }
 
-  toggleRightBar(child:string) {  
-    debugger
+  toggleRightBar(child:string) {
+    // debugger
     // this.parentFun.emit();
     if(localStorage.getItem('child') == child){
       this.toggleRightPanelParent.emit();
@@ -103,8 +103,8 @@ export class InboxRightSidebarComponent implements OnInit {
     } else{
       this.toggleService.addTogglePanel(child);
     }
-  
-  
+
+
 
 //     let routr = this._route.url.split('/')[1];
 //  let parent = localStorage.getItem("parent");
@@ -116,18 +116,18 @@ export class InboxRightSidebarComponent implements OnInit {
 //   this.isOpen = true;
 //  }
 
-  
+
 //     if(this.isOpen){
 //       this._route.navigateByUrl(routr+'/'+ parent+'/'+child);
-      
+
 //       this.toggleService.addTogglePanel("panelToggled");
-      
+
 //     }else{
 //       this._route.navigateByUrl(routr+'/'+ parent);
 //       this.toggleService.addTogglePanel("");
-     
+
 //     }
-    
+
   }
 
 }
