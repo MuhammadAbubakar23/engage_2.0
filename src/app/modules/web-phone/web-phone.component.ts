@@ -110,7 +110,7 @@ export class WebPhoneComponent implements OnInit {
 
   }
   setActiveDialerTab(option: string): void {
-    switch sio(option) {
+    switch (option) {
       case 'dialer':
         this.activeTab.dialerActive = true;
         this.activeTab.callListActive = false;
@@ -285,6 +285,12 @@ export class WebPhoneComponent implements OnInit {
     this.box2Show = false;
     this.transferringCall = false;
     this.callTransferred = false;
+    this.OBCallConnected = true;
+    if (this.sipPhone.isHold(1)) {
+        this.sipPhone.unHold(1)
+        this.isHold = false;
+
+    }
   }
   resetDialer(){
     this.inManualCall = false;
@@ -355,6 +361,7 @@ export class WebPhoneComponent implements OnInit {
       return false;
     } else {
       this.sipPhone.attTransferDial(this.transferNum, this.skill_id, is_not_queue);
+      debugger;
       this.showSecondCallDialer = false;
       this.transferringCall = true;
       this.dialingStatus = 'Dialing';
