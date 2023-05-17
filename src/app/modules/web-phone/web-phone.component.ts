@@ -52,13 +52,13 @@ export class WebPhoneComponent implements OnInit {
   };
   dialingStatus!: string;
   data = {
-    sip_server: 'lhracd1.ibexglobal.com',
+    sip_server: 'lhrccmscloud.ibex.co',
     sip_name: '15157',
     sip_password: '1234',
     auto_answer: 'Y',
-    sip_domain: 'lhracd1.ibexglobal.com',
+    sip_domain: 'lhrccmscloud.ibex.co',
     extension: '15157',
-    ws_sip_server: 'lhracd1.ibexglobal.com:8089/ws',
+    ws_sip_server: 'lhrccmscloud.ibex.co:8089/ws',
   };
   activeTab = {
     dialerActive: true,
@@ -110,7 +110,7 @@ export class WebPhoneComponent implements OnInit {
 
   }
   setActiveDialerTab(option: string): void {
-    switch (option) {
+    switch sio(option) {
       case 'dialer':
         this.activeTab.dialerActive = true;
         this.activeTab.callListActive = false;
