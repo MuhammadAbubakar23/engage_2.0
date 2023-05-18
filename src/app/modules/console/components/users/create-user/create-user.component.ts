@@ -72,7 +72,7 @@ export class CreateUserComponent implements OnInit {
     this._Activatedroute.paramMap.subscribe(paramMap => { 
       this.identity = Number(paramMap.get('id'));
     });
-   // debugger;
+   
     if(this.identity > 0){//.pipe(takeUntil(this.unsubscribe))
       this._request.getBy<userDto>("GetUserById",  this.identity.toString()).subscribe(
         (next:userDto) => {//...next:T[]

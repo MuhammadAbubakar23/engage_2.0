@@ -103,17 +103,17 @@ export class EmailComponent implements OnInit {
       this.removeTagDataListener();
     });
     this.Subscription = this.updateCommentsService.receiveComment().subscribe((res) => {
-      debugger
+      
       this.updatedComments = res;
       this.updateCommentsDataListener();
     });
     this.Subscription = this.queryStatusService.receiveQueryStatus().subscribe((res) => {
-      debugger
+      
       this.queryStatus = res;
       this.updateQueryStatusDataListner();
     });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
-      debugger
+      
       this.newReply = res;
       this.replyDataListner();
     });
@@ -189,7 +189,7 @@ export class EmailComponent implements OnInit {
   fullName: string = '';
 
   getEmails() {
-    debugger
+    
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -821,7 +821,7 @@ export class EmailComponent implements OnInit {
   }
 
   updateQueryStatusDataListner() {
-    debugger
+    
     this.Emails.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {

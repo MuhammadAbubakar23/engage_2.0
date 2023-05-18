@@ -147,33 +147,33 @@ export class InstagramComponent implements OnInit {
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
-        debugger
+        
         this.updatedComments = res;
         this.updateCommentsDataListener();
       });
       this.Subscription = this.updateMessagesService
       .receiveMessage()
       .subscribe((res) => {
-        debugger
+        
         this.updatedMessages = res;
         this.updateMessagesDataListener();
       });
     this.Subscription = this.queryStatusService
       .receiveQueryStatus()
       .subscribe((res) => {
-        debugger
+        
         this.queryStatus = res;
         this.updateQueryStatusDataListner();
       });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
-      debugger
+      
       this.newReply = res;
       this.replyDataListner();
     });
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        debugger
+        
         // this.totalUnrespondedCmntCountByCustomer = res.contentCount.unrespondedCount;
         if (res.contentCount.contentType == 'IC') {
           this.totalUnrespondedCmntCountByCustomer =
@@ -187,7 +187,7 @@ export class InstagramComponent implements OnInit {
       this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
-        debugger
+        
         this.queryStatus = res;
         this.updateBulkQueryStatusDataListner();
       });
@@ -1095,7 +1095,7 @@ export class InstagramComponent implements OnInit {
   }
 
   getInstagramMessages() {
-    debugger
+    
     if (this.id != null || undefined) {
       this.filterDto = {
         // fromDate: new Date(),
@@ -1249,7 +1249,7 @@ export class InstagramComponent implements OnInit {
   }
 
   SendMessageInformation(id: any) {
-    debugger
+    
     this.InstagramMessages.forEach((msg: any) => {
       if (msg.id == id) {
         // show mentioned reply

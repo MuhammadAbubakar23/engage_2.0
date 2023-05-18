@@ -92,7 +92,7 @@ export class RightHeaderComponentsComponent implements OnInit {
 
   assignedProfile = localStorage.getItem('assignedProfile');
   updateBreak() {
-    debugger
+    
     if (
       this.assignedProfile == null ||
       this.assignedProfile == '' ||
@@ -135,7 +135,7 @@ export class RightHeaderComponentsComponent implements OnInit {
   });
 
   submit(){
-    debugger
+    
   //  let activeAgent = this.stor.retrive("originalUserName")
     this.authService.login(this.loginForm.value).subscribe((res : any) =>{
       this.router.navigateByUrl("/all-inboxes/conversation");
@@ -179,7 +179,7 @@ export class RightHeaderComponentsComponent implements OnInit {
   }
 
   timerStart() {
-    debugger
+    
     this.break = true
     this.isBreak = true;
     // let minute = 1;

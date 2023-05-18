@@ -21,9 +21,9 @@ export class PostStatsComponent implements OnInit {
     private shareFbResService : ShareFacebookResponseService) {}
 
   ngOnInit(): void {
-    debugger
+    
     this.Subscription = this.shareFbResService.getMessage().subscribe((res) => {
-      debugger
+      
       this.FacebookData = res;
       
       if (this.FacebookData != null || undefined) {
@@ -80,7 +80,7 @@ export class PostStatsComponent implements OnInit {
   }
 
   fbStats() {
-    debugger
+    
     if (this.FacebookData != null || undefined) {
       this.FacebookData.forEach(async (post: any): Promise<void> => {
         this.postIdForStats = post.post.postId;

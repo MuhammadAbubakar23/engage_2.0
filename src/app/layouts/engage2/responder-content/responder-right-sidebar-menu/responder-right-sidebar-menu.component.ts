@@ -77,7 +77,7 @@ export class ResponderRightSidebarMenuComponent implements OnInit {
   isOpen = false;
 
   toggleRightBar(child: string) {
-    debugger;
+    
     // this.parentFun.emit();
     if (localStorage.getItem('child') == child) {
       //  this.toggleRightPanelParent.emit();

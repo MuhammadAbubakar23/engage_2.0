@@ -10,6 +10,7 @@ import { ConversationComponent } from './components/conversation/conversation.co
 import { SlaComponent } from './components/SLA/sla.component';
 import { RouterModule } from '@angular/router';
 import { RightSidebarComponentsModule } from './right-sidebar-components/right-sidebar-components.module';
+import { WebPhoneDialerComponent } from '../web-phone/components/web-phone-dialer/web-phone-dialer.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { RightSidebarComponentsModule } from './right-sidebar-components/right-s
     RightSidebarComponentsModule
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    WebPhoneDialerComponent
   ]
 })
 export class InboxesModule { }
