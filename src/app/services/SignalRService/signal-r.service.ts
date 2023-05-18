@@ -78,8 +78,6 @@ export class SignalRService {
   }
 
   reConnect(){
-    
-
     var conId = localStorage.getItem('signalRConnectionId')
     if(conId){
      let team = this.storage.retrive("nocompass","O").local;
@@ -107,7 +105,7 @@ export class SignalRService {
   
 
   public updateListDataListener = () => {
-    
+    debugger
     this.hubconnection.on('SendData', (data) => {
       if(data.conversationQueues !=null){
         this.updateListService.sendList(data.conversationQueues)
@@ -134,7 +132,7 @@ export class SignalRService {
   };
 
   public unRespondedCountDataListener = () => {
-    
+    debugger
     this.hubconnection.on('UnrespondedCount', (UnrespondedCount) => {
       
       // console.log('SignalR UnrespondedCount ==> ', UnrespondedCount);
@@ -143,6 +141,7 @@ export class SignalRService {
   };
 
   public replyDataListener = () => {
+    debugger
     this.hubconnection.on('QueryReply', (reply) => {
       // console.log('SignalR QueryReply ==> ', reply);
       this.replyService.sendReply(reply);
@@ -150,6 +149,7 @@ export class SignalRService {
   };
 
   public queryStatusDataListener = () => {
+    debugger
       this.hubconnection.on('QueryStatusProcess', (queryStatus) => {
       // console.log('SignalR queryStatus ==> ', queryStatus);
       this.queryStatusService.sendQueryStatus(queryStatus);
@@ -157,7 +157,7 @@ export class SignalRService {
   };
   
   public bulkQueryStatusDataListener = () => {
-    
+    debugger
     this.hubconnection.on('ListQueryStatusProcess', (queryStatus) => {
     // console.log('SignalR ListQueryStatusProcess ==> ', queryStatus);
     this.queryStatusService.bulkSendQueryStatus(queryStatus);

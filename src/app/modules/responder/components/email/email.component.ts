@@ -103,15 +103,17 @@ export class EmailComponent implements OnInit {
       this.removeTagDataListener();
     });
     this.Subscription = this.updateCommentsService.receiveComment().subscribe((res) => {
+      debugger
       this.updatedComments = res;
       this.updateCommentsDataListener();
     });
     this.Subscription = this.queryStatusService.receiveQueryStatus().subscribe((res) => {
-      
+      debugger
       this.queryStatus = res;
       this.updateQueryStatusDataListner();
     });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
+      debugger
       this.newReply = res;
       this.replyDataListner();
     });
@@ -189,6 +191,7 @@ export class EmailComponent implements OnInit {
   getEmails() {
     debugger
     if (this.id != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -244,6 +247,7 @@ export class EmailComponent implements OnInit {
           });
         });
     } else if (this.slaId != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -817,7 +821,7 @@ export class EmailComponent implements OnInit {
   }
 
   updateQueryStatusDataListner() {
-    
+    debugger
     this.Emails.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
@@ -835,7 +839,8 @@ export class EmailComponent implements OnInit {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
           if (singleCmnt.id == this.newReply.commentId) {
-            singleCmnt.replies.push(this.newReply)
+            singleCmnt.replies.push(this.newReply);
+            singleCmnt.queryStatus = this.newReply.queryStatus
           }
         });
       });
