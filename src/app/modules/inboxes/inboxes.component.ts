@@ -48,10 +48,10 @@ export class InboxesComponent implements OnInit {
   ngOnInit(): void {
 
     this.route.params.subscribe((routeParams) => {
-      
+
       if(routeParams['channel'] != undefined && routeParams['channel'] != "undefined"){
         this.componentName = routeParams['channel'];
-      } 
+      }
       this.childComponentName = routeParams['ticket'];
       this.rightNavService.updateChildComponent(this.childComponentName);
 
@@ -62,7 +62,7 @@ export class InboxesComponent implements OnInit {
       if(this.componentName != undefined){
         localStorage.setItem('parent', this.componentName);
       }
-      
+
       this.sharedService.updateMessage(this.componentName);
 
       this.target?.clear();
@@ -75,7 +75,7 @@ export class InboxesComponent implements OnInit {
     });
 
     this.subscription = this.toggleService.getTogglePanel().subscribe(msg3 => {
-      
+
       if(msg3){
         this.rightcontainer?.clear();
         localStorage.setItem('child', msg3)
@@ -110,10 +110,10 @@ export class InboxesComponent implements OnInit {
   // destroyInboxComponent() {
   //     this.componentRef.destroy();
   // }
-  
-  
+
+
   loadComponent(leftSideName: string, rightSideName: string) {
-    debugger
+    // debugger
     let componentFactory = null;
 
     switch (leftSideName || rightSideName) {
@@ -126,7 +126,7 @@ export class InboxesComponent implements OnInit {
         this.target?.createComponent(componentFactory);
         break;
       case 'ticket':
-        
+
         componentFactory = this.resolver.resolveComponentFactory(TicketsComponent);
         this.rightcontainer?.createComponent(componentFactory);
         break;
