@@ -178,6 +178,7 @@ export class FacebookComponent implements OnInit {
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
+        debugger
         this.updatedComments = res;
         this.updateCommentsDataListener();
       });
@@ -188,25 +189,28 @@ export class FacebookComponent implements OnInit {
         this.updateMessagesDataListener();
       });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
+      debugger
       this.newReply = res;
       this.replyDataListner();
     });
     this.Subscription = this.queryStatusService
       .receiveQueryStatus()
       .subscribe((res) => {
+        debugger
         this.queryStatus = res;
         this.updateQueryStatusDataListner();
       });
       this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
-        
+        debugger
         this.queryStatus = res;
         this.updateBulkQueryStatusDataListner();
       });
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
+        debugger
         if (res.contentCount.contentType == 'FC') {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;

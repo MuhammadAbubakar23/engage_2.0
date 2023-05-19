@@ -40,7 +40,7 @@ export class ConversationComponent implements OnInit {
   TotalUnresponded: number = 0;
   TodayDate: any;
   pageNumber: number = 1;
-  pageSize: number = 50;
+  pageSize: number = 20;
   platform: any;
   updatedList: any;
 
@@ -119,11 +119,8 @@ export class ConversationComponent implements OnInit {
             this.alertWarning = false;
             item['slaFlag'] = 'unread';
           }
-          // console.log("slaFlag", item['slaFlag'])
         });
       }
-
-      // console.log("list", this.ConversationList)
     }, 1000);
   }
 

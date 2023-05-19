@@ -16,6 +16,7 @@ import { QueryStatusService } from 'src/app/services/queryStatusService/query-st
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
+import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
 import { CommentStatusDto } from 'src/app/shared/Models/CommentStatusDto';
@@ -75,7 +76,8 @@ export class EmailComponent implements OnInit {
     private removeTagService: RemoveTagService,
     private updateCommentsService : UpdateCommentsService,
     private queryStatusService : QueryStatusService,
-    private replyService : ReplyService
+    private replyService : ReplyService,
+    private unrespondedCountService : UnRespondedCountService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = null;
@@ -103,12 +105,12 @@ export class EmailComponent implements OnInit {
       this.removeTagDataListener();
     });
     this.Subscription = this.updateCommentsService.receiveComment().subscribe((res) => {
-      
+      debugger
       this.updatedComments = res;
       this.updateCommentsDataListener();
     });
     this.Subscription = this.queryStatusService.receiveQueryStatus().subscribe((res) => {
-      
+      debugger
       this.queryStatus = res;
       this.updateQueryStatusDataListner();
     });
@@ -117,6 +119,22 @@ export class EmailComponent implements OnInit {
       this.newReply = res;
       this.replyDataListner();
     });
+    this.Subscription = this.unrespondedCountService
+      .getUnRespondedCount()
+      .subscribe((res) => {
+        debugger
+        if (res.contentCount.contentType == 'Mail') {
+          this.totalUnrespondedCmntCountByCustomer =
+            res.contentCount.unrespondedCount;
+        }
+      });
+      this.Subscription = this.queryStatusService
+      .bulkReceiveQueryStatus()
+      .subscribe((res) => {
+        debugger
+        this.queryStatus = res;
+        this.updateBulkQueryStatusDataListner();
+      });
   }
 
   commentDto = new commentsDto();
@@ -125,6 +143,7 @@ export class EmailComponent implements OnInit {
 
 
   updateCommentsDataListener() {
+    debugger
         this.updatedComments.forEach((xyz: any) => {
           if (this.id == xyz.userId) {
             this.commentDto = {
@@ -148,7 +167,6 @@ export class EmailComponent implements OnInit {
             }
             this.Emails.forEach((item: any) => {
               this.commentsArray = [];
-              if (item.post.postId == xyz.postId) {
                 item.comments.push(this.commentDto);
                 item.comments.forEach((cmnt: any) => {
                   this.commentsArray.push(cmnt);
@@ -174,8 +192,9 @@ export class EmailComponent implements OnInit {
                     };
                   }
                 );
-              }
             });
+            this.totalUnrespondedCmntCountByCustomer =
+          this.totalUnrespondedCmntCountByCustomer + 1;
           }
         });
         this.changeDetect.detectChanges();
@@ -597,6 +616,7 @@ export class EmailComponent implements OnInit {
   }
   onFileChanged(event: any) {
     if (event.target.files.length > 0) {
+      this.isAttachment = true;
       this.ImageName = event.target.files;
     }
   }
@@ -834,6 +854,25 @@ export class EmailComponent implements OnInit {
     });
     this.changeDetect.detectChanges();
   }
+
+  updateBulkQueryStatusDataListner() {
+    debugger
+    this.Emails.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          this.queryStatus.forEach((qs:any) => {
+            if (singleCmnt.id == qs.queryId) {
+              singleCmnt.queryStatus = qs.queryStatus;
+              this.totalUnrespondedCmntCountByCustomer = 0;
+            }
+          });
+          
+        });
+      });
+    });
+    this.changeDetect.detectChanges();
+  }
+
   replyDataListner() {
     this.Emails.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
@@ -864,5 +903,22 @@ export class EmailComponent implements OnInit {
   closeTagListDropdown() {
     this.tagsListDropdown = false
     this.searchText = ''
+  }
+
+  isAttachment = false;
+
+  removeAttachedFile(image: any) {
+    
+    for (let index = 0; index < this.ImageName.length; index++) {
+      const index = this.ImageName.indexOf(image);
+      if (index !== -1) {
+        this.ImageName.slice(index, 1);
+      }
+    }
+    if (this.ImageName.length == 0) {
+      this.isAttachment = false;
+    }
+
+    // console.log('This is image array=====>', this.ImageName);
   }
 }

@@ -125,17 +125,19 @@ export class RightHeaderComponentsComponent implements OnInit {
   }
 
   logindto = new LoginDto;
-  activeAgent = this.stor.retrive("originalUserName")
+  encryptedData = this.storage.retrive('main','O').local;
+  activeAgent = this.encryptedData.originalUserName;
 
   loginForm=new UntypedFormGroup({
     email:new UntypedFormControl(this.logindto.userName),    
-    userName:new UntypedFormControl("muhammad.rixvan.waheed@gmail.com"),
+    userName:new UntypedFormControl(this.activeAgent),
     password: new UntypedFormControl(this.logindto.password),
     rememberMe: new UntypedFormControl(this.logindto.rememberMe)
   });
 
   submit(){
-    
+    debugger
+    console.log(this.activeAgent)
   //  let activeAgent = this.stor.retrive("originalUserName")
     this.authService.login(this.loginForm.value).subscribe((res : any) =>{
       this.router.navigateByUrl("/all-inboxes/conversation");

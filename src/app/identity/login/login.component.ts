@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
       this.signalRService.removeTagDataListener();
     this.signalRService.addTagDataListner();
     this.signalRService.unRespondedCountDataListener();
-    this.signalRService.updateListDataListener();
+    this.signalRService.updateListAndDetailDataListener();
     this.signalRService.replyDataListener(); 
     this.signalRService.queryStatusDataListener();
     this.signalRService.bulkQueryStatusDataListener();

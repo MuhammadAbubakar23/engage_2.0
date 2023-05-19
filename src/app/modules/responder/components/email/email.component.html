@@ -565,11 +565,11 @@
                                 <div class="reply-header-right">
                                     <a class="cc-btn iconButton medium btn" (click)="OpenCc()"
                                         [ngStyle]="{'display': showCcBtn == true ? 'block':'none'}">
-                                        CC
+                                        Cc
                                     </a>
                                     <a class="bcc-btn iconButton medium btn" (click)="OpenBcc()"
                                         [ngStyle]="{'display': showBccBtn == true ? 'block':'none'}">
-                                        BCC
+                                        Bcc
                                     </a>
 
                                 </div>
@@ -577,7 +577,7 @@
                             <div class="reply-header copy-to-concern" [ngClass]="showCcInput==true?'':'d-none'">
                                 <div class="reply-header-left">
                                     <div class="input-group">
-                                        <strong class="input-group-text charcoal fw-bold" id="basic-addon1">CC:</strong>
+                                        <strong class="input-group-text charcoal fw-bold" id="basic-addon1">Cc:</strong>
                                         <input formControlName="cc" id="cc" value={{emailCc}} class="form-control"
                                             aria-label="css" aria-describedby="basic-addon1">
                                         <!-- <div class="tags m-0">
@@ -597,7 +597,7 @@
                                 <div class="reply-header-left">
                                     <div class="input-group">
                                         <strong class="input-group-text charcoal fw-bold"
-                                            id="basic-addon1">BCC:</strong>
+                                            id="basic-addon1">Bcc:</strong>
                                         <input formControlName="bcc" id="bcc" value={{emailBcc}} class="form-control"
                                             aria-label="bcc" aria-describedby="basic-addon1">
                                     </div>
@@ -663,11 +663,23 @@
                                             <span class="iconButton medium notification iconHover">
                                                 <i class="far fa-image"></i>
                                             </span> -->
+                                            <div class="msgTypingField">
+                                                <div class="attachment-block" [ngClass]="isAttachment == true?'':'d-none'">
+                                                    <div class="card-body p-3" *ngFor="let image of ImageName; let i = index" style="margin-right: 10px;">
+                                                        <span class="close-icon" (click)="removeAttachedFile(image)"><i class="fas fa-times"></i></span>
+                                                        <i class="far fa-file"></i>
+                                                        <h5 class="card-title coal">{{image.name | slice:0:20}}</h5>
+                                                        <p>{{image.size / 1024 | number:'1.2-2'}} kb</p>
+                                                    </div>
+                                                </div>
                                 <div class="upload-btn-wrapper">
                                     <button class="iconButton small notification iconHover channels-attachment-btn">
-                                        <i class="fal fa-paperclip"></i></button>
+                                        <i class="fal fa-paperclip"></i> </button><span>Attach File</span>
                                     <input type="file" formControlName="Image" class="form-control uplaoded-box"
                                         multiple (change)="onFileChanged($event)">
+                                </div>
+                                
+                                    
                                 </div>
                                 <!--  <div class="d-inline-block">
                                                 <button id="btnGroupDrop1" type="button" class="btn sky dropdown-toggle"
