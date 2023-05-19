@@ -20,7 +20,7 @@ export class WebPhoneContactsComponent implements OnInit {
   }
 
   public call(number:any) : void{
-    debugger
+    
     this.openDialerService.updateComponenetName('dialer');
     this.dialCallService.updateNumber(number)
   }

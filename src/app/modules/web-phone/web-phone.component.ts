@@ -32,7 +32,7 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.loadComponent("")
     this.subscription = this.openDialerService.getComponentName().subscribe(name=>{
-      debugger
+      
         this.loadComponent(name)
     });
   }
@@ -55,7 +55,7 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
   target!: ViewContainerRef;
   
   loadComponent(componentName: string) {
-    debugger
+    
     let componentFactory = null;
     this.target?.clear();
     switch (componentName) {

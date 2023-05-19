@@ -31,7 +31,7 @@ export class DialCallService {
      * @param {string} message : siblingMsg
      */
     public updateNumber(num: string) {
-      debugger
+      
       this.number = num;
     }
 }

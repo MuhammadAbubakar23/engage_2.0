@@ -78,11 +78,11 @@ export class WebPhoneDialerComponent implements OnInit {
 
   // for: any = 'Taimoor';
   ngAfterViewInit() {
-    debugger
+    
         this.dialCallService.updateNumber('');
   }
   ngOnInit(): void {
-    debugger
+    
     this.dialerService.getEvent().subscribe((res: any) => {
       this.phoneEvents(res);
       console.log(this);
@@ -161,7 +161,7 @@ export class WebPhoneDialerComponent implements OnInit {
   }
 
   manualDial(to_number: string = ''): void | boolean {
-    debugger
+    
     to_number = this.dialCallService.number;
 
     console.log(this.sipPhone);
@@ -170,11 +170,11 @@ export class WebPhoneDialerComponent implements OnInit {
     this.manualDisconnect = false;
     let number = '';
     if (to_number == '') {
-      debugger
+      
       number = this.manualDialNum;
     } else {
       number = to_number;
-      debugger
+      
     }
     let manual_time_id = 123;
     let lead_id = 1;
@@ -204,7 +204,7 @@ export class WebPhoneDialerComponent implements OnInit {
     }
 
     if (in_manual) {
-      debugger
+      
       this.sipPhone.manualDial(
         
         number,
