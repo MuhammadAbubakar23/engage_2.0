@@ -27,3 +27,35 @@
    top: 0;
    opacity: 0;
  }
+
+ 
+//  @media screen and (max-width: 800px) {
+//    .long-word-wrap {
+//       overflow-wrap: break-word;
+//       width: 400px;
+//  }
+ 
+//  }
+
+ .long-word-wrap {
+   overflow-wrap: break-word;
+   width: 500px;
+}
+//  @media screen and (min-width: 801px) and (max-width: 1200px) {
+//    .long-word-wrap {
+//       overflow-wrap: break-word;
+//       width: 600px;
+//  }
+// }
+// @media screen and (min-width: 1201px) and (max-width: 1500px) {
+//    .long-word-wrap {
+//       overflow-wrap: break-word;
+//       width: 800px;
+//  }
+// }
+// @media screen and (min-width: 1501px) and (max-width: 2000px) {
+//    .long-word-wrap {
+//       overflow-wrap: break-word;
+//       width: 1200px;
+//  }
+// }

@@ -26,6 +26,7 @@ import { InsertSentimentForFeedDto } from 'src/app/shared/Models/InsertSentiment
 import { InsertTagsForFeedDto } from 'src/app/shared/Models/InsertTagsForFeedDto';
 import { ReplyDto } from 'src/app/shared/Models/ReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
   selector: 'app-email',
@@ -77,7 +78,8 @@ export class EmailComponent implements OnInit {
     private updateCommentsService : UpdateCommentsService,
     private queryStatusService : QueryStatusService,
     private replyService : ReplyService,
-    private unrespondedCountService : UnRespondedCountService
+    private unrespondedCountService : UnRespondedCountService,
+    private storage : StorageService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = null;
@@ -87,6 +89,10 @@ export class EmailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.fullName = localStorage.getItem('storeOpenedId') || '{}'
+
+
     this.criteria = {
       property: 'createdDate',
       descending: true,
@@ -105,12 +111,12 @@ export class EmailComponent implements OnInit {
       this.removeTagDataListener();
     });
     this.Subscription = this.updateCommentsService.receiveComment().subscribe((res) => {
-      debugger
+      
       this.updatedComments = res;
       this.updateCommentsDataListener();
     });
     this.Subscription = this.queryStatusService.receiveQueryStatus().subscribe((res) => {
-      debugger
+      
       this.queryStatus = res;
       this.updateQueryStatusDataListner();
     });
@@ -122,7 +128,7 @@ export class EmailComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        debugger
+        
         if (res.contentCount.contentType == 'Mail') {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
@@ -131,7 +137,7 @@ export class EmailComponent implements OnInit {
       this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
-        debugger
+        
         this.queryStatus = res;
         this.updateBulkQueryStatusDataListner();
       });
@@ -143,7 +149,7 @@ export class EmailComponent implements OnInit {
 
 
   updateCommentsDataListener() {
-    debugger
+    
         this.updatedComments.forEach((xyz: any) => {
           if (this.id == xyz.userId) {
             this.commentDto = {
@@ -208,7 +214,7 @@ export class EmailComponent implements OnInit {
   fullName: string = '';
 
   getEmails() {
-    
+    debugger
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -330,7 +336,7 @@ export class EmailComponent implements OnInit {
       };
 
       this.SpinnerService.show();
-      this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
+      this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.Emails = res.List;
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -856,7 +862,7 @@ export class EmailComponent implements OnInit {
   }
 
   updateBulkQueryStatusDataListner() {
-    debugger
+    
     this.Emails.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {

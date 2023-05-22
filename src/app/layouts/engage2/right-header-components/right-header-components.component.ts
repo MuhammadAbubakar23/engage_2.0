@@ -1,7 +1,5 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-// import { CommonDataService } from '../services/common/common-data.service';
-import * as signalR from '@microsoft/signalr';
 import { AgentDetailsService } from 'src/app/services/AgentDetailsService/agent-details.service';
 import { Subscription } from 'rxjs';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
@@ -25,7 +23,7 @@ export class RightHeaderComponentsComponent implements OnInit {
   email: string = '';
   startBreak = false;
 
-  timer : any;
+  timer: any;
   // public hubconnection!: signalR.HubConnection;
   public Subscription!: Subscription;
 
@@ -35,12 +33,10 @@ export class RightHeaderComponentsComponent implements OnInit {
     private commonService: CommonDataService,
     private agentDetailsService: AgentDetailsService,
     private signalR: SignalRService,
-    private authService : AuthService,
-    private stor : StorageService
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
-    
     let data = this.storage.retrive('main', 'O').local;
     this.fullName = data.username;
     console.table(data);
@@ -49,8 +45,7 @@ export class RightHeaderComponentsComponent implements OnInit {
     this.timer = setInterval(() => {
       // console.log("signalR state",this.signalR.hubconnection.state)
       // console.log("signalR conId",this.signalR.hubconnection.connectionId)
-      if (this.signalR.hubconnection.state == "Disconnected") {
-        
+      if (this.signalR.hubconnection.state == 'Disconnected') {
         // this.signalR.hubconnection
         //   .start()
         //   .then(() => console.log('Connection started'))
@@ -70,7 +65,6 @@ export class RightHeaderComponentsComponent implements OnInit {
   }
 
   signOut() {
-    
     if (
       this.assignedProfile == null ||
       this.assignedProfile == '' ||
@@ -78,13 +72,15 @@ export class RightHeaderComponentsComponent implements OnInit {
     ) {
       localStorage.clear();
       this.router.navigateByUrl('/login');
-      clearInterval(this.timer)
-      if(this.signalR.hubconnection.state == "Connected"){
+      clearInterval(this.timer);
+      if (this.signalR.hubconnection.state == 'Connected') {
         this.signalR.hubconnection
-        .stop()
-        .then(() => console.log('Connection stoped'))
-        .catch((err) => console.log('Error while stopping connection: ' + err));
-      }      
+          .stop()
+          .then(() => console.log('Connection stoped'))
+          .catch((err) =>
+            console.log('Error while stopping connection: ' + err)
+          );
+      }
     } else {
       this.reloadComponent('querryAssigned');
     }
@@ -92,124 +88,114 @@ export class RightHeaderComponentsComponent implements OnInit {
 
   assignedProfile = localStorage.getItem('assignedProfile');
   updateBreak() {
-    
     if (
       this.assignedProfile == null ||
       this.assignedProfile == '' ||
       this.assignedProfile == undefined
     ) {
       this.startBreak = true;
-      
-    //  this.AgentDetails.onBreak = !this.AgentDetails.onBreak;
-      this.commonService
-        .UpdateBreak(this.startBreak)
-        .subscribe((res: any) => {
-          
-          if (res.status === "BreakOn") {
-            this.clickHandler();
-            this.reloadComponent('breakStarted');
-            this.timerStart();
-            
-          } 
-          else if (res.message === "Breakoff") {
-            this.reloadComponent('breakOff');
-            this.timerStop();
-          }
-        });
 
-        
-    } 
-    else {
+      //  this.AgentDetails.onBreak = !this.AgentDetails.onBreak;
+      this.commonService.UpdateBreak(this.startBreak).subscribe((res: any) => {
+        if (res.status === 'BreakOn') {
+          this.clickHandler();
+          this.reloadComponent('breakStarted');
+          this.timerStart();
+        } else if (res.message === 'Breakoff') {
+          this.reloadComponent('breakOff');
+          this.timerStop();
+        }
+      });
+    } else {
       this.reloadComponent('querryAssigned');
     }
   }
 
-  logindto = new LoginDto;
-  encryptedData = this.storage.retrive('main','O').local;
+  logindto = new LoginDto();
+  encryptedData = this.storage.retrive('main', 'O').local;
   activeAgent = this.encryptedData.originalUserName;
 
-  loginForm=new UntypedFormGroup({
-    email:new UntypedFormControl(this.logindto.userName),    
-    userName:new UntypedFormControl(this.activeAgent),
+  loginForm = new UntypedFormGroup({
+    email: new UntypedFormControl(this.logindto.userName),
+    userName: new UntypedFormControl(this.activeAgent),
     password: new UntypedFormControl(this.logindto.password),
-    rememberMe: new UntypedFormControl(this.logindto.rememberMe)
+    rememberMe: new UntypedFormControl(this.logindto.rememberMe),
   });
 
-  submit(){
-    debugger
-    console.log(this.activeAgent)
-  //  let activeAgent = this.stor.retrive("originalUserName")
-    this.authService.login(this.loginForm.value).subscribe((res : any) =>{
-      this.router.navigateByUrl("/all-inboxes/conversation");
-      this.resetTimer();
-      this.timerStop();
-      this.clickHandler();
-    },
-    (error:any) =>{
-      this.reloadComponent('loginFailed')
-    });
+  submit() {
+    console.log(this.activeAgent);
+    //  let activeAgent = this.stor.retrive("originalUserName")
+    this.authService.login(this.loginForm.value).subscribe(
+      (res: any) => {
+        this.router.navigateByUrl('/all-inboxes/conversation');
+        this.resetTimer();
+        this.timerStop();
+        this.clickHandler();
+      },
+      (error: any) => {
+        this.reloadComponent('loginFailed');
+      }
+    );
   }
 
-  resetTimer(){
-    this.break=false;
+  resetTimer() {
+    this.break = false;
     this.isBreak = false;
-    this.milisecond=0;
-  this.second=0;
-  this.minute=0;
-  this.hour=0
-  this.day=0
-  // this.breakTimer = 0;
+    this.milisecond = 0;
+    this.second = 0;
+    this.minute = 0;
+    this.hour = 0;
+    this.day = 0;
+    // this.breakTimer = 0;
   }
 
   display: any;
   public timerInterval: any;
-  break=false;
-  milisecond=0;
-  second=0;
-  minute=0;
-  hour=0
-  day=0
+  break = false;
+  milisecond = 0;
+  second = 0;
+  minute = 0;
+  hour = 0;
+  day = 0;
 
-  isBreak :any = false;
-  breakTimer : any = 0;
+  isBreak: any = false;
+  breakTimer: any = 0;
 
-  timerStop(){
-    this.break = false
+  timerStop() {
+    this.break = false;
     this.isBreak = false;
     this.startBreak = false;
     clearInterval(this.breakTimer);
   }
 
   timerStart() {
-    
-    this.break = true
+    this.break = true;
     this.isBreak = true;
     // let minute = 1;
     if (this.isBreak) {
-    this.breakTimer = setInterval(() => {
-      this.milisecond++;
+      this.breakTimer = setInterval(() => {
+        this.milisecond++;
 
-      if (this.milisecond >= 100) {
-        this.second++;
-        this.milisecond = 0;
-      }
-      if (this.second >= 60) {
-        this.minute++;
-        this.second = 0
-      }
-      if (this.minute >= 60) {
-        this.hour++;
-        this.minute = 0
-      }
-      if(this.hour > 24){
-        this.day++;
-        this.hour = 0
-      }
-    }, 10);
-  } else {
-    clearInterval(this.breakTimer);
-  }
-  
+        if (this.milisecond >= 100) {
+          this.second++;
+          this.milisecond = 0;
+        }
+        if (this.second >= 60) {
+          this.minute++;
+          this.second = 0;
+        }
+        if (this.minute >= 60) {
+          this.hour++;
+          this.minute = 0;
+        }
+        if (this.hour > 24) {
+          this.day++;
+          this.hour = 0;
+        }
+      }, 10);
+    } else {
+      clearInterval(this.breakTimer);
+    }
   }
 
   AlterMsg: any;
@@ -256,10 +242,9 @@ export class RightHeaderComponentsComponent implements OnInit {
   dd = 0;
   // aaa = "";
   isRunning = false;
-  timerId : any = 0;
+  timerId: any = 0;
 
   clickHandler() {
-    
     if (!this.isRunning) {
       // Stop => Running
       this.timerId = setInterval(() => {
@@ -271,15 +256,15 @@ export class RightHeaderComponentsComponent implements OnInit {
         }
         if (this.ss >= 60) {
           this.mm++;
-          this.ss = 0
+          this.ss = 0;
         }
         if (this.mm >= 60) {
           this.hh++;
-          this.mm = 0
+          this.mm = 0;
         }
-        if(this.hh > 24){
+        if (this.hh > 24) {
           this.dd++;
-          this.hh = 0
+          this.hh = 0;
         }
       }, 10);
     } else {
@@ -291,4 +276,4 @@ export class RightHeaderComponentsComponent implements OnInit {
   format(num: number) {
     return (num + '').length === 1 ? '0' + num : num + '';
   }
-} 
+}
