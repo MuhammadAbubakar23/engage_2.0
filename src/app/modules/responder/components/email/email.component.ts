@@ -7,7 +7,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { Tooltip } from 'bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -15,7 +14,6 @@ import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
-import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
@@ -26,7 +24,6 @@ import { InsertSentimentForFeedDto } from 'src/app/shared/Models/InsertSentiment
 import { InsertTagsForFeedDto } from 'src/app/shared/Models/InsertTagsForFeedDto';
 import { ReplyDto } from 'src/app/shared/Models/ReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
   selector: 'app-email',
@@ -71,15 +68,13 @@ export class EmailComponent implements OnInit {
     private fetchId: FetchIdService,
     private commondata: CommonDataService,
     private SpinnerService: NgxSpinnerService,
-    private signalRService: SignalRService,
     private changeDetect: ChangeDetectorRef,
     private addTagService: AddTagService,
     private removeTagService: RemoveTagService,
     private updateCommentsService : UpdateCommentsService,
     private queryStatusService : QueryStatusService,
     private replyService : ReplyService,
-    private unrespondedCountService : UnRespondedCountService,
-    private storage : StorageService
+    private unrespondedCountService : UnRespondedCountService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = null;
@@ -535,7 +530,7 @@ export class EmailComponent implements OnInit {
     contentType: new UntypedFormControl(this.ReplyDto.contentType),
   });
 
-  agentTeamId: number = 0;
+  agentId: string = '';
   platform: string = '';
   postType: string = '';
   emailTo: any;
@@ -551,7 +546,7 @@ export class EmailComponent implements OnInit {
           // populate comment data
 
           this.emailId = comment.id;
-          this.agentTeamId = 2;
+          this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
           this.postType = comment.contentType;
           this.emailTo = comment.to;
@@ -604,7 +599,7 @@ export class EmailComponent implements OnInit {
 
     this.emailReplyForm.patchValue({
       commentId: this.emailId,
-      teamId: this.agentTeamId,
+      teamId: this.agentId,
       platform: this.platform,
       contentType: this.postType,
     });
@@ -635,7 +630,7 @@ export class EmailComponent implements OnInit {
     this.emailText = '';
     this.show = false;
     this.emailId = '';
-    this.agentTeamId = 0;
+    this.agentId = '';
     this.platform = '';
     this.postType = '';
   }

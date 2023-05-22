@@ -49,7 +49,7 @@ export class InstagramComponent implements OnInit {
 
   // Instagram Comment
   InstacommentId: any;
-  agentTeamId: number = 0;
+  agentId: string = '';
   platform: string = '';
   postType: string = '';
   instaCommentText: string = '';
@@ -497,7 +497,7 @@ export class InstagramComponent implements OnInit {
           // populate comment data
 
           this.InstacommentId = comment.id;
-          this.agentTeamId = 2;
+          this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
           this.postType = comment.contentType;
           this.profileId = xyz.post.profile.profile_Id;
@@ -521,7 +521,7 @@ export class InstagramComponent implements OnInit {
 
     this.instagramCommentReplyForm.patchValue({
       commentId: this.InstacommentId,
-      teamId: this.agentTeamId,
+      teamId: this.agentId,
       platform: this.platform,
       contentType: this.postType,
       profileId: this.profileId,
@@ -861,7 +861,7 @@ export class InstagramComponent implements OnInit {
     this.instaCommentText = '';
     this.show = false;
     this.InstacommentId = '';
-    this.agentTeamId = 0;
+    this.agentId = '';
     this.platform = '';
     this.postType = '';
     this.msgText = '';
@@ -1255,7 +1255,7 @@ export class InstagramComponent implements OnInit {
         // show mentioned reply
         this.show = true;
         this.msgId = msg.id;
-        this.agentTeamId = Number(localStorage.getItem('agentId'));;
+        this.agentId = localStorage.getItem('agentId') || '{}';
         this.platform = this.fetchId.platform;
         this.postType = 'IM';
         this.profileId = msg.profileId;
@@ -1290,7 +1290,7 @@ export class InstagramComponent implements OnInit {
 
     this.instagramMessageReplyForm.patchValue({
       commentId: this.msgId,
-      teamId: this.agentTeamId,
+      teamId: this.agentId,
       platform: this.platform,
       contentType: this.postType,
       profileId: this.profileId,

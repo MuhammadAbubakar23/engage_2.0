@@ -143,11 +143,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div *ngFor="let group of facebookdata.groupedComments | sort:criteria">
+                            <div *ngFor="let group of facebookdata.groupedComments">
                                 <div class="date-wrap">
                                     <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}}</p>
                                 </div>
-                                <ng-container *ngFor="let fbcmnts of group.items | sort:criteria">
+                                <ng-container *ngFor="let fbcmnts of group.items  | sort:criteria">
                                     <ng-container *ngIf="fbcmnts.queryStatus != 'QueryCompleted'">
                                         <div class="message-wrap agent-message-wrap right" *ngIf="facebookdata.post.postId == fbcmnts.postId">
                                             <div class="application-wrap d-flex align-items-center mb-1" *ngIf="fbcmnts.ticketId != null">

@@ -87,7 +87,7 @@ export class ConversationComponent implements OnInit {
     this.subscription = this.updateListService
       .receiveList()
       .subscribe((res) => {
-        
+        debugger
         this.updatedList = res;
         this.updateListDataListener();
       });
@@ -168,7 +168,7 @@ export class ConversationComponent implements OnInit {
   }
 
   updateListDataListener() {
-    
+    debugger
     this.updatedList.forEach((newMsg: any) => {
       
       const index = this.ConversationList?.findIndex(
@@ -180,7 +180,7 @@ export class ConversationComponent implements OnInit {
           if (newMsg.user == main.user) {
             this.listingDto = newMsg;
             this.listingDto.unrespondedCount =
-              main.unrespondedCount + newMsg.unrespondedCount;
+              main.unrespondedCount + 1;
             this.ConversationList[index] = this.listingDto;
           }
         });

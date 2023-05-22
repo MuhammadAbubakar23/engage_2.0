@@ -66,7 +66,7 @@ export class FacebookComponent implements OnInit {
 
   chatText: any;
   commentId: any;
-  agentTeamId: any;
+  agentId: any;
   platform: any;
   postType: any;
   dmMsg: any = '';
@@ -189,7 +189,7 @@ export class FacebookComponent implements OnInit {
         this.updateMessagesDataListener();
       });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
-      
+      debugger
       this.newReply = res;
       this.replyDataListner();
     });
@@ -227,7 +227,7 @@ export class FacebookComponent implements OnInit {
   totalMessages: number = 0;
 
   getFacebookComments() {
-    
+    debugger
     if (this.id != null || this.id != undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -926,7 +926,7 @@ export class FacebookComponent implements OnInit {
           // populate comment data
 
           this.commentId = comment.id;
-          this.agentTeamId = 2;
+          this.agentId = localStorage.getItem('agentId');
           this.platform = xyz.platform;
           this.postType = comment.contentType;
           this.profileId = xyz.post.profile.profile_Id;
@@ -942,7 +942,7 @@ export class FacebookComponent implements OnInit {
         // show mentioned reply
         this.show = true;
         this.msgId = msg.id;
-        this.agentTeamId = 2;
+        this.agentId = localStorage.getItem('agentId');
         this.platform = this.fetchId.platform;
         this.postType = 'FCP';
         this.profileId = msg.profileId;
@@ -972,7 +972,7 @@ export class FacebookComponent implements OnInit {
 
     this.facebookReplyForm.patchValue({
       commentId: this.commentId,
-      teamId: this.agentTeamId,
+      teamId: this.agentId,
       platform: this.platform,
       contentType: this.postType,
       profileId: this.profileId,
@@ -1002,7 +1002,7 @@ export class FacebookComponent implements OnInit {
     this.msgText = '';
     this.show = false;
     this.commentId = '';
-    this.agentTeamId = '';
+    this.agentId = '';
     this.platform = '';
     this.postType = '';
     this.ImageName = [];
@@ -1023,7 +1023,7 @@ export class FacebookComponent implements OnInit {
 
     this.facebookMessageReplyForm.patchValue({
       commentId: this.msgId,
-      teamId: this.agentTeamId,
+      teamId: this.agentId,
       platform: this.platform,
       contentType: this.postType,
       profileId: this.profileId,

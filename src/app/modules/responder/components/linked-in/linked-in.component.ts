@@ -50,7 +50,7 @@ export class LinkedInComponent implements OnInit {
 
   chatText: any;
   commentId: any;
-  agentTeamId: any;
+  agentId: string = '';
   platform: any;
   postType: any;
   queryStatus:any;
@@ -443,7 +443,7 @@ export class LinkedInComponent implements OnInit {
           // populate comment data
 
           this.commentId = comment.id;
-          this.agentTeamId = 2;
+          this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
           this.postType = comment.contentType;
           this.profileId = xyz.post.profile.profile_Id;
@@ -472,7 +472,7 @@ export class LinkedInComponent implements OnInit {
     }
     this.linkedInReplyForm.patchValue({
       commentId: this.commentId,
-      teamId: this.agentTeamId,
+      teamId: this.agentId,
       platform: this.platform,
       contentType: this.postType,
       profileId: this.profileId,
@@ -498,7 +498,7 @@ export class LinkedInComponent implements OnInit {
     this.commentReply = '';
     this.show = false;
     this.commentId = '';
-    this.agentTeamId = '';
+    this.agentId = '';
     this.platform = '';
     this.postType = '';
     this.ImageName = [];

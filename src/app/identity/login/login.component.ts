@@ -34,11 +34,10 @@ export class LoginComponent implements OnInit {
    private router:Router,
    private spinnerService : NgxSpinnerService,
    private agentDetailsService: AgentDetailsService,
-   private signalRService : SignalRService) { }
+  //  private signalRService : SignalRService
+   ) { }
 
   ngOnInit(): void {
-
-    
   }
 
   submit(){
@@ -55,16 +54,16 @@ export class LoginComponent implements OnInit {
 
       //signalRRequests
 
-      this.signalRService.startConnection();
+    //   this.signalRService.startConnection();
 
-      this.signalRService.removeTagDataListener();
-    this.signalRService.addTagDataListner();
-    this.signalRService.unRespondedCountDataListener();
-    this.signalRService.updateListAndDetailDataListener();
-    this.signalRService.replyDataListener(); 
-    this.signalRService.queryStatusDataListener();
-    this.signalRService.bulkQueryStatusDataListener();
-    this.signalRService.checkConnectionStatusListener();
+    //   this.signalRService.removeTagDataListener();
+    // this.signalRService.addTagDataListner();
+    // this.signalRService.unRespondedCountDataListener();
+    // this.signalRService.updateListAndDetailDataListener();
+    // this.signalRService.replyDataListener(); 
+    // this.signalRService.queryStatusDataListener();
+    // this.signalRService.bulkQueryStatusDataListener();
+    // this.signalRService.checkConnectionStatusListener();
       
     },
     (error:any) =>{

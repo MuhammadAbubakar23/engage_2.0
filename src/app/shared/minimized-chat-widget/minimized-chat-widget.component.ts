@@ -40,7 +40,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
   commentCount: any = '';
   youtubecommentId: any;
   youtubecommentText: any;
-  agentTeamId: number = 0;
+  agentId: string = '';
   // platform: string = '';
   postType: string = '';
   QuickReplies: any;
@@ -201,7 +201,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
           // populate comment data
 
           this.youtubecommentId = comment.id;
-          this.agentTeamId = 2;
+          this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
           this.postType = comment.contentType;
         }
@@ -214,7 +214,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
 
     this.youtubeCommentReplyForm.patchValue({
       commentId: this.youtubecommentId,
-      teamId: this.agentTeamId,
+      teamId: this.agentId,
       platform: this.platform,
       contentType: this.postType,
     });
@@ -464,7 +464,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
     this.youtubecommentText = '';
     this.show = false;
     this.youtubecommentId = '';
-    this.agentTeamId = 0;
+    this.agentId = '';
     this.platform = '';
     this.postType = '';
   }

@@ -55,7 +55,7 @@ export class SmsDetailsComponent implements OnInit {
 
   storeComId: any;
   smsId:number=0;
-  agentTeamId:number=0;
+  agentId:string='';
   platform:string="";
   postType:string="";
   ReplyDto = new ReplyDto()
@@ -528,7 +528,7 @@ export class SmsDetailsComponent implements OnInit {
           // populate comment data
 
           this.smsId = comment.id;
-          this.agentTeamId = 2;
+          this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
           this.postType = comment.contentType;
         }
@@ -553,7 +553,7 @@ export class SmsDetailsComponent implements OnInit {
 
     this.SmsReplyForm.patchValue({
       commentId: this.smsId,
-      teamId: this.agentTeamId,
+      teamId: this.agentId,
       platform: this.platform,
       contentType: this.postType,
     });
@@ -580,7 +580,7 @@ export class SmsDetailsComponent implements OnInit {
     this.smsText = '';
     this.show = false;
     this.smsId = 0;
-    this.agentTeamId = 0;
+    this.agentId = '';
     this.platform = '';
     this.postType = '';
   }

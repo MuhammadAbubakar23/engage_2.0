@@ -61,7 +61,7 @@ export class WhatsappDetailsComponent implements OnInit {
   QuickReplies: any;
   storeComId: any;
   WhatsappMsgId: any;
-  agentTeamId: number = 0;
+  agentId: string = '';
   platform: string = '';
   postType: string = '';
   WhatsappMsgText: string = '';
@@ -581,7 +581,7 @@ export class WhatsappDetailsComponent implements OnInit {
           // populate comment data
 
           this.WhatsappMsgId = comment.id;
-          this.agentTeamId = 2;
+          this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
           this.postType = comment.contentType;
         }
@@ -610,7 +610,7 @@ export class WhatsappDetailsComponent implements OnInit {
 
     this.WhatsappReplyForm.patchValue({
       commentId: this.WhatsappMsgId,
-      teamId: this.agentTeamId,
+      teamId: this.agentId,
       platform: this.platform,
       contentType: this.postType,
     });
@@ -645,7 +645,7 @@ export class WhatsappDetailsComponent implements OnInit {
     this.WhatsappMsgText = '';
     this.show = false;
     this.WhatsappMsgId = '';
-    this.agentTeamId = 0;
+    this.agentId = '';
     this.platform = '';
     this.postType = '';
     this.ImageName = [];

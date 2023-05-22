@@ -858,7 +858,7 @@ export class TwitterComponent implements OnInit {
     });
   }
 
-  agentTeamId: number = 0;
+  agentId: string = '';
   platform: string = '';
   postType: string = '';
   profileId: string = '';
@@ -876,7 +876,7 @@ export class TwitterComponent implements OnInit {
           // populate comment data
 
           this.tweetId = comment.id;
-          this.agentTeamId = 2;
+          this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
           this.postType = comment.contentType;
           this.profileId = xyz.post.profile.profile_Id;
@@ -909,7 +909,7 @@ export class TwitterComponent implements OnInit {
 
     this.TwitterRepliesForm.patchValue({
       commentId: this.tweetId,
-      teamId: this.agentTeamId,
+      teamId: this.agentId,
       platform: this.platform,
       contentType: this.postType,
       profileId: this.profileId,
@@ -956,7 +956,7 @@ export class TwitterComponent implements OnInit {
         // show mentioned reply
         this.show = true;
         this.twitterMsgId = msg.id;
-        this.agentTeamId = 2;
+        this.agentId = localStorage.getItem('agentId') || '{}';
         this.platform = this.fetchId.platform;
         this.postType = msg.contentType;
         this.profileId = msg.profileId;
@@ -986,7 +986,7 @@ export class TwitterComponent implements OnInit {
 
     this.twitterMessageReplyForm.patchValue({
       commentId: this.twitterMsgId,
-      teamId: this.agentTeamId,
+      teamId: this.agentId,
       platform: this.platform,
       contentType: this.postType,
       profileId: this.profileId,
@@ -1106,7 +1106,7 @@ export class TwitterComponent implements OnInit {
     this.msgText = '';
     this.show = false;
     this.tweetId = '';
-    this.agentTeamId = 0;
+    this.agentId = '';
     this.platform = '';
     this.postType = '';
   }
