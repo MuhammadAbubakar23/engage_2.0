@@ -123,14 +123,14 @@ export class RightHeaderComponentsComponent implements OnInit {
   });
 
   submit() {
-    console.log(this.activeAgent);
-    //  let activeAgent = this.stor.retrive("originalUserName")
     this.authService.login(this.loginForm.value).subscribe(
       (res: any) => {
         this.router.navigateByUrl('/all-inboxes/conversation');
         this.resetTimer();
         this.timerStop();
         this.clickHandler();
+        this.resetForm();
+        
       },
       (error: any) => {
         this.reloadComponent('loginFailed');
@@ -138,7 +138,15 @@ export class RightHeaderComponentsComponent implements OnInit {
     );
   }
 
+  resetForm(){
+    this.loginForm.reset({
+      userName:this.activeAgent,
+      password:"",
+      rememberMe:false,
+    });
+  }
   resetTimer() {
+    debugger
     this.break = false;
     this.isBreak = false;
     this.milisecond = 0;
@@ -146,7 +154,6 @@ export class RightHeaderComponentsComponent implements OnInit {
     this.minute = 0;
     this.hour = 0;
     this.day = 0;
-    // this.breakTimer = 0;
   }
 
   display: any;

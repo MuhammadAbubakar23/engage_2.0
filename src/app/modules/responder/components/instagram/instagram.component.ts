@@ -311,7 +311,7 @@ export class InstagramComponent implements OnInit {
   ReplyDto = new ReplyDto();
 
   getInstagramData() {
-    
+    debugger
     if (this.id != null || undefined) {
       this.filterDto = {
         // fromDate: new Date(),

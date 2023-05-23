@@ -283,7 +283,7 @@ export class FacebookComponent implements OnInit {
           });
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-          this.fbStats();
+          // this.fbStats();
           // console.log('Facebook data', this.FacebookData);
         });
     } else if (this.slaId != null || this.slaId != undefined) {
@@ -334,7 +334,7 @@ export class FacebookComponent implements OnInit {
         });
 
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-        this.fbStats();
+        // this.fbStats();
       });
     }
     // if ((this.id == null || this.id == undefined) && (this.slaId == null || this.slaId == undefined))
@@ -391,7 +391,7 @@ export class FacebookComponent implements OnInit {
           });
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-          this.fbStats();
+          // this.fbStats();
           // console.log('Facebook data', this.FacebookData);
         });
     }

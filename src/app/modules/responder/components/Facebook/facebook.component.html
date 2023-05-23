@@ -80,7 +80,7 @@
                                                 <!-- <post-stats></post-stats> -->
                                                 <p class="card-text ms-3 single-img-time">
                                                 </p>
-                                                <div class="silver" *ngIf="!facebookdata.post.postStats">
+                                                <!-- <div class="silver" *ngIf="!facebookdata.post.postStats">
                                                     <a class="message-actionItem coal me-3">
                                                         0 Comments
                                                     </a>
@@ -136,7 +136,7 @@
                                                      <a class="message-actionItem coal me-2">
                                                         549,017 Views
                                                     </a> 
-                                                </div>
+                                                </div> -->
                                                 <p></p>
                                             </div>
                                         </div>
@@ -203,7 +203,7 @@
                                                             <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                                 <div class="message-actionlist d-flex align-items-center">
                                                                     <div class="box">
-                                                                        <a class="message-actionItem coal likebht btn p-0 label-reactions"
+                                                                        <a class="message-actionItem coal likebht p-0 label-reactions"
                                                                             (click)="likeByAdmin(fbcmnts.id, fbcmnts.isLikedByAdmin, facebookdata.platform, facebookdata.post?.profile.page_Id, facebookdata.post?.profile.profile_Id, facebookdata.user?.userId)"
                                                                             [class.active]="fbcmnts.isLikedByAdmin == true">
                                                                             <span class="iconButton small btn">
@@ -352,7 +352,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-lg-2 pe-4 d-flex align-items-center justify-content-end">
+                                                            <!-- <div class="col-lg-2 pe-4 d-flex align-items-center justify-content-end">
                                                                 <div class="reactionsWrap d-flex align-items-center" *ngIf="!fbcmnts?.comStats">
                                                                     <div class="reactImg happy emoji">
                                                                         <img class="me-1" src="../../../../assets/images/wow-emoji.svg" alt="...">
@@ -382,7 +382,7 @@
                                                                         fbcmnts?.comStats.reactioinsLIst?.cARE}}
                                                                     </p>
                                                                 </div>
-                                                            </div>
+                                                            </div> -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -502,12 +502,12 @@
                     </div>
                     <div *ngIf="FacebookMessages" class="tab-pane fade show active" id="fb-msg" role="tabpanel" 
                     aria-labelledby="fb-msg-tab" >
-                        <div class="chat-box-wrap" *ngFor="let group of groupedMessages">
+                        <div class="chat-box-wrap" *ngFor="let group of groupedMessages  | sort:criteria">
                         
                                 <div class="date-wrap">
                                     <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}}</p>
                                 </div>
-                                <ng-container *ngFor="let fbmsgs of group.items">
+                                <ng-container *ngFor="let fbmsgs of group.items | sort:criteria">
                                     <ng-container *ngIf="fbmsgs.queryStatus != 'QueryCompleted'">
                                         <div class="message-wrap agent-message-wrap right" >
                                             <div class="application-wrap d-flex align-items-center mb-1" *ngIf="fbmsgs.ticketId != null">

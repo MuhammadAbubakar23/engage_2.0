@@ -40,7 +40,7 @@ export class ConversationComponent implements OnInit {
   TotalUnresponded: number = 0;
   TodayDate: any;
   pageNumber: number = 1;
-  pageSize: number = 20;
+  pageSize: number = 40;
   platform: any;
   updatedList: any;
 

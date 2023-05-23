@@ -108,7 +108,8 @@ import { AnalyticsRightSidebarMenuComponent } from './engage2/analytics-content/
     BreadcrumbComponent,
     CardBoxListComponent,
     AnalyticsContentComponent,
-    AnalyticsRightSidebarMenuComponent
+    AnalyticsRightSidebarMenuComponent,
+    RightHeaderComponentsComponent
   ]
 })
 export class LayoutsModule { }
