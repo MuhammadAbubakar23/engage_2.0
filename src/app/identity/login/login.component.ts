@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
    private router:Router,
    private spinnerService : NgxSpinnerService,
    private agentDetailsService: AgentDetailsService,
-  //  private signalRService : SignalRService
+   private signalRService : SignalRService
    ) { }
 
   ngOnInit(): void {
@@ -49,21 +49,22 @@ export class LoginComponent implements OnInit {
       this.stor.store("nocompass", res.roles[0]);
       localStorage.setItem("agentId", res.userId)
       localStorage.setItem("agentName", res.username)
-      this.router.navigateByUrl("/all-inboxes/conversation");
+      // this.router.navigateByUrl("/all-inboxes/conversation");
+      this.router.navigateByUrl("/dashboard/all-inboxes/list");
       this.spinnerService.hide();
 
       //signalRRequests
 
-    //   this.signalRService.startConnection();
+      this.signalRService.startConnection();
 
-    //   this.signalRService.removeTagDataListener();
-    // this.signalRService.addTagDataListner();
-    // this.signalRService.unRespondedCountDataListener();
-    // this.signalRService.updateListAndDetailDataListener();
-    // this.signalRService.replyDataListener(); 
-    // this.signalRService.queryStatusDataListener();
-    // this.signalRService.bulkQueryStatusDataListener();
-    // this.signalRService.checkConnectionStatusListener();
+      this.signalRService.removeTagDataListener();
+    this.signalRService.addTagDataListner();
+    this.signalRService.unRespondedCountDataListener();
+    this.signalRService.updateListAndDetailDataListener();
+    this.signalRService.replyDataListener(); 
+    this.signalRService.queryStatusDataListener();
+    this.signalRService.bulkQueryStatusDataListener();
+    this.signalRService.checkConnectionStatusListener();
       
     },
     (error:any) =>{

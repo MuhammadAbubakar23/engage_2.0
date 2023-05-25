@@ -17,6 +17,7 @@ import { Tooltip } from 'bootstrap';
 import { UpdateListService } from 'src/app/services/UpdateListService/update-list.service';
 import { DatePipe } from '@angular/common';
 import { GetAgentReportDto } from 'src/app/shared/Models/GetAgentReportDto';
+import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
 
 @Component({
   selector: 'app-conversation',
@@ -40,7 +41,7 @@ export class ConversationComponent implements OnInit {
   TotalUnresponded: number = 0;
   TodayDate: any;
   pageNumber: number = 1;
-  pageSize: number = 40;
+  pageSize: number = 100;
   platform: any;
   updatedList: any;
 
@@ -65,7 +66,8 @@ export class ConversationComponent implements OnInit {
     private filterService: FilterService,
     private router: Router,
     private updateListService: UpdateListService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private lodeModuleService : ModulesService
   ) {
     this.criteria = {
       property: 'createdDate',
@@ -87,7 +89,7 @@ export class ConversationComponent implements OnInit {
     this.subscription = this.updateListService
       .receiveList()
       .subscribe((res) => {
-        debugger
+        
         this.updatedList = res;
         this.updateListDataListener();
       });
@@ -168,7 +170,7 @@ export class ConversationComponent implements OnInit {
   }
 
   updateListDataListener() {
-    debugger
+    
     this.updatedList.forEach((newMsg: any) => {
       
       const index = this.ConversationList?.findIndex(
@@ -222,8 +224,12 @@ export class ConversationComponent implements OnInit {
 
     this.commondata.AssignQuerry(this.assignQuerryDto).subscribe(
       (res) => {
+        
         this.reloadComponent('queryallocated');
-        this.router.navigateByUrl('/responder/' + platform);
+        
+        //this.router.navigateByUrl('/all-inboxes/responder/' + platform);
+
+        this.lodeModuleService.updateModule('responder')
         this.headerService.updateMessage(string);
         this.leftsidebar.updateMessage(leftExpandedMenu);
         this.fetchId.setPlatform(platform);

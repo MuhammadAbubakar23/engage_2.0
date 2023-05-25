@@ -6,9 +6,14 @@ import { AuthGuard } from './identity/AuthService/auth.guard';
 const routes: Routes = [
  {
    path:'',
-   redirectTo:'/all-inboxes/conversation',
+   redirectTo:'/all-inboxes/list',
    pathMatch:'full',
  },
+//  {
+//   path:'**',
+//   redirectTo:'/dashboard/all-inboxes/list',
+//   pathMatch:'full',
+// },
   {
     path: '',
     loadChildren: () => import('./identity/identity.module').then(f => f.IdentityModule)

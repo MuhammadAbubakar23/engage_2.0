@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { DispositionFormDto } from 'src/app/shared/Models/DispositionFormDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
+import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
 
 @Component({
   selector: 'app-disposition-form',
@@ -17,7 +18,8 @@ export class DispositionFormComponent implements OnInit {
 
   constructor(private commonService : CommonDataService,
     private route : Router,
-    private toggleService : ToggleService) {
+    private toggleService : ToggleService,
+    private lodeModuleService : ModulesService) {
     this.dispositionForm = new FormGroup({
       dispositionId: new FormControl('', Validators.required),
       reasonId: new FormControl(''),
@@ -33,7 +35,7 @@ export class DispositionFormComponent implements OnInit {
     });
    }
 
-  platform = localStorage.getItem('parent')
+  platform = localStorage.getItem('parent');
   agentId = Number(localStorage.getItem('agentId'))
   customerProfileId = Number(localStorage.getItem('profileId'))
   userId = localStorage.getItem('storeHeaderOpenedId')
@@ -60,7 +62,8 @@ export class DispositionFormComponent implements OnInit {
 
     this.commonService.SubmitDispositionForm(this.dispositionFormDto).subscribe((res:any)=>{
       // console.log('disposition response',res)
-      this.route.navigateByUrl('/all-inboxes/conversation');
+      this.route.navigateByUrl('/all-inboxes');
+      this.lodeModuleService.updateModule('all-inboxes')
       localStorage.setItem('assignedProfile','')
     })
   }

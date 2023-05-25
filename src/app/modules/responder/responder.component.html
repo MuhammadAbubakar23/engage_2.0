@@ -1,14 +1,14 @@
 <responder-content>
     <div class="w-auto chat-message-component w-100 inbox-container" [ngClass]="showPanel?'panelToggled':''">
-    <div class="d-flex main-body-wrapper">
-        <div class="agent-page-main-content">
-            <template #container></template>
+        <div class="d-flex main-body-wrapper">
+            <div class="agent-page-main-content">
+                <template #container></template>
+            </div>
+            <div class="rightbar-expanded-wrapper">
+
+                <template #rightcontainer></template>
+            </div>
         </div>
-        <div class="rightbar-expanded-wrapper">
-            
-            <template #rightcontainer></template>
-        </div>
-    </div>      
-    <responder-right-sidebar-menu></responder-right-sidebar-menu>
-</div>  
+        <responder-right-sidebar-menu></responder-right-sidebar-menu>
+    </div>
 </responder-content>

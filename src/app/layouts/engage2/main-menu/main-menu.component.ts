@@ -57,6 +57,7 @@ export class MainMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     // this.menu$ = this.store.select(getMenuById(2)).subscribe((item) => {
     //   this.menus$ = item;
     // })

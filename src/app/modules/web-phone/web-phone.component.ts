@@ -1,11 +1,11 @@
-import { PhoneDialerService } from './services/DialerService/phone-dialer.service';
-import { SharedService } from './services/SharedService/shared.service';
+// import { PhoneDialerService } from './services/DialerService/phone-dialer.service';
+// import { SharedService } from './services/SharedService/shared.service';
 import { Component, OnInit, ElementRef, ViewChild, ViewContainerRef, ComponentFactoryResolver, AfterViewInit } from '@angular/core';
-import { Config } from './phone/Config';
-import { PhoneTypes } from './phone/PhoneTypes';
-import { Logger } from './phone/Logger';
-import { AgentFactory } from './phone/AgentFactory';
-import { FacebookComponent } from '../responder/components/Facebook/facebook.component';
+// import { Config } from './phone/Config';
+// import { PhoneTypes } from './phone/PhoneTypes';
+// import { Logger } from './phone/Logger';
+// import { AgentFactory } from './phone/AgentFactory';
+// import { FacebookComponent } from '../responder/components/Facebook/facebook.component';
 import { WebPhoneContactsComponent } from './components/web-phone-contacts/web-phone-contacts.component';
 import { WebPhoneDialerComponent } from './components/web-phone-dialer/web-phone-dialer.component';
 import { WebPhoneCallListComponent } from './components/web-phone-call-list/web-phone-call-list.component';
@@ -62,8 +62,7 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
       case 'dialer':
         // this.showPanel = false;
         // localStorage.setItem('child', '');
-        componentFactory =
-          this.resolver.resolveComponentFactory(WebPhoneDialerComponent);
+        componentFactory = this.resolver.resolveComponentFactory(WebPhoneDialerComponent);
         this.target?.createComponent(componentFactory);
         break;
         case 'contacts':

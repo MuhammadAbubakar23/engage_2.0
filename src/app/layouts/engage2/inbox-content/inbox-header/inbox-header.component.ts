@@ -13,6 +13,7 @@ export class InboxHeaderComponent implements OnInit {
     private commonService: CommonDataService) { }
 
   ngOnInit(): void {
+    
     this.getAllConversationCount();
   }
 

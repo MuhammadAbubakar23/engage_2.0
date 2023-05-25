@@ -209,7 +209,7 @@ export class EmailComponent implements OnInit {
   fullName: string = '';
 
   getEmails() {
-    debugger
+    
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {

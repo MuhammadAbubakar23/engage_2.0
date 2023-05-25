@@ -1,20 +1,21 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { InboxResponderComponent } from 'src/app/modules/inboxes/components/inbox-responder/inbox-responder.component';
 import { InboxesComponent } from 'src/app/modules/inboxes/inboxes.component';
+import { ResponderComponent } from 'src/app/modules/responder/responder.component';
 import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
+import { InboxHeaderComponent } from '../inbox-content/inbox-header/inbox-header.component';
+import { InboxMenuComponent } from '../inbox-content/inbox-menu/inbox-menu.component';
 import { ResponderHeaderComponent } from '../responder-content/responder-header/responder-header.component';
 import { ResponderMenuComponent } from '../responder-content/responder-menu/responder-menu.component';
-import { InboxHeaderComponent } from './inbox-header/inbox-header.component';
-import { InboxMenuComponent } from './inbox-menu/inbox-menu.component';
 
 @Component({
-  selector: 'inbox-content',
-  templateUrl: './inbox-content.component.html',
-  styleUrls: ['./inbox-content.component.scss']
+  selector: 'app-main',
+  templateUrl: './main.component.html',
+  styleUrls: ['./main.component.scss']
 })
-export class InboxContentComponent implements OnInit {
+export class MainComponent implements OnInit, AfterViewInit {
+
   @ViewChild('submenu', {
     read: ViewContainerRef,
   })
@@ -34,22 +35,34 @@ export class InboxContentComponent implements OnInit {
 
   toggleLeftBar:boolean = true;
   showPanel:boolean = false;
-  constructor(private resolver : ComponentFactoryResolver,
-    private route : ActivatedRoute,
-    private loadModuleService : ModulesService) { }
+  constructor(private loadModuleService : ModulesService,
+    private resolver : ComponentFactoryResolver,
+    private route : ActivatedRoute) { }
 
   ngOnInit(): void {
 
+    // this.route.params.subscribe((routeParams)=>{
+    //   
+    //   if(routeParams['channel'] == "all-inboxes"){
+    //     this.loadComponent("all-inboxes")
+    //   }
+
+    //   if(routeParams['channel'] == "responder"){
+    //     this.loadComponent("responder")
+    //   }
+    // })
     
   }
 
   abc:any
   ngAfterViewInit(): void {
     
-    this.loadComponent("all-inboxes")
+    // this.loadComponent("")
 
     
     this.route.params.subscribe((routeParams)=>{
+      this.abc = this.route.routeConfig?.children;
+      this.abc[0].path
       
       if(this.abc[0].path == "all-inboxes"){
         this.loadComponent("all-inboxes")
@@ -63,10 +76,10 @@ export class InboxContentComponent implements OnInit {
       }
     })
 
-    this.Subscription = this.loadModuleService.getModule().subscribe((name:any)=>{
-      
-      this.loadComponent(name)
-    });
+    // this.Subscription = this.loadModuleService.getModule().subscribe((name:any)=>{
+    //   
+    //   this.loadComponent(name)
+    // });
   }
   
   toggleSubLeftBar(){
@@ -89,8 +102,8 @@ export class InboxContentComponent implements OnInit {
         submenu =  this.resolver.resolveComponentFactory(InboxMenuComponent);
         this.submenu.createComponent(submenu);
 
-        // body = this.resolver.resolveComponentFactory(InboxesComponent);
-        // this.body.createComponent(body);
+        body = this.resolver.resolveComponentFactory(InboxesComponent);
+        this.body.createComponent(body);
 
         header = this.resolver.resolveComponentFactory(InboxHeaderComponent);
         this.header.createComponent(header);
@@ -100,8 +113,8 @@ export class InboxContentComponent implements OnInit {
           submenu =  this.resolver.resolveComponentFactory(ResponderMenuComponent);
           this.submenu.createComponent(submenu);
   
-          // body = this.resolver.resolveComponentFactory(InboxResponderComponent);
-          // this.body.createComponent(body);
+          body = this.resolver.resolveComponentFactory(ResponderComponent);
+          this.body.createComponent(body);
 
           header = this.resolver.resolveComponentFactory(ResponderHeaderComponent);
         this.header.createComponent(header);

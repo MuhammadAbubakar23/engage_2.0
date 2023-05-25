@@ -4,8 +4,13 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path:'',
-    redirectTo:'all-inboxes',
+    redirectTo:'/all-inboxes/list',
     pathMatch:'full'
+  },
+  {
+    path:'',
+    loadChildren : () => import('./main/main.module').then(f=>f.MainModule),
+    data:{preload:true}
   },
   {
     path:'responder',
@@ -16,7 +21,8 @@ const routes: Routes = [
     path:'all-inboxes',
     loadChildren : () => import('./inboxes/inboxes.module').then(f=>f.InboxesModule),
     data: {preload: true}
-  },{
+  },
+  {
     path:'console',
     loadChildren : () => import('./console/console.module').then(f=>f.ConsoleModule),
     data: {preload: true}

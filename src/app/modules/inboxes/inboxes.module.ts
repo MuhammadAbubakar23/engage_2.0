@@ -11,6 +11,7 @@ import { SlaComponent } from './components/SLA/sla.component';
 import { RouterModule } from '@angular/router';
 import { RightSidebarComponentsModule } from './right-sidebar-components/right-sidebar-components.module';
 import { WebPhoneDialerComponent } from '../web-phone/components/web-phone-dialer/web-phone-dialer.component';
+import { InboxResponderComponent } from './components/inbox-responder/inbox-responder.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { WebPhoneDialerComponent } from '../web-phone/components/web-phone-diale
     InboxesComponent,
     ConversationComponent,
     SlaComponent,
+    InboxResponderComponent,
   ],
   imports: [
     CommonModule,

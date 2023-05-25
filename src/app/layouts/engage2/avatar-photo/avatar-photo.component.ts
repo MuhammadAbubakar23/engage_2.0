@@ -25,7 +25,7 @@ export class AvatarPhotoComponent implements OnInit {
   ];
 
   ngOnInit() {
-    debugger
+    
       if (!this.photoUrl) {
           this.showInitials = true;
           this.createInititals();

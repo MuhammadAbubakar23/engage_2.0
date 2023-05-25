@@ -43,6 +43,7 @@ import { AnalyticsContentComponent } from './engage2/analytics-content/analytics
 import { AnalyticsHeaderComponent } from './engage2/analytics-content/analytics-header/analytics-header.component';
 import { AnalyticsMenuComponent } from './engage2/analytics-content/analytics-menu/analytics-menu.component';
 import { AnalyticsRightSidebarMenuComponent } from './engage2/analytics-content/analytics-right-sidebar-menu/analytics-right-sidebar-menu.component';
+import { MainComponent } from './engage2/main/main.component';
 // import { NgSelectModule } from '@ng-select/ng-select/lib/ng-select.module';
 
 
@@ -80,7 +81,8 @@ import { AnalyticsRightSidebarMenuComponent } from './engage2/analytics-content/
     AnalyticsContentComponent,
     AnalyticsHeaderComponent,
     AnalyticsMenuComponent,
-    AnalyticsRightSidebarMenuComponent
+    AnalyticsRightSidebarMenuComponent,
+    MainComponent
   ],
   imports: [
     CommonModule,
@@ -109,7 +111,8 @@ import { AnalyticsRightSidebarMenuComponent } from './engage2/analytics-content/
     CardBoxListComponent,
     AnalyticsContentComponent,
     AnalyticsRightSidebarMenuComponent,
-    RightHeaderComponentsComponent
+    RightHeaderComponentsComponent,
+    MainComponent
   ]
 })
 export class LayoutsModule { }

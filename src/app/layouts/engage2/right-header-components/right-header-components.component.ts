@@ -146,7 +146,7 @@ export class RightHeaderComponentsComponent implements OnInit {
     });
   }
   resetTimer() {
-    debugger
+    
     this.break = false;
     this.isBreak = false;
     this.milisecond = 0;

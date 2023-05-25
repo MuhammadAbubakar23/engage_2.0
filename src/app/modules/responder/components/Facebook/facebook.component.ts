@@ -189,7 +189,7 @@ export class FacebookComponent implements OnInit {
         this.updateMessagesDataListener();
       });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
-      debugger
+      
       this.newReply = res;
       this.replyDataListner();
     });
@@ -227,7 +227,7 @@ export class FacebookComponent implements OnInit {
   totalMessages: number = 0;
 
   getFacebookComments() {
-    debugger
+    
     if (this.id != null || this.id != undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {

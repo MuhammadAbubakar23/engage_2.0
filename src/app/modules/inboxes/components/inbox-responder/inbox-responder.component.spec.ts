@@ -1,20 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainMenuComponent } from './main-menu.component';
+import { InboxResponderComponent } from './inbox-responder.component';
 
-describe('MainMenuComponent', () => {
-  let component: MainMenuComponent;
-  let fixture: ComponentFixture<MainMenuComponent>;
+describe('InboxResponderComponent', () => {
+  let component: InboxResponderComponent;
+  let fixture: ComponentFixture<InboxResponderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MainMenuComponent ]
+      declarations: [ InboxResponderComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(MainMenuComponent);
+    fixture = TestBed.createComponent(InboxResponderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
