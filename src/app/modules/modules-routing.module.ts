@@ -4,13 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path:'',
-    redirectTo:'/all-inboxes/list',
+    redirectTo:'/all-inboxes',
     pathMatch:'full'
-  },
-  {
-    path:'',
-    loadChildren : () => import('./main/main.module').then(f=>f.MainModule),
-    data:{preload:true}
   },
   {
     path:'responder',

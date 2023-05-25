@@ -227,9 +227,7 @@ export class ConversationComponent implements OnInit {
         
         this.reloadComponent('queryallocated');
         
-        //this.router.navigateByUrl('/all-inboxes/responder/' + platform);
-
-        this.lodeModuleService.updateModule('responder')
+        
         this.headerService.updateMessage(string);
         this.leftsidebar.updateMessage(leftExpandedMenu);
         this.fetchId.setPlatform(platform);
@@ -238,6 +236,9 @@ export class ConversationComponent implements OnInit {
         this.fetchposttype.sendPostType(postType);
         localStorage.setItem('profileId', profileId);
         localStorage.setItem('assignedProfile', profileId);
+        this.router.navigateByUrl('/all-inboxes/responder/' + platform);
+
+        this.lodeModuleService.updateModule('responder')
       },
       (error) => {
         this.reloadComponent('queryallocatedtoanotheruser');

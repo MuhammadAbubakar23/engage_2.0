@@ -43,7 +43,6 @@ import { AnalyticsContentComponent } from './engage2/analytics-content/analytics
 import { AnalyticsHeaderComponent } from './engage2/analytics-content/analytics-header/analytics-header.component';
 import { AnalyticsMenuComponent } from './engage2/analytics-content/analytics-menu/analytics-menu.component';
 import { AnalyticsRightSidebarMenuComponent } from './engage2/analytics-content/analytics-right-sidebar-menu/analytics-right-sidebar-menu.component';
-import { MainComponent } from './engage2/main/main.component';
 // import { NgSelectModule } from '@ng-select/ng-select/lib/ng-select.module';
 
 
@@ -82,7 +81,6 @@ import { MainComponent } from './engage2/main/main.component';
     AnalyticsHeaderComponent,
     AnalyticsMenuComponent,
     AnalyticsRightSidebarMenuComponent,
-    MainComponent
   ],
   imports: [
     CommonModule,
@@ -112,7 +110,6 @@ import { MainComponent } from './engage2/main/main.component';
     AnalyticsContentComponent,
     AnalyticsRightSidebarMenuComponent,
     RightHeaderComponentsComponent,
-    MainComponent
   ]
 })
 export class LayoutsModule { }

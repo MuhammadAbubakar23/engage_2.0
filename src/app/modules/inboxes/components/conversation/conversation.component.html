@@ -704,7 +704,7 @@
               <td style="width: 300px;">
                 <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
                   <a
-                    (click)="updatevalue('socialHeader', querry.user, querry.postType, querry.userId,'assignToMe', querry.platform, querry.profileId)" [routerLink]="['responder/'+querry.platform]"><span>{{querry.userName.split('<')[0] || querry.user}} </span>
+                    (click)="updatevalue('socialHeader', querry.user, querry.postType, querry.userId,'assignToMe', querry.platform, querry.profileId)"><span>{{querry.userName.split('<')[0] || querry.user}} </span>
                         <span class="badge bg-danger rounded-pill"
                           *ngIf="querry.unrespondedCount > 0">{{querry.unrespondedCount}}</span></a>
                 </span>

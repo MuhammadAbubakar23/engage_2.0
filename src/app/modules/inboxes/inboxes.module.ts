@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { RightSidebarComponentsModule } from './right-sidebar-components/right-sidebar-components.module';
 import { WebPhoneDialerComponent } from '../web-phone/components/web-phone-dialer/web-phone-dialer.component';
 import { InboxResponderComponent } from './components/inbox-responder/inbox-responder.component';
+import { ResponderGuardGuard } from 'src/app/shared/Guards/responder-guard.guard';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { InboxResponderComponent } from './components/inbox-responder/inbox-resp
   ],
   providers: [
     DatePipe,
-    WebPhoneDialerComponent
+    WebPhoneDialerComponent,
+    ResponderGuardGuard
   ]
 })
 export class InboxesModule { }

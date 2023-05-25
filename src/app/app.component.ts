@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { SignalRService } from './services/SignalRService/signal-r.service';
 
@@ -8,6 +8,9 @@ import { SignalRService } from './services/SignalRService/signal-r.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+
+  
+  
   title = 'Enteract.Engage2.0';
 
   constructor(private signalRService: SignalRService,
@@ -20,7 +23,7 @@ export class AppComponent {
     
 
     // if (this.signalRService.hubconnection == undefined) {
-    //   
+      
     //   localStorage.clear();
     //   this.router.navigateByUrl('/login');
     // }

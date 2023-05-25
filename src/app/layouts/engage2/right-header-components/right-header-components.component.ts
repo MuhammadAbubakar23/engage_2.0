@@ -66,9 +66,9 @@ export class RightHeaderComponentsComponent implements OnInit {
 
   signOut() {
     if (
-      this.assignedProfile == null ||
-      this.assignedProfile == '' ||
-      this.assignedProfile == undefined
+      localStorage.getItem('assignedProfile') == null ||
+      localStorage.getItem('assignedProfile') == '' ||
+      localStorage.getItem('assignedProfile') == undefined
     ) {
       localStorage.clear();
       this.router.navigateByUrl('/login');
@@ -85,13 +85,12 @@ export class RightHeaderComponentsComponent implements OnInit {
       this.reloadComponent('querryAssigned');
     }
   }
-
-  assignedProfile = localStorage.getItem('assignedProfile');
+  
   updateBreak() {
     if (
-      this.assignedProfile == null ||
-      this.assignedProfile == '' ||
-      this.assignedProfile == undefined
+      localStorage.getItem('assignedProfile') == null ||
+      localStorage.getItem('assignedProfile') == '' ||
+      localStorage.getItem('assignedProfile') == undefined
     ) {
       this.startBreak = true;
 
@@ -125,7 +124,7 @@ export class RightHeaderComponentsComponent implements OnInit {
   submit() {
     this.authService.login(this.loginForm.value).subscribe(
       (res: any) => {
-        this.router.navigateByUrl('/all-inboxes/conversation');
+        this.router.navigateByUrl('/all-inboxes');
         this.resetTimer();
         this.timerStop();
         this.clickHandler();

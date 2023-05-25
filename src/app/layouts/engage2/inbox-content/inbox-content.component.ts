@@ -1,8 +1,9 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef, OnDestroy, HostListener } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { InboxResponderComponent } from 'src/app/modules/inboxes/components/inbox-responder/inbox-responder.component';
 import { InboxesComponent } from 'src/app/modules/inboxes/inboxes.component';
+import { ResponderGuardGuard } from 'src/app/shared/Guards/responder-guard.guard';
 import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
 import { ResponderHeaderComponent } from '../responder-content/responder-header/responder-header.component';
 import { ResponderMenuComponent } from '../responder-content/responder-menu/responder-menu.component';
@@ -12,9 +13,17 @@ import { InboxMenuComponent } from './inbox-menu/inbox-menu.component';
 @Component({
   selector: 'inbox-content',
   templateUrl: './inbox-content.component.html',
-  styleUrls: ['./inbox-content.component.scss']
+  styleUrls: ['./inbox-content.component.scss'],
+  // providers: [ResponderGuardGuard]
 })
-export class InboxContentComponent implements OnInit {
+export class InboxContentComponent implements OnInit, OnDestroy {
+
+  @HostListener('window:beforeunload', ['$event'])
+  handleBeforeUnload(event: Event) {
+    event.preventDefault();
+    event.returnValue = false;
+  }
+  
   @ViewChild('submenu', {
     read: ViewContainerRef,
   })
@@ -34,19 +43,37 @@ export class InboxContentComponent implements OnInit {
 
   toggleLeftBar:boolean = true;
   showPanel:boolean = false;
+
   constructor(private resolver : ComponentFactoryResolver,
     private route : ActivatedRoute,
-    private loadModuleService : ModulesService) { }
+    private loadModuleService : ModulesService,
+    private responderGuard : ResponderGuardGuard,
+    private router : Router) { }
 
   ngOnInit(): void {
+debugger
+// window.onbeforeunload = () => this.onBeforeUnload();
+window.addEventListener('beforeunload', this.onBeforeUnload);
 
-    
+    const currentUrl = this.router.url;
+
+    if(currentUrl.includes('responder')){
+      this.loadComponent('responder')
+
+    }
   }
 
   abc:any
   ngAfterViewInit(): void {
-    
+    debugger
     this.loadComponent("all-inboxes")
+
+    const currentUrl = this.router.url;
+
+    if(currentUrl.includes('responder')){
+      this.loadComponent('responder')
+
+    }
 
     
     this.route.params.subscribe((routeParams)=>{
@@ -68,6 +95,43 @@ export class InboxContentComponent implements OnInit {
       this.loadComponent(name)
     });
   }
+
+  // private onBeforeUnload(): void {
+  //   debugger
+  //   this.responderGuard.setCanDeactivateFlag(false)
+  // }
+  private reloadConfirmationMessage = 'Are you sure you want to reload?';
+
+  private onBeforeUnload(event: BeforeUnloadEvent): void {
+    if (!this.canReload()) {
+      event.preventDefault();
+      event.returnValue = this.reloadConfirmationMessage;
+    }
+  }
+
+  private canReload(): boolean {
+    // Add your condition here
+    // Return true if the reload is allowed or false if it should be prevented
+    // For example:
+
+    if (
+      localStorage.getItem('assignedProfile') == null ||
+      localStorage.getItem('assignedProfile') == '' ||
+      localStorage.getItem('assignedProfile') == undefined
+    ){
+      return false
+    } else {
+      return confirm('Are you sure you want to reload?');
+    }
+    
+  }
+
+  ngOnDestroy(): void {
+    debugger
+    // window.onbeforeunload = null;
+    window.removeEventListener('beforeunload', this.onBeforeUnload);
+  }
+
   
   toggleSubLeftBar(){
     this.toggleLeftBar = !this.toggleLeftBar;

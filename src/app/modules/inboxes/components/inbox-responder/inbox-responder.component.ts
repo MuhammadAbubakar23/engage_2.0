@@ -30,6 +30,7 @@ import { WebPhoneComponent } from 'src/app/modules/web-phone/web-phone.component
 import { RightNavService } from 'src/app/services/RightNavService/RightNav.service';
 import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
+import { ResponderGuardGuard } from 'src/app/shared/Guards/responder-guard.guard';
 
 @Component({
   selector: 'app-inbox-responder',
@@ -63,11 +64,14 @@ export class InboxResponderComponent implements OnInit {
     private route: ActivatedRoute,
     private sharedService: SharedService,
     private rightNavService: RightNavService,
-    private toggleService : ToggleService
+    private toggleService : ToggleService,
+    private responderGuard : ResponderGuardGuard
   ) {}
 
   ngOnInit(): void {
-    
+    debugger
+    // window.onbeforeunload = () => this.onBeforeUnload();
+    window.addEventListener('beforeunload', this.onBeforeUnload);
     this.route.params.subscribe((routeParams) => {
       
       if(routeParams['channel'] != undefined && routeParams['channel'] != "undefined"){
@@ -131,6 +135,42 @@ export class InboxResponderComponent implements OnInit {
       //   }
       // })
     });
+  }
+
+  // private onBeforeUnload(): void {
+  //   debugger
+  //   this.responderGuard.setCanDeactivateFlag(false)
+  // }
+  private reloadConfirmationMessage = 'Are you sure you want to reload?';
+
+  private onBeforeUnload(event: BeforeUnloadEvent): void {
+    if (!this.canReload()) {
+      event.preventDefault();
+      event.returnValue = this.reloadConfirmationMessage;
+    }
+  }
+
+  private canReload(): boolean {
+    // Add your condition here
+    // Return true if the reload is allowed or false if it should be prevented
+    // For example:
+
+    if (
+      localStorage.getItem('assignedProfile') == null ||
+      localStorage.getItem('assignedProfile') == '' ||
+      localStorage.getItem('assignedProfile') == undefined
+    ){
+      return false
+    } else {
+      return confirm('Are you sure you want to reload?');
+    }
+    
+  }
+
+  ngOnDestroy(): void {
+    debugger
+    // window.onbeforeunload = null;
+    window.removeEventListener('beforeunload', this.onBeforeUnload);
   }
 
   ngAfterViewInit() {
