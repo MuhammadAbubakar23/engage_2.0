@@ -51,7 +51,7 @@ export class InboxContentComponent implements OnInit, OnDestroy {
     private router : Router) { }
 
   ngOnInit(): void {
-debugger
+
 // window.onbeforeunload = () => this.onBeforeUnload();
 window.addEventListener('beforeunload', this.onBeforeUnload);
 
@@ -65,7 +65,7 @@ window.addEventListener('beforeunload', this.onBeforeUnload);
 
   abc:any
   ngAfterViewInit(): void {
-    debugger
+    
     this.loadComponent("all-inboxes")
 
     const currentUrl = this.router.url;
@@ -97,7 +97,7 @@ window.addEventListener('beforeunload', this.onBeforeUnload);
   }
 
   // private onBeforeUnload(): void {
-  //   debugger
+  //   
   //   this.responderGuard.setCanDeactivateFlag(false)
   // }
   private reloadConfirmationMessage = 'Are you sure you want to reload?';
@@ -127,7 +127,7 @@ window.addEventListener('beforeunload', this.onBeforeUnload);
   }
 
   ngOnDestroy(): void {
-    debugger
+    
     // window.onbeforeunload = null;
     window.removeEventListener('beforeunload', this.onBeforeUnload);
   }

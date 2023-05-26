@@ -1,4 +1,4 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { SharedService } from 'src/app/services/SharedService/shared.service';
@@ -69,10 +69,10 @@ export class ConversationComponent implements OnInit {
     private datePipe: DatePipe,
     private lodeModuleService : ModulesService
   ) {
-    this.criteria = {
-      property: 'createdDate',
-      descending: true,
-    };
+    // this.criteria = {
+    //   property: 'createdDate',
+    //   descending: false,
+    // };
 
     // this.currentDate = this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm:ss.SSSSSS')
   }

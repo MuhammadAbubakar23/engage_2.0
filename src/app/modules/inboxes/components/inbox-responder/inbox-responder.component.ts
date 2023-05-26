@@ -69,7 +69,7 @@ export class InboxResponderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    debugger
+    
     // window.onbeforeunload = () => this.onBeforeUnload();
     window.addEventListener('beforeunload', this.onBeforeUnload);
     this.route.params.subscribe((routeParams) => {
@@ -138,7 +138,7 @@ export class InboxResponderComponent implements OnInit {
   }
 
   // private onBeforeUnload(): void {
-  //   debugger
+  //   
   //   this.responderGuard.setCanDeactivateFlag(false)
   // }
   private reloadConfirmationMessage = 'Are you sure you want to reload?';
@@ -168,7 +168,7 @@ export class InboxResponderComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    debugger
+    
     // window.onbeforeunload = null;
     window.removeEventListener('beforeunload', this.onBeforeUnload);
   }

@@ -46,7 +46,7 @@ export class InboxesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-debugger
+
     this.route.params.subscribe((routeParams) => {
 
       if(routeParams['channel'] != undefined && routeParams['channel'] != "undefined"){

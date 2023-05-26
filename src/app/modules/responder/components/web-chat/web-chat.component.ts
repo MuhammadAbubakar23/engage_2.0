@@ -43,10 +43,10 @@ export class WebChatComponent implements OnInit {
     private changeDetect : ChangeDetectorRef,
     private commondata : CommonDataService,
     ) {
-      this.criteria={
-        property: 'createdDate',
-        descending: false
-      };
+      // this.criteria={
+      //   property: 'createdDate',
+      //   descending: false
+      // };
      }
 
   ngOnInit(): void {

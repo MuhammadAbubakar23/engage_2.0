@@ -110,11 +110,11 @@
                                 </div>
                             </div>
 
-                            <div *ngFor="let group of insta.groupedComments| sort:criteria">
+                            <div *ngFor="let group of insta.groupedComments">
                                 <div class="date-wrap">
                                     <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}}</p>
                                 </div>
-                                <ng-container *ngFor="let comment of group.items | sort:criteria">
+                                <ng-container *ngFor="let comment of group.items ">
                                     <ng-container *ngIf="comment.queryStatus != 'QueryCompleted'">
                                 <div class="message-wrap agent-message-wrap right" *ngIf="insta.post.postId == comment.postId">
                                     <div class="application-wrap d-flex align-items-center mb-1" *ngIf="comment.ticketId != null">

@@ -147,7 +147,7 @@
                                 <div class="date-wrap">
                                     <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}}</p>
                                 </div>
-                                <ng-container *ngFor="let fbcmnts of group.items  | sort:criteria">
+                                <ng-container *ngFor="let fbcmnts of group.items">
                                     <ng-container *ngIf="fbcmnts.queryStatus != 'QueryCompleted'">
                                         <div class="message-wrap agent-message-wrap right" *ngIf="facebookdata.post.postId == fbcmnts.postId">
                                             <div class="application-wrap d-flex align-items-center mb-1" *ngIf="fbcmnts.ticketId != null">
@@ -502,12 +502,12 @@
                     </div>
                     <div *ngIf="FacebookMessages" class="tab-pane fade show active" id="fb-msg" role="tabpanel" 
                     aria-labelledby="fb-msg-tab" >
-                        <div class="chat-box-wrap" *ngFor="let group of groupedMessages  | sort:criteria">
+                        <div class="chat-box-wrap" *ngFor="let group of groupedMessages">
                         
                                 <div class="date-wrap">
                                     <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}}</p>
                                 </div>
-                                <ng-container *ngFor="let fbmsgs of group.items | sort:criteria">
+                                <ng-container *ngFor="let fbmsgs of group.items">
                                     <ng-container *ngIf="fbmsgs.queryStatus != 'QueryCompleted'">
                                         <div class="message-wrap agent-message-wrap right" >
                                             <div class="application-wrap d-flex align-items-center mb-1" *ngIf="fbmsgs.ticketId != null">

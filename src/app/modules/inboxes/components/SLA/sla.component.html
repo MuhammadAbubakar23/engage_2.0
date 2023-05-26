@@ -658,7 +658,7 @@
                           <span class="email-date">Today </span>{{ TodayDate | date:'EEEE, MMMM dd, yyyy'}}
                         </td>
                       </tr>
-                      <tr *ngFor="let querry of ConversationList  | sort:criteria; index as index" [class.selected]="querry.isChecked==true" class="alert alert-danger">
+                      <tr *ngFor="let querry of ConversationList; index as index" [class.selected]="querry.isChecked==true" class="alert alert-danger">
                         <td style="width: 40px;"><input [checked]="querry.isChecked" value="{{querry.id}}" (change)="isAllSelected($event, index, querry.platform)"
                           class="form-check-input me-1" type="checkbox" aria-label="..."></td>
                         <td style="width: 40px;">

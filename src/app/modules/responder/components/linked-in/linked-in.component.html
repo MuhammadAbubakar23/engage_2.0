@@ -123,11 +123,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div *ngFor="let group of linkedIn.groupedComments | sort:criteria">
+                            <div *ngFor="let group of linkedIn.groupedComments ">
                                 <div class="date-wrap">
                                     <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}}</p>
                                 </div>
-                                <ng-container *ngFor="let cmnts of group.items | sort:criteria">
+                                <ng-container *ngFor="let cmnts of group.items ">
                                     <ng-container *ngIf="cmnts.queryStatus != 'QueryCompleted'">
                                         <div class="message-wrap agent-message-wrap right"
                                             *ngIf="linkedIn.post.postId == cmnts.postId">

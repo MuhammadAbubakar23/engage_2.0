@@ -57,10 +57,10 @@ export class SlaComponent implements OnInit {
     private _route: ActivatedRoute,
     private router : Router
   ) {
-    this.criteria = {
-      property: 'createdDate',
-      descending: true,
-    };
+    // this.criteria = {
+    //   property: 'createdDate',
+    //   descending: true,
+    // };
   }
 
   ngOnInit(): void {

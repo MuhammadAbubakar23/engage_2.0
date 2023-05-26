@@ -114,11 +114,11 @@
                                 </div>
                             </div>
 
-                            <div *ngFor="let group of youtubedata.groupedComments | sort:criteria">
+                            <div *ngFor="let group of youtubedata.groupedComments ">
                                 <div class="date-wrap">
                                     <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}} </p>
                                 </div>
-                                <ng-container *ngFor="let youtubecomment of group.items | sort:criteria">
+                                <ng-container *ngFor="let youtubecomment of group.items ">
                                     <ng-container *ngIf="youtubecomment.queryStatus != 'QueryCompleted'">
                                         <div class="message-wrap agent-message-wrap right"
                                             *ngIf="youtubedata.post.postId == youtubecomment.postId">

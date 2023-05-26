@@ -62,7 +62,7 @@
                 <div class="tab-content m-4" id="myTabContent">
                     <div class="tab-pane fade show active" id="post" role="tabpanel" aria-labelledby="post-tab">
                         <div *ngFor="let list of Emails">
-                            <div *ngFor="let group of list.groupedComments  | sort:criteria">
+                            <div *ngFor="let group of list.groupedComments">
                                 <div class="email-content-header">
                                     <div class="header-subheading text silver"> {{group.createdDate | date:'MMMM dd, YYYY'}}
 
@@ -82,7 +82,7 @@
                                 We're happy about your cooperation
                             </div> -->
                                 </div>
-                                <ng-container *ngFor="let email of group.items  | sort:criteria ; let i = index">
+                                <ng-container *ngFor="let email of group.items; let i = index">
                                     <ng-container *ngIf="email.queryStatus != 'QueryCompleted'">
                                 <div class="accordion email-accordion" id="abc" >
 

@@ -125,10 +125,10 @@ export class InstagramComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.criteria = {
-      property: 'createdDate',
-      descending: true,
-    };
+    // this.criteria = {
+    //   property: 'createdDate',
+    //   descending: true,
+    // };
     this.TodayDate = new Date();
 
     this.getInstagramData();

@@ -35,11 +35,11 @@
                 <div class="tab-content m-4" id="myTabContent">
                     <div class="tab-pane fade show active" id="post" role="tabpanel" aria-labelledby="post-tab">
                         <div class="chat-box-wrap" *ngFor="let smsdata of SmsData">
-                            <div *ngFor="let group of groupArrays | sort:criteria">
+                            <div *ngFor="let group of groupArrays ">
                                 <div class="date-wrap">
                                     <p class="date">{{group.createdDate | date:'EEEE, MMMM d'}}</p>
                                 </div>
-                                <div class="message-wrap agent-message-wrap right" *ngFor="let sms of group.items | sort:criteria">
+                                <div class="message-wrap agent-message-wrap right" *ngFor="let sms of group.items ">
                                     <ng-container *ngIf="sms.queryStatus != 'QueryCompleted'">
                                         <div class="application-wrap d-flex align-items-center mb-1" *ngIf="sms.ticketId != null">
                                             <p class="m-0 silver me-2 ms-1">Application ID

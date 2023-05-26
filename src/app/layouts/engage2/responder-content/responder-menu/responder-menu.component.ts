@@ -49,10 +49,10 @@ export class ResponderMenuComponent implements OnInit {
     private changeDetect: ChangeDetectorRef,
     private commondata: CommonDataService
   ) {
-    this.criteria = {
-      property: 'createdDate',
-      descending: true,
-    };
+    // this.criteria = {
+    //   property: 'createdDate',
+    //   descending: true,
+    // };
   }
 
   ngOnInit(): void {

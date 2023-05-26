@@ -88,10 +88,10 @@ export class EmailComponent implements OnInit {
     this.fullName = localStorage.getItem('storeOpenedId') || '{}'
 
 
-    this.criteria = {
-      property: 'createdDate',
-      descending: true,
-    };
+    // this.criteria = {
+    //   property: 'createdDate',
+    //   descending: true,
+    // };
     this.TodayDate = new Date();
 
     this.getEmails();

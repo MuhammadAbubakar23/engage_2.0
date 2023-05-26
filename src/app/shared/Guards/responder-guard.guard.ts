@@ -18,7 +18,7 @@ export class ResponderGuardGuard implements CanDeactivate<unknown> {
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      debugger
+      
       if (
         localStorage.getItem('assignedProfile') == null ||
         localStorage.getItem('assignedProfile') == '' ||
