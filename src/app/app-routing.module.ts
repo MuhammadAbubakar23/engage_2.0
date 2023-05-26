@@ -6,12 +6,12 @@ import { AuthGuard } from './identity/AuthService/auth.guard';
 const routes: Routes = [
  {
    path:'',
-   redirectTo:'/all-inboxes/list',
+   redirectTo:'/all-inboxes',
    pathMatch:'full',
  },
 //  {
 //   path:'**',
-//   redirectTo:'/dashboard/all-inboxes/list',
+//   redirectTo:'/dashboard/all-inboxes',
 //   pathMatch:'full',
 // },
   {

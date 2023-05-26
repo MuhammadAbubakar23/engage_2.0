@@ -1132,7 +1132,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.commondata.MarkAsComplete(this.markAsCompleteDto).subscribe(
       (res: any) => {
         if (res.message === 'Success Responded') {
-          //   this.route.navigateByUrl('/all-inboxes/conversation');
+          //   this.route.navigateByUrl('/all-inboxes');
           this.toggleService.updateDispositionForm('disposition-form');
         }
       },
@@ -1353,7 +1353,7 @@ export class ResponderHeaderComponent implements OnInit {
         this.reloadComponent('queryallocatedtoanotheruser');
         //  alert(res.message);
         this.closeTeamList();
-        this.route.navigateByUrl('/all-inboxes/conversation');
+        this.route.navigateByUrl('/all-inboxes');
       localStorage.setItem('assignedProfile','')
       },
       (error) => {
