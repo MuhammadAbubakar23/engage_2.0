@@ -1,8 +1,4 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { DialCallService } from '../../services/DialCallService/dial-call.service';
-import { OpenDialerService } from '../../services/OpenDialerComponentService/open-dialer.service';
-import { SharedService } from '../../services/SharedService/shared.service';
-import { WebPhoneDialerComponent } from '../web-phone-dialer/web-phone-dialer.component';
 
 @Component({
   selector: 'app-web-phone-contacts',
@@ -11,17 +7,16 @@ import { WebPhoneDialerComponent } from '../web-phone-dialer/web-phone-dialer.co
 })
 export class WebPhoneContactsComponent implements OnInit {
 
-  constructor(private sharedService : SharedService,
-    private openDialerService : OpenDialerService,
-    private dialCallService : DialCallService,
-    private DialerComponentService : WebPhoneDialerComponent) { }
+  @Output() callNumber = new EventEmitter<number>();
+  @Output() contactsComponent = new EventEmitter<boolean>();
+
+  constructor() { }
 
   ngOnInit(): void {
   }
 
   public call(number:any) : void{
-    
-    this.openDialerService.updateComponenetName('dialer');
-    this.dialCallService.updateNumber(number)
+    this.callNumber.emit(number);
+    this.contactsComponent.emit(false)
   }
 }
