@@ -11,6 +11,7 @@ import { Config } from './phone/Config';
 import { PhoneTypes } from './phone/PhoneTypes';
 import { Logger } from './phone/Logger';
 import { AgentFactory } from './phone/AgentFactory';
+import { KeepComponentAlwaysAliveService } from './services/keepComponentAlwaysAliveService/keep-component-always-alive.service';
 @Component({
   selector: 'app-web-phone',
   templateUrl: './web-phone.component.html',
@@ -73,7 +74,7 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
   constructor(
     private dialerService: PhoneDialerService,
     private _shared: SharedService,
-    private el: ElementRef
+    public componentStateService: KeepComponentAlwaysAliveService
   ) {}
 
   ngAfterViewInit() {
@@ -84,33 +85,43 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
     );
   }
   ngOnInit(): void {
-    this.dialerService.getEvent().subscribe((res: any) => {
-      this.phoneEvents(res);
-      console.log(this);
+    debugger
+    
+      this.dialerService.getEvent().subscribe((res: any) => {
+        this.phoneEvents(res);
+        console.log(this);
 
-      if (res.event == 'sipRegistered') {
-        // debugger
-        // this.dialerService.setSipPhone(this.sipPhone);
-      }
-    });
-    this.dialerService.getWsEvent().subscribe((res) => {
-      console.log(res);
+        
 
-      // alert(res + 'From Construct');
-    });
-    this._shared.getMessage().subscribe((res) => {});
-    this.dialerService.getPhoneLogs().subscribe((res) => {
-      console.log(res);
-      // console.log("sad");
+        if (res.event == 'sipRegistered') {
+          // this.dialerService.setSipPhone(this.sipPhone);
+        }
+      });
+      if (!this.componentStateService.isLoaded()) {
+      this.dialerService.getWsEvent().subscribe((res) => {
+        console.log(res);
 
-      // alert(res + 'From Construct');
-    });
-    this.sipPhone = this.dialerService.getSipPhone();
-    console.log(this.sipPhone);
+        // alert(res + 'From Construct');
+      });
+      this._shared.getMessage().subscribe((res) => {});
+      this.dialerService.getPhoneLogs().subscribe((res) => {
+        console.log(res);
+        // console.log("sad");
 
-    if (!this.sipPhone) {
-      this.loadPhone();
+        // alert(res + 'From Construct');
+      });
+    
     }
+    
+    this.sipPhone = this.dialerService.getSipPhone();
+      console.log(this.sipPhone);
+
+      if (!this.sipPhone) {
+        this.loadPhone();
+      }
+    
+
+    this.componentStateService.setLoaded(true);
   }
   setActiveDialerTab(option: string): void {
     switch (option) {
@@ -161,7 +172,7 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
   }
 
   manualDial(to_number: string = ''): void | boolean {
-    debugger;
+    
     console.log(this.sipPhone);
     this.cancelButton = false;
     this.OBCallConnected = false;
@@ -229,6 +240,7 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
   }
 
   phoneEvents(res: any): void {
+    debugger
     if (res.event) {
       switch (res.event) {
         case 'callCompleted':
@@ -430,11 +442,11 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
   }
 
   callFromContacts(number: any) {
-    debugger;
+    
     this.manualDial(number);
   }
   closeContactsComponent(value: any) {
-    debugger;
+    
     this.contacts = value;
   }
 }
