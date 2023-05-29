@@ -5,7 +5,12 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
@@ -18,7 +23,10 @@ import { InsertTagsForFeedDto } from 'src/app/shared/Models/InsertTagsForFeedDto
 import { InstagramCommentReplyDto } from 'src/app/shared/Models/InstagramCommentReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
-import { commentsDto, messagesDto } from 'src/app/shared/Models/concersationDetailDto';
+import {
+  commentsDto,
+  messagesDto,
+} from 'src/app/shared/Models/concersationDetailDto';
 import { Subscription } from 'rxjs';
 import { LikeByAdminDto } from 'src/app/shared/Models/LikeByAdminDto';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
@@ -54,7 +62,7 @@ export class InstagramComponent implements OnInit {
   postType: string = '';
   instaCommentText: string = '';
   commentReply: string = '';
-  quickReplySearchText:string='';
+  quickReplySearchText: string = '';
 
   instagramCommentReplyDto = new InstagramCommentReplyDto();
 
@@ -71,7 +79,7 @@ export class InstagramComponent implements OnInit {
 
   storeComId: any;
   queryStatus: any;
-  searchText: string='';
+  searchText: string = '';
 
   TagsList: any;
   Keywords: any[] = [];
@@ -116,7 +124,7 @@ export class InstagramComponent implements OnInit {
     private replyService: ReplyService,
     private unrespondedCountService: UnRespondedCountService,
     private createTicketService: CreateTicketService,
-    private updateMessagesService : UpdateMessagesService
+    private updateMessagesService: UpdateMessagesService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -147,33 +155,28 @@ export class InstagramComponent implements OnInit {
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
-        
         this.updatedComments = res;
         this.updateCommentsDataListener();
       });
-      this.Subscription = this.updateMessagesService
+    this.Subscription = this.updateMessagesService
       .receiveMessage()
       .subscribe((res) => {
-        
         this.updatedMessages = res;
         this.updateMessagesDataListener();
       });
     this.Subscription = this.queryStatusService
       .receiveQueryStatus()
       .subscribe((res) => {
-        
         this.queryStatus = res;
         this.updateQueryStatusDataListner();
       });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
-      
       this.newReply = res;
       this.replyDataListner();
     });
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        
         // this.totalUnrespondedCmntCountByCustomer = res.contentCount.unrespondedCount;
         if (res.contentCount.contentType == 'IC') {
           this.totalUnrespondedCmntCountByCustomer =
@@ -184,10 +187,9 @@ export class InstagramComponent implements OnInit {
             res.contentCount.unrespondedCount;
         }
       });
-      this.Subscription = this.queryStatusService
+    this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
-        
         this.queryStatus = res;
         this.updateBulkQueryStatusDataListner();
       });
@@ -196,9 +198,9 @@ export class InstagramComponent implements OnInit {
   commentDto = new commentsDto();
 
   updatedComments: any;
-  updatedMessages:any;
+  updatedMessages: any;
   messageDto = new messagesDto();
-  
+
   updateCommentsDataListener() {
     this.updatedComments.forEach((xyz: any) => {
       if (this.id == xyz.userId) {
@@ -252,7 +254,8 @@ export class InstagramComponent implements OnInit {
             );
           }
         });
-        this.totalUnrespondedCmntCountByCustomer = (this.totalUnrespondedCmntCountByCustomer + 1)
+        this.totalUnrespondedCmntCountByCustomer =
+          this.totalUnrespondedCmntCountByCustomer + 1;
       }
     });
     this.changeDetect.detectChanges();
@@ -313,6 +316,7 @@ export class InstagramComponent implements OnInit {
   getInstagramData() {
     
     if (this.id != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -321,7 +325,113 @@ export class InstagramComponent implements OnInit {
         plateForm: 'Instagram',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
-        isAttachment: false
+        isAttachment: false,
+      };
+      this.spinner1running = true;
+      this.SpinnerService.show();
+      this.commondata
+        .GetChannelConversationDetail(this.filterDto)
+        .subscribe((res: any) => {
+          debugger
+          this.SpinnerService.hide();
+          this.spinner1running = false;
+          this.InstagramData = res.List;
+          this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+          this.pageName = this.InstagramData[0]?.post.profile.page_Name;
+
+          this.commentsArray = [];
+
+          this.InstagramData.forEach((item: any) => {
+            this.commentsArray = [];
+            item.comments.forEach((cmnt: any) => {
+              this.commentsArray.push(cmnt);
+            });
+            let groupedItems = this.commentsArray.reduce(
+              (acc: any, item: any) => {
+                const date = item.createdDate.split('T')[0];
+                if (!acc[date]) {
+                  acc[date] = [];
+                }
+                acc[date].push(item);
+                return acc;
+              },
+              {}
+            );
+
+            item['groupedComments'] = Object.keys(groupedItems).map(
+              (createdDate) => {
+                return {
+                  createdDate,
+                  items: groupedItems[createdDate],
+                };
+              }
+            );
+          });
+
+          this.instaStats();
+        });
+    } else if (this.slaId != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.slaId);
+      this.filterDto = {
+        // fromDate: new Date(),
+        // toDate: new Date(),
+        user: this.slaId,
+        pageId: '',
+        plateForm: 'Instagram',
+        pageNumber: 0,
+        pageSize: 0,
+        isAttachment: false,
+      };
+      this.spinner1running = true;
+      this.SpinnerService.show();
+      this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
+        this.SpinnerService.hide();
+        this.spinner1running = false;
+        this.InstagramData = res.List;
+        this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+        this.pageName = this.InstagramData[0]?.post.profile.page_Name;
+
+        this.commentsArray = [];
+
+        this.InstagramData.forEach((item: any) => {
+          this.commentsArray = [];
+          item.comments.forEach((cmnt: any) => {
+            this.commentsArray.push(cmnt);
+          });
+          let groupedItems = this.commentsArray.reduce(
+            (acc: any, item: any) => {
+              const date = item.createdDate.split('T')[0];
+              if (!acc[date]) {
+                acc[date] = [];
+              }
+              acc[date].push(item);
+              return acc;
+            },
+            {}
+          );
+
+          item['groupedComments'] = Object.keys(groupedItems).map(
+            (createdDate) => {
+              return {
+                createdDate,
+                items: groupedItems[createdDate],
+              };
+            }
+          );
+        });
+
+        this.instaStats();
+      });
+    } else {
+      this.filterDto = {
+        // fromDate: new Date(),
+        // toDate: new Date(),
+        user: localStorage.getItem('storeOpenedId') || '{}',
+        pageId: '',
+        plateForm: localStorage.getItem('parent') || '{}',
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize,
+        isAttachment: false,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -365,111 +475,7 @@ export class InstagramComponent implements OnInit {
 
           this.instaStats();
         });
-    } else if (this.slaId != null || undefined) {
-      this.filterDto = {
-        // fromDate: new Date(),
-        // toDate: new Date(),
-        user: this.slaId,
-        pageId: '',
-        plateForm: 'Instagram',
-        pageNumber: 0,
-        pageSize: 0,
-        isAttachment: false
-      };
-      this.spinner1running = true;
-      this.SpinnerService.show();
-      this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
-        this.SpinnerService.hide();
-        this.spinner1running = false;
-        this.InstagramData = res.List;
-        this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-        this.pageName = this.InstagramData[0]?.post.profile.page_Name;
-
-        this.commentsArray = [];
-
-        this.InstagramData.forEach((item: any) => {
-          this.commentsArray = [];
-          item.comments.forEach((cmnt: any) => {
-            this.commentsArray.push(cmnt);
-          });
-          let groupedItems = this.commentsArray.reduce(
-            (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
-              if (!acc[date]) {
-                acc[date] = [];
-              }
-              acc[date].push(item);
-              return acc;
-            },
-            {}
-          );
-
-          item['groupedComments'] = Object.keys(groupedItems).map(
-            (createdDate) => {
-              return {
-                createdDate,
-                items: groupedItems[createdDate],
-              };
-            }
-          );
-        });
-
-        this.instaStats();
-      });
     }
-    else {
-      this.filterDto = {
-        // fromDate: new Date(),
-        // toDate: new Date(),
-        user: localStorage.getItem('storeOpenedId') || '{}',
-        pageId: '',
-        plateForm: localStorage.getItem('parent') || '{}',
-        pageNumber: this.pageNumber,
-        pageSize: this.pageSize,
-        isAttachment: false
-      };
-      this.spinner1running = true;
-      this.SpinnerService.show();
-      this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
-        this.SpinnerService.hide();
-        this.spinner1running = false;
-        this.InstagramData = res.List;
-        this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-        this.pageName = this.InstagramData[0]?.post.profile.page_Name;
-
-        this.commentsArray = [];
-
-        this.InstagramData.forEach((item: any) => {
-          this.commentsArray = [];
-          item.comments.forEach((cmnt: any) => {
-            this.commentsArray.push(cmnt);
-          });
-          let groupedItems = this.commentsArray.reduce(
-            (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
-              if (!acc[date]) {
-                acc[date] = [];
-              }
-              acc[date].push(item);
-              return acc;
-            },
-            {}
-          );
-
-          item['groupedComments'] = Object.keys(groupedItems).map(
-            (createdDate) => {
-              return {
-                createdDate,
-                items: groupedItems[createdDate],
-              };
-            }
-          );
-        });
-
-        this.instaStats();
-      });
-    }
-    
   }
 
   instagramCommentReplyForm = new UntypedFormGroup({
@@ -480,12 +486,12 @@ export class InstagramComponent implements OnInit {
     contentType: new UntypedFormControl(this.ReplyDto.contentType),
     profileId: new UntypedFormControl(this.ReplyDto.profileId),
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
-    userProfileId: new FormControl(this.ReplyDto.userProfileId) 
+    userProfileId: new FormControl(this.ReplyDto.userProfileId),
   });
 
   profileId: string = '';
   profilePageId: string = '';
-  userProfileId=0;
+  userProfileId = 0;
 
   SendInstagramCommentInformation(comId: any) {
     this.InstagramData.forEach((xyz: any) => {
@@ -502,14 +508,18 @@ export class InstagramComponent implements OnInit {
           this.postType = comment.contentType;
           this.profileId = xyz.post.profile.profile_Id;
           this.profilePageId = xyz.post.profile.page_Id;
-          this.userProfileId = this.InstagramData[0].user.id
+          this.userProfileId = this.InstagramData[0].user.id;
         }
       });
     });
   }
   ImageName: any[] = [];
   submitInstagramCommentReply() {
-    if(this.InstacommentId == undefined || this.InstacommentId == '' || this.InstacommentId == null){
+    if (
+      this.InstacommentId == undefined ||
+      this.InstacommentId == '' ||
+      this.InstacommentId == null
+    ) {
       this.reloadComponent('selectComment');
     }
     var formData = new FormData();
@@ -526,7 +536,7 @@ export class InstagramComponent implements OnInit {
       contentType: this.postType,
       profileId: this.profileId,
       profilePageId: this.profilePageId,
-      userProfileId : this.userProfileId
+      userProfileId: this.userProfileId,
     });
 
     formData.append(
@@ -545,7 +555,7 @@ export class InstagramComponent implements OnInit {
     );
   }
 
-  commentStatus(comId: any, type:any) {
+  commentStatus(comId: any, type: any) {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = 'Instagram';
@@ -555,7 +565,7 @@ export class InstagramComponent implements OnInit {
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {});
   }
-  queryCompleted(comId: any, type:any) {
+  queryCompleted(comId: any, type: any) {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = 'Instagram';
@@ -594,12 +604,14 @@ export class InstagramComponent implements OnInit {
     });
   }
 
-  insertTagsForFeed(id: any, comId: any, type:any) {
+  insertTagsForFeed(id: any, comId: any, type: any) {
     if (type == 'IC') {
       this.insertTagsForFeedDto.feedId = comId.toString();
       this.insertTagsForFeedDto.tagId = id;
       this.insertTagsForFeedDto.feedType = type;
-      this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
+      this.insertTagsForFeedDto.userId = Number(
+        localStorage.getItem('agentId')
+      );
 
       this.InstagramData.forEach((abc: any) => {
         abc.comments.forEach((comment: any) => {
@@ -636,7 +648,9 @@ export class InstagramComponent implements OnInit {
       this.insertTagsForFeedDto.feedId = comId.toString();
       this.insertTagsForFeedDto.tagId = id;
       this.insertTagsForFeedDto.feedType = type;
-      this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
+      this.insertTagsForFeedDto.userId = Number(
+        localStorage.getItem('agentId')
+      );
 
       this.InstagramMessages.forEach((msg: any) => {
         if (msg.id == comId) {
@@ -668,18 +682,20 @@ export class InstagramComponent implements OnInit {
     }
   }
 
-  removeTagFromFeed(id: any, comId: any, type:any) {
-    if(type == 'IC'){
+  removeTagFromFeed(id: any, comId: any, type: any) {
+    if (type == 'IC') {
       this.insertTagsForFeedDto.feedId = comId.toString();
       this.insertTagsForFeedDto.tagId = id;
       this.insertTagsForFeedDto.feedType = type;
-      this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
-  
+      this.insertTagsForFeedDto.userId = Number(
+        localStorage.getItem('agentId')
+      );
+
       this.commondata
         .RemoveTag(this.insertTagsForFeedDto)
         .subscribe((res: any) => {
           this.reloadComponent('RemoveTag');
-  
+
           this.activeTag = false;
           this.checkTag = false;
         });
@@ -688,7 +704,9 @@ export class InstagramComponent implements OnInit {
       this.insertTagsForFeedDto.tagId = id;
       this.insertTagsForFeedDto.feedId = comId.toString();
       this.insertTagsForFeedDto.feedType = type;
-      this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
+      this.insertTagsForFeedDto.userId = Number(
+        localStorage.getItem('agentId')
+      );
 
       this.commondata
         .RemoveTag(this.insertTagsForFeedDto)
@@ -736,11 +754,13 @@ export class InstagramComponent implements OnInit {
     },
   ];
 
-  insertSentimentForFeed(feedId: any, sentimenName: any, type:any) {
+  insertSentimentForFeed(feedId: any, sentimenName: any, type: any) {
     this.insertSentimentForFeedDto.feedId = feedId.toString();
     this.insertSentimentForFeedDto.sentiment = sentimenName;
     this.insertSentimentForFeedDto.feedType = 'IM';
-    this.insertSentimentForFeedDto.userId = Number(localStorage.getItem('agentId'));
+    this.insertSentimentForFeedDto.userId = Number(
+      localStorage.getItem('agentId')
+    );
 
     this.commondata
       .InsertSentiment(this.insertSentimentForFeedDto)
@@ -755,7 +775,7 @@ export class InstagramComponent implements OnInit {
     this.instaCommentText = abc?.text;
 
     // this.instagramCommentReplyForm.patchValue({ text: this.instaCommentText });
-    this.insertAtCaret(this.instaCommentText)
+    this.insertAtCaret(this.instaCommentText);
   }
 
   quickReplyList() {
@@ -963,7 +983,6 @@ export class InstagramComponent implements OnInit {
       });
     }
     this.changeDetect.detectChanges();
-   
   }
   removeTagDataListener() {
     if (this.removeTags.feedType == 'IC') {
@@ -995,7 +1014,6 @@ export class InstagramComponent implements OnInit {
       });
     }
     this.changeDetect.detectChanges();
-   
   }
 
   updateQueryStatusDataListner() {
@@ -1025,7 +1043,7 @@ export class InstagramComponent implements OnInit {
     // });
     // this.changeDetect.detectChanges();
 
-    if(this.newReply.contentType == 'IC') {
+    if (this.newReply.contentType == 'IC') {
       this.InstagramData.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
           cmnt.items.forEach((singleCmnt: any) => {
@@ -1037,51 +1055,46 @@ export class InstagramComponent implements OnInit {
         });
       });
     }
-    if(this.newReply.contentType == 'IM') {
-    this.InstagramMessages.forEach((msg: any) => {
-      if (msg.id == this.newReply.commentId) {
-        msg.replies.push(this.newReply);
-        msg.queryStatus = this.newReply.queryStatus;
-      }
-    });
-  }
+    if (this.newReply.contentType == 'IM') {
+      this.InstagramMessages.forEach((msg: any) => {
+        if (msg.id == this.newReply.commentId) {
+          msg.replies.push(this.newReply);
+          msg.queryStatus = this.newReply.queryStatus;
+        }
+      });
+    }
     this.changeDetect.detectChanges();
   }
 
   onScroll() {
-    if(this.totalUnrespondedCmntCountByCustomer > 10){
-      this.pageSize = this.pageSize + 10
-      this.getInstagramData();
-    }
+    this.pageSize = this.pageSize + 10;
+    this.getInstagramData();
   }
 
   updateBulkQueryStatusDataListner() {
-    
     this.InstagramData.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
-          this.queryStatus.forEach((querry:any) => {
+          this.queryStatus.forEach((querry: any) => {
             if (singleCmnt.id == querry.queryId) {
               singleCmnt.queryStatus = querry.queryStatus;
               this.totalUnrespondedCmntCountByCustomer = 0;
             }
           });
-          
         });
       });
     });
     this.changeDetect.detectChanges();
   }
 
-
   instaCmntReply = true;
   instaMsgReply = false;
-  totalUnrespondedMsgCountByCustomer=0;
-  InstagramMessages:any;
+  totalUnrespondedMsgCountByCustomer = 0;
+  InstagramMessages: any;
   messagesArray: any[] = [];
   groupedMessages: any[] = [];
   totalMessages: number = 0;
-  msgId:any;
+  msgId: any;
   msgText: any = '';
 
   instagramCommentReply() {
@@ -1095,7 +1108,6 @@ export class InstagramComponent implements OnInit {
   }
 
   getInstagramMessages() {
-    
     if (this.id != null || undefined) {
       this.filterDto = {
         // fromDate: new Date(),
@@ -1105,7 +1117,7 @@ export class InstagramComponent implements OnInit {
         plateForm: 'Instagram',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
-        isAttachment: false
+        isAttachment: false,
       };
 
       this.SpinnerService.show();
@@ -1154,7 +1166,7 @@ export class InstagramComponent implements OnInit {
         plateForm: 'Instagram',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
-        isAttachment: false
+        isAttachment: false,
       };
 
       this.SpinnerService.show();
@@ -1194,9 +1206,7 @@ export class InstagramComponent implements OnInit {
           // console.log('Messages ==>', this.groupedMessages);
         });
       });
-    }
-    else {
-      
+    } else {
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -1205,51 +1215,52 @@ export class InstagramComponent implements OnInit {
         plateForm: localStorage.getItem('parent') || '{}',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
-        isAttachment: false
+        isAttachment: false,
       };
 
       this.SpinnerService.show();
-      this.commondata.GetChannelMessageDetail(this.filterDto).subscribe((res: any) => {
-        this.SpinnerService.hide();
-        this.InstagramMessages = res.List.dm;
-        this.pageName = this.InstagramMessages[0].toName;
-        this.totalMessages = res.TotalCount;
+      this.commondata
+        .GetChannelMessageDetail(this.filterDto)
+        .subscribe((res: any) => {
+          this.SpinnerService.hide();
+          this.InstagramMessages = res.List.dm;
+          this.pageName = this.InstagramMessages[0].toName;
+          this.totalMessages = res.TotalCount;
 
-        this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+          this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
-        this.messagesArray = [];
-        this.groupedMessages = [];
+          this.messagesArray = [];
+          this.groupedMessages = [];
 
-        this.InstagramMessages.forEach((item: any) => {
-          this.messagesArray.push(item);
-          let groupedItems = this.messagesArray.reduce(
-            (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
-              if (!acc[date]) {
-                acc[date] = [];
+          this.InstagramMessages.forEach((item: any) => {
+            this.messagesArray.push(item);
+            let groupedItems = this.messagesArray.reduce(
+              (acc: any, item: any) => {
+                const date = item.createdDate.split('T')[0];
+                if (!acc[date]) {
+                  acc[date] = [];
+                }
+                acc[date].push(item);
+                return acc;
+              },
+              {}
+            );
+
+            this.groupedMessages = Object.keys(groupedItems).map(
+              (createdDate) => {
+                return {
+                  createdDate,
+                  items: groupedItems[createdDate],
+                };
               }
-              acc[date].push(item);
-              return acc;
-            },
-            {}
-          );
-
-          this.groupedMessages = Object.keys(groupedItems).map(
-            (createdDate) => {
-              return {
-                createdDate,
-                items: groupedItems[createdDate],
-              };
-            }
-          );
-          // console.log('Messages ==>', this.groupedMessages);
+            );
+            // console.log('Messages ==>', this.groupedMessages);
+          });
         });
-      });
     }
   }
 
   SendMessageInformation(id: any) {
-    
     this.InstagramMessages.forEach((msg: any) => {
       if (msg.id == id) {
         // show mentioned reply
@@ -1277,51 +1288,41 @@ export class InstagramComponent implements OnInit {
   });
 
   submitInstagramMessageReply() {
-    
-    if(this.msgId == undefined || this.msgId == '' || this.msgId == null){
+    if (this.msgId == undefined || this.msgId == '' || this.msgId == null) {
       this.reloadComponent('selectComment');
     } else {
-    var formData = new FormData();
-    if (this.ImageName != null || undefined) {
-      for (let index = 0; index < this.ImageName.length; index++) {
-        formData.append('File', this.ImageName[index]);
+      var formData = new FormData();
+      if (this.ImageName != null || undefined) {
+        for (let index = 0; index < this.ImageName.length; index++) {
+          formData.append('File', this.ImageName[index]);
+        }
       }
+
+      this.instagramMessageReplyForm.patchValue({
+        commentId: this.msgId,
+        teamId: this.agentId,
+        platform: this.platform,
+        contentType: this.postType,
+        profileId: this.profileId,
+        profilePageId: this.profilePageId,
+        userProfileId: this.userProfileId,
+      });
+
+      formData.append(
+        'CommentReply',
+        JSON.stringify(this.instagramMessageReplyForm.value)
+      );
+      this.commondata.ReplyComment(formData).subscribe(
+        (res: any) => {
+          this.clearInputField();
+
+          this.reloadComponent('fbmessage');
+        },
+        (error) => {
+          alert(error.error.message);
+        }
+      );
     }
+  }
 
-    this.instagramMessageReplyForm.patchValue({
-      commentId: this.msgId,
-      teamId: this.agentId,
-      platform: this.platform,
-      contentType: this.postType,
-      profileId: this.profileId,
-      profilePageId: this.profilePageId,
-      userProfileId: this.userProfileId,
-    });
-
-    formData.append(
-      'CommentReply',
-      JSON.stringify(this.instagramMessageReplyForm.value)
-    );
-    this.commondata.ReplyComment(formData).subscribe(
-      (res: any) => {
-        this.clearInputField();
-
-        this.reloadComponent('fbmessage');
-      },
-      (error) => {
-        alert(error.error.message);
-      }
-    );
-  }
-  }
-  tagsListDropdown =false
-  
-  openTagListDropdown() {
-    this.searchText ='';
-    this.tagsListDropdown = true;
-  }
-  closeTagListDropdown() {
-    this.tagsListDropdown = false
-    this.searchText = ''
-  }
 }

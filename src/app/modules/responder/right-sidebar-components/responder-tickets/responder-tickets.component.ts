@@ -124,7 +124,7 @@ export class ResponderTicketsComponent implements OnInit {
   }
   
 
-  ticketId: any;
+  ticketId: number = 0;
   createTicketDto = new createTicketDto();
   createTicketForm!: FormGroup;
 
@@ -161,7 +161,7 @@ export class ResponderTicketsComponent implements OnInit {
     this.commonDataservice
       .CreateTicket(this.createTicketDto)
       .subscribe((res: any) => {
-        this.ticketId = res;
+        this.ticketId = res.tick;
         
         this.reloadComponent('ticketCreated')
         setTimeout(() => {

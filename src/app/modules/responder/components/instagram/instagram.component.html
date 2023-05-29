@@ -42,7 +42,9 @@
                 </li>
             </ul>
         </div>
-        <div class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
+        <div class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;" infinite-scroll
+        [scrollWindow]="false" [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5" [infiniteScrollThrottle]="10"
+        (scrolled)="onScroll()">
             <div class="scroll-content">
                 <div class="tab-content m-4" id="myTabContent">
                     <div class="tab-pane fade show active" id="insta-comment" role="tabpanel"
@@ -182,7 +184,7 @@
                                                                 Reply
                                                             </a>
                                                             <div class="dropdown w-auto">
-                                                                <button class="iconButton medium" [ngClass]="tagsListDropdown == true?'show':''" (click)="openTagListDropdown()"
+                                                                <button class="iconButton medium" 
                                                                     id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                     data-bs-auto-close="outside">
                                                                     <span class="iconButton small btn mx-2">
@@ -191,7 +193,7 @@
                                                                     Tag
                                                                 </button>
                                                                 <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                [ngClass]="tagsListDropdown == true?'show':''"
+                                                                
                                                                     aria-labelledby="dropdownMenuButton2">
                                                                     <ul class="dropdown-listing">
                                                                         <li class="dropdown-listing-header">
@@ -529,7 +531,7 @@
                                                                         Reply
                                                                     </a>
                                                                     <div class="dropdown w-auto">
-                                                                        <button class="iconButton medium" id="dropdownMenuButton1" [ngClass]="tagsListDropdown == true?'show':''" (click)="openTagListDropdown()"
+                                                                        <button class="iconButton medium" id="dropdownMenuButton1"
                                                                             data-bs-toggle="dropdown" data-bs-auto-close="outside">
                                                                             <span class="iconButton small btn mx-2">
                                                                                 <i class="fal fa-tag coal"></i>
@@ -537,7 +539,7 @@
                                                                             Tag
                                                                         </button>
                                                                         <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                        [ngClass]="tagsListDropdown == true?'show':''"
+                                                                        
                                                                             aria-labelledby="dropdownMenuButton2">
                                                                             <ul class="dropdown-listing">
                                                                                 <li class="dropdown-listing-header">
@@ -864,7 +866,7 @@
                 <div [ngClass]="show == true? 'show':''" class="card hideMsg">
                     <div class="card-body">
                         <div class="card-text">
-                            <span class="fw-bold navy">2354545</span>
+                            <span class="fw-bold navy">{{mentionComment.ticketId}}</span>
                             {{mentionComment.message}}
                         </div>
                         <button (click)="closeMentionedReply()" class="iconButton small closeMsgBtn"
