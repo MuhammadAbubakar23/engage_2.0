@@ -117,7 +117,5 @@ export class CreateTeamComponent implements OnInit {
       });
     }
   }
-  AddTeamMembers(){
-    this.isActive=!this.isActive;
-  }
+  
 }

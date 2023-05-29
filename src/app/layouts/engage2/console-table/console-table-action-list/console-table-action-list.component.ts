@@ -16,6 +16,7 @@ export class ConsoleTableActionListComponent implements OnInit {
 
   @Input() data: any[] = [];
   @Input() actions: Array<any> = [];
+  
   @Output() action:any;
   @Output() procedure: EventEmitter<any> = new EventEmitter(); 
   

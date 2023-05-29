@@ -2,7 +2,6 @@
     style="overflow-y: auto; outline: none;">
     <div class="scroll-content">
         <div class="p-4">
-
             <div class="filter-toolbar">
                 <div class="row">
                     <div class="col-md-8">
@@ -50,128 +49,34 @@
                     </div>
                 </div>
             </div>
-            <div class="filter-container">
+            <ng-template [ngIf]="showConsoleTable">
+                <console-table [filter]="filter" [TableModel]="model" ></console-table>
+            </ng-template>
+            
 
+            <!-- <div class="filter-container checkbox-reset">
                 <ul class="list-group list-group-horizontal border-0">
-
-                    <li class="list-group-item border-0 refreshicon" aria-label="..." data-bs-toggle="tooltip"
-                        data-bs-placement="bottom" data-bs-original-title="Refresh">
-                        <i class="fal fa-redo"></i>
+                    <li class="list-group-item border-0 all-check-boxes">
+                        <input class="form-check-input me-1" type="checkbox" aria-label="..."
+                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            data-bs-original-title="Check All">
                     </li>
-
                 </ul>
-                <div class="selected-row" style="display: none;">
-                    Selected <span class="badge skyBg rounded-pill">05<span>
-                        </span></span></div>
-                <div class="pagination-bar">
-                    <span>1-100 of 569</span>
-                    <span>
-                        <i class="fal fa-chevron-left"></i>
-                    </span>
-                    <span>
-                        <i class="fal fa-chevron-right"></i>
-                    </span>
-                </div>
-            </div>
-
-            <div class="table-section table-scrool-y mb-3 query-container table-white">
-                <table class="table align-middle">
-                    <thead>
-                        <tr>
-                            <th>
-                                <!-- <div class="filter-container checkbox-reset">
-                                    <ul class="list-group list-group-horizontal border-0">
-                                        <li class="list-group-item border-0 all-check-boxes">
-                                            <input class="form-check-input me-1" type="checkbox" aria-label="..."
-                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                data-bs-original-title="Check All">
-                                        </li>
-                                    </ul>
-                                </div> -->
-                            </th>
-                            <th>
-                                Teams
-                            </th>
-                            <th>
-                                <a href="javascript:" class="charcoal hover-icon">
-                                    Users
-                                    <i class="fas fa-long-arrow-alt-down"></i>
-                                </a>
-                            </th>
-                            <th>
-                                <a href="javascript:" class="charcoal hover-icon">
-                                    Accesses
-                                    <i class="fas fa-long-arrow-alt-down"></i>
-                                </a>
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let team of Teams">
-                            <td>
-                                <!-- <input class="form-check-input me-1" type="checkbox" aria-label="..."> -->
-                            </td>
-                            <td>
-                                {{team.name}}
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center darkblue">
-                                    <i class="fal fa-users coal me-2"></i>
-                                    12
-                                </div>
-                            </td>
-                            <td>
-                                <div class="align-items-lg-center d-flex darkblue">
-                                    <i class="fal fa-share-alt coal me-2"></i>
-                                    VW Tech, Support
-                                    <div class="d-inline-block dropdown w-auto ps-1">
-                                        <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
-                                            id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            +1
-                                        </button>
-                                        <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
-                                            <li>
-                                                <a class="dropdown-item" href="#">
-                                                    Corporate
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Support</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Sales &amp; Lead Management</a>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="icons-list d-flex justify-content-end dropstart">
-
-                                    <button class="btn iconButton medium iconHover btn-group" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu fade">
-                                        <li>
-                                            <a class="dropdown-item" href="#"><i class="fal fa-edit me-2"></i> Edit</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item delete-dd" href="#"><i
-                                                    class="fal fa-trash me-2"></i> Delete</a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-
-            </div>
+            </div> --> 
+            <!-- <li>
+                <a class="dropdown-item delete-dd" (click)="AddTeamMembers()" type="button" 
+                data-bs-toggle="offcanvas" data-bs-target="#addteammembers"
+                aria-controls="offcanvasRight">
+                <i class="fal fa-plus me-2"></i>
+                Add Team Members</a>
+            </li>
+            <li>
+                <a class="dropdown-item delete-dd" (click)="AddTeamMembers()" type="button" 
+                data-bs-toggle="offcanvas" data-bs-target="#consoleoverlayrightpanel"
+                aria-controls="offcanvasRight">
+                <i class="fal fa-plus me-2"></i>
+                Add Team Members</a>
+            </li> -->
         </div>
     </div>
     <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
@@ -183,3 +88,9 @@
             style="height: 220.258px; transform: translate3d(0px, 0px, 0px);"></div>
     </div> -->
 </div>
+<!-- <div [class.show]="isActive==true" class="offcanvas offcanvas-end" tabindex="-1" id="addteammembers"
+    aria-labelledby="offcanvasRightLabel" style="visibility: visible;" aria-hidden="true">
+   
+    <app-add-team-members></app-add-team-members>
+</div> -->
+<overlay-right-panel [header]="'Add Team Members'" [isActive]="isActive" [search]="true"></overlay-right-panel>

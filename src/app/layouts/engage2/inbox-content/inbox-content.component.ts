@@ -16,7 +16,7 @@ import { InboxMenuComponent } from './inbox-menu/inbox-menu.component';
   styleUrls: ['./inbox-content.component.scss'],
   // providers: [ResponderGuardGuard]
 })
-export class InboxContentComponent implements OnInit, OnDestroy {
+export class InboxContentComponent implements OnInit {
 
   @HostListener('window:beforeunload', ['$event'])
   handleBeforeUnload(event: Event) {
@@ -52,8 +52,6 @@ export class InboxContentComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-// window.onbeforeunload = () => this.onBeforeUnload();
-window.addEventListener('beforeunload', this.onBeforeUnload);
 
     const currentUrl = this.router.url;
 
@@ -75,63 +73,11 @@ window.addEventListener('beforeunload', this.onBeforeUnload);
 
     }
 
-    
-    this.route.params.subscribe((routeParams)=>{
-      
-      if(this.abc[0].path == "all-inboxes"){
-        this.loadComponent("all-inboxes")
-      }
-      if(routeParams['channel'] == "all-inboxes" && routeParams['abc'] == "list" ){
-        this.loadComponent("all-inboxes")
-      }
-
-      if(this.abc[1].path == "responder"){
-        this.loadComponent("responder")
-      }
-    })
-
     this.Subscription = this.loadModuleService.getModule().subscribe((name:any)=>{
       
       this.loadComponent(name)
     });
   }
-
-  // private onBeforeUnload(): void {
-  //   
-  //   this.responderGuard.setCanDeactivateFlag(false)
-  // }
-  private reloadConfirmationMessage = 'Are you sure you want to reload?';
-
-  private onBeforeUnload(event: BeforeUnloadEvent): void {
-    if (!this.canReload()) {
-      event.preventDefault();
-      event.returnValue = this.reloadConfirmationMessage;
-    }
-  }
-
-  private canReload(): boolean {
-    // Add your condition here
-    // Return true if the reload is allowed or false if it should be prevented
-    // For example:
-
-    if (
-      localStorage.getItem('assignedProfile') == null ||
-      localStorage.getItem('assignedProfile') == '' ||
-      localStorage.getItem('assignedProfile') == undefined
-    ){
-      return false
-    } else {
-      return confirm('Are you sure you want to reload?');
-    }
-    
-  }
-
-  ngOnDestroy(): void {
-    
-    // window.onbeforeunload = null;
-    window.removeEventListener('beforeunload', this.onBeforeUnload);
-  }
-
   
   toggleSubLeftBar(){
     this.toggleLeftBar = !this.toggleLeftBar;

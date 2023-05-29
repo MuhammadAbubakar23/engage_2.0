@@ -72,7 +72,7 @@ export class CreateUserComponent implements OnInit {
     this._Activatedroute.paramMap.subscribe(paramMap => { 
       this.identity = Number(paramMap.get('id'));
     });
-   
+   // debugger;
     if(this.identity > 0){//.pipe(takeUntil(this.unsubscribe))
       this._request.getBy<userDto>("GetUserById",  this.identity.toString()).subscribe(
         (next:userDto) => {//...next:T[]
@@ -85,13 +85,13 @@ export class CreateUserComponent implements OnInit {
       //userDto fullName:"Ali Ahmad", userName:null,
       let form = {
         id:0,
-        email:"ab3c@gmail.com",
-        firstName:"Ali",
-        lastName:"Ahmad",
+        email:"",
+        firstName:"",
+        lastName:"",
         password:"null0000void",
         confirmPassword:"null0000void",
-        phone:"012345678910",
-        roleId:["Admin Role", "Admin Team", "Admin Channel", "Admin Tag"],
+        phone:"",
+        roleId:[],
         teamId:[],
         teams:"",
         userId:[],

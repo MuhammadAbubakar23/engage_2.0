@@ -37,7 +37,7 @@ const _permissionReducer = createReducer(
   on(updatePermissionsLetters, (state): PermissionState => ({  ...state, loading: true })),
   on(updatePermissionsLettersSuccess, (state, action): PermissionState => {
     let permissions = state.permissions+action.permissions;
-    // console.log(action.permissions); 
+    console.log(action.permissions); 
     return {
       ...state,
       permissions: permissions,
@@ -47,7 +47,7 @@ const _permissionReducer = createReducer(
   }),
   on(updatePermissionsLettersFail, (state, action): PermissionState => ({ ...state, loading: false, error: action.error }))
 );
-export function permissionReducer(state: any, action: any) {
+export function permissionReducer(state: any, action: any) {//=initialPermissionState
   return _permissionReducer(state, action);
 }
 

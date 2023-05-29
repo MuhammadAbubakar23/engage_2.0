@@ -60,21 +60,6 @@ export class SignalRService {
       .then(() => console.log('Connection started'))
       .then(() => this.getConnectionId())
       .catch((err) => console.log('Error while starting connection: ' + err));
-    
-    //   setInterval(() => {
-    //   if (this.hubconnection.state == "Disconnected") {
-    //     
-    //     // ConnectionState.Connected
-    //     // console.log('SignalR connection lost. Attempting to reconnect...');
-    //     this.hubconnection
-    //       .start()
-    //       .then(() => console.log('Connection started'))
-    //       .then(() => this.getConnectionId())
-    //       .catch((err) =>
-    //          console.log('Error while starting connection: ' + err)
-    //       );
-    //   }
-    // }, 5000);
   }
 
   reConnect(){
@@ -88,7 +73,6 @@ export class SignalRService {
       headers : {"X-Super-Team": JSON.stringify(team.id)}
     };
     
-  //  setTimeout(() => {
       this.hubconnection = new signalR.HubConnectionBuilder()
       .withUrl('https://common-engage.enteract.app/ConnectionHub', options)
       .withAutomaticReconnect()
@@ -99,7 +83,6 @@ export class SignalRService {
       .then(() => console.log('Connection started'))
       .then(() => this.getConnectionId())
       .catch((err) => console.log('Error while starting connection: ' + err));
-  //  }, 5000);
   }
   }
   

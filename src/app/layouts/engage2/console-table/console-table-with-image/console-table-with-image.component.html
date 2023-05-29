@@ -2,10 +2,13 @@
     <ul class="list-group list-group-flush">
         <li class="list-group-item d-flex justify-content-between align-items-sm-center ps-0">
             <span class="iconButton large" style="margin-right: 5px;" >
-                <app-avatar-photo [photoUrl]="imagename" [name]="name"></app-avatar-photo> 
+                <app-avatar-photo [photoUrl]="ConsoleTableWithImageData$[2]" [name]="ConsoleTableWithImageData$[0]"></app-avatar-photo> 
                 <!-- <img [src]="imagename" alt="-" class="rounded-circle w-100 h-100"> -->
             </span>
-            <div class="ms-2 me-auto coal"><div class="fw-bold night">{{name}}</div>{{subname}}</div>
+            <div class="ms-2 me-auto coal">
+                <div class="fw-bold night">{{ConsoleTableWithImageData$[0]}}</div>
+                {{ConsoleTableWithImageData$[1]}}
+            </div>
         </li>
     </ul>
 </a>

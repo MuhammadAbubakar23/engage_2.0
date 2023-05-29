@@ -1,0 +1,70 @@
+{ 
+    "search":"",    
+    "url" : "GetAllUsers", 
+    "pageno":1,
+    "pagesize":50,
+
+    "template": {
+        "toolbar": "top",
+        "refresh":true 
+    },
+    "headers": [  
+        { 
+            "visible":true,
+            "index":[], 
+            "name":"", 
+            "type":"empty" 
+        }
+        , { 
+            "visible":true, 
+            "index":["fullName", "email", "image"], 
+            "name":"users", 
+            "type":"with-image", 
+            "order":"ASC", 
+            "search":true, 
+            "group":-1, 
+            "actions":false,
+            "wrap":"",
+            "icon":"" 
+        }
+        , { 
+            "visible":true, 
+            "index":["roleId"], 
+            "name":"roles", 
+            "type":"wrap", 
+            "order":null, 
+            "search":false, 
+            "group":2, 
+            "actions":false,
+            "wrap":"",
+            "icon":"" 
+        }
+        , { 
+            "visible":true, 
+            "index":["teamId"], 
+            "name":"teams", 
+            "type":"wrap", 
+            "order":null, 
+            "search":false, 
+            "group":2, 
+            "actions":false,
+            "wrap":"",
+            "icon":"" 
+        }
+        , { 
+            "visible":true, 
+            "index":[], 
+            "name":"...", 
+            "type":"action-list", 
+            "order":null, 
+            "search":false, 
+            "group":0, 
+            "actions":[
+                {"name":"Edit", "type":"rute", "actionUrl":"console/users/create", "icon":"fal fa-edit me-2", "permission":"_upur_"},
+                {"name":"delete", "type":"service" , "actionUrl":"DeleteUser", "icon":"fal fa-trash me-2", "permission":"_rmvur_"}
+            ],
+            "wrap":"",
+            "icon":"" 
+        }
+    ]
+}

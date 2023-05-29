@@ -57,8 +57,12 @@
                     </div>
                 </div>
             </div>
-            <console-table-toolbar></console-table-toolbar>
-            <console-table [header]="header" [url]="url" [filter]="filter" [TableModel]="model" [TableAction]="actions"></console-table>
+            <!-- <console-table-toolbar></console-table-toolbar> -->
+            <!-- [header]="header" [url]="url"[TableAction]="actions"   -->
+            <ng-template [ngIf]="showConsoleTable">
+                <console-table [filter]="filter" [TableModel]="model" [JsonFile]="'users.json'"></console-table>
+            </ng-template>
+            
         </div>
     </div>
     <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { InboxContentComponent } from './engage2/inbox-content/inbox-content.component';
 import { ResponderContentComponent } from './engage2/responder-content/responder-content.component';
@@ -37,13 +38,24 @@ import { CardBoxListCheckboxComponent } from './engage2/card-box-list/card-box-l
 import { permissionReducer } from './engage2/permission-state/permission.reducer';
 import { AdminContentComponent } from './engage2/admin-content/admin-content.component';
 import { AdminMenuComponent } from './engage2/admin-content/admin-menu/admin-menu.component';
+import { ConsoleTableColumnsComponent } from './engage2/console-table/console-table-columns/console-table-columns.component';
+import { ConsoleTableCheckboxComponent } from './engage2/console-table/console-table-checkbox/console-table-checkbox.component';
+import { ConsoleTableVisibilityPipe } from './engage2/console-table/console-table-visibility.pipe';
+import { ConsoleTableHeaderPipe } from './engage2/console-table/console-table-header.pipe';
+import { ConsoleTableHeaderComponent } from './engage2/console-table/console-table-header/console-table-header.component';
+import { ConsoleTableFooterComponent } from './engage2/console-table/console-table-footer/console-table-footer.component';
+import { ConsoleTableBodyComponent } from './engage2/console-table/console-table-body/console-table-body.component';
+import { ConsoleTableHeaderCheckboxComponent } from './engage2/console-table/console-table-header-checkbox/console-table-header-checkbox.component';
+import { ConsoleTablePaginationComponent } from './engage2/console-table/console-table-pagination/console-table-pagination.component';
+import { OverlayRightPanelComponent } from './engage2/overlay-right-panel/overlay-right-panel.component';
+import { OverlayRightPanelSelectionComponent } from './engage2/overlay-right-panel/overlay-right-panel-selection/overlay-right-panel-selection.component';
+import { OverlayRightPanelListComponent } from './engage2/overlay-right-panel/overlay-right-panel-list/overlay-right-panel-list.component';
 import { RightHeaderComponentsComponent } from './engage2/right-header-components/right-header-components.component';
-import { NgSelectModule } from '@ng-select/ng-select';
+import { AnalyticsRightSidebarMenuComponent } from './engage2/analytics-content/analytics-right-sidebar-menu/analytics-right-sidebar-menu.component';
 import { AnalyticsContentComponent } from './engage2/analytics-content/analytics-content.component';
 import { AnalyticsHeaderComponent } from './engage2/analytics-content/analytics-header/analytics-header.component';
 import { AnalyticsMenuComponent } from './engage2/analytics-content/analytics-menu/analytics-menu.component';
-import { AnalyticsRightSidebarMenuComponent } from './engage2/analytics-content/analytics-right-sidebar-menu/analytics-right-sidebar-menu.component';
-// import { NgSelectModule } from '@ng-select/ng-select/lib/ng-select.module';
+import { AvatarContentComponent } from './engage2/avatar-content/avatar-content.component';
 
 
 
@@ -76,14 +88,28 @@ import { AnalyticsRightSidebarMenuComponent } from './engage2/analytics-content/
     CardBoxListCheckboxComponent,
     AdminContentComponent,
     AdminMenuComponent,
+    ConsoleTableColumnsComponent,
+    ConsoleTableCheckboxComponent,
+    ConsoleTableVisibilityPipe,
+    ConsoleTableHeaderPipe,
+    ConsoleTableHeaderComponent,
+    ConsoleTableFooterComponent,
+    ConsoleTableBodyComponent,
+    ConsoleTableHeaderCheckboxComponent,
+    ConsoleTablePaginationComponent,
+    OverlayRightPanelComponent,
+    OverlayRightPanelSelectionComponent,
+    OverlayRightPanelListComponent,
     RightHeaderComponentsComponent,
+    AnalyticsRightSidebarMenuComponent,
     AnalyticsContentComponent,
     AnalyticsHeaderComponent,
     AnalyticsMenuComponent,
-    AnalyticsRightSidebarMenuComponent,
+    AvatarContentComponent
   ],
   imports: [
     CommonModule,
+    NgSelectModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
@@ -92,7 +118,6 @@ import { AnalyticsRightSidebarMenuComponent } from './engage2/analytics-content/
     StoreModule.forFeature('menus', menuReducer),
     StoreModule.forFeature('permissions', permissionReducer),
     EffectsModule.forFeature([MenusEffects, PermissionsEffects]),
-    NgSelectModule
   ],
   exports:[
     ResponderContentComponent,
@@ -104,12 +129,11 @@ import { AnalyticsRightSidebarMenuComponent } from './engage2/analytics-content/
     ConsoleTableComponent,
     ConsoleTableToolbarComponent,
     AvatarPhotoComponent,
-    ConsoleTableWithImageComponent,
     BreadcrumbComponent,
     CardBoxListComponent,
-    AnalyticsContentComponent,
+    OverlayRightPanelComponent,
     AnalyticsRightSidebarMenuComponent,
-    RightHeaderComponentsComponent,
+    AnalyticsContentComponent
   ]
 })
 export class LayoutsModule { }

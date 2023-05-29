@@ -4,10 +4,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { UsersResolver } from './components/users/users.resolver';
 import { ConsoleRoutingGuard } from './console-routing.guard';
 import { ConsoleComponent } from './console.component';
-import { RolesResolver } from './resolvers/roles.resolver';
 import { RolesPermissionsResolver } from './resolvers/roles-permissions.resolver';
+import { RolesResolver } from './resolvers/roles.resolver';
+import { TeamsJsonResolver } from './resolvers/teams-json.resolver';
 import { TeamsPermissionsResolver } from './resolvers/teams-permissions.resolver';
 import { TeamsResolver } from './resolvers/teams.resolver';
+import { UsersJsonResolver } from './resolvers/users-json.resolver';
 
 const routes: Routes = [
   {
@@ -20,9 +22,9 @@ const routes: Routes = [
         data: { breadcrumb: 'Users' },
         canMatch: [ConsoleRoutingGuard],
         //canLoad: [ConsoleRoutingGuard],
-        // resolve: {
-        //   submenus: UsersResolver,
-        // },
+        resolve: {
+          userJ: UsersJsonResolver
+        },
       },{
         path:'users/create/:id',
         loadComponent: () => import('./components/users/create-user/create-user.component').then(c => c.CreateUserComponent),
@@ -56,7 +58,6 @@ const routes: Routes = [
         data: { breadcrumb: 'Roles N` Permissions > Create' },
         canMatch: [ConsoleRoutingGuard],
         resolve: {
-          //roles: RolesResolver,
           rolesnpermission: RolesPermissionsResolver,
           // teams: TeamsResolver,
         },
@@ -64,9 +65,9 @@ const routes: Routes = [
         path:'teams',
         loadComponent: () => import('./components/teams/teams.component').then(c => c.TeamsComponent),
         data: { breadcrumb: 'Teams N` Accesses ' },
-        canMatch: [ConsoleRoutingGuard],
+        canMatch: [ConsoleRoutingGuard],//teams: TeamsResolver,
         resolve: {
-          teams: TeamsResolver
+          teamJ: TeamsJsonResolver
         },
       },{
         path:'teams/create/:id',
@@ -85,17 +86,6 @@ const routes: Routes = [
         path:'tags',
         loadComponent: () => import('./components/tags/tags.component').then(c => c.TagsComponent)
         
-      },{
-        path:'tags/create/:id',
-        loadComponent: () => import('./components/tags/create-tags/create-tags.component').then(c => c.CreateTagsComponent),
-        data: { breadcrumb: 'Tags > Create' },
-        //canActivate: [ConsoleRoutingGuard],
-        canMatch: [ConsoleRoutingGuard],
-        // canLoad: [ConsoleRoutingGuard],
-        resolve: {
-          roles: RolesResolver,
-          teams: TeamsResolver,
-        },
       },{
         path:'rules',
         loadComponent: () => import('./components/rules/rules.component').then(c => c.RulesComponent)

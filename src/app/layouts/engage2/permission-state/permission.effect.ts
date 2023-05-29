@@ -48,18 +48,9 @@ export class PermissionsEffects {
 // export class PermissionEffect {
 //   constructor(private actions$: Actions, private ser: PermissionService) {}
 // //   @Effect()
-
-// //   sgetPermissionList$: Observable<Action> = this.actions$
-// //     .ofType(PermissionActionType.GET_PERMISSION_LIST)
-// //     .pipe(switchMap((action: GetPermissionListAction) => {
-// //         return this.ser.getPermissionList()
-// //     }));
-
-//     getPermissionList$ = createEffect(() =>  {
-//         return this.actions$.pipe(
-//           ofType(PermissionActionType.GET_PERMISSION_LIST),
-//           mergeMap((action:GetPermissionListAction) => {
+// //   sgetPermissionLetters$: Observable<Action> = this.actions$
 // //     .ofType(PermissionActionType.GET_PERMISSION_LETTERS)
+// //     .pipe(switchMap((action: GetPermissionLettersAction) => {
 // //         return this.ser.getPermissionLetters()
 // //     }));
 
@@ -68,7 +59,6 @@ export class PermissionsEffects {
 //           ofType(PermissionActionType.GET_PERMISSION_LETTERS),
 //           mergeMap((action:GetPermissionLettersAction) => {
 //             return this.ser.getPermissionLetters().pipe()
-
 //           })
 //         );
 //       });  

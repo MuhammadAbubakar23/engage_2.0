@@ -1,0 +1,12 @@
+<tr *ngFor="let row of TblData">
+        <!-- 
+            <td>
+            <input class="form-check-input me-1" type="checkbox" aria-label="...">
+            </td> 
+        -->
+    <td *ngFor="let column of $any(TblColumns) | consoleTableVisibility" >
+        <console-table-with-image *ngIf="column.type=='with-image'" [name]="row['fullName']" [subname]="row['email']" [imagename]="''"></console-table-with-image>
+        <console-table-wrap *ngIf="column.type=='wrap'" [wrapdata]="row[column.index]" [wrapflow]="column.group"></console-table-wrap>
+        <console-table-action-list *ngIf="column.type=='action-list'" (procedure)="procedure($event)" [actions]="column.index" [data]="row"></console-table-action-list>
+    </td> 
+</tr>

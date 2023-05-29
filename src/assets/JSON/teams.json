@@ -1,0 +1,69 @@
+{ 
+    "search":""
+    , "url" : "AllTeams"
+    , "urlparams":"Compwith"
+    , "pageno":1
+    , "pagesize":50
+    , "template": {}
+    , "headers": [ 
+        { 
+            "visible":true, 
+            "index":[], 
+            "name":"", 
+            "type":"empty",
+            "wrap":"",
+            "icon":""  
+        }, 
+        { 
+            "visible":true,   
+            "index":["name"], 
+            "name":"teams", 
+            "type":"display", 
+            "order":"ASC", 
+            "search":true, 
+            "group":-1, 
+            "actions":false,
+            "wrap":"",
+            "icon":""  
+        }, 
+        { 
+            "visible":true, 
+            "index":["countUser"], 
+            "name":"users", 
+            "type":"icondisplay", 
+            "order":null, 
+            "search":false, 
+            "group":2, 
+            "actions":false,
+            "wrap":"",
+            "icon":"" 
+        }, 
+        { 
+            "visible":true, 
+            "index":["subMenu"], 
+            "name":"accesses", 
+            "type":"wrap", 
+            "order":null, 
+            "search":false, 
+            "group":2, 
+            "actions":false ,
+            "wrap":"name",
+            "icon":"" 
+        }, 
+        { 
+            "visible":true, 
+            "index":[], 
+            "name":"...", 
+            "type":"action-list", 
+            "order":null, 
+            "search":false, 
+            "group":0, 
+            "actions":[
+                {"name":"delete", "type":"service" , "actionUrl":"DeleteTeam", "icon":"fal fa-trash me-2"},
+                {"name":"Add Team Members", "type":"overlay" , "actionUrl":"DeleteTeam", "icon":"fal fa-trash me-2"}
+            ],
+            "wrap":"",
+            "icon":"" 
+        }
+    ]
+}

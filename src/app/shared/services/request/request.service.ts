@@ -17,16 +17,18 @@ export class RequestService {
     opt.headers = (!options || !options.isFile)?headers.append('content-type', 'application/json'):headers;
     return opt;
   }
-  private requestParams(options?:any){
+  private requestParamOptionss(options?:any){
     let opt = (!options)?{}:options;
     let params = (opt.params)?opt.params:new HttpParams();
+    //opt.params =
 
   }
-  private createCompleteRoute = (route: string, envAddress: string) =>  `${envAddress}/${route}`;
+  private createCompleteRoute = (route: string, envAddress: string, routeparams:string = "") =>  (routeparams!="" || routeparams.length > 0 )?`${envAddress}/${route}/${routeparams}`:`${envAddress}/${route}`;
   
-  get<T>(route:string, params?: any): Observable<T> {
-    // console.log(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl));
-    return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
+  get<T>(route:string, params?: any,routeparams:string=""): Observable<T> {
+    console.log(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl));
+    debugger;
+    return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, routeparams),{params: params })
     .pipe(
       map((res: any) => { return res }),
       tap(res => console.log(route + " Response: ", res)),
@@ -49,6 +51,7 @@ export class RequestService {
       );    
   }
   post<T>(route:string, params?: any): Observable<T>{
+    //debugger;
     return this.http.post<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
     .pipe(
       map((res: any) => { return res }),
