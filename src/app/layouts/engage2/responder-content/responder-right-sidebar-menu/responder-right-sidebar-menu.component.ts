@@ -16,7 +16,7 @@ import { MenuState } from '../../state/menu.state';
 export class ResponderRightSidebarMenuComponent implements OnInit {
   @Output('toggleRightPanel') toggleRightPanelParent: EventEmitter<any> =
     new EventEmitter();
-  menus$: any = [];
+  menus$: any[] = [];
   menu$: any;
   loading$: any;
 
@@ -53,7 +53,16 @@ export class ResponderRightSidebarMenuComponent implements OnInit {
             indexNo: item[key].indexNo,
           };
 
-          this.menus$ = item;
+          // this.menus$ = item;
+
+          item.forEach((menu:any) => {
+            if(menu.mainId != 220){
+              if(!this.menus$.includes(menu)){
+                this.menus$.push(menu);
+              }
+              
+            }
+          });
         }
       });
 
