@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./team-menu.component.scss'],
 })
 export class TeamMenuComponent implements OnInit {
-  menus$: any;
+  menus$: any[]=[];
   menu$: any;
   loading$: any;
   constructor(private store: Store<MenuState>, private _route: Router) {
@@ -27,8 +27,15 @@ export class TeamMenuComponent implements OnInit {
   ngOnInit(): void {
     this.menu$ = this.store
       .select(getEmargingEqual('team_main_left_menu'))
-      .subscribe((item) => {
-        this.menus$ = item;
+      .subscribe((item:any) => {
+        // this.menus$ = item;
+        item.forEach((menu:any) => {
+          if(menu.mainId != 200){
+            this.menus$.push(menu);
+          }
+        });
+        
+        
       });
     // // console.log(this.menu$);
     // // console.log("------------------------------------------");
