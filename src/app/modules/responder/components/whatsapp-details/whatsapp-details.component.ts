@@ -27,6 +27,7 @@ import { InsertSentimentForFeedDto } from 'src/app/shared/Models/InsertSentiment
 import { InsertTagsForFeedDto } from 'src/app/shared/Models/InsertTagsForFeedDto';
 import { ReplyDto } from 'src/app/shared/Models/ReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
 
 @Component({
   selector: 'app-whatsapp-details',
@@ -92,7 +93,8 @@ export class WhatsappDetailsComponent implements OnInit {
     private queryStatusService : QueryStatusService,
     private replyService : ReplyService,
     private createTicketService: CreateTicketService,
-    private toggleService : ToggleService
+    private toggleService : ToggleService,
+    private ticketResponseService : TicketResponseService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -140,6 +142,9 @@ export class WhatsappDetailsComponent implements OnInit {
         
         this.queryStatus = res;
         this.updateBulkQueryStatusDataListner();
+      });
+      this.ticketResponseService.getTicketId().subscribe(res=>{
+        this.updateTicketId(res)
       });
   }
 
@@ -805,6 +810,17 @@ export class WhatsappDetailsComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
+  updateTicketId(res: any) {
+    this.groupArrays.forEach((cmnt: any) => {
+      cmnt.items.forEach((singleCmnt: any) => {
+        if (singleCmnt.id == res.queryId) {
+          singleCmnt.ticketId = res.ticketId;
+        }
+      });
+    });
+    this.changeDetect.detectChanges();
+  }
+  
   tagsListDropdown =false
   
   openTagListDropdown() {

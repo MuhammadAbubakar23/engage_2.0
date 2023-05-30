@@ -52,7 +52,7 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
     this._fetchData();//this.filter?.pageno, this.filter?.pagesize);
   }
   private _fetchData(){ //}: Observable<T>{ // (page: number, pagesize: number)  {
-   // debugger;
+   // ;
    if(typeof this.filter?.url === 'undefined') return;
    console.log(this.filter)
     let pam:any = {

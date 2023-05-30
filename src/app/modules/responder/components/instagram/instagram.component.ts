@@ -38,6 +38,7 @@ import { ReplyService } from 'src/app/services/replyService/reply.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { UpdateMessagesService } from 'src/app/services/UpdateMessagesService/update-messages.service';
+import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
 
 @Component({
   selector: 'app-instagram',
@@ -112,10 +113,8 @@ export class InstagramComponent implements OnInit {
   constructor(
     private fetchId: FetchIdService,
     private toggleService: ToggleService,
-    private _route: Router,
     private SpinnerService: NgxSpinnerService,
     private commondata: CommonDataService,
-    private signalRService: SignalRService,
     private changeDetect: ChangeDetectorRef,
     private addTagService: AddTagService,
     private removeTagService: RemoveTagService,
@@ -124,7 +123,8 @@ export class InstagramComponent implements OnInit {
     private replyService: ReplyService,
     private unrespondedCountService: UnRespondedCountService,
     private createTicketService: CreateTicketService,
-    private updateMessagesService: UpdateMessagesService
+    private updateMessagesService: UpdateMessagesService,
+    private ticketResponseService : TicketResponseService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -192,6 +192,10 @@ export class InstagramComponent implements OnInit {
       .subscribe((res) => {
         this.queryStatus = res;
         this.updateBulkQueryStatusDataListner();
+      });
+
+      this.ticketResponseService.getTicketId().subscribe(res=>{
+        this.updateTicketId(res)
       });
   }
 
@@ -332,7 +336,7 @@ export class InstagramComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
-          debugger
+          
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.InstagramData = res.List;
@@ -1323,6 +1327,19 @@ export class InstagramComponent implements OnInit {
         }
       );
     }
+  }
+
+  updateTicketId(res:any){
+    this.InstagramData.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == res.queryId) {
+            singleCmnt.ticketId = res.ticketId;
+          }
+        });
+      });
+    });
+    this.changeDetect.detectChanges();
   }
 
 }

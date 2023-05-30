@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { createTicketDto } from 'src/app/shared/Models/CreateTicketDto';
 import { GetOrderDetailDto } from 'src/app/shared/Models/getOrderDetailDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
 
 @Component({
   selector: 'app-responder-tickets',
@@ -27,7 +28,8 @@ export class ResponderTicketsComponent implements OnInit {
     private commonDataservice: CommonDataService,
     private createTicketService: CreateTicketService,
     private toggleService: ToggleService,
-    private spinnerService : NgxSpinnerService
+    private spinnerService : NgxSpinnerService,
+    private ticketResponseService : TicketResponseService
   ) {
     this.createTicketForm = new FormGroup({
       queryId: new FormControl(),
@@ -52,7 +54,7 @@ export class ResponderTicketsComponent implements OnInit {
       unitPrice: new FormControl('string'),
       quantity: new FormControl('string'),
       details: new FormControl('string'),
-      resolutionComments: new FormControl(''),
+      resolutionComments: new FormControl('', Validators.required),
       jomoCustomerId: new FormControl('string'),
       channelType: new FormControl('string'),
       customerProfileId: new FormControl('string'),
@@ -127,6 +129,7 @@ export class ResponderTicketsComponent implements OnInit {
   ticketId: number = 0;
   createTicketDto = new createTicketDto();
   createTicketForm!: FormGroup;
+  responseTicket:any;
 
   createTicket() {
     this.createTicketDto = {
@@ -161,8 +164,8 @@ export class ResponderTicketsComponent implements OnInit {
     this.commonDataservice
       .CreateTicket(this.createTicketDto)
       .subscribe((res: any) => {
-        this.ticketId = res.tick;
-        
+        this.responseTicket = res;
+        this.ticketResponseService.sendTicketId(res);
         this.reloadComponent('ticketCreated')
         setTimeout(() => {
           this.closeTicketComponent('ticket')

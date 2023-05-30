@@ -85,19 +85,16 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
     );
   }
   ngOnInit(): void {
-    debugger
     
+    // if (!this.componentStateService.isLoaded()) {
       this.dialerService.getEvent().subscribe((res: any) => {
         this.phoneEvents(res);
         console.log(this);
-
-        
 
         if (res.event == 'sipRegistered') {
           // this.dialerService.setSipPhone(this.sipPhone);
         }
       });
-      if (!this.componentStateService.isLoaded()) {
       this.dialerService.getWsEvent().subscribe((res) => {
         console.log(res);
 
@@ -111,10 +108,9 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
         // alert(res + 'From Construct');
       });
     
-    }
-    
-    this.sipPhone = this.dialerService.getSipPhone();
+      this.sipPhone = this.dialerService.getSipPhone();
       console.log(this.sipPhone);
+    // }
 
       if (!this.sipPhone) {
         this.loadPhone();
@@ -240,7 +236,6 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
   }
 
   phoneEvents(res: any): void {
-    debugger
     if (res.event) {
       switch (res.event) {
         case 'callCompleted':

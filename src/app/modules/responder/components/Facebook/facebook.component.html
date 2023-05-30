@@ -46,9 +46,9 @@
                 </li>
             </ul>
         </div>
-        <div class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow-y: auto; outline: none;"
+        <div *ngIf="fbCmntReply == true" class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow-y: auto; outline: none;"
             infinite-scroll [scrollWindow]="false" [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5"
-            [infiniteScrollThrottle]="10" (scrolled)="onScroll()">
+            [infiniteScrollThrottle]="10" (scrolled)="onScrollComments()">
             <div class="scroll-content">
                 <div class="tab-content m-4" id="myTabContent">
                     <div *ngIf="FacebookData" class="tab-pane fade show active" id="fb-comment" role="tabpanel"
@@ -67,10 +67,17 @@
                                                 </div>
                                             </div>
                                             <div class="post-img-wrap whatsappImgModalBtn" type="button"
-                                                style="width:375px;"
-                                                *ngFor="let attachment of facebookdata.post.attachments">
-                                                <img src={{attachment.attachmentUrl}}>
-                                            </div>
+                                                        style="width:375px;"
+                                                        *ngFor="let attachment of facebookdata.post.attachments">
+                                                        <img *ngIf="attachment.description == 'photo'"
+                                                            src={{attachment.attachmentUrl}}
+                                                            style="width: -webkit-fill-available;">
+                                                        <video *ngIf="attachment.description == 'video'" width="375px"
+                                                            controls>
+                                                            <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                                style="width: -webkit-fill-available;">
+                                                        </video>
+                                                    </div>
                                             <div class="card-body bg-light">
 
                                                 <p class="card-text nignt mb-0">
@@ -241,8 +248,7 @@
                                                                         <button class="iconButton medium"
                                                                             id="dropdownMenuButton1"
                                                                             data-bs-toggle="dropdown"
-                                                                            data-bs-auto-close="outside"
-                                                                            (click)="openTagListDropdown()">
+                                                                            data-bs-auto-close="outside">
                                                                             <span class="iconButton small btn mx-2">
                                                                                 <i class="fal fa-tag coal"></i>
                                                                             </span>
@@ -553,6 +559,15 @@
 
                         </div>
                     </div>
+                   
+                </div>
+            </div>
+        </div>
+        <div *ngIf="fbMsgReply== true" class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow-y: auto; outline: none;"
+            infinite-scroll [scrollWindow]="false" [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5"
+            [infiniteScrollThrottle]="10" (scrolled)="onScrollMessages()">
+            <div class="scroll-content">
+                <div class="tab-content m-4" id="myTabContent">
                     <div *ngIf="FacebookMessages" class="tab-pane fade show active" id="fb-msg" role="tabpanel"
                         aria-labelledby="fb-msg-tab">
                         <div class="chat-box-wrap" *ngFor="let group of groupedMessages">
@@ -635,7 +650,6 @@
                                                                 <div class="dropdown w-auto">
                                                                     <button class="iconButton medium"
                                                                         id="dropdownMenuButton1"
-                                                                        (click)="openTagListDropdown()"
                                                                         data-bs-toggle="dropdown"
                                                                         data-bs-auto-close="outside">
                                                                         <span class="iconButton small btn mx-2">
@@ -894,8 +908,7 @@
                                                                     </span>
                                                                 </small>
                                                             </div>
-                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM
-                                                                dd, yyyy, h:mm a'}}</small>
+                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM dd, yyyy, h:mm a'}}</small>
                                                         </div>
                                                         <div class="msg-snippet show-text">
                                                             <p class="mb-1 coal" data-maxlength="240">

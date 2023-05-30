@@ -11,6 +11,7 @@ import { FiltersDto } from 'src/app/shared/Models/FiltersDto';
 import { WebChatDto } from 'src/app/shared/Models/WebChatDto';
 import { WebChatReplyDto } from 'src/app/shared/Models/WebChatReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
 
 @Component({
   selector: 'app-web-chat',
@@ -36,12 +37,11 @@ export class WebChatComponent implements OnInit {
   groupArrays : any[]=[];
   
   constructor(private fetchId: FetchIdService,
-    private toggleService: ToggleService,
-    private _route: Router,
     private SpinnerService : NgxSpinnerService,
     private signalRService : SignalRService,
     private changeDetect : ChangeDetectorRef,
     private commondata : CommonDataService,
+    private ticketResponseService : TicketResponseService
     ) {
       // this.criteria={
       //   property: 'createdDate',
@@ -57,6 +57,9 @@ export class WebChatComponent implements OnInit {
     this.getWebChat();
    // this.signalRService.startConnection();
    // this.addTransferChatDataListener(); 
+   this.ticketResponseService.getTicketId().subscribe(res=>{
+    this.updateTicketId(res)
+  });
 
   }
 
@@ -193,5 +196,17 @@ export class WebChatComponent implements OnInit {
     //    alert(error.message || error.title);
     //  }
     // );
+    
+}
+
+updateTicketId(res: any) {
+  this.groupArrays.forEach((cmnt: any) => {
+    cmnt.items.forEach((singleCmnt: any) => {
+      if (singleCmnt.id == res.queryId) {
+        singleCmnt.ticketId = res.ticketId;
+      }
+    });
+  });
+  this.changeDetect.detectChanges();
 }
 }

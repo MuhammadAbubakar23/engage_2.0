@@ -22,6 +22,7 @@ import { InsertTagsForFeedDto } from 'src/app/shared/Models/InsertTagsForFeedDto
 import { LikeByAdminDto } from 'src/app/shared/Models/LikeByAdminDto';
 import { ReplyDto } from 'src/app/shared/Models/ReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
 
 @Component({
   selector: 'app-youtube',
@@ -35,7 +36,6 @@ export class YoutubeComponent implements OnInit {
   public Subscription!: Subscription;
 
   YoutubeData: any;
-  YoutubeComments: any;
   pageNumber: number = 1;
   pageSize: number = 10;
   commentReply: any;
@@ -88,17 +88,16 @@ export class YoutubeComponent implements OnInit {
   constructor(
     private fetchId: FetchIdService,
     private toggleService: ToggleService,
-    private _route: Router,
     private commondata: CommonDataService,
     private SpinnerService: NgxSpinnerService,
-    private signalRService: SignalRService,
     private changeDetect: ChangeDetectorRef,
     private addTagService: AddTagService,
     private removeTagService: RemoveTagService,
     private updateCommentsService : UpdateCommentsService,
     private queryStatusService : QueryStatusService,
     private replyService : ReplyService,
-    private createTicketService: CreateTicketService
+    private createTicketService: CreateTicketService,
+    private ticketResponseService : TicketResponseService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -146,7 +145,9 @@ export class YoutubeComponent implements OnInit {
         this.queryStatus = res;
         this.updateBulkQueryStatusDataListner();
       });
-    
+      this.ticketResponseService.getTicketId().subscribe(res=>{
+        this.updateTicketId(res)
+      });
   }
 
   commentDto = new commentsDto();
@@ -869,5 +870,18 @@ export class YoutubeComponent implements OnInit {
   closeTagListDropdown() {
     this.tagsListDropdown = false
     this.searchText = ''
+  }
+
+  updateTicketId(res:any){
+    this.YoutubeData.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == res.queryId) {
+            singleCmnt.ticketId = res.ticketId;
+          }
+        });
+      });
+    });
+    this.changeDetect.detectChanges();
   }
 }

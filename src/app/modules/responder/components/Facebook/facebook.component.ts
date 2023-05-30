@@ -39,7 +39,7 @@ import { UpdateMessagesService } from 'src/app/services/UpdateMessagesService/up
 import { ReplyService } from 'src/app/services/replyService/reply.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
-import { ShareFacebookResponseService } from 'src/app/services/share-facebook-response.service';
+import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
 
 declare var toggleEmojis: any;
 @Component({
@@ -145,7 +145,7 @@ export class FacebookComponent implements OnInit {
     private replyService: ReplyService,
     private queryStatusService: QueryStatusService,
     private createTicketService: CreateTicketService,
-    private shareFbResService : ShareFacebookResponseService
+    private ticketResponseService : TicketResponseService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -220,9 +220,13 @@ export class FacebookComponent implements OnInit {
             res.contentCount.unrespondedCount;
         }
       });
+
+      this.ticketResponseService.getTicketId().subscribe(res=>{
+        this.updateTicketId(res)
+      });
   }
 
-
+  
   totalComments: number = 0;
   totalMessages: number = 0;
 
@@ -1408,7 +1412,6 @@ export class FacebookComponent implements OnInit {
       this.isAttachment = false;
     }
 
-    // console.log('This is image array=====>', this.ImageName);
   }
 
   Emojies = [
@@ -1447,23 +1450,32 @@ export class FacebookComponent implements OnInit {
 
   insertEmoji(emoji: any) {
     this.insertAtCaret(emoji);
-    // console.log(this.textarea.nativeElement.value);
   }
-  onScroll() {
-    
+  onScrollComments() {
     this.pageSize = this.pageSize + 10;
     this.getFacebookComments();
+  }
+  onScrollMessages() {
+    this.pageSize = this.pageSize + 10;
     this.getFacebookMessages();
   }
 
-  tagsListDropdown =false
-  
-  openTagListDropdown() {
-    this.searchText ='';
-    this.tagsListDropdown = true;
+  updateTicketId(res:any){
+    this.FacebookData.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == res.queryId) {
+            singleCmnt.ticketId = res.ticketId;
+          }
+        });
+      });
+    });
+    this.FacebookMessages.forEach((msg: any) => {
+      if (msg.id == res.queryId) {
+        msg.ticketId = res.ticketId;
+      }
+    });
+    this.changeDetect.detectChanges();
   }
-  closeTagListDropdown() {
-    this.tagsListDropdown = false
-    this.searchText = ''
-  }
+
 }

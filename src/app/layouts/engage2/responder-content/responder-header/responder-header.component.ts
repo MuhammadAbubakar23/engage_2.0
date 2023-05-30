@@ -167,7 +167,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
-        debugger
+        
         res.forEach((msg: any) => {
           if (msg.userId == localStorage.getItem('storeHeaderOpenedId')) {
             if (msg.contentType == 'FC' || msg.contentType == 'FCP') {
@@ -213,7 +213,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        debugger
+        
         if (res.contentCount.contentType == 'FC') {
           this.totalFbUnrespondedCountByCustomer =
             res.contentCount.unrespondedCount +

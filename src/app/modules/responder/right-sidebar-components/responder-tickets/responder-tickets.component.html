@@ -173,7 +173,7 @@
                                     <button type="button" (click)="closeTicketComponent('ticket')"
                                         class="btn btn-outline-secondary">Cancel</button>
                                     <button type="submit" class="btn btn-success ms-2" data-bs-toggle="modal"
-                                        data-bs-target="#ticketSaveModal">Save</button>
+                                        data-bs-target="#ticketSaveModal" [disabled]="!createTicketForm.valid">Save</button>
                                 </div>
                             </div>
                         </div>
