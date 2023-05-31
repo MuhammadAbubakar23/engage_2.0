@@ -18,6 +18,7 @@ import { UpdateListService } from 'src/app/services/UpdateListService/update-lis
 import { DatePipe } from '@angular/common';
 import { GetAgentReportDto } from 'src/app/shared/Models/GetAgentReportDto';
 import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
+import { RemoveAssignedQuerryService } from 'src/app/services/RemoveAssignedQuery/remove-assigned-querry.service';
 
 @Component({
   selector: 'app-conversation',
@@ -41,7 +42,7 @@ export class ConversationComponent implements OnInit {
   TotalUnresponded: number = 0;
   TodayDate: any;
   pageNumber: number = 1;
-  pageSize: number = 100;
+  pageSize: number = 10;
   platform: any;
   updatedList: any;
 
@@ -57,7 +58,6 @@ export class ConversationComponent implements OnInit {
   constructor(
     private headerService: HeaderService,
     private fetchId: FetchIdService,
-    private shareddata: SharedService,
     private SpinnerService: NgxSpinnerService,
     private fetchposttype: FetchPostTypeService,
     private changeDetect: ChangeDetectorRef,
@@ -66,13 +66,13 @@ export class ConversationComponent implements OnInit {
     private filterService: FilterService,
     private router: Router,
     private updateListService: UpdateListService,
-    private datePipe: DatePipe,
-    private lodeModuleService : ModulesService
+    private lodeModuleService : ModulesService,
+    private removeAssignedQueryService : RemoveAssignedQuerryService
   ) {
-    // this.criteria = {
-    //   property: 'createdDate',
-    //   descending: false,
-    // };
+    this.criteria = {
+      property: 'createdDate',
+      descending: true,
+    };
 
     // this.currentDate = this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm:ss.SSSSSS')
   }
@@ -93,6 +93,15 @@ export class ConversationComponent implements OnInit {
         this.updatedList = res;
         this.updateListDataListener();
       });
+
+      this.subscription = this.removeAssignedQueryService
+      .receiveAssignedQuerry()
+      .subscribe((res) => {
+        
+        this.updatedList = res;
+        this.removeAssignedQueryListener();
+      });
+      
 
     setInterval(() => {
       if (this.ConversationList != null || this.ConversationList != undefined) {
@@ -188,12 +197,19 @@ export class ConversationComponent implements OnInit {
         });
       } else if (this.ConversationList) {
         this.listingDto = newMsg;
-        this.ConversationList.push(this.listingDto);
+        this.ConversationList.unshift(this.listingDto);
+        // this.TotalUnresponded = this.TotalUnresponded + 1;
+        this.ConversationList.pop();
       } else {
         this.ConversationList = this.updatedList;
       }
     });
     this.changeDetect.detectChanges();
+  }
+
+  removeAssignedQueryListener(){
+    
+
   }
 
   Reload() {
@@ -376,21 +392,22 @@ export class ConversationComponent implements OnInit {
     }
   }
 
+  remaining:number=0;
   NextPage(pageNumber: any) {
     if (this.TotalUnresponded < this.from) {
       this.from = this.TotalUnresponded;
     }
-    this.totalPageNumbers = Math.round(this.TotalUnresponded / this.pageSize);
+    // this.totalPageNumbers = Math.round(this.TotalUnresponded / this.pageSize);
+    this.totalPageNumbers = (this.TotalUnresponded / this.pageSize);
+    if(this.totalPageNumbers > pageNumber){
+      this.totalPageNumbers = Math.round(this.totalPageNumbers + 1);
+    }
     let page = pageNumber + 1;
     if (page <= this.totalPageNumbers) {
       this.pageNumber = page;
-      // if (this.MachineUsers.find(x => x.isChecked == true)){
-      //   this.isChecked = false;
-      //   this.isCheckedAll = false;
-      //   this.masterSelected = false;
-      //   }
       this.getConversationList();
-      if (this.TotalUnresponded - this.from > this.pageSize) {
+      this.remaining = this.TotalUnresponded - this.from
+      if (this.remaining > this.pageSize) {
         this.to = 1 + this.from;
         this.from = this.from + this.pageSize;
       } else {
@@ -401,17 +418,20 @@ export class ConversationComponent implements OnInit {
     this.pageNumber;
   }
   PreviousPage(pageNumber: any) {
+    
     if (pageNumber >= 1) {
       let page = pageNumber - 1;
       if (page > 0) {
         this.pageNumber = page;
-        // if (this.MachineUsers.find(x => x.isChecked == true)){
-        //   this.isChecked = false;
-        //   this.isCheckedAll = false;
-        //   this.masterSelected = false;
-        //   }
         this.getConversationList();
-        this.from = this.from - this.pageSize;
+        if(this.remaining > this.pageSize){
+          this.from = this.from - this.pageSize
+        } else {
+          this.from = this.from - this.remaining;
+        }
+        if(this.to > this.pageSize){
+          this.remaining = this.pageSize
+        }
         if (this.to > this.pageSize) {
           this.to = this.from - (this.pageSize - 1);
         } else {

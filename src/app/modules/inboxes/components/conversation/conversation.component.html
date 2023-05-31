@@ -673,7 +673,7 @@
               </td>
             </tr>
             <!-- [ngClass]="[alertWarning == true?'alert-warning':'', alertDanger == true?'alert-danger':'']" -->
-            <tr *ngFor="let querry of ConversationList; let i = index"
+            <tr *ngFor="let querry of ConversationList | sort:criteria; let i = index"
               [class.selected]="querry.isChecked==true" class="alert" 
               [ngClass]="[querry.slaFlag == 'warning'?'alert-warning':'' || querry.slaFlag == 'danger'?'alert-danger':'' ||
               querry.slaFlag == 'unread'?'unread':'']">
@@ -703,8 +703,7 @@
               </td>
               <td style="width: 300px;">
                 <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
-                  <a
-                    (click)="updatevalue('socialHeader', querry.user, querry.postType, querry.userId,'assignToMe', querry.platform, querry.profileId)">
+                  <a (click)="updatevalue('socialHeader', querry.user, querry.postType, querry.userId,'assignToMe', querry.platform, querry.profileId)">
                     <span>{{querry.userName.split('<')[0] || querry.user}} </span>
                         <span class="badge bg-danger rounded-pill"
                           *ngIf="querry.unrespondedCount > 0">{{querry.unrespondedCount}}</span></a>
