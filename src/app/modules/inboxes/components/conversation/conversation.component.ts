@@ -97,9 +97,7 @@ export class ConversationComponent implements OnInit {
       this.subscription = this.removeAssignedQueryService
       .receiveAssignedQuerry()
       .subscribe((res) => {
-        
-        this.updatedList = res;
-        this.removeAssignedQueryListener();
+        this.removeAssignedQueryListener(res);
       });
       
 
@@ -207,9 +205,11 @@ export class ConversationComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  removeAssignedQueryListener(){
-    
-
+  removeAssignedQueryListener(res:any){
+    if(localStorage.getItem('agentId') != res.userId){
+      const abc = this.ConversationList.find(x=>x.profileId == res.profileId)
+      this.ConversationList.splice(abc,1);
+     }
   }
 
   Reload() {

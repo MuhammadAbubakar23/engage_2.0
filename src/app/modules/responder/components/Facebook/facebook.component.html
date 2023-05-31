@@ -208,11 +208,18 @@
                                                                 <small>{{fbcmnts.queryStatus}} </small>
                                                             </div>
                                                         </div>
-                                                        <div class="whatsapp-single-img whatsappImgModalBtn"
-                                                            type="button">
-                                                            <img src={{fbcmnts.attachment}}
-                                                                class="card-img-top rounded-3">
-                                                        </div>
+                                                        <div class="post-img-wrap whatsappImgModalBtn" type="button"
+                                                        style="width:375px;"
+                                                        *ngFor="let attachment of fbcmnts.attachments">
+                                                        <img *ngIf="attachment.description == 'photo'"
+                                                            src={{attachment.attachmentUrl}}
+                                                            style="width: -webkit-fill-available;">
+                                                        <video *ngIf="attachment.description == 'video'" width="375px"
+                                                            controls>
+                                                            <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                                style="width: -webkit-fill-available;">
+                                                        </video>
+                                                    </div>
                                                         <p class="card-text nignt">{{fbcmnts.message}}</p>
                                                         <div class="tags" *ngFor="let tag of fbcmnts.tags">
 

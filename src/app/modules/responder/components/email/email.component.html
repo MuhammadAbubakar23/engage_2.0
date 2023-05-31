@@ -151,11 +151,20 @@
                                                         <small>to: {{email.to}}</small>
                                                     </div>
                                                     <p [innerHTML]="email.body"></p>
-                                                    <div class="email-attachments" *ngIf="email.attachmentUrl != null">
-                                                        <div class="whatsapp-single-img whatsappImgModalBtn" type="button">
-                                                            <img src={{email.attachmentUrl}} class="card-img-top rounded-3">
-                                                        </div>
+                                                    <div class="email-attachments">
+                                                        <div class="whatsapp-single-img whatsappImgModalBtn" type="button"
+                                                        *ngFor="let attachment of email.attachments">
+                                                        <img *ngIf="attachment.mediaType == 'image/png'"
+                                                            src={{attachment.attachmentUrl}}
+                                                            style="width: -webkit-fill-available;">
+                                                        <video *ngIf="attachment.description == 'video'"
+                                                            controls>
+                                                            <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                                style="width: -webkit-fill-available;">
+                                                        </video>
                                                     </div>
+                                                    </div>
+                                                    
                                                     <button class="expand-referenced-msg badge btn rounded-pill "
                                                     (click)="expandEmailBody()">
                                                     <i class="fal fa-ellipsis-h"></i>
@@ -176,11 +185,16 @@
                                                 </div>
                                                 <div class="msg-ref-info">
                                                     <strong>Cc:</strong>
-                                                    {{email.cc}}
+                                                    <span *ngFor="let cc of email.cc">
+                                                        {{cc.emailAddress}}
+                                                    </span>
+                                                    
                                                 </div>
                                                 <div class="msg-ref-info">
                                                     <strong>Bcc:</strong>
-                                                    {{email.bcc}}
+                                                    <span *ngFor="let bcc of email.bcc">
+                                                        {{bcc.emailAddress}}
+                                                    </span>
                                                 </div>
                                                 <div class="msg-ref-info">
                                                     <strong>Subject:</strong>
