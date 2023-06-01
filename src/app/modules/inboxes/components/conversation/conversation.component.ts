@@ -197,7 +197,12 @@ export class ConversationComponent implements OnInit {
         this.listingDto = newMsg;
         this.ConversationList.unshift(this.listingDto);
         // this.TotalUnresponded = this.TotalUnresponded + 1;
-        this.ConversationList.pop();
+        if(this.ConversationList.length >= this.pageSize){
+          this.ConversationList.pop();
+        } else if(this.ConversationList.length <= this.pageSize){
+          this.TotalUnresponded = this.TotalUnresponded + 1;
+          this.from = this.from + 1;
+        }
       } else {
         this.ConversationList = this.updatedList;
       }
@@ -206,10 +211,14 @@ export class ConversationComponent implements OnInit {
   }
 
   removeAssignedQueryListener(res:any){
-    if(localStorage.getItem('agentId') != res.userId){
-      const abc = this.ConversationList.find(x=>x.profileId == res.profileId)
-      this.ConversationList.splice(abc,1);
-     }
+    
+      const index = this.ConversationList.findIndex(x=>x.profileId == res.profileId)
+      if(index !== -1){
+        
+        this.ConversationList.splice(index, 1);
+      }
+      console.log("list after splice",this.ConversationList)
+      this.changeDetect.detectChanges();
   }
 
   Reload() {

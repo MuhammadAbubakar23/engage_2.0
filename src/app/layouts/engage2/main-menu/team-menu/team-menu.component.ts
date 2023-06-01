@@ -30,11 +30,13 @@ export class TeamMenuComponent implements OnInit {
       .subscribe((item:any) => {
         // this.menus$ = item;
         item.forEach((menu:any) => {
+          
           if(menu.mainId != 200){
-            this.menus$.push(menu);
+            if(!this.menus$.includes(menu)){
+              this.menus$.push(menu);
+            }            
           }
-        });
-        
+        });      
         
       });
     // // console.log(this.menu$);

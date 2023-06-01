@@ -28,18 +28,18 @@ export class InboxRightSidebarComponent implements OnInit {
   menu$ :any;
   loading$: any;
   constructor(private store: Store<MenuState>,
-    private sharedService : SharedService,
     private toggleService : ToggleService,
     private rightNavService : RightNavService) {
-      this.menu$ = this.store.select(getEmargingEqual("team_inbox_right_menu"));
-      this.loading$ = this.store.select(getMenusLoading)
-      this.store.dispatch(loadMenusList())
+      // this.menu$ = this.store.select(getEmargingEqual("team_inbox_right_menu"));
+      // this.loading$ = this.store.select(getMenusLoading)
+      // this.store.dispatch(loadMenusList())
     }
 
   ngOnInit(): void {
     this.menus$ =[];
     this.menu$ = this.store.select(getEmargingEqual("team_inbox_right_menu")).subscribe((item:any) => {
       for(let key in item) {
+        
        // // console.log(item)
         let obj = {
           mainId : item[key].mainId,
@@ -52,7 +52,10 @@ export class InboxRightSidebarComponent implements OnInit {
           indexNo:item[key].indexNo
         };
         Object.assign(obj, {dival: item[key].slug+"-rightbar-dashboard"});
-        this.menus$.push(obj);
+
+            if(!this.menus$.includes(obj)){
+              this.menus$.push(obj);
+            }
       }
 
       // this.menus$ = item;
