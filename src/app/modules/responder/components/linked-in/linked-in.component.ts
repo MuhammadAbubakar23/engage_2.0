@@ -1,7 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Tooltip } from 'bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -10,7 +8,6 @@ import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
-import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
@@ -238,6 +235,7 @@ export class LinkedInComponent implements OnInit {
   getLinkedInComments() {
     
     if (this.id != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -290,6 +288,7 @@ export class LinkedInComponent implements OnInit {
              });
         });
     } else if (this.slaId != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -345,7 +344,7 @@ export class LinkedInComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false
       };
-      this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
+      this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
         this.LinkedInData = res.List;
         this.pageName = this.LinkedInData[0].post.profile.page_Name;
 
@@ -493,7 +492,7 @@ export class LinkedInComponent implements OnInit {
         this.reloadComponent('comment');
       },
       ({ error }) => {
-        alert(error.message);
+      //  alert(error.message);
       }
     );
   }
@@ -916,17 +915,6 @@ export class LinkedInComponent implements OnInit {
     });
 
     this.changeDetect.detectChanges();
-  }
-
-  tagsListDropdown =false
-  
-  openTagListDropdown() {
-    this.searchText ='';
-    this.tagsListDropdown = true;
-  }
-  closeTagListDropdown() {
-    this.tagsListDropdown = false
-    this.searchText = ''
   }
   
   updateTicketId(res:any){

@@ -164,7 +164,11 @@ export class ConversationComponent implements OnInit {
         this.SpinnerService.hide();
         this.ConversationList = res.List;
         this.TotalUnresponded = res.TotalCount;
-
+        if(this.ConversationList.length == 0){
+          this.to = 0;
+        } else if(this.ConversationList.length != 0 && this.TotalUnresponded < this.from) {
+          this.to = 1;
+        }        
         if (this.TotalUnresponded < this.from) {
           this.from = this.TotalUnresponded;
         }
@@ -177,15 +181,12 @@ export class ConversationComponent implements OnInit {
   }
 
   updateListDataListener() {
-    
     this.updatedList.forEach((newMsg: any) => {
-      
       const index = this.ConversationList?.findIndex(
         (obj: any) => obj.user === newMsg.user
       );
       if (index >= 0) {
         this.ConversationList.forEach((main: any) => {
-          
           if (newMsg.user == main.user) {
             this.listingDto = newMsg;
             this.listingDto.unrespondedCount =
@@ -205,19 +206,21 @@ export class ConversationComponent implements OnInit {
         }
       } else {
         this.ConversationList = this.updatedList;
+        this.to = 1
+        this.TotalUnresponded = 1;
+        this.from = 1;
       }
     });
     this.changeDetect.detectChanges();
   }
 
   removeAssignedQueryListener(res:any){
-    
       const index = this.ConversationList.findIndex(x=>x.profileId == res.profileId)
       if(index !== -1){
-        
         this.ConversationList.splice(index, 1);
+        this.TotalUnresponded = this.TotalUnresponded - 1;
+        this.from = this.from - 1;
       }
-      console.log("list after splice",this.ConversationList)
       this.changeDetect.detectChanges();
   }
 

@@ -182,7 +182,7 @@
                                                                 </p>
                                                             </div>
                                                             <div class="dropdown w-auto"
-                                                                *ngIf="fbcmnts.queryStatus != 'Responded'">
+                                                                *ngIf="fbcmnts.queryStatus != 'Responded' && fbcmnts.queryStatus != 'Completed'">
                                                                 <button class="btn coal p-0 ps-3" type="button"
                                                                     id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                     aria-expanded="false">
@@ -203,7 +203,7 @@
                                                                 </ul>
                                                             </div>
                                                             <div class="w-auto"
-                                                                *ngIf="fbcmnts.queryStatus == 'Responded'"
+                                                                *ngIf="fbcmnts.queryStatus == 'Responded' || fbcmnts.queryStatus == 'Completed'"
                                                                 style="margin-left: 20px;">
                                                                 <small>{{fbcmnts.queryStatus}} </small>
                                                             </div>

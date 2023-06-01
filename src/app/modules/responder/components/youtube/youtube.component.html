@@ -11,8 +11,7 @@
             <div class="titleIcon d-flex align-items-center">
                 <i class="fab fa-youtube"></i>
                 <div class="titleLink ms-1">
-                    <!-- /{{pageName}} -->
-                    /TMUC
+                    /{{pageName}}
                 </div>
             </div>
             <ul class="nav nav-tabs ms-3 h-100" id="myTab" role="tablist">
@@ -25,7 +24,7 @@
                                 <i class="fal fa-comments-alt ice"></i>
                             </span>
                             Comment
-                            <span class="badge rounded-pill bg-light text-dark ms-3">*ngIf="totalUnrespondedCmntCountByCustomer>0">{{totalUnrespondedCmntCountByCustomer}}</span>
+                            <span class="badge rounded-pill bg-light text-dark ms-3" *ngIf="totalUnrespondedCmntCountByCustomer > 0">{{totalUnrespondedCmntCountByCustomer}}</span>
                         </div>
                     </button>
                 </li>
@@ -139,7 +138,7 @@
                                                                         class="silver">{{youtubecomment.createdDate |
                                                                         date:'h:mm:ss a'}}</small></p>
                                                             </div>
-                                                            <div class="dropdown w-auto" *ngIf="youtubecomment.queryStatus != 'Responded'">
+                                                            <div class="dropdown w-auto" *ngIf="youtubecomment.queryStatus != 'Responded' && youtubecomment.queryStatus != 'Completed'">
                                                                 <button class="btn coal p-0 ps-3" type="button"
                                                                     id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                     aria-expanded="false">
@@ -156,11 +155,12 @@
 
                                                                 </ul>
                                                             </div>
-                                                            <div class="w-auto" *ngIf="youtubecomment.queryStatus == 'Responded'" style="margin-left: 20px;">
+                                                            <div class="w-auto" *ngIf="youtubecomment.queryStatus == 'Responded' || youtubecomment.queryStatus == 'Completed'" style="margin-left: 20px;">
                                                                 <small>{{youtubecomment.queryStatus}} </small>
-                                                                </div>
+                                                            </div>
+                                                            
                                                         </div>
-                                                        <p class="card-text nignt">{{youtubecomment.message}}</p>
+                                                        <p class="card-text nignt" [innerHTML]="youtubecomment.message"></p>
                                                         <div class="tags" *ngFor="let tag of youtubecomment.tags">
                                                             <span (click)="removeTagFromFeed(tag.id, youtubecomment.id)"
                                                                 class="badge rounded-pill tag youtube-pill tag1 selected">{{tag.name}}</span>
@@ -191,7 +191,7 @@
                                                                         Reply
                                                                     </a>
                                                                     <div class="dropdown w-auto">
-                                                                        <button class="iconButton medium" [ngClass]="tagsListDropdown == true?'show':''" (click)="openTagListDropdown()"
+                                                                        <button class="iconButton medium"
                                                                             id="dropdownMenuButton1"
                                                                             data-bs-toggle="dropdown"
                                                                             data-bs-auto-close="outside">
@@ -201,7 +201,6 @@
                                                                             Tag
                                                                         </button>
                                                                         <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                        [ngClass]="tagsListDropdown == true?'show':''"
                                                                             aria-labelledby="dropdownMenuButton2">
                                                                             <ul class="dropdown-listing">
                                                                                 <li class="dropdown-listing-header">
@@ -365,8 +364,7 @@
                                                             <div class="card-body shadow-sm">
                                                                 <div class="d-flex align-items-center mb-2">
                                                                     <h6 class="card-title m-0">
-                                                                        <!-- {{pageName}} -->
-                                                                        TMUC
+                                                                        {{pageName}}
                                                                     </h6>
                                                                     <p class="card-text ms-3">
                                                                         <small class="silver">{{reply.createdDate |
@@ -549,7 +547,7 @@
                     </ul>
                     </div>
                 <button type="submit" class="iconButton small notification iconHover" data-bs-toggle="tooltip"
-                    data-bs-placement="top" title="" id="commentSendbtn" data-bs-original-title="Send" [disabled]="youtubeCommentReplyForm.invalid">
+                    data-bs-placement="top" title="" id="commentSendbtn" data-bs-original-title="Send" [disabled]="!youtubeCommentReplyForm.valid">
                     <i class="fal fa-paper-plane"></i>
                 </button>
             </div>

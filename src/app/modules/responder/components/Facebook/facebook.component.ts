@@ -995,7 +995,7 @@ export class FacebookComponent implements OnInit {
         this.reloadComponent('comment');
       },
       ({ error }) => {
-        alert(error.message);
+      //  alert(error.message);
       }
     );
   }

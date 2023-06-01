@@ -231,7 +231,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
         this.reloadComponent('comment');
       },
       ({ error }) => {
-        alert(error.message);
+      //  alert(error.message);
       }
     );
   }

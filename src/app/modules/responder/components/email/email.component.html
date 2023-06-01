@@ -62,7 +62,7 @@
                 <div class="tab-content m-4" id="myTabContent">
                     <div class="tab-pane fade show active" id="post" role="tabpanel" aria-labelledby="post-tab">
                         <div *ngFor="let list of Emails">
-                            <div *ngFor="let group of list.groupedComments">
+                            <div *ngFor="let group of list.groupedComments | sort:criteria">
                                 <div class="email-content-header">
                                     <div class="header-subheading text silver"> {{group.createdDate | date:'MMMM dd, YYYY'}}
 
@@ -82,7 +82,7 @@
                                 We're happy about your cooperation
                             </div> -->
                                 </div>
-                                <ng-container *ngFor="let email of group.items; let i = index">
+                                <ng-container *ngFor="let email of group.items | sort:criteria; let i = index">
                                     <ng-container *ngIf="email.queryStatus != 'QueryCompleted'">
                                 <div class="accordion email-accordion" id="abc" >
 
@@ -123,7 +123,7 @@
                                                 <!-- expanded header -->
                                                 <div class="expanded-card-header-actions icons-list">
                                                     <small class="silver ms-2 me-2">{{email.createdDate |  date:'MMMM d, y, h:mm:ss a'}}</small>
-                                                    <ng-container  *ngIf="email.queryStatus != 'Responded'">
+                                                    <ng-container  *ngIf="email.queryStatus != 'Responded' && email.queryStatus != 'Completed'">
                                                     <small>{{email.queryStatus}}</small>
                                                     <div class="dropdown w-auto">
                                                         <button class="btn icon p-0 iconHover" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -138,7 +138,7 @@
                                                         </ul>
                                                     </div>
                                                 </ng-container>
-                                                    <div class="w-auto" *ngIf="email.queryStatus == 'Responded'" style="margin-left: 20px;">
+                                                    <div class="w-auto" *ngIf="email.queryStatus == 'Responded' || email.queryStatus == 'Completed'" style="margin-left: 20px;">
                                                         <small>{{email.queryStatus}} </small>
                                                     </div>
                                                 </div>
@@ -226,11 +226,11 @@
                                                                 class="fal fa-arrow-alt-to-right"></i>
                                                             Forword</button> -->
     
-                                                        <button type="button" class="btn btn-outline-secondary me-2" [ngClass]="tagsListDropdown == true?'show':''" (click)="openTagListDropdown()"
+                                                        <button type="button" class="btn btn-outline-secondary me-2"
                                                             id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                             data-bs-auto-close="outside"><i class="fal fa-tag"></i>
                                                             Tag</button>
-                                                        <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList" [ngClass]="tagsListDropdown == true?'show':''"
+                                                        <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
                                                             aria-labelledby="dropdownMenuButton2">
                                                             <ul class="dropdown-listing">
                                                                 <li class="dropdown-listing-header">
@@ -371,7 +371,7 @@
                                 </div>
                                 <div class="accordion email-accordion " id="accordionExampleReply">
                                     <div class="accordion-item email-wrap mb-3 email-reply"
-                                        *ngFor="let reply of email.replies; let i =index">
+                                        *ngFor="let reply of email.replies | sort:criteria; let i =index">
                                         <div class="accordion-header"
                                             [ngClass]="{ 'open': i === email.id }" >
                                             <button class="accordion-button " (click)="openEmail(i)"
@@ -592,18 +592,8 @@
                                 <div class="reply-header-left">
                                     <div class="input-group">
                                         <strong class="input-group-text charcoal fw-bold" id="basic-addon1">Cc:</strong>
-                                        <input formControlName="cc" id="cc" value={{emailCc}} class="form-control"
+                                        <input formControlName="cc" id="cc" value={{emailCc.toString()}} class="form-control"
                                             aria-label="css" aria-describedby="basic-addon1">
-                                        <!-- <div class="tags m-0">
-                                            <span
-                                                class="badge rounded-pill tag tag1 email selected">nabeel.naseem@gmail.com
-                                                <span class="ice ms-2"><i class="fal fa-times"></i></span></span>
-                                            <span class="badge rounded-pill tag tag2 email selected">ameer.adil
-                                                <span class="ice ms-2"><i class="fal fa-times"></i></span></span>
-                                            <span
-                                                class="badge rounded-pill tag tag2 email selected">farhan.ahmed@gmail.com
-                                                <span class="ice ms-2"><i class="fal fa-times"></i></span></span>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>

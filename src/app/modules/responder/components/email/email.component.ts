@@ -88,10 +88,10 @@ export class EmailComponent implements OnInit {
     this.fullName = localStorage.getItem('storeOpenedId') || '{}'
 
 
-    // this.criteria = {
-    //   property: 'createdDate',
-    //   descending: true,
-    // };
+    this.criteria = {
+      property: 'createdDate',
+      descending: true,
+    };
     this.TodayDate = new Date();
 
     this.getEmails();
@@ -144,7 +144,6 @@ export class EmailComponent implements OnInit {
 
 
   updateCommentsDataListener() {
-    
         this.updatedComments.forEach((xyz: any) => {
           if (this.id == xyz.userId) {
             this.commentDto = {
@@ -534,15 +533,17 @@ export class EmailComponent implements OnInit {
   platform: string = '';
   postType: string = '';
   emailTo: any;
-  emailCc: any;
+  emailCc: any[]=[];
   emailBcc: any;
   emailSubject: any;
   emailFrom: any;
+  
 
   sendEmailInformation(id: any) {
     this.Emails.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
         if (comment.id == id) {
+          debugger
           // populate comment data
 
           this.emailId = comment.id;
@@ -550,10 +551,14 @@ export class EmailComponent implements OnInit {
           this.platform = xyz.platform;
           this.postType = comment.contentType;
           this.emailTo = comment.to;
-          this.emailCc = comment.cc;
           this.emailBcc = comment.bcc;
           this.emailSubject = comment.message;
           this.emailFrom = comment.userName.split(/[<>]/)[1];
+          comment.cc?.forEach((item:any) => {
+            if(!this.emailCc.includes(item.emailAddress)){
+              this.emailCc.push(item.emailAddress)
+            }
+          });
         }
       });
     });
@@ -611,7 +616,7 @@ export class EmailComponent implements OnInit {
         this.reloadComponent('comment');
       },
       ({ error }) => {
-        alert(error.message);
+      //  alert(error.message);
       }
     );
   }
@@ -626,15 +631,17 @@ export class EmailComponent implements OnInit {
   emailReply: any;
 
   clearInputField() {
-    this.emailReply = '';
-    this.emailText = '';
+    debugger
+    this.emailReplyForm.reset();
     this.show = false;
     this.emailId = '';
     this.agentId = '';
     this.platform = '';
     this.postType = '';
+    this.ImageName = [];
+    this.ReplyDto.cc = '';
+    this.ReplyDto.bcc = '';
   }
-
   toastermessage = false;
   AlterMsg: any = '';
   reloadComponent(type: any) {
@@ -893,17 +900,6 @@ export class EmailComponent implements OnInit {
       this.pageSize = this.pageSize + 10
       this.getEmails();
     }
-  }
-
-  tagsListDropdown =false
-  
-  openTagListDropdown() {
-    this.searchText ='';
-    this.tagsListDropdown = true;
-  }
-  closeTagListDropdown() {
-    this.tagsListDropdown = false
-    this.searchText = ''
   }
 
   isAttachment = false;

@@ -183,6 +183,7 @@ export class SmsDetailsComponent implements OnInit {
   }
   getSmsData() {
     if (this.id != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -236,6 +237,7 @@ export class SmsDetailsComponent implements OnInit {
           });
         });
     } else if (this.slaId != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -298,7 +300,7 @@ export class SmsDetailsComponent implements OnInit {
       };
 
       this.SpinnerService.show();
-      this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
+      this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.ConverstationDetailDto = res;
         this.SmsData = this.ConverstationDetailDto.List;
@@ -563,7 +565,7 @@ export class SmsDetailsComponent implements OnInit {
         this.reloadComponent('comment');
       },
       ({ error }) => {
-        alert(error.message);
+      //  alert(error.message);
       }
     );
   }
@@ -766,16 +768,5 @@ export class SmsDetailsComponent implements OnInit {
       });
     });
     this.changeDetect.detectChanges();
-  }
-
-  tagsListDropdown = false;
-
-  openTagListDropdown() {
-    this.searchText = '';
-    this.tagsListDropdown = true;
-  }
-  closeTagListDropdown() {
-    this.tagsListDropdown = false;
-    this.searchText = '';
   }
 }

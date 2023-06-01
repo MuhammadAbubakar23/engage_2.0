@@ -201,6 +201,7 @@ export class WhatsappDetailsComponent implements OnInit {
 
   getWhatsappData() {
     if (this.id != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -252,6 +253,7 @@ export class WhatsappDetailsComponent implements OnInit {
           });
         });
     } else if (this.slaId != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -311,7 +313,7 @@ export class WhatsappDetailsComponent implements OnInit {
         isAttachment: false
       };
       this.SpinnerService.show();
-      this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
+      this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.WhatsappData = res.List;
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -631,7 +633,7 @@ export class WhatsappDetailsComponent implements OnInit {
         this.reloadComponent('comment');
       },
       ({ error }) => {
-        alert(error.message);
+      //  alert(error.message);
       }
     );
   }
@@ -819,16 +821,5 @@ export class WhatsappDetailsComponent implements OnInit {
       });
     });
     this.changeDetect.detectChanges();
-  }
-  
-  tagsListDropdown =false
-  
-  openTagListDropdown() {
-    this.searchText ='';
-    this.tagsListDropdown = true;
-  }
-  closeTagListDropdown() {
-    this.tagsListDropdown = false
-    this.searchText = ''
   }
 }

@@ -32,9 +32,13 @@ export class TeamMenuComponent implements OnInit {
         item.forEach((menu:any) => {
           
           if(menu.mainId != 200){
-            if(!this.menus$.includes(menu)){
+            const index = this.menus$.findIndex(x=>x.mainId == menu.mainId)
+            if(index == -1){
               this.menus$.push(menu);
-            }            
+            }
+            // if(!this.menus$.includes(menu)){
+            //   this.menus$.push(menu);
+            // }            
           }
         });      
         

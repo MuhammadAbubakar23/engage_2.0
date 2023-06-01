@@ -134,7 +134,7 @@
                                                         <p class="card-text ms-3"><small
                                                                 class="silver">{{comment.createdDate | date:'h:mm:ss a '}}</small></p>
                                                     </div>
-                                                    <div class="dropdown w-auto" *ngIf="comment.queryStatus != 'Responded'">
+                                                    <div class="dropdown w-auto" *ngIf="comment.queryStatus != 'Responded' && comment.queryStatus != 'Completed'">
                                                         <button class="btn coal p-0 ps-3" type="button"
                                                             id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                             aria-expanded="false">
@@ -151,7 +151,7 @@
 
                                                         </ul>
                                                     </div>
-                                                    <div class="w-auto" *ngIf="comment.queryStatus == 'Responded'" style="margin-left: 20px;">
+                                                    <div class="w-auto" *ngIf="comment.queryStatus == 'Responded' || comment.queryStatus == 'Completed'" style="margin-left: 20px;">
                                                         <small> {{ comment.queryStatus}} </small>
                                                     </div>
                                                 </div>

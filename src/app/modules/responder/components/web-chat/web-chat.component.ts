@@ -69,6 +69,7 @@ export class WebChatComponent implements OnInit {
 
   getWebChat(){
     if(this.id != null || undefined){
+      localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -116,6 +117,7 @@ export class WebChatComponent implements OnInit {
   
        });
     } else if(this.slaId != null || undefined){
+      localStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),

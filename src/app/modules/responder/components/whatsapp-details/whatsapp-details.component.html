@@ -55,7 +55,7 @@
                                                         <p class="card-text ms-3"><small class="silver">{{whatsappMsg.createdDate |
                                                                 date:'hh:mm:ss a'}}</small></p>
                                                     </div>
-                                                    <div class="dropdown w-auto" *ngIf="whatsappMsg.queryStatus != 'Responded'">
+                                                    <div class="dropdown w-auto" *ngIf="whatsappMsg.queryStatus != 'Responded' && whatsappMsg.queryStatus != 'Completed'">
                                                         <button class="btn coal p-0 ps-3" type="button"
                                                             id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                             aria-expanded="false">
@@ -73,7 +73,7 @@
 
                                                         </ul>
                                                     </div>
-                                                    <div class="w-auto" *ngIf="whatsappMsg.queryStatus == 'Responded'" style="margin-left: 20px;">
+                                                    <div class="w-auto" *ngIf="whatsappMsg.queryStatus == 'Responded' || whatsappMsg.queryStatus == 'Completed'" style="margin-left: 20px;">
                                                         <small>{{whatsappMsg.queryStatus}} </small>
                                                         </div>
                                                 </div>
@@ -96,7 +96,7 @@
                                                                 Reply
                                                             </a>
                                                             <div class="dropdown w-auto">
-                                                                <button class="iconButton medium" id="dropdownMenuButton1" [ngClass]="tagsListDropdown == true?'show':''" (click)="openTagListDropdown()"
+                                                                <button class="iconButton medium" id="dropdownMenuButton1" 
                                                                     data-bs-toggle="dropdown" data-bs-auto-close="outside">
                                                                     <span class="iconButton small btn mx-2">
                                                                         <i class="fal fa-tag coal"></i>
@@ -104,7 +104,6 @@
                                                                     Tag
                                                                 </button>
                                                                 <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                [ngClass]="tagsListDropdown == true?'show':''"
                                                                     aria-labelledby="dropdownMenuButton2">
                                                                     <ul class="dropdown-listing">
                                                                         <li class="dropdown-listing-header">

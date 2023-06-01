@@ -65,7 +65,6 @@ export class InboxResponderComponent implements OnInit {
     private sharedService: SharedService,
     private rightNavService: RightNavService,
     private toggleService : ToggleService,
-    private responderGuard : ResponderGuardGuard
   ) {}
 
   ngOnInit(): void {
@@ -231,6 +230,13 @@ export class InboxResponderComponent implements OnInit {
         this.target?.createComponent(componentFactory);
         break;
       case 'Email':
+        this.showPanel = false;
+        localStorage.setItem('child', '')
+        componentFactory =
+          this.resolver.resolveComponentFactory(EmailComponent);
+        this.target?.createComponent(componentFactory);
+        break;
+        case 'OfficeEmail':
         this.showPanel = false;
         localStorage.setItem('child', '')
         componentFactory =

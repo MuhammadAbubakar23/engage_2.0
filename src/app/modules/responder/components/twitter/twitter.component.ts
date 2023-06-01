@@ -301,6 +301,7 @@ export class TwitterComponent implements OnInit {
 
   getTwitterData() {
     if (this.id != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -360,6 +361,7 @@ export class TwitterComponent implements OnInit {
         this.SpinnerService.hide();
       }, 3000);
     } else if (this.slaId != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -427,7 +429,7 @@ export class TwitterComponent implements OnInit {
 
       this.spinner1running = true;
       this.SpinnerService.show();
-      this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
+      this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.spinner1running = false;
         this.TwitterConversation = res.List;
@@ -474,6 +476,7 @@ export class TwitterComponent implements OnInit {
 
   getTwitterMessages() {
     if (this.id != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -524,6 +527,7 @@ export class TwitterComponent implements OnInit {
           });
         });
     } else if (this.slaId != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -583,7 +587,7 @@ export class TwitterComponent implements OnInit {
       };
 
       this.SpinnerService.show();
-      this.commondata.GetSlaDM(this.filterDto).subscribe((res: any) => {
+      this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.TwitterMessage = res.List.dm;
         this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
@@ -956,7 +960,7 @@ export class TwitterComponent implements OnInit {
         this.reloadComponent('comment');
       },
       ({ error }) => {
-        alert(error.message);
+      //  alert(error.message);
       }
     );
   }
@@ -1037,7 +1041,7 @@ export class TwitterComponent implements OnInit {
         this.reloadComponent('fbmessage');
       },
       ({ error }) => {
-        alert(error.message);
+      //  alert(error.message);
       }
     );
   }
@@ -1377,17 +1381,6 @@ export class TwitterComponent implements OnInit {
       });
     });
     this.changeDetect.detectChanges();
-  }
-
-  tagsListDropdown = false;
-
-  openTagListDropdown() {
-    this.searchText = '';
-    this.tagsListDropdown = true;
-  }
-  closeTagListDropdown() {
-    this.tagsListDropdown = false;
-    this.searchText = '';
   }
 
   updateTicketId(res: any) {

@@ -53,9 +53,9 @@
                                             <div class="post-img-wrap whatsappImgModalBtn" type="button"
                                                 style="width:375px;"
                                                 *ngFor="let attachment of linkedIn.post.attachments">
-                                                <img *ngIf="attachment.attachmentType == 'image'"
+                                                <img *ngIf="attachment.description == 'IMAGE' || 'image'"
                                                     src={{attachment.attachmentUrl}}>
-                                                <video *ngIf="attachment.attachmentType == 'video'" width="375px"
+                                                <video *ngIf="attachment.description == 'video'" width="375px"
                                                     controls>
                                                     <source src={{attachment.attachmentUrl}} type="video/mp4">
                                                 </video>
@@ -150,7 +150,7 @@
                                                                         date:'h:mm:ss a'}}</small>
                                                                 </p>
                                                             </div>
-                                                            <div class="dropdown w-auto" *ngIf="cmnts.queryStatus != 'Responded'">
+                                                            <div class="dropdown w-auto" *ngIf="cmnts.queryStatus != 'Responded' && cmnts.queryStatus != 'Completed'">
                                                                 <button class="btn coal p-0 ps-3" type="button"
                                                                     id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                     aria-expanded="false">
@@ -168,14 +168,19 @@
 
                                                                 </ul>
                                                             </div>
-                                                            <div class="w-auto" *ngIf="cmnts.queryStatus == 'Responded'" style="margin-left: 20px;">
+                                                            <div class="w-auto" *ngIf="cmnts.queryStatus == 'Responded' || cmnts.queryStatus == 'Completed'" style="margin-left: 20px;">
                                                                 <small>{{cmnts.queryStatus}} </small>
                                                                 </div>
                                                         </div>
-                                                        <div class="whatsapp-single-img whatsappImgModalBtn"
-                                                            type="button">
-                                                            <img src={{cmnts.attachment}} class="card-img-top rounded-3"
-                                                                style="width: 300px;">
+                                                        <div class="post-img-wrap whatsappImgModalBtn" type="button"
+                                                            style="width:375px;"
+                                                            *ngFor="let attachment of cmnts.attachments">
+                                                                <img *ngIf="attachment.description == 'IMAGE' || 'image'"
+                                                                        src={{attachment.attachmentUrl}} style="width: -webkit-fill-available;">
+                                                            <video *ngIf="attachment.description == 'video'" width="375px"
+                                                                controls>
+                                                                <source src={{attachment.attachmentUrl}} type="video/mp4">
+                                                            </video>
                                                         </div>
                                                         <p class="card-text nignt">{{cmnts.message}}</p>
                                                         <div class="tags" *ngFor="let tag of cmnts.tags">
@@ -192,7 +197,7 @@
                                                                 <div
                                                                     class="message-actionlist d-flex align-items-center">
                                                                     <div class="box">
-                                                                        <a class="message-actionItem coal likebht btn p-0 label-reactions"
+                                                                        <a class="message-actionItem coal likebht p-0 label-reactions"
                                                                             (click)="likeByAdmin(cmnts.id, cmnts.isLikedByAdmin, linkedIn.platform, linkedIn.post?.profile.page_Id, linkedIn.post?.profile.profile_Id, linkedIn.post?.profile.profile_Id)"
                                                                             [class.active]="cmnts.isLikedByAdmin == true">
                                                                             <span class="iconButton small btn">
@@ -210,7 +215,7 @@
                                                                         Reply
                                                                     </a>
                                                                     <div class="dropdown w-auto">
-                                                                        <button class="iconButton medium" [ngClass]="tagsListDropdown == true?'show':''" (click)="openTagListDropdown()"
+                                                                        <button class="iconButton medium" 
                                                                             id="dropdownMenuButton1"
                                                                             data-bs-toggle="dropdown"
                                                                             data-bs-auto-close="outside">
@@ -220,7 +225,7 @@
                                                                             Tag
                                                                         </button>
                                                                         <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                        [ngClass]="tagsListDropdown == true?'show':''"
+                                                                        
                                                                             aria-labelledby="dropdownMenuButton2">
                                                                             <ul class="dropdown-listing">
                                                                                 <li class="dropdown-listing-header">

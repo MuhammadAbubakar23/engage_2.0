@@ -215,6 +215,7 @@ export class YoutubeComponent implements OnInit {
   pageName: any;
   getYoutubeData() {
     if (this.id != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -283,6 +284,7 @@ export class YoutubeComponent implements OnInit {
           });
         });
     } else if (this.slaId != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -299,6 +301,8 @@ export class YoutubeComponent implements OnInit {
         this.SpinnerService.hide();
         this.spinner1running = false;
         this.YoutubeData = res.List;
+          this.pageName = this.YoutubeData[0]?.post.profile.page_Name;
+          this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
 
         this.commentsArray = [];
 
@@ -346,10 +350,12 @@ export class YoutubeComponent implements OnInit {
       };
       this.spinner1running = true;
       this.SpinnerService.show();
-      this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
+      this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.spinner1running = false;
         this.YoutubeData = res.List;
+          this.pageName = this.YoutubeData[0]?.post.profile.page_Name;
+          this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
 
         this.commentsArray = [];
 
@@ -476,7 +482,7 @@ export class YoutubeComponent implements OnInit {
         this.reloadComponent('comment');
       },
       ({ error }) => {
-        alert(error.message);
+        // alert(error.message);
       }
     );
   }
@@ -861,16 +867,6 @@ export class YoutubeComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  tagsListDropdown =false
-  
-  openTagListDropdown() {
-    this.searchText ='';
-    this.tagsListDropdown = true;
-  }
-  closeTagListDropdown() {
-    this.tagsListDropdown = false
-    this.searchText = ''
-  }
 
   updateTicketId(res:any){
     this.YoutubeData.forEach((post: any) => {
