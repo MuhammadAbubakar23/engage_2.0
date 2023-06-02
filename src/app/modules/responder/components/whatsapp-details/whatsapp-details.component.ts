@@ -35,6 +35,9 @@ import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ti
   styleUrls: ['./whatsapp-details.component.scss'],
 })
 export class WhatsappDetailsComponent implements OnInit {
+
+  @ViewChild('fileInput') fileInput!: ElementRef;
+
   id = this.fetchId.id;
   slaId = this.fetchId.getSlaId();
 
@@ -68,6 +71,7 @@ export class WhatsappDetailsComponent implements OnInit {
   WhatsappMsgText: string = '';
   WhatsappMsgReply: string = '';
   ImageName: any;
+  ImageArray:any[]=[];
   Keywords: any[] = [];
   TodayDate: any;
   queryStatus:any;
@@ -640,10 +644,18 @@ export class WhatsappDetailsComponent implements OnInit {
 
   isAttachment = false;
 
-  onFileChanged(event: any) {
-    if (event.target.files.length > 0) {
+  onFileChanged() {
+    if (this.fileInput.nativeElement.files.length > 0) {
       this.isAttachment = true;
-      this.ImageName = event.target.files;
+
+      const filesArray = Array.from(this.fileInput.nativeElement.files);
+      filesArray.forEach((attachment:any) => {
+        this.ImageArray.push(attachment)
+      });
+      const files = this.ImageArray.map((file:any) => file); // Create a new array with the remaining files
+        const newFileList = new DataTransfer();
+        files.forEach((file:any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+        this.ImageName = newFileList.files;
     }
   }
 
@@ -673,17 +685,26 @@ export class WhatsappDetailsComponent implements OnInit {
     });
   }
 
-  removeAttachedFile(image: any) {
-    for (let index = 0; index < this.ImageName.length; index++) {
-      const index = this.ImageName.indexOf(image);
-      if (index !== -1) {
-        this.ImageName.slice(index, 1);
-      }
-    }
-    if (this.ImageName.length == 0) {
-      this.isAttachment = false;
-    }
+  removeAttachedFile(index: any) {
+    const filesArray = Array.from(this.ImageName);
+      filesArray.splice(index, 1);
+      this.ImageArray.splice(index, 1);
+      
+      const files = filesArray.map((file:any) => file); // Create a new array with the remaining files
+      const newFileList = new DataTransfer();
+      files.forEach(file => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+
+      this.fileInput.nativeElement.files = newFileList.files; 
+      this.detectChanges()
+
+  if (this.ImageName.length == 0) {
+    this.isAttachment = false;
   }
+}
+
+detectChanges(): void {
+  this.ImageName = this.fileInput.nativeElement.files;
+}
   Emojies = [
     { id: 1, emoji: '🙁', tile: 'sad' },
     { id: 2, emoji: '😀', tile: 'happy' },

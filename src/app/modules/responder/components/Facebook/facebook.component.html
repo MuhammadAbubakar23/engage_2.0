@@ -1041,7 +1041,7 @@
                         <button class="iconButton small notification iconHover channels-attachment-btn">
                             <i class="fal fa-paperclip"></i></button>
                         <input type="file" formControlName="Image" class="form-control uplaoded-box" multiple
-                            (change)="onFileChanged($event)">
+                        (change)="onFileChanged()" #fileInput>
                     </div>
                     <button class="iconButton small notification iconHover" data-bs-toggle="tooltip"
                         data-bs-placement="top" title="" type="submit" [disabled]="facebookReplyForm.invalid"
@@ -1127,7 +1127,7 @@
                         <button class="iconButton small notification iconHover channels-attachment-btn">
                             <i class="fal fa-paperclip"></i></button>
                         <input type="file" formControlName="Image" class="form-control uplaoded-box" multiple
-                            (change)="onFileChanged($event)">
+                        (change)="onFileChanged()" #fileInput>
                     </div>
                     <button class="iconButton small notification iconHover" data-bs-toggle="tooltip"
                         data-bs-placement="top" title="" type="submit" [disabled]="facebookMessageReplyForm.invalid"

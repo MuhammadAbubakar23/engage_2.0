@@ -182,7 +182,7 @@ export class ResponderHeaderComponent implements OnInit {
               this.totalInstaUnrespondedCountByCustomer =
                 this.totalInstaUnrespondedCountByCustomer + 1;
             }
-            if (msg.contentType == 'Mail') {
+            if (msg.contentType == 'Mail' || msg.contentType == 'OMail') {
               this.EmailUnrespondedCmntCountByCustomer =
                 this.EmailUnrespondedCmntCountByCustomer + 1;
             }
@@ -245,7 +245,7 @@ export class ResponderHeaderComponent implements OnInit {
             this.InstaUnrespondedCmntCountByCustomer;
         }
 
-        if (res.contentCount.contentType == 'Mail') {
+        if (res.contentCount.contentType == 'Mail' || res.contentCount.contentType == 'OMail') {
           this.EmailUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
         }
@@ -343,7 +343,7 @@ export class ResponderHeaderComponent implements OnInit {
     if (this.fetchId.platform == 'Instagram') {
       this.totalCount = this.InstaUnrespondedCmntCountByCustomer;
     }
-    if (this.fetchId.platform == 'Email') {
+    if (this.fetchId.platform == 'Email' || this.fetchId.platform == 'OfficeEmail') {
       this.totalCount = this.EmailUnrespondedCmntCountByCustomer;
     }
 
@@ -423,7 +423,7 @@ export class ResponderHeaderComponent implements OnInit {
               if (profiles.platform == 'Instagram') {
                 this.instagramId = profiles.customerUniqueId;
               }
-              if (profiles.platform == 'Email') {
+              if (profiles.platform == 'Email' || profiles.platform == 'OfficeEmail') {
                 this.emailId = profiles.customerUniqueId;
               }
               if (profiles.platform == 'Twitter') {
@@ -452,7 +452,7 @@ export class ResponderHeaderComponent implements OnInit {
             if (this.platformsArray.includes('Instagram')) {
               this.instagram = true;
             }
-            if (this.platformsArray.includes('Email')) {
+            if (this.platformsArray.includes('Email') || this.platformsArray.includes('OfficeEmail')) {
               this.email = true;
             }
             if (this.platformsArray.includes('WhatsApp')) {
@@ -549,7 +549,7 @@ export class ResponderHeaderComponent implements OnInit {
               }
             }
 
-            if (this.fetchId.platform == 'Email') {
+            if (this.fetchId.platform == 'Email' || this.fetchId.platform == 'OfficeEmail') {
               this.EmailUnrespondedCmntCountByCustomer = res.TotalCount;
             }
 
@@ -586,7 +586,7 @@ export class ResponderHeaderComponent implements OnInit {
               if (profiles.platform == 'Instagram') {
                 this.instagramId = profiles.customerUniqueId;
               }
-              if (profiles.platform == 'Email') {
+              if (profiles.platform == 'Email' || profiles.platform == 'OfficeEmail') {
                 this.emailId = profiles.customerUniqueId;
               }
               if (profiles.platform == 'Twitter') {
@@ -621,7 +621,7 @@ export class ResponderHeaderComponent implements OnInit {
             if (this.platformsArray.includes('Instagram')) {
               this.instagram = true;
             }
-            if (this.platformsArray.includes('Email')) {
+            if (this.platformsArray.includes('Email') || this.platformsArray.includes('OfficeEmail')) {
               this.email = true;
             }
             if (this.platformsArray.includes('WhatsApp')) {
@@ -748,7 +748,7 @@ export class ResponderHeaderComponent implements OnInit {
         if (this.platformsArray.includes('Instagram')) {
           this.instagram = true;
         }
-        if (this.platformsArray.includes('Email')) {
+        if (this.platformsArray.includes('Email') || this.platformsArray.includes('OfficeEmail')) {
           this.email = true;
         }
         if (this.platformsArray.includes('WhatsApp')) {
@@ -806,7 +806,7 @@ export class ResponderHeaderComponent implements OnInit {
         if (this.fetchId.platform == 'Instagram') {
           this.InstaUnrespondedCmntCountByCustomer = res.TotalCount;
         }
-        if (this.fetchId.platform == 'Email') {
+        if (this.fetchId.platform == 'Email' || this.fetchId.platform == 'OfficeEmail') {
           this.EmailUnrespondedCmntCountByCustomer = res.TotalCount;
         }
 
@@ -855,7 +855,7 @@ export class ResponderHeaderComponent implements OnInit {
               if (profiles.platform == 'Instagram') {
                 this.instagramId = profiles.customerUniqueId;
               }
-              if (profiles.platform == 'Email') {
+              if (profiles.platform == 'Email' || profiles.platform == 'OfficeEmail') {
                 this.emailId = profiles.customerUniqueId;
               }
               if (profiles.platform == 'Twitter') {
@@ -890,7 +890,7 @@ export class ResponderHeaderComponent implements OnInit {
             if (this.platformsArray.includes('Instagram')) {
               this.instagram = true;
             }
-            if (this.platformsArray.includes('Email')) {
+            if (this.platformsArray.includes('Email') || this.platformsArray.includes('OfficeEmail')) {
               this.email = true;
             }
             if (this.platformsArray.includes('WhatsApp')) {
@@ -945,7 +945,7 @@ export class ResponderHeaderComponent implements OnInit {
             if (this.fetchId.platform == 'Instagram') {
               this.InstaUnrespondedCmntCountByCustomer = res.TotalCount;
             }
-            if (this.fetchId.platform == 'Email') {
+            if (this.fetchId.platform == 'Email' || this.fetchId.platform == 'OfficeEmail') {
               this.EmailUnrespondedCmntCountByCustomer = res.TotalCount;
             }
 
@@ -993,7 +993,7 @@ export class ResponderHeaderComponent implements OnInit {
               if (profiles.platform == 'Instagram') {
                 this.instagramId = profiles.customerUniqueId;
               }
-              if (profiles.platform == 'Email') {
+              if (profiles.platform == 'Email' || profiles.platform == 'OfficeEmail') {
                 this.emailId = profiles.customerUniqueId;
               }
               if (profiles.platform == 'Twitter') {
@@ -1022,7 +1022,7 @@ export class ResponderHeaderComponent implements OnInit {
             if (this.platformsArray.includes('Instagram')) {
               this.instagram = true;
             }
-            if (this.platformsArray.includes('Email')) {
+            if (this.platformsArray.includes('Email') || this.platformsArray.includes('OfficeEmail')) {
               this.email = true;
             }
             if (this.platformsArray.includes('WhatsApp')) {
@@ -1079,7 +1079,7 @@ export class ResponderHeaderComponent implements OnInit {
             if (this.fetchId.platform == 'Instagram') {
               this.InstaUnrespondedCmntCountByCustomer = res.TotalCount;
             }
-            if (this.fetchId.platform == 'Email') {
+            if (this.fetchId.platform == 'Email' || this.fetchId.platform == 'OfficeEmail') {
               this.EmailUnrespondedCmntCountByCustomer = res.TotalCount;
             }
 
@@ -1222,7 +1222,8 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'Mail') {
+    if (this.postType == 'Mail' || this.postType == 'OMail') {
+      
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;

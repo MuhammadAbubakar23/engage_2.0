@@ -517,7 +517,8 @@ export class InstagramComponent implements OnInit {
       });
     });
   }
-  ImageName: any[] = [];
+  ImageName: any;
+  ImageArray:any[]=[];
   submitInstagramCommentReply() {
     if (
       this.InstacommentId == undefined ||

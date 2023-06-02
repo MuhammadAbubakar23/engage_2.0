@@ -32,6 +32,9 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 })
 export class EmailComponent implements OnInit {
 
+  @ViewChild('fileInput') fileInput!: ElementRef;
+
+
   @Input() name:string="";
   @Input() subname:string="";
   @Input() imagename:string="";
@@ -41,6 +44,7 @@ export class EmailComponent implements OnInit {
 
   id = this.fetchId.getOption();
   slaId = this.fetchId.getSlaId();
+  parentPlatform = this.fetchId.platform;
 
   pageNumber: any = 1;
   pageSize: any = 10;
@@ -124,7 +128,7 @@ export class EmailComponent implements OnInit {
       .getUnRespondedCount()
       .subscribe((res) => {
         
-        if (res.contentCount.contentType == 'Mail') {
+        if (res.contentCount.contentType == 'Mail' || res.contentCount.contentType == 'OMail') {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
         }
@@ -216,7 +220,7 @@ export class EmailComponent implements OnInit {
         // toDate: new Date(),
         user: this.id,
         pageId: '',
-        plateForm: 'Email',
+        plateForm: this.parentPlatform,
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false
@@ -272,7 +276,7 @@ export class EmailComponent implements OnInit {
         // toDate: new Date(),
         user: this.slaId,
         pageId: '',
-        plateForm: 'Email',
+        plateForm: this.parentPlatform,
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false
@@ -413,10 +417,10 @@ export class EmailComponent implements OnInit {
   insertTagsForFeedDto = new InsertTagsForFeedDto();
   checkTag = false;
 
-  insertTags(id: any, comId: any) {
+  insertTags(id: any, comId: any, feedType:any) {
     this.insertTagsForFeedDto.feedId = comId.toString();
     this.insertTagsForFeedDto.tagId = id;
-    this.insertTagsForFeedDto.feedType = 'Mail';
+    this.insertTagsForFeedDto.feedType = feedType;
     this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
 
     this.Emails.forEach((abc: any) => {
@@ -434,7 +438,7 @@ export class EmailComponent implements OnInit {
           } else if (comment.tags.length > 0) {
             const value = comment.tags.find((x: any) => x.id == id);
             if (value != null || value != undefined) {
-              this.removeTag(id, comId);
+              this.removeTag(id, comId, feedType);
             } else {
               this.commondata
                 .InsertTag(this.insertTagsForFeedDto)
@@ -451,8 +455,10 @@ export class EmailComponent implements OnInit {
     });
   }
   insertSentimentForFeedDto = new InsertSentimentForFeedDto();
+  appliedSentiment:string='';
 
   insertSentiment(feedId: any, sentimenName: any, type: any) {
+    
     this.insertSentimentForFeedDto.feedId = feedId.toString();
     this.insertSentimentForFeedDto.sentiment = sentimenName;
     this.insertSentimentForFeedDto.feedType = type;
@@ -461,14 +467,16 @@ export class EmailComponent implements OnInit {
     this.commondata
       .InsertSentiment(this.insertSentimentForFeedDto)
       .subscribe((res: any) => {
+        debugger
         this.reloadComponent('Sentiment');
+        this.appliedSentiment = sentimenName;
       });
   }
 
-  removeTag(id: any, comId: any) {
+  removeTag(id: any, comId: any, feedType:any) {
     this.insertTagsForFeedDto.feedId = comId.toString();
     this.insertTagsForFeedDto.tagId = id;
-    this.insertTagsForFeedDto.feedType = 'Mail';
+    this.insertTagsForFeedDto.feedType = feedType;
     this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
 
     this.commondata
@@ -543,7 +551,7 @@ export class EmailComponent implements OnInit {
     this.Emails.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
         if (comment.id == id) {
-          debugger
+          
           // populate comment data
 
           this.emailId = comment.id;
@@ -565,7 +573,7 @@ export class EmailComponent implements OnInit {
   }
 
   ImageName: any;
-
+  ImageArray:any[]=[];
   submitEmailReply() {
     
     if (
@@ -620,10 +628,18 @@ export class EmailComponent implements OnInit {
       }
     );
   }
-  onFileChanged(event: any) {
-    if (event.target.files.length > 0) {
+  onFileChanged() {
+    if (this.fileInput.nativeElement.files.length > 0) {
       this.isAttachment = true;
-      this.ImageName = event.target.files;
+
+      const filesArray = Array.from(this.fileInput.nativeElement.files);
+      filesArray.forEach((attachment:any) => {
+        this.ImageArray.push(attachment)
+      });
+      const files = this.ImageArray.map((file:any) => file); // Create a new array with the remaining files
+        const newFileList = new DataTransfer();
+        files.forEach((file:any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+        this.ImageName = newFileList.files;
     }
   }
 
@@ -631,7 +647,7 @@ export class EmailComponent implements OnInit {
   emailReply: any;
 
   clearInputField() {
-    debugger
+    
     this.emailReplyForm.reset();
     this.show = false;
     this.emailId = '';
@@ -764,9 +780,10 @@ export class EmailComponent implements OnInit {
   }
 
   commentStatus(comId: any, type: any) {
+    
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
-    this.commentStatusDto.plateForm = 'Email';
+    this.commentStatusDto.plateForm = this.parentPlatform;
     this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
     this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata.CommentRespond(this.commentStatusDto).subscribe((res: any) => {
@@ -777,7 +794,7 @@ export class EmailComponent implements OnInit {
     
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
-    this.commentStatusDto.plateForm = 'Email';
+    this.commentStatusDto.plateForm = this.parentPlatform;
     this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .QueryCompleted(this.commentStatusDto)
@@ -904,18 +921,35 @@ export class EmailComponent implements OnInit {
 
   isAttachment = false;
 
-  removeAttachedFile(image: any) {
-    
-    for (let index = 0; index < this.ImageName.length; index++) {
-      const index = this.ImageName.indexOf(image);
-      if (index !== -1) {
-        this.ImageName.slice(index, 1);
-      }
-    }
+  removeAttachedFile(index: any) {
+      const filesArray = Array.from(this.ImageName);
+        filesArray.splice(index, 1);
+        this.ImageArray.splice(index, 1);
+        
+        const files = filesArray.map((file:any) => file); // Create a new array with the remaining files
+        const newFileList = new DataTransfer();
+        files.forEach(file => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+
+        this.fileInput.nativeElement.files = newFileList.files; 
+        this.detectChanges()
+
     if (this.ImageName.length == 0) {
       this.isAttachment = false;
     }
+  }
 
-    // console.log('This is image array=====>', this.ImageName);
+  detectChanges(): void {
+    this.ImageName = this.fileInput.nativeElement.files;
+  }
+  trimText(text: string): string{
+    
+    if(text.length < 50){
+      return text
+    } else {
+      return text.slice(0, 1000) + "...";
+      
+    }
+    console.log(text)
+
   }
 }

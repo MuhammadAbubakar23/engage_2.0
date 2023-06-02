@@ -48,6 +48,8 @@ declare var toggleEmojis: any;
   styleUrls: ['./facebook.component.scss'],
 })
 export class FacebookComponent implements OnInit {
+
+  @ViewChild('fileInput') fileInput!: ElementRef;
   @ViewChild('container') container!: ElementRef;
 
   FacebookData: any;
@@ -73,7 +75,8 @@ export class FacebookComponent implements OnInit {
   msgText: any = '';
   msgId: any;
   filesToUpload: any;
-  ImageName: any[] = [];
+  ImageName: any;
+  ImageArray:any[]=[];
   totalUnrespondedCmntCountByCustomer: number = 0;
   postIdForStats: any;
   pageIdForStats: any;
@@ -834,10 +837,18 @@ export class FacebookComponent implements OnInit {
 
   isAttachment = false;
 
-  onFileChanged(event: any) {
-    if (event.target.files.length > 0) {
+  onFileChanged() {
+    if (this.fileInput.nativeElement.files.length > 0) {
       this.isAttachment = true;
-      this.ImageName = event.target.files;
+
+      const filesArray = Array.from(this.fileInput.nativeElement.files);
+      filesArray.forEach((attachment:any) => {
+        this.ImageArray.push(attachment)
+      });
+      const files = this.ImageArray.map((file:any) => file); // Create a new array with the remaining files
+        const newFileList = new DataTransfer();
+        files.forEach((file:any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+        this.ImageName = newFileList.files;
     }
   }
 
@@ -1400,19 +1411,26 @@ export class FacebookComponent implements OnInit {
     this.fbMsgReply = true;
   }
 
-  removeAttachedFile(image: any) {
-    
-    for (let index = 0; index < this.ImageName.length; index++) {
-      const index = this.ImageName.indexOf(image);
-      if (index !== -1) {
-        this.ImageName.slice(index, 1);
-      }
-    }
-    if (this.ImageName.length == 0) {
-      this.isAttachment = false;
-    }
+  removeAttachedFile(index: any) {
+    const filesArray = Array.from(this.ImageName);
+      filesArray.splice(index, 1);
+      this.ImageArray.splice(index, 1);
+      
+      const files = filesArray.map((file:any) => file); // Create a new array with the remaining files
+      const newFileList = new DataTransfer();
+      files.forEach(file => newFileList.items.add(file)); // Add the files to a new DataTransfer object
 
+      this.fileInput.nativeElement.files = newFileList.files; 
+      this.detectChanges()
+
+  if (this.ImageName.length == 0) {
+    this.isAttachment = false;
   }
+}
+
+detectChanges(): void {
+  this.ImageName = this.fileInput.nativeElement.files;
+}
 
   Emojies = [
     { id: 1, emoji: '🙁', tile: 'sad' },

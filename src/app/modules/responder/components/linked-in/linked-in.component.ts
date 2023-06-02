@@ -28,6 +28,8 @@ import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ti
 })
 export class LinkedInComponent implements OnInit {
 
+  @ViewChild('fileInput') fileInput!: ElementRef;
+
   id = this.fetchId.getOption();
 
   LinkedInData:any;
@@ -54,7 +56,8 @@ export class LinkedInComponent implements OnInit {
   queryStatus:any;
   
   filesToUpload: any;
-  ImageName: any[]=[];
+  ImageName: any;
+  ImageArray:any[]=[];
  
   commentReply: any;
   getAppliedTagsList: any;
@@ -404,25 +407,41 @@ export class LinkedInComponent implements OnInit {
   }
 
   imageSize:any;
-  onFileChanged(event: any) {
-    
-    if (event.target.files.length > 0) {
-      this.isAttachment = true
-      this.ImageName = event.target.files;
+  onFileChanged() {
+    if (this.fileInput.nativeElement.files.length > 0) {
+      this.isAttachment = true;
+
+      const filesArray = Array.from(this.fileInput.nativeElement.files);
+      filesArray.forEach((attachment:any) => {
+        this.ImageArray.push(attachment)
+      });
+      const files = this.ImageArray.map((file:any) => file); // Create a new array with the remaining files
+        const newFileList = new DataTransfer();
+        files.forEach((file:any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+        this.ImageName = newFileList.files;
     }
   }
 
-  removeAttachedFile(image: any) {
-    for (let index = 0; index < this.ImageName.length; index++) {
-      const index = this.ImageName.indexOf(image);
-      if (index !== -1) {
-        this.ImageName.slice(index, 1);
-      }
-    }
-   if(this.ImageName.length == 0){
+  removeAttachedFile(index: any) {
+    const filesArray = Array.from(this.ImageName);
+      filesArray.splice(index, 1);
+      this.ImageArray.splice(index, 1);
+      
+      const files = filesArray.map((file:any) => file); // Create a new array with the remaining files
+      const newFileList = new DataTransfer();
+      files.forEach(file => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+
+      this.fileInput.nativeElement.files = newFileList.files; 
+      this.detectChanges()
+
+  if (this.ImageName.length == 0) {
     this.isAttachment = false;
-   }
   }
+}
+
+detectChanges(): void {
+  this.ImageName = this.fileInput.nativeElement.files;
+}
   linkedInReplyForm = new UntypedFormGroup({
     text: new UntypedFormControl(this.ReplyDto.text, Validators.required),
     commentId: new UntypedFormControl(this.ReplyDto.commentId),

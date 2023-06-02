@@ -33,12 +33,16 @@ import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ti
   styleUrls: ['./twitter.component.scss'],
 })
 export class TwitterComponent implements OnInit {
+
+  @ViewChild('fileInput') fileInput!: ElementRef;
+
   checkTag = false;
   activeTag = false;
   TagsList: any;
 
   userIdsDto = this.fetchId.getIds();
   ImageName: any;
+  ImageArray:any[]=[];
   TwitterConversation: any;
   TwitterMessage: any[] = [];
 
@@ -966,10 +970,20 @@ export class TwitterComponent implements OnInit {
   }
 
   UploadedFile: FormData = new FormData();
+  isAttachment=false;
 
-  onFileChanged(event: any) {
-    if (event.target.files.length > 0) {
-      this.ImageName = event.target.files;
+  onFileChanged() {
+    if (this.fileInput.nativeElement.files.length > 0) {
+      this.isAttachment = true;
+
+      const filesArray = Array.from(this.fileInput.nativeElement.files);
+      filesArray.forEach((attachment:any) => {
+        this.ImageArray.push(attachment)
+      });
+      const files = this.ImageArray.map((file:any) => file); // Create a new array with the remaining files
+        const newFileList = new DataTransfer();
+        files.forEach((file:any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+        this.ImageName = newFileList.files;
     }
   }
 
