@@ -37,7 +37,7 @@ import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ti
 export class WhatsappDetailsComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput!: ElementRef;
-
+  @ViewChild('radioInput', { static: false }) radioInput!: ElementRef<HTMLInputElement>;
   id = this.fetchId.id;
   slaId = this.fetchId.getSlaId();
 
@@ -642,11 +642,13 @@ export class WhatsappDetailsComponent implements OnInit {
         'CommentReply',
         JSON.stringify(this.WhatsappReplyForm.value)
       );
-      if(this.WhatsappReplyForm.value.text !== ""){
+      if((this.WhatsappReplyForm.value.text !== "" && this.WhatsappReplyForm.value.text !== null) 
+            || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.clearInputField();
             this.reloadComponent('comment');
+            this.radioInput.nativeElement.checked = false;
           },
           ({ error }) => {
           //  alert(error.message);
@@ -656,6 +658,7 @@ export class WhatsappDetailsComponent implements OnInit {
         this.reloadComponent('empty-input-field')
       }
     }
+    this.quickReplySearchText = '';
   }
 
   isAttachment = false;

@@ -35,6 +35,7 @@ import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ti
 export class TwitterComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput!: ElementRef;
+  @ViewChild('radioInput', { static: false }) radioInput!: ElementRef<HTMLInputElement>;
 
   checkTag = false;
   activeTag = false;
@@ -959,11 +960,13 @@ export class TwitterComponent implements OnInit {
         'CommentReply',
         JSON.stringify(this.TwitterRepliesForm.value)
       );
-      if(this.TwitterRepliesForm.value.text !== ""){
+      if((this.TwitterRepliesForm.value.text !== "" && this.TwitterRepliesForm.value.text !== null) 
+            || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.clearInputField();
             this.reloadComponent('comment');
+            this.radioInput.nativeElement.checked = false;
           },
           ({ error }) => {
           //  alert(error.message);
@@ -973,6 +976,7 @@ export class TwitterComponent implements OnInit {
         this.reloadComponent('empty-input-field')
       }
     }
+    this.quickReplySearchText = '';
   }
 
   UploadedFile: FormData = new FormData();
@@ -1059,11 +1063,13 @@ export class TwitterComponent implements OnInit {
         'CommentReply',
         JSON.stringify(this.twitterMessageReplyForm.value)
       );
-      if(this.twitterMessageReplyForm.value.text !== ""){
+      if((this.twitterMessageReplyForm.value.text !== "" && this.twitterMessageReplyForm.value.text !== null) 
+            || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.clearInputField();
             this.reloadComponent('comment');
+            this.radioInput.nativeElement.checked = false;
           },
           ({ error }) => {
           //  alert(error.message);
@@ -1073,6 +1079,7 @@ export class TwitterComponent implements OnInit {
         this.reloadComponent('empty-input-field')
       }
     }
+    this.quickReplySearchText = '';
   }
 
   likeByAdminDto = new LikeByAdminDto();

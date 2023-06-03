@@ -210,6 +210,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
   }
 
   text:string="";
+  ImageName:any;
 
   submitYoutubeCommentReply() {
     if(this.youtubecommentId == 0){
@@ -239,7 +240,8 @@ export class MinimizedChatWidgetComponent implements OnInit {
         'CommentReply',
         JSON.stringify(this.youtubeCommentReplyForm.value)
       );
-      if(this.youtubeCommentReplyForm.value.text !== ""){
+      if((this.youtubeCommentReplyForm.value.text !== "" && this.youtubeCommentReplyForm.value.text !== null) 
+            || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.clearInputField();

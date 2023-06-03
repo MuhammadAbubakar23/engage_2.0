@@ -51,6 +51,7 @@ export class FacebookComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput!: ElementRef;
   @ViewChild('container') container!: ElementRef;
+  @ViewChild('radioInput', { static: false }) radioInput!: ElementRef<HTMLInputElement>;
 
   FacebookData: any;
   FacebookMessages: any;
@@ -1003,11 +1004,14 @@ export class FacebookComponent implements OnInit {
         'CommentReply',
         JSON.stringify(this.facebookReplyForm.value)
       );
-      if(this.facebookReplyForm.value.text !== ""){
+      if((this.facebookReplyForm.value.text !== "" && this.facebookReplyForm.value.text !== null) 
+            || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.clearInputField();
             this.reloadComponent('comment');
+            
+        this.radioInput.nativeElement.checked = false;
           },
           ({ error }) => {
           //  alert(error.message);
@@ -1017,6 +1021,7 @@ export class FacebookComponent implements OnInit {
         this.reloadComponent('empty-input-field')
       }
     }
+    this.quickReplySearchText = '';
   }
 
   clearInputField() {
@@ -1061,11 +1066,14 @@ export class FacebookComponent implements OnInit {
         'CommentReply',
         JSON.stringify(this.facebookMessageReplyForm.value)
       );
-      if(this.facebookMessageReplyForm.value.text !== ""){
+      if((this.facebookMessageReplyForm.value.text !== "" && this.facebookMessageReplyForm.value.text !== null) 
+            || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.clearInputField();
             this.reloadComponent('fbmessage');
+            
+        this.radioInput.nativeElement.checked = false;
           },
           ({ error }) => {
           //  alert(error.message);
@@ -1075,6 +1083,7 @@ export class FacebookComponent implements OnInit {
         this.reloadComponent('empty-input-field')
       }
     }
+    this.quickReplySearchText = '';
   }
 
   toggle(child: string, cmntId: any) {

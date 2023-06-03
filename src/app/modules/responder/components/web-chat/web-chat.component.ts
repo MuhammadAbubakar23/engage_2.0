@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Tooltip } from 'bootstrap';
@@ -19,6 +19,8 @@ import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ti
   styleUrls: ['./web-chat.component.scss']
 })
 export class WebChatComponent implements OnInit {
+
+  @ViewChild('radioInput', { static: false }) radioInput!: ElementRef<HTMLInputElement>;
 
   id = this.fetchId.id;
   data:any;
@@ -190,6 +192,8 @@ export class WebChatComponent implements OnInit {
       wcVisitorSessionId: this.WebChat.Session.id,
       fromName:this.WebChat.VisitorMessages[0].fromName
     });
+    this.radioInput.nativeElement.checked = false;
+    // this.quickReplySearchText = '';
 
     // this.webchatdata.SendWebChatReply(this.WebChatReplyForm.value).subscribe((res: any) => {
     //  //  alert(res.message);

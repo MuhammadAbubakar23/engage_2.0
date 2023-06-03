@@ -30,6 +30,9 @@ import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ti
   styleUrls: ['./youtube.component.scss'],
 })
 export class YoutubeComponent implements OnInit {
+
+  @ViewChild('radioInput', { static: false }) radioInput!: ElementRef<HTMLInputElement>;
+
   id = this.fetchId.getOption();
   slaId = this.fetchId.getSlaId();
 
@@ -482,11 +485,12 @@ export class YoutubeComponent implements OnInit {
         'CommentReply',
         JSON.stringify(this.youtubeCommentReplyForm.value)
       );
-      if(this.youtubeCommentReplyForm.value.text !== ""){
+      if(this.youtubeCommentReplyForm.value.text !== "" && this.youtubeCommentReplyForm.value.text !== null){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.clearInputField();
             this.reloadComponent('comment');
+            this.radioInput.nativeElement.checked = false;
           },
           ({ error }) => {
           //  alert(error.message);
@@ -496,6 +500,7 @@ export class YoutubeComponent implements OnInit {
         this.reloadComponent('empty-input-field')
       }
     }
+    this.quickReplySearchText = '';
   }
 
   likeByAdminDto = new LikeByAdminDto();

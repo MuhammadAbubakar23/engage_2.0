@@ -11,7 +11,6 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
@@ -22,7 +21,6 @@ import { InsertSentimentForFeedDto } from 'src/app/shared/Models/InsertSentiment
 import { InsertTagsForFeedDto } from 'src/app/shared/Models/InsertTagsForFeedDto';
 import { InstagramCommentReplyDto } from 'src/app/shared/Models/InstagramCommentReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import {
   commentsDto,
   messagesDto,
@@ -48,7 +46,7 @@ import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ti
 export class InstagramComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput!: ElementRef;
-  
+  @ViewChild('radioInput', { static: false }) radioInput!: ElementRef<HTMLInputElement>;
   InstagramData: any;
 
   id = this.fetchId.getOption();
@@ -552,11 +550,13 @@ export class InstagramComponent implements OnInit {
         'CommentReply',
         JSON.stringify(this.instagramCommentReplyForm.value)
       );
-      if(this.instagramCommentReplyForm.value.text !== ""){
+      if((this.instagramCommentReplyForm.value.text !== "" && this.instagramCommentReplyForm.value.text !== null) 
+            || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.clearInputField();
             this.reloadComponent('comment');
+            this.radioInput.nativeElement.checked = false;
           },
           ({ error }) => {
           //  alert(error.message);
@@ -566,6 +566,7 @@ export class InstagramComponent implements OnInit {
         this.reloadComponent('empty-input-field')
       }
     }
+    this.quickReplySearchText = '';
   }
 
   commentStatus(comId: any, type: any) {
@@ -1342,11 +1343,13 @@ export class InstagramComponent implements OnInit {
         'CommentReply',
         JSON.stringify(this.instagramMessageReplyForm.value)
       );
-      if(this.instagramMessageReplyForm.value.text !== ""){
+      if((this.instagramMessageReplyForm.value.text !== "" && this.instagramMessageReplyForm.value.text !== null) 
+            || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.clearInputField();
             this.reloadComponent('comment');
+            this.radioInput.nativeElement.checked = false;
           },
           ({ error }) => {
           //  alert(error.message);
@@ -1356,6 +1359,7 @@ export class InstagramComponent implements OnInit {
         this.reloadComponent('empty-input-field')
       }
     }
+    this.quickReplySearchText = '';
   }
 
   updateTicketId(res:any){

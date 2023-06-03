@@ -29,6 +29,8 @@ import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ti
 export class LinkedInComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput!: ElementRef;
+  @ViewChild('radioInput', { static: false }) radioInput!: ElementRef<HTMLInputElement>;
+
 
   id = this.fetchId.getOption();
 
@@ -506,11 +508,13 @@ detectChanges(): void {
         'CommentReply',
         JSON.stringify(this.linkedInReplyForm.value)
       );
-      if(this.linkedInReplyForm.value.text !== ""){
+      if((this.linkedInReplyForm.value.text !== "" && this.linkedInReplyForm.value.text !== null) 
+            || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.clearInputField();
             this.reloadComponent('comment');
+            this.radioInput.nativeElement.checked = false;
           },
           ({ error }) => {
           //  alert(error.message);
@@ -520,6 +524,7 @@ detectChanges(): void {
         this.reloadComponent('empty-input-field')
       }
     }    
+    this.quickReplySearchText = '';
   }
 
   clearInputField() {
@@ -554,6 +559,7 @@ detectChanges(): void {
   }
 
   quickReplyList() {
+    
     this.commondata.QuickReplyList().subscribe((res: any) => {
       this.QuickReplies = res;
     });
@@ -969,5 +975,9 @@ detectChanges(): void {
       });
     });
     this.changeDetect.detectChanges();
+  }
+
+  closeQuickResponseSidebar(){
+    this.quickReplySearchText = '';
   }
 }

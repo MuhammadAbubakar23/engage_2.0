@@ -676,7 +676,7 @@
                 <h6 class="silver pt-3 mb-0">Quick Response</h6>
             </div>
             <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas"
-                aria-label="Close"><i class="fal fa-times"></i></button>
+                aria-label="Close" (click)="closeQuickResponseSidebar()"><i class="fal fa-times"></i></button>
         </div>
         <div class="offcanvas-body">
 
@@ -694,7 +694,7 @@
                             <div class="list-group list-group-flush mb-4 ms-4 ps-1" >
                                 <div class="form-check list-group-item theme-check">
                                     <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id={{qr.value}}>
+                                        id={{qr.value}} #radioInput>
                                     <label class="form-check-label" for={{qr.value}} (click)="sendQuickReply(qr.value)">{{qr.text}}
                                     </label>
                                 </div>

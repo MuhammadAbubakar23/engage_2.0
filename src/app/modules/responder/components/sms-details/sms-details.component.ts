@@ -25,6 +25,9 @@ import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ti
   styleUrls: ['./sms-details.component.scss'],
 })
 export class SmsDetailsComponent implements OnInit {
+
+  @ViewChild('radioInput', { static: false }) radioInput!: ElementRef<HTMLInputElement>;
+
   SmsData: any;
 
   id = this.fetchId.id;
@@ -571,13 +574,14 @@ export class SmsDetailsComponent implements OnInit {
         'CommentReply',
         JSON.stringify(this.SmsReplyForm.value)
       );
-      if(this.SmsReplyForm.value.text !== ""){
+      if(this.SmsReplyForm.value.text !== "" && this.SmsReplyForm.value.text !== null){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.clearInputField();
             this.getSmsData();
             
             this.reloadComponent('comment');
+            this.radioInput.nativeElement.checked = false;
           },
           ({ error }) => {
           //  alert(error.message);
@@ -587,6 +591,7 @@ export class SmsDetailsComponent implements OnInit {
         this.reloadComponent('empty-input-field')
       }
     }
+    this.quickReplySearchText = '';
   }
 
   clearInputField() {
