@@ -67,13 +67,13 @@ export class FacebookComponent implements OnInit {
   tagDropdown = false;
 
   chatText: any;
-  commentId: any;
+  commentId: number=0;
   agentId: any;
   platform: any;
   postType: any;
   dmMsg: any = '';
   msgText: any = '';
-  msgId: any;
+  msgId: number=0;
   filesToUpload: any;
   ImageName: any;
   ImageArray:any[]=[];
@@ -158,10 +158,10 @@ export class FacebookComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.criteria = {
-    //   property: 'createdDate',
-    //   descending: false,
-    // };
+    this.criteria = {
+      property: 'createdDate',
+      descending: false,
+    };
     this.TodayDate = new Date();
 
     this.getFacebookComments();
@@ -973,94 +973,108 @@ export class FacebookComponent implements OnInit {
 
   }
 
+  text:string="";
+
   submitFacebookReply() {
-    
-    if(this.commentId == undefined || this.commentId == '' || this.commentId == null){
+    if(this.commentId == 0){
       this.reloadComponent('selectComment');
     } else {
-    var formData = new FormData();
-    if (this.ImageName != null || undefined) {
-      for (let index = 0; index < this.ImageName.length; index++) {
-        formData.append('File', this.ImageName[index]);
+      var formData = new FormData();
+      if (this.ImageName != null || undefined) {
+        for (let index = 0; index < this.ImageName.length; index++) {
+          formData.append('File', this.ImageName[index]);
+        }
+      }
+      if(this.text !== ""){
+        this.facebookReplyForm.patchValue({
+          text: this.text
+        })
+    }
+      this.facebookReplyForm.patchValue({
+        commentId: this.commentId,
+        teamId: this.agentId,
+        platform: this.platform,
+        contentType: this.postType,
+        profileId: this.profileId,
+        profilePageId: this.profilePageId,
+      });
+  
+      formData.append(
+        'CommentReply',
+        JSON.stringify(this.facebookReplyForm.value)
+      );
+      if(this.facebookReplyForm.value.text !== ""){
+        this.commondata.ReplyComment(formData).subscribe(
+          (res: any) => {
+            this.clearInputField();
+            this.reloadComponent('comment');
+          },
+          ({ error }) => {
+          //  alert(error.message);
+          }
+        );
+      } else {
+        this.reloadComponent('empty-input-field')
       }
     }
-
-    this.facebookReplyForm.patchValue({
-      commentId: this.commentId,
-      teamId: this.agentId,
-      platform: this.platform,
-      contentType: this.postType,
-      profileId: this.profileId,
-      profilePageId: this.profilePageId,
-      userProfileId: this.userProfileId,
-    });
-
-    formData.append(
-      'CommentReply',
-      JSON.stringify(this.facebookReplyForm.value)
-    );
-    this.commondata.ReplyComment(formData).subscribe(
-      (res: any) => {
-        this.clearInputField();
-
-        this.reloadComponent('comment');
-      },
-      ({ error }) => {
-      //  alert(error.message);
-      }
-    );
-  }
   }
 
   clearInputField() {
-    this.commentReply = '';
+    this.facebookReplyForm.reset();
+    this.facebookMessageReplyForm.reset();
     this.msgText = '';
     this.show = false;
-    this.commentId = '';
+    this.commentId = 0;
     this.agentId = '';
     this.platform = '';
     this.postType = '';
     this.ImageName = [];
-    this.msgId = '';
+    this.msgId = 0;
   }
 
   submitFacebookMessageReply() {
     
-    if(this.msgId == undefined || this.msgId == '' || this.msgId == null){
+    if(this.msgId == 0){
       this.reloadComponent('selectComment');
     } else {
-    var formData = new FormData();
-    if (this.ImageName != null || undefined) {
-      for (let index = 0; index < this.ImageName.length; index++) {
-        formData.append('File', this.ImageName[index]);
+      var formData = new FormData();
+      if (this.ImageName != null || undefined) {
+        for (let index = 0; index < this.ImageName.length; index++) {
+          formData.append('File', this.ImageName[index]);
+        }
+      }
+      if(this.text !== ""){
+        this.facebookMessageReplyForm.patchValue({
+          text: this.text
+        })
+    }
+      this.facebookMessageReplyForm.patchValue({
+        commentId: this.commentId,
+        teamId: this.agentId,
+        platform: this.platform,
+        contentType: this.postType,
+        profileId: this.profileId,
+        profilePageId: this.profilePageId,
+      });
+  
+      formData.append(
+        'CommentReply',
+        JSON.stringify(this.facebookMessageReplyForm.value)
+      );
+      if(this.facebookMessageReplyForm.value.text !== ""){
+        this.commondata.ReplyComment(formData).subscribe(
+          (res: any) => {
+            this.clearInputField();
+            this.reloadComponent('fbmessage');
+          },
+          ({ error }) => {
+          //  alert(error.message);
+          }
+        );
+      } else {
+        this.reloadComponent('empty-input-field')
       }
     }
-
-    this.facebookMessageReplyForm.patchValue({
-      commentId: this.msgId,
-      teamId: this.agentId,
-      platform: this.platform,
-      contentType: this.postType,
-      profileId: this.profileId,
-      profilePageId: this.profilePageId,
-      userProfileId: this.userProfileId,
-    });
-
-    formData.append(
-      'CommentReply',
-      JSON.stringify(this.facebookMessageReplyForm.value)
-    );
-    this.commondata.ReplyComment(formData).subscribe(
-      (res: any) => {
-        this.clearInputField();
-
-        this.reloadComponent('fbmessage');
-      },
-      (error) => {
-        alert(error.error.message);
-      }
-    );
-  }
   }
 
   toggle(child: string, cmntId: any) {
@@ -1077,7 +1091,7 @@ export class FacebookComponent implements OnInit {
     
     var abc = this.QuickReplies.find((res: any) => res.value == value);
 
-    this.chatText = abc?.text;
+    this.text = abc?.text + " ";
 
    // this.facebookReplyForm.patchValue({ text: this.chatText });
    this.insertAtCaret(this.chatText)
@@ -1335,6 +1349,13 @@ export class FacebookComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
+    if (type == 'empty-input-field') {
+      this.AlterMsg = 'Please write something!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'selectComment') {
       this.AlterMsg = 'No comment or message is selected!';
       this.toastermessage = true;
@@ -1412,6 +1433,7 @@ export class FacebookComponent implements OnInit {
   }
 
   removeAttachedFile(index: any) {
+    
     const filesArray = Array.from(this.ImageName);
       filesArray.splice(index, 1);
       this.ImageArray.splice(index, 1);
@@ -1421,7 +1443,7 @@ export class FacebookComponent implements OnInit {
       files.forEach(file => newFileList.items.add(file)); // Add the files to a new DataTransfer object
 
       this.fileInput.nativeElement.files = newFileList.files; 
-      this.detectChanges()
+      this.detectChanges();
 
   if (this.ImageName.length == 0) {
     this.isAttachment = false;
@@ -1430,6 +1452,7 @@ export class FacebookComponent implements OnInit {
 
 detectChanges(): void {
   this.ImageName = this.fileInput.nativeElement.files;
+  this.text = this.textarea.nativeElement.value
 }
 
   Emojies = [
@@ -1462,12 +1485,12 @@ detectChanges(): void {
       textarea.selectionStart = startPos + text.length;
       textarea.selectionEnd = startPos + text.length;
       textarea.scrollTop = scrollTop;
-      // console.log(this.textarea.nativeElement.value);
+      this.detectChanges();
     }
   }
 
   insertEmoji(emoji: any) {
-    this.insertAtCaret(emoji);
+    this.insertAtCaret(' ' + emoji + ' ');
   }
   onScrollComments() {
     this.pageSize = this.pageSize + 10;

@@ -113,11 +113,11 @@
                                 </div>
                             </div>
 
-                            <div *ngFor="let group of youtubedata.groupedComments ">
+                            <div *ngFor="let group of youtubedata.groupedComments | sort:criteria">
                                 <div class="date-wrap">
                                     <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}} </p>
                                 </div>
-                                <ng-container *ngFor="let youtubecomment of group.items ">
+                                <ng-container *ngFor="let youtubecomment of group.items | sort:criteria">
                                     <ng-container *ngIf="youtubecomment.queryStatus != 'QueryCompleted'">
                                         <div class="message-wrap agent-message-wrap right"
                                             *ngIf="youtubedata.post.postId == youtubecomment.postId">
@@ -357,7 +357,7 @@
                                                 (click)="toggle('ticket', youtubecomment.id)"><i
                                                         class="fal fa-plus-circle sky"></i></span>
                                             </div>
-                                            <div *ngFor="let reply of youtubecomment.replies">
+                                            <div *ngFor="let reply of youtubecomment.replies | sort:criteria">
                                                 <div class="message-wrap agent-message-wrap left">
                                                     <div class="agent-container">
                                                         <div class="card card-txt ms-auto">
@@ -524,7 +524,7 @@
             </div>
             <div class="form-floating textarea-field">
                 <textarea formControlName="text" class="form-control auto" rows="1" id="text"
-                    placeholder="Write a response here" [(ngModel)]="commentReply" style="height: 0px" #textarea></textarea>
+                    placeholder="Write a response here" [(ngModel)]="youtubeCommentReplyForm.value.text" style="height: 0px" #textarea></textarea>
             </div>
             <div class="icons-list align-items-md-center d-flex ps-2">
                 <div class="dropdown w-auto">

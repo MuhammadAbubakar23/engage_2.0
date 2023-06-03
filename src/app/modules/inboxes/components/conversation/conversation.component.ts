@@ -139,14 +139,16 @@ export class ConversationComponent implements OnInit {
   getPlatform() {
     this.subscription = this.filterService.getTogglePanel().subscribe((res) => {
       this.platform = res;
+      this.pageNumber = 1;
       this.getConversationList();
     });
   }
 
-  to: any = 1;
-  from: any = this.pageSize;
+  to: number=0;
+  from: number=0;
 
   getConversationList() {
+    
     this.filterDto = {
       // fromDate : new Date(),
       // toDate : new Date(),
@@ -164,14 +166,17 @@ export class ConversationComponent implements OnInit {
         this.SpinnerService.hide();
         this.ConversationList = res.List;
         this.TotalUnresponded = res.TotalCount;
+        if (this.TotalUnresponded < this.pageSize) {
+          this.from = this.TotalUnresponded;
+        } else if (this.TotalUnresponded > this.pageSize && this.from < this.pageSize) {
+          this.from = this.pageSize
+        } 
         if(this.ConversationList.length == 0){
           this.to = 0;
-        } else if(this.ConversationList.length != 0 && this.TotalUnresponded < this.from) {
+        } else if(this.ConversationList.length != 0 && this.from != 0 && this.pageNumber == 1) {
           this.to = 1;
         }        
-        if (this.TotalUnresponded < this.from) {
-          this.from = this.TotalUnresponded;
-        }
+       
       });
   }
 
@@ -406,10 +411,10 @@ export class ConversationComponent implements OnInit {
 
   remaining:number=0;
   NextPage(pageNumber: any) {
+    
     if (this.TotalUnresponded < this.from) {
       this.from = this.TotalUnresponded;
     }
-    // this.totalPageNumbers = Math.round(this.TotalUnresponded / this.pageSize);
     this.totalPageNumbers = (this.TotalUnresponded / this.pageSize);
     if(this.totalPageNumbers > pageNumber){
       this.totalPageNumbers = Math.round(this.totalPageNumbers + 1);

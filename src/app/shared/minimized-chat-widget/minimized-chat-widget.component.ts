@@ -38,7 +38,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
   likeCount: any = '';
   favoriteCount: any = '';
   commentCount: any = '';
-  youtubecommentId: any;
+  youtubecommentId: number=0;
   youtubecommentText: any;
   agentId: string = '';
   // platform: string = '';
@@ -209,31 +209,51 @@ export class MinimizedChatWidgetComponent implements OnInit {
     });
   }
 
+  text:string="";
+
   submitYoutubeCommentReply() {
-    var formData = new FormData();
-
-    this.youtubeCommentReplyForm.patchValue({
-      commentId: this.youtubecommentId,
-      teamId: this.agentId,
-      platform: this.platform,
-      contentType: this.postType,
-    });
-
-    formData.append(
-      'CommentReply',
-      JSON.stringify(this.youtubeCommentReplyForm.value)
-    );
-    this.commondata.ReplyComment(formData).subscribe(
-      (res: any) => {
-        this.clearInputField();
-        this.getYoutubeData();
-
-        this.reloadComponent('comment');
-      },
-      ({ error }) => {
-      //  alert(error.message);
+    if(this.youtubecommentId == 0){
+      this.reloadComponent('selectComment');
+    } else {
+      var formData = new FormData();
+      // if (this.ImageName != null || undefined) {
+      //   for (let index = 0; index < this.ImageName.length; index++) {
+      //     formData.append('File', this.ImageName[index]);
+      //   }
+      // }
+      if(this.text !== ""){
+        this.youtubeCommentReplyForm.patchValue({
+          text: this.text
+        })
+    }
+      this.youtubeCommentReplyForm.patchValue({
+        commentId: this.youtubecommentId,
+        teamId: this.agentId,
+        platform: this.platform,
+        contentType: this.postType,
+        // profileId: this.profileId,
+        // profilePageId: this.profilePageId,
+      });
+  
+      formData.append(
+        'CommentReply',
+        JSON.stringify(this.youtubeCommentReplyForm.value)
+      );
+      if(this.youtubeCommentReplyForm.value.text !== ""){
+        this.commondata.ReplyComment(formData).subscribe(
+          (res: any) => {
+            this.clearInputField();
+            this.reloadComponent('comment');
+          },
+          ({ error }) => {
+          //  alert(error.message);
+          }
+        );
+      } else {
+        this.reloadComponent('empty-input-field')
       }
-    );
+    }
+   
   }
 
   likeByAdminDto = new LikeByAdminDto();
@@ -288,7 +308,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
 
-    this.youtubecommentText = abc?.text;
+    this.text = abc?.text + " ";
 
     this.youtubeCommentReplyForm.patchValue({
       text: this.youtubecommentText,
@@ -300,6 +320,11 @@ export class MinimizedChatWidgetComponent implements OnInit {
       this.QuickReplies = res;
       // console.log('Quick Reply List ==>', this.QuickReplies);
     });
+  }
+
+  detectChanges(): void {
+    // this.ImageName = this.fileInput.nativeElement.files;
+    // this.text = this.textarea.nativeElement.value
   }
 
   getTagList() {
@@ -412,6 +437,13 @@ export class MinimizedChatWidgetComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
+    if (type == 'empty-input-field') {
+      this.AlterMsg = 'Please write something!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'comment') {
       this.AlterMsg = 'Comment Send Successfully!';
       this.toastermessage = true;
@@ -463,7 +495,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
     this.commentReply = '';
     this.youtubecommentText = '';
     this.show = false;
-    this.youtubecommentId = '';
+    this.youtubecommentId = 0;
     this.agentId = '';
     this.platform = '';
     this.postType = '';

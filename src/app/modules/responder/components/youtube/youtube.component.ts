@@ -44,7 +44,7 @@ export class YoutubeComponent implements OnInit {
   likeCount: any = '';
   favoriteCount: any = '';
   commentCount: any = '';
-  youtubecommentId: any;
+  youtubecommentId: number=0;
   youtubecommentText: any;
   agentId: string='';
   platform: string = '';
@@ -457,34 +457,45 @@ export class YoutubeComponent implements OnInit {
     });
   }
 
+  text:string="";
+
   submitYoutubeCommentReply() {
-    if(this.youtubecommentId == undefined || this.youtubecommentId == '' || this.youtubecommentId == null){
+    if(this.youtubecommentId == 0){
       this.reloadComponent('selectComment');
+    } else {
+      var formData = new FormData();
+      if(this.text !== ""){
+        this.youtubeCommentReplyForm.patchValue({
+          text: this.text
+        })
     }
-    var formData = new FormData();
-
-    this.youtubeCommentReplyForm.patchValue({
-      commentId: this.youtubecommentId,
-      teamId: this.agentId,
-      platform: this.platform,
-      contentType: this.postType,
-      profileId: this.profileId,
-      profilePageId: this.profilePageId,
-    });
-
-    formData.append(
-      'CommentReply',
-      JSON.stringify(this.youtubeCommentReplyForm.value)
-    );
-    this.commondata.ReplyComment(formData).subscribe(
-      (res: any) => {
-        this.clearInputField();
-        this.reloadComponent('comment');
-      },
-      ({ error }) => {
-        // alert(error.message);
+      this.youtubeCommentReplyForm.patchValue({
+        commentId: this.youtubecommentId,
+        teamId: this.agentId,
+        platform: this.platform,
+        contentType: this.postType,
+        profileId: this.profileId,
+        profilePageId: this.profilePageId,
+      });
+  
+      formData.append(
+        'CommentReply',
+        JSON.stringify(this.youtubeCommentReplyForm.value)
+      );
+      if(this.youtubeCommentReplyForm.value.text !== ""){
+        this.commondata.ReplyComment(formData).subscribe(
+          (res: any) => {
+            this.clearInputField();
+            this.reloadComponent('comment');
+          },
+          ({ error }) => {
+          //  alert(error.message);
+          }
+        );
+      } else {
+        this.reloadComponent('empty-input-field')
       }
-    );
+    }
   }
 
   likeByAdminDto = new LikeByAdminDto();
@@ -544,7 +555,7 @@ export class YoutubeComponent implements OnInit {
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
 
-    this.youtubecommentText = abc?.text;
+    this.text = abc?.text + " ";
 
     // this.youtubeCommentReplyForm.patchValue({
     //   text: this.youtubecommentText,
@@ -557,6 +568,10 @@ export class YoutubeComponent implements OnInit {
       this.QuickReplies = res;
       // console.log('Quick Reply List ==>', this.QuickReplies);
     });
+  }
+
+  detectChanges(): void {
+    this.text = this.textarea.nativeElement.value
   }
 
   getTagList() {
@@ -665,6 +680,13 @@ export class YoutubeComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
+    if (type == 'empty-input-field') {
+      this.AlterMsg = 'Please write something!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'selectComment') {
       this.AlterMsg = 'No comment or message is selected!';
       this.toastermessage = true;
@@ -720,10 +742,10 @@ export class YoutubeComponent implements OnInit {
     this.toastermessage = false;
   }
   clearInputField() {
-    this.commentReply = '';
+    this.youtubeCommentReplyForm.reset();
     this.youtubecommentText = '';
     this.show = false;
-    this.youtubecommentId = '';
+    this.youtubecommentId = 0;
     this.agentId = '';
     this.platform = '';
     this.postType = '';
@@ -755,13 +777,12 @@ export class YoutubeComponent implements OnInit {
       textarea.selectionStart = startPos + text.length;
       textarea.selectionEnd = startPos + text.length;
       textarea.scrollTop = scrollTop;
-      // console.log(this.textarea.nativeElement.value);
+      this.detectChanges();
     }
   }
 
   insertEmoji(emoji:any) {
-    this.insertAtCaret(emoji);
-    // console.log(this.textarea.nativeElement.value);
+    this.insertAtCaret(' ' + emoji + ' ');
   }
 
   addTags: any;

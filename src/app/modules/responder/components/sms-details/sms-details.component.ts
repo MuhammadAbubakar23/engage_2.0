@@ -99,10 +99,10 @@ export class SmsDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.criteria = {
-    //   property: 'createdDate',
-    //   descending: true,
-    // };
+    this.criteria = {
+      property: 'createdDate',
+      descending: true,
+    };
 
     this.TodayDate = new Date();
     this.quickReplyList();
@@ -475,7 +475,7 @@ export class SmsDetailsComponent implements OnInit {
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
 
-    this.smsText = abc?.text;
+    this.text = abc?.text + " ";
 
     //  this.SmsReplyForm.patchValue({ text: this.smsText });
     this.insertAtCaret(this.smsText);
@@ -486,6 +486,10 @@ export class SmsDetailsComponent implements OnInit {
       this.QuickReplies = res;
       // console.log('Quick Reply List ==>', this.QuickReplies);
     });
+  }
+
+  detectChanges(): void {
+    this.text = this.textarea.nativeElement.value
   }
 
   smsStatus(comId: any) {
@@ -542,35 +546,51 @@ export class SmsDetailsComponent implements OnInit {
     platform: new UntypedFormControl(this.ReplyDto.platform),
     contentType: new UntypedFormControl(this.ReplyDto.contentType),
   });
+  
+  text:string="";
 
   submitSmsReply() {
-    if (this.smsId == undefined || this.smsId == null) {
+    if(this.smsId == 0){
       this.reloadComponent('selectComment');
+    } else {
+      var formData = new FormData();
+
+      if(this.text !== ""){
+        this.SmsReplyForm.patchValue({
+          text: this.text
+        })
     }
-    var formData = new FormData();
-
-    this.SmsReplyForm.patchValue({
-      commentId: this.smsId,
-      teamId: this.agentId,
-      platform: this.platform,
-      contentType: this.postType,
-    });
-
-    formData.append('CommentReply', JSON.stringify(this.SmsReplyForm.value));
-    this.commondata.ReplyComment(formData).subscribe(
-      (res: any) => {
-        this.clearInputField();
-        this.getSmsData();
-
-        this.reloadComponent('comment');
-      },
-      ({ error }) => {
-      //  alert(error.message);
+      this.SmsReplyForm.patchValue({
+        commentId: this.smsId,
+        teamId: this.agentId,
+        platform: this.platform,
+        contentType: this.postType,
+      });
+  
+      formData.append(
+        'CommentReply',
+        JSON.stringify(this.SmsReplyForm.value)
+      );
+      if(this.SmsReplyForm.value.text !== ""){
+        this.commondata.ReplyComment(formData).subscribe(
+          (res: any) => {
+            this.clearInputField();
+            this.getSmsData();
+            
+            this.reloadComponent('comment');
+          },
+          ({ error }) => {
+          //  alert(error.message);
+          }
+        );
+      } else {
+        this.reloadComponent('empty-input-field')
       }
-    );
+    }
   }
 
   clearInputField() {
+    this.SmsReplyForm.reset();
     this.smsReply = '';
     this.smsText = '';
     this.show = false;
@@ -581,6 +601,13 @@ export class SmsDetailsComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
+    if (type == 'empty-input-field') {
+      this.AlterMsg = 'Please write something!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'selectComment') {
       this.AlterMsg = 'No comment or message is selected!';
       this.toastermessage = true;
@@ -680,13 +707,12 @@ export class SmsDetailsComponent implements OnInit {
       textarea.selectionStart = startPos + text.length;
       textarea.selectionEnd = startPos + text.length;
       textarea.scrollTop = scrollTop;
-      // console.log(this.textarea.nativeElement.value);
+      this.detectChanges();
     }
   }
 
   insertEmoji(emoji: any) {
-    this.insertAtCaret(emoji);
-    // console.log(this.textarea.nativeElement.value);
+    this.insertAtCaret(' ' + emoji + ' ');
   }
 
   addTags: any;

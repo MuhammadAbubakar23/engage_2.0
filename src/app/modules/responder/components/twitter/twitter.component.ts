@@ -73,7 +73,7 @@ export class TwitterComponent implements OnInit {
   isLikedByAdmin: any;
   ticketId: any;
 
-  tweetId: any;
+  tweetId: number=0;
   newReply: any;
 
   commentStatusDto = new CommentStatusDto();
@@ -119,10 +119,10 @@ export class TwitterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.criteria = {
-    //   property: 'createdDate',
-    //   descending: true,
-    // };
+    this.criteria = {
+      property: 'createdDate',
+      descending: true,
+    };
 
     this.TodayDate = new Date();
     this.getTwitterData();
@@ -929,44 +929,50 @@ export class TwitterComponent implements OnInit {
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
   });
 
+  text:string="";
+
   submitTwitterReply() {
-    if (
-      this.tweetId == undefined ||
-      this.tweetId == '' ||
-      this.tweetId == null
-    ) {
+    if(this.tweetId == 0){
       this.reloadComponent('selectComment');
+    } else {
+      var formData = new FormData();
+      if (this.ImageName != null || undefined) {
+        for (let index = 0; index < this.ImageName.length; index++) {
+          formData.append('File', this.ImageName[index]);
+        }
+      }
+      if(this.text !== ""){
+        this.TwitterRepliesForm.patchValue({
+          text: this.text
+        })
     }
-    var formData = new FormData();
-    if (this.ImageName != null || undefined) {
-      for (let index = 0; index < this.ImageName.length; index++) {
-        formData.append('File', this.ImageName[index]);
+      this.TwitterRepliesForm.patchValue({
+        commentId: this.tweetId,
+        teamId: this.agentId,
+        platform: this.platform,
+        contentType: this.postType,
+        profileId: this.profileId,
+        profilePageId: this.profilePageId,
+      });
+  
+      formData.append(
+        'CommentReply',
+        JSON.stringify(this.TwitterRepliesForm.value)
+      );
+      if(this.TwitterRepliesForm.value.text !== ""){
+        this.commondata.ReplyComment(formData).subscribe(
+          (res: any) => {
+            this.clearInputField();
+            this.reloadComponent('comment');
+          },
+          ({ error }) => {
+          //  alert(error.message);
+          }
+        );
+      } else {
+        this.reloadComponent('empty-input-field')
       }
     }
-
-    this.TwitterRepliesForm.patchValue({
-      commentId: this.tweetId,
-      teamId: this.agentId,
-      platform: this.platform,
-      contentType: this.postType,
-      profileId: this.profileId,
-      profilePageId: this.profilePageId,
-    });
-
-    formData.append(
-      'CommentReply',
-      JSON.stringify(this.TwitterRepliesForm.value)
-    );
-    this.commondata.ReplyComment(formData).subscribe(
-      (res: any) => {
-        this.clearInputField();
-
-        this.reloadComponent('comment');
-      },
-      ({ error }) => {
-      //  alert(error.message);
-      }
-    );
   }
 
   UploadedFile: FormData = new FormData();
@@ -989,13 +995,18 @@ export class TwitterComponent implements OnInit {
 
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
-    this.commentText = abc?.text;
+    this.text = abc?.text + " ";
     // this.TwitterRepliesForm.patchValue({ text: this.commentText });
     // this.twitterMessageReplyForm.patchValue({ text: this.commentText });
     this.insertAtCaret(this.commentText);
   }
 
-  twitterMsgId: any;
+  twitterMsgId: number=0;
+
+  detectChanges(): void {
+    this.ImageName = this.fileInput.nativeElement.files;
+    this.text = this.textarea.nativeElement.value
+  }
 
   SendMessageInformation(id: any) {
     this.TwitterMessage.forEach((msg: any) => {
@@ -1021,43 +1032,47 @@ export class TwitterComponent implements OnInit {
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
   });
   submitTwitterMessageReply() {
-    if (
-      this.twitterMsgId == undefined ||
-      this.twitterMsgId == '' ||
-      this.twitterMsgId == null
-    ) {
+    if(this.twitterMsgId == 0){
       this.reloadComponent('selectComment');
+    } else {
+      var formData = new FormData();
+      if (this.ImageName != null || undefined) {
+        for (let index = 0; index < this.ImageName.length; index++) {
+          formData.append('File', this.ImageName[index]);
+        }
+      }
+      if(this.text !== ""){
+        this.twitterMessageReplyForm.patchValue({
+          text: this.text
+        })
     }
-    var formData = new FormData();
-    if (this.ImageName != null || undefined) {
-      for (let index = 0; index < this.ImageName.length; index++) {
-        formData.append('File', this.ImageName[index]);
+      this.twitterMessageReplyForm.patchValue({
+        commentId: this.twitterMsgId,
+        teamId: this.agentId,
+        platform: this.platform,
+        contentType: this.postType,
+        profileId: this.profileId,
+        profilePageId: this.profilePageId,
+      });
+  
+      formData.append(
+        'CommentReply',
+        JSON.stringify(this.twitterMessageReplyForm.value)
+      );
+      if(this.twitterMessageReplyForm.value.text !== ""){
+        this.commondata.ReplyComment(formData).subscribe(
+          (res: any) => {
+            this.clearInputField();
+            this.reloadComponent('comment');
+          },
+          ({ error }) => {
+          //  alert(error.message);
+          }
+        );
+      } else {
+        this.reloadComponent('empty-input-field')
       }
     }
-
-    this.twitterMessageReplyForm.patchValue({
-      commentId: this.twitterMsgId,
-      teamId: this.agentId,
-      platform: this.platform,
-      contentType: this.postType,
-      profileId: this.profileId,
-      profilePageId: this.profilePageId,
-    });
-
-    formData.append(
-      'CommentReply',
-      JSON.stringify(this.twitterMessageReplyForm.value)
-    );
-    this.commondata.ReplyComment(formData).subscribe(
-      (res: any) => {
-        this.clearInputField();
-
-        this.reloadComponent('fbmessage');
-      },
-      ({ error }) => {
-      //  alert(error.message);
-      }
-    );
   }
 
   likeByAdminDto = new LikeByAdminDto();
@@ -1094,6 +1109,13 @@ export class TwitterComponent implements OnInit {
   AlterMsg: any = '';
 
   reloadComponent(type: any) {
+    if (type == 'empty-input-field') {
+      this.AlterMsg = 'Please write something!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'selectComment') {
       this.AlterMsg = 'No comment or message is selected!';
       this.toastermessage = true;
@@ -1158,10 +1180,11 @@ export class TwitterComponent implements OnInit {
   commentReply: any;
 
   clearInputField() {
-    this.commentReply = '';
+    this.TwitterRepliesForm.reset();
+    this.twitterMessageReplyForm.reset();
     this.msgText = '';
     this.show = false;
-    this.tweetId = '';
+    this.tweetId = 0;
     this.agentId = '';
     this.platform = '';
     this.postType = '';
@@ -1232,13 +1255,12 @@ export class TwitterComponent implements OnInit {
       textarea.selectionStart = startPos + text.length;
       textarea.selectionEnd = startPos + text.length;
       textarea.scrollTop = scrollTop;
-      // console.log(this.textarea.nativeElement.value);
+      this.detectChanges();
     }
   }
 
   insertEmoji(emoji: any) {
-    this.insertAtCaret(emoji);
-    // console.log(this.textarea.nativeElement.value);
+    this.insertAtCaret(' ' + emoji + ' ');
   }
 
   addTags: any;

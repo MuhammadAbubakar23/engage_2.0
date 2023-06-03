@@ -33,11 +33,11 @@
                 <div class="tab-content m-4" id="myTabContent">
                     <div class="tab-pane fade show active" id="post" role="tabpanel" aria-labelledby="post-tab">
                         <div class="chat-box-wrap" *ngFor="let whatsapp of WhatsappData">
-                            <div *ngFor="let group of groupArrays ">
+                            <div *ngFor="let group of groupArrays | sort:criteria">
                                 <div class="date-wrap">
                                     <p class="date">{{group.createdDate | date:'EEEE, MMMM d' }}</p>
                                 </div>
-                                <ng-container *ngFor="let whatsappMsg of group.items ">
+                                <ng-container *ngFor="let whatsappMsg of group.items | sort:criteria">
                                     <ng-container *ngIf="whatsappMsg.queryStatus != 'QueryCompleted'">
                                  <div class="message-wrap agent-message-wrap right" >
                                     <div class="application-wrap d-flex align-items-center mb-1" *ngIf="whatsappMsg.ticketId != null">
@@ -246,7 +246,7 @@
                                         </div>
                                         <span class="complaintBtn" type="button"><i class="fal fa-plus-circle sky" (click)="toggle('ticket', whatsappMsg.id)"></i></span>
                                     </div>
-                                    <div *ngFor="let reply of whatsappMsg.replies">
+                                    <div *ngFor="let reply of whatsappMsg.replies | sort:criteria">
                                         <!-- <div class="date-wrap">
                                             <p class="date">{{reply.createdDate | date:'EEEE, MMMM d, y'}}</p>
                                         </div> -->
@@ -369,7 +369,7 @@
     <div *ngFor="let whatsapp of WhatsappData">
         <div class="attachment-block" [ngClass]="isAttachment == true?'':'d-none'">
             <div class="card-body p-3" *ngFor="let image of ImageName; let i = index" style="margin-right: 10px;">
-                <span class="close-icon" (click)="removeAttachedFile(image.name)"><i class="fas fa-times"></i></span>
+                <span class="close-icon" (click)="removeAttachedFile(i)"><i class="fas fa-times"></i></span>
                 <i class="far fa-file"></i>
                 <h5 class="card-title coal">{{image.name | slice:0:20}}</h5>
                 <p>{{image.size / 1024 | number:'1.2-2'}} kb</p>
@@ -404,7 +404,7 @@
             </div>
             <div class="form-floating textarea-field">
                 <textarea formControlName="text" class="form-control auto" rows="1" id="text"
-                    placeholder="Write a response here" [(ngModel)]="WhatsappMsgText" style="height: 0px" #textarea></textarea>
+                    placeholder="Write a response here" [(ngModel)]="WhatsappReplyForm.value.text" style="height: 0px" #textarea></textarea>
 
             </div>
             <div class="icons-list align-items-md-center d-flex ps-2">

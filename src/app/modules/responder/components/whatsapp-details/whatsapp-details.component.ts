@@ -64,7 +64,7 @@ export class WhatsappDetailsComponent implements OnInit {
   getAppliedTagsList: any;
   QuickReplies: any;
   storeComId: any;
-  WhatsappMsgId: any;
+  WhatsappMsgId: number=0;
   agentId: string = '';
   platform: string = '';
   postType: string = '';
@@ -107,10 +107,10 @@ export class WhatsappDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.criteria = {
-    //   property: 'createdDate',
-    //   descending: true,
-    // };
+    this.criteria = {
+      property: 'createdDate',
+      descending: true,
+    };
     this.TodayDate = new Date();
 
     this.getWhatsappData();
@@ -438,6 +438,13 @@ export class WhatsappDetailsComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
+    if (type == 'empty-input-field') {
+      this.AlterMsg = 'Please write something!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'selectComment') {
       this.AlterMsg = 'No comment or message is selected!';
       this.toastermessage = true;
@@ -546,7 +553,7 @@ export class WhatsappDetailsComponent implements OnInit {
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
 
-    this.WhatsappMsgText = abc?.text;
+    this.text = abc?.text + " ";
 
     // this.WhatsappReplyForm.patchValue({ text: this.WhatsappMsgText });
     this.insertAtCaret(this.WhatsappMsgText)
@@ -608,38 +615,47 @@ export class WhatsappDetailsComponent implements OnInit {
     contentType: new UntypedFormControl(this.ReplyDto.contentType),
   });
 
+  text:string="";
   submitWhatsappReply() {
-    if(this.WhatsappMsgId == undefined || this.WhatsappMsgId == '' || this.WhatsappMsgId == null){
+    if(this.WhatsappMsgId == 0){
       this.reloadComponent('selectComment');
+    } else {
+      var formData = new FormData();
+      if (this.ImageName != null || undefined) {
+        for (let index = 0; index < this.ImageName.length; index++) {
+          formData.append('File', this.ImageName[index]);
+        }
+      }
+      if(this.text !== ""){
+        this.WhatsappReplyForm.patchValue({
+          text: this.text
+        })
     }
-    var formData = new FormData();
-    if (this.ImageName != null || undefined) {
-      for (let index = 0; index < this.ImageName.length; index++) {
-        formData.append('File', this.ImageName[index]);
+      this.WhatsappReplyForm.patchValue({
+        commentId: this.WhatsappMsgId,
+        teamId: this.agentId,
+        platform: this.platform,
+        contentType: this.postType,
+      });
+  
+      formData.append(
+        'CommentReply',
+        JSON.stringify(this.WhatsappReplyForm.value)
+      );
+      if(this.WhatsappReplyForm.value.text !== ""){
+        this.commondata.ReplyComment(formData).subscribe(
+          (res: any) => {
+            this.clearInputField();
+            this.reloadComponent('comment');
+          },
+          ({ error }) => {
+          //  alert(error.message);
+          }
+        );
+      } else {
+        this.reloadComponent('empty-input-field')
       }
     }
-
-    this.WhatsappReplyForm.patchValue({
-      commentId: this.WhatsappMsgId,
-      teamId: this.agentId,
-      platform: this.platform,
-      contentType: this.postType,
-    });
-
-    formData.append(
-      'CommentReply',
-      JSON.stringify(this.WhatsappReplyForm.value)
-    );
-    this.commondata.ReplyComment(formData).subscribe(
-      (res: any) => {
-        this.clearInputField();
-
-        this.reloadComponent('comment');
-      },
-      ({ error }) => {
-      //  alert(error.message);
-      }
-    );
   }
 
   isAttachment = false;
@@ -660,10 +676,11 @@ export class WhatsappDetailsComponent implements OnInit {
   }
 
   clearInputField() {
+    this.WhatsappReplyForm.reset();
     this.WhatsappMsgReply = '';
     this.WhatsappMsgText = '';
     this.show = false;
-    this.WhatsappMsgId = '';
+    this.WhatsappMsgId = 0;
     this.agentId = '';
     this.platform = '';
     this.postType = '';
@@ -734,13 +751,12 @@ detectChanges(): void {
       textarea.selectionStart = startPos + text.length;
       textarea.selectionEnd = startPos + text.length;
       textarea.scrollTop = scrollTop;
-      // console.log(this.textarea.nativeElement.value);
+      this.detectChanges();
     }
   }
 
   insertEmoji(emoji: any) {
-    this.insertAtCaret(emoji);
-    // console.log(this.textarea.nativeElement.value);
+    this.insertAtCaret(' ' + emoji + ' ');
   }
 
   addTags: any;

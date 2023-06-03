@@ -49,7 +49,7 @@ export class LinkedInComponent implements OnInit {
   TodayDate: any;
 
   chatText: any;
-  commentId: any;
+  commentId: number=0;
   agentId: string = '';
   platform: any;
   postType: any;
@@ -60,6 +60,7 @@ export class LinkedInComponent implements OnInit {
   ImageArray:any[]=[];
  
   commentReply: any;
+  text:string='';
   getAppliedTagsList: any;
  
   storeComId: any;
@@ -125,10 +126,10 @@ export class LinkedInComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.criteria = {
-    //   property: 'createdDate',
-    //   descending: true,
-    // };
+    this.criteria = {
+      property: 'createdDate',
+      descending: true,
+    };
     
     this.TodayDate = new Date();
 
@@ -384,29 +385,22 @@ export class LinkedInComponent implements OnInit {
   }
 
   postId:any;
+
   linkedInPostStats() {
-    
     if (this.LinkedInData != null || undefined) {
       this.LinkedInData.forEach(async (tweet: any): Promise<void> => {
         this.postId = tweet.post.postId;
-
           await this.commondata
           .GetLinkedInPostStats(this.postId)
           .subscribe((postStats: any) => {
-            
             tweet.post['postStats'] = postStats;
-
-            // console.log("Stats==>", this.LinkedInData)
           });
-
-        
-
-        
       });
     }
   }
 
   imageSize:any;
+
   onFileChanged() {
     if (this.fileInput.nativeElement.files.length > 0) {
       this.isAttachment = true;
@@ -441,6 +435,7 @@ export class LinkedInComponent implements OnInit {
 
 detectChanges(): void {
   this.ImageName = this.fileInput.nativeElement.files;
+  this.text = this.textarea.nativeElement.value
 }
   linkedInReplyForm = new UntypedFormGroup({
     text: new UntypedFormControl(this.ReplyDto.text, Validators.required),
@@ -454,6 +449,7 @@ detectChanges(): void {
 
   profileId: string = '';
   profilePageId: string = '';
+
   SendCommentInformation(comId: any) {
     
     this.LinkedInData.forEach((xyz: any) => {
@@ -483,43 +479,53 @@ detectChanges(): void {
   isAttachment = false;
 
   submitLinkedInCommentReply() {
-    if(this.commentId == undefined || this.commentId == '' || this.commentId == null){
+    if(this.commentId == 0){
       this.reloadComponent('selectComment');
-    }
-    var formData = new FormData();
-    if (this.ImageName != null || undefined) {
-      for (let index = 0; index < this.ImageName.length; index++) {
-        formData.append('File', this.ImageName[index]);
+    } else {
+      var formData = new FormData();
+      if (this.ImageName != null || undefined) {
+        for (let index = 0; index < this.ImageName.length; index++) {
+          formData.append('File', this.ImageName[index]);
+        }
       }
+      if(this.text !== ""){
+        this.linkedInReplyForm.patchValue({
+          text: this.text
+        })
     }
-    this.linkedInReplyForm.patchValue({
-      commentId: this.commentId,
-      teamId: this.agentId,
-      platform: this.platform,
-      contentType: this.postType,
-      profileId: this.profileId,
-      profilePageId: this.profilePageId,
-    });
-
-    formData.append(
-      'CommentReply',
-      JSON.stringify(this.linkedInReplyForm.value)
-    );
-    this.commondata.ReplyComment(formData).subscribe(
-      (res: any) => {
-        this.clearInputField();
-        this.reloadComponent('comment');
-      },
-      ({ error }) => {
-      //  alert(error.message);
+      this.linkedInReplyForm.patchValue({
+        commentId: this.commentId,
+        teamId: this.agentId,
+        platform: this.platform,
+        contentType: this.postType,
+        profileId: this.profileId,
+        profilePageId: this.profilePageId,
+      });
+  
+      formData.append(
+        'CommentReply',
+        JSON.stringify(this.linkedInReplyForm.value)
+      );
+      if(this.linkedInReplyForm.value.text !== ""){
+        this.commondata.ReplyComment(formData).subscribe(
+          (res: any) => {
+            this.clearInputField();
+            this.reloadComponent('comment');
+          },
+          ({ error }) => {
+          //  alert(error.message);
+          }
+        );
+      } else {
+        this.reloadComponent('empty-input-field')
       }
-    );
+    }    
   }
 
   clearInputField() {
-    this.commentReply = '';
+    this.linkedInReplyForm.reset();
     this.show = false;
-    this.commentId = '';
+    this.commentId = 0;
     this.agentId = '';
     this.platform = '';
     this.postType = '';
@@ -538,12 +544,13 @@ detectChanges(): void {
   }
 
   sendQuickReply(value: any) {
+    debugger
     var abc = this.QuickReplies.find((res: any) => res.value == value);
 
-    this.chatText = abc?.text;
+    this.text = abc?.text + " ";
 
     // this.linkedInReplyForm.patchValue({ text: this.chatText });
-    this.insertAtCaret(this.chatText)
+    this.insertAtCaret(this.text)
   }
 
   quickReplyList() {
@@ -733,6 +740,13 @@ detectChanges(): void {
   }
 
   reloadComponent(type: any) {
+    if (type == 'empty-input-field') {
+      this.AlterMsg = 'Please write something!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'selectComment') {
       this.AlterMsg = 'No comment or message is selected!';
       this.toastermessage = true;
@@ -789,6 +803,14 @@ detectChanges(): void {
         this.toastermessage = false;
       }, 4000);
     }
+    
+    if (type == 'empty-input-field') {
+      this.AlterMsg = 'Please write something!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
   }
 
   closeToaster() {
@@ -824,13 +846,13 @@ detectChanges(): void {
       textarea.selectionStart = startPos + text.length;
       textarea.selectionEnd = startPos + text.length;
       textarea.scrollTop = scrollTop;
-      // console.log(this.textarea.nativeElement.value);
+
+      this.detectChanges();
     }
   }
 
   insertEmoji(emoji:any) {
-    this.insertAtCaret(emoji);
-    // console.log(this.textarea.nativeElement.value);
+    this.insertAtCaret(' ' + emoji + ' ');
   }
 
   addTags: any;

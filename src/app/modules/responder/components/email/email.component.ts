@@ -467,7 +467,7 @@ export class EmailComponent implements OnInit {
     this.commondata
       .InsertSentiment(this.insertSentimentForFeedDto)
       .subscribe((res: any) => {
-        debugger
+        
         this.reloadComponent('Sentiment');
         this.appliedSentiment = sentimenName;
       });
@@ -620,6 +620,7 @@ export class EmailComponent implements OnInit {
     formData.append('CommentReply', JSON.stringify(this.emailReplyForm.value));
     this.commondata.ReplyComment(formData).subscribe(
       (res: any) => {
+        debugger
         this.clearInputField();
         this.reloadComponent('comment');
       },

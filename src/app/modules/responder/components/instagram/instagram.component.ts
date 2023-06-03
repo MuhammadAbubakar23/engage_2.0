@@ -46,6 +46,9 @@ import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ti
   styleUrls: ['./instagram.component.scss'],
 })
 export class InstagramComponent implements OnInit {
+
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  
   InstagramData: any;
 
   id = this.fetchId.getOption();
@@ -57,7 +60,7 @@ export class InstagramComponent implements OnInit {
   pageSize: any = 10;
 
   // Instagram Comment
-  InstacommentId: any;
+  InstacommentId: number=0;
   agentId: string = '';
   platform: string = '';
   postType: string = '';
@@ -133,10 +136,10 @@ export class InstagramComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.criteria = {
-    //   property: 'createdDate',
-    //   descending: true,
-    // };
+    this.criteria = {
+      property: 'createdDate',
+      descending: true,
+    };
     this.TodayDate = new Date();
 
     this.getInstagramData();
@@ -519,45 +522,50 @@ export class InstagramComponent implements OnInit {
   }
   ImageName: any;
   ImageArray:any[]=[];
+
+  text:string=""
   submitInstagramCommentReply() {
-    if (
-      this.InstacommentId == undefined ||
-      this.InstacommentId == '' ||
-      this.InstacommentId == null
-    ) {
+    if(this.InstacommentId == 0){
       this.reloadComponent('selectComment');
+    } else {
+      var formData = new FormData();
+      if (this.ImageName != null || undefined) {
+        for (let index = 0; index < this.ImageName.length; index++) {
+          formData.append('File', this.ImageName[index]);
+        }
+      }
+      if(this.text !== ""){
+        this.instagramCommentReplyForm.patchValue({
+          text: this.text
+        })
     }
-    var formData = new FormData();
-    if (this.ImageName != null || undefined) {
-      for (let index = 0; index < this.ImageName.length; index++) {
-        formData.append('File', this.ImageName[index]);
+      this.instagramCommentReplyForm.patchValue({
+        commentId: this.InstacommentId,
+        teamId: this.agentId,
+        platform: this.platform,
+        contentType: this.postType,
+        profileId: this.profileId,
+        profilePageId: this.profilePageId,
+      });
+  
+      formData.append(
+        'CommentReply',
+        JSON.stringify(this.instagramCommentReplyForm.value)
+      );
+      if(this.instagramCommentReplyForm.value.text !== ""){
+        this.commondata.ReplyComment(formData).subscribe(
+          (res: any) => {
+            this.clearInputField();
+            this.reloadComponent('comment');
+          },
+          ({ error }) => {
+          //  alert(error.message);
+          }
+        );
+      } else {
+        this.reloadComponent('empty-input-field')
       }
     }
-
-    this.instagramCommentReplyForm.patchValue({
-      commentId: this.InstacommentId,
-      teamId: this.agentId,
-      platform: this.platform,
-      contentType: this.postType,
-      profileId: this.profileId,
-      profilePageId: this.profilePageId,
-      userProfileId: this.userProfileId,
-    });
-
-    formData.append(
-      'CommentReply',
-      JSON.stringify(this.instagramCommentReplyForm.value)
-    );
-    this.commondata.ReplyComment(formData).subscribe(
-      (res: any) => {
-        this.clearInputField();
-
-        this.reloadComponent('comment');
-      },
-      ({ error }) => {
-      //  alert(error.message);
-      }
-    );
   }
 
   commentStatus(comId: any, type: any) {
@@ -777,10 +785,15 @@ export class InstagramComponent implements OnInit {
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
 
-    this.instaCommentText = abc?.text;
+    this.text = abc?.text + " ";
 
     // this.instagramCommentReplyForm.patchValue({ text: this.instaCommentText });
     this.insertAtCaret(this.instaCommentText);
+  }
+
+  detectChanges(): void {
+    this.ImageName = this.fileInput.nativeElement.files;
+    this.text = this.textarea.nativeElement.value
   }
 
   quickReplyList() {
@@ -820,6 +833,13 @@ export class InstagramComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
+    if (type == 'empty-input-field') {
+      this.AlterMsg = 'Please write something!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'selectComment') {
       this.AlterMsg = 'No comment or message is selected!';
       this.toastermessage = true;
@@ -882,14 +902,17 @@ export class InstagramComponent implements OnInit {
     this.toastermessage = false;
   }
   clearInputField() {
+    this.instagramCommentReplyForm.reset();
+    this.instagramMessageReplyForm.reset();
     this.commentReply = '';
     this.instaCommentText = '';
     this.show = false;
-    this.InstacommentId = '';
+    this.InstacommentId = 0;
     this.agentId = '';
     this.platform = '';
     this.postType = '';
     this.msgText = '';
+    this.msgId=0;
   }
   markAsComplete = false;
   markAsCompleteExpanded(comId: any) {
@@ -930,13 +953,12 @@ export class InstagramComponent implements OnInit {
       textarea.selectionStart = startPos + text.length;
       textarea.selectionEnd = startPos + text.length;
       textarea.scrollTop = scrollTop;
-      // console.log(this.textarea.nativeElement.value);
+      this.detectChanges();
     }
   }
 
   insertEmoji(emoji: any) {
-    this.insertAtCaret(emoji);
-    // console.log(this.textarea.nativeElement.value);
+    this.insertAtCaret(' ' + emoji + ' ');
   }
 
   addTags: any;
@@ -1099,7 +1121,7 @@ export class InstagramComponent implements OnInit {
   messagesArray: any[] = [];
   groupedMessages: any[] = [];
   totalMessages: number = 0;
-  msgId: any;
+  msgId: number=0;
   msgText: any = '';
 
   instagramCommentReply() {
@@ -1293,7 +1315,7 @@ export class InstagramComponent implements OnInit {
   });
 
   submitInstagramMessageReply() {
-    if (this.msgId == undefined || this.msgId == '' || this.msgId == null) {
+    if(this.msgId == 0){
       this.reloadComponent('selectComment');
     } else {
       var formData = new FormData();
@@ -1302,7 +1324,11 @@ export class InstagramComponent implements OnInit {
           formData.append('File', this.ImageName[index]);
         }
       }
-
+      if(this.text !== ""){
+        this.instagramMessageReplyForm.patchValue({
+          text: this.text
+        })
+    }
       this.instagramMessageReplyForm.patchValue({
         commentId: this.msgId,
         teamId: this.agentId,
@@ -1310,23 +1336,25 @@ export class InstagramComponent implements OnInit {
         contentType: this.postType,
         profileId: this.profileId,
         profilePageId: this.profilePageId,
-        userProfileId: this.userProfileId,
       });
-
+  
       formData.append(
         'CommentReply',
         JSON.stringify(this.instagramMessageReplyForm.value)
       );
-      this.commondata.ReplyComment(formData).subscribe(
-        (res: any) => {
-          this.clearInputField();
-
-          this.reloadComponent('fbmessage');
-        },
-        (error) => {
-          alert(error.error.message);
-        }
-      );
+      if(this.instagramMessageReplyForm.value.text !== ""){
+        this.commondata.ReplyComment(formData).subscribe(
+          (res: any) => {
+            this.clearInputField();
+            this.reloadComponent('comment');
+          },
+          ({ error }) => {
+          //  alert(error.message);
+          }
+        );
+      } else {
+        this.reloadComponent('empty-input-field')
+      }
     }
   }
 
