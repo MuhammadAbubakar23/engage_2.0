@@ -15,7 +15,6 @@ import { SocialLoginService } from '../../services/sociallogin.service';
 })
 export class SupportChannelsComponent implements OnInit {
 
-  isProfileEnabled: boolean = false;
   private twitterApiUrl = 'https://api.twitter.com/1.1/account/verify_credentials.json';
   constructor(
     private _request: RequestService
@@ -86,6 +85,7 @@ export class SupportChannelsComponent implements OnInit {
     const loginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&&scope=https://www.googleapis.com/auth/userinfo.profile&response_type=code`;
     window.open(loginUrl, '_blank');
   }
+
   connectUtube() {
     localStorage.setItem('socialtype', 'utube');
     const clientId = environment.googleclientId;
