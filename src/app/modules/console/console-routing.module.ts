@@ -1,5 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CreateMessageTemplatesComponent } from './components/templates/messages/create-message-templates/create-message-templates.component';
+import { MessagesComponent } from './components/templates/messages/messages.component';
+import { QuickResponseComponent } from './components/templates/quick-response/quick-response.component';
+import { SignaturesComponent } from './components/templates/signatures/signatures.component';
+import { TemplatesComponent } from './components/templates/templates.component';
 //import { CreateUserResolver } from './components/users/create-user/create-user.resolver';
 import { UsersResolver } from './components/users/users.resolver';
 import { ConsoleRoutingGuard } from './console-routing.guard';
@@ -110,6 +115,31 @@ const routes: Routes = [
         path:'business-hours',
         loadComponent: () => import('./components/business-hours/business-hours.component').then(c => c.BusinessHoursComponent)
         
+      },
+      {
+        path:'templates/message',
+        component:MessagesComponent
+      },
+      {
+        path:'templates/signature',
+        component:SignaturesComponent
+      },
+      {
+        path:'templates/quick-response',
+        component:QuickResponseComponent
+      },
+      {
+        path:'templates/message/create/:id',
+        component:CreateMessageTemplatesComponent
+        // loadComponent: () => import('./components/templates/messages/create-message-templates/create-message-templates.component').then(c => c.CreateMessageTemplatesComponent)
+      },
+      {
+        path:'templates/signature/create/:id',
+        loadComponent: () => import('./components/templates/signatures/create-signature-templates/create-signature-templates.component').then(c => c.CreateSignatureTemplatesComponent)
+      },
+      {
+        path:'templates/quick-response/create/:id',
+        loadComponent: () => import('./components/templates/quick-response/create-quick-response-template/create-quick-response-template.component').then(c => c.CreateQuickResponseTemplateComponent)
       }
     ]
 // },

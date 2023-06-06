@@ -149,26 +149,31 @@
                                         <div [id]="'collapse'+i" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading'+i" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
                                                 <div class="mail-recepients silver mb-3">
-                                                        <small>to: {{email.to}}</small>
+                                                        <small>to: 
+                                                            <span *ngFor="let to of email.to">
+                                                            {{to.emailAddress}}
+                                                        </span>
+                                                    </small>
                                                     </div>
                                                     <p [innerHTML]="email.body"></p>
                                                     <div class="email-attachments">
-                                                        <div class="whatsapp-single-img whatsappImgModalBtn" type="button"
-                                                        *ngFor="let attachment of email.attachments">
-                                                        <img *ngIf="attachment.mediaType == 'image/png'"
-                                                            src={{attachment.attachmentUrl}}
-                                                            style="width: -webkit-fill-available;">
-                                                        <video *ngIf="attachment.description == 'video'"
-                                                            controls>
-                                                            <source src={{attachment.attachmentUrl}} type="video/mp4"
-                                                                style="width: -webkit-fill-available;">
-                                                        </video>
-                                                    </div>
+                                                        <div *ngFor="let attachment of email.attachments">
+                                                            <img class="whatsapp-single-img whatsappImgModalBtn" *ngIf="isImage(attachment)"
+                                                                src={{attachment.attachmentUrl}} style="width: -webkit-fill-available;" controls>
+                                                    
+                                                            <video class="video" *ngIf="isVideo(attachment)" src={{attachment.attachmentUrl}} controls></video>
+                                                    
+                                                            <audio class="audio" *ngIf="isAudio(attachment)" src={{attachment.attachmentUrl}} controls></audio>
+                                                    
+                                                            <a *ngIf="isOther(attachment)" [href]="attachment.attachmentUrl" target="_blank">
+                                                                <button class="download-button">{{ attachment.name }}</button>
+                                                            </a>
+                                                    
+                                                        </div>
                                                     </div>
                                                     
-                                                    <button class="expand-referenced-msg badge btn rounded-pill "
-                                                    (click)="expandEmailBody()">
-                                                    <i class="fal fa-ellipsis-h"></i>
+                                                    <button class="expand-referenced-msg badge btn rounded-pill " (click)="expandEmailBody()">
+                                                        <i class="fal fa-ellipsis-h"></i>
                                                 </button>
                                                 <div class="mail-reference-msg-wrap" [ngClass]="expandedEmailBody == false? 'd-none':''"
                                                 >
@@ -182,7 +187,9 @@
                                                 </div>
                                                 <div class="msg-ref-info">
                                                     <strong>To:</strong>
-                                                    {{email.to}}
+                                                    <span *ngFor="let to of email.to">
+                                                        {{to.emailAddress}}
+                                                    </span>
                                                 </div>
                                                 <div class="msg-ref-info">
                                                     <strong>Cc:</strong>
@@ -210,8 +217,8 @@
                                                     class="badge rounded-pill email tag tag1 selected" style="margin-right:5px">{{tag.name}}</span>
                                             </div>
                                             <!-- For Sentiment Pills -->
-                                            <div class="tags" *ngIf="appliedSentiment">
-                                                <span class="badge rounded-pill email tag tag1 selected">{{appliedSentiment}}</span>
+                                            <div class="tags" *ngIf="email.sentiment">
+                                                <span class="badge rounded-pill email tag tag1 selected">{{email.sentiment?.text}}</span>
                                             </div>
                                             <!-- For Sentiment Pills -->
                                                     <button class="expand-referenced-msg badge btn rounded-pill d-none">
@@ -419,12 +426,23 @@
                                                 <p [innerHTML]="reply.message">
                                                     {{reply.message}}
                                                 </p>
-                                                <div class="email-attachments" *ngIf="reply.attachmentUrl != null">
-                                                    <!-- <div class="whatsapp-single-img whatsappImgModalBtn" type="button"> -->
-                                                    <img style="width: 375px;" src={{reply.attachmentUrl}}>
-                                                    <!-- </div> -->
-
+                                                <!-- <div class="email-attachments">
+                                                    <div *ngFor="let attachment of replyAttachments">
+                                                    <div class="whatsapp-single-img whatsappImgModalBtn">
+                                                    
+                                                        <img *ngIf="isReplyImage(attachment)" src={{attachment}} style="width: -webkit-fill-available;" controls>
+                                                        <div *ngIf="isReplyVideo(attachment)">
+                                                            <video src={{attachment}} controls style="width: -webkit-fill-available;"></video>
+                                                        </div>
+                                                        <div *ngIf="isReplyAudio(attachment)">
+                                                            <audio src={{attachment}} controls></audio>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="isReplyOther(attachment)">
+                                                        <a [href]="attachment" target="_blank"></a>
+                                                    </div>
                                                 </div>
+                                                </div> -->
                                                 <button class="expand-referenced-msg badge btn rounded-pill "
                                                     (click)="expandEmailBody()">
                                                     <i class="fal fa-ellipsis-h"></i>

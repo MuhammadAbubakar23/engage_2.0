@@ -57,6 +57,7 @@ export const environment = {
     },
     console:{
       AddUser:"Users/CreateUser",
+      CreateMessageTemplate:"Template/Add"
     },
     CCMS:{
       reason_types:'Order/GetReasonTypes',

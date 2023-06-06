@@ -54,6 +54,7 @@ export class CommonDataService {
   markAllAsRead = environment.links.common.markAllAsRead;
   getAgentReport = environment.links.common.getAgentReport;
   getAllocatedProfiles = environment.links.common.getAllocatedProfiles;
+  createMessageTemplate = environment.links.console.CreateMessageTemplate;
 
   constructor(private http : HttpClient) { }
 
@@ -237,13 +238,17 @@ export class CommonDataService {
 
  GetAgentReport(body:any){
   
-  return this.http.post(this.CommonBaseUrl+this.getAgentReport,body, { responseType: 'text' })
+  return this.http.post(this.CommonBaseUrl+this.getAgentReport,body, { responseType: 'text' });
  }
 
  GetAllocatedProfiles(){
-  return this.http.get(this.CommonBaseUrl+this.getAllocatedProfiles)
+  return this.http.get(this.CommonBaseUrl+this.getAllocatedProfiles);
  }
 
+ CreateMessageTemplate(body:any){
+  
+  return this.http.post(this.CommonBaseUrl+this.createMessageTemplate,body);
+ }
 }
 
 var headers_object = new HttpHeaders({

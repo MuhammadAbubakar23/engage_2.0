@@ -210,9 +210,9 @@ export class EmailComponent implements OnInit {
   commentsArray: any[] = [];
   groupArrays: any[] = [];
   fullName: string = '';
+  replyAttachments : any[]= [];
 
   getEmails() {
-    
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -236,6 +236,15 @@ export class EmailComponent implements OnInit {
           this.Emails = res.List;
           this.fullName = this.Emails[0].user.userName.split('<')[0]
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+
+          this.Emails.forEach((comments:any) => {
+            
+            comments.forEach((replies:any) => {
+              replies.forEach((attachment:any) => {
+                this.replyAttachments.push(attachment.attachmentUrl.split(','));
+              });
+            });
+          });
 
           this.commentsArray = []
           this.Emails?.forEach((item: any) => {
@@ -266,7 +275,7 @@ export class EmailComponent implements OnInit {
           });
 
           this.Emails?.forEach((msg: any) => {
-            this.To = msg.comments[0].to;
+            this.To = msg?.comments[0]?.to[0]?.emailAddress
           });
         });
     } else if (this.slaId != null || undefined) {
@@ -288,6 +297,15 @@ export class EmailComponent implements OnInit {
         this.Emails = res.List;
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
 
+        this.Emails.forEach((comments:any) => {
+          
+          comments.forEach((replies:any) => {
+            replies.forEach((attachment:any) => {
+              this.replyAttachments.push(attachment.attachmentUrl.split(','));
+            });
+          });
+        });
+
         this.commentsArray = []
         this.Emails?.forEach((item: any) => {
           this.commentsArray = []
@@ -316,9 +334,9 @@ export class EmailComponent implements OnInit {
           // console.log('hello', this.Emails);
         });
 
-        this.Emails.forEach((msg: any) => {
-          this.To = msg.comments[0].to;
-        });
+        this.Emails?.forEach((msg: any) => {
+          this.To = msg?.comments[0]?.to[0]?.emailAddress
+      });
       });
     }
     else {
@@ -339,6 +357,19 @@ export class EmailComponent implements OnInit {
         this.Emails = res.List;
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
 
+        this.Emails.forEach((cmnt: any) => {
+          cmnt.comments.forEach((reply: any) => {
+            reply.replies.forEach((attachment: any) => {
+              if (attachment.attachmentUrl !== '') {
+                const abc = attachment.attachmentUrl.split(',');
+                abc.forEach((xyz: any) => {
+                  this.replyAttachments.push(xyz);
+                });
+              }
+            });
+          });
+        });
+
         this.commentsArray = []
         this.Emails?.forEach((item: any) => {
           this.commentsArray = []
@@ -367,9 +398,9 @@ export class EmailComponent implements OnInit {
           // console.log('hello', this.Emails);
         });
 
-        this.Emails.forEach((msg: any) => {
-          this.To = msg.comments[0].to;
-        });
+        this.Emails?.forEach((msg: any) => {
+          this.To = msg?.comments[0]?.to[0]?.emailAddress
+      });
       });
     }
   }
@@ -620,7 +651,7 @@ export class EmailComponent implements OnInit {
     formData.append('CommentReply', JSON.stringify(this.emailReplyForm.value));
     this.commondata.ReplyComment(formData).subscribe(
       (res: any) => {
-        debugger
+        
         this.clearInputField();
         this.reloadComponent('comment');
       },
@@ -953,4 +984,87 @@ export class EmailComponent implements OnInit {
     console.log(text)
 
   }
+
+  download(url : string, name: string){
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      console.log(url)
+  }
+
+  isImage(attachment: any): boolean {
+    return attachment.contentType.startsWith('image/');
+  }
+
+  isVideo(attachment: any): boolean {
+    return attachment.contentType.startsWith('video/');
+  }
+
+  isAudio(attachment: any): boolean {
+    return attachment.contentType.startsWith('audio/');
+  }
+
+  isOther(attachment: any): boolean {
+    return !this.isImage(attachment) && !this.isVideo(attachment) && !this.isAudio(attachment);
+  }
+
+  // isReplyImage(attachment: any): boolean {
+  //   debugger
+  //   const abc = attachment.split('.')
+  //   const index = abc.length - 1
+  //   const type = abc[index]
+  //   if(type == 'jpeg'){
+  //     return attachment;
+  //   } 
+  //   if(type == 'jpg'){
+  //     return attachment;
+  //   } 
+  //   if(type == 'png'){
+  //     return attachment;
+  //   } 
+  //   if(type == 'gif'){
+  //     return attachment;
+  //   } else {
+  //     return false;
+  //   }
+  //   // return type == 'image' || type == 'jpeg' || type == 'png' || type == 'gif' || type == 'jpg';
+  // }
+
+  // isReplyVideo(attachment: any): boolean {
+    
+  //   const abc = attachment.split('.')
+  //   const index = abc.length - 1
+  //   const type = abc[index]
+  //   if(type == 'mp4'){
+  //     return attachment;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  // isReplyAudio(attachment: any): boolean {
+    
+  //   const abc = attachment.split('.')
+  //   const index = abc.length - 1
+  //   const type = abc[index]
+  //   if(type == 'mp3'){
+  //     return attachment;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  // isReplyOther(attachment: any): boolean {
+  //   const abc = attachment.split('.')
+  //   const index = abc.length - 1
+  //   const type = abc[index]
+  //   if(type != 'mp3' && type != 'mp4' && type != 'jpeg' && type != 'jpg' && type != 'png' && type != 'gif'){
+  //     return attachment;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 }

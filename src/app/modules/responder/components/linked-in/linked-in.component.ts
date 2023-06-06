@@ -404,17 +404,20 @@ export class LinkedInComponent implements OnInit {
   imageSize:any;
 
   onFileChanged() {
+    debugger
     if (this.fileInput.nativeElement.files.length > 0) {
       this.isAttachment = true;
 
-      const filesArray = Array.from(this.fileInput.nativeElement.files);
-      filesArray.forEach((attachment:any) => {
-        this.ImageArray.push(attachment)
-      });
-      const files = this.ImageArray.map((file:any) => file); // Create a new array with the remaining files
-        const newFileList = new DataTransfer();
-        files.forEach((file:any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
-        this.ImageName = newFileList.files;
+      this.ImageName = this.fileInput.nativeElement.files 
+
+      // const filesArray = Array.from(this.fileInput.nativeElement.files);
+      // filesArray.forEach((attachment:any) => {
+      //   this.ImageArray.push(attachment)
+      // });
+      // const files = this.ImageArray.map((file:any) => file); // Create a new array with the remaining files
+      //   const newFileList = new DataTransfer();
+      //   files.forEach((file:any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+      //   this.ImageName = newFileList.files;
     }
   }
 

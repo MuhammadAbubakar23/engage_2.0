@@ -36,6 +36,9 @@ import { ConnectFormComponent } from './components/connect-form/connect-form.com
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ConsoleTableComponent } from 'src/app/layouts/engage2/console-table/console-table.component';
+import { QuickResponseComponent } from './components/templates/quick-response/quick-response.component';
+import { CreateQuickResponseTemplateComponent } from './components/templates/quick-response/create-quick-response-template/create-quick-response-template.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 // import { CreateSkillsComponent } from './components/skills/create-skills/create-skills.component';
 // import { AddSkillMembersComponent } from './components/skills/add-skill-members/add-skill-members.component';
 
@@ -78,6 +81,8 @@ import { ConsoleTableComponent } from 'src/app/layouts/engage2/console-table/con
     SignaturesComponent,
     CreateSignatureTemplatesComponent,
     ConnectFormComponent,
+    QuickResponseComponent,
+    CreateQuickResponseTemplateComponent,
     // CreateSkillsComponent,
     //AddSkillMembersComponent
   ],
@@ -90,7 +95,8 @@ import { ConsoleTableComponent } from 'src/app/layouts/engage2/console-table/con
     MatChipsModule,
     MatIconModule,
     MatSelectModule,
-    LayoutsModule
+    LayoutsModule,
+    AngularEditorModule
    
   ]
 })
