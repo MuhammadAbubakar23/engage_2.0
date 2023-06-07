@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormControl, FormGroup, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -31,15 +31,13 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
   styleUrls: ['./email.component.scss'],
 })
 export class EmailComponent implements OnInit {
-
   @ViewChild('fileInput') fileInput!: ElementRef;
 
+  @Input() name: string = '';
+  @Input() subname: string = '';
+  @Input() imagename: string = '';
+  @Input() linkname: string = 'javascript:;';
 
-  @Input() name:string="";
-  @Input() subname:string="";
-  @Input() imagename:string="";
-  @Input() linkname:string="javascript:;";
-  
   Emails: any;
 
   id = this.fetchId.getOption();
@@ -48,7 +46,7 @@ export class EmailComponent implements OnInit {
 
   pageNumber: any = 1;
   pageSize: any = 10;
-  newReply:any;
+  newReply: any;
 
   filterDto = new FiltersDto();
 
@@ -57,17 +55,17 @@ export class EmailComponent implements OnInit {
   active = false;
   expandedEmailBody: boolean = false;
   activeTag = false;
-  TodayDate:any;
-  queryStatus:any;
+  TodayDate: any;
+  queryStatus: any;
 
-  spinner1running=false;
-  spinner2running=false;
+  spinner1running = false;
+  spinner2running = false;
 
   public Subscription!: Subscription;
   public criteria!: SortCriteria;
-  searchText: string='';
-  
+  searchText: string = '';
 
+  emailReplyForm!: FormGroup;
   constructor(
     private fetchId: FetchIdService,
     private commondata: CommonDataService,
@@ -75,22 +73,35 @@ export class EmailComponent implements OnInit {
     private changeDetect: ChangeDetectorRef,
     private addTagService: AddTagService,
     private removeTagService: RemoveTagService,
-    private updateCommentsService : UpdateCommentsService,
-    private queryStatusService : QueryStatusService,
-    private replyService : ReplyService,
-    private unrespondedCountService : UnRespondedCountService
+    private updateCommentsService: UpdateCommentsService,
+    private queryStatusService: QueryStatusService,
+    private replyService: ReplyService,
+    private unrespondedCountService: UnRespondedCountService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = null;
       this.id = res;
       this.getEmails();
     });
+
+    this.emailReplyForm = new FormGroup({
+      text: new FormControl(''),
+      commentId: new FormControl(0),
+      teamId: new FormControl(0),
+      platform: new FormControl(''),
+      contentType: new FormControl(''),
+      to: new FormControl(''),
+      cc: new FormControl(''),
+      bcc: new FormControl(''),
+      subject: new FormControl(''),
+      profileId: new FormControl(''),
+      profilePageId: new FormControl(''),
+      userProfileId: new FormControl(0),
+    });
   }
 
   ngOnInit(): void {
-
-    this.fullName = localStorage.getItem('storeOpenedId') || '{}'
-
+    this.fullName = localStorage.getItem('storeOpenedId') || '{}';
 
     this.criteria = {
       property: 'createdDate',
@@ -109,34 +120,36 @@ export class EmailComponent implements OnInit {
       this.removeTags = res;
       this.removeTagDataListener();
     });
-    this.Subscription = this.updateCommentsService.receiveComment().subscribe((res) => {
-      
-      this.updatedComments = res;
-      this.updateCommentsDataListener();
-    });
-    this.Subscription = this.queryStatusService.receiveQueryStatus().subscribe((res) => {
-      
-      this.queryStatus = res;
-      this.updateQueryStatusDataListner();
-    });
+    this.Subscription = this.updateCommentsService
+      .receiveComment()
+      .subscribe((res) => {
+        this.updatedComments = res;
+        this.updateCommentsDataListener();
+      });
+    this.Subscription = this.queryStatusService
+      .receiveQueryStatus()
+      .subscribe((res) => {
+        this.queryStatus = res;
+        this.updateQueryStatusDataListner();
+      });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
-      
       this.newReply = res;
       this.replyDataListner();
     });
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        
-        if (res.contentCount.contentType == 'Mail' || res.contentCount.contentType == 'OMail') {
+        if (
+          res.contentCount.contentType == 'Mail' ||
+          res.contentCount.contentType == 'OMail'
+        ) {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
         }
       });
-      this.Subscription = this.queryStatusService
+    this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
-        
         this.queryStatus = res;
         this.updateBulkQueryStatusDataListner();
       });
@@ -144,65 +157,64 @@ export class EmailComponent implements OnInit {
 
   commentDto = new commentsDto();
 
-  updatedComments:any;
-
+  updatedComments: any;
 
   updateCommentsDataListener() {
-        this.updatedComments.forEach((xyz: any) => {
-          if (this.id == xyz.userId) {
-            this.commentDto = {
-              id: xyz.id,
-              postId: xyz.postId,
-              commentId: xyz.commentId,
-              message: xyz.message,
-              contentType: xyz.contentType,
-              userName: xyz.userName || xyz.userId,
-              queryStatus: xyz.queryStatus,
-              createdDate: xyz.createdDate,
-              fromUserProfilePic: xyz.profilePic,
-              body: xyz.body,
-              to: xyz.toId,
-              cc: xyz.cc,
-              bcc: xyz.bcc,
-              attachments: xyz.mediaAttachments,
-              replies: [],
-              sentiment: '',
-              tags: [],
+    this.updatedComments.forEach((xyz: any) => {
+      if (this.id == xyz.userId) {
+        this.commentDto = {
+          id: xyz.id,
+          postId: xyz.postId,
+          commentId: xyz.commentId,
+          message: xyz.message,
+          contentType: xyz.contentType,
+          userName: xyz.userName || xyz.userId,
+          queryStatus: xyz.queryStatus,
+          createdDate: xyz.createdDate,
+          fromUserProfilePic: xyz.profilePic,
+          body: xyz.body,
+          to: xyz.toId,
+          cc: xyz.cc,
+          bcc: xyz.bcc,
+          attachments: xyz.mediaAttachments,
+          replies: [],
+          sentiment: '',
+          tags: [],
+        };
+        this.Emails.forEach((item: any) => {
+          this.commentsArray = [];
+          item.comments.push(this.commentDto);
+          item.comments.forEach((cmnt: any) => {
+            this.commentsArray.push(cmnt);
+          });
+
+          let groupedItems = this.commentsArray.reduce(
+            (acc: any, item: any) => {
+              const date = item.createdDate.split('T')[0];
+              if (!acc[date]) {
+                acc[date] = [];
+              }
+              acc[date].push(item);
+              return acc;
+            },
+            {}
+          );
+
+          item['groupedComments'] = Object.keys(groupedItems).map(
+            (createdDate) => {
+              return {
+                createdDate,
+                items: groupedItems[createdDate],
+              };
             }
-            this.Emails.forEach((item: any) => {
-              this.commentsArray = [];
-                item.comments.push(this.commentDto);
-                item.comments.forEach((cmnt: any) => {
-                  this.commentsArray.push(cmnt);
-                });
-
-                let groupedItems = this.commentsArray.reduce(
-                  (acc: any, item: any) => {
-                    const date = item.createdDate.split('T')[0];
-                    if (!acc[date]) {
-                      acc[date] = [];
-                    }
-                    acc[date].push(item);
-                    return acc;
-                  },
-                  {}
-                );
-
-                item['groupedComments'] = Object.keys(groupedItems).map(
-                  (createdDate) => {
-                    return {
-                      createdDate,
-                      items: groupedItems[createdDate],
-                    };
-                  }
-                );
-            });
-            this.totalUnrespondedCmntCountByCustomer =
-          this.totalUnrespondedCmntCountByCustomer + 1;
-          }
+          );
         });
-        this.changeDetect.detectChanges();
-  };
+        this.totalUnrespondedCmntCountByCustomer =
+          this.totalUnrespondedCmntCountByCustomer + 1;
+      }
+    });
+    this.changeDetect.detectChanges();
+  }
 
   To: string = '';
   totalUnrespondedCmntCountByCustomer: number = 0;
@@ -210,7 +222,7 @@ export class EmailComponent implements OnInit {
   commentsArray: any[] = [];
   groupArrays: any[] = [];
   fullName: string = '';
-  replyAttachments : any[]= [];
+  replyAttachments: any[] = [];
 
   getEmails() {
     if (this.id != null || undefined) {
@@ -223,32 +235,36 @@ export class EmailComponent implements OnInit {
         plateForm: this.parentPlatform,
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
-        isAttachment: false
+        isAttachment: false,
       };
 
       this.SpinnerService.show();
-      this.spinner1running=true;
+      this.spinner1running = true;
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
           this.SpinnerService.hide();
-          this.spinner1running=false;
+          this.spinner1running = false;
           this.Emails = res.List;
-          this.fullName = this.Emails[0].user.userName.split('<')[0]
+          this.fullName = this.Emails[0].user.userName.split('<')[0];
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
 
-          this.Emails.forEach((comments:any) => {
-            
-            comments.forEach((replies:any) => {
-              replies.forEach((attachment:any) => {
-                this.replyAttachments.push(attachment.attachmentUrl.split(','));
+          this.Emails.forEach((cmnt: any) => {
+            cmnt.comments.forEach((reply: any) => {
+              reply.replies.forEach((attachment: any) => {
+                if (attachment.attachmentUrl !== '') {
+                  const abc = attachment.attachmentUrl.split(',');
+                  abc.forEach((xyz: any) => {
+                    this.replyAttachments.push(xyz);
+                  });
+                }
               });
             });
           });
 
-          this.commentsArray = []
+          this.commentsArray = [];
           this.Emails?.forEach((item: any) => {
-            this.commentsArray = []
+            this.commentsArray = [];
             item.comments.forEach((cmnt: any) => {
               this.commentsArray.push(cmnt);
             });
@@ -264,18 +280,20 @@ export class EmailComponent implements OnInit {
               {}
             );
 
-            item['groupedComments'] = Object.keys(groupedItems).map((createdDate) => {
-              return {
-                createdDate,
-                items: groupedItems[createdDate],
-              };
-            });
-       //     item['groupedComments'] = this.groupArrays;
+            item['groupedComments'] = Object.keys(groupedItems).map(
+              (createdDate) => {
+                return {
+                  createdDate,
+                  items: groupedItems[createdDate],
+                };
+              }
+            );
+            //     item['groupedComments'] = this.groupArrays;
             // console.log('hello', this.Emails);
           });
 
           this.Emails?.forEach((msg: any) => {
-            this.To = msg?.comments[0]?.to[0]?.emailAddress
+            this.To = msg?.comments[0]?.to[0]?.emailAddress;
           });
         });
     } else if (this.slaId != null || undefined) {
@@ -288,71 +306,11 @@ export class EmailComponent implements OnInit {
         plateForm: this.parentPlatform,
         pageNumber: 0,
         pageSize: 0,
-        isAttachment: false
+        isAttachment: false,
       };
 
       this.SpinnerService.show();
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
-        this.SpinnerService.hide();
-        this.Emails = res.List;
-        this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-
-        this.Emails.forEach((comments:any) => {
-          
-          comments.forEach((replies:any) => {
-            replies.forEach((attachment:any) => {
-              this.replyAttachments.push(attachment.attachmentUrl.split(','));
-            });
-          });
-        });
-
-        this.commentsArray = []
-        this.Emails?.forEach((item: any) => {
-          this.commentsArray = []
-          item.comments.forEach((cmnt: any) => {
-            this.commentsArray.push(cmnt);
-          });
-          let groupedItems = this.commentsArray.reduce(
-            (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
-              if (!acc[date]) {
-                acc[date] = [];
-              }
-              acc[date].push(item);
-              return acc;
-            },
-            {}
-          );
-
-          item['groupedComments'] = Object.keys(groupedItems).map((createdDate) => {
-            return {
-              createdDate,
-              items: groupedItems[createdDate],
-            };
-          });
-     //     item['groupedComments'] = this.groupArrays;
-          // console.log('hello', this.Emails);
-        });
-
-        this.Emails?.forEach((msg: any) => {
-          this.To = msg?.comments[0]?.to[0]?.emailAddress
-      });
-      });
-    }
-    else {
-      this.filterDto = {
-        // fromDate: new Date(),
-        // toDate: new Date(),
-        user: localStorage.getItem('storeOpenedId') || '{}',
-        pageId: '',
-        plateForm: localStorage.getItem('parent') || '{}',
-        pageNumber: this.pageNumber,
-        pageSize: this.pageSize,
-        isAttachment: false
-      };
-
-      this.SpinnerService.show();
-      this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.Emails = res.List;
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -370,9 +328,9 @@ export class EmailComponent implements OnInit {
           });
         });
 
-        this.commentsArray = []
+        this.commentsArray = [];
         this.Emails?.forEach((item: any) => {
-          this.commentsArray = []
+          this.commentsArray = [];
           item.comments.forEach((cmnt: any) => {
             this.commentsArray.push(cmnt);
           });
@@ -388,20 +346,89 @@ export class EmailComponent implements OnInit {
             {}
           );
 
-          item['groupedComments'] = Object.keys(groupedItems).map((createdDate) => {
-            return {
-              createdDate,
-              items: groupedItems[createdDate],
-            };
-          });
-     //     item['groupedComments'] = this.groupArrays;
+          item['groupedComments'] = Object.keys(groupedItems).map(
+            (createdDate) => {
+              return {
+                createdDate,
+                items: groupedItems[createdDate],
+              };
+            }
+          );
+          //     item['groupedComments'] = this.groupArrays;
           // console.log('hello', this.Emails);
         });
 
         this.Emails?.forEach((msg: any) => {
-          this.To = msg?.comments[0]?.to[0]?.emailAddress
+          this.To = msg?.comments[0]?.to[0]?.emailAddress;
+        });
       });
-      });
+    } else {
+      this.filterDto = {
+        // fromDate: new Date(),
+        // toDate: new Date(),
+        user: localStorage.getItem('storeOpenedId') || '{}',
+        pageId: '',
+        plateForm: localStorage.getItem('parent') || '{}',
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize,
+        isAttachment: false,
+      };
+
+      this.SpinnerService.show();
+      this.commondata
+        .GetChannelConversationDetail(this.filterDto)
+        .subscribe((res: any) => {
+          this.SpinnerService.hide();
+          this.Emails = res.List;
+          this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+
+          this.Emails.forEach((cmnt: any) => {
+            cmnt.comments.forEach((reply: any) => {
+              reply.replies.forEach((attachment: any) => {
+                if (attachment.attachmentUrl !== '') {
+                  const abc = attachment.attachmentUrl.split(',');
+                  abc.forEach((xyz: any) => {
+                    this.replyAttachments.push(xyz);
+                  });
+                }
+              });
+            });
+          });
+
+          this.commentsArray = [];
+          this.Emails?.forEach((item: any) => {
+            this.commentsArray = [];
+            item.comments.forEach((cmnt: any) => {
+              this.commentsArray.push(cmnt);
+            });
+            let groupedItems = this.commentsArray.reduce(
+              (acc: any, item: any) => {
+                const date = item.createdDate.split('T')[0];
+                if (!acc[date]) {
+                  acc[date] = [];
+                }
+                acc[date].push(item);
+                return acc;
+              },
+              {}
+            );
+
+            item['groupedComments'] = Object.keys(groupedItems).map(
+              (createdDate) => {
+                return {
+                  createdDate,
+                  items: groupedItems[createdDate],
+                };
+              }
+            );
+            //     item['groupedComments'] = this.groupArrays;
+            // console.log('hello', this.Emails);
+          });
+
+          this.Emails?.forEach((msg: any) => {
+            this.To = msg?.comments[0]?.to[0]?.emailAddress;
+          });
+        });
     }
   }
   expandEmailBody() {
@@ -412,7 +439,7 @@ export class EmailComponent implements OnInit {
   opened: boolean = false;
   replyId: any[] = [];
   emailId: any;
-  selectedIndex:any;
+  selectedIndex: any;
 
   openEmail(id: any) {
     this.Emails.forEach((xyz: any) => {
@@ -438,17 +465,17 @@ export class EmailComponent implements OnInit {
       });
     });
 
-      if (this.selectedIndex === id) {
-        this.selectedIndex = 'collapsed unread';
-      } else {
-        this.selectedIndex = '';
-      }
+    if (this.selectedIndex === id) {
+      this.selectedIndex = 'collapsed unread';
+    } else {
+      this.selectedIndex = '';
+    }
   }
 
   insertTagsForFeedDto = new InsertTagsForFeedDto();
   checkTag = false;
 
-  insertTags(id: any, comId: any, feedType:any) {
+  insertTags(id: any, comId: any, feedType: any) {
     this.insertTagsForFeedDto.feedId = comId.toString();
     this.insertTagsForFeedDto.tagId = id;
     this.insertTagsForFeedDto.feedType = feedType;
@@ -486,25 +513,25 @@ export class EmailComponent implements OnInit {
     });
   }
   insertSentimentForFeedDto = new InsertSentimentForFeedDto();
-  appliedSentiment:string='';
+  appliedSentiment: string = '';
 
   insertSentiment(feedId: any, sentimenName: any, type: any) {
-    
     this.insertSentimentForFeedDto.feedId = feedId.toString();
     this.insertSentimentForFeedDto.sentiment = sentimenName;
     this.insertSentimentForFeedDto.feedType = type;
-    this.insertSentimentForFeedDto.userId = Number(localStorage.getItem('agentId'));
+    this.insertSentimentForFeedDto.userId = Number(
+      localStorage.getItem('agentId')
+    );
 
     this.commondata
       .InsertSentiment(this.insertSentimentForFeedDto)
       .subscribe((res: any) => {
-        
         this.reloadComponent('Sentiment');
         this.appliedSentiment = sentimenName;
       });
   }
 
-  removeTag(id: any, comId: any, feedType:any) {
+  removeTag(id: any, comId: any, feedType: any) {
     this.insertTagsForFeedDto.feedId = comId.toString();
     this.insertTagsForFeedDto.tagId = id;
     this.insertTagsForFeedDto.feedType = feedType;
@@ -558,31 +585,23 @@ export class EmailComponent implements OnInit {
     this.clearInputField();
   }
 
-  ReplyDto = new ReplyDto();
-
-  emailReplyForm = new UntypedFormGroup({
-    text: new UntypedFormControl(this.ReplyDto.text),
-    commentId: new UntypedFormControl(this.ReplyDto.commentId),
-    teamId: new UntypedFormControl(this.ReplyDto.teamId),
-    platform: new UntypedFormControl(this.ReplyDto.platform),
-    contentType: new UntypedFormControl(this.ReplyDto.contentType),
-  });
+  replyDto = new ReplyDto();
 
   agentId: string = '';
   platform: string = '';
   postType: string = '';
   emailTo: any;
-  emailCc: any[]=[];
-  emailBcc: any;
-  emailSubject: any;
-  emailFrom: any;
-  
+  emailCc: string = '';
+  emailBcc: string = '';
+  emailSubject: string = '';
+  emailFrom: string = '';
+
+  emailCcArray: any[] = [];
 
   sendEmailInformation(id: any) {
     this.Emails.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
         if (comment.id == id) {
-          
           // populate comment data
 
           this.emailId = comment.id;
@@ -593,42 +612,50 @@ export class EmailComponent implements OnInit {
           this.emailBcc = comment.bcc;
           this.emailSubject = comment.message;
           this.emailFrom = comment.userName.split(/[<>]/)[1];
-          comment.cc?.forEach((item:any) => {
-            if(!this.emailCc.includes(item.emailAddress)){
-              this.emailCc.push(item.emailAddress)
-            }
-          });
+          if (comment.cc){
+            comment.cc?.forEach((item: any) => {
+              if (!this.emailCcArray.includes(item.emailAddress)) {
+                this.emailCcArray.push(item.emailAddress);
+              } 
+              this.emailCc = this.emailCcArray.toString();
+            });
+          } else {
+            this.emailCc = "";
+          }
+          
         }
       });
     });
   }
 
   ImageName: any;
-  ImageArray:any[]=[];
+  ImageArray: any[] = [];
   submitEmailReply() {
-    
+    debugger;
     if (
-      !this.emailReplyForm.get('emailTo')?.dirty ||
-      !this.emailReplyForm.get('emailCc')?.dirty ||
-      !this.emailReplyForm.get('emailBcc')?.dirty ||
-      !this.emailReplyForm.get('emailSubject')?.dirty
+      !this.emailReplyForm.get('to')?.dirty ||
+      !this.emailReplyForm.get('cc')?.dirty ||
+      !this.emailReplyForm.get('bcc')?.dirty ||
+      !this.emailReplyForm.get('subject')?.dirty
     ) {
-      if (!this.emailReplyForm.get('emailTo')?.dirty) {
+      if (!this.emailReplyForm.get('to')?.dirty) {
         this.emailReplyForm.patchValue({
           to: this.emailFrom,
         });
       }
-      if (!this.emailReplyForm.get('emailCc')?.dirty) {
-        this.emailReplyForm.patchValue({
-          cc: this.emailCc,
-        });
+      if (!this.emailReplyForm.get('cc')?.dirty) {
+        if (this.emailCc.length > 0) {
+          this.emailReplyForm.patchValue({
+            cc: this.emailCc,
+          });
+        }
       }
-      if (!this.emailReplyForm.get('emailBcc')?.dirty) {
+      if (!this.emailReplyForm.get('bcc')?.dirty) {
         this.emailReplyForm.patchValue({
           bcc: this.emailBcc,
         });
       }
-      if (!this.emailReplyForm.get('emailSubject')?.dirty) {
+      if (!this.emailReplyForm.get('subject')?.dirty) {
         this.emailReplyForm.patchValue({
           subject: this.emailSubject,
         });
@@ -651,12 +678,13 @@ export class EmailComponent implements OnInit {
     formData.append('CommentReply', JSON.stringify(this.emailReplyForm.value));
     this.commondata.ReplyComment(formData).subscribe(
       (res: any) => {
-        
         this.clearInputField();
         this.reloadComponent('comment');
+        this.emailReplyForm.reset();
+        this.closeReplyModal();
       },
       ({ error }) => {
-      //  alert(error.message);
+        //  alert(error.message);
       }
     );
   }
@@ -665,30 +693,30 @@ export class EmailComponent implements OnInit {
       this.isAttachment = true;
 
       const filesArray = Array.from(this.fileInput.nativeElement.files);
-      filesArray.forEach((attachment:any) => {
-        this.ImageArray.push(attachment)
+      filesArray.forEach((attachment: any) => {
+        this.ImageArray.push(attachment);
       });
-      const files = this.ImageArray.map((file:any) => file); // Create a new array with the remaining files
-        const newFileList = new DataTransfer();
-        files.forEach((file:any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
-        this.ImageName = newFileList.files;
+      const files = this.ImageArray.map((file: any) => file); // Create a new array with the remaining files
+      const newFileList = new DataTransfer();
+      files.forEach((file: any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+      this.ImageName = newFileList.files;
     }
   }
 
-  emailText: any;
-  emailReply: any;
 
   clearInputField() {
-    
-    this.emailReplyForm.reset();
+    this.emailCcArray = [];
+    this.emailCc = '';
     this.show = false;
     this.emailId = '';
     this.agentId = '';
     this.platform = '';
     this.postType = '';
-    this.ImageName = [];
-    this.ReplyDto.cc = '';
-    this.ReplyDto.bcc = '';
+    this.emailTo = '';
+    this.emailBcc = '';
+    this.emailSubject = '';
+    this.fileInput.nativeElement.value = '';
+    this.detectChanges();
   }
   toastermessage = false;
   AlterMsg: any = '';
@@ -812,18 +840,17 @@ export class EmailComponent implements OnInit {
   }
 
   commentStatus(comId: any, type: any) {
-    
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = this.parentPlatform;
     this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
     this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
-    this.commondata.CommentRespond(this.commentStatusDto).subscribe((res: any) => {
-      });
+    this.commondata
+      .CommentRespond(this.commentStatusDto)
+      .subscribe((res: any) => {});
   }
 
-  queryCompleted(comId:any, type:any){
-    
+  queryCompleted(comId: any, type: any) {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = this.parentPlatform;
@@ -831,11 +858,10 @@ export class EmailComponent implements OnInit {
     this.commondata
       .QueryCompleted(this.commentStatusDto)
       .subscribe((res: any) => {
-        
         this.querryCompleted = true;
       });
   }
-  markAsComplete = false
+  markAsComplete = false;
 
   markAsCompleteExpanded(comId: any) {
     this.Emails.forEach((abc: any) => {
@@ -851,7 +877,6 @@ export class EmailComponent implements OnInit {
   removeTags: any;
 
   addTagDataListner() {
-    
     this.Emails.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
@@ -878,7 +903,6 @@ export class EmailComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
   removeTagDataListener() {
-    
     this.Emails.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
@@ -898,13 +922,12 @@ export class EmailComponent implements OnInit {
   }
 
   updateQueryStatusDataListner() {
-    
     this.Emails.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
           if (singleCmnt.id == this.queryStatus.queryId) {
-            singleCmnt.queryStatus = this.queryStatus.queryStatus
-            singleCmnt.isLikedByAdmin = this.queryStatus.isLikes
+            singleCmnt.queryStatus = this.queryStatus.queryStatus;
+            singleCmnt.isLikedByAdmin = this.queryStatus.isLikes;
           }
         });
       });
@@ -913,17 +936,15 @@ export class EmailComponent implements OnInit {
   }
 
   updateBulkQueryStatusDataListner() {
-    
     this.Emails.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
-          this.queryStatus.forEach((qs:any) => {
+          this.queryStatus.forEach((qs: any) => {
             if (singleCmnt.id == qs.queryId) {
               singleCmnt.queryStatus = qs.queryStatus;
               this.totalUnrespondedCmntCountByCustomer = 0;
             }
           });
-          
         });
       });
     });
@@ -936,7 +957,7 @@ export class EmailComponent implements OnInit {
         cmnt.items.forEach((singleCmnt: any) => {
           if (singleCmnt.id == this.newReply.commentId) {
             singleCmnt.replies.push(this.newReply);
-            singleCmnt.queryStatus = this.newReply.queryStatus
+            singleCmnt.queryStatus = this.newReply.queryStatus;
           }
         });
       });
@@ -945,8 +966,8 @@ export class EmailComponent implements OnInit {
   }
 
   onScroll() {
-    if(this.totalUnrespondedCmntCountByCustomer > 10){
-      this.pageSize = this.pageSize + 10
+    if (this.totalUnrespondedCmntCountByCustomer > 10) {
+      this.pageSize = this.pageSize + 10;
       this.getEmails();
     }
   }
@@ -954,16 +975,16 @@ export class EmailComponent implements OnInit {
   isAttachment = false;
 
   removeAttachedFile(index: any) {
-      const filesArray = Array.from(this.ImageName);
-        filesArray.splice(index, 1);
-        this.ImageArray.splice(index, 1);
-        
-        const files = filesArray.map((file:any) => file); // Create a new array with the remaining files
-        const newFileList = new DataTransfer();
-        files.forEach(file => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+    const filesArray = Array.from(this.ImageName);
+    filesArray.splice(index, 1);
+    this.ImageArray.splice(index, 1);
 
-        this.fileInput.nativeElement.files = newFileList.files; 
-        this.detectChanges()
+    const files = filesArray.map((file: any) => file); // Create a new array with the remaining files
+    const newFileList = new DataTransfer();
+    files.forEach((file) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+
+    this.fileInput.nativeElement.files = newFileList.files;
+    this.detectChanges();
 
     if (this.ImageName.length == 0) {
       this.isAttachment = false;
@@ -971,28 +992,26 @@ export class EmailComponent implements OnInit {
   }
 
   detectChanges(): void {
+    debugger;
     this.ImageName = this.fileInput.nativeElement.files;
   }
-  trimText(text: string): string{
-    
-    if(text.length < 50){
-      return text
+  trimText(text: string): string {
+    if (text.length < 50) {
+      return text;
     } else {
-      return text.slice(0, 1000) + "...";
-      
+      return text.slice(0, 1000) + '...';
     }
-    console.log(text)
-
+    console.log(text);
   }
 
-  download(url : string, name: string){
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = name;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      console.log(url)
+  download(url: string, name: string) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    console.log(url);
   }
 
   isImage(attachment: any): boolean {
@@ -1008,23 +1027,26 @@ export class EmailComponent implements OnInit {
   }
 
   isOther(attachment: any): boolean {
-    return !this.isImage(attachment) && !this.isVideo(attachment) && !this.isAudio(attachment);
+    return (
+      !this.isImage(attachment) &&
+      !this.isVideo(attachment) &&
+      !this.isAudio(attachment)
+    );
   }
 
   // isReplyImage(attachment: any): boolean {
-  //   debugger
   //   const abc = attachment.split('.')
   //   const index = abc.length - 1
   //   const type = abc[index]
   //   if(type == 'jpeg'){
   //     return attachment;
-  //   } 
+  //   }
   //   if(type == 'jpg'){
   //     return attachment;
-  //   } 
+  //   }
   //   if(type == 'png'){
   //     return attachment;
-  //   } 
+  //   }
   //   if(type == 'gif'){
   //     return attachment;
   //   } else {
@@ -1034,7 +1056,7 @@ export class EmailComponent implements OnInit {
   // }
 
   // isReplyVideo(attachment: any): boolean {
-    
+
   //   const abc = attachment.split('.')
   //   const index = abc.length - 1
   //   const type = abc[index]
@@ -1046,7 +1068,7 @@ export class EmailComponent implements OnInit {
   // }
 
   // isReplyAudio(attachment: any): boolean {
-    
+
   //   const abc = attachment.split('.')
   //   const index = abc.length - 1
   //   const type = abc[index]

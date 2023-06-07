@@ -461,7 +461,7 @@
                                                         <strong>To:</strong>
                                                         {{email.userName}}
                                                     </div>
-                                                    <!-- <div class="msg-ref-info">
+                                                    <div class="msg-ref-info">
                                             <strong>Cc:</strong>
                                             {{reply.cc}}
                                         </div>
@@ -472,7 +472,7 @@
                                         <div class="msg-ref-info">
                                             <strong>Subject:</strong>
                                             {{reply.body}}
-                                        </div> -->
+                                        </div>
                                                     <div class="ref-msg" [innerHTML]="reply.message">
                                                         {{reply.message}}
                                                     </div>
@@ -586,7 +586,7 @@
                         data-bs-dismiss="modal" aria-label="Close"><i class="fal fa-times ice"></i></button>
                 </div>
             </div>
-            <form [formGroup]="emailReplyForm" (submit)="submitEmailReply()">
+            <form [formGroup]="emailReplyForm" (ngSubmit)="submitEmailReply()">
                 <div class="modal-body p-4 pt-2 pb-2">
                     <div class="email-reply-section">
 
@@ -595,7 +595,7 @@
                                 <div class="reply-header-left">
                                     <div class="input-group">
                                         <strong class="input-group-text charcoal fw-bold" id="basic-addon1">To:</strong>
-                                        <input formControlName="to" id="to" value={{emailFrom}} class="form-control"
+                                        <input formControlName="to" id="to" [(ngModel)]="emailFrom" class="form-control"
                                             placeholder="email" aria-label="email" aria-describedby="basic-addon1">
                                     </div>
                                 </div>
@@ -615,7 +615,7 @@
                                 <div class="reply-header-left">
                                     <div class="input-group">
                                         <strong class="input-group-text charcoal fw-bold" id="basic-addon1">Cc:</strong>
-                                        <input formControlName="cc" id="cc" value={{emailCc.toString()}} class="form-control"
+                                        <input formControlName="cc" id="cc" [(ngModel)]="emailCc" class="form-control"
                                             aria-label="css" aria-describedby="basic-addon1">
                                     </div>
                                 </div>
@@ -625,7 +625,7 @@
                                     <div class="input-group">
                                         <strong class="input-group-text charcoal fw-bold"
                                             id="basic-addon1">Bcc:</strong>
-                                        <input formControlName="bcc" id="bcc" value={{emailBcc}} class="form-control"
+                                        <input formControlName="bcc" id="bcc" [(ngModel)]="emailBcc" class="form-control"
                                             aria-label="bcc" aria-describedby="basic-addon1">
                                     </div>
                                 </div>
@@ -635,8 +635,8 @@
                                     <div class="input-group">
                                         <strong class="input-group-text charcoal fw-bold"
                                             id="basic-addon1">Subject:</strong>
-                                        <input formControlName="subject" id="subject" value={{emailSubject}}
-                                            class="form-control" aria-label="bcc" aria-describedby="basic-addon1">
+                                        <input formControlName="subject" id="subject" [(ngModel)]="emailSubject"
+                                            class="form-control" aria-label="subject" aria-describedby="basic-addon1">
                                     </div>
                                 </div>
                             </div>
@@ -749,10 +749,8 @@
                 </div>
 
                 <div class="modal-footer shadow-sm saltBg justify-content-lg-start">
-                    <button type="submit" class="btn pearlBg" data-bs-dismiss="modal" id="liveToastBtn"><i
-                            class="fal fa-paper-plane">
-
-                        </i> Send</button>
+                    <button type="submit" class="btn pearlBg" data-bs-dismiss="modal" id="liveToastBtn">
+                        <i class="fal fa-paper-plane"></i> Send</button>
                     <!-- <div class="form-check p-2">
                         <input type="checkbox" id="flexCheckChecked" checked="">
                     </div>

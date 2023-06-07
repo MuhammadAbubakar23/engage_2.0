@@ -404,7 +404,6 @@ export class LinkedInComponent implements OnInit {
   imageSize:any;
 
   onFileChanged() {
-    debugger
     if (this.fileInput.nativeElement.files.length > 0) {
       this.isAttachment = true;
 
@@ -518,6 +517,7 @@ detectChanges(): void {
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
+            this.linkedInReplyForm.reset();
           },
           ({ error }) => {
           //  alert(error.message);
@@ -531,13 +531,13 @@ detectChanges(): void {
   }
 
   clearInputField() {
-    this.linkedInReplyForm.reset();
     this.show = false;
     this.commentId = 0;
     this.agentId = '';
     this.platform = '';
     this.postType = '';
-    this.ImageName = [];
+    this.fileInput.nativeElement.value = '';
+    this.detectChanges();
   }
 
 
@@ -552,7 +552,6 @@ detectChanges(): void {
   }
 
   sendQuickReply(value: any) {
-    debugger
     var abc = this.QuickReplies.find((res: any) => res.value == value);
 
     this.text = abc?.text + " ";

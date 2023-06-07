@@ -1,13 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
-import { HeaderService } from 'src/app/services/HeaderService/header.service';
-import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ListingDto } from 'src/app/shared/Models/ListingDto';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
 import { FiltersDto } from 'src/app/shared/Models/FiltersDto';
 import { FetchPostTypeService } from 'src/app/services/FetchPostType/fetch-post-type.service';
-import { LeftsidebarExpandedService } from 'src/app/services/LeftSideBar-Expanded/leftsidebar-expanded.service';
 import { AssignQuerryDto } from 'src/app/shared/Models/AssignQuerryDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { FilterService } from 'src/app/services/FilterService/filter.service';
@@ -15,7 +12,6 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { Tooltip } from 'bootstrap';
 import { UpdateListService } from 'src/app/services/UpdateListService/update-list.service';
-import { DatePipe } from '@angular/common';
 import { GetAgentReportDto } from 'src/app/shared/Models/GetAgentReportDto';
 import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
 import { RemoveAssignedQuerryService } from 'src/app/services/RemoveAssignedQuery/remove-assigned-querry.service';
@@ -56,12 +52,10 @@ export class ConversationComponent implements OnInit {
   public subscription!: Subscription;
 
   constructor(
-    private headerService: HeaderService,
     private fetchId: FetchIdService,
     private SpinnerService: NgxSpinnerService,
     private fetchposttype: FetchPostTypeService,
     private changeDetect: ChangeDetectorRef,
-    private leftsidebar: LeftsidebarExpandedService,
     private commondata: CommonDataService,
     private filterService: FilterService,
     private router: Router,
@@ -203,8 +197,9 @@ export class ConversationComponent implements OnInit {
         this.listingDto = newMsg;
         this.ConversationList.unshift(this.listingDto);
         // this.TotalUnresponded = this.TotalUnresponded + 1;
-        if(this.ConversationList.length >= this.pageSize){
+        if(this.ConversationList.length > this.pageSize){
           this.ConversationList.pop();
+          this.TotalUnresponded = this.TotalUnresponded + 1;
         } else if(this.ConversationList.length <= this.pageSize){
           this.TotalUnresponded = this.TotalUnresponded + 1;
           this.from = this.from + 1;

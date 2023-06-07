@@ -649,6 +649,7 @@ export class WhatsappDetailsComponent implements OnInit {
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
+            this.WhatsappReplyForm.reset();
           },
           ({ error }) => {
           //  alert(error.message);
@@ -679,7 +680,6 @@ export class WhatsappDetailsComponent implements OnInit {
   }
 
   clearInputField() {
-    this.WhatsappReplyForm.reset();
     this.WhatsappMsgReply = '';
     this.WhatsappMsgText = '';
     this.show = false;
@@ -687,7 +687,8 @@ export class WhatsappDetailsComponent implements OnInit {
     this.agentId = '';
     this.platform = '';
     this.postType = '';
-    this.ImageName = [];
+    this.fileInput.nativeElement.value = '';
+    this.detectChanges();
   }
 
   closeToaster() {

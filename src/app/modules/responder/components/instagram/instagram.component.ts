@@ -557,6 +557,7 @@ export class InstagramComponent implements OnInit {
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
+            this.instagramCommentReplyForm.reset();
           },
           ({ error }) => {
           //  alert(error.message);
@@ -903,8 +904,6 @@ export class InstagramComponent implements OnInit {
     this.toastermessage = false;
   }
   clearInputField() {
-    this.instagramCommentReplyForm.reset();
-    this.instagramMessageReplyForm.reset();
     this.commentReply = '';
     this.instaCommentText = '';
     this.show = false;
@@ -914,6 +913,8 @@ export class InstagramComponent implements OnInit {
     this.postType = '';
     this.msgText = '';
     this.msgId=0;
+    this.fileInput.nativeElement.value = '';
+    this.detectChanges();
   }
   markAsComplete = false;
   markAsCompleteExpanded(comId: any) {
@@ -1350,6 +1351,7 @@ export class InstagramComponent implements OnInit {
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
+            this.instagramMessageReplyForm.reset();            
           },
           ({ error }) => {
           //  alert(error.message);

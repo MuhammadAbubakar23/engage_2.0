@@ -1011,6 +1011,8 @@ export class FacebookComponent implements OnInit {
             this.clearInputField();
             this.reloadComponent('comment');
             
+    this.facebookReplyForm.reset();
+            
         this.radioInput.nativeElement.checked = false;
           },
           ({ error }) => {
@@ -1025,16 +1027,15 @@ export class FacebookComponent implements OnInit {
   }
 
   clearInputField() {
-    this.facebookReplyForm.reset();
-    this.facebookMessageReplyForm.reset();
     this.msgText = '';
     this.show = false;
     this.commentId = 0;
     this.agentId = '';
     this.platform = '';
     this.postType = '';
-    this.ImageName = [];
     this.msgId = 0;
+    this.fileInput.nativeElement.value = '';
+    this.detectChanges();
   }
 
   submitFacebookMessageReply() {
@@ -1072,6 +1073,7 @@ export class FacebookComponent implements OnInit {
           (res: any) => {
             this.clearInputField();
             this.reloadComponent('fbmessage');
+            this.facebookMessageReplyForm.reset();
             
         this.radioInput.nativeElement.checked = false;
           },

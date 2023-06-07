@@ -967,6 +967,7 @@ export class TwitterComponent implements OnInit {
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
+            this.TwitterRepliesForm.reset();
           },
           ({ error }) => {
           //  alert(error.message);
@@ -1070,6 +1071,7 @@ export class TwitterComponent implements OnInit {
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
+            this.twitterMessageReplyForm.reset();
           },
           ({ error }) => {
           //  alert(error.message);
@@ -1187,14 +1189,14 @@ export class TwitterComponent implements OnInit {
   commentReply: any;
 
   clearInputField() {
-    this.TwitterRepliesForm.reset();
-    this.twitterMessageReplyForm.reset();
     this.msgText = '';
     this.show = false;
     this.tweetId = 0;
     this.agentId = '';
     this.platform = '';
     this.postType = '';
+    this.fileInput.nativeElement.value = '';
+    this.detectChanges();
   }
 
   TTReply: boolean = true;
