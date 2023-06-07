@@ -368,6 +368,7 @@ export class EmailComponent implements OnInit {
       });
     } else {
       this.filterDto = {
+       
         // fromDate: new Date(),
         // toDate: new Date(),
         user: localStorage.getItem('storeOpenedId') || '{}',
@@ -635,7 +636,6 @@ export class EmailComponent implements OnInit {
   ImageName: any;
   ImageArray: any[] = [];
   submitEmailReply() {
-    debugger;
     if (
       !this.emailReplyForm.get('to')?.dirty ||
       !this.emailReplyForm.get('cc')?.dirty ||
@@ -996,7 +996,6 @@ export class EmailComponent implements OnInit {
   }
 
   detectChanges(): void {
-    debugger;
     this.ImageName = this.fileInput.nativeElement.files;
   }
   trimText(text: string): string {

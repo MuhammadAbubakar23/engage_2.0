@@ -156,7 +156,6 @@ export class YoutubeComponent implements OnInit {
 
 
   updateCommentsDataListener() {
-    debugger
         this.updatedComments.forEach((xyz: any) => {
           if (this.id == xyz.userId) {
             this.commentDto = {
