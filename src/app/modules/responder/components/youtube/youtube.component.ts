@@ -1,7 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Tooltip } from 'bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -10,7 +8,6 @@ import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
-import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
@@ -109,10 +106,10 @@ export class YoutubeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.criteria = {
-    //   property: 'createdDate',
-    //   descending: true,
-    // };
+    this.criteria = {
+      property: 'createdDate',
+      descending: true,
+    };
 
     this.TodayDate = new Date();
 
@@ -159,6 +156,7 @@ export class YoutubeComponent implements OnInit {
 
 
   updateCommentsDataListener() {
+    debugger
         this.updatedComments.forEach((xyz: any) => {
           if (this.id == xyz.userId) {
             this.commentDto = {
@@ -210,6 +208,8 @@ export class YoutubeComponent implements OnInit {
                 );
               }
             });
+            this.totalUnrespondedCmntCountByCustomer =
+          this.totalUnrespondedCmntCountByCustomer + 1;
           }
         });
         this.changeDetect.detectChanges();

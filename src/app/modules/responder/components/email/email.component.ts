@@ -211,6 +211,10 @@ export class EmailComponent implements OnInit {
         });
         this.totalUnrespondedCmntCountByCustomer =
           this.totalUnrespondedCmntCountByCustomer + 1;
+
+          this.Emails?.forEach((msg: any) => {
+            this.To = msg?.comments[0]?.to[0]?.emailAddress;
+          });
       }
     });
     this.changeDetect.detectChanges();
