@@ -982,4 +982,9 @@ detectChanges(): void {
   closeQuickResponseSidebar(){
     this.quickReplySearchText = '';
   }
+
+  onScrollComments() {
+    this.pageSize = this.pageSize + 10;
+    this.getLinkedInComments();
+  }
 }

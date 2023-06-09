@@ -293,8 +293,8 @@ export class YoutubeComponent implements OnInit {
         user: this.slaId,
         pageId: '',
         plateForm: 'Youtube',
-        pageNumber: 0,
-        pageSize: 0,
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize,
         isAttachment: false
       };
       this.spinner1running = true;
@@ -904,5 +904,10 @@ export class YoutubeComponent implements OnInit {
       });
     });
     this.changeDetect.detectChanges();
+  }
+
+  onScrollComments() {
+    this.pageSize = this.pageSize + 10;
+    this.getYoutubeData();
   }
 }

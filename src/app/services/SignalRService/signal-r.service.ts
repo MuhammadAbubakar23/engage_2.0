@@ -3,6 +3,7 @@ import * as signalR from '@microsoft/signalr';
 import { IHttpConnectionOptions } from '@microsoft/signalr';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { AddTagService } from '../AddTagService/add-tag.service';
+import { ApplySentimentService } from '../ApplySentimentService/apply-sentiment.service';
 import { QueryStatusService } from '../queryStatusService/query-status.service';
 import { RemoveAssignedQuerryService } from '../RemoveAssignedQuery/remove-assigned-querry.service';
 import { RemoveTagService } from '../RemoveTagService/remove-tag.service';
@@ -39,7 +40,8 @@ export class SignalRService {
     private updateMessagesService : UpdateMessagesService,
     private replyService : ReplyService,
     private queryStatusService : QueryStatusService,
-    private removeAssignedQueryService : RemoveAssignedQuerryService
+    private removeAssignedQueryService : RemoveAssignedQuerryService,
+    private applySentimentService : ApplySentimentService
   ) {}
 
   startConnection() {
@@ -155,6 +157,12 @@ public assignQueryResponseListner = () => {
   this.hubconnection.on('AssignQueryResponse', (removeAssignedQuerry) => {
     
     this.removeAssignedQueryService.sendAssignedQuerry(removeAssignedQuerry);
+  });
+};
+
+public applySentimentListner = () => {
+  this.hubconnection.on('ApplySentimentTags', (appliedSentiment) => {
+    this.applySentimentService.sendSentiment(appliedSentiment);
   });
 };
 

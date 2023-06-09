@@ -863,4 +863,10 @@ detectChanges(): void {
     });
     this.changeDetect.detectChanges();
   }
+
+  onScrollComments() {
+    this.pageSize = this.pageSize + 10;
+    this.getWhatsappData();
+  }
+
 }

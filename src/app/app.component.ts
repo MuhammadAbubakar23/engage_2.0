@@ -37,5 +37,6 @@ export class AppComponent {
     this.signalRService.queryStatusDataListener();
     this.signalRService.bulkQueryStatusDataListener();
     this.signalRService.assignQueryResponseListner();
+    this.signalRService.applySentimentListner();
   }
 }

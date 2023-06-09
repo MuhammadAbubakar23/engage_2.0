@@ -161,7 +161,7 @@ export class FacebookComponent implements OnInit {
   ngOnInit(): void {
     this.criteria = {
       property: 'createdDate',
-      descending: false,
+      descending: true,
     };
     this.TodayDate = new Date();
 

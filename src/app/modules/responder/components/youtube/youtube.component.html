@@ -30,7 +30,9 @@
                 </li>
             </ul>
         </div>
-        <div class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
+        <div class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;"
+        infinite-scroll [scrollWindow]="false" [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5"
+            [infiniteScrollThrottle]="10" (scrolled)="onScrollComments()">
             <div class="scroll-content">
                 <div class="tab-content m-4" id="myTabContent">
                     <div class="tab-pane fade show active" id="youtube-comment" role="tabpanel"

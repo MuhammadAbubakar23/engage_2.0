@@ -35,10 +35,23 @@
               <i class="fal fa-envelope"></i>
             </div>
             <div class="ms-2 me-auto">
-              <div class="black-text">Careers</div>
-              <!-- <small class="coal">careers@ibex.co</small> -->
+              <div class="black-text">Emails</div>
+              <small class="coal">/Gmail</small>
             </div>
+            <!-- <span class="badge twltte-bg rounded-pill">{{EmailUnResponded + OfficeEmailUnResponded}}</span> -->
             <span class="badge twltte-bg rounded-pill">{{EmailUnResponded}}</span>
+          </a>
+          <a (click)="updatevalue('OfficeEmail')" [routerLink]="['/all-inboxes']" [queryParams]="{List : 'OfficeEmails'}"
+            class="all-inboxes-menu list-group-item list-group-item-action" value="email">
+            <div class="iconButton medium berryBg">
+              <i class="fal fa-envelope"></i>
+            </div>
+            <div class="ms-2 me-auto">
+              <div class="black-text">Emails</div>
+              <small class="coal">/Outlook</small>
+            </div>
+            <!-- <span class="badge twltte-bg rounded-pill">{{EmailUnResponded + OfficeEmailUnResponded}}</span> -->
+            <span class="badge twltte-bg rounded-pill">{{OfficeEmailUnResponded}}</span>
           </a>
           <a (click)="updatevalue('WhatsApp')"
             class="all-inboxes-menu list-group-item list-group-item-action" value="whatsapp">

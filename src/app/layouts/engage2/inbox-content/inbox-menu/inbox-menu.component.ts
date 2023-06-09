@@ -14,18 +14,19 @@ export class InboxMenuComponent implements OnInit {
 
 
   public Subscription! :Subscription
-  UnResponded : number =0;
+  UnResponded : number = 0;
   SlaUnResponded : number = 0;
-  WaUnResponded : number =0;
-  SmsUnResponded : number =0;
-  FbUnResponded : number =0;
-  EmailUnResponded : number =0;
-  WebchatUnResponded : number =0;
-  TwitterUnResponded : number =0;
-  InstaUnResponded : number =0;
-  LinkedInUnResponded : number =0;
-  PlaystoreUnResponded : number =0;
-  YoutubeUnResponded : number =0;
+  WaUnResponded : number = 0;
+  SmsUnResponded : number = 0;
+  FbUnResponded : number = 0;
+  EmailUnResponded : number = 0;
+  OfficeEmailUnResponded : number =0;
+  WebchatUnResponded : number = 0;
+  TwitterUnResponded : number = 0;
+  InstaUnResponded : number = 0;
+  LinkedInUnResponded : number = 0;
+  PlaystoreUnResponded : number = 0;
+  YoutubeUnResponded : number = 0;
 
   constructor(private filterService : FilterService,
     private commonService : CommonDataService,
@@ -67,7 +68,12 @@ export class InboxMenuComponent implements OnInit {
             this.WebchatUnResponded = platform.count;
           }
           if(platform.platform == 'Email'){
+            
             this.EmailUnResponded = platform.count;
+          }
+          if(platform.platform == 'OfficeEmail'){
+            
+            this.OfficeEmailUnResponded = platform.count;
           }
           if(platform.platform == 'PlayStore'){
             this.PlaystoreUnResponded = platform.count;
@@ -105,7 +111,12 @@ export class InboxMenuComponent implements OnInit {
           this.WebchatUnResponded = platform.unrespondedCount + this.WebchatUnResponded;
         }
         if(platform.platform == 'Email'){
+          
           this.EmailUnResponded = platform.unrespondedCount + this.EmailUnResponded;
+        }
+        if(platform.platform == 'OfficeEmail'){
+          
+          this.OfficeEmailUnResponded = platform.unrespondedCount + this.OfficeEmailUnResponded;
         }
         if(platform.platform == 'PlayStore'){
           this.PlaystoreUnResponded = platform.unrespondedCount + this.PlaystoreUnResponded;
@@ -144,7 +155,12 @@ export class InboxMenuComponent implements OnInit {
           this.WebchatUnResponded = platform.count;
         }
         if(platform.platform == 'Email'){
+          
           this.EmailUnResponded = platform.count;
+        }
+        if(platform.platform == 'OfficeEmail'){
+          
+          this.OfficeEmailUnResponded = platform.count;
         }
         if(platform.platform == 'PlayStore'){
           this.PlaystoreUnResponded = platform.count;

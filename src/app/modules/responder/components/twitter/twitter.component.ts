@@ -1445,4 +1445,12 @@ export class TwitterComponent implements OnInit {
     });
     this.changeDetect.detectChanges();
   }
+  onScrollComments() {
+    this.pageSize = this.pageSize + 10;
+    this.getTwitterData();
+  }
+  onScrollMessages() {
+    this.pageSize = this.pageSize + 10;
+    this.getTwitterMessages();
+  }
 }

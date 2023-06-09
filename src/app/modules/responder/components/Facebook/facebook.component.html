@@ -69,10 +69,10 @@
                                             <div class="post-img-wrap whatsappImgModalBtn" type="button"
                                                         style="width:375px;"
                                                         *ngFor="let attachment of facebookdata.post.attachments">
-                                                        <img *ngIf="attachment.description == 'photo'"
+                                                        <img *ngIf="attachment.contentType == 'photo'"
                                                             src={{attachment.attachmentUrl}}
                                                             style="width: -webkit-fill-available;">
-                                                        <video *ngIf="attachment.description == 'video'" width="375px"
+                                                        <video *ngIf="attachment.contentType == 'video'" width="375px"
                                                             controls>
                                                             <source src={{attachment.attachmentUrl}} type="video/mp4"
                                                                 style="width: -webkit-fill-available;">

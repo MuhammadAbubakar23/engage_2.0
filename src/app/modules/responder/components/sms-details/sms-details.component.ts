@@ -800,4 +800,9 @@ export class SmsDetailsComponent implements OnInit {
     });
     this.changeDetect.detectChanges();
   }
-}
+
+  onScrollComments() {
+    this.pageSize = this.pageSize + 10;
+    this.getSmsData();
+  }
+  }
