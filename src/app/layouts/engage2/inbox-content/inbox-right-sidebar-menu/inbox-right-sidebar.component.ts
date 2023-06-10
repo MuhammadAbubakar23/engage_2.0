@@ -1,12 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { RightNavService } from 'src/app/services/RightNavService/RightNav.service';
-import { MenuState } from '../../state/menu.state';
 import { Store } from '@ngrx/store';
-import { getEmargingEqual, getMenusLoading } from '../../state/menu.selectors';
-import { loadMenusList } from '../../state/menu.actions';
+import { MenuState } from '../../menu-state/menu.state';
+import { getEmargingEqual } from '../../menu-state/menu.selectors';
 
 @Component({
   selector: 'inbox-right-sidebar',
@@ -39,7 +37,7 @@ export class InboxRightSidebarComponent implements OnInit {
     this.menus$ =[];
     this.menu$ = this.store.select(getEmargingEqual("team_inbox_right_menu")).subscribe((item:any) => {
       for(let key in item) {
-        
+
        // // console.log(item)
         let obj = {
           mainId : item[key].mainId,
@@ -95,7 +93,7 @@ export class InboxRightSidebarComponent implements OnInit {
   // }
 
   toggleRightBar(child:string) {
-    
+
     // this.parentFun.emit();
     if(localStorage.getItem('child') == child){
       this.toggleRightPanelParent.emit();

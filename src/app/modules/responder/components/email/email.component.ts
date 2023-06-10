@@ -78,7 +78,7 @@ export class EmailComponent implements OnInit {
     private queryStatusService: QueryStatusService,
     private replyService: ReplyService,
     private unrespondedCountService: UnRespondedCountService,
-    private applySentimentService : ApplySentimentService
+    private applySentimentService: ApplySentimentService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = null;
@@ -156,7 +156,9 @@ export class EmailComponent implements OnInit {
         this.updateBulkQueryStatusDataListner();
       });
 
-      this.Subscription = this.applySentimentService.receiveSentiment().subscribe((res) => {
+    this.Subscription = this.applySentimentService
+      .receiveSentiment()
+      .subscribe((res) => {
         this.applySentimentListner(res);
       });
   }
@@ -164,7 +166,7 @@ export class EmailComponent implements OnInit {
   commentDto = new commentsDto();
 
   updatedComments: any;
-  senderEmailAddress:any;
+  senderEmailAddress: any;
 
   updateCommentsDataListener() {
     this.updatedComments.forEach((xyz: any) => {
@@ -219,9 +221,9 @@ export class EmailComponent implements OnInit {
         this.totalUnrespondedCmntCountByCustomer =
           this.totalUnrespondedCmntCountByCustomer + 1;
 
-          this.Emails?.forEach((msg: any) => {
-            this.To = msg?.comments[0]?.to[0]?.emailAddress;
-          });
+        this.Emails?.forEach((msg: any) => {
+          this.To = msg?.comments[0]?.to[0]?.emailAddress;
+        });
       }
     });
     this.changeDetect.detectChanges();
@@ -234,8 +236,8 @@ export class EmailComponent implements OnInit {
   groupArrays: any[] = [];
   fullName: string = '';
   replyAttachments: any[] = [];
-  multipleTo: any[]=[];
-  multipleCc: any[]=[];
+  multipleTo: any[] = [];
+  multipleCc: any[] = [];
 
   getEmails() {
     if (this.id != null || undefined) {
@@ -256,15 +258,12 @@ export class EmailComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
-          debugger
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.Emails = res.List;
           this.fullName = this.Emails[0].user.userName.split('<')[0];
           this.senderEmailAddress = this.Emails[0].user.userId;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-
-          
 
           this.commentsArray = [];
           this.Emails?.forEach((item: any) => {
@@ -292,27 +291,34 @@ export class EmailComponent implements OnInit {
                 };
               }
             );
-            //     item['groupedComments'] = this.groupArrays;
-            // console.log('hello', this.Emails);
+            item.groupedComments.forEach((group: any) => {
+              group.items.forEach((email: any) => {
+                this.multipleTo = [];
+                this.multipleCc = [];
+                email.to.forEach((singleTo:any) => {
+                  if (!this.multipleTo.includes(singleTo.emailAddress)) {
+                    this.multipleTo.push(singleTo.emailAddress);
+                  }
+                  email['multipleTo'] = this.multipleTo.join(', ');
+                });
+                
+
+                email.cc?.forEach((singleCc: any) => {
+                  if (!this.multipleCc.includes(singleCc.emailAddress)) {
+                    this.multipleCc.push(singleCc.emailAddress);
+                  }
+                  email['multipleCc'] = this.multipleCc.join(', ');
+                });
+                
+              });
+              console.log(this.Emails)
+              
+            });
           });
 
           this.Emails?.forEach((item: any) => {
             this.To = item?.comments[0]?.to[0]?.emailAddress;
-
-            item.comments.forEach((cmnt:any) => {
-              cmnt.to.forEach((singleTo:any) => {
-                if(!this.multipleTo.includes(singleTo.emailAddress)){
-                  this.multipleTo.push(singleTo.emailAddress);
-                }
-              });
-              cmnt.cc.forEach((singleCc:any) => {
-                if(!this.multipleCc.includes(singleCc.emailAddress)){
-                  this.multipleCc.push(singleCc.emailAddress);
-                }
-              });
-            });
           });
-
         });
     } else if (this.slaId != null || undefined) {
       localStorage.setItem('storeOpenedId', this.slaId);
@@ -334,7 +340,6 @@ export class EmailComponent implements OnInit {
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
         this.senderEmailAddress = this.Emails[0].user.userId;
         this.fullName = this.Emails[0].user.userName.split('<')[0];
-
 
         this.commentsArray = [];
         this.Emails?.forEach((item: any) => {
@@ -362,30 +367,37 @@ export class EmailComponent implements OnInit {
               };
             }
           );
-          //     item['groupedComments'] = this.groupArrays;
-          // console.log('hello', this.Emails);
+          item.groupedComments.forEach((group: any) => {
+            group.items.forEach((email: any) => {
+              this.multipleTo = [];
+              this.multipleCc = [];
+              email.to.forEach((singleTo:any) => {
+                if (!this.multipleTo.includes(singleTo.emailAddress)) {
+                  this.multipleTo.push(singleTo.emailAddress);
+                }
+                email['multipleTo'] = this.multipleTo.join(', ');
+              });
+              
+
+              email.cc?.forEach((singleCc: any) => {
+                if (!this.multipleCc.includes(singleCc.emailAddress)) {
+                  this.multipleCc.push(singleCc.emailAddress);
+                }
+                email['multipleCc'] = this.multipleCc.join(', ');
+              });
+              
+            });
+            console.log(this.Emails)
+            
+          });
         });
 
         this.Emails?.forEach((item: any) => {
           this.To = item?.comments[0]?.to[0]?.emailAddress;
-
-          item.comments.forEach((cmnt:any) => {
-            cmnt.to.forEach((singleTo:any) => {
-              if(!this.multipleTo.includes(singleTo.emailAddress)){
-                this.multipleTo.push(singleTo.emailAddress);
-              }
-            });
-            cmnt.cc.forEach((singleCc:any) => {
-              if(!this.multipleCc.includes(singleCc.emailAddress)){
-                this.multipleCc.push(singleCc.emailAddress);
-              }
-            });
-          });
         });
       });
     } else {
       this.filterDto = {
-
         // fromDate: new Date(),
         // toDate: new Date(),
         user: localStorage.getItem('storeOpenedId') || '{}',
@@ -432,25 +444,33 @@ export class EmailComponent implements OnInit {
                 };
               }
             );
-            //     item['groupedComments'] = this.groupArrays;
-            // console.log('hello', this.Emails);
+            item.groupedComments.forEach((group: any) => {
+              group.items.forEach((email: any) => {
+                this.multipleTo = [];
+                this.multipleCc = [];
+                email.to.forEach((singleTo:any) => {
+                  if (!this.multipleTo.includes(singleTo.emailAddress)) {
+                    this.multipleTo.push(singleTo.emailAddress);
+                  }
+                  email['multipleTo'] = this.multipleTo.join(', ');
+                });
+                
+
+                email.cc?.forEach((singleCc: any) => {
+                  if (!this.multipleCc.includes(singleCc.emailAddress)) {
+                    this.multipleCc.push(singleCc.emailAddress);
+                  }
+                  email['multipleCc'] = this.multipleCc.join(', ');
+                });
+                
+              });
+              console.log(this.Emails)
+              
+            });
           });
 
           this.Emails?.forEach((item: any) => {
             this.To = item?.comments[0]?.to[0]?.emailAddress;
-
-            item.comments.forEach((cmnt:any) => {
-              cmnt.to.forEach((singleTo:any) => {
-                if(!this.multipleTo.includes(singleTo.emailAddress)){
-                  this.multipleTo.push(singleTo.emailAddress);
-                }
-              });
-              cmnt.cc.forEach((singleCc:any) => {
-                if(!this.multipleCc.includes(singleCc.emailAddress)){
-                  this.multipleCc.push(singleCc.emailAddress);
-                }
-              });
-            });
           });
         });
     }
@@ -618,16 +638,14 @@ export class EmailComponent implements OnInit {
   emailCc: string = '';
   emailBcc: string = '';
   emailSubject: string = '';
-  emailFrom: any[]=[];
-  emailFromInString : string = ''
-  emailCcInString : string = ''
+  emailFrom: any[] = [];
+  emailFromInString: string = '';
+  emailCcInString: string = '';
 
   emailCcArray: any[] = [];
   emailToArray: any[] = [];
 
-
   sendEmailInformation(id: any) {
-    debugger
     this.Emails.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
         if (comment.id == id) {
@@ -638,27 +656,37 @@ export class EmailComponent implements OnInit {
           this.platform = xyz.platform;
           this.postType = comment.contentType;
           this.emailTo = comment.to;
-          if(comment.bcc){
+
+          if (comment.bcc) {
             this.emailBcc = comment.bcc;
           }
           this.emailSubject = comment.message;
-          this.emailFrom = this.emailTo;
-          const index = this.emailFrom.find((x:any)=>x.emailAddress == this.To)
-          if(index != -1){
 
-            this.emailFrom.splice(index, 1)
-            this.emailFrom.unshift({'name':this.fullName, 'emailAddress':this.senderEmailAddress})
+          this.emailFrom = this.emailTo;
+          const index = this.emailFrom.find(
+            (x: any) => x.emailAddress == this.To
+          );
+          if (index != -1) {
+            this.emailFrom.splice(index, 1);
+            this.emailFrom.unshift({
+              name: this.fullName,
+              emailAddress: this.senderEmailAddress,
+            });
           }
+          this.emailFromInString = '';
+          this.emailToArray = [];
           comment.to?.forEach((item: any) => {
             if (!this.emailToArray.includes(item.emailAddress)) {
               this.emailToArray.push(item.emailAddress);
             }
             this.emailFromInString = this.emailToArray.join(', ');
           });
-          if(comment.cc){
+          if (comment.cc) {
             this.emailCc = comment.cc;
           }
-          if (comment.cc){
+          this.emailCcInString='';
+          this.emailCcArray = [];
+          if (comment.cc) {
             comment.cc?.forEach((item: any) => {
               if (!this.emailCcArray.includes(item.emailAddress)) {
                 this.emailCcArray.push(item.emailAddress);
@@ -666,9 +694,8 @@ export class EmailComponent implements OnInit {
               this.emailCcInString = this.emailCcArray.join(', ');
             });
           } else {
-            this.emailCcInString = "";
+            this.emailCcInString = '';
           }
-
         }
       });
     });
@@ -677,11 +704,10 @@ export class EmailComponent implements OnInit {
   ImageName: any;
   ImageArray: any[] = [];
 
-  replyTo:any[]=[];
-  replyCc:any[]=[];
-  replyBcc:any[]=[];
+  replyTo: any[] = [];
+  replyCc: any[] = [];
+  replyBcc: any[] = [];
   submitEmailReply() {
-    debugger
     if (
       !this.emailReplyForm.get('to')?.dirty ||
       !this.emailReplyForm.get('cc')?.dirty ||
@@ -694,8 +720,8 @@ export class EmailComponent implements OnInit {
         });
       } else {
         const to = this.emailReplyForm.value.to.split(',');
-        to.forEach((item:any) => {
-          this.replyTo.push({'name':'','emailAddress':item})
+        to.forEach((item: any) => {
+          this.replyTo.push({ name: '', emailAddress: item });
         });
         this.emailReplyForm.patchValue({
           to: JSON.stringify(this.replyTo),
@@ -709,24 +735,23 @@ export class EmailComponent implements OnInit {
         }
       } else {
         const cc = this.emailReplyForm.value.cc.split(',');
-        cc.forEach((item:any) => {
-          this.replyCc.push({'name':'','emailAddress':item})
+        cc.forEach((item: any) => {
+          this.replyCc.push({ name: '', emailAddress: item });
         });
         this.emailReplyForm.patchValue({
           cc: JSON.stringify(this.replyCc),
         });
       }
       if (!this.emailReplyForm.get('bcc')?.dirty) {
-        if(this.emailBcc){
+        if (this.emailBcc) {
           this.emailReplyForm.patchValue({
             bcc: JSON.stringify(this.emailBcc),
           });
-        } 
-        
+        }
       } else {
         const bcc = this.emailReplyForm.value.bcc.split(',');
-        bcc.forEach((item:any) => {
-          this.replyBcc.push({'name':'','emailAddress':item})
+        bcc.forEach((item: any) => {
+          this.replyBcc.push({ name: '', emailAddress: item });
         });
         this.emailReplyForm.patchValue({
           bcc: JSON.stringify(this.replyBcc),
@@ -779,7 +804,6 @@ export class EmailComponent implements OnInit {
       this.ImageName = newFileList.files;
     }
   }
-
 
   clearInputField() {
     this.emailCcArray = [];
@@ -979,12 +1003,12 @@ export class EmailComponent implements OnInit {
     });
     this.changeDetect.detectChanges();
   }
-  applySentimentListner(res:any) {
+  applySentimentListner(res: any) {
     this.Emails.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
           if (singleCmnt.id == res.feedId) {
-            singleCmnt.sentiment = res
+            singleCmnt.sentiment = res;
           }
         });
       });
@@ -1055,8 +1079,8 @@ export class EmailComponent implements OnInit {
   }
 
   onScroll() {
-      this.pageSize = this.pageSize + 10;
-      this.getEmails();
+    this.pageSize = this.pageSize + 10;
+    this.getEmails();
   }
 
   isAttachment = false;
@@ -1118,6 +1142,10 @@ export class EmailComponent implements OnInit {
       !this.isVideo(attachment) &&
       !this.isAudio(attachment)
     );
+  }
+
+  convertToString(to: any): string {
+    return to.emailAddress;
   }
 
   // isReplyImage(attachment: any): boolean {

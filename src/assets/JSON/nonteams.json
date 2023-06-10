@@ -1,7 +1,7 @@
 { 
     "search":""
     , "url" : "AllTeams"
-    , "urlparams":"WithOutType"
+    , "urlparams":"WithType"
     , "pageno":1
     , "pagesize":50
     , "template": {}
@@ -17,7 +17,7 @@
         { 
             "visible":true,   
             "index":["name"], 
-            "name":"teams", 
+            "name":"name", 
             "type":"display", 
             "order":"ASC", 
             "search":true, 
@@ -59,8 +59,8 @@
             "search":false, 
             "group":0, 
             "actions":[
-                {"name":"delete", "type":"service" , "actionUrl":"DeleteTeam", "icon":"fal fa-trash me-2"},
-                {"name":"Add Team Members", "type":"overlay" , "actionUrl":"DeleteTeam", "icon":"fal fa-trash me-2"}
+                {"name":"delete", "type":"service" , "actionUrl":"DeleteNonTeam", "icon":"fal fa-trash me-2"},
+                {"name":"Add Members", "type":"overlay" , "actionUrl":"DeleteNonTeam", "icon":"fal fa-trash me-2"}
             ],
             "wrap":"",
             "icon":"" 

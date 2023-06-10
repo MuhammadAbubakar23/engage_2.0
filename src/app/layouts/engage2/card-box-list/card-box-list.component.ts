@@ -1,13 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MenuModel } from '../menu-state/menu.model';
+import { CardBoxListCheckboxComponent } from './card-box-list-checkbox/card-box-list-checkbox.component';
 
 @Component({
   selector: 'engage2-card-box-list',
+  // standalone:true,
+  // imports:[CommonModule, CardBoxListCheckboxComponent],
   templateUrl: './card-box-list.component.html',
   styleUrls: ['./card-box-list.component.scss']
 })
 export class CardBoxListComponent implements OnInit {
-  @Input() menulist: any[] = []; //; //Observable<T>
+  @Input() menulist: any = []; //; //Observable<T>
   @Output() menulistchecked: EventEmitter<any> = new EventEmitter<any>();
   @Input() menulistselectall?: string; //; //Observable<T>
   // menulistChecked:any;

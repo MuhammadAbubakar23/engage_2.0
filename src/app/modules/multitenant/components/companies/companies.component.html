@@ -1,1 +1,96 @@
-<p>companies works!</p>
+<div class="team-user-wrap console-body-wrapper inbox-container" data-scrollbar="true" tabindex="-1"
+    style="overflow-y: auto; outline: none;">
+    <div class="scroll-content">
+        <div class="p-4">
+            <div class="filter-toolbar">
+                <div class="row">
+                    <div class="col-md-8">
+                        <ul class="list-inline m-0 d-flex align-items-center">
+                            <li class="list-inline-item">
+                                <a href="javascript:" class="search-btn">
+                                    <button class="iconButton medium">
+                                        <i class="fal fa-search silver"></i>
+                                    </button>
+                                    <input placeholder="Search">
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <select class="js-example-basic-single form-select"
+                                    data-select2-id="select2-data-1-st3r" tabindex="-1" aria-hidden="true">
+                                    <option data-select2-id="select2-data-3-1igk">All </option>
+                                    <option>Ascending </option>
+                                    <option> Descending</option>
+                                    <option>Roles</option>
+                                    <option>Teams</option>
+                                </select>
+                                <!-- <span class="select2 select2-container select2-container--default" dir="ltr"
+                                    data-select2-id="select2-data-2-jctd" style="width: 107px;"><span
+                                        class="selection"><span class="select2-selection select2-selection--single"
+                                            role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                            aria-disabled="false" aria-labelledby="select2-1gkw-container"
+                                            aria-controls="select2-1gkw-container"><span
+                                                class="select2-selection__rendered" id="select2-1gkw-container"
+                                                role="textbox" aria-readonly="true" title="All ">All </span><span
+                                                class="select2-selection__arrow" role="presentation"><b
+                                                    role="presentation"></b></span></span></span><span
+                                        class="dropdown-wrapper" aria-hidden="true"></span></span> -->
+
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-center justify-content-end">
+                        <a (click)="updatevalue('consoleCreateTeamHeader')" [routerLink]="['/multitenant/companies/create/0']" class="ms-2">
+                            <button type="button" class="btn btn-success">
+                                <i class="fal fa-plus me-2"></i>
+                                Create Company
+                            </button>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <ng-template [ngIf]="showConsoleTable">
+                <console-table [filter]="filter" [TableModel]="model" ></console-table>
+            </ng-template>
+            
+
+            <!-- <div class="filter-container checkbox-reset">
+                <ul class="list-group list-group-horizontal border-0">
+                    <li class="list-group-item border-0 all-check-boxes">
+                        <input class="form-check-input me-1" type="checkbox" aria-label="..."
+                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            data-bs-original-title="Check All">
+                    </li>
+                </ul>
+            </div> --> 
+            <!-- <li>
+                <a class="dropdown-item delete-dd" (click)="AddTeamMembers()" type="button" 
+                data-bs-toggle="offcanvas" data-bs-target="#addteammembers"
+                aria-controls="offcanvasRight">
+                <i class="fal fa-plus me-2"></i>
+                Add Team Members</a>
+            </li>
+            <li>
+                <a class="dropdown-item delete-dd" (click)="AddTeamMembers()" type="button" 
+                data-bs-toggle="offcanvas" data-bs-target="#consoleoverlayrightpanel"
+                aria-controls="offcanvasRight">
+                <i class="fal fa-plus me-2"></i>
+                Add Team Members</a>
+            </li> -->
+        </div>
+    </div>
+    <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+        <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 1560px; transform: translate3d(0px, 0px, 0px);">
+        </div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-y" style="display: block;">
+        <div class="scrollbar-thumb scrollbar-thumb-y"
+            style="height: 220.258px; transform: translate3d(0px, 0px, 0px);"></div>
+    </div> -->
+</div>
+<!-- <div [class.show]="isActive==true" class="offcanvas offcanvas-end" tabindex="-1" id="addteammembers"
+    aria-labelledby="offcanvasRightLabel" style="visibility: visible;" aria-hidden="true">
+   
+    <app-add-team-members></app-add-team-members>
+</div> -->
+<overlay-right-panel [header]="'Add Company Resources'" [isActive]="isActive" [search]="true"></overlay-right-panel>

@@ -1,9 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { MenuModel } from '../../menu-state/menu.model';
+// import { MenuModel } from '../../menu-state/menu.model';
+// import { CardBoxListNodeComponent } from '../card-box-list-node/card-box-list-node.component';
 
 @Component({
   selector: 'engage2-card-box-list-checkbox',
+  // standalone: true,
+  // imports: [CommonModule, CardBoxListNodeComponent],
   templateUrl: './card-box-list-checkbox.component.html',
   styleUrls: ['./card-box-list-checkbox.component.scss']
 })

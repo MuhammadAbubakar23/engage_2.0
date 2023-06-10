@@ -148,9 +148,12 @@
                                         
                                         <div [id]="'collapse'+i" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading'+i" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
-                                                <div class="mail-recepients silver mb-3">
+                                                <div class="mail-recepients silver mb-3" *ngIf="email.multipleTo">
                                                         <small>to: 
-                                                        {{multipleTo.join(', ')}}
+                                                            <!-- <span *ngFor="let to of email.to">
+                                                            {{to.emailAddress}}
+                                                        </span> -->
+                                                        {{email.multipleTo}}
                                                     </small>
                                                     </div>
                                                     <p [innerHTML]="email.body"></p>
@@ -183,13 +186,13 @@
                                                     <strong>Sent:</strong>
                                                     {{email.createdDate | date:'EEEE d, y'}}
                                                 </div>
-                                                <div class="msg-ref-info">
+                                                <div class="msg-ref-info" *ngIf="email.multipleTo">
                                                     <strong>To:</strong>
-                                                    {{multipleTo.join(', ')}}
+                                                    {{email.multipleTo}}
                                                 </div>
-                                                <div class="msg-ref-info">
+                                                <div class="msg-ref-info" *ngIf="email.multipleCc">
                                                     <strong>Cc:</strong>
-                                                    {{multipleCc.join(', ')}}
+                                                    {{email.multipleCc}}
                                                 </div>
                                                 <!-- <div class="msg-ref-info">
                                                     <strong>Bcc:</strong>

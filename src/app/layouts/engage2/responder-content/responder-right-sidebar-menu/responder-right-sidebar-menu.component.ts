@@ -4,9 +4,9 @@ import { Subscription } from 'rxjs';
 import { RightNavService } from 'src/app/services/RightNavService/RightNav.service';
 import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
-import { loadMenusList } from '../../state/menu.actions';
-import { getEmargingEqual, getMenusLoading } from '../../state/menu.selectors';
-import { MenuState } from '../../state/menu.state';
+import { loadMenusList } from '../../menu-state/menu.actions';
+import { getEmargingEqual, getMenusLoading } from '../../menu-state/menu.selectors';
+import { MenuState } from '../../menu-state/menu.state';
 
 @Component({
   selector: 'responder-right-sidebar-menu',
