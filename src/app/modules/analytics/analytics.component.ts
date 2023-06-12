@@ -81,7 +81,7 @@ export class AnalyticsComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.target.clear();
+    this.target?.clear();
     this.rightcontainer?.clear();
 
     this.loadComponent(this.componentName, '');

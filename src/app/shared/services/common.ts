@@ -7,7 +7,7 @@ export async function fetchJSON<T>(url: string, options?: any): Promise<T> {
 }
 export function fetchHTML<T>(url: string, options?: any): Promise<T|string> { // T is String
     return fetch(url, options).then((res) => res.text());
-  }
+}
   
 function checkStatus(response:any) {
     if (response.ok) {
@@ -17,4 +17,5 @@ function checkStatus(response:any) {
       error.response = response;
       return Promise.reject(error);
     }
-  }
+}
+

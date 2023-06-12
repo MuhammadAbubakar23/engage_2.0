@@ -1,5 +1,7 @@
-import { createReducer, on } from '@ngrx/store';
+import { state } from '@angular/animations';
+import { Action, createReducer, on } from '@ngrx/store';
 import { never } from 'rxjs';
+//import { Action } from 'rxjs/internal/scheduler/Action';
 import { loadPermissionsLetters, loadPermissionsLettersFail, loadPermissionsLettersSuccess, updatePermissionsLetters, updatePermissionsLettersFail, updatePermissionsLettersSuccess } from './permission.actions';
 import { initialPermissionState, PermissionState } from './permission.state';
 
@@ -27,6 +29,7 @@ const _permissionReducer = createReducer(
     }
   }),
   on(loadPermissionsLettersFail, (state, action): PermissionState => {
+    
     return {
       ...state,
      // permissions:null ,
@@ -36,18 +39,21 @@ const _permissionReducer = createReducer(
   }),
   on(updatePermissionsLetters, (state): PermissionState => ({  ...state, loading: true })),
   on(updatePermissionsLettersSuccess, (state, action): PermissionState => {
-    let permissions = state.permissions+action.permissions;
-    console.log(action.permissions); 
+    // let a = state;
+    // console.log(state);
+    // console.log(action);
+    let permis = state.permissions?.priviledge+action.permissions?.priviledge;
+     
     return {
       ...state,
-      permissions: permissions,
+      permissions: permis,
       loading: true,
       error: null,
     };
   }),
   on(updatePermissionsLettersFail, (state, action): PermissionState => ({ ...state, loading: false, error: action.error }))
 );
-export function permissionReducer(state: any, action: any) {//=initialPermissionState
+export function permissionReducer(state: PermissionState | undefined, action: Action) {//=initialPermissionState
   return _permissionReducer(state, action);
 }
 

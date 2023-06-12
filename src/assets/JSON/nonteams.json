@@ -60,7 +60,7 @@
             "group":0, 
             "actions":[
                 {"name":"delete", "type":"service" , "actionUrl":"DeleteNonTeam", "icon":"fal fa-trash me-2"},
-                {"name":"Add Members", "type":"overlay" , "actionUrl":"DeleteNonTeam", "icon":"fal fa-trash me-2"}
+                {"name":"edit", "type":"overlay" , "actionUrl":"EditNonTeam", "icon":"fal fa-edit me-2"}
             ],
             "wrap":"",
             "icon":"" 

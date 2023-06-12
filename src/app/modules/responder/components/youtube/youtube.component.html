@@ -168,6 +168,11 @@
                                                                 class="badge rounded-pill tag youtube-pill tag1 selected">{{tag.name}}</span>
 
                                                         </div>
+                                                        <!-- For Sentiment Pills -->
+<div class="tags" *ngIf="youtubecomment.sentiment">
+    <span class="badge rounded-pills tag tag1 selected">{{youtubecomment.sentiment?.text}}</span>
+</div>
+<!-- For Sentiment Pills -->
                                                     </div>
                                                     <div class="message-bottom">
                                                         <div class="row">

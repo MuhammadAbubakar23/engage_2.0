@@ -16,7 +16,7 @@ export class PermissionsEffects {
       ofType(loadPermissionsLetters),
       mergeMap((action) => {
         return this.permissionService.getTeamsLetters().pipe(
-          map((permissions: any) => loadPermissionsLettersSuccess({ permissions })),
+          map((permissions: PermissionModel) => loadPermissionsLettersSuccess({ permissions })),
           catchError((error: string ) => of(loadPermissionsLettersFail({ error })))
         );
       })
@@ -27,7 +27,7 @@ export class PermissionsEffects {
       ofType(updatePermissionsLetters),
       mergeMap((action) => {
         return this.permissionService.getRolesLetters().pipe(
-          map((permissions: any) => updatePermissionsLettersSuccess({ permissions })),
+          map((permissions: PermissionModel) => updatePermissionsLettersSuccess({ permissions })),
           catchError((error: string ) => of(updatePermissionsLettersFail({ error })))
         );
       })

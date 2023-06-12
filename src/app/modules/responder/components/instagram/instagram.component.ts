@@ -37,6 +37,7 @@ import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { UpdateMessagesService } from 'src/app/services/UpdateMessagesService/update-messages.service';
 import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
+import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
 
 @Component({
   selector: 'app-instagram',
@@ -125,7 +126,8 @@ export class InstagramComponent implements OnInit {
     private unrespondedCountService: UnRespondedCountService,
     private createTicketService: CreateTicketService,
     private updateMessagesService: UpdateMessagesService,
-    private ticketResponseService : TicketResponseService
+    private ticketResponseService : TicketResponseService,
+    private applySentimentService: ApplySentimentService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -197,6 +199,12 @@ export class InstagramComponent implements OnInit {
 
       this.ticketResponseService.getTicketId().subscribe(res=>{
         this.updateTicketId(res)
+      });
+
+      this.Subscription = this.applySentimentService
+      .receiveSentiment()
+      .subscribe((res) => {
+        this.applySentimentListner(res);
       });
   }
 
@@ -1373,6 +1381,29 @@ export class InstagramComponent implements OnInit {
           }
         });
       });
+    });
+    this.InstagramMessages.forEach((msg: any) => {
+      if (msg.id == res.queryId) {
+        msg.ticketId = res.ticketId;
+      }
+    });
+    this.changeDetect.detectChanges();
+  }
+
+  applySentimentListner(res: any) {
+    this.InstagramData.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == res.feedId) {
+            singleCmnt.sentiment = res;
+          }
+        });
+      });
+    });
+    this.InstagramMessages.forEach((msg: any) => {
+      if (msg.id == res.feedId) {
+        msg.sentiment = res;
+      }
     });
     this.changeDetect.detectChanges();
   }

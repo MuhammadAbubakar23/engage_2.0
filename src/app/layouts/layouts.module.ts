@@ -56,6 +56,8 @@ import { AnalyticsContentComponent } from './engage2/analytics-content/analytics
 import { AnalyticsHeaderComponent } from './engage2/analytics-content/analytics-header/analytics-header.component';
 import { AnalyticsMenuComponent } from './engage2/analytics-content/analytics-menu/analytics-menu.component';
 import { AvatarContentComponent } from './engage2/avatar-content/avatar-content.component';
+import { MainContentComponent } from './engage2/main-content/main-content.component';
+import { SubRoleMenuComponent } from './engage2/main-menu/sub-role-menu/sub-role-menu.component';
 
 
 
@@ -105,7 +107,9 @@ import { AvatarContentComponent } from './engage2/avatar-content/avatar-content.
     AnalyticsContentComponent,
     AnalyticsHeaderComponent,
     AnalyticsMenuComponent,
-    AvatarContentComponent
+    AvatarContentComponent,
+    MainContentComponent,
+    SubRoleMenuComponent
   ],
   imports: [
     CommonModule,
@@ -120,6 +124,7 @@ import { AvatarContentComponent } from './engage2/avatar-content/avatar-content.
     EffectsModule.forFeature([MenusEffects, PermissionsEffects]),
   ],
   exports:[
+    MainContentComponent,
     ResponderContentComponent,
     InboxContentComponent,
     ConsoleContentComponent,

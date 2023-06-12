@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -92,9 +92,9 @@ export class EmailComponent implements OnInit {
       teamId: new FormControl(0),
       platform: new FormControl(''),
       contentType: new FormControl(''),
-      to: new FormControl(''),
-      cc: new FormControl(''),
-      bcc: new FormControl(''),
+      to: new FormControl('', [Validators.required, this.validateEmails]),
+      cc: new FormControl('', [Validators.pattern(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4}[\s,]*)*$/)]),
+      bcc: new FormControl('', [Validators.pattern(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4}[\s,]*)*$/)]),
       subject: new FormControl(''),
       profileId: new FormControl(''),
       profilePageId: new FormControl(''),
@@ -217,6 +217,27 @@ export class EmailComponent implements OnInit {
               };
             }
           );
+          item.groupedComments.forEach((group: any) => {
+            group.items.forEach((email: any) => {
+              this.multipleTo = [];
+              this.multipleCc = [];
+              email.to.forEach((singleTo:any) => {
+                if (!this.multipleTo.includes(singleTo.emailAddress)) {
+                  this.multipleTo.push(singleTo.emailAddress);
+                }
+                email['multipleTo'] = this.multipleTo.join(', ');
+              });
+              
+
+              email.cc?.forEach((singleCc: any) => {
+                if (!this.multipleCc.includes(singleCc.emailAddress)) {
+                  this.multipleCc.push(singleCc.emailAddress);
+                }
+                email['multipleCc'] = this.multipleCc.join(', ');
+              });
+              
+            });              
+          });
         });
         this.totalUnrespondedCmntCountByCustomer =
           this.totalUnrespondedCmntCountByCustomer + 1;
@@ -310,9 +331,7 @@ export class EmailComponent implements OnInit {
                   email['multipleCc'] = this.multipleCc.join(', ');
                 });
                 
-              });
-              console.log(this.Emails)
-              
+              });              
             });
           });
 
@@ -719,6 +738,7 @@ export class EmailComponent implements OnInit {
           to: JSON.stringify(this.emailFrom),
         });
       } else {
+        if(this.emailReplyForm.value.to){
         const to = this.emailReplyForm.value.to.split(',');
         to.forEach((item: any) => {
           this.replyTo.push({ name: '', emailAddress: item });
@@ -727,6 +747,7 @@ export class EmailComponent implements OnInit {
           to: JSON.stringify(this.replyTo),
         });
       }
+      }
       if (!this.emailReplyForm.get('cc')?.dirty) {
         if (this.emailCc != '') {
           this.emailReplyForm.patchValue({
@@ -734,21 +755,24 @@ export class EmailComponent implements OnInit {
           });
         }
       } else {
-        const cc = this.emailReplyForm.value.cc.split(',');
-        cc.forEach((item: any) => {
-          this.replyCc.push({ name: '', emailAddress: item });
-        });
-        this.emailReplyForm.patchValue({
-          cc: JSON.stringify(this.replyCc),
-        });
+        if(this.emailReplyForm.value.cc){
+          const cc = this.emailReplyForm.value.cc.split(',');
+          cc.forEach((item: any) => {
+            this.replyCc.push({ name: '', emailAddress: item });
+          });
+          this.emailReplyForm.patchValue({
+            cc: JSON.stringify(this.replyCc),
+          });
+        }        
       }
       if (!this.emailReplyForm.get('bcc')?.dirty) {
-        if (this.emailBcc) {
+        if (this.emailBcc != '') {
           this.emailReplyForm.patchValue({
             bcc: JSON.stringify(this.emailBcc),
           });
         }
       } else {
+        if(this.emailReplyForm.value.bcc){
         const bcc = this.emailReplyForm.value.bcc.split(',');
         bcc.forEach((item: any) => {
           this.replyBcc.push({ name: '', emailAddress: item });
@@ -756,6 +780,7 @@ export class EmailComponent implements OnInit {
         this.emailReplyForm.patchValue({
           bcc: JSON.stringify(this.replyBcc),
         });
+      }
       }
       if (!this.emailReplyForm.get('subject')?.dirty) {
         this.emailReplyForm.patchValue({
@@ -818,12 +843,13 @@ export class EmailComponent implements OnInit {
     this.emailSubject = '';
     this.fileInput.nativeElement.value = '';
     this.detectChanges();
+    this.ImageArray = []
   }
   toastermessage = false;
   AlterMsg: any = '';
   reloadComponent(type: any) {
     if (type == 'comment') {
-      this.AlterMsg = 'Comment Send Successfully!';
+      this.AlterMsg = 'Email Sent Successfully!';
       this.toastermessage = true;
       setTimeout(() => {
         this.toastermessage = false;
@@ -899,6 +925,7 @@ export class EmailComponent implements OnInit {
     this.showBccBtn = true;
     this.showCcInput = false;
     this.showBccInput = false;
+    this.clearInputField();
   }
 
   expandReply() {}
@@ -1144,63 +1171,29 @@ export class EmailComponent implements OnInit {
     );
   }
 
-  convertToString(to: any): string {
-    return to.emailAddress;
+  get emailControlTo(){
+    return this.emailReplyForm.get('to');
   }
 
-  // isReplyImage(attachment: any): boolean {
-  //   const abc = attachment.split('.')
-  //   const index = abc.length - 1
-  //   const type = abc[index]
-  //   if(type == 'jpeg'){
-  //     return attachment;
-  //   }
-  //   if(type == 'jpg'){
-  //     return attachment;
-  //   }
-  //   if(type == 'png'){
-  //     return attachment;
-  //   }
-  //   if(type == 'gif'){
-  //     return attachment;
-  //   } else {
-  //     return false;
-  //   }
-  //   // return type == 'image' || type == 'jpeg' || type == 'png' || type == 'gif' || type == 'jpg';
-  // }
+  get emailControlCc(){
+    return this.emailReplyForm.get('cc');
+  }
 
-  // isReplyVideo(attachment: any): boolean {
+  get emailControlBcc(){
+    return this.emailReplyForm.get('bcc');
+  }
 
-  //   const abc = attachment.split('.')
-  //   const index = abc.length - 1
-  //   const type = abc[index]
-  //   if(type == 'mp4'){
-  //     return attachment;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  validateEmails(control: FormControl) {
+    const emails = control.value.split(',');
+    const emailRegex = /^\s*[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\s*$/i;
 
-  // isReplyAudio(attachment: any): boolean {
+    for (const email of emails) {
+      if (!emailRegex.test(email.trim())) {
+        return { email: true };
+      }
+    }
 
-  //   const abc = attachment.split('.')
-  //   const index = abc.length - 1
-  //   const type = abc[index]
-  //   if(type == 'mp3'){
-  //     return attachment;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+    return null;
+  }
 
-  // isReplyOther(attachment: any): boolean {
-  //   const abc = attachment.split('.')
-  //   const index = abc.length - 1
-  //   const type = abc[index]
-  //   if(type != 'mp3' && type != 'mp4' && type != 'jpeg' && type != 'jpg' && type != 'png' && type != 'gif'){
-  //     return attachment;
-  //   } else {
-  //     return false;
-  //   }
-  // }
 }

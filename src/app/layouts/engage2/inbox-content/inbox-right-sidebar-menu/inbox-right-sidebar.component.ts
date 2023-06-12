@@ -19,7 +19,7 @@ export class InboxRightSidebarComponent implements OnInit {
   public dynamicPath : string="";
   public dynamicChildPath : string="";
 
-  //menuDto = new MenuDto();
+  //MenuModel = new MenuModel();
   //menus$ :any[] = [];
   @Output("toggleRightPanel") toggleRightPanelParent: EventEmitter<any> = new EventEmitter();
   menus$ :any = [];
@@ -74,14 +74,14 @@ export class InboxRightSidebarComponent implements OnInit {
 
   // getRightMenu(){
 
-  //   this.menuDto = {
+  //   this.MenuModel = {
   //     emerging : "",
   //     equal : 0,
   //     id : "",
   //     sub : "",
   //     base : ""
   //   }
-  //   this.commonService.GetMenu("team", this.menuDto).subscribe((res:any)=> {
+  //   this.commonService.GetMenu("team", this.MenuModel).subscribe((res:any)=> {
 
   //     res.forEach((menu:any) => {
   //       if(menu.emerging == "right_menu" && (menu.name != "Complaints")){

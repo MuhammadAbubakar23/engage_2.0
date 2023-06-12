@@ -8,11 +8,13 @@ import { MaximizeChatService } from 'src/app/services/maximize-chat.service';
 import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { ModulesService } from '../../../shared/services/module-service/modules.service';
+import { loadMenusList, updateMenusList } from '../menu-state/menu.actions';
 // import { loadPermissionsList } from '../permission-state/permission.actions';
 // import { loadMenusList, updateMenusList } from '../menu-state/menu.actions';
 import { MenuModel } from '../menu-state/menu.model';
 // import { getMenuById, getMenusLoading } from '../menu-state/menu.selectors';
 import { MenuState } from '../menu-state/menu.state';
+import { loadPermissionsLetters, updatePermissionsLetters } from '../permission-state/permission.actions';
 
 @Component({
   selector: 'main-menu',
@@ -44,8 +46,13 @@ export class MainMenuComponent implements OnInit {
     private maximizeChatService : MaximizeChatService,
     private moduleService : ModulesService,
     private commonService : CommonDataService,
-    private store: Store<MenuState>
+    private MenuStore: Store<MenuState>,
+    private PermissionStore: Store<PermissionState>
   ) { 
+    this.MenuStore.dispatch(loadMenusList());
+    this.MenuStore.dispatch(updateMenusList());
+    this.PermissionStore.dispatch(loadPermissionsLetters());
+    this.PermissionStore.dispatch(updatePermissionsLetters());
     // this.menu$ = this.store.select(getMenuById(2));
     // this.loading$ = this.store.select(getMenusLoading)
     // this.store.dispatch(loadMenusList());

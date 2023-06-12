@@ -11,6 +11,7 @@ import { Tooltip } from 'bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
+import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
@@ -98,7 +99,8 @@ export class WhatsappDetailsComponent implements OnInit {
     private replyService : ReplyService,
     private createTicketService: CreateTicketService,
     private toggleService : ToggleService,
-    private ticketResponseService : TicketResponseService
+    private ticketResponseService : TicketResponseService,
+    private applySentimentService: ApplySentimentService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -149,6 +151,12 @@ export class WhatsappDetailsComponent implements OnInit {
       });
       this.ticketResponseService.getTicketId().subscribe(res=>{
         this.updateTicketId(res)
+      });
+
+      this.Subscription = this.applySentimentService
+      .receiveSentiment()
+      .subscribe((res) => {
+        this.applySentimentListner(res);
       });
   }
 
@@ -864,6 +872,17 @@ detectChanges(): void {
     this.changeDetect.detectChanges();
   }
 
+  applySentimentListner(res: any) {
+
+    this.groupArrays.forEach((cmnt: any) => {
+      cmnt.items.forEach((singleCmnt: any) => {
+        if (singleCmnt.id == res.feedId) {
+          singleCmnt.sentiment = res;
+        }
+      });
+    });
+    this.changeDetect.detectChanges();
+  }
   onScrollComments() {
     this.pageSize = this.pageSize + 10;
     this.getWhatsappData();

@@ -46,9 +46,10 @@
                 </li>
             </ul>
         </div>
-        <div *ngIf="fbCmntReply == true" class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow-y: auto; outline: none;"
-            infinite-scroll [scrollWindow]="false" [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5"
-            [infiniteScrollThrottle]="10" (scrolled)="onScrollComments()">
+        <div *ngIf="fbCmntReply == true" class="chat-body" data-scrollbar="true" tabindex="-1"
+            style="overflow-y: auto; outline: none;" infinite-scroll [scrollWindow]="false"
+            [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5" [infiniteScrollThrottle]="10"
+            (scrolled)="onScrollComments()">
             <div class="scroll-content">
                 <div class="tab-content m-4" id="myTabContent">
                     <div *ngIf="FacebookData" class="tab-pane fade show active" id="fb-comment" role="tabpanel"
@@ -67,17 +68,16 @@
                                                 </div>
                                             </div>
                                             <div class="post-img-wrap whatsappImgModalBtn" type="button"
-                                                        style="width:375px;"
-                                                        *ngFor="let attachment of facebookdata.post.attachments">
-                                                        <img *ngIf="attachment.contentType == 'photo'"
-                                                            src={{attachment.attachmentUrl}}
-                                                            style="width: -webkit-fill-available;">
-                                                        <video *ngIf="attachment.contentType == 'video'" width="375px"
-                                                            controls>
-                                                            <source src={{attachment.attachmentUrl}} type="video/mp4"
-                                                                style="width: -webkit-fill-available;">
-                                                        </video>
-                                                    </div>
+                                                style="width:375px;"
+                                                *ngFor="let attachment of facebookdata.post.attachments">
+                                                <img *ngIf="attachment.contentType == 'photo'"
+                                                    src={{attachment.attachmentUrl}}
+                                                    style="width: -webkit-fill-available;">
+                                                <video *ngIf="attachment.contentType == 'video'" width="375px" controls>
+                                                    <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                        style="width: -webkit-fill-available;">
+                                                </video>
+                                            </div>
                                             <div class="card-body bg-light">
 
                                                 <p class="card-text nignt mb-0">
@@ -209,17 +209,18 @@
                                                             </div>
                                                         </div>
                                                         <div class="post-img-wrap whatsappImgModalBtn" type="button"
-                                                        style="width:375px;"
-                                                        *ngFor="let attachment of fbcmnts.attachments">
-                                                        <img *ngIf="attachment.description == 'photo'"
-                                                            src={{attachment.attachmentUrl}}
-                                                            style="width: -webkit-fill-available;">
-                                                        <video *ngIf="attachment.description == 'video'" width="375px"
-                                                            controls>
-                                                            <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                            style="width:375px;"
+                                                            *ngFor="let attachment of fbcmnts.attachments">
+                                                            <img *ngIf="attachment.description == 'photo'"
+                                                                src={{attachment.attachmentUrl}}
                                                                 style="width: -webkit-fill-available;">
-                                                        </video>
-                                                    </div>
+                                                            <video *ngIf="attachment.description == 'video'"
+                                                                width="375px" controls>
+                                                                <source src={{attachment.attachmentUrl}}
+                                                                    type="video/mp4"
+                                                                    style="width: -webkit-fill-available;">
+                                                            </video>
+                                                        </div>
                                                         <p class="card-text nignt">{{fbcmnts.message}}</p>
                                                         <div class="tags" *ngFor="let tag of fbcmnts.tags">
 
@@ -227,7 +228,14 @@
                                                                 (click)="removeTagFromFeed(tag.id, tag.feedId, 'FC')">{{tag.name}}</span>
 
                                                         </div>
+                                                        <!-- For Sentiment Pills -->
+                                                    <div class="tags" *ngIf="fbcmnts.sentiment">
+                                                        <span
+                                                            class="badge rounded-pills tag tag1 selected">{{fbcmnts.sentiment?.text}}</span>
                                                     </div>
+                                                    <!-- For Sentiment Pills -->
+                                                    </div>
+                                                    
                                                     <div class="message-bottom">
                                                         <div class="row">
                                                             <div class="col-lg-10 ps-4 d-flex align-items-center">
@@ -566,13 +574,14 @@
 
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
         </div>
-        <div *ngIf="fbMsgReply== true" class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow-y: auto; outline: none;"
-            infinite-scroll [scrollWindow]="false" [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5"
-            [infiniteScrollThrottle]="10" (scrolled)="onScrollMessages()">
+        <div *ngIf="fbMsgReply== true" class="chat-body" data-scrollbar="true" tabindex="-1"
+            style="overflow-y: auto; outline: none;" infinite-scroll [scrollWindow]="false"
+            [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5" [infiniteScrollThrottle]="10"
+            (scrolled)="onScrollMessages()">
             <div class="scroll-content">
                 <div class="tab-content m-4" id="myTabContent">
                     <div *ngIf="FacebookMessages" class="tab-pane fade show active" id="fb-msg" role="tabpanel"
@@ -642,6 +651,12 @@
                                                             (click)="removeTagFromFeed(tag.id, tag.feedId, 'FCP')">{{tag.name}}</span>
 
                                                     </div>
+                                                    <!-- For Sentiment Pills -->
+                                                    <div class="tags" *ngIf="fbmsgs.sentiment">
+                                                        <span
+                                                            class="badge rounded-pill tag tag1 selected">{{fbmsgs.sentiment?.text}}</span>
+                                                    </div>
+                                                    <!-- For Sentiment Pills -->
                                                 </div>
                                                 <div class="message-bottom">
                                                     <div class="row">
@@ -915,7 +930,8 @@
                                                                     </span>
                                                                 </small>
                                                             </div>
-                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM dd, yyyy, h:mm a'}}</small>
+                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM
+                                                                dd, yyyy, h:mm a'}}</small>
                                                         </div>
                                                         <div class="msg-snippet show-text">
                                                             <p class="mb-1 coal" data-maxlength="240">
@@ -1009,8 +1025,9 @@
                         <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></a>
                 </div>
                 <div class="form-floating textarea-field">
-                    <textarea formControlName="text" [(ngModel)]="facebookReplyForm.value.text" class="form-control auto" rows="1"
-                        id="text" placeholder="Write a comment here" style="height: 37px" #textarea></textarea>
+                    <textarea formControlName="text" [(ngModel)]="facebookReplyForm.value.text"
+                        class="form-control auto" rows="1" id="text" placeholder="Write a comment here"
+                        style="height: 37px" #textarea></textarea>
 
                 </div>
                 <div class="icons-list align-items-md-center d-flex ps-2 ">
@@ -1028,7 +1045,8 @@
                                 <li class="dropdown-listing-header">
                                     <div class="head-section">
                                         <div class="left" *ngFor="let emoji of Emojies">
-                                            <span style="cursor: pointer; font-size: 17px;" (click)="insertEmoji(emoji.emoji)">{{emoji.emoji}}</span>
+                                            <span style="cursor: pointer; font-size: 17px;"
+                                                (click)="insertEmoji(emoji.emoji)">{{emoji.emoji}}</span>
                                         </div>
                                     </div>
                                 </li>
@@ -1041,7 +1059,7 @@
                         <button class="iconButton small notification iconHover channels-attachment-btn">
                             <i class="fal fa-paperclip"></i></button>
                         <input type="file" formControlName="Image" class="form-control uplaoded-box" multiple
-                        (change)="onFileChanged()" #fileInput>
+                            (change)="onFileChanged()" #fileInput>
                     </div>
                     <button class="iconButton small notification iconHover" data-bs-toggle="tooltip"
                         data-bs-placement="top" title="" type="submit" [disabled]="facebookReplyForm.invalid"
@@ -1098,8 +1116,8 @@
                 </div>
                 <div class="form-floating textarea-field">
                     <textarea formControlName="text" class="form-control auto" rows="1" id="text"
-                        placeholder="Write a message here" [(ngModel)]="facebookMessageReplyForm.value.text" style="height: 37px"
-                        #textarea></textarea>
+                        placeholder="Write a message here" [(ngModel)]="facebookMessageReplyForm.value.text"
+                        style="height: 37px" #textarea></textarea>
 
                 </div>
                 <div class="icons-list align-items-md-center d-flex ps-2">
@@ -1116,7 +1134,8 @@
                                 <li class="dropdown-listing-header">
                                     <div class="head-section">
                                         <div class="left" *ngFor="let emoji of Emojies">
-                                            <span style="cursor: pointer; font-size: 17px;" (click)="insertEmoji(emoji.emoji)">{{emoji.emoji}}</span>
+                                            <span style="cursor: pointer; font-size: 17px;"
+                                                (click)="insertEmoji(emoji.emoji)">{{emoji.emoji}}</span>
                                         </div>
                                     </div>
                                 </li>
@@ -1127,7 +1146,7 @@
                         <button class="iconButton small notification iconHover channels-attachment-btn">
                             <i class="fal fa-paperclip"></i></button>
                         <input type="file" formControlName="Image" class="form-control uplaoded-box" multiple
-                        (change)="onFileChanged()" #fileInput>
+                            (change)="onFileChanged()" #fileInput>
                     </div>
                     <button class="iconButton small notification iconHover" data-bs-toggle="tooltip"
                         data-bs-placement="top" title="" type="submit" [disabled]="facebookMessageReplyForm.invalid"
@@ -1225,8 +1244,8 @@
                             *ngFor="let qr of QuickReplies | quickReplySearchFilter: quickReplySearchText">
                             <div class="list-group list-group-flush mb-4 ms-4 ps-1">
                                 <div class="form-check list-group-item theme-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id={{qr.value}} #radioInput>
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id={{qr.value}}
+                                        #radioInput>
                                     <label class="form-check-label" for={{qr.value}}
                                         (click)="sendQuickReply(qr.value)">{{qr.text}}
                                     </label>

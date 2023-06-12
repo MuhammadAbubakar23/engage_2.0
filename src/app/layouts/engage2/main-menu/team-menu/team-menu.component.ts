@@ -1,48 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { MenuDto } from 'src/app/shared/Models/MenuDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { loadMenusList } from '../../menu-state/menu.actions';
 import { MenuModel } from '../../menu-state/menu.model';
 import { getEmargingEqual, getMenusLoading } from '../../menu-state/menu.selectors';
 import { MenuState } from '../../menu-state/menu.state';
-import { loadPermissionsLetters } from '../../permission-state/permission.actions';
+import { loadPermissionsLetters, updatePermissionsLetters } from '../../permission-state/permission.actions';
 import { Router } from '@angular/router';
-
+import { getPermissionBySlug, getPermissionsLoading } from '../../permission-state/permission.selectors';
+import { PermissionState } from '../../permission-state/permission.state';
 @Component({
   selector: 'team-menu',
   templateUrl: './team-menu.component.html',
   styleUrls: ['./team-menu.component.scss'],
 })
 export class TeamMenuComponent implements OnInit {
-  menus$: any[]=[];
+  permissions$ :any;
+  permission$ :any;
+  menus$: any;
   menu$: any;
   loading$: any;
-  constructor(private store: Store<MenuState>, private _route: Router) {
-    this.menu$ = this.store.select(getEmargingEqual('team_main_left_menu'));
-    this.loading$ = this.store.select(getMenusLoading);
-    this.store.dispatch(loadMenusList());
+  constructor(private MenuStore: Store<MenuState>, private PermissionStore: Store<PermissionState>, private _route: Router) {
+    // this.menu$ = this.MenuStore.select(getEmargingEqual('team_main_left_menu'));
+    // this.loading$ = this.MenuStore.select(getMenusLoading);
+    // this.MenuStore.dispatch(loadMenusList());
+
+    // this.permission$ = this.PermissionStore.select(getPermissionBySlug("_upur_"));
+    // this.loading$ = this.PermissionStore.select(getPermissionsLoading);
+    // this.PermissionStore.dispatch(loadPermissionsLetters());
   }
 
-  ngOnInit(): void {
-    this.menu$ = this.store
+  ngOnInit() {
+    this.MenuStore
       .select(getEmargingEqual('team_main_left_menu'))
       .subscribe((item:any) => {
-        // this.menus$ = item;
-        item.forEach((menu:any) => {
-          
-          if(menu.mainId != 200){
-            const index = this.menus$.findIndex(x=>x.mainId == menu.mainId)
-            if(index == -1){
-              this.menus$.push(menu);
-            }
-            // if(!this.menus$.includes(menu)){
-            //   this.menus$.push(menu);
-            // }            
-          }
-        });      
-        
+        this.menus$ = [...item];
       });
+    
     // // console.log(this.menu$);
     // // console.log("------------------------------------------");
     // // console.log(this.menus$);

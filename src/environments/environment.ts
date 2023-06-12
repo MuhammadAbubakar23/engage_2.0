@@ -20,7 +20,7 @@ export const environment = {
     types: { local: 'LS' },
   },
   title: 'abc',
-  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  IdentityBaseUrl: 'http://localhost:5036/api', //'https://identity-engage.enteract.app/api',
   InstaBaseUrl: 'https://insta.360scrm.com/api/', // other then post and data
   FbBaseUrl: 'https://face.360scrm.com/api/',
   YoutubeBaseUrl: 'https://tube.360scrm.com/api/',
@@ -31,27 +31,35 @@ export const environment = {
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
   CommonBaseUrl: 'https://common-engage.enteract.app/api/',
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
+
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
 
   links: {
     identity:{
       login:"Authentication/Login",
-      access:"Authorization/Accesses/team_role",
-      // accessteam:"Authorization/Accesses/team",
-      // accessrole:"Authorization/Accesses/role",
+      accesses:"Teams/Accesses",
+      properties:"Teams/Properties",
+      permissions:"Roles/Permissions",
       accessteam:"Accesses/team",
       accessrole:"Permissions/role",
-      AddUser:"Users/CreateUser",
-      UpdateUser:"Users/UpdateUser",
+      permissionteam:"Accesses/team",
+      permissionrole:"Permissions/role",
+      RolesPermissions:"Permissions",
+      TeamsAccesses:"Accesses",
+      
+      AddRole:"Permissions",
+      AddTeam:"Accesses",
+      TeamProperties:"Teams/PropAccesses",
+      RoleProperties:"Roles/PropPermis",
+
       AllRoles:"Roles/GetAll",
       AllTeams:"Teams/GetAll",
+
+      AddUser:"Users/CreateUser",
+      UpdateUser:"Users/UpdateUser",
       GetAllUsers:"Users/GetAllUser",
       DeleteUser:"Users/DeleteUser",
-      GetUserById:"Users/GetUserById",
-      RolesPermissions:"Permissions",
-      AddRole:"Permissions",
-      TeamsAccesses:"Accesses",
-      AddTeam:"Accesses",
+      GetUserById:"Users/GetUserById", 
       
 
     },

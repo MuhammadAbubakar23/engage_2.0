@@ -40,6 +40,7 @@ import { ReplyService } from 'src/app/services/replyService/reply.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
+import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
 
 declare var toggleEmojis: any;
 @Component({
@@ -149,7 +150,8 @@ export class FacebookComponent implements OnInit {
     private replyService: ReplyService,
     private queryStatusService: QueryStatusService,
     private createTicketService: CreateTicketService,
-    private ticketResponseService : TicketResponseService
+    private ticketResponseService : TicketResponseService,
+    private applySentimentService: ApplySentimentService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -227,6 +229,12 @@ export class FacebookComponent implements OnInit {
 
       this.ticketResponseService.getTicketId().subscribe(res=>{
         this.updateTicketId(res)
+      });
+
+      this.Subscription = this.applySentimentService
+      .receiveSentiment()
+      .subscribe((res) => {
+        this.applySentimentListner(res);
       });
   }
 
@@ -1530,4 +1538,21 @@ detectChanges(): void {
     this.changeDetect.detectChanges();
   }
 
+  applySentimentListner(res: any) {
+    this.FacebookData.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == res.feedId) {
+            singleCmnt.sentiment = res;
+          }
+        });
+      });
+    });
+    this.FacebookMessages.forEach((msg: any) => {
+      if (msg.id == res.feedId) {
+        msg.sentiment = res;
+      }
+    });
+    this.changeDetect.detectChanges();
+  }
 }

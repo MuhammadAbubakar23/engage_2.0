@@ -192,6 +192,11 @@
                                                                 (click)="removeTag(tag.id, tag.feedId, 'LIC')">{{tag.name}}</span>
 
                                                         </div>
+                                                        <!-- For Sentiment Pills -->
+<div class="tags" *ngIf="cmnts.sentiment">
+    <span class="badge rounded-pills tag tag1 selected">{{cmnts.sentiment?.text}}</span>
+</div>
+<!-- For Sentiment Pills -->
                                                     </div>
                                                     <div class="message-bottom">
                                                         <div class="row">

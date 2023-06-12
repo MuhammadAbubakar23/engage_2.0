@@ -3,6 +3,7 @@ import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms
 import { NgxSpinnerService } from 'ngx-spinner';
 import { first, pipe, Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
+import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
@@ -110,7 +111,8 @@ export class TwitterComponent implements OnInit {
     private unrespondedCountService: UnRespondedCountService,
     private createTicketService: CreateTicketService,
     private toggleService: ToggleService,
-    private ticketResponseService: TicketResponseService
+    private ticketResponseService: TicketResponseService,
+    private applySentimentService: ApplySentimentService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -183,6 +185,12 @@ export class TwitterComponent implements OnInit {
     this.ticketResponseService.getTicketId().subscribe((res) => {
       this.updateTicketId(res);
     });
+
+    this.Subscription = this.applySentimentService
+      .receiveSentiment()
+      .subscribe((res) => {
+        this.applySentimentListner(res);
+      });
   }
 
   commentDto = new commentsDto();
@@ -1441,6 +1449,23 @@ export class TwitterComponent implements OnInit {
     this.TwitterMessage.forEach((msg: any) => {
       if (msg.id == res.queryId) {
         msg.ticketId = res.ticketId;
+      }
+    });
+    this.changeDetect.detectChanges();
+  }
+  applySentimentListner(res: any) {
+    this.TwitterConversation.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == res.feedId) {
+            singleCmnt.sentiment = res;
+          }
+        });
+      });
+    });
+    this.TwitterMessage.forEach((msg: any) => {
+      if (msg.id == res.feedId) {
+        msg.sentiment = res;
       }
     });
     this.changeDetect.detectChanges();

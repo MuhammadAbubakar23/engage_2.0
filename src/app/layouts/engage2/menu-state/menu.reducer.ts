@@ -20,6 +20,18 @@ const _menuReducer = createReducer(
   }),
   on(loadMenusListSuccess, (state, action): MenuState => 
   {
+    if(state.menus.length > 0){
+      action.menus.forEach(function (menu:MenuModel) {
+        state.menus.push(menu);
+        
+      })
+    }
+    // console.log("LoadMenu State Starts");
+    // //ages.filter()
+    // console.log(action.menus);
+    // console.log(state.menus.length)
+    // console.log(...state.menus);    
+    // console.log("LoadMenu State Ends");
     return {
       ...state,
       menus: action.menus,
@@ -36,16 +48,19 @@ const _menuReducer = createReducer(
     }
   }),
 
+
   on(updateMenusList, (state): MenuState => ({  ...state, loading: true })),
   on(updateMenusListSuccess, (state, action): MenuState => {
-    let menus = [...state.menus];
-    console.log(action.menus);
-    action.menus.forEach(function (menu:MenuModel) {
-      menus.push(menu);
-    })    
+    //let mnus = [...state.menus, ...action.menus];
+    
+    // action.menus.forEach(function (menu:MenuModel) {
+    //   state.menus.push(menu);
+      
+    // })    
+    
     return {
       ...state,
-      menus: menus,
+      menus: [...state.menus, ...action.menus],
       loading: true,
       error: null,
     };

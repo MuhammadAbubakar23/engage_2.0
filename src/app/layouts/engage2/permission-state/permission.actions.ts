@@ -15,11 +15,11 @@ export const UPDATE_PERMISSION_LETTERS_FAIL = '[permission letters] update permi
 
 
 export const loadPermissionsLetters = createAction(LOAD_PERMISSION_LETTERS);
-export const loadPermissionsLettersSuccess = createAction(LOAD_PERMISSION_LETTERS_SUCCESS, props<{ permissions: string }>());
+export const loadPermissionsLettersSuccess = createAction(LOAD_PERMISSION_LETTERS_SUCCESS, props<{ permissions: PermissionModel }>());
 export const loadPermissionsLettersFail = createAction(LOAD_PERMISSION_LETTERS_FAIL, props<{ error: string }>());
 
 export const updatePermissionsLetters = createAction(UPDATE_PERMISSION_LETTERS);
-export const updatePermissionsLettersSuccess = createAction(UPDATE_PERMISSION_LETTERS_SUCCESS, props<{ permissions: string }>());
+export const updatePermissionsLettersSuccess = createAction(UPDATE_PERMISSION_LETTERS_SUCCESS, props<{ permissions: PermissionModel }>());
 export const updatePermissionsLettersFail = createAction(UPDATE_PERMISSION_LETTERS_FAIL, props<{ error: string }>());
 
 

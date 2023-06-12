@@ -1,10 +1,9 @@
-import { empty } from "rxjs";
 
 export interface PermissionModel {
     priviledge: string
 }
 export interface PermissionState {
-    permissions: String
+    permissions: PermissionModel|any
     loading: boolean
     error: string | null
 }

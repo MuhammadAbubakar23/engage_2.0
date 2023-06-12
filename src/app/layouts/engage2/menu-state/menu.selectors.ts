@@ -20,16 +20,26 @@ export const getMenuById = (id:number) => createSelector(getMenus, (menuModels:M
     }
   });
 
-export const getEmargingEqual = (emerging:string) => createSelector(getMenus, (menuModels:MenuModel[]) => {
+export const getEmarging = (emerging:string) => createSelector(getMenus, (menuModels:MenuModel[]) => {
+    //console.log(menuModels);
     if (menuModels) {
-      return menuModels.filter((model) => model.emerging == emerging && model.baseId === model.parentId );
+      return menuModels.filter((model) => model.emerging.includes(emerging));
+    } else {
+      return {};
+    }
+});
+export const getEmargingEqual = (emerging:string) => createSelector(getMenus, (menuModels:MenuModel[]) => {
+    // console.log(menuModels);
+    if (menuModels) {
+      return menuModels.filter((model) => model.emerging.includes(emerging) && model.baseId === model.parentId );
     } else {
       return {};
     }
 });
 export const getEmargingNotEqual = (emerging:string) => createSelector(getMenus, (menuModels:MenuModel[]) => {
+  // console.log(menuModels);
   if (menuModels) {
-    return menuModels.filter((model) => model.emerging == emerging && model.baseId !== model.parentId );
+    return menuModels.filter((model) => model.emerging.includes(emerging) && model.baseId !== model.parentId );
   } else {
     return {};
   }
@@ -47,13 +57,9 @@ export const getEmargingNotEqual = (emerging:string) => createSelector(getMenus,
 //     }
 //   );
 
-
 // const allItems = (state: AppState) => state.clothingItems;
-
 // const shoppingCart = (state: AppState) => state.shoppingCart;
-
 //const cartIds = createSelector(shoppingCart, cart => cart.map(item => item.id));
-
 // const clothingItems = createSelector(
 //   getMenusState,
 //   cartIds,
@@ -67,29 +73,22 @@ export const getEmargingNotEqual = (emerging:string) => createSelector(getMenus,
 // export interface State extends AppState.State {
 //   members: MemberState
 // }
-
 // import { createFeatureSelector, createSelector } from "@ngrx/store";
-
 // import { MenuModel } from "../../model/left-menu";
 // import { MenuState } from "./menu.state";
-
 // export const getMenuState = createFeatureSelector<MenuState>("menu");
 // export const getMenuList = createSelector(
 //   getMenuState,
 //   (state: MenuState): MenuModel[] => state.menu
 // );
-
-
 // export const selectMenus = createSelector(
 //   (state: EmitterState) => state.submenu,
 //   (submenus: Array<MenuModel>) => submenus
 // );
-
 // export const selectCollectionState = createFeatureSelector<
 //     EmitterState,
 //   ReadonlyArray<string>
 // >("collection");
-
 // export const selectBookCollection = createSelector(
 //   selectBooks,
 //   selectCollectionState,

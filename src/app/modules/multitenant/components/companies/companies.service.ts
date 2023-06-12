@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { MenuModel } from 'src/app/layouts/engage2/menu-state/menu.model';
 import { IdNameDto } from 'src/app/shared/Models/IdNameDto';
-import { MenuDto } from 'src/app/shared/Models/MenuDto';
+
 import { RequestService } from 'src/app/shared/services/request/request.service';
 
 @Injectable({
@@ -11,8 +11,8 @@ import { RequestService } from 'src/app/shared/services/request/request.service'
 export class CompaniesService {
 
   constructor(private request:RequestService) { }
-  // getMyCompaniesPermissions(): Observable<MenuDto[]> {
-  //   return this.request.get<MenuDto[]>("CompaniesAccesses",{}).pipe(
+  // getMyCompaniesPermissions(): Observable<MenuModel[]> {
+  //   return this.request.get<MenuModel[]>("CompaniesAccesses",{}).pipe(
   //     map((response: any) => {
   //       // if(response.length>=1) this.stor.store(storekey, response);
   //       // else this.stor.delete(storekey);

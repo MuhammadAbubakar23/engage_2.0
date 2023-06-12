@@ -7,7 +7,6 @@ import { Tooltip } from 'bootstrap';
 import { MenuModel } from 'src/app/layouts/engage2/menu-state/menu.model';
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
-import { MenuDto } from 'src/app/shared/Models/MenuDto';
 import { AddTeamMembersComponent } from '../add-team-members/add-team-members.component';
 import { TeamsService } from '../teams.service';
 

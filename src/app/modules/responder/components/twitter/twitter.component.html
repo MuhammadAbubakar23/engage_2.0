@@ -109,6 +109,11 @@
                                                                 (click)="removeTagFromFeed(tag.id, tag.feedId, 'TT')">{{tag.name}}</span>
         
                                                         </div>
+                                                        <!-- For Sentiment Pills -->
+<div class="tags" *ngIf="tweetmsg.sentiment">
+    <span class="badge rounded-pills tag tag1 selected">{{tweetmsg.sentiment?.text}}</span>
+</div>
+<!-- For Sentiment Pills -->
                                                         <div class="card-footer pb-0 mt-2">
                                                             <p class="card-text ms-3 single-img-time">
                                                                 </p>
@@ -520,6 +525,11 @@
                                                             (click)="removeTagFromFeed(tag.id, tag.feedId, 'TM')">{{tag.name}}</span>
     
                                                     </div>
+                                                    <!-- For Sentiment Pills -->
+<div class="tags" *ngIf="msg.sentiment">
+    <span class="badge rounded-pills tag tag1 selected">{{msg.sentiment?.text}}</span>
+</div>
+<!-- For Sentiment Pills -->
                                                 </div>
                                                 <div class="message-bottom">
                                                     <div class="row">

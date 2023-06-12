@@ -161,6 +161,11 @@
                                                         class="badge rounded-pill tag instagram-pill tag1 selected">{{tag.name}}</span>
 
                                                 </div>
+                                                <!-- For Sentiment Pills -->
+<div class="tags" *ngIf="comment.sentiment">
+    <span class="badge rounded-pills tag tag1 selected">{{comment.sentiment?.text}}</span>
+</div>
+<!-- For Sentiment Pills -->
                                             </div>
                                             <div class="message-bottom">
                                                 <div class="row">
@@ -518,6 +523,11 @@
                                                                 (click)="removeTagFromFeed(tag.id, tag.feedId, 'IM')">{{tag.name}}</span>
         
                                                         </div>
+                                                        <!-- For Sentiment Pills -->
+<div class="tags" *ngIf="instaMsgs.sentiment">
+    <span class="badge rounded-pills tag tag1 selected">{{instaMsgs.sentiment?.text}}</span>
+</div>
+<!-- For Sentiment Pills -->
                                                     </div>
                                                     <div class="message-bottom">
                                                         <div class="row">
