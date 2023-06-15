@@ -100,7 +100,8 @@ export const environment = {
       dispositionHistory : 'Channel/GetDispositionHistory',
       markAllAsRead : 'Channel/ReadAllUnrespondedQuries',
       getAgentReport : 'Report/GetAgentTicketReport',
-      getAllocatedProfiles : 'Query/GetAllocatedProfiles'
+      getAllocatedProfiles : 'Query/GetAllocatedProfiles',
+      repliesList: 'SentQueries/GetRepliesList'
       
     },
     facebook: {

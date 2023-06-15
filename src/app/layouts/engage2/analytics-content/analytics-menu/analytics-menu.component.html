@@ -1,38 +1,61 @@
-
-    <div class="leftbar-console-expanded">
-        <div class="sidebar-header pe-3 ps-3">
-            <h5 class="fw-bold mt-3 ms-1">
-                <a>Analytics</a>
-            </h5>
-        </div>
-        <ul class="list-group console-list mt-2" data-scrollbar="true" tabindex="-1"
-            style="overflow: hidden; outline: none;">
-            <div class="scroll-content">
-                <li class="list-group-item list-group-item-action active" value="Executive Dashboard"
-                    id="analyticstab1">
-                    <a routerLink="/analytics/executive-dashboard" class="d-flex">
-                        Executive Dashboard
-                    </a>
-                </li>
-                <li class="list-group-item list-group-item-action" value="Live Monitoring" id="analyticstab2">
-                    <a routerLink="/analytics/live-monitoring" class="d-flex">
-                        Live Monitoring
-                    </a>
-                </li>
-                <li class="list-group-item list-group-item-action" value="Dashboard" id="analyticstab3">
-                    <a routerLink="/analytics/report-builder" class="d-flex">
-                        Dashboard
-                    </a>
-                </li>
-            </div>
-            <div class="scrollbar-track scrollbar-track-x" style="display: none;">
-                <div class="scrollbar-thumb scrollbar-thumb-x"
-                    style="width: 293px; transform: translate3d(0px, 0px, 0px);"></div>
-            </div>
-            <div class="scrollbar-track scrollbar-track-y" style="display: none;">
-                <div class="scrollbar-thumb scrollbar-thumb-y"
-                    style="height: 473px; transform: translate3d(0px, 0px, 0px);"></div>
-            </div>
-        </ul>
+<div class="leftbar-console-expanded">
+  <div class="sidebar-header pe-3 ps-3">
+    <h5 class="fw-bold mt-3 ms-1">
+      <a>Analytics</a>
+    </h5>
+  </div>
+  <ul
+    class="list-group console-list mt-2"
+    data-scrollbar="true"
+    tabindex="-1"
+    style="overflow: hidden; outline: none"
+  >
+    <div class="scroll-content">
+      <li
+        class="list-group-item list-group-item-action active"
+        value="Executive Dashboard"
+        id="analyticstab1"
+      >
+        <a routerLink="/analytics/reports" class="d-flex">
+          Reports Listing
+        </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action"
+        value="Live Monitoring"
+        id="analyticstab2"
+      >
+        <a routerLink="/analytics/report-builder" class="d-flex">
+          Reporst Builder
+        </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action"
+        value="Dashboard"
+        id="analyticstab3"
+      >
+        <a routerLink="/analytics/db-settings" class="d-flex"> DB Settings </a>
+      </li>
+      <li
+        class="list-group-item list-group-item-action"
+        value="Dashboard"
+        id="analyticstab3"
+      >
+        <a routerLink="/analytics/report-builder" class="d-flex"> Dashboard </a>
+      </li>
     </div>
-    <a href="javascript:void;" class="panelToggle"></a>
+    <div class="scrollbar-track scrollbar-track-x" style="display: none">
+      <div
+        class="scrollbar-thumb scrollbar-thumb-x"
+        style="width: 293px; transform: translate3d(0px, 0px, 0px)"
+      ></div>
+    </div>
+    <div class="scrollbar-track scrollbar-track-y" style="display: none">
+      <div
+        class="scrollbar-thumb scrollbar-thumb-y"
+        style="height: 473px; transform: translate3d(0px, 0px, 0px)"
+      ></div>
+    </div>
+  </ul>
+</div>
+<a href="javascript:void;" class="panelToggle"></a>

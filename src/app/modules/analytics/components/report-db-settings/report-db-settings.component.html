@@ -1,0 +1,147 @@
+<div class="container mt-5" style="width: 60%">
+  <div
+    class="form-group flex-grow-1"
+    style="display: flex; flex-direction: column"
+  >
+  <div style="position: relative">
+    <input
+      id="engine"
+      class="form-control"
+      [(ngModel)]="dbSettings.ConnectionName"
+      style="height: 60px; padding-top: 20px"
+    />
+    <label
+      for="engine"
+      style="
+        position: absolute;
+        top: 2px;
+        left: 10px;
+        color: #999;
+        pointer-events: none;
+      "
+      >Connection Name</label
+    >
+  </div>
+
+  <div >
+    <ng-select
+      [(ngModel)]="selectedEngine"
+      style="margin-top:10px;"
+    >
+      <ng-option *ngFor="let engine of dbSettings.ENGINE" [value]="engine">
+        {{ engine }}
+      </ng-option>
+    </ng-select>
+  </div>
+
+    <div style="position: relative; margin-top: 10px">
+      <input
+        id="name"
+        class="form-control"
+        [(ngModel)]="dbSettings.DATABASE"
+        style="height: 60px; padding-top: 20px"
+      />
+      <label
+        for="name"
+        style="
+          position: absolute;
+          top: 2px;
+          left: 10px;
+          color: #999;
+          pointer-events: none;
+        "
+        >DATABASE NAME</label
+      >
+    </div>
+
+    <div style="position: relative; margin-top: 10px">
+      <input
+        id="user"
+        class="form-control"
+        [(ngModel)]="dbSettings.USER"
+        style="height: 60px; padding-top: 20px"
+      />
+      <label
+        for="user"
+        style="
+          position: absolute;
+          top: 2px;
+          left: 10px;
+          color: #999;
+          pointer-events: none;
+        "
+        >User</label
+      >
+    </div>
+
+    <div style="position: relative; margin-top: 10px">
+      <input
+        type="password"
+        id="password"
+        class="form-control"
+        [(ngModel)]="dbSettings.PASSWORD"
+        style="height: 60px; padding-top: 20px"
+      />
+      <label
+        for="password"
+        style="
+          position: absolute;
+          top: 2px;
+          left: 10px;
+          color: #999;
+          pointer-events: none;
+        "
+        >Password</label
+      >
+    </div>
+
+    <div style="position: relative; margin-top: 10px">
+      <input
+        id="host"
+        class="form-control"
+        [(ngModel)]="dbSettings.HOST"
+        style="height: 60px; padding-top: 20px"
+      />
+      <label
+        for="host"
+        style="
+          position: absolute;
+          top: 2px;
+          left: 10px;
+          color: #999;
+          pointer-events: none;
+        "
+        >Host</label
+      >
+    </div>
+
+    <div style="position: relative; margin-top: 10px">
+      <input
+        id="port"
+        class="form-control"
+        [(ngModel)]="dbSettings.PORT"
+        style="height: 60px; padding-top: 20px"
+      />
+      <label
+        for="port"
+        style="
+          position: absolute;
+          top: 2px;
+          left: 10px;
+          color: #999;
+          pointer-events: none;
+        "
+        >Port</label
+      >
+    </div>
+
+    <button
+      class="btn btn-primary"
+      style="margin-top: 20px; margin-left: 5px;width: 100px;"
+      type="button"
+      (click)="saveSetting()"
+    >
+      Save
+    </button>
+  </div>
+</div>

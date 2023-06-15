@@ -58,6 +58,10 @@ import { AnalyticsMenuComponent } from './engage2/analytics-content/analytics-me
 import { AvatarContentComponent } from './engage2/avatar-content/avatar-content.component';
 import { MainContentComponent } from './engage2/main-content/main-content.component';
 import { SubRoleMenuComponent } from './engage2/main-menu/sub-role-menu/sub-role-menu.component';
+import { BotRightSidebarComponent } from './engage2/bot-content/bot-right-sidebar/bot-right-sidebar.component';
+import { BotContentComponent } from './engage2/bot-content/bot-content.component';
+import { BotMenuComponent } from './engage2/bot-content/bot-menu/bot-menu.component';
+import { BotHeaderComponent } from './engage2/bot-content/bot-header/bot-header.component';
 
 
 
@@ -109,7 +113,11 @@ import { SubRoleMenuComponent } from './engage2/main-menu/sub-role-menu/sub-role
     AnalyticsMenuComponent,
     AvatarContentComponent,
     MainContentComponent,
-    SubRoleMenuComponent
+    SubRoleMenuComponent,
+    BotRightSidebarComponent,
+    BotContentComponent,
+    BotMenuComponent,
+    BotHeaderComponent
   ],
   imports: [
     CommonModule,
@@ -138,7 +146,9 @@ import { SubRoleMenuComponent } from './engage2/main-menu/sub-role-menu/sub-role
     CardBoxListComponent,
     OverlayRightPanelComponent,
     AnalyticsRightSidebarMenuComponent,
-    AnalyticsContentComponent
+    AnalyticsContentComponent,
+    BotRightSidebarComponent,
+    BotContentComponent
   ]
 })
 export class LayoutsModule { }

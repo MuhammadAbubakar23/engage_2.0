@@ -17,22 +17,22 @@ export class AnalyticsRightSidebarMenuComponent implements OnInit {
 
   constructor(
     private toggleService : ToggleService,
-    private rightNavService : RightNavService) { 
+    private rightNavService : RightNavService) {
     }
 
   ngOnInit(): void {
 
-    // let parent = localStorage.getItem("parent");   
+    // let parent = localStorage.getItem("parent");
 
-    // this.subscription2 = this.rightNavService.getChildComponent().subscribe(msg2 => { 
+    // this.subscription2 = this.rightNavService.getChildComponent().subscribe(msg2 => {
     //   this.dynamicChildPath = msg2;
     // });
   }
 
   isOpen = false;
 
-  toggle(child:string) {  
-    
+  toggle(child:string) {
+    debugger
     if(localStorage.getItem('child') == child){
       this.toggleService.addTogglePanel('');
     } else{

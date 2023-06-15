@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="d-flex justify-content-center">
+    <div class="col-lg-6">
+      <form  [formGroup]="stepTwoForm"
+      (ngSubmit)="stepTwoSubmit()"
+      autocomplete="off"
+      novalidate
+         #formRef="ngForm">
+        <div class="mt-3" formArrayName="questions">
+          <div class="row" *ngFor="let question of questions.controls; let i = index;" [formGroupName]="i">
+
+            <div class="col-sm-10" style="position: relative; margin-top:10px">
+
+              <input class="form-control" type="text" style="height: 60px; padding-top: 20px;" formControlName="questionText"/>
+              <label for="threshold" style="position: absolute; top: 2px; left: 15px; color: #999; pointer-events: none;">Question </label>
+            </div>
+
+            <!-- <div *ngIf="i===0;else removebutton" class="col-sm-2 mt-3 pt-2">
+              <button class="btn btn-primary" (click)="addQuestion()">+</button>
+            </div>
+            <ng-template #removebutton>
+            <div class="col-sm-2 mt-3 pt-2">
+              <button class="btn btn-primary px-3" (click)="removeQuestion(i)">-</button>
+            </div>
+          </ng-template> -->
+          </div>
+
+        </div>
+        <div class="mt-3">
+          <button class="btn btn-success" cdkStepperPrevious>Previous</button>
+          <button class="btn btn-primary" style="margin-left: 10px;" cdkStepperNext>Next</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

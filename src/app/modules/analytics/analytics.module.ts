@@ -8,8 +8,14 @@ import { ExecutiveDashboardHeaderComponent } from './analytics-headers/executive
 import { LiveMonitoringHeaderComponent } from './analytics-headers/live-monitoring-header/live-monitoring-header.component';
 import { ReportBuilderHeaderComponent } from './analytics-headers/report-builder-header/report-builder-header.component';
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
-
-
+import { ReportBuilderComponent } from './components/report-builder/report-builder.component';
+import { ActionsComponent } from './components/actions/actions.component';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgChartsModule } from 'ng2-charts';
+import { ReportDbSettingsComponent } from './components/report-db-settings/report-db-settings.component';
+import { ReportlistingComponent } from './components/reportlisting/reportlisting.component';
+import { ExcelService } from './services/excel.service';
 @NgModule({
   declarations: [
     AnalyticsComponent,
@@ -17,12 +23,20 @@ import { LayoutsModule } from 'src/app/layouts/layouts.module';
     LiveMonitoringComponent,
     ExecutiveDashboardHeaderComponent,
     LiveMonitoringHeaderComponent,
-    ReportBuilderHeaderComponent
+    ReportBuilderHeaderComponent,
+    ReportBuilderComponent,
+    ActionsComponent,
+    ReportDbSettingsComponent,
+    ReportlistingComponent
   ],
   imports: [
     CommonModule,
     AnalyticsRoutingModule,
-    LayoutsModule
-  ]
+    LayoutsModule,
+    FormsModule,
+    NgSelectModule,
+    NgChartsModule
+  ],
+  providers: [ExcelService]
 })
 export class AnalyticsModule { }

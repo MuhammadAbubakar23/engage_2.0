@@ -5,10 +5,12 @@ import { RightNavService } from 'src/app/services/RightNavService/RightNav.servi
 import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { ConversationComponent } from '../inboxes/components/conversation/conversation.component';
-import { ContactsComponent } from '../inboxes/right-sidebar-components/contacts/contacts.component';
+import { ActionsComponent } from '../analytics/components/actions/actions.component'
 import { ExecutiveDashboardComponent } from './components/executive-dashboard/executive-dashboard.component';
 import { LiveMonitoringComponent } from './components/live-monitoring/live-monitoring.component';
 import { ReportBuilderComponent } from './components/report-builder/report-builder.component';
+import { ReportDbSettingsComponent } from './components/report-db-settings/report-db-settings.component';
+import { ReportlistingComponent } from './components/reportlisting/reportlisting.component';
 
 @Component({
   selector: 'app-analytics',
@@ -18,7 +20,11 @@ import { ReportBuilderComponent } from './components/report-builder/report-build
 export class AnalyticsComponent implements OnInit {
 
   componentRef: any;
-  @ViewChild('container', { read: ViewContainerRef,  }) target!: ViewContainerRef;
+  @ViewChild('container',
+  { read: ViewContainerRef,})
+  target!: ViewContainerRef;
+
+
   @ViewChild('rightcontainer', { read: ViewContainerRef,}) rightcontainer!: ViewContainerRef;
 
   componentName!: any;
@@ -38,10 +44,10 @@ export class AnalyticsComponent implements OnInit {
   ngOnInit(): void {
 
     this.route.params.subscribe((routeParams) => {
-      
+
       if(routeParams['channel'] != undefined && routeParams['channel'] != "undefined"){
         this.componentName = routeParams['channel'];
-      } 
+      }
       this.childComponentName = routeParams['ticket'];
       this.rightNavService.updateChildComponent(this.childComponentName);
 
@@ -52,7 +58,7 @@ export class AnalyticsComponent implements OnInit {
       if(this.componentName != undefined){
         localStorage.setItem('parent', this.componentName);
       }
-      
+
       this.sharedService.updateMessage(this.componentName);
 
       this.target?.clear();
@@ -65,7 +71,7 @@ export class AnalyticsComponent implements OnInit {
     });
 
     this.subscription = this.toggleService.getTogglePanel().subscribe(msg3 => {
-      
+
       if(msg3){
         this.rightcontainer?.clear();
         localStorage.setItem('child', msg3)
@@ -81,7 +87,7 @@ export class AnalyticsComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.target?.clear();
+    this.target.clear();
     this.rightcontainer?.clear();
 
     this.loadComponent(this.componentName, '');
@@ -90,10 +96,9 @@ export class AnalyticsComponent implements OnInit {
       this.loadComponent('', this.childComponentName);
     }
   }
-  
-  
+
+
   loadComponent(leftSideName: string, rightSideName: string) {
-    
     let componentFactory = null;
 
     switch (leftSideName || rightSideName) {
@@ -109,11 +114,20 @@ export class AnalyticsComponent implements OnInit {
         componentFactory = this.resolver.resolveComponentFactory(ReportBuilderComponent);
         this.target?.createComponent(componentFactory);
         break;
+        case 'db-settings':
+          componentFactory = this.resolver.resolveComponentFactory(ReportDbSettingsComponent);
+          this.target?.createComponent(componentFactory);
+          break;
         case 'contacts':
-        componentFactory =
-          this.resolver.resolveComponentFactory(ContactsComponent);
-        this.rightcontainer?.createComponent(componentFactory);
-        break;
+          componentFactory =
+          this.resolver.resolveComponentFactory(ActionsComponent);
+          this.rightcontainer?.createComponent(componentFactory);
+          break;
+        case 'reports':
+          componentFactory =
+          this.resolver.resolveComponentFactory(ReportlistingComponent);
+          this.target?.createComponent(componentFactory);
+          break;
       default:
         componentFactory = this.resolver.resolveComponentFactory(
           ConversationComponent

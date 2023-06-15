@@ -1,0 +1,100 @@
+<nav id="contacts-rightbar-dashboard" class="expended-rigth-sidebar open">
+  <div class="right-bar-wrapper">
+    <div class="bodyWrapper">
+      <div class="contacts-list">
+        <header class="tab-header rightbar-tab-header pe-3">
+
+          <!-- <div class="form-group flex-grow-1" style="display: flex; align-items: center;">
+            <button class="btn btn-primary" style="margin-top: 20px; margin-left: 5px;" type="button" (click)="trainModel()">Train</button>
+        </div> -->
+
+
+          <div class="card-footer d-flex align-items-center justify-content-end">
+
+
+          </div>
+
+          <nav class="knowledgeBase nav">
+            <div class="row mt-5">
+              <div class="col-sm-6">
+                <div class="card example-card" style="width: 300px; height: 400px;">
+                  <div class="card-header">
+                    <h5 class="card-title mb-5">Sentiment Analysis</h5>
+                  </div>
+                  <div class="card-body scroll-content" style="position: relative; overflow-y: auto; height: 300px;">
+                    <ng-container *ngFor="let sentiment of sentiments">
+                      <div class="message" [ngClass]="{ 'from': sentiment.author === 'bot', 'to': sentiment.author === 'user' }">
+                        {{ sentiment.content }}
+                      </div>
+                    </ng-container>
+                  </div>
+                  <form [formGroup]="senchatForm" style="margin-top: auto;">
+                    <div class="card-footer d-flex align-items-center justify-content-end">
+                      <div class="form-group flex-grow-1">
+                        <label for="text">Your message</label>
+                        <input id="text" class="form-control" placeholder="Ex. Hi" formControlName="text" (keyup.enter)="getSentiment()">
+                      </div>
+                      <button class="btn btn-primary" style="margin-top: 20px; margin-left: 5px;" type="button" [disabled]="!senchatForm" (click)="getSentiment()">Send</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="card example-card" style="width: 300px; height: 400px;">
+                  <div class="card-header">
+                    <h5 class="card-title mb-5">Language Detection</h5>
+                  </div>
+                  <div class="card-body scroll-content" style="position: relative; overflow-y: auto; height: 300px;">
+                    <ng-container *ngFor="let lang of languages">
+                      <div class="message" [ngClass]="{ 'from':lang.author === 'bot', 'to': lang.author === 'user' }">
+                        {{lang.content }}
+                      </div>
+                    </ng-container>
+                  </div>
+                  <form [formGroup]="langchatForm" style="margin-top: auto;">
+                    <div class="card-footer d-flex align-items-center justify-content-end">
+                      <div class="form-group flex-grow-1">
+                        <label for="text">Your message</label>
+                        <input id="text" class="form-control" placeholder="Ex. Hi" formControlName="text" (keyup.enter)="getLanguage()">
+                      </div>
+                      <button class="btn btn-primary" style="margin-top: 20px; margin-left: 5px;" type="button" [disabled]="!langchatForm" (click)="getLanguage()">Send</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- <div class="icons-list" style="display: flex; justify-content: center; align-items: center;">
+
+
+              <div class="card example-card" style="width: 300px; height: 400px;">
+                <div class="card-header">
+                  <h5 class="card-title mb-5">Sentiment Analysis</h5>
+                </div>
+                <div class="card-body scroll-content" style="position: relative; overflow-y: auto; height: 300px;">
+                  <ng-container *ngFor="let message of messages">
+                    <div class="message" [ngClass]="{ 'from': message.author === 'bot', 'to': message.author === 'user' }">
+                      {{ message.content }}
+                    </div>
+                  </ng-container>
+                </div>
+                <form [formGroup]="chatForm" style="margin-top: auto;">
+                  <div class="card-footer d-flex align-items-center justify-content-end">
+                    <div class="form-group flex-grow-1">
+                      <label for="text">Your message</label>
+                      <input id="text" class="form-control" placeholder="Ex. Hi" formControlName="text" (keyup.enter)="sendMessage()">
+                    </div>
+                    <button class="btn btn-primary" style="margin-top: 20px; margin-left: 5px;" type="button" [disabled]="!chatForm" (click)="sendMessage()">Send</button>
+                  </div>
+                </form>
+              </div>
+
+            </div> -->
+          </nav>
+        </header>
+      </div>
+    </div>
+  </div>
+</nav>
+

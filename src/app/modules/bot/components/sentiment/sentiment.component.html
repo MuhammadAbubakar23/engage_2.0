@@ -1,0 +1,92 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+
+          <form
+            (ngSubmit)="onSubmit()"
+            enctype="multipart/form-data"
+            class="text-center"
+          >
+            <div class="mb-3">
+              <label for="fileInput" class="form-label">Select File:</label>
+              <div class="input-group">
+                <input
+                  type="file"
+                  id="fileInput"
+                  (change)="onFileChange($event)"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" (click)="onSubmit()">Upload</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <form
+        [formGroup]="stepThreeForm"
+        autocomplete="off"
+        novalidate
+        #formRef="ngForm"
+      >
+        <div class="mt-3" formArrayName="sentences">
+          <div
+            class="row"
+            *ngFor="let sentence of sentences.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <div class="col-sm-7" style="position: relative; margin-top: 10px">
+              <input
+                class="form-control"
+                type="text"
+                formControlName="sentence"
+                style="height: 60px; padding-top: 20px"
+              />
+              <label
+                for="threshold"
+                style="
+                  position: absolute;
+                  top: 2px;
+                  left: 15px;
+                  color: #999;
+                  pointer-events: none;
+                "
+                >Sentence
+              </label>
+            </div>
+            <div class="col-sm-3 mt-1 pt-2">
+              <select formControlName="review" class="form-control">
+                <option value="Please Select Review">Please Select Review</option>
+                <option *ngFor="let label of labels" [value]="label">{{label}}</option>
+              </select>
+            </div>
+            <div *ngIf="i === 0; else removebutton" class="col-sm-2 mt-1 pt-2">
+              <button class="btn btn-primary" (click)="addSentence()">+</button>
+            </div>
+
+            <ng-template #removebutton>
+              <div class="col-sm-2 mt-1 pt-2">
+                <button
+                  class="btn btn-primary px-3"
+                  (click)="removeSentence(i)"
+                >
+                  -
+                </button>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+        <div class="mt-3">
+          <button class="btn btn-primary" style="margin-left: 10px" (click)="submitSenteces()">
+            save
+          </button>
+        </div>
+      </form>
+    </div>
+
+
+  </div>
+</div>
