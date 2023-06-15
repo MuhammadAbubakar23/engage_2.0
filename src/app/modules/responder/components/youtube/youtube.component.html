@@ -554,7 +554,7 @@
                     </ul>
                     </div>
                 <button type="submit" class="iconButton small notification iconHover" data-bs-toggle="tooltip"
-                    data-bs-placement="top" title="" id="commentSendbtn" data-bs-original-title="Send" [disabled]="!youtubeCommentReplyForm.valid">
+                    data-bs-placement="top" title="" id="commentSendbtn" data-bs-original-title="Send">
                     <i class="fal fa-paper-plane"></i>
                 </button>
             </div>
@@ -583,7 +583,7 @@
                 <h6 class="silver pt-3 mb-0">Quick Response</h6>
             </div>
             <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas"
-                aria-label="Close"><i class="fal fa-times"></i></button>
+                aria-label="Close" (click)="closeQuickResponseSidebar()"><i class="fal fa-times"></i></button>
         </div>
         <div class="offcanvas-body">
 

@@ -6,6 +6,7 @@ import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
 import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
+import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
@@ -33,6 +34,7 @@ export class YoutubeComponent implements OnInit {
 
   id = this.fetchId.getOption();
   slaId = this.fetchId.getSlaId();
+  queryType = this.getQueryTypeService.getQueryType();
 
   public Subscription!: Subscription;
 
@@ -99,7 +101,8 @@ export class YoutubeComponent implements OnInit {
     private replyService : ReplyService,
     private createTicketService: CreateTicketService,
     private ticketResponseService : TicketResponseService,
-    private applySentimentService: ApplySentimentService
+    private applySentimentService: ApplySentimentService,
+    private getQueryTypeService : GetQueryTypeService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -234,7 +237,8 @@ export class YoutubeComponent implements OnInit {
         plateForm: 'Youtube',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
-        isAttachment: false
+        isAttachment: false,
+        queryType: this.queryType
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -303,7 +307,8 @@ export class YoutubeComponent implements OnInit {
         plateForm: 'Youtube',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
-        isAttachment: false
+        isAttachment: false,
+        queryType: this.queryType
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -356,7 +361,8 @@ export class YoutubeComponent implements OnInit {
         plateForm: localStorage.getItem('parent') || '{}',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
-        isAttachment: false
+        isAttachment: false,
+        queryType: this.queryType
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -474,11 +480,21 @@ export class YoutubeComponent implements OnInit {
       this.reloadComponent('selectComment');
     } else {
       var formData = new FormData();
-      if(this.text !== ""){
-        this.youtubeCommentReplyForm.patchValue({
-          text: this.text
-        })
-    }
+
+      if (!this.youtubeCommentReplyForm.get('text')?.dirty) {
+        if(this.text !== ""){
+          this.youtubeCommentReplyForm.patchValue({
+            text: this.text
+          });
+      }
+      } else {
+        if (this.youtubeCommentReplyForm.value.text) {
+          this.youtubeCommentReplyForm.patchValue({
+            to: this.youtubeCommentReplyForm.value.text
+          });
+        }
+      }
+      
       this.youtubeCommentReplyForm.patchValue({
         commentId: this.youtubecommentId,
         teamId: this.agentId,
@@ -566,13 +582,8 @@ export class YoutubeComponent implements OnInit {
 
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
-
     this.text = abc?.text + " ";
-
-    // this.youtubeCommentReplyForm.patchValue({
-    //   text: this.youtubecommentText,
-    // });
-    this.insertAtCaret(this.youtubecommentText)
+    this.insertAtCaret(this.text)
   }
 
   quickReplyList() {
@@ -930,5 +941,11 @@ export class YoutubeComponent implements OnInit {
   onScrollComments() {
     this.pageSize = this.pageSize + 10;
     this.getYoutubeData();
+  }
+
+  closeQuickResponseSidebar(){
+    this.quickReplySearchText = '';
+    this.radioInput.nativeElement.checked = false;
+    
   }
 }

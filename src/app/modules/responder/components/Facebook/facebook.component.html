@@ -29,7 +29,7 @@
                         </div>
                     </button>
                 </li>
-                <li class="nav-item" role="presentation" *ngIf="FacebookMessages">
+                <li class="nav-item" role="presentation" *ngIf="FacebookMessages || fbMsgReply == true">
                     <button (click)="facebookMessageReply()" class="nav-link h-100"
                         [class.active]="FacebookData == null" id="fb-msg-tab" data-bs-toggle="tab"
                         data-bs-target="#fb-msg" type="button" role="tab" aria-controls="fb-msg" aria-selected="false">
@@ -211,14 +211,11 @@
                                                         <div class="post-img-wrap whatsappImgModalBtn" type="button"
                                                             style="width:375px;"
                                                             *ngFor="let attachment of fbcmnts.attachments">
-                                                            <img *ngIf="attachment.description == 'photo'"
-                                                                src={{attachment.attachmentUrl}}
-                                                                style="width: -webkit-fill-available;">
-                                                            <video *ngIf="attachment.description == 'video'"
-                                                                width="375px" controls>
-                                                                <source src={{attachment.attachmentUrl}}
-                                                                    type="video/mp4"
-                                                                    style="width: -webkit-fill-available;">
+                                                            <img *ngIf="attachment.contentType == 'photo'" src={{attachment.attachmentUrl}} style="width: -webkit-fill-available;">
+                                                            <img *ngIf="attachment.contentType == 'animated_image_share'" src={{attachment.attachmentUrl}} style="width: -webkit-fill-available;">
+                                                            <img *ngIf="attachment.contentType == 'sticker'" src={{attachment.attachmentUrl}} style="width: -webkit-fill-available;">
+                                                            <video *ngIf="attachment.contentType == 'video'" width="375px" controls>
+                                                                <source src={{attachment.attachmentUrl}} type="video/mp4" style="width: -webkit-fill-available;">
                                                             </video>
                                                         </div>
                                                         <p class="card-text nignt">{{fbcmnts.message}}</p>
@@ -636,10 +633,13 @@
                                                     <div class="post-img-wrap whatsappImgModalBtn" type="button"
                                                         style="width:375px;"
                                                         *ngFor="let attachment of fbmsgs.attachments">
-                                                        <img *ngIf="attachment.description == 'image'"
+                                                        <img *ngIf="attachment.contentType == 'image'"
                                                             src={{attachment.attachmentUrl}}
                                                             style="width: -webkit-fill-available;">
-                                                        <video *ngIf="attachment.description == 'video'" width="375px"
+                                                        <img *ngIf="attachment.contentType == 'animated_image_share'"
+                                                        src={{attachment.attachmentUrl}}
+                                                        style="width: -webkit-fill-available;">
+                                                        <video *ngIf="attachment.contentType == 'video'" width="375px"
                                                             controls>
                                                             <source src={{attachment.attachmentUrl}} type="video/mp4"
                                                                 style="width: -webkit-fill-available;">
@@ -1168,7 +1168,7 @@
                 <h6 class="silver pt-3 mb-0">Human Agent Tags</h6>
             </div>
             <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas"
-                aria-label="Close"><i class="fal fa-times"></i></button>
+                aria-label="Close" ><i class="fal fa-times"></i></button>
         </div>
         <div class="offcanvas-body">
 
@@ -1225,7 +1225,7 @@
                 <h6 class="silver pt-3 mb-0">Quick Response</h6>
             </div>
             <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas"
-                aria-label="Close"><i class="fal fa-times"></i></button>
+                aria-label="Close" (click)="closeQuickResponseSidebar()"><i class="fal fa-times"></i></button>
         </div>
         <div class="offcanvas-body">
 

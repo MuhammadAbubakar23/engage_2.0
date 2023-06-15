@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Tooltip } from 'bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
+import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
@@ -26,6 +27,7 @@ export class WebChatComponent implements OnInit {
   data:any;
   WebChat:any;
   slaId = this.fetchId.getSlaId();
+  queryType = this.getQueryTypeService.getQueryType();
 
   
 
@@ -43,7 +45,8 @@ export class WebChatComponent implements OnInit {
     private signalRService : SignalRService,
     private changeDetect : ChangeDetectorRef,
     private commondata : CommonDataService,
-    private ticketResponseService : TicketResponseService
+    private ticketResponseService : TicketResponseService,
+    private getQueryTypeService : GetQueryTypeService
     ) {
       // this.criteria={
       //   property: 'createdDate',
@@ -80,7 +83,8 @@ export class WebChatComponent implements OnInit {
         plateForm: 'Webchat',
         pageNumber: 0,
         pageSize: 0,
-        isAttachment: false
+        isAttachment: false,
+        queryType: this.queryType
       };
       this.SpinnerService.show();
       this.commondata
@@ -128,7 +132,8 @@ export class WebChatComponent implements OnInit {
         plateForm: 'Webchat',
         pageNumber: 0,
         pageSize: 0,
-        isAttachment: false
+        isAttachment: false,
+        queryType: this.queryType
       };
       this.SpinnerService.show();
       this.commondata
@@ -218,5 +223,10 @@ updateTicketId(res: any) {
 onScrollComments() {
   // this.pageSize = this.pageSize + 10;
   // this.getWebChat();
+}
+closeQuickResponseSidebar(){
+  // this.quickReplySearchText = '';
+  this.radioInput.nativeElement.checked = false;
+  
 }
 }

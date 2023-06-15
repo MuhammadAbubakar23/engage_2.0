@@ -6,6 +6,7 @@ import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
 import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
+import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
@@ -34,6 +35,7 @@ export class LinkedInComponent implements OnInit {
 
 
   id = this.fetchId.getOption();
+  queryType = this.getQueryTypeService.getQueryType();
 
   LinkedInData:any;
   pageName:any;
@@ -119,7 +121,8 @@ export class LinkedInComponent implements OnInit {
     private replyService : ReplyService,
     private createTicketService: CreateTicketService,
     private ticketResponseService : TicketResponseService,
-    private applySentimentService: ApplySentimentService
+    private applySentimentService: ApplySentimentService,
+    private getQueryTypeService : GetQueryTypeService
 
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res)=>{
@@ -241,6 +244,8 @@ export class LinkedInComponent implements OnInit {
                 );
               }
             });
+            this.totalUnrespondedCmntCountByCustomer =
+          this.totalUnrespondedCmntCountByCustomer + 1;
           }
         });
         this.changeDetect.detectChanges();
@@ -258,7 +263,8 @@ export class LinkedInComponent implements OnInit {
         plateForm: 'LinkedIn',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
-        isAttachment: false
+        isAttachment: false,
+        queryType: this.queryType
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -311,7 +317,8 @@ export class LinkedInComponent implements OnInit {
         plateForm: 'LinkedIn',
         pageNumber: 0,
         pageSize: 0,
-        isAttachment: false
+        isAttachment: false,
+        queryType: this.queryType
       };
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         this.LinkedInData = res.List;
@@ -356,7 +363,8 @@ export class LinkedInComponent implements OnInit {
         plateForm: localStorage.getItem('parent') || '{}',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
-        isAttachment: false
+        isAttachment: false,
+        queryType: this.queryType
       };
       this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
         this.LinkedInData = res.List;
@@ -446,7 +454,7 @@ export class LinkedInComponent implements OnInit {
 }
 
 detectChanges(): void {
-  this.ImageName = this.fileInput.nativeElement.files;
+  this.ImageName = this.fileInput?.nativeElement.files;
   this.text = this.textarea.nativeElement.value
 }
   linkedInReplyForm = new UntypedFormGroup({
@@ -500,10 +508,19 @@ detectChanges(): void {
           formData.append('File', this.ImageName[index]);
         }
       }
+      
+    if (!this.linkedInReplyForm.get('text')?.dirty) {
       if(this.text !== ""){
         this.linkedInReplyForm.patchValue({
           text: this.text
         })
+    }
+    } else {
+      if (this.linkedInReplyForm.value.text) {
+        this.linkedInReplyForm.patchValue({
+          to: this.linkedInReplyForm.value.text
+        });
+      }
     }
       this.linkedInReplyForm.patchValue({
         commentId: this.commentId,
@@ -1002,10 +1019,20 @@ detectChanges(): void {
 
   closeQuickResponseSidebar(){
     this.quickReplySearchText = '';
+    this.radioInput.nativeElement.checked = false;
+    
   }
 
   onScrollComments() {
     this.pageSize = this.pageSize + 10;
     this.getLinkedInComments();
+  }
+
+  isImage(attachment: any): boolean {
+    return attachment.contentType.startsWith('image/');
+  }
+
+  isVideo(attachment: any): boolean {
+    return attachment.contentType.startsWith('video/');
   }
 }

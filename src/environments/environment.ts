@@ -20,7 +20,7 @@ export const environment = {
     types: { local: 'LS' },
   },
   title: 'abc',
-  IdentityBaseUrl: 'http://localhost:5036/api', //'https://identity-engage.enteract.app/api',
+  IdentityBaseUrl: 'https://identity-engage.enteract.app/api', // 'http://localhost:5036/api',
   InstaBaseUrl: 'https://insta.360scrm.com/api/', // other then post and data
   FbBaseUrl: 'https://face.360scrm.com/api/',
   YoutubeBaseUrl: 'https://tube.360scrm.com/api/',
@@ -112,7 +112,8 @@ export const environment = {
       dispositionHistory : 'Channel/GetDispositionHistory',
       markAllAsRead : 'Channel/ReadAllUnrespondedQuries',
       getAgentReport : 'Report/GetAgentTicketReport',
-      getAllocatedProfiles : 'Query/GetAllocatedProfiles'
+      getAllocatedProfiles : 'Query/GetAllocatedProfiles',
+      repliesList: 'SentQueries/GetRepliesList'
       
     },
     facebook: {

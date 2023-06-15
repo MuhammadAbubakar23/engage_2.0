@@ -6,6 +6,7 @@ import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
 import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
+import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
@@ -32,6 +33,7 @@ export class SmsDetailsComponent implements OnInit {
   SmsData: any;
 
   id = this.fetchId.id;
+  queryType = this.getQueryTypeService.getQueryType();
 
   public Subscription!: Subscription;
 
@@ -95,7 +97,8 @@ export class SmsDetailsComponent implements OnInit {
     private queryStatusService: QueryStatusService,
     private createTicketService: CreateTicketService,
     private ticketResponseService: TicketResponseService,
-    private applySentimentService: ApplySentimentService
+    private applySentimentService: ApplySentimentService,
+    private getQueryTypeService : GetQueryTypeService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -188,6 +191,8 @@ export class SmsDetailsComponent implements OnInit {
           };
         });
         // console.log("hello", this.groupArrays)
+        this.totalUnrespondedCmntCountByCustomer =
+          this.totalUnrespondedCmntCountByCustomer + 1;
       }
     });
     this.changeDetect.detectChanges();
@@ -204,6 +209,7 @@ export class SmsDetailsComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        queryType: this.queryType
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -258,6 +264,7 @@ export class SmsDetailsComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
+        queryType: this.queryType
       };
 
       this.SpinnerService.show();
@@ -308,6 +315,7 @@ export class SmsDetailsComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        queryType: this.queryType
       };
 
       this.SpinnerService.show();
@@ -566,10 +574,19 @@ export class SmsDetailsComponent implements OnInit {
     } else {
       var formData = new FormData();
 
+      
+    if (!this.SmsReplyForm.get('text')?.dirty) {
       if(this.text !== ""){
         this.SmsReplyForm.patchValue({
           text: this.text
         })
+    }
+    } else {
+      if (this.SmsReplyForm.value.text) {
+        this.SmsReplyForm.patchValue({
+          to: this.SmsReplyForm.value.text
+        });
+      }
     }
       this.SmsReplyForm.patchValue({
         commentId: this.smsId,
@@ -825,4 +842,11 @@ export class SmsDetailsComponent implements OnInit {
     this.pageSize = this.pageSize + 10;
     this.getSmsData();
   }
+
+  closeQuickResponseSidebar(){
+    this.quickReplySearchText = '';
+    this.radioInput.nativeElement.checked = false;
+    
+  }
+
   }

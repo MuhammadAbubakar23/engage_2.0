@@ -1,10 +1,6 @@
 import {
-  ChangeDetectorRef,
   Component,
-  DoCheck,
-  OnChanges,
   OnInit,
-  SimpleChanges,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Tooltip } from 'bootstrap';
@@ -385,6 +381,7 @@ export class ResponderHeaderComponent implements OnInit {
         pageNumber: 1,
         pageSize: 10,
         isAttachment: false,
+        queryType: ''
       };
       this.SpinnerService.show();
 
@@ -565,12 +562,12 @@ export class ResponderHeaderComponent implements OnInit {
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
           if (res != null || res != undefined) {
-            this.userId = res.List.user.userId;
-            this.profileId = res.List.user.id;
-            this.userName = res.List.user.userName || res.List.user.userId;
-            this.profilePic = res.List.user.profilePic;
-            this.platform = res.List.platform;
-            this.postType = res.List.dm.contentType;
+            this.userId = res.List?.user.userId;
+            this.profileId = res.List?.user.id;
+            this.userName = res.List?.user.userName || res.List?.user.userId;
+            this.profilePic = res.List?.user.profilePic;
+            this.platform = res.List?.platform;
+            this.postType = res.List?.dm.contentType;
 
             this.platformsArrayForMessages = [];
             this.facebookMessage = false;
@@ -715,6 +712,7 @@ export class ResponderHeaderComponent implements OnInit {
         pageNumber: 1,
         pageSize: 10,
         isAttachment: false,
+        queryType: ''
       };
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         this.userId = res.List[0].user.userId;
@@ -827,6 +825,7 @@ export class ResponderHeaderComponent implements OnInit {
         pageNumber: 1,
         pageSize: 10,
         isAttachment: false,
+        queryType: ''
       };
 
       this.SpinnerService.show();
@@ -834,12 +833,12 @@ export class ResponderHeaderComponent implements OnInit {
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
           if (res != null || res != undefined) {
-            this.userId = res.List.user.userId;
-            this.profileId = res.List.user.id;
-            this.userName = res.List.user.userName || res.List.user.userId;
-            this.profilePic = res.List.user.profilePic;
-            this.platform = res.List.platform;
-            this.postType = res.List.dm.contentType;
+            this.userId = res.List?.user.userId;
+            this.profileId = res.List?.user.id;
+            this.userName = res.List?.user.userName || res.List?.user.userId;
+            this.profilePic = res.List?.user.profilePic;
+            this.platform = res.List?.platform;
+            this.postType = res.List?.dm.contentType;
 
             this.platformsArrayForMessages = [];
             this.facebookMessage = false;

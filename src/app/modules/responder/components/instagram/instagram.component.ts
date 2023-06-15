@@ -38,6 +38,7 @@ import { CreateTicketService } from 'src/app/services/CreateTicketService/create
 import { UpdateMessagesService } from 'src/app/services/UpdateMessagesService/update-messages.service';
 import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
 import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
+import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
 
 @Component({
   selector: 'app-instagram',
@@ -52,7 +53,7 @@ export class InstagramComponent implements OnInit {
 
   id = this.fetchId.getOption();
   slaId = this.fetchId.getSlaId();
-
+  queryType = this.getQueryTypeService.getQueryType();
   public Subscription!: Subscription;
 
   pageNumber: any = 1;
@@ -127,7 +128,8 @@ export class InstagramComponent implements OnInit {
     private createTicketService: CreateTicketService,
     private updateMessagesService: UpdateMessagesService,
     private ticketResponseService : TicketResponseService,
-    private applySentimentService: ApplySentimentService
+    private applySentimentService: ApplySentimentService,
+    private getQueryTypeService : GetQueryTypeService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -339,6 +341,7 @@ export class InstagramComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        queryType: this.queryType
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -394,6 +397,7 @@ export class InstagramComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
+        queryType: this.queryType
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -445,6 +449,7 @@ export class InstagramComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        queryType: this.queryType
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -540,10 +545,20 @@ export class InstagramComponent implements OnInit {
           formData.append('File', this.ImageName[index]);
         }
       }
+      
+
+    if (!this.instagramCommentReplyForm.get('text')?.dirty) {
       if(this.text !== ""){
         this.instagramCommentReplyForm.patchValue({
           text: this.text
         })
+    }
+    } else {
+      if (this.instagramCommentReplyForm.value.text) {
+        this.instagramCommentReplyForm.patchValue({
+          to: this.instagramCommentReplyForm.value.text
+        });
+      }
     }
       this.instagramCommentReplyForm.patchValue({
         commentId: this.InstacommentId,
@@ -798,11 +813,11 @@ export class InstagramComponent implements OnInit {
     this.text = abc?.text + " ";
 
     // this.instagramCommentReplyForm.patchValue({ text: this.instaCommentText });
-    this.insertAtCaret(this.instaCommentText);
+    this.insertAtCaret(this.text);
   }
 
   detectChanges(): void {
-    this.ImageName = this.fileInput.nativeElement.files;
+    // this.ImageName = this.fileInput?.nativeElement.files;
     this.text = this.textarea.nativeElement.value
   }
 
@@ -1155,6 +1170,7 @@ export class InstagramComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        queryType: this.queryType
       };
 
       this.SpinnerService.show();
@@ -1204,6 +1220,7 @@ export class InstagramComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        queryType: this.queryType
       };
 
       this.SpinnerService.show();
@@ -1253,6 +1270,7 @@ export class InstagramComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        queryType: this.queryType
       };
 
       this.SpinnerService.show();
@@ -1406,6 +1424,12 @@ export class InstagramComponent implements OnInit {
       }
     });
     this.changeDetect.detectChanges();
+  }
+
+  closeQuickResponseSidebar(){
+    this.quickReplySearchText = '';
+    this.radioInput.nativeElement.checked = false;
+    
   }
 
 }

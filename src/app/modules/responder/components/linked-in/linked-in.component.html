@@ -55,12 +55,8 @@
                                             <div class="post-img-wrap whatsappImgModalBtn" type="button"
                                                 style="width:375px;"
                                                 *ngFor="let attachment of linkedIn.post.attachments">
-                                                <img *ngIf="attachment.description == 'IMAGE' || 'image'"
-                                                    src={{attachment.attachmentUrl}}>
-                                                <video *ngIf="attachment.description == 'video'" width="375px"
-                                                    controls>
-                                                    <source src={{attachment.attachmentUrl}} type="video/mp4">
-                                                </video>
+                                                <img *ngIf="isImage(attachment)" src={{attachment.attachmentUrl}}>
+                                                    <video class="video" *ngIf="isVideo(attachment)" src={{attachment.attachmentUrl}} controls></video>
                                             </div>
                                             <div class="card-body bg-light">
 
@@ -177,12 +173,8 @@
                                                         <div class="post-img-wrap whatsappImgModalBtn" type="button"
                                                             style="width:375px;"
                                                             *ngFor="let attachment of cmnts.attachments">
-                                                                <img *ngIf="attachment.description == 'IMAGE' || 'image'"
+                                                                <img *ngIf="isImage(attachment)"
                                                                         src={{attachment.attachmentUrl}} style="width: -webkit-fill-available;">
-                                                            <video *ngIf="attachment.description == 'video'" width="375px"
-                                                                controls>
-                                                                <source src={{attachment.attachmentUrl}} type="video/mp4">
-                                                            </video>
                                                         </div>
                                                         <p class="card-text nignt">{{cmnts.message}}</p>
                                                         <div class="tags" *ngFor="let tag of cmnts.tags">
@@ -423,12 +415,12 @@
                                                                             | date:'h:mm:ss a'}}</small>
                                                                     </p>
                                                                 </div>
-                                                                <div class="whatsapp-single-img whatsappImgModalBtn"
-                                                                    type="button">
-                                                                    <img src={{reply.attachmentUrl}}
-                                                                        class="card-img-top rounded-3"
-                                                                        style="width: 300px;">
-                                                                </div>
+                                                                <div class="post-img-wrap whatsappImgModalBtn" type="button"
+                                                            style="width:375px;"
+                                                            *ngFor="let attachment of reply.attachments">
+                                                                <img *ngIf="isImage(attachment)"
+                                                                        src={{attachment.attachmentUrl}} style="width: -webkit-fill-available;">
+                                                        </div>
                                                                 <p class="card-textnignt p-0">{{reply.message}}</p>
                                                             </div>
                                                             <div class="message-bottom">
@@ -618,47 +610,6 @@
     </div>
 </div>
 
-<div class="humanAgentTagsWrapper">
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="humanAgentTags" aria-labelledby="humanAgentTagsLabel"
-        style="visibility: visible;" aria-modal="true" role="dialog">
-        <div class="offcanvas-header">
-            <div class="section-heading">
-                <h6 class="silver pt-3 mb-0">Human Agent Tags</h6>
-            </div>
-            <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas"
-                aria-label="Close"><i class="fal fa-times"></i></button>
-        </div>
-        <div class="offcanvas-body">
-
-            <form class="custom-searchbar">
-                <input class="form-control me-2 rounded-pill shadow-sm" placeholder="Search" aria-label="Search">
-                <span class="btn searchbar-btn" type="submit">
-                    <i class="fal fa-search silver"></i>
-                </span>
-            </form>
-            <div class="list-group-section quick-response" id="accordionExample">
-                <div class="collapse-toggle-card">
-                    <div class="list-group list-group-flush">
-
-                        <div class="collapse-wrap mx-3" id="qr-ques1" *ngFor="let hat of HumanAgentTags">
-                            <div class="list-group list-group-flush mb-4 ms-4 ps-1"
-                                (click)="sendHumanAgentTag(hat.value)">
-                                <div class="form-check list-group-item theme-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id={{hat.value}}>
-                                    <label class="form-check-label" for={{hat.value}}>{{hat.text}}
-                                    </label>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"

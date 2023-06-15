@@ -100,7 +100,8 @@ export class SlaComponent implements OnInit {
       plateForm: this.platform,
       pageNumber: this.pageNumber,
       pageSize: this.pageSize,
-      isAttachment: false
+      isAttachment: false,
+      queryType: ''
     };
     this.SpinnerService.show();
     this.commondata

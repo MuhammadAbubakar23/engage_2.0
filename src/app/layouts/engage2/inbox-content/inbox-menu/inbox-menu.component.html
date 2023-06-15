@@ -29,7 +29,7 @@
             </div>
             <span class="badge twltte-bg rounded-pill">{{SlaUnResponded}}</span>
           </a>
-          <a (click)="updatevalue('Email')" [routerLink]="['/all-inboxes']" [queryParams]="{List : 'Emails'}"
+          <a (click)="updatevalue('Email')" [routerLink]="['/all-inboxes']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="email">
             <div class="iconButton medium berryBg">
               <i class="fal fa-envelope"></i>
@@ -41,7 +41,8 @@
             <!-- <span class="badge twltte-bg rounded-pill">{{EmailUnResponded + OfficeEmailUnResponded}}</span> -->
             <span class="badge twltte-bg rounded-pill">{{EmailUnResponded}}</span>
           </a>
-          <a (click)="updatevalue('OfficeEmail')" [routerLink]="['/all-inboxes']" [queryParams]="{List : 'OfficeEmails'}"
+          <!-- [queryParams]="{List : 'OfficeEmails'}" -->
+          <a (click)="updatevalue('OfficeEmail')" [routerLink]="['/all-inboxes']" 
             class="all-inboxes-menu list-group-item list-group-item-action" value="email">
             <div class="iconButton medium berryBg">
               <i class="fal fa-envelope"></i>

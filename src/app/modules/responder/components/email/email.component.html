@@ -194,13 +194,7 @@
                                                     <strong>Cc:</strong>
                                                     {{email.multipleCc}}
                                                 </div>
-                                                <!-- <div class="msg-ref-info">
-                                                    <strong>Bcc:</strong>
-                                                    <span *ngFor="let bcc of email.bcc">
-                                                        {{bcc.emailAddress}}
-                                                    </span>
-                                                </div> -->
-                                                <div class="msg-ref-info">
+                                                <div class="msg-ref-info" *ngIf="email.message">
                                                     <strong>Subject:</strong>
                                                     {{email.message}}
                                                 </div>
@@ -221,16 +215,17 @@
                                                         <i class="fal fa-ellipsis-h"></i>
                                                     </button>
                                                     <div class="btn-groups">
-                                                        <button (click)="sendEmailInformation(email.id)" type="button"
+                                                        <button (click)="sendReplyInformation(email.id)" type="button"
                                                             class="btn btn-outline-secondary me-2 emailModalBtn"
                                                             data-bs-toggle="modal" data-bs-target="#emailModalBtn"><i
                                                                 class="fal fa-reply"></i>
                                                             Reply</button>
-                                                        <!-- <button type="button"
-                                                            class="btn btn-outline-secondary me-2 emailModalBtn"><i
+                                                         <button type="button" (click)="sendReplyAllInformation(email.id)"
+                                                            class="btn btn-outline-secondary me-2 emailModalBtn"
+                                                            data-bs-toggle="modal" data-bs-target="#emailModalBtn"><i
                                                                 class="fal fa-reply-all"></i>
                                                             Reply all </button>
-                                                        <button type="button" class="btn btn-outline-secondary me-2"><i
+                                                    <!--    <button type="button" class="btn btn-outline-secondary me-2"><i
                                                                 class="fal fa-arrow-alt-to-right"></i>
                                                             Forword</button> -->
     
@@ -451,22 +446,22 @@
                                                         <strong>Sent:</strong>
                                                         {{reply.createdDate | date:'EEEE d, y'}}
                                                     </div>
-                                                    <div class="msg-ref-info">
+                                                    <div class="msg-ref-info" *ngIf="reply.multipleToInReply">
                                                         <strong>To:</strong>
-                                                        {{email.userName}}
+                                                        {{reply.multipleToInReply}}
+                                                    </div>
+                                                    <div class="msg-ref-info" *ngIf="reply.multipleCcInReply">
+                                                    <strong>Cc:</strong>
+                                                    {{reply.multipleCcInReply}}
+                                                </div>
+                                                    <div class="msg-ref-info" *ngIf="reply.multipleBccInReply">
+                                                        <strong>Bcc:</strong>
+                                                        {{reply.multipleBccInReply}}
                                                     </div>
                                                     <div class="msg-ref-info">
-                                            <strong>Cc:</strong>
-                                            {{reply.cc}}
-                                        </div>
-                                        <div class="msg-ref-info">
-                                            <strong>Bcc:</strong>
-                                            {{reply.bcc}}
-                                        </div>
-                                        <div class="msg-ref-info">
-                                            <strong>Subject:</strong>
-                                            {{reply.body}}
-                                        </div>
+                                                        <strong>Subject:</strong>
+                                                        {{reply.subject}}
+                                                    </div>
                                                     <div class="ref-msg" [innerHTML]="reply.message">
                                                         {{reply.message}}
                                                     </div>

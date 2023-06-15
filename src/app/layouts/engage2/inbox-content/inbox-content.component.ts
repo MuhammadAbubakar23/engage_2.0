@@ -97,7 +97,7 @@ export class InboxContentComponent implements OnInit {
     switch (name) {
       case 'all-inboxes':
         submenu =  this.resolver.resolveComponentFactory(InboxMenuComponent);
-        this.submenu.createComponent(submenu);
+        this.submenu?.createComponent(submenu);
 
         // body = this.resolver.resolveComponentFactory(InboxesComponent);
         // this.body.createComponent(body);
@@ -108,7 +108,7 @@ export class InboxContentComponent implements OnInit {
 
         case 'responder':
           submenu =  this.resolver.resolveComponentFactory(ResponderMenuComponent);
-          this.submenu.createComponent(submenu);
+          this.submenu?.createComponent(submenu);
   
           // body = this.resolver.resolveComponentFactory(InboxResponderComponent);
           // this.body.createComponent(body);
@@ -119,7 +119,7 @@ export class InboxContentComponent implements OnInit {
     
       default:
         submenu =  this.resolver.resolveComponentFactory(InboxMenuComponent);
-        this.submenu.createComponent(submenu);
+        this.submenu?.createComponent(submenu);
 
         body = this.resolver.resolveComponentFactory(InboxesComponent);
         this.body.createComponent(body)

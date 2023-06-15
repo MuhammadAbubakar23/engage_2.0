@@ -1,0 +1,185 @@
+<div class="w-auto chat-message-component w-100 inbox-container">
+    <div class="d-flex">
+        <div class="agent-page-main-content">
+            <div class="tab-pane fade active show position-relative" id="Focused" role="tabpanel"
+                aria-labelledby="focused-tab">
+
+                <div class="tab-content" id="myTabContent">
+                    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                        [fullScreen]="false">
+                        <p style="color: white"> Loading... </p>
+                    </ngx-spinner>
+
+                    <div class="filter-container">
+                        <ul class="list-group list-group-horizontal border-0">
+                            <li class="list-group-item border-0 all-check-boxes">
+                                <input class="form-check-input me-1" type="checkbox" aria-label="..."
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                                    data-bs-original-title="Check All" [checked]="masterSelected" value="m1"
+                                    (change)="checkUncheckAll($event)">
+                                <div class="dropdown">
+
+                                </div>
+                            </li>
+                            <li class="list-group-item border-0" (click)="Reload()" aria-label="..."
+                                data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                                data-bs-original-title="Refresh">
+                                <i class="fal fa-redo-alt"></i>
+                            </li>
+                            <li class="list-group-item border-0 after-select-fun" aria-label="..."
+                                data-bs-toggle="tooltip" data-bs-placemen data-bs-placement="bottom" title=""
+                                data-bs-original-title="Archive"
+                                [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+                                <i class="fal fa-archive"></i>
+                            </li>
+                            <li class="list-group-item border-0 after-select-fun" aria-label="..."
+                                data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                                data-bs-original-title="Report Spam"
+                                [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+                                <i class="fal fa-exclamation-circle"></i>
+                            </li>
+                            <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun"
+                                aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                                data-bs-original-title="Delete"
+                                [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+                                <i class="fal fa-trash"></i>
+                            </li>
+                            <li class="list-group-item border-0 after-select-fun" aria-label="..."
+                                data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                                data-bs-original-title="Mark as Read"
+                                [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+                                <i class="far fa-envelope-open"></i>
+                            </li>
+                            <li class="list-group-item border-0 after-select-fun" aria-label="..."
+                                data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                                data-bs-original-title="Snooze"
+                                [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+                                <i class="fal fa-clock"></i>
+                            </li>
+
+                        </ul>
+                        <div class="selected-row" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+                            Selected <span class="badge twltte-bg rounded-pill">{{Ids.length}}</span>
+                        </div>
+                        <div class="pagination-bar">
+                            <span>{{to}}-{{from}} of {{TotalUnresponded}}</span>
+                            <span style="cursor: pointer;">
+                                <i class="fal fa-chevron-left" (click)="PreviousPage(pageNumber)"></i>
+                            </span>
+                            <span style="cursor: pointer;">
+                                <i class="fal fa-chevron-right" (click)="NextPage(pageNumber)"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="query-container perfect-scrollbar" data-scrollbar="true" tabindex="-1"
+                        style="overflow-y: auto; outline: none;">
+                        <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
+                            <div class="alert alert-secondary text-center email-info-alert" role="alert"
+                                [ngStyle]="{'display': isCheckedAll==true  ? 'block' : 'none'}">
+                                All <strong>{{Ids.length}}</strong> conversations on this page are selected.
+                                <a class="all-conversation" *ngIf="ConversationList != null">Select all
+                                    <strong> {{ConversationList.length}}</strong>
+                                    conversations in Focused</a>
+                                <a class="clear-selection" style="display: none;">Clear selection</a>
+                            </div>
+
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="6">
+                                            <span class="email-date">Today </span>{{ TodayDate | date:'EEEE, MMMM dd, yyyy'}}
+                                        </td>
+                                    </tr>
+                                    <!-- [ngClass]="[alertWarning == true?'alert-warning':'', alertDanger == true?'alert-danger':'']" -->
+                                    <tr *ngFor="let querry of ConversationList | sort:criteria; let i = index"
+                                        [class.selected]="querry.isChecked==true" class="alert">
+                                        <td style="width: 40px;"><input [checked]="querry.isChecked"
+                                                value="{{querry.id}}"
+                                                (change)="isAllSelected($event, i, querry.platform)"
+                                                class="form-check-input me-1" type="checkbox" aria-label="..."></td>
+                                        <td style="width: 40px;">
+                                            <i *ngIf="querry.platform == 'Facebook'" class="fab fa-facebook navytext"
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                                                data-bs-original-title="Facebook" aria-label="Facebook"></i>
+                                            <i *ngIf="querry.platform == 'Instagram'" data-bs-toggle="tooltip"
+                                                data-bs-placement="bottom" title="" data-bs-original-title="Instagram"
+                                                aria-label="Instagram" class="fab fa-instagram"></i>
+                                            <i *ngIf="querry.platform == 'Email' || querry.platform == 'OfficeEmail'"
+                                                class="fal fa-envelope cherry" data-bs-toggle="tooltip"
+                                                data-bs-placement="bottom" title="" data-bs-original-title="Email"
+                                                aria-label="Email"></i>
+                                            <i *ngIf="querry.platform == 'Youtube'" class="fab fa-youtube warning"
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                                                data-bs-original-title="Youtube" aria-label="Youtube"></i>
+                                            <i *ngIf="querry.platform == 'Twitter'" class="fab fa-twitter sky"
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                                                data-bs-original-title="Twitter" aria-label="Twitter"></i>
+                                            <i *ngIf="querry.platform == 'SMS'" class="fal fa-comment-alt-lines berry"
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                data-bs-original-title="SMS" aria-label="SMS"></i>
+                                            <i *ngIf="querry.platform == 'WhatsApp'" class="fab fa-whatsapp emerald"
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                data-bs-original-title="WhatsApp" aria-label="Whatsapp"></i>
+                                            <i *ngIf="querry.platform == 'Webchat'" class="fal fa-messages webchat"
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                data-bs-original-title="Webchat" aria-label="Webchat"></i>
+                                            <i *ngIf="querry.platform == 'LinkedIn'"
+                                                class="fa-brands fa-linkedin-in linkedinTxt" data-bs-toggle="tooltip"
+                                                data-bs-placement="bottom" data-bs-original-title="LinkedIn"
+                                                aria-label="LinkedIn"></i>
+                                        </td>
+                                        <td style="width: 300px;">
+                                            <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip"
+                                                data-bs-placement="bottom">
+                                                <a
+                                                    (click)="updatevalue(querry.user, querry.postType, querry.platform, querry.profileId)">
+                                                    <span>{{querry.userName.split('<')[0] || querry.user}} </span>
+                                                            <span class="badge bg-danger rounded-pill"
+                                                                *ngIf="querry.unrespondedCount > 0">{{querry.unrespondedCount}}</span></a>
+                                            </span>
+
+                                        </td>
+                                        <td>
+                                            <div class="maintext"
+                                                (click)="updatevalue(querry.user, querry.postType, querry.platform, querry.profileId)">
+                                                {{querry.message < 110 ? querry.message: (querry.message | slice:0:110)
+                                                    +'...'}} </div>
+                                        </td>
+                                        <td class="px-1">
+                                            <small>{{querry.createdDate | date:'h:mm:ss a'}}</small>
+                                        </td>
+
+
+                                        <td class="more-action-container">
+                                            <span class="more-action-btns">
+                                                <a href="#" class="px-2" data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom" tabindex="1" aria-label="Snooze">
+                                                    <i class="fal fa-clock coal"></i>
+                                                </a>
+                                                <a href="#" class="px-2" data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom" tabindex="2" aria-label="archive">
+                                                    <i class="far fa-archive coal"></i>
+                                                </a>
+                                                <a href="#" class="px-2" data-bs-toggle="tooltip"
+                                                    data-bs-placement="bottom" tabindex="3" id="deleteToast"
+                                                    aria-label="Delete">
+                                                    <i class="fal fa-trash coal"></i>
+                                                </a>
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="rightbar-expanded-wrapper">
+
+            <template #rightcontainer></template>
+        </div> -->
+    </div>
+    <!-- <responder-right-sidebar-menu></responder-right-sidebar-menu> -->
+</div>

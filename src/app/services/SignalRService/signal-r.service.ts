@@ -67,8 +67,10 @@ export class SignalRService {
   }
 
   reConnect(){
+    
     var conId = localStorage.getItem('signalRConnectionId')
     if(conId){
+      
      let team = this.storage.retrive("nocompass","O").local;
     const options: IHttpConnectionOptions = {
       accessTokenFactory: () => {
@@ -94,7 +96,6 @@ export class SignalRService {
   public updateListAndDetailDataListener = () => {
     
     this.hubconnection.on('SendData', (data) => {
-      
       if(data.conversationQueues !=null){
         this.updateListService.sendList(data.conversationQueues)
       }
@@ -108,79 +109,62 @@ export class SignalRService {
   };
 
   public addTagDataListner = () => {
-    this.hubconnection.on('ApplyTags', (addTags) => {
+    this.hubconnection?.on('ApplyTags', (addTags) => {
       this.addTagService.sendTags(addTags);
     });
   };
 
   public removeTagDataListener = () => {
-    this.hubconnection.on('RemoveTags', (removeTags) => {
+    this.hubconnection?.on('RemoveTags', (removeTags) => {
       this.removeTagService.sendTags(removeTags);
     });
   };
 
   public unRespondedCountDataListener = () => {
-    
-    this.hubconnection.on('UnrespondedCount', (UnrespondedCount) => {
-      
-      // console.log('SignalR UnrespondedCount ==> ', UnrespondedCount);
+    this.hubconnection?.on('UnrespondedCount', (UnrespondedCount) => {
       this.unrespondedCountService.sendUnRespondedCount(UnrespondedCount);
     });
   };
 
   public replyDataListener = () => {
-    
-    this.hubconnection.on('QueryReply', (reply) => {
-      // console.log('SignalR QueryReply ==> ', reply);
+    this.hubconnection?.on('QueryReply', (reply) => {
       this.replyService.sendReply(reply);
     });
   };
 
   public queryStatusDataListener = () => {
-    
-      this.hubconnection.on('QueryStatusProcess', (queryStatus) => {
-      // console.log('SignalR queryStatus ==> ', queryStatus);
+      this.hubconnection?.on('QueryStatusProcess', (queryStatus) => {
       this.queryStatusService.sendQueryStatus(queryStatus);
     });
   };
   
   public bulkQueryStatusDataListener = () => {
-    
-    this.hubconnection.on('ListQueryStatusProcess', (queryStatus) => {
-    // console.log('SignalR ListQueryStatusProcess ==> ', queryStatus);
+    this.hubconnection?.on('ListQueryStatusProcess', (queryStatus) => {
     this.queryStatusService.bulkSendQueryStatus(queryStatus);
   });
 };
 
 public assignQueryResponseListner = () => {
-  
-  this.hubconnection.on('AssignQueryResponse', (removeAssignedQuerry) => {
-    
+  this.hubconnection?.on('AssignQueryResponse', (removeAssignedQuerry) => {
     this.removeAssignedQueryService.sendAssignedQuerry(removeAssignedQuerry);
   });
 };
 
 public applySentimentListner = () => {
-  this.hubconnection.on('ApplySentimentTags', (appliedSentiment) => {
+  this.hubconnection?.on('ApplySentimentTags', (appliedSentiment) => {
     this.applySentimentService.sendSentiment(appliedSentiment);
   });
 };
 
 public checkConnectionStatusListener = () => {
-  
-  this.hubconnection.on('GetMessage', (status) => {
-    
+  this.hubconnection?.on('GetMessage', (status) => {
     this.hubconnection.invoke('SetConnection').then((data) => {
-      
-      // console.log('setconnection data', data)
     });
-  // console.log('SignalR Status ==> ', status);
- // this.queryStatusService.bulkSendQueryStatus(status);
 });
 };
 
   getConnectionId = () => {
-    this.hubconnection.invoke('getconnectionid').then((data) => {
+    this.hubconnection.invoke('GetConnectionId').then((data) => {
       this.connectionId = data;
       localStorage.setItem('signalRConnectionId', this.connectionId)
     });

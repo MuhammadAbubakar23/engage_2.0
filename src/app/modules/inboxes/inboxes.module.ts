@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { RightSidebarComponentsModule } from './right-sidebar-components/right-sidebar-components.module';
 import { InboxResponderComponent } from './components/inbox-responder/inbox-responder.component';
 import { ResponderGuardGuard } from 'src/app/shared/Guards/responder-guard.guard';
+import { SentItemsComponent } from './components/sent-items/sent-items.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { ResponderGuardGuard } from 'src/app/shared/Guards/responder-guard.guard
     ConversationComponent,
     SlaComponent,
     InboxResponderComponent,
+    SentItemsComponent,
   ],
   imports: [
     CommonModule,

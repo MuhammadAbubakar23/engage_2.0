@@ -45,7 +45,7 @@ export class RightHeaderComponentsComponent implements OnInit {
     this.timer = setInterval(() => {
       // console.log("signalR state",this.signalR.hubconnection.state)
       // console.log("signalR conId",this.signalR.hubconnection.connectionId)
-      if (this.signalR.hubconnection.state == 'Disconnected') {
+      if (this.signalR?.hubconnection?.state == 'Disconnected') {
         // this.signalR.hubconnection
         //   .start()
         //   .then(() => console.log('Connection started'))
@@ -73,7 +73,7 @@ export class RightHeaderComponentsComponent implements OnInit {
       localStorage.clear();
       this.router.navigateByUrl('/login');
       clearInterval(this.timer);
-      if (this.signalR.hubconnection.state == 'Connected') {
+      if (this.signalR.hubconnection?.state == 'Connected') {
         this.signalR.hubconnection
           .stop()
           .then(() => console.log('Connection stoped'))

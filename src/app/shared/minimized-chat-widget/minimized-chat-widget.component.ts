@@ -16,6 +16,7 @@ import { CommonDataService } from '../services/common/common-data.service';
 import { SharedService } from 'src/app/services/SharedService/shared.service'
 import { LikeByAdminDto } from '../Models/LikeByAdminDto';
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
+import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
 
 @Component({
   selector: 'app-minimized-chat-widget',
@@ -56,6 +57,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
   insertTagsForFeedDto = new InsertTagsForFeedDto();
   commentStatusDto = new CommentStatusDto();
 
+  queryType = this.getQueryTypeService.getQueryType();
 
   show = false;
   isOpen = false;
@@ -76,7 +78,8 @@ export class MinimizedChatWidgetComponent implements OnInit {
     private headerService : HeaderService,
     private leftsidebar : LeftsidebarExpandedService,
     private sharedService  : SharedService,
-    private createTicketService: CreateTicketService
+    private createTicketService: CreateTicketService,
+    private getQueryTypeService : GetQueryTypeService
     
   ) {}
 
@@ -106,7 +109,8 @@ export class MinimizedChatWidgetComponent implements OnInit {
       plateForm: this.maximizedChatService.platform,
       pageNumber: 0,
       pageSize: 0,
-      isAttachment: false
+      isAttachment: false,
+      queryType: this.queryType
     };
     this.SpinnerService.show();
     this.commondata
@@ -133,7 +137,8 @@ export class MinimizedChatWidgetComponent implements OnInit {
         plateForm: this.maximizedChatService.platform,
         pageNumber: 0,
         pageSize: 0,
-        isAttachment: false
+        isAttachment: false,
+        queryType: this.queryType
       };
       this.SpinnerService.show();
       this.commondata
@@ -543,5 +548,11 @@ export class MinimizedChatWidgetComponent implements OnInit {
   closeTagListDropdown() {
     this.tagsListDropdown = false
     this.searchText = ''
+  }
+
+  closeQuickResponseSidebar(){
+    // this.quickReplySearchText = '';
+    // this.radioInput.nativeElement.checked = false;
+    
   }
 }

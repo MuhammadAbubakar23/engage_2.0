@@ -55,6 +55,7 @@ export class CommonDataService {
   getAgentReport = environment.links.common.getAgentReport;
   getAllocatedProfiles = environment.links.common.getAllocatedProfiles;
   createMessageTemplate = environment.links.console.CreateMessageTemplate;
+  repliesList = environment.links.common.repliesList;
 
   constructor(private http : HttpClient) { }
 
@@ -129,6 +130,11 @@ export class CommonDataService {
 
   GetConversationList(data:any){
     return this.http.post(this.CommonBaseUrl+this.mainChannelList,data)
+  }
+
+  GetRepliesList(data:any){
+    debugger
+    return this.http.post(this.CommonBaseUrl+this.repliesList,data)
   }
 
   GetChannelConversationDetail(data:any){

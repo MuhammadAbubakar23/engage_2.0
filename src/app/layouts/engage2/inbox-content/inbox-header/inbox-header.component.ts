@@ -32,7 +32,8 @@ export class InboxHeaderComponent implements OnInit {
       plateForm : "",
       pageNumber : this.pageNumber,
       pageSize : this.pageSize,
-      isAttachment: false
+      isAttachment: false,
+      queryType: ''
       
     }
     this.commonService.GetConversationList(this.filterDto).subscribe((res:any)=>{

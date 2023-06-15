@@ -14,6 +14,7 @@ import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
 import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
+import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
@@ -50,6 +51,7 @@ export class WhatsappDetailsComponent implements OnInit {
   activeTag = false;
   checkTag = false;
   quickReplySearchText:string='';
+  queryType = this.getQueryTypeService.getQueryType();
 
   insertSentimentForFeedDto = new InsertSentimentForFeedDto();
   filterDto = new FiltersDto();
@@ -100,7 +102,8 @@ export class WhatsappDetailsComponent implements OnInit {
     private createTicketService: CreateTicketService,
     private toggleService : ToggleService,
     private ticketResponseService : TicketResponseService,
-    private applySentimentService: ApplySentimentService
+    private applySentimentService: ApplySentimentService,
+    private getQueryTypeService : GetQueryTypeService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -203,6 +206,8 @@ export class WhatsappDetailsComponent implements OnInit {
           };
         });
         // console.log('hello', this.groupArrays);
+        this.totalUnrespondedCmntCountByCustomer =
+          this.totalUnrespondedCmntCountByCustomer + 1;
       }
     });
     this.changeDetect.detectChanges();
@@ -222,7 +227,8 @@ export class WhatsappDetailsComponent implements OnInit {
         plateForm: 'WhatsApp',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
-        isAttachment: false
+        isAttachment: false,
+        queryType: this.queryType
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -274,7 +280,8 @@ export class WhatsappDetailsComponent implements OnInit {
         plateForm: 'WhatsApp',
         pageNumber: 0,
         pageSize: 0,
-        isAttachment: false
+        isAttachment: false,
+        queryType: this.queryType
       };
       this.SpinnerService.show();
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
@@ -322,7 +329,8 @@ export class WhatsappDetailsComponent implements OnInit {
         plateForm: localStorage.getItem('parent') || '{}',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
-        isAttachment: false
+        isAttachment: false,
+        queryType: this.queryType
       };
       this.SpinnerService.show();
       this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
@@ -634,10 +642,19 @@ export class WhatsappDetailsComponent implements OnInit {
           formData.append('File', this.ImageName[index]);
         }
       }
+      
+    if (!this.WhatsappReplyForm.get('text')?.dirty) {
       if(this.text !== ""){
         this.WhatsappReplyForm.patchValue({
           text: this.text
-        })
+        });
+    }
+    } else {
+      if (this.WhatsappReplyForm.value.text) {
+        this.WhatsappReplyForm.patchValue({
+          to: this.WhatsappReplyForm.value.text
+        });
+      }
     }
       this.WhatsappReplyForm.patchValue({
         commentId: this.WhatsappMsgId,
@@ -886,6 +903,12 @@ detectChanges(): void {
   onScrollComments() {
     this.pageSize = this.pageSize + 10;
     this.getWhatsappData();
+  }
+
+  closeQuickResponseSidebar(){
+    this.quickReplySearchText = '';
+    this.radioInput.nativeElement.checked = false;
+    
   }
 
 }
