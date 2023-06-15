@@ -11,7 +11,7 @@ export class PhoneDialerService {
   private eventObject = new Subject<Object>();
   private wsEventObject = new Subject<Object>();
   private phoneLogs = new Subject<any>();
-
+  private isLoaded:boolean = false;
 
   encodeQuery(data : any){
     let query = ""
@@ -62,5 +62,13 @@ export class PhoneDialerService {
   public getSipPhone(): SipPhone{
     console.log(this.SipPhone);
     return this.SipPhone;
+  }
+
+  public setIsLoaded(value:boolean):void{
+    this.isLoaded = value;
+  }
+
+  public getIsLoaded():boolean{
+    return this.isLoaded;
   }
 }

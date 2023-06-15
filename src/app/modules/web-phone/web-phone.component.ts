@@ -11,7 +11,7 @@ import { Config } from './phone/Config';
 import { PhoneTypes } from './phone/PhoneTypes';
 import { Logger } from './phone/Logger';
 import { AgentFactory } from './phone/AgentFactory';
-import { KeepComponentAlwaysAliveService } from './services/keepComponentAlwaysAliveService/keep-component-always-alive.service';
+import { SipPhone } from './phone/SipPhone';
 @Component({
   selector: 'app-web-phone',
   templateUrl: './web-phone.component.html',
@@ -38,7 +38,9 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
   skill_name = 'ipt-eng';
   skill_id = 1682;
   callMerged = false;
+  showDialerTabs: boolean = true;
   manualDialNum: string = '';
+  isSipRegistered: boolean = false;
   showManualTransferButtons: boolean = false;
   cancelButton: boolean = false;
   inManualCall: boolean = false;
@@ -54,13 +56,20 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
   };
   dialingStatus!: string;
   data = {
-    sip_server: 'lhrccmscloud1.ibex.co',
-    sip_name: '15103',
+    // sip_server: 'webphone.ibexglobal.com',
+    // sip_name: '1100',
+    // sip_password: '1100',
+    // auto_answer: 'Y',
+    // sip_domain: 'webphone.ibexglobal.com',
+    // extension: '1100',
+    // ws_sip_server: 'webphone.ibexglobal.com:8089/ws',
+    sip_server: 'lhracd2.ibexglobal.com',
+    sip_name: '15157',
     sip_password: '1234',
     auto_answer: 'Y',
-    sip_domain: 'lhrccmscloud1.ibex.co',
+    sip_domain: 'lhracd2.ibexglobal.com',
     extension: '15157',
-    ws_sip_server: 'lhrccmscloud1.ibex.co:8089/ws',
+    ws_sip_server: 'lhracd2.ibexglobal.com:8089/ws',
   };
   activeTab = {
     dialerActive: true,
@@ -74,8 +83,8 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
   constructor(
     private dialerService: PhoneDialerService,
     private _shared: SharedService,
-    public componentStateService: KeepComponentAlwaysAliveService
-  ) {}
+    private el: ElementRef
+  ) { }
 
   ngAfterViewInit() {
     console.log(
@@ -85,39 +94,57 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
     );
   }
   ngOnInit(): void {
-    
-    // if (!this.componentStateService.isLoaded()) {
-      this.dialerService.getEvent().subscribe((res: any) => {
-        this.phoneEvents(res);
-        console.log(this);
+    // debugger;
 
-        if (res.event == 'sipRegistered') {
-          // this.dialerService.setSipPhone(this.sipPhone);
-        }
-      });
-      this.dialerService.getWsEvent().subscribe((res) => {
-        console.log(res);
+    // if (!this.dialerService.getIsLoaded()) {
+    this.dialerService.getEvent().subscribe((res: any) => {
+      // debugger;
+      this.phoneEvents(res);
+      console.log(this);
 
-        // alert(res + 'From Construct');
-      });
-      this._shared.getMessage().subscribe((res) => {});
-      this.dialerService.getPhoneLogs().subscribe((res) => {
-        console.log(res);
-        // console.log("sad");
+      if (res.event == 'sipRegistered') {
+        // debugger
+        // this.dialerService.setSipPhone(this.sipPhone);
+      }
+    });
+    this.dialerService.getWsEvent().subscribe((res) => {
+      console.log(res);
 
-        // alert(res + 'From Construct');
-      });
-    
-      this.sipPhone = this.dialerService.getSipPhone();
-      console.log(this.sipPhone);
+      // alert(res + 'From Construct');
+    });
+    this._shared.getMessage().subscribe((res) => { });
+    this.dialerService.getPhoneLogs().subscribe((res) => {
+      console.log(res);
+      // console.log("sad");
+
+      // alert(res + 'From Construct');
+    });
     // }
 
-      if (!this.sipPhone) {
-        this.loadPhone();
-      }
-    
 
-    this.componentStateService.setLoaded(true);
+    this.sipPhone = this.dialerService.getSipPhone();
+
+    console.log(this.sipPhone);
+
+    this.dialerService.setIsLoaded(true);
+    if (!this.sipPhone) {
+      this.loadPhone();
+    }else{
+      this.isSipRegistered = true;
+    }
+  }
+
+  changeStatus(status: string, code: string): void {
+    this.sipPhone.changeStatus(status, code);
+  }
+  sipLogout(): void {
+    this.sipPhone.logout();
+  }
+  sipLogin(): void {
+    this.sipPhone.login();
+  }
+  changeWrapup(): void {
+    this.sipPhone.changeStatus("unwrapup", "*10");
   }
   setActiveDialerTab(option: string): void {
     switch (option) {
@@ -163,12 +190,12 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
     this.dialerService.setSipPhone(this.sipPhone);
     // console.log("LoadPhone ===> " ,this.sipPhone);
     if (this.sipPhone) {
-      this.sipPhone.changeStatus('Manual Dial', '*12');
+      // this.sipPhone.changeStatus('Manual Dial', '*12');
     }
   }
 
   manualDial(to_number: string = ''): void | boolean {
-    
+    // debugger;
     console.log(this.sipPhone);
     this.cancelButton = false;
     this.OBCallConnected = false;
@@ -179,8 +206,8 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
     } else {
       number = to_number;
     }
-    let manual_time_id = 123;
-    let lead_id = 1;
+    let manual_time_id = 123456;
+    let lead_id = 12345;
     let error = '';
     let in_manual = true;
     // if (skill_name == "") {
@@ -215,6 +242,7 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
         this.skill_id
       );
       this.inManualCall = true;
+      this.showDialerTabs = false;
       this.dialingStatus = 'Connecting';
       this.removeNavLinkActive();
       this.dialerTabContent.nativeElement
@@ -239,7 +267,16 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
     if (res.event) {
       switch (res.event) {
         case 'callCompleted':
+          let values = Object.values(res) as [
+            arg1: any,
+            arg2: any,
+            sessionNum: number,
+            callFailed: any
+          ];
           this.OBCallConnected = false;
+          if (res[2] && res[2] == 1 && this.inboundCall) {
+            this.inboundCall = false;
+          }
           if (!this.manualDisconnect) {
             let values = Object.values(res) as [
               arg1: any,
@@ -250,16 +287,28 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
             this.cancelCall.apply(this, values);
           }
           break;
-        case 'OB_callConnected':
-          this.OBCallConnected = true;
+        case 'IB_callConnected':
+          this.inboundCall = true;
           this.dialingStatus = 'Connected';
+          this.OBCallConnected = false;
+          break;
+        case 'OB_callConnected':
+          if (!this.inboundCall) {
+            this.OBCallConnected = true;
+            this.dialingStatus = 'Connected';
+          }
           break;
         case 'att_callConnected':
           this.transferCallConnected();
           break;
         case 'sipRegistered':
           this.sipPhone = this.dialerService.getSipPhone();
-          this.sipPhone?.changeStatus('Manual Dial', '*12');
+          this.isSipRegistered = true;
+        // if(!res[0]){
+        //   this.sipPhone.login();
+        // }
+        // debugger;
+        // this.sipPhone?.changeStatus('Manual Dial', '*12');
       }
     }
   }
@@ -302,8 +351,13 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
   resetTransferredCall() {
     this.box2Show = false;
     this.transferringCall = false;
+    if (this.inboundCall) {
+      this.showDialerTabs = true;
+    }
     this.callTransferred = false;
-    this.OBCallConnected = true;
+    if (!this.inboundCall) {
+      this.OBCallConnected = true;
+    }
     if (this.sipPhone.isHold(1)) {
       this.sipPhone.unHold(1);
       this.isHold = false;
@@ -314,6 +368,7 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
     this.manualDisconnect = false;
     this.OBCallConnected = false;
     this.manualDialNum = '';
+    this.showDialerTabs = true;
     this.showManualTransferButtons = false;
     this.isMute = false;
     this.isHold = false;
@@ -321,6 +376,7 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
     this.callTransferred = false;
     this.box2Show = false;
     this.transferNum = '';
+    this.inboundCall = false;
     document.getElementById('dialer-tab')?.classList.add('active');
   }
 
@@ -374,6 +430,9 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
   }
 
   transferCall(is_not_queue = true): void | boolean {
+    if (this.inboundCall) {
+      this.transferNum = this.manualDialNum
+    }
     if (this.transferType == '' || this.transferNum == '') {
       return false;
     } else {
@@ -384,6 +443,7 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
       );
       this.showSecondCallDialer = false;
       this.transferringCall = true;
+      this.showDialerTabs = false;
       this.dialingStatus = 'Dialing';
       this.showManualTransferButtons = false;
       if (this.inboundCall) {
@@ -437,11 +497,9 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
   }
 
   callFromContacts(number: any) {
-    
     this.manualDial(number);
   }
   closeContactsComponent(value: any) {
-    
     this.contacts = value;
   }
 }

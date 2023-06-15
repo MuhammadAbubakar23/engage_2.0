@@ -19,6 +19,7 @@ export class AgentAsteriskImp extends Agent {
 	}
 
     public changeStatus(statusName: string, statusNumber: string, extraHeader?: Array<any>): void {
+      debugger;
         if (this.currentStatus != statusName && this.changeStatusInProgress == false) {
             this.changeStatusInProgress = true;
             this.tempStatus = statusName;
@@ -162,7 +163,6 @@ export class AgentAsteriskImp extends Agent {
         if (!this.SIPPHONE) {
             throw "Phone is not loaded yet";
         }
-
         this.changeStatus('Initial Login', '*1');
     }
 
