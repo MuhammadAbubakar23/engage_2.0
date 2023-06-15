@@ -5,12 +5,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ReportService {
-  private apiUrl = 'http://127.0.0.1:8000/reports/';
+  private apiUrl = 'https://reportbuilder.360scrm.com/reports/';
   constructor(private http: HttpClient) { }
 
   login() {
     const body = { email: 'admin@gmail.com', password: 'admin' };
-    return this.http.post("http://127.0.0.1:8000/user/" + "api/token", body);
+    return this.http.post("https://reportbuilder.360scrm.com/user/" + "api/token", body);
   }
 
   gethttpOptions() {

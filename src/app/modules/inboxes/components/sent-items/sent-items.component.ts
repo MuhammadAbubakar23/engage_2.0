@@ -81,7 +81,6 @@ export class SentItemsComponent implements OnInit {
     };
     this.SpinnerService.show();
     this.commondata.GetRepliesList(this.getRepliesDto).subscribe((res: any) => {
-      debugger;
       this.SpinnerService.hide();
       this.ConversationList = res;
       this.TotalUnresponded = res.TotalCount;
@@ -116,7 +115,6 @@ export class SentItemsComponent implements OnInit {
   }
 
   updatevalue(id: any, postType: any, platform: any, profileId: any) {
-    debugger;
     this.fetchId.setPlatform(platform);
     this.fetchId.setOption(id);
     this.fetchposttype.sendPostType(postType);

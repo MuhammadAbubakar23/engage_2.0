@@ -130,6 +130,10 @@ visualKeys.forEach((item, index) => {
     this.statsdataKeys=[];
     this.tableData=[];
     this.isGraph=false;
+    this.databases=[];
+    this.tables=[];
+    this.dbName="All DataBases";
+    this.tableName="All Tables";
     localStorage.setItem('connection_name',this.DBC);
     this.reportservice.getConnectiondatabases(this.DBC).subscribe((res)=>{
       alert("Connection Successful")

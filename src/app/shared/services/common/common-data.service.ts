@@ -3,10 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CommonDataService {
- resultData: any;
+  resultData: any;
   CCMSURL = environment.CCMSURL;
   JomoAccessToken = environment.JomoAccessToken;
   CommonBaseUrl = environment.CommonBaseUrl;
@@ -22,7 +22,7 @@ export class CommonDataService {
   assignQuerry = environment.links.common.AssignQuerry;
   agentsTeamList = environment.links.common.AgentsTeamList;
   assignToAnotherAgent = environment.links.common.AssignToAnotherAgent;
-  slaList= environment.links.common.SlaList;
+  slaList = environment.links.common.SlaList;
   slaDetail = environment.links.common.SlaDetail;
   slaDM = environment.links.common.SlaDM;
   mainChannelList = environment.links.common.ChannelList;
@@ -47,8 +47,10 @@ export class CommonDataService {
   reasons = environment.links.CCMS.reasons;
   subReasons = environment.links.CCMS.subReasons;
   createTicket = environment.links.common.createTicket;
-  allChannelsUnrespondedCounts = environment.links.common.allChannelsUnrespondedCounts;
-  getOrderByCustomerEmailAddressOrPhoneNumber = environment.links.common.getOrderByCustomerEmailAddressOrPhoneNumber;
+  allChannelsUnrespondedCounts =
+    environment.links.common.allChannelsUnrespondedCounts;
+  getOrderByCustomerEmailAddressOrPhoneNumber =
+    environment.links.common.getOrderByCustomerEmailAddressOrPhoneNumber;
   saveAsCompleted = environment.links.common.SaveAsCompleted;
   dispositionHistory = environment.links.common.dispositionHistory;
   markAllAsRead = environment.links.common.markAllAsRead;
@@ -57,209 +59,225 @@ export class CommonDataService {
   createMessageTemplate = environment.links.console.CreateMessageTemplate;
   repliesList = environment.links.common.repliesList;
 
-  constructor(private http : HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-
-  GetTagsList(){
-    return this.http.get(this.CommonBaseUrl+this.tagsList)
-  }
-
-  InsertTag(form:any){
-    
-    return this.http.post(this.CommonBaseUrl+this.insertTags, form)
+  GetTagsList() {
+    return this.http.get(this.CommonBaseUrl + this.tagsList);
   }
 
-  RemoveTag(form:any){
-     
-    return this.http.post(this.CommonBaseUrl+this.removeTags, form)
+  InsertTag(form: any) {
+    return this.http.post(this.CommonBaseUrl + this.insertTags, form);
   }
 
-  InsertSentiment(form:any){
-     
-    return this.http.post(this.CommonBaseUrl+this.insertSentiments, form)
+  RemoveTag(form: any) {
+    return this.http.post(this.CommonBaseUrl + this.removeTags, form);
   }
 
-  MarkAsComplete(data:any){
-    
-    return this.http.post(this.CommonBaseUrl+this.markAsComplete,data)
+  InsertSentiment(form: any) {
+    return this.http.post(this.CommonBaseUrl + this.insertSentiments, form);
   }
 
-  QuickReplyList(){
-     
-    return this.http.get(this.CommonBaseUrl+this.quickReplyList)
+  MarkAsComplete(data: any) {
+    return this.http.post(this.CommonBaseUrl + this.markAsComplete, data);
   }
 
-  CommentRespond(form:any){
-    return this.http.post(this.CommonBaseUrl+this.commentRespond, form)
+  QuickReplyList() {
+    return this.http.get(this.CommonBaseUrl + this.quickReplyList);
   }
 
-  QueryCompleted(form:any){
-    return this.http.post(this.CommonBaseUrl+this.queryCompleted, form)
+  CommentRespond(form: any) {
+    return this.http.post(this.CommonBaseUrl + this.commentRespond, form);
   }
 
-  LikedByAdmin(form:any){
-    
-   // const url = (this.CommonBaseUrl+this.likedByAdmin+form)
-    return this.http.post(this.CommonBaseUrl+this.likedByAdmin,form)
-  }
-  
-  AssignQuerry(data:any){
-    
-    return this.http.post(this.CommonBaseUrl+this.assignQuerry,data)
+  QueryCompleted(form: any) {
+    return this.http.post(this.CommonBaseUrl + this.queryCompleted, form);
   }
 
-  GetAgentsTeamList(){
-    return this.http.get(this.CommonBaseUrl+this.agentsTeamList)
+  LikedByAdmin(form: any) {
+    return this.http.post(this.CommonBaseUrl + this.likedByAdmin, form);
   }
 
-  AssignToAnotherAgent(data:any){
-    return this.http.post(this.CommonBaseUrl+this.assignToAnotherAgent,data)
+  AssignQuerry(data: any) {
+    return this.http.post(this.CommonBaseUrl + this.assignQuerry, data);
   }
 
-  GetSlaList(data:any){
-    return this.http.post(this.CommonBaseUrl+this.slaList,data)
-  }
-  GetSlaDetail(data:any){
-    
-    return this.http.post(this.CommonBaseUrl+this.slaDetail,data)
-  }
-  GetSlaDM(data:any){
-    
-    return this.http.post(this.CommonBaseUrl+this.slaDM,data)
+  GetAgentsTeamList() {
+    return this.http.get(this.CommonBaseUrl + this.agentsTeamList);
   }
 
-  GetConversationList(data:any){
-    return this.http.post(this.CommonBaseUrl+this.mainChannelList,data)
+  AssignToAnotherAgent(data: any) {
+    return this.http.post(this.CommonBaseUrl + this.assignToAnotherAgent, data);
   }
 
-  GetRepliesList(data:any){
-    debugger
-    return this.http.post(this.CommonBaseUrl+this.repliesList,data)
+  GetSlaList(data: any) {
+    return this.http.post(this.CommonBaseUrl + this.slaList, data);
+  }
+  GetSlaDetail(data: any) {
+    return this.http.post(this.CommonBaseUrl + this.slaDetail, data);
+  }
+  GetSlaDM(data: any) {
+    return this.http.post(this.CommonBaseUrl + this.slaDM, data);
   }
 
-  GetChannelConversationDetail(data:any){
-    
-    return this.http.post(this.CommonBaseUrl + this.conversationDetail, data)
+  GetConversationList(data: any) {
+    return this.http.post(this.CommonBaseUrl + this.mainChannelList, data);
   }
 
-  GetChannelMessageDetail(data:any){
-    return this.http.post(this.CommonBaseUrl+this.messageDetail,data)
-  }
-  ReplyComment(formData:any){
-    
-    return this.http.post(this.CommonBaseUrl+this.replyComment,formData)
-  }
-  
-  GetHumanAgentTag(){
-    return this.http.get(this.CommonBaseUrl+this.humanAgentTags)
-  }
-  GetAgentById(agentId:any){
-    const url = (this.CommonBaseUrl+this.agentDetail+"?UserId="+agentId)
-    return this.http.get(url)
-  }
-  UpdateBreak(status:any){
-    
-    const url = (this.CommonBaseUrl+this.updateBreak+"?Status="+status)
-    return this.http.get(url)
-  }
-  GetFbPostStats(pageId:any, postId:any){
-    return this.http.post(this.CommonBaseUrl+this.fbPostStats+"?PageId="+pageId+"&postId="+postId, null)
+  GetRepliesList(data: any) {
+    return this.http.post(this.CommonBaseUrl + this.repliesList, data);
   }
 
-  GetFbCommentStats(pageId:any, commentId:any){
-    return this.http.post(this.CommonBaseUrl+this.fbCommentStats+"?PageId="+pageId+"&CommentId="+commentId, null)
+  GetChannelConversationDetail(data: any) {
+    return this.http.post(this.CommonBaseUrl + this.conversationDetail, data);
   }
-  GetInstaPostStats(pageId:any, postId:any){
-    
-    const url = (this.CommonBaseUrl+this.instaStats+"?PageId="+pageId+"&postId="+postId)
-    return this.http.get(url)
+
+  GetChannelMessageDetail(data: any) {
+    return this.http.post(this.CommonBaseUrl + this.messageDetail, data);
   }
-  GetYoutubePostStats(postId:any){
-    
-    const url = (this.CommonBaseUrl+this.youtubePostStats+"?PostId="+postId)
-    return this.http.get(url)
+  ReplyComment(formData: any) {
+    return this.http.post(this.CommonBaseUrl + this.replyComment, formData);
   }
-  GetTwitterTweetStats(profileId:any, tweetId:any){
-    
-    return this.http.get(this.CommonBaseUrl+this.twitterTweetStats+"?ProfileExternalId="+profileId+"&TweetId="+tweetId)
+
+  GetHumanAgentTag() {
+    return this.http.get(this.CommonBaseUrl + this.humanAgentTags);
   }
-  GetLinkedInPostStats(postId:any){
-    
-    return this.http.get(this.CommonBaseUrl+this.linkedInPostStats+"?PostId="+postId)
+  GetAgentById(agentId: any) {
+    const url = this.CommonBaseUrl + this.agentDetail + '?UserId=' + agentId;
+    return this.http.get(url);
   }
-  GetMenu(type:any, body:any){
-    
-    return this.http.post(this.IdentityBaseUrl+this.menu+type,body)
+  UpdateBreak(status: any) {
+    const url = this.CommonBaseUrl + this.updateBreak + '?Status=' + status;
+    return this.http.get(url);
   }
-  GetProfileDetails(id:any){
-    
-    return this.http.get(this.CommonBaseUrl+this.profileDetails+'?CustomerId='+id)
+  GetFbPostStats(pageId: any, postId: any) {
+    return this.http.post(
+      this.CommonBaseUrl +
+        this.fbPostStats +
+        '?PageId=' +
+        pageId +
+        '&postId=' +
+        postId,
+      null
+    );
   }
-  UpdateProfileDetails(form:any){
-    
-    return this.http.post(this.CommonBaseUrl+this.updateProfile,form)
+
+  GetFbCommentStats(pageId: any, commentId: any) {
+    return this.http.post(
+      this.CommonBaseUrl +
+        this.fbCommentStats +
+        '?PageId=' +
+        pageId +
+        '&CommentId=' +
+        commentId,
+      null
+    );
   }
-// 1
+  GetInstaPostStats(pageId: any, postId: any) {
+    const url =
+      this.CommonBaseUrl +
+      this.instaStats +
+      '?PageId=' +
+      pageId +
+      '&postId=' +
+      postId;
+    return this.http.get(url);
+  }
+  GetYoutubePostStats(postId: any) {
+    const url =
+      this.CommonBaseUrl + this.youtubePostStats + '?PostId=' + postId;
+    return this.http.get(url);
+  }
+  GetTwitterTweetStats(profileId: any, tweetId: any) {
+    return this.http.get(
+      this.CommonBaseUrl +
+        this.twitterTweetStats +
+        '?ProfileExternalId=' +
+        profileId +
+        '&TweetId=' +
+        tweetId
+    );
+  }
+  GetLinkedInPostStats(postId: any) {
+    return this.http.get(
+      this.CommonBaseUrl + this.linkedInPostStats + '?PostId=' + postId
+    );
+  }
+  GetMenu(type: any, body: any) {
+    return this.http.post(this.IdentityBaseUrl + this.menu + type, body);
+  }
+  GetProfileDetails(id: any) {
+    return this.http.get(
+      this.CommonBaseUrl + this.profileDetails + '?CustomerId=' + id
+    );
+  }
+  UpdateProfileDetails(form: any) {
+    return this.http.post(this.CommonBaseUrl + this.updateProfile, form);
+  }
+  // 1
   GetReasonTypes() {
     return this.http.get(this.CommonBaseUrl + this.reason_types);
   }
   GetMainReasons(type: string) {
-    
-    const url = (this.CommonBaseUrl+this.reasons+type)
-    return this.http.get(this.CommonBaseUrl+this.reasons+type)
+    const url = this.CommonBaseUrl + this.reasons + type;
+    return this.http.get(this.CommonBaseUrl + this.reasons + type);
   }
- GetSubReasons(reasonId: number){
-  return this.http.get(this.CommonBaseUrl+this.subReasons+reasonId)
- }
+  GetSubReasons(reasonId: number) {
+    return this.http.get(this.CommonBaseUrl + this.subReasons + reasonId);
+  }
 
- GetTicketStatuses(){
-  return this.http.get(this.CommonBaseUrl+this.getTicketStatuses)
- }
+  GetTicketStatuses() {
+    return this.http.get(this.CommonBaseUrl + this.getTicketStatuses);
+  }
 
- GetOrderByCustomerEmailAddressOrPhoneNumber(form:any){
-  
-  return this.http.post(this.CommonBaseUrl+ this.getOrderByCustomerEmailAddressOrPhoneNumber, form)
- }
+  GetOrderByCustomerEmailAddressOrPhoneNumber(form: any) {
+    return this.http.post(
+      this.CommonBaseUrl + this.getOrderByCustomerEmailAddressOrPhoneNumber,
+      form
+    );
+  }
 
- CreateTicket(form:any){
-  
-  return this.http.post(this.CommonBaseUrl + this.createTicket, form)
- }
+  CreateTicket(form: any) {
+    return this.http.post(this.CommonBaseUrl + this.createTicket, form);
+  }
 
- GetAllChannelsUnrespondedCount() {
-  return this.http.get(this.CommonBaseUrl+this.allChannelsUnrespondedCounts)
- }
+  GetAllChannelsUnrespondedCount() {
+    return this.http.get(
+      this.CommonBaseUrl + this.allChannelsUnrespondedCounts
+    );
+  }
 
- SubmitDispositionForm(form:any){
-  return this.http.post(this.CommonBaseUrl+this.saveAsCompleted,form)
- }
+  SubmitDispositionForm(form: any) {
+    return this.http.post(this.CommonBaseUrl + this.saveAsCompleted, form);
+  }
 
- GetDispositionHistory(body:any){
-  
-  return this.http.post(this.CommonBaseUrl + this.dispositionHistory, body)
- }
- MarkAllAsRead(profileId:any){
-  return this.http.get(this.CommonBaseUrl+this.markAllAsRead+'?CustomerProfileId='+profileId)
- }
+  GetDispositionHistory(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.dispositionHistory, body);
+  }
+  MarkAllAsRead(profileId: any) {
+    return this.http.get(
+      this.CommonBaseUrl +
+        this.markAllAsRead +
+        '?CustomerProfileId=' +
+        profileId
+    );
+  }
 
- GetAgentReport(body:any){
-  
-  return this.http.post(this.CommonBaseUrl+this.getAgentReport,body, { responseType: 'text' });
- }
+  GetAgentReport(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.getAgentReport, body, { responseType: 'text'});
+  }
 
- GetAllocatedProfiles(){
-  return this.http.get(this.CommonBaseUrl+this.getAllocatedProfiles);
- }
+  GetAllocatedProfiles() {
+    return this.http.get(this.CommonBaseUrl + this.getAllocatedProfiles);
+  }
 
- CreateMessageTemplate(body:any){
-  
-  return this.http.post(this.CommonBaseUrl+this.createMessageTemplate,body);
- }
+  CreateMessageTemplate(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.createMessageTemplate, body);
+  }
 }
 
 var headers_object = new HttpHeaders({
-  'Content-Type' : 'multipart/form-data'
+  'Content-Type': 'multipart/form-data',
 });
 const httpOptions = {
-  headers: headers_object
+  headers: headers_object,
 };

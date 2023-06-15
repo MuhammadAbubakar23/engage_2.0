@@ -34,7 +34,6 @@ export class TeamMenuComponent implements OnInit {
     this.MenuStore
       .select(getEmargingEqual('team_main_left_menu'))
       .subscribe((item:any) => {
-        debugger
         this.menus$ = [...item];
       });
     

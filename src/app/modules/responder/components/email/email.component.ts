@@ -308,7 +308,6 @@ export class EmailComponent implements OnInit {
   multipleBccInReply: any[] = [];
 
   getEmails() {
-    debugger
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {

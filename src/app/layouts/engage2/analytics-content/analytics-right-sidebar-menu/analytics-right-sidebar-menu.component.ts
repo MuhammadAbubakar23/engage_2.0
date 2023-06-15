@@ -32,7 +32,6 @@ export class AnalyticsRightSidebarMenuComponent implements OnInit {
   isOpen = false;
 
   toggle(child:string) {
-    debugger
     if(localStorage.getItem('child') == child){
       this.toggleService.addTogglePanel('');
     } else{
