@@ -700,6 +700,7 @@ export class FacebookComponent implements OnInit {
 
   getFacebookMessages() {
     if (this.id != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -720,6 +721,16 @@ export class FacebookComponent implements OnInit {
           this.FacebookMessages = res.List?.dm;
           this.pageName = this.FacebookMessages[0]?.toName;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+
+          if(this.FacebookData){
+            this.fbCmntReply = true;
+            this.fbMsgReply = false;
+          } else {
+            this.fbCmntReply = false;
+            this.fbMsgReply = true;
+          }
+
+          
 
           this.messagesArray = [];
           this.groupedMessages = [];
@@ -750,6 +761,7 @@ export class FacebookComponent implements OnInit {
           });
         });
     } else if (this.slaId != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -770,6 +782,14 @@ export class FacebookComponent implements OnInit {
         this.totalMessages = res.TotalCount;
 
         this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+
+        if(this.FacebookData){
+          this.fbCmntReply = true;
+          this.fbMsgReply = false;
+        } else {
+          this.fbCmntReply = false;
+          this.fbMsgReply = true;
+        }
 
         this.messagesArray = [];
         this.groupedMessages = [];
@@ -822,6 +842,14 @@ export class FacebookComponent implements OnInit {
         this.totalMessages = res.TotalCount;
 
         this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+
+        if(this.FacebookData){
+          this.fbCmntReply = true;
+          this.fbMsgReply = false;
+        } else {
+          this.fbCmntReply = false;
+          this.fbMsgReply = true;
+        }
 
         this.messagesArray = [];
         this.groupedMessages = [];
