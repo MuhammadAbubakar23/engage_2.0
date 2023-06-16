@@ -19,7 +19,6 @@ export class AgentAsteriskImp extends Agent {
 	}
 
     public changeStatus(statusName: string, statusNumber: string, extraHeader?: Array<any>): void {
-      debugger;
         if (this.currentStatus != statusName && this.changeStatusInProgress == false) {
             this.changeStatusInProgress = true;
             this.tempStatus = statusName;

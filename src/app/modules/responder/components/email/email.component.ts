@@ -331,7 +331,7 @@ export class EmailComponent implements OnInit {
           this.spinner1running = false;
           this.Emails = res.List;
           this.fullName = this.Emails[0].user.userName.split('<')[0];
-          this.senderEmailAddress = this.Emails[0].user.userId;
+          this.senderEmailAddress = this.Emails[0].user.userId.split(/[<>]/)[1] || this.Emails[0].user.userId;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
 
           this.commentsArray = [];
@@ -442,7 +442,7 @@ export class EmailComponent implements OnInit {
         this.SpinnerService.hide();
         this.Emails = res.List;
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-        this.senderEmailAddress = this.Emails[0].user.userId;
+        this.senderEmailAddress = this.Emails[0].user.userId.split(/[<>]/)[1] || this.Emails[0].user.userId;
         this.fullName = this.Emails[0].user.userName.split('<')[0];
 
         this.commentsArray = [];
@@ -555,7 +555,7 @@ export class EmailComponent implements OnInit {
           this.SpinnerService.hide();
           this.Emails = res.List;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-          this.senderEmailAddress = this.Emails[0].user.userId;
+          this.senderEmailAddress = this.Emails[0].user.userId.split(/[<>]/)[1] || this.Emails[0].user.userId;
           this.fullName = this.Emails[0].user.userName.split('<')[0];
 
           this.commentsArray = [];
@@ -877,11 +877,17 @@ export class EmailComponent implements OnInit {
   }
 
   sendReplyInformation(id: any) {
+    this.emailFrom = [];
     this.Emails.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
         if (comment.id == id) {
           // populate comment 
 
+          
+          this.emailFrom.unshift({
+            name: this.fullName,
+            emailAddress: this.senderEmailAddress,
+          });
           this.emailId = comment.id;
           this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;

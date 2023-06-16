@@ -37,8 +37,9 @@ import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ConsoleTableComponent } from 'src/app/layouts/engage2/console-table/console-table.component';
 import { QuickResponseComponent } from './components/templates/quick-response/quick-response.component';
-import { CreateQuickResponseTemplateComponent } from './components/templates/quick-response/create-quick-response-template/create-quick-response-template.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { CKEditorModule } from 'ckeditor4-angular';
+import { CreateQuickResponseTemplatesComponent } from './components/templates/quick-response/create-quick-response-templates/create-quick-response-templates.component';
 // import { CreateSkillsComponent } from './components/skills/create-skills/create-skills.component';
 // import { AddSkillMembersComponent } from './components/skills/add-skill-members/add-skill-members.component';
 
@@ -82,9 +83,9 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     CreateSignatureTemplatesComponent,
     ConnectFormComponent,
     QuickResponseComponent,
-    CreateQuickResponseTemplateComponent,
+    CreateQuickResponseTemplatesComponent,
     // CreateSkillsComponent,
-    //AddSkillMembersComponent
+    //AddSkillMembersComponent,
   ],
   imports: [
     CommonModule,
@@ -96,7 +97,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     MatIconModule,
     MatSelectModule,
     LayoutsModule,
-    AngularEditorModule
+    AngularEditorModule,
+    CKEditorModule
    
   ]
 })

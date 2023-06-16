@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommonDataService {
+  // for testing purpose 
+  consoleBaseUrl = environment.consoleBaseUrl;
+
+  
   resultData: any;
   CCMSURL = environment.CCMSURL;
   JomoAccessToken = environment.JomoAccessToken;
@@ -56,8 +61,24 @@ export class CommonDataService {
   markAllAsRead = environment.links.common.markAllAsRead;
   getAgentReport = environment.links.common.getAgentReport;
   getAllocatedProfiles = environment.links.common.getAllocatedProfiles;
-  createMessageTemplate = environment.links.console.CreateMessageTemplate;
+  // createMessageTemplate = environment.links.console.CreateMessageTemplate;
   repliesList = environment.links.common.repliesList;
+
+  // for testing purpose 
+  getAllMessages = environment.links.console.getAllMessages;
+  addTemplate = environment.links.console.addTemplate;
+  updateTemplate = environment.links.console.updateTemplate;
+  deleteMessages = environment.links.console.deleteMessages;
+  getQuickReply = environment.links.console.getQuickReply;
+  addQuickReply = environment.links.console.addQuickReply
+  updateQuickReply = environment.links.console.updateQuickReply
+  deleteQuickReply = environment.links.console.deleteQuickReply
+  getSlaPolicy = environment.links.console.getSlaPolicy
+  addSlaPolicy = environment.links.console.addSlaPolicy
+  updateSlaPolicy = environment.links.console.updateSlaPolicy
+  getPolicyById = environment.links.console.getPolicyById
+  deleteSlaPolicy = environment.links.console.deleteSlaPolicy
+  getOperationalHours = environment.links.console.getOperationalHours
 
   constructor(private http: HttpClient) {}
 
@@ -270,8 +291,63 @@ export class CommonDataService {
     return this.http.get(this.CommonBaseUrl + this.getAllocatedProfiles);
   }
 
-  CreateMessageTemplate(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.createMessageTemplate, body);
+  // CreateMessageTemplate(body: any) {
+  //   return this.http.post(this.CommonBaseUrl + this.createMessageTemplate, body);
+  // }
+
+  // CreateSlaPolicy(body: any) {
+  //   return this.http.post('https://10.111.32.97:45458/api/SLAPolicies/Add', body);
+  // }
+
+  GetAllMessages(templates: any) {
+
+    return this.http.get(this.consoleBaseUrl + this.getAllMessages + '?templateType=' + templates)
+  }
+  Addtemplate(addData: any) {
+    return this.http.post(this.consoleBaseUrl + this.addTemplate, addData)
+  }
+  UpdateTemplate(templateId: string, template: any) {
+    const url = `${this.consoleBaseUrl}${this.updateTemplate}?Id=${templateId}`;
+    return this.http.post(url, template);
+  }
+  DeleteMessage(deleteId: string): Observable<any> {
+    const url = `${this.consoleBaseUrl}${this.deleteMessages}?Id=${deleteId}`;
+    return this.http.get(url);
+  }
+  GetQuickReply() {
+    return this.http.get(this.consoleBaseUrl + this.getQuickReply)
+  }
+  AddQuickReply(add: any) {
+    return this.http.post(this.consoleBaseUrl + this.addQuickReply, add)
+  }
+  UpdateQuickReply(quickId: string, quick: any) {
+    const url = `${this.consoleBaseUrl}${this.updateQuickReply}?Id=${quickId}`;
+    return this.http.post(url, quick);
+  }
+  DeleteQuickReply(deleteId: string): Observable<any> {
+    const url = `${this.consoleBaseUrl}${this.deleteQuickReply}?Id=${deleteId}`;
+    return this.http.get(url);
+  }
+  GetSlaPolicy() {
+    return this.http.get(this.consoleBaseUrl + this.getSlaPolicy);
+  }
+  AddSlaPolicy(addSla: any) {
+    return this.http.post(this.consoleBaseUrl + this.addSlaPolicy, addSla)
+  }
+  UpdateSlaPolicy(slaId: string, sla: any) {
+    const url = `${this.consoleBaseUrl}${this.updateSlaPolicy}?Id=${slaId}`;
+    return this.http.post(url, sla);
+  }
+  GetPolicyById(policyid: string) {
+    const url = `${this.consoleBaseUrl}${this.getPolicyById}?Id=${policyid}`;
+    return this.http.get(url);
+  }
+  DeleteSlaPolicy(deleteSla: string): Observable<any> {
+    const url = `${this.consoleBaseUrl}${this.deleteSlaPolicy}?Id=${deleteSla}`;
+    return this.http.get(url);
+  }
+  GetOperationalHours(){
+    return this.http.get(this.consoleBaseUrl + this.getOperationalHours)
   }
 }
 

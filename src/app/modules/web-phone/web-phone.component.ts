@@ -94,16 +94,12 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
     );
   }
   ngOnInit(): void {
-    // debugger;
-
     // if (!this.dialerService.getIsLoaded()) {
     this.dialerService.getEvent().subscribe((res: any) => {
-      // debugger;
       this.phoneEvents(res);
       console.log(this);
 
       if (res.event == 'sipRegistered') {
-        // debugger
         // this.dialerService.setSipPhone(this.sipPhone);
       }
     });
@@ -195,7 +191,6 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
   }
 
   manualDial(to_number: string = ''): void | boolean {
-    // debugger;
     console.log(this.sipPhone);
     this.cancelButton = false;
     this.OBCallConnected = false;
@@ -307,7 +302,6 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
         // if(!res[0]){
         //   this.sipPhone.login();
         // }
-        // debugger;
         // this.sipPhone?.changeStatus('Manual Dial', '*12');
       }
     }

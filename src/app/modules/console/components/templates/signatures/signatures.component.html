@@ -11,16 +11,19 @@
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle coal" type="button" id="dropdownMenuButton1"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    All
+                                    {{ selectedSortOption }}
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li>
-                                        <a class="dropdown-item" href="#">Ascending</a>
+                                      <a class="dropdown-item" (click)="selectedSortOption = 'All'; sortTemplates()">All</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">Descending</a>
+                                      <a class="dropdown-item" (click)="selectedSortOption = 'Ascending'; sortTemplates()">Ascending</a>
                                     </li>
-                                </ul>
+                                    <li>
+                                      <a class="dropdown-item" (click)="selectedSortOption = 'Descending'; sortTemplates()">Descending</a>
+                                    </li>
+                                  </ul>
                             </div>
                         </div>
                     </div>
@@ -31,7 +34,7 @@
                             </button>
                             <input placeholder="Search" class="me-1">
                         </a>
-                        <a (click)="updatevalue('consoleCreateSignatureTemplatesHeader')" [routerLink]="['/console/signatures-template:create-signature-templates']" class="ms-2">
+                        <a (click)="updatevalue('consoleCreateSignatureTemplatesHeader')" [routerLink]="['/console/templates/createSignatures']" class="ms-2">
                             <button type="button" class="btn btn-success">
                                 <i class="fal fa-plus me-2"></i>
                                 Add Templates
@@ -41,145 +44,56 @@
                 </div>
             </div>
 
-
             <div class="table-section">
-                <table class="table mb-5">
-                    <thead>
-                        <tr>
-                            <th>
-                                3 Templates
-                            </th>
-                            <th></th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>
-
-                                <ul class="list-group list-group-flush">
-                                    <li
-                                        class="list-group-item d-flex justify-content-between align-items-start p-0 pt-2 pb-2">
-                                        <div class="ms-2 me-auto fw-normal coal">
-                                            <div class="fw-bold night">My Jazz Signature
-                                                <span class="badge rounded-pill bg-secondary">Default</span>
-                                            </div>
-                                            user.name, Sales executive, Jazz Pakistan.
-                                        </div>
-                                    </li>
-                                </ul>
-                            </th>
-                            <td>
-                                <div class="icons-list d-flex justify-content-end dropstart">
-                                    <button class="btn iconButton medium iconHover">
-                                        <i class="fal fa-edit"></i>
-                                    </button>
-
-                                    <button class="btn iconButton medium iconHover btn-group" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v dropdown-toggle"></i>
-                                    </button>
-                                    <ul class="dropdown-menu fade">
-                                        <li>
-                                            <a class="dropdown-item" href="#">Edit</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Delete</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Disable</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Clone</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                <ul class="list-group list-group-flush">
-                                    <li
-                                        class="list-group-item d-flex justify-content-between align-items-start p-0 pt-2 pb-2">
-                                        <div class="ms-2 me-auto fw-normal coal">
-                                            <div class="fw-bold night">Internal Team
-                                            </div>
-                                            user.name, Support executive, Jazz Pakistan.
-                                        </div>
-                                    </li>
-                                </ul>
-                            </th>
-                            <td>
-                                <div class="icons-list d-flex justify-content-end dropstart">
-                                    <button class="btn iconButton medium iconHover">
-                                        <i class="fal fa-edit"></i>
-                                    </button>
-
-                                    <button class="btn iconButton medium iconHover btn-group" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v dropdown-toggle"></i>
-                                    </button>
-                                    <ul class="dropdown-menu fade">
-                                        <li>
-                                            <a class="dropdown-item" href="#">Edit</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Delete</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Disable</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Clone</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                <ul class="list-group list-group-flush">
-                                    <li
-                                        class="list-group-item d-flex justify-content-between align-items-start p-0 pt-2 pb-2">
-                                        <div class="ms-2 me-auto fw-normal coal">
-                                            <div class="fw-bold night">Default Signature
-                                            </div>
-                                            user.name, Customer Executive, Jazz Pakistan.
-                                        </div>
-                                    </li>
-                                </ul>
-                            </th>
-                            <td>
-                                <div class="icons-list d-flex justify-content-end dropstart">
-                                    <button class="btn iconButton medium iconHover">
-                                        <i class="fal fa-edit"></i>
-                                    </button>
-
-                                    <button class="btn iconButton medium iconHover btn-group" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v dropdown-toggle"></i>
-                                    </button>
-                                    <ul class="dropdown-menu fade">
-                                        <li>
-                                            <a class="dropdown-item" href="#">Edit</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Delete</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Disable</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Clone</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-
-                    </tbody>
-                </table>
+              <table class="table mb-5 align-middle" *ngIf="signatures && signatures.length > 0">
+                <thead>
+                  <tr>
+                    <th>Templates</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let signature of signatures">
+                    <td>
+                      <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-start" [class.disabled]="signature.disabled">
+                          <div class="ms-2 me-auto fw-normal coal">
+                            <div class="fw-bold night">{{ signature.templateName }}</div>
+                            {{ signature.subject }}
+                          </div>
+                        </li>
+                      </ul>
+                    </td>
+                    <td>
+                      <div class="icons-list d-flex justify-content-end dropstart">
+                        <button class="btn iconButton medium iconHover" (click)="editTemplate(signature)">
+                          <i class="fal fa-edit"></i>
+                        </button>
+                        <button class="btn iconButton medium iconHover btn-group" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <i class="far fa-ellipsis-v dropdown-toggle"></i>
+                        </button>
+                        <ul class="dropdown-menu fade">
+                          <li>
+                            <a class="dropdown-item" (click)="editTemplate(signature)">Edit</a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item" (click)="deleteTemplate(signature)">Delete</a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item" (click)="disableTemplate(signature)">Disable</a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item" (click)="cloneTemplate(signature)">Clone</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div *ngIf="!signatures || signatures.length === 0">No messages found.</div>
             </div>
+            
         </div>
     </div>
     <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">

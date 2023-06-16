@@ -37,6 +37,7 @@
             [attr.ata-bs-target]="(menu.subMenu?.length>=1)?'#sidebar1':''"
             [attr.aria-expanded]="(menu.subMenu?.length>=1)?'false':''"
             [attr.aria-controls]="(menu.subMenu?.length>=1)?'sidebar1':''" -->
+            
             <ng-template [ngIf]="menu.subMenu?.length<1" [ngIfElse]="showWithSubMenu">
                 <li class="list-group-item list-group-item-action" >
                     <a (click)="updatevalue(menu.link)" [routerLink]="['/console/'+menu.link]"

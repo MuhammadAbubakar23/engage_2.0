@@ -68,4 +68,10 @@ export class SentimentService {
     let httpOptions = this.gethttpOptionsforFile();
     return this.http.post(baseUrl + "uploadfile", data, httpOptions)
   }
+
+  trainingApi(data:any){
+    console.log("trainingApi", data);
+    let httpOptions = this.gethttpOptionsforFile();
+    return this.http.post(baseUrl + "trainmodel", data, httpOptions)
+  }
 }

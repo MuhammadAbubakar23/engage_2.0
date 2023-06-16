@@ -15,7 +15,10 @@ export class BotbuilderComponent implements OnInit {
 }
 
 constructor(private botService: BotService){
-
+  this.botService.login().subscribe((token: any) => {
+    console.log(token, token.access);
+    localStorage.setItem("token", token.access);
+  });
 }
 
 

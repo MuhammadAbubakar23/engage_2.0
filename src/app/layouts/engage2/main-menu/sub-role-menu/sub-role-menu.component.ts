@@ -44,6 +44,7 @@ export class SubRoleMenuComponent implements OnInit {
   SuperTeamOptions:any=[];
   SuperTeamShow:boolean = true;
   
+  myUrl:string = "";
   constructor(private store: Store<MenuState>, 
     private treegen: TreeGenService<MenuModel>, 
     private headerService: HeaderService, 
@@ -61,6 +62,7 @@ export class SubRoleMenuComponent implements OnInit {
         if(event.url.toString().toLowerCase().includes("undefined")){
          
         }
+        this.myUrl = event.url.toString().toLowerCase();
         // else{
           _self.SubMenuPages.forEach(function(subMenuPage:any) {
             if(event.url.toString().toLowerCase().includes(subMenuPage.slug)){
@@ -80,19 +82,26 @@ export class SubRoleMenuComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.menus$ = [];
-    let _self = this;
-    console.log(_self.SubMenuPage);
-    
-    _self.store.select(getEmarging(_self.SubMenuPage.slug)).subscribe((item:any) => {
-      console.log(item);
-      
-      if(item.length > 0)
-        _self.menus$ = _self.treegen.buildTree(item, _self.SubMenuPage.parentId);
-      
-        console.log(_self.menus$);
-    });
+   
+    if(this.myUrl.includes("undefined")){
 
+    }else{
+      this.menus$ = [];
+      let _self = this;
+      console.log(_self.SubMenuPage);
+      _self.store.select(getEmarging(_self.SubMenuPage.slug)).subscribe((item:any) => {
+        console.log(item);
+        
+        if(item.length > 0)
+          _self.menus$ = _self.treegen.buildTree(item, _self.SubMenuPage.parentId);
+        
+          console.log(_self.menus$);
+      });
+  
+
+
+    }
+    
     // this.router.events.subscribe((event: Event) => {
     //   if (event instanceof NavigationStart) {
         

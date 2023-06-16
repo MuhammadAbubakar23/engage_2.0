@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true,
+  production: false,
   fetchIntegrate: 'true',
   appKey: 'eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibXVoYW1tYWQucml4dmFuLndhaGVlZEBnbWFpbC5jb20iLCJleHAiOjE2NzYyMzA4MjYsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzY5LyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjQyMDAifQ.NlSFdJSUQfDF0_hbXkfL_smZkfV8b9KFt4ToBFZDzO0',
   googleclientId:'867983649889-mu8n73d0clq5qvan437dmop87a9ofhot.apps.googleusercontent.com',
@@ -33,6 +33,9 @@ export const environment = {
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
+  // for testing purpose 
+  // consoleBaseUrl: 'https://10.111.32.97:45458/api',
+  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
   links: {
     identity:{
@@ -65,7 +68,21 @@ export const environment = {
     },
     console:{
       AddUser:"Users/CreateUser",
-      CreateMessageTemplate:"Template/Add"
+      CreateMessageTemplate:"Template/Add",
+      getAllMessages:'Template/GetAll',
+      addTemplate:'Template/Add',
+      updateTemplate:'Template/Update',
+      deleteMessages: 'Template/Delete',
+      getQuickReply : 'QuickReply/GetAll', 
+      addQuickReply : 'QuickReply/Add',
+      updateQuickReply: 'QuickReply/Update',
+      deleteQuickReply : 'QuickReply/Delete',
+      getSlaPolicy : 'SLAPolicies/GetAll',
+      addSlaPolicy : 'SLAPolicies/Add',
+      updateSlaPolicy : 'SLAPolicies/Update',
+      getPolicyById : 'SLAPolicies/GetById',
+      deleteSlaPolicy : 'SLAPolicies/Delete',
+      getOperationalHours : 'SLAPolicies/GetOperationalHours'
     },
     CCMS:{
       reason_types:'Order/GetReasonTypes',

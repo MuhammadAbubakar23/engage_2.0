@@ -1,6 +1,6 @@
-<div class="container mt-5">
+<div class="mt-5">
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="card">
         <div class="card-body">
 
@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-6 mt-4">
       <form
         [formGroup]="stepThreeForm"
         autocomplete="off"
@@ -86,7 +86,20 @@
         </div>
       </form>
     </div>
+    <div class="col-md-3">
+      <div class="row">
+        <div class="col-sm-8">
+          <select [(ngModel)]="trainType" class="form-control">
+            <option value="Please Select Language Model" disabled selected>Please Select Language Model</option>
+            <option *ngFor="let lang of languages" [value]="lang">{{lang}}</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+         <button class="btn btn-primary" (click)="trainModel()">Train</button>
 
+        </div>
+      </div>
+    </div>
 
   </div>
 </div>

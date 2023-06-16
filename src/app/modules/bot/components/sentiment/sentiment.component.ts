@@ -14,6 +14,8 @@ export class SentimentComponent implements OnInit {
   response="";
   language=""
   inputText=""
+  trainType="Please Select Language Model";
+  languages=["roman","urdu"]
   labels:any=["Positive","Negative","Neutral"];
   public stepThreeForm: FormGroup;
 
@@ -80,5 +82,13 @@ export class SentimentComponent implements OnInit {
     console.log("Sentiment",res);
     alert("Success!")
    })
+  }
+
+  trainModel():void{
+    console.log("Training",this.trainType);
+    this.senService.trainingApi({"text":this.trainType}).subscribe((res)=>{
+      console.log("Sentiment",res);
+      alert("Success!");
+    })
   }
 }
