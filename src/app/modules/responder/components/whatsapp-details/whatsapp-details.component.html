@@ -79,6 +79,25 @@
                                                         <small>{{whatsappMsg.queryStatus}} </small>
                                                         </div>
                                                 </div>
+                                                <div *ngFor="let attachment of whatsappMsg.attachments" style="width: 375px;">
+                                                    <img class="whatsapp-single-img whatsappImgModalBtn" *ngIf="isImage(attachment)" src={{attachment.attachmentUrl}}
+                                                        controls style="width: -webkit-fill-available;">
+                                                    <img *ngIf="attachment.contentType == 'animated_image_share'" src={{attachment.attachmentUrl}}
+                                                        style="width: -webkit-fill-available;">
+                                                    <img *ngIf="attachment.contentType == 'sticker'" src={{attachment.attachmentUrl}}
+                                                        style="width: -webkit-fill-available;">
+                                                
+                                                    <video class="video" *ngIf="isVideo(attachment)" src={{attachment.attachmentUrl}} controls
+                                                        style="width: -webkit-fill-available;"></video>
+                                                
+                                                    <audio class="audio" *ngIf="isAudio(attachment)" src={{attachment.attachmentUrl}} controls
+                                                        style="width: -webkit-fill-available;"></audio>
+                                                
+                                                    <a *ngIf="isOther(attachment)" [href]="attachment.attachmentUrl" target="_blank">
+                                                        <button class="download-button">{{ attachment.name }}</button>
+                                                    </a>
+                                                
+                                                </div>
                                                 <p class="card-text nignt">{{whatsappMsg.message}}</p>
                                                 <div class="tags" *ngFor="let tag of whatsappMsg.tags">
                                                     <span (click)="removeTag(tag.id, whatsappMsg.id)"
@@ -266,8 +285,24 @@
                                                             <p class="card-text ms-3"><small class="silver">{{reply.createdDate |
                                                                     date:'hh:mm:ss a'}}</small></p>
                                                         </div>
-                                                        <div class="whatsapp-single-img whatsappImgModalBtn" type="button">
-                                                            <img src={{reply.attachmentUrl}} class="card-img-top rounded-3">
+                                                        <div *ngFor="let attachment of reply.attachments" style="width: 375px;">
+                                                            <img class="whatsapp-single-img whatsappImgModalBtn" *ngIf="isImage(attachment)" src={{attachment.attachmentUrl}}
+                                                                controls style="width: -webkit-fill-available;">
+                                                            <img *ngIf="attachment.contentType == 'animated_image_share'" src={{attachment.attachmentUrl}}
+                                                                style="width: -webkit-fill-available;">
+                                                            <img *ngIf="attachment.contentType == 'sticker'" src={{attachment.attachmentUrl}}
+                                                                style="width: -webkit-fill-available;">
+                                                        
+                                                            <video class="video" *ngIf="isVideo(attachment)" src={{attachment.attachmentUrl}} controls
+                                                                style="width: -webkit-fill-available;"></video>
+                                                        
+                                                            <audio class="audio" *ngIf="isAudio(attachment)" src={{attachment.attachmentUrl}} controls
+                                                                style="width: -webkit-fill-available;"></audio>
+                                                        
+                                                            <a *ngIf="isOther(attachment)" [href]="attachment.attachmentUrl" target="_blank">
+                                                                <button class="download-button">{{ attachment.name }}</button>
+                                                            </a>
+                                                        
                                                         </div>
                                                         <p class="card-text nignt mb-1">{{reply.message}}</p>
                 

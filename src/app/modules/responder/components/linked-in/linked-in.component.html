@@ -173,8 +173,7 @@
                                                         <div class="post-img-wrap whatsappImgModalBtn" type="button"
                                                             style="width:375px;"
                                                             *ngFor="let attachment of cmnts.attachments">
-                                                                <img *ngIf="isImage(attachment)"
-                                                                        src={{attachment.attachmentUrl}} style="width: -webkit-fill-available;">
+                                                                <img *ngIf="isImage(attachment)" src={{attachment.attachmentUrl}} style="width: -webkit-fill-available;">
                                                         </div>
                                                         <p class="card-text nignt">{{cmnts.message}}</p>
                                                         <div class="tags" *ngFor="let tag of cmnts.tags">

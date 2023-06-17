@@ -211,28 +211,35 @@
                                                         <div class="post-img-wrap whatsappImgModalBtn" type="button"
                                                             style="width:375px;"
                                                             *ngFor="let attachment of fbcmnts.attachments">
-                                                            <img *ngIf="attachment.contentType == 'photo'" src={{attachment.attachmentUrl}} style="width: -webkit-fill-available;">
-                                                            <img *ngIf="attachment.contentType == 'animated_image_share'" src={{attachment.attachmentUrl}} style="width: -webkit-fill-available;">
-                                                            <img *ngIf="attachment.contentType == 'sticker'" src={{attachment.attachmentUrl}} style="width: -webkit-fill-available;">
-                                                            <video *ngIf="attachment.contentType == 'video'" width="375px" controls>
-                                                                <source src={{attachment.attachmentUrl}} type="video/mp4" style="width: -webkit-fill-available;">
+                                                            <img *ngIf="attachment.contentType == 'photo'"
+                                                                src={{attachment.attachmentUrl}}
+                                                                style="width: -webkit-fill-available;">
+                                                            <img *ngIf="attachment.contentType == 'animated_image_share'"
+                                                                src={{attachment.attachmentUrl}}
+                                                                style="width: -webkit-fill-available;">
+                                                            <img *ngIf="attachment.contentType == 'sticker'"
+                                                                src={{attachment.attachmentUrl}}
+                                                                style="width: -webkit-fill-available;">
+                                                            <video *ngIf="attachment.contentType == 'video'"
+                                                                width="375px" controls>
+                                                                <source src={{attachment.attachmentUrl}}
+                                                                    type="video/mp4"
+                                                                    style="width: -webkit-fill-available;">
                                                             </video>
                                                         </div>
                                                         <p class="card-text nignt">{{fbcmnts.message}}</p>
                                                         <div class="tags" *ngFor="let tag of fbcmnts.tags">
-
                                                             <span class="badge rounded-pill tag tag1 selected"
                                                                 (click)="removeTagFromFeed(tag.id, tag.feedId, 'FC')">{{tag.name}}</span>
-
                                                         </div>
                                                         <!-- For Sentiment Pills -->
-                                                    <div class="tags" *ngIf="fbcmnts.sentiment">
-                                                        <span
-                                                            class="badge rounded-pills tag tag1 selected">{{fbcmnts.sentiment?.text}}</span>
+                                                        <div class="tags" *ngIf="fbcmnts.sentiment">
+                                                            <span
+                                                                class="badge rounded-pills tag tag1 selected">{{fbcmnts.sentiment?.text}}</span>
+                                                        </div>
+                                                        <!-- For Sentiment Pills -->
                                                     </div>
-                                                    <!-- For Sentiment Pills -->
-                                                    </div>
-                                                    
+
                                                     <div class="message-bottom">
                                                         <div class="row">
                                                             <div class="col-lg-10 ps-4 d-flex align-items-center">
@@ -469,11 +476,29 @@
                                                                             | date:'h:mm:ss a'}}</small>
                                                                     </p>
                                                                 </div>
-                                                                <div class="whatsapp-single-img whatsappImgModalBtn"
-                                                                    type="button">
-                                                                    <img style="width: 375px;"
-                                                                        src={{reply.attachmentUrl}}
-                                                                        class="card-img-top rounded-3">
+
+                                                                <div *ngFor="let attachment of reply.attachments"
+                                                                    style="width:375px;">
+                                                                    <img class="whatsapp-single-img whatsappImgModalBtn"
+                                                                        *ngIf="isImage(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <img *ngIf="attachment.contentType == 'animated_image_share'"
+                                                                        src={{attachment.attachmentUrl}}
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <img *ngIf="attachment.contentType == 'sticker'"
+                                                                        src={{attachment.attachmentUrl}}
+                                                                        style="width: -webkit-fill-available;">
+
+
+                                                                    <video *ngIf="isVideo(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;"></video>
+
+                                                                    <audio *ngIf="isAudio(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;"></audio>
+
                                                                 </div>
                                                                 <p class="card-textnignt p-0">{{reply.message}}</p>
                                                             </div>
@@ -630,20 +655,26 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="post-img-wrap whatsappImgModalBtn" type="button"
-                                                        style="width:375px;"
-                                                        *ngFor="let attachment of fbmsgs.attachments">
-                                                        <img *ngIf="attachment.contentType == 'image'"
+                                                    <div *ngFor="let attachment of fbmsgs.attachments"
+                                                        style="width: 375px;">
+                                                        <img class="whatsapp-single-img whatsappImgModalBtn"
+                                                            *ngIf="isImage(attachment)" src={{attachment.attachmentUrl}}
+                                                            controls style="width: -webkit-fill-available;">
+                                                        <img *ngIf="attachment.contentType == 'animated_image_share'"
                                                             src={{attachment.attachmentUrl}}
                                                             style="width: -webkit-fill-available;">
-                                                        <img *ngIf="attachment.contentType == 'animated_image_share'"
-                                                        src={{attachment.attachmentUrl}}
-                                                        style="width: -webkit-fill-available;">
-                                                        <video *ngIf="attachment.contentType == 'video'" width="375px"
-                                                            controls>
-                                                            <source src={{attachment.attachmentUrl}} type="video/mp4"
-                                                                style="width: -webkit-fill-available;">
-                                                        </video>
+                                                        <img *ngIf="attachment.contentType == 'sticker'"
+                                                            src={{attachment.attachmentUrl}}
+                                                            style="width: -webkit-fill-available;">
+
+
+                                                        <video *ngIf="isVideo(attachment)"
+                                                            src={{attachment.attachmentUrl}} controls
+                                                            style="width: -webkit-fill-available;"></video>
+
+                                                        <audio *ngIf="isAudio(attachment)"
+                                                            src={{attachment.attachmentUrl}} controls
+                                                            style="width: -webkit-fill-available;"></audio>
                                                     </div>
                                                     <p class="card-text nignt">{{fbmsgs.msgText}}</p>
                                                     <div class="tags" *ngFor="let tag of fbmsgs.tags">
@@ -930,8 +961,7 @@
                                                                     </span>
                                                                 </small>
                                                             </div>
-                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM
-                                                                dd, yyyy, h:mm a'}}</small>
+                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM dd, yyyy, h:mm a'}}</small>
                                                         </div>
                                                         <div class="msg-snippet show-text">
                                                             <p class="mb-1 coal" data-maxlength="240">
@@ -1058,12 +1088,11 @@
                     <div class="upload-btn-wrapper">
                         <button class="iconButton small notification iconHover channels-attachment-btn">
                             <i class="fal fa-paperclip"></i></button>
-                        <input type="file" formControlName="Image" class="form-control uplaoded-box" multiple
+                        <input type="file" formControlName="Image" class="form-control uplaoded-box"
                             (change)="onFileChanged()" #fileInput>
                     </div>
                     <button class="iconButton small notification iconHover" data-bs-toggle="tooltip"
-                        data-bs-placement="top" title="" type="submit"
-                        data-bs-original-title="Send">
+                        data-bs-placement="top" title="" type="submit" data-bs-original-title="Send">
                         <i class="fal fa-paper-plane"></i>
                     </button>
                 </div>
@@ -1145,12 +1174,11 @@
                     <div class="upload-btn-wrapper">
                         <button class="iconButton small notification iconHover channels-attachment-btn">
                             <i class="fal fa-paperclip"></i></button>
-                        <input type="file" formControlName="Image" class="form-control uplaoded-box" multiple
+                        <input type="file" formControlName="Image" class="form-control uplaoded-box"
                             (change)="onFileChanged()" #fileInput>
                     </div>
                     <button class="iconButton small notification iconHover" data-bs-toggle="tooltip"
-                        data-bs-placement="top" title="" type="submit"
-                        data-bs-original-title="Send">
+                        data-bs-placement="top" title="" type="submit" data-bs-original-title="Send">
                         <i class="fal fa-paper-plane"></i>
                     </button>
                 </div>
@@ -1168,7 +1196,7 @@
                 <h6 class="silver pt-3 mb-0">Human Agent Tags</h6>
             </div>
             <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas"
-                aria-label="Close" ><i class="fal fa-times"></i></button>
+                aria-label="Close"><i class="fal fa-times"></i></button>
         </div>
         <div class="offcanvas-body">
 
@@ -1224,8 +1252,8 @@
             <div class="section-heading">
                 <h6 class="silver pt-3 mb-0">Quick Response</h6>
             </div>
-            <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas"
-                aria-label="Close" (click)="closeQuickResponseSidebar()"><i class="fal fa-times"></i></button>
+            <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas" aria-label="Close"
+                (click)="closeQuickResponseSidebar()"><i class="fal fa-times"></i></button>
         </div>
         <div class="offcanvas-body">
 

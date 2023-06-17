@@ -476,6 +476,8 @@ export class YoutubeComponent implements OnInit {
   text:string="";
 
   submitYoutubeCommentReply() {
+    this.spinner1running = true;
+      this.SpinnerService.show();
     if(this.youtubecommentId == 0){
       this.reloadComponent('selectComment');
     } else {
@@ -511,6 +513,8 @@ export class YoutubeComponent implements OnInit {
       if(this.youtubeCommentReplyForm.value.text !== "" && this.youtubeCommentReplyForm.value.text !== null){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
+            this.spinner1running = false;
+      this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;

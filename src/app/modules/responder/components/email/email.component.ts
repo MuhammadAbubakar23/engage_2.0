@@ -907,6 +907,8 @@ export class EmailComponent implements OnInit {
   replyCc: any[] = [];
   replyBcc: any[] = [];
   submitEmailReply() {
+    this.spinner1running = true;
+      this.SpinnerService.show();
     if (!this.emailReplyForm.get('to')?.dirty) {
       this.emailReplyForm.patchValue({
         to: JSON.stringify(this.emailFrom),
@@ -977,7 +979,10 @@ export class EmailComponent implements OnInit {
 
     formData.append('CommentReply', JSON.stringify(this.emailReplyForm.value));
     this.commondata.ReplyComment(formData).subscribe(
+      
       (res: any) => {
+        this.spinner1running = false;
+      this.SpinnerService.hide();
         this.clearInputField();
         this.reloadComponent('comment');
         this.emailReplyForm.reset();
@@ -1325,15 +1330,15 @@ export class EmailComponent implements OnInit {
   }
 
   isImage(attachment: any): boolean {
-    return attachment.contentType.startsWith('image/');
+    return attachment.contentType?.startsWith('image/');
   }
 
   isVideo(attachment: any): boolean {
-    return attachment.contentType.startsWith('video/');
+    return attachment.contentType?.startsWith('video/');
   }
 
   isAudio(attachment: any): boolean {
-    return attachment.contentType.startsWith('audio/');
+    return attachment.contentType?.startsWith('audio/');
   }
 
   isOther(attachment: any): boolean {

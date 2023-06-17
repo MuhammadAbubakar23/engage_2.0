@@ -2,7 +2,7 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Tooltip } from 'bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
@@ -98,6 +98,8 @@ export class ResponderHeaderComponent implements OnInit {
 
   public Subscription!: Subscription;
 
+  currentUrl:string='';
+
   constructor(
     private fetchId: FetchIdService,
     private route: Router,
@@ -111,7 +113,7 @@ export class ResponderHeaderComponent implements OnInit {
     private unrespondedCountService: UnRespondedCountService,
     private updateCommentsService: UpdateCommentsService,
     private updateMessagesService: UpdateMessagesService,
-    private toggleService: ToggleService
+    private toggleService: ToggleService,
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -128,6 +130,11 @@ export class ResponderHeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
+
+    this.currentUrl = this._route.url;
+    
+
     this.getUserDetails();
 
     this.openedTab();
@@ -183,6 +190,7 @@ export class ResponderHeaderComponent implements OnInit {
                 this.EmailUnrespondedCmntCountByCustomer + 1;
             }
             if (msg.contentType == 'SMS') {
+              
               this.SmsUnrespondedCmntCountByCustomer =
                 this.SmsUnrespondedCmntCountByCustomer + 1;
             }
@@ -211,11 +219,13 @@ export class ResponderHeaderComponent implements OnInit {
       .subscribe((res) => {
         
         if (res.contentCount.contentType == 'FC') {
+          
           this.totalFbUnrespondedCountByCustomer =
             res.contentCount.unrespondedCount +
             this.FbUnrespondedMsgCountByCustomer;
         }
         if (res.contentCount.contentType == 'FCP') {
+          
           this.totalFbUnrespondedCountByCustomer =
             res.contentCount.unrespondedCount +
             this.FbUnrespondedCmntCountByCustomer;
@@ -246,6 +256,7 @@ export class ResponderHeaderComponent implements OnInit {
             res.contentCount.unrespondedCount;
         }
         if (res.contentCount.contentType == 'SMS') {
+          
           this.SmsUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
         }
@@ -369,7 +380,9 @@ export class ResponderHeaderComponent implements OnInit {
   totalCount: any;
   id = this.fetchId.id;
   profileId: any;
+
   getUserDetails() {
+    
     if (this.id != null || this.id != undefined) {
       localStorage.setItem('storeHeaderOpenedId', this.id);
       this.filterDto = {
@@ -446,6 +459,9 @@ export class ResponderHeaderComponent implements OnInit {
             if (this.platformsArray.includes('Facebook')) {
               this.facebookComment = true;
             }
+            if (this.platformsArray.includes('SMS')) {
+              this.sms = true;
+            }
             if (this.platformsArray.includes('Instagram')) {
               this.instagram = true;
             }
@@ -509,6 +525,7 @@ export class ResponderHeaderComponent implements OnInit {
               this.WcUnrespondedCmntCountByCustomer = res.TotalCount;
             }
             if (this.fetchId.platform == 'SMS') {
+              
               this.SmsUnrespondedCmntCountByCustomer = res.TotalCount;
             }
             if (this.fetchId.platform == 'Twitter') {
@@ -572,9 +589,9 @@ export class ResponderHeaderComponent implements OnInit {
             this.platformsArrayForMessages = [];
             this.facebookMessage = false;
             this.twitterMessage = false;
-            this.platformsArray.push(res.List.platform);
+            this.platformsArray.push(res.List?.platform);
 
-            res.List.user.secondaryProfiles.forEach((profiles: any) => {
+            res.List?.user.secondaryProfiles.forEach((profiles: any) => {
               this.platformsArray.push(profiles.platform);
 
               if (profiles.platform == 'Facebook') {
@@ -609,6 +626,9 @@ export class ResponderHeaderComponent implements OnInit {
             if (this.platformsArray.includes('Facebook')) {
               this.facebookMessage = true;
               this.facebookComment = true;
+            }
+            if (this.platformsArray.includes('SMS')) {
+              this.sms = true;
             }
 
             if (this.platformsArray.includes('Twitter')) {
@@ -743,6 +763,9 @@ export class ResponderHeaderComponent implements OnInit {
         if (this.platformsArray.includes('Facebook')) {
           this.facebookComment = true;
         }
+        if (this.platformsArray.includes('SMS')) {
+          this.sms = true;
+        }
         if (this.platformsArray.includes('Instagram')) {
           this.instagram = true;
         }
@@ -796,6 +819,7 @@ export class ResponderHeaderComponent implements OnInit {
           this.WcUnrespondedCmntCountByCustomer = res.TotalCount;
         }
         if (this.fetchId.platform == 'SMS') {
+          
           this.SmsUnrespondedCmntCountByCustomer = res.TotalCount;
         }
         if (this.fetchId.platform == 'Twitter') {
@@ -832,20 +856,21 @@ export class ResponderHeaderComponent implements OnInit {
       this.commondata
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
+          
           if (res != null || res != undefined) {
             this.userId = res.List?.user.userId;
             this.profileId = res.List?.user.id;
             this.userName = res.List?.user.userName || res.List?.user.userId;
             this.profilePic = res.List?.user.profilePic;
             this.platform = res.List?.platform;
-            this.postType = res.List?.dm.contentType;
+            this.postType = res.List?.dm[0].contentType;
 
             this.platformsArrayForMessages = [];
             this.facebookMessage = false;
             this.twitterMessage = false;
-            this.platformsArray.push(res.List.platform);
+            this.platformsArray.push(res.List?.platform);
 
-            res.List.user.secondaryProfiles.forEach((profiles: any) => {
+            res.List?.user.secondaryProfiles.forEach((profiles: any) => {
               this.platformsArray.push(profiles.platform);
 
               if (profiles.platform == 'Facebook') {
@@ -880,6 +905,9 @@ export class ResponderHeaderComponent implements OnInit {
             if (this.platformsArray.includes('Facebook')) {
               this.facebookMessage = true;
               this.facebookComment = true;
+            }
+            if (this.platformsArray.includes('SMS')) {
+              this.sms = true;
             }
 
             if (this.platformsArray.includes('Twitter')) {
@@ -926,32 +954,68 @@ export class ResponderHeaderComponent implements OnInit {
             this.FbUnrespondedMsgCountByCustomer = 0;
             this.TwitterUnrespondedMsgCountByCustomer = 0;
 
-            if (this.fetchId.platform == 'Facebook') {
-              this.FbUnrespondedCmntCountByCustomer = res.TotalCount;
+            if (this.platform == 'Facebook') {
+              this.FbUnrespondedMsgCountByCustomer = res.TotalCount;
+              if (this.FbUnrespondedMsgCountByCustomer == undefined) {
+                this.totalFbUnrespondedCountByCustomer =
+                  this.FbUnrespondedCmntCountByCustomer;
+              } else if (this.FbUnrespondedCmntCountByCustomer == undefined) {
+                this.totalFbUnrespondedCountByCustomer =
+                  this.FbUnrespondedMsgCountByCustomer;
+              } else {
+                this.totalFbUnrespondedCountByCustomer =
+                  this.FbUnrespondedCmntCountByCustomer +
+                  this.FbUnrespondedMsgCountByCustomer;
+              }
             }
-            if (this.fetchId.platform == 'WhatsApp') {
+            if (this.platform == 'WhatsApp') {
               this.WtsapUnrespondedCmntCountByCustomer = res.TotalCount;
             }
-            if (this.fetchId.platform == 'Webchat') {
+            if (this.platform == 'Webchat') {
               this.WcUnrespondedCmntCountByCustomer = res.TotalCount;
             }
-            if (this.fetchId.platform == 'SMS') {
+            if (this.platform == 'SMS') {
+              
               this.SmsUnrespondedCmntCountByCustomer = res.TotalCount;
             }
-            if (this.fetchId.platform == 'Twitter') {
-              this.TwitterUnrespondedCmntCountByCustomer = res.TotalCount;
+            if (this.platform == 'Twitter') {
+              this.TwitterUnrespondedMsgCountByCustomer = res.TotalCount;
+              if (this.TwitterUnrespondedCmntCountByCustomer == undefined) {
+                this.totalTwitterUnrespondedCountByCustomer =
+                  this.TwitterUnrespondedMsgCountByCustomer;
+              } else if (
+                this.TwitterUnrespondedMsgCountByCustomer == undefined
+              ) {
+                this.totalTwitterUnrespondedCountByCustomer =
+                  this.TwitterUnrespondedCmntCountByCustomer;
+              } else {
+                this.totalTwitterUnrespondedCountByCustomer =
+                  this.TwitterUnrespondedCmntCountByCustomer +
+                  this.TwitterUnrespondedMsgCountByCustomer;
+              }
             }
-            if (this.fetchId.platform == 'Instagram') {
-              this.InstaUnrespondedCmntCountByCustomer = res.TotalCount;
+            if (this.platform == 'Instagram') {
+              this.InstaUnrespondedMsgCountByCustomer = res.TotalCount;
+              if (this.InstaUnrespondedMsgCountByCustomer == undefined) {
+                this.totalInstaUnrespondedCountByCustomer =
+                  this.InstaUnrespondedCmntCountByCustomer;
+              } else if (this.InstaUnrespondedCmntCountByCustomer == undefined) {
+                this.totalInstaUnrespondedCountByCustomer =
+                  this.InstaUnrespondedMsgCountByCustomer;
+              } else {
+                this.totalInstaUnrespondedCountByCustomer =
+                  this.InstaUnrespondedCmntCountByCustomer +
+                  this.InstaUnrespondedMsgCountByCustomer;
+              }
             }
-            if (this.fetchId.platform == 'Email' || this.fetchId.platform == 'OfficeEmail') {
+            if (this.platform == 'Email' || this.platform == 'OfficeEmail') {
               this.EmailUnrespondedCmntCountByCustomer = res.TotalCount;
             }
 
-            if (this.fetchId.platform == 'Youtube') {
+            if (this.platform == 'Youtube') {
               this.YoutubeUnrespondedCmntCountByCustomer = res.TotalCount;
             }
-            if (this.fetchId.platform == 'LinkedIn') {
+            if (this.platform == 'LinkedIn') {
               this.LinkedInUnrespondedCmntCountByCustomer = res.TotalCount;
             }
           }
@@ -1018,6 +1082,9 @@ export class ResponderHeaderComponent implements OnInit {
             if (this.platformsArray.includes('Facebook')) {
               this.facebookComment = true;
             }
+            if (this.platformsArray.includes('SMS')) {
+              this.sms = true;
+            }
             if (this.platformsArray.includes('Instagram')) {
               this.instagram = true;
             }
@@ -1060,32 +1127,69 @@ export class ResponderHeaderComponent implements OnInit {
             this.FbUnrespondedMsgCountByCustomer = 0;
             this.TwitterUnrespondedMsgCountByCustomer = 0;
 
-            if (this.fetchId.platform == 'Facebook') {
+            if (this.platform == 'Facebook') {
               this.FbUnrespondedCmntCountByCustomer = res.TotalCount;
+              if (this.FbUnrespondedMsgCountByCustomer == undefined) {
+                this.totalFbUnrespondedCountByCustomer =
+                  this.FbUnrespondedCmntCountByCustomer;
+              } else if (this.FbUnrespondedCmntCountByCustomer == undefined) {
+                this.totalFbUnrespondedCountByCustomer =
+                  this.FbUnrespondedMsgCountByCustomer;
+              } else {
+                this.totalFbUnrespondedCountByCustomer =
+                  this.FbUnrespondedCmntCountByCustomer +
+                  this.FbUnrespondedMsgCountByCustomer;
+              }
             }
-            if (this.fetchId.platform == 'WhatsApp') {
+            if (this.platform == 'WhatsApp') {
               this.WtsapUnrespondedCmntCountByCustomer = res.TotalCount;
             }
-            if (this.fetchId.platform == 'Webchat') {
+            if (this.platform == 'Webchat') {
               this.WcUnrespondedCmntCountByCustomer = res.TotalCount;
             }
-            if (this.fetchId.platform == 'SMS') {
+            if (this.platform == 'SMS') {
+              
               this.SmsUnrespondedCmntCountByCustomer = res.TotalCount;
             }
-            if (this.fetchId.platform == 'Twitter') {
+            if (this.platform == 'Twitter') {
               this.TwitterUnrespondedCmntCountByCustomer = res.TotalCount;
+              if (this.TwitterUnrespondedCmntCountByCustomer == undefined) {
+                this.totalTwitterUnrespondedCountByCustomer =
+                  this.TwitterUnrespondedMsgCountByCustomer;
+              } else if (
+                this.TwitterUnrespondedMsgCountByCustomer == undefined
+              ) {
+                this.totalTwitterUnrespondedCountByCustomer =
+                  this.TwitterUnrespondedCmntCountByCustomer;
+              } else {
+                this.totalTwitterUnrespondedCountByCustomer =
+                  this.TwitterUnrespondedCmntCountByCustomer +
+                  this.TwitterUnrespondedMsgCountByCustomer;
+              }
             }
-            if (this.fetchId.platform == 'Instagram') {
+            if (this.platform == 'Instagram') {
+              
               this.InstaUnrespondedCmntCountByCustomer = res.TotalCount;
+              if (this.InstaUnrespondedMsgCountByCustomer == undefined) {
+                this.totalInstaUnrespondedCountByCustomer =
+                  this.InstaUnrespondedCmntCountByCustomer;
+              } else if (this.InstaUnrespondedCmntCountByCustomer == undefined) {
+                this.totalInstaUnrespondedCountByCustomer =
+                  this.InstaUnrespondedMsgCountByCustomer;
+              } else {
+                this.totalInstaUnrespondedCountByCustomer =
+                  this.InstaUnrespondedCmntCountByCustomer +
+                  this.InstaUnrespondedMsgCountByCustomer;
+              }
             }
-            if (this.fetchId.platform == 'Email' || this.fetchId.platform == 'OfficeEmail') {
+            if (this.platform == 'Email' || this.platform == 'OfficeEmail') {
               this.EmailUnrespondedCmntCountByCustomer = res.TotalCount;
             }
 
-            if (this.fetchId.platform == 'Youtube') {
+            if (this.platform == 'Youtube') {
               this.YoutubeUnrespondedCmntCountByCustomer = res.TotalCount;
             }
-            if (this.fetchId.platform == 'LinkedIn') {
+            if (this.platform == 'LinkedIn') {
               this.LinkedInUnrespondedCmntCountByCustomer = res.TotalCount;
             }
           }
@@ -1141,9 +1245,15 @@ export class ResponderHeaderComponent implements OnInit {
   }
 
   openedTab() {
+
+    if(!this.postType){
+      
+      const channel = this.currentUrl.split('/')[3];
+      this.postType = channel;
+    }
     
    // if(this.assignedProfile == null || this.assignedProfile == '' || this.assignedProfile == undefined){
-    if (this.postType == 'IC') {
+    if (this.postType == 'IC' || this.postType == 'Instagram') {
       this.facebookTab = false;
       this.instagramTab = true;
       this.whatsappTab = false;
@@ -1156,7 +1266,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'FC') {
+    if (this.postType == 'FC' || this.postType == 'Facebook') {
       this.facebookTab = true;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1169,7 +1279,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'FCP') {
+    if (this.postType == 'FCP' || this.postType == 'Facebook') {
       this.facebookTab = true;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1182,7 +1292,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'TT') {
+    if (this.postType == 'TT' || this.postType == 'Twitter') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1195,7 +1305,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'TM') {
+    if (this.postType == 'TM' || this.postType == 'Twitter') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1208,7 +1318,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'Message') {
+    if (this.postType == 'Message' || this.postType == 'Twitter') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1221,7 +1331,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'Mail' || this.postType == 'OMail') {
+    if (this.postType == 'Mail' || this.postType == 'OMail' || this.postType == 'Email' || this.postType == 'OfficeEmail') {
       
       this.facebookTab = false;
       this.instagramTab = false;
@@ -1235,7 +1345,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'YC') {
+    if (this.postType == 'YC' || this.postType == 'Youtube') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1247,7 +1357,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'WM') {
+    if (this.postType == 'WM' || this.postType == 'WhatsApp') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = true;
@@ -1273,7 +1383,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'Phone') {
+    if (this.postType == 'Phone' || this.postType == 'Phone') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1286,7 +1396,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'WC') {
+    if (this.postType == 'WC' || this.postType == 'WebChat') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1299,7 +1409,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'LIC') {
+    if (this.postType == 'LIC' || this.postType == 'LinkedIn') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;

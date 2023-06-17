@@ -6,8 +6,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Tooltip } from 'bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -18,7 +16,6 @@ import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-qu
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
-import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
@@ -633,6 +630,8 @@ export class WhatsappDetailsComponent implements OnInit {
 
   text:string="";
   submitWhatsappReply() {
+    this.spinner1running = true;
+      this.SpinnerService.show();
     if(this.WhatsappMsgId == 0){
       this.reloadComponent('selectComment');
     } else {
@@ -671,6 +670,8 @@ export class WhatsappDetailsComponent implements OnInit {
             || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
+            this.spinner1running = false;
+      this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
@@ -909,6 +910,26 @@ detectChanges(): void {
     this.quickReplySearchText = '';
     this.radioInput.nativeElement.checked = false;
     
+  }
+
+  isImage(attachment: any): boolean {
+    return attachment.contentType?.startsWith('image/');
+  }
+
+  isVideo(attachment: any): boolean {
+    return attachment.contentType?.startsWith('video/');
+  }
+
+  isAudio(attachment: any): boolean {
+    return attachment.contentType?.startsWith('audio/');
+  }
+
+  isOther(attachment: any): boolean {
+    return (
+      !this.isImage(attachment) &&
+      !this.isVideo(attachment) &&
+      !this.isAudio(attachment)
+    );
   }
 
 }

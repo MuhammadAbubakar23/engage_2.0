@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -241,7 +242,6 @@ export class FacebookComponent implements OnInit {
       });
   }
 
-  
   totalComments: number = 0;
   totalMessages: number = 0;
 
@@ -271,6 +271,14 @@ export class FacebookComponent implements OnInit {
           this.ConverstationDetailDto = res;
           this.FacebookData = this.ConverstationDetailDto.List;
           this.pageName = this.FacebookData[0]?.post.profile.page_Name;
+
+          if(this.FacebookData){
+            this.fbCmntReply = true;
+            this.fbMsgReply = false;
+          } else if(this.FacebookMessages && !this.FacebookData) {
+            this.fbCmntReply = false;
+            this.fbMsgReply = true;
+          }
 
           this.commentsArray = [];
 
@@ -323,6 +331,14 @@ export class FacebookComponent implements OnInit {
         this.FacebookData = res.List;
         this.totalComments = res.TotalCount;
         this.pageName = this.FacebookData[0].post.profile.page_Name;
+
+        if(this.FacebookData){
+          this.fbCmntReply = true;
+          this.fbMsgReply = false;
+        } else if(this.FacebookMessages && !this.FacebookData) {
+          this.fbCmntReply = false;
+          this.fbMsgReply = true;
+        }
 
         this.commentsArray = [];
 
@@ -381,6 +397,14 @@ export class FacebookComponent implements OnInit {
           this.FacebookData = this.ConverstationDetailDto.List;
           this.totalComments = res.TotalCount;
           this.pageName = this.FacebookData[0]?.post.profile.page_Name;
+
+          if(this.FacebookData){
+            this.fbCmntReply = true;
+            this.fbMsgReply = false;
+          } else if(this.FacebookMessages && !this.FacebookData) {
+            this.fbCmntReply = false;
+            this.fbMsgReply = true;
+          }
 
           this.commentsArray = [];
 
@@ -722,15 +746,13 @@ export class FacebookComponent implements OnInit {
           this.pageName = this.FacebookMessages[0]?.toName;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
-          if(this.FacebookData){
-            this.fbCmntReply = true;
-            this.fbMsgReply = false;
-          } else {
-            this.fbCmntReply = false;
-            this.fbMsgReply = true;
-          }
-
-          
+          // if(this.FacebookData){
+          //   this.fbCmntReply = true;
+          //   this.fbMsgReply = false;
+          // } else {
+          //   this.fbCmntReply = false;
+          //   this.fbMsgReply = true;
+          // }
 
           this.messagesArray = [];
           this.groupedMessages = [];
@@ -783,13 +805,13 @@ export class FacebookComponent implements OnInit {
 
         this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
-        if(this.FacebookData){
-          this.fbCmntReply = true;
-          this.fbMsgReply = false;
-        } else {
-          this.fbCmntReply = false;
-          this.fbMsgReply = true;
-        }
+        // if(this.FacebookData){
+        //   this.fbCmntReply = true;
+        //   this.fbMsgReply = false;
+        // } else {
+        //   this.fbCmntReply = false;
+        //   this.fbMsgReply = true;
+        // }
 
         this.messagesArray = [];
         this.groupedMessages = [];
@@ -843,13 +865,13 @@ export class FacebookComponent implements OnInit {
 
         this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
-        if(this.FacebookData){
-          this.fbCmntReply = true;
-          this.fbMsgReply = false;
-        } else {
-          this.fbCmntReply = false;
-          this.fbMsgReply = true;
-        }
+        // if(this.FacebookData){
+        //   this.fbCmntReply = true;
+        //   this.fbMsgReply = false;
+        // } else {
+        //   this.fbCmntReply = false;
+        //   this.fbMsgReply = true;
+        // }
 
         this.messagesArray = [];
         this.groupedMessages = [];
@@ -1023,6 +1045,8 @@ export class FacebookComponent implements OnInit {
   text:string="";
 
   submitFacebookReply() {
+    this.spinner1running = true;
+      this.SpinnerService.show();
     if(this.commentId == 0){
       this.reloadComponent('selectComment');
     } else {
@@ -1063,6 +1087,8 @@ export class FacebookComponent implements OnInit {
             || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
+            this.spinner1running = false;
+      this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('comment');
             
@@ -1094,7 +1120,8 @@ export class FacebookComponent implements OnInit {
   }
 
   submitFacebookMessageReply() {
-    
+    this.spinner1running = true;
+      this.SpinnerService.show();
     if(this.msgId == 0){
       this.reloadComponent('selectComment');
     } else {
@@ -1133,21 +1160,31 @@ export class FacebookComponent implements OnInit {
         JSON.stringify(this.facebookMessageReplyForm.value)
       );
       if((this.facebookMessageReplyForm.value.text !== "" && this.facebookMessageReplyForm.value.text !== null) 
+      && (this?.ImageName?.length > 0 && this.ImageName != undefined)){
+        
+        this.reloadComponent('both-text-and-attachment-added');
+        
+      }
+      else if((this.facebookMessageReplyForm.value.text !== "" && this.facebookMessageReplyForm.value.text !== null) 
             || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
-        this.commondata.ReplyComment(formData).subscribe(
-          (res: any) => {
-            this.clearInputField();
-            this.reloadComponent('fbmessage');
-            this.facebookMessageReplyForm.reset();
-            
-        this.radioInput.nativeElement.checked = false;
-          },
-          ({ error }) => {
-          //  alert(error.message);
-          }
-        );
+              
+              this.commondata.ReplyComment(formData).subscribe(
+                (res: any) => {
+                  this.spinner1running = false;
+      this.SpinnerService.hide();
+                  this.clearInputField();
+                  this.reloadComponent('fbmessage');
+                  this.facebookMessageReplyForm.reset();
+                  
+              this.radioInput.nativeElement.checked = false;
+                },
+                ({ error }) => {
+                //  alert(error.message);
+                }
+              );
       } else {
-        this.reloadComponent('empty-input-field')
+        
+        this.reloadComponent('empty-input-field');
       }
     }
     this.quickReplySearchText = '';
@@ -1425,6 +1462,15 @@ export class FacebookComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
+    
+    if (type == 'both-text-and-attachment-added') {
+      this.AlterMsg = 'Text and Attachment cannot be sent at the same time';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+
     if (type == 'empty-input-field') {
       this.AlterMsg = 'Please write something!';
       this.toastermessage = true;
@@ -1617,5 +1663,17 @@ detectChanges(): void {
     this.quickReplySearchText = '';
     this.radioInput.nativeElement.checked = false;
     
+  }
+
+  isImage(attachment: any): boolean {
+    return attachment.contentType?.startsWith('image/');
+  }
+
+  isVideo(attachment: any): boolean {
+    return attachment.contentType?.startsWith('video/');
+  }
+
+  isAudio(attachment: any): boolean {
+    return attachment.contentType?.startsWith('audio/');
   }
 }

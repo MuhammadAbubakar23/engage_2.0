@@ -499,6 +499,8 @@ detectChanges(): void {
   isAttachment = false;
 
   submitLinkedInCommentReply() {
+    this.spinner1running = true;
+      this.SpinnerService.show();
     if(this.commentId == 0){
       this.reloadComponent('selectComment');
     } else {
@@ -539,6 +541,8 @@ detectChanges(): void {
             || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
+            this.spinner1running = false;
+      this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
@@ -578,15 +582,11 @@ detectChanges(): void {
 
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
-
     this.text = abc?.text + " ";
-
-    // this.linkedInReplyForm.patchValue({ text: this.chatText });
     this.insertAtCaret(this.text)
   }
 
   quickReplyList() {
-    
     this.commondata.QuickReplyList().subscribe((res: any) => {
       this.QuickReplies = res;
     });
@@ -597,11 +597,10 @@ detectChanges(): void {
       this.HumanAgentTags = res;
     });
   }
+
   sendHumanAgentTag(value: any) {
     var abc = this.HumanAgentTags.find((res: any) => res.value == value);
-
     this.chatText = abc?.text;
-
     this.linkedInReplyForm.patchValue({ text: this.chatText });
   }
 
@@ -616,9 +615,7 @@ detectChanges(): void {
         xyz.keywordList.forEach((abc: any) => {
           this.Keywords.push(abc);
         });
-        // console.log('keywords==>', this.Keywords);
       });
-      // console.log('TagList', this.TagsList);
     });
   }
 
@@ -1029,10 +1026,10 @@ detectChanges(): void {
   }
 
   isImage(attachment: any): boolean {
-    return attachment.contentType.startsWith('image/');
+    return attachment.contentType?.startsWith('image/');
   }
 
   isVideo(attachment: any): boolean {
-    return attachment.contentType.startsWith('video/');
+    return attachment.contentType?.startsWith('video/');
   }
 }

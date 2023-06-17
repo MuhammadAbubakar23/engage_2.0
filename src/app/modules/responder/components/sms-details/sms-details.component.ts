@@ -107,6 +107,7 @@ export class SmsDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     this.criteria = {
       property: 'createdDate',
       descending: true,
@@ -114,6 +115,8 @@ export class SmsDetailsComponent implements OnInit {
 
     this.TodayDate = new Date();
     this.quickReplyList();
+    this.getSmsData();
+    this.getTagList();
 
     this.Subscription = this.addTagService.receiveTags().subscribe((res) => {
       this.addTags = res;
@@ -198,6 +201,7 @@ export class SmsDetailsComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
   getSmsData() {
+    
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -250,7 +254,7 @@ export class SmsDetailsComponent implements OnInit {
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.SmsData.forEach((msg: any) => {
-            this.To = msg.comments[0].to;
+            this.To = msg.comments[0].sendTo;
           });
         });
     } else if (this.slaId != null || undefined) {
@@ -302,7 +306,7 @@ export class SmsDetailsComponent implements OnInit {
 
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
         this.SmsData.forEach((msg: any) => {
-          this.To = msg.comments[0].to;
+          this.To = msg.comments[0].sendTo;
         });
       });
     } else {
@@ -353,7 +357,7 @@ export class SmsDetailsComponent implements OnInit {
 
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
         this.SmsData.forEach((msg: any) => {
-          this.To = msg.comments[0].to;
+          this.To = msg.comments[0].sendTo;
         });
       });
     }
@@ -600,8 +604,12 @@ export class SmsDetailsComponent implements OnInit {
         JSON.stringify(this.SmsReplyForm.value)
       );
       if(this.SmsReplyForm.value.text !== "" && this.SmsReplyForm.value.text !== null){
+        this.spinner1running = true;
+      this.SpinnerService.show();
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
+            this.spinner1running = false;
+      this.SpinnerService.hide();
             this.clearInputField();
             this.getSmsData();
             
@@ -749,50 +757,45 @@ export class SmsDetailsComponent implements OnInit {
   removeTags: any;
 
   addTagDataListner() {
-    this.SmsData.forEach((post: any) => {
-      post.groupedComments.forEach((cmnt: any) => {
-        cmnt.items.forEach((singleCmnt: any) => {
-          if (singleCmnt.id == this.addTags.feedId) {
-            if (singleCmnt.tags.length == 0) {
-              singleCmnt.tags.push(this.addTags);
-            } else if (singleCmnt.tags.length > 0) {
-              const tag = singleCmnt.tags.find(
-                (x: any) => x.id == this.addTags.feedId
-              );
-              if (tag != null || tag != undefined) {
-                const index = singleCmnt.tags.indexOf(tag);
-                if (index !== -1) {
-                  singleCmnt.tags.splice(index, 1);
-                }
-              } else {
-                singleCmnt.tags.push(this.addTags);
+    this.groupArrays.forEach((cmnt: any) => {
+      cmnt.items.forEach((singleCmnt: any) => {
+        if (singleCmnt.id == this.addTags.feedId) {
+          if (singleCmnt.tags.length == 0) {
+            singleCmnt.tags.push(this.addTags);
+          } else if (singleCmnt.tags.length > 0) {
+            const tag = singleCmnt.tags.find(
+              (x: any) => x.id == this.addTags.feedId
+            );
+            if (tag != null || tag != undefined) {
+              const index = singleCmnt.tags.indexOf(tag);
+              if (index !== -1) {
+                singleCmnt.tags.splice(index, 1);
               }
+            } else {
+              singleCmnt.tags.push(this.addTags);
             }
           }
-        });
+        }
       });
     });
     this.changeDetect.detectChanges();
   }
   removeTagDataListener() {
-    this.SmsData.forEach((post: any) => {
-      post.groupedComments.forEach((cmnt: any) => {
-        cmnt.items.forEach((singleCmnt: any) => {
-          if (singleCmnt.id == this.removeTags.feedId) {
-            var tag = singleCmnt.tags.find(
-              (x: any) => x.id == this.removeTags.tagId
-            );
-            const index = singleCmnt.tags.indexOf(tag);
-            if (index !== -1) {
-              singleCmnt.tags.splice(index, 1);
-            }
+    this.groupArrays.forEach((cmnt: any) => {
+      cmnt.items.forEach((singleCmnt: any) => {
+        if (singleCmnt.id == this.removeTags.feedId) {
+          var tag = singleCmnt.tags.find(
+            (x: any) => x.id == this.removeTags.tagId
+          );
+          const index = singleCmnt.tags.indexOf(tag);
+          if (index !== -1) {
+            singleCmnt.tags.splice(index, 1);
           }
-        });
+        }
       });
     });
     this.changeDetect.detectChanges();
   }
-
   onScroll() {
     if (this.totalUnrespondedCmntCountByCustomer > 10) {
       this.pageSize = this.pageSize + 10;

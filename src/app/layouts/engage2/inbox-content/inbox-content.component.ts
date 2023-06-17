@@ -103,7 +103,7 @@ export class InboxContentComponent implements OnInit {
         // this.body.createComponent(body);
 
         header = this.resolver.resolveComponentFactory(InboxHeaderComponent);
-        this.header.createComponent(header);
+        this.header?.createComponent(header);
         break;
 
         case 'responder':
@@ -114,7 +114,7 @@ export class InboxContentComponent implements OnInit {
           // this.body.createComponent(body);
 
           header = this.resolver.resolveComponentFactory(ResponderHeaderComponent);
-        this.header.createComponent(header);
+        this.header?.createComponent(header);
           break;
     
       default:

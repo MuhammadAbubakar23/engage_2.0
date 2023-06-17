@@ -952,6 +952,8 @@ export class TwitterComponent implements OnInit {
   text:string="";
 
   submitTwitterReply() {
+    this.spinner1running = true;
+      this.SpinnerService.show();
     if(this.tweetId == 0){
       this.reloadComponent('selectComment');
     } else {
@@ -993,6 +995,8 @@ export class TwitterComponent implements OnInit {
             || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
+            this.spinner1running = false;
+      this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
@@ -1066,6 +1070,8 @@ export class TwitterComponent implements OnInit {
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
   });
   submitTwitterMessageReply() {
+    this.spinner1running = true;
+      this.SpinnerService.show();
     if(this.twitterMsgId == 0){
       this.reloadComponent('selectComment');
     } else {
@@ -1107,6 +1113,8 @@ export class TwitterComponent implements OnInit {
             || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
+            this.spinner1running = false;
+      this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
@@ -1514,5 +1522,13 @@ export class TwitterComponent implements OnInit {
     this.quickReplySearchText = '';
     this.radioInput.nativeElement.checked = false;
     
+  }
+
+  isImage(attachment: any): boolean {
+    return attachment.contentType?.startsWith('image/');
+  }
+
+  isVideo(attachment: any): boolean {
+    return attachment.contentType?.startsWith('video/');
   }
 }

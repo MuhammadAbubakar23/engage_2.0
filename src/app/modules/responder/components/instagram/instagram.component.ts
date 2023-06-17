@@ -536,6 +536,8 @@ export class InstagramComponent implements OnInit {
 
   text:string=""
   submitInstagramCommentReply() {
+    this.spinner1running = true;
+      this.SpinnerService.show();
     if(this.InstacommentId == 0){
       this.reloadComponent('selectComment');
     } else {
@@ -577,6 +579,8 @@ export class InstagramComponent implements OnInit {
             || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
+            this.spinner1running = false;
+      this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
@@ -1343,6 +1347,8 @@ export class InstagramComponent implements OnInit {
   });
 
   submitInstagramMessageReply() {
+    this.spinner1running = true;
+      this.SpinnerService.show();
     if(this.msgId == 0){
       this.reloadComponent('selectComment');
     } else {
@@ -1374,6 +1380,8 @@ export class InstagramComponent implements OnInit {
             || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
+            this.spinner1running = false;
+      this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
