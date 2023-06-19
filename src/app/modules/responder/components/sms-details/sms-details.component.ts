@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -9,7 +9,9 @@ import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
+import { ReplyService } from 'src/app/services/replyService/reply.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
+import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
 import { CommentStatusDto } from 'src/app/shared/Models/CommentStatusDto';
@@ -60,6 +62,7 @@ export class SmsDetailsComponent implements OnInit {
   smsId: number = 0;
   agentId: string = '';
   platform: string = '';
+  profileId: number = 0;
   postType: string = '';
   ReplyDto = new ReplyDto();
 
@@ -98,7 +101,9 @@ export class SmsDetailsComponent implements OnInit {
     private createTicketService: CreateTicketService,
     private ticketResponseService: TicketResponseService,
     private applySentimentService: ApplySentimentService,
-    private getQueryTypeService : GetQueryTypeService
+    private getQueryTypeService : GetQueryTypeService,
+    private unrespondedCountService : UnRespondedCountService,
+    private replyService : ReplyService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -129,6 +134,7 @@ export class SmsDetailsComponent implements OnInit {
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
+        debugger
         this.updatedComments = res;
         this.updateCommentsDataListener();
       });
@@ -148,12 +154,36 @@ export class SmsDetailsComponent implements OnInit {
       .subscribe((res) => {
         this.applySentimentListner(res);
       });
+
+      this.Subscription = this.unrespondedCountService
+      .getUnRespondedCount()
+      .subscribe((res) => {
+        if (res.contentCount.contentType == 'SMS') {
+          this.totalUnrespondedCmntCountByCustomer =
+            res.contentCount.unrespondedCount;
+        }
+      });
+
+      this.Subscription = this.queryStatusService
+      .receiveQueryStatus()
+      .subscribe((res) => {
+        this.queryStatus = res;
+        this.updateQueryStatusDataListner();
+      });
+
+      this.Subscription = this.replyService.receiveReply().subscribe((res) => {
+        this.replyDataListner(res);
+      });
   }
 
   commentDto = new commentsDto();
   updatedComments: any;
 
   updateCommentsDataListener() {
+    debugger
+    if(!this.id){
+      this.id = localStorage.getItem('storeOpenedId') || '{}'
+    }
     this.updatedComments.forEach((xyz: any) => {
       if (this.id == xyz.userId) {
         this.commentDto = {
@@ -497,11 +527,8 @@ export class SmsDetailsComponent implements OnInit {
 
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
-
     this.text = abc?.text + " ";
-
-    //  this.SmsReplyForm.patchValue({ text: this.smsText });
-    this.insertAtCaret(this.smsText);
+    this.insertAtCaret(this.text);
   }
 
   quickReplyList() {
@@ -519,6 +546,7 @@ export class SmsDetailsComponent implements OnInit {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = 'SMS';
     this.commentStatusDto.plateForm = 'SMS';
+    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
     this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .CommentRespond(this.commentStatusDto)
@@ -526,7 +554,7 @@ export class SmsDetailsComponent implements OnInit {
         // this.querryCompleted = true;
         // this.storeComId = comId;
         // alert(res.message);
-        this.getSmsData();
+        // this.getSmsData();
       });
   }
   queryCompleted(comId: any) {
@@ -540,9 +568,10 @@ export class SmsDetailsComponent implements OnInit {
         this.querryCompleted = true;
         // this.storeComId = comId;
         // alert(res.message);
-        this.getSmsData();
+        // this.getSmsData();
       });
   }
+  userProfileId = 0;
 
   SendSmsInformation(comId: any) {
     this.SmsData.forEach((xyz: any) => {
@@ -556,7 +585,9 @@ export class SmsDetailsComponent implements OnInit {
           this.smsId = comment.id;
           this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
+          this.profileId = Number(localStorage.getItem('profileId'));
           this.postType = comment.contentType;
+          this.userProfileId = this.SmsData[0].user.id;
         }
       });
     });
@@ -567,7 +598,9 @@ export class SmsDetailsComponent implements OnInit {
     commentId: new UntypedFormControl(this.ReplyDto.commentId),
     teamId: new UntypedFormControl(this.ReplyDto.teamId),
     platform: new UntypedFormControl(this.ReplyDto.platform),
+    // profileId: new UntypedFormControl(this.ReplyDto.profileId),
     contentType: new UntypedFormControl(this.ReplyDto.contentType),
+    userProfileId: new FormControl(this.ReplyDto.userProfileId),
   });
   
   text:string="";
@@ -597,6 +630,7 @@ export class SmsDetailsComponent implements OnInit {
         teamId: this.agentId,
         platform: this.platform,
         contentType: this.postType,
+        userProfileId : this.userProfileId
       });
   
       formData.append(
@@ -611,7 +645,7 @@ export class SmsDetailsComponent implements OnInit {
             this.spinner1running = false;
       this.SpinnerService.hide();
             this.clearInputField();
-            this.getSmsData();
+            // this.getSmsData();
             
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
@@ -796,18 +830,12 @@ export class SmsDetailsComponent implements OnInit {
     });
     this.changeDetect.detectChanges();
   }
-  onScroll() {
-    if (this.totalUnrespondedCmntCountByCustomer > 10) {
-      this.pageSize = this.pageSize + 10;
-      this.getSmsData();
-    }
-  }
 
   updateBulkQueryStatusDataListner() {
     this.groupArrays.forEach((cmnt: any) => {
       cmnt.items.forEach((singleCmnt: any) => {
         this.queryStatus.forEach((querry: any) => {
-          if (singleCmnt.id == querry.commentId) {
+          if (singleCmnt.id == querry.queryId) {
             singleCmnt.queryStatus = querry.queryStatus;
             this.totalUnrespondedCmntCountByCustomer = 0;
           }
@@ -851,5 +879,26 @@ export class SmsDetailsComponent implements OnInit {
     this.radioInput.nativeElement.checked = false;
     
   }
-
+  updateQueryStatusDataListner() {
+    this.groupArrays.forEach((cmnt: any) => {
+      cmnt.items.forEach((singleCmnt: any) => {
+        if (singleCmnt.id == this.queryStatus.queryId) {
+          singleCmnt.queryStatus = this.queryStatus.queryStatus;
+          singleCmnt.isLikedByAdmin = this.queryStatus.isLikes;
+        }
+      });
+    });
+    this.changeDetect.detectChanges();
+  }
+  replyDataListner(res:any) {
+    this.groupArrays.forEach((cmnt: any) => {
+      cmnt.items.forEach((singleCmnt: any) => {
+        if (singleCmnt.id == res.commentId) {
+          singleCmnt.replies.push(res);
+          singleCmnt.queryStatus = res.queryStatus;
+        }
+      });
+    });
+    this.changeDetect.detectChanges();
+  }
   }

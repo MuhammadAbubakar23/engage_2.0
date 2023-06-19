@@ -217,6 +217,9 @@ export class InstagramComponent implements OnInit {
   messageDto = new messagesDto();
 
   updateCommentsDataListener() {
+    if(!this.id){
+      this.id = localStorage.getItem('storeOpenedId') || '{}'
+    }
     this.updatedComments.forEach((xyz: any) => {
       if (this.id == xyz.userId) {
         this.commentDto = {
@@ -277,6 +280,9 @@ export class InstagramComponent implements OnInit {
   }
 
   updateMessagesDataListener() {
+    if(!this.id){
+      this.id = localStorage.getItem('storeOpenedId') || '{}'
+    }
     this.updatedMessages.forEach((xyz: any) => {
       if (this.id == xyz.fromId) {
         this.messageDto = {
@@ -536,8 +542,6 @@ export class InstagramComponent implements OnInit {
 
   text:string=""
   submitInstagramCommentReply() {
-    this.spinner1running = true;
-      this.SpinnerService.show();
     if(this.InstacommentId == 0){
       this.reloadComponent('selectComment');
     } else {
@@ -577,6 +581,9 @@ export class InstagramComponent implements OnInit {
       );
       if((this.instagramCommentReplyForm.value.text !== "" && this.instagramCommentReplyForm.value.text !== null) 
             || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
+              
+    this.spinner1running = true;
+    this.SpinnerService.show();
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.spinner1running = false;
@@ -1347,8 +1354,6 @@ export class InstagramComponent implements OnInit {
   });
 
   submitInstagramMessageReply() {
-    this.spinner1running = true;
-      this.SpinnerService.show();
     if(this.msgId == 0){
       this.reloadComponent('selectComment');
     } else {
@@ -1370,6 +1375,7 @@ export class InstagramComponent implements OnInit {
         contentType: this.postType,
         profileId: this.profileId,
         profilePageId: this.profilePageId,
+        userProfileId : this.userProfileId
       });
   
       formData.append(
@@ -1378,6 +1384,9 @@ export class InstagramComponent implements OnInit {
       );
       if((this.instagramMessageReplyForm.value.text !== "" && this.instagramMessageReplyForm.value.text !== null) 
             || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
+              
+    this.spinner1running = true;
+    this.SpinnerService.show();
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.spinner1running = false;

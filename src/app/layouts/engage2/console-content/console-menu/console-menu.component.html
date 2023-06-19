@@ -1,24 +1,25 @@
 <div class="leftbar-console-expanded">
     <div class="sidebar-header pe-3 ps-3 row">
         <h5 class="fw-bold mt-3 ms-1 col-8">
-            <a (click)="updatevalue('consoleHeader')" 
+            <a (click)="updatevalue('consoleHeader')"
                 [routerLink]="['/console/home']">Console</a>
         </h5>
-        <!-- 
+        <!--
         <div class="create-button mt-3 col-3">
-            <button id="connectFormButton" 
+            <button id="connectFormButton"
                 class="iconButton medium notification iconHover custom-fa-col show"
-                (click)="updatevalue('consoleConnectFormHeader')" 
+                (click)="updatevalue('consoleConnectFormHeader')"
                 [routerLink]="['/console/connect-form']">
                 <i class="fal fa-plus" style="color: white;"></i>
             </button>
-        </div> 
+        </div>
         -->
     </div>
+    <!-- Menus From DB -->
     <ul class="list-group console-list mt-2" data-scrollbar="true" tabindex="-1"
         style="overflow-y: auto; outline: none;">
         <!-- <ng-select [items]="SuperTeamOptions"
-           bindLabel="name" 
+           bindLabel="name"
            bindValue="id"
            [(ngModel)]="SuperTeamSelected"
            [searchable]="false"
@@ -37,7 +38,7 @@
             [attr.ata-bs-target]="(menu.subMenu?.length>=1)?'#sidebar1':''"
             [attr.aria-expanded]="(menu.subMenu?.length>=1)?'false':''"
             [attr.aria-controls]="(menu.subMenu?.length>=1)?'sidebar1':''" -->
-            
+
             <ng-template [ngIf]="menu.subMenu?.length<1" [ngIfElse]="showWithSubMenu">
                 <li class="list-group-item list-group-item-action" >
                     <a (click)="updatevalue(menu.link)" [routerLink]="['/console/'+menu.link]"
@@ -48,7 +49,7 @@
                 </li>
             </ng-template>
             <ng-template #showWithSubMenu>
-                <li class="list-group-item list-group-item-action collapsed" type="button" 
+                <li class="list-group-item list-group-item-action collapsed" type="button"
                     data-bs-toggle="collapse" aria-expanded="false"
                     [attr.data-bs-target]="'#'+menu.slug"  [attr.aria-controls]="menu.slug">
                     <a class="d-flex chevron-icon align-items-center">
@@ -68,7 +69,7 @@
             </ng-template>
         </div>
 
-        <!-- <li class="list-group-item list-group-item-action collapsed" type="button" 
+        <!-- <li class="list-group-item list-group-item-action collapsed" type="button"
         data-bs-toggle="collapse"
                 data-bs-target="#sidebar1" aria-expanded="false" aria-controls="sidebar1">
                 <a class="d-flex chevron-icon align-items-center">
@@ -97,5 +98,147 @@
                 </li>
             </ul> -->
     </ul>
+    <!-- Menus From DB -->
+
+    <!-- Hard Coded Menus -->
+
+    <ul class="list-group console-list mt-2" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
+        <div class="scroll-content">
+            <li class="list-group-item list-group-item-action">
+                <a (click)="updatevalue('channels')" [routerLink]="['/console/channels']" class="d-flex align-items-center">
+                    <i class="fal fa-share-alt pe-2"></i>
+                    Channels
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#sidebar2" aria-expanded="true" aria-controls="sidebar2">
+                <a class="d-flex chevron-icon align-items-center" href="#">
+                    <i class="fal fa-clone pe-2"></i>
+                    Users &amp; Teams
+                </a>
+            </li>
+            <ul class="list-unstyled-inner collapse" id="sidebar2">
+                <li class="list-group-item list-group-item-action">
+                    <a (click)="updatevalue('users')" [routerLink]="['/console/users']" class="d-flex align-items-center">
+                        <i class="fal fa-users pe-2"></i>
+                        Users
+                    </a>
+                </li>
+                <li class="list-group-item list-group-item-action">
+                    <a (click)="updatevalue('teams')" [routerLink]="['/console/teams']" class="d-flex align-items-center">
+                        <i class="fal fa-users-class pe-2"></i>
+                        Teams
+                    </a>
+                </li>
+            </ul>
+            <li class="list-group-item list-group-item-action">
+                <a (click)="updatevalue('rules')" [routerLink]="['/console/rules']" class="d-flex align-items-center">
+                    <i class="fal fa-sliders-v pe-2"></i>
+                    Rules
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <a (click)="updatevalue('routes')" [routerLink]="['/console/routes']" class="d-flex align-items-center">
+                    <i class="fal fa-chart-network pe-2"></i>
+                    EnteractRoute
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#sidebar1" aria-expanded="true" aria-controls="sidebar1">
+                <a class="d-flex chevron-icon align-items-center" href="#">
+                    <i class="fal fa-clone pe-2"></i>
+                    Templates
+                </a>
+            </li>
+            <ul class="list-unstyled-inner collapse" id="sidebar1">
+                <li class="list-group-item list-group-item-action d-flex align-items-center">
+                    <a (click)="updatevalue('templates/messages')" [routerLink]="['/console/templates/messages']" class="d-flex align-items-center">
+                        <i class="fal fa-chevron-right pe-2"></i>
+                        Messages
+                    </a>
+                </li>
+                <li class="list-group-item list-group-item-action d-flex align-items-center">
+                    <a (click)="updatevalue('templates/signatures')" [routerLink]="['/console/templates/signatures']" class="d-flex align-items-center">
+                        <i class="fal fa-chevron-right pe-2"></i>
+                        Signatures
+                    </a>
+                </li>
+                <li class="list-group-item list-group-item-action d-flex align-items-center">
+                    <a (click)="updatevalue('templates/quickResponse')" [routerLink]="['/console/templates/quickResponse']" class="d-flex align-items-center">
+                        <i class="fal fa-chevron-right pe-2"></i>
+                        Quick Response
+                    </a>
+                </li>
+            </ul>
+            <li class="list-group-item list-group-item-action">
+                <a (click)="updatevalue('business-hours')" [routerLink]="['/console/business-hours']" class="d-flex align-items-center">
+                    <i class="fal fa-business-time pe-2"></i>
+                    Business hours
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <a (click)="updatevalue('tags')" [routerLink]="['/console/tags']" class="d-flex align-items-center">
+                    <i class="fal fa-tags pe-2"></i>
+                    Tags
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <a (click)="updatevalue('roles-permissions')" [routerLink]="['/console/roles-permissions']" class="d-flex align-items-center">
+                    <i class="fal fa-shield-check pe-2"></i>
+                    Roles &amp; Permissions
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <a (click)="updatevalue('sla-policies')" [routerLink]="['/console/sla-policies']" class="d-flex align-items-center">
+                    <i class="fal fa-flag pe-2"></i>
+                    SLA Policies
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <a (click)="updatevalue('skills')" [routerLink]="['/console/skills']" class="d-flex align-items-center">
+                    <i class="fal fa-fish pe-2"></i>
+                    Skills
+                </a>
+            </li>
+            <!-- <li class="list-group-item list-group-item-action">
+                <a href="contacts.html" class="d-flex align-items-center">
+                    <i class="fal fa-address-book pe-2"></i>
+                    Contacts
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <a href="#" class="d-flex align-items-center">
+                    <i class="fal fa-clipboard pe-2"></i>
+                    Case Management
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <a href="documents.html" class="d-flex align-items-center">
+                    <i class="fal fa-folder-tree pe-2"></i>
+                    Documents
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <a href="knowledge-base.html" class="d-flex align-items-center">
+                    <i class="fal fa-book-open pe-2"></i>
+                    Knowledge Base
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <a href="create-preferences.html" class="d-flex align-items-center">
+                    <i class="fal fa-user-cog pe-2"></i>
+                    Preferences
+                </a>
+            </li>
+            <li class="list-group-item list-group-item-action">
+                <a href="help.html" class="d-flex align-items-center">
+                    <i class="fal fa-question-circle pe-2"></i>
+                    Help
+                </a>
+            </li> -->
+        </div>
+    </ul>
+    
+    <!-- Hard Coded Menus -->
 </div>
 <a href="javascript:void;" class="panelToggle"></a>

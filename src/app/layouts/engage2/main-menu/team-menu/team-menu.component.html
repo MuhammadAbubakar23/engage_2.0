@@ -1,3 +1,4 @@
+<!-- Coming From DB -->
 <ng-container *ngFor="let menu of menus$" >
     <a (click)="update(menu.link)"  routerLinkActive="active" ariaCurrentWhenActive="page"
     class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
@@ -11,8 +12,36 @@
     </div>
     <!-- <span class="badge rounded-pill bg-light text-dark">38</span> -->
 </a>
-<!-- (click)="updatevalue('starredHeader')" -->
 </ng-container>
+
+<!-- Hard coded -->
+<a (click)="update('all-inboxes')"
+    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
+    <div class="list-group-text d-flex align-items-center">
+        <div class="iconButton medium">
+            <i class="fal fa-inbox ice"></i>
+        </div>
+        <div class="itemLabel">
+            All Inboxes
+        </div>
+    </div>
+    <!-- <span class="badge rounded-pill bg-light text-dark">14</span> -->
+</a>
+<a (click)="update('all-inboxes/sent')"
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
+    <div class="list-group-text d-flex align-items-center">
+        <div class="iconButton medium">
+            <i class="fal fa-paper-plane ice"></i>
+        </div>
+        <div class="itemLabel">
+            Sent
+        </div>
+    </div>
+    <!-- <span class="badge rounded-pill bg-light text-dark">32</span> -->
+</a>
+
+<!-- Hard coded -->
+
 
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"

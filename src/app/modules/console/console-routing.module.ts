@@ -110,11 +110,12 @@ const routes: Routes = [
         path:'routes',
         loadComponent: () => import('./components/enteract-route/enteract-route.component').then(c => c.EnteractRouteComponent)
         
-      },{
-        path:'sla-policies',
-        loadComponent: () => import('./components/sla-policies/sla-policies.component').then(c => c.SlaPoliciesComponent)
-        
       },
+      // {
+      //   path:'sla-policies',
+      //   loadComponent: () => import('./components/sla-policies/sla-policies.component').then(c => c.SlaPoliciesComponent)
+        
+      // },
       // {
       //   path:'business-hours',
       //   loadComponent: () => import('./components/business-hours/business-hours.component').then(c => c.BusinessHoursComponent)

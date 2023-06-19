@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { first, pipe, Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -201,8 +201,11 @@ export class TwitterComponent implements OnInit {
 
   updatedComments: any;
   updatedMessages: any;
-
+  userProfileId = 0;
   updateCommentsDataListener() {
+    if(!this.id){
+      this.id = localStorage.getItem('storeOpenedId') || '{}'
+    }
     this.updatedComments.forEach((xyz: any) => {
       if (this.id == xyz.userId) {
         this.commentDto = {
@@ -934,6 +937,7 @@ export class TwitterComponent implements OnInit {
           this.postType = comment.contentType;
           this.profileId = xyz.post.profile.profile_Id;
           this.profilePageId = xyz.post.profile.page_Id;
+          this.userProfileId = this.TwitterConversation[0].user.id;
         }
       });
     });
@@ -947,13 +951,12 @@ export class TwitterComponent implements OnInit {
     contentType: new UntypedFormControl(this.ReplyDto.contentType),
     profileId: new UntypedFormControl(this.ReplyDto.profileId),
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
+    userProfileId: new FormControl(this.ReplyDto.userProfileId),
   });
 
   text:string="";
 
   submitTwitterReply() {
-    this.spinner1running = true;
-      this.SpinnerService.show();
     if(this.tweetId == 0){
       this.reloadComponent('selectComment');
     } else {
@@ -985,6 +988,7 @@ export class TwitterComponent implements OnInit {
         contentType: this.postType,
         profileId: this.profileId,
         profilePageId: this.profilePageId,
+        userProfileId : this.userProfileId
       });
   
       formData.append(
@@ -993,6 +997,9 @@ export class TwitterComponent implements OnInit {
       );
       if((this.TwitterRepliesForm.value.text !== "" && this.TwitterRepliesForm.value.text !== null) 
             || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
+              
+    this.spinner1running = true;
+    this.SpinnerService.show();
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.spinner1running = false;
@@ -1057,6 +1064,7 @@ export class TwitterComponent implements OnInit {
         this.postType = msg.contentType;
         this.profileId = msg.profileId;
         this.profilePageId = msg.profilePageId;
+        this.userProfileId = this.TwitterMessage[0].user.id;
       }
     });
   }
@@ -1068,10 +1076,9 @@ export class TwitterComponent implements OnInit {
     contentType: new UntypedFormControl(this.ReplyDto.contentType),
     profileId: new UntypedFormControl(this.ReplyDto.profileId),
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
+    userProfileId: new FormControl(this.ReplyDto.userProfileId),
   });
   submitTwitterMessageReply() {
-    this.spinner1running = true;
-      this.SpinnerService.show();
     if(this.twitterMsgId == 0){
       this.reloadComponent('selectComment');
     } else {
@@ -1103,6 +1110,7 @@ export class TwitterComponent implements OnInit {
         contentType: this.postType,
         profileId: this.profileId,
         profilePageId: this.profilePageId,
+        userProfileId : this.userProfileId
       });
   
       formData.append(
@@ -1111,6 +1119,9 @@ export class TwitterComponent implements OnInit {
       );
       if((this.twitterMessageReplyForm.value.text !== "" && this.twitterMessageReplyForm.value.text !== null) 
             || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
+              
+    this.spinner1running = true;
+    this.SpinnerService.show();
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.spinner1running = false;
@@ -1525,10 +1536,10 @@ export class TwitterComponent implements OnInit {
   }
 
   isImage(attachment: any): boolean {
-    return attachment.contentType?.startsWith('image/');
+    return attachment.contentType?.toLowerCase().startsWith('image');
   }
 
   isVideo(attachment: any): boolean {
-    return attachment.contentType?.startsWith('video/');
+    return attachment.contentType?.toLowerCase().startsWith('video');
   }
 }

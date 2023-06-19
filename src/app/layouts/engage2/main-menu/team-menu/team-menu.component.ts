@@ -34,7 +34,7 @@ export class TeamMenuComponent implements OnInit {
     this.MenuStore
       .select(getEmargingEqual('team_main_left_menu'))
       .subscribe((item:any) => {
-        this.menus$ = [...item];
+        // this.menus$ = [...item];
       });
     
     // // console.log(this.menu$);
@@ -44,14 +44,14 @@ export class TeamMenuComponent implements OnInit {
     // // console.log("this.menu$");
   }
 
-  assignedProfile = localStorage.getItem('assignedProfile');
+  // assignedProfile = localStorage.getItem('assignedProfile');
 
   update(menuLink: any) {
-    
+    debugger
     if (
-      this.assignedProfile == null ||
-      this.assignedProfile == '' ||
-      this.assignedProfile == undefined
+      localStorage.getItem('assignedProfile') == null ||
+      localStorage.getItem('assignedProfile') == '' ||
+      localStorage.getItem('assignedProfile') == undefined
     ) {
       this._route.navigateByUrl('/' + menuLink);
     } else {

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators, FormControl } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -190,9 +190,12 @@ export class LinkedInComponent implements OnInit {
   commentDto = new commentsDto();
   
   updatedComments:any;
-
+  userProfileId = 0;
 
   updateCommentsDataListener() {
+    if(!this.id){
+      this.id = localStorage.getItem('storeOpenedId') || '{}'
+    }
         this.updatedComments.forEach((xyz: any) => {
           if (this.id == xyz.userId) {
             this.commentDto = {
@@ -465,6 +468,7 @@ detectChanges(): void {
     contentType: new UntypedFormControl(this.ReplyDto.contentType),
     profileId: new UntypedFormControl(this.ReplyDto.profileId),
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
+    userProfileId: new FormControl(this.ReplyDto.userProfileId),
   });
 
   profileId: string = '';
@@ -486,6 +490,7 @@ detectChanges(): void {
           this.postType = comment.contentType;
           this.profileId = xyz.post.profile.profile_Id;
           this.profilePageId = xyz.post.profile.page_Id;
+          this.userProfileId = this.LinkedInData[0].user.id;
         }
       });
     });
@@ -499,8 +504,6 @@ detectChanges(): void {
   isAttachment = false;
 
   submitLinkedInCommentReply() {
-    this.spinner1running = true;
-      this.SpinnerService.show();
     if(this.commentId == 0){
       this.reloadComponent('selectComment');
     } else {
@@ -531,6 +534,7 @@ detectChanges(): void {
         contentType: this.postType,
         profileId: this.profileId,
         profilePageId: this.profilePageId,
+        userProfileId : this.userProfileId
       });
   
       formData.append(
@@ -539,6 +543,9 @@ detectChanges(): void {
       );
       if((this.linkedInReplyForm.value.text !== "" && this.linkedInReplyForm.value.text !== null) 
             || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
+              
+    this.spinner1running = true;
+    this.SpinnerService.show();
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.spinner1running = false;
@@ -1026,10 +1033,10 @@ detectChanges(): void {
   }
 
   isImage(attachment: any): boolean {
-    return attachment.contentType?.startsWith('image/');
+    return attachment.contentType?.toLowerCase().startsWith('image');
   }
 
   isVideo(attachment: any): boolean {
-    return attachment.contentType?.startsWith('video/');
+    return attachment.contentType?.toLowerCase().startsWith('video');
   }
 }

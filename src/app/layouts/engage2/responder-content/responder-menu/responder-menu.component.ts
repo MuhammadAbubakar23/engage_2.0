@@ -151,9 +151,9 @@ export class ResponderMenuComponent implements OnInit {
   ) {
     
     if (
-      this.assignedProfile == null ||
-      this.assignedProfile == '' ||
-      this.assignedProfile == undefined
+      localStorage.getItem('assignedProfile') == null ||
+      localStorage.getItem('assignedProfile') == '' ||
+      localStorage.getItem('assignedProfile') == undefined
     ) {
       this.fetchId.setPlatform(platform);
       if (localStorage.getItem('parent') == platform) {

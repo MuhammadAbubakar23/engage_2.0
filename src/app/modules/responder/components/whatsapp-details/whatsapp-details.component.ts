@@ -5,7 +5,12 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -17,6 +22,7 @@ import { QueryStatusService } from 'src/app/services/queryStatusService/query-st
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
+import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
 import { CommentStatusDto } from 'src/app/shared/Models/CommentStatusDto';
@@ -34,9 +40,9 @@ import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ti
   styleUrls: ['./whatsapp-details.component.scss'],
 })
 export class WhatsappDetailsComponent implements OnInit {
-
   @ViewChild('fileInput') fileInput!: ElementRef;
-  @ViewChild('radioInput', { static: false }) radioInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('radioInput', { static: false })
+  radioInput!: ElementRef<HTMLInputElement>;
   id = this.fetchId.id;
   slaId = this.fetchId.getSlaId();
 
@@ -47,7 +53,7 @@ export class WhatsappDetailsComponent implements OnInit {
   querryCompleted = false;
   activeTag = false;
   checkTag = false;
-  quickReplySearchText:string='';
+  quickReplySearchText: string = '';
   queryType = this.getQueryTypeService.getQueryType();
 
   insertSentimentForFeedDto = new InsertSentimentForFeedDto();
@@ -64,24 +70,26 @@ export class WhatsappDetailsComponent implements OnInit {
   getAppliedTagsList: any;
   QuickReplies: any;
   storeComId: any;
-  WhatsappMsgId: number=0;
+  WhatsappMsgId: number = 0;
   agentId: string = '';
   platform: string = '';
   postType: string = '';
   WhatsappMsgText: string = '';
   WhatsappMsgReply: string = '';
   ImageName: any;
-  ImageArray:any[]=[];
+  ImageArray: any[] = [];
   Keywords: any[] = [];
   TodayDate: any;
-  queryStatus:any;
-  newReply:any;
-  searchText: string='';
+  queryStatus: any;
+  newReply: any;
+  searchText: string = '';
   spinner1running = false;
   spinner2running = false;
 
-  pageNumber:number = 1;
-  pageSize:number = 10;
+  pageNumber: number = 1;
+  pageSize: number = 10;
+
+  profileId: number = 0;
 
   public Subscription!: Subscription;
   public criteria!: SortCriteria;
@@ -94,13 +102,14 @@ export class WhatsappDetailsComponent implements OnInit {
     private addTagService: AddTagService,
     private removeTagService: RemoveTagService,
     private updateCommentsService: UpdateCommentsService,
-    private queryStatusService : QueryStatusService,
-    private replyService : ReplyService,
+    private queryStatusService: QueryStatusService,
+    private replyService: ReplyService,
     private createTicketService: CreateTicketService,
-    private toggleService : ToggleService,
-    private ticketResponseService : TicketResponseService,
+    private toggleService: ToggleService,
+    private ticketResponseService: TicketResponseService,
     private applySentimentService: ApplySentimentService,
-    private getQueryTypeService : GetQueryTypeService
+    private getQueryTypeService: GetQueryTypeService,
+    private unrespondedCountService : UnRespondedCountService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -130,39 +139,53 @@ export class WhatsappDetailsComponent implements OnInit {
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
+        
         this.updatedComments = res;
         this.updateCommentsDataListener();
       });
-      this.Subscription = this.queryStatusService.receiveQueryStatus().subscribe((res) => {
-        
+    this.Subscription = this.queryStatusService
+      .receiveQueryStatus()
+      .subscribe((res) => {
         this.queryStatus = res;
         this.updateQueryStatusDataListner();
       });
-      this.Subscription = this.replyService.receiveReply().subscribe((res) => {
-        this.newReply = res;
-        this.replyDataListner();
-      });
-      this.Subscription = this.queryStatusService
+    this.Subscription = this.replyService.receiveReply().subscribe((res) => {
+      this.newReply = res;
+      this.replyDataListner();
+    });
+    this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
-        
         this.queryStatus = res;
         this.updateBulkQueryStatusDataListner();
       });
-      this.ticketResponseService.getTicketId().subscribe(res=>{
-        this.updateTicketId(res)
-      });
+    this.ticketResponseService.getTicketId().subscribe((res) => {
+      this.updateTicketId(res);
+    });
 
-      this.Subscription = this.applySentimentService
+    this.Subscription = this.applySentimentService
       .receiveSentiment()
       .subscribe((res) => {
         this.applySentimentListner(res);
+      });
+      this.Subscription = this.unrespondedCountService
+      .getUnRespondedCount()
+      .subscribe((res) => {
+        
+        if (res.contentCount.contentType == 'WM') {
+          this.totalUnrespondedCmntCountByCustomer =
+            res.contentCount.unrespondedCount;
+        }
       });
   }
 
   commentDto = new commentsDto();
   updatedComments: any;
   updateCommentsDataListener() {
+    
+    if(!this.id){
+      this.id = localStorage.getItem('storeOpenedId') || '{}'
+    }
     this.updatedComments.forEach((xyz: any) => {
       if (this.id == xyz.userId) {
         this.commentDto = {
@@ -183,7 +206,17 @@ export class WhatsappDetailsComponent implements OnInit {
           replies: [],
           sentiment: '',
           tags: [],
-        }
+          // fromId: xyz.fromId,
+          // fromName: xyz.fromName,
+          // fromProfilePic: xyz.fromProfilePic,
+          // toId: xyz.toId,
+          // toName: xyz.toName,
+          // msgText: xyz.msgText,
+          // agentId: xyz.agentId,
+          // customerSocailProfileId: xyz.agentId,
+          // profileId: xyz.profileId,
+          // profilePageId: xyz.profilePageId,
+        };
         this.WhatsappData[0].comments.push(this.commentDto);
         this.commentsArray.push(this.commentDto);
 
@@ -225,7 +258,7 @@ export class WhatsappDetailsComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -238,7 +271,7 @@ export class WhatsappDetailsComponent implements OnInit {
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
 
           this.WhatsappData?.forEach((msg: any) => {
-            this.senderId = msg.comments[0].to;
+            this.senderId = msg.comments[0].sendTo;
           });
 
           this.commentsArray = [];
@@ -278,7 +311,7 @@ export class WhatsappDetailsComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
       };
       this.SpinnerService.show();
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
@@ -313,11 +346,10 @@ export class WhatsappDetailsComponent implements OnInit {
         });
 
         this.WhatsappData.forEach((msg: any) => {
-          this.senderId = msg.comments[0].to;
+          this.senderId = msg.comments[0].sendTo;
         });
       });
-    }
-    else {
+    } else {
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -327,44 +359,46 @@ export class WhatsappDetailsComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
       };
       this.SpinnerService.show();
-      this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
-        this.SpinnerService.hide();
-        this.WhatsappData = res.List;
-        this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+      this.commondata
+        .GetChannelConversationDetail(this.filterDto)
+        .subscribe((res: any) => {
+          this.SpinnerService.hide();
+          this.WhatsappData = res.List;
+          this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
 
-        this.commentsArray = [];
-        this.WhatsappData.forEach((item: any) => {
-          item.comments.forEach((cmnt: any) => {
-            this.commentsArray.push(cmnt);
+          this.commentsArray = [];
+          this.WhatsappData.forEach((item: any) => {
+            item.comments.forEach((cmnt: any) => {
+              this.commentsArray.push(cmnt);
+            });
+            let groupedItems = this.commentsArray.reduce(
+              (acc: any, item: any) => {
+                const date = item.createdDate.split('T')[0];
+                if (!acc[date]) {
+                  acc[date] = [];
+                }
+                acc[date].push(item);
+                return acc;
+              },
+              {}
+            );
+
+            this.groupArrays = Object.keys(groupedItems).map((createdDate) => {
+              return {
+                createdDate,
+                items: groupedItems[createdDate],
+              };
+            });
+            // console.log('hello', this.groupArrays);
           });
-          let groupedItems = this.commentsArray.reduce(
-            (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
-              if (!acc[date]) {
-                acc[date] = [];
-              }
-              acc[date].push(item);
-              return acc;
-            },
-            {}
-          );
 
-          this.groupArrays = Object.keys(groupedItems).map((createdDate) => {
-            return {
-              createdDate,
-              items: groupedItems[createdDate],
-            };
+          this.WhatsappData.forEach((msg: any) => {
+            this.senderId = msg.comments[0].sendTo;
           });
-          // console.log('hello', this.groupArrays);
         });
-
-        this.WhatsappData.forEach((msg: any) => {
-          this.senderId = msg.comments[0].to;
-        });
-      });
     }
   }
 
@@ -451,6 +485,13 @@ export class WhatsappDetailsComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
+    if (type == 'both-text-and-attachment-added') {
+      this.AlterMsg = 'Text and Attachment cannot be sent at the same time';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'empty-input-field') {
       this.AlterMsg = 'Please write something!';
       this.toastermessage = true;
@@ -554,7 +595,9 @@ export class WhatsappDetailsComponent implements OnInit {
     this.insertSentimentForFeedDto.feedId = feedId.toString();
     this.insertSentimentForFeedDto.sentiment = sentimenName;
     this.insertSentimentForFeedDto.feedType = type;
-    this.insertSentimentForFeedDto.userId = Number(localStorage.getItem('agentId'));
+    this.insertSentimentForFeedDto.userId = Number(
+      localStorage.getItem('agentId')
+    );
 
     this.commondata
       .InsertSentiment(this.insertSentimentForFeedDto)
@@ -565,17 +608,13 @@ export class WhatsappDetailsComponent implements OnInit {
 
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
-
-    this.text = abc?.text + " ";
-
-    // this.WhatsappReplyForm.patchValue({ text: this.WhatsappMsgText });
-    this.insertAtCaret(this.WhatsappMsgText)
+    this.text = abc?.text + ' ';
+    this.insertAtCaret(this.text);
   }
 
   quickReplyList() {
     this.commondata.QuickReplyList().subscribe((res: any) => {
       this.QuickReplies = res;
-      // console.log('Quick Reply List ==>', this.QuickReplies);
     });
   }
 
@@ -583,6 +622,7 @@ export class WhatsappDetailsComponent implements OnInit {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = 'WM';
     this.commentStatusDto.plateForm = 'WhatsApp';
+    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
     this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .CommentRespond(this.commentStatusDto)
@@ -601,6 +641,7 @@ export class WhatsappDetailsComponent implements OnInit {
         this.querryCompleted = true;
       });
   }
+  userProfileId = 0;
 
   SendWhatsappInformation(comId: any) {
     this.WhatsappData.forEach((xyz: any) => {
@@ -614,7 +655,9 @@ export class WhatsappDetailsComponent implements OnInit {
           this.WhatsappMsgId = comment.id;
           this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
+          this.profileId = Number(localStorage.getItem('profileId'));
           this.postType = comment.contentType;
+          this.userProfileId = this.WhatsappData[0].user.id;
         }
       });
     });
@@ -625,14 +668,14 @@ export class WhatsappDetailsComponent implements OnInit {
     commentId: new UntypedFormControl(this.ReplyDto.commentId),
     teamId: new UntypedFormControl(this.ReplyDto.teamId),
     platform: new UntypedFormControl(this.ReplyDto.platform),
+    profileId: new UntypedFormControl(this.ReplyDto.profileId),
     contentType: new UntypedFormControl(this.ReplyDto.contentType),
+    userProfileId: new FormControl(this.ReplyDto.userProfileId),
   });
 
-  text:string="";
+  text: string = '';
   submitWhatsappReply() {
-    this.spinner1running = true;
-      this.SpinnerService.show();
-    if(this.WhatsappMsgId == 0){
+    if (this.WhatsappMsgId == 0) {
       this.reloadComponent('selectComment');
     } else {
       var formData = new FormData();
@@ -641,48 +684,62 @@ export class WhatsappDetailsComponent implements OnInit {
           formData.append('File', this.ImageName[index]);
         }
       }
-      
-    if (!this.WhatsappReplyForm.get('text')?.dirty) {
-      if(this.text !== ""){
-        this.WhatsappReplyForm.patchValue({
-          text: this.text
-        });
-    }
-    } else {
-      if (this.WhatsappReplyForm.value.text) {
-        this.WhatsappReplyForm.patchValue({
-          to: this.WhatsappReplyForm.value.text
-        });
+
+      if (!this.WhatsappReplyForm.get('text')?.dirty) {
+        if (this.text !== '') {
+          this.WhatsappReplyForm.patchValue({
+            text: this.text,
+          });
+        }
+      } else {
+        if (this.WhatsappReplyForm.value.text) {
+          this.WhatsappReplyForm.patchValue({
+            to: this.WhatsappReplyForm.value.text,
+          });
+        }
       }
-    }
       this.WhatsappReplyForm.patchValue({
         commentId: this.WhatsappMsgId,
         teamId: this.agentId,
         platform: this.platform,
         contentType: this.postType,
+        profileId : this.profileId,
+        userProfileId : this.userProfileId
       });
-  
+
       formData.append(
         'CommentReply',
         JSON.stringify(this.WhatsappReplyForm.value)
       );
-      if((this.WhatsappReplyForm.value.text !== "" && this.WhatsappReplyForm.value.text !== null) 
-            || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
+      if (
+        this.WhatsappReplyForm.value.text !== '' &&
+        this.WhatsappReplyForm.value.text !== null &&
+        this?.ImageName?.length > 0 &&
+        this.ImageName != undefined
+      ) {
+        this.reloadComponent('both-text-and-attachment-added');
+      } else if (
+        (this.WhatsappReplyForm.value.text !== '' &&
+          this.WhatsappReplyForm.value.text !== null) ||
+        (this?.ImageName?.length > 0 && this.ImageName != undefined)
+      ) {
+        this.spinner1running = true;
+        this.SpinnerService.show();
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.spinner1running = false;
-      this.SpinnerService.hide();
+            this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
             this.WhatsappReplyForm.reset();
           },
           ({ error }) => {
-          //  alert(error.message);
+            //  alert(error.message);
           }
         );
       } else {
-        this.reloadComponent('empty-input-field')
+        this.reloadComponent('empty-input-field');
       }
     }
     this.quickReplySearchText = '';
@@ -695,13 +752,13 @@ export class WhatsappDetailsComponent implements OnInit {
       this.isAttachment = true;
 
       const filesArray = Array.from(this.fileInput.nativeElement.files);
-      filesArray.forEach((attachment:any) => {
-        this.ImageArray.push(attachment)
+      filesArray.forEach((attachment: any) => {
+        this.ImageArray.push(attachment);
       });
-      const files = this.ImageArray.map((file:any) => file); // Create a new array with the remaining files
-        const newFileList = new DataTransfer();
-        files.forEach((file:any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
-        this.ImageName = newFileList.files;
+      const files = this.ImageArray.map((file: any) => file); // Create a new array with the remaining files
+      const newFileList = new DataTransfer();
+      files.forEach((file: any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+      this.ImageName = newFileList.files;
     }
   }
 
@@ -734,24 +791,24 @@ export class WhatsappDetailsComponent implements OnInit {
 
   removeAttachedFile(index: any) {
     const filesArray = Array.from(this.ImageName);
-      filesArray.splice(index, 1);
-      this.ImageArray.splice(index, 1);
-      
-      const files = filesArray.map((file:any) => file); // Create a new array with the remaining files
-      const newFileList = new DataTransfer();
-      files.forEach(file => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+    filesArray.splice(index, 1);
+    this.ImageArray.splice(index, 1);
 
-      this.fileInput.nativeElement.files = newFileList.files; 
-      this.detectChanges()
+    const files = filesArray.map((file: any) => file); // Create a new array with the remaining files
+    const newFileList = new DataTransfer();
+    files.forEach((file) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
 
-  if (this.ImageName.length == 0) {
-    this.isAttachment = false;
+    this.fileInput.nativeElement.files = newFileList.files;
+    this.detectChanges();
+
+    if (this.ImageName.length == 0) {
+      this.isAttachment = false;
+    }
   }
-}
 
-detectChanges(): void {
-  this.ImageName = this.fileInput.nativeElement.files;
-}
+  detectChanges(): void {
+    this.ImageName = this.fileInput.nativeElement.files;
+  }
   Emojies = [
     { id: 1, emoji: '🙁', tile: 'sad' },
     { id: 2, emoji: '😀', tile: 'happy' },
@@ -838,8 +895,8 @@ detectChanges(): void {
     this.groupArrays.forEach((cmnt: any) => {
       cmnt.items.forEach((singleCmnt: any) => {
         if (singleCmnt.id == this.queryStatus.queryId) {
-          singleCmnt.queryStatus = this.queryStatus.queryStatus
-          singleCmnt.isLikedByAdmin = this.queryStatus.isLikes
+          singleCmnt.queryStatus = this.queryStatus.queryStatus;
+          singleCmnt.isLikedByAdmin = this.queryStatus.isLikes;
         }
       });
     });
@@ -849,7 +906,7 @@ detectChanges(): void {
     this.groupArrays.forEach((cmnt: any) => {
       cmnt.items.forEach((singleCmnt: any) => {
         if (singleCmnt.id == this.newReply.commentId) {
-          singleCmnt.replies.push(this.newReply)
+          singleCmnt.replies.push(this.newReply);
           singleCmnt.queryStatus = this.newReply.queryStatus;
         }
       });
@@ -858,8 +915,8 @@ detectChanges(): void {
   }
 
   onScroll() {
-    if(this.totalUnrespondedCmntCountByCustomer > 10){
-      this.pageSize = this.pageSize + 10
+    if (this.totalUnrespondedCmntCountByCustomer > 10) {
+      this.pageSize = this.pageSize + 10;
       this.getWhatsappData();
     }
   }
@@ -867,8 +924,8 @@ detectChanges(): void {
     
     this.groupArrays.forEach((cmnt: any) => {
       cmnt.items.forEach((singleCmnt: any) => {
-        this.queryStatus.forEach((querry:any) => {
-          if (singleCmnt.id == querry.commentId) {
+        this.queryStatus.forEach((querry: any) => {
+          if (singleCmnt.id == querry.queryId) {
             singleCmnt.queryStatus = querry.queryStatus;
             this.totalUnrespondedCmntCountByCustomer = 0;
           }
@@ -891,7 +948,6 @@ detectChanges(): void {
   }
 
   applySentimentListner(res: any) {
-
     this.groupArrays.forEach((cmnt: any) => {
       cmnt.items.forEach((singleCmnt: any) => {
         if (singleCmnt.id == res.feedId) {
@@ -906,22 +962,21 @@ detectChanges(): void {
     this.getWhatsappData();
   }
 
-  closeQuickResponseSidebar(){
+  closeQuickResponseSidebar() {
     this.quickReplySearchText = '';
     this.radioInput.nativeElement.checked = false;
-    
   }
 
   isImage(attachment: any): boolean {
-    return attachment.contentType?.startsWith('image/');
+    return attachment.contentType?.toLowerCase().startsWith('image');
   }
 
   isVideo(attachment: any): boolean {
-    return attachment.contentType?.startsWith('video/');
+    return attachment.contentType?.toLowerCase().startsWith('video');
   }
 
   isAudio(attachment: any): boolean {
-    return attachment.contentType?.startsWith('audio/');
+    return attachment.contentType?.toLowerCase().startsWith('audio');
   }
 
   isOther(attachment: any): boolean {
@@ -931,5 +986,4 @@ detectChanges(): void {
       !this.isAudio(attachment)
     );
   }
-
 }

@@ -36,7 +36,7 @@ export class RoleMenuComponent implements OnInit {
 
  ngOnInit(): void {
    this.MenuStore.select(getEmargingEqual("role_main_left_menu")).subscribe((item:any) => {
-     this.menus$ = [...item];
+    //  this.menus$ = [...item];
    })
    
    // this.permissions$  = this.PermissionStore.select(getPermissionBySlug("_upur_"));
@@ -49,14 +49,14 @@ export class RoleMenuComponent implements OnInit {
    // console.log("this.menu$");
  }
 
-  assignedProfile = localStorage.getItem('assignedProfile');
+  // assignedProfile = localStorage.getItem('assignedProfile');
 
   update(menuLink: any) {
     
     if (
-      this.assignedProfile == null ||
-      this.assignedProfile == '' ||
-      this.assignedProfile == undefined
+      localStorage.getItem('assignedProfile') == null ||
+      localStorage.getItem('assignedProfile') == '' ||
+      localStorage.getItem('assignedProfile') == undefined
     ) {
       this._route.navigateByUrl('/' + menuLink);
     } else {

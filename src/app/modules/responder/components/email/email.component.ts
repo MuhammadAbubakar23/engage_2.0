@@ -176,6 +176,9 @@ export class EmailComponent implements OnInit {
   senderEmailAddress: any;
 
   updateCommentsDataListener() {
+    if(!this.id){
+      this.id = localStorage.getItem('storeOpenedId') || '{}'
+    }
     this.updatedComments.forEach((xyz: any) => {
       if (this.id == xyz.userId) {
         this.commentDto = {
@@ -831,6 +834,7 @@ export class EmailComponent implements OnInit {
           this.platform = xyz.platform;
           this.postType = comment.contentType;
           this.emailTo = comment.to;
+          this.userProfileId = this.Emails[0].user.id;
 
           if (comment.bcc) {
             this.emailBcc = comment.bcc;
@@ -877,6 +881,7 @@ export class EmailComponent implements OnInit {
   }
 
   sendReplyInformation(id: any) {
+    debugger
     this.emailFrom = [];
     this.Emails.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
@@ -895,6 +900,7 @@ export class EmailComponent implements OnInit {
           this.emailSubject = comment.message;
           this.emailFromInString = this.senderEmailAddress;
           this.emailCcInString = '';
+          this.userProfileId = this.Emails[0].user.id;
         }
       });
     });
@@ -902,13 +908,12 @@ export class EmailComponent implements OnInit {
 
   ImageName: any;
   ImageArray: any[] = [];
+  userProfileId = 0;
 
   replyTo: any[] = [];
   replyCc: any[] = [];
   replyBcc: any[] = [];
   submitEmailReply() {
-    this.spinner1running = true;
-      this.SpinnerService.show();
     if (!this.emailReplyForm.get('to')?.dirty) {
       this.emailReplyForm.patchValue({
         to: JSON.stringify(this.emailFrom),
@@ -975,9 +980,13 @@ export class EmailComponent implements OnInit {
       teamId: this.agentId,
       platform: this.platform,
       contentType: this.postType,
+      userProfileId : this.userProfileId
     });
 
     formData.append('CommentReply', JSON.stringify(this.emailReplyForm.value));
+    
+    this.spinner1running = true;
+      this.SpinnerService.show();
     this.commondata.ReplyComment(formData).subscribe(
       
       (res: any) => {
@@ -1330,15 +1339,15 @@ export class EmailComponent implements OnInit {
   }
 
   isImage(attachment: any): boolean {
-    return attachment.contentType?.startsWith('image/');
+    return attachment.contentType?.toLowerCase().startsWith('image');
   }
 
   isVideo(attachment: any): boolean {
-    return attachment.contentType?.startsWith('video/');
+    return attachment.contentType?.toLowerCase().startsWith('video');
   }
 
   isAudio(attachment: any): boolean {
-    return attachment.contentType?.startsWith('audio/');
+    return attachment.contentType?.toLowerCase().startsWith('audio');
   }
 
   isOther(attachment: any): boolean {

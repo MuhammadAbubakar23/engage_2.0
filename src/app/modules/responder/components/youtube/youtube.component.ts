@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -164,9 +164,12 @@ export class YoutubeComponent implements OnInit {
   commentDto = new commentsDto();
 
   updatedComments:any;
-
+  userProfileId = 0;
 
   updateCommentsDataListener() {
+    if(!this.id){
+      this.id = localStorage.getItem('storeOpenedId') || '{}'
+    }
         this.updatedComments.forEach((xyz: any) => {
           if (this.id == xyz.userId) {
             this.commentDto = {
@@ -449,6 +452,7 @@ export class YoutubeComponent implements OnInit {
     contentType: new UntypedFormControl(this.ReplyDto.contentType),
     profileId: new UntypedFormControl(this.ReplyDto.profileId),
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
+    userProfileId: new FormControl(this.ReplyDto.userProfileId),
   });
   profileId: string = '';
   profilePageId: string = '';
@@ -468,6 +472,7 @@ export class YoutubeComponent implements OnInit {
           this.postType = comment.contentType;
           this.profileId = xyz.post.profile.profile_Id;
           this.profilePageId = xyz.post.profile.page_Id;
+          this.userProfileId = this.YoutubeData[0].user.id;
         }
       });
     });
@@ -476,8 +481,6 @@ export class YoutubeComponent implements OnInit {
   text:string="";
 
   submitYoutubeCommentReply() {
-    this.spinner1running = true;
-      this.SpinnerService.show();
     if(this.youtubecommentId == 0){
       this.reloadComponent('selectComment');
     } else {
@@ -504,6 +507,7 @@ export class YoutubeComponent implements OnInit {
         contentType: this.postType,
         profileId: this.profileId,
         profilePageId: this.profilePageId,
+        userProfileId : this.userProfileId
       });
   
       formData.append(
@@ -511,6 +515,9 @@ export class YoutubeComponent implements OnInit {
         JSON.stringify(this.youtubeCommentReplyForm.value)
       );
       if(this.youtubeCommentReplyForm.value.text !== "" && this.youtubeCommentReplyForm.value.text !== null){
+        
+    this.spinner1running = true;
+    this.SpinnerService.show();
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.spinner1running = false;

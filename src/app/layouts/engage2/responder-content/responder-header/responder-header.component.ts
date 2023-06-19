@@ -292,9 +292,9 @@ export class ResponderHeaderComponent implements OnInit {
   updatevalue(id: any, platform: any) {
     
     // if (
-    //   this.assignedProfile == null ||
-    //   this.assignedProfile == '' ||
-    //   this.assignedProfile == undefined
+    //   localStorage.getItem('assignedProfile') == null ||
+    //   localStorage.getItem('assignedProfile') == '' ||
+    //   localStorage.getItem('assignedProfile') == undefined
     // ) {
       this.commonService.GetProfileDetails(id).subscribe((res: any) => {
         this.profileId = res.id;
@@ -1252,7 +1252,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.postType = channel;
     }
     
-   // if(this.assignedProfile == null || this.assignedProfile == '' || this.assignedProfile == undefined){
+   // if(localStorage.getItem('assignedProfile') == null || localStorage.getItem('assignedProfile') == '' || localStorage.getItem('assignedProfile') == undefined){
     if (this.postType == 'IC' || this.postType == 'Instagram') {
       this.facebookTab = false;
       this.instagramTab = true;
