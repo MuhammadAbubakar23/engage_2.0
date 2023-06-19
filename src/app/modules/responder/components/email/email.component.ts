@@ -81,7 +81,7 @@ export class EmailComponent implements OnInit {
     private replyService: ReplyService,
     private unrespondedCountService: UnRespondedCountService,
     private applySentimentService: ApplySentimentService,
-    private getQueryTypeService : GetQueryTypeService
+    private getQueryTypeService: GetQueryTypeService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = null;
@@ -176,8 +176,9 @@ export class EmailComponent implements OnInit {
   senderEmailAddress: any;
 
   updateCommentsDataListener() {
-    if(!this.id){
-      this.id = localStorage.getItem('storeOpenedId') || '{}'
+    debugger
+    if (!this.id) {
+      this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
     this.updatedComments.forEach((xyz: any) => {
       if (this.id == xyz.userId) {
@@ -200,7 +201,7 @@ export class EmailComponent implements OnInit {
           sentiment: '',
           tags: [],
         };
-        this.Emails.forEach((item: any) => {
+        this.Emails?.forEach((item: any) => {
           this.commentsArray = [];
           item.comments.push(this.commentDto);
           item.comments.forEach((cmnt: any) => {
@@ -227,11 +228,12 @@ export class EmailComponent implements OnInit {
               };
             }
           );
-          item.groupedComments.forEach((group: any) => {
-            group.items.forEach((email: any) => {
+          item.groupedComments?.forEach((group: any) => {
+            group.items?.forEach((email: any) => {
+              debugger
               this.multipleTo = [];
               this.multipleCc = [];
-              email.to.forEach((singleTo: any) => {
+              email.to?.forEach((singleTo: any) => {
                 if (!this.multipleTo.includes(singleTo.emailAddress)) {
                   this.multipleTo.push(singleTo.emailAddress);
                 }
@@ -247,16 +249,14 @@ export class EmailComponent implements OnInit {
             });
           });
 
-          item.groupedComments.forEach((group: any) => {
-            group.items.forEach((email: any) => {
-              email.replies.forEach((reply: any) => {
+          item.groupedComments?.forEach((group: any) => {
+            group.items?.forEach((email: any) => {
+              email.replies?.forEach((reply: any) => {
                 this.multipleToInReply = [];
                 this.multipleCcInReply = [];
                 this.multipleBccInReply = [];
                 reply.to?.forEach((singleTo: any) => {
-                  if (
-                    !this.multipleToInReply.includes(singleTo.emailAddress)
-                  ) {
+                  if (!this.multipleToInReply.includes(singleTo.emailAddress)) {
                     this.multipleToInReply.push(singleTo.emailAddress);
                   }
                   reply['multipleToInReply'] =
@@ -264,9 +264,7 @@ export class EmailComponent implements OnInit {
                 });
 
                 reply.cc?.forEach((singleCc: any) => {
-                  if (
-                    !this.multipleCcInReply.includes(singleCc.emailAddress)
-                  ) {
+                  if (!this.multipleCcInReply.includes(singleCc.emailAddress)) {
                     this.multipleCcInReply.push(singleCc.emailAddress);
                   }
                   reply['multipleCcInReply'] =
@@ -322,7 +320,7 @@ export class EmailComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
       };
 
       this.SpinnerService.show();
@@ -334,7 +332,9 @@ export class EmailComponent implements OnInit {
           this.spinner1running = false;
           this.Emails = res.List;
           this.fullName = this.Emails[0].user.userName.split('<')[0];
-          this.senderEmailAddress = this.Emails[0].user.userId.split(/[<>]/)[1] || this.Emails[0].user.userId;
+          this.senderEmailAddress =
+            this.Emails[0].user.userId.split(/[<>]/)[1] ||
+            this.Emails[0].user.userId;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
 
           this.commentsArray = [];
@@ -437,7 +437,7 @@ export class EmailComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
       };
 
       this.SpinnerService.show();
@@ -445,7 +445,9 @@ export class EmailComponent implements OnInit {
         this.SpinnerService.hide();
         this.Emails = res.List;
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-        this.senderEmailAddress = this.Emails[0].user.userId.split(/[<>]/)[1] || this.Emails[0].user.userId;
+        this.senderEmailAddress =
+          this.Emails[0].user.userId.split(/[<>]/)[1] ||
+          this.Emails[0].user.userId;
         this.fullName = this.Emails[0].user.userName.split('<')[0];
 
         this.commentsArray = [];
@@ -502,9 +504,7 @@ export class EmailComponent implements OnInit {
                 this.multipleCcInReply = [];
                 this.multipleBccInReply = [];
                 reply.to?.forEach((singleTo: any) => {
-                  if (
-                    !this.multipleToInReply.includes(singleTo.emailAddress)
-                  ) {
+                  if (!this.multipleToInReply.includes(singleTo.emailAddress)) {
                     this.multipleToInReply.push(singleTo.emailAddress);
                   }
                   reply['multipleToInReply'] =
@@ -512,9 +512,7 @@ export class EmailComponent implements OnInit {
                 });
 
                 reply.cc?.forEach((singleCc: any) => {
-                  if (
-                    !this.multipleCcInReply.includes(singleCc.emailAddress)
-                  ) {
+                  if (!this.multipleCcInReply.includes(singleCc.emailAddress)) {
                     this.multipleCcInReply.push(singleCc.emailAddress);
                   }
                   reply['multipleCcInReply'] =
@@ -548,7 +546,7 @@ export class EmailComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
       };
 
       this.SpinnerService.show();
@@ -558,7 +556,9 @@ export class EmailComponent implements OnInit {
           this.SpinnerService.hide();
           this.Emails = res.List;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-          this.senderEmailAddress = this.Emails[0].user.userId.split(/[<>]/)[1] || this.Emails[0].user.userId;
+          this.senderEmailAddress =
+            this.Emails[0].user.userId.split(/[<>]/)[1] ||
+            this.Emails[0].user.userId;
           this.fullName = this.Emails[0].user.userName.split('<')[0];
 
           this.commentsArray = [];
@@ -827,7 +827,7 @@ export class EmailComponent implements OnInit {
     this.Emails.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
         if (comment.id == id) {
-          // populate comment 
+          // populate comment
 
           this.emailId = comment.id;
           this.agentId = localStorage.getItem('agentId') || '{}';
@@ -881,14 +881,13 @@ export class EmailComponent implements OnInit {
   }
 
   sendReplyInformation(id: any) {
-    debugger
+    debugger;
     this.emailFrom = [];
     this.Emails.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
         if (comment.id == id) {
-          // populate comment 
+          // populate comment
 
-          
           this.emailFrom.unshift({
             name: this.fullName,
             emailAddress: this.senderEmailAddress,
@@ -914,6 +913,9 @@ export class EmailComponent implements OnInit {
   replyCc: any[] = [];
   replyBcc: any[] = [];
   submitEmailReply() {
+    this.replyTo = [];
+    this.replyCc = [];
+    this.replyBcc = [];
     if (!this.emailReplyForm.get('to')?.dirty) {
       this.emailReplyForm.patchValue({
         to: JSON.stringify(this.emailFrom),
@@ -980,18 +982,17 @@ export class EmailComponent implements OnInit {
       teamId: this.agentId,
       platform: this.platform,
       contentType: this.postType,
-      userProfileId : this.userProfileId
+      userProfileId: this.userProfileId,
     });
 
     formData.append('CommentReply', JSON.stringify(this.emailReplyForm.value));
-    
+
     this.spinner1running = true;
-      this.SpinnerService.show();
+    this.SpinnerService.show();
     this.commondata.ReplyComment(formData).subscribe(
-      
       (res: any) => {
         this.spinner1running = false;
-      this.SpinnerService.hide();
+        this.SpinnerService.hide();
         this.clearInputField();
         this.reloadComponent('comment');
         this.emailReplyForm.reset();
@@ -1279,12 +1280,39 @@ export class EmailComponent implements OnInit {
   }
 
   replyDataListner() {
+    debugger;
     this.Emails.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
           if (singleCmnt.id == this.newReply.commentId) {
             singleCmnt.replies.push(this.newReply);
             singleCmnt.queryStatus = this.newReply.queryStatus;
+
+            singleCmnt.replies.forEach((reply: any) => {
+              this.multipleToInReply = [];
+              this.multipleCcInReply = [];
+              this.multipleBccInReply = [];
+              reply.to?.forEach((singleTo: any) => {
+                if (!this.multipleToInReply.includes(singleTo.emailAddress)) {
+                  this.multipleToInReply.push(singleTo.emailAddress);
+                }
+                reply['multipleToInReply'] = this.multipleToInReply.join(', ');
+              });
+
+              reply.cc?.forEach((singleCc: any) => {
+                if (!this.multipleCcInReply.includes(singleCc.emailAddress)) {
+                  this.multipleCcInReply.push(singleCc.emailAddress);
+                }
+                reply['multipleCcInReply'] = this.multipleCcInReply.join(', ');
+              });
+              reply.bcc?.forEach((singleBcc: any) => {
+                if (!this.multipleBccInReply.includes(singleBcc.emailAddress)) {
+                  this.multipleBccInReply.push(singleBcc.emailAddress);
+                }
+                reply['multipleBccInReply'] =
+                  this.multipleBccInReply.join(', ');
+              });
+            });
           }
         });
       });
