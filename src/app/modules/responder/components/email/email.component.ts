@@ -904,6 +904,39 @@ export class EmailComponent implements OnInit {
       });
     });
   }
+  text:string='';
+
+  sendForwardInformation(id: any) {
+    debugger;
+    this.emailFrom = [];
+    this.Emails.forEach((xyz: any) => {
+      xyz.comments.forEach((comment: any) => {
+        if (comment.id == id) {
+          // populate comment
+
+          this.emailFrom.unshift({
+            name: this.fullName,
+            emailAddress: this.senderEmailAddress,
+          });
+          this.emailId = comment.id;
+          this.agentId = localStorage.getItem('agentId') || '{}';
+          this.platform = xyz.platform;
+          this.postType = comment.contentType;
+          this.emailSubject = comment.message;
+          this.emailFromInString = '';
+          this.emailCcInString = '';
+          this.text = this.convertHtmlToPlainText(comment.body); 
+          this.userProfileId = this.Emails[0].user.id;
+        }
+      });
+    });
+  }
+
+  convertHtmlToPlainText(html: any): string {
+    const parser = new DOMParser();
+    const document = parser.parseFromString(html.toString(), 'text/html');
+    return document.body.textContent || '';
+  }
 
   ImageName: any;
   ImageArray: any[] = [];

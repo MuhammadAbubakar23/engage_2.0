@@ -225,9 +225,11 @@
                                                             data-bs-toggle="modal" data-bs-target="#emailModalBtn"><i
                                                                 class="fal fa-reply-all"></i>
                                                             Reply all </button>
-                                                    <!--    <button type="button" class="btn btn-outline-secondary me-2"><i
+                                                       <button type="button" (click)="sendForwardInformation(email.id)"
+                                                                class="btn btn-outline-secondary me-2"
+                                                                data-bs-toggle="modal" data-bs-target="#emailModalBtn"><i
                                                                 class="fal fa-arrow-alt-to-right"></i>
-                                                            Forword</button> -->
+                                                            Forword</button>
     
                                                         <button type="button" class="btn btn-outline-secondary me-2"
                                                             id="dropdownMenuButton1" data-bs-toggle="dropdown"
@@ -646,7 +648,7 @@
                             <div class="modal-textarea">
                                 <div class="row">
                                     <div class="col-12">
-                                        <textarea formControlName="text" id="text" class="form-control"
+                                        <textarea formControlName="text" id="text" [(ngModel)]="text" class="form-control"
                                             placeholder="Take notes for users in your account...."
                                             id="floatingTextarea"></textarea>
                                     </div>
