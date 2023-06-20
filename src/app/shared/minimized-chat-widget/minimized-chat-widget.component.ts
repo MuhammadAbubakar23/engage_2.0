@@ -499,6 +499,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
     this.toastermessage = false;
   }
   clearInputField() {
+    
     this.commentReply = '';
     this.youtubecommentText = '';
     this.show = false;

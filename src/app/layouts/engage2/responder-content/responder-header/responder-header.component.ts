@@ -217,7 +217,6 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        debugger
         if (res.contentCount.contentType == 'FC') {
           
           this.totalFbUnrespondedCountByCustomer =
@@ -1205,7 +1204,6 @@ export class ResponderHeaderComponent implements OnInit {
   getAgentsTeamList() {
     
     this.commondata.GetAgentsTeamList().subscribe((res: any) => {
-      debugger
       this.AgentsTeamList = res;
       this.ActiveAgents = []
       this.AgentsTeamList.forEach((user:any) => {

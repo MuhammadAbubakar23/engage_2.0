@@ -1247,6 +1247,7 @@ export class TwitterComponent implements OnInit {
   commentReply: any;
 
   clearInputField() {
+    this.ImageArray = [];
     this.msgText = '';
     this.show = false;
     this.tweetId = 0;

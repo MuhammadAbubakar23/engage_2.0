@@ -522,6 +522,7 @@ export class YoutubeComponent implements OnInit {
           (res: any) => {
             this.spinner1running = false;
       this.SpinnerService.hide();
+      this.youtubeCommentReplyForm.reset();
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
@@ -776,7 +777,6 @@ export class YoutubeComponent implements OnInit {
     this.toastermessage = false;
   }
   clearInputField() {
-    this.youtubeCommentReplyForm.reset();
     this.youtubecommentText = '';
     this.show = false;
     this.youtubecommentId = 0;
@@ -784,6 +784,8 @@ export class YoutubeComponent implements OnInit {
     this.platform = '';
     this.postType = '';
   }
+    
+    
 
   Emojies = [
     { id: 1, emoji: '🙁', tile: 'sad' },

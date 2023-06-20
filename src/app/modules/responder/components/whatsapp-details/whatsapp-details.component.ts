@@ -763,6 +763,7 @@ export class WhatsappDetailsComponent implements OnInit {
   }
 
   clearInputField() {
+    this.ImageArray = [];
     this.WhatsappMsgReply = '';
     this.WhatsappMsgText = '';
     this.show = false;

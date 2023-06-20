@@ -567,6 +567,7 @@ detectChanges(): void {
   }
 
   clearInputField() {
+    this.ImageArray = [];
     this.show = false;
     this.commentId = 0;
     this.agentId = '';

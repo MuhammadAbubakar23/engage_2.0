@@ -1028,7 +1028,6 @@ export class FacebookComponent implements OnInit {
   text: string = '';
 
   submitFacebookReply() {
-    debugger
     if (this.commentId == 0) {
       this.reloadComponent('selectComment');
     } else {
@@ -1097,6 +1096,7 @@ export class FacebookComponent implements OnInit {
   }
 
   clearInputField() {
+    this.ImageArray = [];
     this.msgText = '';
     this.show = false;
     this.commentId = 0;

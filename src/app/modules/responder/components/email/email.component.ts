@@ -919,7 +919,7 @@ export class EmailComponent implements OnInit {
           this.emailId = comment.id;
           this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
-          this.postType = comment.contentType;
+          this.postType = 'ForwordEmail';
           this.emailSubject = comment.message;
           this.emailFromInString = '';
           this.emailCcInString = '';
@@ -944,6 +944,7 @@ export class EmailComponent implements OnInit {
   replyCc: any[] = [];
   replyBcc: any[] = [];
   submitEmailReply() {
+    debugger
     this.replyTo = [];
     this.replyCc = [];
     this.replyBcc = [];
@@ -1001,6 +1002,11 @@ export class EmailComponent implements OnInit {
         subject: this.emailSubject,
       });
     }
+    if (!this.emailReplyForm.get('text')?.dirty) {
+      this.emailReplyForm.patchValue({
+        text: this.text,
+      });
+    }
     var formData = new FormData();
     if (this.ImageName != null || undefined) {
       for (let index = 0; index < this.ImageName.length; index++) {
@@ -1014,6 +1020,7 @@ export class EmailComponent implements OnInit {
       platform: this.platform,
       contentType: this.postType,
       userProfileId: this.userProfileId,
+      text : this.text
     });
 
     formData.append('CommentReply', JSON.stringify(this.emailReplyForm.value));
@@ -1034,6 +1041,7 @@ export class EmailComponent implements OnInit {
       }
     );
   }
+  
   onFileChanged() {
     if (this.fileInput.nativeElement.files.length > 0) {
       this.isAttachment = true;
