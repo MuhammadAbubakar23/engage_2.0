@@ -317,7 +317,6 @@ export class SlaComponent implements OnInit {
   }
 
   NextPage(pageNumber: any) {
-    ;
     if (this.TotalUnresponded < this.from) {
       this.from = this.TotalUnresponded;
     }
@@ -342,7 +341,6 @@ export class SlaComponent implements OnInit {
     this.pageNumber;
   }
   PreviousPage(pageNumber: any) {
-    ;
     if (pageNumber >= 1) {
       let page = pageNumber - 1;
       if (page > 0) {

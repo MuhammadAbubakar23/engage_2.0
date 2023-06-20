@@ -508,6 +508,7 @@ export class FacebookComponent implements OnInit {
   }
 
   updateMessagesDataListener() {
+    
     if(!this.id){
       this.id = localStorage.getItem('storeOpenedId') || '{}'
     }
@@ -518,7 +519,7 @@ export class FacebookComponent implements OnInit {
           contentType: xyz.contentType,
           queryStatus: xyz.queryStatus,
           createdDate: xyz.createdDate,
-          attachments: xyz.mediaAttachments,
+          attachments: xyz.attachments,
           replies: [],
           sentiment: '',
           tags: [],
@@ -529,13 +530,13 @@ export class FacebookComponent implements OnInit {
           toId: xyz.toId,
           toName: xyz.toName,
           msgText: xyz.msgText,
-          agentId: xyz.agentId,
-          customerSocailProfileId: xyz.agentId,
+          agentId: '',
+          customerSocailProfileId: 0,
           profileId: xyz.profileId,
           profilePageId: xyz.profilePageId,
         };
-        this.FacebookMessages.push(this.messageDto);
-        this.messagesArray.push(this.messageDto);
+        this.FacebookMessages.unshift(this.messageDto);
+        this.messagesArray.unshift(this.messageDto);
 
         let groupedItems = this.messagesArray.reduce((acc: any, item: any) => {
           const date = item.createdDate.split('T')[0];
@@ -546,13 +547,13 @@ export class FacebookComponent implements OnInit {
           return acc;
         }, {});
 
-        this.groupedMessages = Object.keys(groupedItems).map((date) => {
+        this.groupedMessages = Object.keys(groupedItems).map((createdDate) => {
           return {
-            date,
-            items: groupedItems[date],
+            createdDate,
+            items: groupedItems[createdDate],
           };
         });
-        this.fbMsgReply = true;
+        // this.fbMsgReply = true;
         // console.log('Messages ==>', this.groupedMessages);
         this.totalUnrespondedMsgCountByCustomer =
           this.totalUnrespondedMsgCountByCustomer + 1;
@@ -736,14 +737,6 @@ export class FacebookComponent implements OnInit {
           this.FacebookMessages = res.List?.dm;
           this.pageName = this.FacebookMessages[0]?.toName;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
-
-          // if(this.FacebookData){
-          //   this.fbCmntReply = true;
-          //   this.fbMsgReply = false;
-          // } else {
-          //   this.fbCmntReply = false;
-          //   this.fbMsgReply = true;
-          // }
 
           this.messagesArray = [];
           this.groupedMessages = [];

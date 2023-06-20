@@ -134,7 +134,7 @@ export class SmsDetailsComponent implements OnInit {
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
-        debugger
+        
         this.updatedComments = res;
         this.updateCommentsDataListener();
       });
@@ -180,7 +180,7 @@ export class SmsDetailsComponent implements OnInit {
   updatedComments: any;
 
   updateCommentsDataListener() {
-    debugger
+    
     if(!this.id){
       this.id = localStorage.getItem('storeOpenedId') || '{}'
     }
@@ -574,6 +574,7 @@ export class SmsDetailsComponent implements OnInit {
   userProfileId = 0;
 
   SendSmsInformation(comId: any) {
+    
     this.SmsData.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
         if (comment.id == comId) {
@@ -585,7 +586,6 @@ export class SmsDetailsComponent implements OnInit {
           this.smsId = comment.id;
           this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
-          this.profileId = Number(localStorage.getItem('profileId'));
           this.postType = comment.contentType;
           this.userProfileId = this.SmsData[0].user.id;
         }

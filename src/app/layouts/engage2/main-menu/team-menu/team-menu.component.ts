@@ -47,7 +47,7 @@ export class TeamMenuComponent implements OnInit {
   // assignedProfile = localStorage.getItem('assignedProfile');
 
   update(menuLink: any) {
-    debugger
+    
     if (
       localStorage.getItem('assignedProfile') == null ||
       localStorage.getItem('assignedProfile') == '' ||

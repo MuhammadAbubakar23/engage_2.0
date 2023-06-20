@@ -573,6 +573,7 @@ export class InstagramComponent implements OnInit {
         contentType: this.postType,
         profileId: this.profileId,
         profilePageId: this.profilePageId,
+        userProfileId : this.userProfileId
       });
   
       formData.append(
@@ -588,10 +589,11 @@ export class InstagramComponent implements OnInit {
           (res: any) => {
             this.spinner1running = false;
       this.SpinnerService.hide();
+      this.instagramCommentReplyForm.reset();
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
-            this.instagramCommentReplyForm.reset();
+            
           },
           ({ error }) => {
           //  alert(error.message);
@@ -947,8 +949,6 @@ export class InstagramComponent implements OnInit {
     this.postType = '';
     this.msgText = '';
     this.msgId=0;
-    this.fileInput.nativeElement.value = '';
-    this.detectChanges();
   }
   markAsComplete = false;
   markAsCompleteExpanded(comId: any) {
@@ -1337,7 +1337,7 @@ export class InstagramComponent implements OnInit {
         this.postType = 'IM';
         this.profileId = msg.profileId;
         this.profilePageId = msg.profilePageId;
-        this.userProfileId = this.InstagramData[0].user.id;
+        this.userProfileId = this.InstagramMessages[0].user.id;
       }
     });
   }

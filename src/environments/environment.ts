@@ -102,7 +102,7 @@ export const environment = {
       LikedByAdmin: 'Social/LikeByAdmin',
       QuickReplyList: 'Social/GetQuickReplyList',
       AssignQuerry: 'Query/AssignQuery',
-      AgentsTeamList: 'Team/GetAllTeams',
+      AgentsTeamList: 'Query/GetActiveAgent',
       AssignToAnotherAgent: 'Query/QueryAssignMultiUser',
       SlaList:"Report/GetSLAChannelList",
       SlaDetail:"Report/GetSLADetailList",

@@ -27,7 +27,6 @@ export class RequestService {
   
   get<T>(route:string, params?: any,routeparams:string=""): Observable<T> {
     console.log(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl));
-    ;
     return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, routeparams),{params: params })
     .pipe(
       map((res: any) => { return res }),

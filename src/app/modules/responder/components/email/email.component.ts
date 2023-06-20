@@ -176,7 +176,7 @@ export class EmailComponent implements OnInit {
   senderEmailAddress: any;
 
   updateCommentsDataListener() {
-    debugger
+    
     if (!this.id) {
       this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
@@ -230,7 +230,7 @@ export class EmailComponent implements OnInit {
           );
           item.groupedComments?.forEach((group: any) => {
             group.items?.forEach((email: any) => {
-              debugger
+              
               this.multipleTo = [];
               this.multipleCc = [];
               email.to?.forEach((singleTo: any) => {
@@ -881,7 +881,6 @@ export class EmailComponent implements OnInit {
   }
 
   sendReplyInformation(id: any) {
-    debugger;
     this.emailFrom = [];
     this.Emails.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
@@ -907,7 +906,6 @@ export class EmailComponent implements OnInit {
   text:string='';
 
   sendForwardInformation(id: any) {
-    debugger;
     this.emailFrom = [];
     this.Emails.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
@@ -1313,7 +1311,6 @@ export class EmailComponent implements OnInit {
   }
 
   replyDataListner() {
-    debugger;
     this.Emails.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
