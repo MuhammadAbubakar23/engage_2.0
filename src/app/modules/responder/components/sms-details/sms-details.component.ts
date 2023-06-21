@@ -612,19 +612,19 @@ export class SmsDetailsComponent implements OnInit {
       var formData = new FormData();
 
       
-    if (!this.SmsReplyForm.get('text')?.dirty) {
+    // if (!this.SmsReplyForm.get('text')?.dirty) {
       if(this.text !== ""){
         this.SmsReplyForm.patchValue({
           text: this.text
         })
     }
-    } else {
-      if (this.SmsReplyForm.value.text) {
-        this.SmsReplyForm.patchValue({
-          to: this.SmsReplyForm.value.text
-        });
-      }
-    }
+    // } else {
+    //   if (this.SmsReplyForm.value.text) {
+    //     this.SmsReplyForm.patchValue({
+    //       to: this.SmsReplyForm.value.text
+    //     });
+    //   }
+    // }
       this.SmsReplyForm.patchValue({
         commentId: this.smsId,
         teamId: this.agentId,

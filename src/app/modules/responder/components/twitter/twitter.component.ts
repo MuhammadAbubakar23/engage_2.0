@@ -968,19 +968,19 @@ export class TwitterComponent implements OnInit {
       }
       
 
-    if (!this.TwitterRepliesForm.get('text')?.dirty) {
+    // if (!this.TwitterRepliesForm.get('text')?.dirty) {
       if(this.text !== ""){
         this.TwitterRepliesForm.patchValue({
           text: this.text
         })
     }
-    } else {
-      if (this.TwitterRepliesForm.value.text) {
-        this.TwitterRepliesForm.patchValue({
-          to: this.TwitterRepliesForm.value.text
-        });
-      }
-    }
+    // } else {
+    //   if (this.TwitterRepliesForm.value.text) {
+    //     this.TwitterRepliesForm.patchValue({
+    //       to: this.TwitterRepliesForm.value.text
+    //     });
+    //   }
+    // }
       this.TwitterRepliesForm.patchValue({
         commentId: this.tweetId,
         teamId: this.agentId,
@@ -1041,9 +1041,7 @@ export class TwitterComponent implements OnInit {
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
     this.text = abc?.text + " ";
-    // this.TwitterRepliesForm.patchValue({ text: this.commentText });
-    // this.twitterMessageReplyForm.patchValue({ text: this.commentText });
-    this.insertAtCaret(this.commentText);
+    this.insertAtCaret(this.text);
   }
 
   twitterMsgId: number=0;

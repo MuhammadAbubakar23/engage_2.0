@@ -1028,6 +1028,7 @@ export class FacebookComponent implements OnInit {
   text: string = '';
 
   submitFacebookReply() {
+    debugger
     if (this.commentId == 0) {
       this.reloadComponent('selectComment');
     } else {
@@ -1038,19 +1039,20 @@ export class FacebookComponent implements OnInit {
         }
       }
 
-      if (!this.facebookReplyForm.get('text')?.dirty) {
+      // if () {
         if (this.text !== '') {
           this.facebookReplyForm.patchValue({
             text: this.text,
           });
         }
-      } else {
-        if (this.facebookReplyForm.value.text) {
-          this.facebookReplyForm.patchValue({
-            to: this.facebookReplyForm.value.text,
-          });
-        }
-      }
+      // }
+      //  else {
+      //   if (this.facebookReplyForm.value.text) {
+      //     this.facebookReplyForm.patchValue({
+      //       to: this.facebookReplyForm.value.text,
+      //     });
+      //   }
+      // }
       this.facebookReplyForm.patchValue({
         commentId: this.commentId,
         teamId: this.agentId,
@@ -1109,6 +1111,7 @@ export class FacebookComponent implements OnInit {
   }
 
   submitFacebookMessageReply() {
+    debugger
     if (this.msgId == 0) {
       this.reloadComponent('selectComment');
     } else {
@@ -1119,19 +1122,19 @@ export class FacebookComponent implements OnInit {
         }
       }
 
-      if (!this.facebookMessageReplyForm.get('text')?.dirty) {
+      // if (!this.facebookMessageReplyForm.get('text')?.dirty) {
         if (this.text !== '') {
           this.facebookMessageReplyForm.patchValue({
             text: this.text,
           });
         }
-      } else {
-        if (this.facebookMessageReplyForm.value.text) {
-          this.facebookMessageReplyForm.patchValue({
-            to: this.facebookMessageReplyForm.value.text,
-          });
-        }
-      }
+      // } else {
+      //   if (this.facebookMessageReplyForm.value.text) {
+      //     this.facebookMessageReplyForm.patchValue({
+      //       to: this.facebookMessageReplyForm.value.text,
+      //     });
+      //   }
+      // }
       this.facebookMessageReplyForm.patchValue({
         commentId: this.msgId,
         teamId: this.agentId,
@@ -1194,12 +1197,8 @@ export class FacebookComponent implements OnInit {
 
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
-
     this.text = abc?.text + ' ';
-
-    // this.facebookReplyForm.patchValue({ text: this.chatText });
-    this.insertAtCaret(this.chatText);
-    // this.facebookMessageReplyForm.patchValue({ text: this.chatText });
+    this.insertAtCaret(this.text);
   }
 
   quickReplyList() {

@@ -685,19 +685,19 @@ export class WhatsappDetailsComponent implements OnInit {
         }
       }
 
-      if (!this.WhatsappReplyForm.get('text')?.dirty) {
+      // if (!this.WhatsappReplyForm.get('text')?.dirty) {
         if (this.text !== '') {
           this.WhatsappReplyForm.patchValue({
             text: this.text,
           });
         }
-      } else {
-        if (this.WhatsappReplyForm.value.text) {
-          this.WhatsappReplyForm.patchValue({
-            to: this.WhatsappReplyForm.value.text,
-          });
-        }
-      }
+      // } else {
+      //   if (this.WhatsappReplyForm.value.text) {
+      //     this.WhatsappReplyForm.patchValue({
+      //       to: this.WhatsappReplyForm.value.text,
+      //     });
+      //   }
+      // }
       this.WhatsappReplyForm.patchValue({
         commentId: this.WhatsappMsgId,
         teamId: this.agentId,

@@ -553,19 +553,19 @@ export class InstagramComponent implements OnInit {
       }
       
 
-    if (!this.instagramCommentReplyForm.get('text')?.dirty) {
+    // if (!this.instagramCommentReplyForm.get('text')?.dirty) {
       if(this.text !== ""){
         this.instagramCommentReplyForm.patchValue({
           text: this.text
         })
     }
-    } else {
-      if (this.instagramCommentReplyForm.value.text) {
-        this.instagramCommentReplyForm.patchValue({
-          to: this.instagramCommentReplyForm.value.text
-        });
-      }
-    }
+    // } else {
+    //   if (this.instagramCommentReplyForm.value.text) {
+    //     this.instagramCommentReplyForm.patchValue({
+    //       to: this.instagramCommentReplyForm.value.text
+    //     });
+    //   }
+    // }
       this.instagramCommentReplyForm.patchValue({
         commentId: this.InstacommentId,
         teamId: this.agentId,
@@ -822,10 +822,7 @@ export class InstagramComponent implements OnInit {
 
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
-
     this.text = abc?.text + " ";
-
-    // this.instagramCommentReplyForm.patchValue({ text: this.instaCommentText });
     this.insertAtCaret(this.text);
   }
 

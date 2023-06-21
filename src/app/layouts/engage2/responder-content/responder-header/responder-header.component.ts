@@ -502,6 +502,7 @@ export class ResponderHeaderComponent implements OnInit {
             this.totalInstaUnrespondedCountByCustomer = 0;
             // this.FbUnrespondedMsgCountByCustomer = 0;
             // this.TwitterUnrespondedMsgCountByCustomer = 0;
+            this.InstaUnrespondedMsgCountByCustomer = 0;
 
             if (this.fetchId.platform == 'Facebook') {
               this.FbUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -548,6 +549,7 @@ export class ResponderHeaderComponent implements OnInit {
             // }
 
             if (this.fetchId.platform == 'Instagram') {
+              debugger
               this.InstaUnrespondedCmntCountByCustomer = res.TotalCount;
               if (this.InstaUnrespondedMsgCountByCustomer == 0) {
                 this.totalInstaUnrespondedCountByCustomer =
@@ -664,7 +666,8 @@ export class ResponderHeaderComponent implements OnInit {
             this.WcUnrespondedCmntCountByCustomer = 0;
             this.SmsUnrespondedCmntCountByCustomer = 0;
             // this.TwitterUnrespondedCmntCountByCustomer = 0;
-            this.InstaUnrespondedCmntCountByCustomer = 0;
+            // this.InstaUnrespondedCmntCountByCustomer = 0;
+            this.InstaUnrespondedMsgCountByCustomer = 0;
             this.EmailUnrespondedCmntCountByCustomer = 0;
             this.YoutubeUnrespondedCmntCountByCustomer = 0;
             this.LinkedInUnrespondedCmntCountByCustomer = 0;
@@ -943,7 +946,8 @@ export class ResponderHeaderComponent implements OnInit {
             this.WcUnrespondedCmntCountByCustomer = 0;
             this.SmsUnrespondedCmntCountByCustomer = 0;
             // this.TwitterUnrespondedCmntCountByCustomer = 0;
-            this.InstaUnrespondedCmntCountByCustomer = 0;
+            // this.InstaUnrespondedCmntCountByCustomer = 0;
+            this.InstaUnrespondedMsgCountByCustomer = 0;
             this.EmailUnrespondedCmntCountByCustomer = 0;
             this.YoutubeUnrespondedCmntCountByCustomer = 0;
             this.LinkedInUnrespondedCmntCountByCustomer = 0;
@@ -1117,6 +1121,7 @@ export class ResponderHeaderComponent implements OnInit {
             this.SmsUnrespondedCmntCountByCustomer = 0;
             this.TwitterUnrespondedCmntCountByCustomer = 0;
             this.InstaUnrespondedCmntCountByCustomer = 0;
+            // this.InstaUnrespondedMsgCountByCustomer = 0;
             this.EmailUnrespondedCmntCountByCustomer = 0;
             this.YoutubeUnrespondedCmntCountByCustomer = 0;
             this.LinkedInUnrespondedCmntCountByCustomer = 0;

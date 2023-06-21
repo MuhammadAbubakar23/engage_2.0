@@ -486,19 +486,19 @@ export class YoutubeComponent implements OnInit {
     } else {
       var formData = new FormData();
 
-      if (!this.youtubeCommentReplyForm.get('text')?.dirty) {
+      // if (!this.youtubeCommentReplyForm.get('text')?.dirty) {
         if(this.text !== ""){
           this.youtubeCommentReplyForm.patchValue({
             text: this.text
           });
       }
-      } else {
-        if (this.youtubeCommentReplyForm.value.text) {
-          this.youtubeCommentReplyForm.patchValue({
-            to: this.youtubeCommentReplyForm.value.text
-          });
-        }
-      }
+      // } else {
+      //   if (this.youtubeCommentReplyForm.value.text) {
+      //     this.youtubeCommentReplyForm.patchValue({
+      //       to: this.youtubeCommentReplyForm.value.text
+      //     });
+      //   }
+      // }
       
       this.youtubeCommentReplyForm.patchValue({
         commentId: this.youtubecommentId,

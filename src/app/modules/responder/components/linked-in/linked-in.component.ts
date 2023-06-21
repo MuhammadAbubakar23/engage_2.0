@@ -514,19 +514,19 @@ detectChanges(): void {
         }
       }
       
-    if (!this.linkedInReplyForm.get('text')?.dirty) {
+    // if (!this.linkedInReplyForm.get('text')?.dirty) {
       if(this.text !== ""){
         this.linkedInReplyForm.patchValue({
           text: this.text
         })
     }
-    } else {
-      if (this.linkedInReplyForm.value.text) {
-        this.linkedInReplyForm.patchValue({
-          to: this.linkedInReplyForm.value.text
-        });
-      }
-    }
+    // } else {
+    //   if (this.linkedInReplyForm.value.text) {
+    //     this.linkedInReplyForm.patchValue({
+    //       to: this.linkedInReplyForm.value.text
+    //     });
+    //   }
+    // }
       this.linkedInReplyForm.patchValue({
         commentId: this.commentId,
         teamId: this.agentId,
