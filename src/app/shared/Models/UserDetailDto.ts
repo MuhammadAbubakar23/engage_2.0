@@ -12,10 +12,10 @@ export class UserDetailDto {
     phoneNumber: string = '';
     landlinenumber: string = '';
     address: string = '';
-    // organization: string = '';
-    // role: string = '';
-    // city: string = '';
-    // country: string = '';
+    organization: string = '';
+    role: string = '';
+    city: string = '';
+    country: string = '';
     fatherName: string = '';
     education: string = '';
     bloodGroup: string = '';

@@ -9,29 +9,15 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
   styleUrls: ['./create-quick-response-templates.component.scss']
 })
 export class CreateQuickResponseTemplatesComponent implements OnInit {
-
   messageForm!: FormGroup;
-  
   editorContent!: string;
- 
-  editorConfig = {
-    // Add any desired configuration options here
-  };
-
-  constructor(private formBuilder: FormBuilder , private commonService :CommonDataService , private router: Router) { }
-
-
-  // ngOnInit(): void {
-  //   this.messageForm = this.formBuilder.group({
-  //     messageContent: ['', Validators.required]
-  //   });
-  //   this.editorContent = '';
-  // }
+  editorConfig = {};
+  constructor(private formBuilder: FormBuilder, private commonService: CommonDataService, private router: Router) { }
   ngOnInit(): void {
     this.messageForm = this.formBuilder.group({
       messageContent: ['', Validators.required]
     });
-    
+
     const template = history.state.template; // Get the template value from the state
     if (template) {
       // Update the form values with the selected template
@@ -45,19 +31,15 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
       this.editorContent = '';
     }
   }
-  
-
   saveForm() {
     if (this.messageForm.valid) {
       const messageContentValue = this.messageForm.value.messageContent;
       const strippedMessageContent = messageContentValue.replace(/<[^>]+>|&nbsp;/g, '');
-  
+
       const formData = {
         text: strippedMessageContent
       };
-  
       const template = history.state.template; // Get the template value from the state
-  
       if (template) {
         // Update existing template
         this.commonService.UpdateQuickReply(template.id, formData).subscribe(
@@ -77,7 +59,7 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
         const strippedFormData = {
           text: strippedMessageContent
         };
-  
+
         this.commonService.AddQuickReply(strippedFormData).subscribe(
           (response: any) => {
             // Handle the successful API response here
@@ -95,11 +77,11 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
       console.log('Form is invalid');
     }
   }
-  
-  
-      
-      cancelForm(): void {
-        this.router.navigate(['/console/templates/quickResponse']);
 
-      }
-    }
+
+
+  cancelForm(): void {
+    this.router.navigate(['/console/templates/quickResponse']);
+
+  }
+}

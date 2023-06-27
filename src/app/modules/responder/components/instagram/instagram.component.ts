@@ -606,7 +606,7 @@ export class InstagramComponent implements OnInit {
     this.quickReplySearchText = '';
   }
 
-  commentStatus(comId: any, type: any) {
+  commentStatus(comId: number = 0, type: string = '') {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = 'Instagram';
@@ -1234,7 +1234,7 @@ export class InstagramComponent implements OnInit {
       this.SpinnerService.show();
       this.commondata.GetSlaDM(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
-        this.InstagramMessages = res.List.dm;
+        this.InstagramMessages = res.List?.dm;
         this.pageName = this.InstagramMessages[0].toName;
         this.totalMessages = res.TotalCount;
 
@@ -1286,7 +1286,7 @@ export class InstagramComponent implements OnInit {
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
           this.SpinnerService.hide();
-          this.InstagramMessages = res.List.dm;
+          this.InstagramMessages = res.List?.dm;
           this.pageName = this.InstagramMessages[0].toName;
           this.totalMessages = res.TotalCount;
 

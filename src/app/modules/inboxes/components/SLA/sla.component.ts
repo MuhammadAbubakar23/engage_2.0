@@ -171,7 +171,7 @@ export class SlaComponent implements OnInit {
      platform: platform
    };
 
-   this.commondata.AssignQuerry(this.assignQuerryDto).subscribe(res =>{
+   this.commondata.AssignQuerry(this.assignQuerryDto).subscribe((res:any) =>{
      this.reloadComponent('queryallocated');
      this.router.navigateByUrl("/responder/"+platform);
      this.headerService.updateMessage(string);

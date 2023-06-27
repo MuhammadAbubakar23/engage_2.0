@@ -1,0 +1,185 @@
+<div class="create-business-hour console-body-wrapper" data-scrollbar="true" tabindex="-1"
+    style="overflow-y:auto; outline: none;">
+    <div class="scroll-content">
+        <form [formGroup]="messageForm" (ngSubmit)=" onSubmit()">
+            <div class="wider-container pt-3">
+                <div class="tab-header">
+                    <nav>
+                        <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="holiday-detail-tab" data-bs-toggle="tab"
+                                data-bs-target="#holiday-detail" type="button" role="tab" aria-controls="holiday-detail"
+                                aria-selected="true">
+                                <h6>Details
+                                </h6>
+                            </button>
+                            <button class="nav-link" id="business-hour-tab" data-bs-toggle="tab"
+                                data-bs-target="#business-hour" type="button" role="tab" aria-controls="business-hour"
+                                aria-selected="false" tabindex="-1">
+                                <h6>Business Hours
+                                </h6>
+                            </button>
+                            <button class="nav-link" id="holiday-tab" data-bs-toggle="tab" data-bs-target="#holiday-sec"
+                                type="button" role="tab" aria-controls="holiday-sec" aria-selected="false"
+                                tabindex="-1">
+                                <h6>Holiday
+                                </h6>
+                            </button>
+                        </div>
+                    </nav>
+                </div>
+                <div class="tab-body">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div id="holiday-detail" class="tab-pane fade active show" role="tabpanel"
+                            aria-labelledby="holiday-detail-tab">
+                            <div class="business-detail-wrap">
+                                <div class="floating-item mb-3">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="floatingInputValue"
+                                            placeholder="Tokyo Business hours" value="Tokyo Business hours"
+                                            formControlName="templateName">
+                                        <label for="floatingInputValue">Template Name</label>
+                                    </div>
+                                    <div class="example-text">
+                                        e.g. xyz@domain.com
+                                    </div>
+                                </div>
+                                <div class="floating-item mb-4">
+                                    <div class="form-floating">
+                                        <textarea class="form-control" placeholder="Leave a comment here"
+                                            id="floatingTextarea2" style="height: 100px"
+                                            formControlName="description"></textarea>
+                                        <label for="floatingTextarea2">Description</label>
+                                    </div>
+                                    <div class="example-text">Optional: will appear in the From: header of emails you
+                                        send.
+                                    </div>
+                                </div>
+                                <div class="floating-item mb-4">
+                                    <div class="form-floating mb-2">
+                                        <select class="form-select multi-select" aria-label="Floating label select"
+                                            formControlName="timeZone">
+                                            <option selected="">(GMT+09:00) Tokyo</option>
+                                            <option value="1">(GMT+03:00) Japan</option>
+                                            <option value="2">(GMT+05:00) Korea</option>
+                                            <option value="3">(GMT+06:00) Tokyo</option>
+                                        </select>
+                                        <label for="floatingSelect">Time zone</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="business-hour" class="tab-pane fade" role="tabpanel"
+                            aria-labelledby="business-hour-tab">
+                            <div class="bussiness-hour-wrap ps-5 pe-5">
+                                <div class="choose-assignment-section mb-5">
+                                    <h5 class="darkblue mb-4 mt-5">Choose an assignment mode</h5>
+                                    <div class="business-hour-list">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="radio" name="exampleRadios"
+                                                id="exampleRadios1" [value]="false" formControlName="roundTheClock"
+                                                (click)="hideWorkingDays()">
+                                            <div class="ms-2 me-auto silver lh-sm">
+                                                <div class="fw-bold darkblue mb-1">24 hrs x 7 days</div>
+                                                Round the clock support
+                                            </div>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="radio" name="exampleRadios"
+                                                id="exampleRadios2" [value]="true" formControlName="customBusinessHours"
+                                                (click)="showWorkingDays()">
+                                            <div class="ms-2 me-auto silver lh-sm">
+                                                <div class="fw-bold darkblue mb-1">Custom business hours</div>
+                                                Setup custom working hours for your team
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="rounded-tab-nav mb-4" *ngIf="showWorkingDaysSection">
+                                    <h5 class="darkblue mb-4 mt-5">Select the working days</h5>
+                                    <div class="rounded-tab-nav d-flex">
+                                        <div *ngFor="let day of daysOfWeek"
+                                            class="border-0 nav-link p-0 pe-2 rounded-tab-btn">
+                                            <button type="button"
+                                                class="btn btn-outline-secondary rounded-pill shadow-sm ps-3 pe-3 btn-sm"
+                                                formControlName="workingDay" (click)="addBusinessWorkingDay(day)">
+                                                {{ day }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="working-days-section" *ngIf="showWorkingDaysSection">
+                                    <div class="selected-working-head">
+                                        <h5 class="darkblue mb-4 mt-5">5 days selected</h5>
+                                        <p class="coal">
+                                            Enter the working hours</p>
+                                    </div>
+                                    <!--  -->
+                                    <div class="select-day-list mt-3" formArrayName="businessWorkingDays">
+                                        <div *ngFor="let item of BusinessControls.controls let i = index"
+                                            class="select-day-item mb-3">
+                                            <div class="row" [formGroupName]="i">
+                                                <div class="col-lg-3 mt-2">
+                                                    {{getValueByIndex(i)}}
+                                                </div>
+                                                <div class="col-lg-5">
+                                                    <div class="set-time ms-1 me-1">
+                                                        <select class="form-select ms-2" name="time-from" tabindex="-1"
+                                                            aria-hidden="true" formControlName="shiftStart">
+                                                            <option value="" selected disabled>Select Shift Start
+                                                            </option>
+                                                            <option *ngFor="let time of shiftTiming" [value]="time">
+                                                                {{ time }}</option>
+                                                        </select>
+                                                        <button class="iconButton medium snowBg">
+                                                            <i class="fal fa-arrow-right coal"></i>
+                                                        </button>
+                                                        <select class="form-select" name="time-to" tabindex="-1"
+                                                            aria-hidden="true" formControlName="shiftEnd">
+                                                            <option value="" selected disabled>Select Shift End</option>
+                                                            <option *ngFor="let time of shiftTiming" [value]="time">{{
+                                                                time }}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="icon-anchor-wrap blue sky d-flex align-items-center">
+                                                        <button class="iconButton medium ms-2">
+                                                            <i class="fal fa-copy"></i>
+                                                        </button>
+                                                        <a>Copy to all</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="footer">
+                    <div class="ps-3 pe-3">
+                        <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+                            <div class="row w-100">
+                                <div class="col-md-4">
+                                    <div class="f-icon-txt-wrapper d-flex align-items-center">
+                                    </div>
+                                </div>
+                                <div class="col-md-8 justify-content-end d-flex">
+                                    <div class="buttons-wrap d-flex">
+                                        <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4"
+                                            (click)="cancelForm()">Cancel</button>
+                                        <button type="submit" class="btn skyBg ms-2  px-4 btn-medium saveBtn"
+                                            data-bs-target="">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </form>
+    </div>
+</div>

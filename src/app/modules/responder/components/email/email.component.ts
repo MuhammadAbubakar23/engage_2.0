@@ -296,6 +296,7 @@ export class EmailComponent implements OnInit {
 
   To: string = '';
   totalUnrespondedCmntCountByCustomer: number = 0;
+  TotalQueryCount:number=0;
 
   commentsArray: any[] = [];
   groupArrays: any[] = [];
@@ -336,6 +337,7 @@ export class EmailComponent implements OnInit {
             this.Emails[0].user.userId.split(/[<>]/)[1] ||
             this.Emails[0].user.userId;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+          this.TotalQueryCount = res.TotalQueryCount;
 
           this.commentsArray = [];
           this.Emails?.forEach((item: any) => {
@@ -449,6 +451,7 @@ export class EmailComponent implements OnInit {
           this.Emails[0].user.userId.split(/[<>]/)[1] ||
           this.Emails[0].user.userId;
         this.fullName = this.Emails[0].user.userName.split('<')[0];
+        this.TotalQueryCount = res.TotalQueryCount;
 
         this.commentsArray = [];
         this.Emails?.forEach((item: any) => {
@@ -556,6 +559,7 @@ export class EmailComponent implements OnInit {
           this.SpinnerService.hide();
           this.Emails = res.List;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+          this.TotalQueryCount = res.TotalQueryCount;
           this.senderEmailAddress =
             this.Emails[0].user.userId.split(/[<>]/)[1] ||
             this.Emails[0].user.userId;
@@ -944,7 +948,6 @@ export class EmailComponent implements OnInit {
   replyCc: any[] = [];
   replyBcc: any[] = [];
   submitEmailReply() {
-    debugger
     this.replyTo = [];
     this.replyCc = [];
     this.replyBcc = [];
@@ -1195,6 +1198,7 @@ export class EmailComponent implements OnInit {
   }
 
   commentStatus(comId: any, type: any) {
+
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = this.parentPlatform;
@@ -1359,8 +1363,11 @@ export class EmailComponent implements OnInit {
   }
 
   onScroll() {
-    this.pageSize = this.pageSize + 10;
-    this.getEmails();
+    debugger
+    if(this.TotalQueryCount > this.pageSize){
+      this.pageSize = this.pageSize + 10;
+      this.getEmails();
+    }
   }
 
   isAttachment = false;

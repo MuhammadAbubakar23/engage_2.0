@@ -442,31 +442,9 @@
                                                                 class="col-sm-3 col-form-label">City</label>
                                                             <div class="col-sm-9 country-dropdown">
                                                                 
-                                                                    <select class="form-select" id="floatingSelect" formControlName="city" aria-label="Floating label select">
+                                                                    <select class="form-select" id="floatingSelect"  aria-label="Floating label select">
                                                                     <option>Choose the City</option>
-                                                                    <option value="Abbottabad">Abbottabad</option>
-                                                                    <option value="Chakwal">Chakwal</option>
-                                                                    <option value="DG Khan">DG Khan</option>
-                                                                    <option value="Faisalabad">Faisalabad</option>
-                                                                    <option value="Gujranwala">Gujranwala</option>
-                                                                    <option value="Gujrat">Gujrat</option>
-                                                                    <option value="Hyderabad">Hyderabad</option>
-                                                                    <option value="Islamabad">Islamabad</option>
-                                                                    <option value="Karachi" selected=""
-                                                                        data-select2-id="select2-data-15-vmnr">Karachi
-                                                                    </option>
-                                                                    <option value="Lahore">Lahore</option>
-                                                                    <option value="Mardan">Mardan</option>
-                                                                    <option value="Mirpur AJK">Mirpur AJK</option>
-                                                                    <option value="Multan">Multan</option>
-                                                                    <option value="Peshawer">Peshawer</option>
-                                                                    <option value="Quetta">Quetta</option>
-                                                                    <option value="Rahim Yar Khan">Rahim Yar Khan
-                                                                    </option>
-                                                                    <option value="Rawalpindi">Rawalpindi</option>
-                                                                    <option value="Sahiwal">Sahiwal</option>
-                                                                    <option value="Sargodha">Sargodha</option>
-                                                                    <option value="Sialkot">Sialkot</option>
+                                                                    <option *ngFor="let city of Cities" [value]="city.name" formControlName="city">{{city.name}}</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -474,10 +452,9 @@
                                                             <label for="inputAddress"
                                                                 class="col-sm-3 col-form-label">Country</label>
                                                             <div class="col-sm-9 country-dropdown">
-                                                                <select class="form-select" id="floatingSelect" formControlName="country" aria-label="Floating label select">
+                                                                <select class="form-select" id="floatingSelect"  aria-label="Floating label select">
                                                                     <option>Choose the Country</option>
-                                                                    <option value="Pakistan" selected=""
-                                                                        data-select2-id="select2-data-18-o0ph">Pakistan
+                                                                    <option *ngFor="let country of Countries" [value]="country.name" formControlName="country">Pakistan
                                                                     </option>
                                                                 </select>
                                                             </div>

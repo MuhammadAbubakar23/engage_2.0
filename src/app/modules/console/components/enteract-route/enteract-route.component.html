@@ -1,1 +1,360 @@
-<p>enteract-route works!</p>
+<div class="tags-wrap console-body-wrapper" data-scrollbar="true" tabindex="-1"
+    style="overflow-y: auto; outline: none;">
+    <div class="scroll-content">
+        <form [formGroup]="messageForm" (ngSubmit)=" onSubmit()">
+            <div class="wider-container pt-3">
+                <header class="tab-header">
+                    <nav>
+                        <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="general" data-bs-toggle="tab"
+                                data-bs-target="#general-tab" type="button" role="tab" aria-controls="general-tab"
+                                aria-selected="true">
+                                <h6>Assignment Load
+                                </h6>
+                            </button>
+                            <button class="nav-link" id="security" data-bs-toggle="tab" data-bs-target="#security-tab"
+                                type="button" role="tab" aria-controls="security-tab" aria-selected="false"
+                                tabindex="-1">
+                                <h6>Assignment Preferences
+                                </h6>
+                            </button>
+                        </div>
+                    </nav>
+                </header>
+                <div class="tab-body">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div id="general-tab" class="tab-pane fade active show" role="tabpanel"
+                            aria-labelledby="general">
+                            <div class="alert alert-primary" role="alert">
+                                <i class="fa-light fa-circle-info"></i>Balance workload among agents by defining
+                                thresholds
+                                across
+                                channels.
+                            </div>
+                            <h6>Default open conversations limit</h6>
+                            <p>Set a maximum limit on the number of open conversations your agent teams can handle on
+                                each channel at a given time.</p>
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="form-floating">
+                                    <input type="email" class="form-control" id="tickets" placeholder="" value="10"
+                                        formControlName="value">
+                                    <label for="tickets">Tickets &amp; Conversation</label>
+                                </div>
+                                <div class="form-check form-switch mx-3">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="phonecall"
+                                        checked="">
+                                    <label class="form-check-label" for="phonecall">Phone calls </label>
+                                </div>
+                                <span class="iconButton iconHover medium">
+                                    <i class="fa-light fa-circle-info"></i>
+                                </span>
+                            </div>
+                            <div class="alert alert-primary" role="alert">
+                                <i class="fa-light fa-circle-info"></i> You can choose to modify the default open ticket
+                                to
+                                an agent-level
+                                limit below
+                            </div>
+                            <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                                <div class="toggle-head">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item d-flex justify-content-between align-items-sm-center saltBg collapsed"
+                                            id="flexSwitchCheckDefault" data-bs-toggle="collapse"
+                                            data-bs-target="#permissioncard3" aria-expanded="false"
+                                            aria-controls="permissioncard3">
+                                            <div class="ms-2 me-auto darkblue">
+                                                <div class="fw-bold night">Agent-level open conversation limit </div>
+                                                Set a limit on the open conversations an agent can handle from each
+                                                channel
+                                                at a given time.
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" name="toggle">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- <div class="collapse" id="permissioncard3">
+                                    <div class="card card-body darkblue">
+                                        <div class="card card-body darkblue">
+                                            <ul class="list-inline m-0 d-flex align-items-center mb-3">
+                                                <li class="list-inline-item">
+                                                    <a class="search-btn">
+                                                        <button class="iconButton medium">
+                                                            <i class="fal fa-search silver"></i>
+                                                        </button>
+                                                        <input placeholder="Search">
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <div
+                                                class="table-section table-scrool-y mb-3 query-container h-100 table-white">
+                                                <table class="table align-middle">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                Users
+                                                            </th>
+                                                            <th>
+                                                                open conversations limit
+                                                            </th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let user of users">
+                                                            <td>
+                                                                <a>
+                                                                    <ul class="list-group list-group-flush">
+                                                                        <li
+                                                                            class="list-group-item d-flex justify-content-between align-items-sm-center ps-0">
+                                                                            <span class="iconButton large">
+                                                                                <img [src]="user.avatar" alt="-"
+                                                                                    class="rounded-circle w-100 h-100">
+                                                                            </span>
+                                                                            <div class="ms-2 me-auto coal">
+                                                                                <div class="fw-bold night">
+                                                                                    {{user.name}}
+                                                                                </div>
+                                                                                {{ user.employeeId }}
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <input [value]="user.conversationLimit"
+                                                                    class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    class="icons-list d-flex justify-content-end dropstart">
+                                                                    <button
+                                                                        class="btn iconButton medium iconHover btn-group"
+                                                                        type="button" data-bs-toggle="dropdown"
+                                                                        aria-expanded="false">
+                                                                        <i class="far fa-ellipsis-v"></i>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu fade">
+                                                                        <li>
+                                                                            <a class="dropdown-item"
+                                                                                (click)="editBtn(user)">Edit</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a class="dropdown-item delete-dd"
+                                                                                (click)="deleteBtn(user)"><i
+                                                                                    class="fal fa-trash me-2"></i>Delete</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="collapse" id="permissioncard3">
+                                    <div class="card card-body darkblue">
+                                        <div class="card card-body darkblue">
+                                            <ul class="list-inline m-0 d-flex align-items-center mb-3">
+                                                <li class="list-inline-item">
+                                                    <a class="search-btn">
+                                                        <button class="iconButton medium">
+                                                            <i class="fal fa-search silver"></i>
+                                                        </button>
+                                                        <input placeholder="Search">
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <div
+                                                class="table-section table-scrool-y mb-3 query-container h-100 table-white">
+                                                <table class="table align-middle">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                Skills
+                                                            </th>
+                                                            <th>
+                                                                open conversations limit
+                                                            </th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let user of users">
+                                                            <td>
+                                                                <a>
+                                                                    <ul class="list-group list-group-flush">
+                                                                        <li
+                                                                            class="list-group-item d-flex justify-content-between align-items-sm-center ps-0">
+                                                                            <div class="fw-bold night">
+                                                                                {{user.name}}
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <input [value]="user.conversationLimit"
+                                                                    class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    class="icons-list d-flex justify-content-end dropstart">
+                                                                    <button
+                                                                        class="btn iconButton medium iconHover btn-group"
+                                                                        type="button" data-bs-toggle="dropdown"
+                                                                        aria-expanded="false">
+                                                                        <i class="far fa-ellipsis-v"></i>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu fade">
+                                                                        <li>
+                                                                            <a class="dropdown-item"
+                                                                                (click)="editBtn(user)">Edit</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a class="dropdown-item delete-dd"
+                                                                                (click)="deleteBtn(user)"><i
+                                                                                    class="fal fa-trash me-2"></i>Delete</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="security-tab" class="tab-pane fade" role="tabpanel" aria-labelledby="security">
+                            <div class="alert alert-primary" role="alert">
+                                <i class="fa-light fa-circle-info"></i>Updating assignment preferences will only affect
+                                new
+                                incoming
+                                tickets. Learn more
+                            </div>
+                            <h6>Conversation assignment order</h6>
+                            <ul class="list-group list-group-flush mb-3 radiolist">
+                                <li class="list-group-item d-flex align-items-center py-3 form-check theme-check"
+                                    *ngFor="let radio of conversationAssignmentRadios">
+                                    <input class="form-check-input me-3 ms-0" type="radio" name="listGroupRadio"
+                                        [id]="radio.id" [checked]="radio.checked">
+                                    <label class="form-check-label" [for]="radio.id">
+                                        <h6 class="m-0">{{ radio.title }}</h6>
+                                        <p class="coal m-0">{{ radio.description }}</p>
+                                    </label>
+                                </li>
+                            </ul>
+                            <ul class="list-group large-list-group list-group-flush mb-5 border-top border-bottom">
+                                <li class="list-group-item d-flex justify-content-between align-items-sm-center py-4">
+                                    <div class="ms-2 me-3 coal">
+                                        <div class="fw-bold night">Pause assignment when agents are on-call</div>
+                                        When an agent is on a call, tickets and chats will not be assigned.
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                    </div>
+                                </li>
+                            </ul>
+                            <h6>Routing settings</h6>
+                            <div class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+                                <div class="toggle-head">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item d-flex justify-content-between align-items-sm-center saltBg collapsed"
+                                            id="flexSwitchCheckDefault" data-bs-toggle="collapse"
+                                            data-bs-target="#permissioncard3" aria-expanded="false"
+                                            aria-controls="permissioncard3">
+                                            <div class="ms-2 me-auto darkblue">
+                                                <div class="fw-bold darkblue">Automatic conversation assignment</div>
+                                                Distribute and balance the number of conversation assigned to agents in
+                                                this group
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" name="toggle">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="collapse" id="permissioncard3">
+                                    <div class="card card-body darkblue">
+                                        <div class="card card-body darkblue">
+                                            <p>Choose an assignment mode</p>
+                                            <ul class="list-group list-group-flush radiolist">
+                                                <li *ngFor="let assignmentMode of assignmentModes"
+                                                    class="list-group-item d-flex align-items-center py-3 form-check theme-check">
+                                                    <input class="form-check-input me-3 ms-0" type="radio"
+                                                        name="listGroupRadio1" [id]="assignmentMode.id"
+                                                        formControlName="time" [checked]="assignmentMode.checked">
+                                                    <label class="form-check-label" [for]="assignmentMode.id">
+                                                        <h6 class="m-0">{{ assignmentMode.title }}</h6>
+                                                        <p class="coal m-0">{{ assignmentMode.description }}</p>
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h6>Agent availability</h6>
+                            <ul class="list-group list-group-flush mb-3 radiolist">
+                                <li class="list-group-item d-flex align-items-center py-3 form-check theme-check">
+                                    <input class="form-check-input me-3 ms-0" type="radio" name="listGroupRadio3"
+                                        id="firstRadio3" checked="">
+                                    <label class="form-check-label" for="firstRadio3">
+                                        <h6 class="m-0"> Allow agents to set their own availability status</h6>
+                                        <p class="coal m-0">Agents can set their status according to their activity.
+                                            Admins
+                                            and supervisors
+                                            can still override an agent's availability from the dashboard.</p>
+                                    </label>
+                                </li>
+                                <li class="list-group-item d-flex align-items-center py-3 form-check theme-check">
+                                    <input class="form-check-input me-3 ms-0" type="radio" name="listGroupRadio3"
+                                        id="secondRadio3">
+                                    <label class="form-check-label" for="secondRadio3">
+                                        <h6 class="m-0">Centrally manage the agent availabilities</h6>
+                                        <p class="coal m-0">Admins and supervisors will manage the agent's availability
+                                            from
+                                            the dashboard.
+                                        </p>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="ps-3 pe-3">
+                    <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+                        <div class="row w-100">
+                            <div class="col-md-4">
+                                <div class="f-icon-txt-wrapper d-flex align-items-center">
+                                    <button class="iconButton medium iconHover" id="deleteModalBtn">
+                                        <i class="fal fa-trash radical"></i>
+                                    </button>
+                                    <p class="f-icon-txt coal ms-1 m-0"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-8 justify-content-end d-flex">
+                                <div class="buttons-wrap d-flex">
+                                    <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4"
+                                        data-bs-toggle="modal" data-bs-target=""> Cancel </button>
+                                    <button type="button"
+                                        class="btn btn-success ms-e f-saveBtn btn-large d-none"></button>
+                                    <button type="submit" class="btn skyBg ms-2   px-4 btn-medium saveBtn"
+                                        data-bs-target="">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </form>
+    </div>
+</div>

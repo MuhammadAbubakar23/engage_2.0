@@ -71,7 +71,7 @@ export class ConversationComponent implements OnInit {
     // this.currentDate = this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm:ss.SSSSSS')
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.TodayDate = new Date();
     this.getConversationList();
     this.getPlatform();
@@ -343,7 +343,7 @@ export class ConversationComponent implements OnInit {
     };
 
     this.commondata.AssignQuerry(this.assignQuerryDto).subscribe(
-      (res) => {
+      (res:any) => {
         this.reloadComponent('queryallocated');
 
         // this.headerService.updateMessage(string);

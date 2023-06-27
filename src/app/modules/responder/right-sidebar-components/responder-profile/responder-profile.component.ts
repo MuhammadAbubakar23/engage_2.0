@@ -43,6 +43,8 @@ export class ResponderProfileComponent implements OnInit {
       fromProfilePic: new FormControl(''),
 
       email: new FormControl(''),
+      organization: new FormControl(''),
+      role: new FormControl(''),
       phoneNumber: new FormControl(''),
       landlinenumber: new FormControl(''),
       address: new FormControl(''),
@@ -248,6 +250,10 @@ export class ResponderProfileComponent implements OnInit {
           fatherName: this.userDetailForm.value.fatherName,
           education: this.userDetailForm.value.education,
           bloodGroup: this.userDetailForm.value.bloodGroup,
+          city: this.userDetailForm.value.city,
+          country: this.userDetailForm.value.country,
+          organization: this.userDetailForm.value.organization,
+          role: this.userDetailForm.value.role,
         },
       ],
       secondaryProfiles: secondaryProfiles,
@@ -344,4 +350,32 @@ export class ResponderProfileComponent implements OnInit {
       this.toggleService.addTogglePanel(child);
     }
   }
+
+  Cities = [
+    { id: 1, name: 'Abbottabad' },
+    { id: 2, name: 'Chakwal' },
+    { id: 3, name: 'DG Khan' },
+    { id: 4, name: 'Faisalabad' },
+    { id: 5, name: 'Gujranwala' },
+    { id: 6, name: 'Gujrat' },
+    { id: 7, name: 'Hyderabad' },
+    { id: 8, name: 'Islamabad' },
+    { id: 9, name: 'Karachi' },
+    { id: 10, name: 'Lahore' },
+    { id: 11, name: 'Mardan' },
+    { id: 12, name: 'Mirpur AJK' },
+    { id: 13, name: 'Multan' },
+    { id: 14, name: 'Peshawer' },
+    { id: 15, name: 'Quetta' },
+    { id: 16, name: 'Rahim Yar Khan' },
+    { id: 17, name: 'Rawalpindi' },
+    { id: 18, name: 'Sahiwal' },
+    { id: 19, name: 'Sargodha' },
+    { id: 20, name: 'Sialkot' },
+
+  ];
+  Countries = [
+    { id: 1, name: 'Pakistan' },
+
+  ];
 }

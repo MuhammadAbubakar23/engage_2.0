@@ -15,7 +15,6 @@ export class AddPolicyComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    
     private commonService: CommonDataService
   ) {
     this.messageForm = this.formBuilder.group({
@@ -29,22 +28,7 @@ export class AddPolicyComponent implements OnInit {
         this.createSlaTargetGroup('low')
       ])
     });
-
-    // this.logSlaTargetFormValues();
   }
-
-  // logSlaTargetFormValues() {
-  //   const slaTargets = this.messageForm.get('slaTargets') as FormArray;
-
-  //   for (let i = 0; i < slaTargets.controls.length; i++) {
-  //     const formGroup = slaTargets.controls[i] as FormGroup;
-  //     const formValues = formGroup.value;
-
-  //     console.log("Form values for priority", formValues.priority);
-     
-  //   }
-  // }
-
   createSlaTargetGroup(priority: string): FormGroup {
     return this.formBuilder.group({
       priority: [priority],
@@ -83,6 +67,7 @@ export class AddPolicyComponent implements OnInit {
     console.log("Operation hours ID", formGroup.value.OperationalHoursId);
   }
   onSubmit() {
+    debugger
     const slaTargets = this.messageForm.get('slaTargets') as FormArray;
    
     for (let i = 0; i < slaTargets.controls.length; i++) {
@@ -110,8 +95,6 @@ export class AddPolicyComponent implements OnInit {
     // console.log('Form is invalid');
     // Form is invalid, display error messages or take appropriate action
     //}
-
-
   }
   cancelForm() {
     this.router.navigate(['/console/sla-policies']);

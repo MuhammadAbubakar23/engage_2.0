@@ -24,14 +24,15 @@
                                 <i class="fal fa-comments-alt ice"></i>
                             </span>
                             Comment
-                            <span class="badge rounded-pill bg-light text-dark ms-3" *ngIf="totalUnrespondedCmntCountByCustomer > 0">{{totalUnrespondedCmntCountByCustomer}}</span>
+                            <span class="badge rounded-pill bg-light text-dark ms-3"
+                                *ngIf="totalUnrespondedCmntCountByCustomer > 0">{{totalUnrespondedCmntCountByCustomer}}</span>
                         </div>
                     </button>
                 </li>
             </ul>
         </div>
         <div class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;"
-        infinite-scroll [scrollWindow]="false" [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5"
+            infinite-scroll [scrollWindow]="false" [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5"
             [infiniteScrollThrottle]="10" (scrolled)="onScrollComments()">
             <div class="scroll-content">
                 <div class="tab-content m-4" id="myTabContent">
@@ -123,7 +124,8 @@
                                     <ng-container *ngIf="youtubecomment.queryStatus != 'QueryCompleted'">
                                         <div class="message-wrap agent-message-wrap right"
                                             *ngIf="youtubedata.post.postId == youtubecomment.postId">
-                                            <div class="application-wrap d-flex align-items-center mb-1" *ngIf="youtubecomment.ticketId != null">
+                                            <div class="application-wrap d-flex align-items-center mb-1"
+                                                *ngIf="youtubecomment.ticketId != null">
                                                 <p class="m-0 silver me-2 ms-1">Application ID
                                                 </p>
                                                 <p class="app-no navy m-0 me-2">{{youtubecomment.ticketId}}</p>
@@ -140,7 +142,8 @@
                                                                         class="silver">{{youtubecomment.createdDate |
                                                                         date:'h:mm:ss a'}}</small></p>
                                                             </div>
-                                                            <div class="dropdown w-auto" *ngIf="youtubecomment.queryStatus != 'Responded' && youtubecomment.queryStatus != 'Completed'">
+                                                            <div class="dropdown w-auto"
+                                                                *ngIf="youtubecomment.queryStatus != 'Responded' && youtubecomment.queryStatus != 'Completed'">
                                                                 <button class="btn coal p-0 ps-3" type="button"
                                                                     id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                     aria-expanded="false">
@@ -151,28 +154,34 @@
                                                                     aria-labelledby="dropdownMenuButton1">
 
                                                                     <li>
-                                                                        <a class="dropdown-item" *ngIf="youtubecomment.queryStatus != 'Responded'" (click)="commentStatus(youtubecomment.id)">Read</a>
+                                                                        <a class="dropdown-item"
+                                                                            *ngIf="youtubecomment.queryStatus != 'Responded'"
+                                                                            (click)="commentStatus(youtubecomment.id)">Read</a>
                                                                         <!-- <a class="dropdown-item" *ngIf="youtubecomment.queryStatus == 'Responded'" (click)="queryCompleted(youtubecomment.id)">Completed</a> -->
-                                                                    </li>
+                                                            </li>
 
                                                                 </ul>
                                                             </div>
-                                                            <div class="w-auto" *ngIf="youtubecomment.queryStatus == 'Responded' || youtubecomment.queryStatus == 'Completed'" style="margin-left: 20px;">
+                                                            <div class="w-auto"
+                                                                *ngIf="youtubecomment.queryStatus == 'Responded' || youtubecomment.queryStatus == 'Completed'"
+                                                                style="margin-left: 20px;">
                                                                 <small>{{youtubecomment.queryStatus}} </small>
                                                             </div>
-                                                            
+
                                                         </div>
-                                                        <p class="card-text nignt" [innerHTML]="youtubecomment.message"></p>
+                                                        <p class="card-text nignt" [innerHTML]="youtubecomment.message">
+                                                        </p>
                                                         <div class="tags" *ngFor="let tag of youtubecomment.tags">
-                                                            <span (click)="removeTagFromFeed(tag.id, youtubecomment.id)"
-                                                                class="badge rounded-pill tag youtube-pill tag1 selected">{{tag.name}}</span>
+                                                            <span class="badge rounded-pill tag youtube-pill tag1 selected" 
+                                                            (click)="removeTagFromFeed(tag.id, youtubecomment.id)">{{tag.name}}</span>
 
                                                         </div>
                                                         <!-- For Sentiment Pills -->
-<div class="tags" *ngIf="youtubecomment.sentiment">
-    <span class="badge rounded-pills tag tag1 selected">{{youtubecomment.sentiment?.text}}</span>
-</div>
-<!-- For Sentiment Pills -->
+                                                        <div class="tags" *ngIf="youtubecomment.sentiment">
+                                                            <span
+                                                                class="badge rounded-pills tag tag1 selected">{{youtubecomment.sentiment?.text}}</span>
+                                                        </div>
+                                                        <!-- For Sentiment Pills -->
                                                     </div>
                                                     <div class="message-bottom">
                                                         <div class="row">
@@ -180,9 +189,9 @@
                                                                 <div
                                                                     class="message-actionlist d-flex align-items-center">
                                                                     <div class="box">
-                                                                        <a (click)="likeByAdmin(youtubecomment.id, youtubecomment.isLikedByAdmin, youtubedata.platform, youtubedata.post?.profile.page_Id, youtubedata.post?.profile.profile_Id, youtubedata.user?.userId)"
+                                                                        <a class="message-actionItem coal likebht p-0 label-reactions" (click)="likeByAdmin(youtubecomment.id, youtubecomment.isLikedByAdmin, youtubedata.platform, youtubedata.post?.profile.page_Id, youtubedata.post?.profile.profile_Id, youtubedata.user?.userId)"
                                                                             [class.active]="youtubecomment.isLikedByAdmin == true"
-                                                                            class="message-actionItem coal likebht p-0 label-reactions">
+                                                                            >
                                                                             <span class="iconButton small btn">
                                                                                 <i class="fal fa-thumbs-up coal"></i>
                                                                                 <i class="fas fa-thumbs-up"></i>
@@ -190,8 +199,8 @@
                                                                             Like
                                                                         </a>
                                                                     </div>
-                                                                    <a (click)="sendYoutubeCommentInformation(youtubecomment.id)"
-                                                                        class="message-actionItem replyBtn coal">
+                                                                    <a class="message-actionItem replyBtn coal" (click)="sendYoutubeCommentInformation(youtubecomment.id)"
+                                                                        >
                                                                         <span class="iconButton small btn mx-2">
                                                                             <i class="fal fa-reply coal"></i>
                                                                         </span>
@@ -230,7 +239,8 @@
                                                                                         <input
                                                                                             class="form-control rounded-pill shadow-sm"
                                                                                             placeholder="Search"
-                                                                                            aria-label="Search" [(ngModel)]="searchText">
+                                                                                            aria-label="Search"
+                                                                                            [(ngModel)]="searchText">
                                                                                         <span class="btn searchbar-btn"
                                                                                             type="submit">
                                                                                             <i
@@ -263,9 +273,9 @@
                                                                                                 style="overflow: auto; outline: none;">
                                                                                                 <div
                                                                                                     class="list-group list-group-flush">
-                                                                                                    <a (click)="insertTagsForFeed(keyword.id, youtubecomment.id)"
+                                                                                                    <a class="list-group-item d-flex level1Btn dropdown-item" (click)="insertTagsForFeed(keyword.id, youtubecomment.id)"
                                                                                                         [ngClass]="activeTag==true?'active':''"
-                                                                                                        class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                                        
                                                                                                         *ngFor="let keyword of tag.keywordList">
                                                                                                         <div
                                                                                                             class="list-down-icon">
@@ -322,8 +332,8 @@
                                                                                     <div class="scroll-content">
                                                                                         <div class="list-group list-group-flush"
                                                                                             *ngFor="let sentiment of Sentiments">
-                                                                                            <a (click)="insertSentimentForFeed(youtubecomment.id, sentiment.name)"
-                                                                                                class="list-group-item d-flex level1Btn ">
+                                                                                            <a class="list-group-item d-flex level1Btn " (click)="insertSentimentForFeed(youtubecomment.id, sentiment.name)"
+                                                                                                >
                                                                                                 <div
                                                                                                     class="list-down-icon">
                                                                                                     <span
@@ -361,7 +371,7 @@
                                                     </div>
                                                 </div>
                                                 <span class="complaintBtn" type="button"
-                                                (click)="toggle('ticket', youtubecomment.id)"><i
+                                                    (click)="toggle('ticket', youtubecomment.id)"><i
                                                         class="fal fa-plus-circle sky"></i></span>
                                             </div>
                                             <div *ngFor="let reply of youtubecomment.replies | sort:criteria">
@@ -399,9 +409,8 @@
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="youtubecomment.queryStatus == 'QueryCompleted'">
-                                        <div 
-                                            (click)="markAsCompleteExpanded(youtubecomment.id)"
-                                            class="accordion email-accordion" style="display:block">
+                                        <div class="accordion email-accordion" (click)="markAsCompleteExpanded(youtubecomment.id)"
+                                             style="display:block">
                                             <div class="accordion-item email-wrap marked-wrap mt-3">
                                                 <div [ngClass]="markAsComplete == true?'open':'collaps-wrap'"
                                                     class="accordion-header" id="emailwrap7">
@@ -512,7 +521,7 @@
                             <span class="fw-bold navy">2354545</span>
                             {{youtubecomment.message}}
                         </div>
-                        <button (click)="closeMentionedReply()" class="iconButton small closeMsgBtn"
+                        <button class="iconButton small closeMsgBtn" (click)="closeMentionedReply()"
                             data-bs-toggle="tooltip" data-bs-placement="top" id="searchbtn"
                             data-bs-original-title="Close">
                             <i class="fal fa-times"></i>
@@ -541,18 +550,19 @@
                             <i class="far fa-smile"></i>
                         </span>
                     </button>
-                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList" aria-labelledby="dropdownMenuButton2">
+                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                        aria-labelledby="dropdownMenuButton2">
                         <ul class="dropdown-listing">
                             <li class="dropdown-listing-header">
                                 <div class="head-section">
                                     <div class="left" *ngFor="let emoji of Emojies">
-                                        <span (click)="insertEmoji(emoji.emoji)" style="cursor: pointer; font-size: 17px;">{{emoji.emoji}}</span>
+                                        <span style="cursor: pointer; font-size: 17px;" (click)="insertEmoji(emoji.emoji)">{{emoji.emoji}}</span>
                                     </div>
                                 </div>
                             </li>
                         </ul>
                     </ul>
-                    </div>
+                </div>
                 <button type="submit" class="iconButton small notification iconHover" data-bs-toggle="tooltip"
                     data-bs-placement="top" title="" id="commentSendbtn" data-bs-original-title="Send">
                     <i class="fal fa-paper-plane"></i>
@@ -582,13 +592,14 @@
             <div class="section-heading">
                 <h6 class="silver pt-3 mb-0">Quick Response</h6>
             </div>
-            <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas"
-                aria-label="Close" (click)="closeQuickResponseSidebar()"><i class="fal fa-times"></i></button>
+            <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas" aria-label="Close"
+                (click)="closeQuickResponseSidebar()"><i class="fal fa-times"></i></button>
         </div>
         <div class="offcanvas-body">
 
             <form class="custom-searchbar">
-                <input class="form-control me-2 rounded-pill shadow-sm" placeholder="Search" aria-label="Search" [(ngModel)]="quickReplySearchText">
+                <input class="form-control me-2 rounded-pill shadow-sm" placeholder="Search" aria-label="Search"
+                    [(ngModel)]="quickReplySearchText">
                 <span class="btn searchbar-btn" type="submit">
                     <i class="fal fa-search silver"></i>
                 </span>
@@ -596,12 +607,14 @@
             <div class="list-group-section quick-response" id="accordionExample">
                 <div class="collapse-toggle-card">
                     <div class="list-group list-group-flush">
-                        <div class="collapse-wrap mx-3" id="qr-ques1" *ngFor="let qr of QuickReplies | quickReplySearchFilter: quickReplySearchText">
-                            <div class="list-group list-group-flush mb-4 ms-4 ps-1" >
+                        <div class="collapse-wrap mx-3" id="qr-ques1"
+                            *ngFor="let qr of QuickReplies | quickReplySearchFilter: quickReplySearchText">
+                            <div class="list-group list-group-flush mb-4 ms-4 ps-1">
                                 <div class="form-check list-group-item theme-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id={{qr.value}} #radioInput>
-                                    <label class="form-check-label" for={{qr.value}} (click)="sendQuickReply(qr.value)">{{qr.text}}
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id={{qr.value}}
+                                        #radioInput>
+                                    <label class="form-check-label" for={{qr.value}}
+                                        (click)="sendQuickReply(qr.value)">{{qr.text}}
                                     </label>
                                 </div>
 

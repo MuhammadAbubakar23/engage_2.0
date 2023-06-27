@@ -263,7 +263,7 @@ export class FacebookComponent implements OnInit {
           this.spinner1running = false;
           this.ConverstationDetailDto = res;
           this.FacebookData = this.ConverstationDetailDto.List;
-          this.pageName = this.FacebookData[0]?.post.profile.page_Name;
+         this.pageName = this.FacebookData[0]?.post.profile.page_Name;
 
           if (this.FacebookData) {
             this.fbCmntReply = true;
@@ -446,8 +446,8 @@ export class FacebookComponent implements OnInit {
   spinner2running = false;
 
   updateCommentsDataListener() {
-    if(!this.id){
-      this.id = localStorage.getItem('storeOpenedId') || '{}'
+    if (!this.id) {
+      this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
     this.updatedComments.forEach((xyz: any) => {
       if (this.id == xyz.userId) {
@@ -508,9 +508,8 @@ export class FacebookComponent implements OnInit {
   }
 
   updateMessagesDataListener() {
-    
-    if(!this.id){
-      this.id = localStorage.getItem('storeOpenedId') || '{}'
+    if (!this.id) {
+      this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
     this.updatedMessages.forEach((xyz: any) => {
       if (this.id == xyz.fromId) {
@@ -592,7 +591,7 @@ export class FacebookComponent implements OnInit {
       });
     }
     if (this.addTags.feedType == 'FCP') {
-      this.FacebookMessages.forEach((msg: any) => {
+      this.FacebookMessages?.forEach((msg: any) => {
         if (msg.id == this.addTags.feedId) {
           if (msg.tags.length == 0) {
             msg.tags.push(this.addTags);
@@ -631,7 +630,7 @@ export class FacebookComponent implements OnInit {
       });
     }
     if (this.removeTags.feedType == 'FCP') {
-      this.FacebookMessages.forEach((msg: any) => {
+      this.FacebookMessages?.forEach((msg: any) => {
         if (msg.id == this.removeTags.feedId) {
           var tag = msg.tags.find((x: any) => x.id == this.removeTags.tagId);
           const index = msg.tags.indexOf(tag);
@@ -655,7 +654,7 @@ export class FacebookComponent implements OnInit {
         });
       });
     });
-    this.FacebookMessages.forEach((msg: any) => {
+    this.FacebookMessages?.forEach((msg: any) => {
       if (msg.id == this.queryStatus.queryId) {
         msg.queryStatus = this.queryStatus.queryStatus;
       }
@@ -678,7 +677,7 @@ export class FacebookComponent implements OnInit {
         });
       }
       if (querry.feedType == 'FCP') {
-        this.FacebookMessages.forEach((msg: any) => {
+        this.FacebookMessages?.forEach((msg: any) => {
           if (msg.id == querry.queryId) {
             msg.queryStatus = querry.queryStatus;
             this.totalUnrespondedMsgCountByCustomer = 0;
@@ -704,7 +703,7 @@ export class FacebookComponent implements OnInit {
       });
     }
     if (this.newReply.contentType == 'FCP') {
-      this.FacebookMessages.forEach((msg: any) => {
+      this.FacebookMessages?.forEach((msg: any) => {
         if (msg.id == this.newReply.commentId) {
           msg.replies.push(this.newReply);
           msg.queryStatus = this.newReply.queryStatus;
@@ -735,7 +734,7 @@ export class FacebookComponent implements OnInit {
         .subscribe((res: any) => {
           this.SpinnerService.hide();
           this.FacebookMessages = res.List?.dm;
-          this.pageName = this.FacebookMessages[0]?.toName;
+        //  this.pageName = this.FacebookMessages[0]?.toName;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
           this.messagesArray = [];
@@ -1005,7 +1004,7 @@ export class FacebookComponent implements OnInit {
     });
   }
   SendMessageInformation(id: any) {
-    this.FacebookMessages.forEach((msg: any) => {
+    this.FacebookMessages?.forEach((msg: any) => {
       if (msg.id == id) {
         // show mentioned reply
         this.show = true;
@@ -1028,7 +1027,6 @@ export class FacebookComponent implements OnInit {
   text: string = '';
 
   submitFacebookReply() {
-    debugger
     if (this.commentId == 0) {
       this.reloadComponent('selectComment');
     } else {
@@ -1040,11 +1038,11 @@ export class FacebookComponent implements OnInit {
       }
 
       // if () {
-        if (this.text !== '') {
-          this.facebookReplyForm.patchValue({
-            text: this.text,
-          });
-        }
+      if (this.text !== '') {
+        this.facebookReplyForm.patchValue({
+          text: this.text,
+        });
+      }
       // }
       //  else {
       //   if (this.facebookReplyForm.value.text) {
@@ -1060,7 +1058,7 @@ export class FacebookComponent implements OnInit {
         contentType: this.postType,
         profileId: this.profileId,
         profilePageId: this.profilePageId,
-        userProfileId : this.userProfileId
+        userProfileId: this.userProfileId,
       });
 
       formData.append(
@@ -1072,9 +1070,8 @@ export class FacebookComponent implements OnInit {
           this.facebookReplyForm.value.text !== null) ||
         (this?.ImageName?.length > 0 && this.ImageName != undefined)
       ) {
-        
-    this.spinner1running = true;
-    this.SpinnerService.show();
+        this.spinner1running = true;
+        this.SpinnerService.show();
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.spinner1running = false;
@@ -1111,7 +1108,6 @@ export class FacebookComponent implements OnInit {
   }
 
   submitFacebookMessageReply() {
-    debugger
     if (this.msgId == 0) {
       this.reloadComponent('selectComment');
     } else {
@@ -1123,11 +1119,11 @@ export class FacebookComponent implements OnInit {
       }
 
       // if (!this.facebookMessageReplyForm.get('text')?.dirty) {
-        if (this.text !== '') {
-          this.facebookMessageReplyForm.patchValue({
-            text: this.text,
-          });
-        }
+      if (this.text !== '') {
+        this.facebookMessageReplyForm.patchValue({
+          text: this.text,
+        });
+      }
       // } else {
       //   if (this.facebookMessageReplyForm.value.text) {
       //     this.facebookMessageReplyForm.patchValue({
@@ -1142,7 +1138,7 @@ export class FacebookComponent implements OnInit {
         contentType: this.postType,
         profileId: this.profileId,
         profilePageId: this.profilePageId,
-        userProfileId : this.userProfileId
+        userProfileId: this.userProfileId,
       });
 
       formData.append(
@@ -1161,9 +1157,8 @@ export class FacebookComponent implements OnInit {
           this.facebookMessageReplyForm.value.text !== null) ||
         (this?.ImageName?.length > 0 && this.ImageName != undefined)
       ) {
-        
-    this.spinner1running = true;
-    this.SpinnerService.show();
+        this.spinner1running = true;
+        this.SpinnerService.show();
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.spinner1running = false;
@@ -1285,7 +1280,7 @@ export class FacebookComponent implements OnInit {
         localStorage.getItem('agentId')
       );
 
-      this.FacebookMessages.forEach((msg: any) => {
+      this.FacebookMessages?.forEach((msg: any) => {
         if (msg.id == comId) {
           if (msg.tags.length == 0) {
             this.commondata
@@ -1632,7 +1627,7 @@ export class FacebookComponent implements OnInit {
         });
       });
     });
-    this.FacebookMessages.forEach((msg: any) => {
+    this.FacebookMessages?.forEach((msg: any) => {
       if (msg.id == res.queryId) {
         msg.ticketId = res.ticketId;
       }
@@ -1650,7 +1645,7 @@ export class FacebookComponent implements OnInit {
         });
       });
     });
-    this.FacebookMessages.forEach((msg: any) => {
+    this.FacebookMessages?.forEach((msg: any) => {
       if (msg.id == res.feedId) {
         msg.sentiment = res;
       }

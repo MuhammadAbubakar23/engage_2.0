@@ -78,7 +78,19 @@ export const environment = {
       updateSlaPolicy : 'SLAPolicies/Update',
       getPolicyById : 'SLAPolicies/GetById',
       deleteSlaPolicy : 'SLAPolicies/Delete',
-      getOperationalHours : 'SLAPolicies/GetOperationalHours'
+      getOperationalHours : 'SLAPolicies/GetOperationalHours',
+      getBusinessHours : 'BusinessHours/GetAll',
+      addBusinessHours : 'BusinessHours/Add',
+      deleteBusinessHours : 'BusinessHours/Delete',
+      updateBusinessHours : 'BusinessHours/Update',
+      getBusinessById : 'BusinessHours/GetById',
+      getEntractRoute : 'EnteractRoute/GetAll',
+      addEntractRoute : 'EnteractRoute/Add',
+      updateEntractRoute : 'EnteractRoute/Update',
+      deleteEntractRoute : 'EnteractRoute/Delete',
+      getSkills : 'Skill/GetAll',
+      addSkill : 'Skill/Add',
+      deleteSkill : 'Skill/Delete'
     },
     CCMS:{
       reason_types:'Order/GetReasonTypes',

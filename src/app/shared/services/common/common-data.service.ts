@@ -7,10 +7,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CommonDataService {
-  // for testing purpose 
+  // for testing purpose
   consoleBaseUrl = environment.consoleBaseUrl;
 
-  
   resultData: any;
   CCMSURL = environment.CCMSURL;
   JomoAccessToken = environment.JomoAccessToken;
@@ -64,21 +63,33 @@ export class CommonDataService {
   // createMessageTemplate = environment.links.console.CreateMessageTemplate;
   repliesList = environment.links.common.repliesList;
 
-  // for testing purpose 
+  // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
   addTemplate = environment.links.console.addTemplate;
   updateTemplate = environment.links.console.updateTemplate;
   deleteMessages = environment.links.console.deleteMessages;
   getQuickReply = environment.links.console.getQuickReply;
-  addQuickReply = environment.links.console.addQuickReply
-  updateQuickReply = environment.links.console.updateQuickReply
-  deleteQuickReply = environment.links.console.deleteQuickReply
-  getSlaPolicy = environment.links.console.getSlaPolicy
-  addSlaPolicy = environment.links.console.addSlaPolicy
-  updateSlaPolicy = environment.links.console.updateSlaPolicy
-  getPolicyById = environment.links.console.getPolicyById
-  deleteSlaPolicy = environment.links.console.deleteSlaPolicy
-  getOperationalHours = environment.links.console.getOperationalHours
+  addQuickReply = environment.links.console.addQuickReply;
+  updateQuickReply = environment.links.console.updateQuickReply;
+  deleteQuickReply = environment.links.console.deleteQuickReply;
+  getSlaPolicy = environment.links.console.getSlaPolicy;
+  addSlaPolicy = environment.links.console.addSlaPolicy;
+  updateSlaPolicy = environment.links.console.updateSlaPolicy;
+  getPolicyById = environment.links.console.getPolicyById;
+  deleteSlaPolicy = environment.links.console.deleteSlaPolicy;
+  getOperationalHours = environment.links.console.getOperationalHours;
+  getBusinessHours = environment.links.console.getBusinessHours
+  addBusinessHours = environment.links.console.addBusinessHours
+  deleteBusinessHours =environment.links.console.deleteBusinessHours
+  updateBusinessHours = environment.links.console.updateBusinessHours
+  getBusinessById = environment.links.console.getBusinessById
+  getEntractRoute = environment.links.console.getEntractRoute
+  addEntractRoute = environment.links.console.addEntractRoute
+  updateEntractRoute = environment.links.console.updateEntractRoute
+  deleteEntractRoute = environment.links.console.deleteEntractRoute
+  getSkills = environment.links.console.getSkills
+  addSkill = environment.links.console.addSkill
+  deleteSkill = environment.links.console.deleteSkill
 
   constructor(private http: HttpClient) {}
 
@@ -274,17 +285,14 @@ export class CommonDataService {
   GetDispositionHistory(body: any) {
     return this.http.post(this.CommonBaseUrl + this.dispositionHistory, body);
   }
-  MarkAllAsRead(profileId: any) {
-    return this.http.get(
-      this.CommonBaseUrl +
-        this.markAllAsRead +
-        '?CustomerProfileId=' +
-        profileId
-    );
+  MarkAllAsRead(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.markAllAsRead, body);
   }
 
   GetAgentReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.getAgentReport, body, { responseType: 'text'});
+    return this.http.post(this.CommonBaseUrl + this.getAgentReport, body, {
+      responseType: 'text',
+    });
   }
 
   GetAllocatedProfiles() {
@@ -300,11 +308,12 @@ export class CommonDataService {
   // }
 
   GetAllMessages(templates: any) {
-
-    return this.http.get(this.consoleBaseUrl + this.getAllMessages + '?templateType=' + templates)
+    return this.http.get(
+      this.consoleBaseUrl + this.getAllMessages + '?templateType=' + templates
+    );
   }
   Addtemplate(addData: any) {
-    return this.http.post(this.consoleBaseUrl + this.addTemplate, addData)
+    return this.http.post(this.consoleBaseUrl + this.addTemplate, addData);
   }
   UpdateTemplate(templateId: string, template: any) {
     const url = `${this.consoleBaseUrl}${this.updateTemplate}?Id=${templateId}`;
@@ -315,10 +324,10 @@ export class CommonDataService {
     return this.http.get(url);
   }
   GetQuickReply() {
-    return this.http.get(this.consoleBaseUrl + this.getQuickReply)
+    return this.http.get(this.consoleBaseUrl + this.getQuickReply);
   }
   AddQuickReply(add: any) {
-    return this.http.post(this.consoleBaseUrl + this.addQuickReply, add)
+    return this.http.post(this.consoleBaseUrl + this.addQuickReply, add);
   }
   UpdateQuickReply(quickId: string, quick: any) {
     const url = `${this.consoleBaseUrl}${this.updateQuickReply}?Id=${quickId}`;
@@ -332,7 +341,7 @@ export class CommonDataService {
     return this.http.get(this.consoleBaseUrl + this.getSlaPolicy);
   }
   AddSlaPolicy(addSla: any) {
-    return this.http.post(this.consoleBaseUrl + this.addSlaPolicy, addSla)
+    return this.http.post(this.consoleBaseUrl + this.addSlaPolicy, addSla);
   }
   UpdateSlaPolicy(slaId: string, sla: any) {
     const url = `${this.consoleBaseUrl}${this.updateSlaPolicy}?Id=${slaId}`;
@@ -346,8 +355,50 @@ export class CommonDataService {
     const url = `${this.consoleBaseUrl}${this.deleteSlaPolicy}?Id=${deleteSla}`;
     return this.http.get(url);
   }
-  GetOperationalHours(){
-    return this.http.get(this.consoleBaseUrl + this.getOperationalHours)
+  GetOperationalHours() {
+    return this.http.get(this.consoleBaseUrl + this.getOperationalHours);
+  }
+  GetBusinessHours(){
+    return this.http.get(this.consoleBaseUrl+this.getBusinessHours)
+  }
+  AddBusinessHours(addHours : any){
+    return this.http.post(this.consoleBaseUrl + this.addBusinessHours, addHours)
+  }
+  DeleteBusinessHours(delHours: string): Observable<any> {
+    const url = `${this.consoleBaseUrl}${this.deleteBusinessHours}?Id=${delHours}`;
+    return this.http.get(url);
+  }
+  UpdateBusinessHours(hoursId: string, bueiness: any){
+    const url = `${this.consoleBaseUrl}${this.updateBusinessHours}?Id=${hoursId}`;
+    return this.http.post(url, bueiness);
+  }
+  GetBusinessById(BusinessId: string){
+    const url = `${this.consoleBaseUrl}${this.getBusinessById}?Id=${BusinessId}`;
+    return this.http.get(url);
+  }
+  GetEntractRoute(){
+    return this.http.get(this.consoleBaseUrl+this.getEntractRoute)
+  }
+  AddEntractRoute(addRoute : any){
+    return this.http.post(this.consoleBaseUrl + this.addEntractRoute, addRoute)
+  }
+  UpdateEntractRoute(RouteId : any , entract :any){
+    const url = `${this.consoleBaseUrl}${this.updateEntractRoute}?Id=${RouteId}`;
+    return this.http.post(url, entract);
+  }
+  DeleteEntractRoute(delRoute: string): Observable<any> {
+    const url = `${this.consoleBaseUrl}${this.deleteEntractRoute}?Id=${delRoute}`;
+    return this.http.get(url);
+  }
+  GetSkill(){
+    return this.http.get(this.consoleBaseUrl+this.getSkills)
+  }
+  AddSkill(addSkill : any){
+    return this.http.post(this.consoleBaseUrl + this.addSkill, addSkill)
+  }
+  DeleteSkill(delSkill: string): Observable<any> {
+    const url = `${this.consoleBaseUrl}${this.deleteSkill}?Id=${delSkill}`;
+    return this.http.get(url);
   }
 }
 
