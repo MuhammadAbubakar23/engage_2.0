@@ -40,6 +40,7 @@ import { QuickResponseComponent } from './components/templates/quick-response/qu
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { CKEditorModule } from 'ckeditor4-angular';
 import { CreateQuickResponseTemplatesComponent } from './components/templates/quick-response/create-quick-response-templates/create-quick-response-templates.component';
+import { CreateBusinessHoursComponent } from './components/business-hours/create-business-hours/create-business-hours.component';
 // import { CreateSkillsComponent } from './components/skills/create-skills/create-skills.component';
 // import { AddSkillMembersComponent } from './components/skills/add-skill-members/add-skill-members.component';
 
@@ -86,6 +87,7 @@ import { CreateQuickResponseTemplatesComponent } from './components/templates/qu
     CreateQuickResponseTemplatesComponent,
     // CreateSkillsComponent,
     //AddSkillMembersComponent,
+    CreateBusinessHoursComponent
   ],
   imports: [
     CommonModule,

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CreateBusinessHoursComponent } from './components/business-hours/create-business-hours/create-business-hours.component';
 import { AddPolicyComponent } from './components/sla-policies/add-policy/add-policy.component';
 import { CreateMessageTemplatesComponent } from './components/templates/messages/create-message-templates/create-message-templates.component';
 import { MessagesComponent } from './components/templates/messages/messages.component';
@@ -207,6 +208,10 @@ const routes: Routes = [
         loadComponent: () => import('./components/business-hours/business-hours.component').then(c => c.BusinessHoursComponent)
       },
       { path: 'console/templates/messages/edit/:id', component: CreateMessageTemplatesComponent },
+     {
+       path:'business-hours/create',
+      component : CreateBusinessHoursComponent
+     },
     ]
 // },
 // {
