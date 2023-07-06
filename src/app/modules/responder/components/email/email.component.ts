@@ -92,7 +92,7 @@ export class EmailComponent implements OnInit {
     this.emailReplyForm = new FormGroup({
       text: new FormControl(''),
       commentId: new FormControl(0),
-      teamId: new FormControl(0),
+      // teamId: new FormControl(0),
       platform: new FormControl(''),
       contentType: new FormControl(''),
       to: new FormControl('', [Validators.required, this.validateEmails]),
@@ -176,7 +176,6 @@ export class EmailComponent implements OnInit {
   senderEmailAddress: any;
 
   updateCommentsDataListener() {
-    
     if (!this.id) {
       this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
@@ -230,7 +229,6 @@ export class EmailComponent implements OnInit {
           );
           item.groupedComments?.forEach((group: any) => {
             group.items?.forEach((email: any) => {
-              
               this.multipleTo = [];
               this.multipleCc = [];
               email.to?.forEach((singleTo: any) => {
@@ -296,7 +294,7 @@ export class EmailComponent implements OnInit {
 
   To: string = '';
   totalUnrespondedCmntCountByCustomer: number = 0;
-  TotalQueryCount:number=0;
+  TotalQueryCount: number = 0;
 
   commentsArray: any[] = [];
   groupArrays: any[] = [];
@@ -885,6 +883,7 @@ export class EmailComponent implements OnInit {
   }
 
   sendReplyInformation(id: any) {
+    debugger
     this.emailFrom = [];
     this.Emails.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
@@ -896,7 +895,7 @@ export class EmailComponent implements OnInit {
             emailAddress: this.senderEmailAddress,
           });
           this.emailId = comment.id;
-          this.agentId = localStorage.getItem('agentId') || '{}';
+          // this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
           this.postType = comment.contentType;
           this.emailSubject = comment.message;
@@ -907,7 +906,7 @@ export class EmailComponent implements OnInit {
       });
     });
   }
-  text:string='';
+  text: string = '';
 
   sendForwardInformation(id: any) {
     this.emailFrom = [];
@@ -927,7 +926,7 @@ export class EmailComponent implements OnInit {
           this.emailSubject = comment.message;
           this.emailFromInString = '';
           this.emailCcInString = '';
-          this.text = this.convertHtmlToPlainText(comment.body); 
+          this.text = this.convertHtmlToPlainText(comment.body);
           this.userProfileId = this.Emails[0].user.id;
         }
       });
@@ -1019,11 +1018,11 @@ export class EmailComponent implements OnInit {
 
     this.emailReplyForm.patchValue({
       commentId: this.emailId,
-      teamId: this.agentId,
+      // teamId: this.agentId,
       platform: this.platform,
       contentType: this.postType,
       userProfileId: this.userProfileId,
-      text : this.text
+      text: this.text,
     });
 
     formData.append('CommentReply', JSON.stringify(this.emailReplyForm.value));
@@ -1044,7 +1043,7 @@ export class EmailComponent implements OnInit {
       }
     );
   }
-  
+
   onFileChanged() {
     if (this.fileInput.nativeElement.files.length > 0) {
       this.isAttachment = true;
@@ -1198,12 +1197,12 @@ export class EmailComponent implements OnInit {
   }
 
   commentStatus(comId: any, type: any) {
-
+    debugger
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = this.parentPlatform;
     this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {});
@@ -1213,7 +1212,7 @@ export class EmailComponent implements OnInit {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = this.parentPlatform;
-    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .QueryCompleted(this.commentStatusDto)
       .subscribe((res: any) => {
@@ -1363,8 +1362,8 @@ export class EmailComponent implements OnInit {
   }
 
   onScroll() {
-    debugger
-    if(this.TotalQueryCount > this.pageSize){
+    debugger;
+    if (this.TotalQueryCount > this.pageSize) {
       this.pageSize = this.pageSize + 10;
       this.getEmails();
     }

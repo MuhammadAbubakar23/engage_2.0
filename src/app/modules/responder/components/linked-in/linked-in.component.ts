@@ -722,7 +722,7 @@ detectChanges(): void {
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = 'LinkedIn';
     this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+   // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {
@@ -735,7 +735,7 @@ detectChanges(): void {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = 'LinkedIn';
-    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .QueryCompleted(this.commentStatusDto)
       .subscribe((res: any) => {

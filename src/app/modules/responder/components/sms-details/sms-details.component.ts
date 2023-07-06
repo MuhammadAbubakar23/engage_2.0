@@ -547,7 +547,7 @@ export class SmsDetailsComponent implements OnInit {
     this.commentStatusDto.type = 'SMS';
     this.commentStatusDto.plateForm = 'SMS';
     this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+   // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {
@@ -561,7 +561,7 @@ export class SmsDetailsComponent implements OnInit {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = 'SMS';
     this.commentStatusDto.plateForm = 'SMS';
-    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+   // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .QueryCompleted(this.commentStatusDto)
       .subscribe((res: any) => {

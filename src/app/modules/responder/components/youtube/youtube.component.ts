@@ -681,7 +681,7 @@ export class YoutubeComponent implements OnInit {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = 'YC';
     this.commentStatusDto.plateForm = 'Youtube';
-    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+   // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
     this.commondata.CommentRespond(this.commentStatusDto).subscribe(
       (res: any) => {
@@ -696,7 +696,7 @@ export class YoutubeComponent implements OnInit {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = 'YC';
     this.commentStatusDto.plateForm = 'Youtube';
-    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .QueryCompleted(this.commentStatusDto)
       .subscribe((res: any) => {

@@ -611,7 +611,7 @@ export class InstagramComponent implements OnInit {
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = 'Instagram';
     this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {});
@@ -620,7 +620,7 @@ export class InstagramComponent implements OnInit {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = 'Instagram';
-    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .QueryCompleted(this.commentStatusDto)
       .subscribe((res: any) => {

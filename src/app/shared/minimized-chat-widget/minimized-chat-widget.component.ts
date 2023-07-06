@@ -422,7 +422,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
     this.commentStatusDto.type = 'YC';
     this.commentStatusDto.plateForm = 'Youtube';
     this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata.CommentRespond(this.commentStatusDto).subscribe(
       (res: any) => {
         this.getYoutubeData();

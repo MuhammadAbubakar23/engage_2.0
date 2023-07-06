@@ -961,7 +961,7 @@ export class FacebookComponent implements OnInit {
   facebookReplyForm = new UntypedFormGroup({
     text: new UntypedFormControl(this.ReplyDto.text, Validators.required),
     commentId: new UntypedFormControl(this.ReplyDto.commentId),
-    teamId: new UntypedFormControl(this.ReplyDto.teamId),
+    // teamId: new UntypedFormControl(this.ReplyDto.teamId),
     platform: new UntypedFormControl(this.ReplyDto.platform),
     contentType: new UntypedFormControl(this.ReplyDto.contentType),
     profileId: new UntypedFormControl(this.ReplyDto.profileId),
@@ -972,7 +972,7 @@ export class FacebookComponent implements OnInit {
   facebookMessageReplyForm = new UntypedFormGroup({
     text: new UntypedFormControl(this.ReplyDto.text, Validators.required),
     commentId: new UntypedFormControl(this.ReplyDto.commentId),
-    teamId: new UntypedFormControl(this.ReplyDto.teamId),
+    // teamId: new UntypedFormControl(this.ReplyDto.teamId),
     platform: new UntypedFormControl(this.ReplyDto.platform),
     contentType: new UntypedFormControl(this.ReplyDto.contentType),
     profileId: new UntypedFormControl(this.ReplyDto.profileId),
@@ -993,7 +993,7 @@ export class FacebookComponent implements OnInit {
           // populate comment data
 
           this.commentId = comment.id;
-          this.agentId = localStorage.getItem('agentId');
+          // this.agentId = localStorage.getItem('agentId');
           this.platform = xyz.platform;
           this.postType = comment.contentType;
           this.profileId = xyz.post.profile.profile_Id;
@@ -1009,7 +1009,7 @@ export class FacebookComponent implements OnInit {
         // show mentioned reply
         this.show = true;
         this.msgId = msg.id;
-        this.agentId = localStorage.getItem('agentId');
+        // this.agentId = localStorage.getItem('agentId');
         this.platform = this.fetchId.platform;
         this.postType = 'FCP';
         this.profileId = msg.profileId;
@@ -1053,7 +1053,7 @@ export class FacebookComponent implements OnInit {
       // }
       this.facebookReplyForm.patchValue({
         commentId: this.commentId,
-        teamId: this.agentId,
+        // teamId: this.agentId,
         platform: this.platform,
         contentType: this.postType,
         profileId: this.profileId,
@@ -1133,7 +1133,7 @@ export class FacebookComponent implements OnInit {
       // }
       this.facebookMessageReplyForm.patchValue({
         commentId: this.msgId,
-        teamId: this.agentId,
+        // teamId: this.agentId,
         platform: this.platform,
         contentType: this.postType,
         profileId: this.profileId,
@@ -1400,7 +1400,7 @@ export class FacebookComponent implements OnInit {
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = 'Facebook';
     this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {});
@@ -1410,7 +1410,7 @@ export class FacebookComponent implements OnInit {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = 'Facebook';
-    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .QueryCompleted(this.commentStatusDto)
       .subscribe((res: any) => {

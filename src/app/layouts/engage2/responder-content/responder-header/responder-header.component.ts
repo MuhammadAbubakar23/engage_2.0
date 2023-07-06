@@ -2045,7 +2045,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = localStorage.getItem('parent') || '{}';
     this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+   // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
 
     this.commonService.MarkAllAsRead(this.commentStatusDto).subscribe(
       (res: any) => {

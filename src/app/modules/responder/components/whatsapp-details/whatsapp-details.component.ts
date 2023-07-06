@@ -623,7 +623,7 @@ export class WhatsappDetailsComponent implements OnInit {
     this.commentStatusDto.type = 'WM';
     this.commentStatusDto.plateForm = 'WhatsApp';
     this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+   // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {
@@ -634,7 +634,7 @@ export class WhatsappDetailsComponent implements OnInit {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = 'WM';
     this.commentStatusDto.plateForm = 'WhatsApp';
-    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+   // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .QueryCompleted(this.commentStatusDto)
       .subscribe((res: any) => {
