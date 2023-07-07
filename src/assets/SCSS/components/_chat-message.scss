@@ -180,9 +180,9 @@
       font-weight: 500;
     }
   }
-  .main-body-wrapper{
-    width: calc(100% - 60px);
-  }
+  // .main-body-wrapper{
+    // width: calc(100% - 60px); // for TPPL removing right sidebar
+  // }
   &.panelToggled {
     .agent-page-main-content {
       width: 50%;
