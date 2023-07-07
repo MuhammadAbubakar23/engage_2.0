@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { UserDetailDto } from 'src/app/shared/Models/UserDetailDto';
@@ -29,6 +29,7 @@ export class ResponderProfileComponent implements OnInit {
   userDetailDto = new UserDetailDto();
 
   userDetailForm!: FormGroup;
+  mergeSocialProfilesForm !: FormGroup
 
   constructor(
     private commonService: CommonDataService,
@@ -64,6 +65,11 @@ export class ResponderProfileComponent implements OnInit {
       linkedinUniqueId: new FormControl(''),
       webchatUniqueId: new FormControl(''),
     });
+
+    this.mergeSocialProfilesForm = new FormGroup({
+      whatsappProfileId: new FormControl(''),
+      emailProfileId: new FormControl('')
+    })
   }
 
   ngOnInit(): void {
@@ -171,6 +177,7 @@ export class ResponderProfileComponent implements OnInit {
     
   }
   updateUserInformation() {
+    
     var secondaryProfiles = [];
     if (this.userDetailForm.value.fbUniqueId != '') {
       var obj = {
@@ -261,6 +268,7 @@ export class ResponderProfileComponent implements OnInit {
 
     this.commonService.UpdateProfileDetails(this.userDetailDto).subscribe(
       (res: any) => {
+        
         this.reloadComponent('profileUpdated')
         setTimeout(() => {
           this.closeProfileComponent('profile')
@@ -378,4 +386,34 @@ export class ResponderProfileComponent implements OnInit {
     { id: 1, name: 'Pakistan' },
 
   ];
+
+  SecondWhatsApp = false;
+  SecondEmail = false;
+  SocialDropdown = false;
+  secondWhatsApp(){
+    
+    this.SecondWhatsApp = !this.SecondWhatsApp;
+  }
+
+  socialDropdown(){
+    this.SocialDropdown = !this.SocialDropdown;
+  }
+  secondEmail(){
+    this.SecondEmail = !this.SecondEmail;
+  }
+
+  
+
+  mergeSocialProfiles(){
+    if(this.mergeSocialProfilesForm.value.whatsappProfileId != ''){
+      this.userDetailForm.value.whatsappUniqueId = this.mergeSocialProfilesForm.value.whatsappProfileId;
+      this.whatsappUniqueId = this.mergeSocialProfilesForm.value.whatsappProfileId;
+    }
+    if(this.mergeSocialProfilesForm.value.emailProfileId != ''){
+      this.userDetailForm.value.emailUniqueId = this.mergeSocialProfilesForm.value.emailProfileId;
+      this.emailUniqueId = this.mergeSocialProfilesForm.value.emailProfileId;
+    }
+    this.SocialDropdown = false
+  }
+
 }

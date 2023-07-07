@@ -883,7 +883,7 @@ export class EmailComponent implements OnInit {
   }
 
   sendReplyInformation(id: any) {
-    debugger
+    
     this.emailFrom = [];
     this.Emails.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
@@ -1197,7 +1197,7 @@ export class EmailComponent implements OnInit {
   }
 
   commentStatus(comId: any, type: any) {
-    debugger
+    
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = this.parentPlatform;
@@ -1362,7 +1362,6 @@ export class EmailComponent implements OnInit {
   }
 
   onScroll() {
-    debugger;
     if (this.TotalQueryCount > this.pageSize) {
       this.pageSize = this.pageSize + 10;
       this.getEmails();

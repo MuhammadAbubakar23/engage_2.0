@@ -112,6 +112,7 @@ export class ResponderHeaderComponent implements OnInit {
     private updateCommentsService: UpdateCommentsService,
     private updateMessagesService: UpdateMessagesService,
     private toggleService: ToggleService,
+    private loadModuleService : ModulesService,
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -1709,7 +1710,7 @@ export class ResponderHeaderComponent implements OnInit {
   }
 
   openedTab() {
-debugger
+
     // if(!this.postType){
       
       const channel = this.currentUrl.split('/')[3];
@@ -1886,6 +1887,7 @@ debugger
         //  alert(res.message);
         this.closeTeamList();
         this.route.navigateByUrl('/all-inboxes');
+        this.loadModuleService.updateModule('all-inboxes')
       localStorage.setItem('assignedProfile','')
       },
       (error) => {

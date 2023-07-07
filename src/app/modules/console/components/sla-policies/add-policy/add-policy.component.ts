@@ -67,7 +67,7 @@ export class AddPolicyComponent implements OnInit {
     // console.log("Operation hours ID", formGroup.value.OperationalHoursId);
   }
   onSubmit() {
-    debugger
+    
     const slaTargets = this.messageForm.get('slaTargets') as FormArray;
    
     for (let i = 0; i < slaTargets.controls.length; i++) {
