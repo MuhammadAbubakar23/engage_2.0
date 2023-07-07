@@ -22,8 +22,8 @@ export class StepFourComponent implements OnInit {
 
   ngOnInit(): void {
 this.botService.intents$.subscribe((res:any)=>{
-    console.log(res[0].intentName);
-    console.log(res[1].questions)
+    // console.log(res[0].intentName);
+    // console.log(res[1].questions)
     this.intentName=res[0].intentName;
     this.questions=res[1].questions.map((qst:any)=>qst.questionText);
     this.answers=res[2].answers.map((qst:any)=>qst.answerText);
@@ -40,7 +40,7 @@ this.botService.intents$.subscribe((res:any)=>{
     this.botService.createIntentApi(
       {'intent': this.intentName, 'questions': this.questions, 'answers': finalanswers}
     ).subscribe((res: any) => {
-      console.log(res);
+      // console.log(res);
       alert("Success!");
     });
   }

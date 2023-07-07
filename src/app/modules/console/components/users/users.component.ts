@@ -52,17 +52,17 @@ export class UsersComponent implements OnInit {
   async ngOnInit() {
     let _self = this;
    // this.filter = async () => await this._Activatedroute.snapshot.data["userJ"]
-    console.log(this.filter);
+    // console.log(this.filter);
     this.filter = await this._Activatedroute.snapshot.data["userJ"];
-    console.log(this.filter);
+    // console.log(this.filter);
     if(typeof this.filter !== 'undefined'){
       this.showConsoleTable = true;
     }
-    // console.log(this.filter);
+    // // console.log(this.filter);
     // this.filter.then((a) =>_self.filters = a);
 
-    // console.log(Promise.resolve(this.filter));
-    // console.log(this.filters);
+    // // console.log(Promise.resolve(this.filter));
+    // // console.log(this.filters);
     // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));
     //loadUsers();
@@ -81,7 +81,7 @@ export class UsersComponent implements OnInit {
   //     this.total = next.data.item2 * this.pagesize
 
   //   }, error => {
-  //     console.log(error);
+  //     // console.log(error);
   //   });
   // }
   

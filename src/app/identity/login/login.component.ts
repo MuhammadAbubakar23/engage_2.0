@@ -45,7 +45,6 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.value).subscribe((res : any) =>{
       this.stor.store("token", res.accessToken);
       this.stor.store("main", res);
-      // console.log(res);
       this.stor.store("nocompass", res.roles[0]);
       localStorage.setItem("agentId", res.userId)
       localStorage.setItem("agentName", res.username)

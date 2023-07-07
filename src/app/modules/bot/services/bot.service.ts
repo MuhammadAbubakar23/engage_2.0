@@ -55,24 +55,24 @@ export class BotService {
   }
 
   createIntentApi(data: any) {
-    console.log("hello dear", data);
+    // console.log("hello dear", data);
     let httpOptions = this.gethttpOptions()
     //const url = 'https://enbot.360scrm.com/api/create_intent';
 
     return this.http.post(baseUrl + "api/create_intent", data, httpOptions);
   }
   updateIntentApi(data: any) {
-    console.log("Final Updated",data);
+    // console.log("Final Updated",data);
     let httpOptions = this.gethttpOptions()
     return this.http.post(baseUrl + "api/updateintent_data", data, httpOptions);
   }
   deleteQA(data:any){
-    console.log("data========>",data);
+    // console.log("data========>",data);
     let httpOptions = this.gethttpOptions()
     return this.http.post(baseUrl + "api/del_intent_data",data,httpOptions);
   }
   deleteIntent(data:any){
-    console.log("data========>",data);
+    // console.log("data========>",data);
     let httpOptions = this.gethttpOptions()
     return this.http.post(baseUrl + "api/delete_intent",data,httpOptions);
   }
@@ -97,7 +97,7 @@ export class BotService {
     return this.http.get<string>(baseUrl + "api/chatbot-config", httpOptions);
   }
   updatesettingApi(data: any): Observable<string> {
-    console.log(data);
+    // console.log(data);
     let httpOptions = this.gethttpOptions()
 
     return this.http.put<string>(baseUrl + "api/chatbot-config", data, httpOptions);

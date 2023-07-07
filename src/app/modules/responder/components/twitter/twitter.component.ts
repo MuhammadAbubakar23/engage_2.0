@@ -304,7 +304,7 @@ export class TwitterComponent implements OnInit {
             items: groupedItems[date],
           };
         });
-        // console.log('Messages ==>', this.groupedMessages);
+        // // console.log('Messages ==>', this.groupedMessages);
       }
     });
     this.changeDetect.detectChanges();
@@ -431,7 +431,7 @@ export class TwitterComponent implements OnInit {
               };
             }
           );
-          // console.log('hello', this.groupArrays);
+          // // console.log('hello', this.groupArrays);
           this.tweetStats();
         });
       });
@@ -486,7 +486,7 @@ export class TwitterComponent implements OnInit {
               };
             }
           );
-          // console.log('hello', this.groupArrays);
+          // // console.log('hello', this.groupArrays);
           this.tweetStats();
         });
       });
@@ -548,7 +548,7 @@ export class TwitterComponent implements OnInit {
                 };
               }
             );
-            // console.log('Messages ==>', this.groupedMessages);
+            // // console.log('Messages ==>', this.groupedMessages);
           });
         });
     } else if (this.slaId != null || undefined) {
@@ -597,7 +597,7 @@ export class TwitterComponent implements OnInit {
               };
             }
           );
-          // console.log('Messages ==>', this.groupedMessages);
+          // // console.log('Messages ==>', this.groupedMessages);
         });
       });
     } else {
@@ -645,7 +645,7 @@ export class TwitterComponent implements OnInit {
               };
             }
           );
-          // console.log('Messages ==>', this.groupedMessages);
+          // // console.log('Messages ==>', this.groupedMessages);
         });
       });
     }
@@ -656,7 +656,7 @@ export class TwitterComponent implements OnInit {
   //   this.twitterdata.GetTwitterReplies(this.userIdsDto).subscribe((res:any)=>{
 
   //     this.TwitterReplies = res.result;
-  //     // console.log("Twitter Replies ==>", this.TwitterReplies)
+  //     // // console.log("Twitter Replies ==>", this.TwitterReplies)
   //   })
   // }
 
@@ -705,7 +705,7 @@ export class TwitterComponent implements OnInit {
             .subscribe((postStats: any) => {
               cmnt['postStats'] = postStats;
 
-              // console.log("Stats==>", this.TwitterConversation)
+              // // console.log("Stats==>", this.TwitterConversation)
             });
         });
       });
@@ -848,9 +848,9 @@ export class TwitterComponent implements OnInit {
         xyz.keywordList.forEach((abc: any) => {
           this.Keywords.push(abc);
         });
-        // console.log('keywords==>', this.Keywords);
+        // // console.log('keywords==>', this.Keywords);
       });
-      // console.log('TagList', this.TagsList);
+      // // console.log('TagList', this.TagsList);
     });
   }
 
@@ -910,7 +910,7 @@ export class TwitterComponent implements OnInit {
   quickReplyList() {
     this.commondata.QuickReplyList().subscribe((res: any) => {
       this.QuickReplies = res;
-      // console.log('Quick Reply List ==>', this.QuickReplies);
+      // // console.log('Quick Reply List ==>', this.QuickReplies);
     });
   }
 

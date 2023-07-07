@@ -273,7 +273,7 @@ export class ResponderHeaderComponent implements OnInit {
   getRouteParam(route: any) {
     this.param = route;
     localStorage.setItem('path', this.param);
-    // // console.log(localStorage.getItem('path'));
+    // // // console.log(localStorage.getItem('path'));
   }
 
   draftDto = new DraftDto();
@@ -285,6 +285,7 @@ export class ResponderHeaderComponent implements OnInit {
     //   localStorage.getItem('assignedProfile') == '' ||
     //   localStorage.getItem('assignedProfile') == undefined
     // ) {
+      this.openedTab();
       if(platform == 'WhatsApp' && this.WhatsappData?.List.length > 0){
         this.commonService.GetProfileDetails(id).subscribe((res: any) => {
           this.profileId = this.WhatsappData?.id;
@@ -374,6 +375,7 @@ export class ResponderHeaderComponent implements OnInit {
         (res:any) => {
           this.reloadComponent('queryallocated');
           this._route.navigateByUrl('/all-inboxes/responder/' + platform);
+          
           this.fetchId.setPlatform(platform);
           this.fetchId.setOption(id);
           localStorage.setItem('profileId', this.profileId);
@@ -1707,15 +1709,15 @@ export class ResponderHeaderComponent implements OnInit {
   }
 
   openedTab() {
-
-    if(!this.postType){
+debugger
+    // if(!this.postType){
       
       const channel = this.currentUrl.split('/')[3];
       this.postType = channel;
-    }
+    // }
     
    // if(localStorage.getItem('assignedProfile') == null || localStorage.getItem('assignedProfile') == '' || localStorage.getItem('assignedProfile') == undefined){
-    if (this.postType == 'IC' || this.postType == 'Instagram') {
+    if (this.postType == 'Instagram') {
       this.facebookTab = false;
       this.instagramTab = true;
       this.whatsappTab = false;
@@ -1728,7 +1730,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'FC' || this.postType == 'Facebook') {
+    if (this.postType == 'Facebook') {
       this.facebookTab = true;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1741,20 +1743,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'FCP' || this.postType == 'Facebook') {
-      this.facebookTab = true;
-      this.instagramTab = false;
-      this.whatsappTab = false;
-      this.smsTab = false;
-      this.twitterTab = false;
-      this.emailTab = false;
-      this.youtubeTab = false;
-      this.phoneTab = false;
-      this.webChatTab = false;
-      this.linkedInTab = false;
-      this.playStoreTab = false;
-    }
-    if (this.postType == 'TT' || this.postType == 'Twitter') {
+    if (this.postType == 'Twitter') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1767,33 +1756,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'TM' || this.postType == 'Twitter') {
-      this.facebookTab = false;
-      this.instagramTab = false;
-      this.whatsappTab = false;
-      this.smsTab = false;
-      this.twitterTab = true;
-      this.emailTab = false;
-      this.youtubeTab = false;
-      this.phoneTab = false;
-      this.webChatTab = false;
-      this.linkedInTab = false;
-      this.playStoreTab = false;
-    }
-    if (this.postType == 'Message' || this.postType == 'Twitter') {
-      this.facebookTab = false;
-      this.instagramTab = false;
-      this.whatsappTab = false;
-      this.smsTab = false;
-      this.twitterTab = true;
-      this.emailTab = false;
-      this.youtubeTab = false;
-      this.phoneTab = false;
-      this.webChatTab = false;
-      this.linkedInTab = false;
-      this.playStoreTab = false;
-    }
-    if (this.postType == 'Mail' || this.postType == 'OMail' || this.postType == 'Email' || this.postType == 'OfficeEmail') {
+    if (this.postType == 'Email' || this.postType == 'OfficeEmail') {
       
       this.facebookTab = false;
       this.instagramTab = false;
@@ -1807,7 +1770,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'YC' || this.postType == 'Youtube') {
+    if (this.postType == 'Youtube') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1819,7 +1782,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'WM' || this.postType == 'WhatsApp') {
+    if (this.postType == 'WhatsApp') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = true;
@@ -1845,7 +1808,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'Phone' || this.postType == 'Phone') {
+    if (this.postType == 'Phone') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1858,7 +1821,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'WC' || this.postType == 'WebChat') {
+    if (this.postType == 'WebChat') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1871,7 +1834,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'LIC' || this.postType == 'LinkedIn') {
+    if (this.postType == 'LinkedIn') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;

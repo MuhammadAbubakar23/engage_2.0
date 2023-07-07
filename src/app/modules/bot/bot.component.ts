@@ -109,16 +109,16 @@ export class BotComponent implements OnInit, AfterViewInit {
       case 'chat':
 
         this.route.params.subscribe((routeParams) => {
-          console.log('routeParams', routeParams['channel']);
+          // console.log('routeParams', routeParams['channel']);
 
           switch (routeParams['channel']) {
 
             case 'sentiment-anlysis':
-              console.log('sentimentAnalysis');
+              // console.log('sentimentAnalysis');
               componentFactory = this.resolver.resolveComponentFactory(ChatWithSentimentComponent);
               break;
             default:
-              console.log('Chat');
+              // console.log('Chat');
               componentFactory = this.resolver.resolveComponentFactory(ChatComponent);
               break;
           }

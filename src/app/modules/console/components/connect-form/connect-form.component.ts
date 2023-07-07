@@ -40,7 +40,7 @@ export class ConnectFormComponent implements OnInit {
 
   
   onSubmit() : void {
-    console.log(this.connectForm.value);
+    // console.log(this.connectForm.value);
   }
 
   isShow=false;

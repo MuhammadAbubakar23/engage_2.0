@@ -38,7 +38,7 @@ export class ActionsComponent implements OnInit {
 
   ngOnInit(): void {
     const tableName = localStorage.getItem('selectedtable')
-    console.log("tableName: " + tableName)
+    // console.log("tableName: " + tableName)
     const dbName = localStorage.getItem('dbName')
 
     if (dbName && tableName) {
@@ -50,12 +50,12 @@ export class ActionsComponent implements OnInit {
       if (dbName) {
         this.shareddataService.tables$.subscribe((res) => {
           this.tables = res;
-          console.log("actions", this.tables)
+          // console.log("actions", this.tables)
         })
       }
       const connection = localStorage.getItem('connection_name')
       this.reportService.columnsApi({ 'db': dbName, 'tableName': tableName, 'connection_name': connection }).subscribe((res: any) => {
-        console.log("columnsApi: " + res)
+        // console.log("columnsApi: " + res)
         this.columns = res;
       })
     }
@@ -78,12 +78,12 @@ export class ActionsComponent implements OnInit {
     this.isDropdownVisible = show;
   }
   limitData(): void {
-    console.log("limitData()")
+    // console.log("limitData()")
     const db = localStorage.getItem('dbName');
     const selectedtable = localStorage.getItem('selectedtable');
     const connection = localStorage.getItem('connection_name');
     this.reportService.limitDataApi({ 'db': db, 'tableName': selectedtable, 'limit': this.limitValue, 'connection_name': connection }).subscribe((res: any) => {
-      console.log("limit==>", res);
+      // console.log("limit==>", res);
       this.shareddataService.updateData(res);
 
     });
@@ -91,45 +91,45 @@ export class ActionsComponent implements OnInit {
 
 
   sortData(): void {
-    console.log("sortData()")
+    // console.log("sortData()")
     const db = localStorage.getItem('dbName')
     const selectedtable = localStorage.getItem('selectedtable')
     const connection = localStorage.getItem('connection_name')
     this.reportService.sortDataApi({ 'db': db, 'tableName': selectedtable, 'column': this.columnName, 'order': this.order, 'offset': this.offsetValue, 'connection_name': connection }).subscribe((res: any) => {
-      console.log("sort", res);
+      // console.log("sort", res);
       this.shareddataService.updateData(res);
 
     });
   }
   groupData(): void {
-    console.log("groupData()")
+    // console.log("groupData()")
     const db = localStorage.getItem('dbName')
     const selectedtable = localStorage.getItem('selectedtable')
-    console.log("groupData() selected", this.groupcolumnName, this.groupselectedItems, this.groupName)
+    // console.log("groupData() selected", this.groupcolumnName, this.groupselectedItems, this.groupName)
     const connection = localStorage.getItem('connection_name');
     this.reportService.groupDataApi({ 'db': db, 'tableName': selectedtable, 'column': this.groupcolumnName, 'columns': this.groupselectedItems, 'aggr': this.groupName, 'connection_name': connection }).subscribe((res: any) => {
-      console.log("group", res);
+      // console.log("group", res);
       this.shareddataService.updateData(res);
 
     });
   }
   summarizData(): void {
-    console.log("summarizeData()")
+    // console.log("summarizeData()")
     const db = localStorage.getItem('dbName')
     const connection = localStorage.getItem('connection_name');
     this.reportService.summarizeDataApi({ 'db': db, 'query': this.query, 'connection_name': connection }).subscribe((res: any) => {
-      console.log("group", res);
+      // console.log("group", res);
       this.shareddataService.updateData(res);
 
     });
   }
   visualizeData(): void {
-    console.log("summarizeData()")
+    // console.log("summarizeData()")
     const db = localStorage.getItem('dbName')
 
     const connection = localStorage.getItem('connection_name');
     this.reportService.visualizeDataApi({ 'db': db, 'query': this.query, 'connection_name': connection }).subscribe((res: any) => {
-      console.log("visualize", res);
+      // console.log("visualize", res);
       this.shareddataService.updateVisual(res);
     });
   }
@@ -139,11 +139,11 @@ export class ActionsComponent implements OnInit {
 
   onTableSelect(value: string, index: number) {
 
-    console.log("value==>", value, index);
+    // console.log("value==>", value, index);
     if (value !== undefined) {
       this.selectedTables[index] = value;
     } else {
-      console.log("value from selected table>", this.selectedTables[index]);
+      // console.log("value from selected table>", this.selectedTables[index]);
       this.isOn = false;
       this.selectedValues1 = [];
       this.selectedValues2 = [];
@@ -152,7 +152,7 @@ export class ActionsComponent implements OnInit {
 
     }
 
-    console.log('Selected Values:', this.selectedTables);
+    // console.log('Selected Values:', this.selectedTables);
   }
   getColumns(): void {
     const db = localStorage.getItem('dbName');
@@ -178,7 +178,7 @@ export class ActionsComponent implements OnInit {
     const selectedvalues1 = this.selectedValues1[index];
     const selectedvalues2 = this.selectedValues2[index];
     if (isJoinSection) {
-      console.log("Join")
+      // console.log("Join")
       const existingIndex = this.datajoincolumns.findIndex(obj => obj[key[0]]);
       if (existingIndex !== -1) {
         this.datajoincolumns[existingIndex][key[0]] = selectedvalues2; // Update existing object
@@ -187,10 +187,10 @@ export class ActionsComponent implements OnInit {
         this.datajoincolumns.push(keyvalue); // Add new object
       }
 
-      console.log("datajoincolumns", this.datajoincolumns);
+      // console.log("datajoincolumns", this.datajoincolumns);
     }
     else {
-      console.log("data part")
+      // console.log("data part")
       const existingIndex = this.datacolumns.findIndex(obj => obj[key[0]]);
       if (existingIndex !== -1) {
         this.datacolumns[existingIndex][key[0]] = selectedvalues1; // Update existing object
@@ -199,16 +199,16 @@ export class ActionsComponent implements OnInit {
         this.datacolumns.push(keyvalue); // Add new object
       }
 
-      console.log("dataColumns", this.datacolumns);
+      // console.log("dataColumns", this.datacolumns);
     }
 
   }
   joinTables(): void {
-    console.log("joinTables()")
+    // console.log("joinTables()")
     const db = localStorage.getItem('dbName')
     const connection = localStorage.getItem('connection_name')
     this.reportService.joinDataApi({ 'db': db, 'datacolumns': this.datacolumns, 'datajoincolumns': this.datajoincolumns, 'jointype': this.selectedJoin, 'connection_name': connection }).subscribe((res: any) => {
-      console.log("JoinResult", res);
+      // console.log("JoinResult", res);
       this.shareddataService.updateData(res);
 
 
@@ -219,7 +219,7 @@ export class ActionsComponent implements OnInit {
       const db = localStorage.getItem('dbName')
       const connection = localStorage.getItem('connection_name');
       this.reportService.runSqlApi({ "query": this.query, 'db': db, 'connection_name': connection }).subscribe(res => {
-        console.log("sql", res);
+        // console.log("sql", res);
         this.shareddataService.updateData(res)
       })
     }
@@ -230,7 +230,7 @@ export class ActionsComponent implements OnInit {
   submitReport(): void {
     if (this.reportName !== "" && this.query !== "Please Type Query") {
       this.reportService.createReportApi({ "query": this.query, 'name': this.reportName }).subscribe(res => {
-        console.log(res);
+        // console.log(res);
         this.route.navigateByUrl('/analytics/reports');
         alert(res.message);
       })

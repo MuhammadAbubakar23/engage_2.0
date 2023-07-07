@@ -235,7 +235,7 @@ export class WhatsappDetailsComponent implements OnInit {
             items: groupedItems[createdDate],
           };
         });
-        // console.log('hello', this.groupArrays);
+        // // console.log('hello', this.groupArrays);
         this.totalUnrespondedCmntCountByCustomer =
           this.totalUnrespondedCmntCountByCustomer + 1;
       }
@@ -297,7 +297,7 @@ export class WhatsappDetailsComponent implements OnInit {
                 items: groupedItems[createdDate],
               };
             });
-            // console.log('hello', this.groupArrays);
+            // // console.log('hello', this.groupArrays);
           });
         });
     } else if (this.slaId != null || undefined) {
@@ -342,7 +342,7 @@ export class WhatsappDetailsComponent implements OnInit {
               items: groupedItems[createdDate],
             };
           });
-          // console.log('hello', this.groupArrays);
+          // // console.log('hello', this.groupArrays);
         });
 
         this.WhatsappData.forEach((msg: any) => {
@@ -392,7 +392,7 @@ export class WhatsappDetailsComponent implements OnInit {
                 items: groupedItems[createdDate],
               };
             });
-            // console.log('hello', this.groupArrays);
+            // // console.log('hello', this.groupArrays);
           });
 
           this.WhatsappData.forEach((msg: any) => {
@@ -440,9 +440,9 @@ export class WhatsappDetailsComponent implements OnInit {
         xyz.keywordList.forEach((abc: any) => {
           this.Keywords.push(abc);
         });
-        // console.log('keywords==>', this.Keywords);
+        // // console.log('keywords==>', this.Keywords);
       });
-      // console.log('TagList', this.TagsList);
+      // // console.log('TagList', this.TagsList);
     });
   }
 

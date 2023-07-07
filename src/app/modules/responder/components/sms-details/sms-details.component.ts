@@ -223,7 +223,7 @@ export class SmsDetailsComponent implements OnInit {
             items: groupedItems[createdDate],
           };
         });
-        // console.log("hello", this.groupArrays)
+        // // console.log("hello", this.groupArrays)
         this.totalUnrespondedCmntCountByCustomer =
           this.totalUnrespondedCmntCountByCustomer + 1;
       }
@@ -279,7 +279,7 @@ export class SmsDetailsComponent implements OnInit {
                 items: groupedItems[createdDate],
               };
             });
-            // console.log("hello", this.groupArrays)
+            // // console.log("hello", this.groupArrays)
           });
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -331,7 +331,7 @@ export class SmsDetailsComponent implements OnInit {
               items: groupedItems[date],
             };
           });
-          // console.log("hello", this.groupArrays)
+          // // console.log("hello", this.groupArrays)
         });
 
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -382,7 +382,7 @@ export class SmsDetailsComponent implements OnInit {
               items: groupedItems[date],
             };
           });
-          // console.log("hello", this.groupArrays)
+          // // console.log("hello", this.groupArrays)
         });
 
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -432,9 +432,9 @@ export class SmsDetailsComponent implements OnInit {
         xyz.keywordList.forEach((abc: any) => {
           this.Keywords.push(abc);
         });
-        // console.log('keywords==>', this.Keywords);
+        // // console.log('keywords==>', this.Keywords);
       });
-      // console.log('TagList', this.TagsList);
+      // // console.log('TagList', this.TagsList);
     });
   }
 
@@ -534,7 +534,7 @@ export class SmsDetailsComponent implements OnInit {
   quickReplyList() {
     this.commondata.QuickReplyList().subscribe((res: any) => {
       this.QuickReplies = res;
-      // console.log('Quick Reply List ==>', this.QuickReplies);
+      // // console.log('Quick Reply List ==>', this.QuickReplies);
     });
   }
 

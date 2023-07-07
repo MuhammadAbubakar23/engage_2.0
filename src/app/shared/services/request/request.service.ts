@@ -26,25 +26,25 @@ export class RequestService {
   private createCompleteRoute = (route: string, envAddress: string, routeparams:string = "") =>  (routeparams!="" || routeparams.length > 0 )?`${envAddress}/${route}/${routeparams}`:`${envAddress}/${route}`;
   
   get<T>(route:string, params?: any,routeparams:string=""): Observable<T> {
-    console.log(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl));
+    // console.log(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl));
     return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, routeparams),{params: params })
     .pipe(
       map((res: any) => { return res }),
       tap(res => console.log(route + " Response: ", res)),
       catchError(err => {
-        console.log('Handling error locally and rethrowing it...', err);
+        // console.log('Handling error locally and rethrowing it...', err);
         return throwError(() => new Error(err));
       })
       );    
   }
   getBy<T>(route:string, params: string): Observable<T> {
-    //console.log(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl));
+    //// console.log(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl));
     return this.http.get<T>(this.createCompleteRoute( params, this.createCompleteRoute(this.env.paths[route], this.env.baseUrl)))
     .pipe(
       map((res: any) => { return res }),
       tap(res => console.log(route + " Response: ", res)),
       catchError(err => {
-        console.log('Handling error locally and rethrowing it...', err);
+        // console.log('Handling error locally and rethrowing it...', err);
         return throwError(() => new Error(err));
       })
       );    

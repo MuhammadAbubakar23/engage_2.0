@@ -114,7 +114,7 @@ export class WebChatComponent implements OnInit {
                   items : groupedItems[date]
                 }
               })
-              // console.log("hello", this.groupArrays)
+              // // console.log("hello", this.groupArrays)
              });
   
           this.Chat.forEach((msg:any) => {
@@ -171,7 +171,7 @@ export class WebChatComponent implements OnInit {
       }
       
       
-      // console.log(this.Chat);
+      // // console.log(this.Chat);
 
       this.changeDetect.detectChanges();
     });

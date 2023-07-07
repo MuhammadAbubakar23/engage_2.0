@@ -23,7 +23,7 @@ export class RolesAndPermissionsComponent implements OnInit {
   ngOnInit(): void {
     this.Roles = this._Activatedroute.snapshot.data["roles"];
     this.RolesCount =  this.Roles.length;
-    console.log(this.Roles);
+    // console.log(this.Roles);
     // this.Teams =  this._Activatedroute.snapshot.data["teams"];
   }
    

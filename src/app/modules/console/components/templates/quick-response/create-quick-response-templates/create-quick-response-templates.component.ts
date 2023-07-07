@@ -45,7 +45,7 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
         this.commonService.UpdateQuickReply(template.id, formData).subscribe(
           (response: any) => {
             // Handle the successful API response here
-            console.log('Template updated successfully', response);
+            // console.log('Template updated successfully', response);
             this.router.navigate(['/console/templates/quickResponse']);
           },
           (error: any) => {
@@ -63,7 +63,7 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
         this.commonService.AddQuickReply(strippedFormData).subscribe(
           (response: any) => {
             // Handle the successful API response here
-            console.log('Template created successfully', response);
+            // console.log('Template created successfully', response);
             this.router.navigate(['/console/templates/quickResponse']);
           },
           (error: any) => {
@@ -74,7 +74,7 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
       }
     } else {
       // Handle form validation errors
-      console.log('Form is invalid');
+      // console.log('Form is invalid');
     }
   }
 

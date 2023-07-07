@@ -21,10 +21,7 @@ import { InsertSentimentForFeedDto } from 'src/app/shared/Models/InsertSentiment
 import { InsertTagsForFeedDto } from 'src/app/shared/Models/InsertTagsForFeedDto';
 import { InstagramCommentReplyDto } from 'src/app/shared/Models/InstagramCommentReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-import {
-  commentsDto,
-  messagesDto,
-} from 'src/app/shared/Models/concersationDetailDto';
+import { commentsDto, messagesDto } from 'src/app/shared/Models/concersationDetailDto';
 import { Subscription } from 'rxjs';
 import { LikeByAdminDto } from 'src/app/shared/Models/LikeByAdminDto';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
@@ -46,9 +43,9 @@ import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-qu
   styleUrls: ['./instagram.component.scss'],
 })
 export class InstagramComponent implements OnInit {
-
   @ViewChild('fileInput') fileInput!: ElementRef;
-  @ViewChild('radioInput', { static: false }) radioInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('radioInput', { static: false })
+  radioInput!: ElementRef<HTMLInputElement>;
   InstagramData: any;
 
   id = this.fetchId.getOption();
@@ -60,7 +57,7 @@ export class InstagramComponent implements OnInit {
   pageSize: any = 10;
 
   // Instagram Comment
-  InstacommentId: number=0;
+  InstacommentId: number = 0;
   agentId: string = '';
   platform: string = '';
   postType: string = '';
@@ -127,9 +124,9 @@ export class InstagramComponent implements OnInit {
     private unrespondedCountService: UnRespondedCountService,
     private createTicketService: CreateTicketService,
     private updateMessagesService: UpdateMessagesService,
-    private ticketResponseService : TicketResponseService,
+    private ticketResponseService: TicketResponseService,
     private applySentimentService: ApplySentimentService,
-    private getQueryTypeService : GetQueryTypeService
+    private getQueryTypeService: GetQueryTypeService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -199,11 +196,11 @@ export class InstagramComponent implements OnInit {
         this.updateBulkQueryStatusDataListner();
       });
 
-      this.ticketResponseService.getTicketId().subscribe(res=>{
-        this.updateTicketId(res)
-      });
+    this.ticketResponseService.getTicketId().subscribe((res) => {
+      this.updateTicketId(res);
+    });
 
-      this.Subscription = this.applySentimentService
+    this.Subscription = this.applySentimentService
       .receiveSentiment()
       .subscribe((res) => {
         this.applySentimentListner(res);
@@ -217,8 +214,8 @@ export class InstagramComponent implements OnInit {
   messageDto = new messagesDto();
 
   updateCommentsDataListener() {
-    if(!this.id){
-      this.id = localStorage.getItem('storeOpenedId') || '{}'
+    if (!this.id) {
+      this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
     this.updatedComments.forEach((xyz: any) => {
       if (this.id == xyz.userId) {
@@ -280,8 +277,8 @@ export class InstagramComponent implements OnInit {
   }
 
   updateMessagesDataListener() {
-    if(!this.id){
-      this.id = localStorage.getItem('storeOpenedId') || '{}'
+    if (!this.id) {
+      this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
     this.updatedMessages.forEach((xyz: any) => {
       if (this.id == xyz.fromId) {
@@ -324,7 +321,7 @@ export class InstagramComponent implements OnInit {
             items: groupedItems[date],
           };
         });
-        // console.log('Messages ==>', this.groupedMessages);
+        // // console.log('Messages ==>', this.groupedMessages);
         this.totalUnrespondedMsgCountByCustomer =
           this.totalUnrespondedMsgCountByCustomer + 1;
       }
@@ -335,7 +332,6 @@ export class InstagramComponent implements OnInit {
   ReplyDto = new ReplyDto();
 
   getInstagramData() {
-    
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -347,14 +343,13 @@ export class InstagramComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
-          
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.InstagramData = res.List;
@@ -403,7 +398,7 @@ export class InstagramComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -455,7 +450,7 @@ export class InstagramComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -538,11 +533,11 @@ export class InstagramComponent implements OnInit {
     });
   }
   ImageName: any;
-  ImageArray:any[]=[];
+  ImageArray: any[] = [];
 
-  text:string=""
+  text: string = '';
   submitInstagramCommentReply() {
-    if(this.InstacommentId == 0){
+    if (this.InstacommentId == 0) {
       this.reloadComponent('selectComment');
     } else {
       var formData = new FormData();
@@ -551,21 +546,20 @@ export class InstagramComponent implements OnInit {
           formData.append('File', this.ImageName[index]);
         }
       }
-      
 
-    // if (!this.instagramCommentReplyForm.get('text')?.dirty) {
-      if(this.text !== ""){
+      // if (!this.instagramCommentReplyForm.get('text')?.dirty) {
+      if (this.text !== '') {
         this.instagramCommentReplyForm.patchValue({
-          text: this.text
-        })
-    }
-    // } else {
-    //   if (this.instagramCommentReplyForm.value.text) {
-    //     this.instagramCommentReplyForm.patchValue({
-    //       to: this.instagramCommentReplyForm.value.text
-    //     });
-    //   }
-    // }
+          text: this.text,
+        });
+      }
+      // } else {
+      //   if (this.instagramCommentReplyForm.value.text) {
+      //     this.instagramCommentReplyForm.patchValue({
+      //       to: this.instagramCommentReplyForm.value.text
+      //     });
+      //   }
+      // }
       this.instagramCommentReplyForm.patchValue({
         commentId: this.InstacommentId,
         teamId: this.agentId,
@@ -573,34 +567,35 @@ export class InstagramComponent implements OnInit {
         contentType: this.postType,
         profileId: this.profileId,
         profilePageId: this.profilePageId,
-        userProfileId : this.userProfileId
+        userProfileId: this.userProfileId,
       });
-  
+
       formData.append(
         'CommentReply',
         JSON.stringify(this.instagramCommentReplyForm.value)
       );
-      if((this.instagramCommentReplyForm.value.text !== "" && this.instagramCommentReplyForm.value.text !== null) 
-            || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
-              
-    this.spinner1running = true;
-    this.SpinnerService.show();
+      if (
+        (this.instagramCommentReplyForm.value.text !== '' &&
+          this.instagramCommentReplyForm.value.text !== null) ||
+        (this?.ImageName?.length > 0 && this.ImageName != undefined)
+      ) {
+        this.spinner1running = true;
+        this.SpinnerService.show();
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.spinner1running = false;
-      this.SpinnerService.hide();
-      this.instagramCommentReplyForm.reset();
+            this.SpinnerService.hide();
+            this.instagramCommentReplyForm.reset();
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
-            
           },
           ({ error }) => {
-          //  alert(error.message);
+            //  alert(error.message);
           }
         );
       } else {
-        this.reloadComponent('empty-input-field')
+        this.reloadComponent('empty-input-field');
       }
     }
     this.quickReplySearchText = '';
@@ -611,7 +606,7 @@ export class InstagramComponent implements OnInit {
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = 'Instagram';
     this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {});
@@ -620,7 +615,7 @@ export class InstagramComponent implements OnInit {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = 'Instagram';
-  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .QueryCompleted(this.commentStatusDto)
       .subscribe((res: any) => {
@@ -649,9 +644,9 @@ export class InstagramComponent implements OnInit {
         xyz.keywordList.forEach((abc: any) => {
           this.Keywords.push(abc);
         });
-        // console.log('keywords==>', this.Keywords);
+        // // console.log('keywords==>', this.Keywords);
       });
-      // console.log('TagList', this.TagsList);
+      // // console.log('TagList', this.TagsList);
     });
   }
 
@@ -822,19 +817,19 @@ export class InstagramComponent implements OnInit {
 
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
-    this.text = abc?.text + " ";
+    this.text = abc?.text + ' ';
     this.insertAtCaret(this.text);
   }
 
   detectChanges(): void {
     // this.ImageName = this.fileInput?.nativeElement.files;
-    this.text = this.textarea.nativeElement.value
+    this.text = this.textarea.nativeElement.value;
   }
 
   quickReplyList() {
     this.commondata.QuickReplyList().subscribe((res: any) => {
       this.QuickReplies = res;
-      // console.log('Quick Reply List ==>', this.QuickReplies);
+      // // console.log('Quick Reply List ==>', this.QuickReplies);
     });
   }
   likeByAdminDto = new LikeByAdminDto();
@@ -945,7 +940,7 @@ export class InstagramComponent implements OnInit {
     this.platform = '';
     this.postType = '';
     this.msgText = '';
-    this.msgId=0;
+    this.msgId = 0;
   }
   markAsComplete = false;
   markAsCompleteExpanded(comId: any) {
@@ -1154,7 +1149,7 @@ export class InstagramComponent implements OnInit {
   messagesArray: any[] = [];
   groupedMessages: any[] = [];
   totalMessages: number = 0;
-  msgId: number=0;
+  msgId: number = 0;
   msgText: any = '';
 
   instagramCommentReply() {
@@ -1178,7 +1173,7 @@ export class InstagramComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
       };
 
       this.SpinnerService.show();
@@ -1215,7 +1210,7 @@ export class InstagramComponent implements OnInit {
                 };
               }
             );
-            // console.log('Messages ==>', this.groupedMessages);
+            // // console.log('Messages ==>', this.groupedMessages);
           });
         });
     } else if (this.slaId != null || undefined) {
@@ -1228,7 +1223,7 @@ export class InstagramComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
       };
 
       this.SpinnerService.show();
@@ -1265,7 +1260,7 @@ export class InstagramComponent implements OnInit {
               };
             }
           );
-          // console.log('Messages ==>', this.groupedMessages);
+          // // console.log('Messages ==>', this.groupedMessages);
         });
       });
     } else {
@@ -1278,7 +1273,7 @@ export class InstagramComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
       };
 
       this.SpinnerService.show();
@@ -1317,7 +1312,7 @@ export class InstagramComponent implements OnInit {
                 };
               }
             );
-            // console.log('Messages ==>', this.groupedMessages);
+            // // console.log('Messages ==>', this.groupedMessages);
           });
         });
     }
@@ -1351,7 +1346,7 @@ export class InstagramComponent implements OnInit {
   });
 
   submitInstagramMessageReply() {
-    if(this.msgId == 0){
+    if (this.msgId == 0) {
       this.reloadComponent('selectComment');
     } else {
       var formData = new FormData();
@@ -1360,11 +1355,11 @@ export class InstagramComponent implements OnInit {
           formData.append('File', this.ImageName[index]);
         }
       }
-      if(this.text !== ""){
+      if (this.text !== '') {
         this.instagramMessageReplyForm.patchValue({
-          text: this.text
-        })
-    }
+          text: this.text,
+        });
+      }
       this.instagramMessageReplyForm.patchValue({
         commentId: this.msgId,
         teamId: this.agentId,
@@ -1372,39 +1367,41 @@ export class InstagramComponent implements OnInit {
         contentType: this.postType,
         profileId: this.profileId,
         profilePageId: this.profilePageId,
-        userProfileId : this.userProfileId
+        userProfileId: this.userProfileId,
       });
-  
+
       formData.append(
         'CommentReply',
         JSON.stringify(this.instagramMessageReplyForm.value)
       );
-      if((this.instagramMessageReplyForm.value.text !== "" && this.instagramMessageReplyForm.value.text !== null) 
-            || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
-              
-    this.spinner1running = true;
-    this.SpinnerService.show();
+      if (
+        (this.instagramMessageReplyForm.value.text !== '' &&
+          this.instagramMessageReplyForm.value.text !== null) ||
+        (this?.ImageName?.length > 0 && this.ImageName != undefined)
+      ) {
+        this.spinner1running = true;
+        this.SpinnerService.show();
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.spinner1running = false;
-      this.SpinnerService.hide();
+            this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
-            this.instagramMessageReplyForm.reset();            
+            this.instagramMessageReplyForm.reset();
           },
           ({ error }) => {
-          //  alert(error.message);
+            //  alert(error.message);
           }
         );
       } else {
-        this.reloadComponent('empty-input-field')
+        this.reloadComponent('empty-input-field');
       }
     }
     this.quickReplySearchText = '';
   }
 
-  updateTicketId(res:any){
+  updateTicketId(res: any) {
     this.InstagramData.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
@@ -1440,10 +1437,8 @@ export class InstagramComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  closeQuickResponseSidebar(){
+  closeQuickResponseSidebar() {
     this.quickReplySearchText = '';
     this.radioInput.nativeElement.checked = false;
-    
   }
-
 }

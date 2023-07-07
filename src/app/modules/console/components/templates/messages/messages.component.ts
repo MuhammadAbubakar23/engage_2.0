@@ -29,7 +29,7 @@ export class MessagesComponent implements OnInit {
    this.commonService.GetAllMessages('Message')
   .subscribe((response: any) => {
     this.messages = response; 
-    console.log(this.messages); 
+    // console.log(this.messages); 
   }, (error: any) => {
     console.error(error);
   });
@@ -55,7 +55,7 @@ export class MessagesComponent implements OnInit {
       this.commonService.DeleteMessage(template.id).subscribe(
         () => {
           // Success callback
-          console.log('Template deleted:', template);
+          // console.log('Template deleted:', template);
           // Remove the deleted template from the messages array
           this.messages = this.messages.filter((msg) => msg.id !== template.id);
         },
@@ -71,7 +71,7 @@ export class MessagesComponent implements OnInit {
   disableTemplate(template: any) {
     // Logic for disabling the template
     template.disabled = true;
-    console.log('Disable template:', template);
+    // console.log('Disable template:', template);
   }
 
   cloneTemplate(template: any) {
@@ -80,6 +80,6 @@ export class MessagesComponent implements OnInit {
     clonedTemplate.name += ' (Cloned)';
     // You can modify other properties as well if needed
     this.messages.push(clonedTemplate);
-    console.log('Cloned template:', clonedTemplate);
+    // console.log('Cloned template:', clonedTemplate);
   }
   }

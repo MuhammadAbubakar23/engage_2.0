@@ -21,19 +21,19 @@ export class ConsoleTableBodyComponent<T> implements OnInit {
   }
   procedure(params:any){
 
-    console.log("sent val --- >>>",params.param)
-    console.log("added Data --- >>>",params.data)
-    console.log("I m func action");
+    // // console.log("sent val --- >>>",params.param)
+    // // console.log("added Data --- >>>",params.data)
+    // // console.log("I m func action");
     if(params.param.type == "rute"){
       this._router.navigate([params.param.actionUrl, params.data.id]);
     }else if(params.param.type == "service"){//
       this._request.delete<any>(params.param.actionUrl,  params.data.id).pipe(
         takeUntil(this.unsubscribe)).subscribe(
         (next:T[]) => {//...next:T[]
-           console.log(next); 
+          //  // console.log(next); 
           //this.TableModel = next; 
           //this.data = next;
-          // console.log(this.TableModel)
+          // // console.log(this.TableModel)
         },
         (error:any) => console.log(error)
       );

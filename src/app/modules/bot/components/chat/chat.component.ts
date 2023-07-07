@@ -24,7 +24,7 @@ export class ChatComponent{
    ngOnInit() {
     this.botService.conversation.subscribe((val:any) => {
     this.messages = this.messages.concat(val);
-    console.log("this.messages",this.messages);
+    // console.log("this.messages",this.messages);
   });
 }
 
@@ -39,7 +39,7 @@ export class ChatComponent{
    }
    trainModel():void{
     this.botService.trainApi().subscribe((result:any) => {
-      console.log("Train",result);
+      // console.log("Train",result);
       alert("Success!");
       },(error:any) => {
        alert("Error!");

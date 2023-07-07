@@ -26,7 +26,7 @@ export class SlaPoliciesComponent implements OnInit {
     this.commonService.GetSlaPolicy()
     .subscribe((response: any) => {
       this.messages = response; // Assign the response to the messages array
-      console.log(this.messages); // Verify that the data is populated correctly
+      // console.log(this.messages); // Verify that the data is populated correctly
     }, (error: any) => {
       console.error(error);
     });
@@ -48,7 +48,7 @@ export class SlaPoliciesComponent implements OnInit {
       this.commonService.DeleteSlaPolicy(message.id).subscribe(
         () => {
           // Success callback
-          console.log('message deleted:', message);
+          // console.log('message deleted:', message);
           // Remove the deleted message from the messages array
           this.messages = this.messages.filter((msg) => msg.id !== message.id);
         },
@@ -62,15 +62,15 @@ export class SlaPoliciesComponent implements OnInit {
 
   disableTemplate(message: any) {
     // Logic for disabling the template goes here
-    console.log('Disabling template:', message);
+    // console.log('Disabling template:', message);
   }
 
   cloneTemplate(message: any) {
     const clonedMessage = { ...message };
     clonedMessage.id = this.generateNewId();
     this.messages.push(clonedMessage);
-    console.log('Cloning template:', message);
-    console.log('Cloned template:', clonedMessage);
+    // console.log('Cloning template:', message);
+    // console.log('Cloned template:', clonedMessage);
   }
   generateNewId() {
     return Math.floor(Math.random() * 100000) + 1;

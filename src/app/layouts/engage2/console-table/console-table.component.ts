@@ -34,18 +34,18 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
   // async fetchJson(){
   //   fetch("/assets/JSON/"+this.JsonFile).then(res => res.json())
   //   .then(json => {
-  //     console.log(json)
+  //     // console.log(json)
        
   //   });
   // }
   ngOnInit(): void {
     // let tabl = fetchJSON("/assets/JSON/"+this.JsonFile);
-    //console.log(tabl);
+    //// console.log(tabl);
      // this.tableJson$
-    // console.log(this.tableJson$);
+    // // console.log(this.tableJson$);
     // this.header = this.filter.headers;
-    // console.log(this.filter.headers);
-    // console.log(this.filter.url);
+    // // console.log(this.filter.headers);
+    // // console.log(this.filter.url);
     this._fetchData();
   }
   filterdata() {
@@ -54,7 +54,7 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
   private _fetchData(){ //}: Observable<T>{ // (page: number, pagesize: number)  {
    // ;
    if(typeof this.filter?.url === 'undefined') return;
-   console.log(this.filter)
+  //  // console.log(this.filter)
     let pam:any = {
         pageno: this.filter.pageno
       , pagesize: this.filter.pagesize
@@ -83,13 +83,13 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
     //   // this.Data = next.data.item1;
     //   // this.total = next.data.item2 * this.pagesize
     // }, (error: any) => {
-    //   console.log(error);
+    //   // console.log(error);
     // });
   }
   procedure(params:any){
-    console.log("sent val --- >>>",params.param)
-    console.log("added Data --- >>>",params.data)
-    console.log("I m func action");
+    // // console.log("sent val --- >>>",params.param)
+    // // console.log("added Data --- >>>",params.data)
+    // // console.log("I m func action");
     if(params.param.type == "rute"){
       this.navigateToPage(params);
     }else if(params.param.type == "service"){//

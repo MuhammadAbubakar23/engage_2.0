@@ -16,12 +16,12 @@ export class BotSettingsComponent implements OnInit {
   constructor(private botService:BotService) { }
 
   ngOnInit(): void {
-    console.log("Get Setting0");
+    // console.log("Get Setting0");
     this.botService.getsettingApi().subscribe((result:any) => {
       this.maxSimilarity=result.maximum_similarity_threshold;
       this.threshold=result.threshold;
       this.default_response=result.default_response
-     console.log("Get Setting1",result);
+     // console.log("Get Setting1",result);
      });
   }
 
@@ -31,7 +31,7 @@ export class BotSettingsComponent implements OnInit {
       "threshold": this.threshold,
       "default_response": this.default_response
     }).subscribe((result:any) => {
-     console.log("Train",result);
+     // console.log("Train",result);
      this.maxSimilarity=result.maximum_similarity_threshold;
         this.threshold=result.threshold;
         this.default_response=result.default_response

@@ -34,16 +34,16 @@ export class ConsoleMenuComponent implements OnInit {
   ngOnInit(): void {
     // this.menu$ = this.store.select(getEmargingNotEqual("role_console_left_menu")).subscribe((item) => {
     //   this.menus$ = item;
-    //   //console.log(item);
+    //// console.log(item);
     //   this.menus$ = this.treegen.buildTree(item, 400);
-    //   //console.log(this.anymenus$);
+    //// console.log(this.anymenus$);
     // })
     
     // let main = this.storage.retrive("main","o").local;
     // let selectedRole = this.storage.retrive("nocompass","O").local;
     // this.SuperTeamSelected = selectedRole.id;  
     // this.SuperTeamOptions = main.roles;
-    // //console.log(this.SuperTeamOptions);
+    //// console.log(this.SuperTeamOptions);
    
 
     // if(this.SuperTeamOptions.length >= 2){

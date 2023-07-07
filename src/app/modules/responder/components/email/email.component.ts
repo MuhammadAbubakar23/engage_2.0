@@ -495,7 +495,7 @@ export class EmailComponent implements OnInit {
                 email['multipleCc'] = this.multipleCc.join(', ');
               });
             });
-            console.log(this.Emails);
+            // console.log(this.Emails);
           });
 
           item.groupedComments.forEach((group: any) => {
@@ -607,7 +607,7 @@ export class EmailComponent implements OnInit {
                   email['multipleCc'] = this.multipleCc.join(', ');
                 });
               });
-              console.log(this.Emails);
+              // console.log(this.Emails);
             });
 
             item.groupedComments.forEach((group: any) => {
@@ -798,9 +798,9 @@ export class EmailComponent implements OnInit {
         xyz.keywordList.forEach((abc: any) => {
           this.Keywords.push(abc);
         });
-        // console.log('keywords==>', this.Keywords);
+        // // console.log('keywords==>', this.Keywords);
       });
-      // console.log('TagList', this.TagsList);
+      // // console.log('TagList', this.TagsList);
     });
   }
 
@@ -1187,13 +1187,13 @@ export class EmailComponent implements OnInit {
       textarea.selectionStart = startPos + text.length;
       textarea.selectionEnd = startPos + text.length;
       textarea.scrollTop = scrollTop;
-      // console.log(this.textarea.nativeElement.value);
+      // // console.log(this.textarea.nativeElement.value);
     }
   }
 
   insertEmoji(emoji: any) {
     this.insertAtCaret(emoji);
-    // console.log(this.textarea.nativeElement.value);
+    // // console.log(this.textarea.nativeElement.value);
   }
 
   commentStatus(comId: any, type: any) {
@@ -1397,7 +1397,7 @@ export class EmailComponent implements OnInit {
     } else {
       return text.slice(0, 1000) + '...';
     }
-    console.log(text);
+    // console.log(text);
   }
 
   download(url: string, name: string) {
@@ -1407,7 +1407,7 @@ export class EmailComponent implements OnInit {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    console.log(url);
+    // console.log(url);
   }
 
   isImage(attachment: any): boolean {

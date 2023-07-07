@@ -13,9 +13,9 @@ export class TeamsService {
   getMyTeams(): Observable<IdNameDto[]> {
     // return this.http.get("http://localhost:5036/api/Roles",{}).pipe(
     //   map((res: any) => { return res }),
-    //   tap(res => console.log( + " Response: ", res)),
+    //   tap(res => // console.log( + " Response: ", res)),
     //   catchError(err => {
-    //     console.log('Handling error locally and rethrowing it...', err);
+    //     // console.log('Handling error locally and rethrowing it...', err);
     //     return throwError(() => new Error(err));
     //   })
     // );

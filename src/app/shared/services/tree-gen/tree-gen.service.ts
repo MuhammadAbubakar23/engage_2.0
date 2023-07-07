@@ -17,9 +17,9 @@ export class TreeGenService<T> {
     if (Object.keys(parents)?.length > 0) {
       
       parents.forEach(function(item:any, index:number) {
-        console.log(subIndex);
+        // console.log(subIndex);
         children = _self.buildTree(elements, item[mainId], subIndex);
-        console.log(children);
+        // console.log(children);
 
         if (Object.keys(children)?.length > 0) item[subIndex] = children;
         branch.push(item);

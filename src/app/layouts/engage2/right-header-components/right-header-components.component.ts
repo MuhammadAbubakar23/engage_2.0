@@ -43,15 +43,15 @@ export class RightHeaderComponentsComponent implements OnInit {
     this.email = data.originalUserName;
 
     this.timer = setInterval(() => {
-      // console.log("signalR state",this.signalR.hubconnection.state)
-      // console.log("signalR conId",this.signalR.hubconnection.connectionId)
+      // // console.log("signalR state",this.signalR.hubconnection.state)
+      // // console.log("signalR conId",this.signalR.hubconnection.connectionId)
       if (this.signalR?.hubconnection?.state == 'Disconnected') {
         // this.signalR.hubconnection
         //   .start()
-        //   .then(() => console.log('Connection started'))
+        //   .then(() => // console.log('Connection started'))
         //   .then(() => this.signalR.getConnectionId())
         //   .catch((err) =>
-        //      console.log('Error while starting connection: ' + err)
+        //      // console.log('Error while starting connection: ' + err)
         //   );
         this.signalR.startConnection();
       }
@@ -76,9 +76,9 @@ export class RightHeaderComponentsComponent implements OnInit {
       if (this.signalR.hubconnection?.state == 'Connected') {
         this.signalR.hubconnection
           .stop()
-          .then(() => console.log('Connection stoped'))
+          .then(() =>  console.log('Connection stoped'))
           .catch((err) =>
-            console.log('Error while stopping connection: ' + err)
+             console.log('Error while stopping connection: ' + err)
           );
       }
     } else {

@@ -87,11 +87,11 @@ export class ResponderMenuComponent implements OnInit {
             this.alertWarning = false;
             item['slaFlag'] = 'unread';
           }
-          // console.log("slaFlag", item['slaFlag'])
+          // // console.log("slaFlag", item['slaFlag'])
         });
       }
 
-      //  console.log("list", this.userSpecificAllocatedProfiles)
+      //  // console.log("list", this.userSpecificAllocatedProfiles)
     }, 1000);
   }
 

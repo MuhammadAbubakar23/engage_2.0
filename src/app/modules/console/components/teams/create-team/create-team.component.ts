@@ -37,7 +37,7 @@ export class CreateTeamComponent implements OnInit {
 
   ngOnInit(): void {
     this.TeamsNAccesses = this._Activatedroute.snapshot.data["teamsnpermission"];
-    console.log(this.TeamsNAccesses);
+    // console.log(this.TeamsNAccesses);
     console.table(this.TeamsNAccesses);
   
 
@@ -56,7 +56,7 @@ export class CreateTeamComponent implements OnInit {
   }
 
   onSubmit() : void {
-    // console.log(this.teamForm.value);
+    // // console.log(this.teamForm.value);
     const acesses: FormArray = this.teamForm.get('acesses') as FormArray;
     while (acesses.length !== 0) {
       acesses.removeAt(0)
@@ -64,18 +64,18 @@ export class CreateTeamComponent implements OnInit {
     this.TeamsNAccessesChecked.forEach(function (jsonval:any) {
       acesses.push(new FormControl(jsonval));
     });
-    console.log(this.teamForm.value);
+    // console.log(this.teamForm.value);
     // if (this.teamForm.invalid) {
-    //   console.log("In invalid")
+    //   // console.log("In invalid")
     //  // return;
     // }
-    // console.log(this.userForm.value);
-    // console.log();
+    // // console.log(this.userForm.value);
+    // // console.log();
     //breturn;
     let controllerRoute = "AddTeam";
     this.teamservice.save(controllerRoute, this.teamForm.value).subscribe({ 
       next: (res:any) => {
-        console.log(res)
+        // console.log(res)
       },
       error: (err: HttpErrorResponse) => {
         // this.errorMessage = err.message;
@@ -88,18 +88,18 @@ export class CreateTeamComponent implements OnInit {
   setMenuList(menuData:any){
     let _self = this;
     this.TeamsNAccessesChecked = [];
-    console.log(menuData);
+    // console.log(menuData);
     // let val = Object.values(menuData);
-    // console.log(val);
+    // // console.log(val);
     //Object.entries(menuData).
     Object.values(menuData).forEach((innerArray:any) => {
-      //console.log(innerArray);
+      //// console.log(innerArray);
       innerArray.forEach(function (jsonval:any) {
         _self.TeamsNAccessesChecked.push(jsonval.mainId);
-        //console.log(jsonval);
+        //// console.log(jsonval);
       });      
     })
-    console.log(_self.TeamsNAccessesChecked);
+    // console.log(_self.TeamsNAccessesChecked);
   }
   AddTeamFormArry(e:any){
     const checkArray: FormArray = this.teamForm.get('checkArray') as FormArray;

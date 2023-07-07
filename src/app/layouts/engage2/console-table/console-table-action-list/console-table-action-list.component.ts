@@ -27,7 +27,7 @@ export class ConsoleTableActionListComponent implements OnInit {
     //   this.actionli+='<li><button class="dropdown-item" (click)="funcAction(\''+item.actionUrl+'\')" ><i class="'+item.icon+'"></i>'+item.name+'</button></li>'
     // });
     // this.actionlisenit = this.sanitizer.bypassSecurityTrustHtml(this.actionli);
-    // console.log("Listen Action --->>>", this.listaction);
+    // // console.log("Listen Action --->>>", this.listaction);
   }
   funcAction(params:any){
     let data = {
@@ -36,9 +36,9 @@ export class ConsoleTableActionListComponent implements OnInit {
     }
     this.procedure.emit(data);
     //this.userserv.send(url);
-    // console.log("sent val --- >>>",url)
-    // console.log("added Data --- >>>",this.data)
-    // console.log("I m func action")
+    // // console.log("sent val --- >>>",url)
+    // // console.log("added Data --- >>>",this.data)
+    // // console.log("I m func action")
   }
 
 }

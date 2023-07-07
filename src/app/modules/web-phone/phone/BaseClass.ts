@@ -30,6 +30,6 @@ constructor(st: string)
                     level: 3,
                 }
             });
-    console.log("Class1 -> m1 " + this.str);
+    // console.log("Class1 -> m1 " + this.str);
   }
 }

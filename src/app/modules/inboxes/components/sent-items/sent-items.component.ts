@@ -139,7 +139,7 @@ export class SentItemsComponent implements OnInit {
           this.Ids.push(d.id);
         }
       });
-      //  // console.log(this.Ids);
+      //  // // console.log(this.Ids);
       this.isChecked = true;
       this.isCheckedAll = true;
     } else {
@@ -149,7 +149,7 @@ export class SentItemsComponent implements OnInit {
           this.Ids.splice(abc, 1);
         }
       });
-      //  // console.log(this.Ids);
+      //  // // console.log(this.Ids);
       this.isChecked = false;
       this.isCheckedAll = false;
     }
@@ -159,7 +159,7 @@ export class SentItemsComponent implements OnInit {
     let id = Number(evt.target.value);
     if (index >= 0 && evt.target.checked == true) {
       this.Ids.push(id);
-      //  // console.log(this.Ids);
+      //  // // console.log(this.Ids);
     }
     if (evt.target.checked == false) {
       var abc = this.Ids.find((x) => x.Id == id);

@@ -22,19 +22,19 @@ export class ConsoleTableWrapComponent implements OnInit {
   ngOnInit(): void {
     let _self = this;
     //let count = 0;
-    // console.log("Length --->>>", this.wrapdata.length);
+    // // console.log("Length --->>>", this.wrapdata.length);
     // this.show = true;
-    //console.log("show --->>>", this.show);
+    //// console.log("show --->>>", this.show);
     if(typeof this.wrapdata !== "undefined" && this.wrapdata != null){
       if(this.wrapdata.length > this.wrapflow){
         this.show =true;
-      //  console.log("show --->>>", this.show);
+      //  // console.log("show --->>>", this.show);
         this.overflow = this.wrapdata.length-2;
-      //  console.log("overflow --->>>", this.overflow);
+      //  // console.log("overflow --->>>", this.overflow);
       }
-      console.log(); 
+      // // console.log(); 
       this.wrapdata.forEach((item:any, index:number, arr:any) => {
-        console.log(this.wrapindex);
+        // // console.log(this.wrapindex);
         if(typeof this.wrapindex !== "undefined" && this.wrapindex.length > 0 ){
           if(index < 2) _self.display += item[this.wrapindex]+", ";
           else _self.hidden.push(item);
@@ -51,8 +51,8 @@ export class ConsoleTableWrapComponent implements OnInit {
     // for(let rap:any in this.wrapdata){
       
     //   else 
-    //   console.log(rap);
-    //   console.log(this.wrapdata[rap]);
+    //   // console.log(rap);
+    //   // console.log(this.wrapdata[rap]);
     // }
   }
 

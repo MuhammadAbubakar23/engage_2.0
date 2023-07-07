@@ -279,7 +279,7 @@ export class YoutubeComponent implements OnInit {
                 items: groupedItems[createdDate],
               };
             });
-            // console.log('hello', this.groupArrays);
+            // // console.log('hello', this.groupArrays);
           });
 
           let finalObj: any = {};
@@ -291,7 +291,7 @@ export class YoutubeComponent implements OnInit {
               } else {
                 finalObj[date] = [cmnt];
               }
-              // console.log(finalObj);
+              // // console.log(finalObj);
             });
           });
 
@@ -424,7 +424,7 @@ export class YoutubeComponent implements OnInit {
           .subscribe((postStats: any) => {
             post.post['postStats'] = postStats;
           });
-          // console.log("Youtube stats", this.YoutubeData)
+          // // console.log("Youtube stats", this.YoutubeData)
       });
     }
   }
@@ -601,7 +601,7 @@ export class YoutubeComponent implements OnInit {
   quickReplyList() {
     this.commondata.QuickReplyList().subscribe((res: any) => {
       this.QuickReplies = res;
-      // console.log('Quick Reply List ==>', this.QuickReplies);
+      // // console.log('Quick Reply List ==>', this.QuickReplies);
     });
   }
 
@@ -616,9 +616,9 @@ export class YoutubeComponent implements OnInit {
         xyz.keywordList.forEach((abc: any) => {
           this.Keywords.push(abc);
         });
-        // console.log('keywords==>', this.Keywords);
+        // // console.log('keywords==>', this.Keywords);
       });
-      // console.log('TagList', this.TagsList);
+      // // console.log('TagList', this.TagsList);
     });
   }
 

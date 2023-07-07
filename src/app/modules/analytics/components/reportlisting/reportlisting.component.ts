@@ -15,7 +15,7 @@ export class ReportlistingComponent implements OnInit {
 
   ngOnInit(): void {
 this.reportService.reportslistApi().subscribe((res:any)=>{
-  console.log(res);
+  // console.log(res);
   this.reports=res;
 })
   }

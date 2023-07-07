@@ -20,7 +20,7 @@ export class ReportDbSettingsComponent implements OnInit {
   constructor(private reportService:ReportService) { }
 
   ngOnInit(): void {
-    console.log('');
+    // console.log('');
   }
 
   saveSetting() {
@@ -32,12 +32,12 @@ export class ReportDbSettingsComponent implements OnInit {
                   "host":this.dbSettings.HOST,
                   "port":this.dbSettings.PORT
                 }
-    console.log("ok",data)
+    // console.log("ok",data)
     this.reportService.createDbSetiingApi(data).subscribe((res)=>{
-      console.log(res);
+      // console.log(res);
       alert(res)
     })
-    console.log('Saving settings:', this.dbSettings);
+    // console.log('Saving settings:', this.dbSettings);
 
   }
 }

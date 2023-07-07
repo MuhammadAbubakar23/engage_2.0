@@ -68,17 +68,17 @@ export class ReportBuilderComponent implements OnInit {
     this.sharedataservice.data$.subscribe((newData: any) => {
       this.sharedataservice.updateQuery(newData.query);
       if (newData.isStats == false) {
-        console.log("false new Data", newData);
+        // console.log("false new Data", newData);
         this.isStats = false;
         this.tableData = this.transformDataObject(newData.table);
-        console.log(this.tableData);
+        // console.log(this.tableData);
         this.dataKeys = newData.columnswithdtypes;
-        console.log(this.dataKeys);
+        // console.log(this.dataKeys);
 
 
       }
       else {
-        console.log("true new Data", newData);
+        // console.log("true new Data", newData);
         this.isStats = true;
         this.statsdataKeys = Object.keys(newData.table);
         this.tableData = this.transformDataObject(newData.table);
@@ -166,12 +166,12 @@ visualKeys.forEach((item, index) => {
     localStorage.setItem('selectedtable', this.tableName);
     localStorage.setItem('dbName', this.dbName);
     this.reportservice.selectTableApi({ 'db': this.dbName, 'tableName': this.tableName,'connection_name':this.DBC }).subscribe((res) => {
-      console.log("res", res);
+      // console.log("res", res);
       this.isStats = false;
       this.tableData = this.transformDataObject(res.table);
       this.dataKeys = res.columnswithdtypes;
       this.sharedataservice.updateQuery(res.query);
-      console.log("this.dataKeys", this.dataKeys);
+      // console.log("this.dataKeys", this.dataKeys);
 
     })
   }
@@ -182,7 +182,7 @@ visualKeys.forEach((item, index) => {
       this.isNumber = true;
       this.filterConditions = ["Is", "Is not", "Greater than", "Less than", "Greater than or Equel to", "Less than or Equel to"];
       this.resetfilters();
-      console.log("ok", this.filterConditions);
+      // console.log("ok", this.filterConditions);
     } else if (columntype === 'dt') {
       this.isFilter = true;
       this.isNumber = false;
@@ -192,7 +192,7 @@ visualKeys.forEach((item, index) => {
       this.filterConditions = [];
       this.isFilter = false;
     }
-    console.log("Now filtering data", columntype);
+    // console.log("Now filtering data", columntype);
   }
   resetfilters(): void {
     this.selectedFilter = "Select Filter"
@@ -211,6 +211,6 @@ visualKeys.forEach((item, index) => {
       this.sharedataservice.updateQuery(res.query);
       this.dataKeys = res.columnswithdtypes;
     })
-    console.log("Adding Filters", this.selectedFilter, this.selectedFilterColumn, this.filterNumber);
+    // console.log("Adding Filters", this.selectedFilter, this.selectedFilterColumn, this.filterNumber);
   }
 }

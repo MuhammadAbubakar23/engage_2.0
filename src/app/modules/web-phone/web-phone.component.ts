@@ -87,7 +87,7 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-    console.log(
+     console.log(
       this.dialerTabs.nativeElement.querySelectorAll(
         '.dialerActions .tabs .tab .nav-link'
       )
@@ -97,21 +97,21 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
     // if (!this.dialerService.getIsLoaded()) {
     this.dialerService.getEvent().subscribe((res: any) => {
       this.phoneEvents(res);
-      console.log(this);
+      // console.log(this);
 
       if (res.event == 'sipRegistered') {
         // this.dialerService.setSipPhone(this.sipPhone);
       }
     });
     this.dialerService.getWsEvent().subscribe((res) => {
-      console.log(res);
+      // console.log(res);
 
       // alert(res + 'From Construct');
     });
     this._shared.getMessage().subscribe((res) => { });
     this.dialerService.getPhoneLogs().subscribe((res) => {
-      console.log(res);
-      // console.log("sad");
+      // console.log(res);
+      // // console.log("sad");
 
       // alert(res + 'From Construct');
     });
@@ -120,7 +120,7 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
 
     this.sipPhone = this.dialerService.getSipPhone();
 
-    console.log(this.sipPhone);
+    // console.log(this.sipPhone);
 
     this.dialerService.setIsLoaded(true);
     if (!this.sipPhone) {
@@ -184,14 +184,14 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
     this.sipPhone = AgentFactory.getAgent(config);
     this.sipPhone.loadPhone();
     this.dialerService.setSipPhone(this.sipPhone);
-    // console.log("LoadPhone ===> " ,this.sipPhone);
+    // // console.log("LoadPhone ===> " ,this.sipPhone);
     if (this.sipPhone) {
       // this.sipPhone.changeStatus('Manual Dial', '*12');
     }
   }
 
   manualDial(to_number: string = ''): void | boolean {
-    console.log(this.sipPhone);
+    // console.log(this.sipPhone);
     this.cancelButton = false;
     this.OBCallConnected = false;
     this.manualDisconnect = false;
@@ -468,7 +468,7 @@ export class WebPhoneComponent implements OnInit, AfterViewInit {
       });
   }
   method() {
-    // console.log(this.for);
+    // // console.log(this.for);
   }
   show: any = false;
   click(val: any) {

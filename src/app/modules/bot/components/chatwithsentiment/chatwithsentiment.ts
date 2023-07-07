@@ -27,18 +27,18 @@ export class ChatWithSentimentComponent implements OnInit {
    ngOnInit() {
     this.senService.senconversation.subscribe((val:any) => {
     this.sentiments = this.sentiments.concat(val);
-    console.log("this.sentiments",this.sentiments);
+    // console.log("this.sentiments",this.sentiments);
   });
   this.senService.langconversation.subscribe((val:any) => {
     this.languages = this.languages.concat(val);
-    console.log("this.languages",this.languages);
+    // console.log("this.languages",this.languages);
   });
 
 }
 
    getSentiment() {
     this.senService.getSentimentApi(this.senchatForm.value.text!).subscribe((result:any) => {
-      console.log("sentiment",result);
+      // console.log("sentiment",result);
       const botMessage = new Message('bot',result);
       this.senService.senconversation.next([botMessage]);
       this.senchatForm.reset();
@@ -46,7 +46,7 @@ export class ChatWithSentimentComponent implements OnInit {
    }
    getLanguage(){
     this.senService.getLanguageApi(this.langchatForm.value.text!).subscribe((result:any) => {
-      console.log("Language",result);
+      // console.log("Language",result);
       const botMessage = new Message('bot',result);
       this.senService.langconversation.next([botMessage]);
       this.langchatForm.reset();
@@ -56,7 +56,7 @@ export class ChatWithSentimentComponent implements OnInit {
 //32a4676fbd167365fd7a117cc8616c1c8c64b370
   //  trainModel():void{
   //   this.senService.trainApi().subscribe((result:any) => {
-  //     console.log("Train",result);
+  //     // console.log("Train",result);
   //     alert("Success!");
   //     },(error:any) => {
   //      alert("Error!");

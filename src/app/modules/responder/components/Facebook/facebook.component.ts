@@ -305,7 +305,7 @@ export class FacebookComponent implements OnInit {
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           // this.fbStats();
-          // console.log('Facebook data', this.FacebookData);
+          // // console.log('Facebook data', this.FacebookData);
         });
     } else if (this.slaId != null || this.slaId != undefined) {
       localStorage.setItem('storeOpenedId', this.slaId);
@@ -431,7 +431,7 @@ export class FacebookComponent implements OnInit {
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           // this.fbStats();
-          // console.log('Facebook data', this.FacebookData);
+          // // console.log('Facebook data', this.FacebookData);
         });
     }
   }
@@ -553,7 +553,7 @@ export class FacebookComponent implements OnInit {
           };
         });
         // this.fbMsgReply = true;
-        // console.log('Messages ==>', this.groupedMessages);
+        // // console.log('Messages ==>', this.groupedMessages);
         this.totalUnrespondedMsgCountByCustomer =
           this.totalUnrespondedMsgCountByCustomer + 1;
       }
@@ -762,7 +762,7 @@ export class FacebookComponent implements OnInit {
                 };
               }
             );
-            // console.log('Messages ==>', this.groupedMessages);
+            // // console.log('Messages ==>', this.groupedMessages);
           });
         });
     } else if (this.slaId != null || undefined) {
@@ -821,7 +821,7 @@ export class FacebookComponent implements OnInit {
               };
             }
           );
-          // console.log('Messages ==>', this.groupedMessages);
+          // // console.log('Messages ==>', this.groupedMessages);
         });
       });
     } else {
@@ -881,7 +881,7 @@ export class FacebookComponent implements OnInit {
                 };
               }
             );
-            // console.log('Messages ==>', this.groupedMessages);
+            // // console.log('Messages ==>', this.groupedMessages);
           });
         });
     }
@@ -1226,9 +1226,9 @@ export class FacebookComponent implements OnInit {
         xyz.keywordList.forEach((abc: any) => {
           this.Keywords.push(abc);
         });
-        // console.log('keywords==>', this.Keywords);
+        // // console.log('keywords==>', this.Keywords);
       });
-      // console.log('TagList', this.TagsList);
+      // // console.log('TagList', this.TagsList);
     });
   }
 

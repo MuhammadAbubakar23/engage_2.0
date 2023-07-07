@@ -23,14 +23,14 @@ export class ResponseErrorInterceptor implements HttpInterceptor {
     return next.handle(req)
     .pipe(map((event: HttpEvent<any>) => {
       if (event instanceof HttpResponse) {
-      //  console.log('event--->>>', event);
+      //  // console.log('event--->>>', event);
       }
       return event;
       }),
       catchError((error: HttpErrorResponse) => {
         if (error.error instanceof ErrorEvent) {
           // A client-side error: Retrigger
-          // console.log('error event--->>>', error);
+          // // console.log('error event--->>>', error);
           let errorMessage = this.handleError(error);        
           return throwError(() => new Error(errorMessage));
           
@@ -40,7 +40,7 @@ export class ResponseErrorInterceptor implements HttpInterceptor {
           //if(error.status == 200 && error.ok === false) return error.message;
           // error.clone({body: this.jsonParser.parse(event.body)})
           // error.clone({body: null})
-          // console.log('error 22222 event--->>>', error);
+          // // console.log('error 22222 event--->>>', error);
           return throwError(() => new Error(error.error));
         }
         

@@ -31,7 +31,7 @@ export class CreateRolesComponent implements OnInit {
 
   ngOnInit(): void {
     this.RolesNPermission = this._Activatedroute.snapshot.data["rolesnpermission"];
-    console.log(this.RolesNPermission);
+    // console.log(this.RolesNPermission);
     console.table(this.RolesNPermission);
     this.roleForm = this.formbuilder.group({
       name: ['',[Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
@@ -44,7 +44,7 @@ export class CreateRolesComponent implements OnInit {
     })
   }
   onSubmit() : void {
-    // console.log(this.teamForm.value);
+    // // console.log(this.teamForm.value);
     const acesses: FormArray = this.roleForm.get('acesses') as FormArray;
     while (acesses.length !== 0) {
       acesses.removeAt(0)
@@ -52,18 +52,18 @@ export class CreateRolesComponent implements OnInit {
     this.RolesNPermissionsChecked.forEach(function (jsonval:any) {
       acesses.push(new FormControl(jsonval));
     });
-    console.log(this.roleForm.value);
+    // console.log(this.roleForm.value);
     // if (this.teamForm.invalid) {
-    //   console.log("In invalid")
+    //   // console.log("In invalid")
     //  // return;
     // }
-    // console.log(this.userForm.value);
-    // console.log();
+    // // console.log(this.userForm.value);
+    // // console.log();
     //breturn;
     let controllerRoute = "AddRole";
     this.roleService.save(controllerRoute, this.roleForm.value).subscribe({ 
       next: (res:any) => {
-        console.log(res)
+        // console.log(res)
       },
       error: (err: HttpErrorResponse) => {
         // this.errorMessage = err.message;
@@ -76,18 +76,18 @@ export class CreateRolesComponent implements OnInit {
   setMenuList(menuData:any){
     let _self = this;
     this.RolesNPermissionsChecked = [];
-    console.log(menuData);
+    // console.log(menuData);
     // let val = Object.values(menuData);
-    // console.log(val);
+    // // console.log(val);
     //Object.entries(menuData).
     Object.values(menuData).forEach((innerArray:any) => {
-      //console.log(innerArray);
+      //// console.log(innerArray);
       innerArray.forEach(function (jsonval:any) {
         _self.RolesNPermissionsChecked.push(jsonval.mainId);
-        //console.log(jsonval);
+        //// console.log(jsonval);
       });      
     })
-    console.log(_self.RolesNPermissionsChecked);
+    // console.log(_self.RolesNPermissionsChecked);
   }
   onBtnClick(){
     // Navigate to /products page

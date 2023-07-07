@@ -15,10 +15,10 @@ export class ConsoleRoutingGuard implements CanActivate, CanLoad, CanMatch {
   loading$: any;
   constructor(private store: Store<MenuState>, private router:Router){ //}, private headerService: HeaderService) { 
     //this.menu$ = this.store.select(getEmargingEqual("role_left_menu"));
-    //console.log("1 === >>>",this.menu$);
+    //// console.log("1 === >>>",this.menu$);
     // this.menu$ = this.store.select(getEmargingNotEqual("role_left_menu")).subscribe((item) => {
     //   for(let itm in item){
-    //     console.log(itm);
+    //     // console.log(itm);
     //   }
     //   // item.forEach((element:any,index:string, arr:[])=>{ 
     //   // })
@@ -41,8 +41,8 @@ export class ConsoleRoutingGuard implements CanActivate, CanLoad, CanMatch {
         });
       }
       
-      console.log("canActivate. ActivatedRouteSnapshot === >>>", route.url);
-      console.log("canActivate. RouterStateSnapshot === >>>", state.url);
+      // console.log("canActivate. ActivatedRouteSnapshot === >>>", route.url);
+      // console.log("canActivate. RouterStateSnapshot === >>>", state.url);
       return true;
   }
   canMatch(
@@ -50,11 +50,11 @@ export class ConsoleRoutingGuard implements CanActivate, CanLoad, CanMatch {
     segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
       if(route.path =='' && segments){
-        console.log("----->>>>>>>>>>>>>>>>>>", segments.length)
+        // console.log("----->>>>>>>>>>>>>>>>>>", segments.length)
         this.router.navigate(['/console/users']);
       }
-    console.log("canMatch. Route === >>>", route);
-    console.log("canMatch. segments === >>>", segments);
+    // console.log("canMatch. Route === >>>", route);
+    // console.log("canMatch. segments === >>>", segments);
    
       return true;
   }
@@ -62,8 +62,8 @@ export class ConsoleRoutingGuard implements CanActivate, CanLoad, CanMatch {
     route: Route,
     segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       
-      console.log("canLoad. Route === >>>", route);
-      console.log("canLoad. segments === >>>", segments);
+      // console.log("canLoad. Route === >>>", route);
+      // console.log("canLoad. segments === >>>", segments);
       
       return true;
   }

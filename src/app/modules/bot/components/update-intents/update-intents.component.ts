@@ -30,7 +30,7 @@ export class UpdateIntentsComponent implements OnInit {
       this.oldData.intent=intentName;
       this.oldData.old_question=question;
       this.oldData.old_answers=answers;
-      console.log("this.oldData",this.oldData);
+      // console.log("this.oldData",this.oldData);
 
       this.formGroup?.patchValue({
         intentName: intentName,
@@ -39,7 +39,7 @@ export class UpdateIntentsComponent implements OnInit {
 
       this.setAnswers(answers); // Set the answers array
 
-      console.log("this", this.formGroup);
+      // console.log("this", this.formGroup);
     });
   }
 
@@ -70,7 +70,7 @@ export class UpdateIntentsComponent implements OnInit {
     this.botService.updateIntentApi({"intent": this.formGroup!.value.intentName,"old_question":this.oldData.old_question,"old_answers":this.oldData.old_answers,
      "new_question": this.formGroup!.value.question,
     "new_answers":this.formGroup!.value.answers}).subscribe((res: any) => {
-      console.log(res);
+      // console.log(res);
        alert("Success!");
       });
   }

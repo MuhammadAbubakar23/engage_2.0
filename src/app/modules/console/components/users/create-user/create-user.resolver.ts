@@ -18,9 +18,9 @@ export class CreateUserResolver implements Resolve<any> {
 
   async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<Observable<any>> {
     
-    //console.log(role);
+    //// console.log(role);
     
-   // console.log(team);
+   // // console.log(team);
     await this.funcRoles();
     await this.funcTeams();
     return of({role:this.resroles, team:this.resteams});

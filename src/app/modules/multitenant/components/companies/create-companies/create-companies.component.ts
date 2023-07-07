@@ -55,9 +55,9 @@ export class CreateCompaniesComponent implements OnInit {
     this.CompaniesNProperties = this._Activatedroute.snapshot.data["companiesprops"];
     
     // this.CompaniesNAccessesPermissions = [...this.CompaniesNAccesses, ...this.CompaniesNPermissions];
-    console.log(this.CompaniesNAccesses);
-    console.log(this.CompaniesNPermissions);
-    console.log(this.CompaniesNProperties);
+    // console.log(this.CompaniesNAccesses);
+    // console.log(this.CompaniesNPermissions);
+    // console.log(this.CompaniesNProperties);
     console.table(this.CompaniesNAccesses);
     console.table(this.CompaniesNPermissions);
     console.table(this.CompaniesNProperties);
@@ -80,7 +80,7 @@ export class CreateCompaniesComponent implements OnInit {
   }
 
   onSubmit() : void {
-    // console.log(this.companiesForm.value);
+    // // console.log(this.companiesForm.value);
     const acesses: FormArray = this.companiesForm.get('acesses') as FormArray;
     while (acesses.length !== 0)  acesses.removeAt(0);
     this.CompaniesNAccessesChecked.forEach(function (jsonval:any) {
@@ -102,15 +102,15 @@ export class CreateCompaniesComponent implements OnInit {
     
     
     
-    console.log(this.companiesForm.value);
+    // console.log(this.companiesForm.value);
     // if (this.companiesForm.invalid) {
-    //   console.log("In invalid")
+    //   // console.log("In invalid")
     //  // return;
     // }
     let controllerRoute = "TeamProperties";
     this.companiesservice.save(controllerRoute, this.companiesForm.value).subscribe({ 
       next: (res:any) => {
-        console.log(res)
+        // console.log(res)
       },
       error: (err: HttpErrorResponse) => {
         // this.errorMessage = err.message;
@@ -124,7 +124,7 @@ export class CreateCompaniesComponent implements OnInit {
     //let controllerRoute = "RoleProperties";
     this.companiesservice.save("RoleProperties", this.companiesForm.value).subscribe({ 
       next: (res:any) => {
-        console.log(res)
+        // console.log(res)
       },
       error: (err: HttpErrorResponse) => {
         // this.errorMessage = err.message;
@@ -137,35 +137,35 @@ export class CreateCompaniesComponent implements OnInit {
   setPropertiesList(PropertyData:any){
     let _self = this;
     this.CompaniesNPropertiesChecked = [];
-    console.log(PropertyData);
+    // console.log(PropertyData);
     Object.values(PropertyData).forEach((innerArray:any) => {
       innerArray.forEach(function (jsonval:any) {
         _self.CompaniesNPropertiesChecked.push(jsonval.mainId);
       });      
     })
-    console.log(_self.CompaniesNPropertiesChecked);
+    // console.log(_self.CompaniesNPropertiesChecked);
   }
   setAccessList(AccessData:any){
     let _self = this;
     this.CompaniesNAccessesChecked = [];
-    console.log(AccessData);
+    // console.log(AccessData);
     Object.values(AccessData).forEach((innerArray:any) => {
       innerArray.forEach(function (jsonval:any) {
         _self.CompaniesNAccessesChecked.push(jsonval.mainId);
       });      
     })
-    console.log(_self.CompaniesNAccessesChecked);
+    // console.log(_self.CompaniesNAccessesChecked);
   }
   setPermissionList(PermissionData:any){
     let _self = this;
     this.CompaniesNPermissionsChecked = [];
-    console.log(PermissionData);
+    // console.log(PermissionData);
     Object.values(PermissionData).forEach((innerArray:any) => {
       innerArray.forEach(function (jsonval:any) {
         _self.CompaniesNPermissionsChecked.push(jsonval.mainId);
       });      
     })
-    console.log(_self.CompaniesNPermissionsChecked);
+    // console.log(_self.CompaniesNPermissionsChecked);
   }
   AddCompaniesFormArry(e:any){
     const checkArray: FormArray = this.companiesForm.get('checkArray') as FormArray;

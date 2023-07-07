@@ -22,19 +22,19 @@ export class IntentsComponent implements OnInit {
   ngOnInit(): void {
 
     this.botService.login().subscribe((token: any) => {
-      console.log(token, token.access);
+      // console.log(token, token.access);
       localStorage.setItem("token", token.access);
     });
     this.botService.listofIntents().subscribe((res:any)=>{
       this.intents=res;
-      console.log("result",res);
+      // console.log("result",res);
      })
   }
   selectIntent(): void {
 
 
       this.botService.intentDetails(this.intentName).subscribe((res: any) => {
-        console.log(res);
+        // console.log(res);
         this.intentsDetails.intentName = "";
         this.intentsDetails.intentName = res.categories[0];
 
@@ -64,7 +64,7 @@ export class IntentsComponent implements OnInit {
   })
   }
   deleteIntentQA(obj: any): void {
-    console.log("deleteIntent", obj);
+    // console.log("deleteIntent", obj);
     const data = {'intent': obj.intentName, 'question': obj.question, 'answers': obj.answers};
     this.botService.deleteQA(data).subscribe((res: any) => {
       alert("successfully deleted");

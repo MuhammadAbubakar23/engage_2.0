@@ -4,7 +4,7 @@ import { MenuState } from "./menu.state";
 
 const getMenusState = createFeatureSelector<MenuState>('menus');
 export const getMenus=createSelector(getMenusState,(state)=>{
-    //console.log(state)
+    //// console.log(state)
     return state.menus;
 })
 export const getMenusLoading = createSelector(getMenusState, state => state.loading)
@@ -21,7 +21,7 @@ export const getMenuById = (id:number) => createSelector(getMenus, (menuModels:M
   });
 
 export const getEmarging = (emerging:string) => createSelector(getMenus, (menuModels:MenuModel[]) => {
-    //console.log(menuModels);
+    //// console.log(menuModels);
     if (menuModels) {
       return menuModels.filter((model) => model.emerging.includes(emerging));
     } else {
@@ -29,7 +29,7 @@ export const getEmarging = (emerging:string) => createSelector(getMenus, (menuMo
     }
 });
 export const getEmargingEqual = (emerging:string) => createSelector(getMenus, (menuModels:MenuModel[]) => {
-    // console.log(menuModels);
+    // // console.log(menuModels);
     if (menuModels) {
       return menuModels.filter((model) => model.emerging.includes(emerging) && model.baseId === model.parentId );
     } else {
@@ -37,7 +37,7 @@ export const getEmargingEqual = (emerging:string) => createSelector(getMenus, (m
     }
 });
 export const getEmargingNotEqual = (emerging:string) => createSelector(getMenus, (menuModels:MenuModel[]) => {
-  // console.log(menuModels);
+  // // console.log(menuModels);
   if (menuModels) {
     return menuModels.filter((model) => model.emerging.includes(emerging) && model.baseId !== model.parentId );
   } else {

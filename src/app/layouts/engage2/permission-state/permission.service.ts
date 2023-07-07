@@ -25,7 +25,7 @@ export class PermissionService {
     //let subpermissions : PermissionModel[] = [];
     //alert("We need processor");
     permissions = this.storage.retrive(type,"O").local;  
-   // console.log(permissions);
+   // // console.log(permissions);
     if(permissions != null && permissions?.priviledge?.length>=1) 
       return of(permissions);
     else

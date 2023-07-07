@@ -67,7 +67,7 @@ export class TeamsComponent implements OnInit {
     }
     // this.Teams = await this._Activatedroute.snapshot.data["teams"];
     // this.TeamsCount =  this.Teams.length;
-    console.log(this.filter);
+    // console.log(this.filter);
 
 
     // this.Teams =  this._Activatedroute.snapshot.data["teams"];

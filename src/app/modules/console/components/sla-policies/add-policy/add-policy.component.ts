@@ -49,11 +49,11 @@ export class AddPolicyComponent implements OnInit {
   getOperationalHours(): void {
     this.commonService.GetOperationalHours().subscribe(
       (response: any) => {
-        console.log("hours of operations", )
+        // console.log("hours of operations", )
         this.oprationalHours = response; // Assuming the API response is an array
       },
       (error: any) => {
-        console.log('API error:', error);
+        // console.log('API error:', error);
         // Handle the API error appropriately
       }
     );
@@ -64,7 +64,7 @@ export class AddPolicyComponent implements OnInit {
 
     formGroup.patchValue({ oprationHoursId: Number(value) });
 
-    console.log("Operation hours ID", formGroup.value.OperationalHoursId);
+    // console.log("Operation hours ID", formGroup.value.OperationalHoursId);
   }
   onSubmit() {
     debugger
@@ -73,7 +73,7 @@ export class AddPolicyComponent implements OnInit {
     for (let i = 0; i < slaTargets.controls.length; i++) {
       const formGroup = slaTargets.controls[i] as FormGroup;
       const formValues = formGroup.value;
-      console.log("Form values for oprationHoursId", formValues.oprationHoursId);
+      // console.log("Form values for oprationHoursId", formValues.oprationHoursId);
 
     }
     //if (this.messageForm.valid) {.....
@@ -81,18 +81,18 @@ export class AddPolicyComponent implements OnInit {
     
     this.commonService.AddSlaPolicy(formData).subscribe(
       response => {
-        console.log('API response:', response);
+        // console.log('API response:', response);
 
         this.router.navigate(['/console/sla-policies']);
 
       },
       error => {
-        console.log('API error:', error);
+        // console.log('API error:', error);
 
       }
     );
     //} else {
-    // console.log('Form is invalid');
+    // // console.log('Form is invalid');
     // Form is invalid, display error messages or take appropriate action
     //}
   }

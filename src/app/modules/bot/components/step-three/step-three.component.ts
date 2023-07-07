@@ -40,7 +40,7 @@ export class StepThreeComponent implements OnInit {
   }
 
   stepThreeSubmit() {
-    console.log(this.stepThreeForm.value.answers);
+    // console.log(this.stepThreeForm.value.answers);
   }
   priview(){
   this.childEventpreview.emit();

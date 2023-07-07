@@ -41,7 +41,7 @@ export class ResponderRightSidebarMenuComponent implements OnInit {
     //   .select(getEmargingEqual('team_inbox_right_menu'))
     //   .subscribe((item: any) => {
     //     for (let key in item) {
-    //       // console.log(item)
+    //       // // console.log(item)
     //       let obj = {
     //         mainId: item[key].mainId,
     //         emerging: item[key].emerging,

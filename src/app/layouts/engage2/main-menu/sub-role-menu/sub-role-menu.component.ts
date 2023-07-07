@@ -58,7 +58,7 @@ export class SubRoleMenuComponent implements OnInit {
     //     // _self.SubMenuPage = this.SubMenuPages.filter(function(element:any) {
     //     //   return event.url.toString().toLowerCase().includes(element.slug);
     //     // }); // because return array index;
-    //     //console.log(_self.SubMenuPage);
+    //     //// console.log(_self.SubMenuPage);
     //     if(event.url.toString().toLowerCase().includes("undefined")){
          
     //     }
@@ -67,11 +67,11 @@ export class SubRoleMenuComponent implements OnInit {
     //       _self.SubMenuPages.forEach(function(subMenuPage:any) {
     //         if(event.url.toString().toLowerCase().includes(subMenuPage.slug)){
     //           _self.SubMenuPage = subMenuPage;
-    //           console.log(subMenuPage);
+    //         // console.log(subMenuPage);
     //           //  _self.store.select(getEmarging(subMenuPage.slug)).subscribe((item) => {
-    //           //   console.log(item);
+    //           //   // console.log(item);
     //           //   _self.menus$ = _self.treegen.buildTree(item, subMenuPage.parentId);
-    //           //   console.log(_self.menus$);
+    //           //   // console.log(_self.menus$);
     //           // });
     //         }
     //       });
@@ -88,14 +88,14 @@ export class SubRoleMenuComponent implements OnInit {
     // }else{
     //   this.menus$ = [];
     //   let _self = this;
-    //   console.log(_self.SubMenuPage);
+    //   // console.log(_self.SubMenuPage);
     //   _self.store.select(getEmarging(_self.SubMenuPage.slug)).subscribe((item:any) => {
-    //     console.log(item);
+    //     // console.log(item);
         
     //     if(item.length > 0)
     //       _self.menus$ = _self.treegen.buildTree(item, _self.SubMenuPage.parentId);
         
-    //       console.log(_self.menus$);
+    //       // console.log(_self.menus$);
     //   });
   
 
@@ -106,15 +106,15 @@ export class SubRoleMenuComponent implements OnInit {
     // //   if (event instanceof NavigationStart) {
         
     // //     _self.SubMenuPages.forEach(function(subMenuPage:any, index:number) {
-    // //       console.log(subMenuPage);
+    // //       // console.log(subMenuPage);
     // //       if(event.url.toString().toLowerCase().includes(subMenuPage.slug)){
-    // //         console.log(subMenuPage);
+    // //         // console.log(subMenuPage);
     // //         _self.EmargeType$ = subMenuPage.name;
     // //         _self.menu$ = _self.store.select(getEmarging(subMenuPage.slug)).subscribe((item) => {
     // //           // this.menus$ = item;
-    // //           console.log(item);
+    //     // console.log(item);
     // //           _self.menus$ = _self.treegen.buildTree(item, subMenuPage.parentId);
-    // //           console.log(_self.menus$);
+    //    // console.log//(_self.menus$);
     // //         });
     // //       }
         
@@ -131,25 +131,25 @@ export class SubRoleMenuComponent implements OnInit {
     //     //   this.HeaderEmargeType="Analytics";
     //     //   this.LoadDataEmargeType="analytics";
     //     // }
-    //     // console.log(resultConsole);
-    //     // console.log(resultAnalytics);
-    //     // console.log(event.url.toString().split('/'));
+    //     // // console.log(resultConsole);
+    //     // // console.log(resultAnalytics);
+    //     // // console.log(event.url.toString().split('/'));
     //     // if(event.url.toString())
-    //     // console.log('NavigationStart --- ', event.url);
+    //     // // console.log('NavigationStart --- ', event.url);
     //   // }
     // // });
     // // this.menu$ = this.store.select(getEmarging(this.LoadDataEmargeType)).subscribe((item) => {
     // //   this.menus$ = item;
-    // //   console.log(item);
+    // //   // console.log(item);
     // //   this.menus$ = this.treegen.buildTree(item, 400);
-    // //   console.log(this.anymenus$);
+    // //   // console.log(this.anymenus$);
     // // })
     
     // let main = this.storage.retrive("main","o").local;
     // let selectedRole = this.storage.retrive("nocompass","O").local;
     // this.SuperTeamSelected = selectedRole.id;  
     // this.SuperTeamOptions = main.roles;
-    // //console.log(this.SuperTeamOptions);
+    // //// console.log(this.SuperTeamOptions);
    
 
     // if(this.SuperTeamOptions.length >= 2){

@@ -24,7 +24,6 @@ export class ForgotPasswordComponent implements OnInit {
     
     this.authService.sendVerificationCode(this.verificationForm.value).subscribe((res : any) =>
     {
-    //  // console.log(res)
       
       if (res.message){
         alert("Varification code send successfully on your Email.")
@@ -32,7 +31,6 @@ export class ForgotPasswordComponent implements OnInit {
     },
     ({error}) =>{
       alert(error.message)
-     // // console.log(error.message)
       // this.toaster.error(error.message);
     });
   }
