@@ -22,11 +22,12 @@ const routes: Routes = [
     loadChildren : () => import('./console/console.module').then(f=>f.ConsoleModule),
     data: {preload: true}
   },
+  // {
+  //   path:'',
+  //   loadChildren : () => import('./web-phone/web-phone.module').then(f=>f.WebPhoneModule),
+  //   data: {preload: false}
+  // },
   {
-    path:'',
-    loadChildren : () => import('./web-phone/web-phone.module').then(f=>f.WebPhoneModule),
-    data: {preload: false}
-  },{
     path:'multitenant',
     loadChildren : () => import('./multitenant/multitenant.module').then(f=>f.MultitenantModule),
     data: {preload: true}
