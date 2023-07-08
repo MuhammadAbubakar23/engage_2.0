@@ -528,9 +528,9 @@
     <div class="filter-container">
       <ul class="list-group list-group-horizontal border-0">
         <li class="list-group-item border-0 all-check-boxes">
-          <input class="form-check-input me-1" type="checkbox" aria-label="..." data-bs-toggle="tooltip"
+          <!-- <input class="form-check-input me-1" type="checkbox" aria-label="..." data-bs-toggle="tooltip"
             data-bs-placement="bottom" title="" data-bs-original-title="Check All" [checked]="masterSelected" value="m1"
-            (change)="checkUncheckAll($event)">
+            (change)="checkUncheckAll($event)"> -->
           <div class="dropdown">
             <!-- <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -677,9 +677,10 @@
               [class.selected]="querry.isChecked==true" class="alert" 
               [ngClass]="[querry.slaFlag == 'warning'?'alert-warning':'' || querry.slaFlag == 'danger'?'alert-danger':'' ||
               querry.slaFlag == 'unread'?'unread':'']">
-              <td style="width: 40px;"><input [checked]="querry.isChecked" value="{{querry.id}}"
+              <!-- <td style="width: 40px;"><input [checked]="querry.isChecked" value="{{querry.id}}"
                   (change)="isAllSelected($event, i, querry.platform)" class="form-check-input me-1" type="checkbox"
-                  aria-label="..."></td>
+                  aria-label="...">
+              </td> -->
               <td style="width: 40px;">
                 <i *ngIf="querry.platform == 'Facebook'" class="fab fa-facebook navytext" data-bs-toggle="tooltip"
                   data-bs-placement="bottom" title="" data-bs-original-title="Facebook" aria-label="Facebook"></i>
@@ -699,7 +700,8 @@
                   data-bs-placement="bottom" data-bs-original-title="Webchat" aria-label="Webchat"></i>
                 <i *ngIf="querry.platform == 'LinkedIn'" class="fa-brands fa-linkedin-in linkedinTxt"
                   data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="LinkedIn"
-                  aria-label="LinkedIn"></i>
+                  aria-label="LinkedIn">
+                </i>
               </td>
               <td style="width: 300px;">
                 <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
@@ -804,7 +806,7 @@
                         </div>
                       </td> -->
 
-              <td class="more-action-container">
+              <!-- <td class="more-action-container">
                 <span class="more-action-btns">
                   <a href="#" class="px-2" data-bs-toggle="tooltip" data-bs-placement="bottom" tabindex="1"
                     aria-label="Snooze">
@@ -819,7 +821,7 @@
                     <i class="fal fa-trash coal"></i>
                   </a>
                 </span>
-              </td>
+              </td> -->
             </tr>
 
           </tbody>
