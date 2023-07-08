@@ -80,7 +80,7 @@ export class SignalRService {
     };
     
       this.hubconnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://common-engage.enteract.app/ConnectionHub', options)
+      .withUrl('https://tpplcom.360scrm.com/ConnectionHub', options)
       .withAutomaticReconnect()
       .configureLogging(signalR.LogLevel.Information)
       .build();
