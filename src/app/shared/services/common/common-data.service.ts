@@ -90,6 +90,8 @@ export class CommonDataService {
   getSkills = environment.links.console.getSkills
   addSkill = environment.links.console.addSkill
   deleteSkill = environment.links.console.deleteSkill
+  getAllProfile = environment.links.console.getAllProfile
+  addProfile = environment.links.console.addProfile
 
   constructor(private http: HttpClient) {}
 
@@ -399,6 +401,14 @@ export class CommonDataService {
   DeleteSkill(delSkill: string): Observable<any> {
     const url = `${this.consoleBaseUrl}${this.deleteSkill}?Id=${delSkill}`;
     return this.http.get(url);
+  }
+
+  GetAllProfile(){
+    return this.http.get(this.consoleBaseUrl+this.getAllProfile)
+  }
+  AddProfile(addProfile : any){
+    
+    return this.http.post(this.consoleBaseUrl + this.addProfile, addProfile)
   }
 }
 

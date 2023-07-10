@@ -94,7 +94,9 @@ export const environment = {
       deleteEntractRoute : 'EnteractRoute/Delete',
       getSkills : 'Skill/GetAll',
       addSkill : 'Skill/Add',
-      deleteSkill : 'Skill/Delete'
+      deleteSkill : 'Skill/Delete',
+      getAllProfile: 'Profile/GetAll',
+      addProfile : 'Profile/Add'
     },
     CCMS:{
       reason_types:'Order/GetReasonTypes',
