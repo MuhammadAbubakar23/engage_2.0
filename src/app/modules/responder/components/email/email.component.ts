@@ -1039,7 +1039,9 @@ export class EmailComponent implements OnInit {
         this.closeReplyModal();
       },
       ({ error }) => {
-        //  alert(error.message);
+        this.spinner1running = false;
+        this.SpinnerService.hide();
+        this.reloadComponent('error');
       }
     );
   }
@@ -1121,6 +1123,13 @@ export class EmailComponent implements OnInit {
     }
     if (type == 'disLike') {
       this.AlterMsg = 'Dislike Successfully!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+    if (type == 'error') {
+      this.AlterMsg = 'Something went wrong';
       this.toastermessage = true;
       setTimeout(() => {
         this.toastermessage = false;
