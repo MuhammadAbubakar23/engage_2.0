@@ -651,6 +651,9 @@ export class SmsDetailsComponent implements OnInit {
             this.radioInput.nativeElement.checked = false;
           },
           ({ error }) => {
+            this.spinner1running = false;
+        this.SpinnerService.hide();
+        this.reloadComponent('error');
           //  alert(error.message);
           }
         );
@@ -673,6 +676,13 @@ export class SmsDetailsComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
+    if (type == 'error') {
+      this.AlterMsg = 'Something went wrong';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'empty-input-field') {
       this.AlterMsg = 'Please write something!';
       this.toastermessage = true;

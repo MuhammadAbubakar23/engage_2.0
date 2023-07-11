@@ -485,6 +485,13 @@ export class WhatsappDetailsComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
+    if (type == 'error') {
+      this.AlterMsg = 'Something went wrong';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'both-text-and-attachment-added') {
       this.AlterMsg = 'Text and Attachment cannot be sent at the same time';
       this.toastermessage = true;
@@ -735,6 +742,9 @@ export class WhatsappDetailsComponent implements OnInit {
             this.WhatsappReplyForm.reset();
           },
           ({ error }) => {
+            this.spinner1running = false;
+        this.SpinnerService.hide();
+        this.reloadComponent('error');
             //  alert(error.message);
           }
         );

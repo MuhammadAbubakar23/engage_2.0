@@ -922,7 +922,7 @@ export class EmailComponent implements OnInit {
           this.emailId = comment.id;
           this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
-          this.postType = 'ForwordEmail';
+          this.postType = 'ForwardEmail';
           this.emailSubject = comment.message;
           this.emailFromInString = '';
           this.emailCcInString = '';
