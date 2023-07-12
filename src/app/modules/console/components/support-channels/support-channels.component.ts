@@ -8,6 +8,9 @@ import { SocialLoginService } from '../../services/sociallogin.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import * as bootstrap from 'bootstrap';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+
+declare const FB: any;
+
 @Component({
   selector: 'app-support-channels',
   standalone: true,
@@ -22,6 +25,8 @@ export class SupportChannelsComponent implements OnInit {
   users!: any[];
   pagePicFile: any;
   instaProfile: any;
+
+  attachFacebookPageForm !: FormGroup;
   openModal(): void {
     const exampleModal = document.getElementById('exampleModal');
     if (exampleModal) {
@@ -58,32 +63,32 @@ export class SupportChannelsComponent implements OnInit {
     if (type == "insta")
       this.instaProfile = event.target.files[0];
   }
+
   buildForm() {
     this.messageForm = this.formBuilder.group({
-      channel: ['', Validators.required],
-      name: ['', Validators.required],
-      userName: ['', Validators.required],
-      externalId: ['', Validators.required],
-      accessToken: ['', Validators.required],
-      accessTokenSecret: ['', Validators.required],
-      profilePic: ['', Validators.required],
-      profileType: [0,],
-      apiKey: ['', Validators.required],
-      clientId: ['', Validators.required],
-      clientSecret: ['', Validators.required],
-      isPage: [false, Validators.required],
-      profilePage: this.formBuilder.group({
-        id: [0, Validators.required],
-        profileId: [0,],
-        pageId: ['',],
-        pageName: ['', Validators.required],
-        pageUrl: ['', Validators.required],
-        accessToken: ['', Validators.required],
-        profilePic: ['', Validators.required],
-        instaPageName: [''],
-        instagramBussinessAccountId: ['',],
-        instagramProfilePic: ['', Validators.required]
-      })
+      name: [''],
+      userName: [''],
+      userProfilePic: [''],
+      appId:[''],
+      appSecret:[''],
+      clientId: [''],
+      clientSecret: [''],
+      apiKey: [''],
+      apiSecret: [''],
+      accessToken: [''],
+      accessTokenSecret: [''],
+      profileId: [0],
+      pageId: [''],
+      pageName: [''],
+      pageUrl: [''],
+      bearerToken:[''],
+      externalId: [''],
+      pageProfilePic: [''],
+      instaPageName: [''],
+      instagramBussinessAccountId: [''],
+      instagramProfilePic: [''],      
+      isPage: [false],
+      authCode:['']
     });
   }
   toggleAdditionalFields(event: Event): void {
@@ -103,6 +108,7 @@ export class SupportChannelsComponent implements OnInit {
     }
   }
   sendMessage(): void {
+    debugger
     if (this.messageForm.valid) {
       const formData = new FormData();
   
@@ -117,21 +123,38 @@ export class SupportChannelsComponent implements OnInit {
       if (this.instaProfile) {
         formData.append("instaFile", this.instaProfile, "insta");
       }
+
   
-      formData.append("data", JSON.stringify(this.messageForm.value));
+      
+      
+    //   const clientId = this.messageForm.value.clientId;
+    //   const scope = "email,read_insights,ads_management,instagram_basic,pages_manage_engagement,pages_manage_posts,pages_messaging,pages_read_user_content,pages_manage_metadata,pages_manage_ads,instagram_manage_comments,instagram_manage_insights,pages_read_engagement"
+    //   const redirectUri = 'https://localhost:4200/console/channels';
+    //   const loginUrl = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code`;
+    //   window.open(loginUrl);
   
-      this.commonService.AddProfile(formData).subscribe(
-        (response: any) => {
-          console.log('AddProfile API response:', response);
-          // Handle the response as needed
-        },
-        (error: any) => {
-          console.error('AddProfile API error:', error);
-          // Handle the error as needed
-        }
-      );
+    // const authorizationCode = this._Activatedroute.snapshot.queryParams['code'];
+    // const socialtype = localStorage.getItem('socialtype')
+    // console.log("authorizationCodebefore", authorizationCode, socialtype)
+    // window.close();
+    
+this.messageForm.patchValue({
+      authCode : this.authCode 
+    })
+    formData.append("data", JSON.stringify(this.messageForm.value));
+      // this.commonService.AddProfile(formData).subscribe(
+      //   (response: any) => {
+      //     debugger
+      //     console.log('AddProfile API response:', response);
+      //     // Handle the response as needed
+      //   },
+      //   (error: any) => {
+      //     console.error('AddProfile API error:', error);
+      //     // Handle the error as needed
+      //   }
+      // );
   
-      this.messageForm.reset();
+      // this.messageForm.reset();
   
       // Close the modal if desired
       // Code to close the modal
@@ -151,8 +174,30 @@ export class SupportChannelsComponent implements OnInit {
     , private formBuilder: FormBuilder
     , private commonService: CommonDataService
   ) {
-
+    
   }
+
+  loginWithFacebook() {
+    debugger
+    FB.getLoginStatus((response:any) => {
+      if (response.status === 'connected') {
+        // User is already logged in and authorized
+        const accessToken = response.authResponse.accessToken;
+        console.log('Access Token:', accessToken);
+      } else {
+        // User is not logged in or not authorized
+        FB.login((loginResponse:any) => {
+          if (loginResponse.authResponse) {
+            const authCode = loginResponse.authResponse.code;
+            console.log('Authorization Code:', authCode);
+          } else {
+            console.log('User cancelled login or did not fully authorize.');
+          }
+        }, { scope: 'email', return_scopes: true });
+      }
+    });
+  }
+
   getProfile() {
     this.commonService.GetAllProfile().subscribe(
       (response) => {
@@ -171,8 +216,20 @@ export class SupportChannelsComponent implements OnInit {
       }
     );
   }
+  authCode:any;
   ngOnInit(): void {
+
+    FB.init({
+      appId: '439165040679685',
+      status: true,
+      cookie: true,
+      xfbml: true,
+      version: 'v12.0' // Replace with the desired API version
+    });
+
     const authorizationCode = this._Activatedroute.snapshot.queryParams['code'];
+    this.authCode = authorizationCode;
+    console.log("auth code==>", this.authCode)
     const socialtype = localStorage.getItem('socialtype')
     console.log("authorizationCodebefore", authorizationCode, socialtype)
 
@@ -215,11 +272,16 @@ export class SupportChannelsComponent implements OnInit {
     this.getProfile();
   }
 
+  onVariableChange() {
+    debugger
+    // Handle the change event if needed
+    console.log('Variable changed:', this.authCode);
+  }
+
   connectFacebook(): void {
     localStorage.setItem('socialtype', 'facebook');
     const clientId = environment.facebookclientId;
     const scope = "email,read_insights,ads_management,instagram_basic,pages_manage_engagement,pages_manage_posts,pages_messaging,pages_read_user_content,pages_manage_metadata,pages_manage_ads,instagram_manage_comments,instagram_manage_insights,pages_read_engagement"
-    //const scope="email"
     const redirectUri = 'https://localhost:4200/console/channels';
     const loginUrl = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code`;
     window.open(loginUrl, '_blank');

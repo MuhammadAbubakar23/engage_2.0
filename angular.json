@@ -39,7 +39,8 @@
               "./node_modules/ngx-spinner/animations/square-jelly-box.css"
             ],
             "scripts": [
-              "src/assets/JS/sip015.js"
+              "src/assets/JS/sip015.js",
+              "https://connect.facebook.net/en_US/sdk.js"
             ]
           },
           "configurations": {
@@ -115,7 +116,8 @@
               "./node_modules/ngx-spinner/animations/square-jelly-box.css"
             ],
             "scripts": [
-              "src/assets/JS/sip015.js"
+              "src/assets/JS/sip015.js",
+              "https://connect.facebook.net/en_US/sdk.js"
             ]
           }
         }

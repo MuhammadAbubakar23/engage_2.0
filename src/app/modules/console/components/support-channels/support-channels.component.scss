@@ -14,7 +14,8 @@
 
 .modal-content {
   height: 80vh; 
-  overflow-y: auto; 
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .modal-body {
@@ -27,6 +28,9 @@
 
 .form-group label {
   font-weight: bold;
+}
+.custom-modal-properties{
+  max-width: 950px!important;
 }
 
 
