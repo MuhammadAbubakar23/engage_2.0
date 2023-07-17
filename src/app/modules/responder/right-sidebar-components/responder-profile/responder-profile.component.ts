@@ -72,10 +72,10 @@ export class ResponderProfileComponent implements OnInit {
   }
 
   getProfileDetails() {
-    
+    debugger
     
     this.commonService.GetProfileDetails(this.id).subscribe((res: any) => {
-      
+      debugger
       this.profileDetails = res;
       
       
@@ -91,19 +91,19 @@ export class ResponderProfileComponent implements OnInit {
       this.spinnerService.hide();
       this.spinner2running = false;
 
-      if(res.customerDetails.length > 0){
+      if(res.customerDetail){
         this.userDetailForm.patchValue({
-          email: res.customerDetails[0].email,
-          phoneNumber: res.customerDetails[0].phoneNumber,
-          landlinenumber: res.customerDetails[0].landlinenumber,
-          address: res.customerDetails[0].address,
-          organization: res.customerDetails[0].organization,
-          role: res.customerDetails[0].role,
-          city: res.customerDetails[0].city,
-          country: res.customerDetails[0].country,
-          fatherName: res.customerDetails[0].fatherName,
-          education: res.customerDetails[0].education,
-          bloodGroup: res.customerDetails[0].bloodGroup,
+          email: res.customerDetail.email,
+          phoneNumber: res.customerDetail.phoneNumber,
+          landlinenumber: res.customerDetail.landlinenumber,
+          address: res.customerDetail.address,
+          organization: res.customerDetail.organization,
+          role: res.customerDetail.role,
+          city: res.customerDetail.city,
+          country: res.customerDetail.country,
+          fatherName: res.customerDetail.fatherName,
+          education: res.customerDetail.education,
+          bloodGroup: res.customerDetail.bloodGroup,
         });
         
         

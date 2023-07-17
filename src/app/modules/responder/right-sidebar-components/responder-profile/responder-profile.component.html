@@ -45,7 +45,7 @@
                                                     <tr>
                                                         <td>
                                                             <div class="card mb-4">
-                                                                <div class="row g-0">
+                                                                <div class="row g-0" *ngIf="profileDetails">
                                                                     <div class="col-md-2">
                                                                         <div class="file-input select-user-img"
                                                                             id="edite-user-img">
@@ -383,8 +383,7 @@
                                                             </label>
                                                             <div class="col-sm-9">
                                                                 <input class="form-control" id="inputName"
-                                                                    formControlName="fromName"
-                                                                    value={{profileDetails.fromName}}>
+                                                                    formControlName="fromName">
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
@@ -392,8 +391,7 @@
                                                                 class="col-sm-3 col-form-label">Organization </label>
                                                             <div class="col-sm-9">
                                                                 <input class="form-control" id="inputOrganization"
-                                                                    formControlName="organization"
-                                                                    value={{profileDetails.customerDetails[0]?.organization}}>
+                                                                    formControlName="organization">
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
@@ -401,8 +399,7 @@
                                                                 class="col-sm-3 col-form-label">Role</label>
                                                             <div class="col-sm-9">
                                                                 <input class="form-control" id="inputRole"
-                                                                    formControlName="role"
-                                                                    value={{profileDetails.customerDetails[0]?.role}}>
+                                                                    formControlName="role">
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
@@ -410,8 +407,7 @@
                                                                 Email</label>
                                                             <div class="col-sm-9">
                                                                 <input type="email" class="form-control" id="inputEmail"
-                                                                    formControlName="email"
-                                                                    value={{profileDetails.customerDetails[0]?.email}}>
+                                                                    formControlName="email">
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
@@ -427,8 +423,7 @@
                                                                         <i class="fas fa-sort-down coal ms-1"></i>
                                                                     </span>
                                                                     <input type="text" class="form-control"
-                                                                        id="inputMobile" formControlName="phoneNumber"
-                                                                        value={{profileDetails.customerDetails[0]?.phoneNumber}}>
+                                                                        id="inputMobile" formControlName="phoneNumber">
                                                                 </div>
 
                                                             </div>
@@ -438,8 +433,7 @@
                                                                 Address</label>
                                                             <div class="col-sm-9">
                                                                 <input class="form-control" id="inputAddress"
-                                                                    formControlName="address"
-                                                                    value={{profileDetails.customerDetails[0]?.address}}>
+                                                                    formControlName="address">
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
@@ -448,10 +442,10 @@
                                                             <div class="col-sm-9 country-dropdown">
 
                                                                 <select class="form-select" id="floatingSelect"
-                                                                    aria-label="Floating label select">
+                                                                    aria-label="Floating label select" formControlName="city">
                                                                     <option>Choose the City</option>
                                                                     <option *ngFor="let city of Cities"
-                                                                        [value]="city.name" formControlName="city">
+                                                                        [ngValue]="city.name">
                                                                         {{city.name}}</option>
                                                                 </select>
                                                             </div>
@@ -461,11 +455,11 @@
                                                                 class="col-sm-3 col-form-label">Country</label>
                                                             <div class="col-sm-9 country-dropdown">
                                                                 <select class="form-select" id="floatingSelect"
-                                                                    aria-label="Floating label select">
+                                                                    aria-label="Floating label select" formControlName="country">
                                                                     <option>Choose the Country</option>
                                                                     <option *ngFor="let country of Countries"
-                                                                        [value]="country.name"
-                                                                        formControlName="country">Pakistan
+                                                                        [ngValue]="country.name"
+                                                                        >Pakistan
                                                                     </option>
                                                                 </select>
                                                             </div>
@@ -583,8 +577,7 @@
                                                                 Name </label>
                                                             <div class="col-sm-9">
                                                                 <input class="form-control" id="inputFatherName"
-                                                                    formControlName="fatherName"
-                                                                    value={{profileDetails.customerDetails[0]?.fatherName}}>
+                                                                    formControlName="fatherName">
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
@@ -592,8 +585,7 @@
                                                                 class="col-sm-3 col-form-label">Education </label>
                                                             <div class="col-sm-9">
                                                                 <input class="form-control" id="inputEducation"
-                                                                    formControlName="education"
-                                                                    value={{profileDetails.customerDetails[0]?.education}}>
+                                                                    formControlName="education">
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
@@ -602,8 +594,7 @@
                                                                 Group</label>
                                                             <div class="col-sm-9">
                                                                 <input class="form-control" id="inputBloodGroup"
-                                                                    formControlName="bloodGroup"
-                                                                    value={{profileDetails.customerDetails[0]?.bloodGroup}}>
+                                                                    formControlName="bloodGroup">
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
