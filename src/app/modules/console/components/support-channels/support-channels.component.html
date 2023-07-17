@@ -28,371 +28,13 @@
               </div>
               <div class="icons-list">
                 <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
-                  (click)="openModal()">
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
             </li>
           </ul>
         </div>
-        <!-- Facebook  -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered custom-modal-properties">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">ATTACH A PROFILE</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
-                  <div class="d-flex align-items-center">
-                    <div class="icon-circle iconButton me-4">
-                      <i class="fal fa-clipboard-check"></i>
-                    </div>
-                    <p class="line-txt darkblue">By adding the profile and clicking allow, you permit the application to
-                      access and publish content on your Social Network Account, on your behalf.</p>
-                  </div>
-                  <div class="row">
-                    <div class="fs-4 fw-bold">User Information</div>
-                    <div class="col-6">
-                      <div class="mb-3">
-                        <label for="name" class="col-form-label">Name:</label>
-                        <input type="text" class="form-control" id="name" formControlName="name">
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="mb-3">
-                        <label for="userName" class="col-form-label">Username:</label>
-                        <input type="text" class="form-control" id="userName" formControlName="userName">
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="mb-3">
-                        <label for="page-id" class="col-form-label">ProfilePic:</label>
-                        <input type="file" name="image" formControlName="userProfilePic" class="form-control uplaoded-box"
-                          multiple (change)="onFileSelected($event,'profile')">
-                      </div>
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="fs-4 fw-bold">Page Information</div>
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="mb-3 mt-3">
-                        <input class="form-check-input  " type="checkbox" id="additional-fields-checkbox"
-                          (change)="toggleAdditionalFields($event)" formControlName="isPage">
-                        <label class="form-check-label ms-2 " for="additional-fields-checkbox">Is Page</label>
-                      </div>
-                    </div>
-                    <div class="col-12" *ngIf="showAdditionalFields">
-                      <div class="row">
-                        
-                    
-                    
-                    <div class="col-6">
-                      <div class="mb-3">
-                        <label for="appId" class="col-form-label">APP ID:</label>
-                        <input type="text" class="form-control" id="api-id" formControlName="appId">
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="mb-3">
-                        <label for="appSecret" class="col-form-label">APP Secret:</label>
-                        <input type="text" class="form-control" id="api-secret" formControlName="appSecret">
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="mb-3">
-                        <label for="clientId" class="col-form-label">Client ID:</label>
-                        <input type="text" class="form-control" id="client-id" formControlName="clientId">
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="mb-3">
-                        <label for="clientSecret" class="col-form-label">Client Secret:</label>
-                        <input type="text" class="form-control" id="client-secret" formControlName="clientSecret"
-                        >
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="mb-3">
-                        <label for="apiKey" class="col-form-label">API Key:</label>
-                        <input type="text" class="form-control" id="api-key" formControlName="apiKey">
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="mb-3">
-                        <label for="apiSecret" class="col-form-label">API Secret:</label>
-                        <input type="text" class="form-control" id="api-secret" formControlName="apiSecret"
-                        >
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="mb-3">
-                        <label for="accessToken" class="col-form-label">Access Token:</label>
-                        <input type="text" class="form-control" id="access-token" formControlName="accessToken">
-                      </div>
-                    </div>
-                    <div class="col-6">
-                      <div class="mb-3">
-                        <label for="accessTokenSecret" class="col-form-label">Access Secret:</label>
-                        <input type="text" class="form-control" id="access-token-secret" formControlName="accessTokenSecret"
-                        >
-                      </div>
-                    </div>
-                        <div class="col-6">
-                          <div class="mb-3">
-                            <label for="profileId" class="col-form-label">Profile
-                              Id</label>
-                            <input type="text" class="form-control" id="page-id" formControlName="profileId">
-                          </div>
-                        </div>
-                        <div class="col-6">
-                          <div class="mb-3">
-                            <label for="page-id" class="col-form-label">Page ID:</label>
-                            <input type="text" class="form-control" id="page-id" formControlName="pageId">
-                          </div>
-                        </div>
-                        <div class="col-6">
-                          <div class="mb-3">
-                            <label for="page-name" class="col-form-label">PageName:</label>
-                            <input type="text" class="form-control" id="page-name" formControlName="pageName">
-                          </div>
-                        </div>
-                        <div class="col-6">
-                          <div class="mb-3">
-                            <label for="page-url" class="col-form-label">PageUrl:</label>
-                            <input type="text" class="form-control" id="page-url" formControlName="pageUrl">
-                          </div>
-                        </div>
-                        <div class="col-6">
-                          <div class="mb-3">
-                            <label for="bearer-token" class="col-form-label">Bearer Token:</label>
-                            <input type="text" class="form-control" id="bearer-token" formControlName="bearerToken">
-                          </div>
-                        </div>
-                        <div class="col-6">
-                          <div class="mb-3">
-                            <label for="external-id" class="col-form-label">External ID:</label>
-                            <input type="text" class="form-control" id="external-id" formControlName="externalId">
-                          </div>
-                        </div>
-                        <div class="col-6">
-                          <div class="mb-3">
-                            <label for="auth-code" class="col-form-label">Auth Code:</label>
-                            <input type="text" class="form-control" id="auth-code" [(ngModel)]="authCode" (ngModelChange)="onVariableChange()">
-                          </div>
-                        </div>
-                        <div class="col-6">
-                          <div class="mb-3">
-                            <label for="page-profile-pic" class="col-form-label">ProfilePic:</label>
-                            <input type="file" formControlName="pageProfilePic" class="form-control uplaoded-box" multiple
-                              (change)="onFileSelected($event,'page')">
-                          </div>
-                        </div>
-                      </div>
-                        
-                    </div>
-                  </div>
-                  <div class="d-flex justify-content-end">
-                    <button class="btn btn-primary" (click)="loginWithFacebook()">Get Code</button>
-                    <button type="submit" class="btn btn-primary">Connect</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- intsgram -->
-        <div class="modal fade" id="exampleModals" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered ">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New Message</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="fs-4 fw-bold">User Information</div>
-                      <div class="mb-3">
-                        <label for="name" class="col-form-label">Name:</label>
-                        <input type="text" class="form-control" id="name" formControlName="name">
-                      </div>
-                      <div class="mb-3">
-                        <label for="userName" class="col-form-label">Username:</label>
-                        <input type="text" class="form-control" id="userName" formControlName="userName">
-                      </div>
-
-                      <div class="mb-3">
-                        <label for="external-id" class="col-form-label">External ID:</label>
-                        <input type="text" class="form-control" id="external-id" formControlName="externalId">
-                      </div>
-                      <div class="mb-3">
-                        <label for="page-id" class="col-form-label">Profile Pic:</label>
-                        <input type="file" name="image" formControlName="profilePic" class="form-control uplaoded-box"
-                          multiple (change)="onFileSelected($event,'profile')">
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="mb-3">
-                        <label for="apiKey" class="col-form-label">API Key:</label>
-                        <input type="text" class="form-control" id="api-key" formControlName="apiKey">
-                      </div>
-                      <div class="mb-3">
-                        <label for="clientId" class="col-form-label">Client ID:</label>
-                        <input type="text" class="form-control" id="client-id" formControlName="clientId">
-                      </div>
-                      <div class="mb-3">
-                        <label for="client-secret" class="col-form-label">Client Secret:</label>
-                        <input type="text" class="form-control" id="client-secret" formControlName="clientSecret"
-                        >
-                      </div>>
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="fs-4 fw-bold">Page Information</div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="mb-3 mt-3">
-                        <input class="form-check-input  " type="checkbox" id="additional-fields-checkbox"
-                          (change)="toggleAdditionalFields($event)" formControlName="isPage">
-                        <label class="form-check-label ms-2 " for="additional-fields-checkbox">Is Page</label>
-                      </div>
-                    </div>
-                    <div class="col-md-12" *ngIf="showAdditionalFields">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="mb-3">
-                            <label for="page-id" class="col-form-label">Profile
-                              Id</label>
-                            <input type="text" class="form-control" id="page-id" formControlName="profileId">
-                          </div>
-                          <div class="mb-3">
-                            <label for="page-id" class="col-form-label">Page ID:</label>
-                            <input type="text" class="form-control" id="page-id" formControlName="pageId">
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-
-                          <div class="mb-3">
-                            <label for="page-id" class="col-form-label">PageUrl:</label>
-                            <input type="text" class="form-control" id="pageUrl" formControlName="pageUrl">
-                          </div>
-                          <div class="mb-3">
-                            <label for="page-id" class="col-form-label">Insta
-                              Business:</label>
-                            <input type="text" class="form-control" id="instaBusinessAccountId"
-                              formControlName="instagramBussinessAccountId">
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="mb-3">
-                            <label for="page-id" class="col-form-label">Instagram
-                              Profile:</label>
-                            <input type="file" formControlName="instagramProfilePic" class="form-control uplaoded-box"
-                              multiple (change)="onFileSelected($event,'insta')">
-                          </div>
-                          <div class="mb-3">
-                            <label for="page-id" class="col-form-label">Insta Page
-                              Name:</label>
-                            <input type="text" class="form-control" id="instaPageName" formControlName="instaPageName"
-                            >
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="mb-3">
-                            <label for="page-id" class="col-form-label">ProfilePic:</label>
-                            <input type="file" formControlName="profilePic" class="form-control uplaoded-box" multiple
-                              (change)="onFileSelected($event,'page')">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Send Message</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Twitter -->
-        <div class="modal fade" id="exampleModalls" tabindex="-1" aria-labelledby="exampleModalLabel"
-          aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered ">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New Message</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="fs-4 fw-bold">User Information</div>
-                      <div class="mb-3">
-                        <label for="name" class="col-form-label">Name:</label>
-                        <input type="text" class="form-control" id="name" formControlName="name">
-                      </div>
-                      <div class="mb-3">
-                        <label for="userName" class="col-form-label">Username:</label>
-                        <input type="text" class="form-control" id="userName" formControlName="userName">
-                      </div>
-
-                      <div class="mb-3">
-                        <label for="external-id" class="col-form-label">External ID:</label>
-                        <input type="text" class="form-control" id="external-id" formControlName="externalId">
-                      </div>
-                      <div class="mb-3">
-                        <label for="page-id" class="col-form-label">Profile Pic:</label>
-                        <input type="file" name="image" formControlName="profilePic" class="form-control uplaoded-box"
-                          multiple (change)="onFileSelected($event,'profile')">
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="mb-3">
-                        <label for="apiKey" class="col-form-label">API Key:</label>
-                        <input type="text" class="form-control" id="api-key" formControlName="apiKey">
-                      </div>
-                      <div class="mb-3">
-                        <label for="clientId" class="col-form-label">Client ID:</label>
-                        <input type="text" class="form-control" id="client-id" formControlName="clientId">
-                      </div>
-                      <div class="mb-3">
-                        <label for="client-secret" class="col-form-label">Client Secret:</label>
-                        <input type="text" class="form-control" id="client-secret" formControlName="clientSecret"
-                        >
-                      </div>>
-                    </div>
-                  </div>
-                  <hr>
-
-
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="mb-3">
-                        <label for="page-id" class="col-form-label">ProfilePic:</label>
-                        <input type="file" formControlName="profilePic" class="form-control uplaoded-box" multiple
-                          (change)="onFileSelected($event,'page')">
-                      </div>
-                    </div>
-                  </div>
-
-
-                  <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Send Message</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div class="list-group-section">
           <!-- class="d-flex justify-content-between" -->
           <div class="section-heading">
@@ -403,20 +45,20 @@
                         </div> -->
           </div>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item d-flex justify-content-between align-items-sm-center" data-bs-toggle="collapse"
-              role="button" data-bs-target="#facebookcollapse" aria-expanded="false" aria-controls="facebookcollapse">
+            <li class="list-group-item d-flex justify-content-between align-items-sm-center" >
               <span class="iconButton medium">
                 <i class="fab fa-facebook-f coal"></i>
               </span>
-              <div class="ms-2 me-auto coal">
+              <div class="ms-2 me-auto coal" data-bs-toggle="collapse"
+              role="button" data-bs-target="#facebookcollapse" aria-expanded="false" aria-controls="facebookcollapse">
                 <div class="fw-bold night">Facebook</div>
                 Create Shared inboxes for teammates to work together
               </div>
               <div class="icons-list">
-                <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
-                  (click)="openModal()">
+                <span type="button" class="iconButton iconHover medium btn rounded-circle"
+                data-bs-toggle="modal" data-bs-target="#facebookModal">
                   <i class="far fa-plus"></i>
-                </span>
+              </span>
               </div>
             </li>
             <div class="collapse-wrap collapse" id="facebookcollapse">
@@ -471,7 +113,7 @@
               </div>
               <div class="icons-list">
                 <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
-                  (click)="openBox()">
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
@@ -486,7 +128,7 @@
               </div>
               <div class="icons-list">
                 <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
-                  (click)="popUp()">
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
@@ -501,7 +143,7 @@
               </div>
               <div class="icons-list">
                 <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
-                  (click)="openModal()">
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
@@ -516,7 +158,7 @@
               </div>
               <div class="icons-list">
                 <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
-                  (click)="openModal()">
+                (click)="connectGoogle()">
                   <i class="far fa-plus"></i>
                 </span>
               </div>
@@ -541,7 +183,7 @@
               </div>
               <div class="icons-list">
                 <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
-                  (click)="openModal()">
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
@@ -743,7 +385,7 @@
               </div>
               <div class="icons-list">
                 <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
-                  (click)="openModal()">
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
@@ -758,14 +400,14 @@
               </div>
               <div class="icons-list">
                 <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
-                  (click)="openModal()">
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-sm-center">
               <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
-                (click)="openModal()">
+                >
                 <i class="far fa-plus"></i>
               </span>
               <div class="ms-2 me-auto coal">
@@ -774,7 +416,7 @@
               </div>
               <div class="icons-list">
                 <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
-                  (click)="openModal()">
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
@@ -796,7 +438,7 @@
               </div>
               <div class="icons-list">
                 <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
-                  (click)="openModal()">
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
@@ -947,3 +589,652 @@
   </div>
 
 </div>
+
+                <!-- Facebook  -->
+                <div class="modal fade" id="facebookModal" tabindex="-1" aria-labelledby="facebookModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered custom-modal-properties">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="facebookModalLabel">ATTACH A PROFILE</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form [formGroup]="attachFacebookPageForm" (ngSubmit)="attachFacebookPage()">
+                          <div class="d-flex align-items-center">
+                            <div class="icon-circle iconButton me-4">
+                              <i class="fal fa-clipboard-check"></i>
+                            </div>
+                            <p class="line-txt darkblue">By adding the profile and clicking allow, you permit the application to
+                              access and publish content on your Social Network Account, on your behalf.</p>
+                          </div>
+                          <!-- <div class="row">
+                            <div class="fs-4 fw-bold">User Information</div>
+                            <div class="col-6">
+                              <div class="mb-3">
+                                <label for="name" class="col-form-label">Name:</label>
+                                <input type="text" class="form-control" id="name" formControlName="name">
+                              </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="mb-3">
+                                <label for="userName" class="col-form-label">Username:</label>
+                                <input type="text" class="form-control" id="userName" formControlName="userName">
+                              </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="mb-3">
+                                <label for="page-id" class="col-form-label">ProfilePic:</label>
+                                <input type="file" name="image" formControlName="userProfilePic" class="form-control uplaoded-box"
+                                  multiple (change)="onFileSelected($event,'profile')">
+                              </div>
+                            </div>
+                          </div>
+                          <hr> -->
+                          <div class="fs-4 fw-bold">Page Information</div>
+                          <div class="row">
+                            <div class="col-12">
+                              <!-- <div class="mb-3 mt-3">
+                                <input class="form-check-input  " type="checkbox" id="additional-fields-checkbox"
+                                  (change)="toggleAdditionalFields($event)" formControlName="isPage">
+                                <label class="form-check-label ms-2 " for="additional-fields-checkbox">Is Page</label>
+                              </div> -->
+                            </div>
+                            <div class="col-12">
+                              <div class="row">
+                                <div class="col-6">
+                                  <div class="mb-3">
+                                    <label for="app-id" class="col-form-label">APP ID:</label>
+                                    <input type="text" class="form-control" id="api-id" formControlName="appId">
+                                  </div>
+                                </div>
+                                <div class="col-6">
+                                  <div class="mb-3">
+                                    <label for="appSecret" class="col-form-label">APP Secret:</label>
+                                    <input type="password" class="form-control" id="api-secret" formControlName="appSecret">
+                                  </div>
+                                </div>
+                
+                                <div class="col-6">
+                                  <div class="mb-3">
+                                    <label for="page-url" class="col-form-label">PageUrl:</label>
+                                    <input type="text" class="form-control" id="page-url" formControlName="pageUrl">
+                                  </div>
+                                </div>
+                
+                                <div class="col-6">
+                                  <div class="mb-3">
+                                    <label for="page-profile-pic" class="col-form-label">ProfilePic:</label>
+                                    <input type="file" formControlName="pageProfilePic" class="form-control uplaoded-box"
+                                      multiple (change)="onFileSelected($event,'page')">
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- <div class="col-6">
+                                <div class="mb-3">
+                                  <label for="Scope" class="col-form-label">Scope:</label>
+                                  <input type="text" class="form-control" id="Scope" formControlName="apiKey" required>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pages_manage_metadata"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="pages_manage_metadata">
+                                      pages_manage_metadata
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="Business Asset User Profile Access"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="Business Asset User Profile Access">
+                                      Business Asset User Profile Access
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="instagram_manage_comments"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="instagram_manage_comments">
+                                      instagram_manage_comments
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="Page Public Content Access"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="Page Public Content Access">
+                                      Page Public Content Access
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pages_messaging"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="pages_messaging">
+                                      pages_messaging
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="instagram_manage_messages"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="instagram_manage_messages">
+                                      instagram_manage_messages
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      public_profile
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      Page Public Metadata Access
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      email
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      groups_access_member_info
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      private_computation_access
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      Groups API
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      Oembed Read
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_user_locale
+                                    </label>
+                                  </div>
+                                </div>
+                
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_user_timezone
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      Page Mentions
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      Live Video API
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      instagram_shopping_tag_products
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      Instagram Public Content Access
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      Ads Management Standard Access
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_user_gender
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_read_engagement
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_read_user_content
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_show_list
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_manage_ads
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      business_management
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      instagram_basic
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      ads_management
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      ads_read
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_manage_engagement
+                                    </label>
+                                  </div>
+                                </div>
+                
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      instagram_manage_insights
+                                    </label>
+                                  </div>
+                                </div><div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      read_insights
+                                    </label>
+                                  </div>
+                                </div><div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      publish_to_groups
+                                    </label>
+                                  </div>
+                                </div><div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      instagram_content_publish
+                                    </label>
+                                  </div>
+                                </div><div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_manage_cta
+                                    </label>
+                                  </div>
+                                </div><div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_manage_instant_articles
+                                    </label>
+                                  </div>
+                                </div><div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      leads_retrieval
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      page_events
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      publish_video
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      catalog_management
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      attribution_read
+                                    </label>
+                                  </div>
+                                </div>
+                              </div> -->
+                            </div>
+                          </div>
+                          <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">Connect</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<!-- intsgram -->
+<!-- <div class="modal fade" id="exampleModals" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Message</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="fs-4 fw-bold">User Information</div>
+              <div class="mb-3">
+                <label for="name" class="col-form-label">Name:</label>
+                <input type="text" class="form-control" id="name" formControlName="name">
+              </div>
+              <div class="mb-3">
+                <label for="userName" class="col-form-label">Username:</label>
+                <input type="text" class="form-control" id="userName" formControlName="userName">
+              </div>
+
+              <div class="mb-3">
+                <label for="external-id" class="col-form-label">External ID:</label>
+                <input type="text" class="form-control" id="external-id" formControlName="externalId">
+              </div>
+              <div class="mb-3">
+                <label for="page-id" class="col-form-label">Profile Pic:</label>
+                <input type="file" name="image" formControlName="profilePic" class="form-control uplaoded-box"
+                  multiple (change)="onFileSelected($event,'profile')">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="apiKey" class="col-form-label">API Key:</label>
+                <input type="text" class="form-control" id="api-key" formControlName="apiKey">
+              </div>
+              <div class="mb-3">
+                <label for="clientId" class="col-form-label">Client ID:</label>
+                <input type="text" class="form-control" id="client-id" formControlName="clientId">
+              </div>
+              <div class="mb-3">
+                <label for="client-secret" class="col-form-label">Client Secret:</label>
+                <input type="text" class="form-control" id="client-secret" formControlName="clientSecret">
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="fs-4 fw-bold">Page Information</div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3 mt-3">
+                <input class="form-check-input  " type="checkbox" id="additional-fields-checkbox"
+                  (change)="toggleAdditionalFields($event)" formControlName="isPage">
+                <label class="form-check-label ms-2 " for="additional-fields-checkbox">Is Page</label>
+              </div>
+            </div>
+            <div class="col-md-12" *ngIf="showAdditionalFields">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="page-id" class="col-form-label">Profile
+                      Id</label>
+                    <input type="text" class="form-control" id="page-id" formControlName="profileId">
+                  </div>
+                  <div class="mb-3">
+                    <label for="page-id" class="col-form-label">Page ID:</label>
+                    <input type="text" class="form-control" id="page-id" formControlName="pageId">
+                  </div>
+                </div>
+                <div class="col-md-6">
+
+                  <div class="mb-3">
+                    <label for="page-id" class="col-form-label">PageUrl:</label>
+                    <input type="text" class="form-control" id="pageUrl" formControlName="pageUrl">
+                  </div>
+                  <div class="mb-3">
+                    <label for="page-id" class="col-form-label">Insta
+                      Business:</label>
+                    <input type="text" class="form-control" id="instaBusinessAccountId"
+                      formControlName="instagramBussinessAccountId">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="mb-3">
+                    <label for="page-id" class="col-form-label">Instagram
+                      Profile:</label>
+                    <input type="file" formControlName="instagramProfilePic" class="form-control uplaoded-box"
+                      multiple (change)="onFileSelected($event,'insta')">
+                  </div>
+                  <div class="mb-3">
+                    <label for="page-id" class="col-form-label">Insta Page
+                      Name:</label>
+                    <input type="text" class="form-control" id="instaPageName" formControlName="instaPageName">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="page-id" class="col-form-label">ProfilePic:</label>
+                    <input type="file" formControlName="profilePic" class="form-control uplaoded-box" multiple
+                      (change)="onFileSelected($event,'page')">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Send Message</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- Twitter -->
+<!-- <div class="modal fade" id="exampleModalls" tabindex="-1" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Message</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="fs-4 fw-bold">User Information</div>
+              <div class="mb-3">
+                <label for="name" class="col-form-label">Name:</label>
+                <input type="text" class="form-control" id="name" formControlName="name">
+              </div>
+              <div class="mb-3">
+                <label for="userName" class="col-form-label">Username:</label>
+                <input type="text" class="form-control" id="userName" formControlName="userName">
+              </div>
+
+              <div class="mb-3">
+                <label for="external-id" class="col-form-label">External ID:</label>
+                <input type="text" class="form-control" id="external-id" formControlName="externalId">
+              </div>
+              <div class="mb-3">
+                <label for="page-id" class="col-form-label">Profile Pic:</label>
+                <input type="file" name="image" formControlName="profilePic" class="form-control uplaoded-box"
+                  multiple (change)="onFileSelected($event,'profile')">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="apiKey" class="col-form-label">API Key:</label>
+                <input type="text" class="form-control" id="api-key" formControlName="apiKey">
+              </div>
+              <div class="mb-3">
+                <label for="clientId" class="col-form-label">Client ID:</label>
+                <input type="text" class="form-control" id="client-id" formControlName="clientId">
+              </div>
+              <div class="mb-3">
+                <label for="client-secret" class="col-form-label">Client Secret:</label>
+                <input type="text" class="form-control" id="client-secret" formControlName="clientSecret">
+              </div>>
+            </div>
+          </div>
+          <hr>
+
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="page-id" class="col-form-label">ProfilePic:</label>
+                <input type="file" formControlName="profilePic" class="form-control uplaoded-box" multiple
+                  (change)="onFileSelected($event,'page')">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Send Message</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> -->

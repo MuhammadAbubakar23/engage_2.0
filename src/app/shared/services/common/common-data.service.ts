@@ -15,6 +15,8 @@ export class CommonDataService {
   JomoAccessToken = environment.JomoAccessToken;
   CommonBaseUrl = environment.CommonBaseUrl;
   IdentityBaseUrl = environment.IdentityBaseUrl;
+  FacebookBaseUrl = environment.FbBaseUrl;
+
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
   removeTags = environment.links.common.RemoveTags;
@@ -78,20 +80,21 @@ export class CommonDataService {
   getPolicyById = environment.links.console.getPolicyById;
   deleteSlaPolicy = environment.links.console.deleteSlaPolicy;
   getOperationalHours = environment.links.console.getOperationalHours;
-  getBusinessHours = environment.links.console.getBusinessHours
-  addBusinessHours = environment.links.console.addBusinessHours
-  deleteBusinessHours =environment.links.console.deleteBusinessHours
-  updateBusinessHours = environment.links.console.updateBusinessHours
-  getBusinessById = environment.links.console.getBusinessById
-  getEntractRoute = environment.links.console.getEntractRoute
-  addEntractRoute = environment.links.console.addEntractRoute
-  updateEntractRoute = environment.links.console.updateEntractRoute
-  deleteEntractRoute = environment.links.console.deleteEntractRoute
-  getSkills = environment.links.console.getSkills
-  addSkill = environment.links.console.addSkill
-  deleteSkill = environment.links.console.deleteSkill
-  getAllProfile = environment.links.console.getAllProfile
-  addProfile = environment.links.console.addProfile
+  getBusinessHours = environment.links.console.getBusinessHours;
+  addBusinessHours = environment.links.console.addBusinessHours;
+  deleteBusinessHours =environment.links.console.deleteBusinessHours;
+  updateBusinessHours = environment.links.console.updateBusinessHours;
+  getBusinessById = environment.links.console.getBusinessById;
+  getEntractRoute = environment.links.console.getEntractRoute;
+  addEntractRoute = environment.links.console.addEntractRoute;
+  updateEntractRoute = environment.links.console.updateEntractRoute;
+  deleteEntractRoute = environment.links.console.deleteEntractRoute;
+  getSkills = environment.links.console.getSkills;
+  addSkill = environment.links.console.addSkill;
+  deleteSkill = environment.links.console.deleteSkill;
+  getAllProfile = environment.links.console.getAllProfile;
+  addProfile = environment.links.console.addProfile;
+  attachFacebookPage = environment.links.console.attachFacebookPage;
 
   constructor(private http: HttpClient) {}
 
@@ -409,6 +412,10 @@ export class CommonDataService {
   AddProfile(addProfile : any){
     
     return this.http.post(this.consoleBaseUrl + this.addProfile, addProfile)
+  }
+  AttachFacebookPage(body:any){
+    debugger
+    return this.http.post(this.FacebookBaseUrl + this.attachFacebookPage, body)
   }
 }
 
