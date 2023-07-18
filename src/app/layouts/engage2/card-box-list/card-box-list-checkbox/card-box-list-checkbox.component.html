@@ -1,0 +1,27 @@
+<div class="card card-body darkblue">
+    <div class="list-group list-group-flush">
+        <label class="list-group-item active text-decoration-underline night fw-bold" style="text-transform:capitalize;">
+            <input class="form-check-input me-2" type="checkbox" value="m1" name="list_name" [(ngModel)]="checkboxListMaster" (change)="checkUncheckAll()">
+            {{ checkboxListCheck.length  || 0 }} {{checkboxListName}}
+        </label>
+        <!-- <label class="list-group-item night fw-bold">
+            <input class="form-check-input me-2" type="checkbox">
+            {{menu?.name}} - <small class="fw-normal">Access</small>
+        </label> -->
+        <ng-container *ngFor="let submenu of checkboxListCheck">
+            <label  class="list-group-item night fw-bold">
+                <input class="form-check-input me-2" type="checkbox"
+                [(ngModel)]="submenu.isSelected" name="list_name" value="{{submenu.mainId}}" (change)="isAllSelected()">
+                <small class="fw-normal">{{submenu.name}}</small>
+            </label>
+            <!-- <span *ngFor="let subm of submenu.subMenu" >
+                <label  class="list-group-item night fw-bold" style="margin-left:75px;">
+                    <input class="form-check-input me-2" type="checkbox"
+                    [(ngModel)]="subm.isSelected" name="list_name" value="{{subm.mainId}}" (change)="isAllSelected()">
+                    <small class="fw-normal">{{subm.name}}</small>
+                </label>
+            </span> -->
+        </ng-container>
+        
+    </div>
+</div>

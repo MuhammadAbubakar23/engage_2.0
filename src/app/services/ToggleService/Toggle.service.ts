@@ -7,6 +7,7 @@ import { Observable, Subject } from 'rxjs';
 export class ToggleService {
 
   private siblingMsg3 = new Subject<string>();
+  private dispositionForm = new Subject<string>();
   
   constructor() { }
 
@@ -18,5 +19,15 @@ export class ToggleService {
   public getTogglePanel(): Observable<string> {
       
     return this.siblingMsg3.asObservable();
+  }
+
+  public updateDispositionForm(msg: string): void {
+    
+    this.dispositionForm.next(msg);
+  }
+
+  public getDispositionForm(): Observable<string> {
+      
+    return this.dispositionForm.asObservable();
   }
 }

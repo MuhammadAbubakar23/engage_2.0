@@ -1,12 +1,14 @@
 <div class="multiple-screens">
     <div id="all-inboxes-wrapper">
         <div class="sidebar-header border-bottom ps-4 pe-3 pt-3 pb-3">
-            <h6 class="fw-bold m-0">Assign To Me <span class="badge twltte-bg rounded-pill">569</span></h6>
-            <button (click)="FilterOpen()" [class.active]="filterOpen === true" class="iconButton small btn coal active"
+            <h6 class="fw-bold m-0">Assign To Me
+                <!-- <span class="badge twltte-bg rounded-pill">569</span> -->
+            </h6>
+            <!-- <button (click)="FilterOpen()" [class.active]="filterOpen === true" class="iconButton small btn coal active"
                 id="filterBtn">
                 <i class="fa-light fa-filter"></i>
                 <div class="ripple-container"></div>
-            </button>
+            </button> -->
         </div>
         <div [class.open]="filterOpen === true" class="filterWrapper">
 
@@ -329,128 +331,262 @@
                 </div>
             </div>
         </div>
+
         <div class="panelMain">
 
-            <div class="listing-wrap" data-scrollbar="true" tabindex="-1" style="overflow-y: auto; outline: none;">
-                <div class="scroll-content">
-                    <ng-container *ngIf="SlaList.length > 0">
+            <div class="listing-wrap" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
+                <div class="scroll-content" >
                     <ul class="list-group-followup list-group-flush">
                         <a href="javascript:"
                             class="list-group-item list-group-item-action d-flex align-items-center radical fw-bold"
                             value="itProcurement">
                             SLAs Imminently
-                            <span class="badge radicalBg rounded-pill">4</span>
+                            <!-- <span class="badge radicalBg rounded-pill">4</span> -->
                         </a>
                     </ul>
-                    <ul class="list-group list-group-flush" id="inboxes-list">
+                    <ng-container *ngFor="let profile of userSpecificAllocatedProfiles">
+                    <ng-container *ngIf="profile.slaFlag == 'danger' || profile.slaFlag == 'warning'">
+                        <ul class="list-group list-group-flush" id="inboxes-list">
 
-                        <li class="postBox isSla slaHigh">
-                            <a href="conversation.html">
-                                <div class="avatar medium navyBg">
-                                    <img src="../../../../../../assets/images/avatar-2.jpg" alt="-">
-                                </div>
-                            </a>
-                            <div class="boxMiddle"><a href="conversation.html">
-                                    <div class="boxHeading">
-                                        <div class="left">
-                                            <div class="boxId">9632587</div>
-                                        </div>
-                                        <div class="right">
-                                            <div class="postDate">10:30 PM</div>
-                                            <span class="badge radicalBg rounded-pill">2</span>
-                                        </div>
+                            <li class="postBox isSla"
+                                [ngClass]="[profile.slaFlag == 'warning'?'slaMedium':'' || profile.slaFlag == 'danger'?'slaHigh':'']"
+                                (click)="updatevalue(profile.fromId, profile.platform, profile.profileId)">
+
+                                <a *ngIf="profile.platform == 'Facebook'">
+                                    <div class="iconButton medium navyBg"><i class="fab fa-facebook-f"></i></div>
+                                </a>
+                                <a *ngIf="profile.platform == 'Instagram'">
+                                    <div class="iconButton medium instabg"><i class="fab fa-instagram"></i></div>
+                                </a>
+                                <a *ngIf="profile.platform == 'Twitter'">
+                                    <div class="iconButton medium oceanBg"><i class="fab fa-twitter"></i></div>
+                                </a>
+                                <a *ngIf="profile.platform == 'Youtube'">
+                                    <div class="iconButton medium radicalBg"><i class="fab fa-youtube"></i></div>
+                                </a>
+                                <a *ngIf="profile.platform == 'Email'">
+                                    <div class="iconButton medium berryBg"><i class="fal fa-envelope"></i></div>
+                                </a>
+                                <a *ngIf="profile.platform == 'WhatsApp'">
+                                    <div class="iconButton medium mintBg"><i class="fab fa-whatsapp"></i></div>
+                                </a>
+                                <a *ngIf="profile.platform == 'WebChat'">
+                                    <div class="iconButton medium webchatbg"><i class="fal fa-messages"></i></div>
+                                </a>
+                                <a *ngIf="profile.platform == 'SMS'">
+                                    <div class="iconButton medium cherryBg"><i class="fal fa-comment-alt-lines"></i>
                                     </div>
                                 </a>
-                                <div class="subHeading"><a href="conversation.html">
-                                        <div class="channel navy">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </div>
-                                    </a><a class="businessName navy">/foodpanda.pk</a>
-                                    <a class="skill">@Feedback</a>
-                                </div>
-                                <div class="boxContent"> Can i get discount after purchasing more than 5 i..
-                                </div>
-                            </div>
-
-                        </li>
-                        <li class="postBox isSla slaMedium">
-                            <a href="conversation.html">
-                                <div class="iconButton medium skyBg">
-                                    <i class="fab fa-twitter"></i>
-                                </div>
-                            </a>
-                            <div class="boxMiddle"><a href="conversation.html">
-                                    <div class="boxHeading">
-                                        <div class="left">
-                                            <div class="boxId">9632587</div>
-                                        </div>
-                                        <div class="right">
-                                            <div class="postDate">10:30 PM</div>
-                                            <span class="badge radicalBg rounded-pill">6</span>
-                                        </div>
-                                    </div>
+                                <a *ngIf="profile.platform == 'LinkedIn'">
+                                    <div class="iconButton medium linkedinbg"><i class="fab fa-linkedin-in"></i></div>
                                 </a>
-                                <div class="subHeading"><a href="conversation.html">
+                                <a *ngIf="profile.platform == 'PlayStore'">
+                                    <div class="iconButton medium darkorangeBg"><i class="fab fa-google-play"></i></div>
+                                </a>
+                                <div class="boxMiddle">
+                                    <a>
+                                        <div class="boxHeading">
+                                            <div class="left">
+                                                <div class="boxId">{{profile.fromName}}</div>
+                                            </div>
+                                            <div class="right">
+                                                <div class="postDate">{{profile.createdDate | date:'hh:mm a'}}</div>
+                                                <span
+                                                    class="badge navyBg rounded-pill">{{profile.unrespondedCount}}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <!-- <div class="subHeading"><a >
                                         <div class="channel">
-                                            <i class="far fa-tag ocean"></i>
+                                            <i class="fab fa-facebook-f navy"></i>
                                         </div>
-                                    </a><a class="businessName ocean">/foodpanda.pk</a>
-                                    <a class="skill">@Complaint</a>
-                                </div>
-                                <div class="boxContent"> Hi, I would like to place my order complaint Order number...
-                                </div>
-                            </div>
-
-                        </li>
-                    </ul>
-                </ng-container >
-                    <ng-container >
-                    <ul class="list-group-followup list-group-flush">
-                        <a class="list-group-item list-group-item-action d-flex align-items-center fw-bold"
-                            value="itProcurement">
-                            Conversation Queue
-                            <span class="badge berryBg rounded-pill">{{TotalUnresponded}}</span>
-                        </a>
-                    </ul>
-                    <ul class="list-group list-group-flush" id="inboxes-list" *ngFor="let user of ConversationList">
-                        <li class="postBox" [routerLink]="['/responder/'+[user.platform]]"
-                        (click)="updatevalue('socialHeader', user.user, user.postType, user.userId,'assignToMe', user.platform, user.profileId)">
-                            <!-- <a [routerLink]="['/responder']">
-                                <div class="avatar medium navyBg">
-                                    <img src={{user.profilePic}}>
-                                </div>
-                            </a> -->
-                            <div class="boxMiddle">
-                                <!-- <a href="conversation.html"> -->
-                                    <div class="boxHeading">
-                                        <div class="left">
-                                            <div class="boxId">{{user.userName}}</div>
-                                        </div>
-                                        <div class="right">
-                                            <div class="postDate">{{user.createdDate | date:'hh:mm a'}}</div>
-                                            <span class="badge navyBg rounded-pill">{{user.unrespondedCount}}</span>
-                                        </div>
+                                    </a><a href="javascript:;" class="businessName navy">/foodpanda.pk</a>
+                                    <a href="javascript:;" class="skill">@Feedback</a>
+                                </div> -->
+                                    <div class="boxContent">
+                                        {{profile.message}}
                                     </div>
-                                <!-- </a> -->
-                                <div class="subHeading">
-                                    <!-- <a href="conversation.html"> -->
-                                        <div class="channel">
-                                            <!-- <i class="fab fa-facebook-f navy"></i> -->
-                                        </div>
-                                    <!-- </a> -->
-                                    <a class="businessName">/{{user.platform}}</a>
-                                    <!-- <a class="skill">@Feedback</a> -->
                                 </div>
-                                <div class="boxContent">
-                                    {{user.message}}
-                                </div>
-                            </div>
 
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
+                    </ng-container>
                 </ng-container>
+                    
+                        <ul class="list-group-followup list-group-flush">
+                            <a href="javascript:"
+                                class="list-group-item list-group-item-action d-flex align-items-center fw-bold"
+                                value="itProcurement">
+                                Conversation Queue
+                                <!-- <span class="badge berryBg rounded-pill">16</span> -->
+                            </a>
+                        </ul>
+                        <ng-container *ngFor="let profile of userSpecificAllocatedProfiles">
+                        <ng-container *ngIf="profile.slaFlag == 'unread'">
+                        <ul class="list-group list-group-flush" id="inboxes-list">
+                            <li class="postBox unRead"
+                                (click)="updatevalue(profile.fromId, profile.platform, profile.profileId)">
+                                <a *ngIf="profile.platform == 'Facebook'">
+                                    <div class="iconButton medium navyBg"><i class="fab fa-facebook-f"></i></div>
+                                </a>
+                                <a *ngIf="profile.platform == 'Instagram'">
+                                    <div class="iconButton medium instabg"><i class="fab fa-instagram"></i></div>
+                                </a>
+                                <a *ngIf="profile.platform == 'Twitter'">
+                                    <div class="iconButton medium oceanBg"><i class="fab fa-twitter"></i></div>
+                                </a>
+                                <a *ngIf="profile.platform == 'Youtube'">
+                                    <div class="iconButton medium radicalBg"><i class="fab fa-youtube"></i></div>
+                                </a>
+                                <a *ngIf="profile.platform == 'Email'">
+                                    <div class="iconButton medium berryBg"><i class="fal fa-envelope"></i></div>
+                                </a>
+                                <a *ngIf="profile.platform == 'WhatsApp'">
+                                    <div class="iconButton medium mintBg"><i class="fab fa-whatsapp"></i></div>
+                                </a>
+                                <a *ngIf="profile.platform == 'WebChat'">
+                                    <div class="iconButton medium webchatbg"><i class="fal fa-messages"></i></div>
+                                </a>
+                                <a *ngIf="profile.platform == 'SMS'">
+                                    <div class="iconButton medium cherryBg"><i class="fal fa-comment-alt-lines"></i>
+                                    </div>
+                                </a>
+                                <a *ngIf="profile.platform == 'LinkedIn'">
+                                    <div class="iconButton medium linkedinbg"><i class="fab fa-linkedin-in"></i></div>
+                                </a>
+                                <a *ngIf="profile.platform == 'PlayStore'">
+                                    <div class="iconButton medium darkorangeBg"><i class="fab fa-google-play"></i></div>
+                                </a>
+                                <div class="boxMiddle">
+                                    <a>
+                                        <div class="boxHeading">
+                                            <div class="left">
+                                                <div class="boxId">{{profile.fromName}}</div>
+                                            </div>
+                                            <div class="right">
+                                                <div class="postDate">{{profile.createdDate | date:'hh:mm a'}}</div>
+                                                <span
+                                                    class="badge navyBg rounded-pill">{{profile.unrespondedCount}}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <!-- <div class="subHeading"><a >
+                                        <div class="channel">
+                                            <i class="fab fa-facebook-f navy"></i>
+                                        </div>
+                                    </a><a href="javascript:;" class="businessName navy">/foodpanda.pk</a>
+                                    <a href="javascript:;" class="skill">@Feedback</a>
+                                </div> -->
+                                    <div class="boxContent">
+                                        {{profile.message}}
+                                    </div>
+                                </div>
+
+                            </li>
+                            <!-- <li class="postBox active">
+                            <a >
+                                <div class="iconButton medium radicalBg">
+                                    <i class="fab fa-youtube"></i>
+                                </div>
+                            </a>
+                            <div class="boxMiddle"><a >
+                                    <div class="boxHeading">
+                                        <div class="left">
+                                            <div class="boxId">9632587</div>
+                                        </div>
+                                        <div class="right">
+                                            <div class="postDate">10:30 PM</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="subHeading"><a >
+                                        <div class="channel">
+                                            <i class="fab fa-youtube"></i>
+                                        </div>
+                                    </a><a href="javascript:;" class="businessName radical">/foodpanda.pk</a>
+                                    <a href="javascript:;" class="skill">@Feedback</a>
+                                </div>
+                                <div class="boxContent">...چند گھنٹے میں رپورٹ آ جائے گی تو آفیشل چینلز کے ذریعے ریلیز
+                                </div>
+                            </div>
+
+                        </li>
+                        <li class="postBox">
+                            <a >
+                                <div class="avatar medium oceanBg">
+                                    <img src="../images/avatar-status.jpg" alt="-">
+                                </div>
+                            </a>
+                            <div class="boxMiddle"><a >
+                                    <div class="boxHeading">
+                                        <div class="left">
+                                            <div class="boxId">3645214</div>
+                                        </div>
+                                        <div class="right">
+                                            <div class="postDate">07:41 PM</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="subHeading"><a >
+                                        <div class="channel">
+                                            <i class="far fa-envelope berry"></i>
+                                        </div>
+                                    </a><a href="javascript:;" class="businessName berry">/foodpanda.pk</a>
+                                    <a href="javascript:;" class="skill">@Inquiry</a>
+                                </div>
+                                <div class="boxContent">How can i change my order?
+                                </div>
+                            </div>
+
+                        </li>
+                        <li class="postBox">
+                            <a >
+                                <div class="avatar medium oceanBg">
+                                    <img src="../images/avatar-status.jpg" alt="-">
+                                </div>
+                            </a>
+                            <div class="boxMiddle"><a >
+                                    <div class="boxHeading">
+                                        <div class="left">
+                                            <div class="boxId">7845784</div>
+                                        </div>
+                                        <div class="right">
+                                            <div class="postDate">07:35 PM</div>
+                                            <div class="badge rounded-pill radicalBg">10</div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="subHeading"><a >
+                                        <div class="channel">
+                                            <i class="fab fa-youtube radical"></i>
+                                        </div>
+                                    </a><a href="javascript:;" class="businessName radical">/foodpanda.pk</a>
+                                    <a href="javascript:;" class="skill">@Complaint</a>
+                                </div>
+                                <div class="boxContent">Hi, I would like to place my order complaint Order number...
+                                </div>
+                            </div>
+                        </li> -->
+                        </ul>
+                    </ng-container>
+                </ng-container>
+
                 </div>
-                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+            <div class="toast-btn d-flex align-items-center">
+
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
+
             </div>
         </div>
     </div>

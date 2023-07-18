@@ -1,8 +1,5 @@
-//import { newArray } from '@angular/compiler/src/util';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { ListingCountDto } from 'src/app/shared/Models/ListingCountDto';
-//import { ListingCountDto } from 'src/app/shared/Models/ListingCountDto';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +17,18 @@ export class SharedService {
   private smscount = new Subject<number>();
   private fbcount = new Subject<number>();
   private emailcount = new Subject<number>();
+
+  draft:any;
   
   constructor() { }
 
+  public getInfo(info:any){
+    this.draft = info
+  }
+
+  public updateInfo(){
+    return this.draft;
+  }
    /*
    * @return {Observable<string>} : siblingMsg
    */

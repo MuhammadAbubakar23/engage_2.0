@@ -1,23 +1,36 @@
 <main>
     <div class="main-wrapper d-flex">
+        <!-- Main menu is static component -->
         <main-menu></main-menu>
-        <div class="user-comment-widget-container">
+        <!-- <div class="user-comment-widget-container">
             <template #maximizeChat></template>
-        </div>
+        </div> -->
         <nav id="left-sidebar-expand" class="conversation-list all-conversation"
             [ngClass]="toggleLeftBar ? 'toggled':'' ">
-            <inbox-menu></inbox-menu>
+            <!-- Have to show here all different sub menus, but other components shouldn't reload -->
+            <!-- <inbox-menu></inbox-menu> -->
+            <template #submenu></template>
             <a class="panelToggle" (click)="toggleSubLeftBar()"></a>
         </nav>
         <div class="middle-wrapper d-flex w-100 flex-column">
-            <inbox-header></inbox-header>
+            <header class="main-header shadow-sm agent-header">
+                <div class="row justify-content-between">
+                    <div class="col-9">
+                        <template #header></template>
+                    </div>
+
+
+                    <div class="col-3">
+                        <right-header-components></right-header-components>
+                    </div>
+                </div>
+            </header>
             <div class="content-box-wrapper d-flex w-100">
                 <div class="middle-content d-flex">
                     <div class="page-content-wrapper social">
-                        <div class="w-auto chat-message-component w-100 inbox-container" [ngClass]="showPanel?'panelToggled':''">
-                             <ng-content></ng-content>
-                             <inbox-right-sidebar (toggleRightPanel)="toggleRightPanel()"></inbox-right-sidebar>
-                        </div>   
+                        <!-- <ng-content select=".responderModule"></ng-content> -->
+                        <!-- <template #body></template> -->
+                        <router-outlet></router-outlet>
                     </div>
                 </div>
             </div>

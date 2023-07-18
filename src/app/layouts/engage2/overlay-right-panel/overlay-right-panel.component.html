@@ -1,0 +1,57 @@
+<div [class.show]="isActive==true" class="offcanvas offcanvas-end" tabindex="-1" id="consoleoverlayrightpanel"
+    aria-labelledby="offcanvasRightLabel" style="visibility: visible;" aria-hidden="true">
+
+<div class="offcanvas-header align-items-center saltBg">
+    <h5 id="select-accesspointlabel" class="darkblue fw-bold m-0"> 
+        <i class="fal fa-users-class me-2 fs-6"></i> {{header}}</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+</div>
+<div class="offcanvas-body p-0 overflow-visible">
+    <div class="user-selection-for-group">
+        <div class="newGroupWrapper newChatWrapper">
+            <ng-template [ngIf]="search">
+                <form class="d-flex">
+                    <input class="form-control" placeholder="Search" aria-label="Search">
+                </form>
+            </ng-template>
+            
+            <div class="rightbar-body-wrapper" data-scrollbar="true" tabindex="-1"
+                style="overflow-y:auto; outline: none;">
+                <div class="scroll-content">
+                    <overlay-right-panel-selection></overlay-right-panel-selection>
+                    <div class="section-heading">
+                        <h6 class="silver pt-3 mb-0">16 Team Members</h6>
+                    </div>
+                    <div class="list-group-section pt-0">
+                        <div class="messenger">
+                           <overlay-right-panel-list></overlay-right-panel-list>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                    <div class="scrollbar-thumb scrollbar-thumb-x"
+                        style="width: 1151px; transform: translate3d(0px, 0px, 0px);"></div>
+                </div>
+                <div class="scrollbar-track scrollbar-track-y" style="display: block;">
+                    <div class="scrollbar-thumb scrollbar-thumb-y"
+                        style="height: 31.1704px; transform: translate3d(0px, 0px, 0px);"></div>
+                </div> -->
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="off-canvaas-footer border-top p-3 pe-5">
+    <div class="icon-buttons-wrapper d-flex justify-content-end">
+        <div class="buttons-wrap d-flex">
+            <button type="button" class="btn btn-outline-secondary btn-medium" data-bs-dismiss="offcanvas"
+                aria-label="Close">Cancel</button>
+            <button type="button" class="btn skyBg ms-2 f-nextBtn btn-medium" data-bs-dismiss="offcanvas"
+                aria-label="Close">Add</button>
+        </div>
+    </div>
+</div>
+
+</div>

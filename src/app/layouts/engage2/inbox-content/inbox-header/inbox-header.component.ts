@@ -13,6 +13,7 @@ export class InboxHeaderComponent implements OnInit {
     private commonService: CommonDataService) { }
 
   ngOnInit(): void {
+    
     this.getAllConversationCount();
   }
 
@@ -30,7 +31,8 @@ export class InboxHeaderComponent implements OnInit {
       pageId : "",
       plateForm : "",
       pageNumber : this.pageNumber,
-      pageSize : this.pageSize
+      pageSize : this.pageSize,
+      isAttachment: false
       
     }
     this.commonService.GetConversationList(this.filterDto).subscribe((res:any)=>{

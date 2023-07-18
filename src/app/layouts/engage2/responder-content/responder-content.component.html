@@ -4,7 +4,8 @@
         <div class="user-comment-widget-container">
             <template #maximizeChat></template>
         </div>
-        <nav id="left-sidebar-expand" class="conversation-list all-conversation" [ngClass]="toggleLeftBar ? 'toggled':'' ">
+        <nav id="left-sidebar-expand" class="conversation-list all-conversation"
+            [ngClass]="toggleLeftBar ? 'toggled':'' ">
             <responder-menu></responder-menu>
             <a class="panelToggle" (click)="toggleSubLeftBar()"></a>
         </nav>
@@ -13,13 +14,10 @@
             <div class="content-box-wrapper d-flex w-100">
                 <div class="middle-content d-flex">
                     <div class="page-content-wrapper social">
-                        <div class="w-auto chat-message-component w-100 inbox-container" [ngClass]="showPanel?'panelToggled':''">
-                            <ng-content></ng-content> 
-                            <responder-right-sidebar-menu></responder-right-sidebar-menu>
-                        </div>   
+                        <ng-content></ng-content>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</main> 
+</main>

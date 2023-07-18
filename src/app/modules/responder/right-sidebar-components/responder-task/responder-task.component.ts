@@ -22,6 +22,5 @@ export class ResponderTaskComponent implements OnInit {
     if(val == false){
       this.show =true;
     }
-    
   }
 }

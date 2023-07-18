@@ -85,9 +85,9 @@ export class commentsDto {
   bcc?: string = '';
   isLikedByAdmin?: boolean = false;
   attachments?: string = '';
-  replies?: repliesDto = new repliesDto();
+  replies?: repliesDto = [];
   sentiment?: string = '';
-  tags?: tagsDto = new tagsDto();
+  tags?: tagsDto = [];
 }
 
 export class messagesDto {

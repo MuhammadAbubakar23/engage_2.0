@@ -8,8 +8,8 @@ export class EnvService {
     public store: any = environment.store;
     public baseUrl: string = environment.IdentityBaseUrl;
     // public modules : any = environment.modules;
-    public paths: any = environment.links.identity;
     public console: any = environment.links.console;
+    public paths: any = environment.links.identity;
     public title: string = environment.title;
     public appKey: string = environment.appKey;
     // public token : string = environment.tokenName;

@@ -1,0 +1,21 @@
+<div *ngFor="let menu of menulist" class="collapse-toggle-card toggle-wrap shadow-sm rounded border mb-3">
+    <div class="toggle-head">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-sm-center saltBg">
+                <span class="iconButton chevron-icon ms-4 me-2"></span>
+                <div class="ms-2 me-auto darkblue">
+                    <div class="fw-bold darkblue">{{menu.name}}</div> Select permissions for {{menu.name}}
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                        data-bs-toggle="collapse" [attr.data-bs-target]="'#'+menu.slug"
+                        aria-expanded="true" [attr.aria-controls]="menu.slug"
+                        [(ngModel)]="menu.isSelected" name="card_name" value="{{menu.mainId}}" (change)="cardboxListSelected()">
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="collapse" [ngClass]="{'show': menu.isSelected}" [id]="menu.slug">      
+        <engage2-card-box-list-checkbox [checkboxListCheck]="menu.subMenu" [checkboxListHeader]="menulistselectall" [checkboxListName]="menu.slug" (menuChecked)="menulistChecked($event)" ></engage2-card-box-list-checkbox>              
+    </div>
+</div>

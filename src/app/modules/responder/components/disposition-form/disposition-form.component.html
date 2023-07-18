@@ -1,0 +1,71 @@
+<div class="tab-content " id="myTabContent">
+    <div class="tab-pane fade socila-channels-tab mark-as-tab show active" data-select2-id="select2-data-33-32ki">
+        <!-- <div class="headerWrap py-2 d-flex align-items-center shadow-sm justify-content-between">
+            <div class="titleIcon d-flex align-items-center">
+                <div class="titleLink ms-1">
+                    <h6 class="mt-2">/@foodpanda-pk</h6>
+                </div>
+            </div>
+            <div class="icons-list">
+
+            </div>
+        </div> -->
+        <div class="console-body-wrapper" data-scrollbar="true" tabindex="-1" style="overflow: hidden; outline: none;">
+            <div class="scroll-content" data-select2-id="select2-data-32-mmjn">
+                <div class="tab-content m-4" id="myTabContent" data-select2-id="select2-data-myTabContent">
+                    <div class="tab-pane fade show active" id="post" role="tabpanel" aria-labelledby="post-tab"
+                        data-select2-id="select2-data-post">
+                        <form [formGroup]="dispositionForm" (submit)="submitDispositionForm()">
+                        <div class="form-floating mt-2" [ngClass]="{'was-validated' : dispositionForm.get('dispositionId')!.valid && dispositionForm.get('dispositionId')!.touched}">
+                            <select class="form-select" id="dispositionId" formControlName="dispositionId" aria-label="Floating label select example"
+                            [ngClass]="{'is-invalid' : (dispositionForm.get('dispositionId')!.errors && (dispositionForm.get('dispositionId')!.touched ||
+                                dispositionForm.get('dispositionId')!.dirty))}">
+                                <option selected="" disabled>Select Disposition</option>
+                                <option value="1">Follow Up</option>
+                                <option value="2">Completed</option>
+                                <option value="3">Responded</option>
+                            </select>
+                            <label for="dispositionId">Select Disposition *</label>
+                            <div class="invalid-feedback" *ngIf="(dispositionForm.get('dispositionId')!.errors && (dispositionForm.get('dispositionId')!.touched ||
+                                                                    dispositionForm.get('dispositionId')!.dirty))">
+                            
+                                <div *ngIf="dispositionForm.get('dispositionId')!.errors?.['required']">
+                                    dispositionId is required!
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="form-floating mt-2">
+                            <select class="form-select" id="floatingSelect" formControlName="reasonId" aria-label="Floating label select example">
+                                <option selected="" disabled>Select Reason</option>
+                                <option value="1">Ghost Call</option>
+                                <option value="2">User Not Available</option>
+                                <option value="3">Wrong Number</option>
+                            </select>
+                            <label for="floatingSelect">Works with selects</label>
+                        </div> -->
+                        <div class="form-floating mt-2" [ngClass]="{'was-validated' : dispositionForm.get('comment')!.valid && dispositionForm.get('comment')!.touched}">
+                            <textarea class="form-control" formControlName="comment" placeholder="Leave a comment here" id="floatingTextarea2"
+                                style="height: 100px" [ngClass]="{'is-invalid' : (dispositionForm.get('comment')!.errors && (dispositionForm.get('comment')!.touched ||
+                                dispositionForm.get('comment')!.dirty))}" id="comment"></textarea>
+                            <label for="floatingTextarea2">Comments *</label>
+                            <div class="invalid-feedback" *ngIf="(dispositionForm.get('comment')!.errors && (dispositionForm.get('comment')!.touched ||
+                                                                    dispositionForm.get('comment')!.dirty))">
+                            
+                                <div *ngIf="dispositionForm.get('comment')!.errors?.['required']">
+                                    Comment is required!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 text-end">
+                            <a type="button" class="btn btn-outline-secondary px-5" (click)="routeToParentComponent()">Back</a>
+                            <button type="submit" class="btn btn-success px-5" data-bs-toggle="modal"
+                                data-bs-target="#profileSaveModal" [disabled]="dispositionForm.invalid">Save</button>
+                        </div>
+                    </form>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

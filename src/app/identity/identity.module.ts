@@ -8,6 +8,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { FacebookComponent } from '../modules/responder/components/Facebook/facebook.component';
 
 
 @NgModule({
@@ -22,8 +23,11 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CommonModule,
     IdentityRoutingModule,
     ReactiveFormsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
 
+  ],
+  providers:[
+    FacebookComponent
   ]
 })
 export class IdentityModule { }

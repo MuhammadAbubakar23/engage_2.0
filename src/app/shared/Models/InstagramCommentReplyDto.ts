@@ -5,6 +5,6 @@ export class InstagramCommentReplyDto{
   text: string = "";
   timestamp: string = "";
   insertiondate: string = "";
-  userId: number=2;
-  companyId: number=2
+  userId: number=0;
+  companyId: number=0
 }

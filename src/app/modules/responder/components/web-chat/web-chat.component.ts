@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Tooltip } from 'bootstrap';
@@ -11,6 +11,7 @@ import { FiltersDto } from 'src/app/shared/Models/FiltersDto';
 import { WebChatDto } from 'src/app/shared/Models/WebChatDto';
 import { WebChatReplyDto } from 'src/app/shared/Models/WebChatReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
 
 @Component({
   selector: 'app-web-chat',
@@ -18,6 +19,8 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
   styleUrls: ['./web-chat.component.scss']
 })
 export class WebChatComponent implements OnInit {
+
+  @ViewChild('radioInput', { static: false }) radioInput!: ElementRef<HTMLInputElement>;
 
   id = this.fetchId.id;
   data:any;
@@ -31,19 +34,21 @@ export class WebChatComponent implements OnInit {
   webChatDto = new WebChatDto();
 
   public criteria!: SortCriteria;
+
+  commentsArray : any[]=[];
+  groupArrays : any[]=[];
   
   constructor(private fetchId: FetchIdService,
-    private toggleService: ToggleService,
-    private _route: Router,
     private SpinnerService : NgxSpinnerService,
     private signalRService : SignalRService,
     private changeDetect : ChangeDetectorRef,
     private commondata : CommonDataService,
+    private ticketResponseService : TicketResponseService
     ) {
-      this.criteria={
-        property: 'createdDate',
-        descending: false
-      };
+      // this.criteria={
+      //   property: 'createdDate',
+      //   descending: false
+      // };
      }
 
   ngOnInit(): void {
@@ -52,9 +57,11 @@ export class WebChatComponent implements OnInit {
     // .forEach(tooltipNode => new Tooltip(tooltipNode));
      
     this.getWebChat();
-    this.getSlaWebChat();
    // this.signalRService.startConnection();
    // this.addTransferChatDataListener(); 
+   this.ticketResponseService.getTicketId().subscribe(res=>{
+    this.updateTicketId(res)
+  });
 
   }
 
@@ -64,6 +71,7 @@ export class WebChatComponent implements OnInit {
 
   getWebChat(){
     if(this.id != null || undefined){
+      localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -72,6 +80,7 @@ export class WebChatComponent implements OnInit {
         plateForm: 'Webchat',
         pageNumber: 0,
         pageSize: 0,
+        isAttachment: false
       };
       this.SpinnerService.show();
       this.commondata
@@ -80,17 +89,37 @@ export class WebChatComponent implements OnInit {
           this.SpinnerService.hide();
           this.Chat = res.List;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+
+          this.Chat.forEach((item:any) => {
+            
+            item.comments.forEach((cmnt:any) => {
+              this.commentsArray.push(cmnt)
+            });
+              let groupedItems = this.commentsArray.reduce((acc:any, item:any)=>{
+                const date = item.createdDate.split('T')[0];
+                if(!acc[date]){
+                  acc[date] = [];
+                }
+                acc[date].push(item);
+                return acc;
+              }, {})
+        
+              this.groupArrays = Object.keys(groupedItems).map((date)=>{
+                return {
+                  date,
+                  items : groupedItems[date]
+                }
+              })
+              // console.log("hello", this.groupArrays)
+             });
   
           this.Chat.forEach((msg:any) => {
             this.To = msg.comments[0].to;
           });
   
        });
-    }
-   
-  }
-  getSlaWebChat(){
-    if(this.slaId != null || undefined){
+    } else if(this.slaId != null || undefined){
+      localStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -99,6 +128,7 @@ export class WebChatComponent implements OnInit {
         plateForm: 'Webchat',
         pageNumber: 0,
         pageSize: 0,
+        isAttachment: false
       };
       this.SpinnerService.show();
       this.commondata
@@ -116,7 +146,6 @@ export class WebChatComponent implements OnInit {
     }
    
   }
-
   public addTransferChatDataListener = () => {
     this.signalRService.hubconnection.on('getAllMachineLogs', (data)=>{
        
@@ -137,7 +166,7 @@ export class WebChatComponent implements OnInit {
       }
       
       
-      console.log(this.Chat);
+      // console.log(this.Chat);
 
       this.changeDetect.detectChanges();
     });
@@ -163,6 +192,8 @@ export class WebChatComponent implements OnInit {
       wcVisitorSessionId: this.WebChat.Session.id,
       fromName:this.WebChat.VisitorMessages[0].fromName
     });
+    this.radioInput.nativeElement.checked = false;
+    // this.quickReplySearchText = '';
 
     // this.webchatdata.SendWebChatReply(this.WebChatReplyForm.value).subscribe((res: any) => {
     //  //  alert(res.message);
@@ -171,5 +202,21 @@ export class WebChatComponent implements OnInit {
     //    alert(error.message || error.title);
     //  }
     // );
+    
+}
+
+updateTicketId(res: any) {
+  this.groupArrays.forEach((cmnt: any) => {
+    cmnt.items.forEach((singleCmnt: any) => {
+      if (singleCmnt.id == res.queryId) {
+        singleCmnt.ticketId = res.ticketId;
+      }
+    });
+  });
+  this.changeDetect.detectChanges();
+}
+onScrollComments() {
+  // this.pageSize = this.pageSize + 10;
+  // this.getWebChat();
 }
 }

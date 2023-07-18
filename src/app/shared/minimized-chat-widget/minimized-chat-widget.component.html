@@ -100,7 +100,7 @@
                                 <div class="application-wrap d-flex align-items-center mb-1">
                                     <p class="m-0 silver me-2 ms-1">Application ID
                                     </p>
-                                    <p class="app-no navy m-0 me-2">2354545</p>
+                                    <p class="app-no navy m-0 me-2">{{youtubecomment.ticketId}}</p>
                                 </div>
                                 <div class="d-flex align-items-center agent-container">
                                     <div class="card w-d-inline messageUpper">
@@ -141,9 +141,9 @@
                                                 <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                     <div class="message-actionlist d-flex align-items-center">
                                                         <div class="box">
-                                                            <a (click)="likeByAdmin(youtubecomment.id, youtubecomment.isLikedByAdmin)"
+                                                            <a (click)="likeByAdmin(youtubecomment.id, youtubecomment.isLikedByAdmin, youtubedata.platform, youtubedata.post?.profile.page_Id, youtubedata.post?.profile.profile_Id, youtubedata.user?.userId)"
                                                                 [class.active]="youtubecomment.isLikedByAdmin == true"
-                                                                class="message-actionItem coal likebht btn p-0 label-reactions">
+                                                                class="message-actionItem coal likebht p-0 label-reactions">
                                                                 <span class="iconButton small btn">
                                                                     <i class="fal fa-thumbs-up coal"></i>
                                                                     <i class="fas fa-thumbs-up"></i>
@@ -160,6 +160,7 @@
                                                         </a>
                                                         <div class="dropdown w-auto">
                                                             <button class="iconButton medium" id="dropdownMenuButton1"
+                                                            [ngClass]="tagsListDropdown == true?'show':''" (click)="openTagListDropdown()"
                                                                 data-bs-toggle="dropdown" data-bs-auto-close="outside">
                                                                 <span class="iconButton small btn mx-2">
                                                                     <i class="fal fa-tag coal"></i>
@@ -167,6 +168,7 @@
                                                                 Tag
                                                             </button>
                                                             <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                            [ngClass]="tagsListDropdown == true?'show':''"
                                                                 aria-labelledby="dropdownMenuButton2">
                                                                 <ul class="dropdown-listing">
                                                                     <li class="dropdown-listing-header">
@@ -175,13 +177,14 @@
                                                                                 <h6>Tags
                                                                                 </h6>
                                                                             </div>
-                                                                            <a href="#"
+                                                                            <!-- <a href="#"
                                                                                 class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
+                                                                                (click)="closeTagListDropdown()"
                                                                                 id="dropdownMenuButton3"
                                                                                 data-bs-toggle="dropdown"
                                                                                 aria-expanded="false">
                                                                                 <i class="fal fa-times silver"></i>
-                                                                            </a>
+                                                                            </a> -->
                                                                         </div>
                                                                         <form class="custom-searchbar">
                                                                             <input
@@ -303,7 +306,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <span class="complaintBtn" type="button" (click)="toggle('complaint-ticket-panel')"><i
+                                    <span class="complaintBtn" type="button" (click)="toggle('ticket', youtubecomment.id)"><i
                                             class="fal fa-plus-circle sky"></i></span>
                                 </div>
     

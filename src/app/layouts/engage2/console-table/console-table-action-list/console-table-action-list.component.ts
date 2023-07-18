@@ -16,6 +16,7 @@ export class ConsoleTableActionListComponent implements OnInit {
 
   @Input() data: any[] = [];
   @Input() actions: Array<any> = [];
+  
   @Output() action:any;
   @Output() procedure: EventEmitter<any> = new EventEmitter(); 
   
@@ -29,10 +30,12 @@ export class ConsoleTableActionListComponent implements OnInit {
     // console.log("Listen Action --->>>", this.listaction);
   }
   funcAction(params:any){
+    console.log(params);
     let data = {
       param:params,
       data:this.data
     }
+    console.log(data);
     this.procedure.emit(data);
     //this.userserv.send(url);
     // console.log("sent val --- >>>",url)

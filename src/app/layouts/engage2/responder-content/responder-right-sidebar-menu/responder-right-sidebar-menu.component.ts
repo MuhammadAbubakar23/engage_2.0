@@ -11,89 +11,88 @@ import { MenuState } from '../../menu-state/menu.state';
 @Component({
   selector: 'responder-right-sidebar-menu',
   templateUrl: './responder-right-sidebar-menu.component.html',
-  styleUrls: ['./responder-right-sidebar-menu.component.scss']
+  styleUrls: ['./responder-right-sidebar-menu.component.scss'],
 })
 export class ResponderRightSidebarMenuComponent implements OnInit {
-  @Output("toggleRightPanel") toggleRightPanelParent: EventEmitter<any> = new EventEmitter();
-  menus$ :any = [];
-  menu$ :any;
+  @Output('toggleRightPanel') toggleRightPanelParent: EventEmitter<any> =
+    new EventEmitter();
+  menus$: any[] = [];
+  menu$: any;
   loading$: any;
 
   public subscription!: Subscription;
   public subscription2!: Subscription;
-  public dynamicPath : string="";
-  public dynamicChildPath : string="";
-  
+  public dynamicPath: string = '';
+  public dynamicChildPath: string = '';
+
   constructor(
-    private store: Store<MenuState>, 
-    private sharedService : SharedService,
-    private toggleService : ToggleService,
-    private rightNavService : RightNavService) { 
-      this.menu$ = this.store.select(getEmargingEqual("team_inbox_right_menu"));
-      this.loading$ = this.store.select(getMenusLoading)
-      this.store.dispatch(loadMenusList())
-    }
+    private store: Store<MenuState>,
+    private sharedService: SharedService,
+    private toggleService: ToggleService,
+    private rightNavService: RightNavService
+  ) {
+    this.menu$ = this.store.select(getEmargingEqual('team_inbox_right_menu'));
+    this.loading$ = this.store.select(getMenusLoading);
+    this.store.dispatch(loadMenusList());
+  }
 
   ngOnInit(): void {
-    this.menu$ = this.store.select(getEmargingEqual("team_inbox_right_menu")).subscribe((item) => {
-      this.menus$ = item;
-    })
-   
+    this.menu$ = this.store
+      .select(getEmargingEqual('team_inbox_right_menu'))
+      .subscribe((item: any) => {
+        for (let key in item) {
+          // console.log(item)
+          let obj = {
+            mainId: item[key].mainId,
+            emerging: item[key].emerging,
+            baseId: item[key].baseId,
+            icon: item[key].icon,
+            name: item[key].name,
+            slug: item[key].slug,
+            link: item[key].link,
+            indexNo: item[key].indexNo,
+          };
+
+          // this.menus$ = item;
+
+          item.forEach((menu:any) => {
+            if(menu.mainId != 220){
+              if(!this.menus$.includes(menu)){
+                this.menus$.push(menu);
+              }
+              
+            }
+          });
+        }
+      });
+
     // Array.from(document.querySelectorAll('[data-bs-toggle]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));
-    
-   let parent = localStorage.getItem("parent");
-   if(parent != "undefined")
-   {
-       this.subscription = this.sharedService.getMessage().subscribe(msg => { 
-         
-        
-       this.dynamicPath = msg;
-       });
-   }
 
-    this.subscription2 = this.rightNavService.getChildComponent().subscribe(msg2 => { 
-    
-      
-    this.dynamicChildPath = msg2;
-    });
+    let parent = localStorage.getItem('parent');
+    if (parent != 'undefined') {
+      this.subscription = this.sharedService.getMessage().subscribe((msg) => {
+        this.dynamicPath = msg;
+      });
+    }
+
+    this.subscription2 = this.rightNavService
+      .getChildComponent()
+      .subscribe((msg2) => {
+        this.dynamicChildPath = msg2;
+      });
   }
 
   isOpen = false;
-  
 
-  toggleRightBar(child:string) {
-  
-  if(localStorage.getItem('child') == child){
-    this.toggleService.addTogglePanel('');
-  } else{
-    this.toggleService.addTogglePanel(child);
-  }
-  
-  
-
-//     let routr = this._route.url.split('/')[1];
-//  let parent = localStorage.getItem("parent");
-
-//  if (localStorage.getItem('child') == child){
-//   this.isOpen = false;
-//   localStorage.setItem('child','')
-//  } else {
-//   this.isOpen = true;
-//  }
-
-  
-//     if(this.isOpen){
-//       this._route.navigateByUrl(routr+'/'+ parent+'/'+child);
-      
-//       this.toggleService.addTogglePanel("panelToggled");
-      
-//     }else{
-//       this._route.navigateByUrl(routr+'/'+ parent);
-//       this.toggleService.addTogglePanel("");
-     
-//     }
+  toggleRightBar(child: string) {
     
+    // this.parentFun.emit();
+    if (localStorage.getItem('child') == child) {
+      //  this.toggleRightPanelParent.emit();
+      this.toggleService.addTogglePanel('');
+    } else {
+      this.toggleService.addTogglePanel(child);
+    }
   }
-
 }

@@ -11,8 +11,8 @@ import { userDto } from 'src/app/shared/Models/concersationDetailDto';
 import { RequestService } from 'src/app/shared/services/request/request.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import Validation from 'src/app/shared/Util/validation';
+import { TeamsService } from '../../../services/teams.service';
 import { RolesAndPermissionsService } from '../../roles-and-permissions/roles-and-permissions.service';
-import { TeamsService } from '../../teams/teams.service';
 import { UsersService } from '../users.service';
 
 @Component({
@@ -30,14 +30,14 @@ export class CreateUserComponent implements OnInit {
     id : new UntypedFormControl(),
     firstname : new UntypedFormControl(),
     lastname : new UntypedFormControl(),
-    flexSwitchCheckDefault : new UntypedFormControl(),
+  //  flexSwitchCheckDefault : new UntypedFormControl(),
     phone : new UntypedFormControl(),
     email : new UntypedFormControl(),
     password : new UntypedFormControl(),
     confirmpassword : new UntypedFormControl(),
     roleId : new UntypedFormControl(),
     teamId : new UntypedFormControl(),
-    teams : new UntypedFormControl(),    
+  //   teams : new UntypedFormControl(),    
     // timezone : new UntypedFormControl(),
     // supportchannel : new UntypedFormControl(),
     // language : new UntypedFormControl(),
@@ -72,7 +72,7 @@ export class CreateUserComponent implements OnInit {
     this._Activatedroute.paramMap.subscribe(paramMap => { 
       this.identity = Number(paramMap.get('id'));
     });
-   // debugger;
+   // ;
     if(this.identity > 0){//.pipe(takeUntil(this.unsubscribe))
       this._request.getBy<userDto>("GetUserById",  this.identity.toString()).subscribe(
         (next:userDto) => {//...next:T[]
@@ -85,16 +85,16 @@ export class CreateUserComponent implements OnInit {
       //userDto fullName:"Ali Ahmad", userName:null,
       let form = {
         id:0,
-        email:"ab3c@gmail.com",
-        firstName:"Ali",
-        lastName:"Ahmad",
-        password:"null0000void",
-        confirmPassword:"null0000void",
-        phone:"012345678910",
-        roleId:["Admin Role", "Admin Team", "Admin Channel", "Admin Tag"],
+        email:"",
+        firstName:"",
+        lastName:"",
+        password:"",
+        confirmPassword:"",
+        phone:"",
+        roleId:[],
         teamId:[],
-        teams:"",
-        userId:[],
+      //  teams:"",
+      //  userId:[],//null0000void//null0000void
        
       }
       this.setform(form);
@@ -116,15 +116,15 @@ export class CreateUserComponent implements OnInit {
       email: [formVal.email, [ Validators.required, Validators.email]],
       password: [formVal.password,[ Validators.required, Validators.minLength(7)]],
       confirmpassword: [formVal.confirmPassword, [ Validators.required, Validators.minLength(7) ]],
-      roleId: ['', [ Validators.required]],
+      roleId: ['', [Validators.required]],
       teamId: ['', [Validators.required]],
-      // timezone: ['', [Validators.required]],
-      
+      // timezone: ['', [Validators.required]],      
       // supportchannel: ['', [Validators.required]],
-    },
+    }
+    ,
     {
       validators: [Validation.match('password', 'confirmPassword')]
-    })
+    });
     // await this.getRoles();
     // await this.getTeams();
     // console.log("Roles --->>>",this.Roles);
@@ -174,8 +174,11 @@ export class CreateUserComponent implements OnInit {
   onReset(): void {
     this.submitted = false;
     this.userForm.reset();
+    this.userForm.controls['roleId'].reset();
+    this.userForm.controls['teamId'].reset();
   }
   onSubmit() : void {
+    let _self = this;
     this.userForm.controls['roleId'].reset();
     this.userForm.controls['teamId'].reset();
     //this.userForm.controls['roleId'].setValue('');
@@ -204,10 +207,14 @@ export class CreateUserComponent implements OnInit {
     }
     this.userForm.controls['roleId'].setValue(this.RoleIds);
     this.userForm.controls['teamId'].setValue(this.TeamIds);
-    if (this.userForm.invalid) {
-      console.log("In invalid")
-     // return;
-    }
+    
+    console.log(this.userForm);
+    console.log(this.userForm.invalid);
+    
+
+    
+    // console.log("submitting");
+    // return ;
     // console.log(this.userForm.value);
     // console.log();
     //breturn;
@@ -215,9 +222,19 @@ export class CreateUserComponent implements OnInit {
     if(this.userForm.value.id > 0){
       controllerRoute = "UpdateUser";
     }
+    if(controllerRoute != "UpdateUser" && this.userForm.invalid) {
+      console.log("In invalid")
+      return;
+    }
+    if(controllerRoute == "AddUser" && this.userForm?.controls["password"].value !== this.userForm?.controls["confirmpassword"].value) {
+      console.log("In Add User");
+      return;
+    }
+
     this.uservc.save(controllerRoute, this.userForm.value).subscribe({ 
       next: (res:any) => {
         console.log(res)
+        _self.onReset();
       },
       error: (err: HttpErrorResponse) => {
         // this.errorMessage = err.message;

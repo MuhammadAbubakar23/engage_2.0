@@ -1,8 +1,9 @@
+<form class="team-detail-form" [formGroup]="teamForm" (ngSubmit)="onSubmit()">
 <div class="create-team console-body-wrapper inbox-container footerheight" data-scrollbar="true" tabindex="-1"
     style="overflow-y:auto; outline: none;">
     <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
-        <div class="p-4">
-            <header class="tab-header">
+        <!-- <div class="p-4"> -->
+            <!-- <header class="tab-header">
                 <nav>
                     <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
                         <button class="nav-link active" id="user-tab" data-bs-toggle="tab" data-bs-target="#team-detail"
@@ -20,56 +21,55 @@
             </header>
             <div class="tab-body">
                 <div class="tab-content" id="nav-tabContent">
-
-                    <div id="team-detail" class="tab-pane fade active show" role="tabpanel" aria-labelledby="user-tab">
+                    <div id="team-detail" class="tab-pane fade active show" role="tabpanel" aria-labelledby="user-tab"> -->
                         <div class="wider-container">
                             <div class="team-detail-form-box mb-5">
-                                <form class="team-detail-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
-
-                                    <div class="floating-item mb-4">
-                                        <div class="floating-wrap form-floating mb-2"
-                                            [ngClass]="{'was-validated' : userForm.get('teamname')!.valid && userForm.get('teamname')!.touched}">
-                                            <input [ngClass]="{'is-invalid' : (userForm.get('teamname')!.errors && (userForm.get('teamname')!.touched ||
-                                            userForm.get('teamname')!.dirty))}" formControlName="teamname" type="text"
-                                                class="form-control" id="teamname" placeholder="Sales Team">
-                                            <label for="teamname">Team Name</label>
-                                            <div class="invalid-feedback" *ngIf="(userForm.get('teamname')!.errors && (userForm.get('teamname')!.touched ||
-                                                                              userForm.get('teamname')!.dirty))">
-                                                <div
-                                                    *ngIf="userForm.get('teamname')!.errors?.['maxlength'] || userForm.get('teamname')!.errors?.['minlength']">
-                                                    Team name must be grater than 1 character and less than 25
-                                                    characters!
+                                    <!-- <div class="row" data-scrollbar="true" tabindex="-1"
+                                    style="overflow-y:auto; outline: none;">
+                                    <div class="col-lg-6 fixed-top sticky-top "> -->
+                                        <div class="floating-item mb-4">
+                                            <div class="floating-wrap form-floating mb-2"
+                                                [ngClass]="{'was-validated' : teamForm.get('name')!.valid && teamForm.get('name')!.touched}">
+                                                <input [attr.disabled]="identity>0?'disabled':null" [ngClass]="{'is-invalid' : (teamForm.get('name')!.errors && (teamForm.get('name')!.touched ||
+                                                teamForm.get('name')!.dirty))}" formControlName="name" type="text"
+                                                    class="form-control" id="name" placeholder="Sales Team">
+                                                <label for="name">Team Name</label>
+                                                <div class="invalid-feedback" *ngIf="(teamForm.get('name')!.errors && (teamForm.get('name')!.touched ||
+                                                                                teamForm.get('name')!.dirty))">
+                                                    <div
+                                                        *ngIf="teamForm.get('name')!.errors?.['maxlength'] || teamForm.get('name')!.errors?.['minlength']">
+                                                        Team name must be grater than 1 character and less than 25
+                                                        characters!
+                                                    </div>
+                                                    <div *ngIf="teamForm.get('name')!.errors?.['required']">
+                                                        Team Name is required!
+                                                    </div>
                                                 </div>
-                                                <div *ngIf="userForm.get('teamname')!.errors?.['required']">
-                                                    Team Name is required!
+                                                <div class="valid-feedback"
+                                                    *ngIf="teamForm.get('name')!.valid && teamForm.get('name')!.touched">
+
+                                                    Looks Good!
                                                 </div>
                                             </div>
-                                            <div class="valid-feedback"
-                                                *ngIf="userForm.get('teamname')!.valid && userForm.get('teamname')!.touched">
-
-                                                Looks Good!
-                                            </div>
+                                            <small class="example-text ms-3">e.g. Customer support team</small>
                                         </div>
-                                        <small class="example-text ms-3">e.g. Customer support team</small>
-
-                                    </div>
-                                    <div class="floating-item mb-4">
-                                        <div [ngClass]="{'was-validated' : userForm.get('description')!.valid && userForm.get('description')!.touched}"
+                                        <div class="floating-item mb-4">
+                                        <div [ngClass]="{'was-validated' : teamForm.get('description')!.valid && teamForm.get('description')!.touched}"
                                             class="floating-wrap form-floating mb-2">
-                                            <textarea [ngClass]="{'is-invalid' : (userForm.get('description')!.errors && (userForm.get('description')!.touched ||
-                                            userForm.get('description')!.dirty))}" formControlName="description"
+                                            <textarea [attr.disabled]="identity>0?'disabled':null" [ngClass]="{'is-invalid' : (teamForm.get('description')!.errors && (teamForm.get('description')!.touched ||
+                                            teamForm.get('description')!.dirty))}" formControlName="description"
                                                 class="form-control" placeholder="Leave a comment here"
                                                 id="floatingTextarea2" style="height: 100px"></textarea>
                                             <label for="floatingTextarea2">Description</label>
-                                            <div class="invalid-feedback" *ngIf="(userForm.get('description')!.errors && (userForm.get('description')!.touched ||
-                                                                              userForm.get('description')!.dirty))">
+                                            <div class="invalid-feedback" *ngIf="(teamForm.get('description')!.errors && (teamForm.get('description')!.touched ||
+                                                                              teamForm.get('description')!.dirty))">
 
-                                                <div *ngIf="userForm.get('description')!.errors?.['required']">
+                                                <div *ngIf="teamForm.get('description')!.errors?.['required']">
                                                     Description is required!
                                                 </div>
                                             </div>
                                             <div class="valid-feedback"
-                                                *ngIf="userForm.get('description')!.valid && userForm.get('description')!.touched">
+                                                *ngIf="teamForm.get('description')!.valid && teamForm.get('description')!.touched">
 
                                                 Looks Good!
                                             </div>
@@ -78,192 +78,182 @@
                                             Tokyo
                                             timezone</small>
 
-                                    </div>
-                                    <div class="floating-item mb-4">
-                                        <div [ngClass]="{'was-validated' : userForm.get('businesshours')!.valid && userForm.get('businesshours')!.touched}"
-                                            class="floating-wrap form-floating mb-2">
-                                            <select [ngClass]="{'is-invalid' : (userForm.get('businesshours')!.errors && (userForm.get('businesshours')!.touched ||
-                                            userForm.get('businesshours')!.dirty))}" formControlName="businesshours"
-                                                class="form-select" id="floatingSelect"
-                                                aria-label="Floating label select">
-                                                <option selected="">Tokyo Business hours</option>
-                                                <option value="1">Option 1</option>
-                                                <option value="2">Option 1</option>
-                                                <option value="3">Option 1</option>
-                                            </select>
-                                            <label for="floatingSelect">Business hours</label>
-                                            <div class="invalid-feedback" *ngIf="(userForm.get('businesshours')!.errors && (userForm.get('businesshours')!.touched ||
-                              userForm.get('businesshours')!.dirty))">
-                                                <div *ngIf="userForm.get('businesshours')!.errors?.['required']">
-                                                    Please select Business Hours
+                                        </div>
+                                        <!-- <div class="floating-item mb-4">
+                                            <div [ngClass]="{'was-validated' : teamForm.get('businesshours')!.valid && teamForm.get('businesshours')!.touched}"
+                                                class="floating-wrap form-floating mb-2">
+                                                <select [ngClass]="{'is-invalid' : (teamForm.get('businesshours')!.errors && (teamForm.get('businesshours')!.touched ||
+                                                teamForm.get('businesshours')!.dirty))}" formControlName="businesshours"
+                                                    class="form-select" id="floatingSelect"
+                                                    aria-label="Floating label select">
+                                                    <option selected="">Tokyo Business hours</option>
+                                                    <option value="1">Option 1</option>
+                                                    <option value="2">Option 1</option>
+                                                    <option value="3">Option 1</option>
+                                                </select>
+                                                <label for="floatingSelect">Business hours</label>
+                                                <div class="invalid-feedback" *ngIf="(teamForm.get('businesshours')!.errors && (teamForm.get('businesshours')!.touched || teamForm.get('businesshours')!.dirty))">
+                                                    <div *ngIf="teamForm.get('businesshours')!.errors?.['required']">
+                                                        Please select Business Hours
+                                                    </div>
+                                                    
                                                 </div>
-                                                <!-- <div *ngIf="userForm.get('businesshours')!.errors?.['required']">
-                              businesshours is required!
-                            </div> -->
-
-                                            </div>
-                                            <div class="valid-feedback"
-                                                *ngIf="userForm.get('businesshours')!.valid && userForm.get('businesshours')!.touched">
-
-                                                Looks Good!
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="escalation-setting-box mb-5">
-                                <h6 class="mb-4 darkblue">Support Channels
-                                </h6>
-                                <form class="escalation-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                        
-                                    <div class="floating-item mb-4">
-                                        <div class="floating-wrap form-floating mb-2"
-                                            [ngClass]="{'was-validated' : userForm.get('supportchannelhour')!.valid && userForm.get('supportchannelhour')!.touched}">
-                                            <select [ngClass]="{'is-invalid' : (userForm.get('supportchannelhour')!.errors && (userForm.get('supportchannelhour')!.touched ||
-                                            userForm.get('supportchannelhour')!.dirty))}"
-                                                formControlName="supportchannelhour" class="form-select"
-                                                id="supportchannelhour" aria-label="Floating label select">
-                                                <option selected="">1 hour</option>
-                                                <option value="1">2 hours</option>
-                                                <option value="2">4 hours</option>
-                                                <option value="3">6 hours</option>
-                                            </select>
-                                            <label for="floatingSelect">If a ticket remains unassigned for more
-                                                than</label>
-                                            <div class="invalid-feedback" *ngIf="(userForm.get('supportchannelhour')!.errors && (userForm.get('supportchannelhour')!.touched ||
-                              userForm.get('supportchannelhour')!.dirty))">
-                                                <div *ngIf="userForm.get('supportchannelhour')!.errors?.['required']">
-                                                    Please select Hours
+                                                <div class="valid-feedback"
+                                                    *ngIf="teamForm.get('businesshours')!.valid && teamForm.get('businesshours')!.touched">
+                                                    Looks Good!
                                                 </div>
-                                                <!-- <div *ngIf="userForm.get('supportchannelhour')!.errors?.['required']">
-                              supportchannelhour is required!
-                            </div> -->
-
                                             </div>
-                                            <div class="valid-feedback"
-                                                *ngIf="userForm.get('supportchannelhour')!.valid && userForm.get('supportchannelhour')!.touched">
-
-                                                Looks Good!
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="floating-item mb-4">
-                                        <div class="floating-wrap form-floating mb-2"
-                                        [ngClass]="{'was-validated' : userForm.get('supportchannelteam')!.valid && userForm.get('supportchannelteam')!.touched}">
-                                            <select [ngClass]="{'is-invalid' : (userForm.get('supportchannelteam')!.errors && (userForm.get('supportchannelteam')!.touched ||
-                                            userForm.get('supportchannelteam')!.dirty))}" formControlName="supportchannelteam" class="form-select" id="floatingSelect"
-                                                aria-label="Floating label select">
-                                                <option selected="">Any</option>
-                                                <option value="1" selected="">Admin</option>
-                                                <option value="2">Corporate</option>
-                                                <option value="3">Sales</option>
-                                            </select>
-                                            <label for="floatingSelect">then send an email to</label>
-                                            <div class="invalid-feedback" *ngIf="(userForm.get('supportchannelteam')!.errors && (userForm.get('supportchannelteam')!.touched ||
-                              userForm.get('supportchannelteam')!.dirty))">
-                                                <div *ngIf="userForm.get('supportchannelteam')!.errors?.['required']">
-                                                    Please select Team
+                                        </div> -->
+                                        <!-- <div class="floating-item mb-4">
+                                            <div class="floating-wrap form-floating mb-2"
+                                                [ngClass]="{'was-validated' : teamForm.get('supportchannelhour')!.valid && teamForm.get('supportchannelhour')!.touched}">
+                                                <select [ngClass]="{'is-invalid' : (teamForm.get('supportchannelhour')!.errors && (teamForm.get('supportchannelhour')!.touched ||
+                                                teamForm.get('supportchannelhour')!.dirty))}"
+                                                    formControlName="supportchannelhour" class="form-select"
+                                                    id="supportchannelhour" aria-label="Floating label select">
+                                                    <option selected="">1 hour</option>
+                                                    <option value="1">2 hours</option>
+                                                    <option value="2">4 hours</option>
+                                                    <option value="3">6 hours</option>
+                                                </select>
+                                                <label for="floatingSelect">If a ticket remains unassigned for more
+                                                    than</label>
+                                                <div class="invalid-feedback" *ngIf="(teamForm.get('supportchannelhour')!.errors && (teamForm.get('supportchannelhour')!.touched ||
+                                  teamForm.get('supportchannelhour')!.dirty))">
+                                                    <div *ngIf="teamForm.get('supportchannelhour')!.errors?.['required']">
+                                                        Please select Hours
+                                                    </div>
+                                                   
+    
                                                 </div>
-                                                <!-- <div *ngIf="userForm.get('supportchannelteam')!.errors?.['required']">
-                              supportchannelteam is required!
-                            </div> -->
-
+                                                <div class="valid-feedback"
+                                                    *ngIf="teamForm.get('supportchannelhour')!.valid && teamForm.get('supportchannelhour')!.touched">
+                                                    Looks Good!
+                                                </div>
                                             </div>
-                                            <div class="valid-feedback"
-                                                *ngIf="userForm.get('supportchannelteam')!.valid && userForm.get('supportchannelteam')!.touched">
-
-                                                Looks Good!
+                                        </div> -->
+                                        <!-- <div class="floating-item mb-4">
+                                            <div class="floating-wrap form-floating mb-2"
+                                            [ngClass]="{'was-validated' : teamForm.get('supportchannelteam')!.valid && teamForm.get('supportchannelteam')!.touched}">
+                                                <select [ngClass]="{'is-invalid' : (teamForm.get('supportchannelteam')!.errors && (teamForm.get('supportchannelteam')!.touched ||
+                                                teamForm.get('supportchannelteam')!.dirty))}" formControlName="supportchannelteam" class="form-select" id="floatingSelect"
+                                                    aria-label="Floating label select">
+                                                    <option selected="">Any</option>
+                                                    <option value="1" selected="">Admin</option>
+                                                    <option value="2">Corporate</option>
+                                                    <option value="3">Sales</option>
+                                                </select>
+                                                <label for="floatingSelect">then send an email to</label>
+                                                <div class="invalid-feedback" *ngIf="(teamForm.get('supportchannelteam')!.errors && (teamForm.get('supportchannelteam')!.touched ||
+                                  teamForm.get('supportchannelteam')!.dirty))">
+                                                    <div *ngIf="teamForm.get('supportchannelteam')!.errors?.['required']">
+                                                        Please select Team
+                                                    </div>
+                                                </div>
+                                                <div class="valid-feedback"
+                                                    *ngIf="teamForm.get('supportchannelteam')!.valid && teamForm.get('supportchannelteam')!.touched">
+    
+                                                    Looks Good!
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </form>
+                                        </div> -->
+                                        <!-- <div class="floating-item mb-4">
+                                            <ul class="list-group">
+                                                <li
+                                                    class="list-group-item d-flex justify-content-between align-items-sm-center shadow-sm rounded border p-3 saltBg">
+                                                    <div class="ms-2 me-auto darkblue">
+                                                        <div class="fw-bold darkblue">Automatic conversation assignment</div>
+                                                        Distribute and balance the number of conversation assigned to agents in this
+                                                        group
+                                                    </div>
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input collapsed" type="checkbox"
+                                                            id="flexSwitchCheckDefault" data-bs-toggle="collapse"
+                                                            data-bs-target="#togglecard1" aria-expanded="false"
+                                                            aria-controls="togglecard1">
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="collapse" id="togglecard1">
+                                                <div class="card card-body">
+                                                    <h5 class="darkblue mb-3 mt-3">Choose and assignment mode</h5>
+                                                    <div class="form-check mb-3">
+                                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                            id="flexRadioDefault1">
+                                                        <div class="ms-2 me-auto silver lh-sm">
+                                                            <div class="fw-bold darkblue mb-1">Round robin assignment</div>
+                                                            Assign conversation to agents in a circular order.
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-check mb-3">
+                                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                            id="flexRadioDefault1">
+                                                        <div class="ms-2 me-auto silver lh-sm">
+                                                            <div class="fw-bold darkblue mb-1">Load balanced assignment ( Powered by
+                                                                EnteractRoute
+                                                                <sup>TM</sup>)
+                                                            </div>
+                                                            Distribute and balance the number of tickets assigned to agents in this
+                                                            group, based on channels.
+                                                            Edit the agent’s capping limit in
+                                                            <a href="javascript:">EnteractRoute settings.</a>
+                                                        </div>
+                                                    </div>
+                
+                                                    <div class="form-check mb-3">
+                                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                            id="flexRadioDefault1">
+                                                        <div class="ms-2 me-auto silver lh-sm">
+                                                            <div class="fw-bold darkblue mb-1">Round robin assignment -
+                                                                <a href="javascript:">Manage skills
+                                                                </a>
+                                                            </div>
+                                                            Assign conversation to agents based on their skills.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                
+                                                <div>
+                                                    <h5 class="mb-3 mt-5 fw-bold darkblue">Agent availability</h5>
+                                                    <div class="form-check mb-3">
+                                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                            id="flexRadioDefault1">
+                                                        <div class="ms-2 me-auto silver lh-sm">
+                                                            <div class="fw-bold darkblue mb-1">Allow agents to set their own
+                                                                availability status</div>
+                                                            Agents can set their status according to their activity. Admins and
+                                                            supervisors can still override
+                                                            an agent’s availability from the dashboard.
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-check mb-3">
+                                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                            id="flexRadioDefault1">
+                                                        <div class="ms-2 me-auto coal lh-sm">
+                                                            <div class="fw-bold darkblue mb-1">Centrally manage the agent availabilities
+                                                            </div>
+                                                            Admins and supervisors will manage the agent’s availability from the
+                                                            dashboard.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    <!-- </div>
+                                    <div class="col-lg-6 fixed-top sticky-top overflow-scroll" style="height: 500px;"> -->
+                                        <!-- <span class="coal mb-4">
+                                            The Accesses of default teams cannot be edited. Create a new role to select custom
+                                            accesses.
+                                        </span>
+                                        <div class="border mb-3"></div> -->
+                                        <engage2-card-box-list [menulist]="TeamsNAccesses" [menulistselectall]="menulistselectall" (menulistchecked)="setMenuList($event)"></engage2-card-box-list>
+                                    <!-- </div> -->
+                                    <!-- </div> -->
+                                
                             </div>
-
-                            <ul class="list-group">
-                                <li
-                                    class="list-group-item d-flex justify-content-between align-items-sm-center shadow-sm rounded border p-3 saltBg">
-                                    <div class="ms-2 me-auto darkblue">
-                                        <div class="fw-bold darkblue">Automatic conversation assignment</div>
-                                        Distribute and balance the number of conversation assigned to agents in this
-                                        group
-                                    </div>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input collapsed" type="checkbox"
-                                            id="flexSwitchCheckDefault" data-bs-toggle="collapse"
-                                            data-bs-target="#togglecard1" aria-expanded="false"
-                                            aria-controls="togglecard1">
-                                    </div>
-                                </li>
-                            </ul>
-                            <div class="collapse" id="togglecard1">
-                                <div class="card card-body">
-                                    <h5 class="darkblue mb-3 mt-3">Choose and assignment mode</h5>
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1">
-                                        <div class="ms-2 me-auto silver lh-sm">
-                                            <div class="fw-bold darkblue mb-1">Round robin assignment</div>
-                                            Assign conversation to agents in a circular order.
-                                        </div>
-                                    </div>
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1">
-                                        <div class="ms-2 me-auto silver lh-sm">
-                                            <div class="fw-bold darkblue mb-1">Load balanced assignment ( Powered by
-                                                EnteractRoute
-                                                <sup>TM</sup>)
-                                            </div>
-                                            Distribute and balance the number of tickets assigned to agents in this
-                                            group, based on channels.
-                                            Edit the agent’s capping limit in
-                                            <a href="javascript:">EnteractRoute settings.</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1">
-                                        <div class="ms-2 me-auto silver lh-sm">
-                                            <div class="fw-bold darkblue mb-1">Round robin assignment -
-                                                <a href="javascript:">Manage skills
-                                                </a>
-                                            </div>
-                                            Assign conversation to agents based on their skills.
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <h5 class="mb-3 mt-5 fw-bold darkblue">Agent availability</h5>
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1">
-                                        <div class="ms-2 me-auto silver lh-sm">
-                                            <div class="fw-bold darkblue mb-1">Allow agents to set their own
-                                                availability status</div>
-                                            Agents can set their status according to their activity. Admins and
-                                            supervisors can still override
-                                            an agent’s availability from the dashboard.
-                                        </div>
-                                    </div>
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1">
-                                        <div class="ms-2 me-auto coal lh-sm">
-                                            <div class="fw-bold darkblue mb-1">Centrally manage the agent availabilities
-                                            </div>
-                                            Admins and supervisors will manage the agent’s availability from the
-                                            dashboard.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="team-user" class="tab-pane fade" role="tabpanel" aria-labelledby="team-tab">
+                        </div>   
+                    <!-- </div> -->
+                    <!-- <div id="team-user" class="tab-pane fade" role="tabpanel" aria-labelledby="team-tab">
                         <div class="filter-toolbar">
                             <div class="row">
                                 <div class="col-lg-6">
@@ -285,7 +275,7 @@
                                                 <option>Roles</option>
                                                 <option>Teams</option>
                                             </select>
-                                            <!-- <span class="select2 select2-container select2-container--default"
+                                            <span class="select2 select2-container select2-container--default"
                                                 dir="ltr" data-select2-id="select2-data-2-pec0"
                                                 style="width: auto;"><span class="selection"><span
                                                         class="select2-selection select2-selection--single"
@@ -298,7 +288,7 @@
                                                             aria-readonly="true" title="All ">All </span><span
                                                             class="select2-selection__arrow" role="presentation"><b
                                                                 role="presentation"></b></span></span></span><span
-                                                    class="dropdown-wrapper" aria-hidden="true"></span></span> -->
+                                                    class="dropdown-wrapper" aria-hidden="true"></span></span>
 
                                         </li>
                                     </ul>
@@ -312,13 +302,8 @@
                                         <i class="fal fa-plus me-2"></i>
                                         Add Team Members
                                     </button>
-
-
-
                                 </div>
                             </div>
-
-
                         </div>
                         <div class="filter-container">
 
@@ -570,10 +555,10 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </div> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </div> -->
     </div>
     <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
         <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 1560px; transform: translate3d(0px, 0px, 0px);">
@@ -594,19 +579,13 @@
                 </div>
                 <div class="col-md-8 justify-content-end d-flex">
                     <div class="buttons-wrap d-flex">
-                        <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4"
-                            data-bs-toggle="modal" data-bs-target="">Cancel </button>
-                        <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"></button>
-                        <button type="button" class="btn skyBg ms-2 px-4 btn-medium saveBtn" data-bs-toggle="modal"
-                            data-bs-target="">Next</button>
+                        <button type="reset" class="btn btn-outline-secondary btn-medium me-2 px-4">Cancel </button>
+                        
+                        <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn" >Save</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </footer>
-
-<div [class.show]="isActive==true" class="offcanvas offcanvas-end" tabindex="-1" id="addteammembers"
-    aria-labelledby="offcanvasRightLabel" style="visibility: visible;" aria-hidden="true">
-    <app-add-team-members></app-add-team-members>
-</div>
+</form>

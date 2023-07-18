@@ -1,9 +1,16 @@
-<select  
-        (ngModelChange)="onTeamSelect($event)" 
-        class="btn form-select" 
-        style="border:0px; height: 50px;" 
+<select 
+        (change)="onTeamSelect($event)" 
+        class="form-input form-select" 
         tabindex="-1" 
         aria-hidden="true">
     <option *ngFor="let op of opt; let i = index" [value]="op.id" [attr.selected]='op.id==selected?"selected":null' >{{ op.name }}</option>
 </select>
 <!-- [(ngModel)]="selectedTeam" -->
+<!-- <ng-select [items]="opt"
+            [(ngModel)]="selectedTeam"
+            bindLabel="name" 
+            bindValue="id"          
+            [searchable]="false"
+            [clearable]="false"
+           >
+        </ng-select> -->

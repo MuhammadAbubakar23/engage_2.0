@@ -1,21 +1,21 @@
-<header class="main-header shadow-sm agent-header">
+<!-- <header class="main-header shadow-sm agent-header">
     <div class="row justify-content-between">
-        <div class="col-9">
+        <div class="col-9"> -->
             <div class="social-header-left">
-                <div class="header-left d-flex align-items-center" >
-                    <a class="btn iconButton medium iconHover btn-group me-1 back-to-dashboard-btn" type="button"
-                    [routerLink]="['/all-inboxes/conversation']">
+                <div class="header-left d-flex align-items-center">
+                    <!-- <a class="btn iconButton medium iconHover btn-group me-1 back-to-dashboard-btn" type="button"
+                    [routerLink]="['/all-inboxes']">
                         <i class="fal fa-arrow-left"></i>
-                    </a>
-                        <div class="iconButton large" *ngIf="profilePic !=''">
-                            <img src={{profilePic}} class="rounded-circle w-100">
-                        </div>
-                        <!-- <h6 class="avatar-title navy m-0 ms-2">{{userName.split('<')[0]}}</h6> -->
-                        <h6 class="avatar-title navy m-0 ms-2">{{userName}}</h6>
-                    
+                    </a> -->
+                    <div class="iconButton large" *ngIf="profilePic">
+                        <img src={{profilePic}} class="rounded-circle w-100">
+                    </div>
+                    <!-- <h6 class="avatar-title navy m-0 ms-2">{{userName.split('<')[0]}}</h6> -->
+                    <h6 class="avatar-title navy m-0 ms-2">{{userName}}</h6>
+
                     <div class="dropdown w-auto">
-                        <button class="iconButton medium iconHover mx-2 mt-2" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        <button class="iconButton medium iconHover mx-2 mt-2" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fal fa-ellipsis-v-alt"></i>
                         </button>
                         <ul class="dropdown-menu custom-dropdown medium shadow mt-2 assignFirstDropdownList"
@@ -27,7 +27,7 @@
                                             Assign to...
                                         </a>
                                     </li>
-                                    <li>
+                                    <!-- <li>
                                         <a class="dropdown-item">
                                             Mark as unread
                                         </a>
@@ -40,8 +40,8 @@
                                     <li>
                                         <a class="dropdown-item">
                                             Create quick rules
-                                        </a>
-                                    </li>
+<<<<<<< HEAD
+>>>>>>> master
                                     <li class="important-option mb-0">
                                         <a class="dropdown-item">
                                             Mark as spam
@@ -57,7 +57,7 @@
                                             Block sender
                                         </a>
                                     </li>
-                                    <li class="important-option mb-0">
+                                    <!-- <li class="important-option mb-0">
                                         <a class="dropdown-item">
                                             Copy conversation ID
                                         </a>
@@ -76,25 +76,26 @@
                                         <a class="dropdown-item">
                                             View in external window
                                         </a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </li>
                         </ul>
-                        <ul class="dropdown-menu custom-dropdown medium shadow mt-2 assignSecondDropdownList" [ngClass]="showAgentsList == true?'show':''"
-                            aria-labelledby="dropdownMenuButton2">
+                        <ul class="dropdown-menu custom-dropdown medium shadow mt-2 assignSecondDropdownList"
+                            [ngClass]="showAgentsList == true?'show':''" aria-labelledby="dropdownMenuButton2">
                             <div>
                                 <ul class="dropdown-listing">
                                     <li class="dropdown-listing-header">
                                         <div class="head-section">
                                             <div class="left">
-                                                <a class="dropdown-item p-1 active dropdownBackBtn iconButton dropdown-iconBtn small active" 
-                                                (click)="hideTeamList()">
-                                                    <i class="fal fa-arrow-left silver" ></i>
+                                                <a class="dropdown-item p-1 active dropdownBackBtn iconButton dropdown-iconBtn small active"
+                                                    (click)="hideTeamList()">
+                                                    <i class="fal fa-arrow-left silver"></i>
                                                 </a>
                                                 <h6>Assign to</h6>
                                             </div>
-                                            <a class="iconButton dropdown-iconBtn small active dropdownCrossBtn" (click)="closeTeamList()"
-                                                id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <a class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
+                                                (click)="closeTeamList()" id="dropdownMenuButton3"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="fal fa-times silver"></i>
                                             </a>
                                         </div>
@@ -107,11 +108,13 @@
                                         </form>
                                     </li>
                                     <li class="list-body small-list">
-                                        <div class="list-group list-group-flush" >
-                                            <a class="list-group-item d-flex level1Btn" *ngFor="let agent of AgentsTeamList"> 
+                                        <div class="list-group list-group-flush">
+                                            <a class="list-group-item d-flex level1Btn" *ngFor="let agent of ActiveAgents">
                                                 <div class="form-check w-100 p-0 theme-check">
-                                                    <input class="form-check-input float-end" type="checkbox" id="gridCheck" (click)="sendAgentId(agent.id)">
-                                                    <label class="form-check-label coal d-flex align-items-center" for="gridCheck">
+                                                    <input class="form-check-input float-end" type="checkbox"
+                                                    [id]="agent.id" (click)="sendAgentId(agent.userId, platform)">
+                                                    <label class="form-check-label coal d-flex align-items-center"
+                                                    [for]="agent.id">
                                                         <!-- <div class="list-down-icon">
                                                             <span class="btn iconButton iconHover medium cherryTransBg">
                                                                 AK
@@ -126,116 +129,150 @@
                                                     </label>
                                                 </div>
                                             </a>
+                                            
                                         </div>
                                     </li>
                                     <li class="card-footer">
                                         <div class="dropdown-item">
-                                            <button type="button" class="btn btn-success" (click)="assignToAnotherAgent()">Assign</button>
+                                            <button type="button" class="btn btn-success"
+                                                (click)="assignToAnotherAgent()">Assign</button>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
                         </ul>
                     </div>
-            
+
                     <div class="social-wrapper d-flex align-items-center mx-2">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                data-bs-original-title="ibex.connect">
-                                <button [class.active]="facebookTab == true" class="nav-link iconButton medium btn iconHover notification facebook " id="facebook-tab"
-                                    data-bs-toggle="tab" data-bs-target="#facebook" type="button" role="tab"
-                                    aria-controls="facebook" aria-selected="true"
-                                    [routerLink]="['/responder/Facebook']">
+                                data-bs-original-title="facebook"
+                                *ngIf="facebookComment == true || facebookMessage == true">
+                                <button [class.active]="facebookTab == true"
+                                    class="nav-link iconButton medium btn iconHover notification facebook "
+                                    id="facebook-tab" data-bs-toggle="tab" data-bs-target="#facebook" type="button"
+                                    role="tab" aria-controls="facebook" aria-selected="true"
+                                    (click)="updatevalue(facebookId, 'Facebook')">
                                     <i class="fab fa-facebook-f coal"></i>
-                                    <span class="badge badge-pill badge-dark" *ngIf="totalFbUnrespondedCountByCustomer > 0">{{totalFbUnrespondedCountByCustomer}}</span>
-                                    
+                                    <span class="badge badge-pill badge-dark"
+                                        *ngIf="totalFbUnrespondedCountByCustomer > 0">{{totalFbUnrespondedCountByCustomer}}</span>
+
                                 </button>
-                                
+
                             </li>
                             <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                data-bs-original-title="Whatsapp">
-                                <button [class.active]="whatsappTab == true" class="nav-link iconButton medium btn iconHover notification whatsapp" id="whatsapp-tab"
-                                    data-bs-toggle="tab" data-bs-target="#whatsapp" type="button" role="tab"
-                                    aria-controls="whatsapp" aria-selected="false"
-                                    [routerLink]="['/responder/WhatsApp']">
+                                data-bs-original-title="Whatsapp" *ngIf="whatsapp == true">
+                                <button [class.active]="whatsappTab == true"
+                                    class="nav-link iconButton medium btn iconHover notification whatsapp"
+                                    id="whatsapp-tab" data-bs-toggle="tab" data-bs-target="#whatsapp" type="button"
+                                    role="tab" aria-controls="whatsapp" aria-selected="false"
+                                    (click)="updatevalue(whatsappId, 'WhatsApp')">
                                     <i class="fab fa-whatsapp coal"></i>
-                                    <span class="badge badge-pill badge-dark" *ngIf="WtsapUnrespondedCmntCountByCustomer > 0">{{WtsapUnrespondedCmntCountByCustomer}}</span>
+                                    <span class="badge badge-pill badge-dark"
+                                        *ngIf="WtsapUnrespondedCmntCountByCustomer > 0">{{WtsapUnrespondedCmntCountByCustomer}}</span>
                                 </button>
                             </li>
-                            <li  class="nav-item selector_nav_item" role="presentation" data-bs-toggle="tooltip" 
-                                    data-bs-placement="bottom" data-bs-original-title="WebChat">
-                                        <button [class.active]="webChatTab == true" class="nav-link iconButton medium btn notification iconHover webchat" id="webChat-tab" 
-                                        data-bs-toggle="tab" data-bs-target="#webChat" type="button" role="tab" aria-controls="webChat" 
-                                        aria-selected="false" tabindex="-1" [routerLink]="['/responder/Webchat']">
-                                         <i class="fal fa-comments-alt coal"></i>
-                                         <span class="badge badge-pill badge-dark" *ngIf="WcUnrespondedCmntCountByCustomer > 0">{{WcUnrespondedCmntCountByCustomer}}</span>
-                                        </button>
+                            <li class="nav-item selector_nav_item" role="presentation" data-bs-toggle="tooltip"
+                                data-bs-placement="bottom" data-bs-original-title="WebChat" *ngIf="webChat == true">
+                                <button [class.active]="webChatTab == true"
+                                    class="nav-link iconButton medium btn notification iconHover webchat"
+                                    id="webChat-tab" data-bs-toggle="tab" data-bs-target="#webChat" type="button"
+                                    role="tab" aria-controls="webChat" aria-selected="false" tabindex="-1"
+                                    (click)="updatevalue(webChatId, 'WebChat')">
+                                    <i class="fal fa-comments-alt coal"></i>
+                                    <span class="badge badge-pill badge-dark"
+                                        *ngIf="WcUnrespondedCmntCountByCustomer > 0">{{WcUnrespondedCmntCountByCustomer}}</span>
+                                </button>
                             </li>
                             <li class="nav-item selector_nav_item" role="presentation" data-bs-toggle="tooltip"
-                                data-bs-placement="bottom" data-bs-original-title="SMS/Text">
-                                <button [class.active]="smsTab == true" class="nav-link iconButton medium btn iconHover notification sms" id="sms-tab"
-                                    data-bs-toggle="tab" data-bs-target="#sms" type="button" role="tab" aria-controls="sms"
-                                    aria-selected="false" [routerLink]="['/responder/Sms']">
+                                data-bs-placement="bottom" data-bs-original-title="SMS/Text" *ngIf="sms == true">
+                                <button [class.active]="smsTab == true"
+                                    class="nav-link iconButton medium btn iconHover notification sms" id="sms-tab"
+                                    data-bs-toggle="tab" data-bs-target="#sms" type="button" role="tab"
+                                    aria-controls="sms" aria-selected="false" (click)="updatevalue(smsId, 'SMS')">
                                     <i class="fal fa-comment-alt-lines coal"></i>
-                                    <span class="badge badge-pill badge-dark" *ngIf="SmsUnrespondedCmntCountByCustomer > 0">{{SmsUnrespondedCmntCountByCustomer}}</span>
+                                    <span class="badge badge-pill badge-dark"
+                                        *ngIf="SmsUnrespondedCmntCountByCustomer > 0">{{SmsUnrespondedCmntCountByCustomer}}</span>
                                 </button>
                             </li>
-            
+
                             <li class="nav-item selector_nav_item" role="presentation" data-bs-toggle="tooltip"
-                                data-bs-placement="bottom" data-bs-original-title="Insta">
-                                <button [class.active]="instagramTab == true" class="nav-link iconButton medium btn iconHover notification insta" id="insta-tab"
-                                    data-bs-toggle="tab" data-bs-target="#insta" type="button" role="tab" aria-controls="insta"
-                                    aria-selected="false" [routerLink]="['/responder/Instagram']">
-                                    <span class="badge badge-pill badge-dark" *ngIf="InstaUnrespondedCmntCountByCustomer > 0">{{InstaUnrespondedCmntCountByCustomer}}</span>
+                                data-bs-placement="bottom" data-bs-original-title="Insta" *ngIf="instagram == true">
+                                <button [class.active]="instagramTab == true"
+                                    class="nav-link iconButton medium btn iconHover notification insta" id="insta-tab"
+                                    data-bs-toggle="tab" data-bs-target="#insta" type="button" role="tab"
+                                    aria-controls="insta" aria-selected="false"
+                                    (click)="updatevalue(instagramId, 'Instagram')">
+                                    <span class="badge badge-pill badge-dark"
+                                        *ngIf="totalInstaUnrespondedCountByCustomer > 0">{{totalInstaUnrespondedCountByCustomer}}</span>
                                     <i class="fab fa-instagram"></i>
                                 </button>
                             </li>
                             <li class="nav-item selector_nav_item" role="presentation" data-bs-toggle="tooltip"
-                                data-bs-placement="bottom" data-bs-original-title="Twitter">
-                                    <button [class.active]="twitterTab == true" class="nav-link iconButton medium btn iconHover notification twitter" id="twitter-tab"
-                                    data-bs-toggle="tab" data-bs-target="#twitter" type="button" role="tab" aria-controls="insta"
-                                    aria-selected="false" [routerLink]="['/responder/Twitter']">
+                                data-bs-placement="bottom" data-bs-original-title="Twitter"
+                                *ngIf="twitterComment == true || twitterMessage == true">
+                                <button [class.active]="twitterTab == true"
+                                    class="nav-link iconButton medium btn iconHover notification twitter"
+                                    id="twitter-tab" data-bs-toggle="tab" data-bs-target="#twitter" type="button"
+                                    role="tab" aria-controls="insta" aria-selected="false"
+                                    (click)="updatevalue(twitterId, 'Twitter')">
                                     <i class="fab fa-twitter"></i>
-                                    <span class="badge badge-pill badge-dark" *ngIf="totalTwitterUnrespondedCountByCustomer > 0">{{totalTwitterUnrespondedCountByCustomer}}</span>
+                                    <span class="badge badge-pill badge-dark"
+                                        *ngIf="totalTwitterUnrespondedCountByCustomer > 0">{{totalTwitterUnrespondedCountByCustomer}}</span>
                                 </button>
                             </li>
                             <li class="nav-item selector_nav_item" role="presentation" data-bs-toggle="tooltip"
-                                data-bs-placement="bottom" data-bs-original-title="Phone">
-                                <button [class.active]="phoneTab == true" class="nav-link iconButton medium btn iconHover notification phone" id="phone-tab"
-                                    data-bs-toggle="tab" data-bs-target="#phone" type="button" role="tab" aria-controls="phone"
-                                    aria-selected="false" [routerLink]="['/responder/Phone']">
+                                data-bs-placement="bottom" data-bs-original-title="Phone" *ngIf="phone == true">
+                                <button [class.active]="phoneTab == true"
+                                    class="nav-link iconButton medium btn iconHover notification phone" id="phone-tab"
+                                    data-bs-toggle="tab" data-bs-target="#phone" type="button" role="tab"
+                                    aria-controls="phone" aria-selected="false" (click)="updatevalue(phoneId, 'Phone')">
                                     <i class="fas fa-phone-alt"></i>
                                 </button>
                             </li>
-                            <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                                    data-bs-original-title="Email">
-                                        <button [class.active]="emailTab == true" class="nav-link iconButton medium btn iconHover notification email" 
-                                        id="emails-tab" data-bs-toggle="tab" data-bs-target="#emails" type="button" role="tab" aria-controls="emails" 
-                                        aria-selected="false" tabindex="-1" [routerLink]="['/responder/Email']">
-                                            <i class="fal fa-envelope coal"></i>
-                                            <span class="badge badge-pill badge-dark" *ngIf="EmailUnrespondedCmntCountByCustomer > 0">{{EmailUnrespondedCmntCountByCustomer}}</span>
-                                        </button>
-                            </li>
-                            <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="linkedin">
-                                <button [class.active]="linkedInTab == true" class="nav-link iconButton medium btn iconHover notification linkedin"  id="linkedin-tab"
-                                 data-bs-toggle="tab" data-bs-target="#linkedin" type="button" role="tab" aria-controls="linkedin" aria-selected="false" tabindex="-1"
-                                 [routerLink]="['/responder/LinkedIn']">
-                                 <i class="fa-brands fa-linkedin-in"></i>
-                                 <span class="badge badge-pill badge-dark" *ngIf="LinkedInUnrespondedCmntCountByCustomer > 0">{{LinkedInUnrespondedCmntCountByCustomer}}</span>
+                            <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                data-bs-original-title="Email" *ngIf="email == true">
+                                <button [class.active]="emailTab == true"
+                                    class="nav-link iconButton medium btn iconHover notification email" id="emails-tab"
+                                    data-bs-toggle="tab" data-bs-target="#emails" type="button" role="tab"
+                                    aria-controls="emails" aria-selected="false" tabindex="-1"
+                                    (click)="updatevalue(emailId, 'Email')">
+                                    <i class="fal fa-envelope coal"></i>
+                                    <span class="badge badge-pill badge-dark"
+                                        *ngIf="EmailUnrespondedCmntCountByCustomer > 0">{{EmailUnrespondedCmntCountByCustomer}}</span>
                                 </button>
                             </li>
-                            <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="googleplay">
-                                <button class="nav-link iconButton medium btn iconHover notification googleplay" id="googleplay-tab" data-bs-toggle="tab" data-bs-target="#googleplay" type="button" role="tab" aria-controls="googleplay" aria-selected="false" tabindex="-1">
-                                <i class="fa-brands fa-google-play"></i>
+                            <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                data-bs-original-title="linkedin" *ngIf="linkedIn == true">
+                                <button [class.active]="linkedInTab == true"
+                                    class="nav-link iconButton medium btn iconHover notification linkedin"
+                                    id="linkedin-tab" data-bs-toggle="tab" data-bs-target="#linkedin" type="button"
+                                    role="tab" aria-controls="linkedin" aria-selected="false" tabindex="-1"
+                                    (click)="updatevalue(linkedInId, 'LinkedIn')">
+                                    <i class="fa-brands fa-linkedin-in"></i>
+                                    <span class="badge badge-pill badge-dark"
+                                        *ngIf="LinkedInUnrespondedCmntCountByCustomer > 0">{{LinkedInUnrespondedCmntCountByCustomer}}</span>
                                 </button>
                             </li>
-                            <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                            data-bs-original-title="Youtube">
-                                <button [class.active]="youtubeTab == true" class="nav-link iconButton medium btn iconHover notification youtube" id="youtube-tab" 
-                                data-bs-toggle="tab" data-bs-target="#youtube" type="button" role="tab" aria-controls="youtube" 
-                                aria-selected="false" tabindex="-1" [routerLink]="['/responder/Youtube']">
+                            <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                data-bs-original-title="googleplay" *ngIf="playStore == true">
+                                <button class="nav-link iconButton medium btn iconHover notification googleplay"
+                                    id="googleplay-tab" data-bs-toggle="tab" data-bs-target="#googleplay" type="button"
+                                    role="tab" aria-controls="googleplay" aria-selected="false" tabindex="-1"
+                                    (click)="updatevalue(playStoreId, 'PlayStore')">
+                                    <i class="fa-brands fa-google-play"></i>
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                data-bs-original-title="Youtube" *ngIf="youtube == true">
+                                <button [class.active]="youtubeTab == true"
+                                    class="nav-link iconButton medium btn iconHover notification youtube"
+                                    id="youtube-tab" data-bs-toggle="tab" data-bs-target="#youtube" type="button"
+                                    role="tab" aria-controls="youtube" aria-selected="false" tabindex="-1"
+                                    (click)="updatevalue(youtubeId, 'Youtube')">
                                     <i class="fab fa-youtube"></i>
-                                    <span class="badge badge-pill badge-dark" *ngIf="YoutubeUnrespondedCmntCountByCustomer > 0">{{YoutubeUnrespondedCmntCountByCustomer}}</span>
+                                    <span class="badge badge-pill badge-dark"
+                                        *ngIf="YoutubeUnrespondedCmntCountByCustomer > 0">{{YoutubeUnrespondedCmntCountByCustomer}}</span>
                                 </button>
                             </li>
                         </ul>
@@ -245,25 +282,43 @@
                             id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="dropdown-title">Mark As</div>
                         </a>
-            
+
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li>
+                            <!-- <li>
                                 <a class="dropdown-item mark-as-draftbtn" 
-                                (click)="minimizeChat('allInboxesHeader','inboxMenu')" 
-                                [routerLink]="['/all-inboxes/conversation']">Draft</a>
+                                (click)="minimizeChat()" 
+                                >Draft</a>
+                            </li> -->
+                            <li>
+                                <a class="dropdown-item" (click)="markAllAsRead()">Read All</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" (click)="markAsComplete('allInboxesHeader', userId)">Save</a>
+                                <a class="dropdown-item" (click)="markAsComplete(platform, userId)">Save</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-        </div>
+        <!-- </div>
 
 
         <div class="col-3">
-            <app-right-header-components></app-right-header-components>
+            <right-header-components></right-header-components>
         </div>
     </div>
-</header>
+</header> -->
+
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+            <div class="toast-btn d-flex align-items-center">
+
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
+
+            </div>
+        </div>
+    </div>
+</div>

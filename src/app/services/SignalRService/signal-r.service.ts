@@ -1,59 +1,188 @@
 import { Injectable } from '@angular/core';
-import * as signalR from '@aspnet/signalr'
+import * as signalR from '@microsoft/signalr';
+import { IHttpConnectionOptions } from '@microsoft/signalr';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
+import { AddTagService } from '../AddTagService/add-tag.service';
+import { ApplySentimentService } from '../ApplySentimentService/apply-sentiment.service';
+import { QueryStatusService } from '../queryStatusService/query-status.service';
+import { RemoveAssignedQuerryService } from '../RemoveAssignedQuery/remove-assigned-querry.service';
+import { RemoveTagService } from '../RemoveTagService/remove-tag.service';
+import { ReplyService } from '../replyService/reply.service';
+import { UnRespondedCountService } from '../UnRepondedCountService/un-responded-count.service';
+import { UpdateCommentsService } from '../UpdateCommentsService/update-comments.service';
+import { UpdateListService } from '../UpdateListService/update-list.service';
+import { UpdateMessagesService } from '../UpdateMessagesService/update-messages.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SignalRService {
+  data: any;
+  addTags: any;
+  removeTags: any;
+  UnrespondedCount: any;
+  reply:any
 
-  data:any;
-
+  token = localStorage.getItem('token');
+  signalRStatus = localStorage.getItem('signalRStatus')
+  
   public hubconnection!: signalR.HubConnection;
-  public connectionId !: string;
-  public broadcastedData !: any[];
+  public connectionId!: string;
+  public broadcastedData!: any[];
 
-  public startConnection = () => {
+  constructor(
+    private storage:StorageService,
+    private addTagService: AddTagService,
+    private removeTagService: RemoveTagService,
+    private unrespondedCountService: UnRespondedCountService,
+    private updateListService : UpdateListService,
+    private updateCommentsService : UpdateCommentsService,
+    private updateMessagesService : UpdateMessagesService,
+    private replyService : ReplyService,
+    private queryStatusService : QueryStatusService,
+    private removeAssignedQueryService : RemoveAssignedQuerryService,
+    private applySentimentService : ApplySentimentService
+  ) {}
+
+  startConnection() {
     
-    this.hubconnection = new signalR.HubConnectionBuilder()
-    .withUrl('https://common-engage.enteract.app/ConnectionHub')
-    .build();
-
-    this.hubconnection.start()
-    .then(()=> console.log('Connection Starteddd'))
-    .then(()=> this.getConnectionId())
-    .catch(err => console.log('error ==>', err))
+     let team = this.storage.retrive("nocompass","O").local;
+    const options: IHttpConnectionOptions = {
+      accessTokenFactory: () => {
+        return 'Bearer ' + localStorage.getItem('token');
+      },
+      headers : {"X-Super-Team": JSON.stringify(team.id)}
+    };
+    
+      this.hubconnection = new signalR.HubConnectionBuilder()
+      .withUrl('https://common-engage.enteract.app/ConnectionHub', options)
+      .withAutomaticReconnect()
+      .configureLogging(signalR.LogLevel.Information)
+      .build();
+    this.hubconnection
+      .start()
+      .then(() => console.log('Connection started'))
+      .then(() => this.getConnectionId())
+      .catch((err) => console.log('Error while starting connection: ' + err));
   }
 
-  constructor() { }
+  reConnect(){
+    var conId = localStorage.getItem('signalRConnectionId')
+    if(conId){
+     let team = this.storage.retrive("nocompass","O").local;
+    const options: IHttpConnectionOptions = {
+      accessTokenFactory: () => {
+        return 'Bearer ' + localStorage.getItem('token');
+      },
+      headers : {"X-Super-Team": JSON.stringify(team.id)}
+    };
+    
+      this.hubconnection = new signalR.HubConnectionBuilder()
+      .withUrl('https://common-engage.enteract.app/ConnectionHub', options)
+      .withAutomaticReconnect()
+      .configureLogging(signalR.LogLevel.Information)
+      .build();
+    this.hubconnection
+      .start()
+      .then(() => console.log('Connection started'))
+      .then(() => this.getConnectionId())
+      .catch((err) => console.log('Error while starting connection: ' + err));
+  }
+  }
+  
 
-  getConnectionId() {
-    this.hubconnection.invoke('GetConnectionId')
-    .then((data)=>{
+  public updateListAndDetailDataListener = () => {
+    
+    this.hubconnection.on('SendData', (data) => {
+      
+      if(data.conversationQueues !=null){
+        this.updateListService.sendList(data.conversationQueues)
+      }
+      if (data.signalRConversiontions != null) {
+        this.updateCommentsService.sendComment(data.signalRConversiontions)
+      }
+      if (data.signalRDMConversations != null) {
+        this.updateMessagesService.sendMessage(data.signalRDMConversations)
+      }
+    });
+  };
+
+  public addTagDataListner = () => {
+    this.hubconnection.on('ApplyTags', (addTags) => {
+      this.addTagService.sendTags(addTags);
+    });
+  };
+
+  public removeTagDataListener = () => {
+    this.hubconnection.on('RemoveTags', (removeTags) => {
+      this.removeTagService.sendTags(removeTags);
+    });
+  };
+
+  public unRespondedCountDataListener = () => {
+    
+    this.hubconnection.on('UnrespondedCount', (UnrespondedCount) => {
+      
+      // console.log('SignalR UnrespondedCount ==> ', UnrespondedCount);
+      this.unrespondedCountService.sendUnRespondedCount(UnrespondedCount);
+    });
+  };
+
+  public replyDataListener = () => {
+    
+    this.hubconnection.on('QueryReply', (reply) => {
+      // console.log('SignalR QueryReply ==> ', reply);
+      this.replyService.sendReply(reply);
+    });
+  };
+
+  public queryStatusDataListener = () => {
+    
+      this.hubconnection.on('QueryStatusProcess', (queryStatus) => {
+      // console.log('SignalR queryStatus ==> ', queryStatus);
+      this.queryStatusService.sendQueryStatus(queryStatus);
+    });
+  };
+  
+  public bulkQueryStatusDataListener = () => {
+    
+    this.hubconnection.on('ListQueryStatusProcess', (queryStatus) => {
+    // console.log('SignalR ListQueryStatusProcess ==> ', queryStatus);
+    this.queryStatusService.bulkSendQueryStatus(queryStatus);
+  });
+};
+
+public assignQueryResponseListner = () => {
+  
+  this.hubconnection.on('AssignQueryResponse', (removeAssignedQuerry) => {
+    
+    this.removeAssignedQueryService.sendAssignedQuerry(removeAssignedQuerry);
+  });
+};
+
+public applySentimentListner = () => {
+  this.hubconnection.on('ApplySentimentTags', (appliedSentiment) => {
+    this.applySentimentService.sendSentiment(appliedSentiment);
+  });
+};
+
+public checkConnectionStatusListener = () => {
+  
+  this.hubconnection.on('GetMessage', (status) => {
+    
+    this.hubconnection.invoke('SetConnection').then((data) => {
+      
+      // console.log('setconnection data', data)
+    });
+  // console.log('SignalR Status ==> ', status);
+ // this.queryStatusService.bulkSendQueryStatus(status);
+});
+};
+
+  getConnectionId = () => {
+    this.hubconnection.invoke('getconnectionid').then((data) => {
       this.connectionId = data;
-      console.log("invoke data",data)
-    })
-
-  }
-
-  // public addTransferChatDataListener = () => {
-  //   this.hubconnection.on('SendData', (data) => {
-  //     debugger
-  //     data.conversationQueues.forEach((newMsg: any) => {
-  //       const index = this.ConversationList.findIndex((obj) => obj.user === newMsg.user);
-  //       if (index !== -1) {
-  //         this.ConversationList.forEach((main: any) => {
-  //           if (newMsg.user == main.user) {
-  //             this.listingDto = newMsg;
-  //             this.listingDto.unrespondedCount = main.unrespondedCount + newMsg.unrespondedCount;
-  //             this.ConversationList[index] = this.listingDto;
-  //           }
-  //         });
-  //       } else {
-  //         this.ConversationList.push(newMsg);
-  //       }
-  //       console.log("after signalR", this.ConversationList)
-  //       this.changeDetect.detectChanges();
-  //     });
-  //   });
-  // };
+      localStorage.setItem('signalRConnectionId', this.connectionId)
+    });
+  };
 }

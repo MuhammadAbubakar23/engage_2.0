@@ -2,6 +2,6 @@ export class InsertSentimentForFeedDto{
   feedId: string="";
   feedType: string="";
   sentiment: string="";
-  companyId: number=2;
-  userId: number=2;
+  companyId: number=0;
+  userId: number=0;
 }

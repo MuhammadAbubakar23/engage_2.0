@@ -1,10 +1,23 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { Tooltip } from 'bootstrap';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
+import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
+import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
-import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
+import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
+import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
+import { ReplyService } from 'src/app/services/replyService/reply.service';
+import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
+import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
+import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
 import { CommentStatusDto } from 'src/app/shared/Models/CommentStatusDto';
 import { commentsDto } from 'src/app/shared/Models/concersationDetailDto';
 import { FiltersDto } from 'src/app/shared/Models/FiltersDto';
@@ -19,13 +32,22 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
   styleUrls: ['./email.component.scss'],
 })
 export class EmailComponent implements OnInit {
+  @ViewChild('fileInput') fileInput!: ElementRef;
+
+  @Input() name: string = '';
+  @Input() subname: string = '';
+  @Input() imagename: string = '';
+  @Input() linkname: string = 'javascript:;';
+
   Emails: any;
 
   id = this.fetchId.getOption();
   slaId = this.fetchId.getSlaId();
+  parentPlatform = this.fetchId.platform;
 
-  pageNumber: any = 0;
-  pageSize: any = 0;
+  pageNumber: any = 1;
+  pageSize: any = 10;
+  newReply: any;
 
   filterDto = new FiltersDto();
 
@@ -34,63 +56,358 @@ export class EmailComponent implements OnInit {
   active = false;
   expandedEmailBody: boolean = false;
   activeTag = false;
+  TodayDate: any;
+  queryStatus: any;
+
+  spinner1running = false;
+  spinner2running = false;
 
   public Subscription!: Subscription;
+  public criteria!: SortCriteria;
+  searchText: string = '';
 
+  emailReplyForm!: FormGroup;
   constructor(
     private fetchId: FetchIdService,
     private commondata: CommonDataService,
-    private SpinnerService : NgxSpinnerService,
-    private signalRService: SignalRService,
-    private changeDetect: ChangeDetectorRef
+    private SpinnerService: NgxSpinnerService,
+    private changeDetect: ChangeDetectorRef,
+    private addTagService: AddTagService,
+    private removeTagService: RemoveTagService,
+    private updateCommentsService: UpdateCommentsService,
+    private queryStatusService: QueryStatusService,
+    private replyService: ReplyService,
+    private unrespondedCountService: UnRespondedCountService,
+    private applySentimentService: ApplySentimentService
   ) {
-    this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res)=>{
+    this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
+      this.id = null;
       this.id = res;
       this.getEmails();
-    })
+    });
+
+    this.emailReplyForm = new FormGroup({
+      text: new FormControl(''),
+      commentId: new FormControl(0),
+      teamId: new FormControl(0),
+      platform: new FormControl(''),
+      contentType: new FormControl(''),
+      to: new FormControl(''),
+      cc: new FormControl(''),
+      bcc: new FormControl(''),
+      subject: new FormControl(''),
+      profileId: new FormControl(''),
+      profilePageId: new FormControl(''),
+      userProfileId: new FormControl(0),
+    });
   }
 
   ngOnInit(): void {
+    this.fullName = localStorage.getItem('storeOpenedId') || '{}';
 
-    // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    // .forEach(tooltipNode => new Tooltip(tooltipNode));
-    
+    this.criteria = {
+      property: 'createdDate',
+      descending: true,
+    };
+    this.TodayDate = new Date();
+
     this.getEmails();
-    this.getSlaEmails();
     this.getTagList();
-    
-   // this.signalRService.startConnection();
-  //  this.addTransferChatDataListener();
+
+    this.Subscription = this.addTagService.receiveTags().subscribe((res) => {
+      this.addTags = res;
+      this.addTagDataListner();
+    });
+    this.Subscription = this.removeTagService.receiveTags().subscribe((res) => {
+      this.removeTags = res;
+      this.removeTagDataListener();
+    });
+    this.Subscription = this.updateCommentsService
+      .receiveComment()
+      .subscribe((res) => {
+        this.updatedComments = res;
+        this.updateCommentsDataListener();
+      });
+    this.Subscription = this.queryStatusService
+      .receiveQueryStatus()
+      .subscribe((res) => {
+        this.queryStatus = res;
+        this.updateQueryStatusDataListner();
+      });
+    this.Subscription = this.replyService.receiveReply().subscribe((res) => {
+      this.newReply = res;
+      this.replyDataListner();
+    });
+    this.Subscription = this.unrespondedCountService
+      .getUnRespondedCount()
+      .subscribe((res) => {
+        if (
+          res.contentCount.contentType == 'Mail' ||
+          res.contentCount.contentType == 'OMail'
+        ) {
+          this.totalUnrespondedCmntCountByCustomer =
+            res.contentCount.unrespondedCount;
+        }
+      });
+    this.Subscription = this.queryStatusService
+      .bulkReceiveQueryStatus()
+      .subscribe((res) => {
+        this.queryStatus = res;
+        this.updateBulkQueryStatusDataListner();
+      });
+
+    this.Subscription = this.applySentimentService
+      .receiveSentiment()
+      .subscribe((res) => {
+        this.applySentimentListner(res);
+      });
   }
 
   commentDto = new commentsDto();
-  
-  public addTransferChatDataListener = () => {
-    this.signalRService.hubconnection.on('SendData', (data) => {
-      data.signalRConversiontions.forEach((xyz: any) => {
-        if (this.id == xyz.userId) {
-          this.commentDto = xyz;
-          this.Emails[0].comments.push(this.commentDto);
-        }
-      });
-      this.changeDetect.detectChanges();
+
+  updatedComments: any;
+  senderEmailAddress: any;
+
+  updateCommentsDataListener() {
+    this.updatedComments.forEach((xyz: any) => {
+      if (this.id == xyz.userId) {
+        this.commentDto = {
+          id: xyz.id,
+          postId: xyz.postId,
+          commentId: xyz.commentId,
+          message: xyz.message,
+          contentType: xyz.contentType,
+          userName: xyz.userName || xyz.userId,
+          queryStatus: xyz.queryStatus,
+          createdDate: xyz.createdDate,
+          fromUserProfilePic: xyz.profilePic,
+          body: xyz.body,
+          to: xyz.toId,
+          cc: xyz.cc,
+          bcc: xyz.bcc,
+          attachments: xyz.mediaAttachments,
+          replies: [],
+          sentiment: '',
+          tags: [],
+        };
+        this.Emails.forEach((item: any) => {
+          this.commentsArray = [];
+          item.comments.push(this.commentDto);
+          item.comments.forEach((cmnt: any) => {
+            this.commentsArray.push(cmnt);
+          });
+
+          let groupedItems = this.commentsArray.reduce(
+            (acc: any, item: any) => {
+              const date = item.createdDate.split('T')[0];
+              if (!acc[date]) {
+                acc[date] = [];
+              }
+              acc[date].push(item);
+              return acc;
+            },
+            {}
+          );
+
+          item['groupedComments'] = Object.keys(groupedItems).map(
+            (createdDate) => {
+              return {
+                createdDate,
+                items: groupedItems[createdDate],
+              };
+            }
+          );
+        });
+        this.totalUnrespondedCmntCountByCustomer =
+          this.totalUnrespondedCmntCountByCustomer + 1;
+
+        this.Emails?.forEach((msg: any) => {
+          this.To = msg?.comments[0]?.to[0]?.emailAddress;
+        });
+      }
     });
-  };
-  To:string=""
-  totalUnrespondedCmntCountByCustomer:number=0;
+    this.changeDetect.detectChanges();
+  }
+
+  To: string = '';
+  totalUnrespondedCmntCountByCustomer: number = 0;
+
+  commentsArray: any[] = [];
+  groupArrays: any[] = [];
+  fullName: string = '';
+  replyAttachments: any[] = [];
+  multipleTo: any[] = [];
+  multipleCc: any[] = [];
 
   getEmails() {
-    if(this.id != null || undefined){
+    if (this.id != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
         user: this.id,
         pageId: '',
-        plateForm: 'Email',
+        plateForm: this.parentPlatform,
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize,
+        isAttachment: false,
+      };
+
+      this.SpinnerService.show();
+      this.spinner1running = true;
+      this.commondata
+        .GetChannelConversationDetail(this.filterDto)
+        .subscribe((res: any) => {
+          this.SpinnerService.hide();
+          this.spinner1running = false;
+          this.Emails = res.List;
+          this.fullName = this.Emails[0].user.userName.split('<')[0];
+          this.senderEmailAddress = this.Emails[0].user.userId;
+          this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+
+          this.commentsArray = [];
+          this.Emails?.forEach((item: any) => {
+            this.commentsArray = [];
+            item.comments.forEach((cmnt: any) => {
+              this.commentsArray.push(cmnt);
+            });
+            let groupedItems = this.commentsArray.reduce(
+              (acc: any, item: any) => {
+                const date = item.createdDate.split('T')[0];
+                if (!acc[date]) {
+                  acc[date] = [];
+                }
+                acc[date].push(item);
+                return acc;
+              },
+              {}
+            );
+
+            item['groupedComments'] = Object.keys(groupedItems).map(
+              (createdDate) => {
+                return {
+                  createdDate,
+                  items: groupedItems[createdDate],
+                };
+              }
+            );
+            item.groupedComments.forEach((group: any) => {
+              group.items.forEach((email: any) => {
+                this.multipleTo = [];
+                this.multipleCc = [];
+                email.to.forEach((singleTo:any) => {
+                  if (!this.multipleTo.includes(singleTo.emailAddress)) {
+                    this.multipleTo.push(singleTo.emailAddress);
+                  }
+                  email['multipleTo'] = this.multipleTo.join(', ');
+                });
+                
+
+                email.cc?.forEach((singleCc: any) => {
+                  if (!this.multipleCc.includes(singleCc.emailAddress)) {
+                    this.multipleCc.push(singleCc.emailAddress);
+                  }
+                  email['multipleCc'] = this.multipleCc.join(', ');
+                });
+                
+              });
+              console.log(this.Emails)
+              
+            });
+          });
+
+          this.Emails?.forEach((item: any) => {
+            this.To = item?.comments[0]?.to[0]?.emailAddress;
+          });
+        });
+    } else if (this.slaId != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.slaId);
+      this.filterDto = {
+        // fromDate: new Date(),
+        // toDate: new Date(),
+        user: this.slaId,
+        pageId: '',
+        plateForm: this.parentPlatform,
         pageNumber: 0,
         pageSize: 0,
+        isAttachment: false,
       };
-  
+
+      this.SpinnerService.show();
+      this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
+        this.SpinnerService.hide();
+        this.Emails = res.List;
+        this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+        this.senderEmailAddress = this.Emails[0].user.userId;
+        this.fullName = this.Emails[0].user.userName.split('<')[0];
+
+        this.commentsArray = [];
+        this.Emails?.forEach((item: any) => {
+          this.commentsArray = [];
+          item.comments.forEach((cmnt: any) => {
+            this.commentsArray.push(cmnt);
+          });
+          let groupedItems = this.commentsArray.reduce(
+            (acc: any, item: any) => {
+              const date = item.createdDate.split('T')[0];
+              if (!acc[date]) {
+                acc[date] = [];
+              }
+              acc[date].push(item);
+              return acc;
+            },
+            {}
+          );
+
+          item['groupedComments'] = Object.keys(groupedItems).map(
+            (createdDate) => {
+              return {
+                createdDate,
+                items: groupedItems[createdDate],
+              };
+            }
+          );
+          item.groupedComments.forEach((group: any) => {
+            group.items.forEach((email: any) => {
+              this.multipleTo = [];
+              this.multipleCc = [];
+              email.to.forEach((singleTo:any) => {
+                if (!this.multipleTo.includes(singleTo.emailAddress)) {
+                  this.multipleTo.push(singleTo.emailAddress);
+                }
+                email['multipleTo'] = this.multipleTo.join(', ');
+              });
+              
+
+              email.cc?.forEach((singleCc: any) => {
+                if (!this.multipleCc.includes(singleCc.emailAddress)) {
+                  this.multipleCc.push(singleCc.emailAddress);
+                }
+                email['multipleCc'] = this.multipleCc.join(', ');
+              });
+              
+            });
+            console.log(this.Emails)
+            
+          });
+        });
+
+        this.Emails?.forEach((item: any) => {
+          this.To = item?.comments[0]?.to[0]?.emailAddress;
+        });
+      });
+    } else {
+      this.filterDto = {
+        // fromDate: new Date(),
+        // toDate: new Date(),
+        user: localStorage.getItem('storeOpenedId') || '{}',
+        pageId: '',
+        plateForm: localStorage.getItem('parent') || '{}',
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize,
+        isAttachment: false,
+      };
+
       this.SpinnerService.show();
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
@@ -98,35 +415,62 @@ export class EmailComponent implements OnInit {
           this.SpinnerService.hide();
           this.Emails = res.List;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-  
-          this.Emails.forEach((msg:any) => {
-            this.To = msg.comments[0].to;
+          this.senderEmailAddress = this.Emails[0].user.userId;
+          this.fullName = this.Emails[0].user.userName.split('<')[0];
+
+          this.commentsArray = [];
+          this.Emails?.forEach((item: any) => {
+            this.commentsArray = [];
+            item.comments.forEach((cmnt: any) => {
+              this.commentsArray.push(cmnt);
+            });
+            let groupedItems = this.commentsArray.reduce(
+              (acc: any, item: any) => {
+                const date = item.createdDate.split('T')[0];
+                if (!acc[date]) {
+                  acc[date] = [];
+                }
+                acc[date].push(item);
+                return acc;
+              },
+              {}
+            );
+
+            item['groupedComments'] = Object.keys(groupedItems).map(
+              (createdDate) => {
+                return {
+                  createdDate,
+                  items: groupedItems[createdDate],
+                };
+              }
+            );
+            item.groupedComments.forEach((group: any) => {
+              group.items.forEach((email: any) => {
+                this.multipleTo = [];
+                this.multipleCc = [];
+                email.to.forEach((singleTo:any) => {
+                  if (!this.multipleTo.includes(singleTo.emailAddress)) {
+                    this.multipleTo.push(singleTo.emailAddress);
+                  }
+                  email['multipleTo'] = this.multipleTo.join(', ');
+                });
+                
+
+                email.cc?.forEach((singleCc: any) => {
+                  if (!this.multipleCc.includes(singleCc.emailAddress)) {
+                    this.multipleCc.push(singleCc.emailAddress);
+                  }
+                  email['multipleCc'] = this.multipleCc.join(', ');
+                });
+                
+              });
+              console.log(this.Emails)
+              
+            });
           });
-        });
-    }
-  }
-  getSlaEmails() {
-    if(this.slaId != null || undefined){
-      this.filterDto = {
-        // fromDate: new Date(),
-        // toDate: new Date(),
-        user: this.slaId,
-        pageId: '',
-        plateForm: 'Email',
-        pageNumber: 0,
-        pageSize: 0,
-      };
-  
-      this.SpinnerService.show();
-      this.commondata
-        .GetSlaDetail(this.filterDto)
-        .subscribe((res: any) => {
-          this.SpinnerService.hide();
-          this.Emails = res.List;
-          this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-  
-          this.Emails.forEach((msg:any) => {
-            this.To = msg.comments[0].to;
+
+          this.Emails?.forEach((item: any) => {
+            this.To = item?.comments[0]?.to[0]?.emailAddress;
           });
         });
     }
@@ -135,125 +479,116 @@ export class EmailComponent implements OnInit {
     this.expandedEmailBody = !this.expandedEmailBody;
   }
 
-  markRead:boolean=false;
-  opened:boolean=false;
-  replyId:any[]=[];
-  emailId:any
+  markRead: boolean = false;
+  opened: boolean = false;
+  replyId: any[] = [];
+  emailId: any;
+  selectedIndex: any;
 
-  openEmail(id:any){
-
-    this.Emails.forEach((xyz:any) => {
-      xyz.comments.forEach((email:any) => {
-        if (email.id == id){
+  openEmail(id: any) {
+    this.Emails.forEach((xyz: any) => {
+      xyz.comments.forEach((email: any) => {
+        if (email.id == id) {
           this.emailId = email.id;
           this.opened = true;
-    this.markRead = !this.markRead;
-
+          this.markRead = !this.markRead;
         }
-        email.replies.forEach((reply:any) => {
-          if(reply.id == id){
-            if(this.replyId.includes(id)){
+        email.replies.forEach((reply: any) => {
+          if (reply.id == id) {
+            if (this.replyId.includes(id)) {
               this.replyId.splice(id);
               this.opened = false;
-   this.markRead = !this.markRead;
+              this.markRead = !this.markRead;
             } else {
               this.replyId.push(reply.id);
               this.opened = true;
               this.markRead = !this.markRead;
             }
-            
-            
           }
-          
         });
       });
-      
     });
 
-    
+    if (this.selectedIndex === id) {
+      this.selectedIndex = 'collapsed unread';
+    } else {
+      this.selectedIndex = '';
+    }
   }
 
   insertTagsForFeedDto = new InsertTagsForFeedDto();
-  checkTag=false;
+  checkTag = false;
 
-  insertTags(id: any, comId: any) {
-    
+  insertTags(id: any, comId: any, feedType: any) {
     this.insertTagsForFeedDto.feedId = comId.toString();
     this.insertTagsForFeedDto.tagId = id;
-    this.insertTagsForFeedDto.feedType = 'Mail';
+    this.insertTagsForFeedDto.feedType = feedType;
+    this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
 
     this.Emails.forEach((abc: any) => {
       abc.comments.forEach((comment: any) => {
         if (comment.id == comId) {
-          if (comment.tags.length > 0) {
-            for (let len = 0; len < comment.tags.length; len++) {
-              comment.tags.forEach((tag: any) => {
-                if (tag.id == id) {
-                  this.removeTag(id, comId);
-                }
+          if (comment.tags.length == 0) {
+            this.commondata
+              .InsertTag(this.insertTagsForFeedDto)
+              .subscribe((res: any) => {
+                this.reloadComponent('ApplyTag');
+
+                this.activeTag = true;
+                this.checkTag = true;
               });
+          } else if (comment.tags.length > 0) {
+            const value = comment.tags.find((x: any) => x.id == id);
+            if (value != null || value != undefined) {
+              this.removeTag(id, comId, feedType);
+            } else {
+              this.commondata
+                .InsertTag(this.insertTagsForFeedDto)
+                .subscribe((res: any) => {
+                  this.reloadComponent('ApplyTag');
+
+                  this.activeTag = true;
+                  this.checkTag = true;
+                });
             }
-            this.commondata
-              .InsertTag(this.insertTagsForFeedDto)
-              .subscribe((res: any) => {
-                //  alert(res.message);
-                this.getEmails();
-                this.getSlaEmails();
-                this.reloadComponent('ApplyTag');
-                this.activeTag = true;
-                this.checkTag = true;
-              });
-          } else {
-            this.commondata
-              .InsertTag(this.insertTagsForFeedDto)
-              .subscribe((res: any) => {
-                //  alert(res.message);
-                this.getEmails();
-                this.getSlaEmails();
-                this.reloadComponent('ApplyTag');
-                this.activeTag = true;
-                this.checkTag = true;
-              });
           }
         }
       });
     });
-   
   }
   insertSentimentForFeedDto = new InsertSentimentForFeedDto();
+  appliedSentiment: string = '';
 
-  insertSentiment(feedId: any, sentimenName: any, type:any) {
-    
+  insertSentiment(feedId: any, sentimenName: any, type: any) {
     this.insertSentimentForFeedDto.feedId = feedId.toString();
     this.insertSentimentForFeedDto.sentiment = sentimenName;
     this.insertSentimentForFeedDto.feedType = type;
+    this.insertSentimentForFeedDto.userId = Number(
+      localStorage.getItem('agentId')
+    );
 
     this.commondata
       .InsertSentiment(this.insertSentimentForFeedDto)
       .subscribe((res: any) => {
         this.reloadComponent('Sentiment');
-
+        this.appliedSentiment = sentimenName;
       });
   }
 
-  removeTag(id: any, comId: any) {
-    
+  removeTag(id: any, comId: any, feedType: any) {
     this.insertTagsForFeedDto.feedId = comId.toString();
     this.insertTagsForFeedDto.tagId = id;
-    this.insertTagsForFeedDto.feedType = 'Mail';
+    this.insertTagsForFeedDto.feedType = feedType;
+    this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
 
     this.commondata
       .RemoveTag(this.insertTagsForFeedDto)
       .subscribe((res: any) => {
-        //  alert(res.message);
-        this.getEmails();
-        this.getSlaEmails();
         this.reloadComponent('RemoveTag');
 
         this.activeTag = false;
         this.checkTag = false;
       });
-      
   }
   Sentiments = [
     {
@@ -273,7 +608,7 @@ export class EmailComponent implements OnInit {
     },
   ];
 
-  TagsList:any;
+  TagsList: any;
   Keywords: any[] = [];
 
   getTagList() {
@@ -283,104 +618,151 @@ export class EmailComponent implements OnInit {
         xyz.keywordList.forEach((abc: any) => {
           this.Keywords.push(abc);
         });
-        console.log('keywords==>', this.Keywords);
+        // console.log('keywords==>', this.Keywords);
       });
-      console.log('TagList', this.TagsList);
+      // console.log('TagList', this.TagsList);
     });
   }
 
   closeMentionedReply() {
     this.show = false;
+    this.clearInputField();
   }
-  // toggle(child: string) {
-  //   let routr = this._route.url;
-  //   let parent = localStorage.getItem('parent');
 
-  //   this.isOpen = !this.isOpen;
-  //   if (this.isOpen) {
-  //     this._route.navigateByUrl(
-  //       'all-inboxes/' + '(c1:' + parent + '//c2:' + child + ')'
-  //     );
+  replyDto = new ReplyDto();
 
-  //     this.toggleService.addTogglePanel('panelToggled');
-  //   } else {
-  //     this._route.navigateByUrl('all-inboxes/' + '(c1:' + parent + ')');
-  //     this.toggleService.addTogglePanel('');
-  //   }
-  // }
+  agentId: string = '';
+  platform: string = '';
+  postType: string = '';
+  emailTo: any;
+  emailCc: string = '';
+  emailBcc: string = '';
+  emailSubject: string = '';
+  emailFrom: any[] = [];
+  emailFromInString: string = '';
+  emailCcInString: string = '';
 
-  ReplyDto = new ReplyDto();
-
-  emailReplyForm = new UntypedFormGroup({
-    text: new UntypedFormControl(this.ReplyDto.text),
-    commentId: new UntypedFormControl(this.ReplyDto.commentId),
-    teamId: new UntypedFormControl(this.ReplyDto.teamId),
-    platform: new UntypedFormControl(this.ReplyDto.platform),
-    contentType: new UntypedFormControl(this.ReplyDto.contentType),
-  });
-
-  agentTeamId :number=0;
-  platform :string="";
-  postType : string = ""
-  emailTo:any;
-  emailCc:any;
-  emailBcc:any;
-  emailSubject:any;
-  emailFrom:any;
+  emailCcArray: any[] = [];
+  emailToArray: any[] = [];
 
   sendEmailInformation(id: any) {
     this.Emails.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
         if (comment.id == id) {
-          
-
           // populate comment data
 
           this.emailId = comment.id;
-          this.agentTeamId = 2;
+          this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
           this.postType = comment.contentType;
           this.emailTo = comment.to;
-          this.emailCc = comment.cc;
-          this.emailBcc = comment.bcc;
-          this.emailSubject = comment.body;
-          this.emailFrom = comment.userName.split(/[<>]/)[1];
+
+          if (comment.bcc) {
+            this.emailBcc = comment.bcc;
+          }
+          this.emailSubject = comment.message;
+
+          this.emailFrom = this.emailTo;
+          const index = this.emailFrom.find(
+            (x: any) => x.emailAddress == this.To
+          );
+          if (index != -1) {
+            this.emailFrom.splice(index, 1);
+            this.emailFrom.unshift({
+              name: this.fullName,
+              emailAddress: this.senderEmailAddress,
+            });
+          }
+          this.emailFromInString = '';
+          this.emailToArray = [];
+          comment.to?.forEach((item: any) => {
+            if (!this.emailToArray.includes(item.emailAddress)) {
+              this.emailToArray.push(item.emailAddress);
+            }
+            this.emailFromInString = this.emailToArray.join(', ');
+          });
+          if (comment.cc) {
+            this.emailCc = comment.cc;
+          }
+          this.emailCcInString='';
+          this.emailCcArray = [];
+          if (comment.cc) {
+            comment.cc?.forEach((item: any) => {
+              if (!this.emailCcArray.includes(item.emailAddress)) {
+                this.emailCcArray.push(item.emailAddress);
+              }
+              this.emailCcInString = this.emailCcArray.join(', ');
+            });
+          } else {
+            this.emailCcInString = '';
+          }
         }
       });
     });
   }
 
   ImageName: any;
+  ImageArray: any[] = [];
 
+  replyTo: any[] = [];
+  replyCc: any[] = [];
+  replyBcc: any[] = [];
   submitEmailReply() {
-    
     if (
-      !this.emailReplyForm.get('emailTo')?.dirty ||
-      !this.emailReplyForm.get('emailCc')?.dirty ||
-      !this.emailReplyForm.get('emailBcc')?.dirty ||
-      !this.emailReplyForm.get('emailSubject')?.dirty
+      !this.emailReplyForm.get('to')?.dirty ||
+      !this.emailReplyForm.get('cc')?.dirty ||
+      !this.emailReplyForm.get('bcc')?.dirty ||
+      !this.emailReplyForm.get('subject')?.dirty
     ) {
-      if (!this.emailReplyForm.get('emailTo')?.dirty) {
+      if (!this.emailReplyForm.get('to')?.dirty) {
         this.emailReplyForm.patchValue({
-          to: this.emailFrom,
+          to: JSON.stringify(this.emailFrom),
+        });
+      } else {
+        const to = this.emailReplyForm.value.to.split(',');
+        to.forEach((item: any) => {
+          this.replyTo.push({ name: '', emailAddress: item });
+        });
+        this.emailReplyForm.patchValue({
+          to: JSON.stringify(this.replyTo),
         });
       }
-      if (!this.emailReplyForm.get('emailCc')?.dirty) {
+      if (!this.emailReplyForm.get('cc')?.dirty) {
+        if (this.emailCc != '') {
+          this.emailReplyForm.patchValue({
+            cc: JSON.stringify(this.emailCc),
+          });
+        }
+      } else {
+        const cc = this.emailReplyForm.value.cc.split(',');
+        cc.forEach((item: any) => {
+          this.replyCc.push({ name: '', emailAddress: item });
+        });
         this.emailReplyForm.patchValue({
-          cc: this.emailCc,
+          cc: JSON.stringify(this.replyCc),
         });
       }
-      if (!this.emailReplyForm.get('emailBcc')?.dirty) {
+      if (!this.emailReplyForm.get('bcc')?.dirty) {
+        if (this.emailBcc) {
+          this.emailReplyForm.patchValue({
+            bcc: JSON.stringify(this.emailBcc),
+          });
+        }
+      } else {
+        const bcc = this.emailReplyForm.value.bcc.split(',');
+        bcc.forEach((item: any) => {
+          this.replyBcc.push({ name: '', emailAddress: item });
+        });
         this.emailReplyForm.patchValue({
-          bcc: this.emailBcc,
+          bcc: JSON.stringify(this.replyBcc),
         });
       }
-      if (!this.emailReplyForm.get('emailSubject')?.dirty) {
+      if (!this.emailReplyForm.get('subject')?.dirty) {
         this.emailReplyForm.patchValue({
           subject: this.emailSubject,
         });
-      }  
-    } 
+      }
+    }
     var formData = new FormData();
     if (this.ImageName != null || undefined) {
       for (let index = 0; index < this.ImageName.length; index++) {
@@ -390,47 +772,53 @@ export class EmailComponent implements OnInit {
 
     this.emailReplyForm.patchValue({
       commentId: this.emailId,
-      teamId: this.agentTeamId,
+      teamId: this.agentId,
       platform: this.platform,
       contentType: this.postType,
     });
 
-    formData.append(
-      'CommentReply',
-      JSON.stringify(this.emailReplyForm.value)
-    );
+    formData.append('CommentReply', JSON.stringify(this.emailReplyForm.value));
     this.commondata.ReplyComment(formData).subscribe(
       (res: any) => {
         this.clearInputField();
-        this.getEmails();
-        this.getSlaEmails();
-
         this.reloadComponent('comment');
+        this.emailReplyForm.reset();
+        this.closeReplyModal();
       },
       ({ error }) => {
-        alert(error.message);
+        //  alert(error.message);
       }
     );
   }
-  onFileChanged(event: any) {
-    if (event.target.files.length > 0) {
-      this.ImageName = event.target.files;
+  onFileChanged() {
+    if (this.fileInput.nativeElement.files.length > 0) {
+      this.isAttachment = true;
+
+      const filesArray = Array.from(this.fileInput.nativeElement.files);
+      filesArray.forEach((attachment: any) => {
+        this.ImageArray.push(attachment);
+      });
+      const files = this.ImageArray.map((file: any) => file); // Create a new array with the remaining files
+      const newFileList = new DataTransfer();
+      files.forEach((file: any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+      this.ImageName = newFileList.files;
     }
   }
 
-  emailText:any;
-  emailReply:any;
-
   clearInputField() {
-    this.emailReply = '';
-    this.emailText = '';
+    this.emailCcArray = [];
+    this.emailCc = '';
     this.show = false;
     this.emailId = '';
-    this.agentTeamId = 0;
+    this.agentId = '';
     this.platform = '';
     this.postType = '';
+    this.emailTo = '';
+    this.emailBcc = '';
+    this.emailSubject = '';
+    this.fileInput.nativeElement.value = '';
+    this.detectChanges();
   }
-
   toastermessage = false;
   AlterMsg: any = '';
   reloadComponent(type: any) {
@@ -491,45 +879,328 @@ export class EmailComponent implements OnInit {
 
   commentStatusDto = new CommentStatusDto();
   querryCompleted = false;
-  storeComId:any;
+  storeComId: any;
 
-  emailStatus(comId: any) {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = 'Mail';
-    this.commentStatusDto.plateForm = 'Email';
-    this.commondata
-      .CommentRespond(this.commentStatusDto)
-      .subscribe((res: any) => {
-        this.querryCompleted = true;
-        this.storeComId = comId;
-        alert(res.message);
-        this.getEmails();
-        this.getSlaEmails();
-      });
-  }
+  showCcBtn: boolean = true;
+  showBccBtn: boolean = true;
+  showCcInput: boolean = false;
+  showBccInput: boolean = false;
 
-  showCcBtn:boolean=true;
-  showBccBtn:boolean=true;
-  showCcInput:boolean=false;
-  showBccInput:boolean=false;
-
-  OpenCc(){
+  OpenCc() {
     this.showCcBtn = false;
     this.showCcInput = true;
-
   }
-  OpenBcc(){
+  OpenBcc() {
     this.showBccBtn = false;
     this.showBccInput = true;
   }
-  closeReplyModal(){
-    this.showCcBtn=true;
-    this.showBccBtn=true;
-    this.showCcInput=false;
-    this.showBccInput=false;
+  closeReplyModal() {
+    this.showCcBtn = true;
+    this.showBccBtn = true;
+    this.showCcInput = false;
+    this.showBccInput = false;
   }
 
-  expandReply(){
-    
+  expandReply() {}
+  Emojies = [
+    { id: 1, emoji: '🙁', tile: 'sad' },
+    { id: 2, emoji: '😀', tile: 'happy' },
+    { id: 3, emoji: '😇', tile: 'bleassed' },
+    { id: 4, emoji: '😊', tile: 'smile' },
+    { id: 5, emoji: '😔', tile: 'ohh' },
+    { id: 6, emoji: '😧', tile: 'worried' },
+    { id: 7, emoji: '👌', tile: 'superb' },
+    { id: 8, emoji: '👍', tile: 'thumbs up' },
+    { id: 9, emoji: '🤩', tile: 'wow' },
+  ];
+
+  @ViewChild('textarea')
+  textarea!: ElementRef;
+
+  insertAtCaret(text: string) {
+    const textarea = this.textarea.nativeElement;
+    textarea.focus();
+    if (typeof textarea.selectionStart != 'undefined') {
+      const startPos = textarea.selectionStart;
+      const endPos = textarea.selectionEnd;
+      const scrollTop = textarea.scrollTop;
+      textarea.value =
+        textarea.value.substring(0, startPos) +
+        text +
+        textarea.value.substring(endPos, textarea.value.length);
+      textarea.selectionStart = startPos + text.length;
+      textarea.selectionEnd = startPos + text.length;
+      textarea.scrollTop = scrollTop;
+      // console.log(this.textarea.nativeElement.value);
+    }
   }
+
+  insertEmoji(emoji: any) {
+    this.insertAtCaret(emoji);
+    // console.log(this.textarea.nativeElement.value);
+  }
+
+  commentStatus(comId: any, type: any) {
+    this.commentStatusDto.id = comId;
+    this.commentStatusDto.type = type;
+    this.commentStatusDto.plateForm = this.parentPlatform;
+    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
+    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    this.commondata
+      .CommentRespond(this.commentStatusDto)
+      .subscribe((res: any) => {});
+  }
+
+  queryCompleted(comId: any, type: any) {
+    this.commentStatusDto.id = comId;
+    this.commentStatusDto.type = type;
+    this.commentStatusDto.plateForm = this.parentPlatform;
+    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    this.commondata
+      .QueryCompleted(this.commentStatusDto)
+      .subscribe((res: any) => {
+        this.querryCompleted = true;
+      });
+  }
+  markAsComplete = false;
+
+  markAsCompleteExpanded(comId: any) {
+    this.Emails.forEach((abc: any) => {
+      abc.comments.forEach((comment: any) => {
+        if (comment.id == comId) {
+          this.markAsComplete = !this.markAsComplete;
+        }
+      });
+    });
+  }
+
+  addTags: any;
+  removeTags: any;
+
+  addTagDataListner() {
+    this.Emails.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == this.addTags.feedId) {
+            if (singleCmnt.tags.length == 0) {
+              singleCmnt.tags.push(this.addTags);
+            } else if (singleCmnt.tags.length > 0) {
+              const tag = singleCmnt.tags.find(
+                (x: any) => x.id == this.addTags.feedId
+              );
+              if (tag != null || tag != undefined) {
+                const index = singleCmnt.tags.indexOf(tag);
+                if (index !== -1) {
+                  singleCmnt.tags.splice(index, 1);
+                }
+              } else {
+                singleCmnt.tags.push(this.addTags);
+              }
+            }
+          }
+        });
+      });
+    });
+    this.changeDetect.detectChanges();
+  }
+  applySentimentListner(res: any) {
+    this.Emails.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == res.feedId) {
+            singleCmnt.sentiment = res;
+          }
+        });
+      });
+    });
+    this.changeDetect.detectChanges();
+  }
+  removeTagDataListener() {
+    this.Emails.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == this.removeTags.feedId) {
+            var tag = singleCmnt.tags.find(
+              (x: any) => x.id == this.removeTags.tagId
+            );
+            const index = singleCmnt.tags.indexOf(tag);
+            if (index !== -1) {
+              singleCmnt.tags.splice(index, 1);
+            }
+          }
+        });
+      });
+    });
+    this.changeDetect.detectChanges();
+  }
+
+  updateQueryStatusDataListner() {
+    this.Emails.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == this.queryStatus.queryId) {
+            singleCmnt.queryStatus = this.queryStatus.queryStatus;
+            singleCmnt.isLikedByAdmin = this.queryStatus.isLikes;
+          }
+        });
+      });
+    });
+    this.changeDetect.detectChanges();
+  }
+
+  updateBulkQueryStatusDataListner() {
+    this.Emails.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          this.queryStatus.forEach((qs: any) => {
+            if (singleCmnt.id == qs.queryId) {
+              singleCmnt.queryStatus = qs.queryStatus;
+              this.totalUnrespondedCmntCountByCustomer = 0;
+            }
+          });
+        });
+      });
+    });
+    this.changeDetect.detectChanges();
+  }
+
+  replyDataListner() {
+    this.Emails.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == this.newReply.commentId) {
+            singleCmnt.replies.push(this.newReply);
+            singleCmnt.queryStatus = this.newReply.queryStatus;
+          }
+        });
+      });
+    });
+    this.changeDetect.detectChanges();
+  }
+
+  onScroll() {
+    this.pageSize = this.pageSize + 10;
+    this.getEmails();
+  }
+
+  isAttachment = false;
+
+  removeAttachedFile(index: any) {
+    const filesArray = Array.from(this.ImageName);
+    filesArray.splice(index, 1);
+    this.ImageArray.splice(index, 1);
+
+    const files = filesArray.map((file: any) => file); // Create a new array with the remaining files
+    const newFileList = new DataTransfer();
+    files.forEach((file) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+
+    this.fileInput.nativeElement.files = newFileList.files;
+    this.detectChanges();
+
+    if (this.ImageName.length == 0) {
+      this.isAttachment = false;
+    }
+  }
+
+  detectChanges(): void {
+    this.ImageName = this.fileInput.nativeElement.files;
+  }
+  trimText(text: string): string {
+    if (text.length < 50) {
+      return text;
+    } else {
+      return text.slice(0, 1000) + '...';
+    }
+    console.log(text);
+  }
+
+  download(url: string, name: string) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    console.log(url);
+  }
+
+  isImage(attachment: any): boolean {
+    return attachment.contentType.startsWith('image/');
+  }
+
+  isVideo(attachment: any): boolean {
+    return attachment.contentType.startsWith('video/');
+  }
+
+  isAudio(attachment: any): boolean {
+    return attachment.contentType.startsWith('audio/');
+  }
+
+  isOther(attachment: any): boolean {
+    return (
+      !this.isImage(attachment) &&
+      !this.isVideo(attachment) &&
+      !this.isAudio(attachment)
+    );
+  }
+
+  convertToString(to: any): string {
+    return to.emailAddress;
+  }
+
+  // isReplyImage(attachment: any): boolean {
+  //   const abc = attachment.split('.')
+  //   const index = abc.length - 1
+  //   const type = abc[index]
+  //   if(type == 'jpeg'){
+  //     return attachment;
+  //   }
+  //   if(type == 'jpg'){
+  //     return attachment;
+  //   }
+  //   if(type == 'png'){
+  //     return attachment;
+  //   }
+  //   if(type == 'gif'){
+  //     return attachment;
+  //   } else {
+  //     return false;
+  //   }
+  //   // return type == 'image' || type == 'jpeg' || type == 'png' || type == 'gif' || type == 'jpg';
+  // }
+
+  // isReplyVideo(attachment: any): boolean {
+
+  //   const abc = attachment.split('.')
+  //   const index = abc.length - 1
+  //   const type = abc[index]
+  //   if(type == 'mp4'){
+  //     return attachment;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  // isReplyAudio(attachment: any): boolean {
+
+  //   const abc = attachment.split('.')
+  //   const index = abc.length - 1
+  //   const type = abc[index]
+  //   if(type == 'mp3'){
+  //     return attachment;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  // isReplyOther(attachment: any): boolean {
+  //   const abc = attachment.split('.')
+  //   const index = abc.length - 1
+  //   const type = abc[index]
+  //   if(type != 'mp3' && type != 'mp4' && type != 'jpeg' && type != 'jpg' && type != 'png' && type != 'gif'){
+  //     return attachment;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 }

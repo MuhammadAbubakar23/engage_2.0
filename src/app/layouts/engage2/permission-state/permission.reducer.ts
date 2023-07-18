@@ -1,23 +1,25 @@
-import { createReducer, on } from '@ngrx/store';
+import { state } from '@angular/animations';
+import { Action, createReducer, on } from '@ngrx/store';
 import { never } from 'rxjs';
-import { loadPermissionsList, loadPermissionsListFail, loadPermissionsListSuccess } from './permission.actions';
+//import { Action } from 'rxjs/internal/scheduler/Action';
+import { loadPermissionsLetters, loadPermissionsLettersFail, loadPermissionsLettersSuccess, updatePermissionsLetters, updatePermissionsLettersFail, updatePermissionsLettersSuccess } from './permission.actions';
 import { initialPermissionState, PermissionState } from './permission.state';
 
 const _permissionReducer = createReducer(
   initialPermissionState,
-  // on(loadPermissionsListSuccess,(state,action)=>{
+  // on(loadPermissionsLettersSuccess,(state,action)=>{
   //     return{
   //         ...state,
   //         permissions:action.permissions
   //     }
   // }),
-  on(loadPermissionsList, (state): PermissionState => {
+  on(loadPermissionsLetters, (state): PermissionState => {
     return {
       ...state,
       loading: true
     }
   }),
-  on(loadPermissionsListSuccess, (state, action): PermissionState => 
+  on(loadPermissionsLettersSuccess, (state, action): PermissionState => 
   {
     return {
       ...state,
@@ -26,16 +28,32 @@ const _permissionReducer = createReducer(
       error: ''
     }
   }),
-  on(loadPermissionsListFail, (state, action): PermissionState => {
+  on(loadPermissionsLettersFail, (state, action): PermissionState => {
+    
     return {
       ...state,
-      permissions:"" ,
+     // permissions:null ,
       loading:false,
       error: action.error
     }
-  })
+  }),
+  on(updatePermissionsLetters, (state): PermissionState => ({  ...state, loading: true })),
+  on(updatePermissionsLettersSuccess, (state, action): PermissionState => {
+    // let a = state;
+    // console.log(state);
+    // console.log(action);
+    let permis = state.permissions?.priviledge+action.permissions?.priviledge;
+     
+    return {
+      ...state,
+      permissions: permis,
+      loading: true,
+      error: null,
+    };
+  }),
+  on(updatePermissionsLettersFail, (state, action): PermissionState => ({ ...state, loading: false, error: action.error }))
 );
-export function permissionReducer(state: any, action: any) {
+export function permissionReducer(state: PermissionState | undefined, action: Action) {//=initialPermissionState
   return _permissionReducer(state, action);
 }
 
@@ -54,13 +72,13 @@ export function permissionReducer(state: any, action: any) {
 
 
 //import { createReducer, on, Action } from '@ngrx/store';
-// import { GetPermissionListAction, retrievedPermission } from '../actions/permission.actions';
-// import { retrievedBookList } from './books.actions';
+// import { GetPermissionLettersAction, retrievedPermission } from '../actions/permission.actions';
+// import { retrievedBookLetters } from './books.actions';
 // import { Book } from '../book-list/books.model';
 // import { PermissionModel } from '../../model/left-permission';
 
 
-// import { PermissionActions , GetPermissionListAction, PermissionActionType } from "./permission.actions"
+// import { PermissionActions , GetPermissionLettersAction, PermissionActionType } from "./permission.actions"
 // import { PermissionState } from './permission.state';
 
 // const permissionInitialState = (function(): PermissionState {
@@ -72,7 +90,7 @@ export function permissionReducer(state: any, action: any) {
 
 // export function reducer(state = permissionInitialState, action: PermissionActions) {
 //   switch (action.type) {
-//     case PermissionActionType.GET_PERMISSION_LIST_SUCCESS: {
+//     case PermissionActionType.GET_PERMISSION_LETTERS_SUCCESS: {
 //       return Object.assign({}, state, { permission: action.payload });
 //     }
 //     default: {

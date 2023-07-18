@@ -5,7 +5,7 @@ import { LayoutsModule } from '../../layouts/layouts.module';
 import { ResponderComponent } from './responder.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FacebookComponent } from './components/Facebook/facebook.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { RouterModule } from '@angular/router';
 import { EmailComponent } from './components/email/email.component';
@@ -17,8 +17,13 @@ import { TwitterComponent } from './components/twitter/twitter.component';
 import { WebChatComponent } from './components/web-chat/web-chat.component';
 import { WhatsappDetailsComponent } from './components/whatsapp-details/whatsapp-details.component';
 import { YoutubeComponent } from './components/youtube/youtube.component';
-import { GroupbydatePipe } from 'src/app/shared/CustomPipes/groupbydate.pipe';
 import { ResponderRightSidebarComponentsModule } from './right-sidebar-components/responder-right-sidebar-components.module';
+import { RemovewhitespacesPipe } from 'src/app/shared/CustomPipes/removewhitespaces.pipe';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { DispositionFormComponent } from './components/disposition-form/disposition-form.component';
+import { FilterPipe } from 'src/app/shared/CustomPipes/filter.pipe';
+import { PostStatsComponent } from './sharedComponents/post-stats/post-stats.component';
+import { ConsoleTableWithImageComponent } from 'src/app/layouts/engage2/console-table/console-table-with-image/console-table-with-image.component';
 
 
 @NgModule({
@@ -33,7 +38,10 @@ import { ResponderRightSidebarComponentsModule } from './right-sidebar-component
     TwitterComponent,
     WebChatComponent,
     WhatsappDetailsComponent,
-    YoutubeComponent
+    YoutubeComponent,
+    RemovewhitespacesPipe,
+    DispositionFormComponent,
+    PostStatsComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +51,9 @@ import { ResponderRightSidebarComponentsModule } from './right-sidebar-component
     ReactiveFormsModule,
     NgxSpinnerModule,
     RouterModule,
-    ResponderRightSidebarComponentsModule
+    ResponderRightSidebarComponentsModule,
+    InfiniteScrollModule,
+    FormsModule,
   ],
   exports:[
     ResponderComponent

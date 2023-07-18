@@ -1,6 +1,6 @@
 export class MarkAsCompleteDto {
     user: string="";
-    plateForm: string="";
-    userId: number=1;
-    companyId: number=2;
+    plateFrom: string="";
+    userId: number=0;
+    companyId: number=0;
   }

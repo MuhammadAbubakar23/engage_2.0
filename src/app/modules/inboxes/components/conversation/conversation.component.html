@@ -1,13 +1,12 @@
+<div class="tab-pane fade active show position-relative" id="Focused" role="tabpanel" aria-labelledby="focused-tab">
 
-    <div class="tab-pane fade active show position-relative" id="Focused" role="tabpanel" aria-labelledby="focused-tab">
-      
-<div class="tab-content" id="myTabContent">
-  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
-    <p style="color: white"> Loading... </p>
-</ngx-spinner>
-        <div class="filter-toolbar p-0 border-0 collapse show" id="filter-bar">
-            <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
-                <li class="list-inline-item">
+  <div class="tab-content" id="myTabContent">
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+      <p style="color: white"> Loading... </p>
+    </ngx-spinner>
+    <div class="filter-toolbar p-0 border-0 collapse show" id="filter-bar">
+      <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+        <!-- <li class="list-inline-item">
                   <div class="dropdown">
                     <button class="btn dropdown-toggle fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                       <i class="fal fa-user"></i> From
@@ -162,65 +161,80 @@
                       </div><div class="scrollbar-track scrollbar-track-x" style="display: none;"><div class="scrollbar-thumb scrollbar-thumb-x"></div></div><div class="scrollbar-track scrollbar-track-y" style="display: none;"><div class="scrollbar-thumb scrollbar-thumb-y"></div></div></div>
                     </ul>
                   </div>
-                </li>
-                <li class="list-inline-item">
-                  <div class="dropdown">
-                    <button class="btn dropdown-toggle fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fal fa-calendar"></i> Any Time
-                    </button>
-                    <ul class="dropdown-menu assignFirstDropdownList1" aria-labelledby="dropdownMenuButton1">
+                </li> -->
+        <!-- <li class="list-inline-item">
+          <div class="dropdown">
+            <button class="btn dropdown-toggle fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="fal fa-calendar"></i> Any Time
+            </button>
+            <ul class="dropdown-menu assignFirstDropdownList1" aria-labelledby="dropdownMenuButton1">
 
-                      <li class="dropdown-item">
-                        <a href="#0"> Any Time</a>
-                      </li>
-                      <li class="dropdown-item">
-                        <a href="#0">Older then a week</a>
-                      </li>
-                      <li class="dropdown-item">
-                        <a href="#0">Older then a month</a>
-                      </li>
-                      <li class="dropdown-item">
+              <li class="dropdown-item">
+                <a href="#0"> Any Time</a>
+              </li>
+              <li class="dropdown-item">
+                <a href="#0">Older then a week</a>
+              </li>
+              <li class="dropdown-item">
+                <a href="#0">Older then a month</a>
+              </li>
+              <li class="dropdown-item">
 
-                        <a href="#0"> Older then a 6 months</a>
-                      </li>
-                      <li class="dropdown-item">
-                        <a href="#0">Older then a year</a>
-                      </li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li class="dropdown-item" id="customrange">
-                        <a href="#0">Custom Range</a>
-                      </li>
-                    </ul>
-                    <div class="dropdown-menu assignSecondDropdownList1" aria-labelledby="customrange">
-                      <form class="px-3 py-3">
-                          <div class="d-flex mb-3">
-                            <div class="form-floating">
-                                <input type="date" class="form-control border-end-0 rounded-0" id="start-date" placeholder="Start Date">
-                                <label for="start-date">Start Date </label>
-                            </div>
-                                <div class="form-floating">
-                                <input type="date" class="form-control rounded-0" id="end-date" placeholder="End Date">
-                                <label for="end-date">End Date</label>
-                                </div>
-                          </div>
-                          
-                            <div class="text-end">
-                                <button type="submit" class="btn skyBg btn-small">Apply</button>
-                            </div>
-                        </form>
-                        
-                    </div>
+                <a href="#0"> Older then a 6 months</a>
+              </li>
+              <li class="dropdown-item">
+                <a href="#0">Older then a year</a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li class="dropdown-item" id="customrange">
+                <a href="#0">Custom Range</a>
+              </li>
+            </ul>
+            <div class="dropdown-menu assignSecondDropdownList1" aria-labelledby="customrange">
+              <form class="px-3 py-3">
+                <div class="d-flex mb-3">
+                  <div class="form-floating">
+                    <input type="date" class="form-control border-end-0 rounded-0" id="start-date"
+                      placeholder="Start Date">
+                    <label for="start-date">Start Date </label>
                   </div>
-                
+                  <div class="form-floating">
+                    <input type="date" class="form-control rounded-0" id="end-date" placeholder="End Date">
+                    <label for="end-date">End Date</label>
+                  </div>
+                </div>
+
+                <div class="text-end">
+                  <button type="submit" class="btn skyBg btn-small">Apply</button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </li> -->
+        <li class="list-inline-item">
+          <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+          <label class="btn toggle-check-btn fw-bold" for="btn-check-outlined" (click)="hasAttachment()">
+            <i class="fal fa-paperclip"></i> Has Attachment</label>
+        </li>
+
+        <!-- Testinggggggggggggggggggggggggggggggggggggggggg -->
+
+        <!-- <li class="list-inline-item">
+          <input type="button" class="btn-check" id="btn-download-report" autocomplete="off">
+          <label class="btn toggle-check-btn fw-bold" for="btn-download-report" (click)="download()">
+            <i class="fal fa-paperclip"></i> Download .Csv</label>
+        </li> -->
+
+        <!-- Testinggggggggggggggggggggggggggggggggggggggggg -->
 
 
+        <!-- <li>
                 </li>
                 <li class="list-inline-item">
-                  <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
-                  <label class="btn toggle-check-btn fw-bold" for="btn-check-outlined">
-                      <i class="fal fa-paperclip"></i>  Has Attachment</label>
-                </li><li>
-                </li><li class="list-inline-item">
                   <div class="dropdown">
                     <button class="btn dropdown-toggle fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                       <i class="fal fa-paper-plane"></i> To
@@ -375,152 +389,154 @@
                       </div><div class="scrollbar-track scrollbar-track-x" style="display: none;"><div class="scrollbar-thumb scrollbar-thumb-x"></div></div><div class="scrollbar-track scrollbar-track-y" style="display: none;"><div class="scrollbar-thumb scrollbar-thumb-y"></div></div></div>
                     </ul>
                   </div>
-                </li>
-                <li class="list-inline-item">
+                </li> -->
+        <!-- <li class="list-inline-item">
                   <a href="#0" class="advance-search-o fw-bold sky btn">Advance Search</a>
-                </li><li>
-              </li></ul>
-                
-                    <div class="search-filters">
-  <header class="d-flex align-items-center justify-content-between my-2">
-    <h6 class="m-0">Filter Search </h6>
-    <div class="d-flex align-items-center">
-      <span class="iconButton small iconHover me-2">
-        <i class="fa-light fa-arrows-rotate"></i>
-      </span>
-      <span class="iconButton small iconHover closefilter lightGreyBg">
-        <i class="fa-light fa-xmark"></i>
-      </span>
-    </div>
+                </li> -->
+        <li>
+        </li>
+      </ul>
 
-
-  </header>
-  <div class="search-body">
-    <div class="row">
-      <div class="col-6">
-        <div class="form-floating mb-3">
-          <input class="form-control" id="from" placeholder="From">
-          <label for="from">From</label>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="form-floating mb-3">
-          <input class="form-control" id="to" placeholder="To">
-          <label for="to">To</label>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-6">
-        <div class="form-floating mb-3">
-          <input class="form-control" id="Subject" placeholder="Subject">
-          <label for="Subject">Subject</label>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="form-floating mb-3">
-          <input class="form-control" id="incwords" placeholder="Includes the words">
-          <label for="incwords">Includes the words</label>
-        </div>
-      </div>
-    </div>
-    <div class="form-floating mb-3">
-      <input class="form-control" id="ddh" placeholder="Doesn't have">
-      <label for="ddh">Doesn't have</label>
-    </div>
-    <div class="mb-3 d-none">
-      <div class="heading">Size</div>
-      <div class="row">
-
-        <div class="col-5">
-          <select class="form-control">
-            <option selected="">greater then</option>
-            <option value="1">less then</option>
-          </select>
-        </div>
-        <div class="col-4">
-          <input class="form-control" id="11" placeholder="">
-        </div>
-        <div class="col-3">
-          <select class="form-control" id="fs1" aria-label="">
-            <option selected="">Mb</option>
-            <option value="1">KB </option>
-            <option value="1">Bytes </option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <div class="heading">Date within</div>
-      <div class="row">
-
-        <div class="col-5">
-          <select class="form-control">
-            <option selected="">1 day</option>
-            <option value="1">3 day</option>
-            <option value="2">1 week</option>
-            <option value="3">2 weeks</option>
-            <option value="4">1 month</option>
-            <option value="5">2 months</option>
-            <option value="6">6 months</option>
-            <option value="7">1 year</option>
-          </select>
-        </div>
-        <div class="col-7">
-          <input type="date" class="form-control" placeholder="Select Date">
-        </div>
-
-      </div>
-    </div>
-
-    <div class="form-floating mb-3">
-      <select class="form-select" id="floatingSelect" aria-label="Search">
-        <option selected="">All Mail</option>
-        <option value="1">Inbox</option>
-        <option value="2">Starred</option>
-        <option value="3">Sent Mail</option>
-        <option value="4">Drafts</option>
-        <option value="5">Charts</option>
-        <option value="6">Spam</option>
-        <option value="7">Trash</option>
-      </select>
-      <label for="floatingSelect">Search</label>
-    </div>
-    <div class="mb-3">
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="hasattachment" value="option1">
-        <label class="form-check-label" for="hasattachment">Has attachment</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="dontinccharts" value="option2">
-        <label class="form-check-label" for="dontinccharts">Don't include chats</label>
-      </div>
-    </div>
-  </div>
-
-  <footer class="py-3">
-    <div class="buttons-wrap d-flex justify-content-end">
-      <button type="button" class="btn btn-outline-secondary closefilter">Cancel</button>
-      <button type="button" class="btn btn-success ms-2 px-4">Apply</button>
-    </div>
-  </footer>
-</div>
-
-                
+      <div class="search-filters">
+        <header class="d-flex align-items-center justify-content-between my-2">
+          <h6 class="m-0">Filter Search </h6>
+          <div class="d-flex align-items-center">
+            <span class="iconButton small iconHover me-2">
+              <i class="fa-light fa-arrows-rotate"></i>
+            </span>
+            <span class="iconButton small iconHover closefilter lightGreyBg">
+              <i class="fa-light fa-xmark"></i>
+            </span>
           </div>
-        <div class="filter-container">
-            <ul class="list-group list-group-horizontal border-0">
-                <li class="list-group-item border-0 all-check-boxes">
-                    <input class="form-check-input me-1" type="checkbox" aria-label="..." data-bs-toggle="tooltip"
-                        data-bs-placement="bottom" title="" data-bs-original-title="Check All"
-                        [checked]="masterSelected" value="m1" (change)="checkUncheckAll($event)">
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+
+
+        </header>
+        <div class="search-body">
+          <div class="row">
+            <div class="col-6">
+              <div class="form-floating mb-3">
+                <input class="form-control" id="from" placeholder="From">
+                <label for="from">From</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-floating mb-3">
+                <input class="form-control" id="to" placeholder="To">
+                <label for="to">To</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="form-floating mb-3">
+                <input class="form-control" id="Subject" placeholder="Subject">
+                <label for="Subject">Subject</label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-floating mb-3">
+                <input class="form-control" id="incwords" placeholder="Includes the words">
+                <label for="incwords">Includes the words</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <input class="form-control" id="ddh" placeholder="Doesn't have">
+            <label for="ddh">Doesn't have</label>
+          </div>
+          <div class="mb-3 d-none">
+            <div class="heading">Size</div>
+            <div class="row">
+
+              <div class="col-5">
+                <select class="form-control">
+                  <option selected="">greater then</option>
+                  <option value="1">less then</option>
+                </select>
+              </div>
+              <div class="col-4">
+                <input class="form-control" id="11" placeholder="">
+              </div>
+              <div class="col-3">
+                <select class="form-control" id="fs1" aria-label="">
+                  <option selected="">Mb</option>
+                  <option value="1">KB </option>
+                  <option value="1">Bytes </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="heading">Date within</div>
+            <div class="row">
+
+              <div class="col-5">
+                <select class="form-control">
+                  <option selected="">1 day</option>
+                  <option value="1">3 day</option>
+                  <option value="2">1 week</option>
+                  <option value="3">2 weeks</option>
+                  <option value="4">1 month</option>
+                  <option value="5">2 months</option>
+                  <option value="6">6 months</option>
+                  <option value="7">1 year</option>
+                </select>
+              </div>
+              <div class="col-7">
+                <input type="date" class="form-control" placeholder="Select Date">
+              </div>
+
+            </div>
+          </div>
+
+          <div class="form-floating mb-3">
+            <select class="form-select" id="floatingSelect" aria-label="Search">
+              <option selected="">All Mail</option>
+              <option value="1">Inbox</option>
+              <option value="2">Starred</option>
+              <option value="3">Sent Mail</option>
+              <option value="4">Drafts</option>
+              <option value="5">Charts</option>
+              <option value="6">Spam</option>
+              <option value="7">Trash</option>
+            </select>
+            <label for="floatingSelect">Search</label>
+          </div>
+          <div class="mb-3">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="hasattachment" value="option1">
+              <label class="form-check-label" for="hasattachment">Has attachment</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="dontinccharts" value="option2">
+              <label class="form-check-label" for="dontinccharts">Don't include chats</label>
+            </div>
+          </div>
+        </div>
+
+        <footer class="py-3">
+          <div class="buttons-wrap d-flex justify-content-end">
+            <button type="button" class="btn btn-outline-secondary closefilter">Cancel</button>
+            <button type="button" class="btn btn-success ms-2 px-4">Apply</button>
+          </div>
+        </footer>
+      </div>
+
+
+    </div>
+    <div class="filter-container">
+      <ul class="list-group list-group-horizontal border-0">
+        <li class="list-group-item border-0 all-check-boxes">
+          <input class="form-check-input me-1" type="checkbox" aria-label="..." data-bs-toggle="tooltip"
+            data-bs-placement="bottom" title="" data-bs-original-title="Check All" [checked]="masterSelected" value="m1"
+            (change)="checkUncheckAll($event)">
+          <div class="dropdown">
+            <!-- <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <!-- <i class="fas fa-sort-down"></i> -->
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <i class="fas fa-sort-down"></i>
+                        </button> -->
+            <!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li>
                                 <a class="dropdown-item">All</a>
                             </li>
@@ -536,42 +552,44 @@
                             <li>
                                 <a class="dropdown-item">Unstarred</a>
                             </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="list-group-item filtericon skyBg border-0 iconButton medium iconHover" data-bs-toggle="collapse" data-bs-target="#filter-bar" aria-expanded="true" aria-controls="filter-bar" aria-label="..." data-bs-placement="bottom" title="Filters">
-                    <i class="fal fa-sliders-h"></i>
-                  </li>
-                <li class="list-group-item border-0" (click)="Reload()" aria-label="..." data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="" data-bs-original-title="Refresh">
-                    <i class="fal fa-redo-alt"></i>
-                </li>
-                <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
-                    data-bs-placemen data-bs-placement="bottom" title="" data-bs-original-title="Archive"
-                    [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
-                    <i class="fal fa-archive"></i>
-                </li>
-                <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="" data-bs-original-title="Report Spam"
-                    [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
-                    <i class="fal fa-exclamation-circle"></i>
-                </li>
-                <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun"
-                    aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-                    data-bs-original-title="Delete" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
-                    <i class="fal fa-trash"></i>
-                </li>
-                <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="" data-bs-original-title="Mark as Read"
-                    [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
-                    <i class="far fa-envelope-open"></i>
-                </li>
-                <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="" data-bs-original-title="Snooze"
-                    [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
-                    <i class="fal fa-clock"></i>
-                </li>
-                <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun"
+                        </ul> -->
+          </div>
+        </li>
+        <li class="list-group-item filtericon skyBg border-0 iconButton medium iconHover" data-bs-toggle="collapse"
+          data-bs-target="#filter-bar" aria-expanded="true" aria-controls="filter-bar" aria-label="..."
+          data-bs-placement="bottom" title="Filters">
+          <i class="fal fa-sliders-h"></i>
+        </li>
+        <li class="list-group-item border-0" (click)="Reload()" aria-label="..." data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="" data-bs-original-title="Refresh">
+          <i class="fal fa-redo-alt"></i>
+        </li>
+        <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip" data-bs-placemen
+          data-bs-placement="bottom" title="" data-bs-original-title="Archive"
+          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+          <i class="fal fa-archive"></i>
+        </li>
+        <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="" data-bs-original-title="Report Spam"
+          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+          <i class="fal fa-exclamation-circle"></i>
+        </li>
+        <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun" aria-label="..."
+          data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete"
+          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+          <i class="fal fa-trash"></i>
+        </li>
+        <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="" data-bs-original-title="Mark as Read"
+          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+          <i class="far fa-envelope-open"></i>
+        </li>
+        <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="" data-bs-original-title="Snooze"
+          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+          <i class="fal fa-clock"></i>
+        </li>
+        <!-- <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun"
                     aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                     data-bs-original-title="Add to task" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
                     <i class="fal fa-clipboard-check"></i>
@@ -620,78 +638,88 @@
 
                         </ul>
                     </div>
-                </li>
-            </ul>
-            <div class="selected-row" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
-                Selected <span class="badge twltte-bg rounded-pill" >{{Ids.length}}</span>
-            </div>
-            <div class="pagination-bar">
-                <span>{{to}}-{{from}} of {{TotalUnresponded}}</span>
-                <span style="cursor: pointer;">
-                    <i class="fal fa-chevron-left" (click)="PreviousPage(pageNumber)"></i>
-                </span>
-                <span style="cursor: pointer;">
-                    <i class="fal fa-chevron-right" (click)="NextPage(pageNumber)"></i>
-                </span>
-            </div>
+                </li> -->
+      </ul>
+      <div class="selected-row" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+        Selected <span class="badge twltte-bg rounded-pill">{{Ids.length}}</span>
+      </div>
+      <div class="pagination-bar">
+        <span>{{to}}-{{from}} of {{TotalUnresponded}}</span>
+        <span style="cursor: pointer;">
+          <i class="fal fa-chevron-left" (click)="PreviousPage(pageNumber)"></i>
+        </span>
+        <span style="cursor: pointer;">
+          <i class="fal fa-chevron-right" (click)="NextPage(pageNumber)"></i>
+        </span>
+      </div>
+    </div>
+    <div class="query-container perfect-scrollbar" data-scrollbar="true" tabindex="-1"
+      style="overflow-y: auto; outline: none;">
+      <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
+        <div class="alert alert-secondary text-center email-info-alert" role="alert"
+          [ngStyle]="{'display': isCheckedAll==true  ? 'block' : 'none'}">
+          All <strong>{{Ids.length}}</strong> conversations on this page are selected.
+          <a class="all-conversation" *ngIf="ConversationList != null">Select all
+            <strong> {{ConversationList.length}}</strong>
+            conversations in Focused</a>
+          <a class="clear-selection" style="display: none;">Clear selection</a>
         </div>
-        <div class="query-container perfect-scrollbar" data-scrollbar="true" tabindex="-1" 
-        style="overflow-y: auto; outline: none;">
-            <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
-                <div class="alert alert-secondary text-center email-info-alert" role="alert"
-                 [ngStyle]="{'display': isCheckedAll==true  ? 'block' : 'none'}">
-                   All <strong>{{Ids.length}}</strong> conversations on this page are selected.
-                    <a class="all-conversation">Select all
-                        <strong> {{ConversationList.length}}</strong>
-                         conversations in Focused</a>
-                    <a class="clear-selection" style="display: none;">Clear selection</a>
-                </div>
-                
-                <table class="table">
-                  <tbody>
-                    <tr>
-                      <td colspan="6">
-                        <span class="email-date">Today </span>{{ TodayDate | date:'EEEE, MMMM dd, yyyy'}}
-                      </td>
-                    </tr>
-                    <tr *ngFor="let querry of ConversationList  | sort:criteria; index as index" [class.selected]="querry.isChecked==true" class="unread">
-                      <td style="width: 40px;"><input [checked]="querry.isChecked" value="{{querry.id}}" (change)="isAllSelected($event, index, querry.platform)"
-                        class="form-check-input me-1" type="checkbox" aria-label="..."></td>
-                      <td style="width: 40px;">
-                        <i *ngIf="querry.platform == 'Facebook'" class="fab fa-facebook navytext" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                    title="" data-bs-original-title="Facebook" aria-label="Facebook"></i>
-                                <i *ngIf="querry.platform == 'Instagram'" data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-                                    data-bs-original-title="Instagram" aria-label="Instagram" class="fab fa-instagram"></i>
-                                <i *ngIf="querry.platform == 'Email'" class="fal fa-envelope cherry" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                    title="" data-bs-original-title="Email" aria-label="Email"></i>
-                                <i *ngIf="querry.platform == 'Youtube'" class="fab fa-youtube warning" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                    title="" data-bs-original-title="Youtube" aria-label="Youtube"></i>
-                                <i *ngIf="querry.platform == 'Twitter'" class="fab fa-twitter sky" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                    title="" data-bs-original-title="Twitter" aria-label="Twitter"></i>
-                                <i *ngIf="querry.platform == 'SMS'" class="fal fa-comment-alt-lines berry" data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                                    data-bs-original-title="SMS"  aria-label="SMS"></i>
-                                <i *ngIf="querry.platform == 'WhatsApp'" class="fab fa-whatsapp emerald" data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                                    data-bs-original-title="WhatsApp" aria-label="Whatsapp"></i>
-                                <i *ngIf="querry.platform == 'Webchat'" class="fal fa-messages webchat" data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                                    data-bs-original-title="Webchat" aria-label="Webchat"></i>
-                                <i *ngIf="querry.platform == 'LinkedIn'" class="fa-brands fa-linkedin-in linkedinTxt" data-bs-toggle="tooltip" data-bs-placement="bottom" 
-                                    data-bs-original-title="LinkedIn" aria-label="LinkedIn"></i>
-                      </td>
-                      <td style="width: 300px;">
-                        <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
-                          <a (click)="updatevalue('socialHeader', querry.user, querry.postType, querry.userId,'assignToMe', querry.platform, querry.profileId)" 
-                          [routerLink]="['/responder/'+[querry.platform]]" ><span>{{querry.userName.split('<')[0] || querry.user}} </span>
-                            <span class="badge bg-danger rounded-pill">{{querry.unrespondedCount}}</span></a>
-                        </span>
-                       
-                      </td>
-                      <td><div class="maintext" (click)="updatevalue('socialHeader', querry.user, querry.postType, querry.userId,'assignToMe', querry.platform, querry.profileId)" [routerLink]="['/responder/'+[querry.platform]]">{{querry.message < 110 ? querry.message: (querry.message | slice:0:110) +'...'}}
-                      </div></td>
-                      <td class="px-1">
-                        <small>{{querry.createdDate | date:'h:mm:ss a'}}</small>
-                      </td>
-  
-                      <!-- <td>
+
+        <table class="table">
+          <tbody>
+            <tr>
+              <td colspan="6">
+                <span class="email-date">Today </span>{{ TodayDate | date:'EEEE, MMMM dd, yyyy'}}
+              </td>
+            </tr>
+            <!-- [ngClass]="[alertWarning == true?'alert-warning':'', alertDanger == true?'alert-danger':'']" -->
+            <tr *ngFor="let querry of ConversationList | sort:criteria; let i = index"
+              [class.selected]="querry.isChecked==true" class="alert" 
+              [ngClass]="[querry.slaFlag == 'warning'?'alert-warning':'' || querry.slaFlag == 'danger'?'alert-danger':'' ||
+              querry.slaFlag == 'unread'?'unread':'']">
+              <td style="width: 40px;"><input [checked]="querry.isChecked" value="{{querry.id}}"
+                  (change)="isAllSelected($event, i, querry.platform)" class="form-check-input me-1" type="checkbox"
+                  aria-label="..."></td>
+              <td style="width: 40px;">
+                <i *ngIf="querry.platform == 'Facebook'" class="fab fa-facebook navytext" data-bs-toggle="tooltip"
+                  data-bs-placement="bottom" title="" data-bs-original-title="Facebook" aria-label="Facebook"></i>
+                <i *ngIf="querry.platform == 'Instagram'" data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                  data-bs-original-title="Instagram" aria-label="Instagram" class="fab fa-instagram"></i>
+                <i *ngIf="querry.platform == 'Email' || querry.platform == 'OfficeEmail'" class="fal fa-envelope cherry" data-bs-toggle="tooltip"
+                  data-bs-placement="bottom" title="" data-bs-original-title="Email" aria-label="Email"></i>
+                <i *ngIf="querry.platform == 'Youtube'" class="fab fa-youtube warning" data-bs-toggle="tooltip"
+                  data-bs-placement="bottom" title="" data-bs-original-title="Youtube" aria-label="Youtube"></i>
+                <i *ngIf="querry.platform == 'Twitter'" class="fab fa-twitter sky" data-bs-toggle="tooltip"
+                  data-bs-placement="bottom" title="" data-bs-original-title="Twitter" aria-label="Twitter"></i>
+                <i *ngIf="querry.platform == 'SMS'" class="fal fa-comment-alt-lines berry" data-bs-toggle="tooltip"
+                  data-bs-placement="bottom" data-bs-original-title="SMS" aria-label="SMS"></i>
+                <i *ngIf="querry.platform == 'WhatsApp'" class="fab fa-whatsapp emerald" data-bs-toggle="tooltip"
+                  data-bs-placement="bottom" data-bs-original-title="WhatsApp" aria-label="Whatsapp"></i>
+                <i *ngIf="querry.platform == 'Webchat'" class="fal fa-messages webchat" data-bs-toggle="tooltip"
+                  data-bs-placement="bottom" data-bs-original-title="Webchat" aria-label="Webchat"></i>
+                <i *ngIf="querry.platform == 'LinkedIn'" class="fa-brands fa-linkedin-in linkedinTxt"
+                  data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="LinkedIn"
+                  aria-label="LinkedIn"></i>
+              </td>
+              <td style="width: 300px;">
+                <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
+                  <a (click)="updatevalue('socialHeader', querry.user, querry.postType, querry.userId,'assignToMe', querry.platform, querry.profileId)">
+                    <span>{{querry.userName.split('<')[0] || querry.user}} </span>
+                        <span class="badge bg-danger rounded-pill"
+                          *ngIf="querry.unrespondedCount > 0">{{querry.unrespondedCount}}</span></a>
+                </span>
+
+              </td>
+              <td>
+                <div class="maintext"
+                  (click)="updatevalue('socialHeader', querry.user, querry.postType, querry.userId,'assignToMe', querry.platform, querry.profileId)">
+                  {{querry.message < 110 ? querry.message: (querry.message | slice:0:110) +'...'}} </div>
+              </td>
+              <td class="px-1">
+                <small>{{querry.createdDate | date:'h:mm:ss a'}}</small>
+              </td>
+
+              <!-- <td>
                         <div class="dropdown bookmark-dropdown">
   
                           <button class="btn" type="button" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -775,25 +803,43 @@
                           </ul>
                         </div>
                       </td> -->
-  
-                      <td class="more-action-container">
-                        <span class="more-action-btns">
-                          <a href="#" class="px-2" data-bs-toggle="tooltip" data-bs-placement="bottom" tabindex="1" aria-label="Snooze">
-                            <i class="fal fa-clock coal"></i>
-                          </a>
-                          <a href="#" class="px-2" data-bs-toggle="tooltip" data-bs-placement="bottom" tabindex="2" aria-label="archive">
-                            <i class="far fa-archive coal"></i>
-                          </a>
-                          <a href="#" class="px-2" data-bs-toggle="tooltip" data-bs-placement="bottom" tabindex="3" id="deleteToast" aria-label="Delete">
-                            <i class="fal fa-trash coal"></i>
-                          </a>
-                        </span>
-                      </td>
-                    </tr>
-                    
-                  </tbody>
-                </table>
-            </div>
-        </div>
+
+              <td class="more-action-container">
+                <span class="more-action-btns">
+                  <a href="#" class="px-2" data-bs-toggle="tooltip" data-bs-placement="bottom" tabindex="1"
+                    aria-label="Snooze">
+                    <i class="fal fa-clock coal"></i>
+                  </a>
+                  <a href="#" class="px-2" data-bs-toggle="tooltip" data-bs-placement="bottom" tabindex="2"
+                    aria-label="archive">
+                    <i class="far fa-archive coal"></i>
+                  </a>
+                  <a href="#" class="px-2" data-bs-toggle="tooltip" data-bs-placement="bottom" tabindex="3"
+                    id="deleteToast" aria-label="Delete">
+                    <i class="fal fa-trash coal"></i>
+                  </a>
+                </span>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
+</div>
+
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+  <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+    aria-live="assertive" aria-atomic="true">
+    <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+      <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+      <div class="toast-btn d-flex align-items-center">
+
+        <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+          (click)="closeToaster()"><i class="fal fa-times"></i></button>
+
+      </div>
+    </div>
+  </div>
 </div>

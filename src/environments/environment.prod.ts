@@ -1,13 +1,23 @@
 export const environment = {
   production: true,
   fetchIntegrate: 'true',
-  appKey: 'ACCCCCCCCCCDDDDDDDDDDDFFFFFFFFFFFFFFGGGGGGGGGGGGGG|GHHHHHHHHHHH',
+  appKey: 'eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibXVoYW1tYWQucml4dmFuLndhaGVlZEBnbWFpbC5jb20iLCJleHAiOjE2NzYyMzA4MjYsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzY5LyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjQyMDAifQ.NlSFdJSUQfDF0_hbXkfL_smZkfV8b9KFt4ToBFZDzO0',
+  googleclientId:'867983649889-mu8n73d0clq5qvan437dmop87a9ofhot.apps.googleusercontent.com',
+  googleclientSecret:'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',
+  facebookclientId:'439165040679685',
+  facebookclientSecret:'b1ece7f6d042edefbb22c87815804c5b',
+  instagramclientId:'243324534762428',
+  instagramclientSecret :'b48f01922a081352c29ed641abbc4f1b',
+  linkdinclientId:'86gfpczqqo16t6',
+  linkdinclientSecret :'4wp2Zjzqjw3PYAdt',
+  twitterclientId:'57617762-IWEThd14hGdgr3bXuVNmLdb60Lo9OLEVJ1cFUE4JF',
+  twitterclientSecret :'Ex1XpdfYMFEAtWBJn9XOrtfxyu19INzNaPV155vocLomG',
   store: {
     types: { local: 'LS' },
   },
   title: 'abc',
-  baseUrl: 'https://identity-engage.enteract.app/api/',
-  InstaBaseUrl: 'https://insta.360scrm.com/api/',
+  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  InstaBaseUrl: 'https://insta.360scrm.com/api/', // other then post and data
   FbBaseUrl: 'https://face.360scrm.com/api/',
   YoutubeBaseUrl: 'https://tube.360scrm.com/api/',
   TwitterBaseUrl: 'https://tweet.360scrm.com/api/',
@@ -16,8 +26,41 @@ export const environment = {
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
   CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  CCMSURL: 'https://haccms.ibex.co/jomo/api/',
+  JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
 
   links: {
+    identity:{
+      login:"Authentication/Login",
+      access:"Authorization/Accesses/team_role",
+      // accessteam:"Authorization/Accesses/team",
+      // accessrole:"Authorization/Accesses/role",
+      accessteam:"Accesses/team",
+      accessrole:"Permissions/role",
+      AddUser:"Users/CreateUser",
+      UpdateUser:"Users/UpdateUser",
+      AllRoles:"Roles/GetAll",
+      AllTeams:"Teams/GetAll",
+      GetAllUsers:"Users/GetAllUser",
+      DeleteUser:"Users/DeleteUser",
+      GetUserById:"Users/GetUserById",
+      RolesPermissions:"Permissions",
+      AddRole:"Permissions",
+      TeamsAccesses:"Accesses",
+      AddTeam:"Accesses",
+      
+
+    },
+    console:{
+      AddUser:"Users/CreateUser",
+      CreateMessageTemplate:"Template/Add"
+    },
+    CCMS:{
+      reason_types:'Order/GetReasonTypes',
+      reasons:'Order/GetMainReasons/',
+      GetTicketStatuses:'Order/GetTicketStatuses',
+      subReasons:'Order/GetSubReasons/'
+    },
     common: {
       RemoveTags: 'Tags/RemoveTagFromFeed',
       InsertSentiments: 'Tags/InsertSentimentForFeed',
@@ -26,6 +69,7 @@ export const environment = {
       TagsList: 'Keyword/GetAllKeywordCategory',
       CommentRespond: 'Social/CommentRespond',
       MarkAsComplete: 'Social/MarkAsCompleted',
+      SaveAsCompleted: 'Social/SaveAsCompleted',
       LikedByAdmin: 'Social/LikeByAdmin',
       QuickReplyList: 'Social/GetQuickReplyList',
       AssignQuerry: 'Query/AssignQuery',
@@ -39,11 +83,24 @@ export const environment = {
       ReplyComment:"Channel/ReplyChannelComment",
       HumanAgentTags:"Tags/GetHumanAgentTag",
       AgentDetail:"Team/GetById",
-      UpdateBreak:"Team/UpdateBreaks",
+      UpdateBreak:"SignalRConnector/UserOnBreak",
       InstaStats:"Channel/GetInstagramPostStat",
       FbPostStats: 'Channel/GetFbPostStat',
       FbCommentStats: 'Channel/GetFbCommentStat',
-      YoutubePostStats: 'Channel/GetYoutubePostState'
+      YoutubePostStats: 'Channel/GetYoutubePostStat',
+      TwitterTweetStats: 'Channel/GetTwitterTweetStat',
+      LinkedInPostStats: 'Channel/GetLinkedInPostStats',
+      Menu: 'Menu/',
+      queryCompleted:'Social/QueryCompleted',
+      profileDetails: 'Customer/GetCustomerById',
+      updateProfile:'Customer/UpdateCustomer',
+      createTicket:'Tickets/CreateTicket',
+      allChannelsUnrespondedCounts: 'Channel/GetChannelUnrespondedCount',
+      getOrderByCustomerEmailAddressOrPhoneNumber: 'Order/GetOrdersByCustomerEmailAddress',
+      dispositionHistory : 'Channel/GetDispositionHistory',
+      markAllAsRead : 'Channel/ReadAllUnrespondedQuries',
+      getAgentReport : 'Report/GetAgentTicketReport',
+      getAllocatedProfiles : 'Query/GetAllocatedProfiles'
       
     },
     facebook: {

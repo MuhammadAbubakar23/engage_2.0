@@ -1,805 +1,974 @@
 <nav id="task-rightbar-dashboard" class="expended-rigth-sidebar open">
     <div class="right-bar-wrapper">
-<div class="bodyWrapper">
-    <header class="tab-header pe-3 rightbar-tab-header">
-        <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <button class="nav-link active" id="tasks" data-bs-toggle="tab" data-bs-target="#tasks-tab" type="button" role="tab" aria-controls="tasks-tab" aria-selected="true">
-                    Tasks
-                </button>
-            </div>
-            <div class="icons-list">
+        <div class="bodyWrapper">
+            <header class="tab-header pe-3 rightbar-tab-header">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="tasks" data-bs-toggle="tab" data-bs-target="#tasks-tab"
+                            type="button" role="tab" aria-controls="tasks-tab" aria-selected="true">
+                            Tasks
+                        </button>
+                    </div>
+                    <div class="icons-list">
 
-                <div class="dropdown w-auto" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Add Logs">
-                    <button class="iconButton medium notification iconHover" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fal fa-plus"></i>
-                    </button>
-                    <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1">
-                        <li>
-                            <a class="dropdown-item p-1 active" href="#">
-                                <button class="iconButton dropdown-iconBtn small active" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fal fa-clipboard-check"></i>
-                                </button>Create Task
+                        <div class="dropdown w-auto" data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                            data-bs-original-title="Add Logs">
+                            <button class="iconButton medium notification iconHover" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fal fa-plus"></i>
+                            </button>
+                            <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1">
+                                <li>
+                                    <a class="dropdown-item p-1 active" href="#">
+                                        <button class="iconButton dropdown-iconBtn small active"
+                                            id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fal fa-clipboard-check"></i>
+                                        </button>Create Task
                                     </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item p-1" href="#">
-                                <button class="iconButton dropdown-iconBtn small" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fal fa-edit"></i>
-                                </button>Edit Task
+                                </li>
+                                <li>
+                                    <a class="dropdown-item p-1" href="#">
+                                        <button class="iconButton dropdown-iconBtn small" id="dropdownMenuButton1"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fal fa-edit"></i>
+                                        </button>Edit Task
                                     </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item p-1" href="#">
-                                <button class="iconButton dropdown-iconBtn small" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fal fa-file-minus"></i>
-                                </button>Delete Task
+                                </li>
+                                <li>
+                                    <a class="dropdown-item p-1" href="#">
+                                        <button class="iconButton dropdown-iconBtn small" id="dropdownMenuButton1"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fal fa-file-minus"></i>
+                                        </button>Delete Task
                                     </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="searchbar-click">
-                    <form [ngClass]="show == true ? 'searchbox-open' : ''" class="searchbox">
-<input placeholder="What are you looking for?" name="search" class="searchbox-input" required="">
-<span class="searchbox-icon medium iconButton iconHover" (click)="click(show)"><i [ngClass]="show == false ? 'fa fa-search': 'fa fa-times'"></i></span>
-</form>
-
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="rightbar-body-wrapper" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;"><div class="scroll-content">
-        <div class="tab-content" id="nav-tabContent">
-            <div id="tasks-tab" class="tab-pane fade active show" role="tabpanel" aria-labelledby="tasks">
-                <div class="filter-wrapper mb-2 pt-3">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="d-flex align-items-lg-center">
-                                <p class="coal m-0">Filter by:</p>
-                                <div class="dropdown w-auto">
-                                    <button class="btn dropdown-toggle coal" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Filter activity (18/21)
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li>
-                                            <a class="dropdown-item" href="#">Ascending</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Descending</a>
-                                        </li>
-                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="searchbar-click">
+                            <form [ngClass]="show == true ? 'searchbox-open' : ''" class="searchbox">
+                                <input placeholder="What are you looking for?" name="search" class="searchbox-input"
+                                    required="">
+                                <span class="searchbox-icon medium iconButton iconHover" (click)="click(show)"><i
+                                        [ngClass]="show == false ? 'fa fa-search': 'fa fa-times'"></i></span>
+                            </form>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <div class="rightbar-body-wrapper" data-scrollbar="true" tabindex="-1"
+                style="overflow-y: auto; outline: none;">
+                <div class="scroll-content">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div id="tasks-tab" class="tab-pane fade active show" role="tabpanel" aria-labelledby="tasks">
+                            <div class="filter-wrapper mb-2 pt-3">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="d-flex align-items-lg-center">
+                                            <p class="coal m-0">Filter by:</p>
+                                            <div class="dropdown w-auto">
+                                                <button class="btn dropdown-toggle coal" type="button"
+                                                    id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    Filter activity (18/21)
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Ascending</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Descending</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="dropdown w-auto">
+                                                <button class="btn dropdown-toggle coal" type="button"
+                                                    id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    All users
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Ascending</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Descending</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="dropdown w-auto">
-                                    <button class="btn dropdown-toggle coal" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        All users
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li>
-                                            <a class="dropdown-item" href="#">Ascending</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Descending</a>
-                                        </li>
-                                    </ul>
+                            </div>
+                            <div class="list-group-section pe-3">
+                                <div class="section-heading">
+                                    <h6 class="silver pt-3 mb-0">Upcoming</h6>
+                                </div>
+                                <div class="collapse-toggle-card">
+                                    <div class="list-group list-group-flush">
+                                        <a href="#" class="list-group-item d-flex menu_bar_collapse"
+                                            data-bs-toggle="collapse" role="button" data-bs-target="#task1"
+                                            aria-expanded="false" aria-controls="task1">
+                                            <div class="list-down-icon">
+                                                <span class="iconButton medium medium iconHover me-3">
+                                                    <i class="fal fa-chevron-right rotate-down"></i>
+                                                </span>
+                                            </div>
+                                            <div class="w-100 list-txt">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1 darkblue">Task assigned to Masood Ahmed </h6>
+                                                    <small class="silver">June 10, 2021</small>
+                                                </div>
+                                                <p class="mb-1 coal">
+                                                    <i class="fal fa-check-circle radical"></i> Collect the copy of the
+                                                    experience letter along with the copy of academic degrees.
+                                                </p>
+                                            </div>
+                                        </a>
+
+                                        <div class="collapse-wrap collapse" id="task1">
+
+                                            <ul class="list-group list-group-flush">
+                                                <li
+                                                    class="list-group-item d-flex justify-content-between align-items-sm-center border-0">
+
+                                                    <span class="iconButton large">
+                                                        <img src="../../../../assets/images/avatar-16.jpg" alt="-"
+                                                            class="rounded-circle w-100">
+                                                    </span>
+                                                    <div class="ms-2 me-auto coal">
+                                                        Assigned to
+                                                        <div>
+                                                            <button class="btn sky p-0 h-auto taskModalBtn"
+                                                                type="button">
+                                                                Masood Ahmed (masood.ahmed@ibex.co <i
+                                                                    class="fas fa-sort-down"></i>
+                                                            </button>
+                                                            <div></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex align-self-start">
+                                                        <button class="iconButton medium taskModalBtn iconHover"
+                                                            data-bs-toggle="modal" data-bs-target="#taskModal">
+                                                            <i class="fal fa-external-link-alt" data-bs-toggle="tooltip"
+                                                                data-bs-placement="top" title=""
+                                                                data-bs-original-title="Open popup"
+                                                                aria-label="Open popup"></i>
+                                                        </button>
+                                                        <button class="iconButton medium iconHover"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                            data-bs-original-title="Edit">
+                                                            <i class="fal fa-edit"></i>
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="btn-group" role="group"
+                                                aria-label="Button group with nested dropdown">
+                                                <button type="button" class="btn powderBg darkblue">Due Date</button>
+                                                <button type="button"
+                                                    class="btn btn-outline-secondary">06/10/2021</button>
+
+                                                <div class="btn-group" role="group">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        8:00 AM
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="me-2 ms-2">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Type
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Priority
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-3 btn-group" role="group"
+                                                aria-label="Button group with nested dropdown">
+                                                <button type="button" class="btn powderBg darkblue">Reminder</button>
+                                                <button type="button"
+                                                    class="btn btn-outline-secondary">06/09/2021</button>
+
+                                                <div class="btn-group" role="group">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        8:00 AM
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="me-2 ms-2">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        8:00 AM
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Queue
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <ul class="list-group">
+                                                <li class="list-group-item border-0 pb-1 ps-0" aria-current="true">
+                                                    <small>Created by</small>
+                                                    <p class="mb-1 sky">Masood Ahmed</p>
+                                                </li>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <a href="#" class="list-group-item d-flex menu_bar_collapse"
+                                            data-bs-toggle="collapse" role="button" data-bs-target="#task2"
+                                            aria-expanded="false" aria-controls="task2">
+                                            <div class="list-down-icon">
+                                                <span class="iconButton medium medium iconHover me-3">
+                                                    <i class="fal fa-chevron-right rotate-down"></i>
+                                                </span>
+                                            </div>
+                                            <div class="w-100 list-txt">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1 darkblue">Task assigned to Adeel Saleem </h6>
+                                                    <small class="silver">June 8, 2021</small>
+                                                </div>
+                                                <p class="mb-1 coal">
+                                                    <i class="fal fa-check-circle radical"></i> Call the candidate and
+                                                    schedule the 2nd interview. Coordinate with @Masood Ahemd and
+                                                    confirm the status of copy of required documents
+                                                </p>
+                                            </div>
+                                        </a>
+
+                                        <div class="collapse-wrap collapse" id="task2">
+                                            <ul class="list-group list-group-flush">
+                                                <li
+                                                    class="list-group-item d-flex justify-content-between align-items-sm-center border-0">
+
+                                                    <span class="iconButton large">
+                                                        <img src="../../../../assets/images/avatar-16.jpg" alt="-"
+                                                            class="rounded-circle w-100">
+                                                    </span>
+                                                    <div class="ms-2 me-auto coal">
+                                                        Assigned to
+                                                        <div>
+                                                            <button class="btn sky p-0 h-auto taskModalBtn"
+                                                                type="button">
+                                                                Adeel Saleem (adeel.saleem22@ibex.co <i
+                                                                    class="fas fa-sort-down"></i>
+                                                            </button>
+                                                            <div></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex align-self-start">
+                                                        <button class="iconButton medium taskModalBtn iconHover"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                            data-bs-original-title="Open popup">
+                                                            <i class="fal fa-external-link-alt"></i>
+                                                        </button>
+                                                        <button class="iconButton medium iconHover"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                            data-bs-original-title="Edit">
+                                                            <i class="fal fa-edit"></i>
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="btn-group" role="group"
+                                                aria-label="Button group with nested dropdown">
+                                                <button type="button" class="btn powderBg darkblue">Due Date</button>
+                                                <button type="button"
+                                                    class="btn btn-outline-secondary">06/08/2021</button>
+
+                                                <div class="btn-group" role="group">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        8:00 AM
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="me-2 ms-2">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Type
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Priority
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-3 btn-group" role="group"
+                                                aria-label="Button group with nested dropdown">
+                                                <button type="button" class="btn powderBg darkblue">Reminder</button>
+                                                <button type="button"
+                                                    class="btn btn-outline-secondary">06/07/2021</button>
+
+                                                <div class="btn-group" role="group">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        8:00 AM
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="me-2 ms-2">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        8:00 AM
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Queue
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <ul class="list-group">
+                                                <li class="list-group-item border-0 pb-1 ps-0" aria-current="true">
+                                                    <small>Created by</small>
+                                                    <p class="mb-1 sky">Adeel Saleem</p>
+                                                </li>
+                                            </ul>
+
+                                        </div>
+
+                                        <a href="#" class="list-group-item d-flex menu_bar_collapse"
+                                            data-bs-toggle="collapse" role="button" data-bs-target="#task3"
+                                            aria-expanded="false" aria-controls="task3">
+                                            <div class="list-down-icon">
+                                                <span class="iconButton medium medium iconHover me-3">
+                                                    <i class="fal fa-chevron-right rotate-down"></i>
+                                                </span>
+                                            </div>
+                                            <div class="w-100 list-txt">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1 darkblue">Task assigned to Sajjad Akbar </h6>
+                                                    <small class="silver">June 11, 2021</small>
+                                                </div>
+                                                <p class="mb-1 coal">
+                                                    <i class="fal fa-check-circle radical"></i> Please update the
+                                                    realtime attendance system design changes with the developer to
+                                                    complete it as soon as possible.
+                                                </p>
+                                            </div>
+                                        </a>
+
+                                        <div class="collapse-wrap collapse" id="task3">
+                                            <ul class="list-group list-group-flush">
+                                                <li
+                                                    class="list-group-item d-flex justify-content-between align-items-sm-center border-0">
+
+                                                    <span class="iconButton large">
+                                                        <img src="../../../../assets/images/avatar-12.jpg" alt="-"
+                                                            class="rounded-circle w-100">
+                                                    </span>
+                                                    <div class="ms-2 me-auto coal">
+                                                        Assigned to
+                                                        <div>
+                                                            <button class="btn sky p-0 h-auto taskModalBtn"
+                                                                type="button">
+                                                                Sajjad Akbar (sajjad.akbar@ibex.co <i
+                                                                    class="fas fa-sort-down"></i>
+                                                            </button>
+                                                            <div></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex align-self-start">
+                                                        <button class="iconButton medium taskModalBtn iconHover"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                            data-bs-original-title="Open popup">
+                                                            <i class="fal fa-external-link-alt"></i>
+                                                        </button>
+                                                        <button class="iconButton medium iconHover"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                            data-bs-original-title="Edit">
+                                                            <i class="fal fa-edit"></i>
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="btn-group" role="group"
+                                                aria-label="Button group with nested dropdown">
+                                                <button type="button" class="btn powderBg darkblue">Due Date</button>
+                                                <button type="button"
+                                                    class="btn btn-outline-secondary">06/08/2021</button>
+
+                                                <div class="btn-group" role="group">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        8:00 AM
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="me-2 ms-2">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Type
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Priority
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-3 btn-group" role="group"
+                                                aria-label="Button group with nested dropdown">
+                                                <button type="button" class="btn powderBg darkblue">Reminder</button>
+                                                <button type="button"
+                                                    class="btn btn-outline-secondary">06/07/2021</button>
+
+                                                <div class="btn-group" role="group">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        8:00 AM
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="me-2 ms-2">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        8:00 AM
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Queue
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <a href="#" class="list-group-item d-flex menu_bar_collapse"
+                                            data-bs-toggle="collapse" role="button" data-bs-target="#task4"
+                                            aria-expanded="false" aria-controls="task4">
+                                            <div class="list-down-icon">
+                                                <span class="iconButton medium medium iconHover me-3">
+                                                    <i class="fal fa-chevron-right rotate-down"></i>
+                                                </span>
+                                            </div>
+                                            <div class="w-100 list-txt">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1 darkblue">Task assigned to Sajjad Akbar </h6>
+                                                    <small class="silver">June 11, 2021</small>
+                                                </div>
+                                                <p class="mb-1 coal">
+                                                    <i class="fal fa-check-circle radical"></i> Please update the
+                                                    realtime attendance system design changes with the developer to
+                                                    complete it as soon as possible.
+                                                </p>
+                                            </div>
+                                        </a>
+
+                                        <div class="collapse-wrap collapse" id="task4">
+                                            <ul class="list-group list-group-flush">
+                                                <li
+                                                    class="list-group-item d-flex justify-content-between align-items-sm-center border-0">
+
+                                                    <span class="iconButton large">
+                                                        <img src="../../../../assets/images/avatar-12.jpg" alt="-"
+                                                            class="rounded-circle w-100">
+                                                    </span>
+                                                    <div class="ms-2 me-auto coal">
+                                                        Assigned to
+                                                        <div>
+                                                            <button class="btn sky p-0 h-auto taskModalBtn"
+                                                                type="button">
+                                                                Sajjad Akbar1 (sajjad.akbar@ibex.co <i
+                                                                    class="fas fa-sort-down"></i>
+                                                            </button>
+                                                            <div></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex align-self-start">
+                                                        <button class="iconButton medium taskModalBtn iconHover"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                            data-bs-original-title="Open popup">
+                                                            <i class="fal fa-external-link-alt"></i>
+                                                        </button>
+                                                        <button class="iconButton medium iconHover"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                            data-bs-original-title="Edit">
+                                                            <i class="fal fa-edit"></i>
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="btn-group" role="group"
+                                                aria-label="Button group with nested dropdown">
+                                                <button type="button" class="btn powderBg darkblue">Due Date</button>
+                                                <button type="button"
+                                                    class="btn btn-outline-secondary">06/08/2021</button>
+
+                                                <div class="btn-group" role="group">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        8:00 AM
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="me-2 ms-2">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Type
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Priority
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-3 btn-group" role="group"
+                                                aria-label="Button group with nested dropdown">
+                                                <button type="button" class="btn powderBg darkblue">Reminder</button>
+                                                <button type="button"
+                                                    class="btn btn-outline-secondary">06/07/2021</button>
+
+                                                <div class="btn-group" role="group">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        8:00 AM
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="me-2 ms-2">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        8:00 AM
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Queue
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <ul class="list-group">
+                                                <li class="list-group-item border-0 pb-1 ps-0" aria-current="true">
+                                                    <small>Created by</small>
+                                                    <p class="mb-1 sky">Sajjad Akbar </p>
+                                                </li>
+                                            </ul>
+
+                                        </div>
+
+
+                                        <a href="#" class="list-group-item d-flex menu_bar_collapse"
+                                            data-bs-toggle="collapse" role="button" data-bs-target="#task5"
+                                            aria-expanded="false" aria-controls="task5">
+                                            <div class="list-down-icon">
+                                                <span class="iconButton medium medium iconHover me-3">
+                                                    <i class="fal fa-chevron-right rotate-down"></i>
+                                                </span>
+                                            </div>
+                                            <div class="w-100 list-txt">
+                                                <div class="d-flex w-100 justify-content-between">
+                                                    <h6 class="mb-1 darkblue">Task assigned to Ghulam Rasool </h6>
+                                                    <small class="silver">June 11, 2021</small>
+                                                </div>
+                                                <p class="mb-1 coal">
+                                                    <i class="fal fa-check-circle radical"></i> Please update the
+                                                    realtime attendance system design changes with the developer to
+                                                    complete it as soon as possible.
+                                                </p>
+                                            </div>
+                                        </a>
+
+                                        <div class="collapse-wrap collapse" id="task5">
+                                            <ul class="list-group list-group-flush">
+                                                <li
+                                                    class="list-group-item d-flex justify-content-between align-items-sm-center border-0">
+
+                                                    <span class="iconButton large">
+                                                        <img src="../../../../assets/images/avatar-14.jpg" alt="-"
+                                                            class="rounded-circle w-100">
+                                                    </span>
+                                                    <div class="ms-2 me-auto coal">
+                                                        Assigned to
+                                                        <div>
+                                                            <button class="btn sky p-0 h-auto taskModalBtn"
+                                                                type="button">
+                                                                Ghulam Rasool (ghulam.rasool@ibex.co <i
+                                                                    class="fas fa-sort-down"></i>
+                                                            </button>
+                                                            <div></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex align-self-start">
+                                                        <button class="iconButton medium taskModalBtn iconHover"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                            data-bs-original-title="Open popup">
+                                                            <i class="fal fa-external-link-alt"></i>
+                                                        </button>
+                                                        <button class="iconButton medium iconHover"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                            data-bs-original-title="Edit">
+                                                            <i class="fal fa-edit"></i>
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="btn-group" role="group"
+                                                aria-label="Button group with nested dropdown">
+                                                <button type="button" class="btn powderBg darkblue">Due Date</button>
+                                                <button type="button"
+                                                    class="btn btn-outline-secondary">06/08/2021</button>
+
+                                                <div class="btn-group" role="group">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        8:00 AM
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="me-2 ms-2">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Type
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Priority
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-3 btn-group" role="group"
+                                                aria-label="Button group with nested dropdown">
+                                                <button type="button" class="btn powderBg darkblue">Reminder</button>
+                                                <button type="button"
+                                                    class="btn btn-outline-secondary">06/07/2021</button>
+
+                                                <div class="btn-group" role="group">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        8:00 AM
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="me-2 ms-2">
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        8:00 AM
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div>
+                                                    <button id="btnGroupDrop1" type="button"
+                                                        class="btn btn-outline-secondary dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Queue
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <ul class="list-group">
+                                                <li class="list-group-item border-0 pb-1 ps-0" aria-current="true">
+                                                    <small>Created by</small>
+                                                    <p class="mb-1 sky"> Ghulam Rasool </p>
+                                                </li>
+                                            </ul>
+
+                                        </div>
+                                        <p class="charcoal pt-2">Regarding call logged on Friday, April 30, 2021 1:25 AM
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="list-group-section pe-3">
-                    <div class="section-heading">
-                        <h6 class="silver pt-3 mb-0">Upcoming</h6>
-                    </div>
-                    <div class="collapse-toggle-card">
-                        <div class="list-group list-group-flush">
-                            <a href="#" class="list-group-item d-flex menu_bar_collapse" data-bs-toggle="collapse" role="button" data-bs-target="#task1" aria-expanded="false" aria-controls="task1">
-                                <div class="list-down-icon">
-                                    <span class="iconButton medium medium iconHover me-3">
-                                        <i class="fal fa-chevron-right rotate-down"></i>
-                                    </span>
-                                </div>
-                                <div class="w-100 list-txt">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-1 darkblue">Task assigned to Masood Ahmed </h6>
-                                        <small class="silver">June 10, 2021</small>
-                                    </div>
-                                    <p class="mb-1 coal">
-                                        <i class="fal fa-check-circle radical"></i> Collect the copy of the experience letter along with the copy of academic degrees.</p>
-                                </div>
-                            </a>
-                            
-                            <div class="collapse-wrap collapse" id="task1">
-                                
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex justify-content-between align-items-sm-center border-0">
-
-                                        <span class="iconButton large">
-                                            <img src="../../../../assets/images/avatar-16.jpg" alt="-" class="rounded-circle w-100">
-                                        </span>
-                                        <div class="ms-2 me-auto coal">
-                                            Assigned to
-                                            <div>
-                                                <button class="btn sky p-0 h-auto taskModalBtn" type="button">
-                                                Masood Ahmed (masood.ahmed@ibex.co <i class="fas fa-sort-down"></i>
-                                                </button>
-                                                <div></div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-self-start">
-                                            <button class="iconButton medium taskModalBtn iconHover" data-bs-toggle="modal" data-bs-target="#taskModal">
-                                                <i class="fal fa-external-link-alt" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Open popup" aria-label="Open popup"></i>
-                                            </button>
-                                            <button class="iconButton medium iconHover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit">
-                                                <i class="fal fa-edit"></i>
-                                            </button>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <button type="button" class="btn powderBg darkblue">Due Date</button>
-                                    <button type="button" class="btn btn-outline-secondary">06/10/2021</button>
-
-                                    <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                            8:00 AM
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="me-2 ms-2">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Type
-                                            </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Priority
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div class="mt-3 btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <button type="button" class="btn powderBg darkblue">Reminder</button>
-                                    <button type="button" class="btn btn-outline-secondary">06/09/2021</button>
-
-                                    <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                            8:00 AM
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="me-2 ms-2">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                8:00 AM
-                                            </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Queue
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <ul class="list-group">
-                                    <li class="list-group-item border-0 pb-1 ps-0" aria-current="true">
-                                        <small>Created by</small>
-                                        <p class="mb-1 sky">Masood Ahmed</p>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-                                </ul>
-                            </div>
-
-                            <a href="#" class="list-group-item d-flex menu_bar_collapse" data-bs-toggle="collapse" role="button" data-bs-target="#task2" aria-expanded="false" aria-controls="task2">
-                                <div class="list-down-icon">
-                                    <span class="iconButton medium medium iconHover me-3">
-                                        <i class="fal fa-chevron-right rotate-down"></i>
-                                    </span>
-                                </div>
-                                <div class="w-100 list-txt">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-1 darkblue">Task assigned to Adeel Saleem </h6>
-                                        <small class="silver">June 8, 2021</small>
-                                    </div>
-                                    <p class="mb-1 coal">
-                                        <i class="fal fa-check-circle radical"></i> Call the candidate and schedule the 2nd interview. Coordinate with @Masood Ahemd and confirm the status of copy of required documents</p>
-                                </div>
-                            </a>
-                            
-                            <div class="collapse-wrap collapse" id="task2">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex justify-content-between align-items-sm-center border-0">
-
-                                        <span class="iconButton large">
-                                            <img src="../../../../assets/images/avatar-16.jpg" alt="-" class="rounded-circle w-100">
-                                        </span>
-                                        <div class="ms-2 me-auto coal">
-                                            Assigned to
-                                            <div>
-                                                <button class="btn sky p-0 h-auto taskModalBtn" type="button">
-                                                Adeel Saleem (adeel.saleem22@ibex.co <i class="fas fa-sort-down"></i>
-                                                </button>
-                                                <div></div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-self-start">
-                                            <button class="iconButton medium taskModalBtn iconHover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Open popup">
-                                                <i class="fal fa-external-link-alt"></i>
-                                            </button>
-                                            <button class="iconButton medium iconHover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit">
-                                                <i class="fal fa-edit"></i>
-                                            </button>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <button type="button" class="btn powderBg darkblue">Due Date</button>
-                                    <button type="button" class="btn btn-outline-secondary">06/08/2021</button>
-
-                                    <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                            8:00 AM
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="me-2 ms-2">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Type
-                                            </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Priority
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div class="mt-3 btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <button type="button" class="btn powderBg darkblue">Reminder</button>
-                                    <button type="button" class="btn btn-outline-secondary">06/07/2021</button>
-
-                                    <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                            8:00 AM
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="me-2 ms-2">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                8:00 AM
-                                            </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Queue
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <ul class="list-group">
-                                    <li class="list-group-item border-0 pb-1 ps-0" aria-current="true">
-                                        <small>Created by</small>
-                                        <p class="mb-1 sky">Adeel Saleem</p>
-                                    </li>
-                                </ul>
-
-                            </div>
-                          
-                              <a href="#" class="list-group-item d-flex menu_bar_collapse" data-bs-toggle="collapse" role="button" data-bs-target="#task3" aria-expanded="false" aria-controls="task3">
-                                <div class="list-down-icon">
-                                    <span class="iconButton medium medium iconHover me-3">
-                                        <i class="fal fa-chevron-right rotate-down"></i>
-                                    </span>
-                                </div>
-                                <div class="w-100 list-txt">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-1 darkblue">Task assigned to Sajjad Akbar </h6>
-                                        <small class="silver">June 11, 2021</small>
-                                    </div>
-                                    <p class="mb-1 coal">
-                                        <i class="fal fa-check-circle radical"></i> Please update the realtime attendance system design changes with the developer to complete it as soon as possible.</p>
-                                </div>
-                            </a>
-                            
-                            <div class="collapse-wrap collapse" id="task3">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex justify-content-between align-items-sm-center border-0">
-
-                                        <span class="iconButton large">
-                                            <img src="../../../../assets/images/avatar-12.jpg" alt="-" class="rounded-circle w-100">
-                                        </span>
-                                        <div class="ms-2 me-auto coal">
-                                            Assigned to
-                                            <div>
-                                                <button class="btn sky p-0 h-auto taskModalBtn" type="button">
-                                                Sajjad Akbar (sajjad.akbar@ibex.co <i class="fas fa-sort-down"></i>
-                                                </button>
-                                                <div></div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-self-start">
-                                            <button class="iconButton medium taskModalBtn iconHover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Open popup">
-                                                <i class="fal fa-external-link-alt"></i>
-                                            </button>
-                                            <button class="iconButton medium iconHover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit">
-                                                <i class="fal fa-edit"></i>
-                                            </button>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <button type="button" class="btn powderBg darkblue">Due Date</button>
-                                    <button type="button" class="btn btn-outline-secondary">06/08/2021</button>
-
-                                    <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                            8:00 AM
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="me-2 ms-2">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Type
-                                            </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Priority
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div class="mt-3 btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <button type="button" class="btn powderBg darkblue">Reminder</button>
-                                    <button type="button" class="btn btn-outline-secondary">06/07/2021</button>
-
-                                    <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                            8:00 AM
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="me-2 ms-2">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                8:00 AM
-                                            </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Queue
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                            
-                            </div>
-                            
-                            
-                            <a href="#" class="list-group-item d-flex menu_bar_collapse" data-bs-toggle="collapse" role="button" data-bs-target="#task4" aria-expanded="false" aria-controls="task4">
-                                <div class="list-down-icon">
-                                    <span class="iconButton medium medium iconHover me-3">
-                                        <i class="fal fa-chevron-right rotate-down"></i>
-                                    </span>
-                                </div>
-                                <div class="w-100 list-txt">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-1 darkblue">Task assigned to Sajjad Akbar </h6>
-                                        <small class="silver">June 11, 2021</small>
-                                    </div>
-                                    <p class="mb-1 coal">
-                                        <i class="fal fa-check-circle radical"></i> Please update the realtime attendance system design changes with the developer to complete it as soon as possible.</p>
-                                </div>
-                            </a>
-                            
-                            <div class="collapse-wrap collapse" id="task4">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex justify-content-between align-items-sm-center border-0">
-
-                                        <span class="iconButton large">
-                                            <img src="../../../../assets/images/avatar-12.jpg" alt="-" class="rounded-circle w-100">
-                                        </span>
-                                        <div class="ms-2 me-auto coal">
-                                            Assigned to
-                                            <div>
-                                                <button class="btn sky p-0 h-auto taskModalBtn" type="button">
-                                                Sajjad Akbar1 (sajjad.akbar@ibex.co <i class="fas fa-sort-down"></i>
-                                                </button>
-                                                <div></div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-self-start">
-                                            <button class="iconButton medium taskModalBtn iconHover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Open popup">
-                                                <i class="fal fa-external-link-alt"></i>
-                                            </button>
-                                            <button class="iconButton medium iconHover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit">
-                                                <i class="fal fa-edit"></i>
-                                            </button>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <button type="button" class="btn powderBg darkblue">Due Date</button>
-                                    <button type="button" class="btn btn-outline-secondary">06/08/2021</button>
-
-                                    <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                            8:00 AM
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="me-2 ms-2">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Type
-                                            </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Priority
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div class="mt-3 btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <button type="button" class="btn powderBg darkblue">Reminder</button>
-                                    <button type="button" class="btn btn-outline-secondary">06/07/2021</button>
-
-                                    <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                            8:00 AM
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="me-2 ms-2">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                8:00 AM
-                                            </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Queue
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <ul class="list-group">
-                                    <li class="list-group-item border-0 pb-1 ps-0" aria-current="true">
-                                        <small>Created by</small>
-                                        <p class="mb-1 sky">Sajjad Akbar </p>
-                                    </li>
-                                </ul>
-
-                            </div>
-
-
-                            <a href="#" class="list-group-item d-flex menu_bar_collapse" data-bs-toggle="collapse" role="button" data-bs-target="#task5" aria-expanded="false" aria-controls="task5">
-                                <div class="list-down-icon">
-                                    <span class="iconButton medium medium iconHover me-3">
-                                        <i class="fal fa-chevron-right rotate-down"></i>
-                                    </span>
-                                </div>
-                                <div class="w-100 list-txt">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-1 darkblue">Task assigned to  Ghulam Rasool </h6>
-                                        <small class="silver">June 11, 2021</small>
-                                    </div>
-                                    <p class="mb-1 coal">
-                                        <i class="fal fa-check-circle radical"></i> Please update the realtime attendance system design changes with the developer to complete it as soon as possible.</p>
-                                </div>
-                            </a>
-                            
-                            <div class="collapse-wrap collapse" id="task5">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex justify-content-between align-items-sm-center border-0">
-
-                                        <span class="iconButton large">
-                                            <img src="../../../../assets/images/avatar-14.jpg" alt="-" class="rounded-circle w-100">
-                                        </span>
-                                        <div class="ms-2 me-auto coal">
-                                            Assigned to
-                                            <div>
-                                                <button class="btn sky p-0 h-auto taskModalBtn" type="button">
-                                                Ghulam Rasool (ghulam.rasool@ibex.co <i class="fas fa-sort-down"></i>
-                                                </button>
-                                                <div></div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-self-start">
-                                            <button class="iconButton medium taskModalBtn iconHover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Open popup">
-                                                <i class="fal fa-external-link-alt"></i>
-                                            </button>
-                                            <button class="iconButton medium iconHover" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Edit">
-                                                <i class="fal fa-edit"></i>
-                                            </button>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <button type="button" class="btn powderBg darkblue">Due Date</button>
-                                    <button type="button" class="btn btn-outline-secondary">06/08/2021</button>
-
-                                    <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                            8:00 AM
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="me-2 ms-2">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Type
-                                            </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Priority
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div class="mt-3 btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <button type="button" class="btn powderBg darkblue">Reminder</button>
-                                    <button type="button" class="btn btn-outline-secondary">06/07/2021</button>
-
-                                    <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                            8:00 AM
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="me-2 ms-2">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                8:00 AM
-                                            </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                Queue
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Dropdown link</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <ul class="list-group">
-                                    <li class="list-group-item border-0 pb-1 ps-0" aria-current="true">
-                                        <small>Created by</small>
-                                        <p class="mb-1 sky"> Ghulam Rasool </p>
-                                    </li>
-                                </ul>
-
-                            </div>
-                            <p class="charcoal pt-2">Regarding call logged on Friday, April 30, 2021 1:25 AM</p>
-                        </div>
-                    </div>
+                <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                    <div class="scrollbar-thumb scrollbar-thumb-x"></div>
+                </div>
+                <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                    <div class="scrollbar-thumb scrollbar-thumb-y"></div>
                 </div>
             </div>
         </div>
-    </div><div class="scrollbar-track scrollbar-track-x" style="display: none;"><div class="scrollbar-thumb scrollbar-thumb-x"></div></div><div class="scrollbar-track scrollbar-track-y" style="display: none;"><div class="scrollbar-thumb scrollbar-thumb-y"></div></div></div>
-</div>
-</div>
+    </div>
 </nav>

@@ -1,15 +1,18 @@
 
 <div class="tab-content position-relative" id="myTabContent">
-    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
-        <p style="color: white"> Loading... </p>
-    </ngx-spinner>
+    <div *ngIf="spinner1running">
+        <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+            [fullScreen]="false">
+            <p style="color: white"> Loading... </p>
+        </ngx-spinner>
+    </div>
     <div class="tab-pane fade socila-channels-tab active show" id="twitter" role="tabpanel"
         aria-labelledby="twitter-tab">
         <div class="headerWrap oceanBg d-flex align-items-center shadow-sm">
             <div class="titleIcon d-flex align-items-center">
                 <i class="fab fa-twitter"></i>
                 <div class="titleLink ms-1">
-                    /ibex.connect</div>
+                    /{{pageName}}</div>
             </div>
             <ul class="nav nav-tabs ms-3 h-100" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -42,567 +45,766 @@
                 </li>
             </ul>
         </div>
-        <div class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
+        <div class="chat-body" *ngIf="TTReply == true" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;"
+        infinite-scroll [scrollWindow]="false" [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5"
+            [infiniteScrollThrottle]="10" (scrolled)="onScrollComments()">
             <div class="scroll-content">
                 <div class="tab-content m-4" id="myTabContent">
                     <div class="tab-pane fade show active" id="twitter-tweets" role="tabpanel"
                         aria-labelledby="twitter-tweets-tab">
                         <div class="chat-box-wrap" *ngFor="let tweet of TwitterConversation">
-                            <div *ngFor="let tweetmsg of tweet.comments">
+                            <div *ngFor="let group of tweet.groupedComments | sort:criteria">
                                 <div class="date-wrap">
-                                    <p class="date">{{tweetmsg.createdDate | date:'EEEE, MMMM d, y'}}</p>
+                                    <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}}</p>
                                 </div>
-                                <div class="message-wrap agent-message-wrap right">
-                                    <div class="application-wrap d-flex align-items-center mb-1">
-                                        <p class="m-0 silver me-2 ms-1">Application ID</p>
-                                        <p class="app-no navy m-0 me-2">2354545</p>
-                                    </div>
-                                    <div class="d-flex align-items-center agent-container">
-                                        <div class="card w-d-inline messageUpper">
-                                            <div class="card-body shadow-sm unread-msg" style="min-width: 425px;">
-                                                <div class="d-flex msg-user-info">
-                                                    <div class="d-flex align-items-center">
-                                                        <h6 class="card-title navy m-0">{{tweetmsg.userName}}</h6>
-                                                        <p class="card-text ms-3"><small
-                                                                class="silver">{{tweetmsg.createdDate
-                                                                | date:'h:mm a'}}</small></p>
-                                                    </div>
-                                                    <div class="dropdown w-auto">
-                                                        <button class="btn coal p-0 ps-3" type="button"
-                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                            <small>{{tweetmsg.queryStatus}} <i
-                                                                    class="far fa-chevron-down ms-2"></i></small>
-                                                        </button>
-                                                        <ul class="dropdown-menu custom-dropdown"
-                                                            aria-labelledby="dropdownMenuButton1">
-
-                                                            <li>
-                                                                <a class="dropdown-item"
-                                                                    (click)="commentStatus(tweetmsg.id)">Read</a>
-                                                            </li>
-
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="whatsapp-single-img whatsappImgModalBtn" type="button"
-                                                    style="width:375px;"
-                                                    *ngFor="let attachment of tweetmsg.attachments">
-                                                    <img src={{attachment.attachmentUrl}}
-                                                        class="card-img-top rounded-3">
-                                                </div>
-                                                <p class="card-text nignt">{{tweetmsg.message}}</p>
-                                                <div class="tags" *ngFor="let tag of tweetmsg.tags">
-
-                                                    <span class="badge rounded-pill tag tag1 selected"
-                                                        (click)="removeTagFromFeed(tag.id, tag.feedId, 'TT')">{{tag.name}}</span>
-
-                                                </div>
+                                <ng-container *ngFor="let tweetmsg of group.items | sort:criteria">  
+                                    <ng-container *ngIf="tweetmsg.queryStatus != 'QueryCompleted'"> 
+                                        <div class="message-wrap agent-message-wrap right" >
+                                            <div class="application-wrap d-flex align-items-center mb-1" *ngIf="tweetmsg.ticketId != null">
+                                                <p class="m-0 silver me-2 ms-1">Application ID
+                                                </p>
+                                                <p class="app-no navy m-0 me-2">{{tweetmsg.ticketId}}</p>
                                             </div>
-                                            <div class="message-bottom">
-                                                <div class="row">
-                                                    <div class="col-lg-10 ps-4 d-flex align-items-center">
-                                                        <div class="message-actionlist d-flex align-items-center">
-                                                            <div class="box">
-                                                                <a (click)="likeByAdmin(tweetmsg.id, tweetmsg.isLikedByAdmin)"
-                                                                    [class.active]="tweetmsg.isLikedByAdmin == true"
-                                                                    class="message-actionItem coal unlikebht btn p-0 label-reactions">
-                                                                    <span class="iconButton small btn">
-                                                                        <i class="fal fa-heart"></i>
-                                                                        <i class="fas fa-heart"></i>
-                                                                    </span>
-                                                                    Like
-                                                                </a>
+                                            <div class="d-flex align-items-center agent-container">
+                                                <div class="card w-d-inline messageUpper">
+                                                    <div class="card-body shadow-sm " style="min-width: 425px;" [ngClass]="tweetmsg.queryStatus == 'Unresponded'?'unread-msg':''">
+                                                        <div class="d-flex msg-user-info">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="card-title navy m-0">{{tweetmsg.userName}}</h6>
+                                                                <p class="card-text ms-3"><small
+                                                                        class="silver">{{tweetmsg.createdDate
+                                                                        | date:'h:mm:ss a'}}</small></p>
                                                             </div>
-                                                            <div class="dropdown w-auto">
-                                                                <button class="btn coal" type="button"
+                                                            <div class="dropdown w-auto" *ngIf="tweetmsg.queryStatus != 'Responded' && tweetmsg.queryStatus != 'Completed'">
+                                                                <button class="btn coal p-0 ps-3" type="button"
                                                                     id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                     aria-expanded="false">
-                                                                    <i class="fal fa-retweet"></i> 0
+                                                                    <small>{{tweetmsg.queryStatus}} <i
+                                                                            class="far fa-chevron-down ms-2"></i></small>
                                                                 </button>
                                                                 <ul class="dropdown-menu custom-dropdown"
                                                                     aria-labelledby="dropdownMenuButton1">
+        
                                                                     <li>
-                                                                        <a class="dropdown-item active"
-                                                                            href="#">Retweet</a>
+                                                                        <a class="dropdown-item" *ngIf="tweetmsg.queryStatus != 'Responded'" (click)="commentStatus(tweetmsg.id, tweetmsg.contentType)">Read</a>
+                                                                        <!-- <a class="dropdown-item" *ngIf="tweetmsg.queryStatus == 'Responded'" (click)="queryCompleted(tweetmsg.id, tweetmsg.contentType)">Completed</a> -->
                                                                     </li>
-                                                                    <li>
-                                                                        <a class="dropdown-item" href="#">Retweet with
-                                                                            comments</a>
-                                                                    </li>
+        
                                                                 </ul>
                                                             </div>
-                                                            <a (click)="SendCommentInformation(tweetmsg.id)"
-                                                                class="message-actionItem replyBtn coal">
-                                                                <span class="iconButton small btn">
-                                                                    <i class="fal fa-reply coal"></i>
-                                                                </span>
-                                                                Reply
-                                                            </a>
-                                                            <div class="dropdown w-auto">
-                                                                <button class="iconButton medium"
-                                                                    id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                                    data-bs-auto-close="outside">
-                                                                    <span class="iconButton small btn mx-2">
-                                                                        <i class="fal fa-tag coal"></i>
-                                                                    </span>
-                                                                    Tag
-                                                                </button>
-                                                                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                    aria-labelledby="dropdownMenuButton2">
-                                                                    <ul class="dropdown-listing">
-                                                                        <li class="dropdown-listing-header">
-                                                                            <div class="head-section">
-                                                                                <div class="left">
-                                                                                    <h6>Tags
-                                                                                    </h6>
-                                                                                </div>
-                                                                                <a href="#"
-                                                                                    class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
-                                                                                    id="dropdownMenuButton3"
-                                                                                    data-bs-toggle="dropdown"
-                                                                                    aria-expanded="false">
-                                                                                    <i class="fal fa-times silver"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                            <form class="custom-searchbar">
-                                                                                <input
-                                                                                    class="form-control rounded-pill shadow-sm"
-                                                                                    placeholder="Search"
-                                                                                    aria-label="Search">
-                                                                                <span class="btn searchbar-btn"
-                                                                                    type="submit">
-                                                                                    <i class="fal fa-search silver"></i>
-                                                                                </span>
-                                                                            </form>
-                                                                        </li>
-                                                                        <li class="dropend">
-                                                                            <div *ngFor="let tag of TagsList"
-                                                                                class="list-group list-group-flush dropend">
-                                                                                <a data-bs-toggle="dropdown"
-                                                                                    class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
-
-                                                                                    <div class="w-100 list-txt">
-                                                                                        <div
-                                                                                            class="d-flex w-100 justify-content-between">
-                                                                                            <h6 class="mb-1 darkblue">
-                                                                                                {{tag.name}}
+                                                            <div class="w-auto" *ngIf="tweetmsg.queryStatus == 'Responded' || tweetmsg.queryStatus == 'Completed'" style="margin-left: 20px;">
+                                                                <small>{{tweetmsg.queryStatus}} </small>
+                                                                </div>
+                                                        </div>
+                                                        <div class="whatsapp-single-img whatsappImgModalBtn" type="button"
+                                                            style="width:375px;"
+                                                            *ngFor="let attachment of tweetmsg.attachments">
+                                                            <img src={{attachment.attachmentUrl}}
+                                                                class="card-img-top rounded-3">
+                                                        </div>
+                                                        <p class="card-text nignt">{{tweetmsg.message}}</p>
+                                                        <div class="tags" *ngFor="let tag of tweetmsg.tags">
+        
+                                                            <span class="badge rounded-pill tag tag1 selected"
+                                                                (click)="removeTagFromFeed(tag.id, tag.feedId, 'TT')">{{tag.name}}</span>
+        
+                                                        </div>
+                                                        <div class="card-footer pb-0 mt-2">
+                                                            <p class="card-text ms-3 single-img-time">
+                                                                </p>
+                                                                <div class="silver" *ngIf="!tweetmsg?.postStats">
+                                                                    <a class="message-actionItem coal me-3">
+                                                                        0 Comments
+                                                                    </a>
+                                                                    <a class="message-actionItem coal me-3">
+                                                                        0 Quotes
+                                                                    </a>
+                                                                    <a class="message-actionItem coal me-3">
+                                                                        <i class="fas fa-heart radical"></i> 0
+                                                                    </a>
+                                                                    <a class="message-actionItem coal me-3">
+                                                                        <i class="fal fa-retweet"></i> 0
+                                                                    </a>
+                                                                    <a class="message-actionItem coal me-2">
+                                                                        0 Impressions
+                                                                    </a>
+                                                                </div>
+                                                                <div class="silver" *ngIf="tweetmsg?.postStats">
+                                                                    <a class="message-actionItem coal me-3">
+                                                                        {{tweetmsg?.postStats.reply_count}} Comments
+                                                                    </a>
+                                                                    <a class="message-actionItem coal me-3">
+                                                                        {{tweetmsg?.postStats.quote_count}} Quotes
+                                                                    </a>
+                                                                    <a class="message-actionItem coal me-3">
+                                                                        <i class="fas fa-heart radical"></i> {{tweetmsg?.postStats.like_count}}
+                                                                    </a>
+                                                                    <a class="message-actionItem coal me-3">
+                                                                        <i class="fal fa-retweet"></i> {{tweetmsg?.postStats.retweet_count}}
+                                                                    </a>
+                                                                    <a class="message-actionItem coal me-2">
+                                                                        {{tweetmsg?.postStats.impression_count}} Impressions
+                                                                    </a>
+                                                                </div>
+                                                            <p></p>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="message-bottom">
+                                                        <div class="row">
+                                                            <div class="col-lg-10 ps-4 d-flex align-items-center">
+                                                                <div class="message-actionlist d-flex align-items-center">
+                                                                    <div class="box">
+                                                                        <a class="message-actionItem coal unlikebht btn p-0 label-reactions" (click)="likeByAdmin(tweetmsg.id, tweetmsg.isLikedByAdmin, tweet.platform, tweet.post?.profile.page_Id, tweet.post?.profile.profile_Id, tweet.user?.userId)"
+                                                                            [class.active]="tweetmsg.isLikedByAdmin == true"
+                                                                            >
+                                                                            <span class="iconButton small btn">
+                                                                                <i class="fal fa-heart"></i>
+                                                                                <i class="fas fa-heart"></i>
+                                                                            </span>
+                                                                            Like
+                                                                        </a>
+                                                                    </div>
+                                                                  <!--  <div class="dropdown w-auto">
+                                                                        <button class="btn coal" type="button"
+                                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                                            aria-expanded="false">
+                                                                            <i class="fal fa-retweet"></i> 0
+                                                                        </button>
+                                                                         <ul class="dropdown-menu custom-dropdown"
+                                                                            aria-labelledby="dropdownMenuButton1">
+                                                                            <li>
+                                                                                <a class="dropdown-item active"
+                                                                                    href="#">Retweet</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a class="dropdown-item" href="#">Retweet with
+                                                                                    comments</a>
+                                                                            </li>
+                                                                        </ul> 
+                                                                    </div> -->
+                                                                    <a class="message-actionItem replyBtn coal" (click)="SendCommentInformation(tweetmsg.id)"
+                                                                        >
+                                                                        <span class="iconButton small btn">
+                                                                            <i class="fal fa-reply coal"></i>
+                                                                        </span>
+                                                                        Reply
+                                                                    </a>
+                                                                    <div class="dropdown w-auto">
+                                                                        <button class="iconButton medium" 
+                                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                                            data-bs-auto-close="outside">
+                                                                            <span class="iconButton small btn mx-2">
+                                                                                <i class="fal fa-tag coal"></i>
+                                                                            </span>
+                                                                            Tag
+                                                                        </button>
+                                                                        <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                                            aria-labelledby="dropdownMenuButton2">
+                                                                            <ul class="dropdown-listing">
+                                                                                <li class="dropdown-listing-header">
+                                                                                    <div class="head-section">
+                                                                                        <div class="left">
+                                                                                            <h6>Tags
                                                                                             </h6>
                                                                                         </div>
+                                                                                        <!-- <a href="#"
+                                                                                            class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
+                                                                                            (click)="closeTagListDropdown()"
+                                                                                            id="dropdownMenuButton3"
+                                                                                            data-bs-toggle="dropdown"
+                                                                                            aria-expanded="false">
+                                                                                            <i class="fal fa-times silver"></i>
+                                                                                        </a> -->
                                                                                     </div>
-
-                                                                                </a>
-                                                                                <ul class="dropdown-menu shadow">
-                                                                                    <li class="list-body small-list"
-                                                                                        data-scrollbar="true"
-                                                                                        tabindex="-1"
-                                                                                        style="overflow: auto; outline: none;">
-                                                                                        <div
-                                                                                            class="list-group list-group-flush">
-                                                                                            <a (click)="insertTagsForFeed(keyword.id, tweetmsg.id, 'TT')"
-                                                                                                [ngClass]="activeTag==true?'active':''"
-                                                                                                class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                *ngFor="let keyword of tag.keywordList">
+                                                                                    <form class="custom-searchbar">
+                                                                                        <input
+                                                                                            class="form-control rounded-pill shadow-sm"
+                                                                                            placeholder="Search"
+                                                                                            aria-label="Search">
+                                                                                        <span class="btn searchbar-btn"
+                                                                                            type="submit">
+                                                                                            <i class="fal fa-search silver"></i>
+                                                                                        </span>
+                                                                                    </form>
+                                                                                </li>
+                                                                                <li class="dropend">
+                                                                                    <div *ngFor="let tag of TagsList  | filter: searchText"
+                                                                                        class="list-group list-group-flush dropend">
+                                                                                        <a data-bs-toggle="dropdown"
+                                                                                            class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
+        
+                                                                                            <div class="w-100 list-txt">
                                                                                                 <div
-                                                                                                    class="list-down-icon">
+                                                                                                    class="d-flex w-100 justify-content-between">
+                                                                                                    <h6 class="mb-1 darkblue">
+                                                                                                        {{tag.name}}
+                                                                                                    </h6>
+                                                                                                </div>
+                                                                                            </div>
+        
+                                                                                        </a>
+                                                                                        <ul class="dropdown-menu shadow">
+                                                                                            <li class="list-body small-list"
+                                                                                                data-scrollbar="true"
+                                                                                                tabindex="-1"
+                                                                                                style="overflow: auto; outline: none;">
+                                                                                                <div
+                                                                                                    class="list-group list-group-flush">
+                                                                                                    <a class="list-group-item d-flex level1Btn dropdown-item" (click)="insertTagsForFeed(keyword.id, tweetmsg.id, 'TT')"
+                                                                                                        [ngClass]="activeTag==true?'active':''"
+                                                                                                        
+                                                                                                        *ngFor="let keyword of tag.keywordList">
+                                                                                                        <div
+                                                                                                            class="list-down-icon">
+                                                                                                            <span
+                                                                                                                class="btn iconButton iconHover medium">
+                                                                                                                <i
+                                                                                                                    class="fal fa-tag coal"></i>
+                                                                                                            </span>
+                                                                                                        </div>
+                                                                                                        <div
+                                                                                                            class="w-100 list-txt">
+                                                                                                            <div
+                                                                                                                class="d-flex w-100 justify-content-between">
+                                                                                                                <h6
+                                                                                                                    class="mb-1 darkblue">
+                                                                                                                    {{keyword.name}}
+                                                                                                                </h6>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <small
+                                                                                                            *ngIf="keyword.id == tag.id">
+                                                                                                            <i [ngClass]="checkTag==true?'fa-check-circle':''"
+                                                                                                                class="fal sky"></i>
+                                                                                                        </small>
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </li>
+        
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div class="dropdown w-auto">
+                                                                        <button class="iconButton medium show"
+                                                                            id="sentimentButton" data-bs-toggle="dropdown"
+                                                                            aria-expanded="true" style="margin-left:43px">
+                                                                            <span class="iconButton small btn mx-2">
+                                                                                <i class="fal fa-smile"></i>
+                                                                            </span>
+                                                                            Sentiment
+                                                                        </button>
+                                                                        <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                                            aria-labelledby="dropdownMenuButton2"
+                                                                            style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 42px);"
+                                                                            data-popper-placement="bottom-start">
+                                                                            <ul class="dropdown-listing">
+                                                                                <li class="list-body small-list"
+                                                                                    data-scrollbar="true" tabindex="-1"
+                                                                                    style="overflow: auto; outline: none;">
+                                                                                    <div class="scroll-content">
+                                                                                        <div class="list-group list-group-flush"
+                                                                                            *ngFor="let sentiment of Sentiments">
+                                                                                            <a class="list-group-item d-flex level1Btn " (click)="insertSentimentForFeed(tweetmsg.id, sentiment.name, 'TT')"
+                                                                                                >
+                                                                                                <div class="list-down-icon">
                                                                                                     <span
                                                                                                         class="btn iconButton iconHover medium">
                                                                                                         <i
-                                                                                                            class="fal fa-tag coal"></i>
+                                                                                                            class={{sentiment.icon}}></i>
                                                                                                     </span>
                                                                                                 </div>
-                                                                                                <div
-                                                                                                    class="w-100 list-txt">
+                                                                                                <div class="w-100 list-txt">
                                                                                                     <div
                                                                                                         class="d-flex w-100 justify-content-between">
                                                                                                         <h6
                                                                                                             class="mb-1 darkblue">
-                                                                                                            {{keyword.name}}
+                                                                                                            {{sentiment.name}}
                                                                                                         </h6>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                                <small
-                                                                                                    *ngIf="keyword.id == tag.id">
-                                                                                                    <i [ngClass]="checkTag==true?'fa-check-circle':''"
-                                                                                                        class="fal sky"></i>
-                                                                                                </small>
+                                                                                                <!-- <small>
+                                                                                                    <i
+                                                                                                        class="fal fa-check-circle sky"></i>
+                                                                                                </small> -->
                                                                                             </a>
-                                                                                        </div>
-                                                                                    </li>
-
-                                                                                </ul>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="dropdown w-auto">
-                                                                <button class="iconButton medium show"
-                                                                    id="sentimentButton" data-bs-toggle="dropdown"
-                                                                    aria-expanded="true" style="margin-left:43px">
-                                                                    <span class="iconButton small btn mx-2">
-                                                                        <i class="fal fa-smile"></i>
-                                                                    </span>
-                                                                    Sentiment
-                                                                </button>
-                                                                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                    aria-labelledby="dropdownMenuButton2"
-                                                                    style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 42px);"
-                                                                    data-popper-placement="bottom-start">
-                                                                    <ul class="dropdown-listing">
-                                                                        <li class="list-body small-list"
-                                                                            data-scrollbar="true" tabindex="-1"
-                                                                            style="overflow: auto; outline: none;">
-                                                                            <div class="scroll-content">
-                                                                                <div class="list-group list-group-flush"
-                                                                                    *ngFor="let sentiment of Sentiments">
-                                                                                    <a (click)="insertSentimentForFeed(tweetmsg.id, sentiment.name, 'TT')"
-                                                                                        class="list-group-item d-flex level1Btn ">
-                                                                                        <div class="list-down-icon">
-                                                                                            <span
-                                                                                                class="btn iconButton iconHover medium">
-                                                                                                <i
-                                                                                                    class={{sentiment.icon}}></i>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                        <div class="w-100 list-txt">
-                                                                                            <div
-                                                                                                class="d-flex w-100 justify-content-between">
-                                                                                                <h6
-                                                                                                    class="mb-1 darkblue">
-                                                                                                    {{sentiment.name}}
-                                                                                                </h6>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <!-- <small>
-                                                                                            <i
-                                                                                                class="fal fa-check-circle sky"></i>
-                                                                                        </small> -->
-                                                                                    </a>
-
-
-                                                                                </div>
-                                                                            </div>
-
-                                                                        </li>
-                                                                    </ul>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <span class="complaintBtn" type="button"><i
-                                                class="fal fa-plus-circle sky"></i></span>
-                                    </div>
-                                </div>
-
-                                <div *ngFor="let reply of tweetmsg.replies">
-                                    <div class="date-wrap">
-                                        <p class="date">{{reply.createdDate | date:'EEEE, MMMM d, y'}}</p>
-                                    </div>
-                                    <div class="message-wrap agent-message-wrap left">
-                                        <div class="agent-container">
-                                            <div class="card card-txt ms-auto">
-                                                <div class="card-body shadow-sm">
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <h6 class="card-title m-0">{{tweet.post.profile.page_Name}}</h6>
-                                                        <p class="card-text ms-3">
-                                                            <small class="silver">{{reply.createdDate | date:'h:mm a'}}</small>
-                                                        </p>
-                                                    </div>
-                                                    <p class="card-textnignt p-0">{{reply.message}}</p>
-                                                </div>
-                                                <div class="message-bottom">
-                                                    <div class="row">
-                                                        <div class="col-lg-12 ps-4 d-flex align-items-center">
-                                                            <div class="commentWrap">
-                                                                Commented on by
-                                                                <a class="fw-bold">Syed
-                                                                    Ahmed</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="twitter-message" role="tabpanel"
-                        aria-labelledby="twitter-message-tab">
-                        <div class="chat-box-wrap">
-                            <div *ngFor="let msg of TwitterMessage">
-                                <div class="date-wrap">
-                                    <p class="date">{{msg.createdDate | date:'EEEE, MMMM d, y'}}</p>
-                                </div>
-                                <div class="message-wrap agent-message-wrap right">
-                                    <div class="application-wrap d-flex align-items-center mb-1">
-                                        <p class="m-0 silver me-2 ms-1">Application ID</p>
-                                        <p class="app-no navy m-0 me-2">2354545</p>
-                                    </div>
-                                    <div class="d-flex align-items-center agent-container">
-                                        <div class="card w-d-inline messageUpper">
-                                            <div class="card-body shadow-sm unread-msg" style="min-width: 425px;">
-                                                <div class="d-flex msg-user-info">
-                                                    <div class="d-flex align-items-center">
-                                                        <h6 class="card-title navy m-0">{{msg.fromName}}</h6>
-                                                        <p class="card-text ms-3"><small
-                                                                class="silver">{{msg.createdDate
-                                                                | date:'h:mm a'}}</small></p>
-                                                    </div>
-                                                    <div class="dropdown w-auto">
-                                                        <button class="btn coal p-0 ps-3" type="button"
-                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                            <small>Unread <i
-                                                                    class="far fa-chevron-down ms-2"></i></small>
-                                                        </button>
-                                                        <ul class="dropdown-menu custom-dropdown"
-                                                            aria-labelledby="dropdownMenuButton1">
-                                                            <li>
-                                                                <a class="dropdown-item" href="#">Read</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="whatsapp-single-img whatsappImgModalBtn" type="button"
-                                                    style="width:375px;" *ngFor="let attachment of msg.attachments">
-                                                    <img src={{attachment.attachmentUrl}}
-                                                        class="card-img-top rounded-3">
-                                                </div>
-                                                <p class="card-text nignt">{{msg.msgText}}</p>
-                                                <div class="tags" *ngFor="let tag of msg.tags">
-
-                                                    <span class="badge rounded-pill tag tag1 selected"
-                                                        (click)="removeTagFromFeed(tag.id, tag.feedId, 'TM')">{{tag.name}}</span>
-
-                                                </div>
-                                            </div>
-                                            <div class="message-bottom">
-                                                <div class="row">
-                                                    <div class="col-lg-10 ps-4 d-flex align-items-center">
-                                                        <div class="message-actionlist d-flex align-items-center">
-                                                            
-                                                            <a (click)="SendMessageInformation(msg.id)"
-                                                                class="message-actionItem replyBtn coal">
-                                                                <span class="iconButton small btn">
-                                                                    <i class="fal fa-reply coal"></i>
-                                                                </span>
-                                                                Reply
-                                                            </a>
-                                                            <div class="dropdown w-auto">
-                                                                <button class="iconButton medium"
-                                                                    id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                                    data-bs-auto-close="outside">
-                                                                    <span class="iconButton small btn mx-2">
-                                                                        <i class="fal fa-tag coal"></i>
-                                                                    </span>
-                                                                    Tag
-                                                                </button>
-                                                                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                    aria-labelledby="dropdownMenuButton2">
-                                                                    <ul class="dropdown-listing">
-                                                                        <li class="dropdown-listing-header">
-                                                                            <div class="head-section">
-                                                                                <div class="left">
-                                                                                    <h6>Tags
-                                                                                    </h6>
-                                                                                </div>
-                                                                                <a href="#"
-                                                                                    class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
-                                                                                    id="dropdownMenuButton3"
-                                                                                    data-bs-toggle="dropdown"
-                                                                                    aria-expanded="false">
-                                                                                    <i class="fal fa-times silver"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                            <form class="custom-searchbar">
-                                                                                <input
-                                                                                    class="form-control rounded-pill shadow-sm"
-                                                                                    placeholder="Search"
-                                                                                    aria-label="Search">
-                                                                                <span class="btn searchbar-btn"
-                                                                                    type="submit">
-                                                                                    <i class="fal fa-search silver"></i>
-                                                                                </span>
-                                                                            </form>
-                                                                        </li>
-                                                                        <li class="dropend">
-                                                                            <div *ngFor="let tag of TagsList"
-                                                                                class="list-group list-group-flush dropend">
-                                                                                <a data-bs-toggle="dropdown"
-                                                                                    class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
-
-                                                                                    <div class="w-100 list-txt">
-                                                                                        <div
-                                                                                            class="d-flex w-100 justify-content-between">
-                                                                                            <h6 class="mb-1 darkblue">
-                                                                                                {{tag.name}}
-                                                                                            </h6>
+        
+        
                                                                                         </div>
                                                                                     </div>
-
-                                                                                </a>
-                                                                                <ul class="dropdown-menu shadow">
-                                                                                    <li class="list-body small-list"
-                                                                                        data-scrollbar="true"
-                                                                                        tabindex="-1"
-                                                                                        style="overflow: auto; outline: none;">
-                                                                                        <div
-                                                                                            class="list-group list-group-flush">
-                                                                                            <a (click)="insertTagsForFeed(keyword.id, msg.id, 'TM')"
-                                                                                                [ngClass]="activeTag==true?'active':''"
-                                                                                                class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                *ngFor="let keyword of tag.keywordList">
-                                                                                                <div
-                                                                                                    class="list-down-icon">
-                                                                                                    <span
-                                                                                                        class="btn iconButton iconHover medium">
-                                                                                                        <i
-                                                                                                            class="fal fa-tag coal"></i>
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                                <div
-                                                                                                    class="w-100 list-txt">
-                                                                                                    <div
-                                                                                                        class="d-flex w-100 justify-content-between">
-                                                                                                        <h6
-                                                                                                            class="mb-1 darkblue">
-                                                                                                            {{keyword.name}}
-                                                                                                        </h6>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <small
-                                                                                                    *ngIf="keyword.id == tag.id">
-                                                                                                    <i [ngClass]="checkTag==true?'fa-check-circle':''"
-                                                                                                        class="fal sky"></i>
-                                                                                                </small>
-                                                                                            </a>
-                                                                                        </div>
-                                                                                    </li>
-
-                                                                                </ul>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="dropdown w-auto">
-                                                                <button class="iconButton medium show"
-                                                                    id="sentimentButton" data-bs-toggle="dropdown"
-                                                                    aria-expanded="true" style="margin-left:43px">
-                                                                    <span class="iconButton small btn mx-2">
-                                                                        <i class="fal fa-smile"></i>
-                                                                    </span>
-                                                                    Sentiment
-                                                                </button>
-                                                                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                    aria-labelledby="dropdownMenuButton2"
-                                                                    style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 42px);"
-                                                                    data-popper-placement="bottom-start">
-                                                                    <ul class="dropdown-listing">
-                                                                        <li class="list-body small-list"
-                                                                            data-scrollbar="true" tabindex="-1"
-                                                                            style="overflow: auto; outline: none;">
-                                                                            <div class="scroll-content">
-                                                                                <div class="list-group list-group-flush"
-                                                                                    *ngFor="let sentiment of Sentiments">
-                                                                                    <a (click)="insertSentimentForFeed(msg.id, sentiment.name, 'TM')"
-                                                                                        class="list-group-item d-flex level1Btn ">
-                                                                                        <div class="list-down-icon">
-                                                                                            <span
-                                                                                                class="btn iconButton iconHover medium">
-                                                                                                <i
-                                                                                                    class={{sentiment.icon}}></i>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                        <div class="w-100 list-txt">
-                                                                                            <div
-                                                                                                class="d-flex w-100 justify-content-between">
-                                                                                                <h6
-                                                                                                    class="mb-1 darkblue">
-                                                                                                    {{sentiment.name}}
-                                                                                                </h6>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <!-- <small>
-                                                                                            <i
-                                                                                                class="fal fa-check-circle sky"></i>
-                                                                                        </small> -->
-                                                                                    </a>
-
-
-                                                                                </div>
-                                                                            </div>
-
-                                                                        </li>
-                                                                    </ul>
-                                                                </ul>
+        
+                                                                                </li>
+                                                                            </ul>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                                <span class="complaintBtn" type="button"><i
+                                                        class="fal fa-plus-circle sky" (click)="toggle('ticket', tweetmsg.id)"></i></span>
+                                            </div>
+                                            <div *ngFor="let reply of tweetmsg.replies | sort:criteria">
+                                                <!-- <div class="date-wrap">
+                                                    <p class="date">{{tweetmsg.createdDate | date:'EEEE, MMMM d, y'}}</p>
+                                                </div> -->
+                                                <div class="message-wrap agent-message-wrap left" *ngIf="reply.message != null">
+                                                    <div class="agent-container">
+                                                        <div class="card card-txt ms-auto">
+                                                            <div class="card-body shadow-sm">
+                                                                <div class="d-flex align-items-center mb-2">
+                                                                    <h6 class="card-title m-0">{{pageName}}</h6>
+                                                                    <p class="card-text ms-3">
+                                                                        <small class="silver">{{reply.createdDate | date:'h:mm:ss a'}}</small>
+                                                                    </p>
+                                                                </div>
+                                                                <p class="card-textnignt p-0">{{reply.message}}</p>
+                                                            </div>
+                                                            <div class="message-bottom">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 ps-4 d-flex align-items-center">
+                                                                        <div class="commentWrap">
+                                                                            Commented on by
+                                                                            <a class="fw-bold">{{reply.replyById}}</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+            
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <span class="complaintBtn" type="button"><i
-                                                class="fal fa-plus-circle sky"></i></span>
-                                    </div>
-                                </div>
-
-                                <div *ngFor="let msgReply of msg.replies">
-                                    <div class="date-wrap">
-                                        <p class="date">{{msgReply.createdDate | date:'EEEE, MMMM d, y'}}</p>
-                                    </div>
-                                    <div class="message-wrap agent-message-wrap left">
-                                        <div class="agent-container">
-                                            <div class="card card-txt ms-auto">
-                                                <div class="card-body shadow-sm">
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <h6 class="card-title m-0">
-                                                            Page Name</h6>
-                                                        <p class="card-text ms-3">
-                                                            <small class="silver">{{msgReply.createdDate 
-                                                                | date:'h:mm a'}}</small>
+        
+                                        
+                                    </ng-container>
+                                    <ng-container *ngIf="tweetmsg.queryStatus == 'QueryCompleted'">
+                                        <div class="accordion email-accordion" id="accordionExample"
+                                            (click)="markAsCompleteExpanded(tweetmsg.id)" style="display:block">
+                                            <div class="accordion-item email-wrap marked-wrap mt-3">
+                                                <div [ngClass]="markAsComplete == true?'open':'collaps-wrap'" class="accordion-header"
+                                                    id="emailwrap7">
+                                                    <button [ngClass]="markAsComplete == true?'':'collapsed'" class="accordion-button"
+                                                        type="button">
+                                                        <div class="avatar large coal">
+                                                            <i class="fal fa-check-double"></i>
+                                                        </div>
+                                                        <div class="card-header-content p-0">
+                                                            <div class="card-header-top">
+                                                                <div class="d-block">
+                                                                    <h6 class="mb-1 night">
+                                                                        Marked as Completed
+                                                                    </h6>
+                                                                    <small class="night">
+                                                                        <span>by: <h6 class="d-inline fw-bold charcoal">
+                                                                                Agent Name </h6>
+                                                                        </span>
+                                                                        <span>Complaint Id <a class="sky" href="">FP-325687</a>
+                                                                        </span>
+                                                                    </small>
+                                                                </div>
+                                                                <small class="silver full-date">{{ TodayDate | date:'MMMM dd, yyyy, h:mm a'}}</small>
+                                                            </div>
+                                                            <div class="msg-snippet show-text">
+                                                                <p class="mb-1 coal" data-maxlength="240">
+                                                                    {{tweetmsg.message.length < 80 ? tweetmsg.message: (tweetmsg.message | slice:0:80) +'...'}} </p>
+                                                            </div>
+                                                            <div class="marked-info">
+                                                                <p class="card-text mb-0 coal">
+                                                                    <small>First Response: <span class="night"> July
+                                                                            7, 2021, 2:30 PM (4
+                                                                            days
+                                                                            ago)</span></small>
+                                                                </p>
+                                                                <p class="card-text mb-0 coal">
+                                                                    <small>Last Response: <span class="night"> July
+                                                                            14, 2021, 9:30 AM (6
+                                                                            days
+                                                                            ago)</span></small>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                    <div class="top-right">
+                                                        <div class="expanded-card-header-actions icons-list">
+                                                            <small class="silver ms-2 me-2">{{ TodayDate
+                                                                | date:'MMMM dd, yyyy, h:mm a'}}</small>
+                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                            
+                                                <div class="accordion-collapse collapse" [ngClass]="markAsComplete == true?'show':''">
+                                                    <div class="accordion-body">
+                                                        <p>
+                                                            {{tweetmsg.message}}
                                                         </p>
                                                     </div>
-                                                    <div class="whatsapp-single-img whatsappImgModalBtn" type="button">
-                                                        <img src={{msgReply.attachmentUrl}} class="card-img-top rounded-3">
-                                                    </div>
-                                                    <p class="card-textnignt p-0">{{msgReply.message}}</p>
-                                                </div>
-                                                <div class="message-bottom">
-                                                    <div class="row">
-                                                        <div class="col-lg-12 ps-4 d-flex align-items-center">
-                                                            <div class="commentWrap">
-                                                                Commented on by
-                                                                <a class="fw-bold">Syed
-                                                                    Ahmed</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
-
                                         </div>
-                                    </div>
-                                </div>
+                                    </ng-container>                           
+                                    
+                                </ng-container>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="scrollbar-track scrollbar-track-x" style="display: none;">
-                <div class="scrollbar-thumb scrollbar-thumb-x"></div>
-            </div>
-            <div class="scrollbar-track scrollbar-track-y" style="display: none;">
-                <div class="scrollbar-thumb scrollbar-thumb-y"></div>
+        </div>
+        <div class="chat-body" *ngIf="TMReply == true" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;"
+        infinite-scroll [scrollWindow]="false" [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5"
+            [infiniteScrollThrottle]="10" (scrolled)="onScrollMessages()">
+            <div class="scroll-content">
+                <div class="tab-content m-4" id="myTabContent">
+                    <div class="tab-pane fade" id="twitter-message" role="tabpanel"
+                        aria-labelledby="twitter-message-tab">
+                        <div class="chat-box-wrap">
+                            <div *ngFor="let group of groupedMessages | sort:criteria">
+                                <div class="date-wrap">
+                                    <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}}</p>
+                                </div>
+                                <ng-container *ngFor="let msg of group.items | sort:criteria">
+                                    <ng-container *ngIf="msg.queryStatus != 'QueryCompleted'">
+                                    <div class="message-wrap agent-message-wrap right" >
+                                        <div class="application-wrap d-flex align-items-center mb-1" *ngIf="msg.ticketId != null">
+                                            <p class="m-0 silver me-2 ms-1">Application ID
+                                            </p>
+                                            <p class="app-no navy m-0 me-2">{{msg.ticketId}}</p>
+                                        </div>
+                                        <div class="d-flex align-items-center agent-container">
+                                            <div class="card w-d-inline messageUpper">
+                                                <div class="card-body shadow-sm" style="min-width: 425px;" [ngClass]="msg.queryStatus == 'Unresponded'?'unread-msg':''">
+                                                    <div class="d-flex msg-user-info">
+                                                        <div class="d-flex align-items-center">
+                                                            <h6 class="card-title navy m-0">{{msg.fromName}}</h6>
+                                                            <p class="card-text ms-3"><small
+                                                                    class="silver">{{msg.createdDate
+                                                                    | date:'h:mm:ss a'}}</small></p>
+                                                        </div>
+                                                        <div class="dropdown w-auto" *ngIf="msg.queryStatus != 'Responded' && msg.queryStatus != 'Completed'">
+                                                            <button class="btn coal p-0 ps-3" type="button"
+                                                                id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                                aria-expanded="false">
+                                                                <small>{{msg.queryStatus}} <i
+                                                                        class="far fa-chevron-down ms-2"></i></small>
+                                                            </button>
+                                                            <ul class="dropdown-menu custom-dropdown"
+                                                                aria-labelledby="dropdownMenuButton1">
+                                                                <li>
+                                                                    <a class="dropdown-item" *ngIf="msg.queryStatus != 'Responded'" (click)="commentStatus(msg.id, msg.contentType)">Read</a>
+                                                                    <!-- <a class="dropdown-item" *ngIf="msg.queryStatus == 'Responded'" (click)="queryCompleted(msg.id, msg.contentType)">Completed</a> -->
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="w-auto" *ngIf="msg.queryStatus == 'Responded' || msg.queryStatus == 'Completed'" style="margin-left: 20px;">
+                                                            <small>{{msg.queryStatus}} </small>
+                                                            </div>
+                                                    </div>
+                                                    <div class="whatsapp-single-img whatsappImgModalBtn" type="button"
+                                                        style="width:375px;" *ngFor="let attachment of msg.attachments">
+                                                        <img src={{attachment.attachmentUrl}}
+                                                            class="card-img-top rounded-3">
+                                                    </div>
+                                                    <p class="card-text nignt">{{msg.msgText}}</p>
+                                                    <div class="tags" *ngFor="let tag of msg.tags">
+    
+                                                        <span class="badge rounded-pill tag tag1 selected"
+                                                            (click)="removeTagFromFeed(tag.id, tag.feedId, 'TM')">{{tag.name}}</span>
+    
+                                                    </div>
+                                                </div>
+                                                <div class="message-bottom">
+                                                    <div class="row">
+                                                        <div class="col-lg-10 ps-4 d-flex align-items-center">
+                                                            <div class="message-actionlist d-flex align-items-center">
+                                                                
+                                                                <a class="message-actionItem replyBtn coal" (click)="SendMessageInformation(msg.id)"
+                                                                    >
+                                                                    <span class="iconButton small btn">
+                                                                        <i class="fal fa-reply coal"></i>
+                                                                    </span>
+                                                                    Reply
+                                                                </a>
+                                                                <div class="dropdown w-auto">
+                                                                    <button class="iconButton medium" 
+                                                                        id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                                        data-bs-auto-close="outside">
+                                                                        <span class="iconButton small btn mx-2">
+                                                                            <i class="fal fa-tag coal"></i>
+                                                                        </span>
+                                                                        Tag
+                                                                    </button>
+                                                                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                                    
+                                                                        aria-labelledby="dropdownMenuButton2">
+                                                                        <ul class="dropdown-listing">
+                                                                            <li class="dropdown-listing-header">
+                                                                                <div class="head-section">
+                                                                                    <div class="left">
+                                                                                        <h6>Tags
+                                                                                        </h6>
+                                                                                    </div>
+                                                                                    <!-- <a href="#"
+                                                                                        class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
+                                                                                        (click)="closeTagListDropdown()"
+                                                                                        id="dropdownMenuButton3"
+                                                                                        data-bs-toggle="dropdown"
+                                                                                        aria-expanded="false">
+                                                                                        <i class="fal fa-times silver"></i>
+                                                                                    </a> -->
+                                                                                </div>
+                                                                                <form class="custom-searchbar">
+                                                                                    <input
+                                                                                        class="form-control rounded-pill shadow-sm"
+                                                                                        placeholder="Search"
+                                                                                        aria-label="Search" [(ngModel)]="searchText">
+                                                                                    <span class="btn searchbar-btn"
+                                                                                        type="submit">
+                                                                                        <i class="fal fa-search silver"></i>
+                                                                                    </span>
+                                                                                </form>
+                                                                            </li>
+                                                                            <li class="dropend">
+                                                                                <div *ngFor="let tag of TagsList  | filter: searchText"
+                                                                                    class="list-group list-group-flush dropend">
+                                                                                    <a data-bs-toggle="dropdown"
+                                                                                        class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
+    
+                                                                                        <div class="w-100 list-txt">
+                                                                                            <div
+                                                                                                class="d-flex w-100 justify-content-between">
+                                                                                                <h6 class="mb-1 darkblue">
+                                                                                                    {{tag.name}}
+                                                                                                </h6>
+                                                                                            </div>
+                                                                                        </div>
+    
+                                                                                    </a>
+                                                                                    <ul class="dropdown-menu shadow">
+                                                                                        <li class="list-body small-list"
+                                                                                            data-scrollbar="true"
+                                                                                            tabindex="-1"
+                                                                                            style="overflow: auto; outline: none;">
+                                                                                            <div
+                                                                                                class="list-group list-group-flush">
+                                                                                                <a class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                                (click)="insertTagsForFeed(keyword.id, msg.id, 'TM')"
+                                                                                                    [ngClass]="activeTag==true?'active':''"
+                                                                                                    
+                                                                                                    *ngFor="let keyword of tag.keywordList">
+                                                                                                    <div
+                                                                                                        class="list-down-icon">
+                                                                                                        <span
+                                                                                                            class="btn iconButton iconHover medium">
+                                                                                                            <i
+                                                                                                                class="fal fa-tag coal"></i>
+                                                                                                        </span>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                        class="w-100 list-txt">
+                                                                                                        <div
+                                                                                                            class="d-flex w-100 justify-content-between">
+                                                                                                            <h6
+                                                                                                                class="mb-1 darkblue">
+                                                                                                                {{keyword.name}}
+                                                                                                            </h6>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <small
+                                                                                                        *ngIf="keyword.id == tag.id">
+                                                                                                        <i [ngClass]="checkTag==true?'fa-check-circle':''"
+                                                                                                            class="fal sky"></i>
+                                                                                                    </small>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </li>
+    
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="dropdown w-auto">
+                                                                    <button class="iconButton medium show"
+                                                                        id="sentimentButton" data-bs-toggle="dropdown"
+                                                                        aria-expanded="true" style="margin-left:43px">
+                                                                        <span class="iconButton small btn mx-2">
+                                                                            <i class="fal fa-smile"></i>
+                                                                        </span>
+                                                                        Sentiment
+                                                                    </button>
+                                                                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                                        aria-labelledby="dropdownMenuButton2"
+                                                                        style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 42px);"
+                                                                        data-popper-placement="bottom-start">
+                                                                        <ul class="dropdown-listing">
+                                                                            <li class="list-body small-list"
+                                                                                data-scrollbar="true" tabindex="-1"
+                                                                                style="overflow: auto; outline: none;">
+                                                                                <div class="scroll-content">
+                                                                                    <div class="list-group list-group-flush"
+                                                                                        *ngFor="let sentiment of Sentiments">
+                                                                                        <a class="list-group-item d-flex level1Btn " (click)="insertSentimentForFeed(msg.id, sentiment.name, 'TM')">
+                                                                                            <div class="list-down-icon">
+                                                                                                <span
+                                                                                                    class="btn iconButton iconHover medium">
+                                                                                                    <i
+                                                                                                        class={{sentiment.icon}}></i>
+                                                                                                </span>
+                                                                                            </div>
+                                                                                            <div class="w-100 list-txt">
+                                                                                                <div
+                                                                                                    class="d-flex w-100 justify-content-between">
+                                                                                                    <h6
+                                                                                                        class="mb-1 darkblue">
+                                                                                                        {{sentiment.name}}
+                                                                                                    </h6>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!-- <small>
+                                                                                                <i
+                                                                                                    class="fal fa-check-circle sky"></i>
+                                                                                            </small> -->
+                                                                                        </a>
+    
+    
+                                                                                    </div>
+                                                                                </div>
+    
+                                                                            </li>
+                                                                        </ul>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span class="complaintBtn" type="button"><i
+                                                    class="fal fa-plus-circle sky" (click)="toggle('ticket', msg.id)"></i></span>
+                                        </div>
+                                        <div *ngFor="let reply of msg.replies | sort:criteria">
+                                            <!-- <div class="date-wrap">
+                                                <p class="date">{{reply.createdDate | date:'EEEE, MMMM d, y'}}</p>
+                                            </div> -->
+                                            <div class="message-wrap agent-message-wrap left">
+                                                <div class="agent-container">
+                                                    <div class="card card-txt ms-auto">
+                                                        <div class="card-body shadow-sm">
+                                                            <div class="d-flex align-items-center mb-2">
+                                                                <h6 class="card-title m-0">{{pageName}}</h6>
+                                                                <p class="card-text ms-3">
+                                                                    <small class="silver">{{reply.createdDate | date:'h:mm:ss a'}}</small>
+                                                                </p>
+                                                            </div>
+                                                            <p class="card-textnignt p-0">{{reply.message}}</p>
+                                                        </div>
+                                                        <div class="message-bottom">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 ps-4 d-flex align-items-center">
+                                                                    <div class="commentWrap">
+                                                                        Commented on by
+                                                                        <a class="fw-bold">Syed
+                                                                            Ahmed</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+        
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    
+                                </ng-container>
+                                <ng-container *ngIf="msg.queryStatus == 'QueryCompleted'">
+                                    <div class="accordion email-accordion" id="accordionExample"
+                                        (click)="markAsCompleteExpanded(msg.id)" style="display:block">
+                                        <div class="accordion-item email-wrap marked-wrap mt-3">
+                                            <div [ngClass]="markAsComplete == true?'open':'collaps-wrap'" class="accordion-header"
+                                                id="emailwrap7">
+                                                <button [ngClass]="markAsComplete == true?'':'collapsed'" class="accordion-button"
+                                                    type="button">
+                                                    <div class="avatar large coal">
+                                                        <i class="fal fa-check-double"></i>
+                                                    </div>
+                                                    <div class="card-header-content p-0">
+                                                        <div class="card-header-top">
+                                                            <div class="d-block">
+                                                                <h6 class="mb-1 night">
+                                                                    Marked as Completed
+                                                                </h6>
+                                                                <small class="night">
+                                                                    <span>by: <h6 class="d-inline fw-bold charcoal">
+                                                                            Agent Name </h6>
+                                                                    </span>
+                                                                    <span>Complaint Id <a class="sky" href="">FP-325687</a>
+                                                                    </span>
+                                                                </small>
+                                                            </div>
+                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM dd, yyyy, h:mm a'}}</small>
+                                                        </div>
+                                                        <div class="msg-snippet show-text">
+                                                            <p class="mb-1 coal" data-maxlength="240">
+                                                                {{msg.msgText.length < 80 ? msg.msgText: (msg.msgText | slice:0:80) +'...'}} </p>
+                                                        </div>
+                                                        <div class="marked-info">
+                                                            <p class="card-text mb-0 coal">
+                                                                <small>First Response: <span class="night"> July
+                                                                        7, 2021, 2:30 PM (4
+                                                                        days
+                                                                        ago)</span></small>
+                                                            </p>
+                                                            <p class="card-text mb-0 coal">
+                                                                <small>Last Response: <span class="night"> July
+                                                                        14, 2021, 9:30 AM (6
+                                                                        days
+                                                                        ago)</span></small>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                                <div class="top-right">
+                                                    <div class="expanded-card-header-actions icons-list">
+                                                        <small class="silver ms-2 me-2">{{ TodayDate
+                                                            | date:'MMMM dd, yyyy, h:mm a'}}</small>
+                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                        
+                                            <div class="accordion-collapse collapse" [ngClass]="markAsComplete == true?'show':''">
+                                                <div class="accordion-body">
+                                                    <p>
+                                                        {{msg.msgText}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                </ng-container>
+                                
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
         <ng-container *ngIf="TTReply == true">
         <div class="msgTypingField shadow-lg">
             <div *ngFor="let tweet of TwitterConversation">
@@ -635,7 +837,7 @@
                                     {{mentionTweet.message}}
 
                                 </div>
-                                <button (click)="closeMentionedReply()" class="iconButton small closeMsgBtn"
+                                <button lass="iconButton small closeMsgBtn" (click)="closeMentionedReply()" c
                                     data-bs-toggle="tooltip" data-bs-placement="top" id="searchbtn"
                                     data-bs-original-title="Close">
                                     <i class="fal fa-times"></i>
@@ -654,18 +856,33 @@
                     </div>
                     <div class="form-floating textarea-field">
                         <textarea formControlName="text" class="form-control auto" rows="1" id="text"
-                            placeholder="Write a response here" [(ngModel)]="commentReply" style="height: 0px"></textarea>
+                            placeholder="Write a response here" [(ngModel)]="TwitterRepliesForm.value.text" style="height: 0px" #textarea></textarea>
 
                     </div>
                     <div class="icons-list align-items-md-center d-flex ps-2">
-                        <button class="iconButton small notification iconHover" type="button" data-bs-toggle="tooltip"
-                            data-bs-placement="top" title="" id="searchbtn" data-bs-original-title="Choose an emoji">
-                            <i class="far fa-smile"></i>
-                        </button>
+                        <div class="dropdown w-auto">
+                            <button class="iconButton small notification iconHover" id="emojiBox" data-bs-toggle="dropdown"
+                                data-bs-auto-close="outside" data-bs-original-title="Choose an emoji">
+                                <span class="iconButton small btn mx-2">
+                                    <i class="far fa-smile"></i>
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList" aria-labelledby="dropdownMenuButton2">
+                                <ul class="dropdown-listing">
+                                    <li class="dropdown-listing-header">
+                                        <div class="head-section">
+                                            <div class="left" *ngFor="let emoji of Emojies">
+                                                <span (click)="insertEmoji(emoji.emoji)" style="cursor: pointer; font-size: 17px;">{{emoji.emoji}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </ul>
+                            </div>
 
                         <button class="iconButton small notification iconHover" data-bs-toggle="tooltip"
                             data-bs-placement="top" title="" type="button" id="commentSendbtn" type="submit"
-                            data-bs-original-title="Send">
+                            data-bs-original-title="Send" [disabled]="TwitterRepliesForm.invalid">
                             <i class="fal fa-paper-plane"></i>
                         </button>
                     </div>
@@ -727,16 +944,31 @@
                         </div>
                         <div class="form-floating textarea-field">
                             <textarea formControlName="text" class="form-control auto" rows="1" id="text"
-                                placeholder="Write a message here" [(ngModel)]="msgText" style="height: 37px"></textarea>
+                                placeholder="Write a message here" [(ngModel)]="twitterMessageReplyForm.value.text" style="height: 37px" #textarea></textarea>
 
                         </div>
                         <div class="icons-list align-items-md-center d-flex ps-2">
-                            <a class="iconButton small notification iconHover" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="" data-bs-original-title="Choose an emoji">
-                                <i class="far fa-smile"></i>
-                            </a>
+                            <div class="dropdown w-auto">
+                                <button class="iconButton small notification iconHover" id="emojiBox" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" data-bs-original-title="Choose an emoji">
+                                    <span class="iconButton small btn mx-2">
+                                        <i class="far fa-smile"></i>
+                                    </span>
+                                </button>
+                                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList" aria-labelledby="dropdownMenuButton2">
+                                    <ul class="dropdown-listing">
+                                        <li class="dropdown-listing-header">
+                                            <div class="head-section">
+                                                <div class="left" *ngFor="let emoji of Emojies">
+                                                    <span (click)="insertEmoji(emoji.emoji)" style="cursor: pointer; font-size: 17px;">{{emoji.emoji}}</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </ul>
+                                </div>
                             <button class="iconButton small notification iconHover" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="" type="submit" data-bs-original-title="Send">
+                                data-bs-placement="top" title="" type="submit" [disabled]="twitterMessageReplyForm.invalid" data-bs-original-title="Send">
                                 <i class="fal fa-paper-plane"></i>
                             </button>
                         </div>
@@ -776,7 +1008,7 @@
         <div class="offcanvas-body">
 
             <form class="custom-searchbar">
-                <input class="form-control me-2 rounded-pill shadow-sm" placeholder="Search" aria-label="Search">
+                <input class="form-control me-2 rounded-pill shadow-sm" placeholder="Search" aria-label="Search" [(ngModel)]="quickReplySearchText">
                 <span class="btn searchbar-btn" type="submit">
                     <i class="fal fa-search silver"></i>
                 </span>
@@ -784,12 +1016,12 @@
             <div class="list-group-section quick-response" id="accordionExample">
                 <div class="collapse-toggle-card">
                     <div class="list-group list-group-flush">
-                        <div class="collapse-wrap mx-3" id="qr-ques1" *ngFor="let qr of QuickReplies">
-                            <div class="list-group list-group-flush mb-4 ms-4 ps-1" (click)="sendQuickReply(qr.value)">
+                        <div class="collapse-wrap mx-3" id="qr-ques1" *ngFor="let qr of QuickReplies | quickReplySearchFilter: quickReplySearchText">
+                            <div class="list-group list-group-flush mb-4 ms-4 ps-1" >
                                 <div class="form-check list-group-item theme-check">
                                     <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id={{qr.value}}>
-                                    <label class="form-check-label" for={{qr.value}}>{{qr.text}}
+                                        id={{qr.value}} #radioInput>
+                                    <label class="form-check-label" for={{qr.value}} (click)="sendQuickReply(qr.value)">{{qr.text}}
                                     </label>
                                 </div>
 

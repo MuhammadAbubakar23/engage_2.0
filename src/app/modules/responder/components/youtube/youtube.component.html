@@ -1,14 +1,18 @@
 <div class="tab-content position-relative" id="myTabContent">
-    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
-        <p style="color: white"> Loading... </p>
-    </ngx-spinner>
+    <div *ngIf="spinner1running">
+        <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+            [fullScreen]="false">
+            <p style="color: white"> Loading... </p>
+        </ngx-spinner>
+    </div>
     <div class="tab-pane fade  show active socila-channels-tab" id="youtube" role="tabpanel"
         aria-labelledby="youtube-tab">
         <div class="headerWrap radicalBg d-flex align-items-center shadow-sm">
             <div class="titleIcon d-flex align-items-center">
                 <i class="fab fa-youtube"></i>
                 <div class="titleLink ms-1">
-                    /@foodpanda-pk</div>
+                    /{{pageName}}
+                </div>
             </div>
             <ul class="nav nav-tabs ms-3 h-100" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -20,13 +24,15 @@
                                 <i class="fal fa-comments-alt ice"></i>
                             </span>
                             Comment
-                            <span class="badge rounded-pill bg-light text-dark ms-3">6</span>
+                            <span class="badge rounded-pill bg-light text-dark ms-3" *ngIf="totalUnrespondedCmntCountByCustomer > 0">{{totalUnrespondedCmntCountByCustomer}}</span>
                         </div>
                     </button>
                 </li>
             </ul>
         </div>
-        <div class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
+        <div class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;"
+        infinite-scroll [scrollWindow]="false" [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5"
+            [infiniteScrollThrottle]="10" (scrolled)="onScrollComments()">
             <div class="scroll-content">
                 <div class="tab-content m-4" id="myTabContent">
                     <div class="tab-pane fade show active" id="youtube-comment" role="tabpanel"
@@ -53,6 +59,31 @@
                                             <div class="card-body bg-light">
                                                 <p class="card-text nignt mb-0">
                                                     {{youtubedata.post.caption}}</p>
+                                            </div>
+                                            <div class="card-footer pb-0" *ngIf="!youtubedata.post.postStats">
+                                                <p class="card-text ms-3 single-img-time">
+                                                </p>
+                                                <div class="silver">
+                                                    <a class="message-actionItem coal me-3">
+                                                        <i class="fas fa-thumbs-up sky"></i>
+                                                        0 Likes
+                                                    </a>
+                                                    <a class="message-actionItem coal me-3">
+                                                        0 Comments
+                                                    </a>
+                                                    <!-- <a class="message-actionItem coal me-3">
+                                                        23 Shares
+                                                    </a> -->
+
+                                                    <!-- <a class="message-actionItem coal me-3">
+                                                        <i class="fas fa-thumbs-down radical"></i>
+                                                        100
+                                                    </a> -->
+                                                    <a class="message-actionItem coal me-2">
+                                                        0 Views
+                                                    </a>
+                                                </div>
+                                                <p></p>
                                             </div>
                                             <div class="card-footer pb-0" *ngIf="youtubedata.post.postStats">
                                                 <p class="card-text ms-3 single-img-time">
@@ -84,143 +115,216 @@
                                 </div>
                             </div>
 
-                            <div *ngFor="let youtubecomment of youtubedata.comments">
+                            <div *ngFor="let group of youtubedata.groupedComments | sort:criteria">
                                 <div class="date-wrap">
-                                    <p class="date">{{youtubecomment.createdDate | date:'EEEE, MMMM d, y'}} </p>
+                                    <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}} </p>
                                 </div>
-                                <div class="message-wrap agent-message-wrap right">
-                                    <div class="application-wrap d-flex align-items-center mb-1">
-                                        <p class="m-0 silver me-2 ms-1">Application ID
-                                        </p>
-                                        <p class="app-no navy m-0 me-2">2354545</p>
-                                    </div>
-                                    <div class="d-flex align-items-center agent-container">
-                                        <div class="card w-d-inline messageUpper">
-                                            <div class="card-body shadow-sm unread-msg">
-                                                <div class="d-flex msg-user-info">
-                                                    <div class="d-flex align-items-center">
-                                                        <h6 class="card-title radical m-0">
-                                                            {{youtubecomment.userName}}</h6>
-                                                        <p class="card-text ms-3"><small
-                                                                class="silver">{{youtubecomment.createdDate | date:'h:mm a'}}</small></p>
-                                                    </div>
-                                                    <div class="dropdown w-auto">
-                                                        <button class="btn coal p-0 ps-3" type="button"
-                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                            <small>{{youtubecomment.queryStatus}} <i
-                                                                    class="far fa-chevron-down ms-2"></i></small>
-                                                        </button>
-                                                        <ul class="dropdown-menu custom-dropdown"
-                                                            aria-labelledby="dropdownMenuButton1">
-
-                                                            <li>
-                                                                <a class="dropdown-item"
-                                                                    (click)="commentStatus(youtubecomment.id)">Read</a>
-                                                            </li>
-
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <p class="card-text nignt">{{youtubecomment.message}}</p>
-                                                <div class="tags" *ngFor="let tag of youtubecomment.tags">
-                                                    <span (click)="removeTagFromFeed(tag.id, youtubecomment.id)"
-                                                        class="badge rounded-pill tag youtube-pill tag1 selected">{{tag.name}}</span>
-
-                                                </div>
+                                <ng-container *ngFor="let youtubecomment of group.items | sort:criteria">
+                                    <ng-container *ngIf="youtubecomment.queryStatus != 'QueryCompleted'">
+                                        <div class="message-wrap agent-message-wrap right"
+                                            *ngIf="youtubedata.post.postId == youtubecomment.postId">
+                                            <div class="application-wrap d-flex align-items-center mb-1" *ngIf="youtubecomment.ticketId != null">
+                                                <p class="m-0 silver me-2 ms-1">Application ID
+                                                </p>
+                                                <p class="app-no navy m-0 me-2">{{youtubecomment.ticketId}}</p>
                                             </div>
-                                            <div class="message-bottom">
-                                                <div class="row">
-                                                    <div class="col-lg-10 ps-4 d-flex align-items-center">
-                                                        <div class="message-actionlist d-flex align-items-center">
-                                                            <div class="box">
-                                                                <a (click)="likeByAdmin(youtubecomment.id, youtubecomment.isLikedByAdmin)"
-                                                                    [class.active]="youtubecomment.isLikedByAdmin == true"
-                                                                    class="message-actionItem coal likebht btn p-0 label-reactions">
-                                                                    <span class="iconButton small btn">
-                                                                        <i class="fal fa-thumbs-up coal"></i>
-                                                                        <i class="fas fa-thumbs-up"></i>
-                                                                    </span>
-                                                                    Like
-                                                                </a>
+                                            <div class="d-flex align-items-center agent-container">
+                                                <div class="card w-d-inline messageUpper">
+                                                    <div class="card-body shadow-sm "
+                                                        [ngClass]="youtubecomment.queryStatus == 'Unresponded'?'unread-msg':''">
+                                                        <div class="d-flex msg-user-info">
+                                                            <div class="d-flex align-items-center">
+                                                                <h6 class="card-title radical m-0">
+                                                                    {{youtubecomment.userName}}</h6>
+                                                                <p class="card-text ms-3"><small
+                                                                        class="silver">{{youtubecomment.createdDate |
+                                                                        date:'h:mm:ss a'}}</small></p>
                                                             </div>
-                                                            <a (click)="sendYoutubeCommentInformation(youtubecomment.id)"
-                                                                class="message-actionItem replyBtn coal">
-                                                                <span class="iconButton small btn mx-2">
-                                                                    <i class="fal fa-reply coal"></i>
-                                                                </span>
-                                                                Reply
-                                                            </a>
-                                                            <div class="dropdown w-auto">
-                                                                <button class="iconButton medium"
+                                                            <div class="dropdown w-auto" *ngIf="youtubecomment.queryStatus != 'Responded' && youtubecomment.queryStatus != 'Completed'">
+                                                                <button class="btn coal p-0 ps-3" type="button"
                                                                     id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                                    data-bs-auto-close="outside">
-                                                                    <span class="iconButton small btn mx-2">
-                                                                        <i class="fal fa-tag coal"></i>
-                                                                    </span>
-                                                                    Tag
+                                                                    aria-expanded="false">
+                                                                    <small>{{youtubecomment.queryStatus}} <i
+                                                                            class="far fa-chevron-down ms-2"></i></small>
                                                                 </button>
-                                                                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                    aria-labelledby="dropdownMenuButton2">
-                                                                    <ul class="dropdown-listing">
-                                                                        <li class="dropdown-listing-header">
-                                                                            <div class="head-section">
-                                                                                <div class="left">
-                                                                                    <h6>Tags
-                                                                                    </h6>
-                                                                                </div>
-                                                                                <a href="#"
-                                                                                    class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
-                                                                                    id="dropdownMenuButton3"
-                                                                                    data-bs-toggle="dropdown"
-                                                                                    aria-expanded="false">
-                                                                                    <i class="fal fa-times silver"></i>
-                                                                                </a>
-                                                                            </div>
-                                                                            <form class="custom-searchbar">
-                                                                                <input
-                                                                                    class="form-control rounded-pill shadow-sm"
-                                                                                    placeholder="Search"
-                                                                                    aria-label="Search">
-                                                                                <span class="btn searchbar-btn"
-                                                                                    type="submit">
-                                                                                    <i class="fal fa-search silver"></i>
-                                                                                </span>
-                                                                            </form>
-                                                                        </li>
-                                                                        <li class="dropend">
-                                                                            <div *ngFor="let tag of TagsList"
-                                                                                class="list-group list-group-flush dropend">
-                                                                                <a data-bs-toggle="dropdown"
-                                                                                    class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
+                                                                <ul class="dropdown-menu custom-dropdown"
+                                                                    aria-labelledby="dropdownMenuButton1">
 
-                                                                                    <div class="w-100 list-txt">
-                                                                                        <div
-                                                                                            class="d-flex w-100 justify-content-between">
-                                                                                            <h6 class="mb-1 darkblue">
-                                                                                                {{tag.name}}
+                                                                    <li>
+                                                                        <a class="dropdown-item" *ngIf="youtubecomment.queryStatus != 'Responded'" (click)="commentStatus(youtubecomment.id)">Read</a>
+                                                                        <!-- <a class="dropdown-item" *ngIf="youtubecomment.queryStatus == 'Responded'" (click)="queryCompleted(youtubecomment.id)">Completed</a> -->
+                                                                    </li>
+
+                                                                </ul>
+                                                            </div>
+                                                            <div class="w-auto" *ngIf="youtubecomment.queryStatus == 'Responded' || youtubecomment.queryStatus == 'Completed'" style="margin-left: 20px;">
+                                                                <small>{{youtubecomment.queryStatus}} </small>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                        <p class="card-text nignt" [innerHTML]="youtubecomment.message"></p>
+                                                        <div class="tags" *ngFor="let tag of youtubecomment.tags">
+                                                            <span (click)="removeTagFromFeed(tag.id, youtubecomment.id)"
+                                                                class="badge rounded-pill tag youtube-pill tag1 selected">{{tag.name}}</span>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="message-bottom">
+                                                        <div class="row">
+                                                            <div class="col-lg-10 ps-4 d-flex align-items-center">
+                                                                <div
+                                                                    class="message-actionlist d-flex align-items-center">
+                                                                    <div class="box">
+                                                                        <a (click)="likeByAdmin(youtubecomment.id, youtubecomment.isLikedByAdmin, youtubedata.platform, youtubedata.post?.profile.page_Id, youtubedata.post?.profile.profile_Id, youtubedata.user?.userId)"
+                                                                            [class.active]="youtubecomment.isLikedByAdmin == true"
+                                                                            class="message-actionItem coal likebht p-0 label-reactions">
+                                                                            <span class="iconButton small btn">
+                                                                                <i class="fal fa-thumbs-up coal"></i>
+                                                                                <i class="fas fa-thumbs-up"></i>
+                                                                            </span>
+                                                                            Like
+                                                                        </a>
+                                                                    </div>
+                                                                    <a (click)="sendYoutubeCommentInformation(youtubecomment.id)"
+                                                                        class="message-actionItem replyBtn coal">
+                                                                        <span class="iconButton small btn mx-2">
+                                                                            <i class="fal fa-reply coal"></i>
+                                                                        </span>
+                                                                        Reply
+                                                                    </a>
+                                                                    <div class="dropdown w-auto">
+                                                                        <button class="iconButton medium"
+                                                                            id="dropdownMenuButton1"
+                                                                            data-bs-toggle="dropdown"
+                                                                            data-bs-auto-close="outside">
+                                                                            <span class="iconButton small btn mx-2">
+                                                                                <i class="fal fa-tag coal"></i>
+                                                                            </span>
+                                                                            Tag
+                                                                        </button>
+                                                                        <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                                            aria-labelledby="dropdownMenuButton2">
+                                                                            <ul class="dropdown-listing">
+                                                                                <li class="dropdown-listing-header">
+                                                                                    <div class="head-section">
+                                                                                        <div class="left">
+                                                                                            <h6>Tags
                                                                                             </h6>
                                                                                         </div>
+                                                                                        <!-- <a href="#"
+                                                                                            class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
+                                                                                            (click)="closeTagListDropdown()"
+                                                                                            id="dropdownMenuButton3"
+                                                                                            data-bs-toggle="dropdown"
+                                                                                            aria-expanded="false">
+                                                                                            <i
+                                                                                                class="fal fa-times silver"></i>
+                                                                                        </a> -->
                                                                                     </div>
+                                                                                    <form class="custom-searchbar">
+                                                                                        <input
+                                                                                            class="form-control rounded-pill shadow-sm"
+                                                                                            placeholder="Search"
+                                                                                            aria-label="Search" [(ngModel)]="searchText">
+                                                                                        <span class="btn searchbar-btn"
+                                                                                            type="submit">
+                                                                                            <i
+                                                                                                class="fal fa-search silver"></i>
+                                                                                        </span>
+                                                                                    </form>
+                                                                                </li>
+                                                                                <li class="dropend">
+                                                                                    <div *ngFor="let tag of TagsList  | filter: searchText"
+                                                                                        class="list-group list-group-flush dropend">
+                                                                                        <a data-bs-toggle="dropdown"
+                                                                                            class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
 
-                                                                                </a>
-                                                                                <ul class="dropdown-menu shadow">
-                                                                                    <li class="list-body small-list"
-                                                                                        data-scrollbar="true"
-                                                                                        tabindex="-1"
-                                                                                        style="overflow: auto; outline: none;">
-                                                                                        <div
-                                                                                            class="list-group list-group-flush">
-                                                                                            <a (click)="insertTagsForFeed(keyword.id, youtubecomment.id)"
-                                                                                                [ngClass]="activeTag==true?'active':''"
-                                                                                                class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                *ngFor="let keyword of tag.keywordList">
+                                                                                            <div class="w-100 list-txt">
+                                                                                                <div
+                                                                                                    class="d-flex w-100 justify-content-between">
+                                                                                                    <h6
+                                                                                                        class="mb-1 darkblue">
+                                                                                                        {{tag.name}}
+                                                                                                    </h6>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                        </a>
+                                                                                        <ul
+                                                                                            class="dropdown-menu shadow">
+                                                                                            <li class="list-body small-list"
+                                                                                                data-scrollbar="true"
+                                                                                                tabindex="-1"
+                                                                                                style="overflow: auto; outline: none;">
+                                                                                                <div
+                                                                                                    class="list-group list-group-flush">
+                                                                                                    <a (click)="insertTagsForFeed(keyword.id, youtubecomment.id)"
+                                                                                                        [ngClass]="activeTag==true?'active':''"
+                                                                                                        class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                                        *ngFor="let keyword of tag.keywordList">
+                                                                                                        <div
+                                                                                                            class="list-down-icon">
+                                                                                                            <span
+                                                                                                                class="btn iconButton iconHover medium">
+                                                                                                                <i
+                                                                                                                    class="fal fa-tag coal"></i>
+                                                                                                            </span>
+                                                                                                        </div>
+                                                                                                        <div
+                                                                                                            class="w-100 list-txt">
+                                                                                                            <div
+                                                                                                                class="d-flex w-100 justify-content-between">
+                                                                                                                <h6
+                                                                                                                    class="mb-1 darkblue">
+                                                                                                                    {{keyword.name}}
+                                                                                                                </h6>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <small
+                                                                                                            *ngIf="keyword.id == tag.id">
+                                                                                                            <i [ngClass]="checkTag==true?'fa-check-circle':''"
+                                                                                                                class="fal sky"></i>
+                                                                                                        </small>
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </li>
+
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div class="dropdown w-auto">
+                                                                        <button class="iconButton medium show"
+                                                                            id="sentimentButton"
+                                                                            data-bs-toggle="dropdown"
+                                                                            aria-expanded="true"
+                                                                            style="margin-left:43px">
+                                                                            <span class="iconButton small btn mx-2">
+                                                                                <i class="fal fa-smile"></i>
+                                                                            </span>
+                                                                            Sentiment
+                                                                        </button>
+                                                                        <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                                            aria-labelledby="dropdownMenuButton2"
+                                                                            style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 42px);"
+                                                                            data-popper-placement="bottom-start">
+                                                                            <ul class="dropdown-listing">
+                                                                                <li class="list-body small-list"
+                                                                                    data-scrollbar="true" tabindex="-1"
+                                                                                    style="overflow: auto; outline: none;">
+                                                                                    <div class="scroll-content">
+                                                                                        <div class="list-group list-group-flush"
+                                                                                            *ngFor="let sentiment of Sentiments">
+                                                                                            <a (click)="insertSentimentForFeed(youtubecomment.id, sentiment.name)"
+                                                                                                class="list-group-item d-flex level1Btn ">
                                                                                                 <div
                                                                                                     class="list-down-icon">
                                                                                                     <span
                                                                                                         class="btn iconButton iconHover medium">
                                                                                                         <i
-                                                                                                            class="fal fa-tag coal"></i>
+                                                                                                            class={{sentiment.icon}}></i>
                                                                                                     </span>
                                                                                                 </div>
                                                                                                 <div
@@ -229,124 +333,140 @@
                                                                                                         class="d-flex w-100 justify-content-between">
                                                                                                         <h6
                                                                                                             class="mb-1 darkblue">
-                                                                                                            {{keyword.name}}
+                                                                                                            {{sentiment.name}}
                                                                                                         </h6>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                                <small
-                                                                                                    *ngIf="keyword.id == tag.id">
-                                                                                                    <i [ngClass]="checkTag==true?'fa-check-circle':''"
-                                                                                                        class="fal sky"></i>
-                                                                                                </small>
+                                                                                                <!-- <small>
+                                                                                                                                                                                                                    <i
+                                                                                                                                                                                                                        class="fal fa-check-circle sky"></i>
+                                                                                                                                                                                                                </small> -->
                                                                                             </a>
-                                                                                        </div>
-                                                                                    </li>
-
-                                                                                </ul>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="dropdown w-auto">
-                                                                <button class="iconButton medium show"
-                                                                    id="sentimentButton" data-bs-toggle="dropdown"
-                                                                    aria-expanded="true" style="margin-left:43px">
-                                                                    <span class="iconButton small btn mx-2">
-                                                                        <i class="fal fa-smile"></i>
-                                                                    </span>
-                                                                    Sentiment
-                                                                </button>
-                                                                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                    aria-labelledby="dropdownMenuButton2"
-                                                                    style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 42px);"
-                                                                    data-popper-placement="bottom-start">
-                                                                    <ul class="dropdown-listing">
-                                                                        <li class="list-body small-list"
-                                                                            data-scrollbar="true" tabindex="-1"
-                                                                            style="overflow: auto; outline: none;">
-                                                                            <div class="scroll-content">
-                                                                                <div class="list-group list-group-flush"
-                                                                                    *ngFor="let sentiment of Sentiments">
-                                                                                    <a (click)="insertSentimentForFeed(youtubecomment.id, sentiment.name)"
-                                                                                        class="list-group-item d-flex level1Btn ">
-                                                                                        <div class="list-down-icon">
-                                                                                            <span
-                                                                                                class="btn iconButton iconHover medium">
-                                                                                                <i
-                                                                                                    class={{sentiment.icon}}></i>
-                                                                                            </span>
-                                                                                        </div>
-                                                                                        <div class="w-100 list-txt">
-                                                                                            <div
-                                                                                                class="d-flex w-100 justify-content-between">
-                                                                                                <h6
-                                                                                                    class="mb-1 darkblue">
-                                                                                                    {{sentiment.name}}
-                                                                                                </h6>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <!-- <small>
-                                                                                            <i
-                                                                                                class="fal fa-check-circle sky"></i>
-                                                                                        </small> -->
-                                                                                    </a>
 
 
-                                                                                </div>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                </ul>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <span class="complaintBtn" type="button"
+                                                (click)="toggle('ticket', youtubecomment.id)"><i
+                                                        class="fal fa-plus-circle sky"></i></span>
+                                            </div>
+                                            <div *ngFor="let reply of youtubecomment.replies | sort:criteria">
+                                                <div class="message-wrap agent-message-wrap left">
+                                                    <div class="agent-container">
+                                                        <div class="card card-txt ms-auto">
+                                                            <div class="card-body shadow-sm">
+                                                                <div class="d-flex align-items-center mb-2">
+                                                                    <h6 class="card-title m-0">
+                                                                        {{pageName}}
+                                                                    </h6>
+                                                                    <p class="card-text ms-3">
+                                                                        <small class="silver">{{reply.createdDate |
+                                                                            date:'h:mm:ss a'}}</small>
+                                                                    </p>
+                                                                </div>
+                                                                <p class="card-textnignt p-0">{{reply.message}}</p>
+                                                            </div>
+                                                            <div class="message-bottom">
+                                                                <div class="row">
+                                                                    <div
+                                                                        class="col-lg-12 ps-4 d-flex align-items-center">
+                                                                        <div class="commentWrap">
+                                                                            Commented on by
+                                                                            <a class="fw-bold">{{reply.replyById}}</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <span class="complaintBtn" type="button"
-                                            (click)="toggle('complaint-ticket-panel')"><i
-                                                class="fal fa-plus-circle sky"></i></span>
-                                    </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="youtubecomment.queryStatus == 'QueryCompleted'">
+                                        <div 
+                                            (click)="markAsCompleteExpanded(youtubecomment.id)"
+                                            class="accordion email-accordion" style="display:block">
+                                            <div class="accordion-item email-wrap marked-wrap mt-3">
+                                                <div [ngClass]="markAsComplete == true?'open':'collaps-wrap'"
+                                                    class="accordion-header" id="emailwrap7">
+                                                    <button [ngClass]="markAsComplete == true?'':'collapsed'"
+                                                        class="accordion-button" type="button">
+                                                        <div class="avatar large coal">
+                                                            <i class="fal fa-check-double"></i>
+                                                        </div>
+                                                        <div class="card-header-content p-0">
+                                                            <div class="card-header-top">
+                                                                <div class="d-block">
+                                                                    <h6 class="mb-1 night">
+                                                                        Marked as Completed
+                                                                    </h6>
+                                                                    <small class="night">
+                                                                        <span>by: <h6 class="d-inline fw-bold charcoal">
+                                                                                Agent Name </h6>
+                                                                        </span>
+                                                                        <span>Complaint Id <a class="sky"
+                                                                                href="">FP-325687</a>
+                                                                        </span>
+                                                                    </small>
+                                                                </div>
+                                                                <small class="silver full-date">{{ TodayDate |
+                                                                    date:'MMMM dd, yyyy, h:mm a'}}</small>
+                                                            </div>
+                                                            <div class="msg-snippet show-text">
+                                                                <p class="mb-1 coal" data-maxlength="240">
+                                                                    {{youtubecomment.message.length < 80 ?
+                                                                        youtubecomment.message: (youtubecomment.message
+                                                                        | slice:0:80) +'...'}} </p>
+                                                            </div>
+                                                            <div class="marked-info">
+                                                                <p class="card-text mb-0 coal">
+                                                                    <small>First Response: <span class="night"> July
+                                                                            7, 2021, 2:30 PM (4
+                                                                            days
+                                                                            ago)</span></small>
+                                                                </p>
+                                                                <p class="card-text mb-0 coal">
+                                                                    <small>Last Response: <span class="night"> July
+                                                                            14, 2021, 9:30 AM (6
+                                                                            days
+                                                                            ago)</span></small>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                    <div class="top-right">
+                                                        <div class="expanded-card-header-actions icons-list">
+                                                            <small class="silver ms-2 me-2">{{ TodayDate
+                                                                | date:'MMMM dd, yyyy, h:mm a'}}</small>
 
-                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-                                <div *ngFor="let reply of youtubecomment.replies">
-                                    <div class="date-wrap">
-                                        <p class="date">{{reply.createdDate | date:'EEEE, MMMM d, y'}}</p>
-                                    </div>
-                                    <div class="message-wrap agent-message-wrap left">
-                                        <div class="agent-container">
-                                            <div class="card card-txt ms-auto">
-                                                <div class="card-body shadow-sm">
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <h6 class="card-title m-0">
-                                                            {{youtubedata.post.profile.page_Name}}</h6>
-                                                        <p class="card-text ms-3">
-                                                            <small class="silver">{{reply.createdDate | date:'h:mm a'}}</small>
+                                                <div class="accordion-collapse collapse"
+                                                    [ngClass]="markAsComplete == true?'show':''">
+                                                    <div class="accordion-body">
+                                                        <p>
+                                                            {{youtubecomment.message}}
                                                         </p>
                                                     </div>
-                                                    <p class="card-textnignt p-0">{{reply.message}}</p>
-                                                </div>
-                                                <div class="message-bottom">
-                                                    <div class="row">
-                                                        <div class="col-lg-12 ps-4 d-flex align-items-center">
-                                                            <div class="commentWrap">
-                                                                Commented on by
-                                                                <a class="fw-bold">Syed
-                                                                    Ahmed</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
-
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="date-wrap">
+                                    </ng-container>
 
+                                </ng-container>
                             </div>
                         </div>
                     </div>
@@ -406,15 +526,30 @@
             </div>
             <div class="form-floating textarea-field">
                 <textarea formControlName="text" class="form-control auto" rows="1" id="text"
-                    placeholder="Write a response here" [(ngModel)]="commentReply" style="height: 0px"></textarea>
+                    placeholder="Write a response here" [(ngModel)]="youtubeCommentReplyForm.value.text" style="height: 0px" #textarea></textarea>
             </div>
             <div class="icons-list align-items-md-center d-flex ps-2">
-                <button type="button" class="iconButton small notification iconHover" data-bs-toggle="tooltip"
-                    data-bs-placement="top" title="" id="searchbtn" data-bs-original-title="Choose an emoji">
-                    <i class="far fa-smile"></i>
-                </button>
+                <div class="dropdown w-auto">
+                    <button class="iconButton small notification iconHover" id="emojiBox" data-bs-toggle="dropdown"
+                        data-bs-auto-close="outside" data-bs-original-title="Choose an emoji">
+                        <span class="iconButton small btn mx-2">
+                            <i class="far fa-smile"></i>
+                        </span>
+                    </button>
+                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList" aria-labelledby="dropdownMenuButton2">
+                        <ul class="dropdown-listing">
+                            <li class="dropdown-listing-header">
+                                <div class="head-section">
+                                    <div class="left" *ngFor="let emoji of Emojies">
+                                        <span (click)="insertEmoji(emoji.emoji)" style="cursor: pointer; font-size: 17px;">{{emoji.emoji}}</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </ul>
+                    </div>
                 <button type="submit" class="iconButton small notification iconHover" data-bs-toggle="tooltip"
-                    data-bs-placement="top" title="" id="commentSendbtn" data-bs-original-title="Send">
+                    data-bs-placement="top" title="" id="commentSendbtn" data-bs-original-title="Send" [disabled]="!youtubeCommentReplyForm.valid">
                     <i class="fal fa-paper-plane"></i>
                 </button>
             </div>
@@ -448,7 +583,7 @@
         <div class="offcanvas-body">
 
             <form class="custom-searchbar">
-                <input class="form-control me-2 rounded-pill shadow-sm" placeholder="Search" aria-label="Search">
+                <input class="form-control me-2 rounded-pill shadow-sm" placeholder="Search" aria-label="Search" [(ngModel)]="quickReplySearchText">
                 <span class="btn searchbar-btn" type="submit">
                     <i class="fal fa-search silver"></i>
                 </span>
@@ -456,12 +591,12 @@
             <div class="list-group-section quick-response" id="accordionExample">
                 <div class="collapse-toggle-card">
                     <div class="list-group list-group-flush">
-                        <div class="collapse-wrap mx-3" id="qr-ques1" *ngFor="let qr of QuickReplies">
-                            <div class="list-group list-group-flush mb-4 ms-4 ps-1" (click)="sendQuickReply(qr.value)">
+                        <div class="collapse-wrap mx-3" id="qr-ques1" *ngFor="let qr of QuickReplies | quickReplySearchFilter: quickReplySearchText">
+                            <div class="list-group list-group-flush mb-4 ms-4 ps-1" >
                                 <div class="form-check list-group-item theme-check">
                                     <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id={{qr.value}}>
-                                    <label class="form-check-label" for={{qr.value}}>{{qr.text}}
+                                        id={{qr.value}} #radioInput>
+                                    <label class="form-check-label" for={{qr.value}} (click)="sendQuickReply(qr.value)">{{qr.text}}
                                     </label>
                                 </div>
 

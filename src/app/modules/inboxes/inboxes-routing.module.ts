@@ -1,20 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { InboxContentComponent } from 'src/app/layouts/engage2/inbox-content/inbox-content.component';
+import { ResponderGuardGuard } from 'src/app/shared/Guards/responder-guard.guard';
+import { InboxResponderComponent } from './components/inbox-responder/inbox-responder.component';
 import { InboxesComponent } from './inboxes.component';
 
 const routes: Routes = [
   {
     path:'',
-    component:InboxesComponent,
-  },
-  // {
+    component:InboxContentComponent,
+    canDeactivate:[ResponderGuardGuard],
+    children:[{
     
-  //   path:':channel/:ticket',
-  //   component:InboxesComponent,
-  // },
+      path:'responder/:channel',
+      // loadChildren : () => import('../responder/responder.module').then(f=>f.ResponderModule),
+      component:InboxResponderComponent,
+      canDeactivate:[ResponderGuardGuard],
+    },
   {
-    path:':channel',
+    path:'',
     component:InboxesComponent,
+    // canDeactivate:[ResponderGuardGuard],
+  }]
   },
 ];
 

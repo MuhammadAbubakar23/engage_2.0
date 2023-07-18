@@ -1,12 +1,12 @@
 <div class="multiple-screens">
     <div id="all-inboxes-wrapper">
       <div class="sidebar-header border-bottom ps-4 pe-3 pt-3 pb-3">
-        <h6 class="fw-bold m-0">All Inboxes <span class="badge twltte-bg rounded-pill">{{UnResponded + SlaUnResponded}}</span></h6>
+        <h6 class="fw-bold m-0">All Inboxes <span class="badge twltte-bg rounded-pill">{{UnResponded}}</span></h6>
       </div>
       <ul class="list-group list-group-flush" id="inboxes-list" data-scrollbar="true" tabindex="-1"
         style="overflow-y: auto; outline: none;">
         <div class="scroll-content">
-          <a (click)="updatevalue('')" [routerLink]="['/all-inboxes/conversation']"
+          <a (click)="updatevalue('')" [routerLink]="['/all-inboxes']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="all-conversation">
             <div class="iconButton medium skyBg">
               <i class="far fa-inbox"></i>
@@ -29,16 +29,29 @@
             </div>
             <span class="badge twltte-bg rounded-pill">{{SlaUnResponded}}</span>
           </a>
-          <a (click)="updatevalue('Email')" [routerLink]="['/all-inboxes/conversation']" [queryParams]="{List : 'Emails'}"
+          <a (click)="updatevalue('Email')" [routerLink]="['/all-inboxes']" [queryParams]="{List : 'Emails'}"
             class="all-inboxes-menu list-group-item list-group-item-action" value="email">
             <div class="iconButton medium berryBg">
               <i class="fal fa-envelope"></i>
             </div>
             <div class="ms-2 me-auto">
-              <div class="black-text">Careers</div>
-              <!-- <small class="coal">careers@ibex.co</small> -->
+              <div class="black-text">Emails</div>
+              <small class="coal">/Gmail</small>
             </div>
+            <!-- <span class="badge twltte-bg rounded-pill">{{EmailUnResponded + OfficeEmailUnResponded}}</span> -->
             <span class="badge twltte-bg rounded-pill">{{EmailUnResponded}}</span>
+          </a>
+          <a (click)="updatevalue('OfficeEmail')" [routerLink]="['/all-inboxes']" [queryParams]="{List : 'OfficeEmails'}"
+            class="all-inboxes-menu list-group-item list-group-item-action" value="email">
+            <div class="iconButton medium berryBg">
+              <i class="fal fa-envelope"></i>
+            </div>
+            <div class="ms-2 me-auto">
+              <div class="black-text">Emails</div>
+              <small class="coal">/Outlook</small>
+            </div>
+            <!-- <span class="badge twltte-bg rounded-pill">{{EmailUnResponded + OfficeEmailUnResponded}}</span> -->
+            <span class="badge twltte-bg rounded-pill">{{OfficeEmailUnResponded}}</span>
           </a>
           <a (click)="updatevalue('WhatsApp')"
             class="all-inboxes-menu list-group-item list-group-item-action" value="whatsapp">

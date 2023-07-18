@@ -6,4 +6,5 @@ export class FiltersDto{
   plateForm: string="";
   pageNumber : number=0;
   pageSize : number=0;
+  isAttachment : boolean = false;
   }

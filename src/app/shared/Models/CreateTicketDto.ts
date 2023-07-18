@@ -1,0 +1,28 @@
+export class createTicketDto {
+  queryId: number = 0;
+  name?: string = '';
+  phoneNumber?: string = '';
+  address?: string = '';
+  emailAddress?: string = '';
+  ticketType?: string = '';
+  reasonId?: string = '';
+  reasonName?: string = '';
+  subReasonId?: string = '';
+  subReasonName?: string = '';
+  status?: string = '';
+  orderId?: string = '';
+  orderDate?: string = '';
+  payment?: string = '';
+  modeOfPayment?: string = '';
+  orderStatus?: string = '';
+  shippingAddress?: string = '';
+  productName?: string = '';
+  sku?: string = '';
+  unitPrice?: string = '';
+  quantity?: string = '';
+  details?: string = '';
+  resolutionComments?: string = '';
+  jomoCustomerId?: string = '';
+  channelType?: string = '';
+  customerProfileId?: string = '';
+}

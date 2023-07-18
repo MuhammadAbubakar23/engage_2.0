@@ -1,0 +1,11 @@
+.table>:not(:last-child)>:last-child>* {
+    border-bottom-color: currentColor;
+}
+
+table thead tr th {
+    color: #2e4453;
+    font-weight: 600;
+    text-transform: uppercase;
+    background: #fff;
+    padding: 0.8rem 0.5rem;
+}

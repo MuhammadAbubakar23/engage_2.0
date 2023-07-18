@@ -1,8 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Tooltip } from 'bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subscription } from 'rxjs';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { FetchPostTypeService } from 'src/app/services/FetchPostType/fetch-post-type.service';
+import { FilterService } from 'src/app/services/FilterService/filter.service';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { LeftsidebarExpandedService } from 'src/app/services/LeftSideBar-Expanded/leftsidebar-expanded.service';
 import { SharedService } from 'src/app/services/SharedService/shared.service';
@@ -26,17 +29,19 @@ export class SlaComponent implements OnInit {
 
   Ids: any[] = [];
 
-  ConversationList:any;
+  ConversationList: any[] = [];
   TotalUnresponded: number = 0;
   TodayDate: any;
-  pageNumber:number=1;
-  pageSize:number=300;
+  pageNumber: number = 1;
+  pageSize: number = 50;
+  platform: any;
 
   listingDto = new ListingDto();
   filterDto = new FiltersDto();
   assignQuerryDto = new AssignQuerryDto();
 
   public criteria!: SortCriteria;
+  public subscription!: Subscription;
 
   constructor(
     private headerService: HeaderService,
@@ -47,7 +52,10 @@ export class SlaComponent implements OnInit {
     private signalRService: SignalRService,
     private changeDetect: ChangeDetectorRef,
     private leftsidebar: LeftsidebarExpandedService,
-    private commondata : CommonDataService
+    private commondata: CommonDataService,
+    private filterService: FilterService,
+    private _route: ActivatedRoute,
+    private router : Router
   ) {
     this.criteria = {
       property: 'createdDate',
@@ -59,61 +67,80 @@ export class SlaComponent implements OnInit {
     this.TodayDate = new Date();
 
     this.getSlaList();
+    this.getPlatform();
 
-    // this.signalRService.startConnection();
-    // this.addTransferChatDataListener();
-    // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    // .forEach(tooltipNode => new Tooltip(tooltipNode));
+    this.signalRService.startConnection();
+    this.addTransferChatDataListener();
+
+    Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(
+      (tooltipNode) => new Tooltip(tooltipNode)
+    );
   }
 
-  getSlaList(){
-    this.filterDto ={
-      // fromDate : "2022-12-07T08:17:33.090Z",
-      // toDate : new Date(),
-      user : "",
-      pageId : "",
-      plateForm : "",
-      pageNumber : this.pageNumber,
-      pageSize : this.pageSize
-    }
-    this.SpinnerService.show();
-    this.commondata.GetSlaList(this.filterDto).subscribe((res:any)=>{
-      this.SpinnerService.hide();
-      this.ConversationList = res.List;
+  totalPageNumbers: any;
+  filter: any;
 
-      this.TotalUnresponded = res.TotalCount
-    })
+  getPlatform() {
+    this.subscription = this.filterService.getTogglePanel().subscribe((res) => {
+      this.platform = res;
+      this.getSlaList();
+    });
+  }
+
+  to: any = 1;
+  from: any = this.pageSize;
+
+  getSlaList() {
+    
+    this.filterDto = {
+      // fromDate : new Date(),
+      // toDate : new Date(),
+      user: '',
+      pageId: '',
+      plateForm: this.platform,
+      pageNumber: this.pageNumber,
+      pageSize: this.pageSize,
+      isAttachment: false
+    };
+    this.SpinnerService.show();
+    this.commondata
+      .GetSlaList(this.filterDto)
+      .subscribe((res: any) => {
+        
+        this.SpinnerService.hide();
+        this.ConversationList = res.List;
+        this.TotalUnresponded = res.TotalCount;
+        if (this.TotalUnresponded < this.from) {
+          this.from = this.TotalUnresponded;
+        }
+      //  // console.log("list", this.ConversationList)
+      });
   }
 
   public addTransferChatDataListener = () => {
-    this.signalRService.hubconnection.on('UnrespondedTweetsChats', (data) => {
-      // this.TwitterList.forEach((abc: any) => {
-      //   this.TwitterIds.push(abc.id);
-      // });
-      data.Data.forEach((xyz: any) => {
-        this.listingDto = {
-          id: xyz.id,
-          userName: xyz.userName,
-          unrespondedCount: xyz.unrespondedCount,
-          message: xyz.message,
-          createdDate: xyz.createdDate,
-          platform: data.Platform,
-          user: xyz.userId,
-          postType: xyz.postType,
-          url: 'conversation:twitter',
-          userId: 0,
-        };
-        // if (!this.TwitterIds.includes(xyz.id)) {
-        //    this.TwitterList.push(this.listingDto);
-        //   this.ConversationList.push(this.listingDto);
-        // }
+    this.signalRService.hubconnection.on('SendData', (data) => {
+      
+      data.conversationQueues.forEach((newMsg: any) => {
+        const index = this.ConversationList.findIndex((obj) => obj.user === newMsg.user);
+        if (index !== -1) {
+          this.ConversationList.forEach((main: any) => {
+            if (newMsg.user == main.user) {
+              this.listingDto = newMsg;
+              this.listingDto.unrespondedCount = main.unrespondedCount + newMsg.unrespondedCount;
+              this.ConversationList[index] = this.listingDto;
+            }
+          });
+        } else {
+          this.ConversationList.push(newMsg);
+        }
+      //  // console.log("after signalR", this.ConversationList)
+        this.changeDetect.detectChanges();
       });
-      this.changeDetect.detectChanges();
     });
   };
 
   Reload() {
-    this.TotalUnresponded=0;
+    this.TotalUnresponded = 0;
     this.getSlaList();
 
     this.isChecked = false;
@@ -121,13 +148,12 @@ export class SlaComponent implements OnInit {
     this.masterSelected = false;
   }
 
-  ngAfterViewChecked() {
-    this.totalCount();
-  }
-
-  totalCount() {
-    this.shareddata.unRespondedCount(this.TotalUnresponded);
-  }
+  // ngAfterViewChecked() {
+  //   this.totalCount();
+  // }
+  // totalCount() {
+  //   this.shareddata.unRespondedCount(this.TotalUnresponded);
+  // }
 
   updatevalue(
     string: any,
@@ -135,41 +161,97 @@ export class SlaComponent implements OnInit {
     postType: any,
     userId: any,
     leftExpandedMenu: any,
-    platform:any,
-    profileId:any
-  ) {
-   // this.socialHeader.getRouteParam('sla');
-    this.headerService.updateMessage(string);
-    this.leftsidebar.updateMessage(leftExpandedMenu);
+    platform: any,
+    profileId: any
+  ) {this.assignQuerryDto = {
+    userId: Number(localStorage.getItem('agentId')),
+     profileId: profileId,
+     agentIds: 'string',
+     platform: platform
+   };
+
+   this.commondata.AssignQuerry(this.assignQuerryDto).subscribe(res =>{
+     this.reloadComponent('queryallocated');
+     this.router.navigateByUrl("/responder/"+platform);
+     this.headerService.updateMessage(string);
+   this.leftsidebar.updateMessage(leftExpandedMenu);
    this.fetchId.setPlatform(platform);
-   this.fetchId.setSlaId(id);
-
-    // if (id.includes('+')) {
-    //   this.fetchId.setOption(id.split('+')[1]);
-    // } else {
-    //   this.fetchId.setOption(id);
-    // }
-    this.fetchId.setIds(id, userId, postType);
-    this.fetchposttype.sendPostType(postType);
-
-    this.assignQuerryDto = {
-      agentId : Number(localStorage.getItem('agentId')),
-      profileId : profileId,
-      agentIds : "string"
-    }
-
-    this.commondata.AssignQuerry(this.assignQuerryDto).subscribe((res:any)=>{
-      
-      if(res.message === "Query Assign Successfully to Aggent"){
-        alert(res.message);
-      }
-      
+   this.fetchId.setOption(id);
+   this.fetchId.setIds(id, userId, postType);
+   this.fetchposttype.sendPostType(postType);
+   localStorage.setItem('profileId', profileId)
     },
-    ({error}) => {
-      
-      alert(error.message)
+    (error) => {
+     this.reloadComponent('queryallocatedtoanotheruser');
+    })
+  }
+  AlterMsg:any;
+  toastermessage = false;
+
+  reloadComponent(type: any) {
+    if (type == 'queryallocatedtoanotheruser') {
+      this.AlterMsg = 'Profile Already Allocated to Another Aggent!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
     }
-    )
+    if (type == 'queryallocated') {
+      this.AlterMsg = 'Querry Assigned Successfully!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+    if (type == 'comment') {
+      this.AlterMsg = 'Comment Send Successfully!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+    if (type == 'fbmessage') {
+      this.AlterMsg = 'Message Send Successfully!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+    if (type == 'ApplyTag') {
+      this.AlterMsg = 'Tag Apply Successfully!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+    if (type == 'RemoveTag') {
+      this.AlterMsg = 'Tag Removed Successfully!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+    if (type == 'Sentiment') {
+      this.AlterMsg = 'Sentiment Apply Successfully!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+    if (type == 'Like') {
+      this.AlterMsg = 'Liked Successfully!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+    if (type == 'disLike') {
+      this.AlterMsg = 'Dislike Successfully!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
   }
 
   checkUncheckAll(evt: any) {
@@ -184,23 +266,21 @@ export class SlaComponent implements OnInit {
         // var abc = this.Ids.find(
         //   (x) => x.Id == d.id && x.Platform == d.Platform
         // );
-        if (!(this.Ids.includes(d.id))) {
+        if (!this.Ids.includes(d.id)) {
           this.Ids.push(d.id);
         }
       });
-      console.log(this.Ids);
+    //  // console.log(this.Ids);
       this.isChecked = true;
       this.isCheckedAll = true;
     } else {
       this.ConversationList.forEach((d: any) => {
         for (var i = 0; i <= this.Ids.length; i++) {
-          var abc = this.Ids.find(
-            (x) => x.Id == d.id
-          );
+          var abc = this.Ids.find((x) => x.Id == d.id);
           this.Ids.splice(abc, 1);
         }
       });
-      console.log(this.Ids);
+    //  // console.log(this.Ids);
       this.isChecked = false;
       this.isCheckedAll = false;
     }
@@ -209,9 +289,8 @@ export class SlaComponent implements OnInit {
   isAllSelected(evt: any, index: any, platform: any) {
     let id = Number(evt.target.value);
     if (index >= 0 && evt.target.checked == true) {
-      ;
       this.Ids.push(id);
-      console.log(this.Ids);
+    //  // console.log(this.Ids);
     }
     if (evt.target.checked == false) {
       var abc = this.Ids.find((x) => x.Id == id);
@@ -234,6 +313,64 @@ export class SlaComponent implements OnInit {
     } else {
       this.isChecked = false;
     }
+  }
+
+  NextPage(pageNumber: any) {
+    ;
+    if (this.TotalUnresponded < this.from) {
+      this.from = this.TotalUnresponded;
+    }
+    this.totalPageNumbers = Math.round(this.TotalUnresponded / this.pageSize);
+    let page = pageNumber + 1;
+    if (page <= this.totalPageNumbers) {
+      this.pageNumber = page;
+      // if (this.MachineUsers.find(x => x.isChecked == true)){
+      //   this.isChecked = false;
+      //   this.isCheckedAll = false;
+      //   this.masterSelected = false;
+      //   }
+      this.getSlaList();
+      if (this.TotalUnresponded - this.from > this.pageSize) {
+        this.to = 1 + this.from;
+        this.from = this.from + this.pageSize;
+      } else {
+        this.to = 1 + this.from;
+        this.from = this.TotalUnresponded;
+      }
+    }
+    this.pageNumber;
+  }
+  PreviousPage(pageNumber: any) {
+    ;
+    if (pageNumber >= 1) {
+      let page = pageNumber - 1;
+      if (page > 0) {
+        this.pageNumber = page;
+        // if (this.MachineUsers.find(x => x.isChecked == true)){
+        //   this.isChecked = false;
+        //   this.isCheckedAll = false;
+        //   this.masterSelected = false;
+        //   }
+        this.getSlaList();
+        this.from = this.from - this.pageSize;
+        if (this.to > this.pageSize) {
+          this.to = this.from - (this.pageSize - 1);
+        } else {
+          this.to = 1;
+          this.from = this.pageSize;
+        }
+      }
+    }
+  }
+
+  closeToaster() {
+    this.toastermessage = false;
+  }
+
+  isAttachment = false
+  hasAttachment() {
+    this.isAttachment = !this.isAttachment;
+    this.getSlaList();
   }
 
 }

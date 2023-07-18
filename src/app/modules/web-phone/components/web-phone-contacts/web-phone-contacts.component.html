@@ -1,0 +1,534 @@
+<div id="contacts" class="tab-pane dialerMainTabs" role="tabpanel" aria-labelledby="contacts">
+    <div class="contactsTab-Content tab-body">
+
+        <div class="bodywrapper">
+
+            <div class="Contacts-list">
+                <div class="tab-header">
+                    <div class="header-title">
+                        <div class="back-to-call goBackToConnectedCall d-none">
+                            <i class="far fa-long-arrow-left night"></i>
+                        </div>
+                        <div class="heading">Contacts</div>
+                    </div>
+                    <div class="header-action-btns">
+                        <div class="icons-list">
+                            <div class="searchbar-click">
+                                <form class="searchbox">
+                                    <input placeholder="What are you looking for?" name="search"
+                                        class="searchbox-input" required="">
+                                    <span class="searchbox-icon medium iconButton iconHover"><i
+                                            class="fa fa-search"></i></span>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="animated-border">
+                    <div class="border-line"></div>
+                </div>
+                <div class="found-wrapper d-none">
+                    4 results found
+                </div>
+                <div class="tab-header rightbar-tab-header nav nav-tabs tabs iceBg" role="tablist"
+                    id="myTab">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+
+                            <button class="nav-link active" id="recent-contacts-tab"
+                                data-bs-toggle="tab" href="#recent-contacts" role="tab"
+                                aria-controls="recent-contacts" aria-selected="false">
+                                Recent
+                            </button>
+
+
+                            <button class="nav-link" id="favourite-contacts-tab"
+                                data-bs-toggle="tab" href="#favourite-contacts" role="tab"
+                                aria-controls="favourite-contacts" aria-selected="true">
+                                Favourite
+                            </button>
+
+                        </div>
+                    </nav>
+                </div>
+                <div class="bodySection perfect-scrollbar">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div id="recent-contacts" class="tab-pane active show" role="tabpanel"
+                            aria-labelledby="recents">
+                            <div class="mt-3 list-group list-group-flush">
+                                <a href="javascript:;" class="list-group-item d-flex"
+                                    value="Sajjad Akber">
+                                    <div class="avatar large">
+                                        <img src="/2.0/images/avatar-1.jpg" alt="-"
+                                            class="rounded-circle w-100">
+                                    </div>
+                                    <div
+                                        class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-0 darkblue">Sajjad Akber</h6>
+                                            <small class="silver">+923011234567</small>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="medium iconButton iconHover dialBtn" (click)="call('03224732327')"
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                title="" data-bs-original-title="Dial">
+                                                <i class="fal fa-phone-alt" ></i>
+                                            </div>
+                                            <div class="dropdown">
+                                                <button class="medium iconButton iconHover"
+                                                    id="menu-button" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    <i class="far fa-ellipsis-v"></i>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right"
+                                                    aria-labelledby="menu-button">
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 1</div>
+                                                        </div>
+                                                    </button>
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 2</div>
+                                                        </div>
+                                                    </button>
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 3</div>
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="list-group-item d-flex"
+                                    value="Sajjad Akber">
+                                    <div class="avatar large">
+                                        <img src="/2.0/images/avatar-3.jpg" alt="-"
+                                            class="rounded-circle w-100">
+                                    </div>
+                                    <div
+                                        class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-0 darkblue">Tahir Ahmed</h6>
+                                            <small class="silver">+923011234845</small>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="medium iconButton iconHover dialBtn"
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                title="" data-bs-original-title="Dial">
+                                                <i class="fal fa-phone-alt"></i>
+                                            </div>
+                                            <div class="dropdown">
+                                                <button class="medium iconButton iconHover"
+                                                    id="menu-button" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    <i class="far fa-ellipsis-v"></i>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right"
+                                                    aria-labelledby="menu-button">
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 1</div>
+                                                        </div>
+                                                    </button>
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 2</div>
+                                                        </div>
+                                                    </button>
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 3</div>
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="list-group-item d-flex"
+                                    value="Sajjad Akber">
+                                    <div class="avatar large">
+                                        <img src="/2.0/images/avatar-6.jpg" alt="-"
+                                            class="rounded-circle w-100">
+                                    </div>
+                                    <div
+                                        class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-0 darkblue">Ahmed Ali</h6>
+                                            <small class="silver">+923124565874</small>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="medium iconButton iconHover dialBtn"
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                title="" data-bs-original-title="Dial">
+                                                <i class="fal fa-phone-alt"></i>
+                                            </div>
+                                            <div class="dropdown">
+                                                <button class="medium iconButton iconHover"
+                                                    id="menu-button" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    <i class="far fa-ellipsis-v"></i>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right"
+                                                    aria-labelledby="menu-button">
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 1</div>
+                                                        </div>
+                                                    </button>
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 2</div>
+                                                        </div>
+                                                    </button>
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 3</div>
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="list-group-item d-flex"
+                                    value="Sajjad Akber">
+                                    <div class="avatar large berryBg">
+                                        AK
+                                    </div>
+                                    <div
+                                        class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-0 darkblue">Aniqa Khan</h6>
+                                            <small class="silver">+923011234458</small>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="medium iconButton iconHover dialContact"
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                title="" data-bs-original-title="Dial">
+                                                <i class="fal fa-phone-alt"></i>
+                                            </div>
+                                            <div class="dropdown">
+                                                <button class="medium iconButton iconHover"
+                                                    id="menu-button" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    <i class="far fa-ellipsis-v"></i>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right"
+                                                    aria-labelledby="menu-button">
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 1</div>
+                                                        </div>
+                                                    </button>
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 2</div>
+                                                        </div>
+                                                    </button>
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 3</div>
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div id="favourite-contacts" class="tab-pane" role="tabpanel"
+                            aria-labelledby="favourites">
+                            <div class="mt-3 list-group list-group-flush">
+                                <a href="javascript:;" class="list-group-item d-flex"
+                                    value="Sajjad Akber">
+                                    <div class="avatar large">
+                                        <img src="/2.0/images/avatar-2.jpg" alt="-"
+                                            class="rounded-circle w-100">
+                                    </div>
+                                    <div
+                                        class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-0 darkblue">Anis Khan</h6>
+                                            <small class="silver">+923011234545</small>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="medium iconButton iconHover dialBtn"
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                title="" data-bs-original-title="Dial">
+                                                <i class="fal fa-phone-alt"></i>
+                                            </div>
+                                            <div class="dropdown">
+                                                <button class="medium iconButton iconHover"
+                                                    id="menu-button" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    <i class="far fa-ellipsis-v"></i>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right"
+                                                    aria-labelledby="menu-button">
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 1</div>
+                                                        </div>
+                                                    </button>
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 2</div>
+                                                        </div>
+                                                    </button>
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 3</div>
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="list-group-item d-flex"
+                                    value="Sajjad Akber">
+                                    <div class="avatar large">
+                                        <img src="/2.0/images/avatar-3.jpg" alt="-"
+                                            class="rounded-circle w-100">
+                                    </div>
+                                    <div
+                                        class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-0 darkblue">Tahir Ahmed</h6>
+                                            <small class="silver">+923011234845</small>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="medium iconButton iconHover dialBtn"
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                title="" data-bs-original-title="Dial">
+                                                <i class="fal fa-phone-alt"></i>
+                                            </div>
+                                            <div class="dropdown">
+                                                <button class="medium iconButton iconHover"
+                                                    id="menu-button" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    <i class="far fa-ellipsis-v"></i>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right"
+                                                    aria-labelledby="menu-button">
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 1</div>
+                                                        </div>
+                                                    </button>
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 2</div>
+                                                        </div>
+                                                    </button>
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 3</div>
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="list-group-item d-flex"
+                                    value="Sajjad Akber">
+                                    <div class="avatar large">
+                                        <img src="/2.0/images/avatar-7.jpg" alt="-"
+                                            class="rounded-circle w-100">
+                                    </div>
+                                    <div
+                                        class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-0 darkblue">Saima Ali</h6>
+                                            <small class="silver">+923124565458</small>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="medium iconButton iconHover dialBtn"
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                title="" data-bs-original-title="Dial">
+                                                <i class="fal fa-phone-alt"></i>
+                                            </div>
+                                            <div class="dropdown">
+                                                <button class="medium iconButton iconHover"
+                                                    id="menu-button" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    <i class="far fa-ellipsis-v"></i>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right"
+                                                    aria-labelledby="menu-button">
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 1</div>
+                                                        </div>
+                                                    </button>
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 2</div>
+                                                        </div>
+                                                    </button>
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 3</div>
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="list-group-item d-flex"
+                                    value="Sajjad Akber">
+                                    <div class="avatar large berryBg">
+                                        AK
+                                    </div>
+                                    <div
+                                        class="w-100 ms-3 list-txt d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="mb-0 darkblue">Aniqa Khan</h6>
+                                            <small class="silver">+923011234458</small>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="medium iconButton iconHover dialContact"
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                title="" data-bs-original-title="Dial">
+                                                <i class="fal fa-phone-alt"></i>
+                                            </div>
+                                            <div class="dropdown">
+                                                <button class="medium iconButton iconHover"
+                                                    id="menu-button" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    <i class="far fa-ellipsis-v"></i>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right"
+                                                    aria-labelledby="menu-button">
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 1</div>
+                                                        </div>
+                                                    </button>
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 2</div>
+                                                        </div>
+                                                    </button>
+                                                    <button class="dropdown-item" type="button">
+                                                        <div class="iconLabelWrap noMargin">
+                                                            <div class="label">Option 3</div>
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="createNewProfile-Form saltBg d-none">
+                <div class="createProfileBg">
+                    <img src="../images/profile_background.png" alt="">
+                </div>
+                <div class="createProfileContent perfect-scrollbar">
+                    <div class="avatar large profileAvatar">
+                        <img src="../images/avatar-8.jpg" alt="">
+                    </div>
+                    <div class="field-label">First Name</div>
+                    <div class="inputField">
+                        <input class="textInput" value="Fatima">
+                    </div>
+                    <div class="field-label">Last Name</div>
+                    <div class="inputField">
+                        <input class="textInput" value="Ahmed">
+                    </div>
+                    <div class="field-label">CNIC</div>
+                    <div class="inputField">
+                        <input class="textInput" value="00000-0000000-0">
+                    </div>
+                    <div class="field-label">Address</div>
+                    <div class="inputField">
+                        <input class="textInput" value="Karachi,Pakistan">
+                    </div>
+                    <div class="field-label">Phone</div>
+                    <div class="inputField">
+                        <input class="textInput" value="+923001234567">
+                    </div>
+                    <div class="field-label">Phone</div>
+                    <div class="inputField">
+                        <input class="textInput" value="+923001234567">
+                    </div>
+                    <div class="field-label">Phone</div>
+                    <div class="inputField">
+                        <input class="textInput" value="+923001234567">
+                    </div>
+                    <div class="field-label">Phone</div>
+                    <div class="inputField">
+                        <input class="textInput" value="+923001234567">
+                    </div>
+                    <div class="field-label">Phone</div>
+                    <div class="inputField">
+                        <input class="textInput" value="+923001234567">
+                    </div>
+                    <div class="newly-added d-none">
+                        <div class="field-label">Customer ID</div>
+                        <div class="inputField">
+                            <input class="textInput" value="3215468">
+                        </div>
+                    </div>
+                    <div class="addNewField d-none">
+                        <div class="dropdown rightBarProfile-SelectField">
+                            <div class="field-title" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <div class="type">Select Type</div>
+                                <div class="dropdownBtn">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="dropdown-menu" aria-labelledby="menu-button">
+                                    <button class="dropdown-item" type="button" value="CNIC">
+                                        <div class="iconLabelWrap noMargin">
+                                            <div class="label">CNIC</div>
+                                        </div>
+                                    </button>
+                                    <button class="dropdown-item" type="button" value="Phone">
+                                        <div class="iconLabelWrap noMargin">
+                                            <div class="label">Phone</div>
+                                        </div>
+                                    </button>
+                                    <button class="dropdown-item" type="button" value="ID">
+                                        <div class="iconLabelWrap noMargin">
+                                            <div class="label">Customer ID</div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fieldValue">
+                            <input class="textInput" placeholder="Value...">
+                        </div>
+                    </div>
+                    <div class="addMore">
+                        <i class="fas fa-plus"></i> Add More
+                    </div>
+                </div>
+                <div class="createProfileFooter">
+                    <div class="btn blockBtn emeraldBg saveBtn">
+                        Save
+                    </div>
+                    <div class="btn blockBtn discardBtn">
+                        Discard
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

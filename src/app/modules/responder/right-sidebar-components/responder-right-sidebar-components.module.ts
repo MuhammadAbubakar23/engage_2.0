@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResponderComplaintTicketPanelComponent } from './responder-complaint-ticket-panel/responder-complaint-ticket-panel.component';
 import { ResponderContactsComponent } from './responder-contacts/responder-contacts.component';
 import { ResponderCreateNewComponent } from './responder-create-new/responder-create-new.component';
@@ -14,6 +14,10 @@ import { ResponderPhoneDialerComponent } from './responder-phone-dialer/responde
 import { ResponderTicketsComponent } from './responder-tickets/responder-tickets.component';
 import { ResponderTaskComponent } from './responder-task/responder-task.component';
 import { ResponderScheduleComponent } from './responder-schedule/responder-schedule.component';
+import { ResponderHistoryComponent } from './responder-history/responder-history.component';
+import { ResponderProfileComponent } from './responder-profile/responder-profile.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -30,11 +34,16 @@ import { ResponderScheduleComponent } from './responder-schedule/responder-sched
     ResponderPhoneDialerComponent,
     ResponderTicketsComponent,
     ResponderTaskComponent,
-    ResponderScheduleComponent
+    ResponderScheduleComponent,
+    ResponderHistoryComponent,
+    ResponderProfileComponent
   ],
   imports: [
     FormsModule,
-    CommonModule
+    CommonModule,
+    NgxSpinnerModule,
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class ResponderRightSidebarComponentsModule { }

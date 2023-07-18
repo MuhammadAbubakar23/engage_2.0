@@ -8,7 +8,7 @@ export class YoutubeCommentReplyDto {
   attachmentType: string = "";
   parentId: string = "";
   createdDate: string = "2022-11-05T19:04:49.476Z";
-  userId: number=1;
-  companyId: number=2;
+  userId: number=0;
+  companyId: number=0;
   commentId: number=0
 }

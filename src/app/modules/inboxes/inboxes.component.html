@@ -1,5 +1,6 @@
-<inbox-content>
-         <div class="d-flex main-body-wrapper">
+<!-- <inbox-content> -->
+    <div class="w-auto chat-message-component w-100 inbox-container" [ngClass]="showPanel?'panelToggled':''">
+        <div class="d-flex main-body-wrapper">
             <div class="agent-page-main-content">
                 <template #container></template>
             </div>
@@ -7,4 +8,6 @@
                 <template #rightcontainer></template>
             </div>
         </div>
-</inbox-content>
+        <inbox-right-sidebar></inbox-right-sidebar>
+    </div>
+<!-- </inbox-content> -->

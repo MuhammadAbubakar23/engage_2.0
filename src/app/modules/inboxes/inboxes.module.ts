@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { InboxesRoutingModule } from './inboxes-routing.module';
 import { InboxesComponent } from './inboxes.component';
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
@@ -10,6 +10,8 @@ import { ConversationComponent } from './components/conversation/conversation.co
 import { SlaComponent } from './components/SLA/sla.component';
 import { RouterModule } from '@angular/router';
 import { RightSidebarComponentsModule } from './right-sidebar-components/right-sidebar-components.module';
+import { InboxResponderComponent } from './components/inbox-responder/inbox-responder.component';
+import { ResponderGuardGuard } from 'src/app/shared/Guards/responder-guard.guard';
 
 
 @NgModule({
@@ -17,6 +19,7 @@ import { RightSidebarComponentsModule } from './right-sidebar-components/right-s
     InboxesComponent,
     ConversationComponent,
     SlaComponent,
+    InboxResponderComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +30,10 @@ import { RightSidebarComponentsModule } from './right-sidebar-components/right-s
     ReactiveFormsModule,
     RouterModule,
     RightSidebarComponentsModule
+  ],
+  providers: [
+    DatePipe,
+    ResponderGuardGuard
   ]
 })
 export class InboxesModule { }

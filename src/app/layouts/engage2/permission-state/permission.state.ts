@@ -1,13 +1,14 @@
+
 export interface PermissionModel {
     priviledge: string
 }
 export interface PermissionState {
-    permissions: string
+    permissions: PermissionModel|any
     loading: boolean
-    error: string
+    error: string | null
 }
 export const initialPermissionState: PermissionState = {
-    permissions: '',
+    permissions: "",
     loading: false,
-    error: ''
+    error: null
 };

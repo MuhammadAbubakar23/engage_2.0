@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RequestService } from 'src/app/shared/services/request/request.service';
+import { TeamsService } from '../../services/teams.service';
 import { RolesAndPermissionsService } from '../roles-and-permissions/roles-and-permissions.service';
-import { TeamsService } from '../teams/teams.service';
+// import { TeamsService } from '../teams/teams.service';
 
 @Injectable({
   providedIn: 'root'

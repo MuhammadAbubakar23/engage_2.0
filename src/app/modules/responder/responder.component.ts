@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { EmailComponent } from './components/email/email.component';
@@ -27,6 +27,10 @@ import { ResponderPhoneDialerComponent } from './right-sidebar-components/respon
 import { ResponderDocumentsComponent } from './right-sidebar-components/responder-documents/responder-documents.component';
 import { ResponderScheduleComponent } from './right-sidebar-components/responder-schedule/responder-schedule.component';
 import { ResponderComplaintTicketPanelComponent } from './right-sidebar-components/responder-complaint-ticket-panel/responder-complaint-ticket-panel.component';
+import { ResponderHistoryComponent } from './right-sidebar-components/responder-history/responder-history.component';
+import { ResponderProfileComponent } from './right-sidebar-components/responder-profile/responder-profile.component';
+import { DispositionFormComponent } from './components/disposition-form/disposition-form.component';
+import { WebPhoneComponent } from '../web-phone/web-phone.component';
 
 
 @Component({
@@ -45,11 +49,16 @@ export class ResponderComponent implements OnInit {
   })
   rightcontainer!: ViewContainerRef;
 
+  @Output() someEvent = new EventEmitter<string>();
+
   componentName!: any;
+  oldComponent:any;
   childComponentName!: any;
   public subscription!: Subscription;
   panelToggled: any;
   showPanel=false;
+
+  assignedProfile = localStorage.getItem('assignedProfile')
 
   constructor(
     private resolver: ComponentFactoryResolver,
@@ -60,11 +69,11 @@ export class ResponderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    debugger
+    
     this.route.params.subscribe((routeParams) => {
       
       if(routeParams['channel'] != undefined && routeParams['channel'] != "undefined"){
-        this.componentName = routeParams['channel'];
+        this.componentName = (routeParams['channel']);
       } 
       this.childComponentName = routeParams['ticket'];
       let ffff = this.componentName + this.childComponentName;
@@ -83,7 +92,16 @@ export class ResponderComponent implements OnInit {
 
       this.target?.clear();
       this.rightcontainer?.clear();
-      this.loadComponent(this.componentName, '');
+      // console.log("Locaded component name is=====>",localStorage.getItem('parent'));
+      // console.log("Old Component====>",this.oldComponent);
+      if(this.oldComponent!=undefined){
+
+        if(localStorage.getItem('parent')!=undefined && localStorage.getItem('parent')!=this.oldComponent){
+          
+          this.loadComponent(this.componentName, '');
+          this.oldComponent=this.componentName;
+        }
+      }
       if (
         this.childComponentName != '' &&
         this.childComponentName != undefined
@@ -106,74 +124,120 @@ export class ResponderComponent implements OnInit {
         this.rightcontainer?.clear();
         localStorage.setItem('child', '')
       }
+
+      // this.subscription = this.toggleService.getDispositionForm().subscribe(value=>{
+        
+      //   if(value){
+      //     this.target?.clear();
+      //     this.loadComponent(value,'')
+      //   }
+      // })
     });
   }
 
   ngAfterViewInit() {
-    debugger
+    
     this.target?.clear();
     this.rightcontainer?.clear();
-
+    this.oldComponent=this.componentName;
     this.loadComponent(this.componentName, '');
+    // console.log("Old Component====>",this.oldComponent);
     if (this.childComponentName != null) {
       this.showPanel = true;
       this.loadComponent('', this.childComponentName);
     }
+    this.subscription = this.toggleService.getDispositionForm().subscribe(value=>{
+      
+      if(value == 'disposition-form'){
+        this.target?.clear();
+        this.loadComponent(value,'')
+      } 
+      var parent = localStorage.getItem('parent') || '{}'
+      if(value == 'close-disposition-form'){
+        this.target?.clear();
+        this.loadComponent(parent,'')
+      }
+    })
   }
 
   loadComponent(leftSideName: string, rightSideName: string) {
-    debugger
+    
     let componentFactory = null;
 
     switch (leftSideName || rightSideName) {
       case 'Facebook':
+        this.showPanel = false;
+        localStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(FacebookComponent);
-        this.target?.createComponent(componentFactory);
+           this.target?.createComponent(componentFactory);
+
+          // componentRef.instance.someEvent.subscribe((data:any)=>{
+          //   // console.log("event emitter",data)
+          // })
         break;
 
       case 'Instagram':
+        this.showPanel = false;
+        localStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(InstagramComponent);
         this.target?.createComponent(componentFactory);
+        
         break;
       case 'Twitter':
+        this.showPanel = false;
+        localStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(TwitterComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'Email':
+        this.showPanel = false;
+        localStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(EmailComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'Youtube':
+        this.showPanel = false;
+        localStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(YoutubeComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'Phone':
+        this.showPanel = false;
+        localStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(PhoneComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'SMS':
+        this.showPanel = false;
+        localStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(SmsDetailsComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'Webchat':
+        this.showPanel = false;
+        localStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(WebChatComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'WhatsApp':
+        this.showPanel = false;
+        localStorage.setItem('child', '')
         componentFactory = this.resolver.resolveComponentFactory(
           WhatsappDetailsComponent
         );
         this.target?.createComponent(componentFactory);
         break;
       case 'LinkedIn':
+        this.showPanel = false;
+        localStorage.setItem('child', '')
         componentFactory = this.resolver.resolveComponentFactory(
           LinkedInComponent
         );
@@ -196,7 +260,7 @@ export class ResponderComponent implements OnInit {
           this.resolver.resolveComponentFactory(ResponderLivechatsComponent);
         this.rightcontainer?.createComponent(componentFactory);
         break;
-      case 'createNew':
+      case 'create-new':
         componentFactory =
           this.resolver.resolveComponentFactory(ResponderCreateNewComponent);
         this.rightcontainer?.createComponent(componentFactory);
@@ -215,21 +279,21 @@ export class ResponderComponent implements OnInit {
         componentFactory = this.resolver.resolveComponentFactory(ResponderHelpComponent);
         this.rightcontainer?.createComponent(componentFactory);
         break;
-      case 'keyboardShortcuts':
+      case 'keyboard-shortcuts':
         componentFactory = this.resolver.resolveComponentFactory(
           ResponderKeyboardShortcutsComponent
         );
         this.rightcontainer?.createComponent(componentFactory);
         break;
-      case 'knowledgeBase':
+      case 'knowledge-base':
         componentFactory = this.resolver.resolveComponentFactory(
           ResponderKnowledgeBaseComponent
         );
         this.rightcontainer?.createComponent(componentFactory);
         break;
-      case 'phoneDialer':
+      case 'phone-dialer':
         componentFactory =
-          this.resolver.resolveComponentFactory(ResponderPhoneDialerComponent);
+          this.resolver.resolveComponentFactory(WebPhoneComponent);
         this.rightcontainer?.createComponent(componentFactory);
         break;
       case 'documents':
@@ -249,6 +313,24 @@ export class ResponderComponent implements OnInit {
         );
         this.rightcontainer?.createComponent(componentFactory);
         break;
+        case 'history':
+        componentFactory = this.resolver.resolveComponentFactory(
+          ResponderHistoryComponent
+        );
+        this.rightcontainer?.createComponent(componentFactory);
+        break;
+        case 'profile':
+        componentFactory = this.resolver.resolveComponentFactory(
+          ResponderProfileComponent
+        );
+        this.rightcontainer?.createComponent(componentFactory);
+        break;
+        case 'disposition-form':
+        componentFactory = this.resolver.resolveComponentFactory(
+          DispositionFormComponent
+        );
+        this.target?.createComponent(componentFactory);
+        break;
       default:
         componentFactory = this.resolver.resolveComponentFactory(
           FacebookComponent
@@ -257,4 +339,5 @@ export class ResponderComponent implements OnInit {
         break;
     }
   }
+  
 }

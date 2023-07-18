@@ -1,19 +1,25 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Tooltip } from 'bootstrap';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { UntypedFormGroup, UntypedFormControl, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
+import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
+import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
-import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
+import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
+import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
+import { ReplyService } from 'src/app/services/replyService/reply.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
+import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
+import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
 import { CommentStatusDto } from 'src/app/shared/Models/CommentStatusDto';
 import { commentsDto, conversationDetailDto, listDto, postStatsDto } from 'src/app/shared/Models/concersationDetailDto';
 import { FiltersDto } from 'src/app/shared/Models/FiltersDto';
 import { InsertSentimentForFeedDto } from 'src/app/shared/Models/InsertSentimentForFeedDto';
 import { InsertTagsForFeedDto } from 'src/app/shared/Models/InsertTagsForFeedDto';
+import { LikeByAdminDto } from 'src/app/shared/Models/LikeByAdminDto';
 import { ReplyDto } from 'src/app/shared/Models/ReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
 
 @Component({
   selector: 'app-linked-in',
@@ -21,6 +27,10 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
   styleUrls: ['./linked-in.component.scss']
 })
 export class LinkedInComponent implements OnInit {
+
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  @ViewChild('radioInput', { static: false }) radioInput!: ElementRef<HTMLInputElement>;
+
 
   id = this.fetchId.getOption();
 
@@ -36,24 +46,28 @@ export class LinkedInComponent implements OnInit {
 
 
   TagsList: any;
-  pageNumber: any = 0;
-  pageSize: any = 0;
+  pageNumber: any = 1;
+  pageSize: any = 10;
   TodayDate: any;
 
   chatText: any;
-  commentId: any;
-  agentTeamId: any;
+  commentId: number=0;
+  agentId: string = '';
   platform: any;
   postType: any;
+  queryStatus:any;
   
   filesToUpload: any;
-  ImageName: any[]=[];
+  ImageName: any;
+  ImageArray:any[]=[];
  
   commentReply: any;
+  text:string='';
   getAppliedTagsList: any;
  
   storeComId: any;
   AlterMsg: any = '';
+  newReply:any;
 
   slaId = this.fetchId.getSlaId();
 
@@ -77,19 +91,34 @@ export class LinkedInComponent implements OnInit {
   markAsComplete = false;
   toastermessage = false;
 
+  spinner1running = false;
+  spinner2running = false;
+
   PostStatsArray: postStatsDto[] = [];
   QuickReplies: any[] = [];
   HumanAgentTags: any[] = [];
   Keywords: any[] = [];
+  quickReplySearchText:string='';
+
+  commentsArray : any[]=[];
+  groupArrays : any[]=[];
+  public criteria!: SortCriteria;
+  searchText: string='';
 
   constructor(
     private fetchId: FetchIdService,
     private toggleService: ToggleService,
-    private _route: Router,
     private commondata: CommonDataService,
     private SpinnerService: NgxSpinnerService,
-    private signalRService: SignalRService,
-    private changeDetect: ChangeDetectorRef
+    private changeDetect: ChangeDetectorRef,
+    private addTagService: AddTagService,
+    private removeTagService: RemoveTagService,
+    private updateCommentsService : UpdateCommentsService,
+    private queryStatusService : QueryStatusService,
+    private replyService : ReplyService,
+    private createTicketService: CreateTicketService,
+    private ticketResponseService : TicketResponseService
+
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res)=>{
       this.id = res;
@@ -99,64 +128,173 @@ export class LinkedInComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    // .forEach(tooltipNode => new Tooltip(tooltipNode));
+    this.criteria = {
+      property: 'createdDate',
+      descending: true,
+    };
     
     this.TodayDate = new Date();
 
     this.getLinkedInComments();
-    this.getSlaLinkedInComments();
     this.getTagList();
     this.quickReplyList();
     this.humanAgentTags();
-   // this.signalRService.startConnection();
-   // this.addTransferChatDataListener();
+
+    this.Subscription = this.addTagService.receiveTags().subscribe((res) => {
+      this.addTags = res;
+      this.addTagDataListner();
+    });
+    this.Subscription = this.removeTagService.receiveTags().subscribe((res) => {
+      this.removeTags = res;
+      this.removeTagDataListener();
+    });
+    this.Subscription = this.updateCommentsService.receiveComment().subscribe((res) => {
+      this.updatedComments = res;
+      this.updateCommentsDataListener();
+    });
+    this.Subscription = this.queryStatusService.receiveQueryStatus().subscribe((res) => {
+      
+      this.queryStatus = res;
+      this.updateQueryStatusDataListner();
+    });
+    this.Subscription = this.replyService.receiveReply().subscribe((res) => {
+      this.newReply = res;
+      this.replyDataListner();
+    });
+    this.Subscription = this.queryStatusService
+      .bulkReceiveQueryStatus()
+      .subscribe((res) => {
+        
+        this.queryStatus = res;
+        this.updateBulkQueryStatusDataListner();
+      });
+
+      this.ticketResponseService.getTicketId().subscribe(res=>{
+        this.updateTicketId(res)
+      });
   }
+
+  
 
   commentDto = new commentsDto();
   
-  public addTransferChatDataListener = () => {
-    this.signalRService.hubconnection.on('SendData', (data) => {
-      data.signalRConversiontions.forEach((xyz: any) => {
-        if (this.id == xyz.userId) {
-          this.commentDto = xyz;
-          this.LinkedInData[0].comments.push(this.commentDto);
-        }
-      });
-      this.changeDetect.detectChanges();
-    });
+  updatedComments:any;
+
+
+  updateCommentsDataListener() {
+        this.updatedComments.forEach((xyz: any) => {
+          if (this.id == xyz.userId) {
+            this.commentDto = {
+              id: xyz.id,
+              postId: xyz.postId,
+              commentId: xyz.commentId,
+              message: xyz.message,
+              contentType: xyz.contentType,
+              userName: xyz.userName || xyz.userId,
+              queryStatus: xyz.queryStatus,
+              createdDate: xyz.createdDate,
+              fromUserProfilePic: xyz.profilePic,
+              body: xyz.body,
+              to: xyz.toId,
+              cc: xyz.cc,
+              bcc: xyz.bcc,
+              attachments: xyz.mediaAttachments,
+              replies: [],
+              sentiment: '',
+              tags: [],
+            }
+            this.LinkedInData.forEach((item: any) => {
+              this.commentsArray = [];
+              if (item.post.postId == xyz.postId) {
+                item.comments.push(this.commentDto);
+                item.comments.forEach((cmnt: any) => {
+                  this.commentsArray.push(cmnt);
+                });
+
+                let groupedItems = this.commentsArray.reduce(
+                  (acc: any, item: any) => {
+                    const date = item.createdDate.split('T')[0];
+                    if (!acc[date]) {
+                      acc[date] = [];
+                    }
+                    acc[date].push(item);
+                    return acc;
+                  },
+                  {}
+                );
+
+                item['groupedComments'] = Object.keys(groupedItems).map(
+                  (createdDate) => {
+                    return {
+                      createdDate,
+                      items: groupedItems[createdDate],
+                    };
+                  }
+                );
+              }
+            });
+          }
+        });
+        this.changeDetect.detectChanges();
   };
+
   getLinkedInComments() {
     
     if (this.id != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
         user: this.id,
         pageId: '',
         plateForm: 'LinkedIn',
-        pageNumber: 0,
-        pageSize: 0,
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize,
+        isAttachment: false
       };
-
+      this.spinner1running = true;
       this.SpinnerService.show();
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
           this.SpinnerService.hide();
+          this.spinner1running = false;
           this.ConverstationDetailDto = res;
           this.LinkedInData = this.ConverstationDetailDto.List;
           this.pageName = this.LinkedInData[0].post.profile.page_Name;
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
 
-          console.log('Fb Data==>', this.LinkedInData);
-        });
-    }
-  }
+          // console.log('LinkedIn Data==>', this.LinkedInData);
 
-  getSlaLinkedInComments() {
-    if (this.slaId != null || undefined) {
+          this.commentsArray = []
+
+          this.LinkedInData.forEach((item:any) => {
+            this.commentsArray = []
+            item.comments.forEach((cmnt:any) => {
+              this.commentsArray.push(cmnt)
+            });
+              let groupedItems = this.commentsArray.reduce((acc:any, item:any)=>{
+                const date = item.createdDate.split('T')[0];
+                if(!acc[date]){
+                  acc[date] = [];
+                }
+                acc[date].push(item);
+                return acc;
+              }, {})
+        
+              item['groupedComments'] = Object.keys(groupedItems).map((createdDate)=>{
+                return {
+                  createdDate,
+                  items : groupedItems[createdDate]
+                }
+                
+              })
+              this.linkedInPostStats();
+             });
+        });
+    } else if (this.slaId != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -165,6 +303,7 @@ export class LinkedInComponent implements OnInit {
         plateForm: 'LinkedIn',
         pageNumber: 0,
         pageSize: 0,
+        isAttachment: false
       };
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         this.LinkedInData = res.List;
@@ -172,37 +311,151 @@ export class LinkedInComponent implements OnInit {
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
 
+          this.commentsArray = []
+
+          this.LinkedInData.forEach((item:any) => {
+            this.commentsArray = []
+            item.comments.forEach((cmnt:any) => {
+              this.commentsArray.push(cmnt)
+            });
+              let groupedItems = this.commentsArray.reduce((acc:any, item:any)=>{
+                const date = item.createdDate.split('T')[0];
+                if(!acc[date]){
+                  acc[date] = [];
+                }
+                acc[date].push(item);
+                return acc;
+              }, {})
+        
+              item['groupedComments'] = Object.keys(groupedItems).map((createdDate)=>{
+                return {
+                  createdDate,
+                  items : groupedItems[createdDate]
+                }
+                
+              })
+              this.linkedInPostStats();
+             });
+
+      });
+    }
+    else {
+      this.filterDto = {
+        // fromDate: new Date(),
+        // toDate: new Date(),
+        user: localStorage.getItem('storeOpenedId') || '{}',
+        pageId: '',
+        plateForm: localStorage.getItem('parent') || '{}',
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize,
+        isAttachment: false
+      };
+      this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
+        this.LinkedInData = res.List;
+        this.pageName = this.LinkedInData[0].post.profile.page_Name;
+
+          this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+
+          this.commentsArray = []
+
+          this.LinkedInData.forEach((item:any) => {
+            this.commentsArray = []
+            item.comments.forEach((cmnt:any) => {
+              this.commentsArray.push(cmnt)
+            });
+              let groupedItems = this.commentsArray.reduce((acc:any, item:any)=>{
+                const date = item.createdDate.split('T')[0];
+                if(!acc[date]){
+                  acc[date] = [];
+                }
+                acc[date].push(item);
+                return acc;
+              }, {})
+        
+              item['groupedComments'] = Object.keys(groupedItems).map((createdDate)=>{
+                return {
+                  createdDate,
+                  items : groupedItems[createdDate]
+                }
+                
+              })
+              this.linkedInPostStats();
+             });
+
+      });
+    }
+  }
+
+  postId:any;
+
+  linkedInPostStats() {
+    if (this.LinkedInData != null || undefined) {
+      this.LinkedInData.forEach(async (tweet: any): Promise<void> => {
+        this.postId = tweet.post.postId;
+          await this.commondata
+          .GetLinkedInPostStats(this.postId)
+          .subscribe((postStats: any) => {
+            tweet.post['postStats'] = postStats;
+          });
       });
     }
   }
 
   imageSize:any;
-  onFileChanged(event: any) {
-    
-    if (event.target.files.length > 0) {
-      this.isAttachment = true
-      this.ImageName = event.target.files;
+
+  onFileChanged() {
+    if (this.fileInput.nativeElement.files.length > 0) {
+      this.isAttachment = true;
+
+      this.ImageName = this.fileInput.nativeElement.files 
+
+      // const filesArray = Array.from(this.fileInput.nativeElement.files);
+      // filesArray.forEach((attachment:any) => {
+      //   this.ImageArray.push(attachment)
+      // });
+      // const files = this.ImageArray.map((file:any) => file); // Create a new array with the remaining files
+      //   const newFileList = new DataTransfer();
+      //   files.forEach((file:any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+      //   this.ImageName = newFileList.files;
     }
   }
 
-  removeAttachedFile(i:any){
-    
-    //var rec= this.ImageName.find(x=>x.name==i.name);
-    
-    this.ImageName=this.ImageName.filter(x=>x.name!==i.name)
+  removeAttachedFile(index: any) {
+    const filesArray = Array.from(this.ImageName);
+      filesArray.splice(index, 1);
+      this.ImageArray.splice(index, 1);
+      
+      const files = filesArray.map((file:any) => file); // Create a new array with the remaining files
+      const newFileList = new DataTransfer();
+      files.forEach(file => newFileList.items.add(file)); // Add the files to a new DataTransfer object
 
-    console.log("This is image array=====>",this.ImageName)
+      this.fileInput.nativeElement.files = newFileList.files; 
+      this.detectChanges()
+
+  if (this.ImageName.length == 0) {
+    this.isAttachment = false;
   }
+}
 
+detectChanges(): void {
+  this.ImageName = this.fileInput.nativeElement.files;
+  this.text = this.textarea.nativeElement.value
+}
   linkedInReplyForm = new UntypedFormGroup({
-    text: new UntypedFormControl(this.ReplyDto.text),
+    text: new UntypedFormControl(this.ReplyDto.text, Validators.required),
     commentId: new UntypedFormControl(this.ReplyDto.commentId),
     teamId: new UntypedFormControl(this.ReplyDto.teamId),
     platform: new UntypedFormControl(this.ReplyDto.platform),
     contentType: new UntypedFormControl(this.ReplyDto.contentType),
+    profileId: new UntypedFormControl(this.ReplyDto.profileId),
+    profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
   });
 
+  profileId: string = '';
+  profilePageId: string = '';
+
   SendCommentInformation(comId: any) {
+    
     this.LinkedInData.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
         if (comment.id == comId) {
@@ -212,9 +465,11 @@ export class LinkedInComponent implements OnInit {
           // populate comment data
 
           this.commentId = comment.id;
-          this.agentTeamId = 2;
+          this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
           this.postType = comment.contentType;
+          this.profileId = xyz.post.profile.profile_Id;
+          this.profilePageId = xyz.post.profile.page_Id;
         }
       });
     });
@@ -222,89 +477,91 @@ export class LinkedInComponent implements OnInit {
 
   closeMentionedReply() {
     this.show = false;
-    this.commentId = '';
-    this.agentTeamId = '';
-    this.platform = '';
-    this.postType = '';
+    this.clearInputField();
   }
 
   isAttachment = false;
 
   submitLinkedInCommentReply() {
-    var formData = new FormData();
-    if (this.ImageName != null || undefined) {
-      for (let index = 0; index < this.ImageName.length; index++) {
-        formData.append('File', this.ImageName[index]);
+    if(this.commentId == 0){
+      this.reloadComponent('selectComment');
+    } else {
+      var formData = new FormData();
+      if (this.ImageName != null || undefined) {
+        for (let index = 0; index < this.ImageName.length; index++) {
+          formData.append('File', this.ImageName[index]);
+        }
       }
+      if(this.text !== ""){
+        this.linkedInReplyForm.patchValue({
+          text: this.text
+        })
     }
-
-    this.linkedInReplyForm.patchValue({
-      commentId: this.commentId,
-      teamId: this.agentTeamId,
-      platform: this.platform,
-      contentType: this.postType,
-    });
-
-    formData.append(
-      'CommentReply',
-      JSON.stringify(this.linkedInReplyForm.value)
-    );
-    this.commondata.ReplyComment(formData).subscribe(
-      (res: any) => {
-        this.clearInputField();
-        this.getLinkedInComments();
-        this.getSlaLinkedInComments();
-
-        this.reloadComponent('comment');
-      },
-      ({ error }) => {
-        alert(error.message);
+      this.linkedInReplyForm.patchValue({
+        commentId: this.commentId,
+        teamId: this.agentId,
+        platform: this.platform,
+        contentType: this.postType,
+        profileId: this.profileId,
+        profilePageId: this.profilePageId,
+      });
+  
+      formData.append(
+        'CommentReply',
+        JSON.stringify(this.linkedInReplyForm.value)
+      );
+      if((this.linkedInReplyForm.value.text !== "" && this.linkedInReplyForm.value.text !== null) 
+            || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
+        this.commondata.ReplyComment(formData).subscribe(
+          (res: any) => {
+            this.clearInputField();
+            this.reloadComponent('comment');
+            this.radioInput.nativeElement.checked = false;
+            this.linkedInReplyForm.reset();
+          },
+          ({ error }) => {
+          //  alert(error.message);
+          }
+        );
+      } else {
+        this.reloadComponent('empty-input-field')
       }
-    );
+    }    
+    this.quickReplySearchText = '';
   }
 
   clearInputField() {
-    this.commentReply = '';
     this.show = false;
-    this.commentId = '';
-    this.agentTeamId = '';
+    this.commentId = 0;
+    this.agentId = '';
     this.platform = '';
     this.postType = '';
+    this.fileInput.nativeElement.value = '';
+    this.detectChanges();
   }
 
 
-  toggle(child: string) {
-    if(localStorage.getItem('child') == child){
+  toggle(child: string, cmntId: any) {
+    if (localStorage.getItem('child') == child) {
       this.toggleService.addTogglePanel('');
-    } else{
+    } else {
       this.toggleService.addTogglePanel(child);
     }
 
-    // let routr = this._route.url;
-    // let parent = localStorage.getItem('parent');
-
-    // this.isOpen = !this.isOpen;
-    // if (this.isOpen) {
-    //   this._route.navigateByUrl(
-    //     'all-inboxes/' + '(c1:' + parent + '//c2:' + child + ')'
-    //   );
-
-    //   this.toggleService.addTogglePanel('panelToggled');
-    // } else {
-    //   this._route.navigateByUrl('all-inboxes/' + '(c1:' + parent + ')');
-    //   this.toggleService.addTogglePanel('');
-    // }
+    this.createTicketService.setCommentId(cmntId);
   }
 
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
 
-    this.chatText = abc?.text;
+    this.text = abc?.text + " ";
 
-    this.linkedInReplyForm.patchValue({ text: this.chatText });
+    // this.linkedInReplyForm.patchValue({ text: this.chatText });
+    this.insertAtCaret(this.text)
   }
 
   quickReplyList() {
+    
     this.commondata.QuickReplyList().subscribe((res: any) => {
       this.QuickReplies = res;
     });
@@ -334,9 +591,9 @@ export class LinkedInComponent implements OnInit {
         xyz.keywordList.forEach((abc: any) => {
           this.Keywords.push(abc);
         });
-        console.log('keywords==>', this.Keywords);
+        // console.log('keywords==>', this.Keywords);
       });
-      console.log('TagList', this.TagsList);
+      // console.log('TagList', this.TagsList);
     });
   }
 
@@ -346,42 +603,31 @@ export class LinkedInComponent implements OnInit {
       this.insertTagsForFeedDto.feedId = comId.toString();
       this.insertTagsForFeedDto.tagId = id;
       this.insertTagsForFeedDto.feedType = 'LIC';
+      this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
 
       this.LinkedInData.forEach((abc: any) => {
         abc.comments.forEach((comment: any) => {
           if (comment.id == comId) {
-            if (comment.tags.length > 0) {
-              for (let len = 0; len < comment.tags.length; len++) {
-                comment.tags.forEach((tag: any) => {
-                  if (tag.id == id) {
-                    this.removeTag(id, comId, type);
-                  }
+            if(comment.tags.length == 0){
+              this.commondata.InsertTag(this.insertTagsForFeedDto).subscribe((res: any) => {
+                this.reloadComponent('ApplyTag');
+
+                this.activeTag = true;
+                this.checkTag = true;
+              });
+            }
+            else if(comment.tags.length > 0){
+              const value = comment.tags.find((x:any)=>x.id == id)
+              if(value != null || value != undefined){
+                this.removeTag(id, comId, type);
+              } else {
+                this.commondata.InsertTag(this.insertTagsForFeedDto).subscribe((res: any) => {
+                  this.reloadComponent('ApplyTag');
+
+                  this.activeTag = true;
+                  this.checkTag = true;
                 });
               }
-              this.commondata
-                .InsertTag(this.insertTagsForFeedDto)
-                .subscribe((res: any) => {
-                  this.reloadComponent('ApplyTag');
-                  this.getLinkedInComments();
-                  this.getSlaLinkedInComments();
-
-                  // alert(res.message);
-
-                  this.activeTag = true;
-                  this.checkTag = true;
-                });
-            } else {
-              this.commondata
-                .InsertTag(this.insertTagsForFeedDto)
-                .subscribe((res: any) => {
-                  this.getLinkedInComments();
-                  this.getSlaLinkedInComments();
-                  this.reloadComponent('ApplyTag');
-                  // alert(res.message);
-
-                  this.activeTag = true;
-                  this.checkTag = true;
-                });
             }
           }
         });
@@ -394,14 +640,12 @@ export class LinkedInComponent implements OnInit {
       this.insertTagsForFeedDto.tagId = tagid;
       this.insertTagsForFeedDto.feedId = feedId.toString();
       this.insertTagsForFeedDto.feedType = 'LIC';
+      this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
 
       this.commondata
         .RemoveTag(this.insertTagsForFeedDto)
         .subscribe((res: any) => {
           this.reloadComponent('RemoveTag');
-          this.getLinkedInComments();
-          this.getSlaLinkedInComments();
-          // alert(res.message);
 
           this.activeTag = false;
           this.checkTag = false;
@@ -432,12 +676,11 @@ export class LinkedInComponent implements OnInit {
       this.insertSentimentForFeedDto.feedId = feedId.toString();
       this.insertSentimentForFeedDto.sentiment = sentimenName;
       this.insertSentimentForFeedDto.feedType = 'LIC';
+      this.insertSentimentForFeedDto.userId = Number(localStorage.getItem('agentId'));
 
       this.commondata
         .InsertSentiment(this.insertSentimentForFeedDto)
         .subscribe((res: any) => {
-          this.getLinkedInComments();
-          this.getSlaLinkedInComments();
           this.reloadComponent('Sentiment');
         });
     }
@@ -448,23 +691,43 @@ export class LinkedInComponent implements OnInit {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = 'LinkedIn';
+    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
+    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {
         this.querryCompleted = true;
         this.storeComId = comId;
-        alert(res.message);
-        this.getLinkedInComments();
-        this.getSlaLinkedInComments();
+      });
+  }
+  queryCompleted(comId:any, type:any){
+    
+    this.commentStatusDto.id = comId;
+    this.commentStatusDto.type = type;
+    this.commentStatusDto.plateForm = 'LinkedIn';
+    this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    this.commondata
+      .QueryCompleted(this.commentStatusDto)
+      .subscribe((res: any) => {
+        this.querryCompleted = true;
       });
   }
 
-  likeByAdmin(comId: any, isLiked: boolean) {
+  likeByAdminDto = new LikeByAdminDto();
+
+  likeByAdmin(comId: any, isLiked: boolean,platform:any, profilePageId:any, profileId:any, userId:any) {
+    
     isLiked = !isLiked;
 
-    this.commondata.LikedByAdmin(comId, isLiked).subscribe((res: any) => {
-      this.getLinkedInComments();
-      this.getSlaLinkedInComments();
+    this.likeByAdminDto ={
+      platform : platform,
+      commentId : comId,
+      isLiked : isLiked,
+      profilePageId : profilePageId,
+      profileId : profileId,
+      userFromId : userId
+    }
+    this.commondata.LikedByAdmin(this.likeByAdminDto).subscribe((res: any) => {
       if (isLiked == true) {
         this.reloadComponent('Like');
       }
@@ -485,6 +748,20 @@ export class LinkedInComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
+    if (type == 'empty-input-field') {
+      this.AlterMsg = 'Please write something!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+    if (type == 'selectComment') {
+      this.AlterMsg = 'No comment or message is selected!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'comment') {
       this.AlterMsg = 'Comment Send Successfully!';
       this.toastermessage = true;
@@ -534,6 +811,14 @@ export class LinkedInComponent implements OnInit {
         this.toastermessage = false;
       }, 4000);
     }
+    
+    if (type == 'empty-input-field') {
+      this.AlterMsg = 'Please write something!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
   }
 
   closeToaster() {
@@ -543,5 +828,163 @@ export class LinkedInComponent implements OnInit {
   emojiToggle() {
     // toggleEmojis();
   }
+  Emojies = [
+    { id: 1, emoji: '🙁', tile: 'sad' },
+    { id: 2, emoji: '😀', tile: 'happy' },
+    { id: 3, emoji: '😇', tile: 'bleassed' },
+    { id: 4, emoji: '😊', tile: 'smile' },
+    { id: 5, emoji: '😔', tile: 'ohh' },
+    { id: 6, emoji: '😧', tile: 'worried' },
+    { id: 7, emoji: '👌', tile: 'superb' },
+    { id: 8, emoji: '👍', tile: 'thumbs up' },
+    { id: 9, emoji: '🤩', tile: 'wow' },
+  ]
 
+  @ViewChild('textarea')
+  textarea!: ElementRef;
+  
+  insertAtCaret(text: string) {
+    const textarea = this.textarea.nativeElement;
+    textarea.focus();
+    if (typeof textarea.selectionStart != 'undefined') {
+      const startPos = textarea.selectionStart;
+      const endPos = textarea.selectionEnd;
+      const scrollTop = textarea.scrollTop;
+      textarea.value = textarea.value.substring(0, startPos) + text + textarea.value.substring(endPos, textarea.value.length);
+      textarea.selectionStart = startPos + text.length;
+      textarea.selectionEnd = startPos + text.length;
+      textarea.scrollTop = scrollTop;
+
+      this.detectChanges();
+    }
+  }
+
+  insertEmoji(emoji:any) {
+    this.insertAtCaret(' ' + emoji + ' ');
+  }
+
+  addTags: any;
+  removeTags: any;
+
+  addTagDataListner() {
+    this.LinkedInData.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == this.addTags.feedId) {
+            if (singleCmnt.tags.length == 0) {
+              singleCmnt.tags.push(this.addTags);
+            } else if (singleCmnt.tags.length > 0) {
+              const tag = singleCmnt.tags.find(
+                (x: any) => x.id == this.addTags.feedId
+              );
+              if (tag != null || tag != undefined) {
+                const index = singleCmnt.tags.indexOf(tag);
+                if (index !== -1) {
+                  singleCmnt.tags.splice(index, 1);
+                }
+              } else {
+                singleCmnt.tags.push(this.addTags);
+              }
+            }
+          }
+        });
+      });
+    });
+    this.changeDetect.detectChanges();
+  }
+  removeTagDataListener() {
+    this.LinkedInData.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == this.removeTags.feedId) {
+            var tag = singleCmnt.tags.find(
+              (x: any) => x.id == this.removeTags.tagId
+            );
+            const index = singleCmnt.tags.indexOf(tag);
+            if (index !== -1) {
+              singleCmnt.tags.splice(index, 1);
+            }
+          }
+        });
+      });
+    });
+    this.changeDetect.detectChanges();
+  }
+
+  updateQueryStatusDataListner() {
+    
+    this.LinkedInData.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == this.queryStatus.queryId) {
+            singleCmnt.queryStatus = this.queryStatus.queryStatus
+            singleCmnt.isLikedByAdmin = this.queryStatus.isLikes
+          }
+        });
+      });
+    });
+    this.changeDetect.detectChanges();
+  }
+
+  replyDataListner() {
+    this.LinkedInData.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == this.newReply.commentId) {
+            singleCmnt.replies.push(this.newReply)
+            singleCmnt.queryStatus = this.newReply.queryStatus;
+          }
+        });
+      });
+    });
+    this.changeDetect.detectChanges();
+  }
+
+  onScroll() {
+    if(this.totalUnrespondedCmntCountByCustomer > 10){
+      this.pageSize = this.pageSize + 10
+      this.getLinkedInComments();
+    }
+  }
+
+  updateBulkQueryStatusDataListner() {
+    
+    this.LinkedInData.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          this.queryStatus.forEach((querry:any) => {
+            if (singleCmnt.id == querry.queryId) {
+              singleCmnt.queryStatus = querry.queryStatus;
+              this.totalUnrespondedCmntCountByCustomer = 0;
+            }
+          });
+          
+        });
+      });
+    });
+
+    this.changeDetect.detectChanges();
+  }
+  
+  updateTicketId(res:any){
+    this.LinkedInData.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == res.queryId) {
+            singleCmnt.ticketId = res.ticketId;
+          }
+        });
+      });
+    });
+    this.changeDetect.detectChanges();
+  }
+
+  closeQuickResponseSidebar(){
+    this.quickReplySearchText = '';
+  }
+
+  onScrollComments() {
+    this.pageSize = this.pageSize + 10;
+    this.getLinkedInComments();
+  }
 }

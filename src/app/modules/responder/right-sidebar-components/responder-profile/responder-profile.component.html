@@ -1,0 +1,865 @@
+<nav id="profile-rightbar-social" class="expended-rigth-sidebar open">
+    <div class="right-bar-wrapper">
+        <div class="bodyWrapper position-relative">
+            <div *ngIf="spinner2running">
+                <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                    [fullScreen]="false">
+                    <p style="color: white"> Loading... </p>
+                </ngx-spinner>
+            </div>
+            <header class="tab-header rightbar-tab-header">
+                <nav class="mb-0">
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="user-profile" data-bs-toggle="tab"
+                            data-bs-target="#user-profile-tab" type="button" role="tab" aria-controls="user-profile-tab"
+                            aria-selected="true">
+                            About this Contact
+                        </button>
+                    </div>
+                    <!-- <div class="icons-list">
+                        <div class="searchbar-click">
+                            <form class="searchbox">
+                                <input placeholder="What are you looking for?" name="search" class="searchbox-input"
+                                    required="">
+                                <span class="searchbox-icon medium iconButton iconHover"><i
+                                        class="fa fa-search"></i></span>
+                            </form>
+
+                        </div>
+                    </div> -->
+                </nav>
+            </header>
+            <div class="profile">
+                <div class="tab-content" id="nav-tabContent">
+                    <div id="user-profile-tab" class="tab-pane fade active show" role="tabpanel"
+                        aria-labelledby="user-profile">
+
+                        <div class="about-profile-main">
+                            <form [formGroup]="userDetailForm" (submit)="updateUserInformation()">
+                                <div class="rightbar-scroll-wrap" data-scrollbar="true" tabindex="-1"
+                                    style="overflow-y: auto; outline: none;">
+                                    <div class="scroll-content">
+                                        <div class="about-profile">
+                                            <table class="table">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="card mb-4">
+                                                                <div class="row g-0">
+                                                                    <div class="col-md-2">
+                                                                        <div class="file-input select-user-img"
+                                                                            id="edite-user-img">
+
+                                                                            <ng-container
+                                                                                *ngIf="profileDetails?.fromProfilePic">
+                                                                                <i class="ice img-icon"></i>
+                                                                                <img src={{profileDetails?.fromProfilePic}}
+                                                                                    class="selected-group-img">
+                                                                                <span class="fileSelected d-none">
+                                                                                    <i class="fal fa-pen ice"></i>
+                                                                                </span>
+                                                                            </ng-container>
+                                                                            <ng-container
+                                                                                *ngIf="!profileDetails?.fromProfilePic">
+                                                                                <i
+                                                                                    class="fal fa-camera-alt ice img-icon"></i>
+                                                                                <img src={{profileDetails?.fromProfilePic}}
+                                                                                    class="selected-group-img d-none">
+                                                                                <span class="fileSelected d-none">
+                                                                                    <i class="fal fa-pen ice"></i>
+                                                                                </span>
+                                                                            </ng-container>
+                                                                        </div>
+                                                                        <input class="form-control d-none" type="file"
+                                                                            id="upload-user-img2">
+                                                                    </div>
+                                                                    <div class="col-md-10">
+                                                                        <div class="card-body">
+                                                                            <h5
+                                                                                class="card-title mb-0 darkblue username">
+                                                                                {{profileDetails?.fromName}}</h5>
+                                                                            <div class="dropdown w-auto">
+                                                                                <button
+                                                                                    class="btn charcoal pb-2 ps-0 pt-0"
+                                                                                    id="dropdownMenuButton1"
+                                                                                    data-bs-toggle="dropdown"
+                                                                                    aria-expanded="false">
+                                                                                    Customer
+                                                                                    <small>
+                                                                                        <i
+                                                                                            class="far fa-chevron-down ms-2"></i>
+                                                                                    </small>
+                                                                                </button>
+                                                                                <ul class="dropdown-menu custom-dropdown"
+                                                                                    aria-labelledby="dropdownMenuButton1">
+                                                                                    <li>
+                                                                                        <a class="dropdown-item active p-1"
+                                                                                            href="#"> Customer </a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a class="dropdown-item p-1"
+                                                                                            href="#"> Agent </a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a class="dropdown-item p-1"
+                                                                                            href="#"> Marketing Team
+                                                                                        </a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a class="dropdown-item p-1"
+                                                                                            href="#"> VIPs </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                            <p class="card-text rounded-pill">
+                                                                                <small class="rate-bar">
+                                                                                    <i class="fas fa-star sun"></i>
+                                                                                    <i class="fas fa-star sun"></i>
+                                                                                    <i class="fas fa-star sun"></i>
+                                                                                    <i class="fas fa-star powder"></i>
+                                                                                    <i class="fas fa-star powder"></i>
+                                                                                    3.2 Rated to Agent
+                                                                                </small>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <ul class="list-group center-social-wrapper">
+                                                <li class="list-group-item shadow-lg" aria-disabled="true">
+                                                    <a data-bs-toggle="tooltip"
+                                                        data-bs-placement="top" aria-label="Facekbook">
+                                                        <button type="button" class="iconButton medium btn notification iconHover">
+                                                            <i class="fab fa-facebook"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a data-bs-toggle="tooltip"
+                                                        data-bs-placement="top" aria-label="Whatsapp">
+                                                        <button class="iconButton medium btn notification iconHover" type="button">
+                                                            <i class="fab fa-whatsapp"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a data-bs-toggle="tooltip"
+                                                        data-bs-placement="top" aria-label="Emails">
+                                                        <button class="iconButton medium btn notification iconHover" type="button">
+                                                            <i class="fal fa-envelope coal"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a data-bs-toggle="tooltip"
+                                                        data-bs-placement="top" aria-label="SMS">
+                                                        <button class="iconButton medium btn notification iconHover" type="button">
+                                                            <i class="fal fa-comment-alt-lines coal"></i>
+                                                        </button>
+                                                    </a>
+                                                    <a data-bs-toggle="tooltip"
+                                                        data-bs-placement="top" aria-label="Calls">
+                                                        <button class="iconButton medium btn notification iconHover" type="button">
+                                                            <i class="fal fa-phone-alt coal"></i>
+                                                        </button>
+                                                    </a>
+                                                    <div class="dropdown w-auto social-chancels-dropdown"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top">
+                                                        <button
+                                                            class="iconButton medium notification iconHover social-dropdown"
+                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                            aria-expanded="false" type="button">
+                                                            <i class="fal fa-plus"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu custom-dropdown"
+                                                            aria-labelledby="dropdownMenuButton1">
+                                                            <li class="d-flex">
+                                                                <div class="input-group">
+                                                                    <div class="d-flex mb-1">
+                                                                        <span class="input-group-text"
+                                                                            id="inputFacebook">
+                                                                            <i class="fab fa-facebook-f coal"></i>
+                                                                        </span>
+                                                                        <input class="form-control" id="inputFacebook"
+                                                                            placeholder="facebook.com">
+                                                                    </div>
+                                                                    <div class="second-field d-flex d-none">
+                                                                        <span class="input-group-text"
+                                                                            id="inputFacebook">
+                                                                            <i class="fab fa-facebook-f coal"></i>
+                                                                        </span>
+                                                                        <input class="form-control" id="inputFacebook2"
+                                                                            placeholder="facebook.com">
+                                                                    </div>
+
+                                                                </div>
+                                                                <a id="display_toggle" type="button"
+                                                                    class="iconButton small iconHover mt-1 ms-1"
+                                                                    href="javascript:void(0)">
+                                                                    <i class="fal fa-plus"></i>
+                                                                </a>
+
+                                                            </li>
+
+                                                            <li class="d-flex">
+                                                                <div class="input-group">
+                                                                    <div class="d-flex mb-1">
+                                                                        <span class="input-group-text" id="inputinsta">
+                                                                            <i class="fab fa-instagram coal"></i>
+                                                                        </span>
+                                                                        <input class="form-control" id="inputinsta"
+                                                                            placeholder="instagram.com">
+                                                                    </div>
+                                                                    <div class="second-field d-flex d-none">
+                                                                        <span class="input-group-text" id="inputinsta">
+                                                                            <i class="fab fa-instagram coal"></i>
+                                                                        </span>
+                                                                        <input class="form-control" id="inputinsta2"
+                                                                            placeholder="instagram.com">
+                                                                    </div>
+
+                                                                </div>
+                                                                <a id="display_toggle" type="button"
+                                                                    class="iconButton small iconHover mt-1 ms-1"
+                                                                    href="javascript:void(0)">
+                                                                    <i class="fal fa-plus"></i>
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="d-flex">
+                                                                <div class="input-group">
+                                                                    <div class="d-flex mb-1">
+                                                                        <span class="input-group-text"
+                                                                            id="inputwhatsapp">
+                                                                            <i class="fab fa-whatsapp coal"></i>
+                                                                        </span>
+                                                                        <input class="form-control" id="inputwhatsapp"
+                                                                            placeholder="whatsapp.com">
+                                                                    </div>
+                                                                    <div class="second-field d-flex d-none">
+                                                                        <span class="input-group-text"
+                                                                            id="inputwhatsapp">
+                                                                            <i class="fab fa-whatsapp coal"></i>
+                                                                        </span>
+                                                                        <input class="form-control" id="inputwhatsapp2"
+                                                                            placeholder="whatsapp.com">
+                                                                    </div>
+
+                                                                </div>
+                                                                <a id="display_toggle" type="button"
+                                                                    class="iconButton small iconHover mt-1 ms-1"
+                                                                    href="javascript:void(0)">
+                                                                    <i class="fal fa-plus"></i>
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="d-flex">
+                                                                <div class="input-group">
+                                                                    <div class="d-flex mb-1">
+                                                                        <span class="input-group-text"
+                                                                            id="inputtwitter">
+                                                                            <i class="fab fa-twitter coal"></i>
+                                                                        </span>
+                                                                        <input class="form-control" id="inputtwitter"
+                                                                            placeholder="twitter.com">
+                                                                    </div>
+                                                                    <div class="second-field d-flex d-none">
+                                                                        <span class="input-group-text"
+                                                                            id="inputtwitter">
+                                                                            <i class="fab fa-twitter coal"></i>
+                                                                        </span>
+                                                                        <input class="form-control" id="inputtwitter2"
+                                                                            placeholder="twitter.com">
+                                                                    </div>
+
+                                                                </div>
+                                                                <a id="display_toggle" type="button"
+                                                                    class="iconButton small iconHover mt-1 ms-1"
+                                                                    href="javascript:void(0)">
+                                                                    <i class="fal fa-plus"></i>
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="d-flex">
+                                                                <div class="input-group">
+                                                                    <div class="d-flex mb-1">
+                                                                        <span class="input-group-text"
+                                                                            id="inputyoutube">
+                                                                            <i class="fab fa-youtube coal"></i>
+                                                                        </span>
+                                                                        <input class="form-control" id="inputyoutube"
+                                                                            placeholder="youtube.com">
+                                                                    </div>
+                                                                    <div class="second-field d-flex d-none">
+                                                                        <span class="input-group-text"
+                                                                            id="inputyoutube">
+                                                                            <i class="fab fa-youtube coal"></i>
+                                                                        </span>
+                                                                        <input class="form-control" id="inputyoutube2"
+                                                                            placeholder="youtube.com">
+                                                                    </div>
+
+                                                                </div>
+                                                                <a id="display_toggle" type="button"
+                                                                    class="iconButton small iconHover mt-1 ms-1"
+                                                                    href="javascript:void(0)">
+                                                                    <i class="fal fa-plus"></i>
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="d-flex">
+                                                                <div class="input-group">
+                                                                    <div class="d-flex mb-1">
+                                                                        <span class="input-group-text" id="inputemail">
+                                                                            <i class="fal fa-envelope coal"></i>
+                                                                        </span>
+                                                                        <input class="form-control" id="inputemail"
+                                                                            placeholder="email">
+                                                                    </div>
+                                                                    <div class="second-field d-flex d-none">
+                                                                        <span class="input-group-text" id="inputemail">
+                                                                            <i class="fal fa-envelope coal"></i>
+                                                                        </span>
+                                                                        <input class="form-control" id="inputemail"
+                                                                            placeholder="email">
+                                                                    </div>
+
+                                                                </div>
+                                                                <a id="display_toggle" type="button"
+                                                                    class="iconButton small iconHover mt-1 ms-1"
+                                                                    href="javascript:void(0)">
+                                                                    <i class="fal fa-plus"></i>
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="d-flex">
+                                                                <div class="input-group">
+                                                                    <div class="d-flex mb-1">
+                                                                        <span class="input-group-text" id="v">
+                                                                            <i
+                                                                                class="fal fa-comment-alt-lines coal"></i>
+                                                                        </span>
+                                                                        <input class="form-control" id="inputsms"
+                                                                            placeholder="sms">
+                                                                    </div>
+                                                                    <div class="second-field d-flex d-none">
+                                                                        <span class="input-group-text" id="v">
+                                                                            <i
+                                                                                class="fal fa-comment-alt-lines coal"></i>
+                                                                        </span>
+                                                                        <input class="form-control" id="inputsms"
+                                                                            placeholder="sms">
+                                                                    </div>
+
+                                                                </div>
+                                                                <a id="display_toggle" type="button"
+                                                                    class="iconButton small iconHover mt-1 ms-1"
+                                                                    href="javascript:void(0)">
+                                                                    <i class="fal fa-plus"></i>
+                                                                </a>
+
+                                                            </li>
+                                                            <div class="text-center">
+                                                                <button type="button"
+                                                                    class="btn btn-success">Save</button>
+                                                            </div>
+
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="profile-form mt-5 me-3 pb-4 px-3">
+                                                <h6 class="silver mt-3">Personal</h6>
+
+                                                <div >
+                                                    <ng-container >
+                                                        <div class="row mb-3">
+                                                            <label for="inputName" class="col-sm-3 col-form-label">Full
+                                                                Name
+                                                            </label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" id="inputName"
+                                                                    formControlName="fromName"
+                                                                    value={{profileDetails.fromName}}>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="inputOrganization"
+                                                                class="col-sm-3 col-form-label">Organization </label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" id="inputOrganization"
+                                                                    formControlName="organization"
+                                                                    value={{profileDetails.customerDetails[0]?.organization}}>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="inputRole"
+                                                                class="col-sm-3 col-form-label">Role</label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" id="inputRole"
+                                                                    formControlName="role"
+                                                                    value={{profileDetails.customerDetails[0]?.role}}>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="inputEmail" class="col-sm-3 col-form-label">
+                                                                Email</label>
+                                                            <div class="col-sm-9">
+                                                                <input type="email" class="form-control" id="inputEmail"
+                                                                    formControlName="email"
+                                                                    value={{profileDetails.customerDetails[0]?.email}}>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="inputMobile" class="col-sm-3 col-form-label">
+                                                                Mobile</label>
+                                                            <div class="col-sm-9">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text" id="inputMobile">
+                                                                        <img class="me-1"
+                                                                            src="../../../../../assets/images/pakistanflag.svg"
+                                                                            alt="..." style="width:15px;">
+                                                                        +92
+                                                                        <i class="fas fa-sort-down coal ms-1"></i>
+                                                                    </span>
+                                                                    <input type="text" class="form-control"
+                                                                        id="inputMobile" formControlName="phoneNumber"
+                                                                        value={{profileDetails.customerDetails[0]?.phoneNumber}}>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="inputAddress" class="col-sm-3 col-form-label">
+                                                                Address</label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" id="inputAddress"
+                                                                    formControlName="address"
+                                                                    value={{profileDetails.customerDetails[0]?.address}}>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="inputAddress"
+                                                                class="col-sm-3 col-form-label">City</label>
+                                                            <div class="col-sm-9 country-dropdown">
+                                                                
+                                                                    <select class="form-select" id="floatingSelect" formControlName="city" aria-label="Floating label select">
+                                                                    <option>Choose the City</option>
+                                                                    <option value="Abbottabad">Abbottabad</option>
+                                                                    <option value="Chakwal">Chakwal</option>
+                                                                    <option value="DG Khan">DG Khan</option>
+                                                                    <option value="Faisalabad">Faisalabad</option>
+                                                                    <option value="Gujranwala">Gujranwala</option>
+                                                                    <option value="Gujrat">Gujrat</option>
+                                                                    <option value="Hyderabad">Hyderabad</option>
+                                                                    <option value="Islamabad">Islamabad</option>
+                                                                    <option value="Karachi" selected=""
+                                                                        data-select2-id="select2-data-15-vmnr">Karachi
+                                                                    </option>
+                                                                    <option value="Lahore">Lahore</option>
+                                                                    <option value="Mardan">Mardan</option>
+                                                                    <option value="Mirpur AJK">Mirpur AJK</option>
+                                                                    <option value="Multan">Multan</option>
+                                                                    <option value="Peshawer">Peshawer</option>
+                                                                    <option value="Quetta">Quetta</option>
+                                                                    <option value="Rahim Yar Khan">Rahim Yar Khan
+                                                                    </option>
+                                                                    <option value="Rawalpindi">Rawalpindi</option>
+                                                                    <option value="Sahiwal">Sahiwal</option>
+                                                                    <option value="Sargodha">Sargodha</option>
+                                                                    <option value="Sialkot">Sialkot</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="inputAddress"
+                                                                class="col-sm-3 col-form-label">Country</label>
+                                                            <div class="col-sm-9 country-dropdown">
+                                                                <select class="form-select" id="floatingSelect" formControlName="country" aria-label="Floating label select">
+                                                                    <option>Choose the Country</option>
+                                                                    <option value="Pakistan" selected=""
+                                                                        data-select2-id="select2-data-18-o0ph">Pakistan
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+                                                </div>
+                                                <!-- {{userDetailForm.controls['customerSecondaryProfiles'].value}} -->
+                                                <h6 class="silver mt-5 mb-3">Channels</h6>
+                                                <div >
+                                                    <div class="row mb-3">
+                                                        <label for="inputFacebook"
+                                                            class="col-sm-3 col-form-label">Facebook
+                                                        </label>
+                                                        <div class="col-sm-9">
+                                                            <div class="input-group">
+                                                                <span class="input-group-text"
+                                                                    id="inputFacebook">facebook.com</span>
+                                                                <input class="form-control" id="inputFacebook"
+                                                                    type="text" formControlName="fbUniqueId"
+                                                                    value={{fbUniqueId}}>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label for="inputInstagram"
+                                                            class="col-sm-3 col-form-label">Instagram</label>
+                                                        <div class="col-sm-9">
+                                                            <div class="input-group">
+                                                                <span class="input-group-text"
+                                                                    id="inputInstagram">instagram.com</span>
+                                                                <input class="form-control" id="inputInstagram"
+                                                                formControlName="instaUniqueId" value={{instaUniqueId}}>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label for="inputTwitter" class="col-sm-3 col-form-label">
+                                                            Twitter
+                                                        </label>
+                                                        <div class="col-sm-9">
+                                                            <div class="input-group">
+                                                                <span class="input-group-text"
+                                                                    id="inputTwitter">@</span>
+                                                                <input class="form-control" id="inputTwitter"
+                                                                    formControlName="twitterUniqueId"
+                                                                    value={{twitterUniqueId}}>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label for="inputYoutube" class="col-sm-3 col-form-label">
+                                                            Youtube
+                                                        </label>
+                                                        <div class="col-sm-9">
+                                                            <input class="form-control" id="inputYoutube"
+                                                                formControlName="youtubeUniqueId"
+                                                                value={{youtubeUniqueId}}>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label for="inputWhatsapp"
+                                                            class="col-sm-3 col-form-label">WhatsApp
+                                                        </label>
+                                                        <div class="col-sm-9">
+                                                            <input class="form-control" id="inputWhatsapp"
+                                                                formControlName="whatsappUniqueId" value={{whatsappUniqueId}}>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label for="inputSMS"
+                                                            class="col-sm-3 col-form-label">SMS</label>
+                                                        <div class="col-sm-9">
+                                                            <input class="form-control" id="inputSMS"
+                                                                formControlName="smsUniqueId" value={{smsUniqueId}}>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label for="inputEmail2"
+                                                            class="col-sm-3 col-form-label">Email</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control" id="inputEmail2"
+                                                                formControlName="emailUniqueId" value={{emailUniqueId}}>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label for="inputEmail2"
+                                                            class="col-sm-3 col-form-label">LinkedIn</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control" id="LinkedIn"
+                                                                formControlName="linkedinUniqueId" value={{linkedinUniqueId}}>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label for="inputEmail2"
+                                                            class="col-sm-3 col-form-label">WebChat</label>
+                                                        <div class="col-sm-9">
+                                                            <input type="text" class="form-control" id="WebChat"
+                                                                formControlName="webchatUniqueId" value={{webchatUniqueId}}>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <h6 class="silver mt-5 mb-3">Other</h6>
+                                                <div >
+                                                <ng-container >
+                                                <div class="row mb-3">
+                                                    <label for="inputFatherName" class="col-sm-3 col-form-label">Father
+                                                        Name </label>
+                                                    <div class="col-sm-9">
+                                                        <input class="form-control" id="inputFatherName" formControlName="fatherName"
+                                                            value={{profileDetails.customerDetails[0]?.fatherName}}>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <label for="inputEducation"
+                                                        class="col-sm-3 col-form-label">Education </label>
+                                                    <div class="col-sm-9">
+                                                        <input class="form-control" id="inputEducation" formControlName="education"
+                                                            value={{profileDetails.customerDetails[0]?.education}}>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <label for="inputBloodGroup" class="col-sm-3 col-form-label">Blood
+                                                        Group</label>
+                                                    <div class="col-sm-9">
+                                                        <input class="form-control" id="inputBloodGroup" formControlName="bloodGroup"
+                                                         value={{profileDetails.customerDetails[0]?.bloodGroup}}>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div for="inputBloodGroup" class="col-sm-3 col-form-label">
+                                                        <a href="#" class="btn iconButton add-more-field">
+                                                            <i class="fal fa-plus me-1"></i>
+                                                            Add More
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-sm-9 select-type-field d-none">
+                                                        <select class="select-type select2-hidden-accessible"
+                                                            name="time-from" data-select2-id="select2-data-28-cxcr"
+                                                            tabindex="-1" aria-hidden="true">
+                                                            <option data-select2-id="select2-data-30-xavu"></option>
+                                                            <option>CNIC</option>
+                                                            <option>Phone</option>
+                                                            <option>Customer ID</option>
+                                                        </select><span
+                                                            class="select2 select2-container select2-container--default"
+                                                            dir="ltr" data-select2-id="select2-data-29-apez"
+                                                            style="width: auto;"><span class="selection"><span
+                                                                    class="select2-selection select2-selection--single"
+                                                                    role="combobox" aria-haspopup="true"
+                                                                    aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-time-from-8g-container"
+                                                                    aria-controls="select2-time-from-8g-container"><span
+                                                                        class="select2-selection__rendered"
+                                                                        id="select2-time-from-8g-container"
+                                                                        role="textbox" aria-readonly="true"
+                                                                        title="Select type"><span
+                                                                            class="select2-selection__placeholder">Select
+                                                                            type</span></span><span
+                                                                        class="select2-selection__arrow"
+                                                                        role="presentation"><b
+                                                                            role="presentation"></b></span></span></span><span
+                                                                class="dropdown-wrapper"
+                                                                aria-hidden="true"></span></span>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <footer class="footer">
+                                    <div class="ps-3 pe-3">
+                                        <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+                                            <div class="row w-100">
+                                                <div class="col-md-4"></div>
+                                                <div class="col-md-8 justify-content-end d-flex">
+                                                    <div class="buttons-wrap d-flex">
+                                                        <button type="button" (click)="closeProfileComponent('profile')"
+                                        class="btn btn-outline-secondary">Cancel</button>
+                                                        <button type="submit" class="btn btn-success ms-2"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#profileSaveModal">Save</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </footer>
+                            </form>
+                        </div>
+                        <div class="megre-contacts">
+                            <header class="tab-header rightbar-tab-header">
+                                <nav class="mb-0">
+                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                        <button class="nav-link active d-flex align-items-center" id="user-profile"
+                                            data-bs-toggle="tab" data-bs-target="#user-profile-tab" type="button"
+                                            role="tab" aria-controls="user-profile-tab" aria-selected="true">
+                                            <i class="far fa-arrow-left coal me-2 mb-0 m-0 breadcrumb"></i>
+                                            Merge Contacts
+                                        </button>
+                                    </div>
+                                </nav>
+                            </header>
+                            <div class="rightbar-body-wrapper profile" data-scrollbar="true" tabindex="-1"
+                                style="overflow: hidden; outline: none;">
+                                <div class="scroll-content">
+                                    <div class="tab-content" id="nav-tabContent">
+                                        <div id="user-profile-tab" class="tab-pane fade active show" role="tabpanel"
+                                            aria-labelledby="user-profile">
+                                            <table class="table">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="p-3">
+                                                            <div class="card">
+                                                                <div class="row g-0">
+                                                                    <div class="col-md-2">
+                                                                        <div class="file-input select-user-img skyBg">
+                                                                            <i class="fal fa-user"></i>
+                                                                            <img src="../images/avatar-2.jpg" alt="-"
+                                                                                class="selected-group-img d-none">
+                                                                            <span class="fileSelected d-none">
+                                                                                <i class="fal fa-pen ice"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                        <input class="form-control d-none" type="file"
+                                                                            id="upload-user-img">
+                                                                    </div>
+                                                                    <div class="col-md-10">
+                                                                        <div class="card-body">
+                                                                            <h5
+                                                                                class="card-title mb-0 darkblue username">
+                                                                                AE7884747 </h5>
+                                                                            <div class="dropdown w-auto"
+                                                                                data-bs-toggle="tooltip"
+                                                                                data-bs-placement="top">
+                                                                                <button
+                                                                                    class="btn charcoal pb-2 ps-0 pt-0"
+                                                                                    id="dropdownMenuButton1"
+                                                                                    data-bs-toggle="dropdown"
+                                                                                    aria-expanded="false">
+                                                                                    Customer
+                                                                                    <small>
+                                                                                        <i
+                                                                                            class="far fa-chevron-down ms-2"></i>
+                                                                                    </small>
+                                                                                </button>
+                                                                                <ul class="dropdown-menu custom-dropdown"
+                                                                                    aria-labelledby="dropdownMenuButton1">
+                                                                                    <li>
+                                                                                        <a class="dropdown-item active p-1"
+                                                                                            href="#"> Customer </a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a class="dropdown-item p-1"
+                                                                                            href="#"> Agent </a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a class="dropdown-item p-1"
+                                                                                            href="#"> Marketing Team
+                                                                                        </a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a class="dropdown-item p-1"
+                                                                                            href="#"> VIPs </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="merge-search-sec m-4 mt-5 pb-4">
+                                                <select class="merge-search-field select2-hidden-accessible"
+                                                    name="time-from" data-select2-id="select2-data-25-ovw2"
+                                                    tabindex="-1" aria-hidden="true">
+                                                    <option></option>
+                                                    <option selected="" value="Amin Khan"
+                                                        data-select2-id="select2-data-27-48wq">Amin Khan</option>
+                                                    <option value="Aniqa Khan">Aniqa Khan</option>
+                                                    <option value="Bilal Ali">Bilal Ali</option>
+                                                    <option value="Jawad Khan">Jawad Khan</option>
+                                                    <option value="Sana Khan">Sana Khan</option>
+                                                    <option value="Tabish Ali">Tabish Ali</option>
+                                                    <option value="Talha Iqbal">Talha Iqbal</option>
+                                                    <option value="Umair Khan">Umair Khan</option>
+                                                    <option value="Uroosa Ahmed">Uroosa Ahmed</option>
+                                                    <option value="Zara Khan">Zara Khan</option>
+                                                </select><span
+                                                    class="select2 select2-container select2-container--default"
+                                                    dir="ltr" data-select2-id="select2-data-26-6gx5"
+                                                    style="width: auto;"><span class="selection"><span
+                                                            class="select2-selection select2-selection--single"
+                                                            role="combobox" aria-haspopup="true" aria-expanded="false"
+                                                            tabindex="0" aria-disabled="false"
+                                                            aria-labelledby="select2-time-from-2s-container"
+                                                            aria-controls="select2-time-from-2s-container"><span
+                                                                class="select2-selection__rendered"
+                                                                id="select2-time-from-2s-container" role="textbox"
+                                                                aria-readonly="true" title="Amin Khan">Amin
+                                                                Khan</span><span class="select2-selection__arrow"
+                                                                role="presentation"><b
+                                                                    role="presentation"></b></span></span></span><span
+                                                        class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                                <span class="btn searchbar-btn" type="submit">
+                                                    <i class="fal fa-search silver"></i>
+                                                </span>
+
+                                                <div class="merge-user-info">
+                                                    <div class="card w-100">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title night merge-user">
+                                                                AE7884747 will be Merged into
+                                                                <input class="form-control print-user-name" disabled=""
+                                                                    id="exampleInputEmail1" value="Amin Khan">
+                                                            </h5>
+                                                        </div>
+                                                        <div class="card-footer">
+                                                            <ol>
+                                                                <li>Timeline activity for both contact records will be
+                                                                    preserved in the new record</li>
+                                                                <li>The most recent value for each property (e.g.,
+                                                                    "Frist name") will be used for the new record</li>
+                                                            </ol>
+                                                            <p class="fw-bold m-0">Read more: <a href="javascript;;"
+                                                                    class="sky text-decoration-underline"> What happens
+                                                                    when i merge tow contacts?</a>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <footer class="footer">
+                                                <div class="ps-3 pe-3">
+                                                    <div
+                                                        class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+                                                        <div class="row w-100">
+                                                            <div class="col-md-6 radical">
+                                                                <i class="fal fa-exclamation-circle radical"></i>
+                                                                This action can't be undone
+                                                            </div>
+                                                            <div class="col-md-6 justify-content-end d-flex">
+                                                                <div class="buttons-wrap d-flex">
+                                                                    <button type="button"
+                                                                        class="btn btn-success">Merge</button>
+                                                                    <button type="button"
+                                                                        class="btn btn-outline-secondary ms-2">Cancel</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </footer>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+            <div class="toast-btn d-flex align-items-center">
+
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
+
+            </div>
+        </div>
+    </div>
+</div>

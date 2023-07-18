@@ -3,6 +3,6 @@ export class InsertTagsForFeedDto{
   feedType: string="";
   tagId: number=0;
   tagIds: string="";
-  companyId: number=2;
-  userId:number=2;
+  companyId: number=0;
+  userId:number=0;
 }

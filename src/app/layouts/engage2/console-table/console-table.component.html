@@ -1,33 +1,72 @@
+
+<!-- <ng-container *ngIf="vm$ | async as vm"> -->
 <div class="table-section table-scrool-y mb-3 query-container h-100 table-white">
-    <table class="table align-middle">
+    <ng-template [ngIf]="filter?.template?.toolbar=='top'">
+        <!-- (onNext)="onNextPage" (onPrevious)="onPreviousPage" -->
+        <!-- <console-table-toolbar  ></console-table-toolbar> -->
+        <console-table-pagination 
+            [length]="pagingLength$"
+            [pageSize]="pagingSize$"
+            [pageSizeOptions]="pagingSizeOptions$"
+            (page)="paginator($event)"
+            (searchPageEvent)="seracher($event)"
+        >
+        </console-table-pagination>
+    </ng-template>
+    
+    <table class="table align-middle" width="100%">
         <thead>
             <tr>
-                <!-- <th>
-                    <div class="filter-container checkbox-reset">
-                        <ul class="list-group list-group-horizontal border-0">
-                            <li class="list-group-item border-0 all-check-boxes">
-                                <input class="form-check-input me-1" type="checkbox" aria-label="..."
-                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                    data-bs-original-title="Check All">
-                            </li>
-                        </ul>
-                    </div>
-                </th> -->
-                <th *ngFor="let head of header">
-                    {{head}}
-                </th>
+                <th *ngFor="let header of $any(filter).headers | consoleTableVisibility ">
+                    <ng-template [ngIf]="header?.type=='check'" [ngIfElse]="showName">
+                        <div class="filter-container checkbox-reset">
+                            <ul class="list-group list-group-horizontal border-0">
+                                <li class="list-group-item border-0 all-check-boxes">
+                                    <input class="form-check-input me-1" type="checkbox" aria-label="..."
+                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                        data-bs-original-title="Check All">
+                                </li>
+                            </ul> 
+                        </div>
+                    </ng-template>
+                    <ng-template #showName>
+                        {{header?.name}}
+                    </ng-template>
+                </th>    
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let tm of data">
-                <!-- <td>
-                    <input class="form-check-input me-1" type="checkbox" aria-label="...">
-                </td> -->
-                <td><console-table-with-image [name]="tm.fullName" [subname]="tm.email" [imagename]="''"></console-table-with-image></td>
-                <td><console-table-wrap [wrapdata]="tm.roleId" [wrapflow]="2"></console-table-wrap></td>
-                <td><console-table-wrap [wrapdata]="tm.teamId" [wrapflow]="2"></console-table-wrap></td>
-                <td><console-table-action-list (procedure)="procedure($event)" [actions]="TableAction" [data]="tm"></console-table-action-list></td>
+            <tr *ngFor="let row of data">
+                <td *ngFor="let column of $any(filter).headers | consoleTableVisibility" >
+                    <ng-template [ngIf]="column.type=='display'">
+                        {{row['name']}}
+                    </ng-template>
+                    <ng-template [ngIf]="column.type=='check'">
+                        <input type="checkbox" class="form-check-input me-1" aria-label="..." [(ngModel)]="row['id']">
+                    </ng-template>
+                    <ng-template [ngIf]="column.type=='icondisplay'">
+                        <div class="d-flex align-items-center darkblue">
+                            <i class="fal fa-users coal me-2"></i>{{ row[column.index] }}                        </div>
+                    </ng-template>
+                    <ng-template [ngIf]="column.type=='with-image'">
+                        <console-table-with-image [columns]="column.index" [data]="row"></console-table-with-image>
+                    </ng-template>
+                    <ng-template [ngIf]="column.type=='wrap'">
+                        <console-table-wrap  [wrapdata]="row[column.index]" [wrapflow]="column.group" [wrapindex]="column.wrap"></console-table-wrap>
+                    </ng-template>
+                    <ng-template [ngIf]="column.type=='action-list'">
+                        <console-table-action-list (procedure)="procedure($event)" [actions]="column.actions" [data]="row"></console-table-action-list>
+                    </ng-template>
+                    
+                </td> 
             </tr>
         </tbody>
     </table>
+    <!-- <ng-template [ngIf]="filter.template.toolbar=='top'">
+        <console-table-toolbar ></console-table-toolbar>
+    </ng-template>     -->
 </div>
+<ng-template >
+    <overlay-right-panel [header]="'Add Team Members'" [isActive]="OverLayIsActive" [search]="true"></overlay-right-panel>
+</ng-template>
+<!-- </ng-container> -->

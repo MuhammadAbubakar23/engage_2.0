@@ -1,6 +1,7 @@
-import { createReducer, on } from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
 import { never } from 'rxjs';
-import { loadMenusList, loadMenusListFail, loadMenusListSuccess } from './menu.actions';
+import { loadMenusList, loadMenusListFail, loadMenusListSuccess, updateMenusList, updateMenusListFail, updateMenusListSuccess } from './menu.actions';
+import { MenuModel } from './menu.model';
 import { initialMenuState, MenuState } from './menu.state';
 
 const _menuReducer = createReducer(
@@ -19,6 +20,18 @@ const _menuReducer = createReducer(
   }),
   on(loadMenusListSuccess, (state, action): MenuState => 
   {
+    if(state.menus.length > 0){
+      action.menus.forEach(function (menu:MenuModel) {
+        state.menus.push(menu);
+        
+      })
+    }
+    // console.log("LoadMenu State Starts");
+    // //ages.filter()
+    // console.log(action.menus);
+    // console.log(state.menus.length)
+    // console.log(...state.menus);    
+    // console.log("LoadMenu State Ends");
     return {
       ...state,
       menus: action.menus,
@@ -29,13 +42,34 @@ const _menuReducer = createReducer(
   on(loadMenusListFail, (state, action): MenuState => {
     return {
       ...state,
-      menus: [],
+    //  menus: [],
       loading:false,
       error: action.error
     }
-  })
+  }),
+
+
+  on(updateMenusList, (state): MenuState => ({  ...state, loading: true })),
+  on(updateMenusListSuccess, (state, action): MenuState => {
+    
+    //let AllAct$ = [...state.menus, ...action.menus];    
+    let AllAct$ = [...state.menus, ...action.menus].filter((value, index, self) =>
+      index === self.findIndex((t) => (
+        t.mainId === value.mainId && t.name === value.name
+      ))
+    )
+    return {
+      ...state,
+      menus: AllAct$, //[...state.menus, ...action.menus],
+      loading: true,
+      error: null,
+    };
+  }),
+  on(updateMenusListFail, (state, action) => ({ ...state, loading: false, error: action.error }))
+
+
 );
-export function menuReducer(state: any, action: any) {
+export function menuReducer(state: MenuState | undefined, action: Action) {
   return _menuReducer(state, action);
 }
 

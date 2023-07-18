@@ -41,6 +41,7 @@ export class FetchIdService {
   setOption(authorId:any){
        
     this.id = authorId;
+    this.sendAutoAssignedId(authorId);
     
   }
   getOption(){
@@ -49,13 +50,14 @@ export class FetchIdService {
   }
 
   public sendAutoAssignedId(userId:any) : void{
-    debugger
+    
     this.autoAssignedId.next(userId);
     
   }
   public getAutoAssignedId(): Observable<any>{
-      
+    
     return this.autoAssignedId.asObservable();
+
   }
 
   setIds(authorId:any, userId:any, conversationType:any){

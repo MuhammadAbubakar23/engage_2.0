@@ -1,22 +1,23 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { BROWSER_SESSION_STORAGE } from './storage-type';
 
 @Injectable({
   providedIn: 'any'
 })
 export class SessionStorageService {
 
-  constructor() { }
+  constructor(@Inject(BROWSER_SESSION_STORAGE) public storage: Storage) {}
 
   set(key: string, value: string) {
-    sessionStorage.setItem(key, value);
+    this.storage.setItem(key, value);
   }
   get(key: string) : string | null {
-      return sessionStorage.getItem(key);
+      return this.storage.getItem(key);
   }
   remove(key: string) {
-    sessionStorage.removeItem(key);
+    this.storage.removeItem(key);
   }
   clean(){
-    sessionStorage.clear();
+    this.storage.clear();
   }
 }

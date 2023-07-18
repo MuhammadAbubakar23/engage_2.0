@@ -6,10 +6,19 @@ import { MenuState } from './menu.state';
 export const LOAD_MENU_LIST = '[menu list] load menus';
 export const LOAD_MENU_LIST_SUCCESS = '[menu list] load menus success';
 export const LOAD_MENU_LIST_FAIL = '[menu list] load menus fail';
+export const UPDATE_MENU_LIST = '[menu list] update menus';
+export const UPDATE_MENU_LIST_SUCCESS = '[menu list] update menus success';
+export const UPDATE_MENU_LIST_FAIL = '[menu list] update menus fail';
+
+
 
 export const loadMenusList = createAction(LOAD_MENU_LIST);
 export const loadMenusListSuccess = createAction(LOAD_MENU_LIST_SUCCESS, props<{ menus: MenuModel[] }>());
-export const loadMenusListFail = createAction(LOAD_MENU_LIST_FAIL, props<{ error: string }>());
+export const loadMenusListFail = createAction(LOAD_MENU_LIST_FAIL, props<{ error: string | null }>());
+
+export const updateMenusList = createAction(UPDATE_MENU_LIST);
+export const updateMenusListSuccess = createAction(UPDATE_MENU_LIST_SUCCESS, props<{ menus: MenuModel[] }>());
+export const updateMenusListFail = createAction(UPDATE_MENU_LIST_FAIL, props<{ error: string | null }>());
 
 // export const MenuActionType = {
 //   GET_MENU_LIST: "[Menu] Get Menu List",

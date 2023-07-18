@@ -1,15 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { RightNavService } from 'src/app/services/RightNavService/RightNav.service';
-import { Tooltip } from 'bootstrap';
-import { MenuDto } from 'src/app/shared/Models/MenuDto';
-import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-import { MenuState } from '../../menu-state/menu.state';
 import { Store } from '@ngrx/store';
-import { getEmargingEqual, getMenusLoading } from '../../menu-state/menu.selectors';
-import { loadMenusList } from '../../menu-state/menu.actions';
+import { MenuState } from '../../menu-state/menu.state';
+import { getEmargingEqual, getInSubEmarging } from '../../menu-state/menu.selectors';
+import { Router,Event, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'inbox-right-sidebar',
@@ -18,92 +14,93 @@ import { loadMenusList } from '../../menu-state/menu.actions';
 })
 
 export class InboxRightSidebarComponent implements OnInit {
-
+  public keyword:string = "inbox";
   public subscription!: Subscription;
   public subscription2!: Subscription;
   public dynamicPath : string="";
   public dynamicChildPath : string="";
 
-  //menuDto = new MenuDto();
+  //MenuModel = new MenuModel();
   //menus$ :any[] = [];
   @Output("toggleRightPanel") toggleRightPanelParent: EventEmitter<any> = new EventEmitter();
   menus$ :any = [];
   menu$ :any;
   loading$: any;
   constructor(private store: Store<MenuState>,
-    private sharedService : SharedService,
     private toggleService : ToggleService,
-    private rightNavService : RightNavService) { 
-      this.menu$ = this.store.select(getEmargingEqual("team_inbox_right_menu"));
-      this.loading$ = this.store.select(getMenusLoading)
-      this.store.dispatch(loadMenusList())
+    private rightNavService : RightNavService,
+    private router: Router) {    
+      let _self = this;      
+      router.events.subscribe((event: Event) => {
+        if (event instanceof NavigationEnd) {          
+            console.log(event.url.toString());
+            if(event.url.toString().toLowerCase().includes(this.keyword)){
+              this.keyword = "inbox";
+            }
+            else{
+              this.keyword = "responder";
+            }            
+        }
+      });
+
     }
 
   ngOnInit(): void {
-    this.menu$ = this.store.select(getEmargingEqual("team_inbox_right_menu")).subscribe((item:any) => {
+    this.menus$ =[];
+    this.menu$ = this.store.select(getInSubEmarging(this.keyword, "right_menu")).subscribe((item:any) => {
       for(let key in item) {
-        console.log(item)
         let obj = {
-          mainId : item[key].mainId,
+          emerging: item[key].emerging,
+          mainId: item[key].mainId,
+          baseId: item[key].baseId,
+          icon: item[key].icon,
           name: item[key].name,
-          emerging:item[key].emerging,
-          slug:item[key].slug,
-          link:item[key].link,
-          parentId:item[key].parentId,
-          baseId:item[key].baseId,
-          icon:item[key].icon,
-          indexNo:item[key].indexNo
+          slug: item[key].slug,
+          link: item[key].link,
+          indexNo: item[key].indexNo
         };
         Object.assign(obj, {dival: item[key].slug+"-rightbar-dashboard"});
-        this.menus$.push(obj);
-      }
-      
+          if(!this.menus$.includes(obj))
+            this.menus$.push(obj);
+        }
       // this.menus$ = item;
-    })
+    });
     console.log(this.menus$);
     // Array.from(document.querySelectorAll('[data-bs-toggle]'))
-    // .forEach(tooltipNode => new Tooltip(tooltipNode));
+    // .forEach(tooltipNode => new Tooltip(tooltipNode))
+    // this.getRightMenu();
 
-   // this.getRightMenu();
-    
-   let parent = localStorage.getItem("parent");
-   if(parent != "undefined")
-   {
-       this.subscription = this.sharedService.getMessage().subscribe(msg => { 
-          this.dynamicPath = msg;
-       });
-   }
+    let parent = localStorage.getItem("parent");
 
-    this.subscription2 = this.rightNavService.getChildComponent().subscribe(msg2 => { 
-    
-      
-    this.dynamicChildPath = msg2;
+    this.subscription2 = this.rightNavService.getChildComponent().subscribe(msg2 => {
+      this.dynamicChildPath = msg2;
     });
   }
 
   isOpen = false;
-  
+
   // getRightMenu(){
-    
-  //   this.menuDto = {
+
+  //   this.MenuModel = {
   //     emerging : "",
   //     equal : 0,
   //     id : "",
   //     sub : "",
   //     base : ""
   //   }
-  //   this.commonService.GetMenu("team", this.menuDto).subscribe((res:any)=> {
-      
+  //   this.commonService.GetMenu("team", this.MenuModel).subscribe((res:any)=> {
+
   //     res.forEach((menu:any) => {
   //       if(menu.emerging == "right_menu" && (menu.name != "Complaints")){
   //         this.menus$.push(menu)
   //       }
   //     });
-  //     console.log(this.menus$)
+  //     // console.log(this.menus$)
   //   })
   // }
 
-  toggleRightBar(child:string) {  
+  toggleRightBar(child:string) {
+
     // this.parentFun.emit();
     if(localStorage.getItem('child') == child){
       this.toggleRightPanelParent.emit();
@@ -111,8 +108,8 @@ export class InboxRightSidebarComponent implements OnInit {
     } else{
       this.toggleService.addTogglePanel(child);
     }
-  
-  
+
+
 
 //     let routr = this._route.url.split('/')[1];
 //  let parent = localStorage.getItem("parent");
@@ -124,18 +121,18 @@ export class InboxRightSidebarComponent implements OnInit {
 //   this.isOpen = true;
 //  }
 
-  
+
 //     if(this.isOpen){
 //       this._route.navigateByUrl(routr+'/'+ parent+'/'+child);
-      
+
 //       this.toggleService.addTogglePanel("panelToggled");
-      
+
 //     }else{
 //       this._route.navigateByUrl(routr+'/'+ parent);
 //       this.toggleService.addTogglePanel("");
-     
+
 //     }
-    
+
   }
 
 }
