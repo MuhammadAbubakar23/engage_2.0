@@ -227,6 +227,22 @@ export class EmailComponent implements OnInit {
               };
             }
           );
+          item.groupedComments.forEach((items:any) => {
+            const groupedItemsOnSubject = items.items.reduce((acc: { [x: string]: any[]; }, item: { message: string | number; }) => {
+              debugger
+              if (!acc[item.message]) {
+                acc[item.message] = [];
+              }
+              acc[item.message].push(item);
+              return acc;
+            }, {});
+
+              items.items = Object.keys(groupedItemsOnSubject).map((message) => ({
+                message,
+                items: groupedItemsOnSubject[message],
+              }));
+              console.log(items.items)
+          });
           item.groupedComments?.forEach((group: any) => {
             group.items?.forEach((email: any) => {
               this.multipleTo = [];
@@ -307,7 +323,7 @@ export class EmailComponent implements OnInit {
   multipleCcInReply: any[] = [];
   multipleBccInReply: any[] = [];
 
-  getEmails() {
+getEmails() {
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -363,6 +379,25 @@ export class EmailComponent implements OnInit {
                 };
               }
             );
+
+            item.groupedComments.forEach((items:any) => {
+              const groupedItemsOnSubject = items.items.reduce((acc: { [x: string]: any[]; }, item: { message: string | number; }) => {
+                debugger
+                if (!acc[item.message]) {
+                  acc[item.message] = [];
+                }
+                acc[item.message].push(item);
+                return acc;
+              }, {});
+
+                items.items = Object.keys(groupedItemsOnSubject).map((message) => ({
+                  message,
+                  items: groupedItemsOnSubject[message],
+                }));
+                console.log(items.items)
+            });
+
+            console.log(item.groupedComments)
             item.groupedComments.forEach((group: any) => {
               group.items.forEach((email: any) => {
                 this.multipleTo = [];
@@ -477,6 +512,23 @@ export class EmailComponent implements OnInit {
               };
             }
           );
+          item.groupedComments.forEach((items:any) => {
+            const groupedItemsOnSubject = items.items.reduce((acc: { [x: string]: any[]; }, item: { message: string | number; }) => {
+              debugger
+              if (!acc[item.message]) {
+                acc[item.message] = [];
+              }
+              acc[item.message].push(item);
+              return acc;
+            }, {});
+
+              items.items = Object.keys(groupedItemsOnSubject).map((message) => ({
+                message,
+                items: groupedItemsOnSubject[message],
+              }));
+              console.log(items.items)
+          });
+
           item.groupedComments.forEach((group: any) => {
             group.items.forEach((email: any) => {
               this.multipleTo = [];
@@ -589,6 +641,24 @@ export class EmailComponent implements OnInit {
                 };
               }
             );
+
+              item.groupedComments.forEach((items:any) => {
+                const groupedItemsOnSubject = items.items.reduce((acc: { [x: string]: any[]; }, item: { message: string | number; }) => {
+                  debugger
+                  if (!acc[item.message]) {
+                    acc[item.message] = [];
+                  }
+                  acc[item.message].push(item);
+                  return acc;
+                }, {});
+
+                  items.items = Object.keys(groupedItemsOnSubject).map((message) => ({
+                    message,
+                    items: groupedItemsOnSubject[message],
+                  }));
+                  console.log(items.items)
+              });
+
             item.groupedComments.forEach((group: any) => {
               group.items.forEach((email: any) => {
                 this.multipleTo = [];

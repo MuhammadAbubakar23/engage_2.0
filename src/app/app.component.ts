@@ -1,6 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { SignalRService } from './services/SignalRService/signal-r.service';
+import { CommonDataService } from './shared/services/common/common-data.service';
 
 @Component({
   selector: 'app-root',
@@ -14,20 +15,20 @@ export class AppComponent {
   title = 'Enteract.Engage2.0';
 
   constructor(private signalRService: SignalRService,
-    private router: Router) {
+    private router: Router,
+    private commonService : CommonDataService) {
       
     
   }
 
   ngOnInit() {
-    
-
     // if (this.signalRService.hubconnection == undefined) {
-      
-    //   localStorage.clear();
-    //   this.router.navigateByUrl('/login');
+    //   this.commonService.SignOut().subscribe(()=>{
+    //     localStorage.clear();
+    //     this.router.navigateByUrl('/login');
+    //   })
     // }
-     this.signalRService.reConnect();
+    this.signalRService.reConnect();
 
     this.signalRService.removeTagDataListener();
     this.signalRService.addTagDataListner();

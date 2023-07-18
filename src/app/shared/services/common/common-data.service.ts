@@ -64,6 +64,7 @@ export class CommonDataService {
   getAllocatedProfiles = environment.links.common.getAllocatedProfiles;
   // createMessageTemplate = environment.links.console.CreateMessageTemplate;
   repliesList = environment.links.common.repliesList;
+  signOut = environment.links.common.signOut;
 
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
@@ -416,6 +417,10 @@ export class CommonDataService {
   AttachFacebookPage(body:any){
     debugger
     return this.http.post(this.FacebookBaseUrl + this.attachFacebookPage, body)
+  }
+
+  SignOut(){
+    return this.http.get(this.CommonBaseUrl+this.signOut)
   }
 }
 

@@ -90,7 +90,10 @@ export const environment = {
       deleteEntractRoute : 'EnteractRoute/Delete',
       getSkills : 'Skill/GetAll',
       addSkill : 'Skill/Add',
-      deleteSkill : 'Skill/Delete'
+      deleteSkill : 'Skill/Delete',
+      getAllProfile: 'Profile/GetAll',
+      addProfile : 'Profile/Add',
+      attachFacebookPage: 'ProfileManagement/RegisterProfile'
     },
     CCMS:{
       reason_types:'Order/GetReasonTypes',
@@ -138,7 +141,8 @@ export const environment = {
       markAllAsRead : 'Channel/ReadAllUnrespondedQuries',
       getAgentReport : 'Report/GetAgentTicketReport',
       getAllocatedProfiles : 'Query/GetAllocatedProfiles',
-      repliesList: 'SentQueries/GetRepliesList'
+      repliesList: 'SentQueries/GetRepliesList',
+      signOut: 'SignalRConnector/UserLogout'
       
     },
     facebook: {
