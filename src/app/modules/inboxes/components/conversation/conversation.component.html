@@ -667,13 +667,14 @@
 
         <table class="table">
           <tbody>
-            <tr>
-              <td colspan="6">
-                <span class="email-date">Today </span>{{ TodayDate | date:'EEEE, MMMM dd, yyyy'}}
-              </td>
-            </tr>
+            <ng-container *ngFor="let group of ConversationList">
+              <tr>
+                <td colspan="6">
+                  <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
+                </td>
+              </tr>
             <!-- [ngClass]="[alertWarning == true?'alert-warning':'', alertDanger == true?'alert-danger':'']" -->
-            <tr *ngFor="let querry of ConversationList | sort:criteria; let i = index"
+            <tr *ngFor="let querry of group.items | sort:criteria; let i = index"
               [class.selected]="querry.isChecked==true" class="alert" 
               [ngClass]="[querry.slaFlag == 'warning'?'alert-warning':'' || querry.slaFlag == 'danger'?'alert-danger':'' ||
               querry.slaFlag == 'unread'?'unread':'']">
@@ -821,7 +822,7 @@
                 </span>
               </td>
             </tr>
-
+</ng-container>
           </tbody>
         </table>
       </div>

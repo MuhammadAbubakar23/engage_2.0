@@ -93,36 +93,39 @@ export class ConversationComponent implements OnInit {
         this.removeAssignedQueryListener(res);
       });
 
-    setInterval(() => {
-      if (this.ConversationList != null || this.ConversationList != undefined) {
-        this.TodayDate = new Date();
-        this.ConversationList?.forEach((item: any) => {
-          const twentyMinutesInMs = 20 * 60 * 1000; // 20 minute in milliseconds
-          const fortyMinutesInMs = 40 * 60 * 1000; // 40 minute in milliseconds
-          const time = new Date(item.createdDate);
-          const timeDifference = this.TodayDate.getTime() - time.getTime();
-          if (
-            timeDifference > twentyMinutesInMs &&
-            timeDifference < fortyMinutesInMs
-          ) {
-            this.alertWarning = true;
-            item['slaFlag'] = 'warning';
-          }
-          if (timeDifference > fortyMinutesInMs) {
-            this.alertDanger = true;
-            this.alertWarning = false;
-            item['slaFlag'] = 'danger';
-          } else if (
-            timeDifference < twentyMinutesInMs &&
-            timeDifference < fortyMinutesInMs
-          ) {
-            this.alertDanger = false;
-            this.alertWarning = false;
-            item['slaFlag'] = 'unread';
-          }
-        });
-      }
-    }, 1000);
+      setInterval(() => {
+        if (this.ConversationList.length > 0) {
+          this.TodayDate = new Date();
+          this.ConversationList?.forEach((group: any) => {
+            group.items.forEach((item:any) => {
+              const twentyMinutesInMs = 20 * 60 * 1000; // 20 minute in milliseconds
+            const fortyMinutesInMs = 40 * 60 * 1000; // 40 minute in milliseconds
+            const time = new Date(item.createdDate);
+            const timeDifference = this.TodayDate.getTime() - time.getTime();
+            if (
+              timeDifference > twentyMinutesInMs &&
+              timeDifference < fortyMinutesInMs
+            ) {
+              this.alertWarning = true;
+              item['slaFlag'] = 'warning';
+            }
+            if (timeDifference > fortyMinutesInMs) {
+              this.alertDanger = true;
+              this.alertWarning = false;
+              item['slaFlag'] = 'danger';
+            } else if (
+              timeDifference < twentyMinutesInMs &&
+              timeDifference < fortyMinutesInMs
+            ) {
+              this.alertDanger = false;
+              this.alertWarning = false;
+              item['slaFlag'] = 'unread';
+            }
+            });
+            
+          });
+        }
+      }, 1000);
   }
 
   totalPageNumbers: any;
@@ -155,9 +158,32 @@ export class ConversationComponent implements OnInit {
     this.commondata
       .GetConversationList(this.filterDto)
       .subscribe((res: any) => {
+        debugger
         this.SpinnerService.hide();
         this.ConversationList = res.List;
         this.TotalUnresponded = res.TotalCount;
+
+        let groupedItems = this.ConversationList.reduce(
+          (acc: any, item: any) => {
+            const date = item.createdDate.split('T')[0];
+            if (!acc[date]) {
+              acc[date] = [];
+            }
+            acc[date].push(item);
+            return acc;
+          },
+          {}
+        );
+
+        this.ConversationList = Object.keys(groupedItems).map(
+          (createdDate) => {
+            return {
+              createdDate,
+              items: groupedItems[createdDate],
+            };
+          }
+        );
+
         if (this.TotalUnresponded < this.pageSize) {
           this.from = this.TotalUnresponded;
         } else if (
@@ -186,124 +212,133 @@ export class ConversationComponent implements OnInit {
   updateListDataListener(res: any) {
     res.forEach((newMsg: any) => {
       if (this.platform == newMsg.platform && this.isAttachment != true) {
-        const index = this.ConversationList?.findIndex(
-          (obj: any) => obj.user === newMsg.user
-        );
-        if (index >= 0) {
-          this.ConversationList.forEach((main: any) => {
-            if (newMsg.user == main.user) {
-              this.listingDto = newMsg;
-              this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-              this.ConversationList[index] = this.listingDto;
+        this.ConversationList.forEach((group:any)=>{
+          const index = group.items?.findIndex(
+            (obj: any) => obj.user === newMsg.user
+          );
+          if (index >= 0) {
+            group.items.forEach((main: any) => {
+              if (newMsg.user == main.user) {
+                this.listingDto = newMsg;
+                this.listingDto.unrespondedCount = main.unrespondedCount + 1;
+                group.items[index] = this.listingDto;
+              }
+            });
+          } else if (group.items) {
+            this.listingDto = newMsg;
+            group.items.unshift(this.listingDto);
+            if (group.items.length > this.pageSize) {
+              group.items.pop();
+              this.TotalUnresponded = this.TotalUnresponded + 1;
+            } else if (group.items.length <= this.pageSize) {
+              this.TotalUnresponded = this.TotalUnresponded + 1;
+              this.from = this.from + 1;
             }
-          });
-        } else if (this.ConversationList) {
-          this.listingDto = newMsg;
-          this.ConversationList.unshift(this.listingDto);
-          if (this.ConversationList.length > this.pageSize) {
-            this.ConversationList.pop();
-            this.TotalUnresponded = this.TotalUnresponded + 1;
-          } else if (this.ConversationList.length <= this.pageSize) {
-            this.TotalUnresponded = this.TotalUnresponded + 1;
-            this.from = this.from + 1;
+          } else {
+            group.items = res;
+            this.to = 1;
+            this.TotalUnresponded = 1;
+            this.from = 1;
           }
-        } else {
-          this.ConversationList = res;
-          this.to = 1;
-          this.TotalUnresponded = 1;
-          this.from = 1;
-        }
+        });
+        
       } else if (newMsg.isAttachment == true && this.isAttachment == true) {
-        if (this.platform == newMsg.platform) {
-          const index = this.ConversationList?.findIndex(
-            (obj: any) => obj.user === newMsg.user
-          );
-          if (index >= 0) {
-            this.ConversationList.forEach((main: any) => {
-              if (newMsg.user == main.user) {
-                this.listingDto = newMsg;
-                this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-                this.ConversationList[index] = this.listingDto;
-              }
-            });
-          } else if (this.ConversationList) {
-            this.listingDto = newMsg;
-            this.ConversationList.unshift(this.listingDto);
-            if (this.ConversationList.length > this.pageSize) {
-              this.ConversationList.pop();
-              this.TotalUnresponded = this.TotalUnresponded + 1;
-            } else if (this.ConversationList.length <= this.pageSize) {
-              this.TotalUnresponded = this.TotalUnresponded + 1;
-              this.from = this.from + 1;
-            }
-          } else {
-            this.ConversationList = res;
-            this.to = 1;
-            this.TotalUnresponded = 1;
-            this.from = 1;
-          }
-        } else if (this.platform == '') {
-          const index = this.ConversationList?.findIndex(
-            (obj: any) => obj.user === newMsg.user
-          );
-          if (index >= 0) {
-            this.ConversationList.forEach((main: any) => {
-              if (newMsg.user == main.user) {
-                this.listingDto = newMsg;
-                this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-                this.ConversationList[index] = this.listingDto;
-              }
-            });
-          } else if (this.ConversationList) {
-            this.listingDto = newMsg;
-            this.ConversationList.unshift(this.listingDto);
-            if (this.ConversationList.length > this.pageSize) {
-              this.ConversationList.pop();
-              this.TotalUnresponded = this.TotalUnresponded + 1;
-            } else if (this.ConversationList.length <= this.pageSize) {
-              this.TotalUnresponded = this.TotalUnresponded + 1;
-              this.from = this.from + 1;
-            }
-          } else {
-            this.ConversationList = res;
-            this.to = 1;
-            this.TotalUnresponded = 1;
-            this.from = 1;
-          }
-        }
-      } else if (this.platform == '' && this.isAttachment != true) {
-        const index = this.ConversationList?.findIndex(
-          (obj: any) => obj.user === newMsg.user
-        );
-        if (index >= 0) {
-          this.ConversationList.forEach((main: any) => {
-            if (newMsg.user == main.user) {
+        this.ConversationList.forEach((group:any)=>{
+          if (this.platform == newMsg.platform) {
+            const index = group.items?.findIndex(
+              (obj: any) => obj.user === newMsg.user
+            );
+            if (index >= 0) {
+              group.items.forEach((main: any) => {
+                if (newMsg.user == main.user) {
+                  this.listingDto = newMsg;
+                  this.listingDto.unrespondedCount = main.unrespondedCount + 1;
+                  group.items[index] = this.listingDto;
+                }
+              });
+            } else if (group.items) {
               this.listingDto = newMsg;
-              this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-              this.ConversationList[index] = this.listingDto;
+              group.items.unshift(this.listingDto);
+              if (group.items.length > this.pageSize) {
+                group.items.pop();
+                this.TotalUnresponded = this.TotalUnresponded + 1;
+              } else if (group.items.length <= this.pageSize) {
+                this.TotalUnresponded = this.TotalUnresponded + 1;
+                this.from = this.from + 1;
+              }
+            } else {
+              group.items = res;
+              this.to = 1;
+              this.TotalUnresponded = 1;
+              this.from = 1;
             }
-          });
-        } else if (this.ConversationList) {
-          this.listingDto = newMsg;
-          this.ConversationList.unshift(this.listingDto);
-          if (this.ConversationList.length > this.pageSize) {
-            this.ConversationList.pop();
-            this.TotalUnresponded = this.TotalUnresponded + 1;
-          } else if (this.ConversationList.length <= this.pageSize) {
-            this.TotalUnresponded = this.TotalUnresponded + 1;
-            this.from = this.from + 1;
+          } else if (this.platform == '') {
+            const index = group.items?.findIndex(
+              (obj: any) => obj.user === newMsg.user
+            );
+            if (index >= 0) {
+              group.items.forEach((main: any) => {
+                if (newMsg.user == main.user) {
+                  this.listingDto = newMsg;
+                  this.listingDto.unrespondedCount = main.unrespondedCount + 1;
+                  group.items[index] = this.listingDto;
+                }
+              });
+            } else if (group.items) {
+              this.listingDto = newMsg;
+              group.items.unshift(this.listingDto);
+              if (group.items.length > this.pageSize) {
+                group.items.pop();
+                this.TotalUnresponded = this.TotalUnresponded + 1;
+              } else if (group.items.length <= this.pageSize) {
+                this.TotalUnresponded = this.TotalUnresponded + 1;
+                this.from = this.from + 1;
+              }
+            } else {
+              group.items = res;
+              this.to = 1;
+              this.TotalUnresponded = 1;
+              this.from = 1;
+            }
           }
-        } else {
-          this.ConversationList = res;
-          this.to = 1;
-          this.TotalUnresponded = 1;
-          this.from = 1;
-        }
+        })
+        
+      } 
+      
+      else if (this.platform == '' && this.isAttachment != true) {
+        this.ConversationList.forEach((group:any)=>{
+          const index = group.items?.findIndex(
+            (obj: any) => obj.user === newMsg.user
+          );
+          if (index >= 0) {
+            group.items.forEach((main: any) => {
+              if (newMsg.user == main.user) {
+                this.listingDto = newMsg;
+                this.listingDto.unrespondedCount = main.unrespondedCount + 1;
+                group.items[index] = this.listingDto;
+              }
+            });
+          } else if (group.items) {
+            this.listingDto = newMsg;
+            group.items.unshift(this.listingDto);
+            if (group.items.length > this.pageSize) {
+              group.items.pop();
+              this.TotalUnresponded = this.TotalUnresponded + 1;
+            } else if (group.items.length <= this.pageSize) {
+              this.TotalUnresponded = this.TotalUnresponded + 1;
+              this.from = this.from + 1;
+            }
+          } else {
+            group.items = res;
+            this.to = 1;
+            this.TotalUnresponded = 1;
+            this.from = 1;
+          }
+        });
       }
     });
     this.changeDetect.detectChanges();
   }
-
   removeAssignedQueryListener(res: any) {
     const index = this.ConversationList.findIndex(
       (x) => x.profileId == res.profileId
