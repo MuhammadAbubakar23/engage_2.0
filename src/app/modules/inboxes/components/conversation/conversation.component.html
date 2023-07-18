@@ -390,21 +390,21 @@
                     </ul>
                   </div>
                 </li> -->
-        <!-- <li class="list-inline-item">
-                  <a href="#0" class="advance-search-o fw-bold sky btn">Advance Search</a>
-                </li> -->
+        <li class="list-inline-item">
+                  <a class="advance-search-o fw-bold sky btn" (click)="AdvanceSearch()">Advance Search</a>
+                </li>
         <li>
         </li>
       </ul>
-
-      <div class="search-filters">
+      <form [formGroup]="searchForm" (ngSubmit)="Search()">
+      <div class="search-filters" [ngClass]="advanceSearch?'active':''">
         <header class="d-flex align-items-center justify-content-between my-2">
           <h6 class="m-0">Filter Search </h6>
           <div class="d-flex align-items-center">
-            <span class="iconButton small iconHover me-2">
+            <span class="iconButton small iconHover me-2" (click)="ResetSearchForm()">
               <i class="fa-light fa-arrows-rotate"></i>
             </span>
-            <span class="iconButton small iconHover closefilter lightGreyBg">
+            <span class="iconButton small iconHover closefilter lightGreyBg" (click)="CloseAdvanceSearch()">
               <i class="fa-light fa-xmark"></i>
             </span>
           </div>
@@ -413,7 +413,7 @@
         </header>
         <div class="search-body">
           <div class="row">
-            <div class="col-6">
+            <!-- <div class="col-6">
               <div class="form-floating mb-3">
                 <input class="form-control" id="from" placeholder="From">
                 <label for="from">From</label>
@@ -424,23 +424,23 @@
                 <input class="form-control" id="to" placeholder="To">
                 <label for="to">To</label>
               </div>
-            </div>
+            </div> -->
           </div>
           <div class="row">
-            <div class="col-6">
+            <div class="col-12">
               <div class="form-floating mb-3">
-                <input class="form-control" id="Subject" placeholder="Subject">
+                <input class="form-control" id="Subject" placeholder="Subject" formControlName="text">
                 <label for="Subject">Subject</label>
               </div>
             </div>
-            <div class="col-6">
+            <!-- <div class="col-6">
               <div class="form-floating mb-3">
                 <input class="form-control" id="incwords" placeholder="Includes the words">
                 <label for="incwords">Includes the words</label>
               </div>
-            </div>
+            </div> -->
           </div>
-          <div class="form-floating mb-3">
+          <!-- <div class="form-floating mb-3">
             <input class="form-control" id="ddh" placeholder="Doesn't have">
             <label for="ddh">Doesn't have</label>
           </div>
@@ -512,17 +512,17 @@
               <input class="form-check-input" type="checkbox" id="dontinccharts" value="option2">
               <label class="form-check-label" for="dontinccharts">Don't include chats</label>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <footer class="py-3">
           <div class="buttons-wrap d-flex justify-content-end">
-            <button type="button" class="btn btn-outline-secondary closefilter">Cancel</button>
-            <button type="button" class="btn btn-success ms-2 px-4">Apply</button>
+            <button type="button" class="btn btn-outline-secondary closefilter" (click)="CloseAdvanceSearch()">Cancel</button>
+            <button type="submit" class="btn btn-success ms-2 px-4">Apply</button>
           </div>
         </footer>
       </div>
-
+    </form>
 
     </div>
     <div class="filter-container">
@@ -667,13 +667,14 @@
 
         <table class="table">
           <tbody>
+            <ng-container *ngFor="let group of ConversationList">
             <tr>
               <td colspan="6">
-                <span class="email-date">Today </span>{{ TodayDate | date:'EEEE, MMMM dd, yyyy'}}
+                <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
               </td>
             </tr>
             <!-- [ngClass]="[alertWarning == true?'alert-warning':'', alertDanger == true?'alert-danger':'']" -->
-            <tr *ngFor="let querry of ConversationList | sort:criteria; let i = index"
+            <tr *ngFor="let querry of group.items | sort:criteria; let i = index"
               [class.selected]="querry.isChecked==true" class="alert" 
               [ngClass]="[querry.slaFlag == 'warning'?'alert-warning':'' || querry.slaFlag == 'danger'?'alert-danger':'' ||
               querry.slaFlag == 'unread'?'unread':'']">
@@ -718,7 +719,7 @@
                   {{querry.message < 110 ? querry.message: (querry.message | slice:0:110) +'...'}} </div>
               </td>
               <td class="px-1">
-                <small>{{querry.createdDate | date:'h:mm:ss a'}}</small>
+                <small>{{querry.createdDate | date:'MMMM, dd, YYYY, h:mm:ss a'}}</small>
               </td>
 
               <!-- <td>
@@ -823,7 +824,7 @@
                 </span>
               </td> -->
             </tr>
-
+          </ng-container>
           </tbody>
         </table>
       </div>
