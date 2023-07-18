@@ -227,6 +227,24 @@ export class EmailComponent implements OnInit {
               };
             }
           );
+
+          item.groupedComments.forEach((items:any) => {
+            const groupedItemsOnSubject = items.items.reduce((acc: { [x: string]: any[]; }, item: { message: string | number; }) => {
+              debugger
+              if (!acc[item.message]) {
+                acc[item.message] = [];
+              }
+              acc[item.message].push(item);
+              return acc;
+            }, {});
+
+              items.items = Object.keys(groupedItemsOnSubject).map((message) => ({
+                message,
+                items: groupedItemsOnSubject[message],
+              }));
+              console.log(items.items)
+          });
+
           item.groupedComments?.forEach((group: any) => {
             group.items?.forEach((email: any) => {
               this.multipleTo = [];
@@ -363,6 +381,24 @@ export class EmailComponent implements OnInit {
                 };
               }
             );
+
+            item.groupedComments.forEach((items:any) => {
+              const groupedItemsOnSubject = items.items.reduce((acc: { [x: string]: any[]; }, item: { message: string | number; }) => {
+                debugger
+                if (!acc[item.message]) {
+                  acc[item.message] = [];
+                }
+                acc[item.message].push(item);
+                return acc;
+              }, {});
+  
+                items.items = Object.keys(groupedItemsOnSubject).map((message) => ({
+                  message,
+                  items: groupedItemsOnSubject[message],
+                }));
+                console.log(items.items)
+            });
+
             item.groupedComments.forEach((group: any) => {
               group.items.forEach((email: any) => {
                 this.multipleTo = [];
@@ -477,6 +513,24 @@ export class EmailComponent implements OnInit {
               };
             }
           );
+
+          item.groupedComments.forEach((items:any) => {
+            const groupedItemsOnSubject = items.items.reduce((acc: { [x: string]: any[]; }, item: { message: string | number; }) => {
+              debugger
+              if (!acc[item.message]) {
+                acc[item.message] = [];
+              }
+              acc[item.message].push(item);
+              return acc;
+            }, {});
+
+              items.items = Object.keys(groupedItemsOnSubject).map((message) => ({
+                message,
+                items: groupedItemsOnSubject[message],
+              }));
+              console.log(items.items)
+          });
+
           item.groupedComments.forEach((group: any) => {
             group.items.forEach((email: any) => {
               this.multipleTo = [];
@@ -589,6 +643,24 @@ export class EmailComponent implements OnInit {
                 };
               }
             );
+
+            item.groupedComments.forEach((items:any) => {
+              const groupedItemsOnSubject = items.items.reduce((acc: { [x: string]: any[]; }, item: { message: string | number; }) => {
+                debugger
+                if (!acc[item.message]) {
+                  acc[item.message] = [];
+                }
+                acc[item.message].push(item);
+                return acc;
+              }, {});
+  
+                items.items = Object.keys(groupedItemsOnSubject).map((message) => ({
+                  message,
+                  items: groupedItemsOnSubject[message],
+                }));
+                console.log(items.items)
+            });
+            
             item.groupedComments.forEach((group: any) => {
               group.items.forEach((email: any) => {
                 this.multipleTo = [];
