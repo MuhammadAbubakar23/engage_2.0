@@ -181,7 +181,7 @@ export class ConversationComponent implements OnInit {
     this.commondata
       .GetConversationList(this.filterDto)
       .subscribe((res: any) => {
-        debugger
+        
         this.SpinnerService.hide();
         this.advanceSearch = false;
         this.ConversationList = res.List;
@@ -382,13 +382,13 @@ export class ConversationComponent implements OnInit {
   Reload() {
     this.TotalUnresponded = 0;
     this.Ids = [];
-    this.getConversationList();
     this.isChecked = false;
     this.isCheckedAll = false;
     this.masterSelected = false;
     this.searchForm.reset();
     this.text = "";
     this.advanceSearch = false;
+    this.getConversationList();
   }
 
   updatevalue(
@@ -566,7 +566,7 @@ export class ConversationComponent implements OnInit {
 
   remaining: number = 0;
   NextPage(pageNumber: any) {
-    debugger
+    
     if (this.TotalUnresponded < this.from) {
       this.from = this.TotalUnresponded;
     }
@@ -644,72 +644,9 @@ export class ConversationComponent implements OnInit {
     this.advanceSearch = false;
   }
 
-  // Search(){
-  //   debugger
-  //   this.SpinnerService.show();
-  //   var obj = {
-  //     agentId: 0,
-  //     user: "",
-  //     plateForm: "",
-  //     fromDate: "2022-07-18T06:41:38.777Z",
-  //     toDate: "2023-07-18T06:41:38.777Z",
-  //     isAttachment: false,
-  //     queryType: "",
-  //     text: this.searchForm.value.text,
-  //     pageNumber: 1,
-  //     pageSize: 20
-  //   }
-  //   this.commondata.GetConversationList(obj)
-  //     .subscribe((res: any) => {
-  //       this.SpinnerService.hide();
-  //       this.searchForm.reset();
-  //       this.advanceSearch = false;
-  //       this.ConversationList = res.List;
-  //       this.TotalUnresponded = res.TotalCount;
-
-  //       let groupedItems = this.ConversationList.reduce(
-  //         (acc: any, item: any) => {
-  //           const date = item.createdDate.split('T')[0];
-  //           if (!acc[date]) {
-  //             acc[date] = [];
-  //           }
-  //           acc[date].push(item);
-  //           return acc;
-  //         },
-  //         {}
-  //       );
-
-  //       this.ConversationList = Object.keys(groupedItems).map(
-  //         (createdDate) => {
-  //           return {
-  //             createdDate,
-  //             items: groupedItems[createdDate],
-  //           };
-  //         }
-  //       );
-
-  //       if (this.TotalUnresponded < this.pageSize) {
-  //         this.from = this.TotalUnresponded;
-  //       } else if (
-  //         this.TotalUnresponded > this.pageSize &&
-  //         this.from < this.pageSize
-  //       ) {
-  //         this.from = this.pageSize;
-  //       }
-  //       if (this.ConversationList.length == 0) {
-  //         this.to = 0;
-  //       } else if (
-  //         this.ConversationList.length != 0 &&
-  //         this.from != 0 &&
-  //         this.pageNumber == 1
-  //       ) {
-  //         this.to = 1;
-  //       }
-  //     });    
-  // }
-
   ResetSearchForm(){
     this.searchForm.reset();
     this.text = "";
+    this.getConversationList();
   }
 }
