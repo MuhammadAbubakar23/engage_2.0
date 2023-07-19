@@ -36,31 +36,33 @@ export const environment = {
   links: {
     identity:{
       login:"Authentication/Login",
+      //Company:"Teams/FetchAll",
       accesses:"Teams/Accesses",
       properties:"Teams/Properties",
-      permissions:"Roles/Permissions",
-      accessteam:"Accesses/team",
-      accessrole:"Permissions/role",
-      permissionteam:"Accesses/team",
-      permissionrole:"Permissions/role",
-      RolesPermissions:"Permissions",
-      TeamsAccesses:"Accesses",
+      accessteam:"Teams/Previews",
+      permissionteam:"Teams/Previews",
+      TeamsAccesses:"Teams/Fetch",
+      AllTeams:"Teams/FetchAll",// new to review
+      AddTeam:"Accesses/Teams",
+      TeamProperties:"Accesses/Properties",
+      //accessrole:"Roles/Prmissions",
       
-      AddRole:"Permissions",
-      AddTeam:"Accesses",
-      TeamProperties:"Teams/PropAccesses",
-      RoleProperties:"Roles/PropPermis",
-
-      AllRoles:"Roles/GetAll",
-      AllTeams:"Teams/GetAll",
+      accessrole:"Roles/Previews", //"Permissions/role",      
+      permissionrole:"Roles/Previews", //"Permissions/role",
+      RolesPermissions:"Roles/Fetch",
+      permissions:"Roles/Permissions",
+      RoleProperties:"Permissions/Properties",      
+      AddRole:"Permissions/Roles",      
+      
+      UserRoles:"Roles/Users",
+      UserTeams:"Teams/Users",
+      
 
       AddUser:"Users/CreateUser",
       UpdateUser:"Users/UpdateUser",
-      GetAllUsers:"Users/GetAllUser",
+      AllUsers:"Users/GetAll",
       DeleteUser:"Users/DeleteUser",
-      GetUserById:"Users/GetUserById", 
-      
-
+      GetUserById:"Users/GetUserById",
     },
     console:{
       AddUser:"Users/CreateUser",

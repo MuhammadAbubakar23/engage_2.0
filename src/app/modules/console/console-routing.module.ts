@@ -9,16 +9,14 @@ import { QuickResponseComponent } from './components/templates/quick-response/qu
 import { CreateSignatureTemplatesComponent } from './components/templates/signatures/create-signature-templates/create-signature-templates.component';
 import { SignaturesComponent } from './components/templates/signatures/signatures.component';
 import { TemplatesComponent } from './components/templates/templates.component';
-//import { CreateUserResolver } from './components/users/create-user/create-user.resolver';
-import { UsersResolver } from './components/users/users.resolver';
 import { ConsoleRoutingGuard } from './console-routing.guard';
 import { ConsoleComponent } from './console.component';
-import { RolesPermissionsResolver } from './resolvers/roles-permissions.resolver';
-import { RolesResolver } from './resolvers/roles.resolver';
-import { TeamsJsonResolver } from './resolvers/teams-json.resolver';
-import { TeamsPermissionsResolver } from './resolvers/teams-permissions.resolver';
-import { TeamsResolver } from './resolvers/teams.resolver';
-import { UsersJsonResolver } from './resolvers/users-json.resolver';
+import { RolesPermissionsResolver } from './resolvers/roles/roles-permissions.resolver';
+import { TeamsJsonResolver } from './resolvers/teams/teams-json.resolver';
+import { TeamsPermissionsResolver } from './resolvers/teams/teams-permissions.resolver';
+import { RolesResolver } from './resolvers/users/roles.resolver';
+import { TeamsResolver } from './resolvers/users/teams.resolver';
+import { UsersJsonResolver } from './resolvers/users/users-json.resolver';
 
 const routes: Routes = [
   {
