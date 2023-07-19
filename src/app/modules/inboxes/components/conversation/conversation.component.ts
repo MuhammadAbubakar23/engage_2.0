@@ -54,6 +54,8 @@ export class ConversationComponent implements OnInit {
 
   searchForm !: FormGroup;
 
+  text:string='';
+
   constructor(
     private fetchId: FetchIdService,
     private SpinnerService: NgxSpinnerService,
@@ -159,6 +161,10 @@ export class ConversationComponent implements OnInit {
   from: number = 0;
 
   getConversationList() {
+
+    this.searchForm.patchValue({
+      text : this.text
+    })
     this.filterDto = {
       // fromDate : new Date(),
       // toDate : new Date(),
@@ -168,7 +174,8 @@ export class ConversationComponent implements OnInit {
       pageNumber: this.pageNumber,
       pageSize: this.pageSize,
       isAttachment: this.isAttachment,
-      queryType: ''
+      queryType: '',
+      text : this.searchForm.value.text
     };
     this.SpinnerService.show();
     this.commondata
@@ -176,6 +183,7 @@ export class ConversationComponent implements OnInit {
       .subscribe((res: any) => {
         debugger
         this.SpinnerService.hide();
+        this.advanceSearch = false;
         this.ConversationList = res.List;
         this.TotalUnresponded = res.TotalCount;
 
@@ -357,25 +365,30 @@ export class ConversationComponent implements OnInit {
   }
 
   removeAssignedQueryListener(res: any) {
-    const index = this.ConversationList.findIndex(
-      (x) => x.profileId == res.profileId
-    );
-    if (index !== -1) {
-      this.ConversationList.splice(index, 1);
-      this.TotalUnresponded = this.TotalUnresponded - 1;
-      this.from = this.from - 1;
-    }
-    this.changeDetect.detectChanges();
+    this.ConversationList.forEach((group)=>{
+      const index = group.items.findIndex(
+        (x:any) => x.profileId == res.profileId
+      );
+      if (index !== -1) {
+        group.items.splice(index, 1);
+        this.TotalUnresponded = this.TotalUnresponded - 1;
+        this.from = this.from - 1;
+      }
+      this.changeDetect.detectChanges();
+    })
+    
   }
 
   Reload() {
     this.TotalUnresponded = 0;
     this.Ids = [];
     this.getConversationList();
-
     this.isChecked = false;
     this.isCheckedAll = false;
     this.masterSelected = false;
+    this.searchForm.reset();
+    this.text = "";
+    this.advanceSearch = false;
   }
 
   updatevalue(
@@ -485,69 +498,75 @@ export class ConversationComponent implements OnInit {
   }
 
   checkUncheckAll(evt: any) {
-    this.ConversationList.forEach(
-      (c: any) => (c.isChecked = evt.target.checked)
-    );
-    this.masterSelected = this.ConversationList.every(
-      (l: any) => l.isChecked == true
-    );
-    if (this.masterSelected == true) {
-      this.ConversationList.forEach((d: any) => {
-        // var abc = this.Ids.find(
-        //   (x) => x.Id == d.id && x.Platform == d.Platform
-        // );
-        if (!this.Ids.includes(d.id)) {
-          this.Ids.push(d.id);
-        }
-      });
-      //  // // console.log(this.Ids);
-      this.isChecked = true;
-      this.isCheckedAll = true;
-    } else {
-      this.ConversationList.forEach((d: any) => {
-        for (var i = 0; i <= this.Ids.length; i++) {
-          var abc = this.Ids.find((x) => x.Id == d.id);
-          this.Ids.splice(abc, 1);
-        }
-      });
-      //  // // console.log(this.Ids);
-      this.isChecked = false;
-      this.isCheckedAll = false;
-    }
+    this.ConversationList.forEach((group)=>{
+      group.items.forEach(
+        (c: any) => (c.isChecked = evt.target.checked)
+      );
+      this.masterSelected = group.items.every(
+        (l: any) => l.isChecked == true
+      );
+      if (this.masterSelected == true) {
+        group.items.forEach((d: any) => {
+          // var abc = this.Ids.find(
+          //   (x) => x.Id == d.id && x.Platform == d.Platform
+          // );
+          if (!this.Ids.includes(d.id)) {
+            this.Ids.push(d.id);
+          }
+        });
+        //  // // console.log(this.Ids);
+        this.isChecked = true;
+        this.isCheckedAll = true;
+      } else {
+        group.items.forEach((d: any) => {
+          for (var i = 0; i <= this.Ids.length; i++) {
+            var abc = this.Ids.find((x) => x.Id == d.id);
+            this.Ids.splice(abc, 1);
+          }
+        });
+        //  // // console.log(this.Ids);
+        this.isChecked = false;
+        this.isCheckedAll = false;
+      }
+    });
+    
   }
 
   isAllSelected(evt: any, index: any, platform: any) {
     let id = Number(evt.target.value);
     if (index >= 0 && evt.target.checked == true) {
       this.Ids.push(id);
-      //  // // console.log(this.Ids);
     }
     if (evt.target.checked == false) {
       var abc = this.Ids.find((x) => x.Id == id);
       this.Ids.splice(abc, 1);
     }
-    this.ConversationList[index].isChecked = evt.target.checked;
-    this.masterSelected = this.ConversationList.every(
-      (l: any) => l.isChecked == true
-    );
-
-    let checkselectedlogs = this.ConversationList.find(
-      (x: any) => x.isChecked == true
-    );
-    if (this.masterSelected == true) {
-      this.isChecked = true;
-      this.isCheckedAll = true;
-    } else if (checkselectedlogs != undefined) {
-      this.isChecked = true;
-      this.isCheckedAll = false;
-    } else {
-      this.isChecked = false;
-      this.isCheckedAll = false;
-    }
+    this.ConversationList.forEach((group)=>{
+      group.items[index].isChecked = evt.target.checked;
+      this.masterSelected = group.items.every(
+        (l: any) => l.isChecked == true
+      );
+  
+      let checkselectedlogs = group.items.find(
+        (x: any) => x.isChecked == true
+      );
+      if (this.masterSelected == true) {
+        this.isChecked = true;
+        this.isCheckedAll = true;
+      } else if (checkselectedlogs != undefined) {
+        this.isChecked = true;
+        this.isCheckedAll = false;
+      } else {
+        this.isChecked = false;
+        this.isCheckedAll = false;
+      }
+    });
+    
   }
 
   remaining: number = 0;
   NextPage(pageNumber: any) {
+    debugger
     if (this.TotalUnresponded < this.from) {
       this.from = this.TotalUnresponded;
     }
@@ -622,54 +641,75 @@ export class ConversationComponent implements OnInit {
   }
 
   CloseAdvanceSearch(){
-    this.searchForm.reset();
     this.advanceSearch = false;
   }
 
-  Search(){
-    debugger
-    this.SpinnerService.show();
-    var obj = {
-      agentId: 0,
-      user: "",
-      plateForm: "",
-      fromDate: "2022-07-18T06:41:38.777Z",
-      toDate: "2023-07-18T06:41:38.777Z",
-      isAttachment: false,
-      queryType: "",
-      text: this.searchForm.value.text,
-      pageNumber: 1,
-      pageSize: 20
-    }
-    this.commondata.GetConversationList(obj)
-      .subscribe((res: any) => {
-        this.SpinnerService.hide();
-        this.searchForm.reset();
-        this.advanceSearch = false;
-        this.ConversationList = res.List;
-        this.TotalUnresponded = res.TotalCount;
-        if (this.TotalUnresponded < this.pageSize) {
-          this.from = this.TotalUnresponded;
-        } else if (
-          this.TotalUnresponded > this.pageSize &&
-          this.from < this.pageSize
-        ) {
-          this.from = this.pageSize;
-        }
-        if (this.ConversationList.length == 0) {
-          this.to = 0;
-        } else if (
-          this.ConversationList.length != 0 &&
-          this.from != 0 &&
-          this.pageNumber == 1
-        ) {
-          this.to = 1;
-        }
-      });
-    
-  }
+  // Search(){
+  //   debugger
+  //   this.SpinnerService.show();
+  //   var obj = {
+  //     agentId: 0,
+  //     user: "",
+  //     plateForm: "",
+  //     fromDate: "2022-07-18T06:41:38.777Z",
+  //     toDate: "2023-07-18T06:41:38.777Z",
+  //     isAttachment: false,
+  //     queryType: "",
+  //     text: this.searchForm.value.text,
+  //     pageNumber: 1,
+  //     pageSize: 20
+  //   }
+  //   this.commondata.GetConversationList(obj)
+  //     .subscribe((res: any) => {
+  //       this.SpinnerService.hide();
+  //       this.searchForm.reset();
+  //       this.advanceSearch = false;
+  //       this.ConversationList = res.List;
+  //       this.TotalUnresponded = res.TotalCount;
+
+  //       let groupedItems = this.ConversationList.reduce(
+  //         (acc: any, item: any) => {
+  //           const date = item.createdDate.split('T')[0];
+  //           if (!acc[date]) {
+  //             acc[date] = [];
+  //           }
+  //           acc[date].push(item);
+  //           return acc;
+  //         },
+  //         {}
+  //       );
+
+  //       this.ConversationList = Object.keys(groupedItems).map(
+  //         (createdDate) => {
+  //           return {
+  //             createdDate,
+  //             items: groupedItems[createdDate],
+  //           };
+  //         }
+  //       );
+
+  //       if (this.TotalUnresponded < this.pageSize) {
+  //         this.from = this.TotalUnresponded;
+  //       } else if (
+  //         this.TotalUnresponded > this.pageSize &&
+  //         this.from < this.pageSize
+  //       ) {
+  //         this.from = this.pageSize;
+  //       }
+  //       if (this.ConversationList.length == 0) {
+  //         this.to = 0;
+  //       } else if (
+  //         this.ConversationList.length != 0 &&
+  //         this.from != 0 &&
+  //         this.pageNumber == 1
+  //       ) {
+  //         this.to = 1;
+  //       }
+  //     });    
+  // }
 
   ResetSearchForm(){
     this.searchForm.reset();
+    this.text = "";
   }
 }

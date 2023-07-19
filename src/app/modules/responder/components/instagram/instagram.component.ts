@@ -344,6 +344,7 @@ export class InstagramComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        text : "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -399,6 +400,7 @@ export class InstagramComponent implements OnInit {
         pageSize: 0,
         isAttachment: false,
         queryType: this.queryType,
+        text : "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -451,6 +453,7 @@ export class InstagramComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        text : "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -1184,6 +1187,7 @@ export class InstagramComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        text : "",
       };
 
       this.SpinnerService.show();
@@ -1234,6 +1238,7 @@ export class InstagramComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        text : "",
       };
 
       this.SpinnerService.show();
@@ -1284,6 +1289,7 @@ export class InstagramComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        text : "",
       };
 
       this.SpinnerService.show();

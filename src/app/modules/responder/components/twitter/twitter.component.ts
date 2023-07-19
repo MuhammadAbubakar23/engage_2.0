@@ -332,7 +332,8 @@ export class TwitterComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
+        text : "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -393,7 +394,8 @@ export class TwitterComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
+        text : "",
       };
 
       this.spinner1running = true;
@@ -448,7 +450,8 @@ export class TwitterComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
+        text : "",
       };
 
       this.spinner1running = true;
@@ -510,7 +513,8 @@ export class TwitterComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
+        text : "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -562,7 +566,8 @@ export class TwitterComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
+        text : "",
       };
 
       this.SpinnerService.show();
@@ -610,7 +615,8 @@ export class TwitterComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
+        text : "",
       };
 
       this.SpinnerService.show();

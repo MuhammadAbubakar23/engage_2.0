@@ -338,6 +338,7 @@ export class EmailComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        text : "",
       };
 
       this.SpinnerService.show();
@@ -474,6 +475,7 @@ export class EmailComponent implements OnInit {
         pageSize: 0,
         isAttachment: false,
         queryType: this.queryType,
+        text : "",
       };
 
       this.SpinnerService.show();
@@ -602,6 +604,7 @@ export class EmailComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        text : "",
       };
 
       this.SpinnerService.show();

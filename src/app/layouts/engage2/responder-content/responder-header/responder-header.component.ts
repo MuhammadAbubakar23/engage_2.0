@@ -455,7 +455,8 @@ export class ResponderHeaderComponent implements OnInit {
         pageNumber: 1,
         pageSize: 10,
         isAttachment: false,
-        queryType: ''
+        queryType: '',
+        text : "",
       };
       this.SpinnerService.show();
 
@@ -799,7 +800,8 @@ export class ResponderHeaderComponent implements OnInit {
         pageNumber: 1,
         pageSize: 10,
         isAttachment: false,
-        queryType: ''
+        queryType: '',
+        text : "",
       };
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         this.userId = res.List[0].user.userId;
@@ -920,7 +922,8 @@ export class ResponderHeaderComponent implements OnInit {
         pageNumber: 1,
         pageSize: 10,
         isAttachment: false,
-        queryType: ''
+        queryType: '',
+        text : "",
       };
 
       this.SpinnerService.show();
@@ -1296,7 +1299,8 @@ export class ResponderHeaderComponent implements OnInit {
         pageNumber: 1,
         pageSize: 10,
         isAttachment: false,
-        queryType: ''
+        queryType: '',
+        text : "",
       };
       this.commondata
         .GetChannelConversationDetail(this.filterDto)

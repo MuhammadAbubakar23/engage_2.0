@@ -396,7 +396,7 @@
         <li>
         </li>
       </ul>
-      <form [formGroup]="searchForm" (ngSubmit)="Search()">
+      <form [formGroup]="searchForm" (ngSubmit)="getConversationList()">
       <div class="search-filters" [ngClass]="advanceSearch?'active':''">
         <header class="d-flex align-items-center justify-content-between my-2">
           <h6 class="m-0">Filter Search </h6>
@@ -429,7 +429,7 @@
           <div class="row">
             <div class="col-12">
               <div class="form-floating mb-3">
-                <input class="form-control" id="Subject" placeholder="Subject" formControlName="text">
+                <input class="form-control" type="text" id="Subject" placeholder="Subject" [(ngModel)]="text" formControlName="text">
                 <label for="Subject">Subject</label>
               </div>
             </div>
@@ -660,7 +660,7 @@
           [ngStyle]="{'display': isCheckedAll==true  ? 'block' : 'none'}">
           All <strong>{{Ids.length}}</strong> conversations on this page are selected.
           <a class="all-conversation" *ngIf="ConversationList != null">Select all
-            <strong> {{ConversationList.length}}</strong>
+            <strong> {{TotalUnresponded}}</strong>
             conversations in Focused</a>
           <a class="clear-selection" style="display: none;">Clear selection</a>
         </div>
@@ -719,7 +719,7 @@
                   {{querry.message < 110 ? querry.message: (querry.message | slice:0:110) +'...'}} </div>
               </td>
               <td class="px-1">
-                <small>{{querry.createdDate | date:'MMMM, dd, YYYY, h:mm:ss a'}}</small>
+                <small>{{querry.createdDate | date:'h:mm:ss a'}}</small>
               </td>
 
               <!-- <td>

@@ -8,4 +8,5 @@ export class FiltersDto{
   pageSize : number=0;
   isAttachment : boolean = false;
   queryType : string = "";
+  text : string = "";
   }
