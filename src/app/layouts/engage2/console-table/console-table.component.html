@@ -1,8 +1,19 @@
 
+<!-- <ng-container *ngIf="vm$ | async as vm"> -->
 <div class="table-section table-scrool-y mb-3 query-container h-100 table-white">
     <ng-template [ngIf]="filter?.template?.toolbar=='top'">
-        <console-table-toolbar ></console-table-toolbar>
+        <!-- (onNext)="onNextPage" (onPrevious)="onPreviousPage" -->
+        <!-- <console-table-toolbar  ></console-table-toolbar> -->
+        <console-table-pagination 
+            [length]="pagingLength$"
+            [pageSize]="pagingSize$"
+            [pageSizeOptions]="pagingSizeOptions$"
+            (page)="paginator($event)"
+            (searchPageEvent)="seracher($event)"
+        >
+        </console-table-pagination>
     </ng-template>
+    
     <table class="table align-middle" width="100%">
         <thead>
             <tr>
@@ -35,8 +46,7 @@
                     </ng-template>
                     <ng-template [ngIf]="column.type=='icondisplay'">
                         <div class="d-flex align-items-center darkblue">
-                            <i class="fal fa-users coal me-2"></i>{{ row[column.index] }}
-                        </div>
+                            <i class="fal fa-users coal me-2"></i>{{ row[column.index] }}                        </div>
                     </ng-template>
                     <ng-template [ngIf]="column.type=='with-image'">
                         <console-table-with-image [columns]="column.index" [data]="row"></console-table-with-image>
@@ -59,3 +69,4 @@
 <ng-template >
     <overlay-right-panel [header]="'Add Team Members'" [isActive]="OverLayIsActive" [search]="true"></overlay-right-panel>
 </ng-template>
+<!-- </ng-container> -->

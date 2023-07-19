@@ -30,7 +30,7 @@
                                         <div class="floating-item mb-4">
                                             <div class="floating-wrap form-floating mb-2"
                                                 [ngClass]="{'was-validated' : teamForm.get('name')!.valid && teamForm.get('name')!.touched}">
-                                                <input [ngClass]="{'is-invalid' : (teamForm.get('name')!.errors && (teamForm.get('name')!.touched ||
+                                                <input [attr.disabled]="identity>0?'disabled':null" [ngClass]="{'is-invalid' : (teamForm.get('name')!.errors && (teamForm.get('name')!.touched ||
                                                 teamForm.get('name')!.dirty))}" formControlName="name" type="text"
                                                     class="form-control" id="name" placeholder="Sales Team">
                                                 <label for="name">Team Name</label>
@@ -56,7 +56,7 @@
                                         <div class="floating-item mb-4">
                                         <div [ngClass]="{'was-validated' : teamForm.get('description')!.valid && teamForm.get('description')!.touched}"
                                             class="floating-wrap form-floating mb-2">
-                                            <textarea [ngClass]="{'is-invalid' : (teamForm.get('description')!.errors && (teamForm.get('description')!.touched ||
+                                            <textarea [attr.disabled]="identity>0?'disabled':null" [ngClass]="{'is-invalid' : (teamForm.get('description')!.errors && (teamForm.get('description')!.touched ||
                                             teamForm.get('description')!.dirty))}" formControlName="description"
                                                 class="form-control" placeholder="Leave a comment here"
                                                 id="floatingTextarea2" style="height: 100px"></textarea>

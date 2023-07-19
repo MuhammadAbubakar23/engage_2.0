@@ -24,15 +24,16 @@ import { MenuState } from '../../menu-state/menu.state';
 export class SubRoleMenuComponent implements OnInit {
   SubMenuPages:any = [
     {name:"Console", slug:"console", parentId:400},
-    {name:"Analytics", slug:"analytic", parentId:470},
+    {name:"Analytics", slug:"analytics", parentId:470},
+    {name:"MultiTenant", slug:"multitenant", parentId:450}
   //  {name:"All Inbox", slug:"all-inbox", parentId:470},
   ];
-  SubMenuPage:any = {name:"Console", slug:"console", parentId:400} ;
+
+  SubMenuPage:any = {name:"Console", slug:"console", parentId:400};
 
   EmargeType$?:string;
   EmargeParent$?:number=400;//470
   EmargeShow$?:boolean=true;
-
   
   anymenus$ :any;
   menus$ :any;
@@ -54,107 +55,95 @@ export class SubRoleMenuComponent implements OnInit {
     let _self = this;
     
     router.events.subscribe((event: Event) => {
-    //   if (event instanceof NavigationEnd) {
-    //     // _self.SubMenuPage = this.SubMenuPages.filter(function(element:any) {
-    //     //   return event.url.toString().toLowerCase().includes(element.slug);
-    //     // }); // because return array index;
-    //     //// console.log(_self.SubMenuPage);
-    //     if(event.url.toString().toLowerCase().includes("undefined")){
+      if (event instanceof NavigationEnd) {
+        // _self.SubMenuPage = this.SubMenuPages.filter(function(element:any) {
+        //   return event.url.toString().toLowerCase().includes(element.slug);
+        // }); // because return array index;
+        //console.log(_self.SubMenuPage);
+        // if(event.url.toString().toLowerCase().includes("undefined")){
          
-    //     }
-    //     this.myUrl = event.url.toString().toLowerCase();
-    //     // else{
-    //       _self.SubMenuPages.forEach(function(subMenuPage:any) {
-    //         if(event.url.toString().toLowerCase().includes(subMenuPage.slug)){
-    //           _self.SubMenuPage = subMenuPage;
-    //         // console.log(subMenuPage);
-    //           //  _self.store.select(getEmarging(subMenuPage.slug)).subscribe((item) => {
-    //           //   // console.log(item);
-    //           //   _self.menus$ = _self.treegen.buildTree(item, subMenuPage.parentId);
-    //           //   // console.log(_self.menus$);
-    //           // });
-    //         }
-    //       });
-    //    // }
+        // }
+        // else{
+          console.log(event.url.toString());
+          _self.SubMenuPages.forEach(function(subMenuPage:any) {
+            if(event.url.toString().toLowerCase().includes(subMenuPage.slug)){
+              _self.SubMenuPage = subMenuPage;
+              console.log(subMenuPage);
+              //  _self.store.select(getEmarging(subMenuPage.slug)).subscribe((item) => {
+              //   console.log(item);
+              //   _self.menus$ = _self.treegen.buildTree(item, subMenuPage.parentId);
+              //   console.log(_self.menus$);
+              // });
+            }
+          });
+        //}
         
     
-    //   }
+      }
     });
   }
   ngOnInit(): void {
-   
-    // if(this.myUrl.includes("undefined")){
+    this.menus$ = [];
+    let _self = this;
+    console.log(_self.SubMenuPage);    
+    _self.store.select(getEmarging(_self.SubMenuPage.slug)).subscribe((item:any) => {
+      console.log(item);      
+      if(item.length > 0)
+        _self.menus$ = _self.treegen.buildTree(item, _self.SubMenuPage.parentId);      
+        console.log(_self.menus$);
+    });
 
-    // }else{
-    //   this.menus$ = [];
-    //   let _self = this;
-    //   // console.log(_self.SubMenuPage);
-    //   _self.store.select(getEmarging(_self.SubMenuPage.slug)).subscribe((item:any) => {
-    //     // console.log(item);
-        
-    //     if(item.length > 0)
-    //       _self.menus$ = _self.treegen.buildTree(item, _self.SubMenuPage.parentId);
-        
-    //       // console.log(_self.menus$);
-    //   });
-  
+    // this.router.events.subscribe((event: Event) => {
+    //   if (event instanceof NavigationStart) {        
+    //     _self.SubMenuPages.forEach(function(subMenuPage:any, index:number) {
+    //       console.log(subMenuPage);
+    //       if(event.url.toString().toLowerCase().includes(subMenuPage.slug)){
+    //         console.log(subMenuPage);
+    //         _self.EmargeType$ = subMenuPage.name;
+    //         _self.menu$ = _self.store.select(getEmarging(subMenuPage.slug)).subscribe((item) => {
+    //           // this.menus$ = item;
+    //           console.log(item);
+    //           _self.menus$ = _self.treegen.buildTree(item, subMenuPage.parentId);
+    //           console.log(_self.menus$);
+    //         });
+    //       }        
+    //     });
+        // let urlValue = event.url.toString().split('/');
 
-
-    // }
+        // const resultConsole = event.url.toString().toLowerCase().includes("console");
+        // const resultAnalytics = event.url.toString().toLowerCase().includes("analytics");
+        // if(resultConsole){
+        //   this.HeaderEmargeType="Console";
+        //   this.LoadDataEmargeType="console";
+        // }
+        // if(resultAnalytics){
+        //   this.HeaderEmargeType="Analytics";
+        //   this.LoadDataEmargeType="analytics";
+        // }
+        // console.log(resultConsole);
+        // console.log(resultAnalytics);
+        // console.log(event.url.toString().split('/'));
+        // if(event.url.toString())
+        // console.log('NavigationStart --- ', event.url);
+      // }
+    // });
+    // this.menu$ = this.store.select(getEmarging(this.LoadDataEmargeType)).subscribe((item) => {
+    //   this.menus$ = item;
+    //   console.log(item);
+    //   this.menus$ = this.treegen.buildTree(item, 400);
+    //   console.log(this.anymenus$);
+    // })
     
-    // // this.router.events.subscribe((event: Event) => {
-    // //   if (event instanceof NavigationStart) {
-        
-    // //     _self.SubMenuPages.forEach(function(subMenuPage:any, index:number) {
-    // //       // console.log(subMenuPage);
-    // //       if(event.url.toString().toLowerCase().includes(subMenuPage.slug)){
-    // //         // console.log(subMenuPage);
-    // //         _self.EmargeType$ = subMenuPage.name;
-    // //         _self.menu$ = _self.store.select(getEmarging(subMenuPage.slug)).subscribe((item) => {
-    // //           // this.menus$ = item;
-    //     // console.log(item);
-    // //           _self.menus$ = _self.treegen.buildTree(item, subMenuPage.parentId);
-    //    // console.log//(_self.menus$);
-    // //         });
-    // //       }
-        
-    // //     });
-    //     // let urlValue = event.url.toString().split('/');
-
-    //     // const resultConsole = event.url.toString().toLowerCase().includes("console");
-    //     // const resultAnalytics = event.url.toString().toLowerCase().includes("analytics");
-    //     // if(resultConsole){
-    //     //   this.HeaderEmargeType="Console";
-    //     //   this.LoadDataEmargeType="console";
-    //     // }
-    //     // if(resultAnalytics){
-    //     //   this.HeaderEmargeType="Analytics";
-    //     //   this.LoadDataEmargeType="analytics";
-    //     // }
-    //     // // console.log(resultConsole);
-    //     // // console.log(resultAnalytics);
-    //     // // console.log(event.url.toString().split('/'));
-    //     // if(event.url.toString())
-    //     // // console.log('NavigationStart --- ', event.url);
-    //   // }
-    // // });
-    // // this.menu$ = this.store.select(getEmarging(this.LoadDataEmargeType)).subscribe((item) => {
-    // //   this.menus$ = item;
-    // //   // console.log(item);
-    // //   this.menus$ = this.treegen.buildTree(item, 400);
-    // //   // console.log(this.anymenus$);
-    // // })
-    
-    // let main = this.storage.retrive("main","o").local;
-    // let selectedRole = this.storage.retrive("nocompass","O").local;
-    // this.SuperTeamSelected = selectedRole.id;  
-    // this.SuperTeamOptions = main.roles;
-    // //// console.log(this.SuperTeamOptions);
+    let main = this.storage.retrive("main","o").local;
+    let selectedRole = this.storage.retrive("nocompass","O").local;
+    this.SuperTeamSelected = selectedRole.id;  
+    this.SuperTeamOptions = main.roles;
+    //console.log(this.SuperTeamOptions);
    
 
-    // if(this.SuperTeamOptions.length >= 2){
-    //   this.SuperTeamShow = false;
-    // }
+    if(this.SuperTeamOptions.length >= 2){
+      this.SuperTeamShow = false;
+    }
   }
   
   updatevalue(string:any){    

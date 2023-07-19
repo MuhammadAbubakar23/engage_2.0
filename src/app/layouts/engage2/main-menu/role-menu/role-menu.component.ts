@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, share, startWith } from 'rxjs';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { loadMenusList, updateMenusList } from '../../menu-state/menu.actions';
+import { MenuModel } from '../../menu-state/menu.model';
 import { getEmargingEqual, getMenusLoading} from '../../menu-state/menu.selectors';
 import { MenuState } from '../../menu-state/menu.state';
 import { updatePermissionsLetters } from '../../permission-state/permission.actions';
@@ -21,11 +22,15 @@ export class RoleMenuComponent implements OnInit {
  // MenuModel = new MenuModel();
  permissions$ :any;
  permission$ :any;
- menus$ : any;
+ menus$?:MenuModel[];
+ //menu$ :Observable<MenuModel[]>;
  //menu$ :Observable<any>;
  loading$: any;
- constructor(private MenuStore: Store<MenuState>, private PermissionStore: Store<PermissionState>, private _route: Router) { 
+ constructor(private MenuStore: Store<MenuState>, 
+  private PermissionStore: Store<PermissionState>, 
+  private _route: Router) { 
   //  this.menu$ = this.MenuStore.select(getEmargingEqual("role_main_left_menu"));
+  //  this.menus$ = this.menu$.pipe(share(), startWith(false));
   //  this.loading$ = this.MenuStore.select(getMenusLoading);
   //  this.MenuStore.dispatch(updateMenusList());
    
@@ -35,21 +40,22 @@ export class RoleMenuComponent implements OnInit {
  }
 
  ngOnInit(): void {
-   this.MenuStore.select(getEmargingEqual("role_main_left_menu")).subscribe((item:any) => {
-    //  this.menus$ = [...item];
+   this.MenuStore.select(getEmargingEqual("role_main_left_menu"))
+   .subscribe((item:any) => {
+     this.menus$ = [...item];
    })
    
    // this.permissions$  = this.PermissionStore.select(getPermissionBySlug("_upur_"));
 
-   // // console.log(this.permissions$);
+   // console.log(this.permissions$);
    // .subscribe((item) => {
    //   this.menus$ = item;
    // })
-   // // console.log(this.menu$);
-   // // console.log("this.menu$");
+   // console.log(this.menu$);
+   // console.log("this.menu$");
  }
 
-  // assignedProfile = localStorage.getItem('assignedProfile');
+  assignedProfile = localStorage.getItem('assignedProfile');
 
   update(menuLink: any) {
     

@@ -157,13 +157,16 @@
                               <div *ngIf="f['confirmpassword']!.errors?.['required']">
                                 Confirm Password is required!
                               </div>
+                              <div *ngIf="f['confirmpassword']!.errors?.['mismatch']">
+                                Passwords don't match.
+                              </div>
                             </div>
                             <div class="valid-feedback"
                               *ngIf="f['confirmpassword']!.valid && f['confirmpassword']!.touched">
                               Looks Good!
                             </div>
-                            <div *ngIf="f['confirmpassword']!.errors?.['matching']">
-                              Confirm Password does not match
+                            <div *ngIf="f['confirmpassword']!.errors?.['mismatch']">
+                              Passwords don't match.
                             </div>
                           </div>
                         </div>
@@ -172,7 +175,8 @@
                             [ngClass]="{'was-validated' : userForm.get('team')!.valid && userForm.get('team')!.touched}"
                             class="form-floating mb-2">
                             <select [ngClass]="{'is-invalid' : (userForm.get('team')!.errors && (userForm.get('team')!.touched ||
-                          userForm.get('team')!.dirty))}" class="form-select " id="team" formControlName="team"
+                              userForm.get('team')!.dirty))}"
+                              class="form-select " id="team" formControlName="team"
                               aria-label="Default select  example">
                               <option disabled>Select Team</option>
                               <option value="1">Corporate Teams</option>
@@ -282,9 +286,6 @@
                           </span>
                         </li>
                       </ul>
-
-
-
                     </div>
                   </div>
                 </div>

@@ -38,6 +38,13 @@ import { CardBoxListCheckboxComponent } from './engage2/card-box-list/card-box-l
 import { permissionReducer } from './engage2/permission-state/permission.reducer';
 import { AdminContentComponent } from './engage2/admin-content/admin-content.component';
 import { AdminMenuComponent } from './engage2/admin-content/admin-menu/admin-menu.component';
+
+import { ConsoleTableComponent } from './engage2/console-table/console-table.component';
+import { ConsoleTableToolbarComponent } from './engage2/console-table/console-table-toolbar/console-table-toolbar.component';
+import { ConsoleTableWrapComponent } from './engage2/console-table/console-table-wrap/console-table-wrap.component';
+import { ConsoleTableActionComponent } from './engage2/console-table/console-table-action/console-table-action.component';
+import { ConsoleTableActionListComponent } from './engage2/console-table/console-table-action-list/console-table-action-list.component';
+import { ConsoleTableWithImageComponent } from './engage2/console-table/console-table-with-image/console-table-with-image.component';
 import { ConsoleTableColumnsComponent } from './engage2/console-table/console-table-columns/console-table-columns.component';
 import { ConsoleTableCheckboxComponent } from './engage2/console-table/console-table-checkbox/console-table-checkbox.component';
 import { ConsoleTableVisibilityPipe } from './engage2/console-table/console-table-visibility.pipe';

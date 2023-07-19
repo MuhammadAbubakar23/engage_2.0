@@ -1,4 +1,6 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { RequestService } from 'src/app/shared/services/request/request.service';
 
 @Injectable({
@@ -6,8 +8,22 @@ import { RequestService } from 'src/app/shared/services/request/request.service'
 })
 export class ConsoleTableService {
 
-  constructor(private reqser:RequestService) { }
+  constructor(private api:RequestService) { }
+  //private readonly _http = inject(HttpClient);
 
+  getItems<T>(offset?: number, pageSize?: number): Observable<T[]> {
+    const params = new HttpParams({
+      fromObject: {
+        _start: offset ?? 0,
+        _limit: pageSize ?? 10,
+      },
+    });
+    return of([]);
+    // return this._http.get<T[]>(
+    //   "https://jsonplaceholder.typicode.com/todos",
+    //   { params }
+    // );
+  }
   GetAll(url:string, filter:any){
 
 

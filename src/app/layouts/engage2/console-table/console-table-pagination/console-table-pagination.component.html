@@ -1,1 +1,107 @@
-<p>console-table-pagination works!</p>
+<div class="table-toolbar" *ngIf="vm$ | async as vm">
+    <div class="filter-toolbar">
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="list-inline m-0 d-flex align-items-center">
+                    
+                    <li class="list-inline-item">
+                        <a href="javascript:" class="search-btn">
+                            <button class="iconButton medium">
+                                <i class="fal fa-search silver"></i>
+                            </button>
+                            <input placeholder="Search" id="search" name="search" (change)="serachPage(serachPageItem.value)" #serachPageItem>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <!-- {{vm}} -->
+                        <!-- <ng-template *ngIf="vm.pageSizeOptions.length>1" > -->
+                            <select
+                                [value]="vm.pageSize"
+                                (change)="changePageSize($any($event).target.value)"
+                                class="js-example-basic-single form-select" 
+                                data-select2-id="select2-data-1-h8d3"
+                                tabindex="-1" 
+                                aria-hidden="true">
+                                <option *ngFor="let pageSizeOption of vm.pageSizeOptions" [ngValue]="pageSizeOption">{{ pageSizeOption }}</option>
+                            </select>
+                        <!-- </ng-template> -->
+                        <ng-template *ngIf="$any(vm).pageSizeOptions.length <= 1">{{vm.pageSize}}</ng-template>
+                        <!-- <span class="select2 select2-container select2-container--default" dir="ltr"
+                            data-select2-id="select2-data-2-3v09" style="width: 107px;"><span
+                                class="selection"><span class="select2-selection select2-selection--single"
+                                    role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                    aria-disabled="false" aria-labelledby="select2-30ba-container"
+                                    aria-controls="select2-30ba-container"><span
+                                        class="select2-selection__rendered" id="select2-30ba-container"
+                                        role="textbox" aria-readonly="true" title="All ">All </span><span
+                                        class="select2-selection__arrow" role="presentation"><b
+                                            role="presentation"></b></span></span></span><span
+                                class="dropdown-wrapper" aria-hidden="true"></span></span> -->
+
+                    </li>
+                    <li class="list-inline-item refreshicon" aria-label="..." data-bs-toggle="tooltip"
+                        data-bs-placement="bottom" data-bs-original-title="Refresh">
+                        <i class="fal fa-redo"></i>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4 d-flex align-items-center justify-content-end">
+                <!-- <ng-template *ngIf="vm.pageSizeOptions.length > 1" >
+                    <select
+                        [value]="vm.pageSize"
+                        (selectionChange)="changePageSize($any($event).value)"
+                        class="form-input form-select" 
+                        tabindex="-1" 
+                        aria-hidden="true">
+                        <option *ngFor="let pageSizeOption of vm.pageSizeOptions" [value]="pageSizeOption">{{ pageSizeOption }}</option>
+                    </select>
+            
+                </ng-template> -->
+                
+                <!-- {{vm.pageSizeOptions.length}} -->
+                <div class="selected-row" style="display: none;">
+                    Selected 
+                    <span class="badge skyBg rounded-pill">05<span>
+                        </span></span>
+                </div>
+                <div class="pagination-bar">
+                    <span>{{vm.rangeLabel}}</span>
+                    <!-- <span 
+                    (click)="firstPage()"
+                    [attr.aria-label]="'First Page'"
+                    [attr.disabled]="!vm.hasPreviousPage"
+                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                        <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160zm352-160l-160 160c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L301.3 256 438.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0z"/></svg>
+                    </span> -->
+                    <span 
+                    (click)="previousPage()"
+                    [attr.aria-label]="'Previous Page'"
+                    [attr.disabled]="!vm.hasPreviousPage"
+                    >
+                        <i class="fal fa-chevron-left"></i>
+                    </span>
+                    <span 
+                        (click)="nextPage()"
+                        [attr.aria-label]="'Next Page'"
+                        [attr.disabled]="!vm.hasNextPage"
+                    >
+                        <i class="fal fa-chevron-right"></i>
+                    </span>
+                    <!-- <span 
+                        (click)="lastPage()"
+                        [attr.aria-label]="'Last Page'"
+                        [attr.disabled]="!vm.hasNextPage"
+                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+                        <path d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z"/>
+                    </svg>
+                    </span> -->
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+    
+</div>

@@ -15,8 +15,8 @@ export class CompaniesRolesResolver implements  Resolve<MenuModel[]> {
   constructor(private _companies:CompaniesService){}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MenuModel[] | Observable<MenuModel[]> | Promise<MenuModel[]>  {
-
-    return this._companies.getAllParams("permissions");//.subscribe((response:any) => this.resroles = response);
+    //console.log(route.paramMap.get('id'));
+    return this._companies.getAllParams("permissions", {id:route.paramMap.get('id')});//.subscribe((response:any) => this.resroles = response);
     //return of(true);
   }
 }

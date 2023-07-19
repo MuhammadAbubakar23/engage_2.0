@@ -23,13 +23,13 @@ export class UsersComponent implements OnInit {
   filter?: Observable<ConsoleTableParams>;
   showConsoleTable:boolean= false;
   // header: string[] =  ["Users","Roles", "Teams", ""];
-  // url:string = "GetAllUsers";
+  // url:string = "AllUsers";
   // actions: any[] = [
   //     {name:"Edit", type:"rute", actionUrl:"console/users/create", icon:"fal fa-edit me-2"}
   //   , {name:"delete", type:"service" , actionUrl:"DeleteUser", icon:"fal fa-trash me-2"}
   // ];
   // filter: {} ={ search:""
-  //             , url : "GetAllUsers" 
+  //             , url : "AllUsers" 
   //             , pageno:1
   //             , pagesize:50
   //             //, 
@@ -52,36 +52,32 @@ export class UsersComponent implements OnInit {
   async ngOnInit() {
     let _self = this;
    // this.filter = async () => await this._Activatedroute.snapshot.data["userJ"]
-    // console.log(this.filter);
+    console.log(this.filter);
     this.filter = await this._Activatedroute.snapshot.data["userJ"];
-    // console.log(this.filter);
+    console.log(this.filter);
     if(typeof this.filter !== 'undefined'){
       this.showConsoleTable = true;
     }
-    // // console.log(this.filter);
+    // console.log(this.filter);
     // this.filter.then((a) =>_self.filters = a);
-
-    // // console.log(Promise.resolve(this.filter));
-    // // console.log(this.filters);
+    // console.log(Promise.resolve(this.filter));
+    // console.log(this.filters);
     // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));
     //loadUsers();
   }
   // pageddata(event) {
   //   this._fetchData(event, this.pagesize)
-
   // }
   // filterdata() {
   //   this._fetchData(this.page, this.pagesize);
   // }
   // private _fetchData(page: number, pagesize: number) {
   //   this._userService.GetAll(page, pagesize, this.filter).subscribe((next: any) => {
-    
   //     this.Data = next.data.item1;
   //     this.total = next.data.item2 * this.pagesize
-
   //   }, error => {
-  //     // console.log(error);
+  //     console.log(error);
   //   });
   // }
   
@@ -92,7 +88,6 @@ export class UsersComponent implements OnInit {
   changeFilters(e:any){
     this.filters = e.target.value;
   }
-
   updatevalue(string:any){
     this.headerService.updateMessage(string);
   }

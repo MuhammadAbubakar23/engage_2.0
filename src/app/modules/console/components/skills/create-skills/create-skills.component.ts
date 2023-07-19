@@ -42,7 +42,7 @@ export class CreateSkillsComponent implements OnInit {
   }
 
   onSubmit() : void {
-    // console.log(this.userForm.value);
+    console.log(this.userForm.value);
   }
   
   AddTeamMembers(){

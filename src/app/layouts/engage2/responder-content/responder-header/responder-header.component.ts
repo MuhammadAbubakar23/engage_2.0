@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  DoCheck,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Tooltip } from 'bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -273,7 +280,7 @@ export class ResponderHeaderComponent implements OnInit {
   getRouteParam(route: any) {
     this.param = route;
     localStorage.setItem('path', this.param);
-    // // // console.log(localStorage.getItem('path'));
+    // // console.log(localStorage.getItem('path'));
   }
 
   draftDto = new DraftDto();

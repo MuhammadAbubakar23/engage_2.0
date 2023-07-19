@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CompaniesResolver } from './components/companies/companies.resolver';
+// import { CompaniesResolver } from './components/companies/companies.resolver';
 import { MultitenantComponent } from './multitenant.component';
 import { MultitenantGuard } from './multitenant.guard';
 import { CompaniesJsonResolver } from './resolver/companies-json.resolver';
 import { CompaniesPropResolver } from './resolver/companies-prop.resolver';
 import { CompaniesRolesResolver } from './resolver/companies-roles.resolver';
 import { CompaniesTeamsResolver } from './resolver/companies-teams.resolver';
+import { CompanyResolver } from './resolver/company.resolver';
 
 const routes: Routes = [{ 
   path: '', 
@@ -32,6 +33,7 @@ const routes: Routes = [{
       companiesprops: CompaniesPropResolver,
       companiesroles: CompaniesRolesResolver,
       companiesteams: CompaniesTeamsResolver,
+      companies: CompanyResolver
     },
   }] 
 }];

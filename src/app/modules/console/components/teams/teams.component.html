@@ -50,10 +50,11 @@
                 </div>
             </div>
             <ng-template [ngIf]="showConsoleTable">
-                <console-table [filter]="filter" [TableModel]="model" ></console-table>
+                <console-table [filter]="filter" [TableModel]="model" [identifire]="identifire" ></console-table>
             </ng-template>
-            
-
+            <!-- <ng-template [ngIf]="showConsoleTable">
+                <console-table [filter]="filter" [TableModel]="model" ></console-table>
+            </ng-template> -->
             <!-- <div class="filter-container checkbox-reset">
                 <ul class="list-group list-group-horizontal border-0">
                     <li class="list-group-item border-0 all-check-boxes">

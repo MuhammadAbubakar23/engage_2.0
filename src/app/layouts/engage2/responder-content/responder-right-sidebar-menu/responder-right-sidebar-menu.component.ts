@@ -37,34 +37,34 @@ export class ResponderRightSidebarMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.menu$ = this.store
-    //   .select(getEmargingEqual('team_inbox_right_menu'))
-    //   .subscribe((item: any) => {
-    //     for (let key in item) {
-    //       // // console.log(item)
-    //       let obj = {
-    //         mainId: item[key].mainId,
-    //         emerging: item[key].emerging,
-    //         baseId: item[key].baseId,
-    //         icon: item[key].icon,
-    //         name: item[key].name,
-    //         slug: item[key].slug,
-    //         link: item[key].link,
-    //         indexNo: item[key].indexNo,
-    //       };
+    this.menu$ = this.store
+      .select(getEmargingEqual('team_inbox_right_menu'))
+      .subscribe((item: any) => {
+        for (let key in item) {
+          // console.log(item)
+          let obj = {
+            mainId: item[key].mainId,
+            emerging: item[key].emerging,
+            baseId: item[key].baseId,
+            icon: item[key].icon,
+            name: item[key].name,
+            slug: item[key].slug,
+            link: item[key].link,
+            indexNo: item[key].indexNo,
+          };
 
-    //       // this.menus$ = item;
+          // this.menus$ = item;
 
-    //       item.forEach((menu:any) => {
-    //         if(menu.mainId != 220){
-    //           if(!this.menus$.includes(menu)){
-    //             this.menus$.push(menu);
-    //           }
+          item.forEach((menu:any) => {
+            if(menu.mainId != 220){
+              if(!this.menus$.includes(menu)){
+                this.menus$.push(menu);
+              }
               
-    //         }
-    //       });
-    //     }
-    //   });
+            }
+          });
+        }
+      });
 
     // Array.from(document.querySelectorAll('[data-bs-toggle]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));
