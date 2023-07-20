@@ -95,12 +95,12 @@ export class EmailComponent implements OnInit {
       // teamId: new FormControl(0),
       platform: new FormControl(''),
       contentType: new FormControl(''),
-      to: new FormControl('', [Validators.required, this.validateEmails]),
+      to: new FormControl('', [Validators.required, Validators.pattern(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4}[\s;]*)*$/)]),
       cc: new FormControl('', [
-        Validators.pattern(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4}[\s,]*)*$/),
+        Validators.pattern(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4}[\s;]*)*$/),
       ]),
       bcc: new FormControl('', [
-        Validators.pattern(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4}[\s,]*)*$/),
+        Validators.pattern(/^([\w+-.%]+@[\w-.]+\.[A-Za-z]{2,4}[\s;]*)*$/),
       ]),
       subject: new FormControl(''),
       profileId: new FormControl(''),
@@ -936,6 +936,7 @@ export class EmailComponent implements OnInit {
           this.postType = comment.contentType;
           this.emailTo = comment.to;
           this.userProfileId = this.Emails[0].user.id;
+          this.text = '';
 
           if (comment.bcc) {
             this.emailBcc = comment.bcc;
@@ -1001,6 +1002,7 @@ export class EmailComponent implements OnInit {
           this.emailFromInString = this.senderEmailAddress;
           this.emailCcInString = '';
           this.userProfileId = this.Emails[0].user.id;
+          this.text = '';
         }
       });
     });
