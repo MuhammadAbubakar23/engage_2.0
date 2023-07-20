@@ -33,7 +33,8 @@ export class InboxHeaderComponent implements OnInit {
       pageNumber : this.pageNumber,
       pageSize : this.pageSize,
       isAttachment: false,
-      queryType: ''
+      queryType: '',
+      text : "",
       
     }
     this.commonService.GetConversationList(this.filterDto).subscribe((res:any)=>{

@@ -267,7 +267,8 @@ export class LinkedInComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
+        text : "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -321,7 +322,8 @@ export class LinkedInComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
+        text : "",
       };
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         this.LinkedInData = res.List;
@@ -367,7 +369,8 @@ export class LinkedInComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
+        text : "",
       };
       this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
         this.LinkedInData = res.List;

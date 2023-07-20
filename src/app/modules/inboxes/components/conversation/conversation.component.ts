@@ -15,6 +15,7 @@ import { UpdateListService } from 'src/app/services/UpdateListService/update-lis
 import { GetAgentReportDto } from 'src/app/shared/Models/GetAgentReportDto';
 import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
 import { RemoveAssignedQuerryService } from 'src/app/services/RemoveAssignedQuery/remove-assigned-querry.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-conversation',
@@ -51,6 +52,10 @@ export class ConversationComponent implements OnInit {
   public criteria!: SortCriteria;
   public subscription!: Subscription;
 
+  searchForm !: FormGroup;
+
+  text:string='';
+
   constructor(
     private fetchId: FetchIdService,
     private SpinnerService: NgxSpinnerService,
@@ -67,6 +72,19 @@ export class ConversationComponent implements OnInit {
       property: 'createdDate',
       descending: true,
     };
+
+    this.searchForm = new FormGroup({
+      // agentId: new FormControl(0),
+      // user: new FormControl(""),
+      // plateForm: new FormControl(""),
+      // fromDate: new FormControl("2022-07-18T06:41:38.777Z"),
+      // toDate: new FormControl("2023-07-18T06:41:38.777Z"),
+      // isAttachment: new FormControl(false),
+      // queryType: new FormControl(""),
+      text: new FormControl(""),
+      // pageNumber: new FormControl(1),
+      // pageSize: new FormControl(20),
+    })
 
     // this.currentDate = this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm:ss.SSSSSS')
   }
@@ -93,39 +111,39 @@ export class ConversationComponent implements OnInit {
         this.removeAssignedQueryListener(res);
       });
 
-      setInterval(() => {
-        if (this.ConversationList.length > 0) {
-          this.TodayDate = new Date();
-          this.ConversationList?.forEach((group: any) => {
-            group.items.forEach((item:any) => {
-              const twentyMinutesInMs = 20 * 60 * 1000; // 20 minute in milliseconds
-            const fortyMinutesInMs = 40 * 60 * 1000; // 40 minute in milliseconds
-            const time = new Date(item.createdDate);
-            const timeDifference = this.TodayDate.getTime() - time.getTime();
-            if (
-              timeDifference > twentyMinutesInMs &&
-              timeDifference < fortyMinutesInMs
-            ) {
-              this.alertWarning = true;
-              item['slaFlag'] = 'warning';
-            }
-            if (timeDifference > fortyMinutesInMs) {
-              this.alertDanger = true;
-              this.alertWarning = false;
-              item['slaFlag'] = 'danger';
-            } else if (
-              timeDifference < twentyMinutesInMs &&
-              timeDifference < fortyMinutesInMs
-            ) {
-              this.alertDanger = false;
-              this.alertWarning = false;
-              item['slaFlag'] = 'unread';
-            }
-            });
-            
+    setInterval(() => {
+      if (this.ConversationList.length > 0) {
+        this.TodayDate = new Date();
+        this.ConversationList?.forEach((group: any) => {
+          group.items.forEach((item:any) => {
+            const twentyMinutesInMs = 20 * 60 * 1000; // 20 minute in milliseconds
+          const fortyMinutesInMs = 40 * 60 * 1000; // 40 minute in milliseconds
+          const time = new Date(item.createdDate);
+          const timeDifference = this.TodayDate.getTime() - time.getTime();
+          if (
+            timeDifference > twentyMinutesInMs &&
+            timeDifference < fortyMinutesInMs
+          ) {
+            this.alertWarning = true;
+            item['slaFlag'] = 'warning';
+          }
+          if (timeDifference > fortyMinutesInMs) {
+            this.alertDanger = true;
+            this.alertWarning = false;
+            item['slaFlag'] = 'danger';
+          } else if (
+            timeDifference < twentyMinutesInMs &&
+            timeDifference < fortyMinutesInMs
+          ) {
+            this.alertDanger = false;
+            this.alertWarning = false;
+            item['slaFlag'] = 'unread';
+          }
           });
-        }
-      }, 1000);
+          
+        });
+      }
+    }, 1000);
   }
 
   totalPageNumbers: any;
@@ -143,6 +161,10 @@ export class ConversationComponent implements OnInit {
   from: number = 0;
 
   getConversationList() {
+
+    this.searchForm.patchValue({
+      text : this.text
+    })
     this.filterDto = {
       // fromDate : new Date(),
       // toDate : new Date(),
@@ -152,14 +174,16 @@ export class ConversationComponent implements OnInit {
       pageNumber: this.pageNumber,
       pageSize: this.pageSize,
       isAttachment: this.isAttachment,
-      queryType: ''
+      queryType: '',
+      text : this.searchForm.value.text
     };
     this.SpinnerService.show();
     this.commondata
       .GetConversationList(this.filterDto)
       .subscribe((res: any) => {
-        debugger
+        
         this.SpinnerService.hide();
+        this.advanceSearch = false;
         this.ConversationList = res.List;
         this.TotalUnresponded = res.TotalCount;
 
@@ -339,26 +363,32 @@ export class ConversationComponent implements OnInit {
     });
     this.changeDetect.detectChanges();
   }
+
   removeAssignedQueryListener(res: any) {
-    const index = this.ConversationList.findIndex(
-      (x) => x.profileId == res.profileId
-    );
-    if (index !== -1) {
-      this.ConversationList.splice(index, 1);
-      this.TotalUnresponded = this.TotalUnresponded - 1;
-      this.from = this.from - 1;
-    }
-    this.changeDetect.detectChanges();
+    this.ConversationList.forEach((group)=>{
+      const index = group.items.findIndex(
+        (x:any) => x.profileId == res.profileId
+      );
+      if (index !== -1) {
+        group.items.splice(index, 1);
+        this.TotalUnresponded = this.TotalUnresponded - 1;
+        this.from = this.from - 1;
+      }
+      this.changeDetect.detectChanges();
+    })
+    
   }
 
   Reload() {
     this.TotalUnresponded = 0;
     this.Ids = [];
-    this.getConversationList();
-
     this.isChecked = false;
     this.isCheckedAll = false;
     this.masterSelected = false;
+    this.searchForm.reset();
+    this.text = "";
+    this.advanceSearch = false;
+    this.getConversationList();
   }
 
   updatevalue(
@@ -468,69 +498,75 @@ export class ConversationComponent implements OnInit {
   }
 
   checkUncheckAll(evt: any) {
-    this.ConversationList.forEach(
-      (c: any) => (c.isChecked = evt.target.checked)
-    );
-    this.masterSelected = this.ConversationList.every(
-      (l: any) => l.isChecked == true
-    );
-    if (this.masterSelected == true) {
-      this.ConversationList.forEach((d: any) => {
-        // var abc = this.Ids.find(
-        //   (x) => x.Id == d.id && x.Platform == d.Platform
-        // );
-        if (!this.Ids.includes(d.id)) {
-          this.Ids.push(d.id);
-        }
-      });
-      //  // // console.log(this.Ids);
-      this.isChecked = true;
-      this.isCheckedAll = true;
-    } else {
-      this.ConversationList.forEach((d: any) => {
-        for (var i = 0; i <= this.Ids.length; i++) {
-          var abc = this.Ids.find((x) => x.Id == d.id);
-          this.Ids.splice(abc, 1);
-        }
-      });
-      //  // // console.log(this.Ids);
-      this.isChecked = false;
-      this.isCheckedAll = false;
-    }
+    this.ConversationList.forEach((group)=>{
+      group.items.forEach(
+        (c: any) => (c.isChecked = evt.target.checked)
+      );
+      this.masterSelected = group.items.every(
+        (l: any) => l.isChecked == true
+      );
+      if (this.masterSelected == true) {
+        group.items.forEach((d: any) => {
+          // var abc = this.Ids.find(
+          //   (x) => x.Id == d.id && x.Platform == d.Platform
+          // );
+          if (!this.Ids.includes(d.id)) {
+            this.Ids.push(d.id);
+          }
+        });
+        //  // // console.log(this.Ids);
+        this.isChecked = true;
+        this.isCheckedAll = true;
+      } else {
+        group.items.forEach((d: any) => {
+          for (var i = 0; i <= this.Ids.length; i++) {
+            var abc = this.Ids.find((x) => x.Id == d.id);
+            this.Ids.splice(abc, 1);
+          }
+        });
+        //  // // console.log(this.Ids);
+        this.isChecked = false;
+        this.isCheckedAll = false;
+      }
+    });
+    
   }
 
   isAllSelected(evt: any, index: any, platform: any) {
     let id = Number(evt.target.value);
     if (index >= 0 && evt.target.checked == true) {
       this.Ids.push(id);
-      //  // // console.log(this.Ids);
     }
     if (evt.target.checked == false) {
       var abc = this.Ids.find((x) => x.Id == id);
       this.Ids.splice(abc, 1);
     }
-    this.ConversationList[index].isChecked = evt.target.checked;
-    this.masterSelected = this.ConversationList.every(
-      (l: any) => l.isChecked == true
-    );
-
-    let checkselectedlogs = this.ConversationList.find(
-      (x: any) => x.isChecked == true
-    );
-    if (this.masterSelected == true) {
-      this.isChecked = true;
-      this.isCheckedAll = true;
-    } else if (checkselectedlogs != undefined) {
-      this.isChecked = true;
-      this.isCheckedAll = false;
-    } else {
-      this.isChecked = false;
-      this.isCheckedAll = false;
-    }
+    this.ConversationList.forEach((group)=>{
+      group.items[index].isChecked = evt.target.checked;
+      this.masterSelected = group.items.every(
+        (l: any) => l.isChecked == true
+      );
+  
+      let checkselectedlogs = group.items.find(
+        (x: any) => x.isChecked == true
+      );
+      if (this.masterSelected == true) {
+        this.isChecked = true;
+        this.isCheckedAll = true;
+      } else if (checkselectedlogs != undefined) {
+        this.isChecked = true;
+        this.isCheckedAll = false;
+      } else {
+        this.isChecked = false;
+        this.isCheckedAll = false;
+      }
+    });
+    
   }
 
   remaining: number = 0;
   NextPage(pageNumber: any) {
+    
     if (this.TotalUnresponded < this.from) {
       this.from = this.TotalUnresponded;
     }
@@ -596,5 +632,21 @@ export class ConversationComponent implements OnInit {
         document.body.removeChild(a);
         // console.log(res);
       });
+  }
+
+  advanceSearch:boolean=false;
+
+  AdvanceSearch(){
+    this.advanceSearch = !this.advanceSearch;
+  }
+
+  CloseAdvanceSearch(){
+    this.advanceSearch = false;
+  }
+
+  ResetSearchForm(){
+    this.searchForm.reset();
+    this.text = "";
+    this.getConversationList();
   }
 }

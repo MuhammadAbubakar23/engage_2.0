@@ -253,6 +253,7 @@ export class FacebookComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        text : "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -319,6 +320,7 @@ export class FacebookComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        text : "",
       };
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         this.FacebookData = res.List;
@@ -379,6 +381,7 @@ export class FacebookComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        text : "",
       };
 
       this.SpinnerService.show();
@@ -726,6 +729,7 @@ export class FacebookComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        text : "",
       };
 
       this.SpinnerService.show();
@@ -777,6 +781,7 @@ export class FacebookComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        text : "",
       };
 
       this.SpinnerService.show();
@@ -835,6 +840,7 @@ export class FacebookComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        text : "",
       };
 
       this.SpinnerService.show();

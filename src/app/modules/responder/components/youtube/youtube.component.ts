@@ -241,7 +241,8 @@ export class YoutubeComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
+        text : "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -311,7 +312,8 @@ export class YoutubeComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
+        text : "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -365,7 +367,8 @@ export class YoutubeComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
+        text : "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();

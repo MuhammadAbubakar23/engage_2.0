@@ -390,21 +390,21 @@
                     </ul>
                   </div>
                 </li> -->
-        <!-- <li class="list-inline-item">
-                  <a href="#0" class="advance-search-o fw-bold sky btn">Advance Search</a>
-                </li> -->
+        <li class="list-inline-item">
+                  <a class="advance-search-o fw-bold sky btn" (click)="AdvanceSearch()">Advance Search</a>
+                </li>
         <li>
         </li>
       </ul>
-
-      <div class="search-filters">
+      <form [formGroup]="searchForm" (ngSubmit)="getConversationList()">
+      <div class="search-filters" [ngClass]="advanceSearch?'active':''">
         <header class="d-flex align-items-center justify-content-between my-2">
           <h6 class="m-0">Filter Search </h6>
           <div class="d-flex align-items-center">
-            <span class="iconButton small iconHover me-2">
+            <span class="iconButton small iconHover me-2" (click)="ResetSearchForm()">
               <i class="fa-light fa-arrows-rotate"></i>
             </span>
-            <span class="iconButton small iconHover closefilter lightGreyBg">
+            <span class="iconButton small iconHover closefilter lightGreyBg" (click)="CloseAdvanceSearch()">
               <i class="fa-light fa-xmark"></i>
             </span>
           </div>
@@ -413,7 +413,7 @@
         </header>
         <div class="search-body">
           <div class="row">
-            <div class="col-6">
+            <!-- <div class="col-6">
               <div class="form-floating mb-3">
                 <input class="form-control" id="from" placeholder="From">
                 <label for="from">From</label>
@@ -424,23 +424,23 @@
                 <input class="form-control" id="to" placeholder="To">
                 <label for="to">To</label>
               </div>
-            </div>
+            </div> -->
           </div>
           <div class="row">
-            <div class="col-6">
+            <div class="col-12">
               <div class="form-floating mb-3">
-                <input class="form-control" id="Subject" placeholder="Subject">
+                <input class="form-control" type="text" id="Subject" placeholder="Subject" [(ngModel)]="text" formControlName="text">
                 <label for="Subject">Subject</label>
               </div>
             </div>
-            <div class="col-6">
+            <!-- <div class="col-6">
               <div class="form-floating mb-3">
                 <input class="form-control" id="incwords" placeholder="Includes the words">
                 <label for="incwords">Includes the words</label>
               </div>
-            </div>
+            </div> -->
           </div>
-          <div class="form-floating mb-3">
+          <!-- <div class="form-floating mb-3">
             <input class="form-control" id="ddh" placeholder="Doesn't have">
             <label for="ddh">Doesn't have</label>
           </div>
@@ -512,25 +512,25 @@
               <input class="form-check-input" type="checkbox" id="dontinccharts" value="option2">
               <label class="form-check-label" for="dontinccharts">Don't include chats</label>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <footer class="py-3">
           <div class="buttons-wrap d-flex justify-content-end">
-            <button type="button" class="btn btn-outline-secondary closefilter">Cancel</button>
-            <button type="button" class="btn btn-success ms-2 px-4">Apply</button>
+            <button type="button" class="btn btn-outline-secondary closefilter" (click)="CloseAdvanceSearch()">Cancel</button>
+            <button type="submit" class="btn btn-success ms-2 px-4">Apply</button>
           </div>
         </footer>
       </div>
-
+    </form>
 
     </div>
     <div class="filter-container">
       <ul class="list-group list-group-horizontal border-0">
         <li class="list-group-item border-0 all-check-boxes">
-          <input class="form-check-input me-1" type="checkbox" aria-label="..." data-bs-toggle="tooltip"
+          <!-- <input class="form-check-input me-1" type="checkbox" aria-label="..." data-bs-toggle="tooltip"
             data-bs-placement="bottom" title="" data-bs-original-title="Check All" [checked]="masterSelected" value="m1"
-            (change)="checkUncheckAll($event)">
+            (change)="checkUncheckAll($event)"> -->
           <div class="dropdown">
             <!-- <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -660,7 +660,7 @@
           [ngStyle]="{'display': isCheckedAll==true  ? 'block' : 'none'}">
           All <strong>{{Ids.length}}</strong> conversations on this page are selected.
           <a class="all-conversation" *ngIf="ConversationList != null">Select all
-            <strong> {{ConversationList.length}}</strong>
+            <strong> {{TotalUnresponded}}</strong>
             conversations in Focused</a>
           <a class="clear-selection" style="display: none;">Clear selection</a>
         </div>
@@ -668,19 +668,20 @@
         <table class="table">
           <tbody>
             <ng-container *ngFor="let group of ConversationList">
-              <tr>
-                <td colspan="6">
-                  <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
-                </td>
-              </tr>
+            <tr>
+              <td colspan="6">
+                <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
+              </td>
+            </tr>
             <!-- [ngClass]="[alertWarning == true?'alert-warning':'', alertDanger == true?'alert-danger':'']" -->
             <tr *ngFor="let querry of group.items | sort:criteria; let i = index"
               [class.selected]="querry.isChecked==true" class="alert" 
               [ngClass]="[querry.slaFlag == 'warning'?'alert-warning':'' || querry.slaFlag == 'danger'?'alert-danger':'' ||
               querry.slaFlag == 'unread'?'unread':'']">
-              <td style="width: 40px;"><input [checked]="querry.isChecked" value="{{querry.id}}"
+              <!-- <td style="width: 40px;"><input [checked]="querry.isChecked" value="{{querry.id}}"
                   (change)="isAllSelected($event, i, querry.platform)" class="form-check-input me-1" type="checkbox"
-                  aria-label="..."></td>
+                  aria-label="...">
+              </td> -->
               <td style="width: 40px;">
                 <i *ngIf="querry.platform == 'Facebook'" class="fab fa-facebook navytext" data-bs-toggle="tooltip"
                   data-bs-placement="bottom" title="" data-bs-original-title="Facebook" aria-label="Facebook"></i>
@@ -700,7 +701,8 @@
                   data-bs-placement="bottom" data-bs-original-title="Webchat" aria-label="Webchat"></i>
                 <i *ngIf="querry.platform == 'LinkedIn'" class="fa-brands fa-linkedin-in linkedinTxt"
                   data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="LinkedIn"
-                  aria-label="LinkedIn"></i>
+                  aria-label="LinkedIn">
+                </i>
               </td>
               <td style="width: 300px;">
                 <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
@@ -805,7 +807,7 @@
                         </div>
                       </td> -->
 
-              <td class="more-action-container">
+              <!-- <td class="more-action-container">
                 <span class="more-action-btns">
                   <a href="#" class="px-2" data-bs-toggle="tooltip" data-bs-placement="bottom" tabindex="1"
                     aria-label="Snooze">
@@ -820,9 +822,9 @@
                     <i class="fal fa-trash coal"></i>
                   </a>
                 </span>
-              </td>
+              </td> -->
             </tr>
-</ng-container>
+          </ng-container>
           </tbody>
         </table>
       </div>

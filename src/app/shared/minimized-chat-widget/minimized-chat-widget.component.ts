@@ -110,7 +110,8 @@ export class MinimizedChatWidgetComponent implements OnInit {
       pageNumber: 0,
       pageSize: 0,
       isAttachment: false,
-      queryType: this.queryType
+      queryType: this.queryType,
+      text : "",
     };
     this.SpinnerService.show();
     this.commondata
@@ -138,7 +139,8 @@ export class MinimizedChatWidgetComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
+        text : "",
       };
       this.SpinnerService.show();
       this.commondata

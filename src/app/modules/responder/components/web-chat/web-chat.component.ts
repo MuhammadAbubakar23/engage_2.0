@@ -84,7 +84,8 @@ export class WebChatComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
+        text : "",
       };
       this.SpinnerService.show();
       this.commondata
@@ -133,7 +134,8 @@ export class WebChatComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
-        queryType: this.queryType
+        queryType: this.queryType,
+        text : "",
       };
       this.SpinnerService.show();
       this.commondata

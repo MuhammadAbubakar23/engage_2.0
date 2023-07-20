@@ -71,11 +71,16 @@ export class RightHeaderComponentsComponent implements OnInit {
       localStorage.getItem('assignedProfile') == undefined
     ) {
       this.commonService.SignOut().subscribe((res:any)=>{
-        console.log(res);
         localStorage.clear();
         this.router.navigateByUrl('/login');
         clearInterval(this.timer);
-      })
+      },
+      (error)=>{
+        console.log(error);
+        localStorage.clear();
+        this.router.navigateByUrl('/login');
+        clearInterval(this.timer);
+      });
       
       // if (this.signalR.hubconnection?.state == 'Connected') {
       //   this.signalR.hubconnection
