@@ -62,10 +62,10 @@
             <div class="scroll-content" style="margin-bottom: 100px;">
                 <div class="tab-content m-4" id="myTabContent">
                     <div class="tab-pane fade show active" id="post" role="tabpanel" aria-labelledby="post-tab">
-                        <div *ngFor="let list of Emails">
-                            <div *ngFor="let group of list.groupedComments | sort:criteria">
+                        <div *ngFor="let group of result">
+                            <!-- <div *ngFor="let group of list.groupedComments | sort:criteria"> -->
                                 <div class="header-subheading text silver">
-                                    {{group.createdDate | date:'MMMM dd, YYYY, hh:mm a'}}
+                                    {{group.date | date:'MMMM dd, YYYY'}}
                                     <!-- Mar 6, 2023, 2:43 PM (4 days ago) -->
                                     <!-- <span class="tag-icon">
                                     <i class="fas fa-bookmark"></i>
@@ -79,14 +79,14 @@
                                     <i class="fal fa-times"></i>
                                     </small> -->
                                 </div>
-                                <ng-container *ngFor="let grp of group.items">
+                                <ng-container *ngFor="let grp of group.subjects | sort:criteria">
                                     <div class="email-content-header">
 
                                         <div class="heading-text">
                                             {{grp.message}}
                                         </div>
                                     </div>
-                                    <ng-container *ngFor="let email of grp.items | sort:criteria; let i = index">
+                                    <ng-container *ngFor="let email of grp.items.items | sort:criteria; let i = index">
                                         <ng-container *ngIf="email.queryStatus != 'QueryCompleted'">
                                             <div class="accordion email-accordion" id="abc">
 
@@ -625,7 +625,7 @@
                                         </ng-container>
                                     </ng-container>
                                 </ng-container>
-                            </div>
+                            <!-- </div> -->
                         </div>
                     </div>
                 </div>
@@ -709,7 +709,7 @@
                                 </div>
                             </div>
                             <div class="invalid-feedback"
-                                *ngIf="emailControlCc!.touched && emailControlCc!.hasError('pattern')">
+                                *ngIf="emailControlCc!.touched && emailControlCc!.hasError('pattern') && !sendBtnClicked">
                                 Please enter a valid email address
                             </div>
                             <div class="reply-header blind-carbon-copy" [ngClass]="showBccInput==true?'':'d-none'">
@@ -723,7 +723,7 @@
                                 </div>
                             </div>
                             <div class="invalid-feedback"
-                                *ngIf="emailControlBcc!.touched && emailControlBcc!.hasError('pattern')">
+                                *ngIf="emailControlBcc!.touched && emailControlBcc!.hasError('pattern') && !sendBtnClicked">
                                 Please enter a valid email address
                             </div>
                             <div class="reply-header blind-carbon-copy">
