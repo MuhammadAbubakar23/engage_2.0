@@ -49,10 +49,10 @@ export class MainMenuComponent implements OnInit {
     private MenuStore: Store<MenuState>,
     private PermissionStore: Store<PermissionState>
   ) { 
-    this.MenuStore.dispatch(loadMenusList());
-    this.MenuStore.dispatch(updateMenusList());
-    this.PermissionStore.dispatch(loadPermissionsLetters());
-    this.PermissionStore.dispatch(updatePermissionsLetters());
+    // this.MenuStore.dispatch(loadMenusList());
+    // this.MenuStore.dispatch(updateMenusList());
+    // this.PermissionStore.dispatch(loadPermissionsLetters());
+    // this.PermissionStore.dispatch(updatePermissionsLetters());
     // this.menu$ = this.store.select(getMenuById(2));
     // this.loading$ = this.store.select(getMenusLoading)
     // this.store.dispatch(loadMenusList());
