@@ -30,7 +30,7 @@
                 </li>
                 <ul class="list-unstyled-inner collapse" [attr.id]="menu.slug">
                     <li *ngFor="let submenu of menu.subMenu" class="list-group-item list-group-item-action d-flex align-items-center">
-                        <a (click)="updatevalue(submenu.link)" [routerLink]="['/'+SubMenuPage.slug+'/'++menu.link+'/'+submenu.link]"
+                        <a (click)="updatevalue(submenu.link)" [routerLink]="['/'+SubMenuPage.slug+'/'+menu.link+'/'+submenu.link]"
                             class="d-flex align-items-center">
                             <i class=" pe-2" [innerHTML]="submenu.icon"></i>
                             {{submenu.name}}
@@ -40,7 +40,7 @@
             </ng-template>
         </div>
 
-    </ul> -->
+    </ul>
 
     <!-- Hard Coded Menus -->
 

@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
+//https://reportbuilder.360scrm.com/
+//http://localhost:8000/
 export class ReportService {
   private apiUrl = 'https://reportbuilder.360scrm.com/reports/';
   constructor(private http: HttpClient) { }
@@ -27,7 +30,7 @@ export class ReportService {
   getDataBasesApi(): Observable<any> {
     let httpOptions = this.gethttpOptions()
     //const headers = new HttpHeaders();
-    return this.http.get<any>(this.apiUrl,httpOptions);
+    return this.http.get<any>(this.apiUrl, httpOptions);
   }
 
   createDbSetiingApi(data: any): Observable<any> {
@@ -42,78 +45,79 @@ export class ReportService {
   getConnectiondatabases(connection_name: any): Observable<any> {
     const params = new HttpParams().set('connection_name', connection_name)
     let httpOptions = this.gethttpOptions()
-    return this.http.get(this.apiUrl + "connect/" + params.toString(),httpOptions)
+    return this.http.get(this.apiUrl + "connect/" + params.toString(), httpOptions)
   }
   selectDatabaseApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    return this.http.post<any>(this.apiUrl + 'tables', data,httpOptions);
+    return this.http.post<any>(this.apiUrl + 'tables', data, httpOptions);
   }
 
   connectDatabaseApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    return this.http.post<any>(this.apiUrl + "db-connect", data,httpOptions);
+    return this.http.post<any>(this.apiUrl + "db-connect", data, httpOptions);
   }
   selectTableApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    return this.http.post<any>(this.apiUrl + "gettabledata", data,httpOptions);
+    return this.http.post<any>(this.apiUrl + "gettabledata", data, httpOptions);
   }
   limitDataApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    return this.http.post<any>(this.apiUrl + "rowlimit", data,httpOptions);
+    return this.http.post<any>(this.apiUrl + "rowlimit", data, httpOptions);
   }
   columnsApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    return this.http.post<any>(this.apiUrl + "getcolumns", data,httpOptions);
+    return this.http.post<any>(this.apiUrl + "getcolumns", data, httpOptions);
   }
   sortDataApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    return this.http.post<any>(this.apiUrl + "gettablesortdata", data,httpOptions);
+    return this.http.post<any>(this.apiUrl + "gettablesortdata", data, httpOptions);
   }
   groupDataApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    return this.http.post<any>(this.apiUrl + "getbygroup", data,httpOptions);
+    return this.http.post<any>(this.apiUrl + "getbygroup", data, httpOptions);
   }
   summarizeDataApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    return this.http.post<any>(this.apiUrl + "summarize", data,httpOptions);
+    return this.http.post<any>(this.apiUrl + "summarize", data, httpOptions);
   }
   visualizeDataApi(data: any): Observable<any> {
+    console.log("data==>V",data);
     let httpOptions = this.gethttpOptions()
-    return this.http.post<any>(this.apiUrl + "visualize", data,httpOptions);
+    return this.http.post<any>(this.apiUrl + "visualize", data, httpOptions);
   }
   selectedtablesDataApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    return this.http.post<any>(this.apiUrl + "selectedtables", data,httpOptions);
+    return this.http.post<any>(this.apiUrl + "selectedtables", data, httpOptions);
   }
   joinDataApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    return this.http.post<any>(this.apiUrl + "joinresult", data,httpOptions);
+    return this.http.post<any>(this.apiUrl + "joinresult", data, httpOptions);
   }
   filtersDataApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    return this.http.post<any>(this.apiUrl + "filters", data,httpOptions);
+    return this.http.post<any>(this.apiUrl + "filters", data, httpOptions);
   }
   runSqlApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    return this.http.post<any>(this.apiUrl + "customqueryresult", data,httpOptions);
+    return this.http.post<any>(this.apiUrl + "customqueryresult", data, httpOptions);
   }
 
   createReportApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    return this.http.post<any>(this.apiUrl + "create-report", data,httpOptions);
+    return this.http.post<any>(this.apiUrl + "create-report", data, httpOptions);
   }
 
   reportslistApi(): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    return this.http.get<any>(this.apiUrl + "list-report",httpOptions);
+    return this.http.get<any>(this.apiUrl + "list-report", httpOptions);
   }
   reportupdateApi(): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    return this.http.put<any>(this.apiUrl + "update-report",httpOptions);
+    return this.http.put<any>(this.apiUrl + "update-report", httpOptions);
   }
 
   reportdeleteApi(): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    return this.http.delete<any>(this.apiUrl + "delete-report",httpOptions);
+    return this.http.delete<any>(this.apiUrl + "delete-report", httpOptions);
   }
 }

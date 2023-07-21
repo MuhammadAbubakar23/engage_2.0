@@ -1,71 +1,77 @@
 <div class="container mt-5">
-  <!-- <ng-select style="width: 200px; margin-top: 10px;" [(ngModel)]="intentName" (change)="selectIntent()">
-    <ng-option *ngFor="let intent of intents" [value]="intent">{{ intent }}</ng-option>
-  </ng-select> -->
-
-  <div style="margin-top: 10px;">
-    <div class="tab-pane fade show active" id="agent-stats" role="tabpanel" aria-labelledby="agent-stats-tab">
-      <div class="table-section">
-        <div style="overflow: auto; max-height: 600px;">
-          <table class="table align-middle agent-stats-table mt-0 w-100 mb-4">
-            <thead>
-              <tr >
-                <th *ngFor="let column of columns">{{column}}</th>
-              </tr>
-            </thead>
-            <tbody>
-
-                <tr *ngFor="let report of reports">
-                  <td class="question-cell" style="width: 400px;">
-                    {{report.name}}
-                  </td>
-                  <td class="question-cell" style="width: 400px;">
-                    {{report.query}}
-                  </td>
-                  <td>
-                    {{report.created_at | date:'yyyy-MM-dd HH:mm:ss'}}
-                  </td>
-                  <!-- <td>
-                    <div
-                      class="icons-list d-flex dropstart justify-content-end"
-                    >
-                      <button
-                        class="btn iconButton small iconHover btn-group"
-                        type="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
+  <div style="margin-top: 10px">
+    <div
+      class="tab-pane fade show active"
+      id="agent-stats"
+      role="tabpanel"
+      aria-labelledby="agent-stats-tab"
+    >
+      <div class="row" cdkDropListGroup>
+        <div class="col-sm-3">
+          <div class="table-section">
+            <div style="overflow: auto; max-height: 600px">
+              <table
+                class="table align-middle agent-stats-table mt-0 w-100 mb-4"
+              >
+                <thead>
+                  <tr>
+                    <th *ngFor="let column of columns">{{ column }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let report of reports">
+                    <td class="question-cell" style="width: 400px">
+                      <div
+                        cdkDropList
+                        class="example-list"
+                        (cdkDropListDropped)="drop()"
                       >
-                        <i class="far fa-ellipsis-v"></i>
-                      </button>
-                      <ul class="dropdown-menu fade">
+                        <div
+                          class="example-box"
+                          cdkDrag
+                          (cdkDragStarted)="onDragStarted(report)"
+                        >
+                          {{ report.name }}
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-9">
+          <div class="card" style="overflow: auto; height: 500px">
+            <div class="card-body d-flex flex-wrap justify-content-center align-items-start">
 
-                        <li>
-                          <a [routerLink]="['update']" [queryParams]="{'intentName':intentName,'question':question,'answers':intentsDetails.answers[i]}"
-                            class="dropdown-item"
+              <ng-container *ngFor="let chartData of chartDataArray; let i = index">
+                <div class="example-box m-2" style="display: flex; flex-direction: column; align-items: center;">
 
-                          >
-                            <i class="fal fa-edit me-2"></i> Edit</a
-                      >
-                        </li>
+                  <!-- ng-select -->
+                  <ng-select style="width: 250px; margin-bottom: 10px;" [(ngModel)]="chartData.type" (change)="selectGraph(i, chartData.type)">
+                    <ng-option *ngFor="let graph of graphTypes[0] | keyvalue" [value]="graph.value">{{ graph.key }}</ng-option>
+                  </ng-select>
 
+                  <!-- Canvas -->
+                  <canvas
+                    baseChart
+                    [data]="chartData.data"
+                    [options]="ChartOptions"
+                    [plugins]="ChartPlugins"
+                    [legend]="ChartLegend"
+                    [type]="chartData.type"
+                    style="width: 300px; height: 300px; margin-bottom: 10px;"
+                  ></canvas>
 
-                        <li>
-                          <a
-                            class="dropdown-item delete-dd" (click)="deleteIntent({'intentName':intentName,'question':question,'answers':intentsDetails.answers[i]})"
+                  <!-- Trash Icon -->
+                  <i class="fal fa-trash" (click)="removeGraph(i)"></i>
 
-                          >
-                            <i class="fal fa-trash me-2"></i> Delete</a
-                          >
-                        </li>
-                      </ul>
-                    </div>
-                  </td> -->
+                </div>
+              </ng-container>
 
-                </tr>
-
-
-            </tbody>
-          </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import { RightNavService } from 'src/app/services/RightNavService/RightNav.servi
 import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { ConversationComponent } from '../inboxes/components/conversation/conversation.component';
-import { ActionsComponent } from '../analytics/components/actions/actions.component'
+import { ActionsComponent } from './components/actions/actions.component'
 import { ExecutiveDashboardComponent } from './components/executive-dashboard/executive-dashboard.component';
 import { LiveMonitoringComponent } from './components/live-monitoring/live-monitoring.component';
 import { ReportBuilderComponent } from './components/report-builder/report-builder.component';

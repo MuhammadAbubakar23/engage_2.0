@@ -1,6 +1,9 @@
 <div>
   <div>
-
+    <app-toastr
+      [toasterMsg]="toastermessage"
+      [isToaster]="isToaster"
+    ></app-toastr>
     <div class="d-grid">
       <div
         class="analytics-dashboard perfect-scrollbar"
@@ -9,26 +12,23 @@
         style="overflow: auto; outline: none"
       >
         <div class="scroll-content">
-
-
           <div class="p-4 analytics dashboard" id="analytics-content3">
             <div class="dashbaord w-100">
               <h3 class="report-heading">Dashboard</h3>
               <div class="filter-panel">
                 <div class="coal fw-bold me-4">
                   <i class="fas fa-filter me-1"></i> Filters
-
                 </div>
 
-                  <ng-select
-                  style="width: 250px;margin-right: 10px"
+                <ng-select
+                  style="width: 250px; margin-right: 10px"
                   [(ngModel)]="DBC"
                   (change)="selectConnection()"
                 >
                   <ng-option
                     *ngFor="let db of dbsettings"
                     [value]="db.connection_name"
-                    >{{db.connection_name}}</ng-option
+                    >{{ db.connection_name }}</ng-option
                   >
                 </ng-select>
                 <ng-select
@@ -53,38 +53,70 @@
                     }}</ng-option>
                   </ng-select>
                 </div>
-
-                <div class="w-auto ms-2">
-                  <div
-                  *ngIf="isFilter"
-                  class="my-4 stats-cards-section row"
-                  style="display: flex; justify-content: center"
-                >
-                  <div *ngIf="isNumber" style="width: 200px">
-                    <input style="height:38px"
-                      type="number"
-                      [(ngModel)]="filterNumber"
-                      placeholder="Enter an ID"
-                      class="form-control"
-                      (input)="resetfilters()"
-                    />
-                  </div>
+                <div style="margin-left: 10px" *ngIf="isVisual">
                   <ng-select
-                    style="width: 200px"
-                    [(ngModel)]="selectedFilter"
-                    (change)="addFilter()"
+                    style="width: 250px; margin-right: 10px"
+                    [(ngModel)]="selectedLabels"
+                    (change)="selectLabel()"
+                    [placeholder]="'Select Column '"
+                    [multiple]="true"
                   >
                     <ng-option
-                      *ngFor="let con of filterConditions"
-                      [value]="con"
-                      >{{ con }}</ng-option
+                      *ngFor="let column of graphLabels"
+                      [value]="column"
+                      >{{ column }}</ng-option
                     >
                   </ng-select>
-
                 </div>
+                <div style="margin-left: 10px" *ngIf="isTabular">
+                  <ng-select
+                    style="width: 250px; margin-right: 10px"
+                    [(ngModel)]="selectedColumns"
+                    (change)="selectColumn()"
+                    [placeholder]="'Select Column '"
+                    [multiple]="true"
+                  >
+                    <ng-option
+                      *ngFor="let column of dataKeys | keyvalue"
+                      [value]="column.key"
+                      >{{ column.key }}</ng-option
+                    >
+                  </ng-select>
+                </div>
+                <div class="w-auto ms-2">
+                  <div
+                    *ngIf="isFilter"
+                    class="my-4 stats-cards-section row"
+                    style="display: flex; justify-content: center"
+                  >
+                    <div *ngIf="isNumber" style="width: 200px">
+                      <input
+                        style="height: 38px"
+                        type="number"
+                        [(ngModel)]="filterNumber"
+                        placeholder="Enter an ID"
+                        class="form-control"
+                        (input)="resetfilters()"
+                      />
+                    </div>
+                    <ng-select
+                      style="width: 200px"
+                      [(ngModel)]="selectedFilter"
+                      (change)="addFilter()"
+                    >
+                      <ng-option
+                        *ngFor="let con of filterConditions"
+                        [value]="con"
+                        >{{ con }}</ng-option
+                      >
+                    </ng-select>
+                  </div>
                 </div>
               </div>
-              <div *ngIf="tableData.length >0 " style="float: right; margin-top: 20px;">
+              <div
+                *ngIf="tableData.length > 0"
+                style="float: right; margin-top: 20px"
+              >
                 <input
                   type="button"
                   class="btn btn-primary"
@@ -94,7 +126,6 @@
                 />
               </div>
               <div class="agent-skill-stats pb-3">
-
                 <header class="tab-header">
                   <div
                     class="nav nav-tabs d-flex justify-content-center mb-5"
@@ -110,13 +141,12 @@
                       role="tab"
                       aria-controls="agent-stats"
                       aria-selected="true"
+                      (click)="tabularData()"
                     >
-                      Agent Statistics
+                      Tabular Statistics
                     </button>
 
-
-
-                    <!-- <button
+                    <button
                       class="nav-link"
                       id="skill-stats-tab"
                       data-bs-toggle="tab"
@@ -126,11 +156,11 @@
                       aria-controls="skill-stats"
                       aria-selected="false"
                       tabindex="-1"
+                      (click)="visualizeData()"
                     >
-                      Skill Statistics
-                    </button> -->
+                      Visualization
+                    </button>
                   </div>
-
                 </header>
                 <div class="tab-content" id="nav-tabContent">
                   <div
@@ -207,150 +237,79 @@
                         </table>
                       </ng-template>
                     </div>
+                  </div>
+                </div>
 
-                    <div
-                      class="tab-pane fade"
-                      id="skill-stats"
-                      role="tabpanel"
-                      aria-labelledby="skill-stats-tab"
-                    >
-                      <div class="table-section">
-                        <table
-                          class="tablealign-middle agent-stats-table mt-0 w-100"
-                        >
-                          <thead>
-                            <tr>
-                              <th class="pt-5">Skill</th>
-                              <th class="pt-5">
-                                <i class="fas fa-sort-alt coal"></i> Agent
-                              </th>
-                              <th class="pt-5">
-                                <i class="fas fa-sort-alt coal"></i> Total Calls
-                              </th>
-                              <th class="pt-5">
-                                <i class="fas fa-sort-alt coal"></i> Drop Calls
-                              </th>
-                              <th class="pt-5">
-                                <i class="fas fa-sort-alt coal"></i> In Calls
-                              </th>
-                              <th class="pt-5">
-                                <i class="fas fa-sort-alt coal"></i> Ready
-                              </th>
-                              <th class="pt-5">
-                                <i class="fas fa-sort-alt coal"></i> Wait
-                              </th>
-                              <th class="pt-5">
-                                <i class="fas fa-sort-alt coal"></i> Break
-                              </th>
-                              <th class="pt-5">
-                                <i class="fas fa-sort-alt coal"></i> Wrap
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>911-Sindh</td>
-                              <td>51</td>
-                              <td>78545</td>
-                              <td>7854</td>
-                              <td>54</td>
-                              <td>1</td>
-                              <td>0</td>
-                              <td>3</td>
-                              <td>2</td>
-                            </tr>
-                            <tr>
-                              <td>911-Punjab</td>
-                              <td>51</td>
-                              <td>78545</td>
-                              <td>7854</td>
-                              <td>54</td>
-                              <td>1</td>
-                              <td>0</td>
-                              <td>3</td>
-                              <td>2</td>
-                            </tr>
-                            <tr>
-                              <td>911-Balochistan</td>
-                              <td>51</td>
-                              <td>78545</td>
-                              <td>7854</td>
-                              <td>54</td>
-                              <td>1</td>
-                              <td>0</td>
-                              <td>3</td>
-                              <td>2</td>
-                            </tr>
-                            <tr>
-                              <td>911-KPK</td>
-                              <td>51</td>
-                              <td>78545</td>
-                              <td>7854</td>
-                              <td>54</td>
-                              <td>1</td>
-                              <td>0</td>
-                              <td>3</td>
-                              <td>2</td>
-                            </tr>
-                            <tr>
-                              <td>911-Gilgit Baltistan</td>
-                              <td>51</td>
-                              <td>78545</td>
-                              <td>7854</td>
-                              <td>54</td>
-                              <td>1</td>
-                              <td>0</td>
-                              <td>3</td>
-                              <td>2</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                    <div class="row" *ngIf="isGraph">
-                      <div class="col-md-12 mb-3">
-                        <div class="stats-card dashboard iceBg">
-                          <h5 class="section-heading mb-0 p-2 text-center">
-                            {{ tableName }}
-                          </h5>
-                          <div
-                            class="d-flex align-items-center stats-count justify-content-center"
-                          >
-                            <div class="ocean a-section-heading fw-normal mb-2">
-                              <canvas
-                                baseChart
-                                [data]="bar"
-                                [options]="barChartOptions"
-                                [plugins]="barChartPlugins"
-                                [legend]="barChartLegend"
-                                [type]="'bar'"
-                                style="width: 400px; height: 400px"
+                <div *ngIf="isGraph" class="tab-content" id="nav-tabContent">
+                  <div
+                    class="tab-pane fade active"
+                    id="skill-stats"
+                    role="tabpanel"
+                    aria-labelledby="skill-stats-tab"
+                  >
+                    <div class="table-section">
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <div class="stats-card dashboard iceBg">
+                              <h5 class="section-heading mb-0 p-2 text-center">
+                                {{ tableName }}
+                              </h5>
+                              <div
+                                class="d-flex align-items-center stats-count justify-content-center"
                               >
-                              </canvas>
+                                <div
+                                  class="ocean a-section-heading fw-normal mb-2"
+                                >
+                                  <canvas *ngIf="isBar"
+                                    baseChart
+                                    [data]="barChartData"
+                                    [options]="barChartOptions"
+                                    [plugins]="barChartPlugins"
+                                    [legend]="barChartLegend"
+                                    [type]="'bar'"
+                                    style="width: 600px; height: 500px"
+                                  >
+                                  </canvas>
+                                  <canvas *ngIf="isPie"
+                                  baseChart
+                                  class="chart"
+                                  [data]="pieChartData"
+                                  [type]="'pie'"
+                                  [options]="pieChartOptions"
+                                  style="width: 600px; height: 500px"
+                                >
+                                </canvas>
+                                <canvas baseChart class="chart" *ngIf="isLine"
+                                  [data]="lineChartData"
+                                  [options]="lineChartOptions"
+                                  [type]="'line'"
+                                  style="width: 600px; height: 500px"
+                                  >
+                                </canvas>
+                                <canvas baseChart class="chart"  *ngIf="isPolar"
+                                 [data]="polarAreaChartData"
+                                 [type]="'polarArea'"
+                                 style="width: 600px; height: 500px"
+                                 >
+                                </canvas>
+                                <canvas baseChart class="chart" *ngIf="isRadar"
+                                    [data]="radarChartData"
+                                    [options]="radarChartOptions"
+
+                                    [type]="'radar'"
+                                    style="width: 600px; height: 500px">
+                                  </canvas>
+                                  </div>
+                              </div>
                             </div>
                           </div>
+
                         </div>
                       </div>
-                      <!--
-                    <div class="col-md-6 mb-3">
-                      <div class="stats-card dashboard iceBg">
-                        <h5 class="section-heading mb-0 p-2 text-center">Avg. Talk Time</h5>
-                        <div class="d-flex align-items-center stats-count justify-content-center">
-                          <div class="ocean a-section-heading fw-normal mb-2">
-                            <canvas baseChart
-                              [type]="'pie'"
-                              [datasets]="pieChartDatasets"
-                              [labels]="pieChartLabels"
-                              [options]="pieChartOptions"
-                              [plugins]="pieChartPlugins"
-                              [legend]="pieChartLegend"
-                              style="width: 400px; height: 300px;">
-                            </canvas>
-                          </div>
-                        </div>
-                      </div>
-                    </div> -->
                     </div>
+
+
                   </div>
                 </div>
               </div>
@@ -358,7 +317,7 @@
           </div>
           <div class="scrollbar-track scrollbar-track-x" style="display: none">
             <div
-              class="scrollbar-thumb scrollbar-thumb-x"
+              class="scrollbar-thu mb scrollbar-thumb-x"
               style="width: 1191px; transform: translate3d(0px, 0px, 0px)"
             ></div>
           </div>

@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateBusinessHoursComponent } from './components/business-hours/create-business-hours/create-business-hours.component';
+import { ChatBotBuilderComponent } from './components/chat-bot-builder/chat-bot-builder.component';
+import { ChatBotComponent } from './components/chat-bot/chat-bot.component';
+import { UpdateIntentsComponent } from './components/chat-bot/update-intents/update-intents.component';
+import { SentimentAnalysisComponent } from './components/sentiment-analysis/sentiment-analysis.component';
 import { AddPolicyComponent } from './components/sla-policies/add-policy/add-policy.component';
 import { CreateMessageTemplatesComponent } from './components/templates/messages/create-message-templates/create-message-templates.component';
 import { MessagesComponent } from './components/templates/messages/messages.component';
@@ -210,6 +214,22 @@ const routes: Routes = [
        path:'business-hours/create',
       component : CreateBusinessHoursComponent
      },
+     {
+      path:'automation/sentiment-analysis',
+      component: SentimentAnalysisComponent
+     },
+     {
+      path:'automation/chat-bot-intent',
+      component: ChatBotComponent
+     },
+     {
+      path:'automation/chat-bot-intent/bot-builder',
+      component: ChatBotBuilderComponent,
+     },
+     {
+      path:'automation/chat-bot-intent/update',
+      component:UpdateIntentsComponent
+     }
     ]
 // },
 // {
