@@ -10,7 +10,7 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 })
 export class CreateBusinessHoursComponent implements OnInit {
   daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  shiftTiming = ['8:00 am', '9:00 am', '10:00 am', '11:00 am', '12:00 am']
+  shiftTiming = ['8:00 am', '9:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm', '2:00 pm', '3:00 pm', '5:00 pm', '5:00 pm', '6:00 pm', '7:00 pm', '8:00 pm']
   workingDay = ""
   showWorkingDaysSection: boolean = false;
   hideWorkingDays() {
@@ -28,7 +28,7 @@ export class CreateBusinessHoursComponent implements OnInit {
     private formBuilder: FormBuilder,
     private commonService: CommonDataService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -55,8 +55,8 @@ export class CreateBusinessHoursComponent implements OnInit {
       templateName: '',
       description: '',
       timeZone: '',
-      roundTheClock:false,
-      customBusinessHours : true
+      roundTheClock: false,
+      customBusinessHours: true
     });
   }
   patchFormValues(template: any): void {
@@ -148,7 +148,7 @@ export class CreateBusinessHoursComponent implements OnInit {
           .subscribe(
             (response: any) => {
               // Handle the successful response after updating the template
-              // console.log('Template updated:', response);
+              console.log('Template updated:', response);
               this.router.navigate(['/console/business-hours']);
             },
             (error: any) => {
@@ -160,7 +160,7 @@ export class CreateBusinessHoursComponent implements OnInit {
         this.commonService.AddBusinessHours(this.messageForm.value).subscribe(
           (response: any) => {
             // Handle the successful response after creating a new template
-            // console.log('Template created:', response);
+            console.log('Template created:', response);
             this.router.navigate(['/console/business-hours']);
           },
           (error: any) => {
@@ -171,7 +171,7 @@ export class CreateBusinessHoursComponent implements OnInit {
       }
     } else {
       // Handle form validation errors
-      // console.log('Form is invalid');
+      console.log('Form is invalid');
     }
   }
 

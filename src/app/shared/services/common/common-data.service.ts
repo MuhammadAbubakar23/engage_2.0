@@ -96,6 +96,12 @@ export class CommonDataService {
   getAllProfile = environment.links.console.getAllProfile;
   addProfile = environment.links.console.addProfile;
   attachFacebookPage = environment.links.console.attachFacebookPage;
+  getTags = environment.links.console.getTags;
+  getTagById = environment.links.console.getTagById;
+  addTags = environment.links.console.addTags;
+  updateTag = environment.links.console.updateTag;
+  deleteTags = environment.links.console.deleteTags;
+  getParents = environment.links.console.getParents;
 
   constructor(private http: HttpClient) {}
 
@@ -421,6 +427,29 @@ export class CommonDataService {
 
   SignOut(){
     return this.http.get(this.CommonBaseUrl+this.signOut)
+  }
+
+  GetTags(){
+    return this.http.get(this.consoleBaseUrl+this.getTags);
+  }
+  GetTagById(body: any){
+    const url = `${this.consoleBaseUrl}${this.getTagById}?Id=${body}`;
+    return this.http.get(url);
+  }
+  AddTags(addTags : any){
+    return this.http.post(this.consoleBaseUrl + this.addTags, addTags)
+  }
+  UpdateTag(tagsId: string, tag: any){
+    const url = `${this.consoleBaseUrl}${this.updateTag}?Id=${tagsId}`;
+    return this.http.post(url, tag);
+  }
+  DeleteTags(delTag: string): Observable<any> {
+    const url = `${this.consoleBaseUrl}${this.deleteTags}?Id=${delTag}`;
+    return this.http.get(url);
+  }
+
+  GetParents() {
+    return this.http.get(this.consoleBaseUrl+this.getParents);
   }
 }
 

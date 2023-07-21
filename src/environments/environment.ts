@@ -99,7 +99,13 @@ export const environment = {
       deleteSkill : 'Skill/Delete',
       getAllProfile: 'Profile/GetAll',
       addProfile : 'Profile/Add',
-      attachFacebookPage: 'ProfileManagement/RegisterProfile'
+      attachFacebookPage: 'ProfileManagement/RegisterProfile',
+      getTags: 'Tags/GetAll',
+      getTagById: 'Tags/GetById',
+      addTags: 'Tags/Add',
+      updateTag: 'Tags/Update',
+      deleteTags: 'Tags/Delete',
+      getParents : 'Tags/GetParents',
     },
     CCMS:{
       reason_types:'Order/GetReasonTypes',

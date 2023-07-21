@@ -30,7 +30,7 @@ export class BusinessHoursComponent implements OnInit {
     this.commonService.GetBusinessHours()
       .subscribe((response: any) => {
         this.messages = response; // Assign the response to the messages array
-        // console.log(this.messages); // Verify that the data is populated correctly
+        console.log(this.messages); // Verify that the data is populated correctly
       }, (error: any) => {
         console.error(error);
       });
@@ -53,7 +53,7 @@ export class BusinessHoursComponent implements OnInit {
       this.commonService.DeleteBusinessHours(template.id).subscribe(
         () => {
           // Success callback
-          // console.log('Template deleted:', template);
+          console.log('Template deleted:', template);
           // Remove the deleted template from the messages array
           this.templates = this.templates.filter((msg) => msg.id !== template.id);
         },
@@ -67,7 +67,7 @@ export class BusinessHoursComponent implements OnInit {
   disableTemplate(template: any) {
     // Logic for disabling the template
     template.disabled = true;
-    // console.log('Disable template:', template);
+    console.log('Disable template:', template);
   }
 
   cloneTemplate(template: any) {
@@ -76,6 +76,6 @@ export class BusinessHoursComponent implements OnInit {
     clonedTemplate.name += ' (Cloned)';
     // You can modify other properties as well if needed
     this.templates.push(clonedTemplate);
-    // console.log('Cloned template:', clonedTemplate);
+    console.log('Cloned template:', clonedTemplate);
   }
 }

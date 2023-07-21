@@ -49,13 +49,13 @@
                                         </div>
                                     </div>
                                     <div class="floating-item mb-4">
-                                        <div class="floating-wrap form-floating mb-2">
+                                        <div class="form-floating mb-2">
                                             <select class="form-select multi-select" aria-label="Floating label select"
                                                 formControlName="timeZone">
-                                                <option selected="">(GMT+09:00) Tokyo</option>
-                                                <option value="1">(GMT+03:00) Japan</option>
-                                                <option value="2">(GMT+05:00) Korea</option>
-                                                <option value="3">(GMT+06:00) Tokyo</option>
+                                                <option selected="">(GMT+09:00) Karachi</option>
+                                                <option value="1">(GMT+03:00) Lahore</option>
+                                                <option value="2">(GMT+05:00) Peshawar</option>
+                                                <option value="3">(GMT+06:00) Islamabad</option>
                                             </select>
                                             <label for="floatingSelect">Time zone</label>
                                         </div>
@@ -93,12 +93,12 @@
 
                                                 <div class="col-lg-2">
                                                     <div class="sla-status d-flex align-items-center h-100">
-                                                        <i class="fal fa-flag radical"></i>
+                                                      
                                                         <ng-container [ngSwitch]="i">
-                                                            <p class="m-0 ms-2 radical" *ngSwitchCase="0">Urgent</p>
-                                                            <p class="m-0 ms-2 mango" *ngSwitchCase="1">High</p>
-                                                            <p class="m-0 ms-2 sky" *ngSwitchCase="2">Medium</p>
-                                                            <p class="m-0 ms-2 mint" *ngSwitchCase="3">Low</p>
+                                                            <p class="m-0 ms-2 radical" *ngSwitchCase="0">   <i class="fal fa-flag radical mx-2"></i>Urgent</p>
+                                                            <p class="m-0 ms-2 mango" *ngSwitchCase="1">  <i class="fal fa-flag mango mx-2 "></i>High</p>
+                                                            <p class="m-0 ms-2 sky" *ngSwitchCase="2">  <i class="fal fa-flag sky mx-2"></i>Medium</p>
+                                                            <p class="m-0 ms-2 mint" *ngSwitchCase="3">  <i class="fal fa-flag mint mx-2"></i>Low</p>
                                                         </ng-container>
                                                     </div>
                                                 </div>
@@ -131,6 +131,7 @@
                                                                     oprationalHour.oprationalHours }}</a>
                                                             </li>
                                                         </ul>
+
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-2 ps-4">

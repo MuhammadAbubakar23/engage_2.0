@@ -229,7 +229,16 @@ const routes: Routes = [
      {
       path:'automation/chat-bot-intent/update',
       component:UpdateIntentsComponent
-     }
+     },
+     {
+      path: 'tags',
+      loadComponent: () => import('./components/tags/tags.component').then(c => c.TagsComponent),
+      canMatch: [ConsoleRoutingGuard]
+    }, {
+      path: 'tag/create/:id',
+      loadComponent: () => import('./components/tags/create-tags/create-tags.component').then(c => c.CreateTagsComponent),
+      canMatch: [ConsoleRoutingGuard]
+    },
     ]
 // },
 // {

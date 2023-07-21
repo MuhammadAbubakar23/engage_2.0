@@ -58,10 +58,10 @@
                                     <div class="form-floating mb-2">
                                         <select class="form-select multi-select" aria-label="Floating label select"
                                             formControlName="timeZone">
-                                            <option selected="">(GMT+09:00) Tokyo</option>
-                                            <option value="1">(GMT+03:00) Japan</option>
-                                            <option value="2">(GMT+05:00) Korea</option>
-                                            <option value="3">(GMT+06:00) Tokyo</option>
+                                            <option selected="">(GMT+09:00) Karachi</option>
+                                            <option value="1">(GMT+03:00) Lahore</option>
+                                            <option value="2">(GMT+05:00) Peshawar</option>
+                                            <option value="3">(GMT+06:00) Islamabad</option>
                                         </select>
                                         <label for="floatingSelect">Time zone</label>
                                     </div>
@@ -76,7 +76,7 @@
                                     <div class="business-hour-list">
                                         <div class="form-check mb-3">
                                             <input class="form-check-input" type="radio" name="exampleRadios"
-                                                id="exampleRadios1" [value]="false" formControlName="roundTheClock"
+                                                id="exampleRadios1" [value]="true" formControlName="roundTheClock"
                                                 (click)="hideWorkingDays()">
                                             <div class="ms-2 me-auto silver lh-sm">
                                                 <div class="fw-bold darkblue mb-1">24 hrs x 7 days</div>
@@ -85,7 +85,7 @@
                                         </div>
                                         <div class="form-check mb-3">
                                             <input class="form-check-input" type="radio" name="exampleRadios"
-                                                id="exampleRadios2" [value]="true" formControlName="customBusinessHours"
+                                                id="exampleRadios2" [value]="false" formControlName="customBusinessHours"
                                                 (click)="showWorkingDays()">
                                             <div class="ms-2 me-auto silver lh-sm">
                                                 <div class="fw-bold darkblue mb-1">Custom business hours</div>
