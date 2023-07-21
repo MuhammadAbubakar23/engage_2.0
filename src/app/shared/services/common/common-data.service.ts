@@ -16,6 +16,7 @@ export class CommonDataService {
   CommonBaseUrl = environment.CommonBaseUrl;
   IdentityBaseUrl = environment.IdentityBaseUrl;
   FacebookBaseUrl = environment.FbBaseUrl;
+  InstagramBaseUrl = environment.InstaBaseUrl;
 
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
@@ -422,7 +423,7 @@ export class CommonDataService {
   }
   AttachFacebookPage(body:any){
     debugger
-    return this.http.post(this.FacebookBaseUrl + this.attachFacebookPage, body)
+    return this.http.post(this.InstagramBaseUrl + this.attachFacebookPage, body)
   }
 
   SignOut(){
