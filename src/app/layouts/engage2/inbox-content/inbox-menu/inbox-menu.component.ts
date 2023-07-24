@@ -41,7 +41,7 @@ export class InboxMenuComponent implements OnInit {
       .getUnRespondedCount()
       .subscribe((res) => {
         
-        // this.UnResponded = res.totalCount
+        this.UnResponded = res.totalCount
         res.platformCount.forEach((platform:any) => {
           // if(platform.platform == 'Facebook'){
           //   this.FbUnResponded = platform.count;
@@ -87,7 +87,7 @@ export class InboxMenuComponent implements OnInit {
       this.Subscription = this.updateListService.receiveList().subscribe((res) => {
       
       res.forEach((platform:any) => {
-        // this.UnResponded = platform.unrespondedCount + this.UnResponded;
+        this.UnResponded = platform.unrespondedCount + this.UnResponded;
         // if(platform.platform == 'Facebook'){
         //   this.FbUnResponded = platform.unrespondedCount + this.FbUnResponded;
         // }
@@ -131,7 +131,7 @@ export class InboxMenuComponent implements OnInit {
 
   getAllChannelsUnrespondedCounts(){
     this.commonService.GetAllChannelsUnrespondedCount().subscribe((res:any)=>{
-      // this.UnResponded = res.totalCount
+      this.UnResponded = res.totalCount
       res.platformCount.forEach((platform:any) => {
 
         // if(platform.platform == 'Facebook'){
