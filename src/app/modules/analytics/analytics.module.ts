@@ -18,6 +18,7 @@ import { ReportlistingComponent } from './components/reportlisting/reportlisting
 import { ExcelService } from './services/excel.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { ToastrComponent } from './components/toastr/toastr.component';
+import { AnalyticsDashboardComponent } from './components/analytics-dashboard/analytics-dashboard.component';
 // import {DndModule} from 'ngx-drag-drop';
 
 @NgModule({
@@ -32,7 +33,8 @@ import { ToastrComponent } from './components/toastr/toastr.component';
     ActionsComponent,
     ReportDbSettingsComponent,
     ReportlistingComponent,
-    ToastrComponent
+    ToastrComponent,
+    AnalyticsDashboardComponent
   ],
   imports: [
     CommonModule,
