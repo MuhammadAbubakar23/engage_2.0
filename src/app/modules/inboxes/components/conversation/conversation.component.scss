@@ -1,3 +1,12 @@
 .dateTime {
     width: 105px;
 }
+.toggle-btn-checked {
+    background-color: rgb(215, 238, 255);
+    color: #0081F2;
+    border-color: rgb(215, 238, 255);
+}
+
+.fa-tick::before {
+    content: "\f00c";
+}

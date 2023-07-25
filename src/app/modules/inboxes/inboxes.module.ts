@@ -5,7 +5,7 @@ import { InboxesComponent } from './inboxes.component';
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConversationComponent } from './components/conversation/conversation.component';
 import { SlaComponent } from './components/SLA/sla.component';
 import { RouterModule } from '@angular/router';
@@ -31,7 +31,8 @@ import { SentItemsComponent } from './components/sent-items/sent-items.component
     NgxSpinnerModule,
     ReactiveFormsModule,
     RouterModule,
-    RightSidebarComponentsModule
+    RightSidebarComponentsModule,
+    FormsModule
   ],
   providers: [
     DatePipe,
