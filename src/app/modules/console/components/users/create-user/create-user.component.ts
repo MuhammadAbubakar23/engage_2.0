@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, ReactiveFormsModule, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
@@ -14,13 +14,16 @@ import Validation from 'src/app/shared/Util/validation';
 import { TeamsService } from '../../../services/teams.service';
 import { RolesAndPermissionsService } from '../../roles-and-permissions/roles-and-permissions.service';
 import { UsersService } from '../users.service';
+import { NavigationBackDirective } from 'src/app/shared/services/navigation/navigation-back.directive';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
-  selector: 'app-create-user',
+  selector: 'create-user',
   standalone:true,
-  imports:[CommonModule, ReactiveFormsModule,  MatChipsModule, MatIconModule, MatSelectModule],
+  imports:[SharedModule, CommonModule, ReactiveFormsModule,  MatChipsModule, MatIconModule, MatSelectModule],
   templateUrl: './create-user.component.html',
-  styleUrls: ['./create-user.component.scss']
+  styleUrls: ['./create-user.component.scss'],
+  providers:[NavigationBackDirective]
 })
 export class CreateUserComponent implements OnInit {
   //identity:string | null | undefined = "0";
@@ -56,6 +59,7 @@ export class CreateUserComponent implements OnInit {
   constructor(private formbuilder : UntypedFormBuilder
     , private _request:RequestService
     , private _Activatedroute:ActivatedRoute
+    , private location: Location
     , private storsrv:StorageService
     , private uservc:UsersService
     , private roles:RolesAndPermissionsService
@@ -173,6 +177,7 @@ export class CreateUserComponent implements OnInit {
   // }
   onReset(): void {
     this.submitted = false;
+    this.location.back();
     this.userForm.reset();
     this.userForm.controls['roleId'].reset();
     this.userForm.controls['teamId'].reset();

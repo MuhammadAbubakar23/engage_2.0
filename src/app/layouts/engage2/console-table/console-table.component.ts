@@ -6,6 +6,7 @@ import { RequestService } from 'src/app/shared/services/request/request.service'
 import { ConsoleTableVisibilityPipe } from './console-table-visibility.pipe';
 import { ConsoleTableService } from './console-table.service';
 import { ConsoleTableParams } from './console-table-params';
+import { ConsoleTablePaginatedState } from './console-table-state/console-table-paginated.component-store';
 // import { provideComponentStore } from '@ngrx/component-store';
 // import { ConsoleTableComponentStore } from './console-table.component-store';
 // provideComponentStore(ConsoleTableComponentStore), 
@@ -25,18 +26,18 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
   // }
   private unsubscribe$: Subject<void> = new Subject<void>();
   pagingParams$:any= {};
+  pastPagingParams$:any= {};
   // {
   //   pageIndex: 1,
   //   pageSize: 10,
   //   length: 100,
   //   pageSizeOptions:[10,25,50,100],
-
   // };
-  pagingSizeOptions$:Array<number> = [10,25,50,100];
+  pagingSizeOptions$:number[] = [10,25,50,100];
   pagingSize$:number = 10;
   pagingIndex$:number = 1;
   pagingLength$:number = 100;
-  pagingSearch$:string = "";
+  pageSearchText$:string = "";
 
   data?:any;
   @Input() identifire:string='id';
@@ -65,32 +66,51 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
   IsEmptyOrWhiteSpace(word:any) {
     return (word.match(/^\s*$/) || []).length > 0;
   }
+  reloader(){
+    this._fetchData();
+  }
   seracher(search:string){
-    if(search != null && this.IsEmptyOrWhiteSpace(search) && (search.length>2 || search.length==0))
+    //alert(search);
+    //alert(this.IsEmptyOrWhiteSpace(search))
+    //|| (this.IsEmptyOrWhiteSpace(search) && search.length == 0))
+    if(search != null && !this.IsEmptyOrWhiteSpace(search)) 
     {
-      this.pagingSearch$ = search;
+      this.pageSearchText$ = search;
       this._fetchData();
     }    
   }
-  paginator(paging: unknown){
-    console.log(paging);
-    this.pagingParams$ = paging;
+  paginator(paging: any){
+    
+    if(paging != null && typeof paging === 'object')
+    {
+      if(paging!.pageIndex > 0){
+        this.pagingParams$.pageIndex = paging.pageIndex;
+      }
+      if(paging!.pageSize > 0){
+        this.pagingParams$.pageSize = parseInt(paging.pageSize);
+      }
+    }
+    //this.pagingParams$ = paging;
+    // console.log(this.pagingParams$);
+    // console.log("paging");
+    // console.log(paging);
+    //this.pagingParams$ = paging;
     this._fetchData();
   }
   filterdata() {
     this._fetchData();//this.filter?.pageno, this.filter?.pagesize);
   }
   private _fetchData(){ //}: Observable<T>{ // (page: number, pagesize: number)  {
-   // ;
+   
    if(typeof this.filter?.url === 'undefined') return;
-   console.log(this.filter)
+   // console.log(this.filter)
     // let pam:any = {
     //     pageno: this.filter.pageno
     //   , pagesize: this.filter.pagesize
     //   , search: this.filter.search
     // };
     if(this.filter?.template?.toolbar=='top'){
-      this.pagingParams$.searchText = this.pagingSearch$;
+      this.pagingParams$.searchText = this.pageSearchText$;
 
       let paramextended:any[]=[];
       this.filter?.headers?.forEach((item:any, index:number, arr:any) => {
@@ -99,15 +119,17 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
             let alter = item.index[i].toString();
             if(item.order != null && item.search == true && alter != "image"){
               paramextended[i] = { name:alter, order: item.order, search : item.search }
-            }
-            
-          // this.pagingParams$[alter] = { order: item.order, search : item.search }                  
+            }            
+            // this.pagingParams$[alter] = { order: item.order, search : item.search }                  
           }              
       
           this.pagingParams$.contain =  JSON.stringify(paramextended); 
       })
     }
-    this.pagingParams$ = {};
+    else{
+      this.pagingParams$ = {};
+    }
+    
     //filter?.template?.toolbar=='top'
     // encodeURIComponent
     // if(this.filter?.url && !this.filter?.url)

@@ -1,5 +1,25 @@
-<tr>
+<!-- <tr>
     <th *ngFor="let header of $any(TblHeaders) | consoleTableVisibility ">
         {{header.name}}
     </th>
-</tr>
+</tr> -->
+<!-- <thead width="100%"> -->
+    <tr>
+        <th *ngFor="let header of tblHeaders$ | consoleTableVisibility ">
+            <ng-template [ngIf]="header?.type=='check'" [ngIfElse]="showName">
+                <div class="filter-container checkbox-reset">
+                    <ul class="list-group list-group-horizontal border-0">
+                        <li class="list-group-item border-0 all-check-boxes">
+                            <input class="form-check-input me-1" type="checkbox" aria-label="..."
+                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                data-bs-original-title="Check All">
+                        </li>
+                    </ul> 
+                </div>
+            </ng-template>
+            <ng-template #showName>
+                {{header?.name}}
+            </ng-template>
+        </th>    
+    </tr>
+<!-- </thead> -->

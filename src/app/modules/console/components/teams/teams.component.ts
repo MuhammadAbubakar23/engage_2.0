@@ -5,6 +5,7 @@ import { Tooltip } from 'bootstrap';
 import { Observable } from 'rxjs';
 import { ConsoleTableParams } from 'src/app/layouts/engage2/console-table/console-table-params';
 import { MenuModel } from 'src/app/layouts/engage2/menu-state/menu.model';
+import { ToasterService } from 'src/app/layouts/engage2/toaster/toaster.service';
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { AddTeamMembersComponent } from './add-team-members/add-team-members.component';
@@ -26,7 +27,7 @@ export class TeamsComponent implements OnInit {
   showConsoleTable:boolean= false;
   isActive=false;
   
-  constructor(private headerService: HeaderService, private _Activatedroute:ActivatedRoute) { }
+  constructor(private headerService: HeaderService, private _Activatedroute:ActivatedRoute, private toaster:ToasterService) { }
 
   async ngOnInit() {
     this.filter = await this._Activatedroute.snapshot.data["teamJ"];
@@ -40,7 +41,9 @@ export class TeamsComponent implements OnInit {
   }  
 
   updatevalue(string:any){
-    this.headerService.updateMessage(string);
+    this.toaster.show('error', 'Check it out!', 'This is a error alert');
+    return;
+    //this.headerService.updateMessage(string);
   }
   AddTeamMembers(){
     this.isActive=!this.isActive;

@@ -22,7 +22,7 @@ export class RoleMenuComponent implements OnInit {
  // MenuModel = new MenuModel();
  permissions$ :any;
  permission$ :any;
- menus$?:MenuModel[];
+ menus$!:MenuModel[];
  //menu$ :Observable<MenuModel[]>;
  //menu$ :Observable<any>;
  loading$: any;
@@ -41,7 +41,7 @@ export class RoleMenuComponent implements OnInit {
 
  ngOnInit(): void {
    this.MenuStore.select(getEmargingEqual("role_main_left_menu"))
-   .subscribe((item:any) => {
+   .subscribe((item:MenuModel[]) => {
      this.menus$ = [...item];
    })
    

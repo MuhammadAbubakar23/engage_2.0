@@ -10,11 +10,15 @@
             [pageSizeOptions]="pagingSizeOptions$"
             (page)="paginator($event)"
             (searchPageEvent)="seracher($event)"
+            (reloadPageEvent)="reloader()"
+            
         >
         </console-table-pagination>
     </ng-template>
     
-    <table class="table align-middle" width="100%">
+    <table class="table align-middle" width="100%">       
+        <!-- <console-table-header [TblHeaders]="$any(filter).headers" ></console-table-header> -->        
+        <!-- <thead console-table-header [TblHeaders]="$any(filter).headers"></thead> -->        
         <thead>
             <tr>
                 <th *ngFor="let header of $any(filter).headers | consoleTableVisibility ">

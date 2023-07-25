@@ -40,23 +40,13 @@
 
                     </li>
                     <li class="list-inline-item refreshicon" aria-label="..." data-bs-toggle="tooltip"
-                        data-bs-placement="bottom" data-bs-original-title="Refresh">
+                        data-bs-placement="bottom" data-bs-original-title="Refresh" (click)="reloadPage()">
                         <i class="fal fa-redo"></i>
                     </li>
                 </ul>
             </div>
             <div class="col-md-4 d-flex align-items-center justify-content-end">
-                <!-- <ng-template *ngIf="vm.pageSizeOptions.length > 1" >
-                    <select
-                        [value]="vm.pageSize"
-                        (selectionChange)="changePageSize($any($event).value)"
-                        class="form-input form-select" 
-                        tabindex="-1" 
-                        aria-hidden="true">
-                        <option *ngFor="let pageSizeOption of vm.pageSizeOptions" [value]="pageSizeOption">{{ pageSizeOption }}</option>
-                    </select>
-            
-                </ng-template> -->
+                
                 
                 <!-- {{vm.pageSizeOptions.length}} -->
                 <div class="selected-row" style="display: none;">

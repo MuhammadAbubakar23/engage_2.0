@@ -5,8 +5,8 @@ import { Component, OnInit,
   ViewEncapsulation,
   EventEmitter,
 } from '@angular/core';
-import { provideComponentStore } from '@ngrx/component-store';
-import { ConsoleTablePaginationStore } from './console-table-pagination.store';
+// import { provideComponentStore } from '@ngrx/component-store';//provideComponentStore(ConsoleTablePaginationStore), 
+import { ConsoleTablePaginationStore } from '../console-table-pagination-state/console-table-pagination.store';
 
 @Component({
   selector: 'console-table-pagination',
@@ -14,7 +14,7 @@ import { ConsoleTablePaginationStore } from './console-table-pagination.store';
   styleUrls: ['./console-table-pagination.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [provideComponentStore(ConsoleTablePaginationStore)],
+  providers: [ConsoleTablePaginationStore],
 })
 export class ConsoleTablePaginationComponent implements OnInit {
 
@@ -36,8 +36,13 @@ export class ConsoleTablePaginationComponent implements OnInit {
     this.paginatorStore.setPageSizeOptions(value);
   }
 
+  // @Input() set pageSearchText(value:string ) {
+  //   this.paginatorStore.serachPageText(value);
+  // }
+
   //@Output() readonly search = this.paginatorStore.search$;
   @Output() searchPageEvent = new EventEmitter<string>();
+  @Output() reloadPageEvent = new EventEmitter();
   // Outputing the event directly from the page$ Observable<PageEvent> property.
   /** Event emitted when the paginator changes the page size or page index. */
   @Output() readonly page = this.paginatorStore.page$;
@@ -48,9 +53,16 @@ export class ConsoleTablePaginationComponent implements OnInit {
   constructor(private readonly paginatorStore: ConsoleTablePaginationStore) {
     // this.paginatorStore.setState(initialState);
   }
+  
   serachPage(newsearch:any){
     this.searchPageEvent.emit(newsearch);
   }
+  reloadPage(){
+    this.reloadPageEvent.emit();
+  }
+  // serachPageText(text: string){
+  //   this.paginatorStore.serachPageText(text);
+  // }
   changePageSize(newPageSize: number) {
     this.paginatorStore.changePageSize(newPageSize);
   }
