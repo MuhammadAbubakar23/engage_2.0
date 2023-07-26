@@ -1719,7 +1719,7 @@ export class ResponderHeaderComponent implements OnInit {
   }
 
   openedTab() {
-debugger
+// debugger
     // if(!this.postType){
       
       const channel = this.currentUrl.split('/')[3];

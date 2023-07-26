@@ -114,57 +114,27 @@ const routes: Routes = [
         loadComponent: () => import('./components/enteract-route/enteract-route.component').then(c => c.EnteractRouteComponent)
         
       },
-      // {
-      //   path:'sla-policies',
-      //   loadComponent: () => import('./components/sla-policies/sla-policies.component').then(c => c.SlaPoliciesComponent)
-        
-      // },
-      // {
-      //   path:'business-hours',
-      //   loadComponent: () => import('./components/business-hours/business-hours.component').then(c => c.BusinessHoursComponent)
-        
-      // },
-      // {
-      //   path:'templates/message',
-      //   component:MessagesComponent
-      // },
-      // {
-      //   path:'templates/signature',
-      //   component:SignaturesComponent
-      // },
-      // {
-      //   path:'templates/quick-response',
-      //   component:QuickResponseComponent
-      // },
-      // {
-      //   path:'templates/message/create/:id',
-      //   component:CreateMessageTemplatesComponent
-      //   // loadComponent: () => import('./components/templates/messages/create-message-templates/create-message-templates.component').then(c => c.CreateMessageTemplatesComponent)
-      // },
-      // {
-      //   path:'templates/signature/create/:id',
-      //   loadComponent: () => import('./components/templates/signatures/create-signature-templates/create-signature-templates.component').then(c => c.CreateSignatureTemplatesComponent)
-      // },
-      // {
-      //   path:'templates/quick-response/create/:id',
-      //   loadComponent: () => import('./components/templates/quick-response/create-quick-response-template/create-quick-response-template.component').then(c => c.CreateQuickResponseTemplateComponent)
-      // },
-      // {
-      //   path:'addpolicy',
-      //   component:AddPolicyComponent
-      // }
-
-      
       {
-        path:'templates',
-        // loadComponent: () => import('./components/templates/templates.component').then(c => c.TemplatesComponent)
-        component:TemplatesComponent
+        path:'sla-policies',
+        loadComponent: () => import('./components/sla-policies/sla-policies.component').then(c => c.SlaPoliciesComponent)
+        
       },
       {
-        path:'templates/messages',
-        // loadComponent: () => import('./components/templates/messages/messages.component').then(c => c.MessagesComponent)
-        component:MessagesComponent
+        path:'business-hours',
+        loadComponent: () => import('./components/business-hours/business-hours.component').then(c => c.BusinessHoursComponent)
         
+      },
+      {
+        path:'templates/message',
+        component:MessagesComponent
+      },
+      {
+        path:'templates/signature',
+        component:SignaturesComponent
+      },
+      {
+        path:'templates/quick-response',
+        component:QuickResponseComponent
       },
       {
         path:'templates/messages/create',
@@ -173,20 +143,8 @@ const routes: Routes = [
         
       } ,
       {
-        path:'templates/signatures',
-        component: SignaturesComponent
-
-        // loadComponent: () => import('./components/templates/signatures/create-signature-templates/create-signature-templates.component').then(c => c.CreateSignatureTemplatesComponent)
-      },
-      {
         path:'templates/createSignatures',
         component: CreateSignatureTemplatesComponent
-
-        // loadComponent: () => import('./components/templates/signatures/create-signature-templates/create-signature-templates.component').then(c => c.CreateSignatureTemplatesComponent)
-      },
-      {
-        path:'templates/quickResponse',
-        component: QuickResponseComponent
 
         // loadComponent: () => import('./components/templates/signatures/create-signature-templates/create-signature-templates.component').then(c => c.CreateSignatureTemplatesComponent)
       },
@@ -195,8 +153,8 @@ const routes: Routes = [
         component: CreateQuickResponseTemplatesComponent
 
         // loadComponent: () => import('./components/templates/signatures/create-signature-templates/create-signature-templates.component').then(c => c.CreateSignatureTemplatesComponent)
-      }
-      ,{
+      },
+      {
         path:'sla-policies',
         loadComponent: () => import('./components/sla-policies/sla-policies.component').then(c => c.SlaPoliciesComponent)
         

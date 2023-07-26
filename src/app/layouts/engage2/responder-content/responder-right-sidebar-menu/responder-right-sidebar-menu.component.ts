@@ -55,12 +55,12 @@ export class ResponderRightSidebarMenuComponent implements OnInit {
 
           // this.menus$ = item;
 
-          item.forEach((menu:any) => {
-            if(menu.mainId != 220){
-              if(!this.menus$.includes(menu)){
+          item.forEach((menu: any) => {
+            if (menu.mainId != 220) {
+              if (!this.menus$.includes(menu)) {
                 this.menus$.push(menu);
               }
-              
+
             }
           });
         }
@@ -86,7 +86,7 @@ export class ResponderRightSidebarMenuComponent implements OnInit {
   isOpen = false;
 
   toggleRightBar(child: string) {
-    
+
     // this.parentFun.emit();
     if (localStorage.getItem('child') == child) {
       //  this.toggleRightPanelParent.emit();

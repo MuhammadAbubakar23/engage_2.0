@@ -13,7 +13,7 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
   editorConfig = {};
   constructor(private formBuilder: FormBuilder, private commonService: CommonDataService, private router: Router) { }
   ngOnInit(): void {
-    debugger
+    // debugger
     this.messageForm = this.formBuilder.group({
       text: ['', Validators.required]
     });
@@ -41,7 +41,7 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
         this.commonService.UpdateQuickReply(template.id, formData).subscribe(
           (response: any) => {
             console.log('Template updated successfully', response);
-            this.router.navigate(['/console/templates/quickResponse']);
+            this.router.navigate(['/console/templates/quick-response']);
           },
           (error: any) => {
             console.error('Failed to update template', error);
@@ -51,7 +51,7 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
         this.commonService.AddQuickReply(formData).subscribe(
           (response: any) => {
             console.log('Template created successfully', response);
-            this.router.navigate(['/console/templates/quickResponse']);
+            this.router.navigate(['/console/templates/quick-response']);
           },
           (error: any) => {
             console.error('Failed to create template', error);
@@ -63,7 +63,7 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
     }
   }
   cancelForm(): void {
-    this.router.navigate(['/console/templates/quickResponse']);
+    this.router.navigate(['/console/templates/quick-response']);
 
   }
 }
