@@ -66,6 +66,7 @@ export class CommonDataService {
   // createMessageTemplate = environment.links.console.CreateMessageTemplate;
   repliesList = environment.links.common.repliesList;
   signOut = environment.links.common.signOut;
+  getCustomers = environment.links.common.getCustomers;
 
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
@@ -103,6 +104,8 @@ export class CommonDataService {
   updateTag = environment.links.console.updateTag;
   deleteTags = environment.links.console.deleteTags;
   getParents = environment.links.console.getParents;
+
+  getChannels = environment.links.identity.channels;
 
   constructor(private http: HttpClient) {}
 
@@ -451,6 +454,14 @@ export class CommonDataService {
 
   GetParents() {
     return this.http.get(this.consoleBaseUrl+this.getParents);
+  }
+
+  GetCustomers(body:any) {
+    return this.http.post(this.CommonBaseUrl+this.getCustomers, body);
+  }
+
+  GetChannels(){
+    return this.http.get(this.IdentityBaseUrl+'/'+this.getChannels)
   }
 }
 

@@ -152,7 +152,8 @@ export const environment = {
       getAgentReport : 'Report/GetAgentTicketReport',
       getAllocatedProfiles : 'Query/GetAllocatedProfiles',
       repliesList: 'SentQueries/GetRepliesList',
-      signOut: 'SignalRConnector/UserLogout'
+      signOut: 'SignalRConnector/UserLogout',
+      getCustomers: 'Customer/GetAllCustomersSocialProfile'
       
     },
     facebook: {

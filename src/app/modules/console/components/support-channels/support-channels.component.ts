@@ -37,7 +37,7 @@ export class SupportChannelsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   
+   this.GetChannels();
   }
 
   attachFacebookPage(): void {
@@ -127,6 +127,15 @@ export class SupportChannelsComponent implements OnInit {
     const redirectUri = 'https://localhost:4200/console/channels';
     const loginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&&scope=https://www.googleapis.com/auth/userinfo.profile&response_type=code`;
     window.open(loginUrl, '_blank');
+  }
+
+  channels: any[]=[];
+
+  GetChannels(){
+    this.commonService.GetChannels().subscribe((res:any)=>{
+      debugger
+      this.channels = res[0].subMenu;
+    })
   }
 
 }
