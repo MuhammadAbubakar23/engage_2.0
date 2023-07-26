@@ -320,14 +320,14 @@ export class ConversationComponent implements OnInit {
       let olderThenAWeek =  currentDate.setDate(currentDate.getDate() - 7);
       this.toDate = this.datePipe.transform(olderThenAWeek, 'YYYY-MM-dd')+"T11:59:59.999Z";
 
-      const oneYearFromToDate = currentDate.setDate(currentDate.getDate() - 372)
+      const oneYearFromToDate = currentDate.setDate(currentDate.getDate() - 365)
       this.fromDate = this.datePipe.transform(oneYearFromToDate, 'YYYY-MM-dd')+"T00:00:00.000Z";
     } else if(value == "Older then a month"){
       let currentDate = new Date();
       let olderThenAMonth =  currentDate.setDate(currentDate.getDate() - 30);
       this.toDate = this.datePipe.transform(olderThenAMonth, 'YYYY-MM-dd')+"T11:59:59.999Z";
 
-      const oneYearFromToDate = currentDate.setDate(currentDate.getDate() - 395)
+      const oneYearFromToDate = currentDate.setDate(currentDate.getDate() - 365)
       this.fromDate = this.datePipe.transform(oneYearFromToDate, 'YYYY-MM-dd')+"T00:00:00.000Z";
     }
     else if(value == "Older then a 6 months"){
@@ -335,7 +335,7 @@ export class ConversationComponent implements OnInit {
       let olderThenASixMonth =  currentDate.setDate(currentDate.getDate() - 180);
       this.toDate = this.datePipe.transform(olderThenASixMonth, 'YYYY-MM-dd')+"T11:59:59.999Z";
 
-      const oneYearFromToDate = currentDate.setDate(currentDate.getDate() - 545)
+      const oneYearFromToDate = currentDate.setDate(currentDate.getDate() - 365)
       this.fromDate = this.datePipe.transform(oneYearFromToDate, 'YYYY-MM-dd')+"T00:00:00.000Z";
     }
     else if(value == "Older then a year"){
@@ -780,5 +780,17 @@ export class ConversationComponent implements OnInit {
     this.notInclude = "";
     this.include = "";
     this.getConversationList();
+  }
+
+  anyTimeDropdown = false;
+  showDateRange = false;
+
+  ShowDateRange(){
+    this.anyTimeDropdown = false;
+    this.showDateRange = true;
+  }
+  CloseDateRange(){
+    this.anyTimeDropdown = true;
+    this.showDateRange = false;
   }
 }

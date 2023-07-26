@@ -164,36 +164,43 @@
                 </li> -->
         <li class="list-inline-item">
           <div class="dropdown">
-            <button class="btn dropdown-toggle fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+            <button class="btn dropdown-toggle fw-bold" [ngClass]="anyTimeDropdown?'show':''" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
               aria-expanded="false">
               <i class="fal fa-calendar"></i> Any Time
             </button>
-            <ul class="dropdown-menu assignFirstDropdownList1" aria-labelledby="dropdownMenuButton1">
+            <ul class="dropdown-menu assignFirstDropdownList1" [ngClass]="anyTimeDropdown?'show':''" aria-labelledby="dropdownMenuButton1">
 
-              <li class="dropdown-item">
-                <a (click)="anyTime('Any Time')">Any Time</a>
+              <li class="dropdown-item" (click)="anyTime('Any Time')">
+                <a>Any Time</a>
               </li>
-              <li class="dropdown-item">
-                <a (click)="anyTime('Older then a week')">Older then a week</a>
+              <li class="dropdown-item" (click)="anyTime('Older then a week')">
+                <a>Older then a week</a>
               </li>
-              <li class="dropdown-item">
-                <a (click)="anyTime('Older then a month')">Older then a month</a>
+              <li class="dropdown-item" (click)="anyTime('Older then a month')">
+                <a>Older then a month</a>
               </li>
-              <li class="dropdown-item">
+              <li class="dropdown-item" (click)="anyTime('Older then a 6 months')">
 
-                <a (click)="anyTime('Older then a 6 months')"> Older then a 6 months</a>
+                <a> Older then a 6 months</a>
               </li>
-              <li class="dropdown-item">
-                <a (click)="anyTime('Older then a year')">Older then a year</a>
+              <li class="dropdown-item" (click)="anyTime('Older then a year')">
+                <a>Older then a year</a>
               </li>
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li class="dropdown-item" id="customrange">
-                <a href="#0">Custom Range</a>
+              <li class="dropdown-item" id="customrange" (click)="ShowDateRange()">
+                <a>Custom Range</a>
               </li>
-            </ul>
-            <div class="dropdown-menu assignSecondDropdownList1" aria-labelledby="customrange">
+            </ul><div class="dropdown-menu assignSecondDropdownList1" [ngClass]="showDateRange?'show':''" aria-labelledby="customrange">
+              <header class="d-flex align-items-center justify-content-between my-2">
+                <h6 class="m-0">Date Range </h6>
+                <div class="d-flex align-items-center" (click)="CloseDateRange()">
+                    <span class="iconButton small iconHover closefilter lightGreyBg">
+                      <i class="fa-light fa-xmark"></i>
+                    </span>
+                  </div>
+                </header>
               <form class="px-3 py-3">
                 <div class="d-flex mb-3">
                   <div class="form-floating">

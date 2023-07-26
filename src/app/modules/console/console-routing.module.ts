@@ -15,7 +15,9 @@ import { SignaturesComponent } from './components/templates/signatures/signature
 import { TemplatesComponent } from './components/templates/templates.component';
 import { ConsoleRoutingGuard } from './console-routing.guard';
 import { ConsoleComponent } from './console.component';
+import { ConsoleResolver } from './resolvers/properties/console.resolver';
 import { RolesPermissionsResolver } from './resolvers/roles/roles-permissions.resolver';
+import { TeamResolver } from './resolvers/teams/team.resolver';
 import { TeamsJsonResolver } from './resolvers/teams/teams-json.resolver';
 import { TeamsPermissionsResolver } from './resolvers/teams/teams-permissions.resolver';
 import { RolesResolver } from './resolvers/users/roles.resolver';
@@ -87,12 +89,15 @@ const routes: Routes = [
         canMatch: [ConsoleRoutingGuard],
         resolve: {
           teamsnpermission: TeamsPermissionsResolver,
-          // teams: TeamsResolver,
+          teamin: TeamResolver,
         },
       },{
         path:'channels',
         loadComponent: () => import('./components/support-channels/support-channels.component').then(c => c.SupportChannelsComponent),
         canMatch: [ConsoleRoutingGuard],
+        resolve: {
+          channelsnpermission: ConsoleResolver,
+        },
       },{
         path:'tags',
         loadComponent: () => import('./components/tags/tags.component').then(c => c.TagsComponent)
