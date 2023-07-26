@@ -63,6 +63,7 @@ import { BotRightSidebarComponent } from './engage2/bot-content/bot-right-sideba
 import { BotContentComponent } from './engage2/bot-content/bot-content.component';
 import { BotMenuComponent } from './engage2/bot-content/bot-menu/bot-menu.component';
 import { BotHeaderComponent } from './engage2/bot-content/bot-header/bot-header.component';
+import { ToasterComponent } from './engage2/toaster/toaster.component';
 
 
 
@@ -118,7 +119,8 @@ import { BotHeaderComponent } from './engage2/bot-content/bot-header/bot-header.
     BotRightSidebarComponent,
     BotContentComponent,
     BotMenuComponent,
-    BotHeaderComponent
+    BotHeaderComponent,
+    ToasterComponent
   ],
   imports: [
     CommonModule,
@@ -149,7 +151,8 @@ import { BotHeaderComponent } from './engage2/bot-content/bot-header/bot-header.
     AnalyticsRightSidebarMenuComponent,
     AnalyticsContentComponent,
     BotRightSidebarComponent,
-    BotContentComponent
+    BotContentComponent,
+    ToasterComponent
   ]
 })
 export class LayoutsModule { }

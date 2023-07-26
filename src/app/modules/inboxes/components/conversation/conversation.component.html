@@ -162,38 +162,45 @@
                     </ul>
                   </div>
                 </li> -->
-        <!-- <li class="list-inline-item">
+        <li class="list-inline-item">
           <div class="dropdown">
-            <button class="btn dropdown-toggle fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+            <button class="btn dropdown-toggle fw-bold" [ngClass]="anyTimeDropdown?'show':''" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
               aria-expanded="false">
               <i class="fal fa-calendar"></i> Any Time
             </button>
-            <ul class="dropdown-menu assignFirstDropdownList1" aria-labelledby="dropdownMenuButton1">
+            <ul class="dropdown-menu assignFirstDropdownList1" [ngClass]="anyTimeDropdown?'show':''" aria-labelledby="dropdownMenuButton1">
 
-              <li class="dropdown-item">
-                <a href="#0"> Any Time</a>
+              <li class="dropdown-item" (click)="anyTime('Any Time')">
+                <a>Any Time</a>
               </li>
-              <li class="dropdown-item">
-                <a href="#0">Older then a week</a>
+              <li class="dropdown-item" (click)="anyTime('Older then a week')">
+                <a>Older then a week</a>
               </li>
-              <li class="dropdown-item">
-                <a href="#0">Older then a month</a>
+              <li class="dropdown-item" (click)="anyTime('Older then a month')">
+                <a>Older then a month</a>
               </li>
-              <li class="dropdown-item">
+              <li class="dropdown-item" (click)="anyTime('Older then a 6 months')">
 
-                <a href="#0"> Older then a 6 months</a>
+                <a> Older then a 6 months</a>
               </li>
-              <li class="dropdown-item">
-                <a href="#0">Older then a year</a>
+              <li class="dropdown-item" (click)="anyTime('Older then a year')">
+                <a>Older then a year</a>
               </li>
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li class="dropdown-item" id="customrange">
-                <a href="#0">Custom Range</a>
+              <li class="dropdown-item" id="customrange" (click)="ShowDateRange()">
+                <a>Custom Range</a>
               </li>
-            </ul>
-            <div class="dropdown-menu assignSecondDropdownList1" aria-labelledby="customrange">
+            </ul><div class="dropdown-menu assignSecondDropdownList1" [ngClass]="showDateRange?'show':''" aria-labelledby="customrange">
+              <header class="d-flex align-items-center justify-content-between my-2">
+                <h6 class="m-0">Date Range </h6>
+                <div class="d-flex align-items-center" (click)="CloseDateRange()">
+                    <span class="iconButton small iconHover closefilter lightGreyBg">
+                      <i class="fa-light fa-xmark"></i>
+                    </span>
+                  </div>
+                </header>
               <form class="px-3 py-3">
                 <div class="d-flex mb-3">
                   <div class="form-floating">
@@ -214,11 +221,14 @@
 
             </div>
           </div>
-        </li> -->
-        <li class="list-inline-item">
-          <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
-          <label class="btn toggle-check-btn fw-bold" for="btn-check-outlined" (click)="hasAttachment()">
-            <i class="fal fa-paperclip"></i> Has Attachment</label>
+        </li>
+        <li class="list-inline-item" *ngIf="isAttachment == false">
+          <Button class="btn toggle-check-btn fw-bold" (click)="hasAttachment(true)">
+            <i class="fal fa-paperclip"></i> Has Attachment</Button>
+        </li>
+        <li class="list-inline-item" *ngIf="isAttachment == true">
+          <Button class="btn toggle-btn-checked fw-bold" (click)="hasAttachment(false)">
+            <i class="fal fa-tick"></i> Has Attachment</Button>
         </li>
 
         <!-- Testinggggggggggggggggggggggggggggggggggggggggg -->
@@ -391,138 +401,144 @@
                   </div>
                 </li> -->
         <li class="list-inline-item">
-                  <a class="advance-search-o fw-bold sky btn" (click)="AdvanceSearch()">Advance Search</a>
-                </li>
+          <a class="advance-search-o fw-bold sky btn" (click)="AdvanceSearch()">Advance Search</a>
+        </li>
         <li>
         </li>
       </ul>
       <form [formGroup]="searchForm" (ngSubmit)="getConversationList()">
-      <div class="search-filters" [ngClass]="advanceSearch?'active':''">
-        <header class="d-flex align-items-center justify-content-between my-2">
-          <h6 class="m-0">Filter Search </h6>
-          <div class="d-flex align-items-center">
-            <span class="iconButton small iconHover me-2" (click)="ResetSearchForm()">
-              <i class="fa-light fa-arrows-rotate"></i>
-            </span>
-            <span class="iconButton small iconHover closefilter lightGreyBg" (click)="CloseAdvanceSearch()">
-              <i class="fa-light fa-xmark"></i>
-            </span>
-          </div>
+        <div class="search-filters" [ngClass]="advanceSearch?'active':''">
+          <header class="d-flex align-items-center justify-content-between my-2">
+            <h6 class="m-0">Filter Search </h6>
+            <div class="d-flex align-items-center">
+              <span class="iconButton small iconHover me-2" (click)="ResetSearchForm()">
+                <i class="fa-light fa-arrows-rotate"></i>
+              </span>
+              <span class="iconButton small iconHover closefilter lightGreyBg" (click)="CloseAdvanceSearch()">
+                <i class="fa-light fa-xmark"></i>
+              </span>
+            </div>
 
 
-        </header>
-        <div class="search-body">
-          <div class="row">
-            <!-- <div class="col-6">
-              <div class="form-floating mb-3">
-                <input class="form-control" id="from" placeholder="From">
-                <label for="from">From</label>
+          </header>
+          <div class="search-body">
+            <div class="row">
+              <div class="col-6">
+                <div class="form-floating mb-3">
+                  <input class="form-control" id="from" [(ngModel)]="userName" formControlName="userName"
+                    placeholder="From">
+                  <label for="from">From</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-floating mb-3">
+                  <input class="form-control" id="email" [(ngModel)]="user" formControlName="user" placeholder="Email">
+                  <label for="email">Email</label>
+                </div>
               </div>
             </div>
-            <div class="col-6">
-              <div class="form-floating mb-3">
-                <input class="form-control" id="to" placeholder="To">
-                <label for="to">To</label>
+            <div class="row">
+              <div class="col-6">
+                <div class="form-floating mb-3">
+                  <input class="form-control" type="text" id="Subject" placeholder="Subject" [(ngModel)]="text"
+                    formControlName="text">
+                  <label for="Subject">Subject</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-floating mb-3">
+                  <input class="form-control" type="text" id="incwords" placeholder="Includes the words"
+                    [(ngModel)]="include" formControlName="include">
+                  <label for="incwords">Includes the words</label>
+                </div>
+              </div>
+            </div>
+            <div class="form-floating mb-3">
+              <input class="form-control" type="text" id="ddh" placeholder="Doesn't have" [(ngModel)]="notInclude"
+                formControlName="notInclude">
+              <label for="ddh">Doesn't have</label>
+            </div>
+            <!-- <div class="mb-3 d-none">
+              <div class="heading">Size</div>
+              <div class="row">
+
+                <div class="col-5">
+                  <select class="form-control">
+                    <option selected="">greater then</option>
+                    <option value="1">less then</option>
+                  </select>
+                </div>
+                <div class="col-4">
+                  <input class="form-control" id="11" placeholder="">
+                </div>
+                <div class="col-3">
+                  <select class="form-control" id="fs1" aria-label="">
+                    <option selected="">Mb</option>
+                    <option value="1">KB </option>
+                    <option value="1">Bytes </option>
+                  </select>
+                </div>
               </div>
             </div> -->
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <div class="form-floating mb-3">
-                <input class="form-control" type="text" id="Subject" placeholder="Subject" [(ngModel)]="text" formControlName="text">
-                <label for="Subject">Subject</label>
+
+            <div class="mb-3">
+              <div class="heading">Date within</div>
+              <div class="row">
+
+                <div class="col-5">
+                  <select class="form-control" formControlName="dateWithin">
+                    <option disabled value="">Date Within</option>
+                    <option value="1 day">1 day</option>
+                    <option value="3 days">3 days</option>
+                    <option value="1 week">1 week</option>
+                    <option value="2 weeks">2 weeks</option>
+                    <option value="1 month">1 month</option>
+                    <option value="2 months">2 months</option>
+                    <option value="6 months">6 months</option>
+                    <option value="1 year">1 year</option>
+                  </select>
+                </div>
+                <div class="col-7">
+                  <input type="date" class="form-control" placeholder="Select Date" formControlName="fromDate">
+                </div>
+
               </div>
             </div>
-            <!-- <div class="col-6">
-              <div class="form-floating mb-3">
-                <input class="form-control" id="incwords" placeholder="Includes the words">
-                <label for="incwords">Includes the words</label>
-              </div>
+
+            <!-- <div class="form-floating mb-3">
+              <select class="form-select" id="floatingSelect" aria-label="Search">
+                <option selected="">All Mail</option>
+                <option value="1">Inbox</option>
+                <option value="2">Starred</option>
+                <option value="3">Sent Mail</option>
+                <option value="4">Drafts</option>
+                <option value="5">Charts</option>
+                <option value="6">Spam</option>
+                <option value="7">Trash</option>
+              </select>
+              <label for="floatingSelect">Search</label>
             </div> -->
-          </div>
-          <!-- <div class="form-floating mb-3">
-            <input class="form-control" id="ddh" placeholder="Doesn't have">
-            <label for="ddh">Doesn't have</label>
-          </div>
-          <div class="mb-3 d-none">
-            <div class="heading">Size</div>
-            <div class="row">
-
-              <div class="col-5">
-                <select class="form-control">
-                  <option selected="">greater then</option>
-                  <option value="1">less then</option>
-                </select>
+            <div class="mb-3">
+              <div class="form-check form-check-inline" >
+                <input class="form-check-input" type="checkbox" id="hasattachment" formControlName="isAttachment" (click)="isAttachmentChecked()">
+                <label class="form-check-label" for="hasattachment">Has attachment</label>
               </div>
-              <div class="col-4">
-                <input class="form-control" id="11" placeholder="">
-              </div>
-              <div class="col-3">
-                <select class="form-control" id="fs1" aria-label="">
-                  <option selected="">Mb</option>
-                  <option value="1">KB </option>
-                  <option value="1">Bytes </option>
-                </select>
-              </div>
+              <!-- <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="dontinccharts" value="option2">
+                <label class="form-check-label" for="dontinccharts">Don't include chats</label>
+              </div> -->
             </div>
           </div>
 
-          <div class="mb-3">
-            <div class="heading">Date within</div>
-            <div class="row">
-
-              <div class="col-5">
-                <select class="form-control">
-                  <option selected="">1 day</option>
-                  <option value="1">3 day</option>
-                  <option value="2">1 week</option>
-                  <option value="3">2 weeks</option>
-                  <option value="4">1 month</option>
-                  <option value="5">2 months</option>
-                  <option value="6">6 months</option>
-                  <option value="7">1 year</option>
-                </select>
-              </div>
-              <div class="col-7">
-                <input type="date" class="form-control" placeholder="Select Date">
-              </div>
-
+          <footer class="py-3">
+            <div class="buttons-wrap d-flex justify-content-end">
+              <button type="button" class="btn btn-outline-secondary closefilter"
+                (click)="CloseAdvanceSearch()">Cancel</button>
+              <button type="submit" class="btn btn-success ms-2 px-4">Apply</button>
             </div>
-          </div>
-
-          <div class="form-floating mb-3">
-            <select class="form-select" id="floatingSelect" aria-label="Search">
-              <option selected="">All Mail</option>
-              <option value="1">Inbox</option>
-              <option value="2">Starred</option>
-              <option value="3">Sent Mail</option>
-              <option value="4">Drafts</option>
-              <option value="5">Charts</option>
-              <option value="6">Spam</option>
-              <option value="7">Trash</option>
-            </select>
-            <label for="floatingSelect">Search</label>
-          </div>
-          <div class="mb-3">
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="hasattachment" value="option1">
-              <label class="form-check-label" for="hasattachment">Has attachment</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" id="dontinccharts" value="option2">
-              <label class="form-check-label" for="dontinccharts">Don't include chats</label>
-            </div>
-          </div> -->
+          </footer>
         </div>
-
-        <footer class="py-3">
-          <div class="buttons-wrap d-flex justify-content-end">
-            <button type="button" class="btn btn-outline-secondary closefilter" (click)="CloseAdvanceSearch()">Cancel</button>
-            <button type="submit" class="btn btn-success ms-2 px-4">Apply</button>
-          </div>
-        </footer>
-      </div>
-    </form>
+      </form>
 
     </div>
     <div class="filter-container">
@@ -668,61 +684,62 @@
         <table class="table">
           <tbody>
             <ng-container *ngFor="let group of ConversationList">
-            <tr>
-              <td colspan="6">
-                <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
-              </td>
-            </tr>
-            <!-- [ngClass]="[alertWarning == true?'alert-warning':'', alertDanger == true?'alert-danger':'']" -->
-            <tr *ngFor="let querry of group.items | sort:criteria; let i = index"
-              [class.selected]="querry.isChecked==true" class="alert" 
-              [ngClass]="[querry.slaFlag == 'warning'?'alert-warning':'' || querry.slaFlag == 'danger'?'alert-danger':'' ||
+              <tr>
+                <td colspan="6">
+                  <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
+                </td>
+              </tr>
+              <!-- [ngClass]="[alertWarning == true?'alert-warning':'', alertDanger == true?'alert-danger':'']" -->
+              <tr *ngFor="let querry of group.items | sort:criteria; let i = index"
+                [class.selected]="querry.isChecked==true" class="alert" [ngClass]="[querry.slaFlag == 'warning'?'alert-warning':'' || querry.slaFlag == 'danger'?'alert-danger':'' ||
               querry.slaFlag == 'unread'?'unread':'']">
-              <!-- <td style="width: 40px;"><input [checked]="querry.isChecked" value="{{querry.id}}"
+                <!-- <td style="width: 40px;"><input [checked]="querry.isChecked" value="{{querry.id}}"
                   (change)="isAllSelected($event, i, querry.platform)" class="form-check-input me-1" type="checkbox"
                   aria-label="...">
               </td> -->
-              <td style="width: 40px;">
-                <i *ngIf="querry.platform == 'Facebook'" class="fab fa-facebook navytext" data-bs-toggle="tooltip"
-                  data-bs-placement="bottom" title="" data-bs-original-title="Facebook" aria-label="Facebook"></i>
-                <i *ngIf="querry.platform == 'Instagram'" data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-                  data-bs-original-title="Instagram" aria-label="Instagram" class="fab fa-instagram"></i>
-                <i *ngIf="querry.platform == 'Email' || querry.platform == 'OfficeEmail'" class="fal fa-envelope cherry" data-bs-toggle="tooltip"
-                  data-bs-placement="bottom" title="" data-bs-original-title="Email" aria-label="Email"></i>
-                <i *ngIf="querry.platform == 'Youtube'" class="fab fa-youtube warning" data-bs-toggle="tooltip"
-                  data-bs-placement="bottom" title="" data-bs-original-title="Youtube" aria-label="Youtube"></i>
-                <i *ngIf="querry.platform == 'Twitter'" class="fab fa-twitter sky" data-bs-toggle="tooltip"
-                  data-bs-placement="bottom" title="" data-bs-original-title="Twitter" aria-label="Twitter"></i>
-                <i *ngIf="querry.platform == 'SMS'" class="fal fa-comment-alt-lines berry" data-bs-toggle="tooltip"
-                  data-bs-placement="bottom" data-bs-original-title="SMS" aria-label="SMS"></i>
-                <i *ngIf="querry.platform == 'WhatsApp'" class="fab fa-whatsapp emerald" data-bs-toggle="tooltip"
-                  data-bs-placement="bottom" data-bs-original-title="WhatsApp" aria-label="Whatsapp"></i>
-                <i *ngIf="querry.platform == 'Webchat'" class="fal fa-messages webchat" data-bs-toggle="tooltip"
-                  data-bs-placement="bottom" data-bs-original-title="Webchat" aria-label="Webchat"></i>
-                <i *ngIf="querry.platform == 'LinkedIn'" class="fa-brands fa-linkedin-in linkedinTxt"
-                  data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="LinkedIn"
-                  aria-label="LinkedIn">
-                </i>
-              </td>
-              <td style="width: 300px;">
-                <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
-                  <a (click)="updatevalue('socialHeader', querry.user, querry.postType, querry.userId,'assignToMe', querry.platform, querry.profileId)">
-                    <span>{{querry.userName.split('<')[0] || querry.user}} </span>
-                        <span class="badge bg-danger rounded-pill"
-                          *ngIf="querry.unrespondedCount > 0">{{querry.unrespondedCount}}</span></a>
-                </span>
+                <td style="width: 40px;">
+                  <i *ngIf="querry.platform == 'Facebook'" class="fab fa-facebook navytext" data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" title="" data-bs-original-title="Facebook" aria-label="Facebook"></i>
+                  <i *ngIf="querry.platform == 'Instagram'" data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                    data-bs-original-title="Instagram" aria-label="Instagram" class="fab fa-instagram"></i>
+                  <i *ngIf="querry.platform == 'Email' || querry.platform == 'OfficeEmail'"
+                    class="fal fa-envelope cherry" data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                    data-bs-original-title="Email" aria-label="Email"></i>
+                  <i *ngIf="querry.platform == 'Youtube'" class="fab fa-youtube warning" data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" title="" data-bs-original-title="Youtube" aria-label="Youtube"></i>
+                  <i *ngIf="querry.platform == 'Twitter'" class="fab fa-twitter sky" data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" title="" data-bs-original-title="Twitter" aria-label="Twitter"></i>
+                  <i *ngIf="querry.platform == 'SMS'" class="fal fa-comment-alt-lines berry" data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" data-bs-original-title="SMS" aria-label="SMS"></i>
+                  <i *ngIf="querry.platform == 'WhatsApp'" class="fab fa-whatsapp emerald" data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" data-bs-original-title="WhatsApp" aria-label="Whatsapp"></i>
+                  <i *ngIf="querry.platform == 'Webchat'" class="fal fa-messages webchat" data-bs-toggle="tooltip"
+                    data-bs-placement="bottom" data-bs-original-title="Webchat" aria-label="Webchat"></i>
+                  <i *ngIf="querry.platform == 'LinkedIn'" class="fa-brands fa-linkedin-in linkedinTxt"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="LinkedIn"
+                    aria-label="LinkedIn">
+                  </i>
+                </td>
+                <td style="width: 300px;">
+                  <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
+                    <a
+                      (click)="updatevalue('socialHeader', querry.user, querry.postType, querry.userId,'assignToMe', querry.platform, querry.profileId)">
+                      <span>{{querry.userName.split('<')[0] || querry.user}} </span>
+                          <span class="badge bg-danger rounded-pill"
+                            *ngIf="querry.unrespondedCount > 0">{{querry.unrespondedCount}}</span></a>
+                  </span>
 
-              </td>
-              <td>
-                <div class="maintext"
-                  (click)="updatevalue('socialHeader', querry.user, querry.postType, querry.userId,'assignToMe', querry.platform, querry.profileId)">
-                  {{querry.message < 110 ? querry.message: (querry.message | slice:0:110) +'...'}} </div>
-              </td>
-              <td class="px-1">
-                <small>{{querry.createdDate | date:'h:mm:ss a'}}</small>
-              </td>
+                </td>
+                <td>
+                  <div class="maintext"
+                    (click)="updatevalue('socialHeader', querry.user, querry.postType, querry.userId,'assignToMe', querry.platform, querry.profileId)">
+                    {{querry.message < 110 ? querry.message: (querry.message | slice:0:110) +'...'}} </div>
+                </td>
+                <td class="px-1">
+                  <small>{{querry.createdDate | date:'h:mm:ss a'}}</small>
+                </td>
 
-              <!-- <td>
+                <!-- <td>
                         <div class="dropdown bookmark-dropdown">
   
                           <button class="btn" type="button" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -807,7 +824,7 @@
                         </div>
                       </td> -->
 
-              <!-- <td class="more-action-container">
+                <!-- <td class="more-action-container">
                 <span class="more-action-btns">
                   <a href="#" class="px-2" data-bs-toggle="tooltip" data-bs-placement="bottom" tabindex="1"
                     aria-label="Snooze">
@@ -823,8 +840,8 @@
                   </a>
                 </span>
               </td> -->
-            </tr>
-          </ng-container>
+              </tr>
+            </ng-container>
           </tbody>
         </table>
       </div>

@@ -15,16 +15,15 @@ import { PermissionState } from '../../permission-state/permission.state';
   styleUrls: ['./team-menu.component.scss'],
 })
 export class TeamMenuComponent implements OnInit {
+  menus$!: MenuModel[];
   permissions$ :any;
   permission$ :any;
-  menus$: any;
   menu$: any;
   loading$: any;
   constructor(private MenuStore: Store<MenuState>, private PermissionStore: Store<PermissionState>, private _route: Router) {
     // this.menu$ = this.MenuStore.select(getEmargingEqual('team_main_left_menu'));
     // this.loading$ = this.MenuStore.select(getMenusLoading);
     // this.MenuStore.dispatch(loadMenusList());
-
     // this.permission$ = this.PermissionStore.select(getPermissionBySlug("_upur_"));
     // this.loading$ = this.PermissionStore.select(getPermissionsLoading);
     // this.PermissionStore.dispatch(loadPermissionsLetters());
@@ -33,7 +32,7 @@ export class TeamMenuComponent implements OnInit {
   ngOnInit() {
     this.MenuStore
       .select(getEmargingEqual('team_main_left_menu'))
-      .subscribe((item:any) => {
+      .subscribe((item:MenuModel[]) => {
         this.menus$ = [...item];
       });
     

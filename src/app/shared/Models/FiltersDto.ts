@@ -1,6 +1,6 @@
 export class FiltersDto{
-  // fromDate: any = new Date();
-  // toDate: any = new Date();
+  fromDate?: any;
+  toDate?: any;
   user: string="";
   pageId: string="";
   plateForm: string="";
@@ -9,4 +9,7 @@ export class FiltersDto{
   isAttachment : boolean = false;
   queryType : string = "";
   text:string="";
+  userName?:string="";
+  notInclude?:String="";
+  include?:String="";
   }

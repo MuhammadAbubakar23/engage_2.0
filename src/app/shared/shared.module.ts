@@ -9,6 +9,7 @@ import { GroupbydatePipe } from './CustomPipes/groupbydate.pipe';
 import { FilterPipe } from './CustomPipes/filter.pipe';
 import { QuickReplySearchFilterPipe } from './CustomPipes/quick-reply-search-filter.pipe';
 import { SafePipe } from './pipes/safe.pipe';
+import { NavigationBackDirective } from './services/navigation/navigation-back.directive';
 
 
 
@@ -20,6 +21,7 @@ import { SafePipe } from './pipes/safe.pipe';
     FilterPipe,
     QuickReplySearchFilterPipe,
     SafePipe,
+    NavigationBackDirective,
     
     
   ],
@@ -36,6 +38,7 @@ import { SafePipe } from './pipes/safe.pipe';
     FilterPipe,
     QuickReplySearchFilterPipe,
     SafePipe,
+    NavigationBackDirective,
   ]
 })
 export class SharedModule { }

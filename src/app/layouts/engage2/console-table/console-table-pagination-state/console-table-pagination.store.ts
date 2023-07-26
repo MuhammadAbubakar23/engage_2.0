@@ -2,32 +2,12 @@ import { Injectable } from '@angular/core';
 import { ComponentStore, OnStateInit } from '@ngrx/component-store';
 import { filter, tap, map, withLatestFrom, pairwise, skip } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { ConsoleTablePaginationState } from './console-table-pagination-state';
+import { ConsoleTablePaginationEvent } from './console-table-pagination-event';
 
-export interface PaginatorState {
-  /** The current page index. */
-  pageIndex: number;
-  /** The current page size */
-  pageSize: number;
-  /** The current total number of items being paged */
-  length: number;
-  /** The set of provided page size options to display to the user. */
-  pageSizeOptions: ReadonlySet<number>;
-}
-
-/**
- * Change event object that is emitted when the user selects a
- * different page size or navigates to another page.
- */
-export interface PageEvent
-  extends Pick<PaginatorState, 'pageIndex' | 'pageSize' | 'length'> {
-  /**
-   * Index of the page that was selected previously.
-   */
-  previousPageIndex?: number;
-}
 
 @Injectable()
-export class ConsoleTablePaginationStore extends ComponentStore<PaginatorState> implements OnStateInit {
+export class ConsoleTablePaginationStore extends ComponentStore<ConsoleTablePaginationState> implements OnStateInit {
 
   ngrxOnStateInit() {
     // called once after state has been first initialized
@@ -39,6 +19,7 @@ export class ConsoleTablePaginationStore extends ComponentStore<PaginatorState> 
       pageSize: 50,
       length: 0,
       pageSizeOptions: new Set<number>([50]),
+      //searchText:''
     });
   }
   // *********** Updaters *********** //
@@ -77,6 +58,13 @@ export class ConsoleTablePaginationStore extends ComponentStore<PaginatorState> 
     };
   });
 
+  // readonly serachPageText = this.updater((state, newSearchText: string) => {
+  //   return {
+  //     ...state,
+  //     searchText: newSearchText,
+  //   };
+  // });
+
   // *********** Selectors *********** //
 
   readonly hasPreviousPage$ = this.select(
@@ -88,10 +76,8 @@ export class ConsoleTablePaginationStore extends ComponentStore<PaginatorState> 
     return Math.ceil(length / pageSize);
   });
 
-  readonly hasNextPage$ = this.select(
-    this.state$,
-    this.numberOfPages$,
-    ({ pageIndex, pageSize }, numberOfPages) => {
+  readonly hasNextPage$ = this.select( this.state$, this.numberOfPages$, ({ pageIndex, pageSize }, numberOfPages) => 
+    {
       const maxPageIndex = numberOfPages - 1;
       return pageIndex < maxPageIndex && pageSize != 0;
     }
@@ -122,6 +108,7 @@ export class ConsoleTablePaginationStore extends ComponentStore<PaginatorState> 
       pageSize: state.pageSize,
       pageSizeOptions: Array.from(state.pageSizeOptions),
       pageIndex: state.pageIndex,
+     // searchText: state.searchText,
       hasPreviousPage,
       hasNextPage,
       rangeLabel,
@@ -134,13 +121,13 @@ export class ConsoleTablePaginationStore extends ComponentStore<PaginatorState> 
     pairwise()
   );
 
-  readonly page$: Observable<PageEvent> = this.select(
+  readonly page$: Observable<ConsoleTablePaginationEvent> = this.select(
     // first Observable 👇
     this.pageIndexChanges$,
     // second Observable 👇
-    this.select((state) => [state.pageSize, state.length]),
+    this.select((state) => [state.pageSize, state.length]),//, state.searchText
     // Now combining the results from both of these Observables into a PageEvent object
-    ([previousPageIndex, pageIndex], [pageSize, length]) => ({
+    ([previousPageIndex, pageIndex], [pageSize, length]) => ({//, searchText
       pageIndex,
       previousPageIndex,
       pageSize,

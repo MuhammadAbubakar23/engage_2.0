@@ -34,7 +34,7 @@ export class ConsoleTableWithImageComponent implements OnInit {
       //  else _self.hidden.push(item);
       //  arr[index] = item * 10;
     });
-    console.log(this.ConsoleTableWithImageData$);
+    //console.log(this.ConsoleTableWithImageData$);
   }
 
 }

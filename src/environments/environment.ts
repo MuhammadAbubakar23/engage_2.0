@@ -49,24 +49,22 @@ export const environment = {
       AllTeams:"Teams/FetchAll",// new to review
       AddTeam:"Accesses/Teams",
       TeamProperties:"Accesses/Properties",
-      //accessrole:"Roles/Prmissions",
-      
       accessrole:"Roles/Previews", //"Permissions/role",      
       permissionrole:"Roles/Previews", //"Permissions/role",
       RolesPermissions:"Roles/Fetch",
       permissions:"Roles/Permissions",
       RoleProperties:"Permissions/Properties",      
       AddRole:"Permissions/Roles",      
-      
       UserRoles:"Roles/Users",
-      UserTeams:"Teams/Users",
-      
-
-      AddUser:"Users/CreateUser",
-      UpdateUser:"Users/UpdateUser",
-      AllUsers:"Users/GetAll",
-      DeleteUser:"Users/DeleteUser",
-      GetUserById:"Users/GetUserById",
+      UserTeams:"Teams/Users",      
+      AddUser:"Identity/Add",
+      UpdateUser:"Identity/Update",
+      DeleteUser:"Identity/Delete",
+      AllUsers:"Users/GetAll",      
+      GetUserById:"Users/GetById",
+      // For console skill setup 
+      channels:"Console/Properties/Channel/Tree/0",
+      routing:"Console/Properties/routing/Tree/0",
     },
     console:{
       AddUser:"Users/CreateUser",
