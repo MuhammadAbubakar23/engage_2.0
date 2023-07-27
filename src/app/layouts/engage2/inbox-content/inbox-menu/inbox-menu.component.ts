@@ -35,6 +35,8 @@ export class InboxMenuComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.GetChannels();
+
     this.getAllChannelsUnrespondedCounts();
 
     this.Subscription = this.unrespondedCountService
@@ -125,9 +127,20 @@ export class InboxMenuComponent implements OnInit {
       });
   }
 
+  channels: any[]=[];
+
+  GetChannels(){
+    this.commonService.GetChannels().subscribe((res:any)=>{
+      this.channels = res[0].subMenu;
+    })
+  }
+
+  platformWiseCount:any[]=[];
+
   getAllChannelsUnrespondedCounts(){
     this.commonService.GetAllChannelsUnrespondedCount().subscribe((res:any)=>{
       this.UnResponded = res.totalCount
+      this.platformWiseCount = res.platformCount
       res.platformCount.forEach((platform:any) => {
 
         if(platform.platform == 'Facebook'){
