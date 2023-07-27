@@ -42,5 +42,4 @@ export class ConsoleTableActionListComponent implements OnInit {
     // console.log("added Data --- >>>",this.data)
     // console.log("I m func action")
   }
-
 }

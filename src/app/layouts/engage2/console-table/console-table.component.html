@@ -4,7 +4,7 @@
     <ng-template [ngIf]="filter?.template?.toolbar=='top'">
         <!-- (onNext)="onNextPage" (onPrevious)="onPreviousPage" -->
         <!-- <console-table-toolbar  ></console-table-toolbar> -->
-        <console-table-pagination 
+        <!-- <console-table-pagination 
             [length]="pagingLength$"
             [pageSize]="pagingSize$"
             [pageSizeOptions]="pagingSizeOptions$"
@@ -13,7 +13,15 @@
             (reloadPageEvent)="reloader()"
             
         >
-        </console-table-pagination>
+        </console-table-pagination> -->
+        <console-table-pagination 
+        [length]="pagingLength$"
+        [pageSize]="pagingSize$"
+        [pageSizeOptions]="pagingSizeOptions$"
+        (page)="paginator($event)"
+        (input)="handleSearch($any($event.target).value)" 
+        (reloadPageEvent)="reloader()">
+      </console-table-pagination>
     </ng-template>
     
     <table class="table align-middle" width="100%">       
