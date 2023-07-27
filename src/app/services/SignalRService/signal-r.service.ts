@@ -55,7 +55,7 @@ export class SignalRService {
     };
     
       this.hubconnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://common-engage.enteract.app/ConnectionHub', options)
+      .withUrl('https://comservices.enteract.live/ConnectionHub', options)
       .withAutomaticReconnect()
       .configureLogging(signalR.LogLevel.Information)
       .build();
@@ -80,7 +80,7 @@ export class SignalRService {
     };
     
       this.hubconnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://common-engage.enteract.app/ConnectionHub', options)
+      .withUrl('https://comservices.enteract.live/ConnectionHub', options)
       .withAutomaticReconnect()
       .configureLogging(signalR.LogLevel.Information)
       .build();
