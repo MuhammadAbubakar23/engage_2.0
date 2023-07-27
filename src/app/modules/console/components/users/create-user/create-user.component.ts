@@ -5,7 +5,7 @@ import { AbstractControl, ReactiveFormsModule, UntypedFormBuilder, UntypedFormCo
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { takeUntil } from 'rxjs';
 import { userDto } from 'src/app/shared/Models/concersationDetailDto';
 import { RequestService } from 'src/app/shared/services/request/request.service';
@@ -63,6 +63,7 @@ export class CreateUserComponent implements OnInit {
     , private storsrv:StorageService
     , private uservc:UsersService
     , private roles:RolesAndPermissionsService
+    , private router : Router
     , private teams:TeamsService) { }
 
   get f(): { [key: string]: AbstractControl } {
@@ -239,6 +240,9 @@ export class CreateUserComponent implements OnInit {
       next: (res: any) => {
         console.log(res)
         _self.onReset();
+        this.router.navigate(['/console/users']);
+
+        
       },
       error: (err: HttpErrorResponse) => {
         // this.errorMessage = err.message;
@@ -259,7 +263,11 @@ export class CreateUserComponent implements OnInit {
     this.isActive = !this.isActive;
   }
 
+  cancelForm(){
+    this.router.navigate(['/console/users']);
 
+  
+  }
   onCatRemovedTeam(cat: string) {
     const Teams = this.TeamsControl.value as string[];
     this.removeFirst(Teams, cat);
