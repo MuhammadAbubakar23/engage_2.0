@@ -42,12 +42,9 @@ export class SentimentService {
 
   getSentimentApi(value: string): Observable<string> {
     let httpOptions = this.gethttpOptions();
-
     const userMessage = new Message('user', value);
-
     this.senconversation.next([userMessage]);
     let data = { 'text': value }
-
     return this.http.post<string>(baseUrl + "getsentiment", data, httpOptions);
   }
   getLanguageApi(value: string): Observable<string> {

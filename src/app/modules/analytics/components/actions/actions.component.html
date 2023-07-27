@@ -101,24 +101,18 @@
                 <div *ngIf="numberoftables > 0" class="list-group-section">
                   <div class="list-group list-group-flush">
                     <a class="d-flex" value="Join">
-                      <div
-                        class="list-txt d-flex"
-                        *ngFor="let _ of counterArray(); let i = index"
-                      >
+                      <div class="list-txt d-flex" *ngFor="let _ of counterArray(); let i = index">
                         <div class="icons-list d-flex">
                           <ng-select
                             style="width: 180px; margin-right: 5px"
-                            placeholder="Select Table"
+                            [placeholder]="showTablePlaceholder(i) ? 'Select Table' : ''"
                             (change)="onTableSelect($event, i)"
                           >
-                            <ng-option
-                              *ngFor="let table of tables"
-                              [value]="table"
-                              >{{ table }}</ng-option
-                            >
+                            <ng-option *ngFor="let table of tables" [value]="table">{{ table }}</ng-option>
                           </ng-select>
                         </div>
                       </div>
+
                       <div class="icons-list d-flex">
                         <input
                           type="button"
@@ -139,32 +133,20 @@
                 >
                   <div class="list-group list-group-flush">
                     <a class="d-flex" value="Join">
-                      <div
-                        class="list-txt d-flex"
-                        *ngFor="
-                          let table of selectedTablesColumns;
-                          let i = index
-                        "
-                      >
-                        <div
-                          class="icons-list d-flex"
-                          style="margin-right: 5px"
-                        >
+                      <div class="list-txt d-flex" *ngFor="let table of selectedTablesColumns; let i = index">
+                        <div class="icons-list d-flex" style="margin-right: 5px">
                           <ng-select
                             style="width: 180px"
-                            [placeholder]="'Select Column '"
+                            [placeholder]="showColumns1Placeholder(i) ? 'Select Column' : ''"
                             [multiple]="true"
                             (change)="onColumnsSelect(table, i, false)"
                             [(ngModel)]="selectedValues1[i]"
                           >
-                            <ng-option
-                              *ngFor="let value of getObjectValues(table)"
-                              [value]="value"
-                              >{{ value }}</ng-option
-                            >
+                            <ng-option *ngFor="let value of getObjectValues(table)" [value]="value">{{ value }}</ng-option>
                           </ng-select>
                         </div>
                       </div>
+
                       <div class="icons-list d-flex">
                         <input
                           type="button"
@@ -200,6 +182,7 @@
                             [multiple]="true"
                             (change)="onColumnsSelect(table, i, true)"
                             [(ngModel)]="selectedValues2[i]"
+                            [placeholder]="showColumns2Placeholder(i) ? 'Select Column' : ''"
                           >
                             <ng-option
                               *ngFor="let value of getObjectValues(table)"
@@ -211,7 +194,7 @@
                       </div>
                       <div class="icons-list d-flex">
                         <ng-select
-                          style="width: auto; height: auto"
+                          style="width: 180px; height: auto"
                           [(ngModel)]="selectedJoin"
                           (change)="joinTables()"
                         >
@@ -358,7 +341,7 @@
                             style="width: 180px"
                             [multiple]="true"
                             [(ngModel)]="groupselectedItems"
-                            placeholder="Group By"
+                            [placeholder]="groupselectedItems.length === 0 ? 'Group By' : ''"
                           >
                             <ng-option
                               *ngFor="let column of columns"
@@ -380,6 +363,7 @@
                     </a>
                   </div>
                 </div>
+
                 <hr />
                 <div class="list-group-section pt-3 pe-3">
                   <div class="list-group list-group-flush">

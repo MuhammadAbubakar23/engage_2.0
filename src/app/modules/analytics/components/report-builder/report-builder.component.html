@@ -22,10 +22,12 @@
 
                 <ng-select
                   style="width: 250px; margin-right: 10px"
+
                   [(ngModel)]="DBC"
                   (change)="selectConnection()"
                 >
                   <ng-option
+                  style="width: 250px; margin-right: 10px; background-color: red;"
                     *ngFor="let db of dbsettings"
                     [value]="db.connection_name"
                     >{{ db.connection_name }}</ng-option
@@ -58,7 +60,7 @@
                     style="width: 250px; margin-right: 10px"
                     [(ngModel)]="selectedLabels"
                     (change)="selectLabel()"
-                    [placeholder]="'Select Column '"
+                    [placeholder]="selectedLabels.length === 0 ? 'Select Column' : ''"
                     [multiple]="true"
                   >
                     <ng-option
@@ -73,7 +75,7 @@
                     style="width: 250px; margin-right: 10px"
                     [(ngModel)]="selectedColumns"
                     (change)="selectColumn()"
-                    [placeholder]="'Select Column '"
+                    [placeholder]="selectedColumns.length === 0 ? 'Select Column' : ''"
                     [multiple]="true"
                   >
                     <ng-option

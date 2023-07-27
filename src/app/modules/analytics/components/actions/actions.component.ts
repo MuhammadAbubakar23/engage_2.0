@@ -49,10 +49,7 @@ export class ActionsComponent implements OnInit {
     const dbName = localStorage.getItem('dbName')
 
     if (dbName && tableName) {
-      // this.shareddataService.query$.subscribe((query) => {
-      //   this.query = query;
 
-      // })
 
       if (dbName) {
         this.shareddataService.tables$.subscribe((res) => {
@@ -93,7 +90,15 @@ export class ActionsComponent implements OnInit {
     this.isDropdownVisible = show;
   }
 
-
+  showTablePlaceholder(index: number): boolean {
+    return !this.selectedTables[index]; // Will return true if no table selected for this index
+  }
+  showColumns1Placeholder(index: number): boolean {
+    return !this.selectedValues1[index] || this.selectedValues1[index].length === 0;
+  }
+  showColumns2Placeholder(index: number): boolean {
+    return !this.selectedValues2[index] || this.selectedValues2[index].length === 0;
+  }
 
   limitData(): void {
 
@@ -249,9 +254,9 @@ export class ActionsComponent implements OnInit {
 
   submitReport(): void {
     if (this.reportName !== "" && this.query !== "Please Type Query" && this.query !== "") {
-      const connection=JSON.stringify(localStorage.getItem('connection_name'))
-      const db=JSON.stringify(localStorage.getItem('dbName'));
-      const table=JSON.stringify(localStorage.getItem('selectedtable'));
+      const connection=localStorage.getItem('connection_name')
+      const db=localStorage.getItem('dbName');
+      const table=localStorage.getItem('selectedtable');
       this.reportService.createReportApi({ "query": this.query, 'name': this.reportName,'tableName':table,'dbName':db,'connectionName':connection}).subscribe(res => {
         console.log(res);
         if (res === "Report Name already exists") {
