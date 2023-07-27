@@ -67,7 +67,7 @@ export class CreateSignatureTemplatesComponent implements OnInit {
           (response: any) => {
             // Handle the successful response after updating the template
             // console.log('Template updated:', response);
-            this.router.navigate(['/console/templates/signatures']);
+            this.router.navigate(['/console/templates/signature']);
           },
           (error: any) => {
             // Handle the error if the update fails
@@ -79,7 +79,7 @@ export class CreateSignatureTemplatesComponent implements OnInit {
           (response: any) => {
             // Handle the successful response after creating a new template
             // console.log('Template created:', response);
-            this.router.navigate(['/console/templates/signatures']);
+            this.router.navigate(['/console/templates/signature']);
           },
           (error: any) => {
             // Handle the error if the template creation fails
@@ -95,6 +95,6 @@ export class CreateSignatureTemplatesComponent implements OnInit {
   
       
       cancelForm(): void {
-         this.router.navigate(['/console/templates/signatures']);
+         this.router.navigate(['/console/templates/signature']);
       }
     }
