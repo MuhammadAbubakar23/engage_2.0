@@ -20,7 +20,7 @@ export class ChatBotComponent implements OnInit, AfterViewInit {
   public subscription!: Subscription;
 
   intents=[];
-  
+
   toastermessage: string = '';
   isToaster: boolean = false;
   intentsDetails:any={
@@ -42,6 +42,8 @@ export class ChatBotComponent implements OnInit, AfterViewInit {
       localStorage.setItem("token", token.access);
       this.botService.listofIntents().subscribe((res:any)=>{
         this.intents=res;
+        this.intentName=res[0];
+        this.selectIntent()
         console.log("result",res);
        })
     });
