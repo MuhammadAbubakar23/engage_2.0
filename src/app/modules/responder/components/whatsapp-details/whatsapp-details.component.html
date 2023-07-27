@@ -57,58 +57,71 @@
                                                         <p class="card-text ms-3"><small class="silver">{{whatsappMsg.createdDate |
                                                                 date:'hh:mm:ss a'}}</small></p>
                                                     </div>
-                                                    <div class="dropdown w-auto" *ngIf="whatsappMsg.queryStatus != 'Responded' && whatsappMsg.queryStatus != 'Completed'">
-                                                        <button class="btn coal p-0 ps-3" type="button"
-                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                            aria-expanded="false">
-                                                            <small>{{whatsappMsg.queryStatus}} <i
-                                                                    class="far fa-chevron-down ms-2"></i></small>
+                                
+                                                    <div class="dropdown w-auto"
+                                                        *ngIf="whatsappMsg.queryStatus != 'Responded' && whatsappMsg.queryStatus != 'Completed'">
+                                                        <button class="btn coal p-0 ps-3" type="button" id="dropdownMenuButton1"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <small>{{whatsappMsg.queryStatus}} <i class="far fa-chevron-down ms-2"></i></small>
                                                         </button>
-                                                        <ul class="dropdown-menu custom-dropdown"
-                                                            aria-labelledby="dropdownMenuButton1">
-
+                                                        <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1">
+                                
                                                             <li>
-                                                                <a class="dropdown-item" *ngIf="whatsappMsg.queryStatus != 'Responded'" (click)="whatsappStatus(whatsappMsg.id)">Read</a>
-                                                                
+                                                                <a class="dropdown-item" *ngIf="whatsappMsg.queryStatus != 'Responded'"
+                                                                    (click)="whatsappStatus(whatsappMsg.id)">Read</a>
+                                
                                                                 <!-- <a class="dropdown-item" *ngIf="whatsappMsg.queryStatus == 'Responded'" (click)="queryCompleted(whatsappMsg.id)">Completed</a> -->
                                                             </li>
-
+                                
                                                         </ul>
                                                     </div>
-                                                    <div class="w-auto" *ngIf="whatsappMsg.queryStatus == 'Responded' || whatsappMsg.queryStatus == 'Completed'" style="margin-left: 20px;">
+                                                    <div class="w-auto"
+                                                        *ngIf="whatsappMsg.queryStatus == 'Responded' || whatsappMsg.queryStatus == 'Completed'"
+                                                        style="margin-left: 20px;">
                                                         <small>{{whatsappMsg.queryStatus}} </small>
-                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div *ngFor="let attachment of whatsappMsg.attachments" style="width: 375px;">
-                                                    <img class="whatsapp-single-img whatsappImgModalBtn" *ngIf="isImage(attachment)" src={{attachment.attachmentUrl}}
-                                                        controls style="width: -webkit-fill-available;">
+                                                    <img class="whatsapp-single-img whatsappImgModalBtn" *ngIf="isImage(attachment)"
+                                                        src={{attachment.attachmentUrl}} controls style="width: -webkit-fill-available;">
                                                     <img *ngIf="attachment.contentType == 'animated_image_share'" src={{attachment.attachmentUrl}}
                                                         style="width: -webkit-fill-available;">
                                                     <img *ngIf="attachment.contentType == 'sticker'" src={{attachment.attachmentUrl}}
                                                         style="width: -webkit-fill-available;">
-                                                
+                                
                                                     <video class="video" *ngIf="isVideo(attachment)" src={{attachment.attachmentUrl}} controls
                                                         style="width: -webkit-fill-available;"></video>
-                                                
+                                
                                                     <audio class="audio" *ngIf="isAudio(attachment)" src={{attachment.attachmentUrl}} controls
                                                         style="width: -webkit-fill-available;"></audio>
-                                                
+                                
                                                     <a *ngIf="isOther(attachment)" [href]="attachment.attachmentUrl" target="_blank">
-                                                        <button class="download-button">{{ attachment.name }}</button>
+                                                        <div class="card-body pdf-body bg-light align-items-center">
+                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'pdf'" class="fas fa-file-pdf iconButton file-icon radical"></i>
+                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'document'" class="fas fa-file-word iconButton file-icon sky"></i>
+                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'sheet'" class="fas fa-file-excel iconButton file-icon excelGreen"></i>
+                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'csv'" class="fas fa-file-csv iconButton file-icon excelGreen"></i>
+
+                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) != 'csv' &&  
+                                                                      (attachment.name | getFileTypeFromUrl) != 'sheet' &&
+                                                                      (attachment.name | getFileTypeFromUrl) != 'document' &&
+                                                                      (attachment.name | getFileTypeFromUrl) != 'pdf'" class="fas fa-file-lines iconButton file-icon">
+                                                            </i>
+                                                            <p class="card-text ms-3">{{ attachment.name | splitNameFromUrl }}</p>
+                                                        </div>
                                                     </a>
-                                                
                                                 </div>
                                                 <p class="card-text nignt">{{whatsappMsg.message}}</p>
                                                 <div class="tags" *ngFor="let tag of whatsappMsg.tags">
                                                     <span (click)="removeTag(tag.id, whatsappMsg.id)"
                                                         class="badge rounded-pill whatsapp tag tag1 selected">{{tag.name}}</span>
-            
+                                
                                                 </div>
                                                 <!-- For Sentiment Pills -->
-<div class="tags" *ngIf="whatsappMsg.sentiment">
-    <span class="badge rounded-pills tag tag1 selected">{{whatsappMsg.sentiment?.text}}</span>
-</div>
-<!-- For Sentiment Pills -->
+                                                <div class="tags" *ngIf="whatsappMsg.sentiment">
+                                                    <span class="badge rounded-pills tag tag1 selected">{{whatsappMsg.sentiment?.text}}</span>
+                                                </div>
+                                                <!-- For Sentiment Pills -->
                                             </div>
                                             <div class="message-bottom">
                                                 <div class="row">
