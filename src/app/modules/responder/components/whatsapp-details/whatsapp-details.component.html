@@ -98,13 +98,15 @@
                                                     <a *ngIf="isOther(attachment)" [href]="attachment.attachmentUrl" target="_blank">
                                                         <div class="card-body pdf-body bg-light align-items-center">
                                                             <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'pdf'" class="fas fa-file-pdf iconButton file-icon radical"></i>
-                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'document'" class="fas fa-file-word iconButton file-icon sky"></i>
-                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'sheet'" class="fas fa-file-excel iconButton file-icon excelGreen"></i>
+                                                            <i *ngIf="((attachment.name | getFileTypeFromUrl) == 'document') || ((attachment.name | getFileTypeFromUrl) == 'docx')" class="fas fa-file-word iconButton file-icon sky"></i>
+                                                            <i *ngIf="((attachment.name | getFileTypeFromUrl) == 'sheet') || ((attachment.name | getFileTypeFromUrl) == 'xlsx')" class="fas fa-file-excel iconButton file-icon excelGreen"></i>
                                                             <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'csv'" class="fas fa-file-csv iconButton file-icon excelGreen"></i>
 
                                                             <i *ngIf="(attachment.name | getFileTypeFromUrl) != 'csv' &&  
                                                                       (attachment.name | getFileTypeFromUrl) != 'sheet' &&
+                                                                      (attachment.name | getFileTypeFromUrl) != 'xlsx' &&
                                                                       (attachment.name | getFileTypeFromUrl) != 'document' &&
+                                                                      (attachment.name | getFileTypeFromUrl) != 'docx' &&
                                                                       (attachment.name | getFileTypeFromUrl) != 'pdf'" class="fas fa-file-lines iconButton file-icon">
                                                             </i>
                                                             <p class="card-text ms-3">{{ attachment.name | splitNameFromUrl }}</p>
