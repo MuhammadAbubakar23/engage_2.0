@@ -81,7 +81,6 @@ export class CreateTagsComponent implements OnInit {
     }
     this.commonService.GetTagById(obj).subscribe(
       (response: any) => {
-        // debugger
         this.childTag = response;
       },
       (error: any) => {
@@ -97,7 +96,6 @@ export class CreateTagsComponent implements OnInit {
     }
     this.commonService.GetTagById(obj).subscribe(
       (response: any) => {
-        // debugger
         this.parentChildTag = response;
       },
       (error: any) => {
@@ -113,7 +111,6 @@ export class CreateTagsComponent implements OnInit {
     }
     this.commonService.GetTagById(obj).subscribe(
       (response: any) => {
-        // debugger
         this.parentChild = response;
       },
       (error: any) => {
@@ -139,7 +136,6 @@ export class CreateTagsComponent implements OnInit {
     });
   }
   onSave() {
-    // debugger
     if (this.form.invalid) {
       this.markFormGroupTouched(this.form);
       return;

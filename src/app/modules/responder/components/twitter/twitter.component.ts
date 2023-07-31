@@ -54,6 +54,10 @@ export class TwitterComponent implements OnInit {
   pageSize: any = 10;
   totalUnrespondedCmntCountByCustomer: number = 0;
 
+  TotalCmntQueryCount: number = 0;
+  TotalMsgQueryCount: number = 0;
+
+
   show = false;
   isOpen = false;
   active = false;
@@ -344,6 +348,7 @@ export class TwitterComponent implements OnInit {
           this.spinner1running = false;
           this.TwitterConversation = res.List;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+          this.TotalCmntQueryCount = res.TotalQueryCount;
           this.pageName = this.TwitterConversation[0]?.post.profile?.page_Name;
 
           // group by date function
@@ -405,6 +410,7 @@ export class TwitterComponent implements OnInit {
         this.spinner1running = false;
         this.TwitterConversation = res.List;
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+        this.TotalCmntQueryCount = res.TotalQueryCount;
         this.pageName = this.TwitterConversation[0].post.profile?.page_Name;
 
         this.commentsArray = [];
@@ -461,6 +467,7 @@ export class TwitterComponent implements OnInit {
         this.spinner1running = false;
         this.TwitterConversation = res.List;
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+        this.TotalCmntQueryCount = res.TotalQueryCount;
         this.pageName = this.TwitterConversation[0].post.profile?.page_Name;
 
         this.commentsArray = [];
@@ -526,6 +533,7 @@ export class TwitterComponent implements OnInit {
           this.TwitterMessage = res.List?.dm;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
           this.pageName = this.TwitterMessage[0]?.toName;
+          this.TotalMsgQueryCount = res.TotalQueryCount;
 
           this.messagesArray = [];
           this.groupedMessages = [];
@@ -575,6 +583,7 @@ export class TwitterComponent implements OnInit {
         this.SpinnerService.hide();
         this.TwitterMessage = res.List.dm;
         this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+        this.TotalMsgQueryCount = res.TotalQueryCount;
         this.pageName = this.TwitterMessage[0]?.toName;
 
         this.messagesArray = [];
@@ -624,6 +633,7 @@ export class TwitterComponent implements OnInit {
         this.SpinnerService.hide();
         this.TwitterMessage = res.List.dm;
         this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+        this.TotalMsgQueryCount = res.TotalQueryCount;
         this.pageName = this.TwitterMessage[0]?.toName;
 
         this.messagesArray = [];
@@ -1456,16 +1466,6 @@ export class TwitterComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  onScroll() {
-    if (this.totalUnrespondedCmntCountByCustomer > 10) {
-      this.pageSize = this.pageSize + 10;
-      this.getTwitterData();
-    }
-    if (this.totalUnrespondedMsgCountByCustomer > 10) {
-      this.pageSize = this.pageSize + 10;
-      this.getTwitterMessages();
-    }
-  }
 
   updateBulkQueryStatusDataListner() {
     this.TwitterConversation.forEach((post: any) => {
@@ -1526,13 +1526,18 @@ export class TwitterComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
   onScrollComments() {
-    this.pageSize = this.pageSize + 10;
-    this.getTwitterData();
+    if (this.TotalCmntQueryCount > this.pageSize) {
+      this.pageSize = this.pageSize + 10;
+      this.getTwitterData();
+    }
   }
   onScrollMessages() {
-    this.pageSize = this.pageSize + 10;
-    this.getTwitterMessages();
+    if (this.TotalMsgQueryCount > this.pageSize) {
+      this.pageSize = this.pageSize + 10;
+      this.getTwitterMessages();
+    }
   }
+
 
   closeQuickResponseSidebar(){
     this.quickReplySearchText = '';

@@ -59,6 +59,7 @@ export class LinkedInComponent implements OnInit {
   platform: any;
   postType: any;
   queryStatus:any;
+  TotalCmntQueryCount: number = 0;
   
   filesToUpload: any;
   ImageName: any;
@@ -279,6 +280,7 @@ export class LinkedInComponent implements OnInit {
           this.spinner1running = false;
           this.ConverstationDetailDto = res;
           this.LinkedInData = this.ConverstationDetailDto.List;
+          this.TotalCmntQueryCount = res.TotalQueryCount;
           this.pageName = this.LinkedInData[0].post.profile.page_Name;
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -330,7 +332,7 @@ export class LinkedInComponent implements OnInit {
         this.pageName = this.LinkedInData[0].post.profile.page_Name;
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-
+          this.TotalCmntQueryCount = res.TotalQueryCount;
           this.commentsArray = []
 
           this.LinkedInData.forEach((item:any) => {
@@ -377,7 +379,7 @@ export class LinkedInComponent implements OnInit {
         this.pageName = this.LinkedInData[0].post.profile.page_Name;
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-
+          this.TotalCmntQueryCount = res.TotalQueryCount;
           this.commentsArray = []
 
           this.LinkedInData.forEach((item:any) => {
@@ -973,13 +975,6 @@ detectChanges(): void {
     this.changeDetect.detectChanges();
   }
 
-  onScroll() {
-    if(this.totalUnrespondedCmntCountByCustomer > 10){
-      this.pageSize = this.pageSize + 10
-      this.getLinkedInComments();
-    }
-  }
-
   updateBulkQueryStatusDataListner() {
     
     this.LinkedInData.forEach((post: any) => {
@@ -1032,9 +1027,12 @@ detectChanges(): void {
   }
 
   onScrollComments() {
-    this.pageSize = this.pageSize + 10;
-    this.getLinkedInComments();
+    if (this.TotalCmntQueryCount > this.pageSize) {
+      this.pageSize = this.pageSize + 10;
+      this.getLinkedInComments();
+    }
   }
+
 
   isImage(attachment: any): boolean {
     return attachment.contentType?.toLowerCase().startsWith('image');

@@ -72,7 +72,6 @@ export class SupportChannelsComponent implements OnInit {
       this.fb
         .login(options)
         .then((response: LoginResponse) => {
-          debugger;
           if (response.authResponse.expiresIn > 0) {
             var obj = {
               clientId: this.attachFacebookPageForm.value.appId,
@@ -104,7 +103,6 @@ export class SupportChannelsComponent implements OnInit {
   // Scopes work
   // scopes: any[] = [];
   // onCheckChange(event: any) {
-  //   debugger;
   //   console.log(event);
   //   if (this.scopes.length == 0) {
   //     this.scopes.push(event.target.id);
@@ -133,7 +131,6 @@ export class SupportChannelsComponent implements OnInit {
 
   GetChannels(){
     this.commonService.GetChannels().subscribe((res:any)=>{
-      debugger
       this.channels = res[0].subMenu;
     })
   }

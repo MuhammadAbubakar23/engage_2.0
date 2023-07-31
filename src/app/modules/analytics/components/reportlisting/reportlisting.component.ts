@@ -55,9 +55,6 @@ export class ReportlistingComponent implements OnInit {
   }
 
   selectGraph(i: number, type: ChartType) {
-    debugger
-
-
     const arrdata = this.chartDataArray1[i];
     if (arrdata) {
       this.chartDataArray[i].data = {

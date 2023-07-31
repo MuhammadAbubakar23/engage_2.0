@@ -177,7 +177,8 @@
                     margin-top: 25px;
                     .whatsapp-single-img{
                         overflow: hidden;
-                        height: 145px;
+                        // height: 145px;
+                        max-height: 145px;
                         width: 145px;
                         background-color: $night;
                         position: relative;

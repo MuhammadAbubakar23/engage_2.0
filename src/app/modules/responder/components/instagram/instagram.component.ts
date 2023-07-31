@@ -64,6 +64,9 @@ export class InstagramComponent implements OnInit {
   instaCommentText: string = '';
   commentReply: string = '';
   quickReplySearchText: string = '';
+  TotalCmntQueryCount: number = 0;
+  TotalMsgQueryCount: number = 0;
+
 
   instagramCommentReplyDto = new InstagramCommentReplyDto();
 
@@ -355,6 +358,7 @@ export class InstagramComponent implements OnInit {
           this.spinner1running = false;
           this.InstagramData = res.List;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+          this.TotalCmntQueryCount = res.TotalQueryCount;
           this.pageName = this.InstagramData[0]?.post.profile.page_Name;
 
           this.commentsArray = [];
@@ -409,6 +413,7 @@ export class InstagramComponent implements OnInit {
         this.spinner1running = false;
         this.InstagramData = res.List;
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+        this.TotalCmntQueryCount = res.TotalQueryCount;
         this.pageName = this.InstagramData[0]?.post.profile.page_Name;
 
         this.commentsArray = [];
@@ -464,6 +469,7 @@ export class InstagramComponent implements OnInit {
           this.spinner1running = false;
           this.InstagramData = res.List;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+          this.TotalCmntQueryCount = res.TotalQueryCount;
           this.pageName = this.InstagramData[0]?.post.profile.page_Name;
 
           this.commentsArray = [];
@@ -1124,9 +1130,19 @@ export class InstagramComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  onScroll() {
-    this.pageSize = this.pageSize + 10;
-    this.getInstagramData();
+  onScrollComments() {
+    if (this.TotalCmntQueryCount > this.pageSize) {
+      this.pageSize = this.pageSize + 10;
+      this.getInstagramData();
+    }
+
+  }
+
+  onScrollMessages() {
+    if (this.TotalMsgQueryCount > this.pageSize) {
+      this.pageSize = this.pageSize + 10;
+      this.getInstagramMessages();
+    }
   }
 
   updateBulkQueryStatusDataListner() {
@@ -1186,6 +1202,7 @@ export class InstagramComponent implements OnInit {
         .subscribe((res: any) => {
           this.SpinnerService.hide();
           this.InstagramMessages = res.List?.dm;
+          this.TotalMsgQueryCount = res.TotalQueryCount;
           this.pageName = this.InstagramMessages[0]?.toName;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
@@ -1235,6 +1252,7 @@ export class InstagramComponent implements OnInit {
       this.commondata.GetSlaDM(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.InstagramMessages = res.List?.dm;
+        this.TotalMsgQueryCount = res.TotalQueryCount;
         this.pageName = this.InstagramMessages[0].toName;
         this.totalMessages = res.TotalCount;
 
@@ -1290,6 +1308,7 @@ export class InstagramComponent implements OnInit {
           this.InstagramMessages = res.List?.dm;
           this.pageName = this.InstagramMessages[0].toName;
           this.totalMessages = res.TotalCount;
+          this.TotalMsgQueryCount = res.TotalQueryCount;
 
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 

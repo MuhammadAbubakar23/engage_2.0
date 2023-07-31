@@ -186,7 +186,7 @@ export class ConversationComponent implements OnInit {
   customersList : any[]=[];
 
   getConversationList() {
-    debugger;
+
     if(this.searchForm.value.dateWithin == "1 day"){
       this.fromDate = this.datePipe.transform((new Date), 'YYYY-MM-dd')+"T00:00:00.000Z";
       this.toDate = this.datePipe.transform((new Date), 'YYYY-MM-dd')+"T11:59:59.999Z";
@@ -330,7 +330,7 @@ export class ConversationComponent implements OnInit {
   searchUser:string="";
 
   getCustomers(){
-    debugger
+
     this.filterDto = {
       fromDate: null,
       toDate: null,
