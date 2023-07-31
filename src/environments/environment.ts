@@ -140,7 +140,9 @@ export const environment = {
       markAllAsRead : 'Channel/ReadAllUnrespondedQuries',
       getAgentReport : 'Report/GetAgentTicketReport',
       getAllocatedProfiles : 'Query/GetAllocatedProfiles',
-      repliesList: 'SentQueries/GetRepliesList'
+      repliesList: 'SentQueries/GetRepliesList',
+      signOut: 'SignalRConnector/UserLogout',
+      getCustomers: 'Customer/GetAllCustomersSocialProfile'
       
     },
     facebook: {

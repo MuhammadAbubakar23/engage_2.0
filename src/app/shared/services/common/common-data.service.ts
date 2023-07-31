@@ -62,6 +62,8 @@ export class CommonDataService {
   getAllocatedProfiles = environment.links.common.getAllocatedProfiles;
   // createMessageTemplate = environment.links.console.CreateMessageTemplate;
   repliesList = environment.links.common.repliesList;
+  signOut = environment.links.common.signOut;
+  getCustomers = environment.links.common.getCustomers;
 
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
@@ -400,6 +402,16 @@ export class CommonDataService {
     const url = `${this.consoleBaseUrl}${this.deleteSkill}?Id=${delSkill}`;
     return this.http.get(url);
   }
+
+  GetCustomers(body:any) {
+    return this.http.post(this.CommonBaseUrl+this.getCustomers, body);
+  }
+
+  SignOut(){
+    return this.http.get(this.CommonBaseUrl+this.signOut)
+  }
+
+
 }
 
 var headers_object = new HttpHeaders({

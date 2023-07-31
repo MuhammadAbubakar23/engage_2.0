@@ -70,17 +70,27 @@ export class RightHeaderComponentsComponent implements OnInit {
       localStorage.getItem('assignedProfile') == '' ||
       localStorage.getItem('assignedProfile') == undefined
     ) {
-      localStorage.clear();
-      this.router.navigateByUrl('/login');
-      clearInterval(this.timer);
-      if (this.signalR.hubconnection?.state == 'Connected') {
-        this.signalR.hubconnection
-          .stop()
-          .then(() =>  console.log('Connection stoped'))
-          .catch((err) =>
-             console.log('Error while stopping connection: ' + err)
-          );
-      }
+      this.commonService.SignOut().subscribe((res:any)=>{
+        localStorage.clear();
+        this.router.navigateByUrl('/login');
+        clearInterval(this.timer);
+      },
+      (error)=>{
+        console.log(error);
+        localStorage.clear();
+        this.router.navigateByUrl('/login');
+        clearInterval(this.timer);
+      });
+      
+      // if (this.signalR.hubconnection?.state == 'Connected') {
+      //   this.signalR.hubconnection
+      //     .stop()
+      //     .then(() =>  console.log('Connection stoped'))
+      //     .catch((err) =>
+      //        console.log('Error while stopping connection: ' + err)
+      //     );
+      // }
+
     } else {
       this.reloadComponent('querryAssigned');
     }

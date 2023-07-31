@@ -22,21 +22,21 @@ export class AppComponent {
   ngOnInit() {
     
 
-    if (this.signalRService.hubconnection == undefined) {
+    // if (this.signalRService.hubconnection == undefined) {
       
-      localStorage.clear();
-      this.router.navigateByUrl('/login');
-    }
-    //  this.signalRService.reConnect();
+    //   localStorage.clear();
+    //   this.router.navigateByUrl('/login');
+    // }
+     this.signalRService.reConnect();
 
-    // this.signalRService.removeTagDataListener();
-    // this.signalRService.addTagDataListner();
-    // this.signalRService.unRespondedCountDataListener();
-    // this.signalRService.updateListAndDetailDataListener();
-    // this.signalRService.replyDataListener();
-    // this.signalRService.queryStatusDataListener();
-    // this.signalRService.bulkQueryStatusDataListener();
-    // this.signalRService.assignQueryResponseListner();
-    // this.signalRService.applySentimentListner();
+    this.signalRService.removeTagDataListener();
+    this.signalRService.addTagDataListner();
+    this.signalRService.unRespondedCountDataListener();
+    this.signalRService.updateListAndDetailDataListener();
+    this.signalRService.replyDataListener();
+    this.signalRService.queryStatusDataListener();
+    this.signalRService.bulkQueryStatusDataListener();
+    this.signalRService.assignQueryResponseListner();
+    this.signalRService.applySentimentListner();
   }
 }

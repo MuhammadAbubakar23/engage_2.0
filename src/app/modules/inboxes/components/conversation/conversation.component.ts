@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ListingDto } from 'src/app/shared/Models/ListingDto';
@@ -16,6 +16,7 @@ import { GetAgentReportDto } from 'src/app/shared/Models/GetAgentReportDto';
 import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
 import { RemoveAssignedQuerryService } from 'src/app/services/RemoveAssignedQuery/remove-assigned-querry.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-conversation',
@@ -23,6 +24,11 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./conversation.component.scss'],
 })
 export class ConversationComponent implements OnInit {
+
+  
+  @Input() imagename: string = '';
+  fullName: string = '';
+  
   unread = false;
   alertWarning = false;
   alertDanger = false;
@@ -43,7 +49,7 @@ export class ConversationComponent implements OnInit {
   platform: string = '';
   updatedList: any;
 
-  isAttachment = false;
+  isAttachment : boolean = false;
 
   listingDto = new ListingDto();
   filterDto = new FiltersDto();
@@ -55,6 +61,15 @@ export class ConversationComponent implements OnInit {
   searchForm !: FormGroup;
 
   text:string='';
+  userName:string='';
+  user:string='';
+  notInclude:string='';
+  include:string='';
+
+  fromDate!: any;
+  toDate!: any;
+
+  searchCustomerForm !: FormGroup;
 
   constructor(
     private fetchId: FetchIdService,
@@ -66,7 +81,8 @@ export class ConversationComponent implements OnInit {
     private router: Router,
     private updateListService: UpdateListService,
     private lodeModuleService: ModulesService,
-    private removeAssignedQueryService: RemoveAssignedQuerryService
+    private removeAssignedQueryService: RemoveAssignedQuerryService,
+    private datePipe : DatePipe
   ) {
     this.criteria = {
       property: 'createdDate',
@@ -75,17 +91,24 @@ export class ConversationComponent implements OnInit {
 
     this.searchForm = new FormGroup({
       // agentId: new FormControl(0),
-      // user: new FormControl(""),
+      user: new FormControl(""),
+      userName: new FormControl(""),
+      notInclude: new FormControl(""),
+      include: new FormControl(""),
       // plateForm: new FormControl(""),
-      // fromDate: new FormControl("2022-07-18T06:41:38.777Z"),
-      // toDate: new FormControl("2023-07-18T06:41:38.777Z"),
-      // isAttachment: new FormControl(false),
+      fromDate: new FormControl(null),
+      toDate: new FormControl(null),
+      isAttachment: new FormControl(this.isAttachment),
       // queryType: new FormControl(""),
       text: new FormControl(""),
       // pageNumber: new FormControl(1),
       // pageSize: new FormControl(20),
-    })
+      dateWithin: new FormControl(""),
+    });
 
+    this.searchCustomerForm = new FormGroup({
+      userName: new FormControl('')
+    })
     // this.currentDate = this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm:ss.SSSSSS')
   }
 
@@ -112,7 +135,7 @@ export class ConversationComponent implements OnInit {
       });
 
     setInterval(() => {
-      if (this.ConversationList.length > 0) {
+      if (this.ConversationList?.length > 0) {
         this.TodayDate = new Date();
         this.ConversationList?.forEach((group: any) => {
           group.items.forEach((item:any) => {
@@ -160,30 +183,100 @@ export class ConversationComponent implements OnInit {
   to: number = 0;
   from: number = 0;
 
+  customersList : any[]=[];
+
   getConversationList() {
 
+    if(this.searchForm.value.dateWithin == "1 day"){
+      this.fromDate = this.datePipe.transform((new Date), 'YYYY-MM-dd')+"T00:00:00.000Z";
+      this.toDate = this.datePipe.transform((new Date), 'YYYY-MM-dd')+"T11:59:59.999Z";
+    } else if(this.searchForm.value.dateWithin == "3 days"){
+      let currentDate = new Date();
+      let prevDate =  currentDate.setDate(currentDate.getDate() - 2);
+      const fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd')+"T00:00:00.000Z";
+      this.fromDate = fromDate;
+
+      this.toDate = this.datePipe.transform((new Date), 'YYYY-MM-dd')+"T11:59:59.999Z";
+    } else if(this.searchForm.value.dateWithin == "1 week"){
+      let currentDate = new Date();
+      let prevDate =  currentDate.setDate(currentDate.getDate() - 6);
+      const fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd')+"T00:00:00.000Z";
+      this.fromDate = fromDate;
+
+      this.toDate = this.datePipe.transform((new Date), 'YYYY-MM-dd')+"T11:59:59.999Z";
+    } else if(this.searchForm.value.dateWithin == "2 weeks"){
+      let currentDate = new Date();
+      let prevDate =  currentDate.setDate(currentDate.getDate() - 13);
+      const fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd')+"T00:00:00.000Z";
+      this.fromDate = fromDate;
+
+      this.toDate = this.datePipe.transform((new Date), 'YYYY-MM-dd')+"T11:59:59.999Z";
+    } else if(this.searchForm.value.dateWithin == "1 month"){
+      let currentDate = new Date();
+      let prevDate =  currentDate.setDate(currentDate.getDate() - 30);
+      const fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd')+"T00:00:00.000Z";
+      this.fromDate = fromDate;
+
+      this.toDate = this.datePipe.transform((new Date), 'YYYY-MM-dd')+"T11:59:59.999Z";
+    } else if(this.searchForm.value.dateWithin == "2 months"){
+      let currentDate = new Date();
+      let prevDate =  currentDate.setDate(currentDate.getDate() - 60);
+      const fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd')+"T00:00:00.000Z";
+      this.fromDate = fromDate;
+
+      this.toDate = this.datePipe.transform((new Date), 'YYYY-MM-dd')+"T11:59:59.999Z";
+    } else if(this.searchForm.value.dateWithin == "6 months"){
+      let currentDate = new Date();
+      let prevDate =  currentDate.setDate(currentDate.getDate() - 180);
+      const fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd')+"T00:00:00.000Z";
+      this.fromDate = fromDate;
+
+      this.toDate = this.datePipe.transform((new Date), 'YYYY-MM-dd')+"T11:59:59.999Z";
+    } else if(this.searchForm.value.dateWithin == "1 year"){
+      let currentDate = new Date();
+      let prevDate =  currentDate.setDate(currentDate.getDate() - 365);
+      const fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd')+"T00:00:00.000Z";
+      this.fromDate = fromDate;
+
+      this.toDate = this.datePipe.transform((new Date), 'YYYY-MM-dd')+"T11:59:59.999Z";
+    } else if(this.searchForm.value.fromDate != null && (this.searchForm.value.toDate == null || this.searchForm.value.toDate == undefined)){
+      this.fromDate = this.searchForm.value.fromDate+"T00:00:00.000Z"
+      this.toDate = this.searchForm.value.fromDate+"T11:59:59.999Z"
+    } else if(this.searchForm.value.fromDate != null && this.searchForm.value.toDate != null){
+      this.fromDate = this.searchForm.value.fromDate+"T00:00:00.000Z"
+      this.toDate = this.searchForm.value.toDate+"T11:59:59.999Z"
+    } 
+    
     this.searchForm.patchValue({
-      text : this.text
-    })
+      text: this.text,
+      user: this.user,
+      userName: this.userName,
+      notInclude: this.notInclude,
+      include: this.include,
+      isAttachment: this.isAttachment,
+    });
     this.filterDto = {
-      // fromDate : new Date(),
-      // toDate : new Date(),
-      user: '',
+      fromDate: this.fromDate,
+      toDate: this.toDate,
+      user: this.searchForm.value.user,
       pageId: '',
       plateForm: this.platform,
       pageNumber: this.pageNumber,
       pageSize: this.pageSize,
-      isAttachment: this.isAttachment,
+      isAttachment: this.searchForm.value.isAttachment,
       queryType: '',
-      text : this.searchForm.value.text
+      text: this.searchForm.value.text,
+      include: this.searchForm.value.include,
+      userName: this.searchForm.value.userName,
+      notInclude: this.searchForm.value.notInclude,
     };
     this.SpinnerService.show();
-    this.commondata
-      .GetConversationList(this.filterDto)
-      .subscribe((res: any) => {
-        
+    this.commondata.GetConversationList(this.filterDto).subscribe(
+      (res: any) => {
+        this.searchForm.reset();
         this.SpinnerService.hide();
         this.advanceSearch = false;
+        this.showDateRange = false;
         this.ConversationList = res.List;
         this.TotalUnresponded = res.TotalCount;
 
@@ -199,14 +292,12 @@ export class ConversationComponent implements OnInit {
           {}
         );
 
-        this.ConversationList = Object.keys(groupedItems).map(
-          (createdDate) => {
-            return {
-              createdDate,
-              items: groupedItems[createdDate],
-            };
-          }
-        );
+        this.ConversationList = Object.keys(groupedItems).map((createdDate) => {
+          return {
+            createdDate,
+            items: groupedItems[createdDate],
+          };
+        });
 
         if (this.TotalUnresponded < this.pageSize) {
           this.from = this.TotalUnresponded;
@@ -233,12 +324,84 @@ export class ConversationComponent implements OnInit {
           this.SpinnerService.hide();
         }
       }
-);
+    );
   }
 
-  hasAttachment() {
-    this.isAttachment = !this.isAttachment;
+  searchUser:string="";
+
+  getCustomers(){
+
+    this.filterDto = {
+      fromDate: null,
+      toDate: null,
+      user: '',
+      pageId: '',
+      plateForm: '',
+      pageNumber: 1,
+      pageSize: 30,
+      isAttachment: false,
+      queryType: '',
+      text: '',
+      include: '',
+      userName: this.searchUser,
+      notInclude: '',
+    };
+    this.commondata.GetCustomers(this.filterDto).subscribe((res:any)=>{
+      this.customersList = res;
+    });
+  }
+
+  getConversationListByCustomer(fromId:string){
+    this.searchForm.patchValue({
+      user : fromId
+    });
     this.getConversationList();
+  }
+
+  anyTime(value:string){
+    if(value == "Any Time"){
+      this.toDate = null;
+      this.fromDate = null;
+    } else if(value == "Older then a week"){
+      let currentDate = new Date();
+      let olderThenAWeek =  currentDate.setDate(currentDate.getDate() - 7);
+      this.toDate = this.datePipe.transform(olderThenAWeek, 'YYYY-MM-dd')+"T11:59:59.999Z";
+
+      const oneYearFromToDate = currentDate.setDate(currentDate.getDate() - 365)
+      this.fromDate = this.datePipe.transform(oneYearFromToDate, 'YYYY-MM-dd')+"T00:00:00.000Z";
+    } else if(value == "Older then a month"){
+      let currentDate = new Date();
+      let olderThenAMonth =  currentDate.setDate(currentDate.getDate() - 30);
+      this.toDate = this.datePipe.transform(olderThenAMonth, 'YYYY-MM-dd')+"T11:59:59.999Z";
+
+      const oneYearFromToDate = currentDate.setDate(currentDate.getDate() - 365)
+      this.fromDate = this.datePipe.transform(oneYearFromToDate, 'YYYY-MM-dd')+"T00:00:00.000Z";
+    }
+    else if(value == "Older then a 6 months"){
+      let currentDate = new Date();
+      let olderThenASixMonth =  currentDate.setDate(currentDate.getDate() - 180);
+      this.toDate = this.datePipe.transform(olderThenASixMonth, 'YYYY-MM-dd')+"T11:59:59.999Z";
+
+      const oneYearFromToDate = currentDate.setDate(currentDate.getDate() - 365)
+      this.fromDate = this.datePipe.transform(oneYearFromToDate, 'YYYY-MM-dd')+"T00:00:00.000Z";
+    }
+    else if(value == "Older then a year"){
+      let currentDate = new Date();
+      let olderThenAYear =  currentDate.setDate(currentDate.getDate() - 365);
+      this.toDate = this.datePipe.transform(olderThenAYear, 'YYYY-MM-dd')+"T11:59:59.999Z";
+
+      const oneYearFromToDate = currentDate.setDate(currentDate.getDate() - 365)
+      this.fromDate = this.datePipe.transform(oneYearFromToDate, 'YYYY-MM-dd')+"T00:00:00.000Z";
+    }
+    this.getConversationList();
+  }
+  hasAttachment(value:boolean) {
+    this.isAttachment = value;
+    this.getConversationList();
+  }
+
+  isAttachmentChecked(){
+    this.isAttachment = !this.isAttachment
   }
 
   updateListDataListener(res: any) {
@@ -395,6 +558,10 @@ export class ConversationComponent implements OnInit {
     this.masterSelected = false;
     this.searchForm.reset();
     this.text = "";
+    this.user = "";
+    this.userName = "";
+    this.notInclude = "";
+    this.include = "";
     this.advanceSearch = false;
     this.getConversationList();
   }
@@ -655,6 +822,22 @@ export class ConversationComponent implements OnInit {
   ResetSearchForm(){
     this.searchForm.reset();
     this.text = "";
+    this.user = "";
+    this.userName = "";
+    this.notInclude = "";
+    this.include = "";
     this.getConversationList();
+  }
+
+  anyTimeDropdown = false;
+  showDateRange = false;
+
+  ShowDateRange(){
+    this.anyTimeDropdown = false;
+    this.showDateRange = true;
+  }
+  CloseDateRange(){
+    this.anyTimeDropdown = true;
+    this.showDateRange = false;
   }
 }
