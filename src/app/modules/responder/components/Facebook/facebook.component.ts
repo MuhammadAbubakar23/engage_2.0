@@ -92,6 +92,8 @@ export class FacebookComponent implements OnInit {
   FbStats: any;
   storeComId: any;
   AlterMsg: any = '';
+  TotalCmntQueryCount: number = 0;
+  TotalMsgQueryCount: number = 0;
 
   id = this.fetchId.getOption();
   slaId = this.fetchId.getSlaId();
@@ -264,6 +266,7 @@ export class FacebookComponent implements OnInit {
           this.spinner1running = false;
           this.ConverstationDetailDto = res;
           this.FacebookData = this.ConverstationDetailDto.List;
+          this.TotalCmntQueryCount = res.TotalQueryCount;
          this.pageName = this.FacebookData[0]?.post.profile.page_Name;
 
           if (this.FacebookData) {
@@ -325,6 +328,7 @@ export class FacebookComponent implements OnInit {
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         this.FacebookData = res.List;
         this.totalComments = res.TotalCount;
+        this.TotalCmntQueryCount = res.TotalQueryCount;
         this.pageName = this.FacebookData[0].post.profile.page_Name;
 
         if (this.FacebookData) {
@@ -392,6 +396,7 @@ export class FacebookComponent implements OnInit {
           this.ConverstationDetailDto = res;
           this.FacebookData = this.ConverstationDetailDto.List;
           this.totalComments = res.TotalCount;
+          this.TotalCmntQueryCount = res.TotalQueryCount;
           this.pageName = this.FacebookData[0]?.post.profile.page_Name;
 
           if (this.FacebookData) {
@@ -738,6 +743,7 @@ export class FacebookComponent implements OnInit {
         .subscribe((res: any) => {
           this.SpinnerService.hide();
           this.FacebookMessages = res.List?.dm;
+          this.TotalMsgQueryCount = res.TotalQueryCount;
         //  this.pageName = this.FacebookMessages[0]?.toName;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
@@ -790,7 +796,7 @@ export class FacebookComponent implements OnInit {
         this.FacebookMessages = res.List?.dm;
         this.pageName = this.FacebookMessages[0].toName;
         this.totalMessages = res.TotalCount;
-
+        this.TotalMsgQueryCount = res.TotalQueryCount;
         this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
         // if(this.FacebookData){
@@ -851,6 +857,7 @@ export class FacebookComponent implements OnInit {
           this.FacebookMessages = res.List?.dm;
           this.pageName = this.FacebookMessages[0].toName;
           this.totalMessages = res.TotalCount;
+          this.TotalMsgQueryCount = res.TotalQueryCount;
 
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
@@ -1628,12 +1635,16 @@ export class FacebookComponent implements OnInit {
     this.insertAtCaret(' ' + emoji + ' ');
   }
   onScrollComments() {
-    this.pageSize = this.pageSize + 10;
-    this.getFacebookComments();
+    if (this.TotalCmntQueryCount > this.pageSize) {
+      this.pageSize = this.pageSize + 10;
+      this.getFacebookComments();
+    }
   }
   onScrollMessages() {
-    this.pageSize = this.pageSize + 10;
-    this.getFacebookMessages();
+    if (this.TotalMsgQueryCount > this.pageSize) {
+      this.pageSize = this.pageSize + 10;
+      this.getFacebookMessages();
+    }
   }
 
   updateTicketId(res: any) {

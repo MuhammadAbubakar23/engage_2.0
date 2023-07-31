@@ -89,6 +89,8 @@ export class WhatsappDetailsComponent implements OnInit {
   pageNumber: number = 1;
   pageSize: number = 10;
 
+  TotalCmntQueryCount: number = 0;
+
   profileId: number = 0;
 
   public Subscription!: Subscription;
@@ -270,6 +272,7 @@ export class WhatsappDetailsComponent implements OnInit {
           this.spinner1running = false;
           this.WhatsappData = res.List;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+          this.TotalCmntQueryCount = res.TotalQueryCount;
 
           this.WhatsappData?.forEach((msg: any) => {
             this.senderId = msg.comments[0].sendTo;
@@ -320,6 +323,7 @@ export class WhatsappDetailsComponent implements OnInit {
         this.SpinnerService.hide();
         this.WhatsappData = res.List;
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+        this.TotalCmntQueryCount = res.TotalQueryCount;
 
         this.commentsArray = [];
         this.WhatsappData.forEach((item: any) => {
@@ -368,9 +372,11 @@ export class WhatsappDetailsComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
+          
           this.SpinnerService.hide();
           this.WhatsappData = res.List;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+          this.TotalCmntQueryCount = res.TotalQueryCount;
 
           this.commentsArray = [];
           this.WhatsappData.forEach((item: any) => {
@@ -928,12 +934,6 @@ export class WhatsappDetailsComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  onScroll() {
-    if (this.totalUnrespondedCmntCountByCustomer > 10) {
-      this.pageSize = this.pageSize + 10;
-      this.getWhatsappData();
-    }
-  }
   updateBulkQueryStatusDataListner() {
     
     this.groupArrays.forEach((cmnt: any) => {
@@ -972,8 +972,11 @@ export class WhatsappDetailsComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
   onScrollComments() {
-    this.pageSize = this.pageSize + 10;
-    this.getWhatsappData();
+    
+    if (this.TotalCmntQueryCount > this.pageSize) {
+      this.pageSize = this.pageSize + 10;
+      this.getWhatsappData();
+    }
   }
 
   closeQuickResponseSidebar() {

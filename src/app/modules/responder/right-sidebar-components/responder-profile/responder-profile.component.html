@@ -388,7 +388,7 @@
                                                             <div class="col-sm-9">
                                                                 <input class="form-control" id="inputName"
                                                                     formControlName="fromName"
-                                                                    value={{profileDetails.fromName}}>
+                                                                    value={{profileDetails?.fromName}}>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
@@ -397,7 +397,7 @@
                                                             <div class="col-sm-9">
                                                                 <input class="form-control" id="inputOrganization"
                                                                     formControlName="organization"
-                                                                    value={{profileDetails.customerDetails[0]?.organization}}>
+                                                                    value={{profileDetails?.customerDetail?.organization}}>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
@@ -406,7 +406,7 @@
                                                             <div class="col-sm-9">
                                                                 <input class="form-control" id="inputRole"
                                                                     formControlName="role"
-                                                                    value={{profileDetails.customerDetails[0]?.role}}>
+                                                                    value={{profileDetails?.customerDetail?.role}}>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
@@ -415,7 +415,7 @@
                                                             <div class="col-sm-9">
                                                                 <input type="email" class="form-control" id="inputEmail"
                                                                     formControlName="email"
-                                                                    value={{profileDetails.customerDetails[0]?.email}}>
+                                                                    value={{profileDetails?.customerDetail?.email}}>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
@@ -432,7 +432,7 @@
                                                                     </span>
                                                                     <input type="text" class="form-control"
                                                                         id="inputMobile" formControlName="phoneNumber"
-                                                                        value={{profileDetails.customerDetails[0]?.phoneNumber}}>
+                                                                        value={{profileDetails?.customerDetail?.phoneNumber}}>
                                                                 </div>
 
                                                             </div>
@@ -443,7 +443,7 @@
                                                             <div class="col-sm-9">
                                                                 <input class="form-control" id="inputAddress"
                                                                     formControlName="address"
-                                                                    value={{profileDetails.customerDetails[0]?.address}}>
+                                                                    value={{profileDetails?.customerDetail?.address}}>
                                                             </div>
                                                         </div>
                                                         <div class="row mb-3">
@@ -576,7 +576,7 @@
                                                         Name </label>
                                                     <div class="col-sm-9">
                                                         <input class="form-control" id="inputFatherName" formControlName="fatherName"
-                                                            value={{profileDetails.customerDetails[0]?.fatherName}}>
+                                                            value={{profileDetails?.customerDetail?.fatherName}}>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
@@ -584,7 +584,7 @@
                                                         class="col-sm-3 col-form-label">Education </label>
                                                     <div class="col-sm-9">
                                                         <input class="form-control" id="inputEducation" formControlName="education"
-                                                            value={{profileDetails.customerDetails[0]?.education}}>
+                                                            value={{profileDetails?.customerDetail?.education}}>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
@@ -592,7 +592,7 @@
                                                         Group</label>
                                                     <div class="col-sm-9">
                                                         <input class="form-control" id="inputBloodGroup" formControlName="bloodGroup"
-                                                         value={{profileDetails.customerDetails[0]?.bloodGroup}}>
+                                                         value={{profileDetails?.customerDetail?.bloodGroup}}>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="row mb-3">

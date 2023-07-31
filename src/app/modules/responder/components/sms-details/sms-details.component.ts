@@ -80,6 +80,7 @@ export class SmsDetailsComponent implements OnInit {
 
   pageNumber: number = 1;
   pageSize: number = 10;
+  TotalCmntQueryCount: number = 0;
 
   commentsArray: any[] = [];
   groupArrays: any[] = [];
@@ -254,6 +255,7 @@ export class SmsDetailsComponent implements OnInit {
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.ConverstationDetailDto = res;
+          this.TotalCmntQueryCount = res.TotalQueryCount;
           this.SmsData = this.ConverstationDetailDto.List;
 
           this.commentsArray = [];
@@ -307,6 +309,7 @@ export class SmsDetailsComponent implements OnInit {
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.ConverstationDetailDto = res;
+        this.TotalCmntQueryCount = res.TotalQueryCount;
         this.SmsData = this.ConverstationDetailDto.List;
 
         this.commentsArray = [];
@@ -359,6 +362,7 @@ export class SmsDetailsComponent implements OnInit {
       this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.ConverstationDetailDto = res;
+        this.TotalCmntQueryCount = res.TotalQueryCount;
         this.SmsData = this.ConverstationDetailDto.List;
 
         this.commentsArray = [];
@@ -883,8 +887,10 @@ export class SmsDetailsComponent implements OnInit {
   }
 
   onScrollComments() {
-    this.pageSize = this.pageSize + 10;
-    this.getSmsData();
+    if (this.TotalCmntQueryCount > this.pageSize) {
+      this.pageSize = this.pageSize + 10;
+      this.getSmsData();
+    }
   }
 
   closeQuickResponseSidebar(){

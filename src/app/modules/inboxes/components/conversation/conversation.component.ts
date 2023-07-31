@@ -225,7 +225,15 @@ export class ConversationComponent implements OnInit {
         ) {
           this.to = 1;
         }
-      });
+      },
+      (error) => {
+        if (error.message.includes('401')) {
+          localStorage.clear();
+          this.router.navigateByUrl('/login');
+          this.SpinnerService.hide();
+        }
+      }
+);
   }
 
   hasAttachment() {

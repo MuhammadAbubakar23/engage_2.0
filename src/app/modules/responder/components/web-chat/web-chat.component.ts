@@ -224,8 +224,10 @@ updateTicketId(res: any) {
   this.changeDetect.detectChanges();
 }
 onScrollComments() {
-  // this.pageSize = this.pageSize + 10;
-  // this.getWebChat();
+  // if (this.TotalCmntQueryCount > this.pageSize) {
+  //   this.pageSize = this.pageSize + 10;
+  //   this.getWebChat();
+  // }
 }
 closeQuickResponseSidebar(){
   // this.quickReplySearchText = '';
