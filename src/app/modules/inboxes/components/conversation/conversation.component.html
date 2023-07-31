@@ -6,162 +6,52 @@
     </ngx-spinner>
     <div class="filter-toolbar p-0 border-0 collapse show" id="filter-bar">
       <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
-        <!-- <li class="list-inline-item">
+        <li class="list-inline-item">
                   <div class="dropdown">
-                    <button class="btn dropdown-toggle fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn dropdown-toggle fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                    (click)="getCustomers()" aria-expanded="false">
                       <i class="fal fa-user"></i> From
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                       <li class="dropdown-listing-header">
                         <form class="custom-searchbar my-2 mx-0">
-                          <input class="form-control bg-light border-0 py-2" placeholder="Search" aria-label="Search">
+                          <input class="form-control bg-light border-0 py-2" placeholder="Search" aria-label="Search" [(ngModel)]="searchUser"
+                          (ngModelChange)="(searchUser.length >= 3 || searchUser.length === 0) && getCustomers()">
                           <span class="btn searchbar-btn" type="submit">
                             <i class="fal fa-search silver"></i>
                           </span>
                         </form>
                       </li>
                       <div class="perfect-scrollbar dd-scroll" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;"><div class="scroll-content">
+                       
                         <li>
-                          <a class="dropdown-item d-flex contact-user" href="#">
-
-                            <div class="list-down-icon">
-                              <div class="iconButton medium mintBg me-3">
-                                AK
-                              </div>
-                            </div>
-                            <div class="w-100 list-txt d-flex">
-                              <div class="w-100">
-                                <h6 class="mb-1 darkblue">Amin Khan
-                                </h6>
-                                <p class="mb-1 coal">amin.khan@gmail.com</p>
-                              </div>
-
-                            </div>
-                          </a></li>
-                        <li>
-                          <a class="dropdown-item d-flex contact-user" value="Aniqa Khan">
+                          <a class="dropdown-item d-flex contact-user" *ngFor="let customer of customersList" (click)="getConversationListByCustomer(customer.fromId)">
                             <div class="list-down-icon avatar medium me-3">
-                              <img src="../../../../../assets/images/avatar-18.png" alt="...">
+                              <!-- <img [src]="customer.fromProfilePic"> -->
+                              <app-avatar-photo [photoUrl]="customer.fromProfilePic" [name]="customer.fromName"></app-avatar-photo>
                             </div>
                             <div class="w-100 list-txt d-flex">
                               <div class="w-100">
-                                <h6 class="mb-1 darkblue">Aniqa Khan
+                                <h6 class="mb-1 darkblue">{{customer.fromName}}
                                 </h6>
-                                <p class="mb-1 coal">aniqa@gmail.com</p>
-                              </div>
-
-
-                            </div>
-                          </a>
-                          <a class="dropdown-item d-flex contact-user" value="Bilal Ali">
-                            <div class="list-down-icon">
-                              <div class="iconButton medium berryBg me-3">
-                                BA
-                              </div>
-                            </div>
-                            <div class="w-100 list-txt d-flex">
-                              <div class="w-100">
-                                <h6 class="mb-1 darkblue">Bilal Ali
-                                </h6>
-                                <p class="mb-1 coal">bilal.ali@gmail.com</p>
-                              </div>
-
-
-                            </div>
-                          </a>
-                          <a class="dropdown-item d-flex contact-user" value="Aniqa Khan">
-                            <div class="list-down-icon avatar medium me-3">
-                              <img src="../../../../../assets/images/avatar-18.png" alt="...">
-                            </div>
-                            <div class="w-100 list-txt d-flex">
-                              <div class="w-100">
-                                <h6 class="mb-1 darkblue">Ayesha Khan
-                                </h6>
-                                <p class="mb-1 coal">ayesha@gmail.com</p>
-                              </div>
-
-
-                            </div>
-                          </a>
-                          <a class="dropdown-item d-flex contact-user" value="Jawad Khan">
-                            <div class="list-down-icon avatar medium me-3">
-                              <img src="../../../../../assets/images/avatar-16.jpg" alt="...">
-                            </div>
-                            <div class="w-100 list-txt d-flex">
-                              <div class="w-100">
-                                <h6 class="mb-1 darkblue">Jawad Khan
-                                </h6>
-                                <p class="mb-1 coal">jawadkhan@gmail.com</p>
-                              </div>
-
-
-                            </div>
-                          </a>
-                          <a class="dropdown-item d-flex contact-user" value="Sana Khan">
-                            <div class="list-down-icon">
-                              <div class="iconButton medium mintBg me-3">
-                                SK
-                              </div>
-                            </div>
-                            <div class="w-100 list-txt d-flex">
-                              <div class="w-100">
-                                <h6 class="mb-1 darkblue">Sana Khan
-                                </h6>
-                                <p class="mb-1 coal">sana.khan@gmail.com</p>
-                              </div>
-
-
-                            </div>
-                          </a>
-                          <a class="dropdown-item d-flex contact-user" value="Tabish Ali">
-                            <div class="list-down-icon">
-                              <div class="iconButton medium cherryBg me-3">
-                                TA
-                              </div>
-                            </div>
-                            <div class="w-100 list-txt d-flex">
-                              <div class="w-100">
-                                <h6 class="mb-1 darkblue">Tabish Ali
-                                </h6>
-                                <p class="mb-1 coal">tabish.ali@gmail.com</p>
-                              </div>
-
-
-                            </div>
-                          </a>
-                          <a class="dropdown-item d-flex contact-user" value="Talha Iqbal">
-                            <div class="list-down-icon avatar medium me-3">
-                              <img src="../../../../../assets/images/avatar-3.jpg" alt="...">
-                            </div>
-                            <div class="w-100 list-txt d-flex">
-                              <div class="w-100">
-                                <h6 class="mb-1 darkblue">Talha Iqbal
-                                </h6>
-                                <p class="mb-1 coal">talhaiqbal@gmail.com</p>
-                              </div>
-
-
-                            </div>
-                          </a>
-                          <a class="dropdown-item d-flex contact-user" value="Umair Khan">
-                            <div class="list-down-icon avatar medium me-3">
-                              <img src="../../../../../assets/images/avatar-2.jpg" alt="...">
-                            </div>
-                            <div class="w-100 list-txt d-flex">
-                              <div class="w-100">
-                                <h6 class="mb-1 darkblue">Umair Khan
-                                </h6>
-                                <p class="mb-1 coal">umairkhan@gmail.com</p>
+                                <p class="mb-1 coal">{{customer.fromId}}</p>
                               </div>
 
 
                             </div>
                           </a>
                         </li>
-                      </div><div class="scrollbar-track scrollbar-track-x" style="display: none;"><div class="scrollbar-thumb scrollbar-thumb-x"></div></div><div class="scrollbar-track scrollbar-track-y" style="display: none;"><div class="scrollbar-thumb scrollbar-thumb-y"></div></div></div>
+                      </div>
+                      <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                        <div class="scrollbar-thumb scrollbar-thumb-x"></div>
+                      </div>
+                      <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                        <div class="scrollbar-thumb scrollbar-thumb-y"></div>
+                      </div>
+                      </div>
                     </ul>
                   </div>
-                </li> -->
+                </li>
         <li class="list-inline-item">
           <div class="dropdown">
             <button class="btn dropdown-toggle fw-bold" [ngClass]="anyTimeDropdown?'show':''" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
@@ -201,15 +91,15 @@
                     </span>
                   </div>
                 </header>
-              <form class="px-3 py-3">
+              <form class="px-3 py-3" [formGroup]="searchForm" (ngSubmit)="getConversationList()">
                 <div class="d-flex mb-3">
                   <div class="form-floating">
                     <input type="date" class="form-control border-end-0 rounded-0" id="start-date"
-                      placeholder="Start Date">
+                      placeholder="Start Date" formControlName="fromDate">
                     <label for="start-date">Start Date </label>
                   </div>
                   <div class="form-floating">
-                    <input type="date" class="form-control rounded-0" id="end-date" placeholder="End Date">
+                    <input type="date" class="form-control rounded-0" id="end-date" placeholder="End Date" formControlName="toDate">
                     <label for="end-date">End Date</label>
                   </div>
                 </div>

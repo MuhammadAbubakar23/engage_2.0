@@ -29,9 +29,28 @@
             </div>
             <span class="badge twltte-bg rounded-pill">{{SlaUnResponded}}</span>
           </a>
+
+<!-- From DB -->
+          <!-- <a *ngFor="let channel of channels" (click)="updatevalue(channel.name)" [routerLink]="['/all-inboxes']"
+            class="all-inboxes-menu list-group-item list-group-item-action">
+            <div class="iconButton medium berryBg" [innerHTML]="channel.icon">
+            </div>
+            <div class="ms-2 me-auto">
+              <div class="black-text">{{channel.name}}</div>
+            </div>
+            <ng-container *ngFor="let platform of platformWiseCount">
+              <span class="badge twltte-bg rounded-pill" *ngIf="platform.platform == channel.name">{{platform.count}}</span>
+              <span class="badge twltte-bg rounded-pill" *ngIf="platform.platform != channel.name">0</span>
+            </ng-container>
+          </a>
+
+<br>
+<br>
+<br>
+<br> -->
           <a (click)="updatevalue('Email')" [routerLink]="['/all-inboxes']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="email">
-            <div class="iconButton medium berryBg">
+            <div class="iconButton medium whiteBg">
               <!-- <i class="fal fa-envelope"></i> -->
               <img width="25px" src="../../../../../assets/images/gmail-icon.png" alt="gmail"/>
             </div>

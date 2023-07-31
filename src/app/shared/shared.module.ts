@@ -10,6 +10,8 @@ import { FilterPipe } from './CustomPipes/filter.pipe';
 import { QuickReplySearchFilterPipe } from './CustomPipes/quick-reply-search-filter.pipe';
 import { SafePipe } from './pipes/safe.pipe';
 import { NavigationBackDirective } from './services/navigation/navigation-back.directive';
+import { SplitNameFromUrlPipe } from './pipes/split-name-from-url.pipe';
+import { GetFileTypeFromUrlPipe } from './pipes/get-file-type-from-url.pipe';
 
 
 
@@ -22,7 +24,8 @@ import { NavigationBackDirective } from './services/navigation/navigation-back.d
     QuickReplySearchFilterPipe,
     SafePipe,
     NavigationBackDirective,
-    
+    SplitNameFromUrlPipe,
+    GetFileTypeFromUrlPipe
     
   ],
   imports: [
@@ -39,6 +42,8 @@ import { NavigationBackDirective } from './services/navigation/navigation-back.d
     QuickReplySearchFilterPipe,
     SafePipe,
     NavigationBackDirective,
+    SplitNameFromUrlPipe,
+    GetFileTypeFromUrlPipe
   ]
 })
 export class SharedModule { }

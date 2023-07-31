@@ -134,9 +134,7 @@ debugger
           this.target?.createComponent(componentFactory);
           break;
       default:
-        componentFactory = this.resolver.resolveComponentFactory(
-          ExecutiveDashboardComponent
-        );
+        componentFactory = this.resolver.resolveComponentFactory(ExecutiveDashboardComponent);
         this.target?.createComponent(componentFactory);
         break;
     }

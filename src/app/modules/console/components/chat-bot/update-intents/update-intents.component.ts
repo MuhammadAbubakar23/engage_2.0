@@ -62,12 +62,13 @@ export class UpdateIntentsComponent implements OnInit {
     this.botService.updateIntentApi({"intent": this.formGroup!.value.intentName,"old_question":this.oldData.old_question,"old_answers":this.oldData.old_answers,
      "new_question": this.formGroup!.value.question,
     "new_answers":this.formGroup!.value.answers}).subscribe((res: any) => {
-      
+
        this.toastermessage = 'Successfully updated!';
       this.isToaster = true;
       setTimeout(() => {
         this.isToaster = false;
       }, 4000);
+      this.router.navigateByUrl('console/automation/chat-bot-intent')
       });
 
   }

@@ -126,20 +126,20 @@
 /* width */
 ::-webkit-scrollbar {
     width: 5px;
-    
+
   }
-  
+
   /* Track */
   ::-webkit-scrollbar-track {
     background: #eee;
   }
-  
+
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: #495057;
     border-radius: 5px!important;
   }
-  
+
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #212529;
@@ -148,4 +148,11 @@
   .online-n-offline {
     left: 36px;
     bottom: 9px;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option
+{
+  border-radius: 4px;
+  padding: 15px;
+  background-color: #fff;
 }

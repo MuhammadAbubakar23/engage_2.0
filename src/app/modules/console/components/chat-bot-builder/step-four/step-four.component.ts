@@ -41,7 +41,7 @@ this.botService.intents$.subscribe((res:any)=>{
       {'intent': this.intentName, 'questions': this.questions, 'answers': finalanswers}
     ).subscribe((res: any) => {
       this.showToastr.emit('Successfully Created!')
-      console.log(res);
+      this.router.navigateByUrl('console/automation/chat-bot-intent')
     });
   }
 }

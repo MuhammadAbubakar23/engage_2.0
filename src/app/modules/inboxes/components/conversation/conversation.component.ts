@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ListingDto } from 'src/app/shared/Models/ListingDto';
@@ -24,6 +24,11 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./conversation.component.scss'],
 })
 export class ConversationComponent implements OnInit {
+
+  
+  @Input() imagename: string = '';
+  fullName: string = '';
+  
   unread = false;
   alertWarning = false;
   alertDanger = false;
@@ -64,6 +69,8 @@ export class ConversationComponent implements OnInit {
   fromDate!: any;
   toDate!: any;
 
+  searchCustomerForm !: FormGroup;
+
   constructor(
     private fetchId: FetchIdService,
     private SpinnerService: NgxSpinnerService,
@@ -97,8 +104,11 @@ export class ConversationComponent implements OnInit {
       // pageNumber: new FormControl(1),
       // pageSize: new FormControl(20),
       dateWithin: new FormControl(""),
-    })
+    });
 
+    this.searchCustomerForm = new FormGroup({
+      userName: new FormControl('')
+    })
     // this.currentDate = this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm:ss.SSSSSS')
   }
 
@@ -173,6 +183,8 @@ export class ConversationComponent implements OnInit {
   to: number = 0;
   from: number = 0;
 
+  customersList : any[]=[];
+
   getConversationList() {
     if(this.searchForm.value.dateWithin == "1 day"){
       this.fromDate = this.datePipe.transform((new Date), 'YYYY-MM-dd')+"T00:00:00.000Z";
@@ -226,9 +238,12 @@ export class ConversationComponent implements OnInit {
       this.fromDate = fromDate;
 
       this.toDate = this.datePipe.transform((new Date), 'YYYY-MM-dd')+"T11:59:59.999Z";
-    } else if(this.searchForm.value.fromDate != null){
+    } else if(this.searchForm.value.fromDate != null && (this.searchForm.value.toDate == null || this.searchForm.value.toDate == undefined)){
       this.fromDate = this.searchForm.value.fromDate+"T00:00:00.000Z"
       this.toDate = this.searchForm.value.fromDate+"T11:59:59.999Z"
+    } else if(this.searchForm.value.fromDate != null && this.searchForm.value.toDate != null){
+      this.fromDate = this.searchForm.value.fromDate+"T00:00:00.000Z"
+      this.toDate = this.searchForm.value.toDate+"T11:59:59.999Z"
     } 
     
     this.searchForm.patchValue({
@@ -260,6 +275,7 @@ export class ConversationComponent implements OnInit {
         this.searchForm.reset();
         this.SpinnerService.hide();
         this.advanceSearch = false;
+        this.showDateRange = false;
         this.ConversationList = res.List;
         this.TotalUnresponded = res.TotalCount;
 
@@ -308,6 +324,37 @@ export class ConversationComponent implements OnInit {
         }
       }
     );
+  }
+
+  searchUser:string="";
+
+  getCustomers(){
+    debugger
+    this.filterDto = {
+      fromDate: null,
+      toDate: null,
+      user: '',
+      pageId: '',
+      plateForm: '',
+      pageNumber: 1,
+      pageSize: 30,
+      isAttachment: false,
+      queryType: '',
+      text: '',
+      include: '',
+      userName: this.searchUser,
+      notInclude: '',
+    };
+    this.commondata.GetCustomers(this.filterDto).subscribe((res:any)=>{
+      this.customersList = res;
+    });
+  }
+
+  getConversationListByCustomer(fromId:string){
+    this.searchForm.patchValue({
+      user : fromId
+    });
+    this.getConversationList();
   }
 
   anyTime(value:string){

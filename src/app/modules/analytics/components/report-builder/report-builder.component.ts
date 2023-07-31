@@ -12,10 +12,10 @@ import { BaseChartDirective } from 'ng2-charts';
 export class ReportBuilderComponent implements OnInit {
   databases: string[] = [];
   dbsettings: any[] = [];
-  DBC: string = "Please select connection"
+  DBC: any = "Please select connection"
   tables: string[] = [];
-  dbName: string = "All DataBases";
-  tableName: string = "All Tables";
+  dbName: any = "All DataBases";
+  tableName: any = "All Tables";
   tableData: any = [];
   dataKeys: { [key: string]: any } = {};
   columns = {}
@@ -46,7 +46,6 @@ export class ReportBuilderComponent implements OnInit {
     responsive: false,
   };
 
-  // Pie
   isVisual=false;
   isTabular=false;
   isPie = false;
@@ -121,9 +120,7 @@ export class ReportBuilderComponent implements OnInit {
 
     this.sharedataservice.data$.subscribe((newData: any) => {
       this.isGraph=true;
-      this.dbName=JSON.stringify(localStorage.getItem('dbName'));
-      this.DBC=JSON.stringify(localStorage.getItem('connection_name'));
-      this.tableName=JSON.stringify(localStorage.getItem('selectedtable'));
+
       this.sharedataservice.updateQuery(newData.query);
       this.visualizeData();
       if (newData.isStats == false) {
@@ -202,6 +199,7 @@ export class ReportBuilderComponent implements OnInit {
       this.tables = res.tablesList;
       this.sharedataservice.updateTables(this.tables);
       this.dbName = res.db;
+      localStorage.setItem('dbName', this.dbName);
     })
   }
   selectConnection(): void {
@@ -221,8 +219,8 @@ export class ReportBuilderComponent implements OnInit {
       }, 4000);
       this.databases = res;
     }, (error: any) => {
-
-      let errorMessage = error.error
+      console.log(error);
+      let errorMessage = error
 
       this.toastermessage = `${errorMessage}`;
       this.isToaster = true;
@@ -253,7 +251,6 @@ export class ReportBuilderComponent implements OnInit {
 
   selectTable(): void {
     localStorage.setItem('selectedtable', this.tableName);
-    localStorage.setItem('dbName', this.dbName);
     this.reportservice.selectTableApi({ 'db': this.dbName, 'tableName': this.tableName, 'connection_name': this.DBC }).subscribe((res) => {
 
       this.isGraph=true;
