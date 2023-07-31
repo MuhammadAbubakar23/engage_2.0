@@ -146,7 +146,7 @@ export class ResponderProfileComponent implements OnInit {
               linkedinUniqueId: secondaryProfile.customerUniqueId,
             });
           }
-          if (secondaryProfile.platform == 'Email') {
+          if (secondaryProfile.platform == 'OfficeEmail') {
             this.emailUniqueId = secondaryProfile.customerUniqueId;
             this.userDetailForm.patchValue({
               emailUniqueId: secondaryProfile.customerUniqueId,
@@ -230,7 +230,7 @@ export class ResponderProfileComponent implements OnInit {
     if (this.userDetailForm.value.emailUniqueId != '') {
       var obj = {
         customerUniqueId: this.userDetailForm.value.emailUniqueId,
-        platform: 'Email',
+        platform: 'OfficeEmail',
       };
       secondaryProfiles.push(obj);
     }
