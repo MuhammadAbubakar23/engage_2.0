@@ -19,11 +19,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'create-user',
-  standalone:true,
-  imports:[SharedModule, CommonModule, ReactiveFormsModule,  MatChipsModule, MatIconModule, MatSelectModule],
+  standalone: true,
+  imports: [SharedModule, CommonModule, ReactiveFormsModule, MatChipsModule, MatIconModule, MatSelectModule],
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.scss'],
-  providers:[NavigationBackDirective]
+  providers: [NavigationBackDirective]
 })
 export class CreateUserComponent implements OnInit {
   //identity:string | null | undefined = "0";
@@ -56,15 +56,15 @@ export class CreateUserComponent implements OnInit {
   TeamIds: string[] = []
   RoleIds: string[] = [];
   // Skills: string[] = ['English', 'Urdu'];
-  constructor(private formbuilder : UntypedFormBuilder
-    , private _request:RequestService
-    , private _Activatedroute:ActivatedRoute
+  constructor(private formbuilder: UntypedFormBuilder
+    , private _request: RequestService
+    , private _Activatedroute: ActivatedRoute
     , private location: Location
-    , private storsrv:StorageService
-    , private uservc:UsersService
-    , private roles:RolesAndPermissionsService
-    , private router : Router
-    , private teams:TeamsService) { }
+    , private storsrv: StorageService
+    , private uservc: UsersService
+    , private roles: RolesAndPermissionsService
+    , private router: Router
+    , private teams: TeamsService) { }
 
   get f(): { [key: string]: AbstractControl } {
     return this.userForm.controls;
@@ -242,7 +242,7 @@ export class CreateUserComponent implements OnInit {
         _self.onReset();
         this.router.navigate(['/console/users']);
 
-        
+
       },
       error: (err: HttpErrorResponse) => {
         // this.errorMessage = err.message;
@@ -263,10 +263,10 @@ export class CreateUserComponent implements OnInit {
     this.isActive = !this.isActive;
   }
 
-  cancelForm(){
+  cancelForm() {
     this.router.navigate(['/console/users']);
 
-  
+
   }
   onCatRemovedTeam(cat: string) {
     const Teams = this.TeamsControl.value as string[];

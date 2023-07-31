@@ -65,6 +65,7 @@ export const environment = {
       // For console skill setup 
       channels:"Console/Properties/Channel/Tree/0",
       routing:"Console/Properties/routing/Tree/0",
+      deleteRoles: "Identity/Delete"
     },
     console:{
       AddUser:"Users/CreateUser",
