@@ -30,6 +30,8 @@ export class ResponderProfileComponent implements OnInit {
 
   userDetailForm!: FormGroup;
 
+  openedChannel:string="";
+
   constructor(
     private commonService: CommonDataService,
     public fb: FormBuilder,
@@ -68,6 +70,7 @@ export class ResponderProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = localStorage.getItem('storeOpenedId');
+    this.openedChannel = localStorage.getItem('parent') || '{}';
     this.getProfileDetails();
   }
 
