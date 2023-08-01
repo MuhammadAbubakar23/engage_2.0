@@ -463,7 +463,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
-          if (res != null || res != undefined) {
+          if (Object.keys(res).length > 0) {
             this.userId = res.List[0].user.userId;
             this.userName =
               res.List[0].user.userName || res.List[0].user.userId;
@@ -645,7 +645,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.commondata
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
-          if (res != null || res != undefined) {
+          if (Object.keys(res).length > 0) {
             this.userId = res.List?.user.userId;
             this.profileId = res.List?.user.id;
             this.userName = res.List?.user.userName || res.List?.user.userId;
@@ -931,7 +931,7 @@ export class ResponderHeaderComponent implements OnInit {
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
           
-          if (res != null || res != undefined) {
+          if (Object.keys(res).length > 0) {
             this.userId = res.List?.user.userId;
             this.profileId = res.List?.user.id;
             this.userName = res.List?.user.userName || res.List?.user.userId;
@@ -1099,7 +1099,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
-          if (res != null || res != undefined) {
+          if (Object.keys(res).length > 0) {
             this.userId = res.List[0].user.userId;
             this.userName =
               res.List[0].user.userName || res.List[0].user.userId;
@@ -1305,7 +1305,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
-          // if (res != null || res != undefined) {
+          // if (Object.keys(res).length > 0) {
           //   this.userId = res.List[0].user.userId;
           //   this.userName =
           //     res.List[0].user.userName || res.List[0].user.userId;
@@ -1479,7 +1479,7 @@ export class ResponderHeaderComponent implements OnInit {
           //     this.LinkedInUnrespondedCmntCountByCustomer = res.TotalCount;
           //   }
           // }
-          if (res != null || res != undefined) {
+          if (Object.keys(res).length > 0) {
             if (platform == 'Facebook') {
               this.FacebookData = res;
               this.totalFbUnrespondedCountByCustomer = this.FacebookData.TotalCount;
@@ -1521,7 +1521,7 @@ export class ResponderHeaderComponent implements OnInit {
       // this.commondata
       //   .GetChannelMessageDetail(this.filterDto)
       //   .subscribe((res: any) => {
-      //     // if (res != null || res != undefined) {
+      //     // if (Object.keys(res).length > 0) {
       //     //   this.userId = res.List?.user.userId;
       //     //   this.profileId = res.List?.user.id;
       //     //   this.userName = res.List?.user.userName || res.List?.user.userId;
