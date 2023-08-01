@@ -87,7 +87,7 @@ export class InboxMenuComponent implements OnInit {
       this.Subscription = this.updateListService.receiveList().subscribe((res) => {
       
       res.forEach((platform:any) => {
-        this.UnResponded = platform.unrespondedCount + this.UnResponded;
+        this.UnResponded = this.UnResponded + 1;
         // if(platform.platform == 'Facebook'){
         //   this.FbUnResponded = platform.unrespondedCount + this.FbUnResponded;
         // }
@@ -107,8 +107,7 @@ export class InboxMenuComponent implements OnInit {
         //   this.SmsUnResponded = platform.unrespondedCount + this.SmsUnResponded;
         // }
         if(platform.platform == 'WhatsApp'){
-          this.WaUnResponded = platform.unrespondedCount + this.WaUnResponded;
-          this.UnResponded = platform.unrespondedCount + this.UnResponded;
+          this.WaUnResponded = this.WaUnResponded + 1;
         }
         // if(platform.platform == 'WebChat'){
         //   this.WebchatUnResponded = platform.unrespondedCount + this.WebchatUnResponded;
@@ -119,7 +118,7 @@ export class InboxMenuComponent implements OnInit {
         // }
         if(platform.platform == 'OfficeEmail'){
           
-          this.OfficeEmailUnResponded = platform.unrespondedCount + this.OfficeEmailUnResponded;
+          this.OfficeEmailUnResponded = this.OfficeEmailUnResponded + 1;
           
         }
         // if(platform.platform == 'PlayStore'){

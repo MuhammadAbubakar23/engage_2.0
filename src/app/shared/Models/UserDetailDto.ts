@@ -3,7 +3,7 @@ export class UserDetailDto {
     fromName: string = '';
     fromProfilePic: string = '';
     fromFullName:string = '';
-    customerDetail: CustomerDetailDto[] = [];
+    customerDetails: CustomerDetailDto[] = [];
     secondaryProfiles: SecondaryProfileDto[] = [];
   }
 

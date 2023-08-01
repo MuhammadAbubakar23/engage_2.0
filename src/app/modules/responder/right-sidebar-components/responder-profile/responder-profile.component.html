@@ -519,13 +519,10 @@
                                                                 value={{youtubeUniqueId}}>
                                                         </div>
                                                     </div> -->
-                                                    <div class="row mb-3">
-                                                        <label for="inputWhatsapp"
-                                                            class="col-sm-3 col-form-label">WhatsApp
-                                                        </label>
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'WhatsApp'">
+                                                        <label for="inputWhatsapp" class="col-sm-3 col-form-label">WhatsApp</label>
                                                         <div class="col-sm-9">
-                                                            <input class="form-control" id="inputWhatsapp"
-                                                                formControlName="whatsappUniqueId">
+                                                            <input class="form-control" id="inputWhatsapp" formControlName="whatsappUniqueId">
                                                         </div>
                                                     </div>
                                                     <!-- <div class="row mb-3">
@@ -536,7 +533,7 @@
                                                                 formControlName="smsUniqueId" value={{smsUniqueId}}>
                                                         </div>
                                                     </div> -->
-                                                    <div class="row mb-3">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'OfficeEmail'">
                                                         <label for="inputEmail2"
                                                             class="col-sm-3 col-form-label">Email</label>
                                                         <div class="col-sm-9">

@@ -573,7 +573,7 @@
 
         <table class="table">
           <tbody>
-            <ng-container *ngFor="let group of ConversationList">
+            <ng-container *ngFor="let group of groupByDateList">
               <tr>
                 <td colspan="6">
                   <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}

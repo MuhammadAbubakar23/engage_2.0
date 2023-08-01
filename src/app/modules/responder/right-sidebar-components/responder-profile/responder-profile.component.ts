@@ -72,19 +72,18 @@ export class ResponderProfileComponent implements OnInit {
     })
   }
 
+  openedChannel:string="";
+
   ngOnInit(): void {
     this.id = localStorage.getItem('storeOpenedId');
+    this.openedChannel = localStorage.getItem('parent') || '{}';
     this.getProfileDetails();
   }
 
   getProfileDetails() {
-    
-    
     this.commonService.GetProfileDetails(this.id).subscribe((res: any) => {
-      debugger
       this.profileDetails = res;
-      
-      
+
       this.spinnerService.show();
       this.spinner2running = true;
       this.userDetailForm.patchValue({
@@ -247,7 +246,7 @@ export class ResponderProfileComponent implements OnInit {
       fromName: this.userDetailForm.value.fromName,
       fromProfilePic: this.userDetailForm.value.fromProfilePic,
       fromFullName: this.userDetailForm.value.fromFullName,
-      customerDetail: [
+      customerDetails: [
         {
           email: this.userDetailForm.value.email,
           phoneNumber: this.userDetailForm.value.phoneNumber,
