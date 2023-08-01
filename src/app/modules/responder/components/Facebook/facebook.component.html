@@ -77,6 +77,10 @@
                                                     <source src={{attachment.attachmentUrl}} type="video/mp4"
                                                         style="width: -webkit-fill-available;">
                                                 </video>
+                                                <video *ngIf="attachment.contentType == 'video_inline'" width="375px" controls>
+                                                    <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                        style="width: -webkit-fill-available;">
+                                                </video>
                                             </div>
                                             <div class="card-body bg-light">
 
