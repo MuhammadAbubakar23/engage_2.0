@@ -1,11 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  DoCheck,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Tooltip } from 'bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -120,10 +113,10 @@ export class ResponderHeaderComponent implements OnInit {
     private updateMessagesService: UpdateMessagesService,
     private toggleService: ToggleService,
   ) {
-    this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
-      this.id = res;
-      this.getUserDetails();
-    });
+    // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
+    //   this.id = res;
+    //   this.getUserDetails();
+    // });
 
     this.Subscription = this.fetchposttype
       .getPostTypeAsObservable()
@@ -469,7 +462,8 @@ export class ResponderHeaderComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
-          if (res != null || res != undefined) {
+          debugger
+          if (Object.keys(res).length > 0) {
             this.userId = res.List[0].user.userId;
             this.userName =
               res.List[0].user.userName || res.List[0].user.userId;
@@ -651,7 +645,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.commondata
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
-          if (res != null || res != undefined) {
+          if (Object.keys(res).length > 0) {
             this.userId = res.List?.user.userId;
             this.profileId = res.List?.user.id;
             this.userName = res.List?.user.userName || res.List?.user.userId;
@@ -937,7 +931,7 @@ export class ResponderHeaderComponent implements OnInit {
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
           
-          if (res != null || res != undefined) {
+          if (Object.keys(res).length > 0) {
             this.userId = res.List?.user.userId;
             this.profileId = res.List?.user.id;
             this.userName = res.List?.user.userName || res.List?.user.userId;
@@ -1105,7 +1099,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
-          if (res != null || res != undefined) {
+          if (Object.keys(res).length > 0) {
             this.userId = res.List[0].user.userId;
             this.userName =
               res.List[0].user.userName || res.List[0].user.userId;
