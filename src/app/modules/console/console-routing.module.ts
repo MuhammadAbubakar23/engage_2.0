@@ -106,6 +106,11 @@ const routes: Routes = [
         path:'rules',
         loadComponent: () => import('./components/rules/rules.component').then(c => c.RulesComponent)
         
+      },
+      {
+        path:'add-rules',
+        loadComponent: () => import('./components/rules/add-rules/add-rules.component').then(c => c.AddRulesComponent)
+        
       },{
         path:'skills',
         loadComponent: () => import('./components/skills/skills.component').then(c => c.SkillsComponent),

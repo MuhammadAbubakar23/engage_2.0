@@ -7,7 +7,7 @@ import { SafePipe } from 'src/app/shared/pipes/safe.pipe';
   selector: 'console-table-action-list',
   templateUrl: './console-table-action-list.component.html',
   styleUrls: ['./console-table-action-list.component.scss'],
-  providers: [ SafePipe ]
+  providers: [SafePipe]
 })
 export class ConsoleTableActionListComponent implements OnInit {
   // actionli:string=""; 
@@ -16,11 +16,11 @@ export class ConsoleTableActionListComponent implements OnInit {
 
   @Input() data: any[] = [];
   @Input() actions: Array<any> = [];
-  
-  @Output() action:any;
-  @Output() procedure: EventEmitter<any> = new EventEmitter(); 
-  
-  constructor(private userserv: UsersService,  private sanitizer: DomSanitizer) { }
+
+  @Output() action: any;
+  @Output() procedure: EventEmitter<any> = new EventEmitter();
+
+  constructor(private userserv: UsersService, private sanitizer: DomSanitizer) { }
   ngOnInit(): void {
     // this.actions.forEach((item:any, index:number, arr:any) => {
     //   this.listaction.push(item);
@@ -29,11 +29,12 @@ export class ConsoleTableActionListComponent implements OnInit {
     // this.actionlisenit = this.sanitizer.bypassSecurityTrustHtml(this.actionli);
     // console.log("Listen Action --->>>", this.listaction);
   }
-  funcAction(params:any){
+  funcAction(params: any) {
+    // debugger
     console.log(params);
     let data = {
-      param:params,
-      data:this.data
+      param: params,
+      data: this.data
     }
     console.log(data);
     this.procedure.emit(data);
@@ -42,5 +43,4 @@ export class ConsoleTableActionListComponent implements OnInit {
     // console.log("added Data --- >>>",this.data)
     // console.log("I m func action")
   }
-
 }

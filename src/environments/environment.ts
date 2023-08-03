@@ -65,6 +65,7 @@ export const environment = {
       // For console skill setup 
       channels:"Console/Properties/Channel/Tree/0",
       routing:"Console/Properties/routing/Tree/0",
+      deleteRoles: "/Permissions/Delete"
     },
     console:{
       AddUser:"Users/CreateUser",
@@ -104,6 +105,13 @@ export const environment = {
       updateTag: 'Tags/Update',
       deleteTags: 'Tags/Delete',
       getParents : 'Tags/GetParents',
+      getAllRules : 'Rules/GetAll',
+      getEntitiesRule : 'Rules/GetEntities',
+      getRuleEntityProperties : 'GetEntitiesProperties',
+      getRuleById:  'Rules/GetById',
+      addRules: 'Rules/Add',
+      updateRules: 'Rules/Update',
+      deleteRules: 'Rules/Delete'
     },
     CCMS:{
       reason_types:'Order/GetReasonTypes',

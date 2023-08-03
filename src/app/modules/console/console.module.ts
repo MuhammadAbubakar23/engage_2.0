@@ -55,6 +55,7 @@ import { ChatwithintentComponent } from './components/chat-bot/right-sidebar-com
 import { ToastrComponent } from './components/toastr/toastr.component';
 import { StepFourComponent } from './components/chat-bot-builder/step-four/step-four.component';
 import { UpdateIntentsComponent } from './components/chat-bot/update-intents/update-intents.component';
+import { AddRulesComponent } from './components/rules/add-rules/add-rules.component';
 // import { CreateSkillsComponent } from './components/skills/create-skills/create-skills.component';
 // import { AddSkillMembersComponent } from './components/skills/add-skill-members/add-skill-members.component';
 
@@ -113,6 +114,7 @@ import { UpdateIntentsComponent } from './components/chat-bot/update-intents/upd
     ChatwithsentimentComponent,
     ChatwithintentComponent,
     ToastrComponent,
+   
   ],
   imports: [
     CommonModule,
