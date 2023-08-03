@@ -44,7 +44,7 @@ export class SentimentService {
     let httpOptions = this.gethttpOptions();
     const userMessage = new Message('user', value);
     this.senconversation.next([userMessage]);
-    let data = { 'text': value }
+    let data = { 'text': value, 'client': 'engage' }
     return this.http.post<string>(baseUrl + "getsentiment", data, httpOptions);
   }
   getLanguageApi(value: string): Observable<string> {
@@ -54,18 +54,18 @@ export class SentimentService {
     let data = { 'text': value }
     return this.http.post<string>(baseUrl + "getlang", data, httpOptions);
   }
-  postSentimentApi(data:any):Observable<any> {
+  postSentimentApi(data: any): Observable<any> {
     console.log("postSentimentApi", data);
     let httpOptions = this.gethttpOptions();
     return this.http.post(baseUrl + "singlesentence", data, httpOptions)
   }
 
-  fileUploadApi(data:any){
+  fileUploadApi(data: any) {
     console.log("postSentimentApi", data);
     let httpOptions = this.gethttpOptionsforFile();
     return this.http.post(baseUrl + "uploadfile", data, httpOptions)
   }
-  trainingApi(data:any){
+  trainingApi(data: any) {
     console.log("trainingApi", data);
     let httpOptions = this.gethttpOptionsforFile();
     return this.http.post(baseUrl + "trainmodel", data, httpOptions)
