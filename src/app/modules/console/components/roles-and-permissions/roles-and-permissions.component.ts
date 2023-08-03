@@ -18,7 +18,7 @@ export class RolesAndPermissionsComponent implements OnInit {
   Roles: Array<any> = [];
   RolesCount: number = 0;
 
-  messages: any;
+  messages: any[] = [];
   //Teams: Array<any> = [];
   constructor(private headerService: HeaderService, private _Activatedroute: ActivatedRoute, private router: Router, private commonService: CommonDataService) { }
   ngOnInit(): void {
@@ -31,9 +31,19 @@ export class RolesAndPermissionsComponent implements OnInit {
     this.headerService.updateMessage(string);
   }
   deleteTemplate(message: any) {
+
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
-      this.commonService.DeleteRoles(message.id).subscribe(
+      var obj = {
+        "id": message.mainId,
+        "name": "string",
+        "norm": "string",
+        "slug": "string",
+        "link": "string",
+        "desc": "string",
+        "type": "string"
+      }
+      this.commonService.DeleteRoles(obj).subscribe(
         () => {
           // Success callback
           console.log('message deleted:', message);

@@ -104,6 +104,14 @@ export class CommonDataService {
   updateTag = environment.links.console.updateTag;
   deleteTags = environment.links.console.deleteTags;
   getParents = environment.links.console.getParents;
+  // rules
+  deleteRules = environment.links.console.deleteRules
+  getAllRules = environment.links.console.getAllRules;
+  getRuleById = environment.links.console.getRuleById
+  addRules = environment.links.console.addRules
+  updateRules = environment.links.console.updateRules
+  getEntitiesRule = environment.links.console.getEntitiesRule
+  getRuleEntityProperties = environment.links.console.getRuleEntityProperties
 
   getChannels = environment.links.identity.channels;
   deleteRoles = environment.links.identity.deleteRoles
@@ -437,8 +445,8 @@ export class CommonDataService {
     return this.http.get(this.consoleBaseUrl + this.getTags);
   }
   GetTagById(body: any) {
-    const url = `${this.consoleBaseUrl}${this.getTagById}?Id=${body}`;
-    return this.http.get(url);
+    const url = `${this.consoleBaseUrl}${this.getTagById}`;
+    return this.http.post(url, body);
   }
   AddTags(addTags: any) {
     return this.http.post(this.consoleBaseUrl + this.addTags, addTags)
@@ -451,13 +459,41 @@ export class CommonDataService {
     const url = `${this.consoleBaseUrl}${this.deleteTags}?Id=${delTag}`;
     return this.http.get(url);
   }
-  DeleteRoles(delTag: string): Observable<any> {
-    const url = `${this.IdentityBaseUrl}${this.deleteRoles}?Id=${delTag}`;
-    return this.http.get(url);
+  DeleteRoles(delRolId: any) {
+    const url = `${this.IdentityBaseUrl}${this.deleteRoles}`;
+    return this.http.post(url, delRolId);
   }
 
   GetParents() {
     return this.http.get(this.consoleBaseUrl + this.getParents);
+  }
+
+  // rules
+
+  GetAllRules() {
+    return this.http.get(this.consoleBaseUrl + this.getAllRules)
+  }
+  GetRuleById() {
+    return this.http.get(this.consoleBaseUrl + this.getRuleById)
+  }
+  AddRules(addrule: any) {
+    return this.http.post(this.consoleBaseUrl + this.addRules, addrule)
+  }
+  UpdateRules(ruleId: string, rule: any) {
+    const url = `${this.consoleBaseUrl}${this.updateRules}?Id=${ruleId}`;
+    return this.http.post(url, rule);
+  }
+  DeleteRules(delRules: any) {
+    const url = `${this.consoleBaseUrl}${this.deleteRules}?Id=${delRules}`;
+    return this.http.get(url);
+  }
+  GetEntitiesRule() {
+    return this.http.get(this.consoleBaseUrl + this.getEntitiesRule);
+
+  }
+  GetRuleEntityProperties() {
+    return this.http.get(this.consoleBaseUrl + this.getRuleEntityProperties);
+
   }
 
   GetCustomers(body: any) {
