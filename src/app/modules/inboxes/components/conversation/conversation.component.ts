@@ -113,7 +113,11 @@ export class ConversationComponent implements OnInit {
     })
   }
 
+  currentUrl:string='';
+
   ngOnInit(): void {    
+    this.currentUrl = this.router.url;
+
     this.TodayDate = new Date();
     this.getConversationList();
     this.getPlatform();
@@ -626,9 +630,14 @@ export class ConversationComponent implements OnInit {
         this.fetchposttype.sendPostType(postType);
         localStorage.setItem('profileId', profileId);
         localStorage.setItem('assignedProfile', profileId);
-        this.router.navigateByUrl('/all-inboxes/responder/' + platform);
+        this.router.navigateByUrl(this.currentUrl+'/responder/' + platform);
 
         this.lodeModuleService.updateModule('responder');
+        if(this.from < this.TotalUnresponded){
+          this.pageNumber = 1;
+          this.pageSize = 20;
+          this.getConversationList();
+        }
       },
       (error) => {
         this.reloadComponent('queryallocatedtoanotheruser');

@@ -118,7 +118,7 @@ export class SentItemsComponent implements OnInit {
     this.fetchId.setPlatform(platform);
     this.fetchId.setOption(id);
     this.fetchposttype.sendPostType(postType);
-    this.router.navigateByUrl('/all-inboxes/responder/' + platform);
+    this.router.navigateByUrl('/all-inboxes/sent/responder/' + platform);
     this.lodeModuleService.updateModule('responder');
     this.getQueryTypeService.sendQueryType('Replies')
   }

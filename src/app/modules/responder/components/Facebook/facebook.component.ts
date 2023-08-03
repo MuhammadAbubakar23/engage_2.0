@@ -394,6 +394,7 @@ export class FacebookComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
+          debugger
           this.SpinnerService.hide();
           this.ConverstationDetailDto = res;
           this.FacebookData = this.ConverstationDetailDto.List;

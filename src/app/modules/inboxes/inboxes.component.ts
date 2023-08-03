@@ -6,6 +6,7 @@ import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { WebPhoneComponent } from '../web-phone/web-phone.component';
 import { ConversationComponent } from './components/conversation/conversation.component';
+import { SentItemsComponent } from './components/sent-items/sent-items.component';
 import { SlaComponent } from './components/SLA/sla.component';
 import { ComplaintTicketPanelComponent } from './right-sidebar-components/complaint-ticket-panel/complaint-ticket-panel/complaint-ticket-panel.component';
 import { ContactsComponent } from './right-sidebar-components/contacts/contacts.component';
@@ -46,11 +47,9 @@ export class InboxesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     this.route.params.subscribe((routeParams) => {
-
-      if(routeParams['channel'] != undefined && routeParams['channel'] != "undefined"){
-        this.componentName = routeParams['channel'];
+      if(routeParams['flag'] != undefined && routeParams['flag'] != "undefined"){
+        this.componentName = routeParams['flag'];
       }
       this.childComponentName = routeParams['ticket'];
       this.rightNavService.updateChildComponent(this.childComponentName);
@@ -113,12 +112,11 @@ export class InboxesComponent implements OnInit {
 
 
   loadComponent(leftSideName: string, rightSideName: string) {
-    
     let componentFactory = null;
 
     switch (leftSideName || rightSideName) {
-      case 'conversation':
-        componentFactory = this.resolver.resolveComponentFactory(ConversationComponent);
+      case 'sent':
+        componentFactory = this.resolver.resolveComponentFactory(SentItemsComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'sla':

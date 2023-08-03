@@ -7,12 +7,12 @@ import { ModulesResolver } from './shared/resolver/modules.resolver';
 const routes: Routes = [
  {
    path:'',
-   redirectTo:'/all-inboxes',
+   redirectTo:'/all-inboxes/my_inbox',
    pathMatch:'full',
  },
 //  {
 //   path:'**',
-//   redirectTo:'/dashboard/all-inboxes',
+//   redirectTo:'/all-inboxes/my_inbox',
 //   pathMatch:'full',
 // },
   {
