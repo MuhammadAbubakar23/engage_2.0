@@ -432,12 +432,7 @@ export class CommonDataService {
 
     return this.http.post(this.consoleBaseUrl + this.addProfile, addProfile)
   }
-<<<<<<< HEAD
   AttachFacebookPage(body:any){
-=======
-  AttachFacebookPage(body: any) {
-    debugger
->>>>>>> b39740b24974b36de7d7131d7438605d18566d52
     return this.http.post(this.InstagramBaseUrl + this.attachFacebookPage, body)
   }
 
