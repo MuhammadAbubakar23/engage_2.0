@@ -69,7 +69,7 @@ export class ReportlistingComponent implements OnInit {
         const datasets: ChartDataset<typeof type, number[]>[] = arrdata.data.labels!.map((label: any, index: number) => {
           const data: number[] = arrdata.data.datasets.map((dataset: any) => {
             const value = dataset.data[index] as number | [number, number] | null;
-            return typeof value === 'number' || Array.isArray(value) ? (value as number) : 0; 
+            return typeof value === 'number' || Array.isArray(value) ? (value as number) : 0;
           });
           return { data, label: label };
         });
@@ -124,6 +124,7 @@ export class ReportlistingComponent implements OnInit {
     //   'orange',
     //   'gray'
     // ]
+
     this.ChartData = barChartData;
 
     this.chartDataArray1.push({ type: 'bar', data: this.ChartData });
