@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
@@ -12,7 +13,7 @@ interface Tag {
 @Component({
   selector: 'app-tags',
   standalone:true,
-  imports:[CommonModule, RouterModule],
+  imports:[CommonModule, RouterModule , FormsModule],
   templateUrl: './tags.component.html',
   styleUrls: ['./tags.component.scss']
 })
@@ -21,7 +22,29 @@ export class TagsComponent implements OnInit {
   tags: Tag[] = [];
   perPage: number = 15;
   currentPage: number = 1;
-
+  searchText: string = '';
+  applySearchFilter() {
+    // Convert the search text to lowercase for case-insensitive search
+    const searchTextLower = this.searchText.toLowerCase();
+    
+    // Filter the messages based on the search text
+    this.tags = this.tags.filter((message) => {
+      const templateNameLower = (message.name || '').toLowerCase();
+ 
+      return templateNameLower.includes(searchTextLower) || templateNameLower.includes(searchTextLower) 
+    });
+  }
+  
+  refreshMessages() {
+    this.commonService.GetTags().subscribe(
+      (response: any) => {
+        this.tags = response;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
   constructor(private headerService: HeaderService , private commonService : CommonDataService , private router: Router) { }
 
   ngOnInit(): void {

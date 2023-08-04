@@ -28,7 +28,7 @@
                             <button class="iconButton medium">
                                 <i class="fal fa-search silver"></i>
                             </button>
-                            <input placeholder="Search" class="me-1">
+                            <input [(ngModel)]="searchText" placeholder="Search" class="me-1" (keyup)="applySearchFilter()">
                         </a>
                         <a (click)="updatevalue('consoleCreateRolesHeader')"
                             [routerLink]="['/console/roles-permissions/create/0']" class="ms-2">

@@ -50,7 +50,7 @@
                                         <button class="iconButton medium">
                                             <i class="fal fa-search silver"></i>
                                         </button>
-                                        <input placeholder="Search">
+                                        <input [(ngModel)]="searchText" placeholder="Search" class="me-1" (ngModelChange)="searchText ? applySearchFilter() : refreshtableData()">
                                     </a>
                                     <a (click)="updatevalue('consoleCreateTeamHeader')"
                                         [routerLink]="['/console/add-rules']" class="ms-2">

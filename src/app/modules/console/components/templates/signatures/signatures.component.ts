@@ -12,7 +12,30 @@ export class SignaturesComponent implements OnInit {
   signatures: any[] = [];
   sortOptions: string[] = ['All', 'Ascending', 'Descending'];
   selectedSortOption: string = 'All';
-
+  searchText: string = '';
+  applySearchFilter() {
+    // Convert the search text to lowercase for case-insensitive search
+    const searchTextLower = this.searchText.toLowerCase();
+    
+    // Filter the messages based on the search text
+    this.signatures = this.signatures.filter((message) => {
+      const templateNameLower = (message.templateName || '').toLowerCase();
+      const subjectLower = (message.subject || '').toLowerCase();
+      
+      return templateNameLower.includes(searchTextLower) || subjectLower.includes(searchTextLower);
+    });
+  }
+  
+  refreshMessages() {
+    this.commonService.GetAllMessages('Signature').subscribe(
+      (response: any) => {
+        this.signatures = response;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
   sortTemplates() {
     if (this.selectedSortOption === 'Ascending') {
       this.signatures.sort((a, b) => (a.name || '').localeCompare(b.name || ''));

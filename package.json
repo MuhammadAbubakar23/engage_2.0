@@ -30,6 +30,7 @@
     "@ngrx/effects": "^14.2.0",
     "@ngrx/store": "^14.2.0",
     "@ngrx/store-devtools": "^14.2.0",
+    "@syncfusion/ej2-angular-querybuilder": "^22.2.5",
     "angular-font-awesome": "^3.1.2",
     "angular-ng-stepper": "^2.0.0",
     "angular2-query-builder": "^0.6.2",

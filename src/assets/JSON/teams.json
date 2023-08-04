@@ -4,8 +4,11 @@
     , "urlparams":"WithOutType/0"
     , "pageno":1
     , "pagesize":50
-    , "template": {}
-    , "headers": [ 
+    ,"template": {
+        "toolbar": "top",
+        "refresh":true 
+    },
+    "headers": [ 
         { 
             "visible":true, 
             "index":[], 

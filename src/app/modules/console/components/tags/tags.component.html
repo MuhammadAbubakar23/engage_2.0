@@ -38,7 +38,8 @@
                 <button class="iconButton medium">
                   <i class="fal fa-search silver"></i>
                 </button>
-                <input placeholder="Search">
+                <input [(ngModel)]="searchText" placeholder="Search" class="me-1" (ngModelChange)="searchText ? applySearchFilter() : refreshMessages()">
+
               </a>
               <a (click)="updatevalue('consoleCreateTagsHeader')" [routerLink]="['/console/tag/create/0']" class="ms-2">
                 <button type="button" class="btn btn-success">

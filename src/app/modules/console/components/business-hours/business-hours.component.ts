@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
@@ -7,7 +8,7 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 @Component({
   selector: 'app-business-hours',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule , FormsModule],
   templateUrl: './business-hours.component.html',
   styleUrls: ['./business-hours.component.scss']
 })
@@ -16,7 +17,29 @@ export class BusinessHoursComponent implements OnInit {
   sortOptions: string[] = ['All', 'Ascending', 'Descending'];
   selectedSortOption: string = 'All';
   messages: any;
-
+  searchText: string = '';
+  applySearchFilter() {
+    // Convert the search text to lowercase for case-insensitive search
+    const searchTextLower = this.searchText.toLowerCase();
+    
+    // Filter the messages based on the search text
+    this.messages = this.messages.filter((message: { templateName: any; }) => {
+      const templateNameLower = (message.templateName || '').toLowerCase();
+ 
+      return templateNameLower.includes(searchTextLower) || templateNameLower.includes(searchTextLower) 
+    });
+  }
+  
+  refreshMessages() {
+    this.commonService.GetBusinessHours().subscribe(
+      (response: any) => {
+        this.messages = response;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
   sortTemplates() {
     if (this.selectedSortOption === 'Ascending') {
       this.templates.sort((a, b) => (a.name || '').localeCompare(b.name || ''));

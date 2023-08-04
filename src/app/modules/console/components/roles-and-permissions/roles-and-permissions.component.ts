@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
@@ -10,23 +10,30 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 @Component({
   selector: 'app-roles-and-permissions',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, LayoutsModule, CreateRolesComponent],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, LayoutsModule, CreateRolesComponent, FormsModule],
   templateUrl: './roles-and-permissions.component.html',
   styleUrls: ['./roles-and-permissions.component.scss']
 })
 export class RolesAndPermissionsComponent implements OnInit {
   Roles: Array<any> = [];
   RolesCount: number = 0;
-
+  searchText: string = '';
+  applySearchFilter() {
+    const searchTextLower = this.searchText.toLowerCase();
+    this.Roles = this._Activatedroute.snapshot.data["roles"].filter((role: { name: any }) => {
+      const roleNameLower = (role.name || '').toLowerCase();
+      return roleNameLower.includes(searchTextLower)
+    });
+  }
   messages: any[] = [];
   //Teams: Array<any> = [];
   constructor(private headerService: HeaderService, private _Activatedroute: ActivatedRoute, private router: Router, private commonService: CommonDataService) { }
   ngOnInit(): void {
     this.Roles = this._Activatedroute.snapshot.data["roles"];
     this.RolesCount = this.Roles.length;
-    console.log(this.Roles);
-    // this.Teams =  this._Activatedroute.snapshot.data["teams"];
+    this.applySearchFilter(); // Apply search filter on component initialization
   }
+
   updatevalue(string: any) {
     this.headerService.updateMessage(string);
   }

@@ -15,7 +15,31 @@ export class MessagesComponent implements OnInit {
   messages: any[] = [];
   sortOptions: string[] = ['All', 'Ascending', 'Descending'];
   selectedSortOption: string = 'All';
-
+  searchText: string = '';
+  applySearchFilter() {
+    // Convert the search text to lowercase for case-insensitive search
+    const searchTextLower = this.searchText.toLowerCase();
+    
+    // Filter the messages based on the search text
+    this.messages = this.messages.filter((message) => {
+      const templateNameLower = (message.templateName || '').toLowerCase();
+      const subjectLower = (message.subject || '').toLowerCase();
+      
+      return templateNameLower.includes(searchTextLower) || subjectLower.includes(searchTextLower);
+    });
+  }
+  
+  refreshMessages() {
+    this.commonService.GetAllMessages('Message').subscribe(
+      (response: any) => {
+        this.messages = response;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
+    
   sortTemplates() {
     if (this.selectedSortOption === 'Ascending') {
       this.messages.sort((a, b) => (a.name || '').localeCompare(b.name || ''));

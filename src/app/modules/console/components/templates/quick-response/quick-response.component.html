@@ -14,24 +14,29 @@
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li>
-                                      <a class="dropdown-item" (click)="selectedSortOption = 'All'; sortTemplates()">All</a>
+                                        <a class="dropdown-item"
+                                            (click)="selectedSortOption = 'All'; sortTemplates()">All</a>
                                     </li>
                                     <li>
-                                      <a class="dropdown-item" (click)="selectedSortOption = 'Ascending'; sortTemplates()">Ascending</a>
+                                        <a class="dropdown-item"
+                                            (click)="selectedSortOption = 'Ascending'; sortTemplates()">Ascending</a>
                                     </li>
                                     <li>
-                                      <a class="dropdown-item" (click)="selectedSortOption = 'Descending'; sortTemplates()">Descending</a>
+                                        <a class="dropdown-item"
+                                            (click)="selectedSortOption = 'Descending'; sortTemplates()">Descending</a>
                                     </li>
-                                  </ul>
+                                </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-8 d-flex align-items-center justify-content-end">
-                        <a  class="search-btn">
+                        <a class="search-btn">
                             <button class="iconButton medium">
                                 <i class="fal fa-search silver"></i>
                             </button>
-                            <input placeholder="Search" class="me-1">
+                            <input [(ngModel)]="searchText" placeholder="Search" class="me-1"
+                                (ngModelChange)="searchText ? applySearchFilter() : refreshMessages()">
+
                         </a>
                         <a (click)="updatevalue('consoleCreateQuickResponseTemplatesHeader')"
                             [routerLink]="['/console/createresponse']" class="ms-2">
@@ -43,7 +48,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="table-section">
                 <table class="table mb-5 align-middle">
                     <thead>
@@ -94,18 +98,10 @@
                                 </div>
                             </td>
                         </tr>
-                       
+
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
-        <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 1176px; transform: translate3d(0px, 0px, 0px);">
-        </div>
-    </div>
-    <div class="scrollbar-track scrollbar-track-y" style="display: block;">
-        <div class="scrollbar-thumb scrollbar-thumb-y"
-            style="height: 196.009px; transform: translate3d(0px, 0px, 0px);"></div>
-    </div> -->
 </div>

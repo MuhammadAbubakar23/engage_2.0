@@ -14,8 +14,8 @@ import { CommonDataService } from '../../../../../shared/services/common/common-
 })
 export class AddRulesComponent implements OnInit {
   rulesForm!: FormGroup;
-  query: any = {}; // Initialize an empty object for query
-  query1: any = {}; // Initialize an empty object for query1
+  // query: any = {}; // Initialize an empty object for query
+  // query1: any = {}; // Initialize an empty object for query1
   constructor(private formBuilder: FormBuilder, private commonService: CommonDataService, private router: Router) { }
   ngOnInit(): void {
     this.rulesForm = this.formBuilder.group({
@@ -114,25 +114,26 @@ export class AddRulesComponent implements OnInit {
       Marks: { name: 'Marks', type: 'number' },
     }
   }
-  // query = {
-  //   condition: 'or',
-  //   rules: [
-  //     // { field: 'From', operator: '<=', value: 'Bob' },
-  //     // { field: 'gender', operator: '>=', value: 'm' },
-  //     // { field: 'city', operator: '=', value: 'abc' },
-  //     // { field: 'degree', operator: '!=', value: 'deg' },
-  //     // { field: 'occupation', operator: '!=', value: 'ocu' },
-  //     // { field: 'designation', operator: '!=', value: 'desg' },
-  //   ]
-  // }
-  // query1 = {
-  //   Condition: 'And',
-  //   rules: [
-  //     // { field: 'student', operator: '!=', value: 'std' },
-  //     // {  condition:'', field: '', id:';', input: '', operator: '!=',type:'0', value: ''  },
-  //     // { field: 'Marks', operator: '!=', value: 'mark' }
-  //   ]
-  // }
+  query = {
+    condition: 'or',
+    rules: [
+      // { field: 'From', operator: '<=', value: 'Bob' },
+      // { field: 'gender', operator: '>=', value: 'm' },
+      // { field: 'city', operator: '=', value: 'abc' },
+      // { field: 'degree', operator: '!=', value: 'deg' },
+      // { field: 'occupation', operator: '!=', value: 'ocu' },
+      // { field: 'designation', operator: '!=', value: 'desg' },
+    ]
+  }
+  query1 = {
+    Condition: 'And',
+    rules: [
+      // { field: 'student', operator: '!=', value: 'std' },
+      // {  condition:'', field: '', id:';', input: '', operator: '!=',type:'0', value: ''  },
+      // { field: 'Marks', operator: '!=', value: 'mark' }
+    ]
+  }
+  
   onSave() {
     debugger
     const formData = this.rulesForm.value;
@@ -149,7 +150,7 @@ export class AddRulesComponent implements OnInit {
     // };
     this.commonService.AddRules(queryData).subscribe(
       response => {
-        debugger
+        // debugger
         console.log('Tags added successfully', response);
         this.router.navigate(['console/tags']);
       },
@@ -157,7 +158,6 @@ export class AddRulesComponent implements OnInit {
         console.error('Failed to add tags', error);
       }
     );
-
   }
 }
 

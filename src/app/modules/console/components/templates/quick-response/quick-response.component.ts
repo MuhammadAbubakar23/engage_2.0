@@ -10,12 +10,31 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
   styleUrls: ['./quick-response.component.scss']
 })
 export class QuickResponseComponent implements OnInit {
-
   templates!: any[];
   sortOptions: string[] = ['All', 'Ascending', 'Descending'];
   selectedSortOption: string = 'All';
   messages: any;
+  searchText: string = '';
+  applySearchFilter() {
+    // Convert the search text to lowercase for case-insensitive search
+    const searchTextLower = this.searchText.toLowerCase();
 
+    // Filter the messages based on the search text
+    this.messages = this.messages.filter((message: { text: any; }) => {
+      const templateNameLower = (message.text || '').toLowerCase();
+      return templateNameLower.includes(searchTextLower)
+    });
+  }
+  refreshMessages() {
+    this.commonService.GetQuickReply().subscribe(
+      (response: any) => {
+        this.messages = response;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
   sortTemplates() {
     if (this.selectedSortOption === 'Ascending') {
       this.templates.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
@@ -23,7 +42,7 @@ export class QuickResponseComponent implements OnInit {
       this.templates.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
     }
   }
-  constructor(private headerService: HeaderService, private commonService: CommonDataService,  private router: Router) { }
+  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
 
   ngOnInit(): void {
     this.commonService.GetQuickReply()
@@ -37,7 +56,7 @@ export class QuickResponseComponent implements OnInit {
 
   updatevalue(string: any) {
     this.headerService.updateMessage(string);
-  } 
+  }
   editTemplate(template: any) {
     this.router.navigate(['/console/createresponse'], {
       state: { template }
