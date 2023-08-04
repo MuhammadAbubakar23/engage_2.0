@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { IHttpConnectionOptions } from '@microsoft/signalr';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
+import { environment } from 'src/environments/environment';
 import { AddTagService } from '../AddTagService/add-tag.service';
 import { ApplySentimentService } from '../ApplySentimentService/apply-sentiment.service';
 import { QueryStatusService } from '../queryStatusService/query-status.service';
@@ -30,6 +31,8 @@ export class SignalRService {
   public connectionId!: string;
   public broadcastedData!: any[];
 
+  SignalRCommonBaseUrl = environment.SignalRCommonBaseUrl;
+
   constructor(
     private storage:StorageService,
     private addTagService: AddTagService,
@@ -55,7 +58,7 @@ export class SignalRService {
     };
     
       this.hubconnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://tpplcom.360scrm.com/ConnectionHub', options)
+      .withUrl(this.SignalRCommonBaseUrl+'ConnectionHub', options)
       .withAutomaticReconnect()
       .configureLogging(signalR.LogLevel.Information)
       .build();
@@ -80,7 +83,7 @@ export class SignalRService {
     };
     
       this.hubconnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://tpplcom.360scrm.com/ConnectionHub', options)
+      .withUrl(this.SignalRCommonBaseUrl+'ConnectionHub', options)
       .withAutomaticReconnect()
       .configureLogging(signalR.LogLevel.Information)
       .build();
