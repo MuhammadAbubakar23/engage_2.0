@@ -470,7 +470,6 @@ export class ResponderHeaderComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
-          debugger;
           if (Object.keys(res).length > 0) {
             this.userId = res.List[0].user.userId;
             this.userName =

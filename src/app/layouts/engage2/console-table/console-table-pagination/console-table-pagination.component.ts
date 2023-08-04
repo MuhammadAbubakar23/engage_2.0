@@ -55,7 +55,6 @@ export class ConsoleTablePaginationComponent implements OnInit {
   }
   
   serachPage(newsearch:any){
-    // debugger
     this.searchPageEvent.emit(newsearch);
   }
   isLoading: boolean = false;
@@ -77,7 +76,6 @@ export class ConsoleTablePaginationComponent implements OnInit {
     this.paginatorStore.changePageSize(newPageSize);
   }
   nextPage() {
-    // debugger
     this.paginatorStore.nextPage();
   }
   firstPage() {

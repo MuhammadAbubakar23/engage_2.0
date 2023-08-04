@@ -276,7 +276,6 @@ export class ConversationComponent implements OnInit {
     this.SpinnerService.show();
     this.commondata.GetConversationList(this.filterDto).subscribe(
       (res: any) => {
-        debugger
         this.searchForm.reset();
         this.SpinnerService.hide();
         this.advanceSearch = false;

@@ -381,7 +381,6 @@ export class FacebookComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
-          debugger
           if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.ConverstationDetailDto = res;
@@ -705,7 +704,6 @@ export class FacebookComponent implements OnInit {
   }
 
   getFacebookMessages() {
-    debugger
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -732,7 +730,7 @@ export class FacebookComponent implements OnInit {
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
           this.TotalMsgQueryCount = res.TotalQueryCount;
 
-          if(!this.FacebookData && this.FacebookMessages){
+          if(!this.FacebookData || this.FacebookData == undefined || this.FacebookData.length == 0){
             this.fbCmntReply = false;
             this.fbMsgReply = true;
           }
@@ -791,7 +789,7 @@ export class FacebookComponent implements OnInit {
         this.TotalMsgQueryCount = res.TotalQueryCount;
         this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
-        if(!this.FacebookData && this.FacebookMessages){
+        if(!this.FacebookData || this.FacebookData == undefined || this.FacebookData.length == 0){
           this.fbCmntReply = false;
           this.fbMsgReply = true;
         }
@@ -826,7 +824,6 @@ export class FacebookComponent implements OnInit {
      }
      });
     } else {
-      debugger
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -844,7 +841,6 @@ export class FacebookComponent implements OnInit {
       this.commondata
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
-          debugger
           if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.FacebookMessages = res.List?.dm;
@@ -853,7 +849,7 @@ export class FacebookComponent implements OnInit {
           this.TotalMsgQueryCount = res.TotalQueryCount;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
-          if(!this.FacebookData && this.FacebookMessages){
+          if(!this.FacebookData || this.FacebookData == undefined || this.FacebookData.length == 0){
             this.fbCmntReply = false;
             this.fbMsgReply = true;
           }
