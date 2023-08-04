@@ -616,9 +616,10 @@ export class ConversationComponent implements OnInit {
       agentIds: 'string',
       platform: platform,
     };
-
+this.SpinnerService.show();
     this.commondata.AssignQuerry(this.assignQuerryDto).subscribe(
       (res:any) => {
+        this.SpinnerService.hide();
         this.reloadComponent('queryallocated');
 
         // this.headerService.updateMessage(string);
