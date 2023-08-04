@@ -43,7 +43,7 @@ export class RightHeaderComponentsComponent implements OnInit {
    updateBreak(){
     
     this.AgentDetails.onBreak = !this.AgentDetails.onBreak;
-    this.commonService.UpdateBreak(this.AgentDetails.onBreak,this.id).subscribe((res:any)=>{
+    this.commonService.UpdateBreak(this.AgentDetails.onBreak).subscribe((res:any)=>{
       if(this.AgentDetails.onBreak == true){
         this.reloadComponent('breakStarted')
       } else if (this.AgentDetails.onBreak == false){

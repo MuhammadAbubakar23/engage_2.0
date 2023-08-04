@@ -10,11 +10,11 @@ const routes: Routes = [
    redirectTo:'/all-inboxes/my_inbox',
    pathMatch:'full',
  },
-//  {
-//   path:'**',
-//   redirectTo:'/all-inboxes/my_inbox',
-//   pathMatch:'full',
-// },
+ {
+  path:'all-inboxes',
+  redirectTo:'/all-inboxes/my_inbox',
+  pathMatch:'full',
+},
   {
     path: '',
     loadChildren: () => import('./identity/identity.module').then(f => f.IdentityModule)

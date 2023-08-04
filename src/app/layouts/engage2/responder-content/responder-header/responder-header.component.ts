@@ -140,6 +140,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.updateMessagesService
       .receiveMessage()
       .subscribe((res) => {
+        if (Object.keys(res).length > 0) {
         res.forEach((msg: any) => {
           if (msg.fromId == localStorage.getItem('storeHeaderOpenedId')) {
             if (msg.contentType == 'FCP') {
@@ -156,11 +157,13 @@ export class ResponderHeaderComponent implements OnInit {
             }
           }
         });
-      });
+  }
+});
 
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
+        if (Object.keys(res).length > 0) {
         res.forEach((msg: any) => {
           if (msg.userId == localStorage.getItem('storeHeaderOpenedId')) {
             if (msg.contentType == 'FC' || msg.contentType == 'FCP') {
@@ -201,11 +204,13 @@ export class ResponderHeaderComponent implements OnInit {
             }
           }
         });
-      });
+   }
+   });
 
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
+        if (Object.keys(res).length > 0) {
         if (res.contentCount.contentType == 'FC') {
           this.totalFbUnrespondedCountByCustomer =
             res.contentCount.unrespondedCount +
@@ -264,7 +269,8 @@ export class ResponderHeaderComponent implements OnInit {
           this.LinkedInUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
         }
-      });
+   }
+   });
   }
 
   param: any;
@@ -293,6 +299,7 @@ export class ResponderHeaderComponent implements OnInit {
     }
     if (platform == 'Facebook' && this.FacebookData?.List.length > 0) {
       this.commonService.GetProfileDetails(id).subscribe((res: any) => {
+        
         this.profileId = res?.id;
 
         this.assignQuerry(id, platform);
@@ -817,6 +824,7 @@ export class ResponderHeaderComponent implements OnInit {
         text: '',
       };
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
+        if (Object.keys(res).length > 0) {
         this.userId = res.List[0].user.userId;
         this.userName = res.List[0]?.user.userName || res.List[0]?.user.userId;
         this.profilePic = res.List[0]?.user.profilePic;
@@ -932,7 +940,8 @@ export class ResponderHeaderComponent implements OnInit {
             profiles.platform
           );
         });
-      });
+    }
+  });
     } else {
       this.filterDto = {
         // fromDate: '2000-11-30T08:15:36.365Z',
@@ -1293,7 +1302,7 @@ export class ResponderHeaderComponent implements OnInit {
             if (this.platform == 'LinkedIn') {
               this.LinkedInUnrespondedCmntCountByCustomer = res.TotalCount;
             }
-          }
+          
 
           res.List[0].user.secondaryProfiles.forEach((profiles: any) => {
             this.getSecondaryProfileDetails(
@@ -1301,6 +1310,7 @@ export class ResponderHeaderComponent implements OnInit {
               profiles.platform
             );
           });
+        }
         });
     }
     this.SpinnerService.hide();
@@ -1331,6 +1341,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.commondata
       .GetChannelConversationDetail(this.filterDto)
       .subscribe((res: any) => {
+        if (Object.keys(res).length > 0) {
         // if (res != null || res != undefined) {
         //   this.userId = res.List[0].user.userId;
         //   this.userName =
@@ -1550,11 +1561,12 @@ export class ResponderHeaderComponent implements OnInit {
             this.SmsUnrespondedCmntCountByCustomer = this.SmsData.TotalCount;
           }
         }
-      });
+   }
+   });
     // this.commondata
     //   .GetChannelMessageDetail(this.filterDto)
     //   .subscribe((res: any) => {
-    //     // if (res != null || res != undefined) {
+    //     // if (Object.keys(res).length > 0) {
     //     //   this.userId = res.List?.user.userId;
     //     //   this.profileId = res.List?.user.id;
     //     //   this.userName = res.List?.user.userName || res.List?.user.userId;
@@ -1706,6 +1718,7 @@ export class ResponderHeaderComponent implements OnInit {
   ActiveAgents: any[] = [];
   getAgentsTeamList() {
     this.commondata.GetAgentsTeamList().subscribe((res: any) => {
+      if (Object.keys(res).length > 0) {
       this.AgentsTeamList = res;
       this.ActiveAgents = [];
       this.AgentsTeamList.forEach((user: any) => {
@@ -1713,6 +1726,7 @@ export class ResponderHeaderComponent implements OnInit {
           this.ActiveAgents.push(user);
         }
       });
+    }
     });
   }
 

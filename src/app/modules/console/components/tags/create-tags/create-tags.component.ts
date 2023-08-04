@@ -136,10 +136,9 @@ export class CreateTagsComponent implements OnInit {
     });
   }
   onSave() {
-    if (this.form.invalid) {
-      this.markFormGroupTouched(this.form);
-      return;
-    }
+    if(this.form.value.parentId == 0){
+      this.form.value.parentId =  this.form.value.baseId 
+     }
     const tagNames = [this.form.value];
 
 

@@ -264,20 +264,13 @@ export class FacebookComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
+          if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.ConverstationDetailDto = res;
           this.FacebookData = this.ConverstationDetailDto.List;
           this.TotalCmntQueryCount = res.TotalQueryCount;
          this.pageName = this.FacebookData[0]?.post.profile.page_Name;
-
-          if (this.FacebookData) {
-            this.fbCmntReply = true;
-            this.fbMsgReply = false;
-          } else if (this.FacebookMessages && !this.FacebookData) {
-            this.fbCmntReply = false;
-            this.fbMsgReply = true;
-          }
 
           this.commentsArray = [];
 
@@ -312,7 +305,8 @@ export class FacebookComponent implements OnInit {
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           // this.fbStats();
           // // console.log('Facebook data', this.FacebookData);
-        });
+      }
+      });
     } else if (this.slaId != null || this.slaId != undefined) {
       localStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
@@ -328,19 +322,11 @@ export class FacebookComponent implements OnInit {
         text : "",
       };
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
+        if (Object.keys(res).length > 0) {
         this.FacebookData = res.List;
         this.totalComments = res.TotalCount;
         this.TotalCmntQueryCount = res.TotalQueryCount;
         this.pageName = this.FacebookData[0].post.profile.page_Name;
-
-        if (this.FacebookData) {
-          this.fbCmntReply = true;
-          this.fbMsgReply = false;
-        } else if (this.FacebookMessages && !this.FacebookData) {
-          this.fbCmntReply = false;
-          this.fbMsgReply = true;
-        }
-
         this.commentsArray = [];
 
         this.FacebookData.forEach((item: any) => {
@@ -373,7 +359,8 @@ export class FacebookComponent implements OnInit {
 
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
         // this.fbStats();
-      });
+     }
+     });
     }
     // if ((this.id == null || this.id == undefined) && (this.slaId == null || this.slaId == undefined))
     else {
@@ -395,21 +382,13 @@ export class FacebookComponent implements OnInit {
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
           debugger
+          if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.ConverstationDetailDto = res;
           this.FacebookData = this.ConverstationDetailDto.List;
           this.totalComments = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
           this.pageName = this.FacebookData[0]?.post.profile.page_Name;
-
-          if (this.FacebookData) {
-            this.fbCmntReply = true;
-            this.fbMsgReply = false;
-          } else if (this.FacebookMessages && !this.FacebookData) {
-            this.fbCmntReply = false;
-            this.fbMsgReply = true;
-          }
-
           this.commentsArray = [];
 
           this.FacebookData.forEach((item: any) => {
@@ -443,7 +422,8 @@ export class FacebookComponent implements OnInit {
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           // this.fbStats();
           // // console.log('Facebook data', this.FacebookData);
-        });
+    }
+  });
     }
   }
 
@@ -725,6 +705,7 @@ export class FacebookComponent implements OnInit {
   }
 
   getFacebookMessages() {
+    debugger
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -744,11 +725,17 @@ export class FacebookComponent implements OnInit {
       this.commondata
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
+          if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.FacebookMessages = res.List?.dm;
         //  this.pageName = this.FacebookMessages[0]?.toName;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
           this.TotalMsgQueryCount = res.TotalQueryCount;
+
+          if(!this.FacebookData && this.FacebookMessages){
+            this.fbCmntReply = false;
+            this.fbMsgReply = true;
+          }
 
           this.messagesArray = [];
           this.groupedMessages = [];
@@ -777,7 +764,8 @@ export class FacebookComponent implements OnInit {
             );
             // // console.log('Messages ==>', this.groupedMessages);
           });
-        });
+     }
+     });
     } else if (this.slaId != null || undefined) {
       localStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
@@ -795,6 +783,7 @@ export class FacebookComponent implements OnInit {
 
       this.SpinnerService.show();
       this.commondata.GetSlaDM(this.filterDto).subscribe((res: any) => {
+        if (Object.keys(res).length > 0) {
         this.SpinnerService.hide();
         this.FacebookMessages = res.List?.dm;
         this.pageName = this.FacebookMessages[0].toName;
@@ -802,13 +791,10 @@ export class FacebookComponent implements OnInit {
         this.TotalMsgQueryCount = res.TotalQueryCount;
         this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
-        // if(this.FacebookData){
-        //   this.fbCmntReply = true;
-        //   this.fbMsgReply = false;
-        // } else {
-        //   this.fbCmntReply = false;
-        //   this.fbMsgReply = true;
-        // }
+        if(!this.FacebookData && this.FacebookMessages){
+          this.fbCmntReply = false;
+          this.fbMsgReply = true;
+        }
 
         this.messagesArray = [];
         this.groupedMessages = [];
@@ -837,8 +823,10 @@ export class FacebookComponent implements OnInit {
           );
           // // console.log('Messages ==>', this.groupedMessages);
         });
-      });
+     }
+     });
     } else {
+      debugger
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -856,6 +844,8 @@ export class FacebookComponent implements OnInit {
       this.commondata
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
+          debugger
+          if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.FacebookMessages = res.List?.dm;
           this.pageName = this.FacebookMessages[0].toName;
@@ -863,13 +853,10 @@ export class FacebookComponent implements OnInit {
           this.TotalMsgQueryCount = res.TotalQueryCount;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
-          // if(this.FacebookData){
-          //   this.fbCmntReply = true;
-          //   this.fbMsgReply = false;
-          // } else {
-          //   this.fbCmntReply = false;
-          //   this.fbMsgReply = true;
-          // }
+          if(!this.FacebookData && this.FacebookMessages){
+            this.fbCmntReply = false;
+            this.fbMsgReply = true;
+          }
 
           this.messagesArray = [];
           this.groupedMessages = [];
@@ -898,7 +885,8 @@ export class FacebookComponent implements OnInit {
             );
             // // console.log('Messages ==>', this.groupedMessages);
           });
-        });
+     }
+     });
     }
   }
 
@@ -1236,6 +1224,7 @@ export class FacebookComponent implements OnInit {
 
   getTagList() {
     this.commondata.GetTagsList().subscribe((res: any) => {
+      if (Object.keys(res).length > 0) {
       this.TagsList = res;
       this.TagsList.forEach((xyz: any) => {
         xyz.keywordList.forEach((abc: any) => {
@@ -1244,7 +1233,8 @@ export class FacebookComponent implements OnInit {
         // // console.log('keywords==>', this.Keywords);
       });
       // // console.log('TagList', this.TagsList);
-    });
+  }
+});
   }
 
   insertTagsForFeed(id: any, comId: string, type: any) {
