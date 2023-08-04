@@ -267,6 +267,7 @@ export class FacebookComponent implements OnInit {
           if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.spinner1running = false;
+          this.fbCmntReply = true;
           this.ConverstationDetailDto = res;
           this.FacebookData = this.ConverstationDetailDto.List;
           this.TotalCmntQueryCount = res.TotalQueryCount;
@@ -323,6 +324,7 @@ export class FacebookComponent implements OnInit {
       };
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         if (Object.keys(res).length > 0) {
+          this.fbCmntReply = true;
         this.FacebookData = res.List;
         this.totalComments = res.TotalCount;
         this.TotalCmntQueryCount = res.TotalQueryCount;
@@ -383,6 +385,7 @@ export class FacebookComponent implements OnInit {
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
+          this.fbCmntReply = true;
           this.ConverstationDetailDto = res;
           this.FacebookData = this.ConverstationDetailDto.List;
           this.totalComments = res.TotalCount;
