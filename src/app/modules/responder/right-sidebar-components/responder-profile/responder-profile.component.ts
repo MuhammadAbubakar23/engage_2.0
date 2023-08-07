@@ -23,18 +23,20 @@ export class ResponderProfileComponent implements OnInit {
   linkedinUniqueId: any;
   webchatUniqueId: any;
 
-  spinner1running=false
-  spinner2running=false
+  spinner1running = false;
+  spinner2running = false;
 
   userDetailDto = new UserDetailDto();
 
   userDetailForm!: FormGroup;
 
+  openedChannel:string="";
+
   constructor(
     private commonService: CommonDataService,
     public fb: FormBuilder,
-    private spinnerService : NgxSpinnerService,
-    private toggleService : ToggleService
+    private spinnerService: NgxSpinnerService,
+    private toggleService: ToggleService
   ) {
     this.userDetailForm = new FormGroup({
       fromFullName: new FormControl(''),
@@ -68,17 +70,14 @@ export class ResponderProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = localStorage.getItem('storeOpenedId');
+    this.openedChannel = localStorage.getItem('parent') || '{}';
     this.getProfileDetails();
   }
 
   getProfileDetails() {
-    debugger
-    
     this.commonService.GetProfileDetails(this.id).subscribe((res: any) => {
-      debugger
       this.profileDetails = res;
-      
-      
+
       this.spinnerService.show();
       this.spinner2running = true;
       this.userDetailForm.patchValue({
@@ -86,12 +85,11 @@ export class ResponderProfileComponent implements OnInit {
         fromName: res.fromName,
         fromProfilePic: res.fromProfilePic,
         isActive: res.isActive,
-        
       });
       this.spinnerService.hide();
       this.spinner2running = false;
 
-      if(res.customerDetail){
+      if (res.customerDetail) {
         this.userDetailForm.patchValue({
           email: res.customerDetail.email,
           phoneNumber: res.customerDetail.phoneNumber,
@@ -105,12 +103,9 @@ export class ResponderProfileComponent implements OnInit {
           education: res.customerDetail.education,
           bloodGroup: res.customerDetail.bloodGroup,
         });
-        
-        
       }
       this.profileDetails.customerSecondaryProfiles.forEach(
         (secondaryProfile: any) => {
-          
           if (secondaryProfile.platform == 'Facebook') {
             this.fbUniqueId = secondaryProfile.customerUniqueId;
             this.userDetailForm.patchValue({
@@ -168,7 +163,6 @@ export class ResponderProfileComponent implements OnInit {
         }
       );
     });
-    
   }
   updateUserInformation() {
     var secondaryProfiles = [];
@@ -261,9 +255,9 @@ export class ResponderProfileComponent implements OnInit {
 
     this.commonService.UpdateProfileDetails(this.userDetailDto).subscribe(
       (res: any) => {
-        this.reloadComponent('profileUpdated')
+        this.reloadComponent('profileUpdated');
         setTimeout(() => {
-          this.closeProfileComponent('profile')
+          this.closeProfileComponent('profile');
         }, 1000);
       },
       (error: any) => {
@@ -272,8 +266,8 @@ export class ResponderProfileComponent implements OnInit {
     );
   }
 
-  AlterMsg:any;
-  toastermessage:any;
+  AlterMsg: any;
+  toastermessage: any;
   reloadComponent(type: any) {
     if (type == 'profileUpdated') {
       this.AlterMsg = 'Profile updated Successfully!';
@@ -372,10 +366,6 @@ export class ResponderProfileComponent implements OnInit {
     { id: 18, name: 'Sahiwal' },
     { id: 19, name: 'Sargodha' },
     { id: 20, name: 'Sialkot' },
-
   ];
-  Countries = [
-    { id: 1, name: 'Pakistan' },
-
-  ];
+  Countries = [{ id: 1, name: 'Pakistan' }];
 }

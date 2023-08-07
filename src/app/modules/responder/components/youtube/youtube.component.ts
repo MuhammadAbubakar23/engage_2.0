@@ -62,6 +62,8 @@ export class YoutubeComponent implements OnInit {
   newReply:any;
   totalUnrespondedCmntCountByCustomer:number=0;
 
+  TotalCmntQueryCount: number = 0;
+
   filterDto = new FiltersDto();
   ReplyDto = new ReplyDto();
   insertSentimentForFeedDto = new InsertSentimentForFeedDto();
@@ -254,6 +256,7 @@ export class YoutubeComponent implements OnInit {
           this.YoutubeData = res.List;
           this.pageName = this.YoutubeData[0]?.post.profile.page_Name;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+          this.TotalCmntQueryCount = res.TotalQueryCount;
 
           this.commentsArray = [];
 
@@ -323,6 +326,7 @@ export class YoutubeComponent implements OnInit {
         this.YoutubeData = res.List;
           this.pageName = this.YoutubeData[0]?.post.profile.page_Name;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+          this.TotalCmntQueryCount = res.TotalQueryCount;
 
         this.commentsArray = [];
 
@@ -378,6 +382,7 @@ export class YoutubeComponent implements OnInit {
         this.YoutubeData = res.List;
           this.pageName = this.YoutubeData[0]?.post.profile.page_Name;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+          this.TotalCmntQueryCount = res.TotalQueryCount;
 
         this.commentsArray = [];
 
@@ -900,14 +905,6 @@ export class YoutubeComponent implements OnInit {
     });
     this.changeDetect.detectChanges();
   }
-  
-  onScroll() {
-    if(this.totalUnrespondedCmntCountByCustomer > 10){
-      this.pageSize = this.pageSize + 10
-      this.getYoutubeData();
-    }
-  }
-
   updateBulkQueryStatusDataListner() {
     
     this.YoutubeData.forEach((post: any) => {
@@ -955,8 +952,10 @@ export class YoutubeComponent implements OnInit {
   }
 
   onScrollComments() {
-    this.pageSize = this.pageSize + 10;
-    this.getYoutubeData();
+    if (this.TotalCmntQueryCount > this.pageSize) {
+      this.pageSize = this.pageSize + 10;
+      this.getYoutubeData();
+    }
   }
 
   closeQuickResponseSidebar(){

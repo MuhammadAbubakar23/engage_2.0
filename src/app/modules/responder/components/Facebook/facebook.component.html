@@ -29,7 +29,7 @@
                         </div>
                     </button>
                 </li>
-                <li class="nav-item" role="presentation" *ngIf="FacebookMessages || fbMsgReply == true">
+                <li class="nav-item" role="presentation" *ngIf="FacebookMessages">
                     <button (click)="facebookMessageReply()" class="nav-link h-100"
                         [class.active]="FacebookData == null" id="fb-msg-tab" data-bs-toggle="tab"
                         data-bs-target="#fb-msg" type="button" role="tab" aria-controls="fb-msg" aria-selected="false">
@@ -74,6 +74,11 @@
                                                     src={{attachment.attachmentUrl}}
                                                     style="width: -webkit-fill-available;">
                                                 <video *ngIf="attachment.contentType == 'video'" width="375px" controls>
+                                                    <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                        style="width: -webkit-fill-available;">
+                                                </video>
+                                                <video *ngIf="attachment.contentType == 'video_inline'" width="375px"
+                                                    controls>
                                                     <source src={{attachment.attachmentUrl}} type="video/mp4"
                                                         style="width: -webkit-fill-available;">
                                                 </video>
@@ -289,10 +294,10 @@
                                                                                             <i class="fal fa-times silver"></i>
                                                                                         </a> -->
                                                                                     </div>
-                                                                                    <form class="custom-searchbar">
+                                                                                    <!-- <form class="custom-searchbar">
                                                                                         <input
                                                                                             class="form-control rounded-pill shadow-sm"
-                                                                                            [(ngModel)]="searchText"
+                                                                                            
                                                                                             placeholder="Search"
                                                                                             aria-label="Search">
                                                                                         <span class="btn searchbar-btn"
@@ -300,10 +305,10 @@
                                                                                             <i
                                                                                                 class="fal fa-search silver"></i>
                                                                                         </span>
-                                                                                    </form>
+                                                                                    </form> -->
                                                                                 </li>
                                                                                 <li class="dropend">
-                                                                                    <div *ngFor="let tag of TagsList | filter: searchText"
+                                                                                    <div *ngFor="let tag of TagsList"
                                                                                         class="list-group list-group-flush dropend">
                                                                                         <a data-bs-toggle="dropdown"
                                                                                             class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
@@ -321,43 +326,57 @@
                                                                                         </a>
                                                                                         <ul
                                                                                             class="dropdown-menu shadow">
+                                                                                            <form class="custom-searchbar">
+                                                                                                <input
+                                                                                                    class="form-control rounded-pill shadow-sm"
+                                                                                                    [(ngModel)]="searchText"
+                                                                                                    placeholder="Search"
+                                                                                                    aria-label="Search">
+                                                                                                <span class="btn searchbar-btn"
+                                                                                                    type="submit">
+                                                                                                    <i
+                                                                                                        class="fal fa-search silver"></i>
+                                                                                                </span>
+                                                                                            </form>
                                                                                             <li class="list-body small-list"
                                                                                                 data-scrollbar="true"
                                                                                                 tabindex="-1"
-                                                                                                style="overflow: auto; outline: none;">
-                                                                                                <div
-                                                                                                    class="list-group list-group-flush">
-                                                                                                    <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                        (click)="insertTagsForFeed(keyword.id, fbcmnts.id, 'FC')"
-                                                                                                        [ngClass]="activeTag==true?'active':''"
-                                                                                                        *ngFor="let keyword of tag.keywordList">
-                                                                                                        <div
-                                                                                                            class="list-down-icon">
-                                                                                                            <span
-                                                                                                                class="btn iconButton iconHover medium">
-                                                                                                                <i
-                                                                                                                    class="fal fa-tag coal"></i>
-                                                                                                            </span>
-                                                                                                        </div>
-                                                                                                        <div
-                                                                                                            class="w-100 list-txt">
+                                                                                                style="overflow-y: auto; outline: none;">
+                                                                                                <div class="scroll-content"
+                                                                                                    style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
+                                                                                                    <div
+                                                                                                        class="list-group list-group-flush">
+                                                                                                        <a class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                                            (click)="insertTagsForFeed(keyword.id, fbcmnts.id, 'FC')"
+                                                                                                            [ngClass]="activeTag==true?'active':''"
+                                                                                                            *ngFor="let keyword of tag.keywordList | filter: searchText">
                                                                                                             <div
-                                                                                                                class="d-flex w-100 justify-content-between">
-                                                                                                                <h6
-                                                                                                                    class="mb-1 darkblue">
-                                                                                                                    {{keyword.name}}
-                                                                                                                </h6>
+                                                                                                                class="list-down-icon">
+                                                                                                                <span
+                                                                                                                    class="btn iconButton iconHover medium">
+                                                                                                                    <i
+                                                                                                                        class="fal fa-tag coal"></i>
+                                                                                                                </span>
                                                                                                             </div>
-                                                                                                        </div>
-                                                                                                        <small
-                                                                                                            *ngIf="keyword.id == tag.id">
-                                                                                                            <i [ngClass]="checkTag==true?'fa-check-circle':''"
-                                                                                                                class="fal sky"></i>
-                                                                                                        </small>
-                                                                                                    </a>
+                                                                                                            <div
+                                                                                                                class="w-100 list-txt">
+                                                                                                                <div
+                                                                                                                    class="d-flex w-100 justify-content-between">
+                                                                                                                    <h6
+                                                                                                                        class="mb-1 darkblue">
+                                                                                                                        {{keyword.name}}
+                                                                                                                    </h6>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <small
+                                                                                                                *ngIf="keyword.id == tag.id">
+                                                                                                                <i [ngClass]="checkTag==true?'fa-check-circle':''"
+                                                                                                                    class="fal sky"></i>
+                                                                                                            </small>
+                                                                                                        </a>
+                                                                                                    </div>
                                                                                                 </div>
                                                                                             </li>
-
                                                                                         </ul>
                                                                                     </div>
                                                                                 </li>
@@ -626,7 +645,7 @@
                                             <div class="card w-d-inline messageUpper">
                                                 <div class="card-body shadow-sm" style="min-width: 400px;"
                                                     [ngClass]="fbmsgs.queryStatus == 'Unresponded'?'unread-msg':''">
-                                                    
+
                                                     <div class="d-flex msg-user-info">
                                                         <div class="d-flex align-items-center">
                                                             <h6 class="card-title navy m-0">
@@ -807,18 +826,6 @@
 
                                                                                     </ul>
                                                                                 </div>
-                                                                                <div class="scrollbar-track scrollbar-track-x"
-                                                                                    style="display: none;">
-                                                                                    <div
-                                                                                        class="scrollbar-thumb scrollbar-thumb-x">
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="scrollbar-track scrollbar-track-y"
-                                                                                    style="display: none;">
-                                                                                    <div
-                                                                                        class="scrollbar-thumb scrollbar-thumb-y">
-                                                                                    </div>
-                                                                                </div>
                                                                             </li>
                                                                         </ul>
                                                                     </ul>
@@ -970,7 +977,8 @@
                                                                     </span>
                                                                 </small>
                                                             </div>
-                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM dd, yyyy, h:mm a'}}</small>
+                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM
+                                                                dd, yyyy, h:mm a'}}</small>
                                                         </div>
                                                         <div class="msg-snippet show-text">
                                                             <p class="mb-1 coal" data-maxlength="240">
@@ -1064,9 +1072,8 @@
                         <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></a>
                 </div>
                 <div class="form-floating textarea-field">
-                    <textarea formControlName="text" [(ngModel)]="text"
-                        class="form-control auto" rows="1" id="text" placeholder="Write a comment here"
-                        style="height: 37px" #textarea></textarea>
+                    <textarea formControlName="text" [(ngModel)]="text" class="form-control auto" rows="1" id="text"
+                        placeholder="Write a comment here" style="height: 37px" #textarea></textarea>
 
                 </div>
                 <div class="icons-list align-items-md-center d-flex ps-2 ">
@@ -1154,8 +1161,7 @@
                 </div>
                 <div class="form-floating textarea-field">
                     <textarea formControlName="text" class="form-control auto" rows="1" id="text"
-                        placeholder="Write a message here" [(ngModel)]="text"
-                        style="height: 37px" #textarea></textarea>
+                        placeholder="Write a message here" [(ngModel)]="text" style="height: 37px" #textarea></textarea>
 
                 </div>
                 <div class="icons-list align-items-md-center d-flex ps-2">

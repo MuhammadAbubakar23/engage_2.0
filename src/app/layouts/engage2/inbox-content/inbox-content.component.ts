@@ -51,30 +51,28 @@ export class InboxContentComponent implements OnInit {
     private router : Router) { }
 
   ngOnInit(): void {
-
-
     const currentUrl = this.router.url;
 
     if(currentUrl.includes('responder')){
       this.loadComponent('responder')
-
+    } else if(!currentUrl.includes('responder')){
+      this.loadComponent('all-inboxes')
     }
   }
 
   abc:any
   ngAfterViewInit(): void {
-    
     this.loadComponent("all-inboxes")
 
     const currentUrl = this.router.url;
 
     if(currentUrl.includes('responder')){
-      this.loadComponent('responder')
-
+      this.loadComponent('responder');
+    } else if(!currentUrl.includes('responder')){
+      this.loadComponent('all-inboxes')
     }
 
     this.Subscription = this.loadModuleService.getModule().subscribe((name:any)=>{
-      
       this.loadComponent(name)
     });
   }

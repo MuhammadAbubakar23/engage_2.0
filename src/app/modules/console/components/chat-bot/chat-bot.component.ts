@@ -136,7 +136,6 @@ deleteIntentQA(obj: any): void {
   }
 
   loadComponent(leftSideName: string, rightSideName: string) {
-    debugger
     let componentFactory: any = null;
 
     switch (leftSideName || rightSideName) {

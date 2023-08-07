@@ -174,7 +174,6 @@ export class ReportBuilderComponent implements OnInit {
   }
 
   graphFormatData(data: any) {
-    debugger
     const barChartData: ChartConfiguration<'bar'>['data'] = {
       labels: [],
       datasets: []

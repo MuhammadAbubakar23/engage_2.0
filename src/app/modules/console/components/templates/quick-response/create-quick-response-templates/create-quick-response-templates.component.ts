@@ -13,7 +13,6 @@ export class CreateQuickResponseTemplatesComponent implements OnInit {
   editorConfig = {};
   constructor(private formBuilder: FormBuilder, private commonService: CommonDataService, private router: Router) { }
   ngOnInit(): void {
-    // debugger
     this.messageForm = this.formBuilder.group({
       text: ['', Validators.required]
     });

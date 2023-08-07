@@ -135,7 +135,6 @@ export class AddRulesComponent implements OnInit {
   }
   
   onSave() {
-    debugger
     const formData = this.rulesForm.value;
     const queryData = {
       name: this.rulesForm.value.name,
@@ -150,7 +149,6 @@ export class AddRulesComponent implements OnInit {
     // };
     this.commonService.AddRules(queryData).subscribe(
       response => {
-        // debugger
         console.log('Tags added successfully', response);
         this.router.navigate(['console/tags']);
       },

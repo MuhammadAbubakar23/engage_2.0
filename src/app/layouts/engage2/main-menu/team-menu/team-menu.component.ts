@@ -20,6 +20,8 @@ export class TeamMenuComponent implements OnInit {
   permission$ :any;
   menu$: any;
   loading$: any;
+
+  menuArray:any[]=[];
   constructor(private MenuStore: Store<MenuState>, private PermissionStore: Store<PermissionState>, private _route: Router) {
     // this.menu$ = this.MenuStore.select(getEmargingEqual('team_main_left_menu'));
     // this.loading$ = this.MenuStore.select(getMenusLoading);
@@ -33,6 +35,18 @@ export class TeamMenuComponent implements OnInit {
     this.MenuStore
       .select(getEmargingEqual('team_main_left_menu'))
       .subscribe((item:MenuModel[]) => {
+
+        // removing responder menu from list for time being
+        this.menuArray = [];
+        item.forEach((singleMenu:any)=>{
+          if(singleMenu.name != "Responder"){
+            if(!this.menuArray.includes(singleMenu)){
+              this.menuArray.push(singleMenu);
+            }            
+          }
+        });
+        item = this.menuArray;
+        // til here
         this.menus$ = [...item];
       });
     

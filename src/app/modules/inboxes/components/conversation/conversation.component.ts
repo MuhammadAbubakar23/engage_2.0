@@ -71,6 +71,8 @@ export class ConversationComponent implements OnInit {
 
   searchCustomerForm !: FormGroup;
 
+  groupByDateList:any[]=[];
+
   constructor(
     private fetchId: FetchIdService,
     private SpinnerService: NgxSpinnerService,
@@ -109,10 +111,13 @@ export class ConversationComponent implements OnInit {
     this.searchCustomerForm = new FormGroup({
       userName: new FormControl('')
     })
-    // this.currentDate = this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm:ss.SSSSSS')
   }
 
+  currentUrl:string='';
+
   ngOnInit(): void {    
+    this.currentUrl = this.router.url;
+
     this.TodayDate = new Date();
     this.getConversationList();
     this.getPlatform();
@@ -124,7 +129,6 @@ export class ConversationComponent implements OnInit {
     this.subscription = this.updateListService
       .receiveList()
       .subscribe((res) => {
-        // this.updatedList = res;
         this.updateListDataListener(res);
       });
 
@@ -135,9 +139,9 @@ export class ConversationComponent implements OnInit {
       });
 
     setInterval(() => {
-      if (this.ConversationList?.length > 0) {
+      if (this.groupByDateList?.length > 0) {
         this.TodayDate = new Date();
-        this.ConversationList?.forEach((group: any) => {
+        this.groupByDateList?.forEach((group: any) => {
           group.items.forEach((item:any) => {
             const twentyMinutesInMs = 20 * 60 * 1000; // 20 minute in milliseconds
           const fortyMinutesInMs = 40 * 60 * 1000; // 40 minute in milliseconds
@@ -291,7 +295,7 @@ export class ConversationComponent implements OnInit {
           {}
         );
 
-        this.ConversationList = Object.keys(groupedItems).map((createdDate) => {
+        this.groupByDateList = Object.keys(groupedItems).map((createdDate) => {
           return {
             createdDate,
             items: groupedItems[createdDate],
@@ -329,7 +333,7 @@ export class ConversationComponent implements OnInit {
   searchUser:string="";
 
   getCustomers(){
-    debugger
+
     this.filterDto = {
       fromDate: null,
       toDate: null,
@@ -406,136 +410,167 @@ export class ConversationComponent implements OnInit {
   updateListDataListener(res: any) {
     res.forEach((newMsg: any) => {
       if (this.platform == newMsg.platform && this.isAttachment != true) {
-        this.ConversationList.forEach((group:any)=>{
-          const index = group.items?.findIndex(
+          const index = this.ConversationList?.findIndex(
             (obj: any) => obj.user === newMsg.user
           );
           if (index >= 0) {
-            group.items.forEach((main: any) => {
+            this.ConversationList.forEach((main: any) => {
               if (newMsg.user == main.user) {
                 this.listingDto = newMsg;
                 this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-                group.items[index] = this.listingDto;
+                this.ConversationList[index] = this.listingDto;
               }
             });
-          } else if (group.items) {
+          } else if (this.ConversationList) {
             this.listingDto = newMsg;
-            group.items.unshift(this.listingDto);
-            if (group.items.length > this.pageSize) {
-              group.items.pop();
+            this.ConversationList.unshift(this.listingDto);
+            if (this.ConversationList.length > this.pageSize) {
+              this.ConversationList.pop();
               this.TotalUnresponded = this.TotalUnresponded + 1;
-            } else if (group.items.length <= this.pageSize) {
+            } else if (this.ConversationList.length <= this.pageSize) {
               this.TotalUnresponded = this.TotalUnresponded + 1;
               this.from = this.from + 1;
             }
           } else {
-            group.items = res;
+            this.ConversationList = res;
             this.to = 1;
             this.TotalUnresponded = 1;
             this.from = 1;
           }
-        });
         
       } else if (newMsg.isAttachment == true && this.isAttachment == true) {
-        this.ConversationList.forEach((group:any)=>{
           if (this.platform == newMsg.platform) {
-            const index = group.items?.findIndex(
+            const index = this.ConversationList?.findIndex(
               (obj: any) => obj.user === newMsg.user
             );
             if (index >= 0) {
-              group.items.forEach((main: any) => {
+              this.ConversationList.forEach((main: any) => {
                 if (newMsg.user == main.user) {
                   this.listingDto = newMsg;
                   this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-                  group.items[index] = this.listingDto;
+                  this.ConversationList[index] = this.listingDto;
                 }
               });
-            } else if (group.items) {
+            } else if (this.ConversationList) {
               this.listingDto = newMsg;
-              group.items.unshift(this.listingDto);
-              if (group.items.length > this.pageSize) {
-                group.items.pop();
+              this.ConversationList.unshift(this.listingDto);
+              if (this.ConversationList.length > this.pageSize) {
+                this.ConversationList.pop();
                 this.TotalUnresponded = this.TotalUnresponded + 1;
-              } else if (group.items.length <= this.pageSize) {
+              } else if (this.ConversationList.length <= this.pageSize) {
                 this.TotalUnresponded = this.TotalUnresponded + 1;
                 this.from = this.from + 1;
               }
             } else {
-              group.items = res;
+              this.ConversationList = res;
               this.to = 1;
               this.TotalUnresponded = 1;
               this.from = 1;
             }
           } else if (this.platform == '') {
-            const index = group.items?.findIndex(
+            const index = this.ConversationList?.findIndex(
               (obj: any) => obj.user === newMsg.user
             );
             if (index >= 0) {
-              group.items.forEach((main: any) => {
+              this.ConversationList.forEach((main: any) => {
                 if (newMsg.user == main.user) {
                   this.listingDto = newMsg;
                   this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-                  group.items[index] = this.listingDto;
+                  this.ConversationList[index] = this.listingDto;
                 }
               });
-            } else if (group.items) {
+            } else if (this.ConversationList) {
               this.listingDto = newMsg;
-              group.items.unshift(this.listingDto);
-              if (group.items.length > this.pageSize) {
-                group.items.pop();
+              this.ConversationList.unshift(this.listingDto);
+              if (this.ConversationList.length > this.pageSize) {
+                this.ConversationList.pop();
                 this.TotalUnresponded = this.TotalUnresponded + 1;
-              } else if (group.items.length <= this.pageSize) {
+              } else if (this.ConversationList.length <= this.pageSize) {
                 this.TotalUnresponded = this.TotalUnresponded + 1;
                 this.from = this.from + 1;
               }
             } else {
-              group.items = res;
+              this.ConversationList = res;
               this.to = 1;
               this.TotalUnresponded = 1;
               this.from = 1;
             }
           }
-        })
         
       } 
       
       else if (this.platform == '' && this.isAttachment != true) {
-        this.ConversationList.forEach((group:any)=>{
-          const index = group.items?.findIndex(
+          const index = this.ConversationList?.findIndex(
             (obj: any) => obj.user === newMsg.user
           );
           if (index >= 0) {
-            group.items.forEach((main: any) => {
+            this.ConversationList.forEach((main: any) => {
               if (newMsg.user == main.user) {
                 this.listingDto = newMsg;
                 this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-                group.items[index] = this.listingDto;
+                this.ConversationList[index] = this.listingDto;
               }
             });
-          } else if (group.items) {
+          } else if (this.ConversationList) {
             this.listingDto = newMsg;
-            group.items.unshift(this.listingDto);
-            if (group.items.length > this.pageSize) {
-              group.items.pop();
+            this.ConversationList.unshift(this.listingDto);
+            if (this.ConversationList.length > this.pageSize) {
+              this.ConversationList.pop();
               this.TotalUnresponded = this.TotalUnresponded + 1;
-            } else if (group.items.length <= this.pageSize) {
+            } else if (this.ConversationList.length <= this.pageSize) {
               this.TotalUnresponded = this.TotalUnresponded + 1;
               this.from = this.from + 1;
             }
           } else {
-            group.items = res;
+            this.ConversationList = res;
             this.to = 1;
             this.TotalUnresponded = 1;
             this.from = 1;
           }
-        });
+      }
+
+      let groupedItems = this.ConversationList.reduce(
+        (acc: any, item: any) => {
+          const date = item.createdDate.split('T')[0];
+          if (!acc[date]) {
+            acc[date] = [];
+          }
+          acc[date].push(item);
+          return acc;
+        },
+        {}
+      );
+
+      this.groupByDateList = Object.keys(groupedItems).map((createdDate) => {
+        return {
+          createdDate,
+          items: groupedItems[createdDate],
+        };
+      });
+
+      if (this.TotalUnresponded < this.pageSize) {
+        this.from = this.TotalUnresponded;
+      } else if (
+        this.TotalUnresponded > this.pageSize &&
+        this.from < this.pageSize
+      ) {
+        this.from = this.pageSize;
+      }
+      if (this.ConversationList.length == 0) {
+        this.to = 0;
+      } else if (
+        this.ConversationList.length != 0 &&
+        this.from != 0 &&
+        this.pageNumber == 1
+      ) {
+        this.to = 1;
       }
     });
     this.changeDetect.detectChanges();
   }
 
   removeAssignedQueryListener(res: any) {
-    this.ConversationList.forEach((group)=>{
+    this.groupByDateList.forEach((group)=>{
       const index = group.items.findIndex(
         (x:any) => x.profileId == res.profileId
       );
@@ -580,9 +615,10 @@ export class ConversationComponent implements OnInit {
       agentIds: 'string',
       platform: platform,
     };
-
+this.SpinnerService.show();
     this.commondata.AssignQuerry(this.assignQuerryDto).subscribe(
       (res:any) => {
+        this.SpinnerService.hide();
         this.reloadComponent('queryallocated');
 
         // this.headerService.updateMessage(string);
@@ -593,9 +629,14 @@ export class ConversationComponent implements OnInit {
         this.fetchposttype.sendPostType(postType);
         localStorage.setItem('profileId', profileId);
         localStorage.setItem('assignedProfile', profileId);
-        this.router.navigateByUrl('/all-inboxes/responder/' + platform);
+        this.router.navigateByUrl(this.currentUrl+'/responder/' + platform);
 
         this.lodeModuleService.updateModule('responder');
+        if(this.from < this.TotalUnresponded){
+          this.pageNumber = 1;
+          this.pageSize = 20;
+          this.getConversationList();
+        }
       },
       (error) => {
         this.reloadComponent('queryallocatedtoanotheruser');
@@ -672,7 +713,7 @@ export class ConversationComponent implements OnInit {
   }
 
   checkUncheckAll(evt: any) {
-    this.ConversationList.forEach((group)=>{
+    this.groupByDateList.forEach((group)=>{
       group.items.forEach(
         (c: any) => (c.isChecked = evt.target.checked)
       );
@@ -715,7 +756,7 @@ export class ConversationComponent implements OnInit {
       var abc = this.Ids.find((x) => x.Id == id);
       this.Ids.splice(abc, 1);
     }
-    this.ConversationList.forEach((group)=>{
+    this.groupByDateList.forEach((group)=>{
       group.items[index].isChecked = evt.target.checked;
       this.masterSelected = group.items.every(
         (l: any) => l.isChecked == true
