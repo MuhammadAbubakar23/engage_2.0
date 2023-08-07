@@ -20,7 +20,7 @@ export const environment = {
     types: { local: 'LS' },
   },
   title: 'abc',
-  IdentityBaseUrl:  'https://identity-engage.enteract.app/api', // 'https://tpplidp.360scrm.com/api', // 'http://localhost:5036/api',
+  IdentityBaseUrl:  'https://identity-engage.enteract.app/api',
   InstaBaseUrl: 'https://insta.360scrm.com/api/', // other then post and data
   FbBaseUrl: 'https://face.360scrm.com/api/',
   YoutubeBaseUrl: 'https://tube.360scrm.com/api/',
@@ -29,7 +29,8 @@ export const environment = {
   SmsBaseUrl: 'https://text.360scrm.com/api/',
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
-  CommonBaseUrl:  'https://common-engage.enteract.app/api/', // 'https://tpplcom.360scrm.com/api/', 
+  CommonBaseUrl:  'https://common-engage.enteract.app/api/',
+  SignalRCommonBaseUrl:  'https://common-engage.enteract.app/',
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
