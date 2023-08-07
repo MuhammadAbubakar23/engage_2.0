@@ -117,6 +117,8 @@ export class AddRulesComponent implements OnInit {
   query = {
     condition: 'or',
     rules: [
+      {  condition:'AND', field: 'from', id:'1', input: '', operator: '!=',type:'0', value: 'lahore'  },
+
       // { field: 'From', operator: '<=', value: 'Bob' },
       // { field: 'gender', operator: '>=', value: 'm' },
       // { field: 'city', operator: '=', value: 'abc' },
@@ -129,7 +131,7 @@ export class AddRulesComponent implements OnInit {
     Condition: 'And',
     rules: [
       // { field: 'student', operator: '!=', value: 'std' },
-      // {  condition:'', field: '', id:';', input: '', operator: '!=',type:'0', value: ''  },
+      {  condition:'', field: '', id:';', input: '', operator: '!=',type:'0', value: ''  },
       // { field: 'Marks', operator: '!=', value: 'mark' }
     ]
   }

@@ -27,12 +27,15 @@ export class MessagesComponent implements OnInit {
       
       return templateNameLower.includes(searchTextLower) || subjectLower.includes(searchTextLower);
     });
+    this.sortMessages();
+
   }
   
   refreshMessages() {
     this.commonService.GetAllMessages('Message').subscribe(
       (response: any) => {
         this.messages = response;
+        this.sortMessages();
       },
       (error: any) => {
         console.error(error);
@@ -40,11 +43,18 @@ export class MessagesComponent implements OnInit {
     );
   }
     
-  sortTemplates() {
-    if (this.selectedSortOption === 'Ascending') {
-      this.messages.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-    } else if (this.selectedSortOption === 'Descending') {
-      this.messages.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
+  
+  sortMessages() {
+    switch (this.selectedSortOption) {
+      case 'Ascending':
+        this.messages.sort((a, b) => a.templateName.localeCompare(b.templateName));
+        break;
+      case 'Descending':
+        this.messages.sort((a, b) => b.templateName.localeCompare(a.templateName));
+        break;
+      default:
+        // For 'All', no sorting is required
+        break;
     }
   }
   constructor(private headerService: HeaderService ,private commonService: CommonDataService , private router: Router ) { }

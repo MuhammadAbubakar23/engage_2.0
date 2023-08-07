@@ -15,6 +15,7 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 export class SlaPoliciesComponent implements OnInit {
   messages: any[] = [];
   searchText: string = '';
+  selectedSortOption: any;
   applySearchFilter() {
     // Convert the search text to lowercase for case-insensitive search
     const searchTextLower = this.searchText.toLowerCase();
@@ -48,7 +49,25 @@ export class SlaPoliciesComponent implements OnInit {
       console.error(error);
     });
   }
-
+  setStatus(status: string) {
+    this.selectedSortOption = status;
+    this.sortPolicies();
+  }
+  
+  sortPolicies() {
+    switch (this.selectedSortOption) {
+      case 'Ascending':
+        this.messages.sort((a, b) => a.policyName.localeCompare(b.policyName));
+        break;
+      case 'Descending':
+        this.messages.sort((a, b) => b.policyName.localeCompare(a.policyName));
+        break;
+      default:
+        // For 'All', no sorting is required
+        break;
+    }
+  }
+  
   updatevalue(string: any) {
     this.headerService.updateMessage(string);
   }

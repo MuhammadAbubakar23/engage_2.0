@@ -6,21 +6,24 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="d-flex align-items-lg-center">
-                            <p class="coal m-0">Status:</p>
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle coal" type="button" id="dropdownMenuButton1"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    All
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li>
-                                        <a class="dropdown-item">Ascending</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item">Descending</a>
-                                    </li>
-                                </ul>
-                            </div>
+                          <p class="coal m-0">Status:</p>
+                          <div class="dropdown">
+                            <button class="btn dropdown-toggle coal" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                              aria-expanded="false">
+                              {{ selectedSortOption }}
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                              <li>
+                                <a class="dropdown-item" (click)="setStatus('All')">All</a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" (click)="setStatus('Ascending')">Ascending</a>
+                              </li>
+                              <li>
+                                <a class="dropdown-item" (click)="setStatus('Descending')">Descending</a>
+                              </li>
+                            </ul>
+                          </div>
                         </div>
                     </div>
                     <div class="col-lg-8 d-flex align-items-center justify-content-end">

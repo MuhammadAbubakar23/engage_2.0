@@ -8,7 +8,7 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 @Component({
   selector: 'app-business-hours',
   standalone: true,
-  imports: [CommonModule, RouterModule , FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './business-hours.component.html',
   styleUrls: ['./business-hours.component.scss']
 })
@@ -19,17 +19,12 @@ export class BusinessHoursComponent implements OnInit {
   messages: any;
   searchText: string = '';
   applySearchFilter() {
-    // Convert the search text to lowercase for case-insensitive search
     const searchTextLower = this.searchText.toLowerCase();
-    
-    // Filter the messages based on the search text
     this.messages = this.messages.filter((message: { templateName: any; }) => {
       const templateNameLower = (message.templateName || '').toLowerCase();
- 
-      return templateNameLower.includes(searchTextLower) || templateNameLower.includes(searchTextLower) 
+      return templateNameLower.includes(searchTextLower) || templateNameLower.includes(searchTextLower)
     });
   }
-  
   refreshMessages() {
     this.commonService.GetBusinessHours().subscribe(
       (response: any) => {
@@ -40,14 +35,24 @@ export class BusinessHoursComponent implements OnInit {
       }
     );
   }
-  sortTemplates() {
-    if (this.selectedSortOption === 'Ascending') {
-      this.templates.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-    } else if (this.selectedSortOption === 'Descending') {
-      this.templates.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
+  sortPolicies() {
+    switch (this.selectedSortOption) {
+      case 'Ascending':
+        this.messages.sort((a: { templateName: string; }, b: { templateName: any; }) => a.templateName.localeCompare(b.templateName));
+        break;
+      case 'Descending':
+        this.messages.sort((a: { templateName: any; }, b: { templateName: string; }) => b.templateName.localeCompare(a.templateName));
+        break;
+      default:
+        break;
     }
   }
-  constructor(private headerService: HeaderService, private commonService: CommonDataService,  private router: Router) { }
+  setStatus(status: string): void {
+    this.selectedSortOption = status;
+    this.sortPolicies();
+  }
+
+  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
 
   ngOnInit(): void {
     this.commonService.GetBusinessHours()
@@ -61,13 +66,13 @@ export class BusinessHoursComponent implements OnInit {
 
   updatevalue(string: any) {
     this.headerService.updateMessage(string);
-  } 
+  }
   editTemplate(template: any) {
     this.router.navigate(['/console/business-hours/create'], {
       state: { template }
     });
   }
-  
+
   deleteTemplate(template: any) {
     // Confirm deletion with user if needed
 

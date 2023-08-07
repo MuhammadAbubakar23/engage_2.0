@@ -18,30 +18,43 @@ export class QuickResponseComponent implements OnInit {
   applySearchFilter() {
     // Convert the search text to lowercase for case-insensitive search
     const searchTextLower = this.searchText.toLowerCase();
-
+  
     // Filter the messages based on the search text
     this.messages = this.messages.filter((message: { text: any; }) => {
       const templateNameLower = (message.text || '').toLowerCase();
-      return templateNameLower.includes(searchTextLower)
+      return templateNameLower.includes(searchTextLower);
     });
+  
+    // Apply sorting after filtering
+    this.sortMessages();
   }
+  
   refreshMessages() {
     this.commonService.GetQuickReply().subscribe(
       (response: any) => {
         this.messages = response;
+        // Apply sorting after refreshing messages
+        this.sortMessages();
       },
       (error: any) => {
         console.error(error);
       }
     );
   }
-  sortTemplates() {
-    if (this.selectedSortOption === 'Ascending') {
-      this.templates.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-    } else if (this.selectedSortOption === 'Descending') {
-      this.templates.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
+  
+  sortMessages() {
+    switch (this.selectedSortOption) {
+      case 'Ascending':
+        this.messages.sort((a: { text: string; }, b: { text: any; }) => a.text.localeCompare(b.text));
+        break;
+      case 'Descending':
+        this.messages.sort((a: { text: any; }, b: { text: string; }) => b.text.localeCompare(a.text));
+        break;
+      default:
+        break;
     }
   }
+  
   constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
 
   ngOnInit(): void {

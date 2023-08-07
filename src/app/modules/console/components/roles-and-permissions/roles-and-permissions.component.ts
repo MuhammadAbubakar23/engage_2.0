@@ -18,22 +18,46 @@ export class RolesAndPermissionsComponent implements OnInit {
   Roles: Array<any> = [];
   RolesCount: number = 0;
   searchText: string = '';
+  selectedSortOption: string = 'All';
+
   applySearchFilter() {
     const searchTextLower = this.searchText.toLowerCase();
     this.Roles = this._Activatedroute.snapshot.data["roles"].filter((role: { name: any }) => {
       const roleNameLower = (role.name || '').toLowerCase();
-      return roleNameLower.includes(searchTextLower)
+      return roleNameLower.includes(searchTextLower);
     });
+  
+    this.sortRoles(); // Reapply sorting after filtering the roles
   }
+  
   messages: any[] = [];
   //Teams: Array<any> = [];
   constructor(private headerService: HeaderService, private _Activatedroute: ActivatedRoute, private router: Router, private commonService: CommonDataService) { }
   ngOnInit(): void {
     this.Roles = this._Activatedroute.snapshot.data["roles"];
     this.RolesCount = this.Roles.length;
-    this.applySearchFilter(); // Apply search filter on component initialization
+    this.selectedSortOption = 'All'; // Set the default sort option
+    this.applySearchFilter(); // Apply search filter and sort roles on component initialization
   }
-
+  setStatus(status: string): void {
+    this.selectedSortOption = status;
+    this.sortRoles(); // Reapply sorting when changing the selected status
+  }
+    
+  sortRoles() {
+    switch (this.selectedSortOption) {
+      case 'Ascending':
+        this.Roles.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 'Descending':
+        this.Roles.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      default:
+        // For 'All', no sorting is required
+        break;
+    }
+  }
+  
   updatevalue(string: any) {
     this.headerService.updateMessage(string);
   }
