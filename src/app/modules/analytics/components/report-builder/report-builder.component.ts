@@ -396,7 +396,7 @@ export class ReportBuilderComponent implements OnInit {
       const datasets3: ChartDataset<"polarArea", number[]>[] = this.barChartData.labels!.map((label: any, index: number) => {
         const data: number[] = this.barChartData.datasets.map((dataset: any) => {
           const value = dataset.data[index] as number | [number, number] | null;
-          return typeof value === 'number' || Array.isArray(value) ? (value as number) : 0; // Replace null with 0 or any other appropriate default value
+          return typeof value === 'number' || Array.isArray(value) ? (value as number) : 0;
         });
         return { data, label: label };
       });
@@ -417,7 +417,7 @@ export class ReportBuilderComponent implements OnInit {
       const datasets4: ChartDataset<"radar", number[]>[] = this.barChartData.labels!.map((label: any, index: number) => {
         const data: number[] = this.barChartData.datasets.map((dataset: any) => {
           const value = dataset.data[index] as number | [number, number] | null;
-          return typeof value === 'number' || Array.isArray(value) ? (value as number) : 0; // Replace null with 0 or any other appropriate default value
+          return typeof value === 'number' || Array.isArray(value) ? (value as number) : 0;
         });
         return { data, label: label };
       });
