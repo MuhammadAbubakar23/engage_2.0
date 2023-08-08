@@ -4,6 +4,7 @@ import { ReportService } from '../../services/report.service';
 import { ChartConfiguration, ChartData, ChartDataset, ChartOptions, ChartType } from 'chart.js';
 import { ExcelService } from '../../services/excel.service';
 import { BaseChartDirective } from 'ng2-charts';
+
 @Component({
   selector: 'app-report-builder',
   templateUrl: './report-builder.component.html',
@@ -34,11 +35,11 @@ export class ReportBuilderComponent implements OnInit {
   labels: any[] = [];
   values: any[] = [];
   collective: any[] = [];
-  // bar: any;
+
   isGraph: boolean = false;
   Labels = []
   graphLabels: any = []
-  // graphTypes: any[] = ["Bar Chart", "Pie Chart", "Line Chart", "Polar Area Chart", "Radar Chart"];
+
   selectedGraph = "";
   selectedLabels: any[] = [];
   selectedColumns:any[]=[];
@@ -94,6 +95,7 @@ export class ReportBuilderComponent implements OnInit {
     labels: [],
     datasets: []
   };
+  finalGraphresponse=[];
   finalGrapData: any = {};
   finalTableData: any[]=[];
   exportAsXLSX(): void {
@@ -189,6 +191,7 @@ export class ReportBuilderComponent implements OnInit {
     });
 
     this.barChartData = barChartData;
+
 
     return  this.barChartData
 
@@ -322,6 +325,7 @@ export class ReportBuilderComponent implements OnInit {
     const connection = localStorage.getItem('connection_name');
     this.reportservice.visualizeDataApi({ 'db': db, 'query': this.query, 'connection_name': connection })
       .subscribe((res: any) => {
+        this.finalGraphresponse = res;
         this.sharedataservice.updateVisual(res);
         this.selectGraph();
       });
@@ -470,16 +474,21 @@ export class ReportBuilderComponent implements OnInit {
 
 
   selectLabel() {
-
     const filteredObject = this.filterObjectByColumns(this.finalGrapData, this.selectedLabels);
     this.barChartData=this.graphFormatData(filteredObject);
     this.selectGraph();
   }
   selectColumn(){
-
     const filteredArray = this.filterTableByColumns(this.finalTableData, this.selectedColumns);
     this.tableData=filteredArray;
+  }
 
+  refreshData(){
+  this.selectedColumns=[];
+  this.selectedLabels=[];
+  this.tableData=this.finalTableData;
+  this.sharedataservice.updateVisual(this.finalGraphresponse);
+  this.selectGraph();
   }
 }
 
