@@ -67,6 +67,7 @@ export class InstagramComponent implements OnInit {
   TotalCmntQueryCount: number = 0;
   TotalMsgQueryCount: number = 0;
 
+
   instagramCommentReplyDto = new InstagramCommentReplyDto();
 
   show = false;
@@ -347,6 +348,10 @@ export class InstagramComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -404,6 +409,10 @@ export class InstagramComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -458,6 +467,10 @@ export class InstagramComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -1203,6 +1216,10 @@ export class InstagramComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
 
       this.SpinnerService.show();
@@ -1255,12 +1272,17 @@ export class InstagramComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
 
       this.SpinnerService.show();
       this.commondata.GetSlaDM(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.InstagramMessages = res.List?.dm;
+        this.TotalMsgQueryCount = res.TotalQueryCount;
         this.pageName = this.InstagramMessages[0].toName;
         this.totalMessages = res.TotalCount;
         this.TotalMsgQueryCount = res.TotalQueryCount;
@@ -1307,6 +1329,10 @@ export class InstagramComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
 
       this.SpinnerService.show();

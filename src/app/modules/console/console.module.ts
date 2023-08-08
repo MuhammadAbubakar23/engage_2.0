@@ -41,6 +41,21 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { CKEditorModule } from 'ckeditor4-angular';
 import { CreateQuickResponseTemplatesComponent } from './components/templates/quick-response/create-quick-response-templates/create-quick-response-templates.component';
 import { CreateBusinessHoursComponent } from './components/business-hours/create-business-hours/create-business-hours.component';
+import { SentimentAnalysisComponent } from './components/sentiment-analysis/sentiment-analysis.component';
+import { ChatBotComponent } from './components/chat-bot/chat-bot.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ChatBotBuilderComponent } from './components/chat-bot-builder/chat-bot-builder.component';
+import { StepOneComponent } from './components/chat-bot-builder/step-one/step-one.component';
+import { StepTwoComponent } from './components/chat-bot-builder/step-two/step-two.component';
+import { StepThreeComponent } from './components/chat-bot-builder/step-three/step-three.component';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { NgStepperModule } from 'angular-ng-stepper';
+import { ChatwithsentimentComponent } from './components/sentiment-analysis/right-sidebar-components/chatwithsentiment/chatwithsentiment.component';
+import { ChatwithintentComponent } from './components/chat-bot/right-sidebar-components/chatwithintent/chatwithintent.component';
+import { ToastrComponent } from './components/toastr/toastr.component';
+import { StepFourComponent } from './components/chat-bot-builder/step-four/step-four.component';
+import { UpdateIntentsComponent } from './components/chat-bot/update-intents/update-intents.component';
+import { AddRulesComponent } from './components/rules/add-rules/add-rules.component';
 // import { CreateSkillsComponent } from './components/skills/create-skills/create-skills.component';
 // import { AddSkillMembersComponent } from './components/skills/add-skill-members/add-skill-members.component';
 
@@ -87,7 +102,19 @@ import { CreateBusinessHoursComponent } from './components/business-hours/create
     CreateQuickResponseTemplatesComponent,
     // CreateSkillsComponent,
     //AddSkillMembersComponent,
-    CreateBusinessHoursComponent
+    CreateBusinessHoursComponent,
+    SentimentAnalysisComponent,
+    ChatBotComponent,
+    ChatBotBuilderComponent,
+    StepOneComponent,
+    StepTwoComponent,
+    StepThreeComponent,
+    StepFourComponent,
+    UpdateIntentsComponent,
+    ChatwithsentimentComponent,
+    ChatwithintentComponent,
+    ToastrComponent,
+   
   ],
   imports: [
     CommonModule,
@@ -100,7 +127,10 @@ import { CreateBusinessHoursComponent } from './components/business-hours/create
     MatSelectModule,
     LayoutsModule,
     AngularEditorModule,
-    CKEditorModule
+    CKEditorModule,
+    NgSelectModule,
+    CdkStepperModule,
+    NgStepperModule,
    
   ]
 })

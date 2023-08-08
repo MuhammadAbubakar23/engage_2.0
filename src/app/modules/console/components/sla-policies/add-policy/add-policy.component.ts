@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, FormArray, Validators, } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-
 @Component({
   selector: 'app-add-policy',
   templateUrl: './add-policy.component.html',
@@ -15,12 +14,13 @@ export class AddPolicyComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private commonService: CommonDataService
+    private commonService: CommonDataService,
+    private route : ActivatedRoute
   ) {
     this.messageForm = this.formBuilder.group({
-      policyName: [''],
-      description: [''],
-      timeZone: [''],
+      policyName: ['', Validators.required],
+      description: ['', Validators.required],
+      timeZone: ['', Validators.required],
       slaTargets: this.formBuilder.array([
         this.createSlaTargetGroup('high'),
         this.createSlaTargetGroup('urgent'),
@@ -39,62 +39,108 @@ export class AddPolicyComponent implements OnInit {
       oprationHoursId: ['']
     });
   }
-
   get SLATargetsControls(): FormArray {
     return this.messageForm.get('slaTargets') as FormArray;
   }
   ngOnInit(): void {
-    this.getOperationalHours(); // Call the method to fetch operational hours
+    this.getOperationalHours();
+    const template = history.state.template; // Get the template value from the state
+    if (template) {
+      this.policyId = template.policyId; // Set the policyId property
+      this.getPolicyById(template.policyId);
+    }
+  }
+  getPolicyById(policyId: string) {
+    this.commonService.GetPolicyById(policyId).subscribe(
+      (policy: any) => {
+        this.messageForm.patchValue({
+          policyName: policy.policyName,
+          description: policy.description,
+          timeZone: policy.timeZone,
+        });
+
+        // Clear the existing SLA targets
+        this.SLATargetsControls.clear();
+
+        // Patch SLA targets based on the fetched policy data
+        policy.slaTargets.forEach((target: any) => {
+          const slaTargetGroup = this.createSlaTargetGroup(target.priority);
+          slaTargetGroup.patchValue(target);
+          this.SLATargetsControls.push(slaTargetGroup);
+        });
+      },
+      (error: any) => {
+        console.log('API error:', error);
+      }
+    );
   }
   getOperationalHours(): void {
     this.commonService.GetOperationalHours().subscribe(
       (response: any) => {
-        // console.log("hours of operations", )
-        this.oprationalHours = response; // Assuming the API response is an array
+        console.log('hours of operations', response);
+        this.oprationalHours = response;
       },
       (error: any) => {
-        // console.log('API error:', error);
-        // Handle the API error appropriately
+        console.log('API error:', error);
       }
     );
   }
   selectOperationalhours(value: any, index: any) {
     const slaTargets = this.messageForm.get('slaTargets') as FormArray;
-    const formGroup = slaTargets.controls[index] as FormGroup;
-
-    formGroup.patchValue({ oprationHoursId: Number(value) });
-
-    // console.log("Operation hours ID", formGroup.value.OperationalHoursId);
+  
+    if (index >= 0 && index < slaTargets.controls.length) {
+      const formGroup = slaTargets.controls[index] as FormGroup;
+      formGroup.patchValue({ oprationHoursId: value });
+  
+      console.log("Operation hours ID", formGroup.value.oprationHoursId); // Corrected property name
+    } else {
+      console.error('Invalid index:', index);
+    }
   }
   onSubmit() {
-    
     const slaTargets = this.messageForm.get('slaTargets') as FormArray;
-   
-    for (let i = 0; i < slaTargets.controls.length; i++) {
-      const formGroup = slaTargets.controls[i] as FormGroup;
-      const formValues = formGroup.value;
-      // console.log("Form values for oprationHoursId", formValues.oprationHoursId);
-
-    }
-    //if (this.messageForm.valid) {.....
-    const formData = this.messageForm.value;
-    
-    this.commonService.AddSlaPolicy(formData).subscribe(
-      response => {
-        // console.log('API response:', response);
-
-        this.router.navigate(['/console/sla-policies']);
-
-      },
-      error => {
-        // console.log('API error:', error);
-
+    // Remove form controls for unselected "slaTargets"
+    for (let i = slaTargets.controls.length - 1; i >= 0; i--) {
+      if (!slaTargets.controls[i].value.oprationHoursId) {
+        slaTargets.removeAt(i);
       }
-    );
-    //} else {
-    // // console.log('Form is invalid');
-    // Form is invalid, display error messages or take appropriate action
-    //}
+    }
+    if (this.messageForm.valid) {
+      const template = history.state.template; // Get the template value from the state
+
+      if (template) {
+        const updatedTemplate = {
+          ...template,
+          policyName: this.messageForm.value.policyName,
+          description: this.messageForm.value.description,
+          timeZone: this.messageForm.value.timeZone,
+          slaTargets: this.messageForm.value.slaTargets,
+        };
+        this.commonService.UpdateSlaPolicy(updatedTemplate.id, updatedTemplate).subscribe(
+          response => {
+            console.log('API response:', response);
+            this.router.navigate(['/console/sla-policies']);
+          },
+          error => {
+            console.log('API error:', error);
+          }
+        );
+      }
+  else{
+    this.commonService.AddSlaPolicy(this.messageForm.value).subscribe(
+        response => {
+          console.log('API response:', response);
+          this.router.navigate(['/console/sla-policies']);
+        },
+        error => {
+          console.log('API error:', error);
+        }
+      );
+  }
+    } else {
+      console.log('Form is invalid');
+      // Form is invalid, display error messages or take appropriate action
+    }
   }
   cancelForm() {
     this.router.navigate(['/console/sla-policies']);

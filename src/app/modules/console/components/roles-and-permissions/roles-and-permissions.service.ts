@@ -15,13 +15,13 @@ export class RolesAndPermissionsService {
   getMyRoles(): Observable<IdNameDto[]> {
     // return this.http.get("http://localhost:5036/api/Roles",{}).pipe(
     //   map((res: any) => { return res }),
-    //   tap(res => // console.log( + " Response: ", res)),
+    //   tap(res => console.log( + " Response: ", res)),
     //   catchError(err => {
-    //     // console.log('Handling error locally and rethrowing it...', err);
+    //     console.log('Handling error locally and rethrowing it...', err);
     //     return throwError(() => new Error(err));
     //   })
     // );
-    return this.request.get<IdNameDto[]>("AllRoles",{}).pipe(
+    return this.request.get<IdNameDto[]>("UserRoles",{}).pipe(
       map((response: any) => {
         // if(response.length>=1) this.stor.store(storekey, response);
         // else this.stor.delete(storekey);

@@ -6,7 +6,7 @@
       <ul class="list-group list-group-flush" id="inboxes-list" data-scrollbar="true" tabindex="-1"
         style="overflow-y: auto; outline: none;">
         <div class="scroll-content">
-          <a (click)="updatevalue('')" [routerLink]="['/all-inboxes']"
+          <a (click)="updatevalue('')" [routerLink]="['/all-inboxes/my_inbox']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="all-conversation">
             <div class="iconButton medium skyBg">
               <i class="far fa-inbox"></i>
@@ -29,10 +29,30 @@
             </div>
             <span class="badge twltte-bg rounded-pill">{{SlaUnResponded}}</span>
           </a>
-           <a (click)="updatevalue('Email')" [routerLink]="['/all-inboxes']"
+
+<!-- From DB -->
+          <!-- <a *ngFor="let channel of channels" (click)="updatevalue(channel.name)" [routerLink]="['/all-inboxes/my_inbox']"
+            class="all-inboxes-menu list-group-item list-group-item-action">
+            <div class="iconButton medium berryBg" [innerHTML]="channel.icon">
+            </div>
+            <div class="ms-2 me-auto">
+              <div class="black-text">{{channel.name}}</div>
+            </div>
+            <ng-container *ngFor="let platform of platformWiseCount">
+              <span class="badge twltte-bg rounded-pill" *ngIf="platform.platform == channel.name">{{platform.count}}</span>
+              <span class="badge twltte-bg rounded-pill" *ngIf="platform.platform != channel.name">0</span>
+            </ng-container>
+          </a>
+
+<br>
+<br>
+<br>
+<br> -->
+          <a (click)="updatevalue('Email')"
             class="all-inboxes-menu list-group-item list-group-item-action" value="email">
-            <div class="iconButton medium berryBg">
-              <i class="fal fa-envelope"></i>
+            <div class="iconButton medium whiteBg">
+              <!-- <i class="fal fa-envelope"></i> -->
+              <img width="25px" src="../../../../../assets/images/gmail-icon.png" alt="gmail"/>
             </div>
             <div class="ms-2 me-auto">
               <div class="black-text">Emails</div>
@@ -43,7 +63,7 @@
           </a> -->
           <!-- <span class="badge twltte-bg rounded-pill">{{EmailUnResponded + OfficeEmailUnResponded}}</span> -->
           <!-- [queryParams]="{List : 'OfficeEmails'}" -->
-          <a (click)="updatevalue('OfficeEmail')" [routerLink]="['/all-inboxes']" 
+          <a (click)="updatevalue('OfficeEmail')"
             class="all-inboxes-menu list-group-item list-group-item-action" value="email">
             <div class="iconButton medium berryBg">
               <i class="fal fa-envelope"></i>
@@ -87,8 +107,8 @@
   
             </div>
   
-          </a>
-          <a (click)="updatevalue('Facebook')"
+          </a> -->
+          <a (click)="updatevalue('Facebook')" 
             class="all-inboxes-menu list-group-item list-group-item-action" value="facebook">
             <div class="iconButton medium navyBg">
               <i class="fab fa-facebook-f"></i>

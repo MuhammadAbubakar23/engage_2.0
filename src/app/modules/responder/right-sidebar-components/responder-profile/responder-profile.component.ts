@@ -23,19 +23,20 @@ export class ResponderProfileComponent implements OnInit {
   linkedinUniqueId: any;
   webchatUniqueId: any;
 
-  spinner1running=false
-  spinner2running=false
+  spinner1running = false;
+  spinner2running = false;
 
   userDetailDto = new UserDetailDto();
 
   userDetailForm!: FormGroup;
-  mergeSocialProfilesForm !: FormGroup
+
+  openedChannel:string="";
 
   constructor(
     private commonService: CommonDataService,
     public fb: FormBuilder,
-    private spinnerService : NgxSpinnerService,
-    private toggleService : ToggleService
+    private spinnerService: NgxSpinnerService,
+    private toggleService: ToggleService
   ) {
     this.userDetailForm = new FormGroup({
       fromFullName: new FormControl(''),
@@ -91,12 +92,11 @@ export class ResponderProfileComponent implements OnInit {
         fromName: res.fromName,
         fromProfilePic: res.fromProfilePic,
         isActive: res.isActive,
-        
       });
       this.spinnerService.hide();
       this.spinner2running = false;
 
-      if(res.customerDetail){
+      if (res.customerDetail) {
         this.userDetailForm.patchValue({
           email: res.customerDetail.email,
           phoneNumber: res.customerDetail.phoneNumber,
@@ -114,7 +114,6 @@ export class ResponderProfileComponent implements OnInit {
 
       this.profileDetails?.customerSecondaryProfiles?.forEach(
         (secondaryProfile: any) => {
-          
           if (secondaryProfile.platform == 'Facebook') {
             this.fbUniqueId = secondaryProfile.customerUniqueId;
             this.userDetailForm.patchValue({
@@ -172,7 +171,6 @@ export class ResponderProfileComponent implements OnInit {
         }
       );
     });
-    
   }
   updateUserInformation() {
     
@@ -266,10 +264,9 @@ export class ResponderProfileComponent implements OnInit {
 
     this.commonService.UpdateProfileDetails(this.userDetailDto).subscribe(
       (res: any) => {
-        
-        this.reloadComponent('profileUpdated')
+        this.reloadComponent('profileUpdated');
         setTimeout(() => {
-          this.closeProfileComponent('profile')
+          this.closeProfileComponent('profile');
         }, 1000);
       },
       (error: any) => {
@@ -278,8 +275,8 @@ export class ResponderProfileComponent implements OnInit {
     );
   }
 
-  AlterMsg:any;
-  toastermessage:any;
+  AlterMsg: any;
+  toastermessage: any;
   reloadComponent(type: any) {
     if (type == 'profileUpdated') {
       this.AlterMsg = 'Profile updated Successfully!';
@@ -378,40 +375,6 @@ export class ResponderProfileComponent implements OnInit {
     { id: 18, name: 'Sahiwal' },
     { id: 19, name: 'Sargodha' },
     { id: 20, name: 'Sialkot' },
-
   ];
-  Countries = [
-    { id: 1, name: 'Pakistan' },
-
-  ];
-
-  SecondWhatsApp = false;
-  SecondEmail = false;
-  SocialDropdown = false;
-  secondWhatsApp(){
-    
-    this.SecondWhatsApp = !this.SecondWhatsApp;
-  }
-
-  socialDropdown(){
-    this.SocialDropdown = !this.SocialDropdown;
-  }
-  secondEmail(){
-    this.SecondEmail = !this.SecondEmail;
-  }
-
-  
-
-  mergeSocialProfiles(){
-    if(this.mergeSocialProfilesForm.value.whatsappProfileId != ''){
-      this.userDetailForm.value.whatsappUniqueId = this.mergeSocialProfilesForm.value.whatsappProfileId;
-      this.whatsappUniqueId = this.mergeSocialProfilesForm.value.whatsappProfileId;
-    }
-    if(this.mergeSocialProfilesForm.value.emailProfileId != ''){
-      this.userDetailForm.value.emailUniqueId = this.mergeSocialProfilesForm.value.emailProfileId;
-      this.emailUniqueId = this.mergeSocialProfilesForm.value.emailProfileId;
-    }
-    this.SocialDropdown = false
-  }
-
+  Countries = [{ id: 1, name: 'Pakistan' }];
 }

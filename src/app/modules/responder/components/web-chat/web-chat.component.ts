@@ -86,6 +86,10 @@ export class WebChatComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
       this.SpinnerService.show();
       this.commondata
@@ -136,6 +140,10 @@ export class WebChatComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
       this.SpinnerService.show();
       this.commondata
@@ -228,6 +236,7 @@ onScrollComments() {
   //   this.pageSize = this.pageSize + 10;
   //   this.getWebChat();
   // }
+
 }
 closeQuickResponseSidebar(){
   // this.quickReplySearchText = '';

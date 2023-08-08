@@ -1,18 +1,17 @@
 <div class="rightbarNav dashboard">
     <div class="navUpper">
-
-        <!-- <div *ngFor="let menu of menus$" (click)="toggleRightBar(menu.link)" class="rightbar-btn-group panelToggle" 
+        <div *ngFor="let menu of menus$" (click)="toggleRightBar(menu.link)" class="rightbar-btn-group panelToggle" 
         [attr.value]="menu.slug+'-rightbar-dashboard'">
             <button class="iconButton btn medium iconHover" data-bs-toggle="tooltip" 
             data-bs-placement="left" [attr.data-bs-original-title]="menu.name">
                <div [innerHTML]="menu.icon"></div>
             </button>
-        </div> -->
-        <div (click)="toggleRightBar('phone-dialer')" class="rightbar-btn-group panelToggle" value="dialer-rightbar">
+        </div>
+        <!-- <div (click)="toggleRightBar('phone-dialer')" class="rightbar-btn-group panelToggle" value="dialer-rightbar">
             <button class="iconButton btn medium iconHover" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Phone Dialer">
                 <i class="fal fa-phone-alt"></i>
             </button>
-        </div>
+        </div> -->
         <!--
         <div  (click)="toggle('engagements')" class="rightbar-btn-group panelToggle" value="engagements-rightbar-dashboard">
             <button class="iconButton btn medium iconHover" data-bs-toggle="tooltip" data-bs-placement="left" title="" data-bs-original-title="Engagements">

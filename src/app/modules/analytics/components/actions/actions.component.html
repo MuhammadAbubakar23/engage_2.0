@@ -1,4 +1,8 @@
 <nav id="contacts-rightbar-dashboard" class="expended-rigth-sidebar open">
+  <app-toastr
+    [toasterMsg]="toastermessage"
+    [isToaster]="isToaster"
+  ></app-toastr>
   <div class="right-bar-wrapper">
     <div class="bodyWrapper">
       <div class="contacts-list">
@@ -65,203 +69,212 @@
                 role="tabpanel"
                 aria-labelledby=""
               >
-              <div class="list-group-section">
-                <div class="list-group list-group-flush" >
-                  <a class="d-flex" value="Join">
-                    <div class="list-txt d-flex">
-                      <div class="icons-list d-flex">
-                        <h6 class="mt-3 darkblue">Join</h6>
-                      </div>
-                      <div
-                        class="icons-list d-flex"
-                        style="margin-left: 30px; margin-right: 5px"
-                      >
-                        <span>Number of Tables to be join</span>
-                      </div>
-                      <div
-                        class="icons-list d-flex"
-                        style="margin-right: 10px"
-                      >
-                        <input
-                          type="number"
-                          class="form-control"
-                          [(ngModel)]="numberoftables"
-                        />
-                      </div>
-                    </div>
-                  </a>
-                </div>
-                <hr *ngIf="numberoftables==0">
-              </div>
-
-              <div *ngIf="numberoftables>0" class="list-group-section">
-                <div class="list-group list-group-flush">
-                  <a class=" d-flex" value="Join">
-                    <div
-                      class="list-txt d-flex"
-                      *ngFor="let _ of counterArray(); let i = index"
-                    >
-                      <div
-                        class="icons-list d-flex"
-                      >
-                        <ng-select
-                          style="width: 180px;margin-right: 5px;"
-                          placeholder="Select Table"
-                          (change)="onTableSelect($event, i)"
+                <div class="list-group-section">
+                  <div class="list-group list-group-flush">
+                    <a class="d-flex" value="Join">
+                      <div class="list-txt d-flex">
+                        <div class="icons-list d-flex">
+                          <h6 class="mt-3 darkblue">Join</h6>
+                        </div>
+                        <div
+                          class="icons-list d-flex"
+                          style="margin-left: 30px; margin-right: 5px"
                         >
-                          <ng-option
-                            *ngFor="let table of tables"
-                            [value]="table"
-                            >{{ table }}</ng-option
-                          >
-                        </ng-select>
-                      </div>
-                    </div>
-                    <div class="icons-list d-flex">
-                      <input
-                        type="button"
-                        class="btn btn-primary"
-                        name="answer"
-                        value="Apply"
-                        (click)="getColumns()"
-                      />
-                    </div>
-                  </a>
-                </div>
-                <hr>
-              </div>
-
-              <div *ngIf="numberoftables>0 && isOn" class="list-group-section">
-                <div class="list-group list-group-flush">
-                  <a class="d-flex" value="Join">
-                    <div
-                      class="list-txt d-flex"
-                      *ngFor="
-                        let table of selectedTablesColumns;
-                        let i = index
-                      "
-                    >
-                      <div
-                        class="icons-list d-flex"
-                        style="margin-right: 5px"
-                      >
-                        <ng-select
-                          style="width: 180px"
-                          [placeholder]="'Select Column '"
-                          [multiple]="true"
-                          (change)="onColumnsSelect(table, i, false)"
-                          [(ngModel)]="selectedValues1[i]"
+                          <span>Number of Tables to be join</span>
+                        </div>
+                        <div
+                          class="icons-list d-flex"
+                          style="margin-right: 10px"
                         >
-                          <ng-option
-                            *ngFor="let value of getObjectValues(table)"
-                            [value]="value"
-                            >{{ value }}</ng-option
-                          >
-                        </ng-select>
+                          <input
+                            type="number"
+                            class="form-control"
+                            [(ngModel)]="numberoftables"
+                            (input)="resetTable()"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div  class="icons-list d-flex">
-                      <input
-                        type="button"
-                        class="btn btn-primary"
-                        name="answer"
-                        value="On"
-                        [disabled]="true"
-                      />
-                    </div>
-                  </a>
+                    </a>
+                  </div>
+                  <hr *ngIf="numberoftables == 0" />
                 </div>
-              </div>
-              <div *ngIf="numberoftables>0 && isOn" class="list-group-section">
-                <div class="list-group list-group-flush">
-                  <a class="d-flex" value="Join">
-                    <div
-                      class="list-txt d-flex"
-                      *ngFor="
-                        let table of selectedTablesColumns;
-                        let i = index
-                      "
-                    >
-                      <div
-                        class="icons-list d-flex"
-                        style="margin-right: 5px"
-                      >
-                        <ng-select
-                          style="width: 180px"
-                          [placeholder]="'Select Column'"
-                          [multiple]="true"
-                          (change)="onColumnsSelect(table, i, true)"
-                          [(ngModel)]="selectedValues2[i]"
-                        >
-                          <ng-option
-                            *ngFor="let value of getObjectValues(table)"
-                            [value]="value"
-                            >{{ value }}</ng-option
-                          >
-                        </ng-select>
-                      </div>
-                    </div>
-                    <div class="icons-list d-flex">
-                      <ng-select
-                      style="width:auto;height:auto"
-                            [(ngModel)]="selectedJoin"
-                            (change)="joinTables()"
 
+                <div *ngIf="numberoftables > 0" class="list-group-section">
+                  <div class="list-group list-group-flush">
+                    <a class="d-flex" value="Join">
+                      <div
+                        class="list-txt d-flex"
+                        *ngFor="let _ of counterArray(); let i = index"
+                      >
+                        <div class="icons-list d-flex">
+                          <ng-select
+                            style="width: 180px; margin-right: 5px"
+                            [placeholder]="
+                              showTablePlaceholder(i) ? 'Select Table' : ''
+                            "
+                            (change)="onTableSelect($event, i)"
                           >
                             <ng-option
-                              *ngFor="let join of jointypes"
-                              [value]="join"
-                              >{{ join }}</ng-option
+                              *ngFor="let table of tables"
+                              [value]="table"
+                              >{{ table }}</ng-option
                             >
                           </ng-select>
-
-                    </div>
-                  </a>
-                </div>
-                <hr>
-              </div>
-
-              <div class="list-group-section pt-3 pe-3">
-                <div class="list-group list-group-flush">
-                  <a
-                    class=" d-flex contact-user"
-                    value="limit"
-                  >
-                    <div class="w-100 list-txt d-flex">
-                      <div style="width:350px;">
-                        <h6 class="mb-1 darkblue">Limit</h6>
-                      </div>
-                      <div
-                        class="icons-list d-flex"
-                        style="margin-right: 10px"
-                      >
-                        <input
-                          type="number"
-                          name="limit"
-                          value="0"
-                          class="form-control"
-                          [(ngModel)]="limitValue"
-                        />
+                        </div>
                       </div>
 
                       <div class="icons-list d-flex">
                         <input
                           type="button"
-                          class="btn btn-primary w-100"
+                          class="btn btn-primary"
                           name="answer"
                           value="Apply"
-                          (click)="limitData()"
+                          (click)="getColumns()"
                         />
                       </div>
-                    </div>
-                  </a>
+                    </a>
+                  </div>
+                  <hr />
                 </div>
-              </div>
-              <hr>
+
+                <div
+                  *ngIf="numberoftables > 0 && isOn"
+                  class="list-group-section"
+                >
+                  <div class="list-group list-group-flush">
+                    <a class="d-flex" value="Join">
+                      <div
+                        class="list-txt d-flex"
+                        *ngFor="
+                          let table of selectedTablesColumns;
+                          let i = index
+                        "
+                      >
+                        <div
+                          class="icons-list d-flex"
+                          style="margin-right: 5px"
+                        >
+                          <ng-select
+                            style="width: 180px"
+                            [placeholder]="
+                              showColumns1Placeholder(i) ? 'Select Column' : ''
+                            "
+                            [multiple]="true"
+                            (change)="onColumnsSelect(table, i, false)"
+                            [(ngModel)]="selectedValues1[i]"
+                          >
+                            <ng-option
+                              *ngFor="let value of getObjectValues(table)"
+                              [value]="value"
+                              >{{ value }}</ng-option
+                            >
+                          </ng-select>
+                        </div>
+                      </div>
+
+                      <div class="icons-list d-flex">
+                        <input
+                          type="button"
+                          class="btn btn-primary"
+                          name="answer"
+                          value="On"
+                          [disabled]="true"
+                        />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div
+                  *ngIf="numberoftables > 0 && isOn"
+                  class="list-group-section"
+                >
+                  <div class="list-group list-group-flush">
+                    <a class="d-flex" value="Join">
+                      <div
+                        class="list-txt d-flex"
+                        *ngFor="
+                          let table of selectedTablesColumns;
+                          let i = index
+                        "
+                      >
+                        <div
+                          class="icons-list d-flex"
+                          style="margin-right: 5px"
+                        >
+                          <ng-select
+                            style="width: 180px"
+                            [placeholder]="'Select Column'"
+                            [multiple]="true"
+                            (change)="onColumnsSelect(table, i, true)"
+                            [(ngModel)]="selectedValues2[i]"
+                            [placeholder]="
+                              showColumns2Placeholder(i) ? 'Select Column' : ''
+                            "
+                          >
+                            <ng-option
+                              *ngFor="let value of getObjectValues(table)"
+                              [value]="value"
+                              >{{ value }}</ng-option
+                            >
+                          </ng-select>
+                        </div>
+                      </div>
+                      <div class="icons-list d-flex">
+                        <ng-select
+                          style="width: 180px; height: auto"
+                          [(ngModel)]="selectedJoin"
+                          (change)="joinTables()"
+                        >
+                          <ng-option
+                            *ngFor="let join of jointypes"
+                            [value]="join"
+                            >{{ join }}</ng-option
+                          >
+                        </ng-select>
+                      </div>
+                    </a>
+                  </div>
+                  <hr />
+                </div>
+                <form #limitForm="ngForm" (ngSubmit)="limitData()">
+                  <div class="list-group-section pt-3 pe-3">
+                    <div class="list-group list-group-flush">
+                      <a class="d-flex contact-user" value="limit">
+                        <div class="w-100 list-txt d-flex">
+                          <div style="width: 350px">
+                            <h6 class="mb-1 darkblue">Limit</h6>
+                          </div>
+                          <div class="icons-list d-flex" style="margin-right: 10px">
+                            <input
+                              type="number"
+                              name="limit"
+                              value="0"
+                              class="form-control"
+                              [(ngModel)]="limitValue"
+                              required
+                            />
+                          </div>
+
+                          <div class="icons-list d-flex">
+                            <input
+                              type="submit"
+                              class="btn btn-primary w-100"
+                              name="answer"
+                              value="Apply"
+                              [disabled]="!limitForm.valid"
+                            />
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </form>
+
+                <hr>
 
                 <div class="list-group-section pt-3 pe-3">
                   <div class="list-group list-group-flush">
-                    <a class=" d-flex" value="sort">
+                    <a class="d-flex" value="sort">
                       <div class="w-100 list-txt d-flex">
                         <div style="margin-right: 10px">
                           <h6 class="pt-3 darkblue">Sort</h6>
@@ -314,10 +327,10 @@
                     </a>
                   </div>
                 </div>
-                <hr>
+                <hr />
                 <div class="list-group-section pt-3 pe-3">
                   <div class="list-group list-group-flush">
-                    <a class=" d-flex" value="group by">
+                    <a class="d-flex" value="group by">
                       <div class="w-100 list-txt d-flex">
                         <div style="width: 400px">
                           <h6 class="pt-3 darkblue">Group By:</h6>
@@ -355,7 +368,9 @@
                             style="width: 180px"
                             [multiple]="true"
                             [(ngModel)]="groupselectedItems"
-                            placeholder="Group By"
+                            [placeholder]="
+                              groupselectedItems.length === 0 ? 'Group By' : ''
+                            "
                           >
                             <ng-option
                               *ngFor="let column of columns"
@@ -377,10 +392,11 @@
                     </a>
                   </div>
                 </div>
-                <hr>
+
+                <hr />
                 <div class="list-group-section pt-3 pe-3">
                   <div class="list-group list-group-flush">
-                    <a class=" d-flex" value="Sql">
+                    <a class="d-flex" value="Sql">
                       <div class="w-100 list-txt d-flex">
                         <div>
                           <h6 class="mb-1 darkblue mt-5">Sql</h6>
@@ -389,30 +405,37 @@
                           class="icons-list d-flex w-100"
                           style="margin-left: 5px"
                         >
-                          <textarea class="form-control" rows="3" [(ngModel)]="query">{{
-                            query
-                          }}</textarea>
+                          <textarea
+                            class="form-control"
+                            rows="3"
+                            [(ngModel)]="query"
+                            >{{ query }}</textarea
+                          >
                         </div>
                         <div class="icons-list d-flex" style="margin-left: 5px">
-                          <input
-                            type="button"
-                            class="btn btn-primary"
-                            name="answer"
-                            value="Run"
-                            (click)="runSql()"
-                          />
+                          <!-- <div cdkDropList class="example-list" (cdkDropListDropped)="onItemDropped($event)">
+                            <div class="example-box" *ngFor="let item of items" cdkDrag>{{ item }}</div>
+                          </div> -->
+                          <div>
+                            <div class="example-box">
+                              <input
+                                type="button"
+                                class="btn btn-primary"
+                                name="answer"
+                                value="Run"
+                                (click)="runSql()"
+                              />
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </a>
                   </div>
                 </div>
-                <hr>
+                <hr />
                 <div class="list-group-section pt-3 pe-3">
                   <div class="list-group list-group-flush">
-                    <a
-                      class=" d-flex contact-user"
-                      value="Summarize"
-                    >
+                    <a class="d-flex contact-user" value="Summarize">
                       <div class="w-100 list-txt d-flex">
                         <div class="w-100">
                           <h6 class="mb-1 darkblue">Summarize</h6>
@@ -430,41 +453,47 @@
                     </a>
                   </div>
                 </div>
-                <hr>
+                <hr />
                 <div class="list-group-section pt-3 pe-3">
                   <div class="list-group list-group-flush">
-                    <a
-                      class=" d-flex contact-user"
-                      value="Visualize"
-                    >
+                    <a class="d-flex contact-user" value="Visualize">
                       <div class="w-100 list-txt d-flex">
                         <div class="w-100">
                           <h6 class="mb-1 darkblue">Visualize</h6>
                         </div>
                         <div class="icons-list d-flex" style="margin-left: 5px">
-                          <input
-                            type="button"
-                            class="btn btn-primary"
-                            name="answer"
-                            value="Apply"
-                            (click)="visualizeData()"
-                          />
+                          <ng-select
+                            style="width: 250px; margin-right: 10px"
+                            [(ngModel)]="selectedGraph"
+                            (change)="selectGraph()"
+                          >
+                            <ng-option
+                              *ngFor="let graph of graphTypes"
+                              [value]="graph"
+                              >{{ graph }}</ng-option
+                            >
+                          </ng-select>
                         </div>
                       </div>
                     </a>
                   </div>
                 </div>
-                <hr>
+                <hr />
                 <div class="list-group-section pt-3 pe-3">
                   <div class="list-group list-group-flush">
-                    <div class="icons-list d-flex" >
+                    <div class="icons-list d-flex">
                       <span>Report Name:</span>
-                      <input style="margin-left: 10px;margin-right: 10px;width: 50%;"
-                      type="text"
-                      class="form-control"
-                      value=""
-                      [(ngModel)]="reportName"
-                    />
+                      <input
+                        style="
+                          margin-left: 10px;
+                          margin-right: 10px;
+                          width: 50%;
+                        "
+                        type="text"
+                        class="form-control"
+                        value=""
+                        [(ngModel)]="reportName"
+                      />
                       <input
                         type="button"
                         class="btn btn-primary"

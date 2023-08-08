@@ -1,5 +1,5 @@
 import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef, OnDestroy, HostListener } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { InboxResponderComponent } from 'src/app/modules/inboxes/components/inbox-responder/inbox-responder.component';
 import { InboxesComponent } from 'src/app/modules/inboxes/inboxes.component';
@@ -51,32 +51,38 @@ export class InboxContentComponent implements OnInit {
     private router : Router) { }
 
   ngOnInit(): void {
-
-
     const currentUrl = this.router.url;
 
     if(currentUrl.includes('responder')){
       this.loadComponent('responder')
-
     }
+
+    this.router.events.subscribe((ev) => {
+      if(ev instanceof NavigationEnd){
+        debugger
+        if(ev.url.includes('responder')){
+          this.loadComponent('responder')
+        } else {
+          this.loadComponent('all-inboxes')
+        }
+        
+      }
+    });
   }
 
   abc:any
   ngAfterViewInit(): void {
-    
     this.loadComponent("all-inboxes")
 
     const currentUrl = this.router.url;
 
     if(currentUrl.includes('responder')){
-      this.loadComponent('responder')
-
+      this.loadComponent('responder');
     }
 
-    this.Subscription = this.loadModuleService.getModule().subscribe((name:any)=>{
-      
-      this.loadComponent(name)
-    });
+    // this.Subscription = this.loadModuleService.getModule().subscribe((name:any)=>{
+    //   this.loadComponent(name)
+    // });
   }
   
   toggleSubLeftBar(){

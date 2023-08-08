@@ -130,7 +130,7 @@
                             <label for="password">Password</label>
                             <div class="invalid-feedback" *ngIf="(f['password']!.errors && (f['password']!.touched || f['password']!.dirty))">
                               <div *ngIf="f['password']!.errors?.['maxlength'] || f['password']!.errors?.['minlength']">
-                                Password must be grater than 7 character and less than 15 characters!
+                                Password must be grater than 8 character and less than 15 characters!
                               </div>
                               <div *ngIf="f['password']!.errors?.['required']">
                                 Password is required!
@@ -152,18 +152,21 @@
                                                                                     f['confirmpassword']!.dirty))">
                               <div
                                 *ngIf="f['confirmpassword']!.errors?.['maxlength'] || f['confirmpassword']!.errors?.['minlength']">
-                                Confirm Password must be grater than 7 character and less than 15 characters!
+                                Confirm Password must be grater than 8 character and less than 15 characters!
                               </div>
                               <div *ngIf="f['confirmpassword']!.errors?.['required']">
                                 Confirm Password is required!
+                              </div>
+                              <div *ngIf="f['confirmpassword']!.errors?.['mismatch']">
+                                Passwords don't match.
                               </div>
                             </div>
                             <div class="valid-feedback"
                               *ngIf="f['confirmpassword']!.valid && f['confirmpassword']!.touched">
                               Looks Good!
                             </div>
-                            <div *ngIf="f['confirmpassword']!.errors?.['matching']">
-                              Confirm Password does not match
+                            <div *ngIf="f['confirmpassword']!.errors?.['mismatch']">
+                              Passwords don't match.
                             </div>
                           </div>
                         </div>
@@ -172,7 +175,8 @@
                             [ngClass]="{'was-validated' : userForm.get('team')!.valid && userForm.get('team')!.touched}"
                             class="form-floating mb-2">
                             <select [ngClass]="{'is-invalid' : (userForm.get('team')!.errors && (userForm.get('team')!.touched ||
-                          userForm.get('team')!.dirty))}" class="form-select " id="team" formControlName="team"
+                              userForm.get('team')!.dirty))}"
+                              class="form-select " id="team" formControlName="team"
                               aria-label="Default select  example">
                               <option disabled>Select Team</option>
                               <option value="1">Corporate Teams</option>
@@ -204,7 +208,7 @@
                                     <mat-chip *ngFor="let role of RolesControl.value" [removable]="true" (removed)="onCatRemovedRole(role)"
                                       style="background-color:#2F9DF2; color:#ffffff; border-radius: 5px!important;" selected>
                                       {{ role.name }}
-                                      <mat-icon matChipRemove>cancel</mat-icon>
+                                      <mat-icon class="mb-2" matChipRemove>x</mat-icon>
                                     </mat-chip>
                                   </mat-chip-list>
                                 </mat-select-trigger>
@@ -227,7 +231,8 @@
                                     <mat-chip *ngFor="let team of TeamsControl.value" [removable]="true" (removed)="onCatRemovedRole(team)"
                                       style="background-color:#2F9DF2; color:#ffffff; border-radius: 5px!important;" selected>
                                       {{ team.name }}
-                                      <mat-icon matChipRemove>cancel</mat-icon>
+                                      <mat-icon class="mb-2" matChipRemove>x</mat-icon>
+
                                     </mat-chip>
                                   </mat-chip-list>
                                 </mat-select-trigger>
@@ -282,9 +287,6 @@
                           </span>
                         </li>
                       </ul>
-
-
-
                     </div>
                   </div>
                 </div>
@@ -307,14 +309,12 @@
           <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
             <div class="row w-100">
               <div class="col-md-4">
-
-
               </div>
               <div class="col-md-8 justify-content-end d-flex">
                 <div class="buttons-wrap d-flex">
-                  <button type="reset" class="btn btn-outline-secondary btn-medium me-2 px-4" data-bs-toggle="modal"
-                    data-bs-target="">Cancel </button>
-                  <!-- <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"></button> -->
+                  <button navigationBack class="btn btn-outline-secondary btn-medium me-2 px-4">Cancel </button>
+                  <!-- <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"  data-bs-toggle="modal"
+                    data-bs-target=""></button> -->
 
                   <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn">{{btnText}}</button>
                 </div>
@@ -494,7 +494,7 @@
         </div>
         <div class="buttons-wrap d-flex">
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas"
-            aria-label="Close">Cancel</button>
+            aria-label="Close" (click)="cancelForm()">Cancel</button>
           <button type="button" class="btn btn-success ms-2 f-nextBtn" data-bs-dismiss="offcanvas" aria-label="Close"
             id="saveSkills ">Save</button>
         </div>

@@ -1,7 +1,7 @@
 { 
     "search":""
     , "url" : "AllTeams"
-    , "urlparams":"WithOutType"
+    , "urlparams":"WithOutType/0"
     , "pageno":1
     , "pagesize":50
     , "template": {}
@@ -59,8 +59,8 @@
             "search":false, 
             "group":0, 
             "actions":[
-                {"name":"delete", "type":"service" , "actionUrl":"DeleteTeam", "icon":"fal fa-trash me-2"},
-                {"name":"edit", "type":"overlay" , "actionUrl":"EditTeam", "icon":"fal fa-edit me-2"}
+                {"name":"Edit", "type":"rute", "actionUrl":"console/teams/create", "icon":"fal fa-edit me-2", "permission":"_upur_"},
+                {"name":"delete", "type":"service" , "actionUrl":"Delete", "icon":"fal fa-trash me-2", "permission":"_rmvur_"}
             ],
             "wrap":"",
             "icon":"" 

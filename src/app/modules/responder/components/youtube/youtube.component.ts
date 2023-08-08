@@ -64,7 +64,6 @@ export class YoutubeComponent implements OnInit {
 
   TotalCmntQueryCount: number = 0;
 
-
   filterDto = new FiltersDto();
   ReplyDto = new ReplyDto();
   insertSentimentForFeedDto = new InsertSentimentForFeedDto();
@@ -246,6 +245,10 @@ export class YoutubeComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -318,6 +321,10 @@ export class YoutubeComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -374,6 +381,10 @@ export class YoutubeComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -916,7 +927,6 @@ export class YoutubeComponent implements OnInit {
     });
     this.changeDetect.detectChanges();
   }
-
   updateBulkQueryStatusDataListner() {
     
     this.YoutubeData.forEach((post: any) => {

@@ -40,7 +40,8 @@ export class CardBoxListCheckboxComponent implements OnInit {
     // }
     // let a = this.menu;
     // a.name = "Access"
-    // // console.log(this.checkboxListCheck);
+    // console.log(this.checkboxListCheck);
+    this.isAllSelected();
   }
   checkUncheckAll() {
     for (var i = 0; i < this.checkboxListCheck.length; i++) {

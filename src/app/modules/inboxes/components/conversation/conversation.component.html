@@ -82,7 +82,8 @@
               <li class="dropdown-item" id="customrange" (click)="ShowDateRange()">
                 <a>Custom Range</a>
               </li>
-            </ul><div class="dropdown-menu assignSecondDropdownList1" [ngClass]="showDateRange?'show':''" aria-labelledby="customrange">
+            </ul>
+            <div class="dropdown-menu assignSecondDropdownList1" [ngClass]="showDateRange?'show':''" aria-labelledby="customrange">
               <header class="d-flex align-items-center justify-content-between my-2">
                 <h6 class="m-0">Date Range </h6>
                 <div class="d-flex align-items-center" (click)="CloseDateRange()">
@@ -470,27 +471,27 @@
           data-bs-placement="bottom" title="" data-bs-original-title="Refresh">
           <i class="fal fa-redo-alt"></i>
         </li>
-        <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip" data-bs-placemen
+        <li class="list-group-item border-0 after-select-fun" (click)="Archive()" aria-label="..." data-bs-toggle="tooltip" data-bs-placemen
           data-bs-placement="bottom" title="" data-bs-original-title="Archive"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-archive"></i>
         </li>
-        <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
+        <li class="list-group-item border-0 after-select-fun" (click)="Spam()" aria-label="..." data-bs-toggle="tooltip"
           data-bs-placement="bottom" title="" data-bs-original-title="Report Spam"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-exclamation-circle"></i>
         </li>
-        <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun" aria-label="..."
+        <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun" (click)="Delete()" aria-label="..."
           data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-trash"></i>
         </li>
-        <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
+        <!-- <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
           data-bs-placement="bottom" title="" data-bs-original-title="Mark as Read"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="far fa-envelope-open"></i>
-        </li>
-        <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
+        </li> -->
+        <li class="list-group-item border-0 after-select-fun" (click)="Snooze()" aria-label="..." data-bs-toggle="tooltip"
           data-bs-placement="bottom" title="" data-bs-original-title="Snooze"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-clock"></i>
@@ -509,7 +510,7 @@
                     data-bs-placement="bottom" title="" data-bs-original-title="Labels"
                     [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
                     <i class="fal fa-tags"></i>
-                </li>
+                </li> -->
 
                 <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
                     data-bs-placement="bottom" title="" data-bs-original-title="More"
@@ -520,7 +521,7 @@
                             <i class="fal fa-ellipsis-v-alt"></i>
                         </button>
                         <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1">
-                            <li>
+                            <!-- <li>
                                 <a class="dropdown-item" href="#">Mark as read </a>
                             </li>
                             <li>
@@ -528,11 +529,11 @@
                             </li>
                             <li>
                                 <a class="dropdown-item" href="#">Mark as important</a>
+                            </li> -->
+                            <li> 
+                                <a class="dropdown-item" (click)="Starred()">Add star</a>
                             </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Add star</a>
-                            </li>
-                            <li>
+                            <!-- <li>
                                 <a class="dropdown-item" href="#">Filter Messages like these</a>
                             </li>
                             <li>
@@ -540,11 +541,11 @@
                             </li>
                             <li>
                                 <a class="dropdown-item" href="#">Forward as Attachment</a>
-                            </li>
+                            </li> -->
 
                         </ul>
                     </div>
-                </li> -->
+                </li> 
       </ul>
       <div class="selected-row" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
         Selected <span class="badge twltte-bg rounded-pill">{{Ids.length}}</span>
@@ -583,10 +584,10 @@
               <tr *ngFor="let querry of group.items | sort:criteria; let i = index"
                 [class.selected]="querry.isChecked==true" class="alert" [ngClass]="[querry.slaFlag == 'warning'?'alert-warning':'' || querry.slaFlag == 'danger'?'alert-danger':'' ||
               querry.slaFlag == 'unread'?'unread':'']">
-                <!-- <td style="width: 40px;"><input [checked]="querry.isChecked" value="{{querry.id}}"
-                  (change)="isAllSelected($event, i, querry.platform)" class="form-check-input me-1" type="checkbox"
+                <td style="width: 40px;"><input [checked]="querry.isChecked" value="{{querry.id}}"
+                  (change)="isAllSelected($event, i, querry.platform, querry.profileId)" class="form-check-input me-1" type="checkbox"
                   aria-label="...">
-              </td> -->
+              </td>
                 <td style="width: 40px;">
                   <i *ngIf="querry.platform == 'Facebook'" class="fab fa-facebook navytext" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" title="" data-bs-original-title="Facebook" aria-label="Facebook"></i>

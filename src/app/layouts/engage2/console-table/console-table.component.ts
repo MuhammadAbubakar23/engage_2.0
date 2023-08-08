@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { isArguments } from 'lodash';
 import { Observable, Subject, takeUntil } from 'rxjs';
@@ -6,110 +6,201 @@ import { RequestService } from 'src/app/shared/services/request/request.service'
 import { ConsoleTableVisibilityPipe } from './console-table-visibility.pipe';
 import { ConsoleTableService } from './console-table.service';
 import { ConsoleTableParams } from './console-table-params';
-
+import { ConsoleTablePaginatedState } from './console-table-state/console-table-paginated.component-store';
+// import { provideComponentStore } from '@ngrx/component-store';
+// import { ConsoleTableComponentStore } from './console-table.component-store';
+// provideComponentStore(ConsoleTableComponentStore), 
 @Component({
   selector: 'console-table',
   templateUrl: './console-table.component.html',
   styleUrls: ['./console-table.component.scss'],
-  providers: [ ConsoleTableVisibilityPipe ]
+  providers: [ConsoleTableVisibilityPipe],
 })
 export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends this
-  private unsubscribe$: Subject<void> = new Subject<void>();
-  
-  data?:any;
-  @Input() JsonFile:string='default';
-  @Input() TableModel: T[] = []; //| undefined; //Observable<T>
-  @Input() filter: any; 
-  @Input() OverLayIsActive:boolean=false;
 
-  tableJson$:ConsoleTableParams = new ConsoleTableParams;
+  // private readonly _componentStore = inject(ConsoleTableComponentStore<T>);  
+  // readonly vm$ = this._componentStore.vm$;
+  // onPreviousPage(): void {
+  // onNextPage(): void {
+  //   this._componentStore.loadNextPage();
+  // }
+  private unsubscribe$: Subject<void> = new Subject<void>();
+  pagingParams$: any = {};
+  pastPagingParams$: any = {};
+  // {
+  //   pageIndex: 1,
+  //   pageSize: 10,
+  //   length: 100,
+  //   pageSizeOptions:[10,25,50,100],
+  // };
+  pagingSizeOptions$: number[] = [10, 25, 50, 100];
+  pagingSize$: number = 10;
+  pagingIndex$: number = 1;
+  pagingLength$: number = 100;
+  pageSearchText$: string = "";
+
+  data?: any;
+  @Input() identifire: string = 'id';
+  @Input() JsonFile: string = 'default';//[JsonFile]="'users.json'"
+  @Input() TableModel: T[] = []; //| undefined; //Observable<T>
+  @Input() filter: any;
+  @Input() OverLayIsActive: boolean = false;
+
+  tableJson$: ConsoleTableParams = new ConsoleTableParams;
 
   //tableJson$:any={};
-  constructor(private _tableService: ConsoleTableService, private _request:RequestService, private _router:Router) { }
+  constructor(private _tableService: ConsoleTableService, private _request: RequestService, private _router: Router) { }
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
     // this.unsubscribe$.unsubscribe();
   }
-  // async fetchJson(){
-  //   fetch("/assets/JSON/"+this.JsonFile).then(res => res.json())
-  //   .then(json => {
-  //     // console.log(json)
-       
-  //   });
-  // }
   ngOnInit(): void {
-    // let tabl = fetchJSON("/assets/JSON/"+this.JsonFile);
-    //// console.log(tabl);
-     // this.tableJson$
-    // // console.log(this.tableJson$);
-    // this.header = this.filter.headers;
-    // // console.log(this.filter.headers);
-    // // console.log(this.filter.url);
+    this.pagingParams$.pageIndex = this.pagingIndex$;
+    this.pagingParams$.pageSize = this.pagingSize$
+    //length: 100,
+    //this.pagingSize$ = this.filter.pagesize;
+    //this.pagingIndex$ = this.filter.pageno;
+    this._fetchData();
+  }
+  IsEmptyOrWhiteSpace(word: any) {
+    return (word.match(/^\s*$/) || []).length > 0;
+  }
+  reloader() {
+    this._fetchData();
+  }
+  // seracher(search: string) {
+  //   //alert(search);
+  //   //alert(this.IsEmptyOrWhiteSpace(search))
+  //   //|| (this.IsEmptyOrWhiteSpace(search) && search.length == 0))
+  //   if (search != null && !this.IsEmptyOrWhiteSpace(search)) {
+  //     this.pageSearchText$ = search;
+  //     this._fetchData();
+  //   }
+  // }
+
+  seracher(search: string) {
+    this.pageSearchText$ = search;
+    this._fetchData();
+  }
+  
+  handleSearch(searchQuery: string) {
+    if (searchQuery.length >= 3 || searchQuery.length === 0) {
+      this.seracher(searchQuery);
+    }
+  }
+  
+  paginator(paging: any) {
+
+    if (paging != null && typeof paging === 'object') {
+      if (paging!.pageIndex > 0) {
+        this.pagingParams$.pageIndex = paging.pageIndex;
+      }
+      if (paging!.pageSize > 0) {
+        this.pagingParams$.pageSize = parseInt(paging.pageSize);
+      }
+    }
+    //this.pagingParams$ = paging;
+    // console.log(this.pagingParams$);
+    // console.log("paging");
+    // console.log(paging);
+    //this.pagingParams$ = paging;
     this._fetchData();
   }
   filterdata() {
     this._fetchData();//this.filter?.pageno, this.filter?.pagesize);
   }
-  private _fetchData(){ //}: Observable<T>{ // (page: number, pagesize: number)  {
-   // ;
-   if(typeof this.filter?.url === 'undefined') return;
-  //  // console.log(this.filter)
-    let pam:any = {
-        pageno: this.filter.pageno
-      , pagesize: this.filter.pagesize
-      , search: this.filter.search
-    };
+  private _fetchData() { //}: Observable<T>{ // (page: number, pagesize: number)  {
 
-    this.filter?.headers?.forEach((item:any, index:number, arr:any) => {
-      if(!item.actions)
-        for(let i = 0; i < item.index.length; i++ ){
-          let alter = item.index[i].toString();
-          pam[alter] = { order: item.order, search : item.search }                  
-        }              
-    })   
+    if (typeof this.filter?.url === 'undefined') return;
+    // console.log(this.filter)
+    // let pam:any = {
+    //     pageno: this.filter.pageno
+    //   , pagesize: this.filter.pagesize
+    //   , search: this.filter.search
+    // };
+    if (this.filter?.template?.toolbar == 'top') {
+      this.pagingParams$.searchText = this.pageSearchText$;
+
+      let paramextended: any[] = [];
+      this.filter?.headers?.forEach((item: any, index: number, arr: any) => {
+        if (!item.actions)
+          for (let i = 0; i < item.index.length; i++) {
+            let alter = item.index[i].toString();
+            if (item.order != null && item.search == true && alter != "image") {
+              paramextended[i] = { name: alter, order: item.order, search: item.search }
+            }
+            // this.pagingParams$[alter] = { order: item.order, search : item.search }                  
+          }
+
+        this.pagingParams$.contain = JSON.stringify(paramextended);
+      })
+    }
+    else {
+      this.pagingParams$ = {};
+    }
+
+    //filter?.template?.toolbar=='top'
+    // encodeURIComponent
     // if(this.filter?.url && !this.filter?.url)
-    this._request.get<T[]>(this.filter.url, pam, this.filter.urlparams).pipe(
+    this._request.get<T[]>(this.filter.url, this.pagingParams$, this.filter.urlparams).pipe(
       takeUntil(this.unsubscribe$)).subscribe({
-        next: (nxt:T[]) => {
+        next: (nxt: T[]) => {
           this.data = nxt;
         },
-        error: (error:any) => console.error(error),
-        complete: () => console.info('complete') 
+        error: (error: any) => console.error(error),
+        complete: () => console.info('complete')
       }
-    );
+      );
     // console.table(this.data);
     // this._tableService.GetAll(this.url,  this.filter).subscribe((next: any) => {
     //   // this.Data = next.data.item1;
     //   // this.total = next.data.item2 * this.pagesize
     // }, (error: any) => {
-    //   // console.log(error);
+    //   console.log(error);
     // });
   }
-  procedure(params:any){
-    // // console.log("sent val --- >>>",params.param)
-    // // console.log("added Data --- >>>",params.data)
-    // // console.log("I m func action");
-    if(params.param.type == "rute"){
+  procedure(params: any) {
+    console.log("sent val --- >>>", params.param)
+    console.log("added Data --- >>>", params.data)
+    console.log("I m func action");
+
+    if (params.param.type == "rute") {
       this.navigateToPage(params);
-    }else if(params.param.type == "service"){//
-      this.deleteFromDatabase(params);    
-    }else if (params.param.type == "overlay"){
+    } else if (params.param.type == "service") {//
+      this.deleteFromDatabase(params);
+    } else if (params.param.type == "overlay") {
       this.loadOverlayComponenet(params)
     }
-     
+
   }
-  navigateToPage(params:any){
-    this._router.navigate([params.param.actionUrl, params.data.id]);
+  navigateToPage(params: any) {
+    console.log(params);
+    console.log(params.param.actionUrl);
+    console.log(this.identifire);
+    console.log(params.data[this.identifire]);
+
+    this._router.navigate([params.param.actionUrl, params.data[this.identifire]]);
   }
-  deleteFromDatabase(params:any){
-    this._request.delete<any>(params.param.actionUrl,  params.data.id).pipe(
+  deleteFromDatabase(params: any) {
+
+    var obj = {
+      "id": params.data[this.identifire],
+      "name": "string",
+      "norm": "string",
+      "slug": "string",
+      "link": "string",
+      "desc": "string",
+      "type": "string"
+    }
+    this._request.post<any>(params.param.actionUrl, obj).pipe(
       takeUntil(this.unsubscribe$)).subscribe({
-      next: (nxt:any) => console.table(nxt),
-      error: (error:any) => console.error(error),
-      complete: () => console.info('complete') });
+        next: (nxt: any) => console.table(nxt),
+        error: (error: any) => console.error(error),
+        complete: () => console.info('complete')
+      });
   }
-  loadOverlayComponenet(params:any){
+  loadOverlayComponenet(params: any) {
 
   }
 }

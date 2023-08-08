@@ -15,10 +15,10 @@ export class ConsoleRoutingGuard implements CanActivate, CanLoad, CanMatch {
   loading$: any;
   constructor(private store: Store<MenuState>, private router:Router){ //}, private headerService: HeaderService) { 
     //this.menu$ = this.store.select(getEmargingEqual("role_left_menu"));
-    //// console.log("1 === >>>",this.menu$);
+    //console.log("1 === >>>",this.menu$);
     // this.menu$ = this.store.select(getEmargingNotEqual("role_left_menu")).subscribe((item) => {
     //   for(let itm in item){
-    //     // console.log(itm);
+    //     console.log(itm);
     //   }
     //   // item.forEach((element:any,index:string, arr:[])=>{ 
     //   // })

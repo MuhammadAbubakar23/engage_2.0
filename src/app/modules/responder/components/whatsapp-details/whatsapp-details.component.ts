@@ -92,6 +92,7 @@ export class WhatsappDetailsComponent implements OnInit {
   TotalCmntQueryCount: number = 0;
 
   profileId: number = 0;
+  TotalCmntQueryCount: number = 0;
 
   public Subscription!: Subscription;
   public criteria!: SortCriteria;
@@ -262,6 +263,10 @@ export class WhatsappDetailsComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -317,6 +322,10 @@ export class WhatsappDetailsComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
       this.SpinnerService.show();
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
@@ -367,6 +376,10 @@ export class WhatsappDetailsComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
       this.SpinnerService.show();
       this.commondata
@@ -933,7 +946,6 @@ export class WhatsappDetailsComponent implements OnInit {
     });
     this.changeDetect.detectChanges();
   }
-
   updateBulkQueryStatusDataListner() {
     
     this.groupArrays.forEach((cmnt: any) => {
@@ -972,7 +984,6 @@ export class WhatsappDetailsComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
   onScrollComments() {
-    
     if (this.TotalCmntQueryCount > this.pageSize) {
       this.pageSize = this.pageSize + 10;
       this.getWhatsappData();

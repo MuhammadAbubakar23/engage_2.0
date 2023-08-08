@@ -5,7 +5,8 @@ import { RightNavService } from 'src/app/services/RightNavService/RightNav.servi
 import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { ConversationComponent } from '../inboxes/components/conversation/conversation.component';
-import { ActionsComponent } from '../analytics/components/actions/actions.component'
+import { ActionsComponent } from './components/actions/actions.component'
+import { AnalyticsDashboardComponent } from './components/analytics-dashboard/analytics-dashboard.component';
 import { ExecutiveDashboardComponent } from './components/executive-dashboard/executive-dashboard.component';
 import { LiveMonitoringComponent } from './components/live-monitoring/live-monitoring.component';
 import { ReportBuilderComponent } from './components/report-builder/report-builder.component';
@@ -42,7 +43,6 @@ export class AnalyticsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     this.route.params.subscribe((routeParams) => {
 
       if(routeParams['channel'] != undefined && routeParams['channel'] != "undefined"){
@@ -110,6 +110,10 @@ export class AnalyticsComponent implements OnInit {
         componentFactory = this.resolver.resolveComponentFactory(LiveMonitoringComponent);
         this.target?.createComponent(componentFactory);
         break;
+        case 'dashboard':
+        componentFactory = this.resolver.resolveComponentFactory(AnalyticsDashboardComponent);
+        this.target?.createComponent(componentFactory);
+        break;
         case 'report-builder':
         componentFactory = this.resolver.resolveComponentFactory(ReportBuilderComponent);
         this.target?.createComponent(componentFactory);
@@ -129,9 +133,7 @@ export class AnalyticsComponent implements OnInit {
           this.target?.createComponent(componentFactory);
           break;
       default:
-        componentFactory = this.resolver.resolveComponentFactory(
-          ConversationComponent
-        );
+        componentFactory = this.resolver.resolveComponentFactory(ExecutiveDashboardComponent);
         this.target?.createComponent(componentFactory);
         break;
     }

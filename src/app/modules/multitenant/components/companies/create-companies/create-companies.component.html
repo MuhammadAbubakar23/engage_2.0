@@ -27,22 +27,22 @@
                                     <!-- <div class="row" data-scrollbar="true" tabindex="-1"
                                     style="overflow-y:auto; outline: none;">
                                     <div class="col-lg-6 fixed-top sticky-top "> -->
-                                        <div class="floating-item mb-4">
-                                            <div class="floating-wrap form-floating mb-2"
+                                        <div class="floating-item mb-4"  >
+                                            <div class="floating-wrap form-floating mb-2" 
                                                 [ngClass]="{'was-validated' : companiesForm.get('name')!.valid && companiesForm.get('name')!.touched}">
-                                                <input [ngClass]="{'is-invalid' : (companiesForm.get('name')!.errors && (companiesForm.get('name')!.touched ||
+                                                <input [attr.disabled]="identity>0?'disabled':null" [ngClass]="{'is-invalid' : (companiesForm.get('name')!.errors && (companiesForm.get('name')!.touched ||
                                                 companiesForm.get('name')!.dirty))}" formControlName="name" type="text"
-                                                    class="form-control" id="name" placeholder="Sales Companies">
-                                                <label for="name">Companies Name</label>
+                                                    class="form-control" id="name" placeholder="Sales Companies" >
+                                                <label for="name" >Name</label>
                                                 <div class="invalid-feedback" *ngIf="(companiesForm.get('name')!.errors && (companiesForm.get('name')!.touched ||
                                                                                 companiesForm.get('name')!.dirty))">
                                                     <div
                                                         *ngIf="companiesForm.get('name')!.errors?.['maxlength'] || companiesForm.get('name')!.errors?.['minlength']">
-                                                        Companies name must be grater than 1 character and less than 25
+                                                        Name must be grater than 1 character and less than 25
                                                         characters!
                                                     </div>
                                                     <div *ngIf="companiesForm.get('name')!.errors?.['required']">
-                                                        Companies Name is required!
+                                                        App Name is required!
                                                     </div>
                                                 </div>
                                                 <div class="valid-feedback"
@@ -51,16 +51,16 @@
                                                     Looks Good!
                                                 </div>
                                             </div>
-                                            <small class="example-text ms-3">e.g. Customer support companies</small>
+                                            <small class="example-text ms-3">App Name e.g. Company/Client</small>
                                         </div>
                                         <div class="floating-item mb-4">
                                             <div [ngClass]="{'was-validated' : companiesForm.get('description')!.valid && companiesForm.get('description')!.touched}"
                                                 class="floating-wrap form-floating mb-2">
-                                                <textarea [ngClass]="{'is-invalid' : (companiesForm.get('description')!.errors && (companiesForm.get('description')!.touched ||
+                                                <textarea [attr.disabled]="identity>0?'disabled':null" [ngClass]="{'is-invalid' : (companiesForm.get('description')!.errors && (companiesForm.get('description')!.touched ||
                                                 companiesForm.get('description')!.dirty))}" formControlName="description"
                                                     class="form-control" placeholder="Leave a comment here"
-                                                    id="floatingTextarea2" style="height: 100px"></textarea>
-                                                <label for="floatingTextarea2">Description</label>
+                                                    id="floatingTextarea2" style="height: 100px" ></textarea>
+                                                <label for="floatingTextarea2" >Description</label>
                                                 <div class="invalid-feedback" *ngIf="(companiesForm.get('description')!.errors && (companiesForm.get('description')!.touched ||
                                                                                 companiesForm.get('description')!.dirty))">
 
@@ -73,8 +73,7 @@
                                                     Looks Good!
                                                 </div>
                                             </div>
-                                            <small class="example-text ms-3">e.g. This Companies belongs to Administrator</small>
-
+                                            <small class="example-text ms-3">e.g. This App belongs to Company/Client Administrator</small>
                                         </div>
                                         <!-- <engage2-card-box-list [menulist]="CompaniesNAccessesPermissions" [menulistselectall]="accesslistselectall" (menulistchecked)="setAccessList($event)"></engage2-card-box-list> -->
                                         <header class="tab-header">

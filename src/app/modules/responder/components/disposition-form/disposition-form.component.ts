@@ -62,9 +62,9 @@ export class DispositionFormComponent implements OnInit {
     };
 
     this.commonService.SubmitDispositionForm(this.dispositionFormDto).subscribe((res:any)=>{
-      // // console.log('disposition response',res)
+      // console.log('disposition response',res)
       localStorage.setItem('assignedProfile','')
-      this.route.navigateByUrl('/all-inboxes');
+      this.route.navigateByUrl('/all-inboxes/my_inbox');
       this.lodeModuleService.updateModule('all-inboxes')
       
     })

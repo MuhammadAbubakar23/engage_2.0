@@ -96,7 +96,9 @@ export class ResponderHeaderComponent implements OnInit {
 
   public Subscription!: Subscription;
 
-  currentUrl:string='';
+  currentUrl: string = '';
+  flag: string = '';
+  
 
   constructor(
     private fetchId: FetchIdService,
@@ -105,24 +107,22 @@ export class ResponderHeaderComponent implements OnInit {
     private _route: Router,
     private commondata: CommonDataService,
     private _sharedService: SharedService,
-    private moduleService: ModulesService,
+    private loadModuleService: ModulesService,
     private SpinnerService: NgxSpinnerService,
     private commonService: CommonDataService,
     private unrespondedCountService: UnRespondedCountService,
     private updateCommentsService: UpdateCommentsService,
     private updateMessagesService: UpdateMessagesService,
-    private toggleService: ToggleService,
-    private loadModuleService : ModulesService,
+    private toggleService: ToggleService
   ) {
-    this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
-      this.id = res;
-      this.getUserDetails();
-    });
+    // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
+    //   this.id = res;
+    //   this.getUserDetails();
+    // });
 
     this.Subscription = this.fetchposttype
       .getPostTypeAsObservable()
       .subscribe((res) => {
-        
         this.postType = res;
         this.openedTab();
       });
@@ -130,6 +130,7 @@ export class ResponderHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUrl = this._route.url;
+    this.flag = this.currentUrl.split('/')[2]
     this.getUserDetails();
     this.openedTab();
     Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(
@@ -142,6 +143,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.updateMessagesService
       .receiveMessage()
       .subscribe((res) => {
+        if (Object.keys(res).length > 0) {
         res.forEach((msg: any) => {
           if (msg.fromId == localStorage.getItem('storeHeaderOpenedId')) {
             if (msg.contentType == 'FCP') {
@@ -158,12 +160,13 @@ export class ResponderHeaderComponent implements OnInit {
             }
           }
         });
-      });
+  }
+});
 
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
-        
+        if (Object.keys(res).length > 0) {
         res.forEach((msg: any) => {
           if (msg.userId == localStorage.getItem('storeHeaderOpenedId')) {
             if (msg.contentType == 'FC' || msg.contentType == 'FCP') {
@@ -204,19 +207,19 @@ export class ResponderHeaderComponent implements OnInit {
             }
           }
         });
-      });
+   }
+   });
 
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
+        if (Object.keys(res).length > 0) {
         if (res.contentCount.contentType == 'FC') {
-          
           this.totalFbUnrespondedCountByCustomer =
             res.contentCount.unrespondedCount +
             this.FbUnrespondedMsgCountByCustomer;
         }
         if (res.contentCount.contentType == 'FCP') {
-          
           this.totalFbUnrespondedCountByCustomer =
             res.contentCount.unrespondedCount +
             this.FbUnrespondedCmntCountByCustomer;
@@ -242,12 +245,14 @@ export class ResponderHeaderComponent implements OnInit {
             this.InstaUnrespondedCmntCountByCustomer;
         }
 
-        if (res.contentCount.contentType == 'Mail' || res.contentCount.contentType == 'OMail') {
+        if (
+          res.contentCount.contentType == 'Mail' ||
+          res.contentCount.contentType == 'OMail'
+        ) {
           this.EmailUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
         }
         if (res.contentCount.contentType == 'SMS') {
-          
           this.SmsUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
         }
@@ -267,14 +272,15 @@ export class ResponderHeaderComponent implements OnInit {
           this.LinkedInUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
         }
-      });
+   }
+   });
   }
 
   param: any;
   getRouteParam(route: any) {
     this.param = route;
     localStorage.setItem('path', this.param);
-    // // // console.log(localStorage.getItem('path'));
+    // // console.log(localStorage.getItem('path'));
   }
 
   draftDto = new DraftDto();
@@ -286,78 +292,79 @@ export class ResponderHeaderComponent implements OnInit {
     //   localStorage.getItem('assignedProfile') == '' ||
     //   localStorage.getItem('assignedProfile') == undefined
     // ) {
-      this.openedTab();
-      if(platform == 'WhatsApp' && this.WhatsappData?.List.length > 0){
-        this.commonService.GetProfileDetails(id).subscribe((res: any) => {
-          this.profileId = this.WhatsappData?.id;
-  
-          this.assignQuerry(id, platform);
-        });
-      }
-      if(platform == 'Facebook' && this.FacebookData?.List.length > 0){
-        this.commonService.GetProfileDetails(id).subscribe((res: any) => {
-          this.profileId = res?.id;
-  
-          this.assignQuerry(id, platform);
-        });
-      }
-      if(platform == 'Instagram' && this.InstagramData?.List.length > 0){
-        this.commonService.GetProfileDetails(id).subscribe((res: any) => {
-          this.profileId = res?.id;
-  
-          this.assignQuerry(id, platform);
-        });
-      }
-      if(platform == 'Twitter' && this.TwitterData?.List.length > 0){
-        this.commonService.GetProfileDetails(id).subscribe((res: any) => {
-          this.profileId = res?.id;
-  
-          this.assignQuerry(id, platform);
-        });
-      }
-      if(platform == 'LinkedIn' && this.LinkedinData?.List.length > 0){
-        this.commonService.GetProfileDetails(id).subscribe((res: any) => {
-          this.profileId = res?.id;
-  
-          this.assignQuerry(id, platform);
-        });
-      }
-      if(platform == 'WebChat' && this.WebchatData?.List.length > 0){
-        this.commonService.GetProfileDetails(id).subscribe((res: any) => {
-          this.profileId = res?.id;
-  
-          this.assignQuerry(id, platform);
-        });
-      }
-      if(platform == 'SMS' && this.SmsData?.List.length > 0){
-        this.commonService.GetProfileDetails(id).subscribe((res: any) => {
-          this.profileId = res?.id;
-  
-          this.assignQuerry(id, platform);
-        });
-      }
-      if(platform == 'Email' && this.EmailData?.List.length > 0){
-        this.commonService.GetProfileDetails(id).subscribe((res: any) => {
-          this.profileId = res?.id;
-  
-          this.assignQuerry(id, platform);
-        });
-      }
-      if(platform == 'OfficeEmail' && this.OfficeMailData?.List.length > 0){
-        this.commonService.GetProfileDetails(id).subscribe((res: any) => {
-          this.profileId = res?.id;
-  
-          this.assignQuerry(id, platform);
-        });
-      }
-      if(platform == 'Youtube' && this.YoutubeData?.List.length > 0){
-        this.commonService.GetProfileDetails(id).subscribe((res: any) => {
-          this.profileId = res?.id;
-  
-          this.assignQuerry(id, platform);
-        });
-      }
-      
+    this.openedTab();
+    if (platform == 'WhatsApp' && this.WhatsappData?.List.length > 0) {
+      this.commonService.GetProfileDetails(id).subscribe((res: any) => {
+        this.profileId = this.WhatsappData?.id;
+
+        this.assignQuerry(id, platform);
+      });
+    }
+    if (platform == 'Facebook' && this.FacebookData?.List.length > 0) {
+      this.commonService.GetProfileDetails(id).subscribe((res: any) => {
+        
+        this.profileId = res?.id;
+
+        this.assignQuerry(id, platform);
+      });
+    }
+    if (platform == 'Instagram' && this.InstagramData?.List.length > 0) {
+      this.commonService.GetProfileDetails(id).subscribe((res: any) => {
+        this.profileId = res?.id;
+
+        this.assignQuerry(id, platform);
+      });
+    }
+    if (platform == 'Twitter' && this.TwitterData?.List.length > 0) {
+      this.commonService.GetProfileDetails(id).subscribe((res: any) => {
+        this.profileId = res?.id;
+
+        this.assignQuerry(id, platform);
+      });
+    }
+    if (platform == 'LinkedIn' && this.LinkedinData?.List.length > 0) {
+      this.commonService.GetProfileDetails(id).subscribe((res: any) => {
+        this.profileId = res?.id;
+
+        this.assignQuerry(id, platform);
+      });
+    }
+    if (platform == 'WebChat' && this.WebchatData?.List.length > 0) {
+      this.commonService.GetProfileDetails(id).subscribe((res: any) => {
+        this.profileId = res?.id;
+
+        this.assignQuerry(id, platform);
+      });
+    }
+    if (platform == 'SMS' && this.SmsData?.List.length > 0) {
+      this.commonService.GetProfileDetails(id).subscribe((res: any) => {
+        this.profileId = res?.id;
+
+        this.assignQuerry(id, platform);
+      });
+    }
+    if (platform == 'Email' && this.EmailData?.List.length > 0) {
+      this.commonService.GetProfileDetails(id).subscribe((res: any) => {
+        this.profileId = res?.id;
+
+        this.assignQuerry(id, platform);
+      });
+    }
+    if (platform == 'OfficeEmail' && this.OfficeMailData?.List.length > 0) {
+      this.commonService.GetProfileDetails(id).subscribe((res: any) => {
+        this.profileId = res?.id;
+
+        this.assignQuerry(id, platform);
+      });
+    }
+    if (platform == 'Youtube' && this.YoutubeData?.List.length > 0) {
+      this.commonService.GetProfileDetails(id).subscribe((res: any) => {
+        this.profileId = res?.id;
+
+        this.assignQuerry(id, platform);
+      });
+    }
+
     // } else {
     //   this.reloadComponent('querryAssigned')
     // }
@@ -371,12 +378,14 @@ export class ResponderHeaderComponent implements OnInit {
       platform: platform,
     };
 
-    if(this.assignQuerryDto != null){
+    if (this.assignQuerryDto != null) {
       this.commondata.AssignQuerry(this.assignQuerryDto).subscribe(
-        (res:any) => {
+        (res: any) => {
           this.reloadComponent('queryallocated');
-          this._route.navigateByUrl('/all-inboxes/responder/' + platform);
-          
+          this._route.navigateByUrl(
+            '/all-inboxes/my_inbox/responder/' + platform
+          );
+
           this.fetchId.setPlatform(platform);
           this.fetchId.setOption(id);
           localStorage.setItem('profileId', this.profileId);
@@ -386,10 +395,9 @@ export class ResponderHeaderComponent implements OnInit {
         }
       );
     }
-    
   }
   updateModule(value: string) {
-    this.moduleService.updateModule(value);
+    this.loadModuleService.updateModule(value);
   }
 
   minimizeChat() {
@@ -411,7 +419,10 @@ export class ResponderHeaderComponent implements OnInit {
     if (this.fetchId.platform == 'Instagram') {
       this.totalCount = this.InstaUnrespondedCmntCountByCustomer;
     }
-    if (this.fetchId.platform == 'Email' || this.fetchId.platform == 'OfficeEmail') {
+    if (
+      this.fetchId.platform == 'Email' ||
+      this.fetchId.platform == 'OfficeEmail'
+    ) {
       this.totalCount = this.EmailUnrespondedCmntCountByCustomer;
     }
 
@@ -443,7 +454,6 @@ export class ResponderHeaderComponent implements OnInit {
   profileId: any;
 
   getUserDetails() {
-    
     if (this.id != null || this.id != undefined) {
       localStorage.setItem('storeHeaderOpenedId', this.id);
       this.filterDto = {
@@ -456,7 +466,11 @@ export class ResponderHeaderComponent implements OnInit {
         pageSize: 10,
         isAttachment: false,
         queryType: '',
-        text : "",
+        text: '',
+        flag: this.flag,
+        userName: "",
+        notInclude: "",
+        include: ""
       };
       this.SpinnerService.show();
 
@@ -495,7 +509,10 @@ export class ResponderHeaderComponent implements OnInit {
               if (profiles.platform == 'Instagram') {
                 this.instagramId = profiles.customerUniqueId;
               }
-              if (profiles.platform == 'Email' || profiles.platform == 'OfficeEmail') {
+              if (
+                profiles.platform == 'Email' ||
+                profiles.platform == 'OfficeEmail'
+              ) {
                 this.emailId = profiles.customerUniqueId;
               }
               if (profiles.platform == 'Twitter') {
@@ -527,7 +544,10 @@ export class ResponderHeaderComponent implements OnInit {
             if (this.platformsArray.includes('Instagram')) {
               this.instagram = true;
             }
-            if (this.platformsArray.includes('Email') || this.platformsArray.includes('OfficeEmail')) {
+            if (
+              this.platformsArray.includes('Email') ||
+              this.platformsArray.includes('OfficeEmail')
+            ) {
               this.email = true;
             }
             if (this.platformsArray.includes('WhatsApp')) {
@@ -588,7 +608,6 @@ export class ResponderHeaderComponent implements OnInit {
               this.WcUnrespondedCmntCountByCustomer = res.TotalCount;
             }
             if (this.fetchId.platform == 'SMS') {
-              
               this.SmsUnrespondedCmntCountByCustomer = res.TotalCount;
             }
             if (this.fetchId.platform == 'Twitter') {
@@ -596,9 +615,7 @@ export class ResponderHeaderComponent implements OnInit {
               if (this.TwitterUnrespondedCmntCountByCustomer == 0) {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedMsgCountByCustomer;
-              } else if (
-                this.TwitterUnrespondedMsgCountByCustomer == 0
-              ) {
+              } else if (this.TwitterUnrespondedMsgCountByCustomer == 0) {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedCmntCountByCustomer;
               } else {
@@ -626,7 +643,10 @@ export class ResponderHeaderComponent implements OnInit {
               }
             }
 
-            if (this.fetchId.platform == 'Email' || this.fetchId.platform == 'OfficeEmail') {
+            if (
+              this.fetchId.platform == 'Email' ||
+              this.fetchId.platform == 'OfficeEmail'
+            ) {
               this.EmailUnrespondedCmntCountByCustomer = res.TotalCount;
             }
 
@@ -638,9 +658,11 @@ export class ResponderHeaderComponent implements OnInit {
             }
           }
           res.List[0].user.secondaryProfiles.forEach((profiles: any) => {
-            this.getSecondaryProfileDetails(profiles.customerUniqueId, profiles.platform)
+            this.getSecondaryProfileDetails(
+              profiles.customerUniqueId,
+              profiles.platform
+            );
           });
-        
         });
       this.commondata
         .GetChannelMessageDetail(this.filterDto)
@@ -667,7 +689,10 @@ export class ResponderHeaderComponent implements OnInit {
               if (profiles.platform == 'Instagram') {
                 this.instagramId = profiles.customerUniqueId;
               }
-              if (profiles.platform == 'Email' || profiles.platform == 'OfficeEmail') {
+              if (
+                profiles.platform == 'Email' ||
+                profiles.platform == 'OfficeEmail'
+              ) {
                 this.emailId = profiles.customerUniqueId;
               }
               if (profiles.platform == 'Twitter') {
@@ -705,7 +730,10 @@ export class ResponderHeaderComponent implements OnInit {
             if (this.platformsArray.includes('Instagram')) {
               this.instagram = true;
             }
-            if (this.platformsArray.includes('Email') || this.platformsArray.includes('OfficeEmail')) {
+            if (
+              this.platformsArray.includes('Email') ||
+              this.platformsArray.includes('OfficeEmail')
+            ) {
               this.email = true;
             }
             if (this.platformsArray.includes('WhatsApp')) {
@@ -738,7 +766,7 @@ export class ResponderHeaderComponent implements OnInit {
             this.YoutubeUnrespondedCmntCountByCustomer = 0;
             this.LinkedInUnrespondedCmntCountByCustomer = 0;
             this.totalFbUnrespondedCountByCustomer = 0;
-            this.totalInstaUnrespondedCountByCustomer = 0
+            this.totalInstaUnrespondedCountByCustomer = 0;
             this.totalTwitterUnrespondedCountByCustomer = 0;
             this.FbUnrespondedMsgCountByCustomer = 0;
             this.TwitterUnrespondedMsgCountByCustomer = 0;
@@ -762,9 +790,7 @@ export class ResponderHeaderComponent implements OnInit {
               if (this.TwitterUnrespondedCmntCountByCustomer == 0) {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedMsgCountByCustomer;
-              } else if (
-                this.TwitterUnrespondedMsgCountByCustomer == 0
-              ) {
+              } else if (this.TwitterUnrespondedMsgCountByCustomer == 0) {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedCmntCountByCustomer;
               } else {
@@ -801,9 +827,14 @@ export class ResponderHeaderComponent implements OnInit {
         pageSize: 10,
         isAttachment: false,
         queryType: '',
-        text : "",
+        text: '',
+        flag: this.flag,
+        userName: "",
+        notInclude: "",
+        include: ""
       };
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
+        if (Object.keys(res).length > 0) {
         this.userId = res.List[0].user.userId;
         this.userName = res.List[0]?.user.userName || res.List[0]?.user.userId;
         this.profilePic = res.List[0]?.user.profilePic;
@@ -838,7 +869,10 @@ export class ResponderHeaderComponent implements OnInit {
         if (this.platformsArray.includes('Instagram')) {
           this.instagram = true;
         }
-        if (this.platformsArray.includes('Email') || this.platformsArray.includes('OfficeEmail')) {
+        if (
+          this.platformsArray.includes('Email') ||
+          this.platformsArray.includes('OfficeEmail')
+        ) {
           this.email = true;
         }
         if (this.platformsArray.includes('WhatsApp')) {
@@ -888,7 +922,6 @@ export class ResponderHeaderComponent implements OnInit {
           this.WcUnrespondedCmntCountByCustomer = res.TotalCount;
         }
         if (this.fetchId.platform == 'SMS') {
-          
           this.SmsUnrespondedCmntCountByCustomer = res.TotalCount;
         }
         if (this.fetchId.platform == 'Twitter') {
@@ -897,7 +930,10 @@ export class ResponderHeaderComponent implements OnInit {
         if (this.fetchId.platform == 'Instagram') {
           this.InstaUnrespondedCmntCountByCustomer = res.TotalCount;
         }
-        if (this.fetchId.platform == 'Email' || this.fetchId.platform == 'OfficeEmail') {
+        if (
+          this.fetchId.platform == 'Email' ||
+          this.fetchId.platform == 'OfficeEmail'
+        ) {
           this.EmailUnrespondedCmntCountByCustomer = res.TotalCount;
         }
 
@@ -907,11 +943,15 @@ export class ResponderHeaderComponent implements OnInit {
         if (this.fetchId.platform == 'LinkedIn') {
           this.LinkedInUnrespondedCmntCountByCustomer = res.TotalCount;
         }
-      
+
         res.List[0].user.secondaryProfiles.forEach((profiles: any) => {
-          this.getSecondaryProfileDetails(profiles.customerUniqueId, profiles.platform)
+          this.getSecondaryProfileDetails(
+            profiles.customerUniqueId,
+            profiles.platform
+          );
         });
-      });
+    }
+  });
     } else {
       this.filterDto = {
         // fromDate: '2000-11-30T08:15:36.365Z',
@@ -923,14 +963,17 @@ export class ResponderHeaderComponent implements OnInit {
         pageSize: 10,
         isAttachment: false,
         queryType: '',
-        text : "",
+        text: '',
+        flag: this.flag,
+        userName: "",
+        notInclude: "",
+        include: ""
       };
 
       this.SpinnerService.show();
       this.commondata
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
-          
           if (Object.keys(res).length > 0) {
             this.userId = res.List?.user.userId;
             this.profileId = res.List?.user.id;
@@ -953,7 +996,10 @@ export class ResponderHeaderComponent implements OnInit {
               if (profiles.platform == 'Instagram') {
                 this.instagramId = profiles.customerUniqueId;
               }
-              if (profiles.platform == 'Email' || profiles.platform == 'OfficeEmail') {
+              if (
+                profiles.platform == 'Email' ||
+                profiles.platform == 'OfficeEmail'
+              ) {
                 this.emailId = profiles.customerUniqueId;
               }
               if (profiles.platform == 'Twitter') {
@@ -991,7 +1037,10 @@ export class ResponderHeaderComponent implements OnInit {
             if (this.platformsArray.includes('Instagram')) {
               this.instagram = true;
             }
-            if (this.platformsArray.includes('Email') || this.platformsArray.includes('OfficeEmail')) {
+            if (
+              this.platformsArray.includes('Email') ||
+              this.platformsArray.includes('OfficeEmail')
+            ) {
               this.email = true;
             }
             if (this.platformsArray.includes('WhatsApp')) {
@@ -1050,7 +1099,6 @@ export class ResponderHeaderComponent implements OnInit {
               this.WcUnrespondedCmntCountByCustomer = res.TotalCount;
             }
             if (this.platform == 'SMS') {
-              
               this.SmsUnrespondedCmntCountByCustomer = res.TotalCount;
             }
             if (this.platform == 'Twitter') {
@@ -1058,9 +1106,7 @@ export class ResponderHeaderComponent implements OnInit {
               if (this.TwitterUnrespondedCmntCountByCustomer == 0) {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedMsgCountByCustomer;
-              } else if (
-                this.TwitterUnrespondedMsgCountByCustomer == 0
-              ) {
+              } else if (this.TwitterUnrespondedMsgCountByCustomer == 0) {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedCmntCountByCustomer;
               } else {
@@ -1131,7 +1177,10 @@ export class ResponderHeaderComponent implements OnInit {
               if (profiles.platform == 'Instagram') {
                 this.instagramId = profiles.customerUniqueId;
               }
-              if (profiles.platform == 'Email' || profiles.platform == 'OfficeEmail') {
+              if (
+                profiles.platform == 'Email' ||
+                profiles.platform == 'OfficeEmail'
+              ) {
                 this.emailId = profiles.customerUniqueId;
               }
               if (profiles.platform == 'Twitter') {
@@ -1163,7 +1212,10 @@ export class ResponderHeaderComponent implements OnInit {
             if (this.platformsArray.includes('Instagram')) {
               this.instagram = true;
             }
-            if (this.platformsArray.includes('Email') || this.platformsArray.includes('OfficeEmail')) {
+            if (
+              this.platformsArray.includes('Email') ||
+              this.platformsArray.includes('OfficeEmail')
+            ) {
               this.email = true;
             }
             if (this.platformsArray.includes('WhatsApp')) {
@@ -1224,7 +1276,6 @@ export class ResponderHeaderComponent implements OnInit {
               this.WcUnrespondedCmntCountByCustomer = res.TotalCount;
             }
             if (this.platform == 'SMS') {
-              
               this.SmsUnrespondedCmntCountByCustomer = res.TotalCount;
             }
             if (this.platform == 'Twitter') {
@@ -1232,9 +1283,7 @@ export class ResponderHeaderComponent implements OnInit {
               if (this.TwitterUnrespondedCmntCountByCustomer == 0) {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedMsgCountByCustomer;
-              } else if (
-                this.TwitterUnrespondedMsgCountByCustomer == 0
-              ) {
+              } else if (this.TwitterUnrespondedMsgCountByCustomer == 0) {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedCmntCountByCustomer;
               } else {
@@ -1244,7 +1293,6 @@ export class ResponderHeaderComponent implements OnInit {
               }
             }
             if (this.platform == 'Instagram') {
-              
               this.InstaUnrespondedCmntCountByCustomer = res.TotalCount;
               if (this.InstaUnrespondedMsgCountByCustomer == 0) {
                 this.totalInstaUnrespondedCountByCustomer =
@@ -1268,403 +1316,418 @@ export class ResponderHeaderComponent implements OnInit {
             if (this.platform == 'LinkedIn') {
               this.LinkedInUnrespondedCmntCountByCustomer = res.TotalCount;
             }
-          }
+          
 
           res.List[0].user.secondaryProfiles.forEach((profiles: any) => {
-            this.getSecondaryProfileDetails(profiles.customerUniqueId, profiles.platform)
+            this.getSecondaryProfileDetails(
+              profiles.customerUniqueId,
+              profiles.platform
+            );
           });
+        }
         });
-
-        
     }
     this.SpinnerService.hide();
   }
 
-  FacebookData:any;
-  InstagramData:any;
-  TwitterData:any;
-  YoutubeData:any;
-  EmailData:any;
-  OfficeMailData:any;
-  WhatsappData:any;
-  SmsData:any;
-  WebchatData:any;
-  LinkedinData:any;
+  FacebookData: any;
+  InstagramData: any;
+  TwitterData: any;
+  YoutubeData: any;
+  EmailData: any;
+  OfficeMailData: any;
+  WhatsappData: any;
+  SmsData: any;
+  WebchatData: any;
+  LinkedinData: any;
 
-  getSecondaryProfileDetails(id:string, platform:string) {
-      this.filterDto = {
-        user: id,
-        pageId: '',
-        plateForm: platform,
-        pageNumber: 1,
-        pageSize: 10,
-        isAttachment: false,
-        queryType: '',
-        text : "",
-      };
-      this.commondata
-        .GetChannelConversationDetail(this.filterDto)
-        .subscribe((res: any) => {
-          // if (Object.keys(res).length > 0) {
-          //   this.userId = res.List[0].user.userId;
-          //   this.userName =
-          //     res.List[0].user.userName || res.List[0].user.userId;
-          //   this.profilePic = res.List[0].user.profilePic;
-          //   this.platform = res.List[0].platform;
-          //   this.postType = res.List[0].comments[0].contentType;
-          //   this.profileId = res.List[0].user.id;
+  getSecondaryProfileDetails(id: string, platform: string) {
+    this.filterDto = {
+      user: id,
+      pageId: '',
+      plateForm: platform,
+      pageNumber: 1,
+      pageSize: 10,
+      isAttachment: false,
+      queryType: '',
+      text: '',
+      userName: "",
+        notInclude: "",
+        include: "",
+        flag: ""
+    };
+    this.commondata
+      .GetChannelConversationDetail(this.filterDto)
+      .subscribe((res: any) => {
+        if (Object.keys(res).length > 0) {
+        // if (res != null || res != undefined) {
+        //   this.userId = res.List[0].user.userId;
+        //   this.userName =
+        //     res.List[0].user.userName || res.List[0].user.userId;
+        //   this.profilePic = res.List[0].user.profilePic;
+        //   this.platform = res.List[0].platform;
+        //   this.postType = res.List[0].comments[0].contentType;
+        //   this.profileId = res.List[0].user.id;
 
-          //   this.platformsArray = [];
-          //   this.facebookComment = false;
-          //   this.instagram = false;
-          //   this.whatsapp = false;
-          //   this.sms = false;
-          //   this.twitterComment = false;
-          //   this.email = false;
-          //   this.youtube = false;
-          //   this.phone = false;
-          //   this.webChat = false;
-          //   this.linkedIn = false;
-          //   this.playStore = false;
-          //   this.platformsArray.push(res.List[0].platform);
+        //   this.platformsArray = [];
+        //   this.facebookComment = false;
+        //   this.instagram = false;
+        //   this.whatsapp = false;
+        //   this.sms = false;
+        //   this.twitterComment = false;
+        //   this.email = false;
+        //   this.youtube = false;
+        //   this.phone = false;
+        //   this.webChat = false;
+        //   this.linkedIn = false;
+        //   this.playStore = false;
+        //   this.platformsArray.push(res.List[0].platform);
 
-          //   res.List[0].user.secondaryProfiles.forEach((profiles: any) => {
-          //     this.platformsArray.push(profiles.platform);
+        //   res.List[0].user.secondaryProfiles.forEach((profiles: any) => {
+        //     this.platformsArray.push(profiles.platform);
 
-          //     if (profiles.platform == 'Facebook') {
-          //       this.facebookId = profiles.customerUniqueId;
-          //     }
-          //     if (profiles.platform == 'Instagram') {
-          //       this.instagramId = profiles.customerUniqueId;
-          //     }
-          //     if (profiles.platform == 'Email' || profiles.platform == 'OfficeEmail') {
-          //       this.emailId = profiles.customerUniqueId;
-          //     }
-          //     if (profiles.platform == 'Twitter') {
-          //       this.twitterId = profiles.customerUniqueId;
-          //     }
-          //     if (profiles.platform == 'LinkedIn') {
-          //       this.linkedInId = profiles.customerUniqueId;
-          //     }
-          //     if (profiles.platform == 'Youtube') {
-          //       this.youtubeId = profiles.customerUniqueId;
-          //     }
-          //     if (profiles.platform == 'WhatsApp') {
-          //       this.whatsappId = profiles.customerUniqueId;
-          //     }
-          //     if (profiles.platform == 'WebChat') {
-          //       this.webChatId = profiles.customerUniqueId;
-          //     }
-          //     if (profiles.platform == 'SMS') {
-          //       this.smsId = profiles.customerUniqueId;
-          //     }
-          //   });
+        //     if (profiles.platform == 'Facebook') {
+        //       this.facebookId = profiles.customerUniqueId;
+        //     }
+        //     if (profiles.platform == 'Instagram') {
+        //       this.instagramId = profiles.customerUniqueId;
+        //     }
+        //     if (profiles.platform == 'Email' || profiles.platform == 'OfficeEmail') {
+        //       this.emailId = profiles.customerUniqueId;
+        //     }
+        //     if (profiles.platform == 'Twitter') {
+        //       this.twitterId = profiles.customerUniqueId;
+        //     }
+        //     if (profiles.platform == 'LinkedIn') {
+        //       this.linkedInId = profiles.customerUniqueId;
+        //     }
+        //     if (profiles.platform == 'Youtube') {
+        //       this.youtubeId = profiles.customerUniqueId;
+        //     }
+        //     if (profiles.platform == 'WhatsApp') {
+        //       this.whatsappId = profiles.customerUniqueId;
+        //     }
+        //     if (profiles.platform == 'WebChat') {
+        //       this.webChatId = profiles.customerUniqueId;
+        //     }
+        //     if (profiles.platform == 'SMS') {
+        //       this.smsId = profiles.customerUniqueId;
+        //     }
+        //   });
 
-          //   if (this.platformsArray.includes('Facebook')) {
-          //     this.facebookComment = true;
-          //   }
-          //   if (this.platformsArray.includes('SMS')) {
-          //     this.sms = true;
-          //   }
-          //   if (this.platformsArray.includes('Instagram')) {
-          //     this.instagram = true;
-          //   }
-          //   if (this.platformsArray.includes('Email') || this.platformsArray.includes('OfficeEmail')) {
-          //     this.email = true;
-          //   }
-          //   if (this.platformsArray.includes('WhatsApp')) {
-          //     this.whatsapp = true;
-          //   }
-          //   if (this.platformsArray.includes('WebChat')) {
-          //     this.webChat = true;
-          //   }
-          //   if (this.platformsArray.includes('Twitter')) {
-          //     this.twitterComment = true;
-          //   }
-          //   if (this.platformsArray.includes('Phone')) {
-          //     this.phone = true;
-          //   }
-          //   if (this.platformsArray.includes('LinkedIn')) {
-          //     this.linkedIn = true;
-          //   }
-          //   if (this.platformsArray.includes('PlayStore')) {
-          //     this.playStore = true;
-          //   }
-          //   if (this.platformsArray.includes('Youtube')) {
-          //     this.youtube = true;
-          //   }
-          //   this.FbUnrespondedCmntCountByCustomer = 0;
-          //   this.WtsapUnrespondedCmntCountByCustomer = 0;
-          //   this.WcUnrespondedCmntCountByCustomer = 0;
-          //   this.SmsUnrespondedCmntCountByCustomer = 0;
-          //   this.TwitterUnrespondedCmntCountByCustomer = 0;
-          //   this.InstaUnrespondedCmntCountByCustomer = 0;
-          //   this.EmailUnrespondedCmntCountByCustomer = 0;
-          //   this.YoutubeUnrespondedCmntCountByCustomer = 0;
-          //   this.LinkedInUnrespondedCmntCountByCustomer = 0;
-          //   this.totalFbUnrespondedCountByCustomer = 0;
-          //   this.totalTwitterUnrespondedCountByCustomer = 0;
-          //   this.totalInstaUnrespondedCountByCustomer = 0;
-          //   // this.FbUnrespondedMsgCountByCustomer = 0;
-          //   // this.TwitterUnrespondedMsgCountByCustomer = 0;
-          //   this.InstaUnrespondedMsgCountByCustomer = 0;
+        //   if (this.platformsArray.includes('Facebook')) {
+        //     this.facebookComment = true;
+        //   }
+        //   if (this.platformsArray.includes('SMS')) {
+        //     this.sms = true;
+        //   }
+        //   if (this.platformsArray.includes('Instagram')) {
+        //     this.instagram = true;
+        //   }
+        //   if (this.platformsArray.includes('Email') || this.platformsArray.includes('OfficeEmail')) {
+        //     this.email = true;
+        //   }
+        //   if (this.platformsArray.includes('WhatsApp')) {
+        //     this.whatsapp = true;
+        //   }
+        //   if (this.platformsArray.includes('WebChat')) {
+        //     this.webChat = true;
+        //   }
+        //   if (this.platformsArray.includes('Twitter')) {
+        //     this.twitterComment = true;
+        //   }
+        //   if (this.platformsArray.includes('Phone')) {
+        //     this.phone = true;
+        //   }
+        //   if (this.platformsArray.includes('LinkedIn')) {
+        //     this.linkedIn = true;
+        //   }
+        //   if (this.platformsArray.includes('PlayStore')) {
+        //     this.playStore = true;
+        //   }
+        //   if (this.platformsArray.includes('Youtube')) {
+        //     this.youtube = true;
+        //   }
+        //   this.FbUnrespondedCmntCountByCustomer = 0;
+        //   this.WtsapUnrespondedCmntCountByCustomer = 0;
+        //   this.WcUnrespondedCmntCountByCustomer = 0;
+        //   this.SmsUnrespondedCmntCountByCustomer = 0;
+        //   this.TwitterUnrespondedCmntCountByCustomer = 0;
+        //   this.InstaUnrespondedCmntCountByCustomer = 0;
+        //   this.EmailUnrespondedCmntCountByCustomer = 0;
+        //   this.YoutubeUnrespondedCmntCountByCustomer = 0;
+        //   this.LinkedInUnrespondedCmntCountByCustomer = 0;
+        //   this.totalFbUnrespondedCountByCustomer = 0;
+        //   this.totalTwitterUnrespondedCountByCustomer = 0;
+        //   this.totalInstaUnrespondedCountByCustomer = 0;
+        //   // this.FbUnrespondedMsgCountByCustomer = 0;
+        //   // this.TwitterUnrespondedMsgCountByCustomer = 0;
+        //   this.InstaUnrespondedMsgCountByCustomer = 0;
 
-          //   if (this.fetchId.platform == 'Facebook') {
-          //     this.FbUnrespondedCmntCountByCustomer = res.TotalCount;
-          //     if (this.FbUnrespondedMsgCountByCustomer == 0) {
-          //       this.totalFbUnrespondedCountByCustomer =
-          //         this.FbUnrespondedCmntCountByCustomer;
-          //     } else if (this.FbUnrespondedCmntCountByCustomer == 0) {
-          //       this.totalFbUnrespondedCountByCustomer =
-          //         this.FbUnrespondedMsgCountByCustomer;
-          //     } else {
-          //       this.totalFbUnrespondedCountByCustomer =
-          //         this.FbUnrespondedCmntCountByCustomer +
-          //         this.FbUnrespondedMsgCountByCustomer;
-          //     }
-          //   }
-          //   if (this.fetchId.platform == 'WhatsApp') {
-          //     this.WtsapUnrespondedCmntCountByCustomer = res.TotalCount;
-          //   }
-          //   if (this.fetchId.platform == 'Webchat') {
-          //     this.WcUnrespondedCmntCountByCustomer = res.TotalCount;
-          //   }
-          //   if (this.fetchId.platform == 'SMS') {
-              
-          //     this.SmsUnrespondedCmntCountByCustomer = res.TotalCount;
-          //   }
-          //   if (this.fetchId.platform == 'Twitter') {
-          //     this.TwitterUnrespondedCmntCountByCustomer = res.TotalCount;
-          //     if (this.TwitterUnrespondedCmntCountByCustomer == 0) {
-          //       this.totalTwitterUnrespondedCountByCustomer =
-          //         this.TwitterUnrespondedMsgCountByCustomer;
-          //     } else if (
-          //       this.TwitterUnrespondedMsgCountByCustomer == 0
-          //     ) {
-          //       this.totalTwitterUnrespondedCountByCustomer =
-          //         this.TwitterUnrespondedCmntCountByCustomer;
-          //     } else {
-          //       this.totalTwitterUnrespondedCountByCustomer =
-          //         this.TwitterUnrespondedCmntCountByCustomer +
-          //         this.TwitterUnrespondedMsgCountByCustomer;
-          //     }
-          //   }
-          //   // if (this.fetchId.platform == 'Instagram') {
-          //   //   this.InstaUnrespondedCmntCountByCustomer = res.TotalCount;
-          //   // }
+        //   if (this.fetchId.platform == 'Facebook') {
+        //     this.FbUnrespondedCmntCountByCustomer = res.TotalCount;
+        //     if (this.FbUnrespondedMsgCountByCustomer == 0) {
+        //       this.totalFbUnrespondedCountByCustomer =
+        //         this.FbUnrespondedCmntCountByCustomer;
+        //     } else if (this.FbUnrespondedCmntCountByCustomer == 0) {
+        //       this.totalFbUnrespondedCountByCustomer =
+        //         this.FbUnrespondedMsgCountByCustomer;
+        //     } else {
+        //       this.totalFbUnrespondedCountByCustomer =
+        //         this.FbUnrespondedCmntCountByCustomer +
+        //         this.FbUnrespondedMsgCountByCustomer;
+        //     }
+        //   }
+        //   if (this.fetchId.platform == 'WhatsApp') {
+        //     this.WtsapUnrespondedCmntCountByCustomer = res.TotalCount;
+        //   }
+        //   if (this.fetchId.platform == 'Webchat') {
+        //     this.WcUnrespondedCmntCountByCustomer = res.TotalCount;
+        //   }
+        //   if (this.fetchId.platform == 'SMS') {
 
-          //   if (this.fetchId.platform == 'Instagram') {
-          //     this.InstaUnrespondedCmntCountByCustomer = res.TotalCount;
-          //     if (this.InstaUnrespondedMsgCountByCustomer == 0) {
-          //       this.totalInstaUnrespondedCountByCustomer =
-          //         this.InstaUnrespondedCmntCountByCustomer;
-          //     } else if (this.InstaUnrespondedCmntCountByCustomer == 0) {
-          //       this.totalInstaUnrespondedCountByCustomer =
-          //         this.InstaUnrespondedMsgCountByCustomer;
-          //     } else {
-          //       this.totalInstaUnrespondedCountByCustomer =
-          //         this.InstaUnrespondedCmntCountByCustomer +
-          //         this.InstaUnrespondedMsgCountByCustomer;
-          //     }
-          //   }
+        //     this.SmsUnrespondedCmntCountByCustomer = res.TotalCount;
+        //   }
+        //   if (this.fetchId.platform == 'Twitter') {
+        //     this.TwitterUnrespondedCmntCountByCustomer = res.TotalCount;
+        //     if (this.TwitterUnrespondedCmntCountByCustomer == 0) {
+        //       this.totalTwitterUnrespondedCountByCustomer =
+        //         this.TwitterUnrespondedMsgCountByCustomer;
+        //     } else if (
+        //       this.TwitterUnrespondedMsgCountByCustomer == 0
+        //     ) {
+        //       this.totalTwitterUnrespondedCountByCustomer =
+        //         this.TwitterUnrespondedCmntCountByCustomer;
+        //     } else {
+        //       this.totalTwitterUnrespondedCountByCustomer =
+        //         this.TwitterUnrespondedCmntCountByCustomer +
+        //         this.TwitterUnrespondedMsgCountByCustomer;
+        //     }
+        //   }
+        //   // if (this.fetchId.platform == 'Instagram') {
+        //   //   this.InstaUnrespondedCmntCountByCustomer = res.TotalCount;
+        //   // }
 
-          //   if (this.fetchId.platform == 'Email' || this.fetchId.platform == 'OfficeEmail') {
-          //     this.EmailUnrespondedCmntCountByCustomer = res.TotalCount;
-          //   }
+        //   if (this.fetchId.platform == 'Instagram') {
+        //     this.InstaUnrespondedCmntCountByCustomer = res.TotalCount;
+        //     if (this.InstaUnrespondedMsgCountByCustomer == 0) {
+        //       this.totalInstaUnrespondedCountByCustomer =
+        //         this.InstaUnrespondedCmntCountByCustomer;
+        //     } else if (this.InstaUnrespondedCmntCountByCustomer == 0) {
+        //       this.totalInstaUnrespondedCountByCustomer =
+        //         this.InstaUnrespondedMsgCountByCustomer;
+        //     } else {
+        //       this.totalInstaUnrespondedCountByCustomer =
+        //         this.InstaUnrespondedCmntCountByCustomer +
+        //         this.InstaUnrespondedMsgCountByCustomer;
+        //     }
+        //   }
 
-          //   if (this.fetchId.platform == 'Youtube') {
-          //     this.YoutubeUnrespondedCmntCountByCustomer = res.TotalCount;
-          //   }
-          //   if (this.fetchId.platform == 'LinkedIn') {
-          //     this.LinkedInUnrespondedCmntCountByCustomer = res.TotalCount;
-          //   }
-          // }
-          if (Object.keys(res).length > 0) {
-            if (platform == 'Facebook') {
-              this.FacebookData = res;
-              this.totalFbUnrespondedCountByCustomer = this.FacebookData.TotalCount;
-            }
-            if (platform == 'Instagram') {
-              this.InstagramData = res;
-              this.totalInstaUnrespondedCountByCustomer = this.InstagramData.TotalCount;
-            }
-            if (platform == 'Email' || platform == 'OfficeEmail') {
-              this.EmailData = res;
-              this.EmailUnrespondedCmntCountByCustomer = this.EmailData.TotalCount;
-            }
-            if (platform == 'Twitter') {
-              this.TwitterData = res;
-              this.totalTwitterUnrespondedCountByCustomer = this.TwitterData.TotalCount;
-            }
-            if (platform == 'LinkedIn') {
-              this.LinkedinData = res;
-              this.LinkedInUnrespondedCmntCountByCustomer = this.LinkedinData.TotalCount;
-            }
-            if (platform == 'Youtube') {
-              this.YoutubeData = res;
-              this.YoutubeUnrespondedCmntCountByCustomer = this.YoutubeData.TotalCount;
-            }
-            if (platform == 'WhatsApp') {
-              this.WhatsappData = res;
-              this.WtsapUnrespondedCmntCountByCustomer = this.WhatsappData.TotalCount;
-            }
-            if (platform == 'WebChat') {
-              this.WebchatData = res;
-              this.WcUnrespondedCmntCountByCustomer = this.WebchatData.TotalCount;
-            }
-            if (platform == 'SMS') {
-              this.SmsData = res;
-              this.SmsUnrespondedCmntCountByCustomer = this.SmsData.TotalCount;
-            }
+        //   if (this.fetchId.platform == 'Email' || this.fetchId.platform == 'OfficeEmail') {
+        //     this.EmailUnrespondedCmntCountByCustomer = res.TotalCount;
+        //   }
+
+        //   if (this.fetchId.platform == 'Youtube') {
+        //     this.YoutubeUnrespondedCmntCountByCustomer = res.TotalCount;
+        //   }
+        //   if (this.fetchId.platform == 'LinkedIn') {
+        //     this.LinkedInUnrespondedCmntCountByCustomer = res.TotalCount;
+        //   }
+        // }
+        if (res != null || res != undefined) {
+          if (platform == 'Facebook') {
+            this.FacebookData = res;
+            this.totalFbUnrespondedCountByCustomer =
+              this.FacebookData.TotalCount;
           }
-        });
-      // this.commondata
-      //   .GetChannelMessageDetail(this.filterDto)
-      //   .subscribe((res: any) => {
-      //     // if (Object.keys(res).length > 0) {
-      //     //   this.userId = res.List?.user.userId;
-      //     //   this.profileId = res.List?.user.id;
-      //     //   this.userName = res.List?.user.userName || res.List?.user.userId;
-      //     //   this.profilePic = res.List?.user.profilePic;
-      //     //   this.platform = res.List?.platform;
-      //     //   this.postType = res.List?.dm.contentType;
+          if (platform == 'Instagram') {
+            this.InstagramData = res;
+            this.totalInstaUnrespondedCountByCustomer =
+              this.InstagramData.TotalCount;
+          }
+          if (platform == 'Email' || platform == 'OfficeEmail') {
+            this.EmailData = res;
+            this.EmailUnrespondedCmntCountByCustomer =
+              this.EmailData.TotalCount;
+          }
+          if (platform == 'Twitter') {
+            this.TwitterData = res;
+            this.totalTwitterUnrespondedCountByCustomer =
+              this.TwitterData.TotalCount;
+          }
+          if (platform == 'LinkedIn') {
+            this.LinkedinData = res;
+            this.LinkedInUnrespondedCmntCountByCustomer =
+              this.LinkedinData.TotalCount;
+          }
+          if (platform == 'Youtube') {
+            this.YoutubeData = res;
+            this.YoutubeUnrespondedCmntCountByCustomer =
+              this.YoutubeData.TotalCount;
+          }
+          if (platform == 'WhatsApp') {
+            this.WhatsappData = res;
+            this.WtsapUnrespondedCmntCountByCustomer =
+              this.WhatsappData.TotalCount;
+          }
+          if (platform == 'WebChat') {
+            this.WebchatData = res;
+            this.WcUnrespondedCmntCountByCustomer = this.WebchatData.TotalCount;
+          }
+          if (platform == 'SMS') {
+            this.SmsData = res;
+            this.SmsUnrespondedCmntCountByCustomer = this.SmsData.TotalCount;
+          }
+        }
+   }
+   });
+    // this.commondata
+    //   .GetChannelMessageDetail(this.filterDto)
+    //   .subscribe((res: any) => {
+    //     // if (Object.keys(res).length > 0) {
+    //     //   this.userId = res.List?.user.userId;
+    //     //   this.profileId = res.List?.user.id;
+    //     //   this.userName = res.List?.user.userName || res.List?.user.userId;
+    //     //   this.profilePic = res.List?.user.profilePic;
+    //     //   this.platform = res.List?.platform;
+    //     //   this.postType = res.List?.dm.contentType;
 
-      //     //   this.platformsArrayForMessages = [];
-      //     //   this.facebookMessage = false;
-      //     //   this.twitterMessage = false;
-      //     //   this.platformsArray.push(res.List?.platform);
+    //     //   this.platformsArrayForMessages = [];
+    //     //   this.facebookMessage = false;
+    //     //   this.twitterMessage = false;
+    //     //   this.platformsArray.push(res.List?.platform);
 
-      //     //   res.List?.user.secondaryProfiles.forEach((profiles: any) => {
-      //     //     this.platformsArray.push(profiles.platform);
+    //     //   res.List?.user.secondaryProfiles.forEach((profiles: any) => {
+    //     //     this.platformsArray.push(profiles.platform);
 
-      //     //     if (profiles.platform == 'Facebook') {
-      //     //       this.facebookId = profiles.customerUniqueId;
-      //     //     }
-      //     //     if (profiles.platform == 'Instagram') {
-      //     //       this.instagramId = profiles.customerUniqueId;
-      //     //     }
-      //     //     if (profiles.platform == 'Email' || profiles.platform == 'OfficeEmail') {
-      //     //       this.emailId = profiles.customerUniqueId;
-      //     //     }
-      //     //     if (profiles.platform == 'Twitter') {
-      //     //       this.twitterId = profiles.customerUniqueId;
-      //     //     }
-      //     //     if (profiles.platform == 'LinkedIn') {
-      //     //       this.linkedInId = profiles.customerUniqueId;
-      //     //     }
-      //     //     if (profiles.platform == 'Youtube') {
-      //     //       this.youtubeId = profiles.customerUniqueId;
-      //     //     }
-      //     //     if (profiles.platform == 'WhatsApp') {
-      //     //       this.whatsappId = profiles.customerUniqueId;
-      //     //     }
-      //     //     if (profiles.platform == 'WebChat') {
-      //     //       this.webChatId = profiles.customerUniqueId;
-      //     //     }
-      //     //     if (profiles.platform == 'SMS') {
-      //     //       this.smsId = profiles.customerUniqueId;
-      //     //     }
-      //     //   });
+    //     //     if (profiles.platform == 'Facebook') {
+    //     //       this.facebookId = profiles.customerUniqueId;
+    //     //     }
+    //     //     if (profiles.platform == 'Instagram') {
+    //     //       this.instagramId = profiles.customerUniqueId;
+    //     //     }
+    //     //     if (profiles.platform == 'Email' || profiles.platform == 'OfficeEmail') {
+    //     //       this.emailId = profiles.customerUniqueId;
+    //     //     }
+    //     //     if (profiles.platform == 'Twitter') {
+    //     //       this.twitterId = profiles.customerUniqueId;
+    //     //     }
+    //     //     if (profiles.platform == 'LinkedIn') {
+    //     //       this.linkedInId = profiles.customerUniqueId;
+    //     //     }
+    //     //     if (profiles.platform == 'Youtube') {
+    //     //       this.youtubeId = profiles.customerUniqueId;
+    //     //     }
+    //     //     if (profiles.platform == 'WhatsApp') {
+    //     //       this.whatsappId = profiles.customerUniqueId;
+    //     //     }
+    //     //     if (profiles.platform == 'WebChat') {
+    //     //       this.webChatId = profiles.customerUniqueId;
+    //     //     }
+    //     //     if (profiles.platform == 'SMS') {
+    //     //       this.smsId = profiles.customerUniqueId;
+    //     //     }
+    //     //   });
 
-      //     //   if (this.platformsArray.includes('Facebook')) {
-      //     //     this.facebookMessage = true;
-      //     //     this.facebookComment = true;
-      //     //   }
-      //     //   if (this.platformsArray.includes('SMS')) {
-      //     //     this.sms = true;
-      //     //   }
+    //     //   if (this.platformsArray.includes('Facebook')) {
+    //     //     this.facebookMessage = true;
+    //     //     this.facebookComment = true;
+    //     //   }
+    //     //   if (this.platformsArray.includes('SMS')) {
+    //     //     this.sms = true;
+    //     //   }
 
-      //     //   if (this.platformsArray.includes('Twitter')) {
-      //     //     this.twitterMessage = true;
-      //     //     this.twitterComment = true;
-      //     //   }
-      //     //   if (this.platformsArray.includes('Instagram')) {
-      //     //     this.instagram = true;
-      //     //   }
-      //     //   if (this.platformsArray.includes('Email') || this.platformsArray.includes('OfficeEmail')) {
-      //     //     this.email = true;
-      //     //   }
-      //     //   if (this.platformsArray.includes('WhatsApp')) {
-      //     //     this.whatsapp = true;
-      //     //   }
-      //     //   if (this.platformsArray.includes('WebChat')) {
-      //     //     this.webChat = true;
-      //     //   }
-      //     //   if (this.platformsArray.includes('Phone')) {
-      //     //     this.phone = true;
-      //     //   }
-      //     //   if (this.platformsArray.includes('LinkedIn')) {
-      //     //     this.linkedIn = true;
-      //     //   }
-      //     //   if (this.platformsArray.includes('PlayStore')) {
-      //     //     this.playStore = true;
-      //     //   }
-      //     //   if (this.platformsArray.includes('Youtube')) {
-      //     //     this.youtube = true;
-      //     //   }
+    //     //   if (this.platformsArray.includes('Twitter')) {
+    //     //     this.twitterMessage = true;
+    //     //     this.twitterComment = true;
+    //     //   }
+    //     //   if (this.platformsArray.includes('Instagram')) {
+    //     //     this.instagram = true;
+    //     //   }
+    //     //   if (this.platformsArray.includes('Email') || this.platformsArray.includes('OfficeEmail')) {
+    //     //     this.email = true;
+    //     //   }
+    //     //   if (this.platformsArray.includes('WhatsApp')) {
+    //     //     this.whatsapp = true;
+    //     //   }
+    //     //   if (this.platformsArray.includes('WebChat')) {
+    //     //     this.webChat = true;
+    //     //   }
+    //     //   if (this.platformsArray.includes('Phone')) {
+    //     //     this.phone = true;
+    //     //   }
+    //     //   if (this.platformsArray.includes('LinkedIn')) {
+    //     //     this.linkedIn = true;
+    //     //   }
+    //     //   if (this.platformsArray.includes('PlayStore')) {
+    //     //     this.playStore = true;
+    //     //   }
+    //     //   if (this.platformsArray.includes('Youtube')) {
+    //     //     this.youtube = true;
+    //     //   }
 
-      //     //   // this.FbUnrespondedCmntCountByCustomer = 0;
-      //     //   this.WtsapUnrespondedCmntCountByCustomer = 0;
-      //     //   this.WcUnrespondedCmntCountByCustomer = 0;
-      //     //   this.SmsUnrespondedCmntCountByCustomer = 0;
-      //     //   // this.TwitterUnrespondedCmntCountByCustomer = 0;
-      //     //   // this.InstaUnrespondedCmntCountByCustomer = 0;
-      //     //   this.InstaUnrespondedMsgCountByCustomer = 0;
-      //     //   this.EmailUnrespondedCmntCountByCustomer = 0;
-      //     //   this.YoutubeUnrespondedCmntCountByCustomer = 0;
-      //     //   this.LinkedInUnrespondedCmntCountByCustomer = 0;
-      //     //   this.totalFbUnrespondedCountByCustomer = 0;
-      //     //   this.totalInstaUnrespondedCountByCustomer = 0
-      //     //   this.totalTwitterUnrespondedCountByCustomer = 0;
-      //     //   this.FbUnrespondedMsgCountByCustomer = 0;
-      //     //   this.TwitterUnrespondedMsgCountByCustomer = 0;
+    //     //   // this.FbUnrespondedCmntCountByCustomer = 0;
+    //     //   this.WtsapUnrespondedCmntCountByCustomer = 0;
+    //     //   this.WcUnrespondedCmntCountByCustomer = 0;
+    //     //   this.SmsUnrespondedCmntCountByCustomer = 0;
+    //     //   // this.TwitterUnrespondedCmntCountByCustomer = 0;
+    //     //   // this.InstaUnrespondedCmntCountByCustomer = 0;
+    //     //   this.InstaUnrespondedMsgCountByCustomer = 0;
+    //     //   this.EmailUnrespondedCmntCountByCustomer = 0;
+    //     //   this.YoutubeUnrespondedCmntCountByCustomer = 0;
+    //     //   this.LinkedInUnrespondedCmntCountByCustomer = 0;
+    //     //   this.totalFbUnrespondedCountByCustomer = 0;
+    //     //   this.totalInstaUnrespondedCountByCustomer = 0
+    //     //   this.totalTwitterUnrespondedCountByCustomer = 0;
+    //     //   this.FbUnrespondedMsgCountByCustomer = 0;
+    //     //   this.TwitterUnrespondedMsgCountByCustomer = 0;
 
-      //     //   if (this.fetchId.platform == 'Facebook') {
-      //     //     this.FbUnrespondedMsgCountByCustomer = res.TotalCount;
-      //     //     if (this.FbUnrespondedMsgCountByCustomer == 0) {
-      //     //       this.totalFbUnrespondedCountByCustomer =
-      //     //         this.FbUnrespondedCmntCountByCustomer;
-      //     //     } else if (this.FbUnrespondedCmntCountByCustomer == 0) {
-      //     //       this.totalFbUnrespondedCountByCustomer =
-      //     //         this.FbUnrespondedMsgCountByCustomer;
-      //     //     } else {
-      //     //       this.totalFbUnrespondedCountByCustomer =
-      //     //         this.FbUnrespondedCmntCountByCustomer +
-      //     //         this.FbUnrespondedMsgCountByCustomer;
-      //     //     }
-      //     //   }
-      //     //   if (this.fetchId.platform == 'Twitter') {
-      //     //     this.TwitterUnrespondedMsgCountByCustomer = res.TotalCount;
-      //     //     if (this.TwitterUnrespondedCmntCountByCustomer == 0) {
-      //     //       this.totalTwitterUnrespondedCountByCustomer =
-      //     //         this.TwitterUnrespondedMsgCountByCustomer;
-      //     //     } else if (
-      //     //       this.TwitterUnrespondedMsgCountByCustomer == 0
-      //     //     ) {
-      //     //       this.totalTwitterUnrespondedCountByCustomer =
-      //     //         this.TwitterUnrespondedCmntCountByCustomer;
-      //     //     } else {
-      //     //       this.totalTwitterUnrespondedCountByCustomer =
-      //     //         this.TwitterUnrespondedCmntCountByCustomer +
-      //     //         this.TwitterUnrespondedMsgCountByCustomer;
-      //     //     }
-      //     //   }
-      //     //   if (this.fetchId.platform == 'Instagram') {
-      //     //     this.InstaUnrespondedMsgCountByCustomer = res.TotalCount;
-      //     //     if (this.InstaUnrespondedMsgCountByCustomer == 0) {
-      //     //       this.totalInstaUnrespondedCountByCustomer =
-      //     //         this.InstaUnrespondedCmntCountByCustomer;
-      //     //     } else if (this.InstaUnrespondedCmntCountByCustomer == 0) {
-      //     //       this.totalInstaUnrespondedCountByCustomer =
-      //     //         this.InstaUnrespondedMsgCountByCustomer;
-      //     //     } else {
-      //     //       this.totalInstaUnrespondedCountByCustomer =
-      //     //         this.InstaUnrespondedCmntCountByCustomer +
-      //     //         this.InstaUnrespondedMsgCountByCustomer;
-      //     //     }
-      //     //   }
-      //     // }
-      //   });
+    //     //   if (this.fetchId.platform == 'Facebook') {
+    //     //     this.FbUnrespondedMsgCountByCustomer = res.TotalCount;
+    //     //     if (this.FbUnrespondedMsgCountByCustomer == 0) {
+    //     //       this.totalFbUnrespondedCountByCustomer =
+    //     //         this.FbUnrespondedCmntCountByCustomer;
+    //     //     } else if (this.FbUnrespondedCmntCountByCustomer == 0) {
+    //     //       this.totalFbUnrespondedCountByCustomer =
+    //     //         this.FbUnrespondedMsgCountByCustomer;
+    //     //     } else {
+    //     //       this.totalFbUnrespondedCountByCustomer =
+    //     //         this.FbUnrespondedCmntCountByCustomer +
+    //     //         this.FbUnrespondedMsgCountByCustomer;
+    //     //     }
+    //     //   }
+    //     //   if (this.fetchId.platform == 'Twitter') {
+    //     //     this.TwitterUnrespondedMsgCountByCustomer = res.TotalCount;
+    //     //     if (this.TwitterUnrespondedCmntCountByCustomer == 0) {
+    //     //       this.totalTwitterUnrespondedCountByCustomer =
+    //     //         this.TwitterUnrespondedMsgCountByCustomer;
+    //     //     } else if (
+    //     //       this.TwitterUnrespondedMsgCountByCustomer == 0
+    //     //     ) {
+    //     //       this.totalTwitterUnrespondedCountByCustomer =
+    //     //         this.TwitterUnrespondedCmntCountByCustomer;
+    //     //     } else {
+    //     //       this.totalTwitterUnrespondedCountByCustomer =
+    //     //         this.TwitterUnrespondedCmntCountByCustomer +
+    //     //         this.TwitterUnrespondedMsgCountByCustomer;
+    //     //     }
+    //     //   }
+    //     //   if (this.fetchId.platform == 'Instagram') {
+    //     //     this.InstaUnrespondedMsgCountByCustomer = res.TotalCount;
+    //     //     if (this.InstaUnrespondedMsgCountByCustomer == 0) {
+    //     //       this.totalInstaUnrespondedCountByCustomer =
+    //     //         this.InstaUnrespondedCmntCountByCustomer;
+    //     //     } else if (this.InstaUnrespondedCmntCountByCustomer == 0) {
+    //     //       this.totalInstaUnrespondedCountByCustomer =
+    //     //         this.InstaUnrespondedMsgCountByCustomer;
+    //     //     } else {
+    //     //       this.totalInstaUnrespondedCountByCustomer =
+    //     //         this.InstaUnrespondedCmntCountByCustomer +
+    //     //         this.InstaUnrespondedMsgCountByCustomer;
+    //     //     }
+    //     //   }
+    //     // }
+    //   });
   }
 
   AgentsTeamList: any;
@@ -1672,15 +1735,16 @@ export class ResponderHeaderComponent implements OnInit {
 
   ActiveAgents: any[] = [];
   getAgentsTeamList() {
-    
     this.commondata.GetAgentsTeamList().subscribe((res: any) => {
+      if (Object.keys(res).length > 0) {
       this.AgentsTeamList = res;
-      this.ActiveAgents = []
-      this.AgentsTeamList.forEach((user:any) => {
-        if(user.userId != localStorage.getItem('agentId')){
-          this.ActiveAgents.push(user)
+      this.ActiveAgents = [];
+      this.AgentsTeamList.forEach((user: any) => {
+        if (user.userId != localStorage.getItem('agentId')) {
+          this.ActiveAgents.push(user);
         }
       });
+    }
     });
   }
 
@@ -1693,10 +1757,9 @@ export class ResponderHeaderComponent implements OnInit {
   markAsCompleteDto = new MarkAsCompleteDto();
 
   markAsComplete(plateForm: any, userId: any) {
-    
     this.markAsCompleteDto.user = userId;
     this.markAsCompleteDto.plateFrom = plateForm;
-    this.markAsCompleteDto.userId = Number(localStorage.getItem('agentId'))
+    this.markAsCompleteDto.userId = Number(localStorage.getItem('agentId'));
 
     this.commondata.MarkAsComplete(this.markAsCompleteDto).subscribe(
       (res: any) => {
@@ -1714,14 +1777,13 @@ export class ResponderHeaderComponent implements OnInit {
   }
 
   openedTab() {
-
     // if(!this.postType){
-      
-      const channel = this.currentUrl.split('/')[3];
-      this.postType = channel;
+
+    const channel = this.currentUrl.split('/')[4];
+    this.postType = channel;
     // }
-    
-   // if(localStorage.getItem('assignedProfile') == null || localStorage.getItem('assignedProfile') == '' || localStorage.getItem('assignedProfile') == undefined){
+
+    // if(localStorage.getItem('assignedProfile') == null || localStorage.getItem('assignedProfile') == '' || localStorage.getItem('assignedProfile') == undefined){
     if (this.postType == 'Instagram') {
       this.facebookTab = false;
       this.instagramTab = true;
@@ -1762,7 +1824,6 @@ export class ResponderHeaderComponent implements OnInit {
       this.playStoreTab = false;
     }
     if (this.postType == 'Email' || this.postType == 'OfficeEmail') {
-      
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1852,9 +1913,9 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = true;
       this.playStoreTab = false;
     }
-  // } else {
-  //   this.reloadComponent('querryAssigned')
-  // }
+    // } else {
+    //   this.reloadComponent('querryAssigned')
+    // }
   }
 
   showAgentsList: boolean = false;
@@ -1888,17 +1949,15 @@ export class ResponderHeaderComponent implements OnInit {
     this.commondata.AssignToAnotherAgent(this.assignQuerryDto).subscribe(
       (res: any) => {
         this.reloadComponent('queryallocatedtoanotheruser');
-        //  alert(res.message);
         this.closeTeamList();
-        this.route.navigateByUrl('/all-inboxes');
+        this.route.navigateByUrl('/all-inboxes/my_inbox');
         this.loadModuleService.updateModule('all-inboxes')
-      localStorage.setItem('assignedProfile','')
+        localStorage.setItem('assignedProfile', '');
       },
       (error) => {
-        
-        if(error.error.message === "User Information Not added Team"){
+        if (error.error.message === 'User Information Not added Team') {
           this.reloadComponent('noAgentSelected');
-        };
+        }
       }
     );
   }
@@ -2008,31 +2067,31 @@ export class ResponderHeaderComponent implements OnInit {
   closeToaster() {
     this.toastermessage = false;
   }
-  commentStatusDto = new CommentStatusDto;
+  commentStatusDto = new CommentStatusDto();
   markAllAsRead(comId: number = 0, type: string = '') {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = localStorage.getItem('parent') || '{}';
     this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-   // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
 
     this.commonService.MarkAllAsRead(this.commentStatusDto).subscribe(
       (res: any) => {
         this.reloadComponent('markAllAsRead');
         this.FbUnrespondedCmntCountByCustomer = 0;
-            this.WtsapUnrespondedCmntCountByCustomer = 0;
-            this.WcUnrespondedCmntCountByCustomer = 0;
-            this.SmsUnrespondedCmntCountByCustomer = 0;
-            this.TwitterUnrespondedCmntCountByCustomer = 0;
-            this.InstaUnrespondedCmntCountByCustomer = 0;
-            this.EmailUnrespondedCmntCountByCustomer = 0;
-            this.YoutubeUnrespondedCmntCountByCustomer = 0;
-            this.LinkedInUnrespondedCmntCountByCustomer = 0;
-            this.totalFbUnrespondedCountByCustomer = 0;
-            this.totalInstaUnrespondedCountByCustomer = 0;
-            this.totalTwitterUnrespondedCountByCustomer = 0;
-            this.FbUnrespondedMsgCountByCustomer = 0;
-            this.TwitterUnrespondedMsgCountByCustomer = 0;
+        this.WtsapUnrespondedCmntCountByCustomer = 0;
+        this.WcUnrespondedCmntCountByCustomer = 0;
+        this.SmsUnrespondedCmntCountByCustomer = 0;
+        this.TwitterUnrespondedCmntCountByCustomer = 0;
+        this.InstaUnrespondedCmntCountByCustomer = 0;
+        this.EmailUnrespondedCmntCountByCustomer = 0;
+        this.YoutubeUnrespondedCmntCountByCustomer = 0;
+        this.LinkedInUnrespondedCmntCountByCustomer = 0;
+        this.totalFbUnrespondedCountByCustomer = 0;
+        this.totalInstaUnrespondedCountByCustomer = 0;
+        this.totalTwitterUnrespondedCountByCustomer = 0;
+        this.FbUnrespondedMsgCountByCustomer = 0;
+        this.TwitterUnrespondedMsgCountByCustomer = 0;
       },
       (error: any) => {
         this.reloadComponent('alreadyAllQueriesMarkedRead');

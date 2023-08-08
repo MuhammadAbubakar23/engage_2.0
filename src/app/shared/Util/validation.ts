@@ -1,18 +1,25 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 export default class Validation {
+
   static match(controlName: string, checkControlName: string): ValidatorFn {
     return (controls: AbstractControl) => {
       const control = controls.get(controlName);
       const checkControl = controls.get(checkControlName);
-
-      if (checkControl?.errors && !checkControl.errors['matching']) {
+      
+      if (!checkControl?.value?.length) {
+        return null;
+      }
+      if (checkControl?.errors) {
         return null;
       }
 
+      console.log(control?.value);
+      console.log(checkControl?.value);
+
       if (control?.value !== checkControl?.value) {
-        controls.get(checkControlName)?.setErrors({ matching: true });
-        return { matching: true };
+        controls.get(checkControlName)?.setErrors({ mismatch: true });
+        return { mismatch: true };
       } else {
         return null;
       }

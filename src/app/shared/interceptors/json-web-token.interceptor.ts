@@ -15,16 +15,17 @@ export class JsonWebTokenInterceptor implements HttpInterceptor {
   constructor(private router: Router, private ls: StorageService) { }
 
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+     ;
     const allToken = this.ls.retrive("token");
     let token = allToken.local;// allToken.cookie
     token = (token == null)?allToken.session:token;
     token = (token == null)?allToken.local:token;
     
-    //// console.log("Jwt Token............"+ token)
-    // // console.log(httpRequest.url);
+    //console.log("Jwt Token............"+ token)
+    // console.log(httpRequest.url);
     // const urlAL = "Authentication/Login"
     // httpRequest.url.includes("Login")
-    // // console.log(httpRequest);
+    // console.log(httpRequest);
     if(token == null && (!httpRequest.url.includes("Login") || !httpRequest.url.includes("Register"))){
       this.router.navigate(['/identity/login']);
     }

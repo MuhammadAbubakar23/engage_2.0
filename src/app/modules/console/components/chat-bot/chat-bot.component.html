@@ -1,0 +1,103 @@
+<div class="w-auto chat-message-component w-100 inbox-container" [ngClass]="showPanel?'panelToggled':''">
+    <div class="d-flex main-body-wrapper">
+        <div class="agent-page-main-content">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-end">
+                    <a (click)="updatevalue('')" [routerLink]="['/console/automation/chat-bot-intent/bot-builder']" class="ms-2">
+                        <button type="button" class="btn btn-success">
+                            <i class="fal fa-plus me-2"></i>
+                            Create Intent
+                        </button>
+                    </a>
+
+                </div>
+                <div class="row">
+                  <div class="col-sm-2"><ng-select style="width: 200px; margin-top: 10px;" [(ngModel)]="intentName" (change)="selectIntent()">
+                    <ng-option *ngFor="let intent of intents" [value]="intent">{{ intent }}</ng-option>
+                  </ng-select>
+                </div>
+                  <div *ngIf="intentName !=='Please Select Intent'" class="col-sm-2 mt-1"><i class="fal fa-trash me-2" (click)="deleteIntent()"></i></div>
+                </div>
+              
+              
+                <div class="tab-content" id="nav-tabContent" style="margin-top: 10px;">
+                  <div class="tab-pane fade show active" id="agent-stats" role="tabpanel" aria-labelledby="agent-stats-tab">
+                    <div class="table-section">
+                      <div style="overflow: auto; max-height: 600px;">
+                        <table class="table align-middle agent-stats-table mt-0 w-100 mb-4">
+                          <thead>
+                            <tr>
+                              <th>Questions</th>
+                              <th>Answers</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <ng-container *ngFor="let question of intentsDetails.questions; let i = index">
+                              <tr>
+                                <td class="question-cell" style="width: 400px;">
+                                  <span class="dot"></span>
+                                  {{ question }}
+                                </td>
+                                <td >
+                                  <ul class="list-group list-group-flush">
+                                    <li *ngFor="let answer of intentsDetails.answers[i]">
+                                      {{ answer }}
+                                    </li>
+                                  </ul>
+                                </td>
+                                <td>
+                                  <div
+                                    class="icons-list d-flex dropstart justify-content-end"
+                                  >
+                                    <button
+                                      class="btn iconButton small iconHover btn-group"
+                                      type="button"
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                    >
+                                      <i class="far fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu fade">
+              
+                                      <li>
+                                        <a [routerLink]="['update']" [queryParams]="{'intentName':intentName,'question':question,'answers':intentsDetails.answers[i]}"
+                                          class="dropdown-item"
+              
+                                        >
+                                          <i class="fal fa-edit me-2"></i> Edit</a
+                                    >
+                                      </li>
+              
+              
+                                      <li>
+                                        <a
+                                          class="dropdown-item delete-dd" (click)="deleteIntentQA({'intentName':intentName,'question':question,'answers':intentsDetails.answers[i]})"
+              
+                                        >
+                                          <i class="fal fa-trash me-2"></i> Delete</a
+                                        >
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </td>
+                              </tr>
+              
+                            </ng-container>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="rightbar-expanded-wrapper">
+            <template #rightcontainer>
+            </template>
+        </div>
+    </div>
+    <bot-right-sidebar></bot-right-sidebar>
+</div>
+
+
+  

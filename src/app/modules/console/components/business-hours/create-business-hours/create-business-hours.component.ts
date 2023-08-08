@@ -10,7 +10,7 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 })
 export class CreateBusinessHoursComponent implements OnInit {
   daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  shiftTiming = ['8:00 am', '9:00 am', '10:00 am', '11:00 am', '12:00 am']
+  shiftTiming = ['8:00 am', '9:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm', '2:00 pm', '3:00 pm', '4:00 pm', '5:00 pm', '6:00 pm', '7:00 pm', '8:00 pm']
   workingDay = ""
   showWorkingDaysSection: boolean = false;
   hideWorkingDays() {
@@ -28,8 +28,7 @@ export class CreateBusinessHoursComponent implements OnInit {
     private formBuilder: FormBuilder,
     private commonService: CommonDataService,
     private router: Router
-  ) {}
-
+  ) { }
   ngOnInit(): void {
     this.initializeForm();
     const template = history.state.template; // Get the template value from the state
@@ -55,25 +54,43 @@ export class CreateBusinessHoursComponent implements OnInit {
       templateName: '',
       description: '',
       timeZone: '',
-      roundTheClock:false,
-      customBusinessHours : true
+      roundTheClock: false,
+      customBusinessHours: true
     });
   }
-  patchFormValues(template: any): void {
-    this.messageForm.patchValue({
-      templateName: template.templateName,
-      description: template.description,
-      timeZone: template.timeZone,
-      roundTheClock: template.roundTheClock,
-      customBusinessHours: template.customBusinessHours,
-      businessWorkingDays: template.businessWorkingDays
-    });
-  }
+patchFormValues(template: any): void {
+  this.messageForm.patchValue({
+    templateName: template.templateName,
+    description: template.description,
+    timeZone: template.timeZone,
+    roundTheClock: template.roundTheClock,
+    customBusinessHours: template.customBusinessHours,
+  });
 
+  // Clear the existing businessWorkingDays form array before patching new values
+  this.clearBusinessWorkingDays();
+
+  // Iterate through the businessWorkingDays array and add form groups one by one
+  const businessWorkingDays = this.messageForm.get('businessWorkingDays') as FormArray;
+  template.businessWorkingDays.forEach((workingDay: any) => {
+    businessWorkingDays.push(
+      this.formBuilder.group({
+        workingDay: workingDay.workingDay,
+        shiftStart: workingDay.shiftStart,
+        shiftEnd: workingDay.shiftEnd,
+      })
+    );
+  });
+}
+clearBusinessWorkingDays(): void {
+  const businessWorkingDays = this.messageForm.get('businessWorkingDays') as FormArray;
+  while (businessWorkingDays.length !== 0) {
+    businessWorkingDays.removeAt(0);
+  }
+}
   get businessWorkingDays(): FormArray {
     return this.messageForm.get('businessWorkingDays') as FormArray;
   }
-
   addBusinessWorkingDay(workingDay: string): void {
     const formArray = this.businessWorkingDays;
     const existingIndex = formArray.controls.findIndex(
@@ -92,7 +109,6 @@ export class CreateBusinessHoursComponent implements OnInit {
       );
     }
   }
-
   getValueByIndex(index: number): string {
     const formArray = this.businessWorkingDays;
     const formGroup = formArray.at(index) as FormGroup;
@@ -120,14 +136,11 @@ export class CreateBusinessHoursComponent implements OnInit {
       default:
         formValue = 'Sunday';
     }
-
     return formValue;
   }
-
   removeBusinessWorkingDay(index: number): void {
     this.businessWorkingDays.removeAt(index);
   }
-
   onSubmit(): void {
     if (this.messageForm.valid) {
       const template = history.state.template; // Get the template value from the state
@@ -148,7 +161,7 @@ export class CreateBusinessHoursComponent implements OnInit {
           .subscribe(
             (response: any) => {
               // Handle the successful response after updating the template
-              // console.log('Template updated:', response);
+              console.log('Template updated:', response);
               this.router.navigate(['/console/business-hours']);
             },
             (error: any) => {
@@ -160,7 +173,7 @@ export class CreateBusinessHoursComponent implements OnInit {
         this.commonService.AddBusinessHours(this.messageForm.value).subscribe(
           (response: any) => {
             // Handle the successful response after creating a new template
-            // console.log('Template created:', response);
+            console.log('Template created:', response);
             this.router.navigate(['/console/business-hours']);
           },
           (error: any) => {
@@ -171,7 +184,7 @@ export class CreateBusinessHoursComponent implements OnInit {
       }
     } else {
       // Handle form validation errors
-      // console.log('Form is invalid');
+      console.log('Form is invalid');
     }
   }
 
