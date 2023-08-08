@@ -435,7 +435,7 @@
     <div class="filter-container">
       <ul class="list-group list-group-horizontal border-0">
         <li class="list-group-item border-0 all-check-boxes">
-          <input class="form-check-input me-1" type="checkbox" aria-label="..." data-bs-toggle="tooltip"
+          <input *ngIf="flag != 'sent'" class="form-check-input me-1" type="checkbox" aria-label="..." data-bs-toggle="tooltip"
             data-bs-placement="bottom" title="" data-bs-original-title="Check All" [checked]="masterSelected" value="m1"
             (change)="checkUncheckAll($event)">
           <div class="dropdown">
@@ -471,6 +471,8 @@
           data-bs-placement="bottom" title="" data-bs-original-title="Refresh">
           <i class="fal fa-redo-alt"></i>
         </li>
+        <ng-container *ngIf="flag != 'trash'">
+        
         <li class="list-group-item border-0 after-select-fun" (click)="Archive()" aria-label="..." data-bs-toggle="tooltip" data-bs-placemen
           data-bs-placement="bottom" title="" data-bs-original-title="Archive"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
@@ -491,10 +493,15 @@
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="far fa-envelope-open"></i>
         </li> -->
-        <li class="list-group-item border-0 after-select-fun" (click)="Snooze()" aria-label="..." data-bs-toggle="tooltip"
+        <li class="list-group-item border-0 after-select-fun" *ngIf="flag != 'snoozed'" (click)="Snooze()" aria-label="..." data-bs-toggle="tooltip"
           data-bs-placement="bottom" title="" data-bs-original-title="Snooze"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-clock"></i>
+        </li>
+        <li class="list-group-item border-0 after-select-fun" *ngIf="flag == 'snoozed'" (click)="RemoveSnooze()" aria-label="..." data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="" data-bs-original-title="Remove Snooze"
+          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+          <i class="fal fa-trash-can-clock"></i>
         </li>
         <!-- <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun"
                     aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
@@ -530,9 +537,12 @@
                             <li>
                                 <a class="dropdown-item" href="#">Mark as important</a>
                             </li> -->
-                            <li> 
+                            <li *ngIf="flag != 'starred'"> 
                                 <a class="dropdown-item" (click)="Starred()">Add star</a>
                             </li>
+                            <li *ngIf="flag == 'starred'"> 
+                              <a class="dropdown-item" (click)="RemoveStarred()">Remove star</a>
+                          </li>
                             <!-- <li>
                                 <a class="dropdown-item" href="#">Filter Messages like these</a>
                             </li>
@@ -546,6 +556,14 @@
                         </ul>
                     </div>
                 </li> 
+              </ng-container>
+              <ng-container *ngIf="flag == 'trash'">
+                <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun" (click)="UndoDelete()" aria-label="..."
+          data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Undo Delete"
+          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+          <i class="fal fa-trash-slash"></i>
+        </li>
+              </ng-container>
       </ul>
       <div class="selected-row" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
         Selected <span class="badge twltte-bg rounded-pill">{{Ids.length}}</span>
@@ -584,7 +602,7 @@
               <tr *ngFor="let querry of group.items | sort:criteria; let i = index"
                 [class.selected]="querry.isChecked==true" class="alert" [ngClass]="[querry.slaFlag == 'warning'?'alert-warning':'' || querry.slaFlag == 'danger'?'alert-danger':'' ||
               querry.slaFlag == 'unread'?'unread':'']">
-                <td style="width: 40px;"><input [checked]="querry.isChecked" value="{{querry.id}}"
+                <td *ngIf="flag != 'sent'" style="width: 40px;"><input [checked]="querry.isChecked" value="{{querry.id}}"
                   (change)="isAllSelected($event, i, querry.platform, querry.profileId)" class="form-check-input me-1" type="checkbox"
                   aria-label="...">
               </td>

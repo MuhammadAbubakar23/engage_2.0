@@ -68,6 +68,7 @@ export class CommonDataService {
   signOut = environment.links.common.signOut;
   getCustomers = environment.links.common.getCustomers;
   updateStatus = environment.links.common.updateStatus;
+  hideUnhideMessage = environment.links.common.hideUnhideMessage;
 
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
@@ -506,6 +507,12 @@ export class CommonDataService {
 
   UpdateStatus(body:any){
     return this.http.post(this.CommonBaseUrl+this.updateStatus, body)
+  }
+
+  HideUnhideMessage(queryId:number, status:boolean){
+    debugger
+    const url = (this.CommonBaseUrl+this.hideUnhideMessage+'?QueryId='+queryId+'&Status='+status);
+    return this.http.get(url);
   }
 }
 

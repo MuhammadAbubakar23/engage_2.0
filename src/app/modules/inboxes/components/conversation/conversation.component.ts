@@ -309,51 +309,56 @@ export class ConversationComponent implements OnInit {
     this.SpinnerService.show();
     this.commondata.GetConversationList(this.filterDto).subscribe(
       (res: any) => {
-        debugger;
-        this.searchForm.reset();
-        this.SpinnerService.hide();
-        this.advanceSearch = false;
-        this.showDateRange = false;
-        this.ConversationList = res.List;
-        this.TotalUnresponded = res.TotalCount;
-
-        let groupedItems = this.ConversationList.reduce(
-          (acc: any, item: any) => {
-            const date = item.createdDate.split('T')[0];
-            if (!acc[date]) {
-              acc[date] = [];
-            }
-            acc[date].push(item);
-            return acc;
-          },
-          {}
-        );
-
-        this.groupByDateList = Object.keys(groupedItems).map((createdDate) => {
-          return {
-            createdDate,
-            items: groupedItems[createdDate],
-          };
-        });
-
-        if (this.TotalUnresponded < this.pageSize) {
-          this.from = this.TotalUnresponded;
-        } else if (
-          this.TotalUnresponded > this.pageSize &&
-          this.from < this.pageSize
-        ) {
-          this.from = this.pageSize;
+        if (Object.keys(res).length > 0) {
+          this.searchForm.reset();
+          this.SpinnerService.hide();
+          this.advanceSearch = false;
+          this.showDateRange = false;
+          this.ConversationList = res.List;
+          this.TotalUnresponded = res.TotalCount;
+  
+          let groupedItems = this.ConversationList.reduce(
+            (acc: any, item: any) => {
+              const date = item.createdDate.split('T')[0];
+              if (!acc[date]) {
+                acc[date] = [];
+              }
+              acc[date].push(item);
+              return acc;
+            },
+            {}
+          );
+  
+          this.groupByDateList = Object.keys(groupedItems).map((createdDate) => {
+            return {
+              createdDate,
+              items: groupedItems[createdDate],
+            };
+          });
+  
+          if (this.TotalUnresponded < this.pageSize) {
+            this.from = this.TotalUnresponded;
+          } else if (
+            this.TotalUnresponded > this.pageSize &&
+            this.from < this.pageSize
+          ) {
+            this.from = this.pageSize;
+          }
+          if (this.ConversationList.length == 0) {
+            this.to = 0;
+          } else if (
+            this.ConversationList.length != 0 &&
+            this.from != 0 &&
+            this.pageNumber == 1
+          ) {
+            this.to = 1;
+          }
+        } else if(Object.keys(res).length == 0){
+          this.SpinnerService.hide();
+          this.ConversationList = [];
+          this.groupByDateList = [];
         }
-        if (this.ConversationList.length == 0) {
-          this.to = 0;
-        } else if (
-          this.ConversationList.length != 0 &&
-          this.from != 0 &&
-          this.pageNumber == 1
-        ) {
-          this.to = 1;
-        }
-      },
+        },
       (error) => {
         if (error.message.includes('401')) {
           localStorage.clear();
@@ -657,10 +662,7 @@ export class ConversationComponent implements OnInit {
     platform: any,
     profileId: any
   ) {
-    if (
-      this.currentUrl.split('/')[2] == 'my_inbox' ||
-      this.currentUrl.split('/')[2] == 'all-inboxes'
-    ) {
+    if (this.currentUrl.split('/')[2] == 'my_inbox' || this.currentUrl.split('/')[2] == 'all-inboxes') {
       this.assignQuerryDto = {
         userId: Number(localStorage.getItem('agentId')),
         profileId: profileId,
@@ -694,6 +696,8 @@ export class ConversationComponent implements OnInit {
           this.reloadComponent('queryallocatedtoanotheruser');
         }
       );
+    } else if (this.currentUrl.split('/')[2] == 'trash') {
+      this.reloadComponent('removeFromTrashToOpen');
     } else {
       this.SpinnerService.show();
       this.fetchId.setPlatform(platform);
@@ -709,6 +713,35 @@ export class ConversationComponent implements OnInit {
   toastermessage = false;
 
   reloadComponent(type: any) {
+    
+    if (type == 'removeFromTrashToOpen') {
+      this.AlterMsg = 'Please move this item to all conversation to open';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+    if (type == 'removeSnooze') {
+      this.AlterMsg = 'Profile(s) has been removed from snoozed items';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+    if (type == 'RemoveStarred') {
+      this.AlterMsg = 'Profile(s) has been removed from starred items';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+    if (type == 'undoDelete') {
+      this.AlterMsg = 'Profile(s) has been moved to all conversations';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'delete') {
       this.AlterMsg = 'Profile(s) moved to trash items!';
       this.toastermessage = true;
@@ -811,7 +844,6 @@ export class ConversationComponent implements OnInit {
   }
 
   checkUncheckAll(evt: any) {
-    debugger;
     this.groupByDateList.forEach((group) => {
       group.items.forEach((c: any) => (c.isChecked = evt.target.checked));
       this.masterSelected = group.items.every((l: any) => l.isChecked == true);
@@ -842,7 +874,6 @@ export class ConversationComponent implements OnInit {
   }
 
   isAllSelected(evt: any, index: any, platform: any, profileId: any) {
-    debugger;
     // let id = Number(evt.target.value);
     if (index >= 0 && evt.target.checked == true) {
       this.Ids.push(profileId);
@@ -986,9 +1017,31 @@ export class ConversationComponent implements OnInit {
     this.commondata
       .UpdateStatus(this.itemsToBeUpdated)
       .subscribe((res: any) => {
-        if (res == true) {
+        if (res.message === "Status Updated Successfully") {
           this.itemsToBeUpdated = [];
           this.reloadComponent('delete');
+          this.Reload();
+        }
+      });
+  }
+
+  UndoDelete(){
+    this.Ids.forEach((id: any) => {
+      var obj = {
+        channel: '',
+        flag: 'trash',
+        status: false,
+        messageId: 0,
+        profileId: id,
+      };
+      this.itemsToBeUpdated.push(obj);
+    });
+    this.commondata
+      .UpdateStatus(this.itemsToBeUpdated)
+      .subscribe((res: any) => {
+        if (res.message === "Status Updated Successfully") {
+          this.itemsToBeUpdated = [];
+          this.reloadComponent('undoDelete');
           this.Reload();
         }
       });
@@ -1008,7 +1061,7 @@ export class ConversationComponent implements OnInit {
     this.commondata
       .UpdateStatus(this.itemsToBeUpdated)
       .subscribe((res: any) => {
-        if (res == true) {
+        if (res.message === "Status Updated Successfully") {
           this.itemsToBeUpdated = [];
           this.reloadComponent('archive');
           this.Reload();
@@ -1030,9 +1083,31 @@ export class ConversationComponent implements OnInit {
     this.commondata
       .UpdateStatus(this.itemsToBeUpdated)
       .subscribe((res: any) => {
-        if (res == true) {
+        if (res.message === "Status Updated Successfully") {
           this.itemsToBeUpdated = [];
           this.reloadComponent('snooze');
+          this.Reload();
+        }
+      });
+  }
+
+  RemoveSnooze(){
+    this.Ids.forEach((id: any) => {
+      var obj = {
+        channel: '',
+        flag: 'snoozed',
+        status: false,
+        messageId: 0,
+        profileId: id,
+      };
+      this.itemsToBeUpdated.push(obj);
+    });
+    this.commondata
+      .UpdateStatus(this.itemsToBeUpdated)
+      .subscribe((res: any) => {
+        if (res.message === "Status Updated Successfully") {
+          this.itemsToBeUpdated = [];
+          this.reloadComponent('removeSnooze');
           this.Reload();
         }
       });
@@ -1052,7 +1127,7 @@ export class ConversationComponent implements OnInit {
     this.commondata
       .UpdateStatus(this.itemsToBeUpdated)
       .subscribe((res: any) => {
-        if (res == true) {
+        if (res.message === "Status Updated Successfully") {
           this.itemsToBeUpdated = [];
           this.reloadComponent('spam');
           this.Reload();
@@ -1074,9 +1149,31 @@ export class ConversationComponent implements OnInit {
     this.commondata
       .UpdateStatus(this.itemsToBeUpdated)
       .subscribe((res: any) => {
-        if (res == true) {
+        if (res.message === "Status Updated Successfully") {
           this.itemsToBeUpdated = [];
           this.reloadComponent('starred');
+          this.Reload();
+        }
+      });
+  }
+
+  RemoveStarred(){
+    this.Ids.forEach((id: any) => {
+      var obj = {
+        channel: '',
+        flag: 'starred',
+        status: false,
+        messageId: 0,
+        profileId: id,
+      };
+      this.itemsToBeUpdated.push(obj);
+    });
+    this.commondata
+      .UpdateStatus(this.itemsToBeUpdated)
+      .subscribe((res: any) => {
+        if (res.message === "Status Updated Successfully") {
+          this.itemsToBeUpdated = [];
+          this.reloadComponent('RemoveStarred');
           this.Reload();
         }
       });

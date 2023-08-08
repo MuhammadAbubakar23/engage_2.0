@@ -1351,6 +1351,7 @@ export class FacebookComponent implements OnInit {
   }
 
   removeTagFromFeed(tagid: any, feedId: string, type: any) {
+    if(this.flag != 'sent'){
     if (type == 'FC') {
       this.insertTagsForFeedDto.tagId = tagid;
       this.insertTagsForFeedDto.feedId = feedId.toString();
@@ -1384,6 +1385,7 @@ export class FacebookComponent implements OnInit {
           this.checkTag = false;
         });
     }
+  }
   }
 
   Sentiments = [
@@ -1712,5 +1714,30 @@ export class FacebookComponent implements OnInit {
 
   isAudio(attachment: any): boolean {
     return attachment.contentType?.toLowerCase().startsWith('audio');
+  }
+
+  hideMessage(queryId:number, status:boolean){
+    this.commondata.HideUnhideMessage(queryId,status).subscribe((res:any)=>{
+      debugger
+      console.log(res);
+    })
+  }
+  itemsToBeUpdated:any[]=[];
+  starMessage(msgId:number, status:boolean){
+      var obj = {
+        channel: '',
+        flag: 'starred',
+        status: status,
+        messageId: msgId,
+        profileId: 0,
+      };
+      this.itemsToBeUpdated.push(obj);
+    this.commondata
+      .UpdateStatus(this.itemsToBeUpdated)
+      .subscribe((res: any) => {
+        if (res.message === "Status Updated Successfully") {
+          this.reloadComponent('starred');
+        }
+      });
   }
 }

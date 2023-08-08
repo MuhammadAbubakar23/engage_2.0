@@ -166,6 +166,12 @@ public checkConnectionStatusListener = () => {
 });
 };
 
+public getAllocatedProfilesListner = () => {
+  this.hubconnection?.on('GetAllocatedProfiles', (res) => {
+    // this.addTagService.sendTags(res);
+  });
+};
+
   getConnectionId = () => {
     this.hubconnection.invoke('GetConnectionId').then((data) => {
       this.connectionId = data;

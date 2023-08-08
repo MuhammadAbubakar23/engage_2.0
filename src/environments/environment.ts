@@ -29,8 +29,8 @@ export const environment = {
   SmsBaseUrl: 'https://text.360scrm.com/api/',
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
-  CommonBaseUrl:  'https://common2.enteract.app/api/',
-  SignalRCommonBaseUrl:  'https://common2.enteract.app/',
+  CommonBaseUrl:  'https://common-engage.enteract.app/api/',
+  SignalRCommonBaseUrl:  'https://common-engage.enteract.app/',
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
@@ -163,7 +163,8 @@ export const environment = {
       repliesList: 'SentQueries/GetRepliesList',
       signOut: 'SignalRConnector/UserLogout',
       getCustomers: 'Customer/GetAllCustomersSocialProfile',
-      updateStatus: 'Channel/UpdateMessageStatus'
+      updateStatus: 'Channel/UpdateMessageStatus',
+      hideUnhideMessage: 'Query/HideQuery'
       
     },
     facebook: {

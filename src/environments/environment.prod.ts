@@ -158,7 +158,9 @@ export const environment = {
       getAllocatedProfiles : 'Query/GetAllocatedProfiles',
       repliesList: 'SentQueries/GetRepliesList',
       signOut: 'SignalRConnector/UserLogout',
-      getCustomers: 'Customer/GetAllCustomersSocialProfile'
+      getCustomers: 'Customer/GetAllCustomersSocialProfile',
+      updateStatus: 'Channel/UpdateMessageStatus',
+      hideUnhideMessage: 'Query/HideQuery'
       
     },
     facebook: {

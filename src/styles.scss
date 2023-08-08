@@ -122,7 +122,7 @@
 @import "./assets/SCSS/font-awesome-6/thin.scss";
 @import "./assets/SCSS/font-awesome-6/regular.scss";
 
-
+@import "~@ng-select/ng-select/themes/default.theme.css";
 /* width */
 ::-webkit-scrollbar {
     width: 5px;
