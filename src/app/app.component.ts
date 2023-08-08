@@ -37,22 +37,22 @@ toasters: Toaster[] = [];
         }
         
       });
-    if (this.signalRService.hubconnection == undefined) {
-      this.commonService.SignOut().subscribe(()=>{
-        localStorage.clear();
-        this.router.navigateByUrl('/login');
-      })
-    }
-    // this.signalRService.reConnect();
+    // if (this.signalRService.hubconnection == undefined) {
+    //   this.commonService.SignOut().subscribe(()=>{
+    //     localStorage.clear();
+    //     this.router.navigateByUrl('/login');
+    //   })
+    // }
+    this.signalRService.reConnect();
 
-    // this.signalRService.removeTagDataListener();
-    // this.signalRService.addTagDataListner();
-    // this.signalRService.unRespondedCountDataListener();
-    // this.signalRService.updateListAndDetailDataListener();
-    // this.signalRService.replyDataListener();
-    // this.signalRService.queryStatusDataListener();
-    // this.signalRService.bulkQueryStatusDataListener();
-    // this.signalRService.assignQueryResponseListner();
-    // this.signalRService.applySentimentListner();
+    this.signalRService.removeTagDataListener();
+    this.signalRService.addTagDataListner();
+    this.signalRService.unRespondedCountDataListener();
+    this.signalRService.updateListAndDetailDataListener();
+    this.signalRService.replyDataListener();
+    this.signalRService.queryStatusDataListener();
+    this.signalRService.bulkQueryStatusDataListener();
+    this.signalRService.assignQueryResponseListner();
+    this.signalRService.applySentimentListner();
   }
 }

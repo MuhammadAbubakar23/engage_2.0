@@ -331,6 +331,10 @@ export class EmailComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
 
       this.SpinnerService.show();
@@ -460,6 +464,10 @@ export class EmailComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
 
       this.SpinnerService.show();
@@ -584,6 +592,10 @@ export class EmailComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
 
       this.SpinnerService.show();

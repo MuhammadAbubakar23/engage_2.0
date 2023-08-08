@@ -43,6 +43,7 @@ import { CreateTicketService } from 'src/app/services/CreateTicketService/create
 import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
 import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
+import { Router } from '@angular/router';
 
 declare var toggleEmojis: any;
 @Component({
@@ -159,7 +160,8 @@ export class FacebookComponent implements OnInit {
     private createTicketService: CreateTicketService,
     private ticketResponseService: TicketResponseService,
     private applySentimentService: ApplySentimentService,
-    private getQueryTypeService: GetQueryTypeService
+    private getQueryTypeService: GetQueryTypeService,
+    private router: Router
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -168,7 +170,12 @@ export class FacebookComponent implements OnInit {
     });
   }
 
+  currentUrl:string="";
+
   ngOnInit(): void {
+
+    this.currentUrl = this.router.url;
+
     this.criteria = {
       property: 'createdDate',
       descending: true,
@@ -244,7 +251,10 @@ export class FacebookComponent implements OnInit {
   totalComments: number = 0;
   totalMessages: number = 0;
 
+  flag:string="";
   getFacebookComments() {
+    this.flag = this.currentUrl.split('/')[2];
+
     if (this.id != null || this.id != undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -258,6 +268,10 @@ export class FacebookComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        flag: this.flag,
+        userName: "",
+        notInclude: "",
+        include: ""
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -321,6 +335,10 @@ export class FacebookComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        flag: this.flag,
+        userName: "",
+        notInclude: "",
+        include: ""
       };
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         if (Object.keys(res).length > 0) {
@@ -377,6 +395,10 @@ export class FacebookComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        flag: this.flag,
+        userName: "",
+        notInclude: "",
+        include: ""
       };
 
       this.SpinnerService.show();
@@ -707,6 +729,8 @@ export class FacebookComponent implements OnInit {
   }
 
   getFacebookMessages() {
+    this.flag = this.currentUrl.split('/')[2];
+
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -720,6 +744,10 @@ export class FacebookComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        flag : this.flag,
+        userName: "",
+        notInclude: "",
+        include: ""
       };
 
       this.SpinnerService.show();
@@ -780,6 +808,10 @@ export class FacebookComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        flag: this.flag,
+        userName: "",
+        notInclude: "",
+        include: ""
       };
 
       this.SpinnerService.show();
@@ -838,6 +870,10 @@ export class FacebookComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        flag: this.flag,
+        userName: "",
+        notInclude: "",
+        include: ""
       };
 
       this.SpinnerService.show();

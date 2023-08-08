@@ -261,6 +261,10 @@ export class WhatsappDetailsComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -316,6 +320,10 @@ export class WhatsappDetailsComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
       this.SpinnerService.show();
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
@@ -366,6 +374,10 @@ export class WhatsappDetailsComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
       this.SpinnerService.show();
       this.commondata

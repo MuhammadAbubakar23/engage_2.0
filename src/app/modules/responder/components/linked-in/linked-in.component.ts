@@ -270,6 +270,10 @@ export class LinkedInComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -326,6 +330,10 @@ export class LinkedInComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         this.LinkedInData = res.List;
@@ -373,6 +381,10 @@ export class LinkedInComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
       this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
         this.LinkedInData = res.List;

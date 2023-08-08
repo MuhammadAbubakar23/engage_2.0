@@ -348,6 +348,10 @@ export class InstagramComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -405,6 +409,10 @@ export class InstagramComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -459,6 +467,10 @@ export class InstagramComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -1194,6 +1206,10 @@ export class InstagramComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
 
       this.SpinnerService.show();
@@ -1246,6 +1262,10 @@ export class InstagramComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
 
       this.SpinnerService.show();
@@ -1298,6 +1318,10 @@ export class InstagramComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
 
       this.SpinnerService.show();

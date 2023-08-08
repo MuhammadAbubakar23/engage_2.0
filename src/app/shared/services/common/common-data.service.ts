@@ -67,6 +67,7 @@ export class CommonDataService {
   repliesList = environment.links.common.repliesList;
   signOut = environment.links.common.signOut;
   getCustomers = environment.links.common.getCustomers;
+  updateStatus = environment.links.common.updateStatus;
 
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
@@ -501,6 +502,10 @@ export class CommonDataService {
 
   GetChannels() {
     return this.http.get(this.IdentityBaseUrl + '/' + this.getChannels)
+  }
+
+  UpdateStatus(body:any){
+    return this.http.post(this.CommonBaseUrl+this.updateStatus, body)
   }
 }
 

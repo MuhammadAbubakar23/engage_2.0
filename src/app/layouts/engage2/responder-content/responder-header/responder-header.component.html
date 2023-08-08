@@ -13,12 +13,13 @@
         <!-- <h6 class="avatar-title navy m-0 ms-2">{{userName.split('<')[0]}}</h6> -->
         <h6 class="avatar-title navy m-0 ms-2">{{userName}}</h6>
 
-        <div class="dropdown w-auto">
+        <div class="dropdown w-auto" >
             <button class="iconButton medium iconHover mx-2 mt-2" id="dropdownMenuButton1" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 <i class="fal fa-ellipsis-v-alt"></i>
             </button>
-            <ul class="dropdown-menu custom-dropdown medium shadow mt-2 assignFirstDropdownList"
+            <ng-container *ngIf="flag !='sent'">
+            <ul class="dropdown-menu custom-dropdown medium shadow mt-2 assignFirstDropdownList" 
                 aria-labelledby="dropdownMenuButton1" [ngClass]="showMoreOptions == true?'show':''">
                 <li>
                     <ul>
@@ -140,6 +141,7 @@
                     </ul>
                 </div>
             </ul>
+        </ng-container>
         </div>
 
         <div class="social-wrapper d-flex align-items-center mx-2">
@@ -268,7 +270,7 @@
                 </li>
             </ul>
         </div>
-        <div class="dropdown borderDropdown w-auto markAs-dropdown">
+        <div class="dropdown borderDropdown w-auto markAs-dropdown" *ngIf="flag !='sent'">
             <a class="btn btn-secondary dropdown-toggle chevron-icon down ps-2 pe-5" role="button" id="dropdownMenuLink"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="dropdown-title">Mark As</div>

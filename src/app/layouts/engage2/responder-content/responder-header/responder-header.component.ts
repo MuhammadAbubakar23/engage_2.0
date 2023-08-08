@@ -97,6 +97,8 @@ export class ResponderHeaderComponent implements OnInit {
   public Subscription!: Subscription;
 
   currentUrl: string = '';
+  flag: string = '';
+  
 
   constructor(
     private fetchId: FetchIdService,
@@ -128,6 +130,7 @@ export class ResponderHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUrl = this._route.url;
+    this.flag = this.currentUrl.split('/')[2]
     this.getUserDetails();
     this.openedTab();
     Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(
@@ -464,6 +467,10 @@ export class ResponderHeaderComponent implements OnInit {
         isAttachment: false,
         queryType: '',
         text: '',
+        flag: this.flag,
+        userName: "",
+        notInclude: "",
+        include: ""
       };
       this.SpinnerService.show();
 
@@ -821,6 +828,10 @@ export class ResponderHeaderComponent implements OnInit {
         isAttachment: false,
         queryType: '',
         text: '',
+        flag: this.flag,
+        userName: "",
+        notInclude: "",
+        include: ""
       };
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         if (Object.keys(res).length > 0) {
@@ -953,6 +964,10 @@ export class ResponderHeaderComponent implements OnInit {
         isAttachment: false,
         queryType: '',
         text: '',
+        flag: this.flag,
+        userName: "",
+        notInclude: "",
+        include: ""
       };
 
       this.SpinnerService.show();
@@ -1336,6 +1351,10 @@ export class ResponderHeaderComponent implements OnInit {
       isAttachment: false,
       queryType: '',
       text: '',
+      userName: "",
+        notInclude: "",
+        include: "",
+        flag: ""
     };
     this.commondata
       .GetChannelConversationDetail(this.filterDto)

@@ -6,7 +6,6 @@ import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { WebPhoneComponent } from '../web-phone/web-phone.component';
 import { ConversationComponent } from './components/conversation/conversation.component';
-import { SentItemsComponent } from './components/sent-items/sent-items.component';
 import { SlaComponent } from './components/SLA/sla.component';
 import { ComplaintTicketPanelComponent } from './right-sidebar-components/complaint-ticket-panel/complaint-ticket-panel/complaint-ticket-panel.component';
 import { ContactsComponent } from './right-sidebar-components/contacts/contacts.component';
@@ -112,11 +111,12 @@ export class InboxesComponent implements OnInit {
 
 
   loadComponent(leftSideName: string, rightSideName: string) {
+    debugger
     let componentFactory = null;
 
     switch (leftSideName || rightSideName) {
       case 'sent':
-        componentFactory = this.resolver.resolveComponentFactory(SentItemsComponent);
+        componentFactory = this.resolver.resolveComponentFactory(ConversationComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'sla':
