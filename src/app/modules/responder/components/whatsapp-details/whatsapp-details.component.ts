@@ -92,7 +92,6 @@ export class WhatsappDetailsComponent implements OnInit {
   TotalCmntQueryCount: number = 0;
 
   profileId: number = 0;
-  TotalCmntQueryCount: number = 0;
 
   public Subscription!: Subscription;
   public criteria!: SortCriteria;

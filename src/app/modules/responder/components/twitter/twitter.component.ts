@@ -94,8 +94,6 @@ export class TwitterComponent implements OnInit {
   getAppliedTagsList: any;
   totalUnrespondedMsgCountByCustomer: any;
   TodayDate: any;
-  TotalCmntQueryCount: number = 0;
-  TotalMsgQueryCount: number = 0;
 
   public Subscription!: Subscription;
   public criteria!: SortCriteria;

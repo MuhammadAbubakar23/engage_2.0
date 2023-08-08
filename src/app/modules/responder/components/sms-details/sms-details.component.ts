@@ -81,7 +81,6 @@ export class SmsDetailsComponent implements OnInit {
 
   pageNumber: number = 1;
   pageSize: number = 10;
-  TotalCmntQueryCount: number = 0;
 
   commentsArray: any[] = [];
   groupArrays: any[] = [];
