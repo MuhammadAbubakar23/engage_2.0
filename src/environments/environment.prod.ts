@@ -25,12 +25,8 @@ export const environment = {
   SmsBaseUrl: 'https://text.360scrm.com/api/',
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
-  CommonBaseUrl: 'https://wacommon.enteract.live/api/',
+  CommonBaseUrl: 'https://wacommon.enteract.live/api/', 
   SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
-  CCMSURL: 'https://haccms.ibex.co/jomo/api/',
-
-  JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
-  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
   links: {
     identity:{
@@ -156,7 +152,8 @@ export const environment = {
       getAllocatedProfiles : 'Query/GetAllocatedProfiles',
       repliesList: 'SentQueries/GetRepliesList',
       signOut: 'SignalRConnector/UserLogout',
-      getCustomers: 'Customer/GetAllCustomersSocialProfile'
+      getCustomers: 'Customer/GetAllCustomersSocialProfile',
+      updateStatus: 'Channel/UpdateMessageStatus'
       
     },
     facebook: {
