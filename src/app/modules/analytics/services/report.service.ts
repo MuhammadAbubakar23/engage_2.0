@@ -8,12 +8,12 @@ import { Observable } from 'rxjs';
 //https://reportbuilder.360scrm.com/
 //http://localhost:8000/
 export class ReportService {
-  private apiUrl = 'https://reportbuilder.360scrm.com/reports/';
+  private apiUrl = 'http://localhost:8000/reports/';
   constructor(private http: HttpClient) { }
 
   login() {
     const body = { email: 'admin@gmail.com', password: 'admin' };
-    return this.http.post("https://reportbuilder.360scrm.com/user/" + "api/token", body);
+    return this.http.post("http://localhost:8000/user/" + "api/token", body);
   }
 
   gethttpOptions() {

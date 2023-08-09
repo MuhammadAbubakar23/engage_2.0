@@ -12,12 +12,12 @@ export class ReportDbSettingsComponent implements OnInit {
   selectedEngine: string = "Please select engine";
   engineOptions: string[] = ['Microsoft SQL Server', 'My SQL'];
   constructor(
-    private formBuilder: FormBuilder, // Inject FormBuilder
+    private formBuilder: FormBuilder,
     private reportService: ReportService
   ) { }
 
   ngOnInit(): void {
-    this.initForm(); // Initialize the form group
+    this.initForm(); 
   }
 
   initForm() {

@@ -42,13 +42,13 @@ export class ReportBuilderComponent implements OnInit {
 
   selectedGraph = "";
   selectedLabels: any[] = [];
-  selectedColumns:any[]=[];
+  selectedColumns: any[] = [];
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
     responsive: false,
   };
 
-  isVisual=false;
-  isTabular=false;
+  isVisual = false;
+  isTabular = false;
   isPie = false;
   isBar = true;
   isLine = false;
@@ -95,9 +95,9 @@ export class ReportBuilderComponent implements OnInit {
     labels: [],
     datasets: []
   };
-  finalGraphresponse=[];
+  finalGraphresponse = [];
   finalGrapData: any = {};
-  finalTableData: any[]=[];
+  finalTableData: any[] = [];
   exportAsXLSX(): void {
     this.excelService.exportAsExcelFile(this.tableData, 'sample');
   }
@@ -121,16 +121,16 @@ export class ReportBuilderComponent implements OnInit {
     })
 
     this.sharedataservice.data$.subscribe((newData: any) => {
-      this.isGraph=true;
+      this.isGraph = true;
 
       this.sharedataservice.updateQuery(newData.query);
       this.visualizeData();
       if (newData.isStats == false) {
         this.isStats = false;
         this.tableData = this.transformDataObject(newData.table);
-        this.finalTableData=this.tableData
-        if(this.selectedColumns.length!==0){
-          this.tableData=this.filterTableByColumns(this.tableData,this.selectedColumns);
+        this.finalTableData = this.tableData
+        if (this.selectedColumns.length !== 0) {
+          this.tableData = this.filterTableByColumns(this.tableData, this.selectedColumns);
         }
 
         this.dataKeys = newData.columnswithdtypes;
@@ -173,6 +173,9 @@ export class ReportBuilderComponent implements OnInit {
 
 
     });
+    this.sharedataservice.getrRfreshEvent().subscribe(data => {
+      this.refreshData();
+    })
   }
 
   graphFormatData(data: any) {
@@ -193,7 +196,7 @@ export class ReportBuilderComponent implements OnInit {
     this.barChartData = barChartData;
 
 
-    return  this.barChartData
+    return this.barChartData
 
   }
 
@@ -253,29 +256,34 @@ export class ReportBuilderComponent implements OnInit {
   }
 
   selectTable(): void {
+
+    console.log("selectTable", this.tableName, this.DBC, this.dbName);
     localStorage.setItem('selectedtable', this.tableName);
-    this.reportservice.selectTableApi({ 'db': this.dbName, 'tableName': this.tableName, 'connection_name': this.DBC }).subscribe((res) => {
+    if (this.dbName !== "All DataBases" && this.tableName !== "All Tables" && this.DBC !== "Please select connection") {
+      this.reportservice.selectTableApi({ 'db': this.dbName, 'tableName': this.tableName, 'connection_name': this.DBC }).subscribe((res) => {
 
-      this.isGraph=true;
-      this.isStats = false;
-      this.tableData = this.transformDataObject(res.table);
-      this.finalTableData=this.tableData;
+        this.isGraph = true;
+        this.isStats = false;
+        this.tableData = this.transformDataObject(res.table);
+        this.finalTableData = this.tableData;
 
-      if (this.tableData.length === 0) {
-        this.toastermessage = 'No Data Available';
-        this.isToaster = true;
-        setTimeout(() => {
-          this.isToaster = false;
-        }, 4000);
-      }
-      this.dataKeys = res.columnswithdtypes;
-      this.isTabular=true;
-      this.isVisual=false;
+        if (this.tableData.length === 0) {
+          this.toastermessage = 'No Data Available';
+          this.isToaster = true;
+          setTimeout(() => {
+            this.isToaster = false;
+          }, 4000);
+        }
+        this.dataKeys = res.columnswithdtypes;
+        this.isTabular = true;
+        this.isVisual = false;
 
-      this.sharedataservice.updateQuery(res.query);
+        this.sharedataservice.updateQuery(res.query);
+        localStorage.setItem('query', res.query);
 
+      })
+    }
 
-    })
   }
 
   handleFilters(columntype: any, columnname: any): void {
@@ -319,21 +327,23 @@ export class ReportBuilderComponent implements OnInit {
 
 
   visualizeData(): void {
-     this.isVisual = true;
-     this.isTabular=false
     const db = localStorage.getItem('dbName');
     const connection = localStorage.getItem('connection_name');
-    this.reportservice.visualizeDataApi({ 'db': db, 'query': this.query, 'connection_name': connection })
-      .subscribe((res: any) => {
-        this.finalGraphresponse = res;
-        this.sharedataservice.updateVisual(res);
-        this.selectGraph();
-      });
+    if (db !== null && this.query !== "Please Type Query" && connection !== null) {
+      this.isVisual = true;
+      this.isTabular = false
+      this.reportservice.visualizeDataApi({ 'db': db, 'query': this.query, 'connection_name': connection })
+        .subscribe((res: any) => {
+          this.finalGraphresponse = res;
+          this.sharedataservice.updateVisual(res);
+          this.selectGraph();
+        });
+    }
 
   }
-  tabularData():void{
+  tabularData(): void {
     this.isVisual = false;
-    this.isTabular=true;
+    this.isTabular = true;
   }
   selectGraph() {
     if (this.selectedGraph === 'Bar Chart') {
@@ -475,20 +485,20 @@ export class ReportBuilderComponent implements OnInit {
 
   selectLabel() {
     const filteredObject = this.filterObjectByColumns(this.finalGrapData, this.selectedLabels);
-    this.barChartData=this.graphFormatData(filteredObject);
+    this.barChartData = this.graphFormatData(filteredObject);
     this.selectGraph();
   }
-  selectColumn(){
+  selectColumn() {
     const filteredArray = this.filterTableByColumns(this.finalTableData, this.selectedColumns);
-    this.tableData=filteredArray;
+    this.tableData = filteredArray;
   }
 
-  refreshData(){
-  this.selectedColumns=[];
-  this.selectedLabels=[];
-  this.tableData=this.finalTableData;
-  this.sharedataservice.updateVisual(this.finalGraphresponse);
-  this.selectGraph();
+  refreshData() {
+    this.selectedColumns = [];
+    this.selectedLabels = [];
+    this.selectTable();
+    this.visualizeData();
+    this.selectGraph();
   }
 }
 

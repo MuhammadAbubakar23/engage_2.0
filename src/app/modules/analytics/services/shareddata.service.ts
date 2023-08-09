@@ -17,6 +17,16 @@ export class ShareddataService {
   public visual$ = this.visualSubject.asObservable();
   public charttype$ = this.chartTypeSubject.asObservable();
   public chartdata$ = this.chartDataSubject.asObservable();
+
+  private refreshsubject = new BehaviorSubject<any>('');
+
+  emitRefreshEvent(event: any) {
+    this.refreshsubject.next(event);
+  }
+
+  getrRfreshEvent() {
+    return this.refreshsubject.asObservable();
+  }
   updateData(newData: any) {
     this.dataSubject.next(newData);
   }
