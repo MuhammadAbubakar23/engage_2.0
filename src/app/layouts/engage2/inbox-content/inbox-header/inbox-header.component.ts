@@ -10,12 +10,14 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
   styleUrls: ['./inbox-header.component.scss']
 })
 export class InboxHeaderComponent implements OnInit {
+
+  flag:string='';
   constructor(private sharedService: SharedService,
     private commonService: CommonDataService,
     private _route: Router) { }
 
   ngOnInit(): void {
-    
+    this.flag = this._route.url.split('/')[2];
     // this.getAllConversationCount();
   }
 
@@ -49,7 +51,7 @@ export class InboxHeaderComponent implements OnInit {
   }
 
   update(menuLink: any) {
-    
+    this.flag = this._route.url.split('/')[2];
     if (
       localStorage.getItem('assignedProfile') == null ||
       localStorage.getItem('assignedProfile') == '' ||
@@ -58,7 +60,7 @@ export class InboxHeaderComponent implements OnInit {
       this._route.navigateByUrl('/' + menuLink);
     } else {
       this.reloadComponent('querryAssigned')
-    }
+    } 
   }
 
   AlterMsg:any;

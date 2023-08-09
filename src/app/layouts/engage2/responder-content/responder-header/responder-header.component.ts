@@ -500,7 +500,7 @@ export class ResponderHeaderComponent implements OnInit {
             this.playStore = false;
             this.platformsArray.push(res.List[0].platform);
 
-            res.List[0].user.secondaryProfiles.forEach((profiles: any) => {
+            res.List[0].user?.secondaryProfiles.forEach((profiles: any) => {
               this.platformsArray.push(profiles.platform);
 
               if (profiles.platform == 'Facebook') {
@@ -657,7 +657,7 @@ export class ResponderHeaderComponent implements OnInit {
               this.LinkedInUnrespondedCmntCountByCustomer = res.TotalCount;
             }
           }
-          res.List[0].user.secondaryProfiles.forEach((profiles: any) => {
+          res.List[0]?.user.secondaryProfiles.forEach((profiles: any) => {
             this.getSecondaryProfileDetails(
               profiles.customerUniqueId,
               profiles.platform
@@ -856,7 +856,7 @@ export class ResponderHeaderComponent implements OnInit {
         this.playStore = false;
         this.platformsArray.push(res.List[0].platform);
 
-        res.List[0].user.secondaryProfiles.forEach((profiles: any) => {
+        res.List[0].user?.secondaryProfiles.forEach((profiles: any) => {
           this.platformsArray.push(profiles.platform);
         });
 
@@ -944,7 +944,7 @@ export class ResponderHeaderComponent implements OnInit {
           this.LinkedInUnrespondedCmntCountByCustomer = res.TotalCount;
         }
 
-        res.List[0].user.secondaryProfiles.forEach((profiles: any) => {
+        res.List[0].user?.secondaryProfiles.forEach((profiles: any) => {
           this.getSecondaryProfileDetails(
             profiles.customerUniqueId,
             profiles.platform
@@ -1168,7 +1168,7 @@ export class ResponderHeaderComponent implements OnInit {
             this.playStore = false;
             this.platformsArray.push(res.List[0].platform);
 
-            res.List[0].user.secondaryProfiles.forEach((profiles: any) => {
+            res.List[0].user?.secondaryProfiles.forEach((profiles: any) => {
               this.platformsArray.push(profiles.platform);
 
               if (profiles.platform == 'Facebook') {
@@ -1318,7 +1318,7 @@ export class ResponderHeaderComponent implements OnInit {
             }
           
 
-          res.List[0].user.secondaryProfiles.forEach((profiles: any) => {
+          res.List[0].user?.secondaryProfiles.forEach((profiles: any) => {
             this.getSecondaryProfileDetails(
               profiles.customerUniqueId,
               profiles.platform
@@ -1964,6 +1964,48 @@ export class ResponderHeaderComponent implements OnInit {
   AlterMsg: any;
   toastermessage = false;
   reloadComponent(type: any) {
+    if (type == 'spam') {
+      this.AlterMsg = 'Profile(s) has been marked as spam!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+if (type == 'removeSpam') {
+      this.AlterMsg = 'Profile(s) has been removed from spam items';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+if (type == 'block') {
+      this.AlterMsg = 'Profile(s) has been marked as blacklisted';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+if (type == 'unblock') {
+      this.AlterMsg = 'Profile(s) has been removed from Blacklisted items';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+if (type == 'starred') {
+      this.AlterMsg = 'Profile(s) has been marked as starred!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+if (type == 'RemoveStarred') {
+      this.AlterMsg = 'Profile(s) has been removed from starred items';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'noAgentSelected') {
       this.AlterMsg = 'No Agent Selected!';
       this.toastermessage = true;
@@ -2098,4 +2140,90 @@ export class ResponderHeaderComponent implements OnInit {
       }
     );
   }
+  
+  itemsToBeUpdated:any[]=[];
+  spamStatus:boolean=false;
+  blockStatus:boolean=false;
+
+  Spam(id:any) {
+      var obj = {
+        channel: '',
+        flag: 'spam',
+        status: true,
+        messageId: 0,
+        profileId: id,
+      };
+      this.itemsToBeUpdated.push(obj);
+    this.commondata
+      .UpdateStatus(this.itemsToBeUpdated)
+      .subscribe((res: any) => {
+        if (res.message === "Status Updated Successfully") {
+          this.itemsToBeUpdated = [];
+          this.spamStatus = true;
+          this.reloadComponent('spam');
+        }
+      });
+  }
+
+  RemoveSpam(id:any){
+    debugger
+      var obj = {
+        channel: '',
+        flag: 'spam',
+        status: false,
+        messageId: 0,
+        profileId: id,
+      };
+      this.itemsToBeUpdated.push(obj);
+    this.commondata
+      .UpdateStatus(this.itemsToBeUpdated)
+      .subscribe((res: any) => {
+        if (res.message === "Status Updated Successfully") {
+          this.itemsToBeUpdated = [];
+          this.spamStatus=false;
+          this.reloadComponent('removeSpam');
+        }
+      });
+  }
+
+  Block(id:any) {
+    debugger
+    var obj = {
+      channel: '',
+      flag: 'blacklist',
+      status: true,
+      messageId: 0,
+      profileId: id,
+    };
+    this.itemsToBeUpdated.push(obj);
+  this.commondata
+    .UpdateStatus(this.itemsToBeUpdated)
+    .subscribe((res: any) => {
+      if (res.message === "Status Updated Successfully") {
+        this.itemsToBeUpdated = [];
+        this.blockStatus = true;
+        this.reloadComponent('block');
+      }
+    });
+}
+
+Unblock(id:any){
+    var obj = {
+      channel: '',
+      flag: 'blacklist',
+      status: false,
+      messageId: 0,
+      profileId: id,
+    };
+    this.itemsToBeUpdated.push(obj);
+  this.commondata
+    .UpdateStatus(this.itemsToBeUpdated)
+    .subscribe((res: any) => {
+      if (res.message === "Status Updated Successfully") {
+        this.itemsToBeUpdated = [];
+        this.blockStatus=false;
+        this.reloadComponent('unblock');
+      }
+    });
+}
 }

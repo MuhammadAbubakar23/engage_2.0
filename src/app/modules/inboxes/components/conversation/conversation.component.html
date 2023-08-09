@@ -473,15 +473,25 @@
         </li>
         <ng-container *ngIf="flag != 'trash'">
         
-        <li class="list-group-item border-0 after-select-fun" (click)="Archive()" aria-label="..." data-bs-toggle="tooltip" data-bs-placemen
+        <li class="list-group-item border-0 after-select-fun" *ngIf="flag != 'archived'" (click)="Archive()" aria-label="..." data-bs-toggle="tooltip" data-bs-placemen
           data-bs-placement="bottom" title="" data-bs-original-title="Archive"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-archive"></i>
         </li>
-        <li class="list-group-item border-0 after-select-fun" (click)="Spam()" aria-label="..." data-bs-toggle="tooltip"
+        <li class="list-group-item border-0 after-select-fun" *ngIf="flag == 'archived'" (click)="Unarchive()" aria-label="..." data-bs-toggle="tooltip" data-bs-placemen
+          data-bs-placement="bottom" title="" data-bs-original-title="Unarchive"
+          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+          <i class="fal fa-inbox-out"></i>
+        </li>
+        <li class="list-group-item border-0 after-select-fun" *ngIf="flag != 'spam'" (click)="Spam()" aria-label="..." data-bs-toggle="tooltip"
           data-bs-placement="bottom" title="" data-bs-original-title="Report Spam"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-exclamation-circle"></i>
+        </li>
+        <li class="list-group-item border-0 after-select-fun" *ngIf="flag == 'spam'" (click)="RemoveSpam()" aria-label="..." data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="" data-bs-original-title="Report Spam"
+          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+          <i class="fal fa-rotate-exclamation"></i>
         </li>
         <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun" (click)="Delete()" aria-label="..."
           data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete"
@@ -543,6 +553,9 @@
                             <li *ngIf="flag == 'starred'"> 
                               <a class="dropdown-item" (click)="RemoveStarred()">Remove star</a>
                           </li>
+                          <li *ngIf="flag == 'blacklist'"> 
+                            <a class="dropdown-item" (click)="Unblock()">Unblock User(s)</a>
+                        </li>
                             <!-- <li>
                                 <a class="dropdown-item" href="#">Filter Messages like these</a>
                             </li>

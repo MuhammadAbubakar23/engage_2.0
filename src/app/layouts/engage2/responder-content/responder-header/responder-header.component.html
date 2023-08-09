@@ -13,135 +13,147 @@
         <!-- <h6 class="avatar-title navy m-0 ms-2">{{userName.split('<')[0]}}</h6> -->
         <h6 class="avatar-title navy m-0 ms-2">{{userName}}</h6>
 
-        <div class="dropdown w-auto" >
+        <div class="dropdown w-auto">
             <button class="iconButton medium iconHover mx-2 mt-2" id="dropdownMenuButton1" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 <i class="fal fa-ellipsis-v-alt"></i>
             </button>
             <ng-container *ngIf="flag !='sent'">
-            <ul class="dropdown-menu custom-dropdown medium shadow mt-2 assignFirstDropdownList" 
-                aria-labelledby="dropdownMenuButton1" [ngClass]="showMoreOptions == true?'show':''">
-                <li>
-                    <ul>
-                        <li>
-                            <a class="dropdown-item active" (click)="showTeamList()" id="assignToList">
-                                Assign to...
-                            </a>
-                        </li>
-                        <!-- <li>
-                                        <a class="dropdown-item">
-                                            Mark as unread
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item">
-                                            Print..
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item">
-                                            Create quick rules
-           `         <<<<<<< HEAD
-                    >>>>>>> master
-                                    <li class="important-option mb-0">
-                                        <a class="dropdown-item">
-                                            Mark as spam
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item">
-                                            Report phishing
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item">
-                                            Block sender
-                                        </a>
-                                    </li>
-                                    <!- <li class="important-option mb-0">
-                                        <a class="dropdown-item">
-                                            Copy conversation ID
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item">
-                                            Copy conversation link
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item">
-                                            View conversation details
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item">
-                                            View in external window
-                                        </a>
-                                    </li> -->
-                    </ul>
-                </li>
-            </ul>
-            <ul class="dropdown-menu custom-dropdown medium shadow mt-2 assignSecondDropdownList"
-                [ngClass]="showAgentsList == true?'show':''" aria-labelledby="dropdownMenuButton2">
-                <div>
-                    <ul class="dropdown-listing">
-                        <li class="dropdown-listing-header">
-                            <div class="head-section">
-                                <div class="left">
-                                    <a class="dropdown-item p-1 active dropdownBackBtn iconButton dropdown-iconBtn small active"
-                                        (click)="hideTeamList()">
-                                        <i class="fal fa-arrow-left silver"></i>
-                                    </a>
-                                    <h6>Assign to</h6>
-                                </div>
-                                <a class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
-                                    (click)="closeTeamList()" id="dropdownMenuButton3" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <i class="fal fa-times silver"></i>
+                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 assignFirstDropdownList"
+                    aria-labelledby="dropdownMenuButton1" [ngClass]="showMoreOptions == true?'show':''">
+                    <li>
+                        <ul>
+                            <li>
+                                <a class="dropdown-item active" (click)="showTeamList()" id="assignToList">
+                                    Assign to...
                                 </a>
-                            </div>
-                            <form class="custom-searchbar">
-                                <input class="form-control rounded-pill shadow-sm" placeholder="Search"
-                                    aria-label="Search">
-                                <span class="btn searchbar-btn" type="submit">
-                                    <i class="fal fa-search silver"></i>
-                                </span>
-                            </form>
-                        </li>
-                        <li class="list-body small-list">
-                            <div class="list-group list-group-flush">
-                                <a class="list-group-item d-flex level1Btn" *ngFor="let agent of ActiveAgents">
-                                    <div class="form-check w-100 p-0 theme-check">
-                                        <input class="form-check-input float-end" type="checkbox" [id]="agent.id"
-                                            (click)="sendAgentId(agent.userId, platform)">
-                                        <label class="form-check-label coal d-flex align-items-center" [for]="agent.id">
-                                            <!-- <div class="list-down-icon">
+                            </li>
+                            <!-- <li>
+                                <a class="dropdown-item">
+                                    Mark as unread
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item">
+                                    Print..
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item">
+                                    Create quick rules
+                                </a>
+                            </li> -->
+                            <li class="important-option mb-0" *ngIf="spamStatus == false" (click)="Spam(profileId)">
+                                <a class="dropdown-item">
+                                    Mark as spam
+                                </a>
+                            </li>
+                            <li class="important-option mb-0" *ngIf="spamStatus == true" (click)="RemoveSpam(profileId)">
+                                <a class="dropdown-item">
+                                    Remove from Spam
+                                </a>
+                            </li>
+                            <!-- <li>
+                                <a class="dropdown-item">
+                                    Report phishing
+                                </a>
+                            </li> -->
+                            <li *ngIf="blockStatus == false" (click)="Block(profileId)">
+                                <a class="dropdown-item">
+                                    Block sender
+                                </a>
+                            </li>
+                            <li *ngIf="blockStatus == true" (click)="Unblock(profileId)">
+                                <a class="dropdown-item">
+                                    Unblock sender
+                                </a>
+                            </li>
+                            <!-- <li class="important-option mb-0">
+                                <a class="dropdown-item">
+                                    Copy conversation ID
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item">
+                                    Copy conversation link
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item">
+                                    View conversation details
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item">
+                                    View in external window
+                                </a>
+                            </li> -->
+
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 assignSecondDropdownList"
+                    [ngClass]="showAgentsList == true?'show':''" aria-labelledby="dropdownMenuButton2">
+                    <div>
+                        <ul class="dropdown-listing">
+                            <li class="dropdown-listing-header">
+                                <div class="head-section">
+                                    <div class="left">
+                                        <a class="dropdown-item p-1 active dropdownBackBtn iconButton dropdown-iconBtn small active"
+                                            (click)="hideTeamList()">
+                                            <i class="fal fa-arrow-left silver"></i>
+                                        </a>
+                                        <h6>Assign to</h6>
+                                    </div>
+                                    <a class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
+                                        (click)="closeTeamList()" id="dropdownMenuButton3" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <i class="fal fa-times silver"></i>
+                                    </a>
+                                </div>
+                                <form class="custom-searchbar">
+                                    <input class="form-control rounded-pill shadow-sm" placeholder="Search"
+                                        aria-label="Search">
+                                    <span class="btn searchbar-btn" type="submit">
+                                        <i class="fal fa-search silver"></i>
+                                    </span>
+                                </form>
+                            </li>
+                            <li class="list-body small-list">
+                                <div class="list-group list-group-flush">
+                                    <a class="list-group-item d-flex level1Btn" *ngFor="let agent of ActiveAgents">
+                                        <div class="form-check w-100 p-0 theme-check">
+                                            <input class="form-check-input float-end" type="checkbox" [id]="agent.id"
+                                                (click)="sendAgentId(agent.userId, platform)">
+                                            <label class="form-check-label coal d-flex align-items-center"
+                                                [for]="agent.id">
+                                                <!-- <div class="list-down-icon">
                                                             <span class="btn iconButton iconHover medium cherryTransBg">
                                                                 AK
                                                             </span>
                                                         </div> -->
-                                            <div class="w-100 list-txt">
-                                                <div class="d-flex w-100 justify-content-between">
-                                                    <h6 class="mb-1 darkblue">{{agent.name}}
-                                                    </h6>
+                                                <div class="w-100 list-txt">
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                        <h6 class="mb-1 darkblue">{{agent.name}}
+                                                        </h6>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </label>
-                                    </div>
-                                </a>
+                                            </label>
+                                        </div>
+                                    </a>
 
-                            </div>
-                        </li>
-                        <li class="card-footer">
-                            <div class="dropdown-item">
-                                <button type="button" class="btn btn-success"
-                                    (click)="assignToAnotherAgent()">Assign</button>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </ul>
-        </ng-container>
+                                </div>
+                            </li>
+                            <li class="card-footer">
+                                <div class="dropdown-item">
+                                    <button type="button" class="btn btn-success"
+                                        (click)="assignToAnotherAgent()">Assign</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </ul>
+            </ng-container>
         </div>
 
         <div class="social-wrapper d-flex align-items-center mx-2">

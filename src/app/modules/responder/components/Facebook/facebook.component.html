@@ -1142,7 +1142,7 @@
         </form>
     </div>
 </ng-container>
-<ng-container *ngIf="fbMsgReply == true && flag != 'sent'">
+<ng-container *ngIf="fbMsgReply == true && flag != 'sent' && fbCmntReply == false">
     <div class="msgTypingField shadow-lg">
         <div>
             <div class="attachment-block" [ngClass]="isAttachment == true?'':'d-none'">

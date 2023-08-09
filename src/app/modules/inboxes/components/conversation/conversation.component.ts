@@ -714,6 +714,20 @@ export class ConversationComponent implements OnInit {
 
   reloadComponent(type: any) {
     
+    if (type == 'unblock') {
+      this.AlterMsg = 'Profile(s) has been removed from Blacklisted items';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+    if (type == 'removeSpam') {
+      this.AlterMsg = 'Profile(s) has been removed from spam items';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'removeFromTrashToOpen') {
       this.AlterMsg = 'Please move this item to all conversation to open';
       this.toastermessage = true;
@@ -751,6 +765,13 @@ export class ConversationComponent implements OnInit {
     }
     if (type == 'archive') {
       this.AlterMsg = 'Profile(s) has been archived!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+    if (type == 'unarchive') {
+      this.AlterMsg = 'Profile(s) has been un-archived!';
       this.toastermessage = true;
       setTimeout(() => {
         this.toastermessage = false;
@@ -1068,6 +1089,27 @@ export class ConversationComponent implements OnInit {
         }
       });
   }
+  Unarchive(){
+    this.Ids.forEach((id: any) => {
+      var obj = {
+        channel: '',
+        flag: 'archived',
+        status: false,
+        messageId: 0,
+        profileId: id,
+      };
+      this.itemsToBeUpdated.push(obj);
+    });
+    this.commondata
+      .UpdateStatus(this.itemsToBeUpdated)
+      .subscribe((res: any) => {
+        if (res.message === "Status Updated Successfully") {
+          this.itemsToBeUpdated = [];
+          this.reloadComponent('unarchive');
+          this.Reload();
+        }
+      });
+  }
 
   Snooze() {
     this.Ids.forEach((id: any) => {
@@ -1135,6 +1177,28 @@ export class ConversationComponent implements OnInit {
       });
   }
 
+  RemoveSpam(){
+    this.Ids.forEach((id: any) => {
+      var obj = {
+        channel: '',
+        flag: 'spam',
+        status: false,
+        messageId: 0,
+        profileId: id,
+      };
+      this.itemsToBeUpdated.push(obj);
+    });
+    this.commondata
+      .UpdateStatus(this.itemsToBeUpdated)
+      .subscribe((res: any) => {
+        if (res.message === "Status Updated Successfully") {
+          this.itemsToBeUpdated = [];
+          this.reloadComponent('removeSpam');
+          this.Reload();
+        }
+      });
+  }
+
   Starred() {
     this.Ids.forEach((id: any) => {
       var obj = {
@@ -1178,4 +1242,25 @@ export class ConversationComponent implements OnInit {
         }
       });
   }
+
+  Unblock(){
+    this.Ids.forEach((id: any) => {
+    var obj = {
+      channel: '',
+      flag: 'blacklist',
+      status: false,
+      messageId: 0,
+      profileId: id,
+    };
+    this.itemsToBeUpdated.push(obj);
+  });
+  this.commondata
+    .UpdateStatus(this.itemsToBeUpdated)
+    .subscribe((res: any) => {
+      if (res.message === "Status Updated Successfully") {
+        this.itemsToBeUpdated = [];
+        this.reloadComponent('unblock');
+      }
+    });
+}
 }
