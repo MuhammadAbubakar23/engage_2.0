@@ -81,7 +81,7 @@ export class ReportService {
     return this.http.post<any>(this.apiUrl + "summarize", data, httpOptions);
   }
   visualizeDataApi(data: any): Observable<any> {
-    console.log("data==>V",data);
+    console.log("data==>V", data);
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "visualize", data, httpOptions);
   }
