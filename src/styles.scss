@@ -121,14 +121,9 @@
 @import "./assets/SCSS/font-awesome-6/solid.scss";
 @import "./assets/SCSS/font-awesome-6/thin.scss";
 @import "./assets/SCSS/font-awesome-6/regular.scss";
-<<<<<<< HEAD
-
-@import "~@ng-select/ng-select/themes/default.theme.css";
-=======
 // Import ng-select component styles
 @import "~@ng-select/ng-select/themes/default.theme.css";
 
->>>>>>> 94edb59c866fbf9aaa6758a0c728b8707228b1cd
 /* width */
 ::-webkit-scrollbar {
     width: 5px;
