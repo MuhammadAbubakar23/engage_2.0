@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ShareddataService } from '../../services/shareddata.service';
 import { ReportService } from '../../services/report.service';
-import { ChartConfiguration, ChartData, ChartDataset, ChartOptions, ChartType } from 'chart.js';
+import { ChartConfiguration, ChartData, ChartDataset, ChartType } from 'chart.js';
 import { ExcelService } from '../../services/excel.service';
 import { BaseChartDirective } from 'ng2-charts';
 
