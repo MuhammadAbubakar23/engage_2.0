@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
@@ -11,8 +12,8 @@ interface Tag {
 }
 @Component({
   selector: 'app-tags',
-  standalone:true,
-  imports:[CommonModule, RouterModule],
+  standalone: true,
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './tags.component.html',
   styleUrls: ['./tags.component.scss']
 })
@@ -21,9 +22,33 @@ export class TagsComponent implements OnInit {
   tags: Tag[] = [];
   perPage: number = 15;
   currentPage: number = 1;
-
-  constructor(private headerService: HeaderService , private commonService : CommonDataService , private router: Router) { }
-
+  searchText: string = '';
+  applySearchFilter(): void {
+    // Convert the search text to lowercase for case-insensitive search
+    const searchTextLower = this.searchText.toLowerCase();
+  
+    // Filter the tags based on the search text
+    this.tags = this.tags.filter((tag) => {
+      const tagNameLower = (tag.name || '').toLowerCase();
+      return tagNameLower.includes(searchTextLower);
+    });
+  
+    // Apply sorting after filtering
+    this.sortTags();
+  }
+  refreshMessages() {
+    this.commonService.GetTags().subscribe(
+      (response: any) => {
+        this.tags = response;
+        // Apply sorting after refreshing tags
+        this.sortTags();
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
+  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
   ngOnInit(): void {
     this.getTags();
   }
@@ -35,94 +60,87 @@ export class TagsComponent implements OnInit {
       }, (error: any) => {
         console.error(error);
       });
-    
   }
-
+  sortTags(): void {
+    switch (this.status) {
+      case 'Ascending':
+        this.tags.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 'Descending':
+        this.tags.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      case 'Tickets':
+        this.tags.sort((a, b) => a.tickets - b.tickets);
+        break;
+      case 'Contacts':
+        this.tags.sort((a, b) => a.contacts - b.contacts);
+        break;
+      default:
+        // For 'All', no sorting is required
+        break;
+    }
+  }
+  
   updatevalue(string: any) {
     this.headerService.updateMessage(string);
   }
-
   setStatus(status: string): void {
     this.status = status;
   }
-
   sortByTickets(): void {
-    // Implement sorting logic based on tickets
     this.tags.sort((a, b) => a.tickets - b.tickets);
   }
-
   sortByContacts(): void {
-    // Implement sorting logic based on contacts
     this.tags.sort((a, b) => a.contacts - b.contacts);
   }
-
   editTag(tag: Tag): void {
-    // Implement logic to edit a tag
-  this.router.navigate(['console/tag/create/:id'],{
-    state:{tag}
-  })
+    this.router.navigate(['console/tag/create/:id'], {
+      state: { tag }
+    })
   }
-
   deleteTemplate(message: any) {
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
       this.commonService.DeleteTags(message.id).subscribe(
         () => {
-          // Success callback
           console.log('message deleted:', message);
-          // Remove the deleted message from the messages array
-          this.tags = this.tags.filter((msg) => msg.id !== message.id);
+           this.tags = this.tags.filter((msg) => msg.id !== message.id);
         },
         (error: any) => {
-          // Error callback
           console.error('Error deleting template:', error);
         }
       );
     }
   }
   disableTag(tag: Tag): void {
-    // Implement logic to disable a tag
     console.log('Disable tag:', tag);
   }
-
-  // cloneTag(tag: Tag): void {
-  //   // Implement logic to clone a tag
-  //   console.log('Clone tag:', tag);
-  // }
-  
   cloneTag(tag: Tag): void {
-    // Logic for cloning the template
-    const cloneTag = { ...tag }; // Perform a shallow copy of the template
+    const cloneTag = { ...tag }; 
     cloneTag.name += ' (Cloned)';
-    // You can modify other properties as well if needed
     this.tags.push(cloneTag);
     console.log('Cloned tag:', cloneTag);
   }
-
   setPerPage(perPage: number): void {
     this.perPage = perPage;
-    this.currentPage = 1; // Reset to the first page
+    this.currentPage = 1; 
   }
-
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
     }
   }
-
   nextPage(): void {
     const maxPages = Math.ceil(this.tags.length / this.perPage);
     if (this.currentPage < maxPages) {
       this.currentPage++;
     }
   }
-
   goToPage(pageNumber: number): void {
     if (pageNumber >= 1 && pageNumber <= Math.ceil(this.tags.length / this.perPage)) {
       this.currentPage = pageNumber;
     }
   }
-
   getPageNumbers(): number[] {
     const maxPages = Math.ceil(this.tags.length / this.perPage);
     return Array.from({ length: maxPages }, (_, i) => i + 1);

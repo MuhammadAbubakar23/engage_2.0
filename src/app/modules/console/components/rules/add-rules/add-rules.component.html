@@ -42,7 +42,8 @@
                                                     <div class="form-floating">
                                                         <textarea class="form-control"
                                                             placeholder="Leave a comment here" id="floatingTextarea2"
-                                                            style="height: 100px" formControlName="description"></textarea>
+                                                            style="height: 100px"
+                                                            formControlName="description"></textarea>
                                                         <label for="floatingTextarea2">Description</label>
                                                     </div>
                                                     <div class="example-text">Optional: will appear in the From: header
@@ -57,8 +58,8 @@
                                             aria-labelledby="business-hour-tab">
                                             <div class="bussiness-hour-wrap ps-5 pe-5">
                                                 <div class="choose-assignment-section mb-5">
-                                                    <h5 class="darkblue mb-4 mt-5">Create Query </h5>
-                                                    <div >
+                                                    <h5 class="darkblue mb-4 mt-5">Create Query Rules </h5>
+                                                    <div>
                                                         <div class="query-builder-wrapper">
                                                             <query-builder [(ngModel)]='query'
                                                                 [config]='config'></query-builder>
@@ -89,8 +90,8 @@
                                 </div>
                                 <div class="col-md-8 justify-content-end d-flex">
                                     <div class="buttons-wrap d-flex">
-                                        <button type="button"
-                                            class="btn btn-outline-secondary btn-medium me-2 px-4">Cancel</button>
+                                        <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4"
+                                            (click)="cancelbtn()">Cancel</button>
                                         <button type="button" class="btn skyBg ms-2 px-4 btn-medium saveBtn"
                                             (click)="onSave()">Save</button>
                                     </div>

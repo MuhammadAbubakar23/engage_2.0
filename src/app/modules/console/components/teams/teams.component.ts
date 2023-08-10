@@ -13,39 +13,36 @@ import { CreateTeamComponent } from './create-team/create-team.component';
 // import { DataTablesModule } from "angular-datatables";
 @Component({
   selector: 'app-teams',//DataTablesModule
-  standalone:true,
-  imports:[CommonModule, RouterModule, LayoutsModule, CreateTeamComponent, AddTeamMembersComponent],
+  standalone: true,
+  imports: [CommonModule, RouterModule, LayoutsModule, CreateTeamComponent, AddTeamMembersComponent],
   templateUrl: './teams.component.html',
   styleUrls: ['./teams.component.scss']
 })
 export class TeamsComponent implements OnInit {
   Teams: Array<any> = [];
   TeamsCount: number = 0;
-  identifire:string = "mainId"
-  model:MenuModel[] = [];
+  identifire: string = "mainId"
+  model: MenuModel[] = [];
   filter?: Observable<ConsoleTableParams>;
-  showConsoleTable:boolean= false;
-  isActive=false;
-  
-  constructor(private headerService: HeaderService, private _Activatedroute:ActivatedRoute, private toaster:ToasterService) { }
-
+  showConsoleTable: boolean = false;
+  isActive = false;
+  constructor(private headerService: HeaderService, private _Activatedroute: ActivatedRoute, private toaster: ToasterService) { }
   async ngOnInit() {
     this.filter = await this._Activatedroute.snapshot.data["teamJ"];
-    if(typeof this.filter !== 'undefined'){
+    if (typeof this.filter !== 'undefined') {
       this.showConsoleTable = true;
     }
     // this.Teams = await this._Activatedroute.snapshot.data["teams"];
     // this.TeamsCount =  this.Teams.length;
     console.log(this.filter);
     // this.Teams =  this._Activatedroute.snapshot.data["teams"];
-  }  
-
-  updatevalue(string:any){
+  }
+  updatevalue(string: any) {
     this.toaster.show('error', 'Check it out!', 'This is a error alert');
     return;
     //this.headerService.updateMessage(string);
   }
-  AddTeamMembers(){
-    this.isActive=!this.isActive;
+  AddTeamMembers() {
+    this.isActive = !this.isActive;
   }
 }

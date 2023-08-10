@@ -10,20 +10,52 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
   styleUrls: ['./quick-response.component.scss']
 })
 export class QuickResponseComponent implements OnInit {
-
   templates!: any[];
   sortOptions: string[] = ['All', 'Ascending', 'Descending'];
   selectedSortOption: string = 'All';
   messages: any;
-
-  sortTemplates() {
-    if (this.selectedSortOption === 'Ascending') {
-      this.templates.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-    } else if (this.selectedSortOption === 'Descending') {
-      this.templates.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
+  searchText: string = '';
+  applySearchFilter() {
+    // Convert the search text to lowercase for case-insensitive search
+    const searchTextLower = this.searchText.toLowerCase();
+  
+    // Filter the messages based on the search text
+    this.messages = this.messages.filter((message: { text: any; }) => {
+      const templateNameLower = (message.text || '').toLowerCase();
+      return templateNameLower.includes(searchTextLower);
+    });
+  
+    // Apply sorting after filtering
+    this.sortMessages();
+  }
+  
+  refreshMessages() {
+    this.commonService.GetQuickReply().subscribe(
+      (response: any) => {
+        this.messages = response;
+        // Apply sorting after refreshing messages
+        this.sortMessages();
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
+  
+  sortMessages() {
+    switch (this.selectedSortOption) {
+      case 'Ascending':
+        this.messages.sort((a: { text: string; }, b: { text: any; }) => a.text.localeCompare(b.text));
+        break;
+      case 'Descending':
+        this.messages.sort((a: { text: any; }, b: { text: string; }) => b.text.localeCompare(a.text));
+        break;
+      default:
+        break;
     }
   }
-  constructor(private headerService: HeaderService, private commonService: CommonDataService,  private router: Router) { }
+  
+  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
 
   ngOnInit(): void {
     this.commonService.GetQuickReply()
@@ -37,7 +69,7 @@ export class QuickResponseComponent implements OnInit {
 
   updatevalue(string: any) {
     this.headerService.updateMessage(string);
-  } 
+  }
   editTemplate(template: any) {
     this.router.navigate(['/console/createresponse'], {
       state: { template }
