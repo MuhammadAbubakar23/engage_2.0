@@ -16,7 +16,7 @@
             </div>
             <span class="badge twltte-bg rounded-pill">{{UnResponded}}</span>
           </a>
-         <!-- <a (click)="updatevalue('allInboxesHeader')" [routerLink]="['/all-inboxes/sla']"
+          <a (click)="updatevalue('allInboxesHeader')" [routerLink]="['/all-inboxes/sla']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="all-slas">
             <div class="iconButton medium radicalBg">
               <i class="fal fa-bell"></i>
@@ -29,20 +29,38 @@
             </div>
             <span class="badge twltte-bg rounded-pill">{{SlaUnResponded}}</span>
           </a>
-           <a (click)="updatevalue('Email')" [routerLink]="['/all-inboxes']"
+
+<!-- From DB -->
+          <!-- <a *ngFor="let channel of channels" (click)="updatevalue(channel.name)" [routerLink]="['/all-inboxes/my_inbox']"
+            class="all-inboxes-menu list-group-item list-group-item-action">
+            <div class="iconButton medium berryBg" [innerHTML]="channel.icon">
+            </div>
+            <div class="ms-2 me-auto">
+              <div class="black-text">{{channel.name}}</div>
+            </div>
+            <ng-container *ngFor="let platform of platformWiseCount">
+              <span class="badge twltte-bg rounded-pill" *ngIf="platform.platform == channel.name">{{platform.count}}</span>
+              <span class="badge twltte-bg rounded-pill" *ngIf="platform.platform != channel.name">0</span>
+            </ng-container>
+          </a>
+
+<br>
+<br>
+<br>
+<br> -->
+          <a (click)="updatevalue('Email')"
             class="all-inboxes-menu list-group-item list-group-item-action" value="email">
             <div class="iconButton medium whiteBg">
-              <i class="fal fa-envelope"></i>
+              <!-- <i class="fal fa-envelope"></i> -->
               <img width="25px" src="../../../../../assets/images/gmail-icon.png" alt="gmail"/>
             </div>
             <div class="ms-2 me-auto">
               <div class="black-text">Emails</div>
               <small class="coal">/Gmail</small>
             </div>
-            
+            <!-- <span class="badge twltte-bg rounded-pill">{{EmailUnResponded + OfficeEmailUnResponded}}</span> -->
             <span class="badge twltte-bg rounded-pill">{{EmailUnResponded}}</span>
-          </a> -->
-          <!-- <span class="badge twltte-bg rounded-pill">{{EmailUnResponded + OfficeEmailUnResponded}}</span> -->
+          </a>
           <!-- [queryParams]="{List : 'OfficeEmails'}" -->
           <a (click)="updatevalue('OfficeEmail')"
             class="all-inboxes-menu list-group-item list-group-item-action" value="email">
@@ -67,7 +85,7 @@
             </div>
             <span class="badge twltte-bg rounded-pill">{{WaUnResponded}}</span>
           </a>
-          <!-- <a (click)="updatevalue('SMS')"
+          <a (click)="updatevalue('SMS')"
             class="all-inboxes-menu list-group-item list-group-item-action" value="sms">
             <div class="iconButton medium cherryBg">
               <i class="fal fa-comment-alt-lines"></i>
@@ -78,7 +96,7 @@
             </div>
             <span class="badge twltte-bg rounded-pill">{{SmsUnResponded}}</span>
           </a>
-           <a 
+          <!-- <a 
             class="all-inboxes-menu list-group-item list-group-item-action" value="contacts">
             <div class="iconButton medium pearlBg">
               <i class="fas fa-phone-alt"></i>
@@ -88,8 +106,8 @@
   
             </div>
   
-          </a>
-          <a (click)="updatevalue('Facebook')"
+          </a> -->
+          <a (click)="updatevalue('Facebook')" 
             class="all-inboxes-menu list-group-item list-group-item-action" value="facebook">
             <div class="iconButton medium navyBg">
               <i class="fab fa-facebook-f"></i>
@@ -108,7 +126,7 @@
   
             <div class="ms-2 me-auto">
               <div>Webchat</div>
-               <small class="coal">/ibex.connect</small> 
+              <!-- <small class="coal">/ibex.connect</small> -->
             </div>
             <span class="badge twltte-bg rounded-pill">{{WebchatUnResponded}}</span>
           </a>
@@ -120,7 +138,7 @@
   
             <div class="ms-2 me-auto">
               <div>Twitter</div>
-               <small class="coal">/ibex.connect</small>
+              <!-- <small class="coal">/ibex.connect</small> -->
             </div>
             <span class="badge twltte-bg rounded-pill">{{TwitterUnResponded}}</span>
           </a>
@@ -132,7 +150,7 @@
   
             <div class="ms-2 me-auto">
               <div>Instagram</div>
-               <small class="coal">/ibex.connect</small> 
+              <!-- <small class="coal">/ibex.connect</small> -->
             </div>
             <span class="badge twltte-bg rounded-pill">{{InstaUnResponded}}</span>
           </a>
@@ -144,10 +162,10 @@
   
             <div class="ms-2 me-auto">
               <div>LinkedIn</div>
-              <small class="coal">/ibex.connect</small> 
+              <!-- <small class="coal">/ibex.connect</small> -->
             </div>
             <span class="badge twltte-bg rounded-pill">{{LinkedInUnResponded}}</span>
-          </a> -->
+          </a>
           <!-- <a 
             class="all-inboxes-menu list-group-item list-group-item-action" value="playstore">
             <div class="iconButton medium googleplaybg">
@@ -159,7 +177,7 @@
             </div>
             <span class="badge twltte-bg rounded-pill">{{PlaystoreUnResponded}}</span>
           </a> -->
-          <!-- <a (click)="updatevalue('Youtube')"
+          <a (click)="updatevalue('Youtube')"
             class="all-inboxes-menu list-group-item list-group-item-action" value="youtube">
             <div class="iconButton medium radicalBg">
               <i class="fab fa-youtube"></i>
@@ -167,10 +185,10 @@
   
             <div class="ms-2 me-auto">
               <div>Youtube</div>
-                <small class="coal">/ibex.connect</small>
+              <!-- <small class="coal">/ibex.connect</small> -->
             </div>
             <span class="badge twltte-bg rounded-pill">{{YoutubeUnResponded}}</span>
-          </a> -->
+          </a>
           <!-- <ul class="list-group-followup list-group-flush ms-1 p-0">
             <a (click)="updatevalue('allInboxesHeader')" [routerLink]="['/all-inboxes'saItProcurement']"
               class="list-group-item list-group-item-action d-flex align-items-center" value="itProcurement">

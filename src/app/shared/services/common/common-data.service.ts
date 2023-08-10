@@ -510,6 +510,7 @@ export class CommonDataService {
   }
 
   HideUnhideMessage(queryId:number, status:boolean){
+    debugger
     const url = (this.CommonBaseUrl+this.hideUnhideMessage+'?QueryId='+queryId+'&Status='+status);
     return this.http.get(url);
   }
