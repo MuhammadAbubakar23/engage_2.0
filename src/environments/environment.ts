@@ -162,15 +162,10 @@ export const environment = {
       getAllocatedProfiles: 'Query/GetAllocatedProfiles',
       repliesList: 'SentQueries/GetRepliesList',
       signOut: 'SignalRConnector/UserLogout',
-<<<<<<< HEAD
       getCustomers: 'Customer/GetAllCustomersSocialProfile',
       updateStatus: 'Channel/UpdateMessageStatus',
       hideUnhideMessage: 'Query/HideQuery'
       
-=======
-      getCustomers: 'Customer/GetAllCustomersSocialProfile'
-
->>>>>>> f9ebc779c2aa75a6b4e8361b0940b807a5c2ebc8
     },
     facebook: {
       comments: 'Facebook/GetFbPost',
