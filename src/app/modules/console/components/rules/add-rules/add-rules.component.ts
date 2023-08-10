@@ -4,7 +4,6 @@ import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } 
 import { Router, RouterModule } from '@angular/router';
 import { QueryBuilderConfig, QueryBuilderModule } from 'angular2-query-builder';
 import { CommonDataService } from '../../../../../shared/services/common/common-data.service';
-
 @Component({
   selector: 'app-add-rules',
   standalone: true,
@@ -14,7 +13,7 @@ import { CommonDataService } from '../../../../../shared/services/common/common-
 })
 export class AddRulesComponent implements OnInit {
   rulesForm!: FormGroup;
-  // query: any = {}; // Initialize an empty object for query
+  query: any = {}; // Initialize an empty object for query
   // query1: any = {}; // Initialize an empty object for query1
   constructor(private formBuilder: FormBuilder, private commonService: CommonDataService, private router: Router) { }
   ngOnInit(): void {
@@ -38,7 +37,7 @@ export class AddRulesComponent implements OnInit {
             id: [''],
             input: [''],
             operator: [''],
-            rules: this.formBuilder.array(['']),
+            rules: this.formBuilder.array(['']),   
             type: [''],
             value: this.formBuilder.array(['']),
           }),
@@ -114,50 +113,44 @@ export class AddRulesComponent implements OnInit {
       Marks: { name: 'Marks', type: 'number' },
     }
   }
-  query = {
-    condition: 'or',
-    rules: [
-      {  condition:'AND', field: 'from', id:'1', input: '', operator: '!=',type:'0', value: 'lahore'  },
+  // query = {
+  //   condition: 'or',
+  //   rules: [
+  //     { condition: 'AND', field: 'from', id: '1', input: '', operator: '!=', type: '0', value: 'lahore' },
 
-      // { field: 'From', operator: '<=', value: 'Bob' },
-      // { field: 'gender', operator: '>=', value: 'm' },
-      // { field: 'city', operator: '=', value: 'abc' },
-      // { field: 'degree', operator: '!=', value: 'deg' },
-      // { field: 'occupation', operator: '!=', value: 'ocu' },
-      // { field: 'designation', operator: '!=', value: 'desg' },
-    ]
-  }
-  query1 = {
-    Condition: 'And',
-    rules: [
-      // { field: 'student', operator: '!=', value: 'std' },
-      {  condition:'', field: '', id:';', input: '', operator: '!=',type:'0', value: ''  },
-      // { field: 'Marks', operator: '!=', value: 'mark' }
-    ]
-  }
-  
+  //     // { field: 'From', operator: '<=', value: 'Bob' },
+  //     // { field: 'gender', operator: '>=', value: 'm' },
+  //     // { field: 'city', operator: '=', value: 'abc' },
+  //     // { field: 'degree', operator: '!=', value: 'deg' },
+  //     // { field: 'occupation', operator: '!=', value: 'ocu' },
+  //     // { field: 'designation', operator: '!=', value: 'desg' },
+  //   ]
+  // }
+  // query1 = {
+  //   Condition: 'And',
+  //   rules: [
+  //     // { field: 'student', operator: '!=', value: 'std' },
+  //     { condition: '', field: '', id: ';', input: '', operator: '!=', type: '0', value: '' },
+  //     // { field: 'Marks', operator: '!=', value: 'mark' }
+  //   ]
+  // }
   onSave() {
     const formData = this.rulesForm.value;
-    const queryData = {
-      name: this.rulesForm.value.name,
-      description: this.rulesForm.value.description,
+    formData.queryBuilderFilterRuleDto.query = this.query; // Update the query control's value
 
-      query: this.query,
-      query1: this.query1,
-    };
-    // const completeDataToSend = {
-    //   formData: formData,
-    //   queryData: queryData,
-    // };
-    this.commonService.AddRules(queryData).subscribe(
+    this.commonService.AddRules(formData).subscribe(
       response => {
-        console.log('Tags added successfully', response);
-        this.router.navigate(['console/tags']);
+        console.log('Rules added successfully', response);
+        // ... navigate or perform other actions ...
       },
       error => {
-        console.error('Failed to add tags', error);
+        console.error('Failed to add rules', error);
       }
     );
+  }
+  cancelbtn() {
+    this.router.navigate(['console/rules']);
+
   }
 }
 
