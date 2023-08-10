@@ -241,14 +241,14 @@ export class EmailComponent implements OnInit {
                   if (!this.multipleTo.includes(singleTo.emailAddress)) {
                     this.multipleTo.push(singleTo.emailAddress);
                   }
-                  email['multipleTo'] = this.multipleTo.join('; ');
+                  email['multipleTo'] = this.multipleTo.join(', ');
                 });
 
                 email.cc?.forEach((singleCc: any) => {
                   if (!this.multipleCc.includes(singleCc.emailAddress)) {
                     this.multipleCc.push(singleCc.emailAddress);
                   }
-                  email['multipleCc'] = this.multipleCc.join('; ');
+                  email['multipleCc'] = this.multipleCc.join(', ');
                 });
               });
             });
@@ -266,7 +266,7 @@ export class EmailComponent implements OnInit {
                       this.multipleToInReply.push(singleTo.emailAddress);
                     }
                     reply['multipleToInReply'] =
-                      this.multipleToInReply.join('; ');
+                      this.multipleToInReply.join(', ');
                   });
   
                   reply.cc?.forEach((singleCc: any) => {
@@ -274,7 +274,7 @@ export class EmailComponent implements OnInit {
                       this.multipleCcInReply.push(singleCc.emailAddress);
                     }
                     reply['multipleCcInReply'] =
-                      this.multipleCcInReply.join('; ');
+                      this.multipleCcInReply.join(', ');
                   });
                   reply.bcc?.forEach((singleBcc: any) => {
                     if (
@@ -283,7 +283,7 @@ export class EmailComponent implements OnInit {
                       this.multipleBccInReply.push(singleBcc.emailAddress);
                     }
                     reply['multipleBccInReply'] =
-                      this.multipleBccInReply.join('; ');
+                      this.multipleBccInReply.join(', ');
                   });
                 });
               });
@@ -331,10 +331,10 @@ export class EmailComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
-        userName: '',
-        notInclude: '',
-        include: '',
-        flag: '',        
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
 
       this.SpinnerService.show();
@@ -396,14 +396,14 @@ export class EmailComponent implements OnInit {
                       if (!this.multipleTo.includes(singleTo.emailAddress)) {
                         this.multipleTo.push(singleTo.emailAddress);
                       }
-                      email['multipleTo'] = this.multipleTo.join('; ');
+                      email['multipleTo'] = this.multipleTo.join(', ');
                     });
     
                     email.cc?.forEach((singleCc: any) => {
                       if (!this.multipleCc.includes(singleCc.emailAddress)) {
                         this.multipleCc.push(singleCc.emailAddress);
                       }
-                      email['multipleCc'] = this.multipleCc.join('; ');
+                      email['multipleCc'] = this.multipleCc.join(', ');
                     });
                   });
                 });
@@ -421,7 +421,7 @@ export class EmailComponent implements OnInit {
                           this.multipleToInReply.push(singleTo.emailAddress);
                         }
                         reply['multipleToInReply'] =
-                          this.multipleToInReply.join('; ');
+                          this.multipleToInReply.join(', ');
                       });
       
                       reply.cc?.forEach((singleCc: any) => {
@@ -429,7 +429,7 @@ export class EmailComponent implements OnInit {
                           this.multipleCcInReply.push(singleCc.emailAddress);
                         }
                         reply['multipleCcInReply'] =
-                          this.multipleCcInReply.join('; ');
+                          this.multipleCcInReply.join(', ');
                       });
                       reply.bcc?.forEach((singleBcc: any) => {
                         if (
@@ -438,7 +438,7 @@ export class EmailComponent implements OnInit {
                           this.multipleBccInReply.push(singleBcc.emailAddress);
                         }
                         reply['multipleBccInReply'] =
-                          this.multipleBccInReply.join('; ');
+                          this.multipleBccInReply.join(', ');
                       });
                     });
                   });
@@ -464,10 +464,10 @@ export class EmailComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
-        userName: '',
-        notInclude: '',
-        include: '',
-        flag: '',
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
 
       this.SpinnerService.show();
@@ -525,14 +525,14 @@ export class EmailComponent implements OnInit {
                     if (!this.multipleTo.includes(singleTo.emailAddress)) {
                       this.multipleTo.push(singleTo.emailAddress);
                     }
-                    email['multipleTo'] = this.multipleTo.join('; ');
+                    email['multipleTo'] = this.multipleTo.join(', ');
                   });
   
                   email.cc?.forEach((singleCc: any) => {
                     if (!this.multipleCc.includes(singleCc.emailAddress)) {
                       this.multipleCc.push(singleCc.emailAddress);
                     }
-                    email['multipleCc'] = this.multipleCc.join('; ');
+                    email['multipleCc'] = this.multipleCc.join(', ');
                   });
                 });
               });
@@ -550,7 +550,7 @@ export class EmailComponent implements OnInit {
                         this.multipleToInReply.push(singleTo.emailAddress);
                       }
                       reply['multipleToInReply'] =
-                        this.multipleToInReply.join('; ');
+                        this.multipleToInReply.join(', ');
                     });
     
                     reply.cc?.forEach((singleCc: any) => {
@@ -558,7 +558,7 @@ export class EmailComponent implements OnInit {
                         this.multipleCcInReply.push(singleCc.emailAddress);
                       }
                       reply['multipleCcInReply'] =
-                        this.multipleCcInReply.join('; ');
+                        this.multipleCcInReply.join(', ');
                     });
                     reply.bcc?.forEach((singleBcc: any) => {
                       if (
@@ -567,7 +567,7 @@ export class EmailComponent implements OnInit {
                         this.multipleBccInReply.push(singleBcc.emailAddress);
                       }
                       reply['multipleBccInReply'] =
-                        this.multipleBccInReply.join('; ');
+                        this.multipleBccInReply.join(', ');
                     });
                   });
                 });
@@ -592,10 +592,10 @@ export class EmailComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
-        userName: '',
-        notInclude: '',
-        include: '',
-        flag: '',
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
 
       this.SpinnerService.show();
@@ -656,14 +656,14 @@ export class EmailComponent implements OnInit {
                       if (!this.multipleTo.includes(singleTo.emailAddress)) {
                         this.multipleTo.push(singleTo.emailAddress);
                       }
-                      email['multipleTo'] = this.multipleTo.join('; ');
+                      email['multipleTo'] = this.multipleTo.join(', ');
                     });
     
                     email.cc?.forEach((singleCc: any) => {
                       if (!this.multipleCc.includes(singleCc.emailAddress)) {
                         this.multipleCc.push(singleCc.emailAddress);
                       }
-                      email['multipleCc'] = this.multipleCc.join('; ');
+                      email['multipleCc'] = this.multipleCc.join(', ');
                     });
                   });
                 });
@@ -681,7 +681,7 @@ export class EmailComponent implements OnInit {
                           this.multipleToInReply.push(singleTo.emailAddress);
                         }
                         reply['multipleToInReply'] =
-                          this.multipleToInReply.join('; ');
+                          this.multipleToInReply.join(', ');
                       });
       
                       reply.cc?.forEach((singleCc: any) => {
@@ -689,7 +689,7 @@ export class EmailComponent implements OnInit {
                           this.multipleCcInReply.push(singleCc.emailAddress);
                         }
                         reply['multipleCcInReply'] =
-                          this.multipleCcInReply.join('; ');
+                          this.multipleCcInReply.join(', ');
                       });
                       reply.bcc?.forEach((singleBcc: any) => {
                         if (
@@ -698,7 +698,7 @@ export class EmailComponent implements OnInit {
                           this.multipleBccInReply.push(singleBcc.emailAddress);
                         }
                         reply['multipleBccInReply'] =
-                          this.multipleBccInReply.join('; ');
+                          this.multipleBccInReply.join(', ');
                       });
                     });
                   });
@@ -921,7 +921,7 @@ export class EmailComponent implements OnInit {
             if (!this.emailToArray.includes(item.emailAddress)) {
               this.emailToArray.push(item.emailAddress);
             }
-            this.emailFromInString = this.emailToArray.join('; ');
+            this.emailFromInString = this.emailToArray.join(', ');
           });
           if (comment.cc) {
             this.emailCc = comment.cc;
@@ -933,7 +933,7 @@ export class EmailComponent implements OnInit {
               if (!this.emailCcArray.includes(item.emailAddress)) {
                 this.emailCcArray.push(item.emailAddress);
               }
-              this.emailCcInString = this.emailCcArray.join('; ');
+              this.emailCcInString = this.emailCcArray.join(', ');
             });
           } else {
             this.emailCcInString = '';
@@ -1424,21 +1424,21 @@ export class EmailComponent implements OnInit {
                   if (!this.multipleToInReply.includes(singleTo.emailAddress)) {
                     this.multipleToInReply.push(singleTo.emailAddress);
                   }
-                  reply['multipleToInReply'] = this.multipleToInReply.join('; ');
+                  reply['multipleToInReply'] = this.multipleToInReply.join(', ');
                 });
   
                 reply.cc?.forEach((singleCc: any) => {
                   if (!this.multipleCcInReply.includes(singleCc.emailAddress)) {
                     this.multipleCcInReply.push(singleCc.emailAddress);
                   }
-                  reply['multipleCcInReply'] = this.multipleCcInReply.join('; ');
+                  reply['multipleCcInReply'] = this.multipleCcInReply.join(', ');
                 });
                 reply.bcc?.forEach((singleBcc: any) => {
                   if (!this.multipleBccInReply.includes(singleBcc.emailAddress)) {
                     this.multipleBccInReply.push(singleBcc.emailAddress);
                   }
                   reply['multipleBccInReply'] =
-                    this.multipleBccInReply.join('; ');
+                    this.multipleBccInReply.join(', ');
                 });
               });
             }

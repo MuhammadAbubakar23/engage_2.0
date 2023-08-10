@@ -85,12 +85,12 @@
                                                                                     data-bs-toggle="dropdown"
                                                                                     aria-expanded="false">
                                                                                     Customer
-                                                                                    <!-- <small>
+                                                                                    <small>
                                                                                         <i
                                                                                             class="far fa-chevron-down ms-2"></i>
-                                                                                    </small> -->
+                                                                                    </small>
                                                                                 </button>
-                                                                                <!-- <ul class="dropdown-menu custom-dropdown"
+                                                                                <ul class="dropdown-menu custom-dropdown"
                                                                                     aria-labelledby="dropdownMenuButton1">
                                                                                     <li>
                                                                                         <a class="dropdown-item active p-1"
@@ -109,9 +109,9 @@
                                                                                         <a class="dropdown-item p-1"
                                                                                             href="#"> VIPs </a>
                                                                                     </li>
-                                                                                </ul> -->
+                                                                                </ul>
                                                                             </div>
-                                                                            <!-- <p class="card-text rounded-pill">
+                                                                            <p class="card-text rounded-pill">
                                                                                 <small class="rate-bar">
                                                                                     <i class="fas fa-star sun"></i>
                                                                                     <i class="fas fa-star sun"></i>
@@ -120,7 +120,7 @@
                                                                                     <i class="fas fa-star powder"></i>
                                                                                     3.2 Rated to Agent
                                                                                 </small>
-                                                                            </p> -->
+                                                                            </p>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -132,28 +132,24 @@
 
                                             <ul class="list-group center-social-wrapper">
                                                 <li class="list-group-item shadow-lg" aria-disabled="true">
-                                                    <!-- <a data-bs-toggle="tooltip"
-                                                        data-bs-placement="top" aria-label="Facekbook">
-                                                        <button type="button" class="iconButton medium btn notification iconHover">
+                                                    <a data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        aria-label="Facekbook">
+                                                        <button type="button"
+                                                            class="iconButton medium btn notification iconHover">
                                                             <i class="fab fa-facebook"></i>
                                                         </button>
-                                                    </a> -->
-                                                    <a data-bs-toggle="tooltip"
-                                                        data-bs-placement="top" aria-label="Whatsapp">
-                                                        <button class="iconButton medium btn notification iconHover" type="button">
+                                                    </a>
+                                                    <a data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        aria-label="Whatsapp">
+                                                        <button class="iconButton medium btn notification iconHover"
+                                                            type="button">
                                                             <i class="fab fa-whatsapp"></i>
                                                         </button>
                                                     </a>
-                                                    <a data-bs-toggle="tooltip"
-                                                        data-bs-placement="top" aria-label="Email">
-                                                        <button class="iconButton medium btn notification iconHover" type="button">
-                                                            <i class="fal fa-envelope coal"></i>
-                                                        </button>
-                                                    </a>
-                                                    
-                                                    <!-- <a data-bs-toggle="tooltip"
-                                                        data-bs-placement="top" aria-label="Emails">
-                                                        <button class="iconButton medium btn notification iconHover" type="button">
+                                                    <a data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        aria-label="Emails">
+                                                        <button class="iconButton medium btn notification iconHover"
+                                                            type="button">
                                                             <i class="fal fa-envelope coal"></i>
                                                         </button>
                                                     </a>
@@ -170,19 +166,18 @@
                                                             type="button">
                                                             <i class="fal fa-phone-alt coal"></i>
                                                         </button>
-                                                    </a> -->
+                                                    </a>
                                                     <div class="dropdown w-auto social-chancels-dropdown"
                                                         data-bs-toggle="tooltip" data-bs-placement="top">
                                                         <button
-                                                            class="iconButton medium notification iconHover social-dropdown" [ngClass]="SocialDropdown?'show':''"
+                                                            class="iconButton medium notification iconHover social-dropdown"
                                                             id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                            aria-expanded="false" type="button" (click)="socialDropdown()">
+                                                            aria-expanded="false" type="button">
                                                             <i class="fal fa-plus"></i>
                                                         </button>
-                                                        <form [formGroup]="mergeSocialProfilesForm" (ngSubmit)="mergeSocialProfiles()">
                                                         <ul class="dropdown-menu custom-dropdown"
                                                             aria-labelledby="dropdownMenuButton1">
-                                                            <!-- <li class="d-flex">
+                                                            <li class="d-flex">
                                                                 <div class="input-group">
                                                                     <div class="d-flex mb-1">
                                                                         <span class="input-group-text"
@@ -234,7 +229,7 @@
                                                                     <i class="fal fa-plus"></i>
                                                                 </a>
 
-                                                            </li> -->
+                                                            </li>
                                                             <li class="d-flex">
                                                                 <div class="input-group">
                                                                     <div class="d-flex mb-1">
@@ -243,26 +238,26 @@
                                                                             <i class="fab fa-whatsapp coal"></i>
                                                                         </span>
                                                                         <input class="form-control" id="inputwhatsapp"
-                                                                            placeholder="whatsapp.com" formControlName="whatsappProfileId">
+                                                                            placeholder="whatsapp.com">
                                                                     </div>
-                                                                    <div class="second-field d-flex " [ngClass]="SecondWhatsApp == true? '':'d-none'">
+                                                                    <div class="second-field d-flex d-none">
                                                                         <span class="input-group-text"
                                                                             id="inputwhatsapp">
                                                                             <i class="fab fa-whatsapp coal"></i>
                                                                         </span>
-                                                                        <input class="form-control" id="inputwhatsapp2" 
+                                                                        <input class="form-control" id="inputwhatsapp2"
                                                                             placeholder="whatsapp.com">
                                                                     </div>
 
                                                                 </div>
                                                                 <a id="display_toggle" type="button"
                                                                     class="iconButton small iconHover mt-1 ms-1"
-                                                                    (click)="secondWhatsApp()">
+                                                                    href="javascript:void(0)">
                                                                     <i class="fal fa-plus"></i>
                                                                 </a>
 
                                                             </li>
-                                                            <!-- <li class="d-flex">
+                                                            <li class="d-flex">
                                                                 <div class="input-group">
                                                                     <div class="d-flex mb-1">
                                                                         <span class="input-group-text"
@@ -315,7 +310,7 @@
                                                                     <i class="fal fa-plus"></i>
                                                                 </a>
 
-                                                            </li> -->
+                                                            </li>
                                                             <li class="d-flex">
                                                                 <div class="input-group">
                                                                     <div class="d-flex mb-1">
@@ -323,25 +318,25 @@
                                                                             <i class="fal fa-envelope coal"></i>
                                                                         </span>
                                                                         <input class="form-control" id="inputemail"
-                                                                            placeholder="email" formControlName="emailProfileId">
+                                                                            placeholder="email">
                                                                     </div>
-                                                                    <div class="second-field d-flex" [ngClass]="SecondEmail == true? '':'d-none'">
+                                                                    <div class="second-field d-flex d-none">
                                                                         <span class="input-group-text" id="inputemail">
                                                                             <i class="fal fa-envelope coal"></i>
                                                                         </span>
-                                                                        <input class="form-control" id="inputemail" 
+                                                                        <input class="form-control" id="inputemail"
                                                                             placeholder="email">
                                                                     </div>
 
                                                                 </div>
                                                                 <a id="display_toggle" type="button"
                                                                     class="iconButton small iconHover mt-1 ms-1"
-                                                                    (click)="secondEmail()">
+                                                                    href="javascript:void(0)">
                                                                     <i class="fal fa-plus"></i>
                                                                 </a>
 
                                                             </li>
-                                                            <!-- <li class="d-flex">
+                                                            <li class="d-flex">
                                                                 <div class="input-group">
                                                                     <div class="d-flex mb-1">
                                                                         <span class="input-group-text" id="v">
@@ -367,14 +362,13 @@
                                                                     <i class="fal fa-plus"></i>
                                                                 </a>
 
-                                                            </li> -->
+                                                            </li>
                                                             <div class="text-center">
-                                                                <button type="submit"
+                                                                <button type="button"
                                                                     class="btn btn-success">Save</button>
                                                             </div>
 
                                                         </ul>
-                                                    </form>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -446,10 +440,13 @@
                                                             <label for="inputAddress"
                                                                 class="col-sm-3 col-form-label">City</label>
                                                             <div class="col-sm-9 country-dropdown">
-                                                                
-                                                                    <select class="form-select" id="floatingSelect"  aria-label="Floating label select" formControlName="city">
+
+                                                                <select class="form-select" id="floatingSelect"
+                                                                    aria-label="Floating label select" formControlName="city">
                                                                     <option>Choose the City</option>
-                                                                    <option *ngFor="let city of Cities" [ngValue]="city.name" >{{city.name}}</option>
+                                                                    <option *ngFor="let city of Cities"
+                                                                        [ngValue]="city.name">
+                                                                        {{city.name}}</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -457,9 +454,12 @@
                                                             <label for="inputAddress"
                                                                 class="col-sm-3 col-form-label">Country</label>
                                                             <div class="col-sm-9 country-dropdown">
-                                                                <select class="form-select" id="floatingSelect"  aria-label="Floating label select" formControlName="country">
+                                                                <select class="form-select" id="floatingSelect"
+                                                                    aria-label="Floating label select" formControlName="country">
                                                                     <option>Choose the Country</option>
-                                                                    <option *ngFor="let country of Countries" [ngValue]="country.name">{{country.name}}
+                                                                    <option *ngFor="let country of Countries"
+                                                                        [ngValue]="country.name"
+                                                                        >Pakistan
                                                                     </option>
                                                                 </select>
                                                             </div>
@@ -468,8 +468,8 @@
                                                 </div>
                                                 <!-- {{userDetailForm.controls['customerSecondaryProfiles'].value}} -->
                                                 <h6 class="silver mt-5 mb-3">Channels</h6>
-                                                <div >
-                                                    <!-- <div class="row mb-3">
+                                                <div>
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'Facebook'">
                                                         <label for="inputFacebook"
                                                             class="col-sm-3 col-form-label">Facebook
                                                         </label>
@@ -521,30 +521,34 @@
                                                                 formControlName="youtubeUniqueId"
                                                                 value={{youtubeUniqueId}}>
                                                         </div>
-                                                    </div> -->
+                                                    </div>
                                                     <div class="row mb-3" *ngIf="openedChannel != 'WhatsApp'">
-                                                        <label for="inputWhatsapp" class="col-sm-3 col-form-label">WhatsApp</label>
+                                                        <label for="inputWhatsapp"
+                                                            class="col-sm-3 col-form-label">WhatsApp
+                                                        </label>
                                                         <div class="col-sm-9">
-                                                            <input class="form-control" id="inputWhatsapp" formControlName="whatsappUniqueId">
+                                                            <input class="form-control" id="inputWhatsapp"
+                                                                formControlName="whatsappUniqueId"
+                                                                value={{whatsappUniqueId}}>
                                                         </div>
                                                     </div>
-                                                    <!-- <div class="row mb-3">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'SMS'">
                                                         <label for="inputSMS"
                                                             class="col-sm-3 col-form-label">SMS</label>
                                                         <div class="col-sm-9">
                                                             <input class="form-control" id="inputSMS"
                                                                 formControlName="smsUniqueId" value={{smsUniqueId}}>
                                                         </div>
-                                                    </div> -->
-                                                    <div class="row mb-3" *ngIf="openedChannel != 'OfficeEmail'">
+                                                    </div>
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'Email'">
                                                         <label for="inputEmail2"
                                                             class="col-sm-3 col-form-label">Email</label>
                                                         <div class="col-sm-9">
                                                             <input type="text" class="form-control" id="inputEmail2"
-                                                                formControlName="emailUniqueId">
+                                                                formControlName="emailUniqueId" value={{emailUniqueId}}>
                                                         </div>
                                                     </div>
-                                                    <!-- <div class="row mb-3">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'LinkedIn'">
                                                         <label for="inputEmail2"
                                                             class="col-sm-3 col-form-label">LinkedIn</label>
                                                         <div class="col-sm-9">
@@ -561,71 +565,80 @@
                                                                 formControlName="webchatUniqueId"
                                                                 value={{webchatUniqueId}}>
                                                         </div>
-                                                    </div> -->
+                                                    </div>
                                                 </div>
 
                                                 <h6 class="silver mt-5 mb-3">Other</h6>
-                                                <div >
-                                                <ng-container >
-                                                <div class="row mb-3">
-                                                    <label for="inputFatherName" class="col-sm-3 col-form-label">Father
-                                                        Name </label>
-                                                    <div class="col-sm-9">
-                                                        <input class="form-control" id="inputFatherName" formControlName="fatherName">
-                                                    </div>
+                                                <div>
+                                                    <ng-container>
+                                                        <div class="row mb-3">
+                                                            <label for="inputFatherName"
+                                                                class="col-sm-3 col-form-label">Father
+                                                                Name </label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" id="inputFatherName"
+                                                                    formControlName="fatherName">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="inputEducation"
+                                                                class="col-sm-3 col-form-label">Education </label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" id="inputEducation"
+                                                                    formControlName="education">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="inputBloodGroup"
+                                                                class="col-sm-3 col-form-label">Blood
+                                                                Group</label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" id="inputBloodGroup"
+                                                                    formControlName="bloodGroup">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <div for="inputBloodGroup" class="col-sm-3 col-form-label">
+                                                                <a href="#" class="btn iconButton add-more-field">
+                                                                    <i class="fal fa-plus me-1"></i>
+                                                                    Add More
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-sm-9 select-type-field d-none">
+                                                                <select class="select-type select2-hidden-accessible"
+                                                                    name="time-from"
+                                                                    data-select2-id="select2-data-28-cxcr" tabindex="-1"
+                                                                    aria-hidden="true">
+                                                                    <option data-select2-id="select2-data-30-xavu">
+                                                                    </option>
+                                                                    <option>CNIC</option>
+                                                                    <option>Phone</option>
+                                                                    <option>Customer ID</option>
+                                                                </select><span
+                                                                    class="select2 select2-container select2-container--default"
+                                                                    dir="ltr" data-select2-id="select2-data-29-apez"
+                                                                    style="width: auto;"><span class="selection"><span
+                                                                            class="select2-selection select2-selection--single"
+                                                                            role="combobox" aria-haspopup="true"
+                                                                            aria-expanded="false" tabindex="0"
+                                                                            aria-disabled="false"
+                                                                            aria-labelledby="select2-time-from-8g-container"
+                                                                            aria-controls="select2-time-from-8g-container"><span
+                                                                                class="select2-selection__rendered"
+                                                                                id="select2-time-from-8g-container"
+                                                                                role="textbox" aria-readonly="true"
+                                                                                title="Select type"><span
+                                                                                    class="select2-selection__placeholder">Select
+                                                                                    type</span></span><span
+                                                                                class="select2-selection__arrow"
+                                                                                role="presentation"><b
+                                                                                    role="presentation"></b></span></span></span><span
+                                                                        class="dropdown-wrapper"
+                                                                        aria-hidden="true"></span></span>
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
                                                 </div>
-                                                <div class="row mb-3">
-                                                    <label for="inputEducation"
-                                                        class="col-sm-3 col-form-label">Education </label>
-                                                    <div class="col-sm-9">
-                                                        <input class="form-control" id="inputEducation" formControlName="education">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <label for="inputBloodGroup" class="col-sm-3 col-form-label">Blood
-                                                        Group</label>
-                                                    <div class="col-sm-9">
-                                                        <input class="form-control" id="inputBloodGroup" formControlName="bloodGroup">
-                                                    </div>
-                                                </div>
-                                                <!-- <div class="row mb-3">
-                                                    <div for="inputBloodGroup" class="col-sm-3 col-form-label">
-                                                        <a href="#" class="btn iconButton add-more-field">
-                                                            <i class="fal fa-plus me-1"></i>
-                                                            Add More
-                                                        </a>
-                                                    </div>
-                                                    <div class="col-sm-9 select-type-field d-none">
-                                                        <select class="select-type select2-hidden-accessible"
-                                                            name="time-from" data-select2-id="select2-data-28-cxcr"
-                                                            tabindex="-1" aria-hidden="true">
-                                                            <option data-select2-id="select2-data-30-xavu"></option>
-                                                            <option>CNIC</option>
-                                                            <option>Phone</option>
-                                                            <option>Customer ID</option>
-                                                        </select><span
-                                                            class="select2 select2-container select2-container--default"
-                                                            dir="ltr" data-select2-id="select2-data-29-apez"
-                                                            style="width: auto;"><span class="selection"><span
-                                                                    class="select2-selection select2-selection--single"
-                                                                    role="combobox" aria-haspopup="true"
-                                                                    aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-time-from-8g-container"
-                                                                    aria-controls="select2-time-from-8g-container"><span
-                                                                        class="select2-selection__rendered"
-                                                                        id="select2-time-from-8g-container"
-                                                                        role="textbox" aria-readonly="true"
-                                                                        title="Select type"><span
-                                                                            class="select2-selection__placeholder">Select
-                                                                            type</span></span><span
-                                                                        class="select2-selection__arrow"
-                                                                        role="presentation"><b
-                                                                            role="presentation"></b></span></span></span><span
-                                                                class="dropdown-wrapper"
-                                                                aria-hidden="true"></span></span>
-                                                    </div>
-                                                </div> -->
-                                            </ng-container>
-                                            </div>
                                             </div>
                                         </div>
 

@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
+import { FetchPostTypeService } from 'src/app/services/FetchPostType/fetch-post-type.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
 import { AssignQuerryDto } from 'src/app/shared/Models/AssignQuerryDto';
@@ -85,8 +86,10 @@ export class ResponderMenuComponent implements OnInit {
             this.alertWarning = false;
             item['slaFlag'] = 'unread';
           }
+          // // console.log("slaFlag", item['slaFlag'])
         });
       }
+      //  // console.log("list", this.userSpecificAllocatedProfiles)
     }, 1000);
   }
   totalPageNumbers: any;

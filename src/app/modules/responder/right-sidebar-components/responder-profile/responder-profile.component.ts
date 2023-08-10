@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { UserDetailDto } from 'src/app/shared/Models/UserDetailDto';
@@ -29,7 +29,8 @@ export class ResponderProfileComponent implements OnInit {
   userDetailDto = new UserDetailDto();
 
   userDetailForm!: FormGroup;
-  mergeSocialProfilesForm !: FormGroup
+
+  openedChannel:string="";
 
   constructor(
     private commonService: CommonDataService,
@@ -65,18 +66,10 @@ export class ResponderProfileComponent implements OnInit {
       linkedinUniqueId: new FormControl(''),
       webchatUniqueId: new FormControl(''),
     });
-
-    this.mergeSocialProfilesForm = new FormGroup({
-      whatsappProfileId: new FormControl(''),
-      emailProfileId: new FormControl('')
-    })
   }
-
-  openedChannel:string="";
 
   ngOnInit(): void {
     this.id = localStorage.getItem('storeOpenedId');
-    this.openedChannel = localStorage.getItem('parent') || '{}';
     this.openedChannel = localStorage.getItem('parent') || '{}';
     this.getProfileDetails();
   }
@@ -84,7 +77,6 @@ export class ResponderProfileComponent implements OnInit {
   getProfileDetails() {
     this.commonService.GetProfileDetails(this.id).subscribe((res: any) => {
       this.profileDetails = res;
-
 
       this.spinnerService.show();
       this.spinner2running = true;
@@ -97,7 +89,7 @@ export class ResponderProfileComponent implements OnInit {
       this.spinnerService.hide();
       this.spinner2running = false;
 
-      if(res.customerDetail){
+      if (res.customerDetail) {
         this.userDetailForm.patchValue({
           email: res.customerDetail.email,
           phoneNumber: res.customerDetail.phoneNumber,
@@ -109,11 +101,10 @@ export class ResponderProfileComponent implements OnInit {
           country: res.customerDetail.country,
           fatherName: res.customerDetail.fatherName,
           education: res.customerDetail.education,
-          bloodGroup: res.customerDetail.bloodGroup
+          bloodGroup: res.customerDetail.bloodGroup,
         });
       }
-
-      this.profileDetails?.customerSecondaryProfiles?.forEach(
+      this.profileDetails.customerSecondaryProfiles.forEach(
         (secondaryProfile: any) => {
           if (secondaryProfile.platform == 'Facebook') {
             this.fbUniqueId = secondaryProfile.customerUniqueId;
@@ -145,7 +136,7 @@ export class ResponderProfileComponent implements OnInit {
               linkedinUniqueId: secondaryProfile.customerUniqueId,
             });
           }
-          if (secondaryProfile.platform == 'OfficeEmail') {
+          if (secondaryProfile.platform == 'Email') {
             this.emailUniqueId = secondaryProfile.customerUniqueId;
             this.userDetailForm.patchValue({
               emailUniqueId: secondaryProfile.customerUniqueId,
@@ -174,7 +165,6 @@ export class ResponderProfileComponent implements OnInit {
     });
   }
   updateUserInformation() {
-    
     var secondaryProfiles = [];
     if (this.userDetailForm.value.fbUniqueId != '') {
       var obj = {
@@ -228,7 +218,7 @@ export class ResponderProfileComponent implements OnInit {
     if (this.userDetailForm.value.emailUniqueId != '') {
       var obj = {
         customerUniqueId: this.userDetailForm.value.emailUniqueId,
-        platform: 'OfficeEmail',
+        platform: 'Email',
       };
       secondaryProfiles.push(obj);
     }
@@ -265,8 +255,7 @@ export class ResponderProfileComponent implements OnInit {
 
     this.commonService.UpdateProfileDetails(this.userDetailDto).subscribe(
       (res: any) => {
-        
-        this.reloadComponent('profileUpdated')
+        this.reloadComponent('profileUpdated');
         setTimeout(() => {
           this.closeProfileComponent('profile');
         }, 1000);
@@ -378,38 +367,5 @@ export class ResponderProfileComponent implements OnInit {
     { id: 19, name: 'Sargodha' },
     { id: 20, name: 'Sialkot' },
   ];
-  Countries = [
-    { id: 1, name: 'Pakistan' },
-
-  ];
-
-  SecondWhatsApp = false;
-  SecondEmail = false;
-  SocialDropdown = false;
-  secondWhatsApp(){
-    
-    this.SecondWhatsApp = !this.SecondWhatsApp;
-  }
-
-  socialDropdown(){
-    this.SocialDropdown = !this.SocialDropdown;
-  }
-  secondEmail(){
-    this.SecondEmail = !this.SecondEmail;
-  }
-
-  
-
-  mergeSocialProfiles(){
-    if(this.mergeSocialProfilesForm.value.whatsappProfileId != ''){
-      this.userDetailForm.value.whatsappUniqueId = this.mergeSocialProfilesForm.value.whatsappProfileId;
-      this.whatsappUniqueId = this.mergeSocialProfilesForm.value.whatsappProfileId;
-    }
-    if(this.mergeSocialProfilesForm.value.emailProfileId != ''){
-      this.userDetailForm.value.emailUniqueId = this.mergeSocialProfilesForm.value.emailProfileId;
-      this.emailUniqueId = this.mergeSocialProfilesForm.value.emailProfileId;
-    }
-    this.SocialDropdown = false
-  }
-
+  Countries = [{ id: 1, name: 'Pakistan' }];
 }

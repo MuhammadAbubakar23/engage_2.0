@@ -1,0 +1,200 @@
+<nav id="keyboard-shortcuts-rightbar-dashboard" class="expended-rigth-sidebar open">
+    <div class="right-bar-wrapper">
+        <div class="bodyWrapper">
+            <header class="tab-header pe-3 rightbar-tab-header">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="short-key" data-bs-toggle="tab"
+                            data-bs-target="#short-key-tab" type="button" role="tab" aria-controls="short-key-tab"
+                            aria-selected="true">
+                            Keyboard Shortcuts
+                        </button>
+                    </div>
+                    <div class="icons-list">
+                        <div class="searchbar-click">
+                            <form [ngClass]="show == true ? 'searchbox-open' : ''" class="searchbox">
+                                <input placeholder="What are you looking for?" name="search" class="searchbox-input"
+                                    required="">
+                                <span class="searchbox-icon medium iconButton iconHover" (click)="click(show)"><i
+                                        [ngClass]="show == false ? 'fa fa-search': 'fa fa-times'"></i></span>
+                            </form>
+
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <div class="rightbar-body-wrapper pt-3 pe-3 key-shortcuts" data-scrollbar="true" tabindex="-1"
+                style="overflow: auto; outline: none;">
+                <div class="scroll-content">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div id="short-key-tab" class="tab-pane fade active show" role="tabpanel"
+                            aria-labelledby="short-key">
+                            <div class="row">
+                                <div class="col-sm-12 pt-3 pb-3">
+                                    <h6 class="darkblue">Press <a
+                                            class="border rounded-pill shadow-sm rounded-key-tab">?</a> show this again
+                                    </h6>
+                                </div>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item border-info fw-bold silver">NAVIGATION</li>
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-center pt-3 pb-3 darkblue">
+                                    <div>Back in History</div>
+                                    <div>
+                                        <a
+                                            class="border rounded-pill shadow-sm rounded-key-tab darkblue">Cmd</a>
+                                        <span> + </span>
+                                        <a
+                                            class="border rounded-pill shadow-sm rounded-key-tab darkblue">[</a>
+                                    </div>
+                                </li>
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-center pt-3 pb-3 darkblue">
+                                    <div>Forward in History</div>
+                                    <div>
+                                        <a
+                                            class="border rounded-pill shadow-sm rounded-key-tab darkblue">Cmd</a>
+                                        <span> + </span>
+                                        <a
+                                            class="border rounded-pill shadow-sm rounded-key-tab darkblue">[</a>
+                                    </div>
+                                </li>
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-center pt-3 pb-3 darkblue">
+                                    <div>Search</div>
+                                    <div class="d-flex flex-column align-items-sm-end">
+                                        <p>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">Cmd</a>
+                                            <span> + </span>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">Shift</a>
+                                            <span> + </span>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">F</a>
+                                        </p>
+                                        <p class="mb-0">
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">Shift</a>
+                                            <span> + </span>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">F</a>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-center pt-3 pb-3 darkblue">
+                                    <div>Go to conversation</div>
+                                    <div>
+                                        <a
+                                            class="border rounded-pill shadow-sm rounded-key-tab darkblue">Shift</a>
+                                        <span> + </span>
+                                        <a
+                                            class="border rounded-pill shadow-sm rounded-key-tab darkblue">O</a>
+                                    </div>
+                                </li>
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-center pt-3 pb-3 darkblue">
+                                    <div>Open plugins panel</div>
+                                    <div class="d-flex flex-column align-items-sm-end">
+                                        <p>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue"> Cmd</a>
+                                            <span> + </span>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">K</a>
+                                        </p>
+                                        <p>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">Cmd</a>
+                                            <span> + </span>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">Shift</a>
+                                            <span> + </span>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">P</a>
+                                        </p>
+                                        <p class="mb-0">
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">Cmd</a>
+                                            <span> + </span>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">Option</a>
+                                            <span> + </span>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">Shift</a>
+                                            <span> + </span>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">P</a>
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item border-info fw-bold silver mt-4">CONVERSATION ACTION</li>
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-center pt-3 pb-3 darkblue">
+                                    <div>Mute / subscribe</div>
+                                    <div class="d-flex flex-column align-items-sm-end">
+                                        <p>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">Cmd</a>
+                                            <span> + </span>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">Shift</a>
+                                            <span> + </span>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">U</a>
+                                        </p>
+                                        <p class="mb-0">
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">Shift</a>
+                                            <span> + </span>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">U</a>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-center pt-3 pb-3 darkblue">
+                                    <div>Archive / unarchive</div>
+                                    <div class="d-flex flex-column align-items-sm-end">
+                                        <p>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">Cmd</a>
+                                            <span> + </span>
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">E</a>
+                                        </p>
+                                        <p class="mb-0">
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">E</a>
+                                        </p>
+                                    </div>
+                                </li>
+                                <li
+                                    class="list-group-item d-flex justify-content-between align-items-center pt-3 pb-3 darkblue">
+                                    <div>Delete</div>
+                                    <div class="d-flex flex-column align-items-sm-end">
+                                        <p class="mb-0">
+                                            <a
+                                                class="border rounded-pill shadow-sm rounded-key-tab darkblue">Forward
+                                                Delete</a>
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                    <div class="scrollbar-thumb scrollbar-thumb-x"></div>
+                </div>
+                <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                    <div class="scrollbar-thumb scrollbar-thumb-y"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
