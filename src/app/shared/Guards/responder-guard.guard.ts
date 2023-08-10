@@ -29,7 +29,7 @@ export class ResponderGuardGuard implements CanDeactivate<unknown> {
         alert('Please complete the querry first')
         return false
       }
-      return this.canDeactivateFlag;
+      
       
   }
   

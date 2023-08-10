@@ -68,7 +68,7 @@ export class CreateMessageTemplatesComponent implements OnInit {
           (response: any) => {
             // Handle the successful response after updating the template
             // console.log('Template updated:', response);
-            this.router.navigate(['/console/templates/messages']);
+            this.router.navigate(['/console/templates/message']);
           },
           (error: any) => {
             // Handle the error if the update fails
@@ -80,7 +80,7 @@ export class CreateMessageTemplatesComponent implements OnInit {
           (response: any) => {
             // Handle the successful response after creating a new template
             // console.log('Template created:', response);
-            this.router.navigate(['/console/templates/messages']);
+            this.router.navigate(['/console/templates/message']);
           },
           (error: any) => {
             // Handle the error if the template creation fails
@@ -97,6 +97,6 @@ export class CreateMessageTemplatesComponent implements OnInit {
 
   cancelForm(): void {
     // Redirect to the main page without resetting the form
-    this.router.navigate(['/console/templates/messages']);
+    this.router.navigate(['/console/templates/message']);
   }
 }

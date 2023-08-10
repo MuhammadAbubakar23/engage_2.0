@@ -26,6 +26,7 @@ export class CardBoxListComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.cardboxListSelected();
   }
   cardboxListSelected(){
     this.cardboxListChecked = [];
@@ -40,8 +41,9 @@ export class CardBoxListComponent implements OnInit {
     this.menulistchecked.emit(this.childListChecked);
   }
   menulistChecked(childData:any){
+    //1 console.log(childData);
     this.childListChecked[childData.name] = childData.data;
-    // // console.log(this.childListChecked);
+    //1 console.log(this.childListChecked);
     this.sendmenulistchecked();
     // for (var i = 0; i < this.childListChecked.length; i++) {
     //   if(this.childListChecked[i].name == childData.name){
@@ -52,12 +54,12 @@ export class CardBoxListComponent implements OnInit {
     //     }
     //   }        
     // }
-    // // console.log(this.childListChecked); 
+    // console.log(this.childListChecked); 
     // this.cardboxListChecked = [];
     // for (var i = 0; i < this.menulist.length; i++) {
     //   if(this.menulist[i].isSelected)
     //   this.cardboxListChecked.push(this.menulist[i]);
     // }
-    // // console.log(this.cardboxListChecked);
+    // console.log(this.cardboxListChecked);
   }
 }

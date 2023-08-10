@@ -15,16 +15,17 @@ import { PermissionState } from '../../permission-state/permission.state';
   styleUrls: ['./team-menu.component.scss'],
 })
 export class TeamMenuComponent implements OnInit {
+  menus$!: MenuModel[];
   permissions$ :any;
   permission$ :any;
-  menus$: any;
   menu$: any;
   loading$: any;
+
+  menuArray:any[]=[];
   constructor(private MenuStore: Store<MenuState>, private PermissionStore: Store<PermissionState>, private _route: Router) {
     // this.menu$ = this.MenuStore.select(getEmargingEqual('team_main_left_menu'));
     // this.loading$ = this.MenuStore.select(getMenusLoading);
     // this.MenuStore.dispatch(loadMenusList());
-
     // this.permission$ = this.PermissionStore.select(getPermissionBySlug("_upur_"));
     // this.loading$ = this.PermissionStore.select(getPermissionsLoading);
     // this.PermissionStore.dispatch(loadPermissionsLetters());
@@ -33,18 +34,30 @@ export class TeamMenuComponent implements OnInit {
   ngOnInit() {
     this.MenuStore
       .select(getEmargingEqual('team_main_left_menu'))
-      .subscribe((item:any) => {
-        // this.menus$ = [...item];
+      .subscribe((item:MenuModel[]) => {
+
+        // removing responder menu from list for time being
+        this.menuArray = [];
+        item.forEach((singleMenu:any)=>{
+          if(singleMenu.name != "Responder"){
+            if(!this.menuArray.includes(singleMenu)){
+              this.menuArray.push(singleMenu);
+            }            
+          }
+        });
+        item = this.menuArray;
+        // til here
+        this.menus$ = [...item];
       });
     
-    // // // console.log(this.menu$);
-    // // // console.log("------------------------------------------");
-    // // // console.log(this.menus$);
-    // // // console.log("------------------------------------------");
-    // // // console.log("this.menu$");
+    // // console.log(this.menu$);
+    // // console.log("------------------------------------------");
+    // // console.log(this.menus$);
+    // // console.log("------------------------------------------");
+    // // console.log("this.menu$");
   }
 
-  // assignedProfile = localStorage.getItem('assignedProfile');
+  assignedProfile = localStorage.getItem('assignedProfile');
 
   update(menuLink: any) {
     

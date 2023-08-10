@@ -45,7 +45,7 @@
                                                     <tr>
                                                         <td>
                                                             <div class="card mb-4">
-                                                                <div class="row g-0">
+                                                                <div class="row g-0" *ngIf="profileDetails">
                                                                     <div class="col-md-2">
                                                                         <div class="file-input select-user-img"
                                                                             id="edite-user-img">
@@ -157,15 +157,17 @@
                                                             <i class="fal fa-envelope coal"></i>
                                                         </button>
                                                     </a>
-                                                    <a data-bs-toggle="tooltip"
-                                                        data-bs-placement="top" aria-label="SMS">
-                                                        <button class="iconButton medium btn notification iconHover" type="button">
+                                                    <a data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        aria-label="SMS">
+                                                        <button class="iconButton medium btn notification iconHover"
+                                                            type="button">
                                                             <i class="fal fa-comment-alt-lines coal"></i>
                                                         </button>
                                                     </a>
-                                                    <a data-bs-toggle="tooltip"
-                                                        data-bs-placement="top" aria-label="Calls">
-                                                        <button class="iconButton medium btn notification iconHover" type="button">
+                                                    <a data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        aria-label="Calls">
+                                                        <button class="iconButton medium btn notification iconHover"
+                                                            type="button">
                                                             <i class="fal fa-phone-alt coal"></i>
                                                         </button>
                                                     </a> -->
@@ -379,8 +381,8 @@
                                             <div class="profile-form mt-5 me-3 pb-4 px-3">
                                                 <h6 class="silver mt-3">Personal</h6>
 
-                                                <div >
-                                                    <ng-container >
+                                                <div>
+                                                    <ng-container>
                                                         <div class="row mb-3">
                                                             <label for="inputName" class="col-sm-3 col-form-label">Full
                                                                 Name
@@ -482,7 +484,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row mb-3">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'Instagram'">
                                                         <label for="inputInstagram"
                                                             class="col-sm-3 col-form-label">Instagram</label>
                                                         <div class="col-sm-9">
@@ -490,12 +492,13 @@
                                                                 <span class="input-group-text"
                                                                     id="inputInstagram">instagram.com</span>
                                                                 <input class="form-control" id="inputInstagram"
-                                                                formControlName="instaUniqueId" value={{instaUniqueId}}>
+                                                                    formControlName="instaUniqueId"
+                                                                    value={{instaUniqueId}}>
                                                             </div>
 
                                                         </div>
                                                     </div>
-                                                    <div class="row mb-3">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'Twitter'">
                                                         <label for="inputTwitter" class="col-sm-3 col-form-label">
                                                             Twitter
                                                         </label>
@@ -509,7 +512,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row mb-3">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'Youtube'">
                                                         <label for="inputYoutube" class="col-sm-3 col-form-label">
                                                             Youtube
                                                         </label>
@@ -546,15 +549,17 @@
                                                             class="col-sm-3 col-form-label">LinkedIn</label>
                                                         <div class="col-sm-9">
                                                             <input type="text" class="form-control" id="LinkedIn"
-                                                                formControlName="linkedinUniqueId" value={{linkedinUniqueId}}>
+                                                                formControlName="linkedinUniqueId"
+                                                                value={{linkedinUniqueId}}>
                                                         </div>
                                                     </div>
-                                                    <div class="row mb-3">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'WebChat'">
                                                         <label for="inputEmail2"
                                                             class="col-sm-3 col-form-label">WebChat</label>
                                                         <div class="col-sm-9">
                                                             <input type="text" class="form-control" id="WebChat"
-                                                                formControlName="webchatUniqueId" value={{webchatUniqueId}}>
+                                                                formControlName="webchatUniqueId"
+                                                                value={{webchatUniqueId}}>
                                                         </div>
                                                     </div> -->
                                                 </div>
@@ -634,7 +639,7 @@
                                                 <div class="col-md-8 justify-content-end d-flex">
                                                     <div class="buttons-wrap d-flex">
                                                         <button type="button" (click)="closeProfileComponent('profile')"
-                                        class="btn btn-outline-secondary">Cancel</button>
+                                                            class="btn btn-outline-secondary">Cancel</button>
                                                         <button type="submit" class="btn btn-success ms-2"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#profileSaveModal">Save</button>

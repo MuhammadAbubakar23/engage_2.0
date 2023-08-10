@@ -54,6 +54,10 @@ export class TwitterComponent implements OnInit {
   pageSize: any = 10;
   totalUnrespondedCmntCountByCustomer: number = 0;
 
+  TotalCmntQueryCount: number = 0;
+  TotalMsgQueryCount: number = 0;
+
+
   show = false;
   isOpen = false;
   active = false;
@@ -90,8 +94,6 @@ export class TwitterComponent implements OnInit {
   getAppliedTagsList: any;
   totalUnrespondedMsgCountByCustomer: any;
   TodayDate: any;
-  TotalCmntQueryCount: number = 0;
-  TotalMsgQueryCount: number = 0;
 
   public Subscription!: Subscription;
   public criteria!: SortCriteria;
@@ -336,6 +338,10 @@ export class TwitterComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -399,6 +405,10 @@ export class TwitterComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
 
       this.spinner1running = true;
@@ -456,6 +466,10 @@ export class TwitterComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
 
       this.spinner1running = true;
@@ -520,6 +534,10 @@ export class TwitterComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -532,6 +550,7 @@ export class TwitterComponent implements OnInit {
           this.TotalMsgQueryCount = res.TotalQueryCount;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
           this.pageName = this.TwitterMessage[0]?.toName;
+          this.TotalMsgQueryCount = res.TotalQueryCount;
 
           this.messagesArray = [];
           this.groupedMessages = [];
@@ -574,6 +593,10 @@ export class TwitterComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
 
       this.SpinnerService.show();
@@ -582,6 +605,7 @@ export class TwitterComponent implements OnInit {
         this.TwitterMessage = res.List.dm;
         this.TotalMsgQueryCount = res.TotalQueryCount;
         this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+        this.TotalMsgQueryCount = res.TotalQueryCount;
         this.pageName = this.TwitterMessage[0]?.toName;
 
         this.messagesArray = [];
@@ -609,7 +633,7 @@ export class TwitterComponent implements OnInit {
               };
             }
           );
-          // // console.log('Messages ==>', this.groupedMessages);
+          // console.log('Messages ==>', this.groupedMessages);
         });
       });
     } else {
@@ -624,6 +648,10 @@ export class TwitterComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
 
       this.SpinnerService.show();
@@ -632,6 +660,7 @@ export class TwitterComponent implements OnInit {
         this.TwitterMessage = res.List.dm;
         this.TotalMsgQueryCount = res.TotalQueryCount;
         this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+        this.TotalMsgQueryCount = res.TotalQueryCount;
         this.pageName = this.TwitterMessage[0]?.toName;
 
         this.messagesArray = [];
@@ -1477,6 +1506,7 @@ export class TwitterComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
+
   updateBulkQueryStatusDataListner() {
     this.TwitterConversation.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
@@ -1547,6 +1577,7 @@ export class TwitterComponent implements OnInit {
       this.getTwitterMessages();
     }
   }
+
 
   closeQuickResponseSidebar(){
     this.quickReplySearchText = '';

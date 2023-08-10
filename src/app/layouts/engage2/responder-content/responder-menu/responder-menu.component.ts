@@ -8,7 +8,6 @@ import {
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
-import { FetchPostTypeService } from 'src/app/services/FetchPostType/fetch-post-type.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
 import { AssignQuerryDto } from 'src/app/shared/Models/AssignQuerryDto';
@@ -31,7 +30,6 @@ export class ResponderMenuComponent implements OnInit {
   TodayDate: any;
   pageNumber: number = 1;
   pageSize: number = 20;
-
   listingDto = new ListingDto();
   filterDto = new FiltersDto();
   assignQuerryDto = new AssignQuerryDto();
@@ -87,36 +85,29 @@ export class ResponderMenuComponent implements OnInit {
             this.alertWarning = false;
             item['slaFlag'] = 'unread';
           }
-          // // console.log("slaFlag", item['slaFlag'])
         });
       }
-
-      //  // console.log("list", this.userSpecificAllocatedProfiles)
     }, 1000);
   }
-
   totalPageNumbers: any;
-  userSpecificAllocatedProfiles :any[]= [];
-
+  userSpecificAllocatedProfiles: any[] = [];
   getAllocatedProfiles() {
-    
     this.SpinnerService.show();
     this.commondata
       .GetAllocatedProfiles()
       .subscribe((res: any) => {
         this.SpinnerService.hide();
         this.AllocatedProfiles = res;
-        
-        this.AllocatedProfiles.forEach((profile:any) => {
-          if(profile.userId == localStorage.getItem('agentId')){
+
+        this.AllocatedProfiles.forEach((profile: any) => {
+          if (profile.userId == localStorage.getItem('agentId')) {
             this.userSpecificAllocatedProfiles.push(profile)
           }
         });
       });
   }
-
   public addTransferChatDataListener = () => {
-    this.signalRService.hubconnection.on('UnrespondedTweetsChats', (data:any) => {
+    this.signalRService.hubconnection.on('UnrespondedTweetsChats', (data: any) => {
       // this.TwitterList.forEach((abc: any) => {
       //   this.TwitterIds.push(abc.id);
       // });
@@ -149,7 +140,7 @@ export class ResponderMenuComponent implements OnInit {
     platform: any,
     profileId: any
   ) {
-    
+
     if (
       localStorage.getItem('assignedProfile') == null ||
       localStorage.getItem('assignedProfile') == '' ||
@@ -158,10 +149,10 @@ export class ResponderMenuComponent implements OnInit {
       this.fetchId.setPlatform(platform);
       if (localStorage.getItem('parent') == platform) {
         this.fetchId.sendAutoAssignedId(fromId);
-       // this.fetchposttype.sendPostTypeAsObservable(postType);
+        // this.fetchposttype.sendPostTypeAsObservable(postType);
       } else {
         this.fetchId.setOption(fromId);
-      //  this.fetchposttype.sendPostType(postType);
+        //  this.fetchposttype.sendPostType(postType);
       }
 
       localStorage.setItem('profileId', profileId);

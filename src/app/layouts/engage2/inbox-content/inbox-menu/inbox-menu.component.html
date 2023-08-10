@@ -6,7 +6,7 @@
       <ul class="list-group list-group-flush" id="inboxes-list" data-scrollbar="true" tabindex="-1"
         style="overflow-y: auto; outline: none;">
         <div class="scroll-content">
-          <a (click)="updatevalue('')" [routerLink]="['/all-inboxes']"
+          <a (click)="updatevalue('')" [routerLink]="['/all-inboxes/my_inbox']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="all-conversation">
             <div class="iconButton medium skyBg">
               <i class="far fa-inbox"></i>
@@ -31,8 +31,9 @@
           </a>
            <a (click)="updatevalue('Email')" [routerLink]="['/all-inboxes']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="email">
-            <div class="iconButton medium berryBg">
+            <div class="iconButton medium whiteBg">
               <i class="fal fa-envelope"></i>
+              <img width="25px" src="../../../../../assets/images/gmail-icon.png" alt="gmail"/>
             </div>
             <div class="ms-2 me-auto">
               <div class="black-text">Emails</div>
@@ -43,7 +44,7 @@
           </a> -->
           <!-- <span class="badge twltte-bg rounded-pill">{{EmailUnResponded + OfficeEmailUnResponded}}</span> -->
           <!-- [queryParams]="{List : 'OfficeEmails'}" -->
-          <a (click)="updatevalue('OfficeEmail')" [routerLink]="['/all-inboxes']" 
+          <a (click)="updatevalue('OfficeEmail')"
             class="all-inboxes-menu list-group-item list-group-item-action" value="email">
             <div class="iconButton medium berryBg">
               <i class="fal fa-envelope"></i>

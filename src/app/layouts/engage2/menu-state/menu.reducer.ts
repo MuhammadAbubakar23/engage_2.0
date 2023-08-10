@@ -26,12 +26,12 @@ const _menuReducer = createReducer(
         
       })
     }
-    // // console.log("LoadMenu State Starts");
+    // console.log("LoadMenu State Starts");
     // //ages.filter()
-    // // console.log(action.menus);
-    // // console.log(state.menus.length)
-    // // console.log(...state.menus);    
-    // // console.log("LoadMenu State Ends");
+    // console.log(action.menus);
+    // console.log(state.menus.length)
+    // console.log(...state.menus);    
+    // console.log("LoadMenu State Ends");
     return {
       ...state,
       menus: action.menus,
@@ -51,16 +51,16 @@ const _menuReducer = createReducer(
 
   on(updateMenusList, (state): MenuState => ({  ...state, loading: true })),
   on(updateMenusListSuccess, (state, action): MenuState => {
-    //let mnus = [...state.menus, ...action.menus];
     
-    // action.menus.forEach(function (menu:MenuModel) {
-    //   state.menus.push(menu);
-      
-    // })    
-    
+    //let AllAct$ = [...state.menus, ...action.menus];    
+    let AllAct$ = [...state.menus, ...action.menus].filter((value, index, self) =>
+      index === self.findIndex((t) => (
+        t.mainId === value.mainId && t.name === value.name
+      ))
+    )
     return {
       ...state,
-      menus: [...state.menus, ...action.menus],
+      menus: AllAct$, //[...state.menus, ...action.menus],
       loading: true,
       error: null,
     };

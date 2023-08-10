@@ -1,9 +1,8 @@
 { 
-    "search":"",    
-    "url" : "GetAllUsers", 
+    "url" : "AllUsers", 
     "pageno":1,
-    "pagesize":50,
-
+    "pagesize":10,
+    "urlparams":"",
     "template": {
         "toolbar": "top",
         "refresh":true 

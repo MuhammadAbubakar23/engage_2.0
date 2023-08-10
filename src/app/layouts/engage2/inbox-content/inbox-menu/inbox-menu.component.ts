@@ -13,34 +13,36 @@ import { UpdateListService } from 'src/app/services/UpdateListService/update-lis
 export class InboxMenuComponent implements OnInit {
 
 
-  public Subscription! :Subscription
-  UnResponded : number = 0;
-  SlaUnResponded : number = 0;
-  WaUnResponded : number = 0;
-  SmsUnResponded : number = 0;
-  FbUnResponded : number = 0;
-  EmailUnResponded : number = 0;
-  OfficeEmailUnResponded : number =0;
-  WebchatUnResponded : number = 0;
-  TwitterUnResponded : number = 0;
-  InstaUnResponded : number = 0;
-  LinkedInUnResponded : number = 0;
-  PlaystoreUnResponded : number = 0;
-  YoutubeUnResponded : number = 0;
+  public Subscription!: Subscription
+  UnResponded: number = 0;
+  SlaUnResponded: number = 0;
+  WaUnResponded: number = 0;
+  SmsUnResponded: number = 0;
+  FbUnResponded: number = 0;
+  EmailUnResponded: number = 0;
+  OfficeEmailUnResponded: number = 0;
+  WebchatUnResponded: number = 0;
+  TwitterUnResponded: number = 0;
+  InstaUnResponded: number = 0;
+  LinkedInUnResponded: number = 0;
+  PlaystoreUnResponded: number = 0;
+  YoutubeUnResponded: number = 0;
 
-  constructor(private filterService : FilterService,
-    private commonService : CommonDataService,
-    private unrespondedCountService : UnRespondedCountService,
-    private updateListService : UpdateListService) { }
+  constructor(private filterService: FilterService,
+    private commonService: CommonDataService,
+    private unrespondedCountService: UnRespondedCountService,
+    private updateListService: UpdateListService) { }
 
   ngOnInit(): void {
+
+    this.GetChannels();
 
     this.getAllChannelsUnrespondedCounts();
 
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        
+
         this.UnResponded = res.totalCount
         res.platformCount.forEach((platform:any) => {
           // if(platform.platform == 'Facebook'){
@@ -81,7 +83,7 @@ export class InboxMenuComponent implements OnInit {
           //   this.PlaystoreUnResponded = platform.count;
           // }
         });
-        
+
       });
 
       this.Subscription = this.updateListService.receiveList().subscribe((res) => {
@@ -125,12 +127,23 @@ export class InboxMenuComponent implements OnInit {
         //   this.PlaystoreUnResponded = platform.unrespondedCount + this.PlaystoreUnResponded;
         // }
       });
-      });
+    });
   }
+
+  channels: any[]=[];
+
+  GetChannels(){
+    this.commonService.GetChannels().subscribe((res:any)=>{
+      this.channels = res[0].subMenu;
+    })
+  }
+
+  platformWiseCount:any[]=[];
 
   getAllChannelsUnrespondedCounts(){
     this.commonService.GetAllChannelsUnrespondedCount().subscribe((res:any)=>{
       this.UnResponded = res.totalCount
+      this.platformWiseCount = res.platformCount
       res.platformCount.forEach((platform:any) => {
 
         // if(platform.platform == 'Facebook'){
@@ -173,13 +186,13 @@ export class InboxMenuComponent implements OnInit {
       });
     });
   }
-  
 
-  updatevalue(string:any){
-    
+
+  updatevalue(string: any) {
+
     this.filterService.addTogglePanel(string);
-    
+
   }
- 
+
 }
 

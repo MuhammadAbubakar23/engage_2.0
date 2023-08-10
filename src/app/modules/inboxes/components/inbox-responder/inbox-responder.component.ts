@@ -93,8 +93,8 @@ export class InboxResponderComponent implements OnInit {
 
       this.target?.clear();
       this.rightcontainer?.clear();
-      // // console.log("Locaded component name is=====>",localStorage.getItem('parent'));
-      // // console.log("Old Component====>",this.oldComponent);
+      // console.log("Locaded component name is=====>",localStorage.getItem('parent'));
+      // console.log("Old Component====>",this.oldComponent);
       if(this.oldComponent!=undefined){
 
         if(localStorage.getItem('parent')!=undefined && localStorage.getItem('parent')!=this.oldComponent){
@@ -178,7 +178,7 @@ export class InboxResponderComponent implements OnInit {
     this.rightcontainer?.clear();
     this.oldComponent=this.componentName;
     this.loadComponent(this.componentName, '');
-    // // console.log("Old Component====>",this.oldComponent);
+    // console.log("Old Component====>",this.oldComponent);
     if (this.childComponentName != null) {
       this.showPanel = true;
       this.loadComponent('', this.childComponentName);
@@ -210,7 +210,7 @@ export class InboxResponderComponent implements OnInit {
            this.target?.createComponent(componentFactory);
 
           // componentRef.instance.someEvent.subscribe((data:any)=>{
-          //   // // console.log("event emitter",data)
+          //   // console.log("event emitter",data)
           // })
         break;
 

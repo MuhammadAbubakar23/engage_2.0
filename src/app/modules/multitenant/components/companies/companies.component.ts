@@ -11,14 +11,14 @@ import { CreateCompaniesComponent } from './create-companies/create-companies.co
 @Component({
   selector: 'companies',
   standalone:true,
-  imports:[CommonModule, RouterModule, LayoutsModule, CreateCompaniesComponent],
+  imports:[CommonModule, CreateCompaniesComponent, RouterModule, LayoutsModule],
   templateUrl: './companies.component.html',
   styleUrls: ['./companies.component.scss']
 })
 export class CompaniesComponent implements OnInit {
   Companies: Array<any> = [];
   CompaniesCount: number = 0;
- 
+  identifire:string = "mainId"
   model:MenuModel[] = [];
   filter?: Observable<ConsoleTableParams>;
   showConsoleTable:boolean= false;
@@ -32,12 +32,6 @@ export class CompaniesComponent implements OnInit {
     if(typeof this.filter !== 'undefined'){
       this.showConsoleTable = true;
     }
-    // this.Teams = await this._Activatedroute.snapshot.data["teams"];
-    // this.TeamsCount =  this.Teams.length;
-    // console.log(this.filter);
-
-
-    // this.Teams =  this._Activatedroute.snapshot.data["teams"];
   }  
 
   updatevalue(string:any){

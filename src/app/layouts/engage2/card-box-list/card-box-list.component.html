@@ -15,7 +15,7 @@
             </li>
         </ul>
     </div>
-    <div class="collapse" [id]="menu.slug">      
+    <div class="collapse" [ngClass]="{'show': menu.isSelected}" [id]="menu.slug">      
         <engage2-card-box-list-checkbox [checkboxListCheck]="menu.subMenu" [checkboxListHeader]="menulistselectall" [checkboxListName]="menu.slug" (menuChecked)="menulistChecked($event)" ></engage2-card-box-list-checkbox>              
     </div>
 </div>

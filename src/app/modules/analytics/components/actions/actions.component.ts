@@ -4,6 +4,8 @@ import { ReportService } from '../../services/report.service';
 import { ShareddataService } from '../../services/shareddata.service';
 import { Route } from '@angular/router';
 import { Router } from '@angular/router';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { DragDropService } from '../../services/dragdrop.service';
 
 @Component({
   selector: 'app-actions',
@@ -11,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./actions.component.scss']
 })
 export class ActionsComponent implements OnInit {
-  limitValue: number = 0;
+  limitValue: number = 5;
   offsetValue: number = 0;
   columnName = 'Select Column';
   groupName = "Select Group";
@@ -34,31 +36,41 @@ export class ActionsComponent implements OnInit {
   reportName = "";
   jointypes = ["INNER JOIN", "LEFT JOIN", "RIGHT JOIN"]
   selectedJoin = "Join";
-  constructor(private reportService: ReportService, private shareddataService: ShareddataService, private route: Router) { }
+  toastermessage: string = '';
+  isToaster: boolean = false;
+  graphTypes: any[] = ["Bar Chart", "Pie Chart", "Line Chart", "Polar Area Chart", "Radar Chart"];
+  selectedGraph = ""
+  items: string[] = [];
+  constructor(private reportService: ReportService, private shareddataService: ShareddataService, private route: Router, private dragDropService: DragDropService) { }
 
   ngOnInit(): void {
     const tableName = localStorage.getItem('selectedtable')
-    // console.log("tableName: " + tableName)
+
     const dbName = localStorage.getItem('dbName')
 
     if (dbName && tableName) {
-      this.shareddataService.query$.subscribe((query) => {
-        this.query = query;
 
-      })
 
       if (dbName) {
         this.shareddataService.tables$.subscribe((res) => {
           this.tables = res;
-          // console.log("actions", this.tables)
+
         })
       }
       const connection = localStorage.getItem('connection_name')
       this.reportService.columnsApi({ 'db': dbName, 'tableName': tableName, 'connection_name': connection }).subscribe((res: any) => {
-        // console.log("columnsApi: " + res)
+
         this.columns = res;
       })
     }
+    this.shareddataService.charttype$.subscribe((res: any) => {
+      this.selectedGraph = res;
+    })
+    this.shareddataService.query$.subscribe((item) => {
+      if (item) {
+        this.query = item;
+      }
+    });
   }
 
   show: any = false;
@@ -77,73 +89,84 @@ export class ActionsComponent implements OnInit {
   toggleDropdown(show: boolean) {
     this.isDropdownVisible = show;
   }
+
+  showTablePlaceholder(index: number): boolean {
+    return !this.selectedTables[index]; // Will return true if no table selected for this index
+  }
+  showColumns1Placeholder(index: number): boolean {
+    return !this.selectedValues1[index] || this.selectedValues1[index].length === 0;
+  }
+  showColumns2Placeholder(index: number): boolean {
+    return !this.selectedValues2[index] || this.selectedValues2[index].length === 0;
+  }
+
   limitData(): void {
-    // console.log("limitData()")
+
     const db = localStorage.getItem('dbName');
     const selectedtable = localStorage.getItem('selectedtable');
     const connection = localStorage.getItem('connection_name');
     this.reportService.limitDataApi({ 'db': db, 'tableName': selectedtable, 'limit': this.limitValue, 'connection_name': connection }).subscribe((res: any) => {
-      // console.log("limit==>", res);
       this.shareddataService.updateData(res);
-
     });
   }
 
 
   sortData(): void {
-    // console.log("sortData()")
     const db = localStorage.getItem('dbName')
     const selectedtable = localStorage.getItem('selectedtable')
     const connection = localStorage.getItem('connection_name')
     this.reportService.sortDataApi({ 'db': db, 'tableName': selectedtable, 'column': this.columnName, 'order': this.order, 'offset': this.offsetValue, 'connection_name': connection }).subscribe((res: any) => {
-      // console.log("sort", res);
       this.shareddataService.updateData(res);
 
     });
   }
   groupData(): void {
-    // console.log("groupData()")
+
     const db = localStorage.getItem('dbName')
     const selectedtable = localStorage.getItem('selectedtable')
-    // console.log("groupData() selected", this.groupcolumnName, this.groupselectedItems, this.groupName)
+
     const connection = localStorage.getItem('connection_name');
     this.reportService.groupDataApi({ 'db': db, 'tableName': selectedtable, 'column': this.groupcolumnName, 'columns': this.groupselectedItems, 'aggr': this.groupName, 'connection_name': connection }).subscribe((res: any) => {
-      // console.log("group", res);
+
       this.shareddataService.updateData(res);
 
     });
   }
   summarizData(): void {
-    // console.log("summarizeData()")
+
     const db = localStorage.getItem('dbName')
     const connection = localStorage.getItem('connection_name');
     this.reportService.summarizeDataApi({ 'db': db, 'query': this.query, 'connection_name': connection }).subscribe((res: any) => {
-      // console.log("group", res);
+
       this.shareddataService.updateData(res);
 
     });
   }
   visualizeData(): void {
-    // console.log("summarizeData()")
+
     const db = localStorage.getItem('dbName')
 
     const connection = localStorage.getItem('connection_name');
     this.reportService.visualizeDataApi({ 'db': db, 'query': this.query, 'connection_name': connection }).subscribe((res: any) => {
-      // console.log("visualize", res);
+
       this.shareddataService.updateVisual(res);
     });
   }
   counterArray(): number[] {
+
     return Array(this.numberoftables);
   }
-
+  resetTable() {
+    this.selectedTables = [];
+    this.selectedTablesColumns = [];
+    this.isOn = false;
+  }
   onTableSelect(value: string, index: number) {
 
-    // console.log("value==>", value, index);
     if (value !== undefined) {
       this.selectedTables[index] = value;
     } else {
-      // console.log("value from selected table>", this.selectedTables[index]);
+
       this.isOn = false;
       this.selectedValues1 = [];
       this.selectedValues2 = [];
@@ -152,8 +175,8 @@ export class ActionsComponent implements OnInit {
 
     }
 
-    // console.log('Selected Values:', this.selectedTables);
   }
+
   getColumns(): void {
     const db = localStorage.getItem('dbName');
     const connection = localStorage.getItem('connection_name');
@@ -169,8 +192,8 @@ export class ActionsComponent implements OnInit {
   }
 
   getObjectValues(table: any): any[] {
-    const values: any[] = Object.values(table); // Get the values from the object
-    return values.reduce((acc, arr) => acc.concat(arr), []); // Flatten the arrays into a single array
+    const values: any[] = Object.values(table);
+    return values.reduce((acc, arr) => acc.concat(arr), []);
   }
 
   onColumnsSelect(table: any, index: any, isJoinSection: boolean): void {
@@ -178,19 +201,19 @@ export class ActionsComponent implements OnInit {
     const selectedvalues1 = this.selectedValues1[index];
     const selectedvalues2 = this.selectedValues2[index];
     if (isJoinSection) {
-      // console.log("Join")
+
       const existingIndex = this.datajoincolumns.findIndex(obj => obj[key[0]]);
       if (existingIndex !== -1) {
-        this.datajoincolumns[existingIndex][key[0]] = selectedvalues2; // Update existing object
+        this.datajoincolumns[existingIndex][key[0]] = selectedvalues2;
       } else {
         const keyvalue = { [key[0]]: selectedvalues2 };
-        this.datajoincolumns.push(keyvalue); // Add new object
+        this.datajoincolumns.push(keyvalue);
       }
 
-      // console.log("datajoincolumns", this.datajoincolumns);
+
     }
     else {
-      // console.log("data part")
+
       const existingIndex = this.datacolumns.findIndex(obj => obj[key[0]]);
       if (existingIndex !== -1) {
         this.datacolumns[existingIndex][key[0]] = selectedvalues1; // Update existing object
@@ -199,16 +222,16 @@ export class ActionsComponent implements OnInit {
         this.datacolumns.push(keyvalue); // Add new object
       }
 
-      // console.log("dataColumns", this.datacolumns);
+
     }
 
   }
   joinTables(): void {
-    // console.log("joinTables()")
+
     const db = localStorage.getItem('dbName')
     const connection = localStorage.getItem('connection_name')
     this.reportService.joinDataApi({ 'db': db, 'datacolumns': this.datacolumns, 'datajoincolumns': this.datajoincolumns, 'jointype': this.selectedJoin, 'connection_name': connection }).subscribe((res: any) => {
-      // console.log("JoinResult", res);
+
       this.shareddataService.updateData(res);
 
 
@@ -219,26 +242,54 @@ export class ActionsComponent implements OnInit {
       const db = localStorage.getItem('dbName')
       const connection = localStorage.getItem('connection_name');
       this.reportService.runSqlApi({ "query": this.query, 'db': db, 'connection_name': connection }).subscribe(res => {
-        // console.log("sql", res);
+        console.log("sql", res);
         this.shareddataService.updateData(res)
       })
     }
     else {
-      alert("Please Define Name of Report and Query");
+      this.toastermessage = 'Please Define Name of Report and Query';
+      this.isToaster = true;
+      setTimeout(() => {
+        this.isToaster = false;
+      }, 4000);
     }
   }
+
   submitReport(): void {
-    if (this.reportName !== "" && this.query !== "Please Type Query") {
-      this.reportService.createReportApi({ "query": this.query, 'name': this.reportName }).subscribe(res => {
-        // console.log(res);
-        this.route.navigateByUrl('/analytics/reports');
-        alert(res.message);
+    if (this.reportName !== "" && this.query !== "Please Type Query" && this.query !== "") {
+      const connection = localStorage.getItem('connection_name')
+      const db = localStorage.getItem('dbName');
+      const table = localStorage.getItem('selectedtable');
+      this.reportService.createReportApi({ "query": this.query, 'name': this.reportName, 'tableName': table, 'dbName': db, 'connectionName': connection }).subscribe(res => {
+        console.log(res);
+        if (res === "Report Name already exists") {
+
+          this.toastermessage = `${res}`;
+          this.isToaster = true;
+          setTimeout(() => {
+            this.isToaster = false;
+          }, 4000);
+
+        }
+        else {
+          alert(res.message);
+          this.route.navigateByUrl('/analytics/reports');
+        }
+
+
       })
     }
     else {
-      alert("Please Define Name of Report and Query");
+      this.toastermessage = 'Please Define Name of Report and Query';
+      this.isToaster = true;
+      setTimeout(() => {
+        this.isToaster = false;
+      }, 4000);
     }
 
+  }
+  selectGraph() {
+    this.shareddataService.updatechartType(this.selectedGraph);
   }
 
 }

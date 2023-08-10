@@ -16,6 +16,11 @@ import { NgChartsModule } from 'ng2-charts';
 import { ReportDbSettingsComponent } from './components/report-db-settings/report-db-settings.component';
 import { ReportlistingComponent } from './components/reportlisting/reportlisting.component';
 import { ExcelService } from './services/excel.service';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { ToastrComponent } from './components/toastr/toastr.component';
+import { AnalyticsDashboardComponent } from './components/analytics-dashboard/analytics-dashboard.component';
+// import {DndModule} from 'ngx-drag-drop';
+
 @NgModule({
   declarations: [
     AnalyticsComponent,
@@ -27,7 +32,9 @@ import { ExcelService } from './services/excel.service';
     ReportBuilderComponent,
     ActionsComponent,
     ReportDbSettingsComponent,
-    ReportlistingComponent
+    ReportlistingComponent,
+    ToastrComponent,
+    AnalyticsDashboardComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +42,9 @@ import { ExcelService } from './services/excel.service';
     LayoutsModule,
     FormsModule,
     NgSelectModule,
-    NgChartsModule
+    NgChartsModule,
+    DragDropModule
+    // DndModule
   ],
   providers: [ExcelService]
 })

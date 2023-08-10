@@ -111,7 +111,11 @@ export class MinimizedChatWidgetComponent implements OnInit {
       pageSize: 0,
       isAttachment: false,
       queryType: this.queryType,
-      text : "",
+      text: '',
+      userName: '',
+      notInclude: '',
+      include: '',
+      flag: '',
     };
     this.SpinnerService.show();
     this.commondata
@@ -140,7 +144,11 @@ export class MinimizedChatWidgetComponent implements OnInit {
         pageSize: 0,
         isAttachment: false,
         queryType: this.queryType,
-        text : "",
+        text: '',
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
       this.SpinnerService.show();
       this.commondata

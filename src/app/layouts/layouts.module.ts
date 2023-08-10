@@ -23,12 +23,6 @@ import { menuReducer } from './engage2/menu-state/menu.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { MenusEffects } from './engage2/menu-state/menu.effect';
 import { PermissionsEffects } from './engage2/permission-state/permission.effect';
-import { ConsoleTableComponent } from './engage2/console-table/console-table.component';
-import { ConsoleTableToolbarComponent } from './engage2/console-table/console-table-toolbar/console-table-toolbar.component';
-import { ConsoleTableWrapComponent } from './engage2/console-table/console-table-wrap/console-table-wrap.component';
-import { ConsoleTableActionComponent } from './engage2/console-table/console-table-action/console-table-action.component';
-import { ConsoleTableActionListComponent } from './engage2/console-table/console-table-action-list/console-table-action-list.component';
-import { ConsoleTableWithImageComponent } from './engage2/console-table/console-table-with-image/console-table-with-image.component';
 import { AvatarPhotoComponent } from './engage2/avatar-photo/avatar-photo.component';
 import { SelectOptionComponent } from './engage2/select-option/select-option.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -38,6 +32,13 @@ import { CardBoxListCheckboxComponent } from './engage2/card-box-list/card-box-l
 import { permissionReducer } from './engage2/permission-state/permission.reducer';
 import { AdminContentComponent } from './engage2/admin-content/admin-content.component';
 import { AdminMenuComponent } from './engage2/admin-content/admin-menu/admin-menu.component';
+
+import { ConsoleTableComponent } from './engage2/console-table/console-table.component';
+import { ConsoleTableToolbarComponent } from './engage2/console-table/console-table-toolbar/console-table-toolbar.component';
+import { ConsoleTableWrapComponent } from './engage2/console-table/console-table-wrap/console-table-wrap.component';
+import { ConsoleTableActionComponent } from './engage2/console-table/console-table-action/console-table-action.component';
+import { ConsoleTableActionListComponent } from './engage2/console-table/console-table-action-list/console-table-action-list.component';
+import { ConsoleTableWithImageComponent } from './engage2/console-table/console-table-with-image/console-table-with-image.component';
 import { ConsoleTableColumnsComponent } from './engage2/console-table/console-table-columns/console-table-columns.component';
 import { ConsoleTableCheckboxComponent } from './engage2/console-table/console-table-checkbox/console-table-checkbox.component';
 import { ConsoleTableVisibilityPipe } from './engage2/console-table/console-table-visibility.pipe';
@@ -62,6 +63,7 @@ import { BotRightSidebarComponent } from './engage2/bot-content/bot-right-sideba
 import { BotContentComponent } from './engage2/bot-content/bot-content.component';
 import { BotMenuComponent } from './engage2/bot-content/bot-menu/bot-menu.component';
 import { BotHeaderComponent } from './engage2/bot-content/bot-header/bot-header.component';
+import { ToasterComponent } from './engage2/toaster/toaster.component';
 
 
 
@@ -117,7 +119,8 @@ import { BotHeaderComponent } from './engage2/bot-content/bot-header/bot-header.
     BotRightSidebarComponent,
     BotContentComponent,
     BotMenuComponent,
-    BotHeaderComponent
+    BotHeaderComponent,
+    ToasterComponent
   ],
   imports: [
     CommonModule,
@@ -148,7 +151,8 @@ import { BotHeaderComponent } from './engage2/bot-content/bot-header/bot-header.
     AnalyticsRightSidebarMenuComponent,
     AnalyticsContentComponent,
     BotRightSidebarComponent,
-    BotContentComponent
+    BotContentComponent,
+    ToasterComponent
   ]
 })
 export class LayoutsModule { }

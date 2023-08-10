@@ -36,23 +36,24 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 <li>
-                                                    <a class="dropdown-item" href="#">Ascending</a>
+                                                    <a class="dropdown-item">Ascending</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="#">Descending</a>
+                                                    <a class="dropdown-item">Descending</a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-8 d-flex align-items-center justify-content-end">
-                                    <a href="javascript:" class="search-btn">
+                                    <a class="search-btn">
                                         <button class="iconButton medium">
                                             <i class="fal fa-search silver"></i>
                                         </button>
                                         <input placeholder="Search">
                                     </a>
-                                    <a href="#" class="ms-2">
+                                    <a (click)="updatevalue('consoleCreateTeamHeader')"
+                                        [routerLink]="['/console/add-rules']" class="ms-2">
                                         <button type="button" class="btn btn-success">
                                             <i class="fal fa-plus me-2"></i>
                                             Add Rules
@@ -66,152 +67,57 @@
                             <table class="table mb-5 align-middle">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            4 Rules
-                                        </th>
+                                        <th>Rules</th>
                                         <th></th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr *ngFor="let row of tableData; let i = index">
                                         <th>
                                             <ul class="list-group list-group-flush">
                                                 <li
                                                     class="list-group-item d-flex justify-content-between align-items-start">
                                                     <div class="ms-2 me-auto fw-normal coal">
-                                                        <div class="fw-bold night">Assign with round-robin</div>
-                                                        EMP-59894Assign conversations while alternating who gets
-                                                        assigned.
+                                                        <div class="fw-bold night">{{ row.name }}</div>
+                                                        {{ row.description }}
+                                                        <!-- <span  class="badge rounded-pill bg-secondary">{{ row.rulesJson }}</span> -->
                                                     </div>
                                                 </li>
                                             </ul>
                                         </th>
                                         <td>
                                             <div class="icons-list d-flex justify-content-end dropstart">
-                                                <button class="btn iconButton medium iconHover">
+                                                <button class="btn iconButton medium iconHover"
+                                                    (click)="editTemplate(row)">
                                                     <i class="fal fa-edit"></i>
                                                 </button>
-
                                                 <button class="btn iconButton medium iconHover btn-group" type="button"
                                                     data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="far fa-ellipsis-v dropdown-toggle"></i>
                                                 </button>
                                                 <ul class="dropdown-menu fade">
                                                     <li>
-                                                        <a class="dropdown-item" href="#">Edit</a>
+                                                        <a class="dropdown-item" (click)="editTemplate(row)">Edit</a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item" href="#">Delete</a>
+                                                        <a class="dropdown-item"
+                                                            (click)="deleteTemplate(row)">Delete</a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item" href="#">Disable</a>
+                                                        <a class="dropdown-item"
+                                                            (click)="disableTemplate(row)">Disable</a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item" href="#">Clone</a>
+                                                        <a class="dropdown-item" (click)="cloneTemplate(row)">Clone</a>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <ul class="list-group list-group-flush">
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-start">
-                                                    <div class="ms-2 me-auto fw-normal coal">
-                                                        <div class="fw-bold night">Archive based on recipient</div>
-                                                        Archive conversations sent to this abc@xyz.com.
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </th>
-                                        <td>
-                                            <div class="icons-list d-flex justify-content-end dropstart">
-                                                <button class="btn iconButton medium iconHover">
-                                                    <i class="fal fa-edit"></i>
-                                                </button>
-
-                                                <button class="btn iconButton medium iconHover btn-group" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="far fa-ellipsis-v dropdown-toggle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu fade">
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">Edit</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">Delete</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">Disable</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">Clone</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <ul class="list-group list-group-flush">
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-start">
-                                                    <div class="ms-2 me-auto fw-normal coal">
-                                                        <div class="fw-bold night">Move based on recipient</div>
-                                                        Move conversations sent to support@jazz.com.pk in VIP list.
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </th>
-                                        <td>
-                                            <div class="icons-list d-flex justify-content-end dropstart">
-                                                <button class="btn iconButton medium iconHover">
-                                                    <i class="fal fa-edit"></i>
-                                                </button>
-
-                                                <button class="btn iconButton medium iconHover btn-group" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="far fa-ellipsis-v dropdown-toggle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu fade">
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">Edit</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">Delete</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">Disable</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">Clone</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="disable-item">
-                                        <th>
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item d-flex justify-content-between align-items-start disabled"
-                                                    aria-disabled="true">
-                                                    <div class="ms-2 me-auto fw-normal coal">
-                                                        <div class="fw-bold night">Auto-reply template
-                                                            <span
-                                                                class="badge rounded-pill bg-secondary">Inactive</span>
-                                                        </div>
-                                                        Move conversations sent to support@jazz.com.pk in VIP list.
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </th>
-                                        <td></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
+
                     </div>
 
                     <div id="rules-library-tab" class="tab-pane fade" role="tabpanel" aria-labelledby="rules-library">
@@ -228,29 +134,31 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 <li>
-                                                    <a class="dropdown-item" href="#">Ascending</a>
+                                                    <a class="dropdown-item">Ascending</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="#">Descending</a>
+                                                    <a class="dropdown-item">Descending</a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-8 d-flex align-items-center justify-content-end">
-                                    <a href="javascript:" class="search-btn">
+                                    <a class="search-btn">
                                         <button class="iconButton medium">
                                             <i class="fal fa-search silver"></i>
                                         </button>
                                         <input placeholder="Search">
                                     </a>
-                                    <a href="#" class="ms-2">
-                                        <button type="button" class="btn btn-outline-success">
+                                    <a (click)="updatevalue('consoleCreateTeamHeader')"
+                                        [routerLink]="['/console/add-rules']" class="ms-2">
+                                        <button type="button" class="btn btn-success">
                                             <i class="fal fa-plus me-2"></i>
                                             Add Rules
                                         </button>
                                     </a>
                                 </div>
+
                             </div>
                         </div>
 
@@ -318,14 +226,15 @@
                                                         </h5>
                                                         <p class="coal lh-base">Tag unreplided messages after a specific
                                                             time.
-                                                            <a class="text-decoration-underline" href="#">Learn more</a>
+                                                            <a class="text-decoration-underline">Learn more</a>
                                                         </p>
 
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="img-box emerald30sBg">
-                                                        <img class="ps-2 pt-2 w-100" src="../../../../../assets/images/SLA.png" alt="...">
+                                                        <img class="ps-2 pt-2 w-100"
+                                                            src="../../../../../assets/images/SLA.png" alt="...">
                                                     </div>
                                                 </div>
                                             </div>
@@ -341,7 +250,7 @@
                                                     </h6>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <a class="d-block text-end text-decoration-underline" href="#">View
+                                                    <a class="d-block text-end text-decoration-underline">View
                                                         All</a>
                                                 </div>
                                             </div>
@@ -392,7 +301,7 @@
                                                     <h6 class="night mb-0 fw-bold">Route messages to the right team</h6>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <a class="d-block text-end text-decoration-underline" href="#">View
+                                                    <a class="d-block text-end text-decoration-underline">View
                                                         All</a>
                                                 </div>
                                             </div>
@@ -444,7 +353,7 @@
                                                     </h6>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <a class="d-block text-end text-decoration-underline" href="#">View
+                                                    <a class="d-block text-end text-decoration-underline">View
                                                         All</a>
                                                 </div>
                                             </div>
@@ -495,7 +404,7 @@
                                                     <h6 class="night mb-0 fw-bold">Keep your inboxes tidy</h6>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <a class="d-block text-end text-decoration-underline" href="#">View
+                                                    <a class="d-block text-end text-decoration-underline">View
                                                         All</a>
                                                 </div>
                                             </div>
@@ -547,7 +456,7 @@
                                                     <h6 class="night mb-0 fw-bold">Keep your inboxes tidy</h6>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <a class="d-block text-end text-decoration-underline" href="#">View
+                                                    <a class="d-block text-end text-decoration-underline">View
                                                         All</a>
                                                 </div>
                                             </div>
@@ -612,14 +521,15 @@
                                                         </h5>
                                                         <p class="coal lh-base">Tag unreplided messages after a specific
                                                             time.
-                                                            <a class="text-decoration-underline" href="#">Learn more</a>
+                                                            <a class="text-decoration-underline">Learn more</a>
                                                         </p>
 
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="img-box">
-                                                        <img class="ps-2 pt-2 w-100" src="../../../../../assets/images/SLA.png" alt="...">
+                                                        <img class="ps-2 pt-2 w-100"
+                                                            src="../../../../../assets/images/SLA.png" alt="...">
                                                     </div>
                                                 </div>
                                             </div>

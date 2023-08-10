@@ -30,6 +30,7 @@ export const environment = {
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
   CommonBaseUrl: 'https://tpplcom.360scrm.com/api/', 
+  SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/', 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
@@ -38,31 +39,32 @@ export const environment = {
   links: {
     identity:{
       login:"Authentication/Login",
+      //Company:"Teams/FetchAll",
       accesses:"Teams/Accesses",
       properties:"Teams/Properties",
+      accessteam:"Teams/Previews",
+      permissionteam:"Teams/Previews",
+      TeamsAccesses:"Teams/Fetch",
+      AllTeams:"Teams/FetchAll",// new to review
+      AddTeam:"Accesses/Teams",
+      TeamProperties:"Accesses/Properties",
+      accessrole:"Roles/Previews", //"Permissions/role",      
+      permissionrole:"Roles/Previews", //"Permissions/role",
+      RolesPermissions:"Roles/Fetch",
       permissions:"Roles/Permissions",
-      accessteam:"Accesses/team",
-      accessrole:"Permissions/role",
-      permissionteam:"Accesses/team",
-      permissionrole:"Permissions/role",
-      RolesPermissions:"Permissions",
-      TeamsAccesses:"Accesses",
-      
-      AddRole:"Permissions",
-      AddTeam:"Accesses",
-      TeamProperties:"Teams/PropAccesses",
-      RoleProperties:"Roles/PropPermis",
-
-      AllRoles:"Roles/GetAll",
-      AllTeams:"Teams/GetAll",
-
-      AddUser:"Users/CreateUser",
-      UpdateUser:"Users/UpdateUser",
-      GetAllUsers:"Users/GetAllUser",
-      DeleteUser:"Users/DeleteUser",
-      GetUserById:"Users/GetUserById", 
-      
-
+      RoleProperties:"Permissions/Properties",      
+      AddRole:"Permissions/Roles",      
+      UserRoles:"Roles/Users",
+      UserTeams:"Teams/Users",      
+      AddUser:"Identity/Add",
+      UpdateUser:"Identity/Update",
+      DeleteUser:"Identity/Delete",
+      AllUsers:"Users/GetAll",      
+      GetUserById:"Users/GetById",
+      // For console skill setup 
+      channels:"Console/Properties/Channel/Tree/0",
+      routing:"Console/Properties/routing/Tree/0",
+      deleteRoles: "/Permissions/Delete"
     },
     console:{
       AddUser:"Users/CreateUser",
@@ -92,7 +94,23 @@ export const environment = {
       deleteEntractRoute : 'EnteractRoute/Delete',
       getSkills : 'Skill/GetAll',
       addSkill : 'Skill/Add',
-      deleteSkill : 'Skill/Delete'
+      deleteSkill : 'Skill/Delete',
+      getAllProfile: 'Profile/GetAll',
+      addProfile : 'Profile/Add',
+      attachFacebookPage: 'ProfileManagement/RegisterProfile',
+      getTags: 'Tags/GetAll',
+      getTagById: 'Tags/GetById',
+      addTags: 'Tags/Add',
+      updateTag: 'Tags/Update',
+      deleteTags: 'Tags/Delete',
+      getParents : 'Tags/GetParents',
+      getAllRules : 'Rules/GetAll',
+      getEntitiesRule : 'Rules/GetEntities',
+      getRuleEntityProperties : 'GetEntitiesProperties',
+      getRuleById:  'Rules/GetById',
+      addRules: 'Rules/Add',
+      updateRules: 'Rules/Update',
+      deleteRules: 'Rules/Delete'
     },
     CCMS:{
       reason_types:'Order/GetReasonTypes',
@@ -142,7 +160,9 @@ export const environment = {
       getAllocatedProfiles : 'Query/GetAllocatedProfiles',
       repliesList: 'SentQueries/GetRepliesList',
       signOut: 'SignalRConnector/UserLogout',
-      getCustomers: 'Customer/GetAllCustomersSocialProfile'
+      getCustomers: 'Customer/GetAllCustomersSocialProfile',
+      updateStatus: 'Channel/UpdateMessageStatus',
+      hideUnhideMessage: 'Query/HideQuery'
       
     },
     facebook: {

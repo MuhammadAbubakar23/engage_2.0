@@ -9,6 +9,7 @@ import { GroupbydatePipe } from './CustomPipes/groupbydate.pipe';
 import { FilterPipe } from './CustomPipes/filter.pipe';
 import { QuickReplySearchFilterPipe } from './CustomPipes/quick-reply-search-filter.pipe';
 import { SafePipe } from './pipes/safe.pipe';
+import { NavigationBackDirective } from './services/navigation/navigation-back.directive';
 import { SplitNameFromUrlPipe } from './pipes/split-name-from-url.pipe';
 import { GetFileTypeFromUrlPipe } from './pipes/get-file-type-from-url.pipe';
 
@@ -22,9 +23,9 @@ import { GetFileTypeFromUrlPipe } from './pipes/get-file-type-from-url.pipe';
     FilterPipe,
     QuickReplySearchFilterPipe,
     SafePipe,
+    NavigationBackDirective,
     SplitNameFromUrlPipe,
-    GetFileTypeFromUrlPipe,
-    
+    GetFileTypeFromUrlPipe
     
   ],
   imports: [
@@ -40,6 +41,7 @@ import { GetFileTypeFromUrlPipe } from './pipes/get-file-type-from-url.pipe';
     FilterPipe,
     QuickReplySearchFilterPipe,
     SafePipe,
+    NavigationBackDirective,
     SplitNameFromUrlPipe,
     GetFileTypeFromUrlPipe
   ]

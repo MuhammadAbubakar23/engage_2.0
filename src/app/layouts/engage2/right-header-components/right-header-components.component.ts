@@ -90,7 +90,6 @@ export class RightHeaderComponentsComponent implements OnInit {
       //        console.log('Error while stopping connection: ' + err)
       //     );
       // }
-
     } else {
       this.reloadComponent('querryAssigned');
     }
@@ -134,7 +133,7 @@ export class RightHeaderComponentsComponent implements OnInit {
   submit() {
     this.authService.login(this.loginForm.value).subscribe(
       (res: any) => {
-        this.router.navigateByUrl('/all-inboxes');
+        this.router.navigateByUrl('/all-inboxes/my_inbox');
         this.resetTimer();
         this.timerStop();
         this.clickHandler();

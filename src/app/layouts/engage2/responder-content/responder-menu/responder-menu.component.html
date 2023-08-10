@@ -335,7 +335,7 @@
         <div class="panelMain">
 
             <div class="listing-wrap" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
-                <div class="scroll-content" >
+                <div class="scroll-content">
                     <ul class="list-group-followup list-group-flush">
                         <a href="javascript:"
                             class="list-group-item list-group-item-action d-flex align-items-center radical fw-bold"
@@ -345,145 +345,149 @@
                         </a>
                     </ul>
                     <ng-container *ngFor="let profile of userSpecificAllocatedProfiles">
-                    <ng-container *ngIf="profile.slaFlag == 'danger' || profile.slaFlag == 'warning'">
-                        <ul class="list-group list-group-flush" id="inboxes-list">
+                        <ng-container *ngIf="profile.slaFlag == 'danger' || profile.slaFlag == 'warning'">
+                            <ul class="list-group list-group-flush" id="inboxes-list">
 
-                            <li class="postBox isSla"
-                                [ngClass]="[profile.slaFlag == 'warning'?'slaMedium':'' || profile.slaFlag == 'danger'?'slaHigh':'']"
-                                (click)="updatevalue(profile.fromId, profile.platform, profile.profileId)">
+                                <li class="postBox isSla"
+                                    [ngClass]="[profile.slaFlag == 'warning'?'slaMedium':'' || profile.slaFlag == 'danger'?'slaHigh':'']"
+                                    (click)="updatevalue(profile.fromId, profile.platform, profile.profileId)">
 
-                                <a *ngIf="profile.platform == 'Facebook'">
-                                    <div class="iconButton medium navyBg"><i class="fab fa-facebook-f"></i></div>
-                                </a>
-                                <a *ngIf="profile.platform == 'Instagram'">
-                                    <div class="iconButton medium instabg"><i class="fab fa-instagram"></i></div>
-                                </a>
-                                <a *ngIf="profile.platform == 'Twitter'">
-                                    <div class="iconButton medium oceanBg"><i class="fab fa-twitter"></i></div>
-                                </a>
-                                <a *ngIf="profile.platform == 'Youtube'">
-                                    <div class="iconButton medium radicalBg"><i class="fab fa-youtube"></i></div>
-                                </a>
-                                <a *ngIf="profile.platform == 'Email'">
-                                    <div class="iconButton medium berryBg"><i class="fal fa-envelope"></i></div>
-                                </a>
-                                <a *ngIf="profile.platform == 'WhatsApp'">
-                                    <div class="iconButton medium mintBg"><i class="fab fa-whatsapp"></i></div>
-                                </a>
-                                <a *ngIf="profile.platform == 'WebChat'">
-                                    <div class="iconButton medium webchatbg"><i class="fal fa-messages"></i></div>
-                                </a>
-                                <a *ngIf="profile.platform == 'SMS'">
-                                    <div class="iconButton medium cherryBg"><i class="fal fa-comment-alt-lines"></i>
-                                    </div>
-                                </a>
-                                <a *ngIf="profile.platform == 'LinkedIn'">
-                                    <div class="iconButton medium linkedinbg"><i class="fab fa-linkedin-in"></i></div>
-                                </a>
-                                <a *ngIf="profile.platform == 'PlayStore'">
-                                    <div class="iconButton medium darkorangeBg"><i class="fab fa-google-play"></i></div>
-                                </a>
-                                <div class="boxMiddle">
-                                    <a>
-                                        <div class="boxHeading">
-                                            <div class="left">
-                                                <div class="boxId">{{profile.fromName}}</div>
-                                            </div>
-                                            <div class="right">
-                                                <div class="postDate">{{profile.createdDate | date:'hh:mm a'}}</div>
-                                                <span
-                                                    class="badge navyBg rounded-pill">{{profile.unrespondedCount}}</span>
-                                            </div>
+                                    <a *ngIf="profile.platform == 'Facebook'">
+                                        <div class="iconButton medium navyBg"><i class="fab fa-facebook-f"></i></div>
+                                    </a>
+                                    <a *ngIf="profile.platform == 'Instagram'">
+                                        <div class="iconButton medium instabg"><i class="fab fa-instagram"></i></div>
+                                    </a>
+                                    <a *ngIf="profile.platform == 'Twitter'">
+                                        <div class="iconButton medium oceanBg"><i class="fab fa-twitter"></i></div>
+                                    </a>
+                                    <a *ngIf="profile.platform == 'Youtube'">
+                                        <div class="iconButton medium radicalBg"><i class="fab fa-youtube"></i></div>
+                                    </a>
+                                    <a *ngIf="profile.platform == 'Email'">
+                                        <div class="iconButton medium berryBg"><i class="fal fa-envelope"></i></div>
+                                    </a>
+                                    <a *ngIf="profile.platform == 'WhatsApp'">
+                                        <div class="iconButton medium mintBg"><i class="fab fa-whatsapp"></i></div>
+                                    </a>
+                                    <a *ngIf="profile.platform == 'WebChat'">
+                                        <div class="iconButton medium webchatbg"><i class="fal fa-messages"></i></div>
+                                    </a>
+                                    <a *ngIf="profile.platform == 'SMS'">
+                                        <div class="iconButton medium cherryBg"><i class="fal fa-comment-alt-lines"></i>
                                         </div>
                                     </a>
-                                    <!-- <div class="subHeading"><a >
+                                    <a *ngIf="profile.platform == 'LinkedIn'">
+                                        <div class="iconButton medium linkedinbg"><i class="fab fa-linkedin-in"></i>
+                                        </div>
+                                    </a>
+                                    <a *ngIf="profile.platform == 'PlayStore'">
+                                        <div class="iconButton medium darkorangeBg"><i class="fab fa-google-play"></i>
+                                        </div>
+                                    </a>
+                                    <div class="boxMiddle">
+                                        <a>
+                                            <div class="boxHeading">
+                                                <div class="left">
+                                                    <div class="boxId">{{profile.fromName}}</div>
+                                                </div>
+                                                <div class="right">
+                                                    <div class="postDate">{{profile.createdDate | date:'hh:mm a'}}</div>
+                                                    <span
+                                                        class="badge navyBg rounded-pill">{{profile.unrespondedCount}}</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <!-- <div class="subHeading"><a >
                                         <div class="channel">
                                             <i class="fab fa-facebook-f navy"></i>
                                         </div>
                                     </a><a href="javascript:;" class="businessName navy">/foodpanda.pk</a>
                                     <a href="javascript:;" class="skill">@Feedback</a>
                                 </div> -->
-                                    <div class="boxContent">
-                                        {{profile.message}}
+                                        <div class="boxContent">
+                                            {{profile.message}}
+                                        </div>
                                     </div>
-                                </div>
 
-                            </li>
-                        </ul>
+                                </li>
+                            </ul>
+                        </ng-container>
                     </ng-container>
-                </ng-container>
-                    
-                        <ul class="list-group-followup list-group-flush">
-                            <a href="javascript:"
-                                class="list-group-item list-group-item-action d-flex align-items-center fw-bold"
-                                value="itProcurement">
-                                Conversation Queue
-                                <!-- <span class="badge berryBg rounded-pill">16</span> -->
-                            </a>
-                        </ul>
-                        <ng-container *ngFor="let profile of userSpecificAllocatedProfiles">
+
+                    <ul class="list-group-followup list-group-flush">
+                        <a href="javascript:"
+                            class="list-group-item list-group-item-action d-flex align-items-center fw-bold"
+                            value="itProcurement">
+                            Conversation Queue
+                            <!-- <span class="badge berryBg rounded-pill">16</span> -->
+                        </a>
+                    </ul>
+                    <ng-container *ngFor="let profile of userSpecificAllocatedProfiles">
                         <ng-container *ngIf="profile.slaFlag == 'unread'">
-                        <ul class="list-group list-group-flush" id="inboxes-list">
-                            <li class="postBox unRead"
-                                (click)="updatevalue(profile.fromId, profile.platform, profile.profileId)">
-                                <a *ngIf="profile.platform == 'Facebook'">
-                                    <div class="iconButton medium navyBg"><i class="fab fa-facebook-f"></i></div>
-                                </a>
-                                <a *ngIf="profile.platform == 'Instagram'">
-                                    <div class="iconButton medium instabg"><i class="fab fa-instagram"></i></div>
-                                </a>
-                                <a *ngIf="profile.platform == 'Twitter'">
-                                    <div class="iconButton medium oceanBg"><i class="fab fa-twitter"></i></div>
-                                </a>
-                                <a *ngIf="profile.platform == 'Youtube'">
-                                    <div class="iconButton medium radicalBg"><i class="fab fa-youtube"></i></div>
-                                </a>
-                                <a *ngIf="profile.platform == 'Email'">
-                                    <div class="iconButton medium berryBg"><i class="fal fa-envelope"></i></div>
-                                </a>
-                                <a *ngIf="profile.platform == 'WhatsApp'">
-                                    <div class="iconButton medium mintBg"><i class="fab fa-whatsapp"></i></div>
-                                </a>
-                                <a *ngIf="profile.platform == 'WebChat'">
-                                    <div class="iconButton medium webchatbg"><i class="fal fa-messages"></i></div>
-                                </a>
-                                <a *ngIf="profile.platform == 'SMS'">
-                                    <div class="iconButton medium cherryBg"><i class="fal fa-comment-alt-lines"></i>
-                                    </div>
-                                </a>
-                                <a *ngIf="profile.platform == 'LinkedIn'">
-                                    <div class="iconButton medium linkedinbg"><i class="fab fa-linkedin-in"></i></div>
-                                </a>
-                                <a *ngIf="profile.platform == 'PlayStore'">
-                                    <div class="iconButton medium darkorangeBg"><i class="fab fa-google-play"></i></div>
-                                </a>
-                                <div class="boxMiddle">
-                                    <a>
-                                        <div class="boxHeading">
-                                            <div class="left">
-                                                <div class="boxId">{{profile.fromName}}</div>
-                                            </div>
-                                            <div class="right">
-                                                <div class="postDate">{{profile.createdDate | date:'hh:mm a'}}</div>
-                                                <span
-                                                    class="badge navyBg rounded-pill">{{profile.unrespondedCount}}</span>
-                                            </div>
+                            <ul class="list-group list-group-flush" id="inboxes-list">
+                                <li class="postBox unRead"
+                                    (click)="updatevalue(profile.fromId, profile.platform, profile.profileId)">
+                                    <a *ngIf="profile.platform == 'Facebook'">
+                                        <div class="iconButton medium navyBg"><i class="fab fa-facebook-f"></i></div>
+                                    </a>
+                                    <a *ngIf="profile.platform == 'Instagram'">
+                                        <div class="iconButton medium instabg"><i class="fab fa-instagram"></i></div>
+                                    </a>
+                                    <a *ngIf="profile.platform == 'Twitter'">
+                                        <div class="iconButton medium oceanBg"><i class="fab fa-twitter"></i></div>
+                                    </a>
+                                    <a *ngIf="profile.platform == 'Youtube'">
+                                        <div class="iconButton medium radicalBg"><i class="fab fa-youtube"></i></div>
+                                    </a>
+                                    <a *ngIf="profile.platform == 'Email'">
+                                        <div class="iconButton medium berryBg"><i class="fal fa-envelope"></i></div>
+                                    </a>
+                                    <a *ngIf="profile.platform == 'WhatsApp'">
+                                        <div class="iconButton medium mintBg"><i class="fab fa-whatsapp"></i></div>
+                                    </a>
+                                    <a *ngIf="profile.platform == 'WebChat'">
+                                        <div class="iconButton medium webchatbg"><i class="fal fa-messages"></i></div>
+                                    </a>
+                                    <a *ngIf="profile.platform == 'SMS'">
+                                        <div class="iconButton medium cherryBg"><i class="fal fa-comment-alt-lines"></i>
                                         </div>
                                     </a>
-                                    <!-- <div class="subHeading"><a >
+                                    <a *ngIf="profile.platform == 'LinkedIn'">
+                                        <div class="iconButton medium linkedinbg"><i class="fab fa-linkedin-in"></i>
+                                        </div>
+                                    </a>
+                                    <a *ngIf="profile.platform == 'PlayStore'">
+                                        <div class="iconButton medium darkorangeBg"><i class="fab fa-google-play"></i>
+                                        </div>
+                                    </a>
+                                    <div class="boxMiddle">
+                                        <a>
+                                            <div class="boxHeading">
+                                                <div class="left">
+                                                    <div class="boxId">{{profile.fromName}}</div>
+                                                </div>
+                                                <div class="right">
+                                                    <div class="postDate">{{profile.createdDate | date:'hh:mm a'}}</div>
+                                                    <span
+                                                        class="badge navyBg rounded-pill">{{profile.unrespondedCount}}</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <!-- <div class="subHeading"><a >
                                         <div class="channel">
                                             <i class="fab fa-facebook-f navy"></i>
                                         </div>
                                     </a><a href="javascript:;" class="businessName navy">/foodpanda.pk</a>
                                     <a href="javascript:;" class="skill">@Feedback</a>
                                 </div> -->
-                                    <div class="boxContent">
-                                        {{profile.message}}
+                                        <div class="boxContent">
+                                            {{profile.message}}
+                                        </div>
                                     </div>
-                                </div>
 
-                            </li>
-                            <!-- <li class="postBox active">
+                                </li>
+                                <!-- <li class="postBox active">
                             <a >
                                 <div class="iconButton medium radicalBg">
                                     <i class="fab fa-youtube"></i>
@@ -567,9 +571,9 @@
                                 </div>
                             </div>
                         </li> -->
-                        </ul>
+                            </ul>
+                        </ng-container>
                     </ng-container>
-                </ng-container>
 
                 </div>
             </div>

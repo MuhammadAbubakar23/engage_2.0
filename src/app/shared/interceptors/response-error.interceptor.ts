@@ -17,33 +17,28 @@ export class ResponseErrorInterceptor implements HttpInterceptor {
   constructor(private router: Router, private ls:StorageService) { }
   //responseErro
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.responseType === 'json') {
-        
-    }
+    let errorMessage = "";
+    //if (req.responseType === 'json') { }
     return next.handle(req)
-    .pipe(map((event: HttpEvent<any>) => {
-      if (event instanceof HttpResponse) {
-      //  // console.log('event--->>>', event);
-      }
-      return event;
-      }),
+    .pipe(
       catchError((error: HttpErrorResponse) => {
+        
         if (error.error instanceof ErrorEvent) {
           // A client-side error: Retrigger
-          // // console.log('error event--->>>', error);
-          let errorMessage = this.handleError(error);        
-          return throwError(() => new Error(errorMessage));
-          
-          
+          // console.log('error event--->>>', error);
+          errorMessage = this.handleError(error);        
+          //return throwError(() => new Error(errorMessage));          
         }else{
           reportError(error.message);          
           //if(error.status == 200 && error.ok === false) return error.message;
           // error.clone({body: this.jsonParser.parse(event.body)})
           // error.clone({body: null})
-          // // console.log('error 22222 event--->>>', error);
-          return throwError(() => new Error(error.error));
+          // console.log('error 22222 event--->>>', error);
+          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+          
         }
-        
+        return throwError(() => new Error(errorMessage));
+
       })
     )
 
@@ -96,3 +91,16 @@ export class ResponseErrorInterceptor implements HttpInterceptor {
     }
   }
 }
+
+// map((event: HttpEvent<any>) => {
+//   if (event instanceof HttpResponse) {
+//   //  console.log('event--->>>', event);
+//   }
+//   return event;
+// }), 
+// | Error
+// if (error instanceof HttpErrorResponse){
+//   console.error('Server side error'+err);
+// } else {
+//   console.error('Not a httpErrorResponse'+err);
+// }

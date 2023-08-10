@@ -46,11 +46,9 @@ export class InboxesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     this.route.params.subscribe((routeParams) => {
-
-      if(routeParams['channel'] != undefined && routeParams['channel'] != "undefined"){
-        this.componentName = routeParams['channel'];
+      if(routeParams['flag'] != undefined && routeParams['flag'] != "undefined"){
+        this.componentName = routeParams['flag'];
       }
       this.childComponentName = routeParams['ticket'];
       this.rightNavService.updateChildComponent(this.childComponentName);
@@ -113,11 +111,10 @@ export class InboxesComponent implements OnInit {
 
 
   loadComponent(leftSideName: string, rightSideName: string) {
-    
     let componentFactory = null;
 
     switch (leftSideName || rightSideName) {
-      case 'conversation':
+      case 'sent':
         componentFactory = this.resolver.resolveComponentFactory(ConversationComponent);
         this.target?.createComponent(componentFactory);
         break;

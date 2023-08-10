@@ -15,6 +15,9 @@ export class CommonDataService {
   JomoAccessToken = environment.JomoAccessToken;
   CommonBaseUrl = environment.CommonBaseUrl;
   IdentityBaseUrl = environment.IdentityBaseUrl;
+  FacebookBaseUrl = environment.FbBaseUrl;
+  InstagramBaseUrl = environment.InstaBaseUrl;
+
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
   removeTags = environment.links.common.RemoveTags;
@@ -64,6 +67,8 @@ export class CommonDataService {
   repliesList = environment.links.common.repliesList;
   signOut = environment.links.common.signOut;
   getCustomers = environment.links.common.getCustomers;
+  updateStatus = environment.links.common.updateStatus;
+  hideUnhideMessage = environment.links.common.hideUnhideMessage;
 
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
@@ -80,20 +85,39 @@ export class CommonDataService {
   getPolicyById = environment.links.console.getPolicyById;
   deleteSlaPolicy = environment.links.console.deleteSlaPolicy;
   getOperationalHours = environment.links.console.getOperationalHours;
-  getBusinessHours = environment.links.console.getBusinessHours
-  addBusinessHours = environment.links.console.addBusinessHours
-  deleteBusinessHours =environment.links.console.deleteBusinessHours
-  updateBusinessHours = environment.links.console.updateBusinessHours
-  getBusinessById = environment.links.console.getBusinessById
-  getEntractRoute = environment.links.console.getEntractRoute
-  addEntractRoute = environment.links.console.addEntractRoute
-  updateEntractRoute = environment.links.console.updateEntractRoute
-  deleteEntractRoute = environment.links.console.deleteEntractRoute
-  getSkills = environment.links.console.getSkills
-  addSkill = environment.links.console.addSkill
-  deleteSkill = environment.links.console.deleteSkill
+  getBusinessHours = environment.links.console.getBusinessHours;
+  addBusinessHours = environment.links.console.addBusinessHours;
+  deleteBusinessHours = environment.links.console.deleteBusinessHours;
+  updateBusinessHours = environment.links.console.updateBusinessHours;
+  getBusinessById = environment.links.console.getBusinessById;
+  getEntractRoute = environment.links.console.getEntractRoute;
+  addEntractRoute = environment.links.console.addEntractRoute;
+  updateEntractRoute = environment.links.console.updateEntractRoute;
+  deleteEntractRoute = environment.links.console.deleteEntractRoute;
+  getSkills = environment.links.console.getSkills;
+  addSkill = environment.links.console.addSkill;
+  deleteSkill = environment.links.console.deleteSkill;
+  getAllProfile = environment.links.console.getAllProfile;
+  addProfile = environment.links.console.addProfile;
+  attachFacebookPage = environment.links.console.attachFacebookPage;
+  getTags = environment.links.console.getTags;
+  getTagById = environment.links.console.getTagById;
+  addTags = environment.links.console.addTags;
+  updateTag = environment.links.console.updateTag;
+  deleteTags = environment.links.console.deleteTags;
+  getParents = environment.links.console.getParents;
+  // rules
+  deleteRules = environment.links.console.deleteRules
+  getAllRules = environment.links.console.getAllRules;
+  getRuleById = environment.links.console.getRuleById
+  addRules = environment.links.console.addRules
+  updateRules = environment.links.console.updateRules
+  getEntitiesRule = environment.links.console.getEntitiesRule
+  getRuleEntityProperties = environment.links.console.getRuleEntityProperties
 
-  constructor(private http: HttpClient) {}
+  getChannels = environment.links.identity.channels;
+  deleteRoles = environment.links.identity.deleteRoles
+  constructor(private http: HttpClient) { }
 
   GetTagsList() {
     return this.http.get(this.CommonBaseUrl + this.tagsList);
@@ -186,11 +210,11 @@ export class CommonDataService {
   GetFbPostStats(pageId: any, postId: any) {
     return this.http.post(
       this.CommonBaseUrl +
-        this.fbPostStats +
-        '?PageId=' +
-        pageId +
-        '&postId=' +
-        postId,
+      this.fbPostStats +
+      '?PageId=' +
+      pageId +
+      '&postId=' +
+      postId,
       null
     );
   }
@@ -198,11 +222,11 @@ export class CommonDataService {
   GetFbCommentStats(pageId: any, commentId: any) {
     return this.http.post(
       this.CommonBaseUrl +
-        this.fbCommentStats +
-        '?PageId=' +
-        pageId +
-        '&CommentId=' +
-        commentId,
+      this.fbCommentStats +
+      '?PageId=' +
+      pageId +
+      '&CommentId=' +
+      commentId,
       null
     );
   }
@@ -224,11 +248,11 @@ export class CommonDataService {
   GetTwitterTweetStats(profileId: any, tweetId: any) {
     return this.http.get(
       this.CommonBaseUrl +
-        this.twitterTweetStats +
-        '?ProfileExternalId=' +
-        profileId +
-        '&TweetId=' +
-        tweetId
+      this.twitterTweetStats +
+      '?ProfileExternalId=' +
+      profileId +
+      '&TweetId=' +
+      tweetId
     );
   }
   GetLinkedInPostStats(postId: any) {
@@ -360,31 +384,31 @@ export class CommonDataService {
   GetOperationalHours() {
     return this.http.get(this.consoleBaseUrl + this.getOperationalHours);
   }
-  GetBusinessHours(){
-    return this.http.get(this.consoleBaseUrl+this.getBusinessHours)
+  GetBusinessHours() {
+    return this.http.get(this.consoleBaseUrl + this.getBusinessHours)
   }
-  AddBusinessHours(addHours : any){
+  AddBusinessHours(addHours: any) {
     return this.http.post(this.consoleBaseUrl + this.addBusinessHours, addHours)
   }
   DeleteBusinessHours(delHours: string): Observable<any> {
     const url = `${this.consoleBaseUrl}${this.deleteBusinessHours}?Id=${delHours}`;
     return this.http.get(url);
   }
-  UpdateBusinessHours(hoursId: string, bueiness: any){
+  UpdateBusinessHours(hoursId: string, bueiness: any) {
     const url = `${this.consoleBaseUrl}${this.updateBusinessHours}?Id=${hoursId}`;
     return this.http.post(url, bueiness);
   }
-  GetBusinessById(BusinessId: string){
+  GetBusinessById(BusinessId: string) {
     const url = `${this.consoleBaseUrl}${this.getBusinessById}?Id=${BusinessId}`;
     return this.http.get(url);
   }
-  GetEntractRoute(){
-    return this.http.get(this.consoleBaseUrl+this.getEntractRoute)
+  GetEntractRoute() {
+    return this.http.get(this.consoleBaseUrl + this.getEntractRoute)
   }
-  AddEntractRoute(addRoute : any){
+  AddEntractRoute(addRoute: any) {
     return this.http.post(this.consoleBaseUrl + this.addEntractRoute, addRoute)
   }
-  UpdateEntractRoute(RouteId : any , entract :any){
+  UpdateEntractRoute(RouteId: any, entract: any) {
     const url = `${this.consoleBaseUrl}${this.updateEntractRoute}?Id=${RouteId}`;
     return this.http.post(url, entract);
   }
@@ -392,10 +416,10 @@ export class CommonDataService {
     const url = `${this.consoleBaseUrl}${this.deleteEntractRoute}?Id=${delRoute}`;
     return this.http.get(url);
   }
-  GetSkill(){
-    return this.http.get(this.consoleBaseUrl+this.getSkills)
+  GetSkill() {
+    return this.http.get(this.consoleBaseUrl + this.getSkills)
   }
-  AddSkill(addSkill : any){
+  AddSkill(addSkill: any) {
     return this.http.post(this.consoleBaseUrl + this.addSkill, addSkill)
   }
   DeleteSkill(delSkill: string): Observable<any> {
@@ -403,15 +427,92 @@ export class CommonDataService {
     return this.http.get(url);
   }
 
-  GetCustomers(body:any) {
-    return this.http.post(this.CommonBaseUrl+this.getCustomers, body);
+  GetAllProfile() {
+    return this.http.get(this.consoleBaseUrl + this.getAllProfile)
+  }
+  AddProfile(addProfile: any) {
+
+    return this.http.post(this.consoleBaseUrl + this.addProfile, addProfile)
+  }
+  AttachFacebookPage(body:any){
+    return this.http.post(this.InstagramBaseUrl + this.attachFacebookPage, body)
   }
 
-  SignOut(){
-    return this.http.get(this.CommonBaseUrl+this.signOut)
+  SignOut() {
+    return this.http.get(this.CommonBaseUrl + this.signOut)
   }
 
+  GetTags() {
+    return this.http.get(this.consoleBaseUrl + this.getTags);
+  }
+  GetTagById(body: any) {
+    const url = `${this.consoleBaseUrl}${this.getTagById}`;
+    return this.http.post(url, body);
+  }
+  AddTags(addTags: any) {
+    return this.http.post(this.consoleBaseUrl + this.addTags, addTags)
+  }
+  UpdateTag(tagsId: string, tag: any) {
+    const url = `${this.consoleBaseUrl}${this.updateTag}?Id=${tagsId}`;
+    return this.http.post(url, tag);
+  }
+  DeleteTags(delTag: string): Observable<any> {
+    const url = `${this.consoleBaseUrl}${this.deleteTags}?Id=${delTag}`;
+    return this.http.get(url);
+  }
+  DeleteRoles(delRolId: any) {
+    const url = `${this.IdentityBaseUrl}${this.deleteRoles}`;
+    return this.http.post(url, delRolId);
+  }
 
+  GetParents() {
+    return this.http.get(this.consoleBaseUrl + this.getParents);
+  }
+
+  // rules
+
+  GetAllRules() {
+    return this.http.get(this.consoleBaseUrl + this.getAllRules)
+  }
+  GetRuleById() {
+    return this.http.get(this.consoleBaseUrl + this.getRuleById)
+  }
+  AddRules(addrule: any) {
+    return this.http.post(this.consoleBaseUrl + this.addRules, addrule)
+  }
+  UpdateRules(ruleId: string, rule: any) {
+    const url = `${this.consoleBaseUrl}${this.updateRules}?Id=${ruleId}`;
+    return this.http.post(url, rule);
+  }
+  DeleteRules(delRules: any) {
+    const url = `${this.consoleBaseUrl}${this.deleteRules}?Id=${delRules}`;
+    return this.http.get(url);
+  }
+  GetEntitiesRule() {
+    return this.http.get(this.consoleBaseUrl + this.getEntitiesRule);
+
+  }
+  GetRuleEntityProperties() {
+    return this.http.get(this.consoleBaseUrl + this.getRuleEntityProperties);
+
+  }
+
+  GetCustomers(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.getCustomers, body);
+  }
+
+  GetChannels() {
+    return this.http.get(this.IdentityBaseUrl + '/' + this.getChannels)
+  }
+
+  UpdateStatus(body:any){
+    return this.http.post(this.CommonBaseUrl+this.updateStatus, body)
+  }
+
+  HideUnhideMessage(queryId:number, status:boolean){
+    const url = (this.CommonBaseUrl+this.hideUnhideMessage+'?QueryId='+queryId+'&Status='+status);
+    return this.http.get(url);
+  }
 }
 
 var headers_object = new HttpHeaders({

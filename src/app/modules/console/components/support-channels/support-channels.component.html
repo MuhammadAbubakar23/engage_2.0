@@ -1,25 +1,24 @@
-<div
-  class="support-channel-wrapper console-body-wrapper"
-  data-scrollbar="true"
-  tabindex="-1"
-  style="overflow-y: auto; outline: none"
->
+<div class="support-channel-wrapper console-body-wrapper" data-scrollbar="true" tabindex="-1"
+  style="overflow-y:auto; outline: none;">
   <div class="scroll-content">
     <div class="wider-container skybg">
       <div class="bodyWrapper">
+        <!-- class="d-flex justify-content-between " -->
         <div>
           <h5 class="fw-bold border-2 border-bottom border-info pb-3">
             6 Channels
           </h5>
-        </div>
+          <!-- <div class="form-check form-switch mx-3">
+                        <input class="form-check-input" type="checkbox" role="switch" id="phonecall"checked="">
+                        <label class="form-check-label" for="phonecall"> </label>
+                    </div> -->
+        <!-- </div>
         <div class="list-group-section">
           <div class="section-heading">
             <h6 class="silver mb-0 pt-3">Voice</h6>
           </div>
           <ul class="list-group list-group-flush">
-            <li
-              class="list-group-item d-flex justify-content-between align-items-sm-center"
-            >
+            <li class="list-group-item d-flex justify-content-between align-items-sm-center">
               <span class="iconButton medium">
                 <i class="fal fa-phone-alt coal"></i>
               </span>
@@ -28,11 +27,8 @@
                 Create Shared inboxes for teammates to work together
               </div>
               <div class="icons-list">
-                <span
-                  type="button"
-                  class="iconButton iconHover medium btn rounded-circle"
-                  id="addMore-btn"
-                >
+                <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
@@ -44,100 +40,36 @@
             <h6 class="silver mb-0">Social Media</h6>
           </div>
           <ul class="list-group list-group-flush">
-            <li
-              class="list-group-item d-flex justify-content-between align-items-sm-center"
-              data-bs-toggle="collapse"
-              role="button"
-              data-bs-target="#facebookcollapse"
-              aria-expanded="false"
-              aria-controls="facebookcollapse"
-            >
+            <li class="list-group-item d-flex justify-content-between align-items-sm-center" >
               <span class="iconButton medium">
                 <i class="fab fa-facebook-f coal"></i>
               </span>
-              <div class="ms-2 me-auto coal">
+              <div class="ms-2 me-auto coal" data-bs-toggle="collapse"
+              role="button" data-bs-target="#facebookcollapse" aria-expanded="false" aria-controls="facebookcollapse">
                 <div class="fw-bold night">Facebook</div>
                 Create Shared inboxes for teammates to work together
               </div>
               <div class="icons-list">
-                <span
-                  type="button"
-                  class="iconButton iconHover medium btn rounded-circle"
-                  id="addMore-btn"
-                >
+                <span type="button" class="iconButton iconHover medium btn rounded-circle"
+                data-bs-toggle="modal" data-bs-target="#facebookModal">
                   <i class="far fa-plus"></i>
-                </span>
+              </span>
               </div>
             </li>
             <div class="collapse-wrap collapse" id="facebookcollapse">
               <ul class="list-group list-group-flush mb-4 ms-5 ps-1">
-                <li
-                  class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
-                  role="button"
-                >
-                  <div
-                    class="ms-2 me-auto coal d-flex coal"
-                    data-bs-toggle="modal"
-                    data-bs-target="#attachFacebookPage"
-                    aria-hidden="true"
-                  >
+                <li class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
+                  role="button">
+
+                  <div class="ms-2 me-auto coal d-flex coal" data-bs-toggle="modal" data-bs-target="#attachFacebookPage"
+                    aria-hidden="true">
                     Attach a Facebook Page
                   </div>
                 </li>
               </ul>
             </div>
 
-            <li
-              class="list-group-item d-flex justify-content-between align-items-sm-center"
-              data-bs-toggle="collapse"
-              role="button"
-              data-bs-target="#googlecollapse"
-              aria-expanded="false"
-              aria-controls="googlecollapse"
-            >
-              <span class="iconButton medium">
-                <i class="fab fa-google coal"></i>
-              </span>
-              <div class="ms-2 me-auto coal">
-                <div class="fw-bold night">Google</div>
-                Create Shared inboxes for teammates to work together
-              </div>
-              <div class="icons-list">
-                <span
-                  type="button"
-                  class="iconButton iconHover medium btn rounded-circle"
-                  id="addMore-btn"
-                >
-                  <i class="far fa-plus"></i>
-                </span>
-              </div>
-            </li>
-            <div class="collapse-wrap collapse" id="googlecollapse">
-              <ul class="list-group list-group-flush mb-4 ms-5 ps-1">
-                <li
-                  class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
-                  role="button"
-                >
-                  <div
-                    class="ms-2 me-auto coal d-flex coal"
-                    data-bs-toggle="modal"
-                    data-bs-target="#attachGooglePage"
-                    aria-hidden="true"
-                  >
-                    Attach a Google Page
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-            <li
-              class="list-group-item d-flex justify-content-between align-items-sm-center"
-              data-bs-toggle="collapse"
-              role="button"
-              data-bs-target="#instagramcollapse"
-              aria-expanded="false"
-              aria-controls="instagramcollapse"
-            >
+            <li class="list-group-item d-flex justify-content-between align-items-sm-center">
               <span class="iconButton medium">
                 <i class="fab fa-instagram coal"></i>
               </span>
@@ -146,83 +78,13 @@
                 Create Shared inboxes for teammates to work together
               </div>
               <div class="icons-list">
-                <span
-                  type="button"
-                  class="iconButton iconHover medium btn rounded-circle"
-                  id="addMore-btn"
-                >
+                <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
             </li>
-            <div class="collapse-wrap collapse" id="instagramcollapse">
-              <ul class="list-group list-group-flush mb-4 ms-5 ps-1">
-                <li
-                  class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
-                  role="button"
-                >
-                  <div
-                    class="ms-2 me-auto coal d-flex coal"
-                    data-bs-toggle="modal"
-                    data-bs-target="#attachInstagramPage"
-                    aria-hidden="true"
-                  >
-                    Attach a Instagram Page
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <li
-            class="list-group-item d-flex justify-content-between align-items-sm-center"
-            data-bs-toggle="collapse"
-            role="button"
-            data-bs-target="#linkdincollapse"
-            aria-expanded="false"
-            aria-controls="linkdincollapse"
-          >
-            <span class="iconButton medium">
-              <i class="fab fa-linkedin coal"></i>
-            </span>
-            <div class="ms-2 me-auto coal">
-              <div class="fw-bold night">LinkdIn</div>
-              Create Shared inboxes for teammates to work together
-            </div>
-            <div class="icons-list">
-              <span
-                type="button"
-                class="iconButton iconHover medium btn rounded-circle"
-                id="addMore-btn"
-              >
-                <i class="far fa-plus"></i>
-              </span>
-            </div>
-          </li>
-          <div class="collapse-wrap collapse" id="linkdincollapse">
-            <ul class="list-group list-group-flush mb-4 ms-5 ps-1">
-              <li
-                class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
-                role="button"
-              >
-                <div
-                  class="ms-2 me-auto coal d-flex coal"
-                  data-bs-toggle="modal"
-                  data-bs-target="#attachLinkdInPage"
-                  aria-hidden="true"
-                >
-                  Attach a LinkdIn Page
-                </div>
-              </li>
-            </ul>
-          </div>
-
-            <li
-              class="list-group-item d-flex justify-content-between align-items-sm-center"
-              data-bs-toggle="collapse"
-              role="button"
-              data-bs-target="#twittercollapse"
-              aria-expanded="false"
-              aria-controls="twittercollapse"
-            >
+            <li class="list-group-item d-flex justify-content-between align-items-sm-center">
               <span class="iconButton medium">
                 <i class="fab fa-twitter coal"></i>
               </span>
@@ -231,40 +93,13 @@
                 Create Shared inboxes for teammates to work together
               </div>
               <div class="icons-list">
-                <span
-                  type="button"
-                  class="iconButton iconHover medium btn rounded-circle"
-                  id="addMore-btn"
-                >
+                <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
             </li>
-            <div class="collapse-wrap collapse" id="twittercollapse">
-              <ul class="list-group list-group-flush mb-4 ms-5 ps-1">
-                <li
-                  class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
-                  role="button"
-                >
-                  <div
-                    class="ms-2 me-auto coal d-flex coal"
-                    data-bs-toggle="modal"
-                    data-bs-target="#attachTwitterPage"
-                    aria-hidden="true"
-                  >
-                    Attach a Twitter Page
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <li
-              class="list-group-item d-flex justify-content-between align-items-sm-center"
-              data-bs-toggle="collapse"
-              role="button"
-              data-bs-target="#utubecollapse"
-              aria-expanded="false"
-              aria-controls="utubecollapse"
-            >
+            <li class="list-group-item d-flex justify-content-between align-items-sm-center">
               <span class="iconButton medium">
                 <i class="fab fa-youtube coal"></i>
               </span>
@@ -273,35 +108,13 @@
                 Create Shared inboxes for teammates to work together
               </div>
               <div class="icons-list">
-                <span
-                  type="button"
-                  class="iconButton iconHover medium btn rounded-circle"
-                  id="addMore-btn"
-                >
+                <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
             </li>
-            <div class="collapse-wrap collapse" id="utubecollapse">
-              <ul class="list-group list-group-flush mb-4 ms-5 ps-1">
-                <li
-                  class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
-                  role="button"
-                >
-                  <div
-                    class="ms-2 me-auto coal d-flex coal"
-                    data-bs-toggle="modal"
-                    data-bs-target="#attachUtubePage"
-                    aria-hidden="true"
-                  >
-                    Attach a Utube Page
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <li
-              class="list-group-item d-flex justify-content-between align-items-sm-center"
-            >
+            <li class="list-group-item d-flex justify-content-between align-items-sm-center">
               <span class="iconButton medium">
                 <i class="fal fa-envelope-open coal"></i>
               </span>
@@ -310,11 +123,8 @@
                 Create Shared inboxes for teammates to work together
               </div>
               <div class="icons-list">
-                <span
-                  type="button"
-                  class="iconButton iconHover medium btn rounded-circle"
-                  id="addMore-btn"
-                >
+                <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
+                (click)="connectGoogle()">
                   <i class="far fa-plus"></i>
                 </span>
               </div>
@@ -326,40 +136,30 @@
             <h6 class="silver mb-0">Messages</h6>
           </div>
           <ul class="list-group list-group-flush">
-            <li
-              class="list-group-item d-flex justify-content-between align-items-sm-center"
-              data-bs-toggle="collapse"
-              role="button"
-              data-bs-target="#emailcollapse"
-              aria-expanded="false"
-              aria-controls="emailcollapse"
-            >
+            <li class="list-group-item d-flex justify-content-between align-items-sm-center" data-bs-toggle="collapse"
+              role="button" data-bs-target="#emailcollapse" aria-expanded="false" aria-controls="emailcollapse">
               <span class="iconButton medium">
                 <i class="fal fa-envelope-open cherry"></i>
               </span>
               <div class="ms-2 me-auto coal">
-                <div class="fw-bold cherry">
-                  Email <span class="badge rounded-pill cherryBg">3</span>
+                <div class="fw-bold cherry">Email
+                  <span class="badge rounded-pill cherryBg">3</span>
                 </div>
                 Create Shared inboxes for teammates to work together
               </div>
               <div class="icons-list">
-                <span
-                  type="button"
-                  class="iconButton iconHover medium btn rounded-circle"
-                  id="addMore-btn"
-                >
+                <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
+
             </li>
 
             <div class="collapse-wrap collapse" id="emailcollapse">
               <ul class="list-group list-group-flush mb-4 ms-5 ps-1">
-                <li
-                  class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
-                  role="button"
-                >
+                <li class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
+                  role="button">
                   <div class="ms-2 me-auto coal d-flex coal">
                     <div class="fw-bold mb-0 me-2 coal">Corporate</div>
                     corporate@jazz.com.pk
@@ -374,12 +174,8 @@
                     <span class="iconButton medium btn iconHover">
                       <i class="fal fa-envelope-open"></i>
                     </span>
-                    <span
-                      class="iconButton medium btn btn-group iconHover"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
+                    <span class="iconButton medium btn btn-group iconHover" type="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">
                       <i class="far fa-ellipsis-v dropdown-toggle"></i>
                     </span>
                     <ul class="dropdown-menu fade">
@@ -398,10 +194,8 @@
                     </ul>
                   </div>
                 </li>
-                <li
-                  class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
-                  role="button"
-                >
+                <li class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
+                  role="button">
                   <div class="ms-2 me-auto coal d-flex coal">
                     <div class="fw-bold mb-0 me-2 coal">Corporate</div>
                     corporate@jazz.com.pk
@@ -416,12 +210,8 @@
                     <span class="iconButton medium btn iconHover">
                       <i class="fal fa-envelope-open"></i>
                     </span>
-                    <span
-                      class="iconButton medium btn btn-group iconHover"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
+                    <span class="iconButton medium btn btn-group iconHover" type="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">
                       <i class="far fa-ellipsis-v dropdown-toggle"></i>
                     </span>
                     <ul class="dropdown-menu fade">
@@ -440,10 +230,8 @@
                     </ul>
                   </div>
                 </li>
-                <li
-                  class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
-                  role="button"
-                >
+                <li class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
+                  role="button">
                   <div class="ms-2 me-auto coal d-flex coal">
                     <div class="fw-bold mb-0 me-2 coal">Corporate</div>
                     corporate@jazz.com.pk
@@ -458,12 +246,8 @@
                     <span class="iconButton medium btn iconHover">
                       <i class="fal fa-envelope-open"></i>
                     </span>
-                    <span
-                      class="iconButton medium btn btn-group iconHover"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
+                    <span class="iconButton medium btn btn-group iconHover" type="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">
                       <i class="far fa-ellipsis-v dropdown-toggle"></i>
                     </span>
                     <ul class="dropdown-menu fade">
@@ -482,10 +266,8 @@
                     </ul>
                   </div>
                 </li>
-                <li
-                  class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
-                  role="button"
-                >
+                <li class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
+                  role="button">
                   <div class="ms-2 me-auto coal d-flex coal">
                     <div class="fw-bold mb-0 me-2 coal">Corporate</div>
                     corporate@jazz.com.pk
@@ -500,12 +282,8 @@
                     <span class="iconButton medium btn iconHover">
                       <i class="fal fa-envelope-open"></i>
                     </span>
-                    <span
-                      class="iconButton medium btn btn-group iconHover"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
+                    <span class="iconButton medium btn btn-group iconHover" type="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">
                       <i class="far fa-ellipsis-v dropdown-toggle"></i>
                     </span>
                     <ul class="dropdown-menu fade">
@@ -524,10 +302,8 @@
                     </ul>
                   </div>
                 </li>
-                <li
-                  class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
-                  role="button"
-                >
+                <li class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
+                  role="button">
                   <div class="ms-2 me-auto coal d-flex coal">
                     <div class="fw-bold mb-0 me-2 coal">Corporate</div>
                     corporate@jazz.com.pk
@@ -542,12 +318,8 @@
                     <span class="iconButton medium btn iconHover">
                       <i class="fal fa-envelope-open"></i>
                     </span>
-                    <span
-                      class="iconButton medium btn btn-group iconHover"
-                      type="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
+                    <span class="iconButton medium btn btn-group iconHover" type="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">
                       <i class="far fa-ellipsis-v dropdown-toggle"></i>
                     </span>
                     <ul class="dropdown-menu fade">
@@ -566,11 +338,10 @@
                     </ul>
                   </div>
                 </li>
+
               </ul>
             </div>
-            <li
-              class="list-group-item d-flex justify-content-between align-items-sm-center"
-            >
+            <li class="list-group-item d-flex justify-content-between align-items-sm-center">
               <span class="iconButton medium">
                 <i class="fab fa-whatsapp coal"></i>
               </span>
@@ -579,18 +350,13 @@
                 Create Shared inboxes for teammates to work together
               </div>
               <div class="icons-list">
-                <span
-                  type="button"
-                  class="iconButton iconHover medium btn rounded-circle"
-                  id="addMore-btn"
-                >
+                <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
             </li>
-            <li
-              class="list-group-item d-flex justify-content-between align-items-sm-center"
-            >
+            <li class="list-group-item d-flex justify-content-between align-items-sm-center">
               <span class="iconButton medium">
                 <i class="fal fa-comments-alt coal"></i>
               </span>
@@ -599,31 +365,24 @@
                 Create Shared inboxes for teammates to work together
               </div>
               <div class="icons-list">
-                <span
-                  type="button"
-                  class="iconButton iconHover medium btn rounded-circle"
-                  id="addMore-btn"
-                >
+                <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
             </li>
-            <li
-              class="list-group-item d-flex justify-content-between align-items-sm-center"
-            >
-              <span class="iconButton medium">
-                <i class="fal fa-comment coal"></i>
+            <li class="list-group-item d-flex justify-content-between align-items-sm-center">
+              <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
+                >
+                <i class="far fa-plus"></i>
               </span>
               <div class="ms-2 me-auto coal">
                 <div class="fw-bold night">SMS</div>
                 Create Shared inboxes for teammates to work together
               </div>
               <div class="icons-list">
-                <span
-                  type="button"
-                  class="iconButton iconHover medium btn rounded-circle"
-                  id="addMore-btn"
-                >
+                <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
@@ -635,9 +394,7 @@
             <h6 class="silver mb-0">Integration</h6>
           </div>
           <ul class="list-group list-group-flush">
-            <li
-              class="list-group-item d-flex justify-content-between align-items-sm-center"
-            >
+            <li class="list-group-item d-flex justify-content-between align-items-sm-center">
               <span class="iconButton medium">
                 <i class="fal fa-file coal"></i>
               </span>
@@ -646,15 +403,48 @@
                 Create Shared inboxes for teammates to work together
               </div>
               <div class="icons-list">
-                <span
-                  type="button"
-                  class="iconButton iconHover medium btn rounded-circle"
-                  id="addMore-btn"
-                >
+                <span type="button" class="iconButton iconHover medium btn rounded-circle" id="addMore-btn"
+                  >
                   <i class="far fa-plus"></i>
                 </span>
               </div>
             </li>
+          </ul>
+        </div> -->
+
+        <div class="list-group-section">
+          <div class="section-heading">
+            <h6 class="silver mb-0">Social Media</h6>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-sm-center" *ngFor="let channel of channels">
+              <div class="iconButton medium" [innerHTML]="channel.icon">
+                <!-- <i class="fab fa-facebook-f coal"></i> -->
+              </div>
+              <div class="ms-2 me-auto coal" data-bs-toggle="collapse"
+              role="button" data-bs-target="#facebookcollapse" aria-expanded="false" aria-controls="facebookcollapse">
+                <div class="fw-bold night">{{channel.name}}</div>
+                Create Shared inboxes for teammates to work together
+              </div>
+              <div class="icons-list">
+                <span type="button" class="iconButton iconHover medium btn rounded-circle"
+                data-bs-toggle="modal" [attr.data-bs-target]="'#'+channel.slug">
+                  <i class="far fa-plus"></i>
+              </span>
+              </div>
+            </li>
+            <div class="collapse-wrap collapse" id="facebookcollapse">
+              <ul class="list-group list-group-flush mb-4 ms-5 ps-1">
+                <li class="list-group-item d-flex justify-content-between align-items-sm-center pe-0 ps-0"
+                  role="button">
+
+                  <div class="ms-2 me-auto coal d-flex coal" data-bs-toggle="modal" data-bs-target="#attachFacebookPage"
+                    aria-hidden="true">
+                    Attach a Facebook Page
+                  </div>
+                </li>
+              </ul>
+            </div>
           </ul>
         </div>
       </div>
@@ -662,1327 +452,791 @@
   </div>
   <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;"><div class="scrollbar-thumb scrollbar-thumb-x" style="width: 1560px; transform: translate3d(0px, 0px, 0px);"></div></div><div class="scrollbar-track scrollbar-track-y" style="display: block;"><div class="scrollbar-thumb scrollbar-thumb-y" style="height: 177.988px; transform: translate3d(0px, 0px, 0px);"></div></div> -->
 </div>
-<div
-  class="modal fade"
-  id="attachFacebookPage"
-  tabindex="-1"
-  aria-labelledby="attachFacebookPageLabel"
-  aria-modal="true"
-  role="dialog"
->
-  <div class="modal-dialog modal-dialog-centered" style="max-width: 920px">
+<div class="modal fade" id="attachFacebookPage" tabindex="-1" aria-labelledby="attachFacebookPageLabel"
+  aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 920px;">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title line-head" id="attachFacebookPageLabel">
-          ATTACH A PROFILE
-        </h5>
-        <button
-          type="button"
-          class="btn iconHover pt-0 pb-0"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
-          <i class="fal fa-times"></i>
-        </button>
+        <h5 class="modal-title line-head" id="attachFacebookPageLabel">ATTACH A PROFILE</h5>
+        <button type="button" class="btn iconHover pt-0 pb-0" data-bs-dismiss="modal" aria-label="Close"><i
+            class="fal fa-times"></i></button>
       </div>
       <div class="modal-body p-5">
         <div class="d-flex align-items-center">
           <div class="icon-circle iconButton me-4">
             <i class="fal fa-clipboard-check"></i>
           </div>
-          <p class="line-txt darkblue">
-            By adding the profile and clicking allow, you permit the application
-            to access and publish content on your Social Network Account, on
-            your behalf.
-          </p>
+          <p class="line-txt darkblue">By adding the profile and clicking allow, you permit the application to
+            access and publish content on your
+            Social Network Account, on your behalf.</p>
         </div>
         <div class="row">
-          <div class="col-sm-6 mx-auto">
+          <div class="col-sm-4">
             <div class="card card-body pradd">
-              <a href="">
-                <img src="../../../../../assets/images/fbicon.png" /><br />
+              <a href="" ng-click="ConnectFacebookProfile()">
+                <img src="../../../../../assets/images/fbicon.png"><br>
                 FACEBOOK
               </a>
-              <!-- <asl-google-signin-button (click)="signInWithGoogle()" type='icon' size='medium' text="signin_with"></asl-google-signin-button> -->
-              <button
-                type="button"
-                class="btn btn-primary"
-                (click)="connectFacebook()"
-              >
-                <i class="fa fa-link"></i> Connect <span class="caret"></span>
-              </button>
-              <!--<div class="dropdown" >
-                            <ul class="dropdown-menu" style="width:375px;">
-                                <li><a href="" ><img src="/Content/images/fb_page_ico.jpg" class="img_circle img_mar" alt="">Attach a Facebook Page</a></li>
-                                <li><a href="" ><img src="/Content/images/insta_ico.png" class="img_circle img_mar" alt="">Attach Instagram Linked Facebook Profile</a></li>
-                            </ul>
-                        </div>
-                      -->
+              <div class="dropdown">
+                <button type="button" data-toggle="dropdown" class="btn btn-primary  dropdown-toggle "><i
+                    class="fa fa-link"></i> Connect <span class="caret"></span></button>
+                <ul class="dropdown-menu" style="width:375px;">
+                  <li><a href="" ng-click="ConnectFacebookPage()"><img src="/Content/images/fb_page_ico.jpg"
+                        class="img_circle img_mar" alt="">Attach a Facebook Page</a></li>
+                  <li><a href="" ng-click="ConnectFacebookProfile()"><img src="/Content/images/insta_ico.png"
+                        class="img_circle img_mar" alt="">Attach Instagram Linked Facebook Profile</a></li>
+                </ul>
+              </div>
             </div>
             <!--</div>-->
           </div>
-          <!--
+          <!--<div class="col-sm-6" style="margin:0 auto !important; text-align:center;">-->
+          <div class="col-sm-4 ">
+            <div class="card card-body pradd">
+              <a href="" ng-click="ConnectTwitter()">
+                <img src="../../../../../assets/images/twicon.png"><br>
+                TWITTER
+              </a>
+              <button type="button" ng-click="ConnectTwitter()" class="btn btn-primary  "><i class="fa fa-link"></i>
+                Connect</button>
+            </div>
+            <!--</div>-->
+          </div>
+          <div class="col-sm-4">
+            <div class="card card-body pradd">
+              <a href="" ng-click="ConnectYoutubeProfile()">
+                <img style="max-width:22px" src="../../../../../assets/images/google.png"><br>
+                <!--<i style="font-size:27px;color:#cc1f1f" class="fa fa-google"></i><br>-->
+                GOOGLE
+              </a>
+              <div class="dropdown">
+                <button type="button" data-toggle="dropdown" class="btn btn-primary  dropdown-toggle "><i
+                    class="fa fa-link"></i> Connect <span class="caret"></span></button>
+                <ul class="dropdown-menu" style="width:375px;">
+                  <li>
+                    <a href="" ng-click="ConnectYoutubePage()"><img src="../../../../../assets/images/youtube.png"
+                        class="img_mar" alt="">Attach a Youtube Page</a>
+                    <a href="" ng-click="ConnectYoutubePage()">
+                      <img style="max-width:18px" src="../../../../../assets/images/gmail.png" class="img_mar"
+                        alt="">Attach a Gsuite Account</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!--</div>-->
+          </div>
+          <!--<div class="col-sm-6" style="margin:0 auto !important; text-align:center;">-->
+          <div class="col-sm-4 zro" style="margin:0 auto !important; text-align:center;display:none;">
 
-                <div class="col-sm-4 " >
-                    <div class="card card-body pradd">
-                        <a href="" ng-click="ConnectTwitter()" >
-                            <img src="../../../../../assets/images/twicon.png" ><br>
-                            TWITTER
-                        </a>
-                        <button type="button" ng-click="ConnectTwitter()" class="btn btn-primary  "><i class="fa fa-link"></i> Connect</button>
-                    </div>
-
-                </div>
-
-                <div class="col-sm-4">
-                    <div class="card card-body pradd">
-                        <a href="" ng-click="ConnectYoutubeProfile()">
-                            <img style="max-width:22px" src="../../../../../assets/images/google.png"><br>
-                            GOOGLE
-                        </a>
-                        <button type="button" data-toggle="dropdown" class="btn btn-primary" (click)="signInWithGoogle()"><i class="fa fa-link" ></i> Connect <span class="caret"></span></button>
-                      <div class="dropdown">
-
-                          <ul class="dropdown-menu" style="width:375px;">
-                                <li>
-                                    <a href="" ><img src="../../../../../assets/images/youtube.png" class="img_mar" alt="">Attach a Youtube Page</a>
-                                    <a href="" >
-                                        <img style="max-width:18px" src="../../../../../assets/images/gmail.png" class="img_mar" alt="">Attach a Gsuite Account</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-
--->
-          <!-- <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center; display: none"
-          >
             <div class="card card-body pradd">
               <a href="" ng-click="ConnectInstagram()">
-                <img src="/Content/images/inicon.png" /><br />
+                <img src="/Content/images/inicon.png"><br>
                 INSTAGRAM
               </a>
-              <button
-                type="button"
-                ng-click="ConnectInstagram()"
-                class="btn btn-primary"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
+              <button type="button" ng-click="ConnectInstagram()" class="btn btn-primary  "><i class="fa fa-link"></i>
+                Connect</button>
             </div>
-
-          </div> -->
+            <!--</div>-->
+          </div>
         </div>
-        <!-- <div class="col-sm-12 col-sm-offset-2" style="display: none">
-
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
-              <a
-                href=""
-                ng-click="ConnectLinkedinProfile()"
-                class="hvr-bounce-in"
-              >
-                <img
-                  src="/Content/img/Instagram_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                LINKEDIN </a
-              ><br /><br />
+        <div class="col-sm-12 col-sm-offset-2" style="display:none;">
+          <!--<div class="col-sm-6" style="margin:0 auto !important; text-align:center;display:none!important;">-->
+          <div class="col-sm-4 zro" style="margin:0 auto !important; text-align:center;">
+            <div style="display:inline-block; padding:20px;">
+              <a href="" ng-click="ConnectLinkedinProfile()" class="hvr-bounce-in">
+                <img src="/Content/img/Instagram_c.png" style="width:109px; height:109px;"><br>
+                LINKEDIN
+              </a><br><br>
               <div class="dropdown">
-                <button
-                  type="button"
-                  data-toggle="dropdown"
-                  class="btn btn-primary button_round dropdown-toggle"
-                >
-                  <i class="fa fa-link"></i> Connect <span class="caret"></span>
-                </button>
+                <button type="button" data-toggle="dropdown" class="btn btn-primary button_round dropdown-toggle "><i
+                    class="fa fa-link"></i>
+                  Connect <span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                  <li>
-                    <a href=""
-                      ><img
-                        src="/Content/images/in_page_ico.png"
-                        class="img_circle img_mar"
-                        alt=""
-                      />
-                      Attach a Company Page</a
-                    >
-                  </li>
-                  <li>
-                    <a href="" ng-click="ConnectLinkedinProfile()"
-                      ><img
-                        src="/Content/images/fb_profile_ico.jpg"
-                        class="img_circle img_mar"
-                        alt=""
-                      />
-                      Attach a Personal Profile</a
-                    >
-                  </li>
+                  <li><a href=""><img src="/Content/images/in_page_ico.png" class="img_circle img_mar" alt=""> Attach a
+                      Company Page</a></li>
+                  <li><a href="" ng-click="ConnectLinkedinProfile()"><img src="/Content/images/fb_profile_ico.jpg"
+                        class="img_circle img_mar" alt=""> Attach a Personal Profile</a></li>
                 </ul>
               </div>
             </div>
           </div>
-
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
+          <!--</div>-->
+          <!--<div class="col-sm-6" style="margin:0 auto !important; text-align:center;">-->
+          <div class="col-sm-4 zro" style="margin:0 auto !important; text-align:center;">
+            <div style="display:inline-block; padding:20px;">
               <a href="" ng-click="ConnectGoogle()" class="hvr-bounce-in">
-                <img
-                  src="/Content/img/ana_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                ANALYTICS </a
-              ><br /><br />
-              <button
-                type="button"
-                ng-click="ConnectGoogle()"
-                class="btn btn-primary button_round"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
+                <img src="/Content/img/ana_c.png" style="width:109px; height:109px;"><br>
+                ANALYTICS
+              </a><br><br>
+              <button type="button" ng-click="ConnectGoogle()" class="btn btn-primary button_round "><i
+                  class="fa fa-link"></i> Connect</button>
             </div>
           </div>
-
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
+          <!--</div>-->
+          <!--<div class="col-sm-6" style="margin:0 auto !important; text-align:center;">-->
+          <div class="col-sm-4 zro" style="margin:0 auto !important; text-align:center;">
+            <div style="display:inline-block; padding:20px;">
               <a href="" ng-click="ConnectOutlook()" class="hvr-bounce-in">
-                <img
-                  src="/Content/images/outlook_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                OUTLOOK </a
-              ><br /><br />
-              <button
-                type="button"
-                ng-click="ConnectOutlook()"
-                class="btn btn-primary button_round"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
+                <img src="/Content/images/outlook_c.png" style="width:109px; height:109px;"><br>
+                OUTLOOK
+              </a><br><br>
+              <button type="button" ng-click="ConnectOutlook()" class="btn btn-primary button_round "><i
+                  class="fa fa-link"></i> Connect</button>
             </div>
           </div>
-
-        </div> -->
+          <!--</div>-->
+        </div>
       </div>
     </div>
   </div>
+
 </div>
 
-
-<div
-  class="modal fade"
-  id="attachGooglePage"
-  tabindex="-1"
-  aria-labelledby="attachGooglePageLabel"
-  aria-modal="true"
-  role="dialog"
->
-  <div class="modal-dialog modal-dialog-centered" style="max-width: 920px">
+                <!-- Facebook  -->
+                <div class="modal fade" id="channel_facebook" tabindex="-1" aria-labelledby="channel_facebookLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered custom-modal-properties">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="facebookModalLabel">ATTACH A PROFILE</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form [formGroup]="attachFacebookPageForm" (ngSubmit)="attachFacebookPage()">
+                          <div class="d-flex align-items-center">
+                            <div class="icon-circle iconButton me-4">
+                              <i class="fal fa-clipboard-check"></i>
+                            </div>
+                            <p class="line-txt darkblue">By adding the profile and clicking allow, you permit the application to
+                              access and publish content on your Social Network Account, on your behalf.</p>
+                          </div>
+                          <!-- <div class="row">
+                            <div class="fs-4 fw-bold">User Information</div>
+                            <div class="col-6">
+                              <div class="mb-3">
+                                <label for="name" class="col-form-label">Name:</label>
+                                <input type="text" class="form-control" id="name" formControlName="name">
+                              </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="mb-3">
+                                <label for="userName" class="col-form-label">Username:</label>
+                                <input type="text" class="form-control" id="userName" formControlName="userName">
+                              </div>
+                            </div>
+                            <div class="col-6">
+                              <div class="mb-3">
+                                <label for="page-id" class="col-form-label">ProfilePic:</label>
+                                <input type="file" name="image" formControlName="userProfilePic" class="form-control uplaoded-box"
+                                  multiple (change)="onFileSelected($event,'profile')">
+                              </div>
+                            </div>
+                          </div>
+                          <hr> -->
+                          <div class="fs-4 fw-bold">Page Information</div>
+                          <div class="row">
+                            <div class="col-12">
+                              <!-- <div class="mb-3 mt-3">
+                                <input class="form-check-input  " type="checkbox" id="additional-fields-checkbox"
+                                  (change)="toggleAdditionalFields($event)" formControlName="isPage">
+                                <label class="form-check-label ms-2 " for="additional-fields-checkbox">Is Page</label>
+                              </div> -->
+                            </div>
+                            <div class="col-12">
+                              <div class="row">
+                                <div class="col-6">
+                                  <div class="mb-3">
+                                    <label for="app-id" class="col-form-label">APP ID:</label>
+                                    <input type="text" class="form-control" id="api-id" formControlName="appId">
+                                  </div>
+                                </div>
+                                <div class="col-6">
+                                  <div class="mb-3">
+                                    <label for="appSecret" class="col-form-label">APP Secret:</label>
+                                    <input type="password" class="form-control" id="api-secret" formControlName="appSecret">
+                                  </div>
+                                </div>
+                
+                                <div class="col-6">
+                                  <div class="mb-3">
+                                    <label for="page-url" class="col-form-label">PageUrl:</label>
+                                    <input type="text" class="form-control" id="page-url" formControlName="pageUrl">
+                                  </div>
+                                </div>
+                
+                                <div class="col-6">
+                                  <div class="mb-3">
+                                    <label for="page-profile-pic" class="col-form-label">ProfilePic:</label>
+                                    <input type="file" formControlName="pageProfilePic" class="form-control uplaoded-box"
+                                      multiple (change)="onFileSelected($event,'page')">
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- <div class="col-6">
+                                <div class="mb-3">
+                                  <label for="Scope" class="col-form-label">Scope:</label>
+                                  <input type="text" class="form-control" id="Scope" formControlName="apiKey" required>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pages_manage_metadata"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="pages_manage_metadata">
+                                      pages_manage_metadata
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="Business Asset User Profile Access"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="Business Asset User Profile Access">
+                                      Business Asset User Profile Access
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="instagram_manage_comments"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="instagram_manage_comments">
+                                      instagram_manage_comments
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="Page Public Content Access"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="Page Public Content Access">
+                                      Page Public Content Access
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pages_messaging"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="pages_messaging">
+                                      pages_messaging
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="instagram_manage_messages"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="instagram_manage_messages">
+                                      instagram_manage_messages
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      public_profile
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      Page Public Metadata Access
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      email
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      groups_access_member_info
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      private_computation_access
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      Groups API
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      Oembed Read
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_user_locale
+                                    </label>
+                                  </div>
+                                </div>
+                
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_user_timezone
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      Page Mentions
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      Live Video API
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      instagram_shopping_tag_products
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      Instagram Public Content Access
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      Ads Management Standard Access
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_user_gender
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_read_engagement
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_read_user_content
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_show_list
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_manage_ads
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      business_management
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      instagram_basic
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      ads_management
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      ads_read
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_manage_engagement
+                                    </label>
+                                  </div>
+                                </div>
+                
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      instagram_manage_insights
+                                    </label>
+                                  </div>
+                                </div><div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      read_insights
+                                    </label>
+                                  </div>
+                                </div><div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      publish_to_groups
+                                    </label>
+                                  </div>
+                                </div><div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      instagram_content_publish
+                                    </label>
+                                  </div>
+                                </div><div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_manage_cta
+                                    </label>
+                                  </div>
+                                </div><div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      pages_manage_instant_articles
+                                    </label>
+                                  </div>
+                                </div><div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      leads_retrieval
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      page_events
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      publish_video
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      catalog_management
+                                    </label>
+                                  </div>
+                                </div>
+                                <div class="col-4">
+                                  <div class="mb-3 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                      (change)="onCheckChange($event)">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                      attribution_read
+                                    </label>
+                                  </div>
+                                </div>
+                              </div> -->
+                            </div>
+                          </div>
+                          <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary">Connect</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<!-- intsgram -->
+<!-- <div class="modal fade" id="exampleModals" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered ">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title line-head" id="attachGooglePageLabel">
-          ATTACH A PROFILE
-        </h5>
-        <button
-          type="button"
-          class="btn iconHover pt-0 pb-0"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
-          <i class="fal fa-times"></i>
-        </button>
+        <h5 class="modal-title" id="exampleModalLabel">New Message</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body p-5">
-        <div class="d-flex align-items-center">
-          <div class="icon-circle iconButton me-4">
-            <i class="fal fa-clipboard-check"></i>
-          </div>
-          <p class="line-txt darkblue">
-            By adding the profile and clicking allow, you permit the application
-            to access and publish content on your Social Network Account, on
-            your behalf.
-          </p>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 mx-auto">
-            <div class="card card-body pradd">
-              <h5>Google</h5>
+      <div class="modal-body">
+        <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="fs-4 fw-bold">User Information</div>
+              <div class="mb-3">
+                <label for="name" class="col-form-label">Name:</label>
+                <input type="text" class="form-control" id="name" formControlName="name">
+              </div>
+              <div class="mb-3">
+                <label for="userName" class="col-form-label">Username:</label>
+                <input type="text" class="form-control" id="userName" formControlName="userName">
+              </div>
 
-              <!-- <asl-google-signin-button
-                (click)="signInWithGoogle()"
-                type="icon"
-                size="medium"
-                text="signin_with"
-                class="custom-google-button"
-              ></asl-google-signin-button> -->
-
-              <button type="button" class="btn btn-primary" (click)="connectGoogle()">
-                <i class="fa fa-link"></i> Connect <span class="caret"></span>
-              </button>
-              <!--<div class="dropdown" >
-                            <ul class="dropdown-menu" style="width:375px;">
-                                <li><a href="" ><img src="/Content/images/fb_page_ico.jpg" class="img_circle img_mar" alt="">Attach a Facebook Page</a></li>
-                                <li><a href="" ><img src="/Content/images/insta_ico.png" class="img_circle img_mar" alt="">Attach Instagram Linked Facebook Profile</a></li>
-                            </ul>
-                        </div>
-                      -->
+              <div class="mb-3">
+                <label for="external-id" class="col-form-label">External ID:</label>
+                <input type="text" class="form-control" id="external-id" formControlName="externalId">
+              </div>
+              <div class="mb-3">
+                <label for="page-id" class="col-form-label">Profile Pic:</label>
+                <input type="file" name="image" formControlName="profilePic" class="form-control uplaoded-box"
+                  multiple (change)="onFileSelected($event,'profile')">
+              </div>
             </div>
-            <!--</div>-->
-          </div>
-          <!--
-
-                <div class="col-sm-4 " >
-                    <div class="card card-body pradd">
-                        <a href="" ng-click="ConnectTwitter()" >
-                            <img src="../../../../../assets/images/twicon.png" ><br>
-                            TWITTER
-                        </a>
-                        <button type="button" ng-click="ConnectTwitter()" class="btn btn-primary  "><i class="fa fa-link"></i> Connect</button>
-                    </div>
-
-                </div>
-
-                <div class="col-sm-4">
-                    <div class="card card-body pradd">
-                        <a href="" ng-click="ConnectYoutubeProfile()">
-                            <img style="max-width:22px" src="../../../../../assets/images/google.png"><br>
-                            GOOGLE
-                        </a>
-                        <button type="button" data-toggle="dropdown" class="btn btn-primary" (click)="signInWithGoogle()"><i class="fa fa-link" ></i> Connect <span class="caret"></span></button>
-                      <div class="dropdown">
-
-                          <ul class="dropdown-menu" style="width:375px;">
-                                <li>
-                                    <a href="" ><img src="../../../../../assets/images/youtube.png" class="img_mar" alt="">Attach a Youtube Page</a>
-                                    <a href="" >
-                                        <img style="max-width:18px" src="../../../../../assets/images/gmail.png" class="img_mar" alt="">Attach a Gsuite Account</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-
--->
-          <!-- <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center; display: none"
-          >
-            <div class="card card-body pradd">
-              <a href="" ng-click="ConnectInstagram()">
-                <img src="/Content/images/inicon.png" /><br />
-                INSTAGRAM
-              </a>
-              <button
-                type="button"
-                ng-click="ConnectInstagram()"
-                class="btn btn-primary"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
-            </div>
-
-          </div> -->
-        </div>
-        <!-- <div class="col-sm-12 col-sm-offset-2" style="display: none">
-
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
-              <a
-                href=""
-                ng-click="ConnectLinkedinProfile()"
-                class="hvr-bounce-in"
-              >
-                <img
-                  src="/Content/img/Instagram_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                LINKEDIN </a
-              ><br /><br />
-              <div class="dropdown">
-                <button
-                  type="button"
-                  data-toggle="dropdown"
-                  class="btn btn-primary button_round dropdown-toggle"
-                >
-                  <i class="fa fa-link"></i> Connect <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a href=""
-                      ><img
-                        src="/Content/images/in_page_ico.png"
-                        class="img_circle img_mar"
-                        alt=""
-                      />
-                      Attach a Company Page</a
-                    >
-                  </li>
-                  <li>
-                    <a href="" ng-click="ConnectLinkedinProfile()"
-                      ><img
-                        src="/Content/images/fb_profile_ico.jpg"
-                        class="img_circle img_mar"
-                        alt=""
-                      />
-                      Attach a Personal Profile</a
-                    >
-                  </li>
-                </ul>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="apiKey" class="col-form-label">API Key:</label>
+                <input type="text" class="form-control" id="api-key" formControlName="apiKey">
+              </div>
+              <div class="mb-3">
+                <label for="clientId" class="col-form-label">Client ID:</label>
+                <input type="text" class="form-control" id="client-id" formControlName="clientId">
+              </div>
+              <div class="mb-3">
+                <label for="client-secret" class="col-form-label">Client Secret:</label>
+                <input type="text" class="form-control" id="client-secret" formControlName="clientSecret">
               </div>
             </div>
           </div>
+          <hr>
+          <div class="fs-4 fw-bold">Page Information</div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3 mt-3">
+                <input class="form-check-input  " type="checkbox" id="additional-fields-checkbox"
+                  (change)="toggleAdditionalFields($event)" formControlName="isPage">
+                <label class="form-check-label ms-2 " for="additional-fields-checkbox">Is Page</label>
+              </div>
+            </div>
+            <div class="col-md-12" *ngIf="showAdditionalFields">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="page-id" class="col-form-label">Profile
+                      Id</label>
+                    <input type="text" class="form-control" id="page-id" formControlName="profileId">
+                  </div>
+                  <div class="mb-3">
+                    <label for="page-id" class="col-form-label">Page ID:</label>
+                    <input type="text" class="form-control" id="page-id" formControlName="pageId">
+                  </div>
+                </div>
+                <div class="col-md-6">
 
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
-              <a href="" ng-click="ConnectGoogle()" class="hvr-bounce-in">
-                <img
-                  src="/Content/img/ana_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                ANALYTICS </a
-              ><br /><br />
-              <button
-                type="button"
-                ng-click="ConnectGoogle()"
-                class="btn btn-primary button_round"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
+                  <div class="mb-3">
+                    <label for="page-id" class="col-form-label">PageUrl:</label>
+                    <input type="text" class="form-control" id="pageUrl" formControlName="pageUrl">
+                  </div>
+                  <div class="mb-3">
+                    <label for="page-id" class="col-form-label">Insta
+                      Business:</label>
+                    <input type="text" class="form-control" id="instaBusinessAccountId"
+                      formControlName="instagramBussinessAccountId">
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="mb-3">
+                    <label for="page-id" class="col-form-label">Instagram
+                      Profile:</label>
+                    <input type="file" formControlName="instagramProfilePic" class="form-control uplaoded-box"
+                      multiple (change)="onFileSelected($event,'insta')">
+                  </div>
+                  <div class="mb-3">
+                    <label for="page-id" class="col-form-label">Insta Page
+                      Name:</label>
+                    <input type="text" class="form-control" id="instaPageName" formControlName="instaPageName">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label for="page-id" class="col-form-label">ProfilePic:</label>
+                    <input type="file" formControlName="profilePic" class="form-control uplaoded-box" multiple
+                      (change)="onFileSelected($event,'page')">
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
-              <a href="" ng-click="ConnectOutlook()" class="hvr-bounce-in">
-                <img
-                  src="/Content/images/outlook_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                OUTLOOK </a
-              ><br /><br />
-              <button
-                type="button"
-                ng-click="ConnectOutlook()"
-                class="btn btn-primary button_round"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
-            </div>
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Send Message</button>
           </div>
-
-        </div> -->
+        </form>
       </div>
     </div>
   </div>
-</div>
-
-
-
-<div
-  class="modal fade"
-  id="attachInstagramPage"
-  tabindex="-1"
-  aria-labelledby="attachInstagramPageLabel"
-  aria-modal="true"
-  role="dialog"
->
-  <div class="modal-dialog modal-dialog-centered" style="max-width: 920px">
+</div> -->
+<!-- Twitter -->
+<!-- <div class="modal fade" id="exampleModalls" tabindex="-1" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered ">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title line-head" id="attachInstagramPageLabel">
-          ATTACH A PROFILE
-        </h5>
-        <button
-          type="button"
-          class="btn iconHover pt-0 pb-0"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
-          <i class="fal fa-times"></i>
-        </button>
+        <h5 class="modal-title" id="exampleModalLabel">New Message</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body p-5">
-        <div class="d-flex align-items-center">
-          <div class="icon-circle iconButton me-4">
-            <i class="fal fa-clipboard-check"></i>
-          </div>
-          <p class="line-txt darkblue">
-            By adding the profile and clicking allow, you permit the application
-            to access and publish content on your Social Network Account, on
-            your behalf.
-          </p>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 mx-auto">
-            <div class="card card-body pradd">
-              <a href="" ng-click="ConnectInstagram()">
-                <img src="/Content/images/inicon.png" /><br />
-                INSTAGRAM
-              </a>
-              <!-- <asl-google-signin-button
+      <div class="modal-body">
+        <form [formGroup]="messageForm" (ngSubmit)="sendMessage()">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="fs-4 fw-bold">User Information</div>
+              <div class="mb-3">
+                <label for="name" class="col-form-label">Name:</label>
+                <input type="text" class="form-control" id="name" formControlName="name">
+              </div>
+              <div class="mb-3">
+                <label for="userName" class="col-form-label">Username:</label>
+                <input type="text" class="form-control" id="userName" formControlName="userName">
+              </div>
 
-                type="icon"
-                size="medium"
-                text="signin_with"
-                class="custom-google-button"
-              ></asl-google-signin-button> -->
-              <button
-                type="button"
-                class="btn btn-primary"
-                (click)="connectInstagram()"
-              >
-                <i class="fa fa-link"></i> Connect <span class="caret"></span>
-              </button>
-              <!--<div class="dropdown" >
-                            <ul class="dropdown-menu" style="width:375px;">
-                                <li><a href="" ><img src="/Content/images/fb_page_ico.jpg" class="img_circle img_mar" alt="">Attach a Facebook Page</a></li>
-                                <li><a href="" ><img src="/Content/images/insta_ico.png" class="img_circle img_mar" alt="">Attach Instagram Linked Facebook Profile</a></li>
-                            </ul>
-                        </div>
-                      -->
+              <div class="mb-3">
+                <label for="external-id" class="col-form-label">External ID:</label>
+                <input type="text" class="form-control" id="external-id" formControlName="externalId">
+              </div>
+              <div class="mb-3">
+                <label for="page-id" class="col-form-label">Profile Pic:</label>
+                <input type="file" name="image" formControlName="profilePic" class="form-control uplaoded-box"
+                  multiple (change)="onFileSelected($event,'profile')">
+              </div>
             </div>
-            <!--</div>-->
-          </div>
-          <!--
-
-                <div class="col-sm-4 " >
-                    <div class="card card-body pradd">
-                        <a href="" ng-click="ConnectTwitter()" >
-                            <img src="../../../../../assets/images/twicon.png" ><br>
-                            TWITTER
-                        </a>
-                        <button type="button" ng-click="ConnectTwitter()" class="btn btn-primary  "><i class="fa fa-link"></i> Connect</button>
-                    </div>
-
-                </div>
-
-                <div class="col-sm-4">
-                    <div class="card card-body pradd">
-                        <a href="" ng-click="ConnectYoutubeProfile()">
-                            <img style="max-width:22px" src="../../../../../assets/images/google.png"><br>
-                            GOOGLE
-                        </a>
-                        <button type="button" data-toggle="dropdown" class="btn btn-primary" (click)="signInWithGoogle()"><i class="fa fa-link" ></i> Connect <span class="caret"></span></button>
-                      <div class="dropdown">
-
-                          <ul class="dropdown-menu" style="width:375px;">
-                                <li>
-                                    <a href="" ><img src="../../../../../assets/images/youtube.png" class="img_mar" alt="">Attach a Youtube Page</a>
-                                    <a href="" >
-                                        <img style="max-width:18px" src="../../../../../assets/images/gmail.png" class="img_mar" alt="">Attach a Gsuite Account</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-
--->
-          <!-- <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center; display: none"
-          >
-            <div class="card card-body pradd">
-              <a href="" ng-click="ConnectInstagram()">
-                <img src="/Content/images/inicon.png" /><br />
-                INSTAGRAM
-              </a>
-              <button
-                type="button"
-                ng-click="ConnectInstagram()"
-                class="btn btn-primary"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="apiKey" class="col-form-label">API Key:</label>
+                <input type="text" class="form-control" id="api-key" formControlName="apiKey">
+              </div>
+              <div class="mb-3">
+                <label for="clientId" class="col-form-label">Client ID:</label>
+                <input type="text" class="form-control" id="client-id" formControlName="clientId">
+              </div>
+              <div class="mb-3">
+                <label for="client-secret" class="col-form-label">Client Secret:</label>
+                <input type="text" class="form-control" id="client-secret" formControlName="clientSecret">
+              </div>>
             </div>
+          </div>
+          <hr>
 
-          </div> -->
-        </div>
-        <!-- <div class="col-sm-12 col-sm-offset-2" style="display: none">
 
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
-              <a
-                href=""
-                ng-click="ConnectLinkedinProfile()"
-                class="hvr-bounce-in"
-              >
-                <img
-                  src="/Content/img/Instagram_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                LINKEDIN </a
-              ><br /><br />
-              <div class="dropdown">
-                <button
-                  type="button"
-                  data-toggle="dropdown"
-                  class="btn btn-primary button_round dropdown-toggle"
-                >
-                  <i class="fa fa-link"></i> Connect <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a href=""
-                      ><img
-                        src="/Content/images/in_page_ico.png"
-                        class="img_circle img_mar"
-                        alt=""
-                      />
-                      Attach a Company Page</a
-                    >
-                  </li>
-                  <li>
-                    <a href="" ng-click="ConnectLinkedinProfile()"
-                      ><img
-                        src="/Content/images/fb_profile_ico.jpg"
-                        class="img_circle img_mar"
-                        alt=""
-                      />
-                      Attach a Personal Profile</a
-                    >
-                  </li>
-                </ul>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="page-id" class="col-form-label">ProfilePic:</label>
+                <input type="file" formControlName="profilePic" class="form-control uplaoded-box" multiple
+                  (change)="onFileSelected($event,'page')">
               </div>
             </div>
           </div>
 
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
-              <a href="" ng-click="ConnectGoogle()" class="hvr-bounce-in">
-                <img
-                  src="/Content/img/ana_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                ANALYTICS </a
-              ><br /><br />
-              <button
-                type="button"
-                ng-click="ConnectGoogle()"
-                class="btn btn-primary button_round"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
-            </div>
-          </div>
 
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
-              <a href="" ng-click="ConnectOutlook()" class="hvr-bounce-in">
-                <img
-                  src="/Content/images/outlook_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                OUTLOOK </a
-              ><br /><br />
-              <button
-                type="button"
-                ng-click="ConnectOutlook()"
-                class="btn btn-primary button_round"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
-            </div>
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Send Message</button>
           </div>
-
-        </div> -->
+        </form>
       </div>
     </div>
   </div>
-</div>
-<div
-  class="modal fade"
-  id="attachLinkdInPage"
-  tabindex="-1"
-  aria-labelledby="attachLinkdInPageLabel"
-  aria-modal="true"
-  role="dialog"
->
-  <div class="modal-dialog modal-dialog-centered" style="max-width: 920px">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title line-head" id="attachLinkdInPageLabel">
-          ATTACH A PROFILE
-        </h5>
-        <button
-          type="button"
-          class="btn iconHover pt-0 pb-0"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
-          <i class="fal fa-times"></i>
-        </button>
-      </div>
-      <div class="modal-body p-5">
-        <div class="d-flex align-items-center">
-          <div class="icon-circle iconButton me-4">
-            <i class="fal fa-clipboard-check"></i>
-          </div>
-          <p class="line-txt darkblue">
-            By adding the profile and clicking allow, you permit the application
-            to access and publish content on your Social Network Account, on
-            your behalf.
-          </p>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 mx-auto">
-            <div class="card card-body pradd">
-              <a href="" ng-click="ConnectInstagram()">
-                <img src="/Content/images/inicon.png" /><br />
-                LinkdIn
-              </a>
-              <!-- <asl-google-signin-button
-
-                type="icon"
-                size="medium"
-                text="signin_with"
-                class="custom-google-button"
-              ></asl-google-signin-button> -->
-              <button
-                type="button"
-                class="btn btn-primary"
-                (click)="connectLinkdIn()"
-              >
-                <i class="fa fa-link"></i> Connect <span class="caret"></span>
-              </button>
-              <!--<div class="dropdown" >
-                            <ul class="dropdown-menu" style="width:375px;">
-                                <li><a href="" ><img src="/Content/images/fb_page_ico.jpg" class="img_circle img_mar" alt="">Attach a Facebook Page</a></li>
-                                <li><a href="" ><img src="/Content/images/insta_ico.png" class="img_circle img_mar" alt="">Attach Instagram Linked Facebook Profile</a></li>
-                            </ul>
-                        </div>
-                      -->
-            </div>
-            <!--</div>-->
-          </div>
-          <!--
-
-                <div class="col-sm-4 " >
-                    <div class="card card-body pradd">
-                        <a href="" ng-click="ConnectTwitter()" >
-                            <img src="../../../../../assets/images/twicon.png" ><br>
-                            TWITTER
-                        </a>
-                        <button type="button" ng-click="ConnectTwitter()" class="btn btn-primary  "><i class="fa fa-link"></i> Connect</button>
-                    </div>
-
-                </div>
-
-                <div class="col-sm-4">
-                    <div class="card card-body pradd">
-                        <a href="" ng-click="ConnectYoutubeProfile()">
-                            <img style="max-width:22px" src="../../../../../assets/images/google.png"><br>
-                            GOOGLE
-                        </a>
-                        <button type="button" data-toggle="dropdown" class="btn btn-primary" (click)="signInWithGoogle()"><i class="fa fa-link" ></i> Connect <span class="caret"></span></button>
-                      <div class="dropdown">
-
-                          <ul class="dropdown-menu" style="width:375px;">
-                                <li>
-                                    <a href="" ><img src="../../../../../assets/images/youtube.png" class="img_mar" alt="">Attach a Youtube Page</a>
-                                    <a href="" >
-                                        <img style="max-width:18px" src="../../../../../assets/images/gmail.png" class="img_mar" alt="">Attach a Gsuite Account</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-
--->
-       <!--   <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center; display: none"
-          >
-            <div class="card card-body pradd">
-              <a href="" ng-click="ConnectInstagram()">
-                <img src="/Content/images/inicon.png" /><br />
-                INSTAGRAM
-              </a>
-              <button
-                type="button"
-                ng-click="ConnectInstagram()"
-                class="btn btn-primary"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
-            </div>
-
-          </div>
-          -->
-        </div>
-        <!--
-        <div class="col-sm-12 col-sm-offset-2" style="display: none">
-
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
-              <a
-                href=""
-                ng-click="ConnectLinkedinProfile()"
-                class="hvr-bounce-in"
-              >
-                <img
-                  src="/Content/img/Instagram_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                LINKEDIN </a
-              ><br /><br />
-              <div class="dropdown">
-                <button
-                  type="button"
-                  data-toggle="dropdown"
-                  class="btn btn-primary button_round dropdown-toggle"
-                >
-                  <i class="fa fa-link"></i> Connect <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a href=""
-                      ><img
-                        src="/Content/images/in_page_ico.png"
-                        class="img_circle img_mar"
-                        alt=""
-                      />
-                      Attach a Company Page</a
-                    >
-                  </li>
-                  <li>
-                    <a href="" ng-click="ConnectLinkedinProfile()"
-                      ><img
-                        src="/Content/images/fb_profile_ico.jpg"
-                        class="img_circle img_mar"
-                        alt=""
-                      />
-                      Attach a Personal Profile</a
-                    >
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
-              <a href="" ng-click="ConnectGoogle()" class="hvr-bounce-in">
-                <img
-                  src="/Content/img/ana_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                ANALYTICS </a
-              ><br /><br />
-              <button
-                type="button"
-                ng-click="ConnectGoogle()"
-                class="btn btn-primary button_round"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
-            </div>
-          </div>
-
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
-              <a href="" ng-click="ConnectOutlook()" class="hvr-bounce-in">
-                <img
-                  src="/Content/images/outlook_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                OUTLOOK </a
-              ><br /><br />
-              <button
-                type="button"
-                ng-click="ConnectOutlook()"
-                class="btn btn-primary button_round"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
-            </div>
-          </div>
-
-        </div>
-        -->
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div
-  class="modal fade"
-  id="attachTwitterPage"
-  tabindex="-1"
-  aria-labelledby="attachTwitterPageLabel"
-  aria-modal="true"
-  role="dialog"
->
-  <div class="modal-dialog modal-dialog-centered" style="max-width: 920px">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title line-head" id="attachTwitterPageLabel">
-          ATTACH A PROFILE
-        </h5>
-        <button
-          type="button"
-          class="btn iconHover pt-0 pb-0"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
-          <i class="fal fa-times"></i>
-        </button>
-      </div>
-      <div class="modal-body p-5">
-        <div class="d-flex align-items-center">
-          <div class="icon-circle iconButton me-4">
-            <i class="fal fa-clipboard-check"></i>
-          </div>
-          <p class="line-txt darkblue">
-            By adding the profile and clicking allow, you permit the application
-            to access and publish content on your Social Network Account, on
-            your behalf.
-          </p>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 mx-auto">
-            <div class="card card-body pradd">
-              <a href="" ng-click="ConnectInstagram()">
-                <img src="/Content/images/inicon.png" /><br />
-                Twitter
-              </a>
-              <!-- <asl-google-signin-button
-
-                type="icon"
-                size="medium"
-                text="signin_with"
-                class="custom-google-button"
-              ></asl-google-signin-button> -->
-              <button
-                type="button"
-                class="btn btn-primary"
-                (click)="connectTwitter()"
-              >
-                <i class="fa fa-link"></i> Connect <span class="caret"></span>
-              </button>
-              <!--<div class="dropdown" >
-                            <ul class="dropdown-menu" style="width:375px;">
-                                <li><a href="" ><img src="/Content/images/fb_page_ico.jpg" class="img_circle img_mar" alt="">Attach a Facebook Page</a></li>
-                                <li><a href="" ><img src="/Content/images/insta_ico.png" class="img_circle img_mar" alt="">Attach Instagram Linked Facebook Profile</a></li>
-                            </ul>
-                        </div>
-                      -->
-            </div>
-            <!--</div>-->
-          </div>
-          <!--
-
-                <div class="col-sm-4 " >
-                    <div class="card card-body pradd">
-                        <a href="" ng-click="ConnectTwitter()" >
-                            <img src="../../../../../assets/images/twicon.png" ><br>
-                            TWITTER
-                        </a>
-                        <button type="button" ng-click="ConnectTwitter()" class="btn btn-primary  "><i class="fa fa-link"></i> Connect</button>
-                    </div>
-
-                </div>
-
-                <div class="col-sm-4">
-                    <div class="card card-body pradd">
-                        <a href="" ng-click="ConnectYoutubeProfile()">
-                            <img style="max-width:22px" src="../../../../../assets/images/google.png"><br>
-                            GOOGLE
-                        </a>
-                        <button type="button" data-toggle="dropdown" class="btn btn-primary" (click)="signInWithGoogle()"><i class="fa fa-link" ></i> Connect <span class="caret"></span></button>
-                      <div class="dropdown">
-
-                          <ul class="dropdown-menu" style="width:375px;">
-                                <li>
-                                    <a href="" ><img src="../../../../../assets/images/youtube.png" class="img_mar" alt="">Attach a Youtube Page</a>
-                                    <a href="" >
-                                        <img style="max-width:18px" src="../../../../../assets/images/gmail.png" class="img_mar" alt="">Attach a Gsuite Account</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-
--->
-          <!-- <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center; display: none"
-          >
-            <div class="card card-body pradd">
-              <a href="" ng-click="ConnectInstagram()">
-                <img src="/Content/images/inicon.png" /><br />
-
-              </a>
-              <button
-                type="button"
-                ng-click="ConnectInstagram()"
-                class="btn btn-primary"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
-            </div>
-
-          </div>
-        </div>
-        <div class="col-sm-12 col-sm-offset-2" style="display: none">
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
-              <a
-                href=""
-                ng-click="ConnectLinkedinProfile()"
-                class="hvr-bounce-in"
-              >
-                <img
-                  src="/Content/img/Instagram_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                LINKEDIN </a
-              ><br /><br />
-              <div class="dropdown">
-                <button
-                  type="button"
-                  data-toggle="dropdown"
-                  class="btn btn-primary button_round dropdown-toggle"
-                >
-                  <i class="fa fa-link"></i> Connect <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a href=""
-                      ><img
-                        src="/Content/images/in_page_ico.png"
-                        class="img_circle img_mar"
-                        alt=""
-                      />
-                      Attach a Company Page</a
-                    >
-                  </li>
-                  <li>
-                    <a href="" ng-click="ConnectLinkedinProfile()"
-                      ><img
-                        src="/Content/images/fb_profile_ico.jpg"
-                        class="img_circle img_mar"
-                        alt=""
-                      />
-                      Attach a Personal Profile</a
-                    >
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
-              <a href="" ng-click="ConnectGoogle()" class="hvr-bounce-in">
-                <img
-                  src="/Content/img/ana_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                ANALYTICS </a
-              ><br /><br />
-              <button
-                type="button"
-                ng-click="ConnectGoogle()"
-                class="btn btn-primary button_round"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
-            </div>
-          </div>
-
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
-              <a href="" ng-click="ConnectOutlook()" class="hvr-bounce-in">
-                <img
-                  src="/Content/images/outlook_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                OUTLOOK </a
-              ><br /><br />
-              <button
-                type="button"
-                ng-click="ConnectOutlook()"
-                class="btn btn-primary button_round"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
-            </div>
-          </div>
-
-        </div> -->
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-<div
-  class="modal fade"
-  id="attachUtubePage"
-  tabindex="-1"
-  aria-labelledby="attachUtubePageLabel"
-  aria-modal="true"
-  role="dialog"
->
-  <div class="modal-dialog modal-dialog-centered" style="max-width: 920px">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title line-head" id="attachUtubePageLabel">
-          ATTACH A PROFILE
-        </h5>
-        <button
-          type="button"
-          class="btn iconHover pt-0 pb-0"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
-          <i class="fal fa-times"></i>
-        </button>
-      </div>
-      <div class="modal-body p-5">
-        <div class="d-flex align-items-center">
-          <div class="icon-circle iconButton me-4">
-            <i class="fal fa-clipboard-check"></i>
-          </div>
-          <p class="line-txt darkblue">
-            By adding the profile and clicking allow, you permit the application
-            to access and publish content on your Social Network Account, on
-            your behalf.
-          </p>
-        </div>
-        <div class="row">
-          <div class="col-sm-6 mx-auto">
-            <div class="card card-body pradd">
-              <a href="" ng-click="ConnectInstagram()">
-                <img src="/Content/images/inicon.png" /><br />
-                Utube
-              </a>
-              <!-- <asl-google-signin-button
-
-                type="icon"
-                size="medium"
-                text="signin_with"
-                class="custom-google-button"
-              ></asl-google-signin-button> -->
-              <button
-                type="button"
-                class="btn btn-primary"
-                (click)="connectUtube()"
-              >
-                <i class="fa fa-link"></i> Connect <span class="caret"></span>
-              </button>
-              <!--<div class="dropdown" >
-                            <ul class="dropdown-menu" style="width:375px;">
-                                <li><a href="" ><img src="/Content/images/fb_page_ico.jpg" class="img_circle img_mar" alt="">Attach a Facebook Page</a></li>
-                                <li><a href="" ><img src="/Content/images/insta_ico.png" class="img_circle img_mar" alt="">Attach Instagram Linked Facebook Profile</a></li>
-                            </ul>
-                        </div>
-                      -->
-            </div>
-            <!--</div>-->
-          </div>
-          <!--
-
-                <div class="col-sm-4 " >
-                    <div class="card card-body pradd">
-                        <a href="" ng-click="ConnectTwitter()" >
-                            <img src="../../../../../assets/images/twicon.png" ><br>
-                            TWITTER
-                        </a>
-                        <button type="button" ng-click="ConnectTwitter()" class="btn btn-primary  "><i class="fa fa-link"></i> Connect</button>
-                    </div>
-
-                </div>
-
-                <div class="col-sm-4">
-                    <div class="card card-body pradd">
-                        <a href="" ng-click="ConnectYoutubeProfile()">
-                            <img style="max-width:22px" src="../../../../../assets/images/google.png"><br>
-                            GOOGLE
-                        </a>
-                        <button type="button" data-toggle="dropdown" class="btn btn-primary" (click)="signInWithGoogle()"><i class="fa fa-link" ></i> Connect <span class="caret"></span></button>
-                      <div class="dropdown">
-
-                          <ul class="dropdown-menu" style="width:375px;">
-                                <li>
-                                    <a href="" ><img src="../../../../../assets/images/youtube.png" class="img_mar" alt="">Attach a Youtube Page</a>
-                                    <a href="" >
-                                        <img style="max-width:18px" src="../../../../../assets/images/gmail.png" class="img_mar" alt="">Attach a Gsuite Account</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-
--->
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center; display: none"
-          >
-            <div class="card card-body pradd">
-              <a href="" >
-                <img src="/Content/images/inicon.png" /><br />
-
-              </a>
-              <button
-                type="button"
-
-                class="btn btn-primary"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
-            </div>
-            <!--</div>-->
-          </div>
-        </div>
-        <!-- <div class="col-sm-12 col-sm-offset-2" style="display: none">
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
-              <a
-                href=""
-                ng-click="ConnectLinkedinProfile()"
-                class="hvr-bounce-in"
-              >
-                <img
-                  src="/Content/img/Instagram_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                LINKEDIN </a
-              ><br /><br />
-              <div class="dropdown">
-                <button
-                  type="button"
-                  data-toggle="dropdown"
-                  class="btn btn-primary button_round dropdown-toggle"
-                >
-                  <i class="fa fa-link"></i> Connect <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a href=""
-                      ><img
-                        src="/Content/images/in_page_ico.png"
-                        class="img_circle img_mar"
-                        alt=""
-                      />
-                      Attach a Company Page</a
-                    >
-                  </li>
-                  <li>
-                    <a href="" ng-click="ConnectLinkedinProfile()"
-                      ><img
-                        src="/Content/images/fb_profile_ico.jpg"
-                        class="img_circle img_mar"
-                        alt=""
-                      />
-                      Attach a Personal Profile</a
-                    >
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
-              <a href="" ng-click="ConnectGoogle()" class="hvr-bounce-in">
-                <img
-                  src="/Content/img/ana_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                ANALYTICS </a
-              ><br /><br />
-              <button
-                type="button"
-                ng-click="ConnectGoogle()"
-                class="btn btn-primary button_round"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
-            </div>
-          </div>
-
-          <div
-            class="col-sm-4 zro"
-            style="margin: 0 auto !important; text-align: center"
-          >
-            <div style="display: inline-block; padding: 20px">
-              <a href="" ng-click="ConnectOutlook()" class="hvr-bounce-in">
-                <img
-                  src="/Content/images/outlook_c.png"
-                  style="width: 109px; height: 109px"
-                /><br />
-                OUTLOOK </a
-              ><br /><br />
-              <button
-                type="button"
-                ng-click="ConnectOutlook()"
-                class="btn btn-primary button_round"
-              >
-                <i class="fa fa-link"></i> Connect
-              </button>
-            </div>
-          </div>
-
-        </div> -->
-      </div>
-    </div>
-  </div>
-</div>
+</div> -->

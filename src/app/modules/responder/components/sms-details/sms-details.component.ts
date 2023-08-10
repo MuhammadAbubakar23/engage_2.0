@@ -74,13 +74,13 @@ export class SmsDetailsComponent implements OnInit {
   filterDto = new FiltersDto();
   totalUnrespondedCmntCountByCustomer: number = 0;
   To: any;
+  TotalCmntQueryCount: number = 0;
 
   spinner1running = false;
   spinner2running = false;
 
   pageNumber: number = 1;
   pageSize: number = 10;
-  TotalCmntQueryCount: number = 0;
 
   commentsArray: any[] = [];
   groupArrays: any[] = [];
@@ -246,6 +246,10 @@ export class SmsDetailsComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -303,6 +307,10 @@ export class SmsDetailsComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
 
       this.SpinnerService.show();
@@ -356,6 +364,10 @@ export class SmsDetailsComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
 
       this.SpinnerService.show();
@@ -891,6 +903,7 @@ export class SmsDetailsComponent implements OnInit {
       this.pageSize = this.pageSize + 10;
       this.getSmsData();
     }
+  
   }
 
   closeQuickResponseSidebar(){

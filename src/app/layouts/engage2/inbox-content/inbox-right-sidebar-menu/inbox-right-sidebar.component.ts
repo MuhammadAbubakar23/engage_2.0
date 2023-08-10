@@ -4,7 +4,8 @@ import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { RightNavService } from 'src/app/services/RightNavService/RightNav.service';
 import { Store } from '@ngrx/store';
 import { MenuState } from '../../menu-state/menu.state';
-import { getEmargingEqual } from '../../menu-state/menu.selectors';
+import { getEmargingEqual, getInSubEmarging } from '../../menu-state/menu.selectors';
+import { Router,Event, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'inbox-right-sidebar',
@@ -13,7 +14,7 @@ import { getEmargingEqual } from '../../menu-state/menu.selectors';
 })
 
 export class InboxRightSidebarComponent implements OnInit {
-
+  public keyword:string = "inbox";
   public subscription!: Subscription;
   public subscription2!: Subscription;
   public dynamicPath : string="";
@@ -27,38 +28,44 @@ export class InboxRightSidebarComponent implements OnInit {
   loading$: any;
   constructor(private store: Store<MenuState>,
     private toggleService : ToggleService,
-    private rightNavService : RightNavService) {
-      // this.menu$ = this.store.select(getEmargingEqual("team_inbox_right_menu"));
-      // this.loading$ = this.store.select(getMenusLoading)
-      // this.store.dispatch(loadMenusList())
+    private rightNavService : RightNavService,
+    private router: Router) {    
+      let _self = this;      
+      router.events.subscribe((event: Event) => {
+        if (event instanceof NavigationEnd) {          
+            console.log(event.url.toString());
+            if(event.url.toString().toLowerCase().includes(this.keyword)){
+              this.keyword = "inbox";
+            }
+            else{
+              this.keyword = "responder";
+            }            
+        }
+      });
+
     }
 
   ngOnInit(): void {
     this.menus$ =[];
-    this.menu$ = this.store.select(getEmargingEqual("team_inbox_right_menu")).subscribe((item:any) => {
+    this.menu$ = this.store.select(getInSubEmarging(this.keyword, "right_menu")).subscribe((item:any) => {
       for(let key in item) {
-
-       // // // console.log(item)
         let obj = {
-          mainId : item[key].mainId,
-          emerging:item[key].emerging,
-          baseId:item[key].baseId,
-          icon:item[key].icon,
-          name:item[key].name,
-          slug:item[key].slug,
-          link:item[key].link,
-          indexNo:item[key].indexNo
+          emerging: item[key].emerging,
+          mainId: item[key].mainId,
+          baseId: item[key].baseId,
+          icon: item[key].icon,
+          name: item[key].name,
+          slug: item[key].slug,
+          link: item[key].link,
+          indexNo: item[key].indexNo
         };
         Object.assign(obj, {dival: item[key].slug+"-rightbar-dashboard"});
-
-            if(!this.menus$.includes(obj)){
-              this.menus$.push(obj);
-            }
-      }
-
+          if(!this.menus$.includes(obj))
+            this.menus$.push(obj);
+        }
       // this.menus$ = item;
     });
-    //  // console.log(this.menus$);
+    console.log(this.menus$);
     // Array.from(document.querySelectorAll('[data-bs-toggle]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode))
     // this.getRightMenu();
@@ -88,7 +95,7 @@ export class InboxRightSidebarComponent implements OnInit {
   //         this.menus$.push(menu)
   //       }
   //     });
-  //     // // console.log(this.menus$)
+  //     // console.log(this.menus$)
   //   })
   // }
 

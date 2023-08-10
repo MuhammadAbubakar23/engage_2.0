@@ -1,82 +1,123 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { FacebookService, InitParams, LoginOptions, LoginResponse } from 'ngx-facebook';
 import { environment } from 'src/environments/environment';
-import { RequestService } from 'src/app/shared/services/request/request.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { SocialLoginService } from '../../services/sociallogin.service';
 
 @Component({
   selector: 'app-support-channels',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   templateUrl: './support-channels.component.html',
-  styleUrls: ['./support-channels.component.scss']
+  styleUrls: ['./support-channels.component.scss'],
 })
 export class SupportChannelsComponent implements OnInit {
+  profilePicFile!: File;
+  showAdditionalFields = false;
+  users!: any[];
+  pagePicFile: any;
+  instaProfile: any;
+  
+  isProfileEnabled: boolean = false;
 
-  private twitterApiUrl = 'https://api.twitter.com/1.1/account/verify_credentials.json';
+  attachFacebookPageForm!: FormGroup;
   constructor(
-    private _request: RequestService
-    , private _Activatedroute: ActivatedRoute
-    , private route: Router
-    , private http: HttpClient
-    , private socialService: SocialLoginService
+    private formBuilder: FormBuilder,
+    private commonService: CommonDataService,
+    private fb: FacebookService,
   ) {
-
+    this.attachFacebookPageForm = this.formBuilder.group({
+      appId: [''],
+      appSecret: [''],
+      pageUrl: [''],
+      pageProfilePic: [''],
+    });
   }
 
   ngOnInit(): void {
-    const authorizationCode = this._Activatedroute.snapshot.queryParams['code'];
-    const socialtype = localStorage.getItem('socialtype')
-    // console.log("authorizationCodebefore", authorizationCode, socialtype)
-
-    if (authorizationCode && socialtype == 'facebook') {
-      this.socialService.getFaceBookData(authorizationCode).subscribe((response: any) => {
-        // console.log("Profile===>", response);
-      }, (error: any) => {
-        // console.log("Error==>", error)
-      })
-    }
-    if (authorizationCode && socialtype == 'instagram') {
-      this.socialService.getInstagramData(authorizationCode).subscribe((response: any) => {
-        // console.log("Profile===>", response);
-      }, (error: any) => {
-        // console.log("Error==>", error)
-      })
-    }
-     if (authorizationCode && socialtype == 'google') {
-      this.socialService.getGoogleData(authorizationCode).subscribe((response: any) => {
-        // console.log("Profile===>", response);
-      }, (error: any) => {
-        // console.log("Error==>", error)
-      })
-    }
-     if (authorizationCode && socialtype == 'linkdin') {
-       this.socialService.getLinkdinData(authorizationCode).subscribe((response: any) => {
-         // console.log("Profile===>", response);
-       }, (error: any) => {
-         // console.log("Error==>", error)
-       })
-     }
-     if (authorizationCode && socialtype == 'utube') {
-       this.socialService.getUtubeData(authorizationCode).subscribe((response: any) => {
-         // console.log("Profile===>", response);
-       }, (error: any) => {
-         // console.log("Error==>", error)
-       })
-     }
+   this.GetChannels();
   }
 
-  connectFacebook(): void {
-    localStorage.setItem('socialtype', 'facebook');
-    const clientId = environment.facebookclientId;
-    const scope = "email,read_insights,ads_management,instagram_basic,pages_manage_engagement,pages_manage_posts,pages_messaging,pages_read_user_content,pages_manage_metadata,pages_manage_ads,instagram_manage_comments,instagram_manage_insights,pages_read_engagement"
-    //const scope="email"
-    const redirectUri = 'https://localhost:4200/console/channels';
-    const loginUrl = `https://www.facebook.com/v12.0/dialog/oauth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code`;
-    window.open(loginUrl, '_blank');
+  attachFacebookPage(): void {
+    if (this.attachFacebookPageForm.valid) {
+      const formData = new FormData();
+      if (this.profilePicFile) {
+        formData.append('profileFile', this.profilePicFile, 'profile');
+      }
+      if (this.pagePicFile) {
+        formData.append('pageFile', this.pagePicFile, 'page');
+      }
+      if (this.instaProfile) {
+        formData.append('instaFile', this.instaProfile, 'insta');
+      }
+
+      const initParams: InitParams = {
+        appId: this.attachFacebookPageForm.value.appId,
+        xfbml: true,
+        version: 'v12.0',
+      };
+
+      this.fb.init(initParams);
+
+      const options: LoginOptions = {
+        scope:'public_profile,email,read_insights,ads_management,instagram_basic,pages_manage_engagement,pages_manage_posts,pages_messaging,pages_read_user_content,pages_manage_metadata,pages_manage_ads,instagram_manage_comments,instagram_manage_insights,pages_read_engagement',
+        return_scopes: true,
+        enable_profile_selector: true,
+      };
+
+      formData.append('data', JSON.stringify(this.attachFacebookPageForm.value));
+
+      this.fb
+        .login(options)
+        .then((response: LoginResponse) => {
+          if (response.authResponse.expiresIn > 0) {
+            var obj = {
+              clientId: this.attachFacebookPageForm.value.appId,
+              clientSecret: this.attachFacebookPageForm.value.appSecret,
+              // pageUrl: this.attachFacebookPageForm.value.pageUrl,
+              // pageProfilePic : this.attachFacebookPageForm.value.pageProfilePic,
+              authResponse: response.authResponse,
+            }
+            this.commonService.AttachFacebookPage(obj).subscribe((res:any)=>{
+              console.log(res);
+              this.attachFacebookPageForm.reset();
+            })
+            
+          }
+        })
+        .catch((error: any) => console.error(error));
+    } else {
+      console.log('Form is invalid');
+      // Form is invalid, display error messages or take appropriate action
+    }
   }
+
+  onFileSelected(event: any, type: any) {
+    if (type == 'profile') this.profilePicFile = event.target.files[0];
+    if (type == 'page') this.pagePicFile = event.target.files[0];
+    if (type == 'insta') this.instaProfile = event.target.files[0];
+  }
+
+  // Scopes work
+  // scopes: any[] = [];
+  // onCheckChange(event: any) {
+  //   console.log(event);
+  //   if (this.scopes.length == 0) {
+  //     this.scopes.push(event.target.id);
+  //   } else {
+  //     if (this.scopes.includes(event.target.id)) {
+  //       const index = this.scopes.findIndex(x=>x == event.target.id);
+  //       if(index != -1){
+  //         this.scopes.slice(index);
+  //       }
+        
+  //     } else {
+  //       this.scopes.push(event.target.id);
+  //     }
+  //   }
+  // }
 
   connectGoogle(): void {
     localStorage.setItem('socialtype', 'google');
@@ -86,37 +127,12 @@ export class SupportChannelsComponent implements OnInit {
     window.open(loginUrl, '_blank');
   }
 
-  connectUtube() {
-    localStorage.setItem('socialtype', 'utube');
-    const clientId = environment.googleclientId;
-    const redirectUri = 'https://localhost:4200/console/channels';
-    const loginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&&scope=https://www.googleapis.com/auth/youtube&response_type=code`;
-    window.open(loginUrl, '_blank');
-  }
+  channels: any[]=[];
 
-  connectInstagram() {
-    localStorage.setItem('socialtype', 'instagram');
-    const clientId = environment.instagramclientId;
-    const redirectUri = 'https://localhost:4200/console/channels';
-    const loginUrl = `https://api.instagram.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=user_profile,user_media,basic+public_content&response_type=code`;
-    window.open(loginUrl, '_blank');
-  }
-
-  connectLinkdIn() {
-    localStorage.setItem('socialtype', 'linkdin');
-    const clientId = environment.linkdinclientId;
-    const redirectUri = 'https://localhost:4200/console/channels';
-    const scope = 'r_ads_reporting,r_liteprofile,r_organization_social,rw_organization_admin,w_member_social,r_ads,r_emailaddress,w_organization_social,rw_ads,r_basicprofile,r_organization_admin,r_1st_connections_size'; // Add any additional scopes as needed
-    const authUrl = `https://www.linkedin.com/oauth/v2/authorization?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code`;
-    window.location.href = authUrl;
-  }
-  connectTwitter() {
-    localStorage.setItem('socialtype', 'twitter');
-    const clientId = environment.twitterclientId;
-    const redirectUri = 'http://localhost:4200/console/channels';
-    const scope = 'read';
-    const authUrl = `https://api.twitter.com/oauth2/authenticate?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope}`;
-    window.location.href = authUrl;
+  GetChannels(){
+    this.commonService.GetChannels().subscribe((res:any)=>{
+      this.channels = res[0].subMenu;
+    })
   }
 
 }

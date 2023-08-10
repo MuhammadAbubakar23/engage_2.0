@@ -1,6 +1,9 @@
 import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { Toaster } from './layouts/engage2/toaster/toaster';
+import { ToasterService } from './layouts/engage2/toaster/toaster.service';
 import { SignalRService } from './services/SignalRService/signal-r.service';
+import { CommonDataService } from './shared/services/common/common-data.service';
 
 @Component({
   selector: 'app-root',
@@ -9,34 +12,47 @@ import { SignalRService } from './services/SignalRService/signal-r.service';
 })
 export class AppComponent {
 
-  
-  
+toasters: Toaster[] = [];
   title = 'Enteract.Engage2.0';
 
   constructor(private signalRService: SignalRService,
-    private router: Router) {
+    private router: Router,
+    private commonService : CommonDataService,
+    private toaster: ToasterService) {
       
     
   }
 
+  remove(index: number) {
+    console.log(index);
+    this.toasters = this.toasters.filter((v, i) => i !== index);
+    //this.toasts.splice(index, 1);
+  }
   ngOnInit() {
-    
+    this.toaster.toaster$
+      .subscribe(toaster => {
+        if(toaster!==null){
+          this.toasters = [toaster, ...this.toasters];
+          setTimeout(() => this.toasters.pop(), toaster.delay || 6000);
+        }
+        
+      });
+    if (this.signalRService.hubconnection == undefined) {
+      this.commonService.SignOut().subscribe(()=>{
+        localStorage.clear();
+        this.router.navigateByUrl('/login');
+      })
+    }
+    // this.signalRService.reConnect();
 
-    // if (this.signalRService.hubconnection == undefined) {
-      
-    //   localStorage.clear();
-    //   this.router.navigateByUrl('/login');
-    // }
-     this.signalRService.reConnect();
-
-    this.signalRService.removeTagDataListener();
-    this.signalRService.addTagDataListner();
-    this.signalRService.unRespondedCountDataListener();
-    this.signalRService.updateListAndDetailDataListener();
-    this.signalRService.replyDataListener();
-    this.signalRService.queryStatusDataListener();
-    this.signalRService.bulkQueryStatusDataListener();
-    this.signalRService.assignQueryResponseListner();
-    this.signalRService.applySentimentListner();
+    // this.signalRService.removeTagDataListener();
+    // this.signalRService.addTagDataListner();
+    // this.signalRService.unRespondedCountDataListener();
+    // this.signalRService.updateListAndDetailDataListener();
+    // this.signalRService.replyDataListener();
+    // this.signalRService.queryStatusDataListener();
+    // this.signalRService.bulkQueryStatusDataListener();
+    // this.signalRService.assignQueryResponseListner();
+    // this.signalRService.applySentimentListner();
   }
 }
