@@ -26,7 +26,7 @@ import { ResponderProfileComponent } from 'src/app/modules/responder/right-sideb
 import { ResponderScheduleComponent } from 'src/app/modules/responder/right-sidebar-components/responder-schedule/responder-schedule.component';
 import { ResponderTaskComponent } from 'src/app/modules/responder/right-sidebar-components/responder-task/responder-task.component';
 import { ResponderTicketsComponent } from 'src/app/modules/responder/right-sidebar-components/responder-tickets/responder-tickets.component';
-import { WebPhoneComponent } from 'src/app/modules/web-phone/web-phone.component';
+// import { WebPhoneComponent } from 'src/app/modules/web-phone/web-phone.component';
 import { RightNavService } from 'src/app/services/RightNavService/RightNav.service';
 import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
@@ -335,11 +335,11 @@ export class InboxResponderComponent implements OnInit {
         );
         this.rightcontainer?.createComponent(componentFactory);
         break;
-      case 'phone-dialer':
-        componentFactory =
-          this.resolver.resolveComponentFactory(WebPhoneComponent);
-        this.rightcontainer?.createComponent(componentFactory);
-        break;
+      // case 'phone-dialer':
+      //   componentFactory =
+      //     this.resolver.resolveComponentFactory(WebPhoneComponent);
+      //   this.rightcontainer?.createComponent(componentFactory);
+      //   break;
       case 'documents':
         componentFactory =
           this.resolver.resolveComponentFactory(ResponderDocumentsComponent);

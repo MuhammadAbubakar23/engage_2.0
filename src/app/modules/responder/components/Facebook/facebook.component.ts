@@ -757,6 +757,7 @@ export class FacebookComponent implements OnInit {
           if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.FacebookMessages = res.List?.dm;
+          this.TotalMsgQueryCount = res.TotalQueryCount;
         //  this.pageName = this.FacebookMessages[0]?.toName;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
           this.TotalMsgQueryCount = res.TotalQueryCount;
@@ -1122,6 +1123,9 @@ export class FacebookComponent implements OnInit {
             this.radioInput.nativeElement.checked = false;
           },
           ({ error }) => {
+            this.spinner1running = false;
+        this.SpinnerService.hide();
+        this.reloadComponent('error');
             //  alert(error.message);
           }
         );
@@ -1208,6 +1212,9 @@ export class FacebookComponent implements OnInit {
             this.radioInput.nativeElement.checked = false;
           },
           ({ error }) => {
+            this.spinner1running = false;
+        this.SpinnerService.hide();
+        this.reloadComponent('error');
             //  alert(error.message);
           }
         );

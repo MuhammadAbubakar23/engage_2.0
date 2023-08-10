@@ -214,6 +214,7 @@ export class WebChatComponent implements OnInit {
     //  //  alert(res.message);
     //  },
     //  ({ error }) => {
+      
     //    alert(error.message || error.title);
     //  }
     // );

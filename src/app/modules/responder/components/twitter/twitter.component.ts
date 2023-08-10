@@ -547,6 +547,7 @@ export class TwitterComponent implements OnInit {
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.TwitterMessage = res.List?.dm;
+          this.TotalMsgQueryCount = res.TotalQueryCount;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
           this.pageName = this.TwitterMessage[0]?.toName;
           this.TotalMsgQueryCount = res.TotalQueryCount;
@@ -602,6 +603,7 @@ export class TwitterComponent implements OnInit {
       this.commondata.GetSlaDM(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.TwitterMessage = res.List.dm;
+        this.TotalMsgQueryCount = res.TotalQueryCount;
         this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
         this.TotalMsgQueryCount = res.TotalQueryCount;
         this.pageName = this.TwitterMessage[0]?.toName;
@@ -656,6 +658,7 @@ export class TwitterComponent implements OnInit {
       this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.TwitterMessage = res.List.dm;
+        this.TotalMsgQueryCount = res.TotalQueryCount;
         this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
         this.TotalMsgQueryCount = res.TotalQueryCount;
         this.pageName = this.TwitterMessage[0]?.toName;
@@ -1050,6 +1053,9 @@ export class TwitterComponent implements OnInit {
             this.TwitterRepliesForm.reset();
           },
           ({ error }) => {
+            this.spinner1running = false;
+        this.SpinnerService.hide();
+        this.reloadComponent('error');
           //  alert(error.message);
           }
         );
@@ -1170,6 +1176,9 @@ export class TwitterComponent implements OnInit {
             this.twitterMessageReplyForm.reset();
           },
           ({ error }) => {
+            this.spinner1running = false;
+        this.SpinnerService.hide();
+        this.reloadComponent('error');
           //  alert(error.message);
           }
         );
@@ -1214,6 +1223,13 @@ export class TwitterComponent implements OnInit {
   AlterMsg: any = '';
 
   reloadComponent(type: any) {
+    if (type == 'error') {
+      this.AlterMsg = 'Something went wrong';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'empty-input-field') {
       this.AlterMsg = 'Please write something!';
       this.toastermessage = true;
