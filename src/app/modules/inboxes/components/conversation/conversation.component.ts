@@ -1260,6 +1260,7 @@ export class ConversationComponent implements OnInit {
       if (res.message === "Status Updated Successfully") {
         this.itemsToBeUpdated = [];
         this.reloadComponent('unblock');
+        this.Reload();
       }
     });
 }
