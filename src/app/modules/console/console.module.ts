@@ -57,8 +57,6 @@ import { StepFourComponent } from './components/chat-bot-builder/step-four/step-
 import { UpdateIntentsComponent } from './components/chat-bot/update-intents/update-intents.component';
 import { AddRulesComponent } from './components/rules/add-rules/add-rules.component';
 
-
-
 // import { CreateSkillsComponent } from './components/skills/create-skills/create-skills.component';
 // import { AddSkillMembersComponent } from './components/skills/add-skill-members/add-skill-members.component';
 
@@ -85,6 +83,7 @@ import { AddRulesComponent } from './components/rules/add-rules/add-rules.compon
     ConsoleKnowledgeBaseComponent,
     PreferencesComponent,
     ConsoleHelpComponent,
+
     // BulkUsersAddComponent,
     // CreateUserComponent,
     // CreateTeamComponent,
@@ -117,10 +116,6 @@ import { AddRulesComponent } from './components/rules/add-rules/add-rules.compon
     ChatwithsentimentComponent,
     ChatwithintentComponent,
     ToastrComponent,
-
-
-
-
   ],
   imports: [
     CommonModule,
@@ -137,8 +132,6 @@ import { AddRulesComponent } from './components/rules/add-rules/add-rules.compon
     NgSelectModule,
     CdkStepperModule,
     NgStepperModule,
-
-
   ]
 })
 export class ConsoleModule { }
