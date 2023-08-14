@@ -1121,8 +1121,10 @@ export class FacebookComponent implements OnInit {
 
             this.radioInput.nativeElement.checked = false;
           },
-          ({ error }) => {
-            //  alert(error.message);
+          (error) => {
+             alert(error.message);
+             this.spinner1running = false;
+            this.SpinnerService.hide();
           }
         );
       } else {
@@ -1207,8 +1209,10 @@ export class FacebookComponent implements OnInit {
 
             this.radioInput.nativeElement.checked = false;
           },
-          ({ error }) => {
-            //  alert(error.message);
+          ( error ) => {
+             alert(error.message);
+             this.spinner1running = false;
+            this.SpinnerService.hide();
           }
         );
       } else {
