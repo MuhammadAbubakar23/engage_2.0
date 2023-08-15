@@ -102,7 +102,11 @@ export class SlaComponent implements OnInit {
       pageSize: this.pageSize,
       isAttachment: false,
       queryType: '',
-      text : "",
+      text: '',
+      userName: '',
+      notInclude: '',
+      include: '',
+      flag: '',
     };
     this.SpinnerService.show();
     this.commondata

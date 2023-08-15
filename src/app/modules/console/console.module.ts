@@ -7,10 +7,10 @@ import { HomeComponent } from './components/home/home.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TemplatesComponent } from './components/templates/templates.component';
-import { ConsoleContactsComponent} from './components/contacts/contacts.component';
+import { ConsoleContactsComponent } from './components/contacts/contacts.component';
 import { CaseManagementComponent } from './components/case-management/case-management.component';
 import { ConsoleDocumentsComponent } from './components/documents/documents.component';
-import { ConsoleKnowledgeBaseComponent} from './components/knowledge-base/knowledge-base.component';
+import { ConsoleKnowledgeBaseComponent } from './components/knowledge-base/knowledge-base.component';
 import { PreferencesComponent } from './components/preferences/preferences.component';
 import { ConsoleHelpComponent } from './components/help/help.component';
 // import { BulkUsersAddComponent } from './components/users/bulk-users-add/bulk-users-add.component';
@@ -55,6 +55,10 @@ import { ChatwithintentComponent } from './components/chat-bot/right-sidebar-com
 import { ToastrComponent } from './components/toastr/toastr.component';
 import { StepFourComponent } from './components/chat-bot-builder/step-four/step-four.component';
 import { UpdateIntentsComponent } from './components/chat-bot/update-intents/update-intents.component';
+import { AddRulesComponent } from './components/rules/add-rules/add-rules.component';
+
+
+
 // import { CreateSkillsComponent } from './components/skills/create-skills/create-skills.component';
 // import { AddSkillMembersComponent } from './components/skills/add-skill-members/add-skill-members.component';
 
@@ -62,7 +66,7 @@ import { UpdateIntentsComponent } from './components/chat-bot/update-intents/upd
 @NgModule({
   declarations: [
     ConsoleComponent,
-  //  ConsoleTableComponent,
+    //  ConsoleTableComponent,
     HomeComponent,
     TemplatesComponent,
     // BusinessHoursComponent,
@@ -113,6 +117,10 @@ import { UpdateIntentsComponent } from './components/chat-bot/update-intents/upd
     ChatwithsentimentComponent,
     ChatwithintentComponent,
     ToastrComponent,
+
+
+
+
   ],
   imports: [
     CommonModule,
@@ -129,7 +137,8 @@ import { UpdateIntentsComponent } from './components/chat-bot/update-intents/upd
     NgSelectModule,
     CdkStepperModule,
     NgStepperModule,
-   
+
+
   ]
 })
 export class ConsoleModule { }

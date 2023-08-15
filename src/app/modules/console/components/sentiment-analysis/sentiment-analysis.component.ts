@@ -155,7 +155,6 @@ export class SentimentAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   loadComponent(leftSideName: string, rightSideName: string) {
-    debugger
     let componentFactory: any = null;
 
     switch (leftSideName || rightSideName) {

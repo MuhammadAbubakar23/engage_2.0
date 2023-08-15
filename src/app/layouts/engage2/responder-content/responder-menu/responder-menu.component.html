@@ -393,8 +393,8 @@
                                                 </div>
                                                 <div class="right">
                                                     <div class="postDate">{{profile.createdDate | date:'hh:mm a'}}</div>
-                                                    <span
-                                                        class="badge navyBg rounded-pill">{{profile.unrespondedCount}}</span>
+                                                    <span class="badge navyBg rounded-pill"
+                                                        *ngIf="profile.unrespondedCount > 0">{{profile.unrespondedCount}}</span>
                                                 </div>
                                             </div>
                                         </a>

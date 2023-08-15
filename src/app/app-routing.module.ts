@@ -7,14 +7,14 @@ import { ModulesResolver } from './shared/resolver/modules.resolver';
 const routes: Routes = [
  {
    path:'',
-   redirectTo:'/all-inboxes',
+   redirectTo:'/all-inboxes/my_inbox',
    pathMatch:'full',
  },
-//  {
-//   path:'**',
-//   redirectTo:'/dashboard/all-inboxes',
-//   pathMatch:'full',
-// },
+ {
+  path:'all-inboxes',
+  redirectTo:'/all-inboxes/my_inbox',
+  pathMatch:'full',
+},
   {
     path: '',
     loadChildren: () => import('./identity/identity.module').then(f => f.IdentityModule)

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
@@ -7,19 +8,36 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 @Component({
   selector: 'app-sla-policies',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule , FormsModule],
   templateUrl: './sla-policies.component.html',
   styleUrls: ['./sla-policies.component.scss']
 })
 export class SlaPoliciesComponent implements OnInit {
-  messages: any[] = [
-    // Assuming you have an array of messages to display
-    // Replace this with your actual data
-    { id: 1, content: 'This is the first message' },
-    { id: 2, content: 'This is the second message' },
-    { id: 3, content: 'This is the third message' }
-  ];
-
+  messages: any[] = [];
+  searchText: string = '';
+  selectedSortOption: any;
+  applySearchFilter() {
+    // Convert the search text to lowercase for case-insensitive search
+    const searchTextLower = this.searchText.toLowerCase();
+    
+    // Filter the messages based on the search text
+    this.messages = this.messages.filter((message) => {
+      const templateNameLower = (message.policyName || '').toLowerCase();
+ 
+      return templateNameLower.includes(searchTextLower)
+    });
+  }
+  
+  refreshMessages() {
+    this.commonService.GetSlaPolicy().subscribe(
+      (response: any) => {
+        this.messages = response;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
   constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
 
   ngOnInit(): void {
@@ -31,7 +49,25 @@ export class SlaPoliciesComponent implements OnInit {
       console.error(error);
     });
   }
-
+  setStatus(status: string) {
+    this.selectedSortOption = status;
+    this.sortPolicies();
+  }
+  
+  sortPolicies() {
+    switch (this.selectedSortOption) {
+      case 'Ascending':
+        this.messages.sort((a, b) => a.policyName.localeCompare(b.policyName));
+        break;
+      case 'Descending':
+        this.messages.sort((a, b) => b.policyName.localeCompare(a.policyName));
+        break;
+      default:
+        // For 'All', no sorting is required
+        break;
+    }
+  }
+  
   updatevalue(string: any) {
     this.headerService.updateMessage(string);
   }

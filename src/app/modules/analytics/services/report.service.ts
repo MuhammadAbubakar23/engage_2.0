@@ -8,12 +8,12 @@ import { Observable } from 'rxjs';
 //https://reportbuilder.360scrm.com/
 //http://localhost:8000/
 export class ReportService {
-  private apiUrl = 'http://localhost:8000/reports/';
+  private apiUrl = 'https://reportbuilder.360scrm.com/reports/';
   constructor(private http: HttpClient) { }
 
   login() {
     const body = { email: 'admin@gmail.com', password: 'admin' };
-    return this.http.post("http://localhost:8000/user/" + "api/token", body);
+    return this.http.post("https://reportbuilder.360scrm.com/user/" + "api/token", body);
   }
 
   gethttpOptions() {
@@ -81,7 +81,7 @@ export class ReportService {
     return this.http.post<any>(this.apiUrl + "summarize", data, httpOptions);
   }
   visualizeDataApi(data: any): Observable<any> {
-    console.log("data==>V",data);
+    console.log("data==>V", data);
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "visualize", data, httpOptions);
   }

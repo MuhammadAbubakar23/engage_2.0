@@ -76,11 +76,10 @@ export class ConsoleTablePaginationStore extends ComponentStore<ConsoleTablePagi
     return Math.ceil(length / pageSize);
   });
 
-  readonly hasNextPage$ = this.select( this.state$, this.numberOfPages$, ({ pageIndex, pageSize }, numberOfPages) => 
-    {
-      const maxPageIndex = numberOfPages - 1;
-      return pageIndex < maxPageIndex && pageSize != 0;
-    }
+  readonly hasNextPage$ = this.select(this.state$, this.numberOfPages$, ({ pageIndex, pageSize }, numberOfPages) => {
+    const maxPageIndex = numberOfPages - 1;
+    return pageIndex < maxPageIndex && pageSize != 0;
+  }
   );
 
   readonly rangeLabel$ = this.select(({ pageIndex, pageSize, length }) => {
@@ -108,7 +107,7 @@ export class ConsoleTablePaginationStore extends ComponentStore<ConsoleTablePagi
       pageSize: state.pageSize,
       pageSizeOptions: Array.from(state.pageSizeOptions),
       pageIndex: state.pageIndex,
-     // searchText: state.searchText,
+      // searchText: state.searchText,
       hasPreviousPage,
       hasNextPage,
       rangeLabel,

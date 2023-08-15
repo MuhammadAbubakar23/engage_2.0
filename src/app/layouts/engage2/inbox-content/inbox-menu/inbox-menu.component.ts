@@ -87,41 +87,41 @@ export class InboxMenuComponent implements OnInit {
     this.Subscription = this.updateListService.receiveList().subscribe((res) => {
 
       res.forEach((platform: any) => {
-        this.UnResponded = platform.unrespondedCount + this.UnResponded;
+        this.UnResponded = this.UnResponded + 1;
         if (platform.platform == 'Facebook') {
-          this.FbUnResponded = platform.unrespondedCount + this.FbUnResponded;
+          this.FbUnResponded = this.FbUnResponded + 1;
         }
         if (platform.platform == 'Instagram') {
-          this.InstaUnResponded = platform.unrespondedCount + this.InstaUnResponded;
+          this.InstaUnResponded = this.InstaUnResponded + 1;
         }
         if (platform.platform == 'Twitter') {
-          this.TwitterUnResponded = platform.unrespondedCount + this.TwitterUnResponded;
+          this.TwitterUnResponded = this.TwitterUnResponded + 1;
         }
         if (platform.platform == 'LinkedIn') {
-          this.LinkedInUnResponded = platform.unrespondedCount + this.LinkedInUnResponded;
+          this.LinkedInUnResponded = this.LinkedInUnResponded + 1;
         }
         if (platform.platform == 'Youtube') {
-          this.YoutubeUnResponded = platform.unrespondedCount + this.YoutubeUnResponded;
+          this.YoutubeUnResponded = this.YoutubeUnResponded + 1;
         }
         if (platform.platform == 'SMS') {
-          this.SmsUnResponded = platform.unrespondedCount + this.SmsUnResponded;
+          this.SmsUnResponded = this.SmsUnResponded + 1;
         }
         if (platform.platform == 'WhatsApp') {
-          this.WaUnResponded = platform.unrespondedCount + this.WaUnResponded;
+          this.WaUnResponded = this.WaUnResponded + 1;
         }
         if (platform.platform == 'WebChat') {
-          this.WebchatUnResponded = platform.unrespondedCount + this.WebchatUnResponded;
+          this.WebchatUnResponded = this.WebchatUnResponded + 1;
         }
         if (platform.platform == 'Email') {
 
-          this.EmailUnResponded = platform.unrespondedCount + this.EmailUnResponded;
+          this.EmailUnResponded = this.EmailUnResponded + 1;
         }
         if (platform.platform == 'OfficeEmail') {
 
-          this.OfficeEmailUnResponded = platform.unrespondedCount + this.OfficeEmailUnResponded;
+          this.OfficeEmailUnResponded = this.OfficeEmailUnResponded + 1;
         }
         if (platform.platform == 'PlayStore') {
-          this.PlaystoreUnResponded = platform.unrespondedCount + this.PlaystoreUnResponded;
+          this.PlaystoreUnResponded = this.PlaystoreUnResponded + 1;
         }
       });
     });

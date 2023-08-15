@@ -7,58 +7,64 @@
     <div class="filter-toolbar p-0 border-0 collapse show" id="filter-bar">
       <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
         <li class="list-inline-item">
-                  <div class="dropdown">
-                    <button class="btn dropdown-toggle fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                    (click)="getCustomers()" aria-expanded="false">
-                      <i class="fal fa-user"></i> From
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li class="dropdown-listing-header">
-                        <form class="custom-searchbar my-2 mx-0">
-                          <input class="form-control bg-light border-0 py-2" placeholder="Search" aria-label="Search" [(ngModel)]="searchUser"
-                          (ngModelChange)="(searchUser.length >= 3 || searchUser.length === 0) && getCustomers()">
-                          <span class="btn searchbar-btn" type="submit">
-                            <i class="fal fa-search silver"></i>
-                          </span>
-                        </form>
-                      </li>
-                      <div class="perfect-scrollbar dd-scroll" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;"><div class="scroll-content">
-                       
-                        <li>
-                          <a class="dropdown-item d-flex contact-user" *ngFor="let customer of customersList" (click)="getConversationListByCustomer(customer.fromId)">
-                            <div class="list-down-icon avatar medium me-3">
-                              <!-- <img [src]="customer.fromProfilePic"> -->
-                              <app-avatar-photo [photoUrl]="customer.fromProfilePic" [name]="customer.fromName"></app-avatar-photo>
-                            </div>
-                            <div class="w-100 list-txt d-flex">
-                              <div class="w-100">
-                                <h6 class="mb-1 darkblue">{{customer.fromName}}
-                                </h6>
-                                <p class="mb-1 coal">{{customer.fromId}}</p>
-                              </div>
+          <div class="dropdown">
+            <button class="btn dropdown-toggle fw-bold" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+              (click)="getCustomers()" aria-expanded="false">
+              <i class="fal fa-user"></i> From
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li class="dropdown-listing-header">
+                <form class="custom-searchbar my-2 mx-0">
+                  <input class="form-control bg-light border-0 py-2" placeholder="Search" aria-label="Search"
+                    [(ngModel)]="searchUser"
+                    (ngModelChange)="(searchUser.length >= 3 || searchUser.length === 0) && getCustomers()">
+                  <span class="btn searchbar-btn" type="submit">
+                    <i class="fal fa-search silver"></i>
+                  </span>
+                </form>
+              </li>
+              <div class="perfect-scrollbar dd-scroll" data-scrollbar="true" tabindex="-1"
+                style="overflow: auto; outline: none;">
+                <div class="scroll-content">
+
+                  <li>
+                    <a class="dropdown-item d-flex contact-user" *ngFor="let customer of customersList"
+                      (click)="getConversationListByCustomer(customer.fromId)">
+                      <div class="list-down-icon avatar medium me-3">
+                        <!-- <img [src]="customer.fromProfilePic"> -->
+                        <app-avatar-photo [photoUrl]="customer.fromProfilePic"
+                          [name]="customer.fromName"></app-avatar-photo>
+                      </div>
+                      <div class="w-100 list-txt d-flex">
+                        <div class="w-100">
+                          <h6 class="mb-1 darkblue">{{customer.fromName}}
+                          </h6>
+                          <p class="mb-1 coal">{{customer.fromId}}</p>
+                        </div>
 
 
-                            </div>
-                          </a>
-                        </li>
                       </div>
-                      <div class="scrollbar-track scrollbar-track-x" style="display: none;">
-                        <div class="scrollbar-thumb scrollbar-thumb-x"></div>
-                      </div>
-                      <div class="scrollbar-track scrollbar-track-y" style="display: none;">
-                        <div class="scrollbar-thumb scrollbar-thumb-y"></div>
-                      </div>
-                      </div>
-                    </ul>
-                  </div>
-                </li>
+                    </a>
+                  </li>
+                </div>
+                <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                  <div class="scrollbar-thumb scrollbar-thumb-x"></div>
+                </div>
+                <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                  <div class="scrollbar-thumb scrollbar-thumb-y"></div>
+                </div>
+              </div>
+            </ul>
+          </div>
+        </li>
         <li class="list-inline-item">
           <div class="dropdown">
-            <button class="btn dropdown-toggle fw-bold" [ngClass]="anyTimeDropdown?'show':''" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-              aria-expanded="false">
+            <button class="btn dropdown-toggle fw-bold" [ngClass]="anyTimeDropdown?'show':''" type="button"
+              id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fal fa-calendar"></i> Any Time
             </button>
-            <ul class="dropdown-menu assignFirstDropdownList1" [ngClass]="anyTimeDropdown?'show':''" aria-labelledby="dropdownMenuButton1">
+            <ul class="dropdown-menu assignFirstDropdownList1" [ngClass]="anyTimeDropdown?'show':''"
+              aria-labelledby="dropdownMenuButton1">
 
               <li class="dropdown-item" (click)="anyTime('Any Time')">
                 <a>Any Time</a>
@@ -82,15 +88,17 @@
               <li class="dropdown-item" id="customrange" (click)="ShowDateRange()">
                 <a>Custom Range</a>
               </li>
-            </ul><div class="dropdown-menu assignSecondDropdownList1" [ngClass]="showDateRange?'show':''" aria-labelledby="customrange">
+            </ul>
+            <div class="dropdown-menu assignSecondDropdownList1" [ngClass]="showDateRange?'show':''"
+              aria-labelledby="customrange">
               <header class="d-flex align-items-center justify-content-between my-2">
                 <h6 class="m-0">Date Range </h6>
                 <div class="d-flex align-items-center" (click)="CloseDateRange()">
-                    <span class="iconButton small iconHover closefilter lightGreyBg">
-                      <i class="fa-light fa-xmark"></i>
-                    </span>
-                  </div>
-                </header>
+                  <span class="iconButton small iconHover closefilter lightGreyBg">
+                    <i class="fa-light fa-xmark"></i>
+                  </span>
+                </div>
+              </header>
               <form class="px-3 py-3" [formGroup]="searchForm" (ngSubmit)="getConversationList()">
                 <div class="d-flex mb-3">
                   <div class="form-floating">
@@ -99,7 +107,8 @@
                     <label for="start-date">Start Date </label>
                   </div>
                   <div class="form-floating">
-                    <input type="date" class="form-control rounded-0" id="end-date" placeholder="End Date" formControlName="toDate">
+                    <input type="date" class="form-control rounded-0" id="end-date" placeholder="End Date"
+                      formControlName="toDate">
                     <label for="end-date">End Date</label>
                   </div>
                 </div>
@@ -409,8 +418,9 @@
               <label for="floatingSelect">Search</label>
             </div> -->
             <div class="mb-3">
-              <div class="form-check form-check-inline" >
-                <input class="form-check-input" type="checkbox" id="hasattachment" formControlName="isAttachment" (click)="isAttachmentChecked()">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="hasattachment" formControlName="isAttachment"
+                  (click)="isAttachmentChecked()">
                 <label class="form-check-label" for="hasattachment">Has attachment</label>
               </div>
               <!-- <div class="form-check form-check-inline">
@@ -434,9 +444,9 @@
     <div class="filter-container">
       <ul class="list-group list-group-horizontal border-0">
         <li class="list-group-item border-0 all-check-boxes">
-          <!-- <input class="form-check-input me-1" type="checkbox" aria-label="..." data-bs-toggle="tooltip"
-            data-bs-placement="bottom" title="" data-bs-original-title="Check All" [checked]="masterSelected" value="m1"
-            (change)="checkUncheckAll($event)"> -->
+          <input *ngIf="flag != 'sent'" class="form-check-input me-1" type="checkbox" aria-label="..."
+            data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Check All"
+            [checked]="masterSelected" value="m1" (change)="checkUncheckAll($event)">
           <div class="dropdown">
             <!-- <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -470,32 +480,55 @@
           data-bs-placement="bottom" title="" data-bs-original-title="Refresh">
           <i class="fal fa-redo-alt"></i>
         </li>
-        <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip" data-bs-placemen
-          data-bs-placement="bottom" title="" data-bs-original-title="Archive"
-          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
-          <i class="fal fa-archive"></i>
-        </li>
-        <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
-          data-bs-placement="bottom" title="" data-bs-original-title="Report Spam"
-          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
-          <i class="fal fa-exclamation-circle"></i>
-        </li>
-        <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun" aria-label="..."
-          data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete"
-          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
-          <i class="fal fa-trash"></i>
-        </li>
-        <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
+        <!-- <div [hidden]="flag == 'trash'"> -->
+
+          <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'archived'" (click)="Archive()"
+            aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+            data-bs-original-title="Archive" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+            <i class="fal fa-archive"></i>
+          </li>
+          <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag != 'archived'" (click)="Unarchive()"
+            aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+            data-bs-original-title="Unarchive" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+            <i class="fal fa-inbox-out"></i>
+          </li>
+          <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'spam'" (click)="Spam()" aria-label="..."
+            data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Report Spam"
+            [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+            <i class="fal fa-exclamation-circle"></i>
+          </li>
+          <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag != 'spam'" (click)="RemoveSpam()"
+            aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+            data-bs-original-title="Undo Spam" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+            <i class="fal fa-rotate-exclamation"></i>
+          </li>
+          <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun" (click)="Delete()"
+          [hidden]="flag == 'trash'"
+            aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+            data-bs-original-title="Delete" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+            <i class="fal fa-trash"></i>
+          </li>
+          <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun" [hidden]="flag != 'trash'"
+            (click)="UndoDelete()" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+            data-bs-original-title="Undo Delete" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+            <i class="fal fa-trash-slash"></i>
+          </li>
+          <!-- <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
           data-bs-placement="bottom" title="" data-bs-original-title="Mark as Read"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="far fa-envelope-open"></i>
-        </li>
-        <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
-          data-bs-placement="bottom" title="" data-bs-original-title="Snooze"
-          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
-          <i class="fal fa-clock"></i>
-        </li>
-        <!-- <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun"
+        </li> -->
+          <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'snoozed'" (click)="Snooze()"
+            aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+            data-bs-original-title="Snooze" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+            <i class="fal fa-clock"></i>
+          </li>
+          <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag != 'snoozed'" (click)="RemoveSnooze()"
+            aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+            data-bs-original-title="Remove Snooze" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+            <i class="fal fa-trash-can-clock"></i>
+          </li>
+          <!-- <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun"
                     aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                     data-bs-original-title="Add to task" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
                     <i class="fal fa-clipboard-check"></i>
@@ -509,18 +542,18 @@
                     data-bs-placement="bottom" title="" data-bs-original-title="Labels"
                     [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
                     <i class="fal fa-tags"></i>
-                </li>
+                </li> -->
 
-                <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="" data-bs-original-title="More"
-                    [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
-                    <div class="dropdown w-auto">
-                        <button class="btn p-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <i class="fal fa-ellipsis-v-alt"></i>
-                        </button>
-                        <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1">
-                            <li>
+          <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
+            data-bs-placement="bottom" title="" data-bs-original-title="More" [hidden]="flag == 'trash'"
+            [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+            <div class="dropdown w-auto">
+              <button class="btn p-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="fal fa-ellipsis-v-alt"></i>
+              </button>
+              <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1">
+                <!-- <li>
                                 <a class="dropdown-item" href="#">Mark as read </a>
                             </li>
                             <li>
@@ -528,11 +561,17 @@
                             </li>
                             <li>
                                 <a class="dropdown-item" href="#">Mark as important</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Add star</a>
-                            </li>
-                            <li>
+                            </li> -->
+                <li [hidden]="flag == 'starred'">
+                  <a class="dropdown-item" (click)="Starred()">Add star</a>
+                </li>
+                <li [hidden]="flag != 'starred'">
+                  <a class="dropdown-item" (click)="RemoveStarred()">Remove star</a>
+                </li>
+                <li [hidden]="flag != 'blacklist'">
+                  <a class="dropdown-item" (click)="Unblock()">Unblock User(s)</a>
+                </li>
+                <!-- <li>
                                 <a class="dropdown-item" href="#">Filter Messages like these</a>
                             </li>
                             <li>
@@ -540,11 +579,13 @@
                             </li>
                             <li>
                                 <a class="dropdown-item" href="#">Forward as Attachment</a>
-                            </li>
+                            </li> -->
 
-                        </ul>
-                    </div>
-                </li> -->
+              </ul>
+            </div>
+          </li>
+        <!-- </div> -->
+        
       </ul>
       <div class="selected-row" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
         Selected <span class="badge twltte-bg rounded-pill">{{Ids.length}}</span>
@@ -573,7 +614,7 @@
 
         <table class="table">
           <tbody>
-            <ng-container *ngFor="let group of ConversationList">
+            <ng-container *ngFor="let group of groupByDateList">
               <tr>
                 <td colspan="6">
                   <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
@@ -583,10 +624,10 @@
               <tr *ngFor="let querry of group.items | sort:criteria; let i = index"
                 [class.selected]="querry.isChecked==true" class="alert" [ngClass]="[querry.slaFlag == 'warning'?'alert-warning':'' || querry.slaFlag == 'danger'?'alert-danger':'' ||
               querry.slaFlag == 'unread'?'unread':'']">
-                <!-- <td style="width: 40px;"><input [checked]="querry.isChecked" value="{{querry.id}}"
-                  (change)="isAllSelected($event, i, querry.platform)" class="form-check-input me-1" type="checkbox"
-                  aria-label="...">
-              </td> -->
+                <td *ngIf="flag != 'sent'" style="width: 40px;"><input [checked]="querry.isChecked"
+                    value="{{querry.id}}" (change)="isAllSelected($event, i, querry.platform, querry.profileId)"
+                    class="form-check-input me-1" type="checkbox" aria-label="...">
+                </td>
                 <td style="width: 40px;">
                   <i *ngIf="querry.platform == 'Facebook'" class="fab fa-facebook navytext" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" title="" data-bs-original-title="Facebook" aria-label="Facebook"></i>

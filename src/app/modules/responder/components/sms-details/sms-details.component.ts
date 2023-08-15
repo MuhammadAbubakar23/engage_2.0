@@ -74,6 +74,7 @@ export class SmsDetailsComponent implements OnInit {
   filterDto = new FiltersDto();
   totalUnrespondedCmntCountByCustomer: number = 0;
   To: any;
+  TotalCmntQueryCount: number = 0;
 
   spinner1running = false;
   spinner2running = false;
@@ -245,6 +246,10 @@ export class SmsDetailsComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -254,6 +259,7 @@ export class SmsDetailsComponent implements OnInit {
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.ConverstationDetailDto = res;
+          this.TotalCmntQueryCount = res.TotalQueryCount;
           this.SmsData = this.ConverstationDetailDto.List;
 
           this.commentsArray = [];
@@ -301,12 +307,17 @@ export class SmsDetailsComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: "",
+        notInclude: "",
+        include: "",
+        flag: "",
       };
 
       this.SpinnerService.show();
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.ConverstationDetailDto = res;
+        this.TotalCmntQueryCount = res.TotalQueryCount;
         this.SmsData = this.ConverstationDetailDto.List;
 
         this.commentsArray = [];
@@ -353,12 +364,17 @@ export class SmsDetailsComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         text : "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: '',
       };
 
       this.SpinnerService.show();
       this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.ConverstationDetailDto = res;
+        this.TotalCmntQueryCount = res.TotalQueryCount;
         this.SmsData = this.ConverstationDetailDto.List;
 
         this.commentsArray = [];
@@ -873,8 +889,11 @@ export class SmsDetailsComponent implements OnInit {
   }
 
   onScrollComments() {
-    this.pageSize = this.pageSize + 10;
-    this.getSmsData();
+    if (this.TotalCmntQueryCount > this.pageSize) {
+      this.pageSize = this.pageSize + 10;
+      this.getSmsData();
+    }
+  
   }
 
   closeQuickResponseSidebar(){

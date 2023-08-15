@@ -13,7 +13,7 @@ import { DragDropService } from '../../services/dragdrop.service';
   styleUrls: ['./actions.component.scss']
 })
 export class ActionsComponent implements OnInit {
-  limitValue: number = 0;
+  limitValue: number = 5;
   offsetValue: number = 0;
   columnName = 'Select Column';
   groupName = "Select Group";
@@ -39,9 +39,10 @@ export class ActionsComponent implements OnInit {
   toastermessage: string = '';
   isToaster: boolean = false;
   graphTypes: any[] = ["Bar Chart", "Pie Chart", "Line Chart", "Polar Area Chart", "Radar Chart"];
-  selectedGraph=""
+  selectedGraph = ""
   items: string[] = [];
-  constructor(private reportService: ReportService, private shareddataService: ShareddataService, private route: Router,private dragDropService:DragDropService) { }
+
+  constructor(private reportService: ReportService, private shareddataService: ShareddataService, private route: Router, private dragDropService: DragDropService) { }
 
   ngOnInit(): void {
     const tableName = localStorage.getItem('selectedtable')
@@ -64,11 +65,11 @@ export class ActionsComponent implements OnInit {
       })
     }
     this.shareddataService.charttype$.subscribe((res: any) => {
-      this.selectedGraph=res;
+      this.selectedGraph = res;
     })
     this.shareddataService.query$.subscribe((item) => {
       if (item) {
-        this.query= item;
+        this.query = item;
       }
     });
   }
@@ -106,9 +107,7 @@ export class ActionsComponent implements OnInit {
     const selectedtable = localStorage.getItem('selectedtable');
     const connection = localStorage.getItem('connection_name');
     this.reportService.limitDataApi({ 'db': db, 'tableName': selectedtable, 'limit': this.limitValue, 'connection_name': connection }).subscribe((res: any) => {
-
       this.shareddataService.updateData(res);
-
     });
   }
 
@@ -155,11 +154,15 @@ export class ActionsComponent implements OnInit {
     });
   }
   counterArray(): number[] {
+
     return Array(this.numberoftables);
   }
-
+  resetTable() {
+    this.selectedTables = [];
+    this.selectedTablesColumns = [];
+    this.isOn = false;
+  }
   onTableSelect(value: string, index: number) {
-
 
     if (value !== undefined) {
       this.selectedTables[index] = value;
@@ -174,6 +177,7 @@ export class ActionsComponent implements OnInit {
     }
 
   }
+
   getColumns(): void {
     const db = localStorage.getItem('dbName');
     const connection = localStorage.getItem('connection_name');
@@ -254,23 +258,23 @@ export class ActionsComponent implements OnInit {
 
   submitReport(): void {
     if (this.reportName !== "" && this.query !== "Please Type Query" && this.query !== "") {
-      const connection=localStorage.getItem('connection_name')
-      const db=localStorage.getItem('dbName');
-      const table=localStorage.getItem('selectedtable');
-      this.reportService.createReportApi({ "query": this.query, 'name': this.reportName,'tableName':table,'dbName':db,'connectionName':connection}).subscribe(res => {
+      const connection = localStorage.getItem('connection_name')
+      const db = localStorage.getItem('dbName');
+      const table = localStorage.getItem('selectedtable');
+      this.reportService.createReportApi({ "query": this.query, 'name': this.reportName, 'tableName': table, 'dbName': db, 'connectionName': connection }).subscribe(res => {
         console.log(res);
         if (res === "Report Name already exists") {
 
           this.toastermessage = `${res}`;
-           this.isToaster = true;
-            setTimeout(() => {
-               this.isToaster = false;
-              }, 4000);
+          this.isToaster = true;
+          setTimeout(() => {
+            this.isToaster = false;
+          }, 4000);
 
         }
-        else{
-        alert(res.message);
-        this.route.navigateByUrl('/analytics/reports');
+        else {
+          alert(res.message);
+          this.route.navigateByUrl('/analytics/reports');
         }
 
 
@@ -285,8 +289,25 @@ export class ActionsComponent implements OnInit {
     }
 
   }
-  selectGraph(){
-   this.shareddataService.updatechartType(this.selectedGraph);
+  selectGraph() {
+    this.shareddataService.updatechartType(this.selectedGraph);
   }
 
+  refreshData(){
+    this.numberoftables=0;
+     this.resetTable();
+     this.limitValue=5;
+     this.columnName='Select Column';
+     this.order='Order By';
+     this.offsetValue=0;
+    this.groupName="Select Group";
+    this.groupcolumnName="Select Column";
+    this.groupselectedItems=[];
+    const q=JSON.stringify(localStorage.getItem('query'));
+    console.log("q====>",q);
+    this.query=JSON.stringify(localStorage.getItem('query'));
+    this.selectedGraph="Bar Chart"
+    this.shareddataService.updatechartType('Bar Chart')
+    this.shareddataService.emitRefreshEvent('calling');
+  }
 }

@@ -6,7 +6,7 @@
       <ul class="list-group list-group-flush" id="inboxes-list" data-scrollbar="true" tabindex="-1"
         style="overflow-y: auto; outline: none;">
         <div class="scroll-content">
-          <a (click)="updatevalue('')" [routerLink]="['/all-inboxes']"
+          <a (click)="updatevalue('')" [routerLink]="['/all-inboxes/my_inbox']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="all-conversation">
             <div class="iconButton medium skyBg">
               <i class="far fa-inbox"></i>
@@ -31,7 +31,7 @@
           </a> -->
 
 <!-- From DB -->
-          <!-- <a *ngFor="let channel of channels" (click)="updatevalue(channel.name)" [routerLink]="['/all-inboxes']"
+          <!-- <a *ngFor="let channel of channels" (click)="updatevalue(channel.name)" [routerLink]="['/all-inboxes/my_inbox']"
             class="all-inboxes-menu list-group-item list-group-item-action">
             <div class="iconButton medium berryBg" [innerHTML]="channel.icon">
             </div>

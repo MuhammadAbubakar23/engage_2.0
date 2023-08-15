@@ -1,8 +1,8 @@
 <form class="team-detail-form" [formGroup]="teamForm" (ngSubmit)="onSubmit()">
-<div class="create-team console-body-wrapper inbox-container footerheight" data-scrollbar="true" tabindex="-1"
-    style="overflow-y:auto; outline: none;">
-    <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
-        <!-- <div class="p-4"> -->
+    <div class="create-team console-body-wrapper inbox-container footerheight" data-scrollbar="true" tabindex="-1"
+        style="overflow-y:auto; outline: none;">
+        <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
+            <!-- <div class="p-4"> -->
             <!-- <header class="tab-header">
                 <nav>
                     <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
@@ -22,64 +22,39 @@
             <div class="tab-body">
                 <div class="tab-content" id="nav-tabContent">
                     <div id="team-detail" class="tab-pane fade active show" role="tabpanel" aria-labelledby="user-tab"> -->
-                        <div class="wider-container">
-                            <div class="team-detail-form-box mb-5">
-                                    <!-- <div class="row" data-scrollbar="true" tabindex="-1"
+            <div class="wider-container">
+                <div class="team-detail-form-box mb-5">
+                    <!-- <div class="row" data-scrollbar="true" tabindex="-1"
                                     style="overflow-y:auto; outline: none;">
                                     <div class="col-lg-6 fixed-top sticky-top "> -->
-                                        <div class="floating-item mb-4">
-                                            <div class="floating-wrap form-floating mb-2"
-                                                [ngClass]="{'was-validated' : teamForm.get('name')!.valid && teamForm.get('name')!.touched}">
-                                                <input [attr.disabled]="identity>0?'disabled':null" [ngClass]="{'is-invalid' : (teamForm.get('name')!.errors && (teamForm.get('name')!.touched ||
-                                                teamForm.get('name')!.dirty))}" formControlName="name" type="text"
-                                                    class="form-control" id="name" placeholder="Sales Team">
-                                                <label for="name">Team Name</label>
-                                                <div class="invalid-feedback" *ngIf="(teamForm.get('name')!.errors && (teamForm.get('name')!.touched ||
-                                                                                teamForm.get('name')!.dirty))">
-                                                    <div
-                                                        *ngIf="teamForm.get('name')!.errors?.['maxlength'] || teamForm.get('name')!.errors?.['minlength']">
-                                                        Team name must be grater than 1 character and less than 25
-                                                        characters!
-                                                    </div>
-                                                    <div *ngIf="teamForm.get('name')!.errors?.['required']">
-                                                        Team Name is required!
-                                                    </div>
-                                                </div>
-                                                <div class="valid-feedback"
-                                                    *ngIf="teamForm.get('name')!.valid && teamForm.get('name')!.touched">
-
-                                                    Looks Good!
-                                                </div>
-                                            </div>
-                                            <small class="example-text ms-3">e.g. Customer support team</small>
-                                        </div>
-                                        <div class="floating-item mb-4">
-                                        <div [ngClass]="{'was-validated' : teamForm.get('description')!.valid && teamForm.get('description')!.touched}"
-                                            class="floating-wrap form-floating mb-2">
-                                            <textarea [attr.disabled]="identity>0?'disabled':null" [ngClass]="{'is-invalid' : (teamForm.get('description')!.errors && (teamForm.get('description')!.touched ||
+                 
+                    <div class="floating-item mb-4">
+                        <div [ngClass]="{'was-validated' : teamForm.get('description')!.valid && teamForm.get('description')!.touched}"
+                            class="floating-wrap form-floating mb-2">
+                            <textarea [attr.disabled]="identity>0?'disabled':null" [ngClass]="{'is-invalid' : (teamForm.get('description')!.errors && (teamForm.get('description')!.touched ||
                                             teamForm.get('description')!.dirty))}" formControlName="description"
-                                                class="form-control" placeholder="Leave a comment here"
-                                                id="floatingTextarea2" style="height: 100px"></textarea>
-                                            <label for="floatingTextarea2">Description</label>
-                                            <div class="invalid-feedback" *ngIf="(teamForm.get('description')!.errors && (teamForm.get('description')!.touched ||
+                                class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">Description</label>
+                            <div class="invalid-feedback" *ngIf="(teamForm.get('description')!.errors && (teamForm.get('description')!.touched ||
                                                                               teamForm.get('description')!.dirty))">
 
-                                                <div *ngIf="teamForm.get('description')!.errors?.['required']">
-                                                    Description is required!
-                                                </div>
-                                            </div>
-                                            <div class="valid-feedback"
-                                                *ngIf="teamForm.get('description')!.valid && teamForm.get('description')!.touched">
+                                <div *ngIf="teamForm.get('description')!.errors?.['required']">
+                                    Description is required!
+                                </div>
+                            </div>
+                            <div class="valid-feedback"
+                                *ngIf="teamForm.get('description')!.valid && teamForm.get('description')!.touched">
 
-                                                Looks Good!
-                                            </div>
-                                        </div>
-                                        <small class="example-text ms-3">e.g. This Team belongs to Customer Support in
-                                            Tokyo
-                                            timezone</small>
+                                Looks Good!
+                            </div>
+                        </div>
+                        <small class="example-text ms-3">e.g. This Team belongs to Customer Support in
+                            Tokyo
+                            timezone</small>
 
-                                        </div>
-                                        <!-- <div class="floating-item mb-4">
+                    </div>
+                    <!-- <div class="floating-item mb-4">
                                             <div [ngClass]="{'was-validated' : teamForm.get('businesshours')!.valid && teamForm.get('businesshours')!.touched}"
                                                 class="floating-wrap form-floating mb-2">
                                                 <select [ngClass]="{'is-invalid' : (teamForm.get('businesshours')!.errors && (teamForm.get('businesshours')!.touched ||
@@ -104,7 +79,7 @@
                                                 </div>
                                             </div>
                                         </div> -->
-                                        <!-- <div class="floating-item mb-4">
+                    <!-- <div class="floating-item mb-4">
                                             <div class="floating-wrap form-floating mb-2"
                                                 [ngClass]="{'was-validated' : teamForm.get('supportchannelhour')!.valid && teamForm.get('supportchannelhour')!.touched}">
                                                 <select [ngClass]="{'is-invalid' : (teamForm.get('supportchannelhour')!.errors && (teamForm.get('supportchannelhour')!.touched ||
@@ -132,7 +107,7 @@
                                                 </div>
                                             </div>
                                         </div> -->
-                                        <!-- <div class="floating-item mb-4">
+                    <!-- <div class="floating-item mb-4">
                                             <div class="floating-wrap form-floating mb-2"
                                             [ngClass]="{'was-validated' : teamForm.get('supportchannelteam')!.valid && teamForm.get('supportchannelteam')!.touched}">
                                                 <select [ngClass]="{'is-invalid' : (teamForm.get('supportchannelteam')!.errors && (teamForm.get('supportchannelteam')!.touched ||
@@ -157,7 +132,7 @@
                                                 </div>
                                             </div>
                                         </div> -->
-                                        <!-- <div class="floating-item mb-4">
+                    <!-- <div class="floating-item mb-4">
                                             <ul class="list-group">
                                                 <li
                                                     class="list-group-item d-flex justify-content-between align-items-sm-center shadow-sm rounded border p-3 saltBg">
@@ -239,21 +214,22 @@
                                                 </div>
                                             </div>
                                         </div> -->
-                                    <!-- </div>
+                    <!-- </div>
                                     <div class="col-lg-6 fixed-top sticky-top overflow-scroll" style="height: 500px;"> -->
-                                        <!-- <span class="coal mb-4">
+                    <!-- <span class="coal mb-4">
                                             The Accesses of default teams cannot be edited. Create a new role to select custom
                                             accesses.
                                         </span>
                                         <div class="border mb-3"></div> -->
-                                        <engage2-card-box-list [menulist]="TeamsNAccesses" [menulistselectall]="menulistselectall" (menulistchecked)="setMenuList($event)"></engage2-card-box-list>
-                                    <!-- </div> -->
-                                    <!-- </div> -->
-                                
-                            </div>
-                        </div>   
+                    <engage2-card-box-list [menulist]="TeamsNAccesses" [menulistselectall]="menulistselectall"
+                        (menulistchecked)="setMenuList($event)"></engage2-card-box-list>
                     <!-- </div> -->
-                    <!-- <div id="team-user" class="tab-pane fade" role="tabpanel" aria-labelledby="team-tab">
+                    <!-- </div> -->
+
+                </div>
+            </div>
+            <!-- </div> -->
+            <!-- <div id="team-user" class="tab-pane fade" role="tabpanel" aria-labelledby="team-tab">
                         <div class="filter-toolbar">
                             <div class="row">
                                 <div class="col-lg-6">
@@ -556,11 +532,11 @@
                             </table>
                         </div>
                     </div> -->
-                <!-- </div> -->
             <!-- </div> -->
-        <!-- </div> -->
-    </div>
-    <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+            <!-- </div> -->
+            <!-- </div> -->
+        </div>
+        <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
         <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 1560px; transform: translate3d(0px, 0px, 0px);">
         </div>
     </div>
@@ -568,24 +544,24 @@
         <div class="scrollbar-thumb scrollbar-thumb-y"
             style="height: 179.594px; transform: translate3d(0px, 0px, 0px);"></div>
     </div> -->
-</div>
-<footer class="footer">
-    <div class="ps-3 pe-3">
-        <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
-            <div class="row w-100">
-                <div class="col-md-4">
+    </div>
+    <footer class="footer">
+        <div class="ps-3 pe-3">
+            <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+                <div class="row w-100">
+                    <div class="col-md-4">
 
 
-                </div>
-                <div class="col-md-8 justify-content-end d-flex">
-                    <div class="buttons-wrap d-flex">
-                        <button type="reset" class="btn btn-outline-secondary btn-medium me-2 px-4">Cancel </button>
-                        
-                        <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn" >Save</button>
+                    </div>
+                    <div class="col-md-8 justify-content-end d-flex">
+                        <div class="buttons-wrap d-flex">
+                            <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4"
+                                (click)="cancelForm()">Cancel</button>
+                            <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn">Save</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
 </form>

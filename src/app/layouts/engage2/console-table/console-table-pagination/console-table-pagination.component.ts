@@ -57,8 +57,17 @@ export class ConsoleTablePaginationComponent implements OnInit {
   serachPage(newsearch:any){
     this.searchPageEvent.emit(newsearch);
   }
+  isLoading: boolean = false;
+  showLoader() {
+    this.isLoading = true;
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1000); // Show loader for 1 second
+  }
+
   reloadPage(){
     this.reloadPageEvent.emit();
+    window.location.reload();
   }
   // serachPageText(text: string){
   //   this.paginatorStore.serachPageText(text);

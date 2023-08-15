@@ -70,6 +70,8 @@ export class CreateRolesComponent implements OnInit {
     this.roleService.save(controllerRoute, this.roleForm.value).subscribe({ 
       next: (res:any) => {
         console.log(res)
+        this.router.navigate(['/console/roles-permissions']);
+
       },
       error: (err: HttpErrorResponse) => {
         // this.errorMessage = err.message;

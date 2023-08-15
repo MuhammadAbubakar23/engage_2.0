@@ -12,16 +12,16 @@ import { ConsoleTableParams } from 'src/app/layouts/engage2/console-table/consol
 import { Observable } from 'rxjs';
 
 @Component({
-    selector: 'app-users',
-    standalone: true,
-    templateUrl: './users.component.html',
-    styleUrls: ['./users.component.scss'],
-    imports: [CommonModule, RouterModule, CreateUserComponent, LayoutsModule]
+  selector: 'app-users',
+  standalone: true,
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.scss'],
+  imports: [CommonModule, RouterModule, CreateUserComponent, LayoutsModule]
 })
 export class UsersComponent implements OnInit {
-  model:Users[] = [];
+  model: Users[] = [];
   filter?: Observable<ConsoleTableParams>;
-  showConsoleTable:boolean= false;
+  showConsoleTable: boolean = false;
   // header: string[] =  ["Users","Roles", "Teams", ""];
   // url:string = "AllUsers";
   // actions: any[] = [
@@ -42,20 +42,18 @@ export class UsersComponent implements OnInit {
   //                        , { visible:true, index:this.actions, name:"...", type:"action-list", order:null, search:false, group:0, actions:true }
   //                       ]
   //             };
-
-
-  filters!:ConsoleTableParams ;
+  filters!: ConsoleTableParams;
   constructor(private headerService: HeaderService
-    , private _Activatedroute:ActivatedRoute) { }
+    , private _Activatedroute: ActivatedRoute) { }
 
-  
+
   async ngOnInit() {
     let _self = this;
-   // this.filter = async () => await this._Activatedroute.snapshot.data["userJ"]
+    // this.filter = async () => await this._Activatedroute.snapshot.data["userJ"]
     console.log(this.filter);
     this.filter = await this._Activatedroute.snapshot.data["userJ"];
     console.log(this.filter);
-    if(typeof this.filter !== 'undefined'){
+    if (typeof this.filter !== 'undefined') {
       this.showConsoleTable = true;
     }
     // console.log(this.filter);
@@ -80,15 +78,15 @@ export class UsersComponent implements OnInit {
   //     console.log(error);
   //   });
   // }
-  
-  form = new UntypedFormGroup({  
-    filters: new UntypedFormControl('', Validators.required)  
-  });  
 
-  changeFilters(e:any){
+  form = new UntypedFormGroup({
+    filters: new UntypedFormControl('', Validators.required)
+  });
+
+  changeFilters(e: any) {
     this.filters = e.target.value;
   }
-  updatevalue(string:any){
+  updatevalue(string: any) {
     this.headerService.updateMessage(string);
   }
 }

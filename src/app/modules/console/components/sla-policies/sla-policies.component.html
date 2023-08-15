@@ -1,103 +1,110 @@
 <div class="role-and-permission-wrap console-body-wrapper" data-scrollbar="true" tabindex="-1"
-    style="overflow: auto; outline: none;">
-    <div class="scroll-content">
-        <div class="wider-container pt-3">
-            <div class="searchBar-wrapper mb-2 p-0">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="d-flex align-items-lg-center">
-                            <p class="coal m-0">Status:</p>
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle coal" type="button" id="dropdownMenuButton1"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    All
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li>
-                                        <a class="dropdown-item" >Ascending</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" >Descending</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 d-flex align-items-center justify-content-end">
-                        <a href="javascript:" class="search-btn">
-                            <button class="iconButton medium">
-                                <i class="fal fa-search silver"></i>
-                            </button>
-                            <input placeholder="Search">
-                        </a>
-                        <a (click)="updatevalue('consoleCreateSlaPolicyHeader')" [routerLink]="['/console/sla-policy/create']" class="ms-2">
-                            <button type="button" class="btn btn-success">
-                                <i class="fal fa-plus me-2"></i>
-                                Add Policy
-                            </button>
-                        </a>
-                    </div>
-                </div>
+  style="overflow: auto; outline: none;">
+  <div class="scroll-content">
+    <div class="wider-container pt-3">
+      <div class="searchBar-wrapper mb-2 p-0">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="d-flex align-items-lg-center">
+              <p class="coal m-0">Status:</p>
+              <div class="dropdown">
+                <button class="btn dropdown-toggle coal" type="button" id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  {{ selectedSortOption }}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li>
+                    <a class="dropdown-item" (click)="setStatus('All')">All</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" (click)="setStatus('Ascending')">Ascending</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" (click)="setStatus('Descending')">Descending</a>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div class="table-section">
-                <table class="table mb-5 align-middle">
-                    <thead>
-                        <tr>
-                            <th class="border-0">
-                                3 Policies
-                            </th>
-                            <th class="border-0"></th>
-                        </tr>
-                        <tr>
-                            <td>
-                                The first matching SLA policy will be applied to tickets with matching conditions
-                            </td>
-                            <td></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let message of messages">
-                            <th>
-                              <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-start p-0 pt-2 pb-2">
-                                  <div class="ms-2 me-auto fw-normal coal">
-                                    <!-- <div class="fw-bold night">Default SLA Policy
+          </div>
+          
+          <div class="col-lg-8 d-flex align-items-center justify-content-end">
+            <a href="javascript:" class="search-btn">
+              <button class="iconButton medium">
+                <i class="fal fa-search silver"></i>
+              </button>
+              <input [(ngModel)]="searchText" placeholder="Search" class="me-1" (ngModelChange)="searchText ? applySearchFilter() : refreshMessages()">
+
+            </a>
+            <a (click)="updatevalue('consoleCreateSlaPolicyHeader')" [routerLink]="['/console/sla-policy/create']"
+              class="ms-2">
+              <button type="button" class="btn btn-success">
+                <i class="fal fa-plus me-2"></i>
+                Add Policy
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="table-section">
+        <table class="table mb-5 align-middle">
+          <thead>
+            <tr>
+              <th class="border-0">
+                3 Policies
+              </th>
+              <th class="border-0"></th>
+            </tr>
+            <tr>
+              <td>
+                The first matching SLA policy will be applied to tickets with matching conditions
+              </td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let message of messages">
+              <th>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-start p-0 pt-2 pb-2">
+                    <div class="ms-2 me-auto fw-normal coal">
+                      <!-- <div class="fw-bold night">Default SLA Policy
                                     <span class="badge rounded-pill bg-secondary">Default</span>
                                 </div> -->
-                                    {{ message.policyName }}
-                                  </div>
-                                </li>
-                              </ul>
-                            </th>
-                            <td>
-                              <div class="icons-list d-flex justify-content-end dropstart">
-                                <button class="btn iconButton medium iconHover" (click)="editTemplate(message)">
-                                  <i class="fal fa-edit"></i>
-                                </button>
-                                <button class="btn iconButton medium iconHover btn-group" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <i class="far fa-ellipsis-v dropdown-toggle"></i>
-                                </button>
-                                <ul class="dropdown-menu fade">
-                                  <li>
-                                    <a class="dropdown-item" (click)="editTemplate(message)">Edit</a>
-                                  </li>
-                                  <li>
-                                    <a class="dropdown-item" (click)="deleteTemplate(message)">Delete</a>
-                                  </li>
-                                  <li>
-                                    <a class="dropdown-item" (click)="disableTemplate(message)">Disable</a>
-                                  </li>
-                                  <li>
-                                    <a class="dropdown-item" (click)="cloneTemplate(message)">Clone</a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                      {{ message.policyName }}
+                    </div>
+                  </li>
+                </ul>
+              </th>
+              <td>
+                <div class="icons-list d-flex justify-content-end dropstart">
+                  <button class="btn iconButton medium iconHover" (click)="editTemplate(message)">
+                    <i class="fal fa-edit"></i>
+                  </button>
+                  <button class="btn iconButton medium iconHover btn-group" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="far fa-ellipsis-v dropdown-toggle"></i>
+                  </button>
+                  <ul class="dropdown-menu fade">
+                    <li>
+                      <a class="dropdown-item" (click)="editTemplate(message)">Edit</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" (click)="deleteTemplate(message)">Delete</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" (click)="disableTemplate(message)">Disable</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" (click)="cloneTemplate(message)">Clone</a>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-   
+  </div>
+
 </div>

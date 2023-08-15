@@ -9,7 +9,8 @@ export class FiltersDto{
   isAttachment : boolean = false;
   queryType : string = "";
   text:string="";
-  userName?:string="";
-  notInclude?:String="";
-  include?:String="";
+  userName:string="";
+  notInclude:String="";
+  include:String="";
+  flag:String="";
   }

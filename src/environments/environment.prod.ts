@@ -26,6 +26,7 @@ export const environment = {
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
   CommonBaseUrl:  'https://comservices.enteract.live/api/',
+  SignalRCommonBaseUrl:  'https://comservices.enteract.live/',
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
@@ -61,6 +62,7 @@ export const environment = {
       // For console skill setup 
       channels:"Console/Properties/Channel/Tree/0",
       routing:"Console/Properties/routing/Tree/0",
+      deleteRoles: "/Permissions/Delete"
     },
     console:{
       AddUser:"Users/CreateUser",
@@ -100,6 +102,13 @@ export const environment = {
       updateTag: 'Tags/Update',
       deleteTags: 'Tags/Delete',
       getParents : 'Tags/GetParents',
+      getAllRules : 'Rules/GetAll',
+      getEntitiesRule : 'Rules/GetEntities',
+      getRuleEntityProperties : 'GetEntitiesProperties',
+      getRuleById:  'Rules/GetById',
+      addRules: 'Rules/Add',
+      updateRules: 'Rules/Update',
+      deleteRules: 'Rules/Delete'
     },
     CCMS:{
       reason_types:'Order/GetReasonTypes',
@@ -149,7 +158,9 @@ export const environment = {
       getAllocatedProfiles : 'Query/GetAllocatedProfiles',
       repliesList: 'SentQueries/GetRepliesList',
       signOut: 'SignalRConnector/UserLogout',
-      getCustomers: 'Customer/GetAllCustomersSocialProfile'
+      getCustomers: 'Customer/GetAllCustomersSocialProfile',
+      updateStatus: 'Channel/UpdateMessageStatus',
+      hideUnhideMessage: 'Query/HideQuery'
       
     },
     facebook: {
