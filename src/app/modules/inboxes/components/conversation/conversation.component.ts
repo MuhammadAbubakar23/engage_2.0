@@ -633,6 +633,11 @@ export class ConversationComponent implements OnInit {
         this.TotalUnresponded = this.TotalUnresponded - 1;
         this.from = this.from - 1;
       }
+      this.ConversationList.forEach((item:any)=>{
+        if(item.profileId == res.profileId){
+          this.ConversationList.splice(item)
+        }
+      });
       this.changeDetect.detectChanges();
     });
   }

@@ -7,9 +7,12 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subscription } from 'rxjs';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
-import { FetchPostTypeService } from 'src/app/services/FetchPostType/fetch-post-type.service';
+import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
+import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
+import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
 import { AssignQuerryDto } from 'src/app/shared/Models/AssignQuerryDto';
 import { FiltersDto } from 'src/app/shared/Models/FiltersDto';
@@ -37,6 +40,8 @@ export class ResponderMenuComponent implements OnInit {
 
   public criteria!: SortCriteria;
 
+  public Subscription!: Subscription;
+
   alertWarning = false;
   alertDanger = false;
 
@@ -46,7 +51,10 @@ export class ResponderMenuComponent implements OnInit {
     private SpinnerService: NgxSpinnerService,
     private signalRService: SignalRService,
     private changeDetect: ChangeDetectorRef,
-    private commondata: CommonDataService
+    private commondata: CommonDataService,
+    private unrespondedCountService: UnRespondedCountService,
+    private updateCommentsService: UpdateCommentsService,
+    private queryStatusService: QueryStatusService
   ) {
     // this.criteria = {
     //   property: 'createdDate',
@@ -60,7 +68,10 @@ export class ResponderMenuComponent implements OnInit {
     this.getAllocatedProfiles();
 
     setInterval(() => {
-      if (this.userSpecificAllocatedProfiles != null || this.userSpecificAllocatedProfiles != undefined) {
+      if (
+        this.userSpecificAllocatedProfiles != null ||
+        this.userSpecificAllocatedProfiles != undefined
+      ) {
         this.TodayDate = new Date();
         this.userSpecificAllocatedProfiles?.forEach((item: any) => {
           const twentyMinutesInMs = 20 * 60 * 1000; // 20 minute in milliseconds
@@ -86,64 +97,97 @@ export class ResponderMenuComponent implements OnInit {
             this.alertWarning = false;
             item['slaFlag'] = 'unread';
           }
-          // // console.log("slaFlag", item['slaFlag'])
         });
       }
-      //  // console.log("list", this.userSpecificAllocatedProfiles)
     }, 1000);
+
+    this.Subscription = this.unrespondedCountService
+      .getUnRespondedCount()
+      .subscribe((res) => {
+        if (Object.keys(res).length > 0) {
+          this.userSpecificAllocatedProfiles.forEach((profile: any) => {
+            if (profile.profileId == res.contentCount.profileId) {
+              profile.unrespondedCount = res.contentCount.unrespondedCount;
+            }
+          });
+        }
+      });
+    this.Subscription = this.updateCommentsService
+      .receiveComment()
+      .subscribe((res) => {
+        if (Object.keys(res).length > 0) {
+          res.forEach((newMsg: any) => {
+            this.userSpecificAllocatedProfiles.forEach((profile: any) => {
+              if (profile.fromId == newMsg.userId) {
+                profile.unrespondedCount = profile.unrespondedCount + 1;
+              }
+            });
+          });
+        }
+      });
+    this.Subscription = this.queryStatusService
+      .bulkReceiveQueryStatus()
+      .subscribe((res) => {
+        if (Object.keys(res).length > 0) {
+          res.forEach((newMsg: any) => {
+            this.userSpecificAllocatedProfiles.forEach((profile: any) => {
+              if (profile.profileId == localStorage.getItem('profileId')) {
+                profile.unrespondedCount = 0;
+              }
+            });
+          });
+        }
+      });
+    this.changeDetect.detectChanges();
   }
   totalPageNumbers: any;
   userSpecificAllocatedProfiles: any[] = [];
   getAllocatedProfiles() {
     this.SpinnerService.show();
-    this.commondata
-      .GetAllocatedProfiles()
-      .subscribe((res: any) => {
-        this.SpinnerService.hide();
-        this.AllocatedProfiles = res;
+    this.commondata.GetAllocatedProfiles().subscribe((res: any) => {
+      this.SpinnerService.hide();
+      this.AllocatedProfiles = res;
 
-        this.AllocatedProfiles.forEach((profile: any) => {
-          if (profile.userId == localStorage.getItem('agentId')) {
-            this.userSpecificAllocatedProfiles.push(profile)
-          }
-        });
+      this.AllocatedProfiles.forEach((profile: any) => {
+        if (profile.userId == localStorage.getItem('agentId')) {
+          this.userSpecificAllocatedProfiles.push(profile);
+        }
       });
+    });
   }
   public addTransferChatDataListener = () => {
-    this.signalRService.hubconnection.on('UnrespondedTweetsChats', (data: any) => {
-      // this.TwitterList.forEach((abc: any) => {
-      //   this.TwitterIds.push(abc.id);
-      // });
-      data.Data.forEach((xyz: any) => {
-        this.listingDto = {
-          id: xyz.id,
-          userName: xyz.userName,
-          unrespondedCount: xyz.unrespondedCount,
-          message: xyz.message,
-          createdDate: xyz.createdDate,
-          platform: data.Platform,
-          user: xyz.userId,
-          postType: xyz.postType,
-          url: 'conversation:twitter',
-          userId: 0,
-        };
-        // if (!this.TwitterIds.includes(xyz.id)) {
-        //    this.TwitterList.push(this.listingDto);
-        //   this.userSpecificAllocatedProfiles.push(this.listingDto);
-        // }
-      });
-      this.changeDetect.detectChanges();
-    });
+    this.signalRService.hubconnection.on(
+      'UnrespondedTweetsChats',
+      (data: any) => {
+        // this.TwitterList.forEach((abc: any) => {
+        //   this.TwitterIds.push(abc.id);
+        // });
+        data.Data.forEach((xyz: any) => {
+          this.listingDto = {
+            id: xyz.id,
+            userName: xyz.userName,
+            unrespondedCount: xyz.unrespondedCount,
+            message: xyz.message,
+            createdDate: xyz.createdDate,
+            platform: data.Platform,
+            user: xyz.userId,
+            postType: xyz.postType,
+            url: 'conversation:twitter',
+            userId: 0,
+          };
+          // if (!this.TwitterIds.includes(xyz.id)) {
+          //    this.TwitterList.push(this.listingDto);
+          //   this.userSpecificAllocatedProfiles.push(this.listingDto);
+          // }
+        });
+        this.changeDetect.detectChanges();
+      }
+    );
   };
 
   assignedProfile = localStorage.getItem('assignedProfile');
 
-  updatevalue(
-    fromId: any,
-    platform: any,
-    profileId: any
-  ) {
-
+  updatevalue(fromId: any, platform: any, profileId: any) {
     if (
       localStorage.getItem('assignedProfile') == null ||
       localStorage.getItem('assignedProfile') == '' ||
@@ -180,7 +224,7 @@ export class ResponderMenuComponent implements OnInit {
         }
       );
     } else {
-      this.reloadComponent('querryAssigned')
+      this.reloadComponent('querryAssigned');
     }
   }
 
