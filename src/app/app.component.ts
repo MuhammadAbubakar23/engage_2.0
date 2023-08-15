@@ -41,6 +41,10 @@ toasters: Toaster[] = [];
       this.commonService.SignOut().subscribe(()=>{
         localStorage.clear();
         this.router.navigateByUrl('/login');
+      },
+      (error)=>{
+        localStorage.clear();
+        this.router.navigateByUrl('/login');
       })
     }
     // this.signalRService.reConnect();
