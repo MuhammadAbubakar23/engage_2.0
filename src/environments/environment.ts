@@ -34,9 +34,9 @@ export const environment = {
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
-  // for testing purpose 
-  // consoleBaseUrl: 'https://10.111.32.97:45458/api',
-  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  // for testing purpose
+  consoleBaseUrl: 'https://10.111.11.93:45456/api/',
+  //consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
   links: {
     identity: {
@@ -50,7 +50,7 @@ export const environment = {
       AllTeams: "Teams/FetchAll",// new to review
       AddTeam: "Accesses/Teams",
       TeamProperties: "Accesses/Properties",
-      accessrole: "Roles/Previews", //"Permissions/role",      
+      accessrole: "Roles/Previews", //"Permissions/role",
       permissionrole: "Roles/Previews", //"Permissions/role",
       RolesPermissions: "Roles/Fetch",
       permissions: "Roles/Permissions",
@@ -63,7 +63,7 @@ export const environment = {
       DeleteUser: "Identity/Delete",
       AllUsers: "Users/GetAll",
       GetUserById: "Users/GetById",
-      // For console skill setup 
+      // For console skill setup
       channels: "Console/Properties/Channel/Tree/0",
       routing: "Console/Properties/routing/Tree/0",
       deleteRoles: "/Permissions/Delete"
@@ -108,7 +108,7 @@ export const environment = {
       getParents: 'Tags/GetParents',
       getAllRules: 'Rules/GetAll',
       getEntitiesRule: 'Rules/GetEntities',
-      getRuleEntityProperties: 'GetEntitiesProperties',
+      getRuleEntityProperties: 'Rules/GetEntitiesProperties/',
       getRuleById: 'Rules/GetById',
       addRules: 'Rules/Add',
       updateRules: 'Rules/Update',
@@ -165,7 +165,7 @@ export const environment = {
       getCustomers: 'Customer/GetAllCustomersSocialProfile',
       updateStatus: 'Channel/UpdateMessageStatus',
       hideUnhideMessage: 'Query/HideQuery'
-      
+
     },
     facebook: {
       comments: 'Facebook/GetFbPost',
