@@ -26,7 +26,7 @@ export const environment = {
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
   CommonBaseUrl: 'https://tpplcom.360scrm.com/api/', 
-  SignalRCommonBaseUrl:  'https://common-engage.enteract.app/',
+  SignalRCommonBaseUrl:  'https://tpplcom.360scrm.com/',
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
