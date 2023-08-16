@@ -655,6 +655,8 @@ export class ConversationComponent implements OnInit {
     this.notInclude = '';
     this.include = '';
     this.advanceSearch = false;
+    this.fromDate = null;
+    this.toDate = null;
     this.getConversationList();
   }
 
