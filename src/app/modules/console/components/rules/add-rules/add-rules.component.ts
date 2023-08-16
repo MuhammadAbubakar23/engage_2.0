@@ -2,9 +2,10 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { Field, QueryBuilderConfig, QueryBuilderModule, RuleSet } from 'angular2-query-builder';
+import { Field, QueryBuilderClassNames, QueryBuilderConfig, QueryBuilderModule, RuleSet } from 'angular2-query-builder';
 import { CommonDataService } from '../../../../../shared/services/common/common-data.service';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { EntityTypeBuilder } from 'src/app/shared/Models/EntityTypeDto';
 
 @Component({
   selector: 'app-add-rules',
@@ -37,92 +38,123 @@ export class AddRulesComponent implements OnInit {
 
   public config: QueryBuilderConfig = {
     fields: {
-      // age: { name: 'Age', type: 'number' },
-      // gender: {
-      //   name: 'Gender',
-      //   type: 'category',
-      //   options: [
-      //     { name: 'Male', value: 'm' },
-      //     { name: 'Female', value: 'f' }
-      //   ]
-      // },
-      // name: { name: 'Name', type: 'string' },
-      // notes: { name: 'Notes', type: 'string', operators: ['=', '!='] },
-      // educated: { name: 'College Degree?', type: 'boolean' },
-      // birthday: {
-      //   name: 'Birthday', type: 'date', operators: ['=', '<=', '>'],
-      //   defaultValue: (() => new Date())
-      // },
-      // school: { name: 'School', type: 'string', nullable: true },
-      // occupation: {
-      //   name: 'Occupation',
-      //   type: 'category',
-      //   options: [
-      //     { name: 'Student', value: 'student' },
-      //     { name: 'Teacher', value: 'teacher' },
-      //     { name: 'Unemployed', value: 'unemployed' },
-      //     { name: 'Scientist', value: 'scientist' }
-      //   ]
-      // }
     }
   };
+  classNames: QueryBuilderClassNames = {
+    removeIcon: 'fa fa-minus',
+    addIcon: 'fa fa-plus',
+    arrowIcon: 'fa fa-chevron-right px-2',
+    button: 'btn',
+    buttonGroup: 'btn-group',
+    rightAlign: 'order-12 ml-auto',
+    switchRow: 'd-flex px-2',
+    switchGroup: 'd-flex align-items-center',
+    switchRadio: 'custom-control-input',
+    switchLabel: 'custom-control-label',
+    switchControl: 'custom-control custom-radio custom-control-inline',
+    row: 'row p-2 m-1',
+    rule: 'border',
+    ruleSet: 'border',
+    invalidRuleSet: 'alert alert-danger',
+    emptyWarning: 'text-danger mx-auto',
+    operatorControl: 'form-control',
+    operatorControlSize: 'col-auto pr-0',
+    fieldControl: 'form-control',
+    fieldControlSize: 'col-auto pr-0',
+    entityControl: 'form-control',
+    entityControlSize: 'col-auto pr-0',
+    inputControl: 'form-control mt-2',
+    inputControlSize: 'col-auto'
+  }
 
-
+  entitySet: any = [];
 
   constructor(private _fb: FormBuilder, private router: Router, private _cs: CommonDataService, private ngZone: NgZone) {
-    console.log("this.query",this.query);
+    console.log("this.query", this.query);
     this.queryCtrl = this._fb.control(this.query);
-    this.queryCtrl.valueChanges.subscribe(ruleSet => {
+
+    this.queryCtrl.valueChanges.subscribe((ruleSet: any) => {
+      console.log("ruleSet", ruleSet);
+      this.processRules(ruleSet.rules);
       this.selectedRuleSet = ruleSet;
       console.log("Selected rule set:", this.selectedRuleSet);
+    });
+
+  }
+  processRules(rules: any[]) {
+    rules.forEach((rule: any) => {
+      if (rule.rules) {
+        this.processRules(rule.rules);
+      } else {
+        let val = this.entitySet.find(
+          (x: EntityTypeBuilder) => x.entityName === rule.field
+        );
+
+        rule.type = val.entitytype;
+        if (Array.isArray(rule.value)) {
+        } else if (rule.value !== undefined && rule.value !== null) {
+          rule.value = [rule.value];
+        }
+      }
     });
   }
   ngOnInit(): void {
     this._cs.GetEntitiesRule().subscribe((response: any) => {
       this.entities = response;
-
     })
   }
-
   selectEntity() {
 
     this._cs.GetRuleEntityProperties(this.selectedEntity).subscribe((response) => {
+
       console.log("Response", response)
       if (Array.isArray(response)) {
-        response.forEach((obj: any,index) => {
+        response.forEach((item) => {
+          var obj: EntityTypeBuilder = {
+            entityName: item.entityName,
+            entityType: item.entityType
+          };
+          this.entitySet.push(obj);
+        })
+        console.log("Entity Set", this.entitySet = response);
+        response.forEach((obj: any, index) => {
           console.log(obj, obj.entitytype, obj.entityName)
-          let typeValue;
-          let operators: string[]=[];
+          let typeValue = obj.entitytype;
+          let operators: string[] = [];
           switch (obj.entitytype) {
-            case 'Int64':
+            case 'integer':
               typeValue = 'number';
-              operators=["equal","not equal","greater than","greater than equal to","less than","less than equal to"];
+
+              operators=["equal","not_equal","not_in","less_or_equal","greater_or_equal","not_between","begins_with","not_begins_with","is_null"]
               break;
-            case 'Boolean':
-              typeValue = 'boolean';
-              operators=["equal"]
+            case 'boolean':
+              operators = ["equal"]
               break;
-            case 'String':
-              typeValue = 'string';
-              operators=["equal","not equal","contains","like"]
+            case 'string':
+              operators = ["equal", "not_equal", "contains", "like"]
               break;
-            case 'DateTime':
+            case 'datetime':
               typeValue = 'date';
-              operators=["equal","not equal","greater than","greater than equal to","less than","less than equal to"];
+              operators=["equal","not_equal","not_in","less_or_equal","greater_or_equal","not_between","begins_with","not_begins_with","is_null"]
+              break;
+            case 'date':
+              operators=["equal","not_equal","not_in","less_or_equal","greater_or_equal","not_between","begins_with","not_begins_with","is_null"]
               break;
             default:
               typeValue = 'number';
-
           }
 
           const fieldsObj = {
             name: obj.entityName,
             type: typeValue,
-            operators:operators,
-            Type: typeValue,
-          };
-          this.config.fields[obj.entityName] = fieldsObj;
+            operators: operators,
 
+          };
+
+          if (typeValue === 'boolean') {
+
+          }
+          this.config.fields[obj.entityName] = fieldsObj;
         });
         console.log("Updated", this.config.fields)
       } else {
@@ -130,9 +162,10 @@ export class AddRulesComponent implements OnInit {
       }
     })
   }
-  onClick(){
-    this._cs.AddRules({"name":"","description":"",'rulesJson':JSON.stringify(this.selectedRuleSet)}).subscribe((res)=>{
-      console.log("Rules",res);
+
+  onClick() {
+    this._cs.AddRules({ "name": "", "description": "", 'rulesJson': JSON.stringify(this.selectedRuleSet) }).subscribe((res) => {
+      console.log("Rules", res);
       alert("SuccessFully rules Added!");
     })
   }

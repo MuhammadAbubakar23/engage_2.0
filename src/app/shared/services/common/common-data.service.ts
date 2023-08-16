@@ -492,7 +492,7 @@ export class CommonDataService {
     return this.http.get(this.consoleBaseUrl + this.getEntitiesRule);
 
   }
-  GetRuleEntityProperties(entity:string) {
+  GetRuleEntityProperties(entity: string) {
     return this.http.get(`${this.consoleBaseUrl}${this.getRuleEntityProperties}?tableName=${entity}`);
 
   }
