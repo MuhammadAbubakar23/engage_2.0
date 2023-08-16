@@ -1,156 +1,176 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { QueryBuilderConfig, QueryBuilderModule } from 'angular2-query-builder';
+import { Field, QueryBuilderClassNames, QueryBuilderConfig, QueryBuilderModule, RuleSet } from 'angular2-query-builder';
 import { CommonDataService } from '../../../../../shared/services/common/common-data.service';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { EntityTypeBuilder } from 'src/app/shared/Models/EntityTypeDto';
+
 @Component({
   selector: 'app-add-rules',
   standalone: true,
-  imports: [RouterModule, CommonModule, QueryBuilderModule, FormsModule, ReactiveFormsModule],
+  imports: [RouterModule, CommonModule, QueryBuilderModule, FormsModule, ReactiveFormsModule, NgSelectModule],
   templateUrl: './add-rules.component.html',
   styleUrls: ['./add-rules.component.scss']
 })
 export class AddRulesComponent implements OnInit {
-  rulesForm!: FormGroup;
-  query: any = {}; // Initialize an empty object for query
-  // query1: any = {}; // Initialize an empty object for query1
-  constructor(private formBuilder: FormBuilder, private commonService: CommonDataService, private router: Router) { }
-  ngOnInit(): void {
-    this.rulesForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      description: [''],
-      rulesJson: [''],
-      queryBuilderFilterRuleDto: this.formBuilder.group({
-        // Define the form controls for 'queryBuilderFilterRuleDto'
-        id: [''],
-        condition: [''],
-        field: [''],
-        input: [''],
-        operator: [''],
-        type: [''],
-        value: this.formBuilder.array(['']),
-        rules: this.formBuilder.array([
-          this.formBuilder.group({
-            condition: [''],
-            field: [''],
-            id: [''],
-            input: [''],
-            operator: [''],
-            rules: this.formBuilder.array(['']),   
-            type: [''],
-            value: this.formBuilder.array(['']),
-          }),
-        ]),
-      }),
+  public queryCtrl!: FormControl;
+  entities = [];
+  selectedEntity = "Please Select Entity";
+  public query: RuleSet = {
+    condition: 'and',
+    rules: [
+      // { field: 'age', operator: '>=', entity: 'physical', value: 18 },
+      // { field: 'birthday', operator: '=', value: '2018-11-20', entity: 'nonphysical' },
+      // {
+      //   condition: 'or',
+      //   rules: [
+      //     { field: 'gender', operator: '=', entity: 'physical', value: 'm' },
+      //     { field: 'school', operator: 'is null', entity: 'nonphysical' },
+      //     { field: 'notes', operator: '=', entity: 'nonphysical', value: 'Hi' }
+      //   ]
+      // }
+    ]
+  };
+  selectedRuleSet!: RuleSet;
+  public oDataFilter: string = "hello";
+
+  public config: QueryBuilderConfig = {
+    fields: {
+    }
+  };
+  classNames: QueryBuilderClassNames = {
+    removeIcon: 'fa fa-minus',
+    addIcon: 'fa fa-plus',
+    arrowIcon: 'fa fa-chevron-right px-2',
+    button: 'btn',
+    buttonGroup: 'btn-group',
+    rightAlign: 'order-12 ml-auto',
+    switchRow: 'd-flex px-2',
+    switchGroup: 'd-flex align-items-center',
+    switchRadio: 'custom-control-input',
+    switchLabel: 'custom-control-label',
+    switchControl: 'custom-control custom-radio custom-control-inline',
+    row: 'row p-2 m-1',
+    rule: 'border',
+    ruleSet: 'border',
+    invalidRuleSet: 'alert alert-danger',
+    emptyWarning: 'text-danger mx-auto',
+    operatorControl: 'form-control',
+    operatorControlSize: 'col-auto pr-0',
+    fieldControl: 'form-control',
+    fieldControlSize: 'col-auto pr-0',
+    entityControl: 'form-control',
+    entityControlSize: 'col-auto pr-0',
+    inputControl: 'form-control mt-2',
+    inputControlSize: 'col-auto'
+  }
+
+  entitySet: any = [];
+
+  constructor(private _fb: FormBuilder, private router: Router, private _cs: CommonDataService, private ngZone: NgZone) {
+    console.log("this.query", this.query);
+    this.queryCtrl = this._fb.control(this.query);
+
+    this.queryCtrl.valueChanges.subscribe((ruleSet: any) => {
+      console.log("ruleSet", ruleSet);
+      this.processRules(ruleSet.rules);
+      this.selectedRuleSet = ruleSet;
+      console.log("Selected rule set:", this.selectedRuleSet);
+    });
+
+  }
+  processRules(rules: any[]) {
+    rules.forEach((rule: any) => {
+      if (rule.rules) {
+        this.processRules(rule.rules);
+      } else {
+        let val = this.entitySet.find(
+          (x: EntityTypeBuilder) => x.entityName === rule.field
+        );
+
+        rule.type = val.entitytype;
+        if (Array.isArray(rule.value)) {
+        } else if (rule.value !== undefined && rule.value !== null) {
+          rule.value = [rule.value];
+        }
+      }
     });
   }
-  config: QueryBuilderConfig = {
-    fields: {
-      From: { name: 'From', type: 'number' },
-      gender: {
-        name: 'Gender', type: 'category',
-        options: [
-          { name: 'Male', value: 'm' },
-          { name: 'Female', value: 'f' },
-          { name: 'Other', value: 'o' }
-        ]
-      },
-      city: {
-        name: 'city', type: 'category',
-        options: [
-          { name: 'lahore', value: 'lahore' },
-          { name: 'Isb', value: 'iIsb' },
-          { name: 'faslbad', value: 'faslbad' },
-        ]
-      },
-      degree: {
-        name: 'degree', type: 'category',
-        options: [
-          { name: 'college degree', value: 'college degree' },
-          { name: 'uni degree', value: 'uni degree' },
-          { name: 'inter degree', value: 'inter degree' },
-        ]
-      },
-      occupation: {
-        name: 'occupation', type: 'category',
-        options: [
-          { name: 'Student', value: 'student' },
-          { name: 'Teacher', value: 'teacher' },
-          { name: 'Unemployed', value: 'unemployed' },
-          { name: 'Scientist', value: 'scientist' }
-        ]
-      },
-      designation: {
-        name: 'designation', type: 'category',
-        options: [
-          { name: 'senior', value: 'senior' },
-          { name: 'mid', value: 'mid' },
-          { name: 'beginner', value: 'beginner' }
-        ]
-      },
-
-    }
+  ngOnInit(): void {
+    this._cs.GetEntitiesRule().subscribe((response: any) => {
+      this.entities = response;
+    })
   }
-  config1: QueryBuilderConfig = {
-    fields: {
-      student: {
-        name: 'student', type: 'category',
-        options: [
-          { name: 'high', value: 'high' },
-          { name: 'mid', value: 'mid' },
-          { name: 'beginner', value: 'beginner' }
-        ]
-      },
-      Subject: {
-        name: 'Subject', type: 'category',
-        options: [
-          { name: 'maths', value: 'maths' },
-          { name: 'computer', value: 'computer' },
-          { name: 'English', value: 'English' }
-        ]
-      },
-      Marks: { name: 'Marks', type: 'number' },
-    }
-  }
-  // query = {
-  //   condition: 'or',
-  //   rules: [
-  //     { condition: 'AND', field: 'from', id: '1', input: '', operator: '!=', type: '0', value: 'lahore' },
+  selectEntity() {
 
-  //     // { field: 'From', operator: '<=', value: 'Bob' },
-  //     // { field: 'gender', operator: '>=', value: 'm' },
-  //     // { field: 'city', operator: '=', value: 'abc' },
-  //     // { field: 'degree', operator: '!=', value: 'deg' },
-  //     // { field: 'occupation', operator: '!=', value: 'ocu' },
-  //     // { field: 'designation', operator: '!=', value: 'desg' },
-  //   ]
-  // }
-  // query1 = {
-  //   Condition: 'And',
-  //   rules: [
-  //     // { field: 'student', operator: '!=', value: 'std' },
-  //     { condition: '', field: '', id: ';', input: '', operator: '!=', type: '0', value: '' },
-  //     // { field: 'Marks', operator: '!=', value: 'mark' }
-  //   ]
-  // }
-  onSave() {
-    const formData = this.rulesForm.value;
-    formData.queryBuilderFilterRuleDto.query = this.query; // Update the query control's value
+    this._cs.GetRuleEntityProperties(this.selectedEntity).subscribe((response) => {
 
-    this.commonService.AddRules(formData).subscribe(
-      response => {
-        console.log('Rules added successfully', response);
-        // ... navigate or perform other actions ...
-      },
-      error => {
-        console.error('Failed to add rules', error);
+      console.log("Response", response)
+      if (Array.isArray(response)) {
+        response.forEach((item) => {
+          var obj: EntityTypeBuilder = {
+            entityName: item.entityName,
+            entityType: item.entityType
+          };
+          this.entitySet.push(obj);
+        })
+        console.log("Entity Set", this.entitySet = response);
+        response.forEach((obj: any, index) => {
+          console.log(obj, obj.entitytype, obj.entityName)
+          let typeValue = obj.entitytype;
+          let operators: string[] = [];
+          switch (obj.entitytype) {
+            case 'integer':
+              typeValue = 'number';
+
+              operators=["equal","not_equal","not_in","less_or_equal","greater_or_equal","not_between","begins_with","not_begins_with","is_null"]
+              break;
+            case 'boolean':
+              operators = ["equal"]
+              break;
+            case 'string':
+              operators = ["equal", "not_equal", "contains", "like"]
+              break;
+            case 'datetime':
+              typeValue = 'date';
+              operators=["equal","not_equal","not_in","less_or_equal","greater_or_equal","not_between","begins_with","not_begins_with","is_null"]
+              break;
+            case 'date':
+              operators=["equal","not_equal","not_in","less_or_equal","greater_or_equal","not_between","begins_with","not_begins_with","is_null"]
+              break;
+            default:
+              typeValue = 'number';
+          }
+
+          const fieldsObj = {
+            name: obj.entityName,
+            type: typeValue,
+            operators: operators,
+
+          };
+
+          if (typeValue === 'boolean') {
+
+          }
+          this.config.fields[obj.entityName] = fieldsObj;
+        });
+        console.log("Updated", this.config.fields)
+      } else {
+        console.error("response is not an array");
       }
-    );
+    })
+  }
+
+  onClick() {
+    this._cs.AddRules({ "name": "", "description": "", 'rulesJson': JSON.stringify(this.selectedRuleSet) }).subscribe((res) => {
+      console.log("Rules", res);
+      alert("SuccessFully rules Added!");
+    })
   }
   cancelbtn() {
     this.router.navigate(['console/rules']);
-
   }
 }
 

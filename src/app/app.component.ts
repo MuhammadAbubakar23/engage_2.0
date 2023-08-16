@@ -21,8 +21,8 @@ toasters: Toaster[] = [];
     private commonService : CommonDataService,
     private toaster: ToasterService,
     private spinnerService : NgxSpinnerService) {
-      
-    
+
+
   }
 
   remove(index: number) {
@@ -38,31 +38,31 @@ toasters: Toaster[] = [];
           this.toasters = [toaster, ...this.toasters];
           setTimeout(() => this.toasters.pop(), toaster.delay || 6000);
         }
-        
-      });
-    if (this.signalRService.hubconnection == undefined) {
-      this.spinnerService.show();
-      this.commonService.SignOut().subscribe(()=>{
-        localStorage.clear();
-        this.router.navigateByUrl('/login');
-        this.spinnerService.hide();
-      },
-      (error)=>{
-        localStorage.clear();
-        this.router.navigateByUrl('/login');
-        this.spinnerService.hide();
-      })
-    }
-    // this.signalRService.reConnect();
 
-    // this.signalRService.removeTagDataListener();
-    // this.signalRService.addTagDataListner();
-    // this.signalRService.unRespondedCountDataListener();
-    // this.signalRService.updateListAndDetailDataListener();
-    // this.signalRService.replyDataListener();
-    // this.signalRService.queryStatusDataListener();
-    // this.signalRService.bulkQueryStatusDataListener();
-    // this.signalRService.assignQueryResponseListner();
-    // this.signalRService.applySentimentListner();
+      });
+    // if (this.signalRService.hubconnection == undefined) {
+    //   this.spinnerService.show();
+    //   this.commonService.SignOut().subscribe(()=>{
+    //     localStorage.clear();
+    //     this.router.navigateByUrl('/login');
+    //     this.spinnerService.hide();
+    //   },
+    //   (error)=>{
+    //     localStorage.clear();
+    //     this.router.navigateByUrl('/login');
+    //     this.spinnerService.hide();
+    //   })
+    // }
+    this.signalRService.reConnect();
+
+    this.signalRService.removeTagDataListener();
+    this.signalRService.addTagDataListner();
+    this.signalRService.unRespondedCountDataListener();
+    this.signalRService.updateListAndDetailDataListener();
+    this.signalRService.replyDataListener();
+    this.signalRService.queryStatusDataListener();
+    this.signalRService.bulkQueryStatusDataListener();
+    this.signalRService.assignQueryResponseListner();
+    this.signalRService.applySentimentListner();
   }
 }

@@ -37,6 +37,7 @@ export class ReportService {
     let httpOptions = this.gethttpOptions()
     return this.http.post(this.apiUrl + "db-settings", data, httpOptions)
   }
+
   listDbSetiingApi(): Observable<any> {
     let httpOptions = this.gethttpOptions()
 
@@ -47,6 +48,7 @@ export class ReportService {
     let httpOptions = this.gethttpOptions()
     return this.http.get(this.apiUrl + "connect/" + params.toString(), httpOptions)
   }
+
   selectDatabaseApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + 'tables', data, httpOptions);
@@ -56,10 +58,12 @@ export class ReportService {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "db-connect", data, httpOptions);
   }
+
   selectTableApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "gettabledata", data, httpOptions);
   }
+
   limitDataApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "rowlimit", data, httpOptions);
@@ -68,10 +72,12 @@ export class ReportService {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "getcolumns", data, httpOptions);
   }
+
   sortDataApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "gettablesortdata", data, httpOptions);
   }
+  
   groupDataApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "getbygroup", data, httpOptions);
@@ -111,6 +117,7 @@ export class ReportService {
     let httpOptions = this.gethttpOptions()
     return this.http.get<any>(this.apiUrl + "list-report", httpOptions);
   }
+
   reportupdateApi(): Observable<any> {
     let httpOptions = this.gethttpOptions()
     return this.http.put<any>(this.apiUrl + "update-report", httpOptions);
