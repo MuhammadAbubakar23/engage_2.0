@@ -104,7 +104,7 @@ export const environment = {
       getParents : 'Tags/GetParents',
       getAllRules : 'Rules/GetAll',
       getEntitiesRule : 'Rules/GetEntities',
-      getRuleEntityProperties : 'GetEntitiesProperties',
+      getRuleEntityProperties: 'Rules/GetEntitiesProperties/',
       getRuleById:  'Rules/GetById',
       addRules: 'Rules/Add',
       updateRules: 'Rules/Update',
