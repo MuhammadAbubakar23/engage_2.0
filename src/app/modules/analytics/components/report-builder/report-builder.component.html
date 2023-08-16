@@ -69,6 +69,8 @@
                       >{{ column }}</ng-option
                     >
                   </ng-select>
+
+
                 </div>
                 <div style="margin-left: 10px" *ngIf="isTabular">
                   <ng-select
@@ -84,7 +86,11 @@
                       >{{ column.key }}</ng-option
                     >
                   </ng-select>
+
                 </div>
+                <div *ngIf="isTabular || isVisual" style="margin-right: 10px;"><i class="fa fa-refresh" aria-hidden="true" (click)="refreshData()"></i></div>
+
+
                 <div class="w-auto ms-2">
                   <div
                     *ngIf="isFilter"

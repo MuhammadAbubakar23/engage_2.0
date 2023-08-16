@@ -434,7 +434,7 @@ export class CommonDataService {
 
     return this.http.post(this.consoleBaseUrl + this.addProfile, addProfile)
   }
-  AttachFacebookPage(body:any){
+  AttachFacebookPage(body: any) {
     return this.http.post(this.InstagramBaseUrl + this.attachFacebookPage, body)
   }
 
@@ -492,8 +492,8 @@ export class CommonDataService {
     return this.http.get(this.consoleBaseUrl + this.getEntitiesRule);
 
   }
-  GetRuleEntityProperties() {
-    return this.http.get(this.consoleBaseUrl + this.getRuleEntityProperties);
+  GetRuleEntityProperties(entity: string) {
+    return this.http.get(`${this.consoleBaseUrl}${this.getRuleEntityProperties}?tableName=${entity}`);
 
   }
 
@@ -505,12 +505,13 @@ export class CommonDataService {
     return this.http.get(this.IdentityBaseUrl + '/' + this.getChannels)
   }
 
-  UpdateStatus(body:any){
-    return this.http.post(this.CommonBaseUrl+this.updateStatus, body)
+  UpdateStatus(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.updateStatus, body)
   }
 
-  HideUnhideMessage(queryId:number, status:boolean){
-    const url = (this.CommonBaseUrl+this.hideUnhideMessage+'?QueryId='+queryId+'&Status='+status);
+  HideUnhideMessage(queryId: number, status: boolean) {
+    debugger
+    const url = (this.CommonBaseUrl + this.hideUnhideMessage + '?QueryId=' + queryId + '&Status=' + status);
     return this.http.get(url);
   }
 }

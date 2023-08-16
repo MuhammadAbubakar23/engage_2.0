@@ -203,7 +203,7 @@ export class ConversationComponent implements OnInit {
       this.fromDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T11:59:59.999Z';
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '3 days') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 2);
@@ -212,7 +212,7 @@ export class ConversationComponent implements OnInit {
       this.fromDate = fromDate;
 
       this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T11:59:59.999Z';
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '1 week') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 6);
@@ -221,7 +221,7 @@ export class ConversationComponent implements OnInit {
       this.fromDate = fromDate;
 
       this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T11:59:59.999Z';
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '2 weeks') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 13);
@@ -230,7 +230,7 @@ export class ConversationComponent implements OnInit {
       this.fromDate = fromDate;
 
       this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T11:59:59.999Z';
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '1 month') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 30);
@@ -239,7 +239,7 @@ export class ConversationComponent implements OnInit {
       this.fromDate = fromDate;
 
       this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T11:59:59.999Z';
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '2 months') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 60);
@@ -248,7 +248,7 @@ export class ConversationComponent implements OnInit {
       this.fromDate = fromDate;
 
       this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T11:59:59.999Z';
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '6 months') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 180);
@@ -257,7 +257,7 @@ export class ConversationComponent implements OnInit {
       this.fromDate = fromDate;
 
       this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T11:59:59.999Z';
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '1 year') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 365);
@@ -266,20 +266,20 @@ export class ConversationComponent implements OnInit {
       this.fromDate = fromDate;
 
       this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T11:59:59.999Z';
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (
       this.searchForm.value.fromDate != null &&
       (this.searchForm.value.toDate == null ||
         this.searchForm.value.toDate == undefined)
     ) {
       this.fromDate = this.searchForm.value.fromDate + 'T00:00:00.000Z';
-      this.toDate = this.searchForm.value.fromDate + 'T11:59:59.999Z';
+      this.toDate = this.searchForm.value.fromDate + 'T23:59:59.999Z';
     } else if (
       this.searchForm.value.fromDate != null &&
       this.searchForm.value.toDate != null
     ) {
       this.fromDate = this.searchForm.value.fromDate + 'T00:00:00.000Z';
-      this.toDate = this.searchForm.value.toDate + 'T11:59:59.999Z';
+      this.toDate = this.searchForm.value.toDate + 'T23:59:59.999Z';
     }
 
     this.searchForm.patchValue({
@@ -410,7 +410,7 @@ export class ConversationComponent implements OnInit {
       let olderThenAWeek = currentDate.setDate(currentDate.getDate() - 7);
       this.toDate =
         this.datePipe.transform(olderThenAWeek, 'YYYY-MM-dd') +
-        'T11:59:59.999Z';
+        'T23:59:59.999Z';
 
       const oneYearFromToDate = currentDate.setDate(
         currentDate.getDate() - 365
@@ -423,7 +423,7 @@ export class ConversationComponent implements OnInit {
       let olderThenAMonth = currentDate.setDate(currentDate.getDate() - 30);
       this.toDate =
         this.datePipe.transform(olderThenAMonth, 'YYYY-MM-dd') +
-        'T11:59:59.999Z';
+        'T23:59:59.999Z';
 
       const oneYearFromToDate = currentDate.setDate(
         currentDate.getDate() - 365
@@ -436,7 +436,7 @@ export class ConversationComponent implements OnInit {
       let olderThenASixMonth = currentDate.setDate(currentDate.getDate() - 180);
       this.toDate =
         this.datePipe.transform(olderThenASixMonth, 'YYYY-MM-dd') +
-        'T11:59:59.999Z';
+        'T23:59:59.999Z';
 
       const oneYearFromToDate = currentDate.setDate(
         currentDate.getDate() - 365
@@ -449,7 +449,7 @@ export class ConversationComponent implements OnInit {
       let olderThenAYear = currentDate.setDate(currentDate.getDate() - 365);
       this.toDate =
         this.datePipe.transform(olderThenAYear, 'YYYY-MM-dd') +
-        'T11:59:59.999Z';
+        'T23:59:59.999Z';
 
       const oneYearFromToDate = currentDate.setDate(
         currentDate.getDate() - 365
@@ -472,96 +472,35 @@ export class ConversationComponent implements OnInit {
   updateListDataListener(res: any) {
     res.forEach((newMsg: any) => {
       if (this.platform == newMsg.platform && this.isAttachment != true) {
-          const index = this.ConversationList?.findIndex(
-            (obj: any) => obj.user === newMsg.user
-          );
-          if (index >= 0) {
-            this.ConversationList.forEach((main: any) => {
-              if (newMsg.user == main.user) {
-                this.listingDto = newMsg;
-                this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-                this.ConversationList[index] = this.listingDto;
-              }
-            });
-          } else if (this.ConversationList) {
-            this.listingDto = newMsg;
-            this.ConversationList.unshift(this.listingDto);
-            if (this.ConversationList.length > this.pageSize) {
-              this.ConversationList.pop();
-              this.TotalUnresponded = this.TotalUnresponded + 1;
-            } else if (this.ConversationList.length <= this.pageSize) {
-              this.TotalUnresponded = this.TotalUnresponded + 1;
-              this.from = this.from + 1;
+        const index = this.ConversationList?.findIndex(
+          (obj: any) => obj.user === newMsg.user
+        );
+        if (index >= 0) {
+          this.ConversationList.forEach((main: any) => {
+            if (newMsg.user == main.user) {
+              this.listingDto = newMsg;
+              this.listingDto.unrespondedCount = main.unrespondedCount + 1;
+              this.ConversationList[index] = this.listingDto;
             }
-          } else {
-            this.ConversationList = res;
-            this.to = 1;
-            this.TotalUnresponded = 1;
-            this.from = 1;
+          });
+        } else if (this.ConversationList) {
+          this.listingDto = newMsg;
+          this.ConversationList.unshift(this.listingDto);
+          if (this.ConversationList.length > this.pageSize) {
+            this.ConversationList.pop();
+            this.TotalUnresponded = this.TotalUnresponded + 1;
+          } else if (this.ConversationList.length <= this.pageSize) {
+            this.TotalUnresponded = this.TotalUnresponded + 1;
+            this.from = this.from + 1;
           }
-        
+        } else {
+          this.ConversationList = res;
+          this.to = 1;
+          this.TotalUnresponded = 1;
+          this.from = 1;
+        }
       } else if (newMsg.isAttachment == true && this.isAttachment == true) {
-          if (this.platform == newMsg.platform) {
-            const index = this.ConversationList?.findIndex(
-              (obj: any) => obj.user === newMsg.user
-            );
-            if (index >= 0) {
-              this.ConversationList.forEach((main: any) => {
-                if (newMsg.user == main.user) {
-                  this.listingDto = newMsg;
-                  this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-                  this.ConversationList[index] = this.listingDto;
-                }
-              });
-            } else if (this.ConversationList) {
-              this.listingDto = newMsg;
-              this.ConversationList.unshift(this.listingDto);
-              if (this.ConversationList.length > this.pageSize) {
-                this.ConversationList.pop();
-                this.TotalUnresponded = this.TotalUnresponded + 1;
-              } else if (this.ConversationList.length <= this.pageSize) {
-                this.TotalUnresponded = this.TotalUnresponded + 1;
-                this.from = this.from + 1;
-              }
-            } else {
-              this.ConversationList = res;
-              this.to = 1;
-              this.TotalUnresponded = 1;
-              this.from = 1;
-            }
-          } else if (this.platform == '') {
-            const index = this.ConversationList?.findIndex(
-              (obj: any) => obj.user === newMsg.user
-            );
-            if (index >= 0) {
-              this.ConversationList.forEach((main: any) => {
-                if (newMsg.user == main.user) {
-                  this.listingDto = newMsg;
-                  this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-                  this.ConversationList[index] = this.listingDto;
-                }
-              });
-            } else if (this.ConversationList) {
-              this.listingDto = newMsg;
-              this.ConversationList.unshift(this.listingDto);
-              if (this.ConversationList.length > this.pageSize) {
-                this.ConversationList.pop();
-                this.TotalUnresponded = this.TotalUnresponded + 1;
-              } else if (this.ConversationList.length <= this.pageSize) {
-                this.TotalUnresponded = this.TotalUnresponded + 1;
-                this.from = this.from + 1;
-              }
-            } else {
-              this.ConversationList = res;
-              this.to = 1;
-              this.TotalUnresponded = 1;
-              this.from = 1;
-            }
-          }
-        
-      } 
-      
-      else if (this.platform == '' && this.isAttachment != true) {
+        if (this.platform == newMsg.platform) {
           const index = this.ConversationList?.findIndex(
             (obj: any) => obj.user === newMsg.user
           );
@@ -589,6 +528,63 @@ export class ConversationComponent implements OnInit {
             this.TotalUnresponded = 1;
             this.from = 1;
           }
+        } else if (this.platform == '') {
+          const index = this.ConversationList?.findIndex(
+            (obj: any) => obj.user === newMsg.user
+          );
+          if (index >= 0) {
+            this.ConversationList.forEach((main: any) => {
+              if (newMsg.user == main.user) {
+                this.listingDto = newMsg;
+                this.listingDto.unrespondedCount = main.unrespondedCount + 1;
+                this.ConversationList[index] = this.listingDto;
+              }
+            });
+          } else if (this.ConversationList) {
+            this.listingDto = newMsg;
+            this.ConversationList.unshift(this.listingDto);
+            if (this.ConversationList.length > this.pageSize) {
+              this.ConversationList.pop();
+              this.TotalUnresponded = this.TotalUnresponded + 1;
+            } else if (this.ConversationList.length <= this.pageSize) {
+              this.TotalUnresponded = this.TotalUnresponded + 1;
+              this.from = this.from + 1;
+            }
+          } else {
+            this.ConversationList = res;
+            this.to = 1;
+            this.TotalUnresponded = 1;
+            this.from = 1;
+          }
+        }
+      } else if (this.platform == '' && this.isAttachment != true) {
+        const index = this.ConversationList?.findIndex(
+          (obj: any) => obj.user === newMsg.user
+        );
+        if (index >= 0) {
+          this.ConversationList.forEach((main: any) => {
+            if (newMsg.user == main.user) {
+              this.listingDto = newMsg;
+              this.listingDto.unrespondedCount = main.unrespondedCount + 1;
+              this.ConversationList[index] = this.listingDto;
+            }
+          });
+        } else if (this.ConversationList) {
+          this.listingDto = newMsg;
+          this.ConversationList.unshift(this.listingDto);
+          if (this.ConversationList.length > this.pageSize) {
+            this.ConversationList.pop();
+            this.TotalUnresponded = this.TotalUnresponded + 1;
+          } else if (this.ConversationList.length <= this.pageSize) {
+            this.TotalUnresponded = this.TotalUnresponded + 1;
+            this.from = this.from + 1;
+          }
+        } else {
+          this.ConversationList = res;
+          this.to = 1;
+          this.TotalUnresponded = 1;
+          this.from = 1;
+        }
       }
 
       let groupedItems = this.ConversationList.reduce((acc: any, item: any) => {
@@ -642,7 +638,7 @@ export class ConversationComponent implements OnInit {
         if(item.profileId == res.profileId){
           this.ConversationList.splice(item)
         }
-      })
+      });
       this.changeDetect.detectChanges();
     });
   }
@@ -660,6 +656,8 @@ export class ConversationComponent implements OnInit {
     this.notInclude = '';
     this.include = '';
     this.advanceSearch = false;
+    this.fromDate = null;
+    this.toDate = null;
     this.getConversationList();
   }
 
@@ -931,7 +929,6 @@ export class ConversationComponent implements OnInit {
 
   remaining: number = 0;
   NextPage(pageNumber: any) {
-    
     if (this.TotalUnresponded < this.from) {
       this.from = this.TotalUnresponded;
     }
@@ -1268,6 +1265,7 @@ export class ConversationComponent implements OnInit {
       if (res.message === "Status Updated Successfully") {
         this.itemsToBeUpdated = [];
         this.reloadComponent('unblock');
+        this.Reload();
       }
     });
 }

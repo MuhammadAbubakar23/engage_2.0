@@ -78,6 +78,7 @@ export class AnalyticsComponent implements OnInit {
         this.showPanel = true
         this.loadComponent('',msg3)
       }
+      
       else {
         this.showPanel = false;
         this.rightcontainer?.clear();
