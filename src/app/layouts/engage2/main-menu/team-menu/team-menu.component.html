@@ -4,16 +4,18 @@
     class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
     <div class="list-group-text d-flex align-items-center" >
         <div class="iconButton medium" [innerHTML]="menu.icon">
+            {{menu.icon}}
         </div>
         <a class="itemLabel">
             {{menu.name}}
         </a>
     </div>
+    <span class="badge rounded-pill bg-light text-dark">38</span>
 </a>
 </ng-container> -->
 
 <!-- Hard coded -->
-<a (click)="update('all-inboxes')"
+<a (click)="update('all-inboxes/my_inbox')"
     class="list-group-item list-group-item-action d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
     <div class="list-group-text d-flex align-items-center">
         <div class="iconButton medium">
@@ -21,6 +23,17 @@
         </div>
         <div class="itemLabel">
             All Inboxes
+        </div>
+    </div>
+</a>
+<a (click)="update('all-inboxes/starred')"
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
+    <div class="list-group-text d-flex align-items-center">
+        <div class="iconButton medium">
+            <i class="fal fa-star ice"></i>
+        </div>
+        <div class="itemLabel">
+            Starred
         </div>
     </div>
 </a>
@@ -32,6 +45,39 @@
         </div>
         <div class="itemLabel">
             Sent
+        </div>
+    </div>
+</a>
+<a (click)="update('all-inboxes/blacklist')"
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
+    <div class="list-group-text d-flex align-items-center">
+        <div class="iconButton medium">
+            <i class="fal fa-ban ice"></i>
+        </div>
+        <div class="itemLabel">
+            Black List
+        </div>
+    </div>
+</a>
+<a (click)="update('all-inboxes/spam')"
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
+    <div class="list-group-text d-flex align-items-center">
+        <div class="iconButton medium">
+            <i class="fal fa-exclamation-circle ice"></i>
+        </div>
+        <div class="itemLabel">
+            Spam
+        </div>
+    </div>
+</a>
+<a (click)="update('all-inboxes/trash')"
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
+    <div class="list-group-text d-flex align-items-center">
+        <div class="iconButton medium">
+            <i class="fal fa-flag ice"></i>
+        </div>
+        <div class="itemLabel">
+            Trash
         </div>
     </div>
 </a>
