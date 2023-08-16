@@ -203,7 +203,7 @@ export class ConversationComponent implements OnInit {
       this.fromDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T11:59:59.999Z';
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '3 days') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 2);
@@ -212,7 +212,7 @@ export class ConversationComponent implements OnInit {
       this.fromDate = fromDate;
 
       this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T11:59:59.999Z';
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '1 week') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 6);
@@ -221,7 +221,7 @@ export class ConversationComponent implements OnInit {
       this.fromDate = fromDate;
 
       this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T11:59:59.999Z';
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '2 weeks') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 13);
@@ -230,7 +230,7 @@ export class ConversationComponent implements OnInit {
       this.fromDate = fromDate;
 
       this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T11:59:59.999Z';
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '1 month') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 30);
@@ -239,7 +239,7 @@ export class ConversationComponent implements OnInit {
       this.fromDate = fromDate;
 
       this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T11:59:59.999Z';
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '2 months') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 60);
@@ -248,7 +248,7 @@ export class ConversationComponent implements OnInit {
       this.fromDate = fromDate;
 
       this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T11:59:59.999Z';
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '6 months') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 180);
@@ -257,7 +257,7 @@ export class ConversationComponent implements OnInit {
       this.fromDate = fromDate;
 
       this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T11:59:59.999Z';
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '1 year') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 365);
@@ -266,20 +266,20 @@ export class ConversationComponent implements OnInit {
       this.fromDate = fromDate;
 
       this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T11:59:59.999Z';
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (
       this.searchForm.value.fromDate != null &&
       (this.searchForm.value.toDate == null ||
         this.searchForm.value.toDate == undefined)
     ) {
       this.fromDate = this.searchForm.value.fromDate + 'T00:00:00.000Z';
-      this.toDate = this.searchForm.value.fromDate + 'T11:59:59.999Z';
+      this.toDate = this.searchForm.value.fromDate + 'T23:59:59.999Z';
     } else if (
       this.searchForm.value.fromDate != null &&
       this.searchForm.value.toDate != null
     ) {
       this.fromDate = this.searchForm.value.fromDate + 'T00:00:00.000Z';
-      this.toDate = this.searchForm.value.toDate + 'T11:59:59.999Z';
+      this.toDate = this.searchForm.value.toDate + 'T23:59:59.999Z';
     }
 
     this.searchForm.patchValue({
@@ -409,7 +409,7 @@ export class ConversationComponent implements OnInit {
       let olderThenAWeek = currentDate.setDate(currentDate.getDate() - 7);
       this.toDate =
         this.datePipe.transform(olderThenAWeek, 'YYYY-MM-dd') +
-        'T11:59:59.999Z';
+        'T23:59:59.999Z';
 
       const oneYearFromToDate = currentDate.setDate(
         currentDate.getDate() - 365
@@ -422,7 +422,7 @@ export class ConversationComponent implements OnInit {
       let olderThenAMonth = currentDate.setDate(currentDate.getDate() - 30);
       this.toDate =
         this.datePipe.transform(olderThenAMonth, 'YYYY-MM-dd') +
-        'T11:59:59.999Z';
+        'T23:59:59.999Z';
 
       const oneYearFromToDate = currentDate.setDate(
         currentDate.getDate() - 365
@@ -435,7 +435,7 @@ export class ConversationComponent implements OnInit {
       let olderThenASixMonth = currentDate.setDate(currentDate.getDate() - 180);
       this.toDate =
         this.datePipe.transform(olderThenASixMonth, 'YYYY-MM-dd') +
-        'T11:59:59.999Z';
+        'T23:59:59.999Z';
 
       const oneYearFromToDate = currentDate.setDate(
         currentDate.getDate() - 365
@@ -448,7 +448,7 @@ export class ConversationComponent implements OnInit {
       let olderThenAYear = currentDate.setDate(currentDate.getDate() - 365);
       this.toDate =
         this.datePipe.transform(olderThenAYear, 'YYYY-MM-dd') +
-        'T11:59:59.999Z';
+        'T23:59:59.999Z';
 
       const oneYearFromToDate = currentDate.setDate(
         currentDate.getDate() - 365
