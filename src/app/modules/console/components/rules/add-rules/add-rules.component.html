@@ -48,6 +48,7 @@
                     role="tabpanel"
                     aria-labelledby="holiday-detail-tab"
                   >
+                  <form [formGroup]="rulesForm">
                     <div class="business-detail-wrap">
                       <div class="floating-item mb-3">
                         <div class="form-floating">
@@ -56,7 +57,7 @@
                             class="form-control"
                             id="floatingInputValue"
                             placeholder="Rules Name"
-                            formControlName="name"
+                            formControlName="ruleName"
                           />
                           <label for="floatingInputValue">Rule Name</label>
                         </div>
@@ -79,6 +80,7 @@
                         </div>
                       </div>
                     </div>
+                  </form>
                   </div>
 
                   <div
@@ -114,12 +116,11 @@
                               }}</textarea>
                             </div>
                             <div>
-                              <!-- <textarea class="output">{{oDataFilter}}</textarea> -->
+
                             </div>
                           </div>
                         </div>
                         <br />
-                        <!-- <button (click)="onClick()" class="btn btn-success">Submit</button> -->
                       </div>
                     </div>
                   </div>
