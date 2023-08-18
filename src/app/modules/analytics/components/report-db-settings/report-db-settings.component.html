@@ -1,138 +1,124 @@
-<div class="container mt-5" style="width: 60%">
+
+<div class="container mt-5" style="width: 40%;">
+
   <form [formGroup]="dbSettingsForm">
-    <div class="form-group flex-grow-1" style="display: flex; flex-direction: column">
-      <div style="position: relative">
-        <input
-          id="ConnectionName"
-          class="form-control"
-          formControlName="ConnectionName"
-          style="height: 60px; padding-top: 20px"
-        />
-        <label
-          for="ConnectionName"
-          style="
-            position: absolute;
-            top: 2px;
-            left: 10px;
-            color: #999;
-            pointer-events: none;
-          "
-          >Connection Name</label
-        >
-      </div>
+    <div class="business-detail-wrap">
+      <div class="business-detail-wrap">
+        <div class="floating-item mb-3">
+          <div class="form-floating">
+            <ng-select formControlName="ENGINE">
+              <ng-option *ngFor="let engine of engineOptions" [value]="engine">
+                {{ engine }}
+              </ng-option>
+            </ng-select>
 
-      <div>
-        <ng-select
-        
-        formControlName="ENGINE"
-          style="margin-top: 10px;"
-        >
-        <ng-option *ngFor="let engine of engineOptions" [value]="engine">
-          {{ engine }}
-        </ng-option>
-        </ng-select>
+          </div>
+        </div>
       </div>
+    </div>
+    <div class="business-detail-wrap">
+      <div class="business-detail-wrap">
+        <div class="floating-item mb-3">
+          <div class="form-floating">
+            <input
+            type="text"
+              class="form-control"
+              id="floatingInputValue"
+              placeholder="Connection Name"
+              formControlName="ConnectionName"
+            />
+            <label for="floatingInputValue">Connection Name</label>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <div style="position: relative; margin-top: 10px">
-        <input
-          id="DATABASE"
-          class="form-control"
-          formControlName="DATABASE"
-          style="height: 60px; padding-top: 20px"
-        />
-        <label
-          for="DATABASE"
-          style="
-            position: absolute;
-            top: 2px;
-            left: 10px;
-            color: #999;
-            pointer-events: none;
-          "
-          >DATABASE NAME</label
-        >
-      </div>
 
-      <div style="position: relative; margin-top: 10px">
-        <input
-          id="USER"
-          class="form-control"
-          formControlName="USER"
-          style="height: 60px; padding-top: 20px"
-        />
-        <label
-          for="USER"
-          style="
-            position: absolute;
-            top: 2px;
-            left: 10px;
-            color: #999;
-            pointer-events: none;
-          "
-          >User</label
-        >
+    <div class="business-detail-wrap">
+      <div class="business-detail-wrap">
+        <div class="floating-item mb-3">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInputDatabase"
+              placeholder="Database Name"
+              formControlName="DATABASE"
+            />
+            <label for="floatingInputDatabase">Database Name</label>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <div style="position: relative; margin-top: 10px">
-        <input
-          type="password"
-          id="PASSWORD"
-          class="form-control"
-          formControlName="PASSWORD"
-          style="height: 60px; padding-top: 20px"
-        />
-        <label
-          for="PASSWORD"
-          style="
-            position: absolute;
-            top: 2px;
-            left: 10px;
-            color: #999;
-            pointer-events: none;
-          "
-          >Password</label
-        >
+    <div class="business-detail-wrap">
+      <div class="business-detail-wrap">
+        <div class="floating-item mb-3">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInputUser"
+              placeholder="User"
+              formControlName="USER"
+            />
+            <label for="floatingInputUser">User</label>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <div style="position: relative; margin-top: 10px">
-        <input
-          id="HOST"
-          class="form-control"
-          formControlName="HOST"
-          style="height: 60px; padding-top: 20px"
-        />
-        <label
-          for="HOST"
-          style="
-            position: absolute;
-            top: 2px;
-            left: 10px;
-            color: #999;
-            pointer-events: none;
-          "
-          >Host</label
-        >
+    <div class="business-detail-wrap">
+      <div class="business-detail-wrap">
+        <div class="floating-item mb-3">
+          <div class="form-floating">
+            <input
+              type="password"
+              class="form-control"
+              id="floatingInputPassword"
+              placeholder="Password"
+              formControlName="PASSWORD"
+            />
+            <label for="floatingInputPassword">Password</label>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <div style="position: relative; margin-top: 10px">
-        <input
-          id="PORT"
-          class="form-control"
-          formControlName="PORT"
-          style="height: 60px; padding-top: 20px"
-        />
-        <label
-          for="PORT"
-          style="
-            position: absolute;
-            top: 2px;
-            left: 10px;
-            color: #999;
-            pointer-events: none;
-          "
-          >Port</label
-        >
+    <div class="business-detail-wrap">
+      <div class="business-detail-wrap">
+        <div class="floating-item mb-3">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInputHost"
+              placeholder="Host"
+              formControlName="HOST"
+            />
+            <label for="floatingInputHost">Host</label>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <div class="business-detail-wrap">
+      <div class="business-detail-wrap">
+        <div class="floating-item mb-3">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInputPort"
+              placeholder="Port"
+              formControlName="PORT"
+            />
+            <label for="floatingInputPort">Port</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
       <button
         class="btn btn-primary"
@@ -143,6 +129,6 @@
       >
         Save
       </button>
-    </div>
+
   </form>
 </div>

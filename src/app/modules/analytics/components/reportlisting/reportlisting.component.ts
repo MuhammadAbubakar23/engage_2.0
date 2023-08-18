@@ -3,6 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { ReportService } from '../../services/report.service';
 import { ShareddataService } from '../../services/shareddata.service';
 import { ChartConfiguration, ChartData, ChartDataset, ChartType, ChartTypeRegistry, Color } from 'chart.js';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgChartsModule } from 'ng2-charts';
 
 interface CustomChartData1<TType extends ChartType, TData extends ChartData<TType, unknown, string | string[]>> {
   type: TType | 'bar' | 'pie' | 'line' | 'polarArea' | 'radar';
@@ -12,11 +17,20 @@ interface CustomChartData1<TType extends ChartType, TData extends ChartData<TTyp
 
 @Component({
   selector: 'app-reportlisting',
+  standalone: true,
+  imports:[CommonModule,
+    FormsModule,
+    NgSelectModule,
+    NgChartsModule,
+    DragDropModule,],
   templateUrl: './reportlisting.component.html',
   styleUrls: ['./reportlisting.component.scss']
 })
 export class ReportlistingComponent implements OnInit {
-  reports: any = [];
+
+  showPanel=false;
+  
+    reports: any = [];
   columns = ['Report Name']
   targetReport = ""
   db = "";

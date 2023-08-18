@@ -1,9 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Import the necessary form-related modules
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'; // Import the necessary form-related modules
 import { ReportService } from '../../services/report.service';
-
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-report-db-settings',
+  standalone: true,
+  imports: [
+    CommonModule,
+    NgSelectModule,
+    ReactiveFormsModule,
+    FormsModule],
   templateUrl: './report-db-settings.component.html',
   styleUrls: ['./report-db-settings.component.scss']
 })
@@ -13,11 +22,12 @@ export class ReportDbSettingsComponent implements OnInit {
   engineOptions: string[] = ['Microsoft SQL Server', 'My SQL'];
   constructor(
     private formBuilder: FormBuilder,
-    private reportService: ReportService
+    private reportService: ReportService,
+    private _route:Router
   ) { }
 
   ngOnInit(): void {
-    this.initForm(); 
+    this.initForm();
   }
 
   initForm() {
@@ -53,6 +63,7 @@ export class ReportDbSettingsComponent implements OnInit {
     this.reportService.createDbSetiingApi(data).subscribe((res) => {
       console.log(res);
       alert(res);
+      this._route.navigateByUrl('/analytics/db-settings')
     });
     console.log('Saving settings:', this.dbSettingsForm.value);
   }
