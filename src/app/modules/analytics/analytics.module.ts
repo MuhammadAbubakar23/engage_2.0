@@ -31,7 +31,7 @@ import { DblistingComponent } from './components/dblisting/dblisting.component';
     LiveMonitoringHeaderComponent,
     ReportBuilderHeaderComponent,
     // ReportBuilderComponent,
-    ActionsComponent,
+    //ActionsComponent,
     // ReportDbSettingsComponent,
     // ReportlistingComponent,
     // ToastrComponent,
