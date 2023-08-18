@@ -37,6 +37,11 @@ const routes: Routes = [
       path:'db-settings/create',
       loadComponent: () => import('./components/report-db-settings/report-db-settings.component').then(c => c.ReportDbSettingsComponent),
 
+    },
+    {
+      path:'db-settings/update/:id',
+      loadComponent: () => import('./components/report-db-settings/report-db-settings.component').then(c => c.ReportDbSettingsComponent),
+
     }
   ]
   },

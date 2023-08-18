@@ -27,10 +27,7 @@ import { ToastrComponent } from '../toastr/toastr.component';
   styleUrls: ['./report-builder.component.scss']
 })
 export class ReportBuilderComponent implements OnInit {
-
   showPanel = false;
-
-
   databases: string[] = [];
   dbsettings: any[] = [];
   DBC: any = "Please select connection"

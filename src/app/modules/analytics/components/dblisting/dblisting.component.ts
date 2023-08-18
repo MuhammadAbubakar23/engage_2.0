@@ -13,15 +13,19 @@ import { RouterModule } from '@angular/router';
 export class DblistingComponent implements OnInit {
   showPanel=false;
   connections:any=[]
-  columns=['Connection','Engine','Database','User','Host','Port']
+  columns=['Connection','Engine','Database','User','Host','Port','Action']
   constructor(private _rs:ReportService) { }
 
   ngOnInit(): void {
-   this._rs.listDbSetiingApi().subscribe((res)=>{
-    console.log("Dblisting", res);
-    this.connections=res;
+    this._rs.login().subscribe((token: any) => {
+      localStorage.setItem("token", token.access);
+      this._rs.listDbSetiingApi().subscribe((res)=>{
+        console.log("Dblisting", res);
+        this.connections=res;
 
-   })
+       })
+    })
+
   }
 
 }
