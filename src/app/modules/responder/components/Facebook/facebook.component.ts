@@ -1736,7 +1736,6 @@ if (type == 'removeStarred') {
 
   hideMessage(queryId:number, status:boolean){
     this.commondata.HideUnhideMessage(queryId,status).subscribe((res:any)=>{
-      debugger
       console.log(res);
     })
   }
