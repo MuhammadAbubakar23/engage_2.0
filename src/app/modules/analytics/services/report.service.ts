@@ -29,24 +29,33 @@ export class ReportService {
   }
   getDataBasesApi(): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    //const headers = new HttpHeaders();
+
     return this.http.get<any>(this.apiUrl, httpOptions);
   }
-
-  createDbSetiingApi(data: any): Observable<any> {
-    let httpOptions = this.gethttpOptions()
-    return this.http.post(this.apiUrl + "db-settings", data, httpOptions)
-  }
-  updateDbSetiingApi(data: any): Observable<any> {
-    let httpOptions = this.gethttpOptions()
-    return this.http.post(this.apiUrl + "db-settings", data, httpOptions)
-  }
-
   listDbSetiingApi(): Observable<any> {
     let httpOptions = this.gethttpOptions()
 
     return this.http.get(this.apiUrl + "db-settings", httpOptions)
   }
+  getDbSettingById(id: any): Observable<any> {
+    let httpOptions = this.gethttpOptions()
+    return this.http.get(this.apiUrl + `db-settings/${id}`, httpOptions)
+  }
+  createDbSetiingApi(data: any): Observable<any> {
+    let httpOptions = this.gethttpOptions()
+    return this.http.post(this.apiUrl + "db-settings", data, httpOptions)
+  }
+
+  updateDbSetiingApi(id: any, data: any): Observable<any> {
+    let httpOptions = this.gethttpOptions()
+    return this.http.put(this.apiUrl + `db-settings/${id}`, data, httpOptions)
+  }
+  deleteDbSetiingApi(id: any): Observable<any> {
+    let httpOptions = this.gethttpOptions()
+    return this.http.delete(this.apiUrl + `db-settings/${id}`, httpOptions)
+  }
+
+
   getConnectiondatabases(connection_name: any): Observable<any> {
     const params = new HttpParams().set('connection_name', connection_name)
     let httpOptions = this.gethttpOptions()
