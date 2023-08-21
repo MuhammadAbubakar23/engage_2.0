@@ -16,8 +16,8 @@ export const environment = {
     types: { local: 'LS' },
   },
   title: 'abc',
-  IdentityBaseUrl:  'https://idtservice.enteract.live/api', // 'https://tpplidp.360scrm.com/api', // 'http://localhost:5036/api',
-  InstaBaseUrl: 'https://insta.360scrm.com/api/', // other then post and data
+  IdentityBaseUrl:  'https://idtservice.enteract.live/api',
+  InstaBaseUrl: 'https://insta.360scrm.com/api/',
   FbBaseUrl: 'https://face.360scrm.com/api/',
   YoutubeBaseUrl: 'https://tube.360scrm.com/api/',
   TwitterBaseUrl: 'https://tweet.360scrm.com/api/',
