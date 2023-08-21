@@ -657,8 +657,8 @@ export class ConversationComponent implements OnInit {
     this.advanceSearch = false;
     this.pageNumber = 1;
     this.pageSize = 20;
-    this.to = 20;
-    this.from = 1;
+    this.to = 1;
+    this.from = 20;
     this.getConversationList();
   }
 

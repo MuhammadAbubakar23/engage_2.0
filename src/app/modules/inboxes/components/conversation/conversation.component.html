@@ -518,11 +518,11 @@
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="far fa-envelope-open"></i>
         </li> -->
-          <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'snoozed'" (click)="Snooze()"
+          <!-- <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'snoozed'" (click)="Snooze()"
             aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
             data-bs-original-title="Snooze" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
             <i class="fal fa-clock"></i>
-          </li>
+          </li> -->
           <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag != 'snoozed'" (click)="RemoveSnooze()"
             aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
             data-bs-original-title="Remove Snooze" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
