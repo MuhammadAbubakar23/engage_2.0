@@ -6,7 +6,7 @@ import { ExecutiveDashboardComponent } from './components/executive-dashboard/ex
 import { LiveMonitoringComponent } from './components/live-monitoring/live-monitoring.component';
 import { ExecutiveDashboardHeaderComponent } from './analytics-headers/executive-dashboard-header/executive-dashboard-header.component';
 import { LiveMonitoringHeaderComponent } from './analytics-headers/live-monitoring-header/live-monitoring-header.component';
-import { ReportBuilderHeaderComponent } from './analytics-headers/report-builder-header/report-builder-header.component';
+
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { ReportBuilderComponent } from './components/report-builder/report-builder.component';
 import { ActionsComponent } from './components/actions/actions.component';
@@ -17,9 +17,7 @@ import { ReportDbSettingsComponent } from './components/report-db-settings/repor
 import { ReportlistingComponent } from './components/reportlisting/reportlisting.component';
 import { ExcelService } from './services/excel.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import { ToastrComponent } from './components/toastr/toastr.component';
-import { AnalyticsDashboardComponent } from './components/analytics-dashboard/analytics-dashboard.component';
-import { DblistingComponent } from './components/dblisting/dblisting.component';
+
 // import {DndModule} from 'ngx-drag-drop';
 
 @NgModule({
@@ -27,7 +25,7 @@ import { DblistingComponent } from './components/dblisting/dblisting.component';
     AnalyticsComponent,
     ExecutiveDashboardHeaderComponent,
     LiveMonitoringHeaderComponent,
-    ReportBuilderHeaderComponent
+
   ],
   imports: [
     CommonModule,

@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgChartsModule } from 'ng2-charts';
+import { HeaderService } from 'src/app/shared/services/header.service';
 
 interface CustomChartData1<TType extends ChartType, TData extends ChartData<TType, unknown, string | string[]>> {
   type: TType | 'bar' | 'pie' | 'line' | 'polarArea' | 'radar';
@@ -29,7 +30,7 @@ interface CustomChartData1<TType extends ChartType, TData extends ChartData<TTyp
 export class ReportlistingComponent implements OnInit {
 
   showPanel=false;
-  
+
     reports: any = [];
   columns = ['Report Name']
   targetReport = ""
@@ -54,7 +55,7 @@ export class ReportlistingComponent implements OnInit {
   public ChartPlugins = [];
   public ChartLegend = true;
 
-  constructor(private reportService: ReportService, private sharedService: ShareddataService) { }
+  constructor(private reportService: ReportService,private _hS:HeaderService) { }
 
   ngOnInit(): void {
 
@@ -64,7 +65,8 @@ export class ReportlistingComponent implements OnInit {
         this.reports = res;
       });
     })
-
+    const newObj = {title:'Reports',url:'/analytics/reports'};
+    this._hS.setHeader(newObj);
 
   }
 
