@@ -367,6 +367,7 @@ export class ConversationComponent implements OnInit {
         }
       }
     );
+    
   }
 
   searchUser: string = '';
@@ -655,6 +656,8 @@ export class ConversationComponent implements OnInit {
     this.notInclude = '';
     this.include = '';
     this.advanceSearch = false;
+    this.fromDate = null;
+    this.toDate = null;
     this.getConversationList();
   }
 
@@ -882,7 +885,6 @@ export class ConversationComponent implements OnInit {
             this.Ids.push(d.profileId);
           }
         });
-        //  // // console.log(this.Ids);
         this.isChecked = true;
         this.isCheckedAll = true;
       } else {
@@ -892,7 +894,6 @@ export class ConversationComponent implements OnInit {
             this.Ids.splice(abc, 1);
           }
         });
-        //  // // console.log(this.Ids);
         this.isChecked = false;
         this.isCheckedAll = false;
       }
@@ -991,7 +992,6 @@ export class ConversationComponent implements OnInit {
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        // console.log(res);
       });
   }
 

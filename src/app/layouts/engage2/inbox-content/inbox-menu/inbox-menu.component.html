@@ -24,24 +24,22 @@
             <div class="ms-2 me-auto">
               <div class="black-text">SLAs Imminent</div>
               <span class="badge rounded-pill badge-danger">{{SlaUnResponded}} High </span>
-  
+
               <span class="badge rounded-pill badge-success">5 Low</span>
             </div>
             <span class="badge twltte-bg rounded-pill">{{SlaUnResponded}}</span>
           </a> -->
 
 <!-- From DB -->
-          <!-- <a *ngFor="let channel of channels" (click)="updatevalue(channel.name)" [routerLink]="['/all-inboxes/my_inbox']"
+          <!-- <a *ngFor="let channel of allChannels" (click)="updatevalue(channel.title)" [routerLink]="['/all-inboxes/my_inbox']"
             class="all-inboxes-menu list-group-item list-group-item-action">
-            <div class="iconButton medium berryBg" [innerHTML]="channel.icon">
+            <div [ngClass]="channel.color" [innerHTML]="channel.icon">
             </div>
             <div class="ms-2 me-auto">
-              <div class="black-text">{{channel.name}}</div>
+              <div class="black-text">{{channel.title}}</div>
+              <small class="coal">{{channel.subtitle}}</small>
             </div>
-            <ng-container *ngFor="let platform of platformWiseCount">
-              <span class="badge twltte-bg rounded-pill" *ngIf="platform.platform == channel.name">{{platform.count}}</span>
-              <span class="badge twltte-bg rounded-pill" *ngIf="platform.platform != channel.name">0</span>
-            </ng-container>
+            <span class="badge twltte-bg rounded-pill">{{channel.count}}</span>
           </a>
 
 <br>
@@ -64,10 +62,10 @@
             <div class="iconButton medium oceanBg">
               <i class="fab fa-twitter"></i>
             </div>
-  
+
             <div class="ms-2 me-auto">
               <div>Twitter</div>
-              <!-- <small class="coal">/ibex.connect</small> -->
+              <small class="coal">/ibex.connect</small>
             </div>
             <span class="badge twltte-bg rounded-pill">{{TwitterUnResponded}}</span>
           </a>
@@ -76,10 +74,10 @@
             <div class="iconButton medium instabg">
               <i class="fab fa-instagram"></i>
             </div>
-  
+
             <div class="ms-2 me-auto">
               <div>Instagram</div>
-              <!-- <small class="coal">/ibex.connect</small> -->
+              <small class="coal">/ibex.connect</small>
             </div>
             <span class="badge twltte-bg rounded-pill">{{InstaUnResponded}}</span>
           </a>
@@ -88,10 +86,10 @@
             <div class="iconButton medium linkedinbg">
               <i class="fa-brands fa-linkedin-in"></i>
             </div>
-  
+
             <div class="ms-2 me-auto">
               <div>LinkedIn</div>
-              <!-- <small class="coal">/ibex.connect</small> -->
+            <small class="coal">/ibex.connect</small>
             </div>
             <span class="badge twltte-bg rounded-pill">{{LinkedInUnResponded}}</span>
           </a>

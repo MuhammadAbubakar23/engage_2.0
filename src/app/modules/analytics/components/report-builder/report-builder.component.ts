@@ -1,30 +1,56 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ShareddataService } from '../../services/shareddata.service';
 import { ReportService } from '../../services/report.service';
-import { ChartConfiguration, ChartData, ChartDataset, ChartType } from 'chart.js';
+import {
+  ChartConfiguration,
+  ChartData,
+  ChartDataset,
+  ChartType,
+} from 'chart.js';
 import { ExcelService } from '../../services/excel.service';
-import { BaseChartDirective } from 'ng2-charts';
+import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { LayoutsModule } from 'src/app/layouts/layouts.module';
+import { ToastrComponent } from '../toastr/toastr.component';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { SharedService } from 'src/app/services/SharedService/shared.service';
+import { RightNavService } from 'src/app/services/RightNavService/RightNav.service';
+import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
+import { ActionsComponent } from '../actions/actions.component';
 
 @Component({
   selector: 'app-report-builder',
+  standalone: true,
+  imports: [
+    CommonModule,
+    LayoutsModule,
+    FormsModule,
+    NgSelectModule,
+    NgChartsModule,
+    ToastrComponent,
+  ],
   templateUrl: './report-builder.component.html',
-  styleUrls: ['./report-builder.component.scss']
+  styleUrls: ['./report-builder.component.scss'],
 })
 export class ReportBuilderComponent implements OnInit {
+  showPanel = false;
   databases: string[] = [];
   dbsettings: any[] = [];
-  DBC: any = "Please select connection"
+  DBC: any = 'Please select connection';
   tables: string[] = [];
-  dbName: any = "All DataBases";
-  tableName: any = "All Tables";
+  dbName: any = 'All DataBases';
+  tableName: any = 'All Tables';
   tableData: any = [];
   dataKeys: { [key: string]: any } = {};
-  columns = {}
-  filterConditions: string[] = []
+  columns = {};
+  filterConditions: string[] = [];
   isFilter: boolean = false;
-  selectedFilter = "Select Filter";
-  selectedFilterColumn = "";
-  filterNumber = 0
+  selectedFilter = 'Select Filter';
+  selectedFilterColumn = '';
+  filterNumber = 0;
   isNumber: boolean = false;
   statsdataKeys: any = [];
   isStats = false;
@@ -37,10 +63,10 @@ export class ReportBuilderComponent implements OnInit {
   collective: any[] = [];
 
   isGraph: boolean = false;
-  Labels = []
-  graphLabels: any = []
+  Labels = [];
+  graphLabels: any = [];
 
-  selectedGraph = "";
+  selectedGraph = '';
   selectedLabels: any[] = [];
   selectedColumns: any[] = [];
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
@@ -63,37 +89,37 @@ export class ReportBuilderComponent implements OnInit {
   };
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
     labels: [],
-    datasets: []
+    datasets: [],
   };
   public pieChartType: ChartType = 'pie';
   public lineChartData: ChartData<'line', number[], string | string[]> = {
     datasets: [],
-    labels: []
+    labels: [],
   };
   public polarAreaChartData: ChartData<'polarArea'> = {
     labels: [],
-    datasets: []
+    datasets: [],
   };
   public radarChartOptions: ChartConfiguration['options'] = {
     responsive: true,
   };
   public radarChartData: ChartData<'radar'> = {
     labels: [],
-    datasets: []
+    datasets: [],
   };
   public scatterChartData: ChartData<'scatter'> = {
     labels: [],
-    datasets: []
+    datasets: [],
   };
   public scatterChartOptions: ChartConfiguration['options'] = {
     responsive: true,
   };
-  toastermessage: string = "";
+  toastermessage: string = '';
   isToaster: boolean = false;
   query: any;
   public barChartData: ChartConfiguration<'bar'>['data'] = {
     labels: [],
-    datasets: []
+    datasets: [],
   };
   finalGraphresponse = [];
   finalGrapData: any = {};
@@ -101,24 +127,33 @@ export class ReportBuilderComponent implements OnInit {
   exportAsXLSX(): void {
     this.excelService.exportAsExcelFile(this.tableData, 'sample');
   }
-  constructor(private sharedataservice: ShareddataService, private reportservice: ReportService, private excelService: ExcelService) { }
+  constructor(
+    private sharedataservice: ShareddataService,
+    private reportservice: ReportService,
+    private excelService: ExcelService,
+    
+    private resolver: ComponentFactoryResolver,
+    private route: ActivatedRoute,
+    private sharedService: SharedService,
+    private rightNavService: RightNavService,
+    private toggleService: ToggleService
+  ) {}
   ngOnInit(): void {
-
     this.reportservice.login().subscribe((token: any) => {
-      localStorage.setItem("token", token.access);
+      localStorage.setItem('token', token.access);
       this.reportservice.listDbSetiingApi().subscribe((res: any) => {
         this.dbsettings = res;
-      })
-    })
+      });
+    });
 
     this.sharedataservice.query$.subscribe((res: any) => {
       this.query = res;
-    })
+    });
 
     this.sharedataservice.charttype$.subscribe((res: any) => {
       this.selectedGraph = res;
       this.selectGraph();
-    })
+    });
 
     this.sharedataservice.data$.subscribe((newData: any) => {
       this.isGraph = true;
@@ -128,14 +163,16 @@ export class ReportBuilderComponent implements OnInit {
       if (newData.isStats == false) {
         this.isStats = false;
         this.tableData = this.transformDataObject(newData.table);
-        this.finalTableData = this.tableData
+        this.finalTableData = this.tableData;
         if (this.selectedColumns.length !== 0) {
-          this.tableData = this.filterTableByColumns(this.tableData, this.selectedColumns);
+          this.tableData = this.filterTableByColumns(
+            this.tableData,
+            this.selectedColumns
+          );
         }
 
         this.dataKeys = newData.columnswithdtypes;
-      }
-      else {
+      } else {
         this.isStats = true;
         this.statsdataKeys = Object.keys(newData.table);
         this.tableData = this.transformDataObject(newData.table);
@@ -150,10 +187,7 @@ export class ReportBuilderComponent implements OnInit {
       }
     });
     this.sharedataservice.visual$.subscribe((res) => {
-
-      if (res !== "Initial Data") {
-
-
+      if (res !== 'Initial Data') {
         this.finalGrapData = res.graph_data;
 
         const keys: string[] = [];
@@ -167,21 +201,69 @@ export class ReportBuilderComponent implements OnInit {
         const uniqueKeys: string[] = [...new Set(keys)];
 
         this.graphLabels = uniqueKeys;
-        this.graphFormatData(res.graph_data)
-
+        this.graphFormatData(res.graph_data);
       }
-
-
     });
-    this.sharedataservice.getrRfreshEvent().subscribe(data => {
+    this.sharedataservice.getrRfreshEvent().subscribe((data) => {
       this.refreshData();
-    })
+    });
+
+    this.subscription = this.toggleService
+      .getTogglePanel()
+      .subscribe((msg3) => {
+        if (msg3) {
+          this.rightcontainer?.clear();
+          localStorage.setItem('child', msg3);
+          this.showPanel = true;
+          this.loadComponent(msg3);
+        } else {
+          this.showPanel = false;
+          this.rightcontainer?.clear();
+          localStorage.setItem('child', '');
+        }
+      });
+  }
+
+  componentRef: any;
+
+  @ViewChild('rightcontainer', { read: ViewContainerRef })
+  rightcontainer!: ViewContainerRef;
+
+  childComponentName!: any;
+  public subscription!: Subscription;
+  panelToggled: any;
+
+  ngAfterViewInit() {
+    this.rightcontainer?.clear();
+
+    if (this.childComponentName != null) {
+      this.showPanel = true;
+      this.loadComponent(this.childComponentName);
+    }
+  }
+
+  loadComponent(rightSideName: string) {
+    debugger;
+    let componentFactory = null;
+
+    switch (rightSideName) {
+      case 'contacts':
+        componentFactory =
+          this.resolver.resolveComponentFactory(ActionsComponent);
+        this.rightcontainer?.createComponent(componentFactory);
+        break;
+      default:
+        componentFactory =
+          this.resolver.resolveComponentFactory(ActionsComponent);
+        this.rightcontainer?.createComponent(componentFactory);
+        break;
+    }
   }
 
   graphFormatData(data: any) {
     const barChartData: ChartConfiguration<'bar'>['data'] = {
       labels: [],
-      datasets: []
+      datasets: [],
     };
     const visualKeys = Object.keys(data);
     visualKeys.forEach((item, index) => {
@@ -194,18 +276,18 @@ export class ReportBuilderComponent implements OnInit {
 
     this.barChartData = barChartData;
 
-
-    return this.barChartData
-
+    return this.barChartData;
   }
 
   selectDataBase(): void {
-    this.reportservice.selectDatabaseApi({ 'dbName': this.dbName, 'connection_name': this.DBC }).subscribe((res) => {
-      this.tables = res.tablesList;
-      this.sharedataservice.updateTables(this.tables);
-      this.dbName = res.db;
-      localStorage.setItem('dbName', this.dbName);
-    })
+    this.reportservice
+      .selectDatabaseApi({ dbName: this.dbName, connection_name: this.DBC })
+      .subscribe((res) => {
+        this.tables = res.tablesList;
+        this.sharedataservice.updateTables(this.tables);
+        this.dbName = res.db;
+        localStorage.setItem('dbName', this.dbName);
+      });
   }
   selectConnection(): void {
     this.dataKeys = [];
@@ -213,33 +295,35 @@ export class ReportBuilderComponent implements OnInit {
     this.tableData = [];
     this.databases = [];
     this.tables = [];
-    this.dbName = "All DataBases";
-    this.tableName = "All Tables";
+    this.dbName = 'All DataBases';
+    this.tableName = 'All Tables';
     localStorage.setItem('connection_name', this.DBC);
-    this.reportservice.getConnectiondatabases(this.DBC).subscribe((res) => {
-      this.toastermessage = 'Connection SuccessFull!';
-      this.isToaster = true;
-      setTimeout(() => {
-        this.isToaster = false;
-      }, 4000);
-      this.databases = res;
-    }, (error: any) => {
-      console.log(error);
-      let errorMessage = error
+    this.reportservice.getConnectiondatabases(this.DBC).subscribe(
+      (res) => {
+        this.toastermessage = 'Connection SuccessFull!';
+        this.isToaster = true;
+        setTimeout(() => {
+          this.isToaster = false;
+        }, 4000);
+        this.databases = res;
+      },
+      (error: any) => {
+        console.log(error);
+        let errorMessage = error;
 
-      this.toastermessage = `${errorMessage}`;
-      this.isToaster = true;
-      setTimeout(() => {
-        this.isToaster = false;
-      }, 4000);
-    }
-    )
+        this.toastermessage = `${errorMessage}`;
+        this.isToaster = true;
+        setTimeout(() => {
+          this.isToaster = false;
+        }, 4000);
+      }
+    );
   }
 
   transformDataObject(dataObject: any): any[] {
     const rows: any[] = [];
     const keys = Object.keys(dataObject);
-    const maxLength = Math.max(...keys.map(key => dataObject[key].length));
+    const maxLength = Math.max(...keys.map((key) => dataObject[key].length));
 
     for (let i = 0; i < maxLength; i++) {
       const row: any = {};
@@ -255,34 +339,40 @@ export class ReportBuilderComponent implements OnInit {
   }
 
   selectTable(): void {
-
-    console.log("selectTable", this.tableName, this.DBC, this.dbName);
+    console.log('selectTable', this.tableName, this.DBC, this.dbName);
     localStorage.setItem('selectedtable', this.tableName);
-    if (this.dbName !== "All DataBases" && this.tableName !== "All Tables" && this.DBC !== "Please select connection") {
-      this.reportservice.selectTableApi({ 'db': this.dbName, 'tableName': this.tableName, 'connection_name': this.DBC }).subscribe((res) => {
+    if (
+      this.dbName !== 'All DataBases' &&
+      this.tableName !== 'All Tables' &&
+      this.DBC !== 'Please select connection'
+    ) {
+      this.reportservice
+        .selectTableApi({
+          db: this.dbName,
+          tableName: this.tableName,
+          connection_name: this.DBC,
+        })
+        .subscribe((res) => {
+          this.isGraph = true;
+          this.isStats = false;
+          this.tableData = this.transformDataObject(res.table);
+          this.finalTableData = this.tableData;
 
-        this.isGraph = true;
-        this.isStats = false;
-        this.tableData = this.transformDataObject(res.table);
-        this.finalTableData = this.tableData;
+          if (this.tableData.length === 0) {
+            this.toastermessage = 'No Data Available';
+            this.isToaster = true;
+            setTimeout(() => {
+              this.isToaster = false;
+            }, 4000);
+          }
+          this.dataKeys = res.columnswithdtypes;
+          this.isTabular = true;
+          this.isVisual = false;
 
-        if (this.tableData.length === 0) {
-          this.toastermessage = 'No Data Available';
-          this.isToaster = true;
-          setTimeout(() => {
-            this.isToaster = false;
-          }, 4000);
-        }
-        this.dataKeys = res.columnswithdtypes;
-        this.isTabular = true;
-        this.isVisual = false;
-
-        this.sharedataservice.updateQuery(res.query);
-        localStorage.setItem('query', res.query);
-
-      })
+          this.sharedataservice.updateQuery(res.query);
+          localStorage.setItem('query', res.query);
+        });
     }
-
   }
 
   handleFilters(columntype: any, columnname: any): void {
@@ -290,55 +380,76 @@ export class ReportBuilderComponent implements OnInit {
     if (columntype === 'i' || columntype === 'f') {
       this.isFilter = true;
       this.isNumber = true;
-      this.filterConditions = ["Is", "Is not", "Greater than", "Less than", "Greater than or Equel to", "Less than or Equel to"];
+      this.filterConditions = [
+        'Is',
+        'Is not',
+        'Greater than',
+        'Less than',
+        'Greater than or Equel to',
+        'Less than or Equel to',
+      ];
       this.resetfilters();
-
     } else if (columntype === 'dt') {
       this.isFilter = true;
       this.isNumber = false;
-      this.filterConditions = ["Today", "Yesterday", "Last Week", "Last 7 Days", "Last 30 Days", "Last 3 Months", "Last 12 Months"];
+      this.filterConditions = [
+        'Today',
+        'Yesterday',
+        'Last Week',
+        'Last 7 Days',
+        'Last 30 Days',
+        'Last 3 Months',
+        'Last 12 Months',
+      ];
       this.resetfilters();
     } else {
       this.filterConditions = [];
       this.isFilter = false;
     }
-
   }
   resetfilters(): void {
-    this.selectedFilter = "Select Filter"
+    this.selectedFilter = 'Select Filter';
   }
   addFilter(): void {
-    const connection = localStorage.getItem("connection_name");
-    this.reportservice.filtersDataApi({
-      'column': this.selectedFilterColumn,
-      'columnid': this.filterNumber,
-      'db': this.dbName,
-      'tableName': this.tableName,
-      'condition': this.selectedFilter,
-      'connection_name': connection
-    }).subscribe((res) => {
-      this.tableData = this.transformDataObject(res.table);
-      this.sharedataservice.updateQuery(res.query);
-      this.dataKeys = res.columnswithdtypes;
-    })
-
+    const connection = localStorage.getItem('connection_name');
+    this.reportservice
+      .filtersDataApi({
+        column: this.selectedFilterColumn,
+        columnid: this.filterNumber,
+        db: this.dbName,
+        tableName: this.tableName,
+        condition: this.selectedFilter,
+        connection_name: connection,
+      })
+      .subscribe((res) => {
+        this.tableData = this.transformDataObject(res.table);
+        this.sharedataservice.updateQuery(res.query);
+        this.dataKeys = res.columnswithdtypes;
+      });
   }
-
 
   visualizeData(): void {
     const db = localStorage.getItem('dbName');
     const connection = localStorage.getItem('connection_name');
-    if (db !== null && this.query !== "Please Type Query" && connection !== null) {
+    if (
+      db !== null &&
+      this.query !== 'Please Type Query' &&
+      connection !== null
+    ) {
       this.isVisual = true;
-      this.isTabular = false
-      this.reportservice.visualizeDataApi({ 'db': db, 'query': this.query, 'connection_name': connection })
+      this.isTabular = false;
+      this.reportservice
+        .visualizeDataApi({
+          db: db,
+          query: this.query,
+          connection_name: connection,
+        })
         .subscribe((res: any) => {
           this.finalGraphresponse = res;
           this.sharedataservice.updateVisual(res);
           this.selectGraph();
         });
     }
-
   }
   tabularData(): void {
     this.isVisual = false;
@@ -352,24 +463,33 @@ export class ReportBuilderComponent implements OnInit {
       this.isPolar = false;
       this.isRadar = false;
     } else if (this.selectedGraph === 'Pie Chart') {
-
       this.isBar = false;
       this.isLine = false;
       this.isPolar = false;
       this.isPie = true;
       this.isRadar = false;
 
-      const labels1: string[] = this.barChartData.datasets.map((dataset: any) => dataset.label);
-      const datasets1: ChartDataset<"pie", number[]>[] = this.barChartData.labels!.map((label: any, index: number) => {
-        const data: number[] = this.barChartData.datasets.map((dataset: any) => {
-          const value = dataset.data[index] as number | [number, number] | null;
-          return typeof value === 'number' || Array.isArray(value) ? (value as number) : 0; // Replace null with 0 or any other appropriate default value
+      const labels1: string[] = this.barChartData.datasets.map(
+        (dataset: any) => dataset.label
+      );
+      const datasets1: ChartDataset<'pie', number[]>[] =
+        this.barChartData.labels!.map((label: any, index: number) => {
+          const data: number[] = this.barChartData.datasets.map(
+            (dataset: any) => {
+              const value = dataset.data[index] as
+                | number
+                | [number, number]
+                | null;
+              return typeof value === 'number' || Array.isArray(value)
+                ? (value as number)
+                : 0; // Replace null with 0 or any other appropriate default value
+            }
+          );
+          return { data, label: label };
         });
-        return { data, label: label };
-      });
-      const output1: ChartData<"pie", number[], string | string[]> = {
+      const output1: ChartData<'pie', number[], string | string[]> = {
         labels: labels1,
-        datasets: datasets1
+        datasets: datasets1,
       };
 
       this.pieChartData = output1;
@@ -380,17 +500,27 @@ export class ReportBuilderComponent implements OnInit {
       this.isPolar = false;
       this.isRadar = false;
 
-      const labels2: string[] = this.barChartData.datasets.map((dataset: any) => dataset.label);
-      const datasets2: ChartDataset<"line", number[]>[] = this.barChartData.labels!.map((label: any, index: number) => {
-        const data: number[] = this.barChartData.datasets.map((dataset: any) => {
-          const value = dataset.data[index] as number | [number, number] | null;
-          return typeof value === 'number' || Array.isArray(value) ? (value as number) : 0; // Replace null with 0 or any other appropriate default value
+      const labels2: string[] = this.barChartData.datasets.map(
+        (dataset: any) => dataset.label
+      );
+      const datasets2: ChartDataset<'line', number[]>[] =
+        this.barChartData.labels!.map((label: any, index: number) => {
+          const data: number[] = this.barChartData.datasets.map(
+            (dataset: any) => {
+              const value = dataset.data[index] as
+                | number
+                | [number, number]
+                | null;
+              return typeof value === 'number' || Array.isArray(value)
+                ? (value as number)
+                : 0; // Replace null with 0 or any other appropriate default value
+            }
+          );
+          return { data, label: label };
         });
-        return { data, label: label };
-      });
-      const output2: ChartData<"line", number[], string | string[]> = {
+      const output2: ChartData<'line', number[], string | string[]> = {
         labels: labels2,
-        datasets: datasets2
+        datasets: datasets2,
       };
 
       this.lineChartData = output2;
@@ -401,17 +531,27 @@ export class ReportBuilderComponent implements OnInit {
       this.isPolar = true;
       this.isRadar = false;
 
-      const labels3: string[] = this.barChartData.datasets.map((dataset: any) => dataset.label);
-      const datasets3: ChartDataset<"polarArea", number[]>[] = this.barChartData.labels!.map((label: any, index: number) => {
-        const data: number[] = this.barChartData.datasets.map((dataset: any) => {
-          const value = dataset.data[index] as number | [number, number] | null;
-          return typeof value === 'number' || Array.isArray(value) ? (value as number) : 0;
+      const labels3: string[] = this.barChartData.datasets.map(
+        (dataset: any) => dataset.label
+      );
+      const datasets3: ChartDataset<'polarArea', number[]>[] =
+        this.barChartData.labels!.map((label: any, index: number) => {
+          const data: number[] = this.barChartData.datasets.map(
+            (dataset: any) => {
+              const value = dataset.data[index] as
+                | number
+                | [number, number]
+                | null;
+              return typeof value === 'number' || Array.isArray(value)
+                ? (value as number)
+                : 0;
+            }
+          );
+          return { data, label: label };
         });
-        return { data, label: label };
-      });
-      const output3: ChartData<"polarArea", number[], string | string[]> = {
+      const output3: ChartData<'polarArea', number[], string | string[]> = {
         labels: labels3,
-        datasets: datasets3
+        datasets: datasets3,
       };
 
       this.polarAreaChartData = output3;
@@ -422,17 +562,27 @@ export class ReportBuilderComponent implements OnInit {
       this.isPolar = false;
       this.isRadar = true;
 
-      const labels4: string[] = this.barChartData.datasets.map((dataset: any) => dataset.label);
-      const datasets4: ChartDataset<"radar", number[]>[] = this.barChartData.labels!.map((label: any, index: number) => {
-        const data: number[] = this.barChartData.datasets.map((dataset: any) => {
-          const value = dataset.data[index] as number | [number, number] | null;
-          return typeof value === 'number' || Array.isArray(value) ? (value as number) : 0;
+      const labels4: string[] = this.barChartData.datasets.map(
+        (dataset: any) => dataset.label
+      );
+      const datasets4: ChartDataset<'radar', number[]>[] =
+        this.barChartData.labels!.map((label: any, index: number) => {
+          const data: number[] = this.barChartData.datasets.map(
+            (dataset: any) => {
+              const value = dataset.data[index] as
+                | number
+                | [number, number]
+                | null;
+              return typeof value === 'number' || Array.isArray(value)
+                ? (value as number)
+                : 0;
+            }
+          );
+          return { data, label: label };
         });
-        return { data, label: label };
-      });
-      const output4: ChartData<"radar", number[], string | string[]> = {
+      const output4: ChartData<'radar', number[], string | string[]> = {
         labels: labels4,
-        datasets: datasets4
+        datasets: datasets4,
       };
       this.radarChartData = output4;
     } else {
@@ -442,8 +592,6 @@ export class ReportBuilderComponent implements OnInit {
       this.isPolar = false;
       this.isRadar = false;
     }
-
-
   }
 
   filterObjectByColumns(obj: any, columnNames: string[]): any {
@@ -451,7 +599,9 @@ export class ReportBuilderComponent implements OnInit {
 
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
-        const filteredData: any = obj[key].filter((item: any) => columnNames.includes(Object.keys(item)[0]));
+        const filteredData: any = obj[key].filter((item: any) =>
+          columnNames.includes(Object.keys(item)[0])
+        );
         filteredObj[key] = filteredData;
       }
     }
@@ -460,13 +610,13 @@ export class ReportBuilderComponent implements OnInit {
   }
 
   filterTableByColumns(arr: any[], columnNames: string[]): any[] {
-    return arr.map(obj => {
+    return arr.map((obj) => {
       const filteredObj: { [key: string]: any } = {};
-      columnNames.forEach(column => {
+      columnNames.forEach((column) => {
         if (obj.hasOwnProperty(column)) {
           const value = obj[column];
           if (Array.isArray(value)) {
-            const filteredValue = value.filter(item => item !== null);
+            const filteredValue = value.filter((item) => item !== null);
             if (filteredValue.length > 0) {
               filteredObj[column] = filteredValue;
             }
@@ -477,18 +627,21 @@ export class ReportBuilderComponent implements OnInit {
       });
       return filteredObj;
     });
-
   }
 
-
-
   selectLabel() {
-    const filteredObject = this.filterObjectByColumns(this.finalGrapData, this.selectedLabels);
+    const filteredObject = this.filterObjectByColumns(
+      this.finalGrapData,
+      this.selectedLabels
+    );
     this.barChartData = this.graphFormatData(filteredObject);
     this.selectGraph();
   }
   selectColumn() {
-    const filteredArray = this.filterTableByColumns(this.finalTableData, this.selectedColumns);
+    const filteredArray = this.filterTableByColumns(
+      this.finalTableData,
+      this.selectedColumns
+    );
     this.tableData = filteredArray;
   }
 
@@ -500,4 +653,3 @@ export class ReportBuilderComponent implements OnInit {
     this.selectGraph();
   }
 }
-

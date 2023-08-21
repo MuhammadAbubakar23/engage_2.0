@@ -1,342 +1,352 @@
-<div>
-  <div>
-    <app-toastr
-      [toasterMsg]="toastermessage"
-      [isToaster]="isToaster"
-    ></app-toastr>
-    <div class="d-grid">
-      <div
-        class="analytics-dashboard perfect-scrollbar"
-        data-scrollbar="true"
-        tabindex="-1"
-        style="overflow: auto; outline: none"
-      >
-        <div class="scroll-content">
-          <div class="p-4 analytics dashboard" id="analytics-content3">
-            <div class="dashbaord w-100">
-              <h3 class="report-heading">Dashboard</h3>
-              <div class="filter-panel">
-                <div class="coal fw-bold me-4">
-                  <i class="fas fa-filter me-1"></i> Filters
-                </div>
-
-                <ng-select
-                  style="width: 250px; margin-right: 10px"
-
-                  [(ngModel)]="DBC"
-                  (change)="selectConnection()"
-                >
-                  <ng-option
-                  style="width: 250px; margin-right: 10px; background-color: red;"
-                    *ngFor="let db of dbsettings"
-                    [value]="db.connection_name"
-                    >{{ db.connection_name }}</ng-option
-                  >
-                </ng-select>
-                <ng-select
-                  style="width: 200px"
-                  [(ngModel)]="dbName"
-                  (change)="selectDataBase()"
-                >
-                  <ng-option
-                    *ngFor="let database of databases"
-                    [value]="database"
-                    >{{ database }}</ng-option
-                  >
-                </ng-select>
-                <div style="margin-left: 10px">
-                  <ng-select
-                    style="width: 200px"
-                    [(ngModel)]="tableName"
-                    (change)="selectTable()"
-                  >
-                    <ng-option *ngFor="let table of tables" [value]="table">{{
-                      table
-                    }}</ng-option>
-                  </ng-select>
-                </div>
-                <div style="margin-left: 10px" *ngIf="isVisual">
-                  <ng-select
-                    style="width: 250px; margin-right: 10px"
-                    [(ngModel)]="selectedLabels"
-                    (change)="selectLabel()"
-                    [placeholder]="selectedLabels.length === 0 ? 'Select Column' : ''"
-                    [multiple]="true"
-                  >
-                    <ng-option
-                      *ngFor="let column of graphLabels"
-                      [value]="column"
-                      >{{ column }}</ng-option
-                    >
-                  </ng-select>
-
-
-                </div>
-                <div style="margin-left: 10px" *ngIf="isTabular">
-                  <ng-select
-                    style="width: 250px; margin-right: 10px"
-                    [(ngModel)]="selectedColumns"
-                    (change)="selectColumn()"
-                    [placeholder]="selectedColumns.length === 0 ? 'Select Column' : ''"
-                    [multiple]="true"
-                  >
-                    <ng-option
-                      *ngFor="let column of dataKeys | keyvalue"
-                      [value]="column.key"
-                      >{{ column.key }}</ng-option
-                    >
-                  </ng-select>
-
-                </div>
-                <div *ngIf="isTabular || isVisual" style="margin-right: 10px;"><i class="fa fa-refresh" aria-hidden="true" (click)="refreshData()"></i></div>
-
-
-                <div class="w-auto ms-2">
-                  <div
-                    *ngIf="isFilter"
-                    class="my-4 stats-cards-section row"
-                    style="display: flex; justify-content: center"
-                  >
-                    <div *ngIf="isNumber" style="width: 200px">
-                      <input
-                        style="height: 38px"
-                        type="number"
-                        [(ngModel)]="filterNumber"
-                        placeholder="Enter an ID"
-                        class="form-control"
-                        (input)="resetfilters()"
-                      />
-                    </div>
-                    <ng-select
-                      style="width: 200px"
-                      [(ngModel)]="selectedFilter"
-                      (change)="addFilter()"
-                    >
-                      <ng-option
-                        *ngFor="let con of filterConditions"
-                        [value]="con"
-                        >{{ con }}</ng-option
-                      >
-                    </ng-select>
-                  </div>
-                </div>
-              </div>
+<div class="w-auto chat-message-component w-100 inbox-container" [ngClass]="showPanel?'panelToggled':''">
+  <div class="d-flex main-body-wrapper">
+      <div class="agent-page-main-content">
+        <div>
+          <div>
+            <app-toastr
+              [toasterMsg]="toastermessage"
+              [isToaster]="isToaster"
+            ></app-toastr>
+            <div class="d-grid">
               <div
-                *ngIf="tableData.length > 0"
-                style="float: right; margin-top: 20px"
+                class="analytics-dashboard perfect-scrollbar"
+                data-scrollbar="true"
+                tabindex="-1"
+                style="overflow: auto; outline: none"
               >
-                <input
-                  type="button"
-                  class="btn btn-primary"
-                  name="answer"
-                  value="Download"
-                  (click)="exportAsXLSX()"
-                />
-              </div>
-              <div class="agent-skill-stats pb-3">
-                <header class="tab-header">
-                  <div
-                    class="nav nav-tabs d-flex justify-content-center mb-5"
-                    id="nav-tab"
-                    role="tablist"
-                  >
-                    <button
-                      class="nav-link active"
-                      id="agent-stats-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#agent-stats"
-                      type="button"
-                      role="tab"
-                      aria-controls="agent-stats"
-                      aria-selected="true"
-                      (click)="tabularData()"
-                    >
-                      Tabular Statistics
-                    </button>
+                <div class="scroll-content">
+                  <div class="p-4 analytics dashboard" id="analytics-content3">
+                    <div class="dashbaord w-100">
+                      <h3 class="report-heading">Dashboard</h3>
+                      <div class="filter-panel">
+                        <div class="coal fw-bold me-4">
+                          <i class="fas fa-filter me-1"></i> Filters
+                        </div>
 
-                    <button
-                      class="nav-link"
-                      id="skill-stats-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#skill-stats"
-                      type="button"
-                      role="tab"
-                      aria-controls="skill-stats"
-                      aria-selected="false"
-                      tabindex="-1"
-                      (click)="visualizeData()"
-                    >
-                      Visualization
-                    </button>
-                  </div>
-                </header>
-                <div class="tab-content" id="nav-tabContent">
-                  <div
-                    class="tab-pane fade show active"
-                    id="agent-stats"
-                    role="tabpanel"
-                    aria-labelledby="agent-stats-tab"
-                  >
-                    <div class="table-section">
-                      <ng-container *ngIf="isStats; else rawdata">
-                        <table
-                          class="tablealign-middle agent-stats-table mt-0 w-100 mb-4"
+                        <ng-select
+                          style="width: 250px; margin-right: 10px"
+
+                          [(ngModel)]="DBC"
+                          (change)="selectConnection()"
                         >
-                          <thead>
-                            <tr>
-                              <th *ngFor="let column of statsdataKeys">
-                                {{ column }}
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr
-                              class="region-row"
-                              *ngFor="let row of tableData"
-                            >
-                              <td *ngFor="let column of statsdataKeys">
-                                {{ row[column] }}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </ng-container>
-                      <ng-template #rawdata>
-                        <table
-                          class="tablealign-middle agent-stats-table mt-0 w-100 mb-4"
+                          <ng-option
+                          style="width: 250px; margin-right: 10px; background-color: red;"
+                            *ngFor="let db of dbsettings"
+                            [value]="db.connection_name"
+                            >{{ db.connection_name }}</ng-option
+                          >
+                        </ng-select>
+                        <ng-select
+                          style="width: 200px"
+                          [(ngModel)]="dbName"
+                          (change)="selectDataBase()"
                         >
-                          <thead>
-                            <tr>
-                              <th
-                                *ngFor="let column of dataKeys | keyvalue"
-                                (click)="
-                                  column.value == 'i' ||
-                                  column.value == 'f' ||
-                                  column.value == 'dt'
-                                    ? handleFilters(column.value, column.key)
-                                    : null
-                                "
-                              >
-                                <select
-                                  class="form-select form-select-sm"
-                                  aria-label=".form-select-lg example"
-                                  name="column"
-                                  style="
-                                    width: 170px !important;
-                                    height: 40px !important;
-                                  "
-                                >
-                                  <option selected>{{ column.key }}</option>
-                                  <!-- Add any additional options as needed -->
-                                </select>
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr
-                              class="region-row"
-                              *ngFor="let row of tableData"
+                          <ng-option
+                            *ngFor="let database of databases"
+                            [value]="database"
+                            >{{ database }}</ng-option
+                          >
+                        </ng-select>
+                        <div style="margin-left: 10px">
+                          <ng-select
+                            style="width: 200px"
+                            [(ngModel)]="tableName"
+                            (change)="selectTable()"
+                          >
+                            <ng-option *ngFor="let table of tables" [value]="table">{{
+                              table
+                            }}</ng-option>
+                          </ng-select>
+                        </div>
+                        <div style="margin-left: 10px" *ngIf="isVisual">
+                          <ng-select
+                            style="width: 250px; margin-right: 10px"
+                            [(ngModel)]="selectedLabels"
+                            (change)="selectLabel()"
+                            [placeholder]="selectedLabels.length === 0 ? 'Select Column' : ''"
+                            [multiple]="true"
+                          >
+                            <ng-option
+                              *ngFor="let column of graphLabels"
+                              [value]="column"
+                              >{{ column }}</ng-option
                             >
-                              <td *ngFor="let column of dataKeys | keyvalue">
-                                {{ row[column.key] }}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </ng-template>
-                    </div>
-                  </div>
-                </div>
+                          </ng-select>
 
-                <div *ngIf="isGraph" class="tab-content" id="nav-tabContent">
-                  <div
-                    class="tab-pane fade active"
-                    id="skill-stats"
-                    role="tabpanel"
-                    aria-labelledby="skill-stats-tab"
-                  >
-                    <div class="table-section">
-                      <div class="container">
-                        <div class="row">
-                          <div class="col-sm-12">
-                            <div class="stats-card dashboard iceBg">
-                              <h5 class="section-heading mb-0 p-2 text-center">
-                                {{ tableName }}
-                              </h5>
-                              <div
-                                class="d-flex align-items-center stats-count justify-content-center"
+
+                        </div>
+                        <div style="margin-left: 10px" *ngIf="isTabular">
+                          <ng-select
+                            style="width: 250px; margin-right: 10px"
+                            [(ngModel)]="selectedColumns"
+                            (change)="selectColumn()"
+                            [placeholder]="selectedColumns.length === 0 ? 'Select Column' : ''"
+                            [multiple]="true"
+                          >
+                            <ng-option
+                              *ngFor="let column of dataKeys | keyvalue"
+                              [value]="column.key"
+                              >{{ column.key }}</ng-option
+                            >
+                          </ng-select>
+
+                        </div>
+                        <div *ngIf="isTabular || isVisual" style="margin-right: 10px;"><i class="fa fa-refresh" aria-hidden="true" (click)="refreshData()"></i></div>
+
+
+                        <div class="w-auto ms-2">
+                          <div
+                            *ngIf="isFilter"
+                            class="my-4 stats-cards-section row"
+                            style="display: flex; justify-content: center"
+                          >
+                            <div *ngIf="isNumber" style="width: 200px">
+                              <input
+                                style="height: 38px"
+                                type="number"
+                                [(ngModel)]="filterNumber"
+                                placeholder="Enter an ID"
+                                class="form-control"
+                                (input)="resetfilters()"
+                              />
+                            </div>
+                            <ng-select
+                              style="width: 200px"
+                              [(ngModel)]="selectedFilter"
+                              (change)="addFilter()"
+                            >
+                              <ng-option
+                                *ngFor="let con of filterConditions"
+                                [value]="con"
+                                >{{ con }}</ng-option
                               >
-                                <div
-                                  class="ocean a-section-heading fw-normal mb-2"
-                                >
-                                  <canvas *ngIf="isBar"
-                                    baseChart
-                                    [data]="barChartData"
-                                    [options]="barChartOptions"
-                                    [plugins]="barChartPlugins"
-                                    [legend]="barChartLegend"
-                                    [type]="'bar'"
-                                    style="width: 600px; height: 500px"
-                                  >
-                                  </canvas>
-                                  <canvas *ngIf="isPie"
-                                  baseChart
-                                  class="chart"
-                                  [data]="pieChartData"
-                                  [type]="'pie'"
-                                  [options]="pieChartOptions"
-                                  style="width: 600px; height: 500px"
-                                >
-                                </canvas>
-                                <canvas baseChart class="chart" *ngIf="isLine"
-                                  [data]="lineChartData"
-                                  [options]="lineChartOptions"
-                                  [type]="'line'"
-                                  style="width: 600px; height: 500px"
-                                  >
-                                </canvas>
-                                <canvas baseChart class="chart"  *ngIf="isPolar"
-                                 [data]="polarAreaChartData"
-                                 [type]="'polarArea'"
-                                 style="width: 600px; height: 500px"
-                                 >
-                                </canvas>
-                                <canvas baseChart class="chart" *ngIf="isRadar"
-                                    [data]="radarChartData"
-                                    [options]="radarChartOptions"
+                            </ng-select>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        *ngIf="tableData.length > 0"
+                        style="float: right; margin-top: 20px"
+                      >
+                        <input
+                          type="button"
+                          class="btn btn-primary"
+                          name="answer"
+                          value="Download"
+                          (click)="exportAsXLSX()"
+                        />
+                      </div>
+                      <div class="agent-skill-stats pb-3">
+                        <header class="tab-header">
+                          <div
+                            class="nav nav-tabs d-flex justify-content-center mb-5"
+                            id="nav-tab"
+                            role="tablist"
+                          >
+                            <button
+                              class="nav-link active"
+                              id="agent-stats-tab"
+                              data-bs-toggle="tab"
+                              data-bs-target="#agent-stats"
+                              type="button"
+                              role="tab"
+                              aria-controls="agent-stats"
+                              aria-selected="true"
+                              (click)="tabularData()"
+                            >
+                              Tabular Statistics
+                            </button>
 
-                                    [type]="'radar'"
-                                    style="width: 600px; height: 500px">
-                                  </canvas>
-                                  </div>
-                              </div>
+                            <button
+                              class="nav-link"
+                              id="skill-stats-tab"
+                              data-bs-toggle="tab"
+                              data-bs-target="#skill-stats"
+                              type="button"
+                              role="tab"
+                              aria-controls="skill-stats"
+                              aria-selected="false"
+                              tabindex="-1"
+                              (click)="visualizeData()"
+                            >
+                              Visualization
+                            </button>
+                          </div>
+                        </header>
+                        <div class="tab-content" id="nav-tabContent">
+                          <div
+                            class="tab-pane fade show active"
+                            id="agent-stats"
+                            role="tabpanel"
+                            aria-labelledby="agent-stats-tab"
+                          >
+                            <div class="table-section">
+                              <ng-container *ngIf="isStats; else rawdata">
+                                <table
+                                  class="tablealign-middle agent-stats-table mt-0 w-100 mb-4"
+                                >
+                                  <thead>
+                                    <tr>
+                                      <th *ngFor="let column of statsdataKeys">
+                                        {{ column }}
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr
+                                      class="region-row"
+                                      *ngFor="let row of tableData"
+                                    >
+                                      <td *ngFor="let column of statsdataKeys">
+                                        {{ row[column] }}
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </ng-container>
+                              <ng-template #rawdata>
+                                <table
+                                  class="tablealign-middle agent-stats-table mt-0 w-100 mb-4"
+                                >
+                                  <thead>
+                                    <tr>
+                                      <th
+                                        *ngFor="let column of dataKeys | keyvalue"
+                                        (click)="
+                                          column.value == 'i' ||
+                                          column.value == 'f' ||
+                                          column.value == 'dt'
+                                            ? handleFilters(column.value, column.key)
+                                            : null
+                                        "
+                                      >
+                                        <select
+                                          class="form-select form-select-sm"
+                                          aria-label=".form-select-lg example"
+                                          name="column"
+                                          style="
+                                            width: 170px !important;
+                                            height: 40px !important;
+                                          "
+                                        >
+                                          <option selected>{{ column.key }}</option>
+                                          <!-- Add any additional options as needed -->
+                                        </select>
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr
+                                      class="region-row"
+                                      *ngFor="let row of tableData"
+                                    >
+                                      <td *ngFor="let column of dataKeys | keyvalue">
+                                        {{ row[column.key] }}
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </ng-template>
                             </div>
                           </div>
+                        </div>
 
+                        <div *ngIf="isGraph" class="tab-content" id="nav-tabContent">
+                          <div
+                            class="tab-pane fade active"
+                            id="skill-stats"
+                            role="tabpanel"
+                            aria-labelledby="skill-stats-tab"
+                          >
+                            <div class="table-section">
+                              <div class="container">
+                                <div class="row">
+                                  <div class="col-sm-12">
+                                    <div class="stats-card dashboard iceBg">
+                                      <h5 class="section-heading mb-0 p-2 text-center">
+                                        {{ tableName }}
+                                      </h5>
+                                      <div
+                                        class="d-flex align-items-center stats-count justify-content-center"
+                                      >
+                                        <div
+                                          class="ocean a-section-heading fw-normal mb-2"
+                                        >
+                                          <canvas *ngIf="isBar"
+                                            baseChart
+                                            [data]="barChartData"
+                                            [options]="barChartOptions"
+                                            [plugins]="barChartPlugins"
+                                            [legend]="barChartLegend"
+                                            [type]="'bar'"
+                                            style="width: 600px; height: 500px"
+                                          >
+                                          </canvas>
+                                          <canvas *ngIf="isPie"
+                                          baseChart
+                                          class="chart"
+                                          [data]="pieChartData"
+                                          [type]="'pie'"
+                                          [options]="pieChartOptions"
+                                          style="width: 600px; height: 500px"
+                                        >
+                                        </canvas>
+                                        <canvas baseChart class="chart" *ngIf="isLine"
+                                          [data]="lineChartData"
+                                          [options]="lineChartOptions"
+                                          [type]="'line'"
+                                          style="width: 600px; height: 500px"
+                                          >
+                                        </canvas>
+                                        <canvas baseChart class="chart"  *ngIf="isPolar"
+                                         [data]="polarAreaChartData"
+                                         [type]="'polarArea'"
+                                         style="width: 600px; height: 500px"
+                                         >
+                                        </canvas>
+                                        <canvas baseChart class="chart" *ngIf="isRadar"
+                                            [data]="radarChartData"
+                                            [options]="radarChartOptions"
+
+                                            [type]="'radar'"
+                                            style="width: 600px; height: 500px">
+                                          </canvas>
+                                          </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+
+
+                          </div>
                         </div>
                       </div>
                     </div>
-
-
+                  </div>
+                  <div class="scrollbar-track scrollbar-track-x" style="display: none">
+                    <div
+                      class="scrollbar-thu mb scrollbar-thumb-x"
+                      style="width: 1191px; transform: translate3d(0px, 0px, 0px)"
+                    ></div>
+                  </div>
+                  <div class="scrollbar-track scrollbar-track-y" style="display: block">
+                    <div
+                      class="scrollbar-thumb scrollbar-thumb-y"
+                      style="height: 69.4338px; transform: translate3d(0px, 0px, 0px)"
+                    ></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="scrollbar-track scrollbar-track-x" style="display: none">
-            <div
-              class="scrollbar-thu mb scrollbar-thumb-x"
-              style="width: 1191px; transform: translate3d(0px, 0px, 0px)"
-            ></div>
-          </div>
-          <div class="scrollbar-track scrollbar-track-y" style="display: block">
-            <div
-              class="scrollbar-thumb scrollbar-thumb-y"
-              style="height: 69.4338px; transform: translate3d(0px, 0px, 0px)"
-            ></div>
-          </div>
         </div>
       </div>
-    </div>
+      <div class="rightbar-expanded-wrapper">
+          <template #rightcontainer></template>
+      </div>
   </div>
+  <analytics-right-sidebar-menu></analytics-right-sidebar-menu>
 </div>

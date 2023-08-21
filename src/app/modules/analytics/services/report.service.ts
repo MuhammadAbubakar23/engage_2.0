@@ -12,7 +12,7 @@ export class ReportService {
   constructor(private http: HttpClient) { }
 
   login() {
-    const body = { email: 'admin@gmail.com', password: 'admin' };
+    const body = { email: 'mailto:admin@gmail.com', password: 'admin' };
     return this.http.post("https://reportbuilder.360scrm.com/user/" + "api/token", body);
   }
 
@@ -29,20 +29,33 @@ export class ReportService {
   }
   getDataBasesApi(): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    //const headers = new HttpHeaders();
+
     return this.http.get<any>(this.apiUrl, httpOptions);
   }
-
-  createDbSetiingApi(data: any): Observable<any> {
-    let httpOptions = this.gethttpOptions()
-    return this.http.post(this.apiUrl + "db-settings", data, httpOptions)
-  }
-
   listDbSetiingApi(): Observable<any> {
     let httpOptions = this.gethttpOptions()
 
     return this.http.get(this.apiUrl + "db-settings", httpOptions)
   }
+  getDbSettingById(id: any): Observable<any> {
+    let httpOptions = this.gethttpOptions()
+    return this.http.get(this.apiUrl + `db-settings/${id}`, httpOptions)
+  }
+  createDbSetiingApi(data: any): Observable<any> {
+    let httpOptions = this.gethttpOptions()
+    return this.http.post(this.apiUrl + "db-settings", data, httpOptions)
+  }
+
+  updateDbSetiingApi(id: any, data: any): Observable<any> {
+    let httpOptions = this.gethttpOptions()
+    return this.http.put(this.apiUrl + `db-settings/${id}`, data, httpOptions)
+  }
+  deleteDbSetiingApi(id: any): Observable<any> {
+    let httpOptions = this.gethttpOptions()
+    return this.http.delete(this.apiUrl + `db-settings/${id}`, httpOptions)
+  }
+
+
   getConnectiondatabases(connection_name: any): Observable<any> {
     const params = new HttpParams().set('connection_name', connection_name)
     let httpOptions = this.gethttpOptions()
@@ -77,7 +90,7 @@ export class ReportService {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "gettablesortdata", data, httpOptions);
   }
-  
+
   groupDataApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "getbygroup", data, httpOptions);
