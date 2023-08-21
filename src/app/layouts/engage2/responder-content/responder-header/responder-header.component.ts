@@ -2166,7 +2166,6 @@ if (type == 'RemoveStarred') {
   }
 
   RemoveSpam(id:any){
-    debugger
       var obj = {
         channel: '',
         flag: 'spam',
@@ -2187,7 +2186,6 @@ if (type == 'RemoveStarred') {
   }
 
   Block(id:any) {
-    debugger
     var obj = {
       channel: '',
       flag: 'blacklist',
