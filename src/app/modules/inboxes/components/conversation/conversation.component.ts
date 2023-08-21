@@ -367,7 +367,6 @@ export class ConversationComponent implements OnInit {
         }
       }
     );
-    
   }
 
   searchUser: string = '';
@@ -656,8 +655,10 @@ export class ConversationComponent implements OnInit {
     this.notInclude = '';
     this.include = '';
     this.advanceSearch = false;
-    this.fromDate = null;
-    this.toDate = null;
+    this.pageNumber = 1;
+    this.pageSize = 20;
+    this.to = 20;
+    this.from = 1;
     this.getConversationList();
   }
 
@@ -885,6 +886,7 @@ export class ConversationComponent implements OnInit {
             this.Ids.push(d.profileId);
           }
         });
+        //  // // console.log(this.Ids);
         this.isChecked = true;
         this.isCheckedAll = true;
       } else {
@@ -894,13 +896,14 @@ export class ConversationComponent implements OnInit {
             this.Ids.splice(abc, 1);
           }
         });
+        //  // // console.log(this.Ids);
         this.isChecked = false;
         this.isCheckedAll = false;
       }
     });
   }
 
-  isAllSelected(evt: any, index: any, platform: any, profileId: any) {
+  isAllSelected(evt: any, index: any, platform: any, profileId: any, date:any) {
     // let id = Number(evt.target.value);
     if (index >= 0 && evt.target.checked == true) {
       this.Ids.push(profileId);
@@ -910,19 +913,22 @@ export class ConversationComponent implements OnInit {
       this.Ids.splice(abc, 1);
     }
     this.groupByDateList.forEach((group) => {
-      group.items[index].isChecked = evt.target.checked;
-      this.masterSelected = group.items.every((l: any) => l.isChecked == true);
+      if(group.createdDate == date){
+        group.items[index].isChecked = evt.target.checked;
 
-      let checkselectedlogs = group.items.find((x: any) => x.isChecked == true);
-      if (this.masterSelected == true) {
-        this.isChecked = true;
-        this.isCheckedAll = true;
-      } else if (checkselectedlogs != undefined) {
-        this.isChecked = true;
-        this.isCheckedAll = false;
-      } else {
-        this.isChecked = false;
-        this.isCheckedAll = false;
+        this.masterSelected = this.ConversationList.every((l: any) => l.isChecked == true);
+  
+        let checkselectedlogs = group.items.find((x: any) => x.isChecked == true);
+        if (this.masterSelected == true) {
+          this.isChecked = true;
+          this.isCheckedAll = true;
+        } else if (checkselectedlogs != undefined) {
+          this.isChecked = true;
+          this.isCheckedAll = false;
+        } else {
+          this.isChecked = false;
+          this.isCheckedAll = false;
+        }
       }
     });
   }
@@ -992,6 +998,7 @@ export class ConversationComponent implements OnInit {
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+        // console.log(res);
       });
   }
 
