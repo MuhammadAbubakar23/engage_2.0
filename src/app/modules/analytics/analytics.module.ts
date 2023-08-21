@@ -19,6 +19,7 @@ import { ExcelService } from './services/excel.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { ToastrComponent } from './components/toastr/toastr.component';
 import { AnalyticsDashboardComponent } from './components/analytics-dashboard/analytics-dashboard.component';
+import { DblistingComponent } from './components/dblisting/dblisting.component';
 // import {DndModule} from 'ngx-drag-drop';
 
 @NgModule({
@@ -29,12 +30,13 @@ import { AnalyticsDashboardComponent } from './components/analytics-dashboard/an
     ExecutiveDashboardHeaderComponent,
     LiveMonitoringHeaderComponent,
     ReportBuilderHeaderComponent,
-    ReportBuilderComponent,
-    ActionsComponent,
-    ReportDbSettingsComponent,
-    ReportlistingComponent,
-    ToastrComponent,
-    AnalyticsDashboardComponent
+    // ReportBuilderComponent,
+    //ActionsComponent,
+    // ReportDbSettingsComponent,
+    // ReportlistingComponent,
+    // ToastrComponent,
+    AnalyticsDashboardComponent,
+    // DblistingComponent
   ],
   imports: [
     CommonModule,

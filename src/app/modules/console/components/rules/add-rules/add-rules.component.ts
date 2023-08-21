@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
-import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { FormsModule, FormBuilder, FormGroup, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { Field, QueryBuilderClassNames, QueryBuilderConfig, QueryBuilderModule, RuleSet } from 'angular2-query-builder';
+import {QueryBuilderClassNames, QueryBuilderConfig, QueryBuilderModule, RuleSet } from 'angular2-query-builder';
 import { CommonDataService } from '../../../../../shared/services/common/common-data.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { EntityTypeBuilder } from 'src/app/shared/Models/EntityTypeDto';
@@ -15,30 +15,24 @@ import { EntityTypeBuilder } from 'src/app/shared/Models/EntityTypeDto';
   styleUrls: ['./add-rules.component.scss']
 })
 export class AddRulesComponent implements OnInit {
-  public queryCtrl!: FormControl;
+
   entities = [];
   selectedEntity = "Please Select Entity";
+
+  rulesForm = new FormGroup({
+    ruleName: new FormControl(''),
+    description: new FormControl('')
+  })
   public query: RuleSet = {
     condition: 'and',
-    rules: [
-      // { field: 'age', operator: '>=', entity: 'physical', value: 18 },
-      // { field: 'birthday', operator: '=', value: '2018-11-20', entity: 'nonphysical' },
-      // {
-      //   condition: 'or',
-      //   rules: [
-      //     { field: 'gender', operator: '=', entity: 'physical', value: 'm' },
-      //     { field: 'school', operator: 'is null', entity: 'nonphysical' },
-      //     { field: 'notes', operator: '=', entity: 'nonphysical', value: 'Hi' }
-      //   ]
-      // }
-    ]
+    rules: []
   };
+  public queryCtrl!: FormControl;
   selectedRuleSet!: RuleSet;
   public oDataFilter: string = "hello";
 
   public config: QueryBuilderConfig = {
-    fields: {
-    }
+    fields: {}
   };
   classNames: QueryBuilderClassNames = {
     removeIcon: 'fa fa-minus',
@@ -70,14 +64,10 @@ export class AddRulesComponent implements OnInit {
   entitySet: any = [];
 
   constructor(private _fb: FormBuilder, private router: Router, private _cs: CommonDataService, private ngZone: NgZone) {
-    console.log("this.query", this.query);
     this.queryCtrl = this._fb.control(this.query);
-
     this.queryCtrl.valueChanges.subscribe((ruleSet: any) => {
-      console.log("ruleSet", ruleSet);
       this.processRules(ruleSet.rules);
       this.selectedRuleSet = ruleSet;
-      console.log("Selected rule set:", this.selectedRuleSet);
     });
 
   }
@@ -92,6 +82,7 @@ export class AddRulesComponent implements OnInit {
 
         rule.type = val.entitytype;
         if (Array.isArray(rule.value)) {
+          console.log("ok");
         } else if (rule.value !== undefined && rule.value !== null) {
           rule.value = [rule.value];
         }
@@ -107,25 +98,22 @@ export class AddRulesComponent implements OnInit {
 
     this._cs.GetRuleEntityProperties(this.selectedEntity).subscribe((response) => {
 
-      console.log("Response", response)
       if (Array.isArray(response)) {
         response.forEach((item) => {
-          var obj: EntityTypeBuilder = {
+          let obj: EntityTypeBuilder = {
             entityName: item.entityName,
             entityType: item.entityType
           };
           this.entitySet.push(obj);
         })
-        console.log("Entity Set", this.entitySet = response);
         response.forEach((obj: any, index) => {
-          console.log(obj, obj.entitytype, obj.entityName)
           let typeValue = obj.entitytype;
           let operators: string[] = [];
           switch (obj.entitytype) {
             case 'integer':
               typeValue = 'number';
 
-              operators=["equal","not_equal","not_in","less_or_equal","greater_or_equal","not_between","begins_with","not_begins_with","is_null"]
+              operators = ["equal", "not_equal", "not_in", "less_or_equal", "greater_or_equal", "not_between", "begins_with", "not_begins_with", "is_null"]
               break;
             case 'boolean':
               operators = ["equal"]
@@ -135,10 +123,10 @@ export class AddRulesComponent implements OnInit {
               break;
             case 'datetime':
               typeValue = 'date';
-              operators=["equal","not_equal","not_in","less_or_equal","greater_or_equal","not_between","begins_with","not_begins_with","is_null"]
+              operators = ["equal", "not_equal", "not_in", "less_or_equal", "greater_or_equal", "not_between", "begins_with", "not_begins_with", "is_null"]
               break;
             case 'date':
-              operators=["equal","not_equal","not_in","less_or_equal","greater_or_equal","not_between","begins_with","not_begins_with","is_null"]
+              operators = ["equal", "not_equal", "not_in", "less_or_equal", "greater_or_equal", "not_between", "begins_with", "not_begins_with", "is_null"]
               break;
             default:
               typeValue = 'number';
@@ -151,12 +139,10 @@ export class AddRulesComponent implements OnInit {
 
           };
 
-          if (typeValue === 'boolean') {
 
-          }
           this.config.fields[obj.entityName] = fieldsObj;
         });
-        console.log("Updated", this.config.fields)
+
       } else {
         console.error("response is not an array");
       }
@@ -164,8 +150,7 @@ export class AddRulesComponent implements OnInit {
   }
 
   onClick() {
-    this._cs.AddRules({ "name": "", "description": "", 'rulesJson': JSON.stringify(this.selectedRuleSet) }).subscribe((res) => {
-      console.log("Rules", res);
+    this._cs.AddRules({ "name": this.rulesForm.value['ruleName'], "description":this.rulesForm.value['description'], 'rulesJson': JSON.stringify(this.selectedRuleSet) }).subscribe((res) => {
       alert("SuccessFully rules Added!");
     })
   }

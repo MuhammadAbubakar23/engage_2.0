@@ -37,6 +37,10 @@ export class ReportService {
     let httpOptions = this.gethttpOptions()
     return this.http.post(this.apiUrl + "db-settings", data, httpOptions)
   }
+  updateDbSetiingApi(data: any): Observable<any> {
+    let httpOptions = this.gethttpOptions()
+    return this.http.post(this.apiUrl + "db-settings", data, httpOptions)
+  }
 
   listDbSetiingApi(): Observable<any> {
     let httpOptions = this.gethttpOptions()
@@ -77,7 +81,7 @@ export class ReportService {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "gettablesortdata", data, httpOptions);
   }
-  
+
   groupDataApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "getbygroup", data, httpOptions);

@@ -12,6 +12,7 @@ import { LiveMonitoringComponent } from './components/live-monitoring/live-monit
 import { ReportBuilderComponent } from './components/report-builder/report-builder.component';
 import { ReportDbSettingsComponent } from './components/report-db-settings/report-db-settings.component';
 import { ReportlistingComponent } from './components/reportlisting/reportlisting.component';
+import { DblistingComponent } from './components/dblisting/dblisting.component';
 
 @Component({
   selector: 'app-analytics',
@@ -22,30 +23,30 @@ export class AnalyticsComponent implements OnInit {
 
   componentRef: any;
   @ViewChild('container',
-  { read: ViewContainerRef,})
+    { read: ViewContainerRef, })
   target!: ViewContainerRef;
 
 
-  @ViewChild('rightcontainer', { read: ViewContainerRef,}) rightcontainer!: ViewContainerRef;
+  @ViewChild('rightcontainer', { read: ViewContainerRef, }) rightcontainer!: ViewContainerRef;
 
   componentName!: any;
   childComponentName!: any;
   public subscription!: Subscription;
   panelToggled: any;
-  showPanel=false;
+  showPanel = false;
 
   constructor(
     private resolver: ComponentFactoryResolver,
     private route: ActivatedRoute,
     private sharedService: SharedService,
     private rightNavService: RightNavService,
-    private toggleService : ToggleService
-  ) {}
+    private toggleService: ToggleService
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((routeParams) => {
 
-      if(routeParams['channel'] != undefined && routeParams['channel'] != "undefined"){
+      if (routeParams['channel'] != undefined && routeParams['channel'] != "undefined") {
         this.componentName = routeParams['channel'];
       }
       this.childComponentName = routeParams['ticket'];
@@ -55,7 +56,7 @@ export class AnalyticsComponent implements OnInit {
       if (this.childComponentName != null) {
         this.childComponentName = localStorage.getItem('child');
       }
-      if(this.componentName != undefined){
+      if (this.componentName != undefined) {
         localStorage.setItem('parent', this.componentName);
       }
 
@@ -64,21 +65,21 @@ export class AnalyticsComponent implements OnInit {
       this.target?.clear();
       this.rightcontainer?.clear();
       this.loadComponent(this.componentName, '');
-      if ( this.childComponentName != '' && this.childComponentName != undefined) {
-         this.showPanel = true
+      if (this.childComponentName != '' && this.childComponentName != undefined) {
+        this.showPanel = true
         this.loadComponent('', this.childComponentName);
       }
     });
 
     this.subscription = this.toggleService.getTogglePanel().subscribe(msg3 => {
 
-      if(msg3){
+      if (msg3) {
         this.rightcontainer?.clear();
         localStorage.setItem('child', msg3)
         this.showPanel = true
-        this.loadComponent('',msg3)
+        this.loadComponent('', msg3)
       }
-      
+
       else {
         this.showPanel = false;
         this.rightcontainer?.clear();
@@ -100,6 +101,7 @@ export class AnalyticsComponent implements OnInit {
 
 
   loadComponent(leftSideName: string, rightSideName: string) {
+    debugger
     let componentFactory = null;
 
     switch (leftSideName || rightSideName) {
@@ -107,32 +109,37 @@ export class AnalyticsComponent implements OnInit {
         componentFactory = this.resolver.resolveComponentFactory(ExecutiveDashboardComponent);
         this.target?.createComponent(componentFactory);
         break;
-        case 'live-monitoring':
+      case 'live-monitoring':
         componentFactory = this.resolver.resolveComponentFactory(LiveMonitoringComponent);
         this.target?.createComponent(componentFactory);
         break;
-        case 'dashboard':
+      case 'dashboard':
         componentFactory = this.resolver.resolveComponentFactory(AnalyticsDashboardComponent);
         this.target?.createComponent(componentFactory);
         break;
-        case 'report-builder':
+      case 'report-builder':
         componentFactory = this.resolver.resolveComponentFactory(ReportBuilderComponent);
         this.target?.createComponent(componentFactory);
         break;
-        case 'db-settings':
-          componentFactory = this.resolver.resolveComponentFactory(ReportDbSettingsComponent);
-          this.target?.createComponent(componentFactory);
-          break;
-        case 'contacts':
-          componentFactory =
+      case 'db-settings':
+        componentFactory = this.resolver.resolveComponentFactory(DblistingComponent);
+        this.target?.createComponent(componentFactory);
+        break;
+      case 'db-settings/create':
+        componentFactory = this.resolver.resolveComponentFactory(ReportDbSettingsComponent);
+        this.target?.createComponent(componentFactory);
+        break;
+
+      case 'contacts':
+        componentFactory =
           this.resolver.resolveComponentFactory(ActionsComponent);
-          this.rightcontainer?.createComponent(componentFactory);
-          break;
-        case 'reports':
-          componentFactory =
+        this.rightcontainer?.createComponent(componentFactory);
+        break;
+      case 'reports':
+        componentFactory =
           this.resolver.resolveComponentFactory(ReportlistingComponent);
-          this.target?.createComponent(componentFactory);
-          break;
+        this.target?.createComponent(componentFactory);
+        break;
       default:
         componentFactory = this.resolver.resolveComponentFactory(ExecutiveDashboardComponent);
         this.target?.createComponent(componentFactory);

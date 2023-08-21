@@ -3,14 +3,31 @@ import { ShareddataService } from '../../services/shareddata.service';
 import { ReportService } from '../../services/report.service';
 import { ChartConfiguration, ChartData, ChartDataset, ChartType } from 'chart.js';
 import { ExcelService } from '../../services/excel.service';
-import { BaseChartDirective } from 'ng2-charts';
+import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { LayoutsModule } from 'src/app/layouts/layouts.module';
+import { AnalyticsRoutingModule } from '../../analytics-routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { ToasterComponent } from 'src/app/layouts/engage2/toaster/toaster.component';
+import { ToastrComponent } from '../toastr/toastr.component';
 
 @Component({
   selector: 'app-report-builder',
+  standalone: true,
+  imports: [CommonModule,
+    LayoutsModule,
+    FormsModule,
+    NgSelectModule,
+    NgChartsModule,
+  ToastrComponent],
   templateUrl: './report-builder.component.html',
   styleUrls: ['./report-builder.component.scss']
 })
 export class ReportBuilderComponent implements OnInit {
+  showPanel = false;
   databases: string[] = [];
   dbsettings: any[] = [];
   DBC: any = "Please select connection"

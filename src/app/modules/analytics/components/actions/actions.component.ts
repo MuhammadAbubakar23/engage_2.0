@@ -6,9 +6,19 @@ import { Route } from '@angular/router';
 import { Router } from '@angular/router';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DragDropService } from '../../services/dragdrop.service';
+import { CommonModule } from '@angular/common';
 
+import { ToastrComponent } from '../toastr/toastr.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-actions',
+  standalone: true,
+  imports: [
+    CommonModule,
+    NgSelectModule,
+    FormsModule,
+  ToastrComponent],
   templateUrl: './actions.component.html',
   styleUrls: ['./actions.component.scss']
 })
