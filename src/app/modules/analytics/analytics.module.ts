@@ -25,18 +25,9 @@ import { DblistingComponent } from './components/dblisting/dblisting.component';
 @NgModule({
   declarations: [
     AnalyticsComponent,
-    ExecutiveDashboardComponent,
-    LiveMonitoringComponent,
     ExecutiveDashboardHeaderComponent,
     LiveMonitoringHeaderComponent,
-    ReportBuilderHeaderComponent,
-    // ReportBuilderComponent,
-    //ActionsComponent,
-    // ReportDbSettingsComponent,
-    // ReportlistingComponent,
-    // ToastrComponent,
-    AnalyticsDashboardComponent,
-    // DblistingComponent
+    ReportBuilderHeaderComponent
   ],
   imports: [
     CommonModule,

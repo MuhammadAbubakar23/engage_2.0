@@ -1,4 +1,4 @@
-<div class="w-auto chat-message-component w-100 inbox-container" [ngClass]="showPanel?'panelToggled':''">
+<div class="w-auto chat-message-component w-100 inbox-container">
   <div class="d-flex main-body-wrapper">
       <div class="agent-page-main-content">
         <div class="fluid-container mt-5">
@@ -7,15 +7,13 @@
               class="tab-pane fade show active"
               id="agent-stats"
               role="tabpanel"
-              aria-labelledby="agent-stats-tab"
-            >
+              aria-labelledby="agent-stats-tab">
               <div class="row" cdkDropListGroup>
                 <div class="col-sm-2">
                   <div class="table-section">
                     <div style="overflow: auto; max-height: 600px">
                       <table
-                        class="table align-middle agent-stats-table mt-0 w-100 mb-4"
-                      >
+                        class="table align-middle agent-stats-table mt-0 w-100 mb-4">
                         <thead>
                           <tr>
                             <th *ngFor="let column of columns">{{ column }}</th>

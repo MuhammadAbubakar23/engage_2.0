@@ -41,7 +41,18 @@ const routes: Routes = [
     {
       path:'db-settings/update/:id',
       loadComponent: () => import('./components/report-db-settings/report-db-settings.component').then(c => c.ReportDbSettingsComponent),
-
+    },
+    {
+      path:'live-monitoring',
+      loadComponent: () => import('./components/live-monitoring/live-monitoring.component').then(c => c.LiveMonitoringComponent),
+    },
+    {
+      path:'dashboard',
+      loadComponent: () => import('./components/analytics-dashboard/analytics-dashboard.component').then(c => c.AnalyticsDashboardComponent),
+    },
+    {
+      path:'executive-dashboard',
+      loadComponent: () => import('./components/executive-dashboard/executive-dashboard.component').then(c => c.ExecutiveDashboardComponent),
     }
   ]
   },
