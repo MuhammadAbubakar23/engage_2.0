@@ -12,7 +12,7 @@ export class ReportService {
   constructor(private http: HttpClient) { }
 
   login() {
-    const body = { email: 'mailto:admin@gmail.com', password: 'admin' };
+    const body = { email: 'admin@gmail.com', password: 'admin' };
     return this.http.post("https://reportbuilder.360scrm.com/user/" + "api/token", body);
   }
 
