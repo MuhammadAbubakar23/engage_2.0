@@ -657,8 +657,8 @@ export class ConversationComponent implements OnInit {
     this.advanceSearch = false;
     this.pageNumber = 1;
     this.pageSize = 20;
-    this.to = 20;
-    this.from = 1;
+    this.to = 0;
+    this.from = 0;
     this.getConversationList();
   }
 
@@ -707,7 +707,12 @@ export class ConversationComponent implements OnInit {
       );
     } else if (this.currentUrl.split('/')[2] == 'trash') {
       this.reloadComponent('removeFromTrashToOpen');
-    } else {
+    } else if (this.currentUrl.split('/')[2] == 'spam') {
+      this.reloadComponent('removeFromTrashToOpen');
+    } else if (this.currentUrl.split('/')[2] == 'blacklist') {
+      this.reloadComponent('removeFromTrashToOpen');
+    }
+    else {
       this.SpinnerService.show();
       this.fetchId.setPlatform(platform);
       this.fetchId.setOption(id);

@@ -243,7 +243,6 @@ export class ReportBuilderComponent implements OnInit {
   }
 
   loadComponent(rightSideName: string) {
-    debugger;
     let componentFactory = null;
 
     switch (rightSideName) {
