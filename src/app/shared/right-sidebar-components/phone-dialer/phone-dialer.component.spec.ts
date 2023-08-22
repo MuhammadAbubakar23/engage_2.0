@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainMenuComponent } from './main-menu.component';
+import { PhoneDialerComponent } from './phone-dialer.component';
 
-describe('MainMenuComponent', () => {
-  let component: MainMenuComponent;
-  let fixture: ComponentFixture<MainMenuComponent>;
+describe('PhoneDialerComponent', () => {
+  let component: PhoneDialerComponent;
+  let fixture: ComponentFixture<PhoneDialerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MainMenuComponent ]
+      declarations: [ PhoneDialerComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MainMenuComponent);
+    fixture = TestBed.createComponent(PhoneDialerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -921,7 +921,7 @@ export class EmailComponent implements OnInit {
             if (!this.emailToArray.includes(item.emailAddress)) {
               this.emailToArray.push(item.emailAddress);
             }
-            this.emailFromInString = this.emailToArray.join('; ');
+            this.emailFromInString = this.emailToArray.join(', ');
           });
           if (comment.cc) {
             this.emailCc = comment.cc;
@@ -933,7 +933,7 @@ export class EmailComponent implements OnInit {
               if (!this.emailCcArray.includes(item.emailAddress)) {
                 this.emailCcArray.push(item.emailAddress);
               }
-              this.emailCcInString = this.emailCcArray.join('; ');
+              this.emailCcInString = this.emailCcArray.join(', ');
             });
           } else {
             this.emailCcInString = '';

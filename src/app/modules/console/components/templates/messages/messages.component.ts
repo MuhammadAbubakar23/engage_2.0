@@ -15,12 +15,46 @@ export class MessagesComponent implements OnInit {
   messages: any[] = [];
   sortOptions: string[] = ['All', 'Ascending', 'Descending'];
   selectedSortOption: string = 'All';
+  searchText: string = '';
+  applySearchFilter() {
+    // Convert the search text to lowercase for case-insensitive search
+    const searchTextLower = this.searchText.toLowerCase();
+    
+    // Filter the messages based on the search text
+    this.messages = this.messages.filter((message) => {
+      const templateNameLower = (message.templateName || '').toLowerCase();
+      const subjectLower = (message.subject || '').toLowerCase();
+      
+      return templateNameLower.includes(searchTextLower) || subjectLower.includes(searchTextLower);
+    });
+    this.sortMessages();
 
-  sortTemplates() {
-    if (this.selectedSortOption === 'Ascending') {
-      this.messages.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-    } else if (this.selectedSortOption === 'Descending') {
-      this.messages.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
+  }
+  
+  refreshMessages() {
+    this.commonService.GetAllMessages('Message').subscribe(
+      (response: any) => {
+        this.messages = response;
+        this.sortMessages();
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
+    
+  
+  sortMessages() {
+    switch (this.selectedSortOption) {
+      case 'Ascending':
+        this.messages.sort((a, b) => a.templateName.localeCompare(b.templateName));
+        break;
+      case 'Descending':
+        this.messages.sort((a, b) => b.templateName.localeCompare(a.templateName));
+        break;
+      default:
+        // For 'All', no sorting is required
+        break;
     }
   }
   constructor(private headerService: HeaderService ,private commonService: CommonDataService , private router: Router ) { }

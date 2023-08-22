@@ -1,147 +1,134 @@
-<div class="container mt-5" style="width: 60%">
-  <div
-    class="form-group flex-grow-1"
-    style="display: flex; flex-direction: column"
-  >
-  <div style="position: relative">
-    <input
-      id="engine"
-      class="form-control"
-      [(ngModel)]="dbSettings.ConnectionName"
-      style="height: 60px; padding-top: 20px"
-    />
-    <label
-      for="engine"
-      style="
-        position: absolute;
-        top: 2px;
-        left: 10px;
-        color: #999;
-        pointer-events: none;
-      "
-      >Connection Name</label
-    >
-  </div>
 
-  <div >
-    <ng-select
-      [(ngModel)]="selectedEngine"
-      style="margin-top:10px;"
-    >
-      <ng-option *ngFor="let engine of dbSettings.ENGINE" [value]="engine">
-        {{ engine }}
-      </ng-option>
-    </ng-select>
-  </div>
+<div class="container mt-5" style="width: 50%;">
 
-    <div style="position: relative; margin-top: 10px">
-      <input
-        id="name"
-        class="form-control"
-        [(ngModel)]="dbSettings.DATABASE"
-        style="height: 60px; padding-top: 20px"
-      />
-      <label
-        for="name"
-        style="
-          position: absolute;
-          top: 2px;
-          left: 10px;
-          color: #999;
-          pointer-events: none;
-        "
-        >DATABASE NAME</label
-      >
+  <form [formGroup]="dbSettingsForm">
+    <div class="business-detail-wrap">
+      <div class="business-detail-wrap">
+        <div class="floating-item mb-3">
+          <div class="form-floating">
+            <ng-select formControlName="ENGINE">
+              <ng-option *ngFor="let engine of engineOptions" [value]="engine">
+                {{ engine }}
+              </ng-option>
+            </ng-select>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="business-detail-wrap">
+      <div class="business-detail-wrap">
+        <div class="floating-item mb-3">
+          <div class="form-floating">
+            <input
+            type="text"
+              class="form-control"
+              id="floatingInputValue"
+              placeholder="Connection Name"
+              formControlName="ConnectionName"
+            />
+            <label for="floatingInputValue">Connection Name</label>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div style="position: relative; margin-top: 10px">
-      <input
-        id="user"
-        class="form-control"
-        [(ngModel)]="dbSettings.USER"
-        style="height: 60px; padding-top: 20px"
-      />
-      <label
-        for="user"
-        style="
-          position: absolute;
-          top: 2px;
-          left: 10px;
-          color: #999;
-          pointer-events: none;
-        "
-        >User</label
-      >
+
+    <div class="business-detail-wrap">
+      <div class="business-detail-wrap">
+        <div class="floating-item mb-3">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInputDatabase"
+              placeholder="Database Name"
+              formControlName="DATABASE"
+            />
+            <label for="floatingInputDatabase">Database Name</label>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div style="position: relative; margin-top: 10px">
-      <input
-        type="password"
-        id="password"
-        class="form-control"
-        [(ngModel)]="dbSettings.PASSWORD"
-        style="height: 60px; padding-top: 20px"
-      />
-      <label
-        for="password"
-        style="
-          position: absolute;
-          top: 2px;
-          left: 10px;
-          color: #999;
-          pointer-events: none;
-        "
-        >Password</label
-      >
+    <div class="business-detail-wrap">
+      <div class="business-detail-wrap">
+        <div class="floating-item mb-3">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInputUser"
+              placeholder="User"
+              formControlName="USER"
+            />
+            <label for="floatingInputUser">User</label>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div style="position: relative; margin-top: 10px">
-      <input
-        id="host"
-        class="form-control"
-        [(ngModel)]="dbSettings.HOST"
-        style="height: 60px; padding-top: 20px"
-      />
-      <label
-        for="host"
-        style="
-          position: absolute;
-          top: 2px;
-          left: 10px;
-          color: #999;
-          pointer-events: none;
-        "
-        >Host</label
-      >
+    <div class="business-detail-wrap">
+      <div class="business-detail-wrap">
+        <div class="floating-item mb-3">
+          <div class="form-floating">
+            <input
+              type="password"
+              class="form-control"
+              id="floatingInputPassword"
+              placeholder="Password"
+              formControlName="PASSWORD"
+            />
+            <label for="floatingInputPassword">Password</label>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div style="position: relative; margin-top: 10px">
-      <input
-        id="port"
-        class="form-control"
-        [(ngModel)]="dbSettings.PORT"
-        style="height: 60px; padding-top: 20px"
-      />
-      <label
-        for="port"
-        style="
-          position: absolute;
-          top: 2px;
-          left: 10px;
-          color: #999;
-          pointer-events: none;
-        "
-        >Port</label
-      >
+    <div class="business-detail-wrap">
+      <div class="business-detail-wrap">
+        <div class="floating-item mb-3">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInputHost"
+              placeholder="Host"
+              formControlName="HOST"
+            />
+            <label for="floatingInputHost">Host</label>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <button
-      class="btn btn-primary"
-      style="margin-top: 20px; margin-left: 5px;width: 100px;"
-      type="button"
-      (click)="saveSetting()"
-    >
-      Save
-    </button>
-  </div>
+    <div class="business-detail-wrap">
+      <div class="business-detail-wrap">
+        <div class="floating-item mb-3">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              id="floatingInputPort"
+              placeholder="Port"
+              formControlName="PORT"
+            />
+            <label for="floatingInputPort">Port</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+      <button
+        class="btn btn-primary"
+        style="margin-top: 20px; margin-left: 5px; width: 100px;"
+        type="button"
+        (click)="saveSetting()"
+        [disabled]="dbSettingsForm.invalid"
+      >
+        Save
+      </button>
+
+  </form>
 </div>

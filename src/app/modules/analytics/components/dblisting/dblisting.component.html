@@ -1,0 +1,117 @@
+<div class="w-auto chat-message-component w-100 inbox-container" [ngClass]="showPanel?'panelToggled':''">
+  <div class="d-flex main-body-wrapper">
+      <div class="agent-page-main-content">
+        <div
+        class="tags-wrap console-body-wrapper"
+        data-scrollbar="true"
+        tabindex="-1"
+        style="overflow-y: auto; outline: none"
+      >
+        <div class="scroll-content">
+          <div class="wider-container pt-3">
+            <div id="nav-team">
+              <div class="searchBar-wrapper mb-4">
+                <div class="row">
+                  <div class="col-lg-4">
+                  </div>
+                  <div class="col-lg-8 d-flex align-items-center justify-content-end">
+
+                    <a [routerLink]="['/analytics/db-settings/create']" class="ms-2">
+                      <button type="button" class="btn btn-success">
+                        <i class="fal fa-plus me-2"></i>
+                        Create Connection
+                      </button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="table-section">
+                <table class="table mb-5 align-middle">
+                  <thead>
+                    <tr >
+                      <th *ngFor="let column of columns">{{column}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let con of connections">
+                      <td>
+                        <div class="d-flex align-items-center darkblue">
+                          {{con.connection_name}}
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center darkblue">
+                          {{con.engine}}
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center darkblue">
+                          {{con.name}}
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center darkblue">
+                          {{con.user}}
+                        </div>
+                      </td>
+
+                      <td>
+                        <div class="d-flex align-items-center darkblue">
+                          {{con.host}}
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center darkblue">
+                          {{con.port}}
+                        </div>
+                      </td>
+                      <td>
+                        <div
+                          class="icons-list d-flex dropstart justify-content-end"
+                        >
+                          <button
+                            class="btn iconButton small iconHover btn-group"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            <i class="far fa-ellipsis-v"></i>
+                          </button>
+                          <ul class="dropdown-menu fade">
+
+                            <li>
+                              <a  [routerLink]="['/analytics/db-settings/update', con.id]"
+                                class="dropdown-item"
+
+                              >
+                                <i class="fal fa-edit me-2"></i> Edit</a
+                          >
+                            </li>
+
+
+                            <li>
+                              <a
+                                class="dropdown-item delete-dd"
+                                (click)="deletecon(con.id)"
+
+                              >
+                                <i class="fal fa-trash me-2"></i> Delete</a
+                              >
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+  </div>
+</div>
+
+

@@ -59,7 +59,6 @@ export class InboxContentComponent implements OnInit {
 
     this.router.events.subscribe((ev) => {
       if(ev instanceof NavigationEnd){
-        debugger
         if(ev.url.includes('responder')){
           this.loadComponent('responder')
         } else {

@@ -10,16 +10,43 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 })
 export class SignaturesComponent implements OnInit {
   signatures: any[] = [];
-  sortOptions: string[] = ['All', 'Ascending', 'Descending'];
-  selectedSortOption: string = 'All';
 
-  sortTemplates() {
-    if (this.selectedSortOption === 'Ascending') {
-      this.signatures.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-    } else if (this.selectedSortOption === 'Descending') {
-      this.signatures.sort((a, b) => (b.name || '').localeCompare(a.name || ''));
+  selectedSortOption: string = 'All';
+  searchText: string = '';
+  applySearchFilter() {
+    const searchTextLower = this.searchText.toLowerCase();
+    this.signatures = this.signatures.filter((signature) => {
+      const templateNameLower = (signature.templateName || '').toLowerCase();
+      const subjectLower = (signature.subject || '').toLowerCase();
+      return templateNameLower.includes(searchTextLower) || subjectLower.includes(searchTextLower);
+    });
+    this.sortSignatures();
+  }
+  refreshMessages() {
+    this.commonService.GetAllMessages('Signature').subscribe(
+      (response: any) => {
+        this.signatures = response;
+        this.sortSignatures();
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
+  
+  sortSignatures() {
+    switch (this.selectedSortOption) {
+      case 'Ascending':
+        this.signatures.sort((a, b) => a.templateName.localeCompare(b.templateName));
+        break;
+      case 'Descending':
+        this.signatures.sort((a, b) => b.templateName.localeCompare(a.templateName));
+        break;
+      default:
+        break;
     }
   }
+  
   constructor(private headerService: HeaderService ,private commonService: CommonDataService , private router: Router ) { }
 
   ngOnInit(): void {

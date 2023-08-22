@@ -8,12 +8,12 @@ import { Observable } from 'rxjs';
 //https://reportbuilder.360scrm.com/
 //http://localhost:8000/
 export class ReportService {
-  private apiUrl = 'http://localhost:8000/reports/';
+  private apiUrl = 'https://reportbuilder.360scrm.com/reports/';
   constructor(private http: HttpClient) { }
 
   login() {
     const body = { email: 'admin@gmail.com', password: 'admin' };
-    return this.http.post("http://localhost:8000/user/" + "api/token", body);
+    return this.http.post("https://reportbuilder.360scrm.com/user/" + "api/token", body);
   }
 
   gethttpOptions() {
@@ -29,24 +29,39 @@ export class ReportService {
   }
   getDataBasesApi(): Observable<any> {
     let httpOptions = this.gethttpOptions()
-    //const headers = new HttpHeaders();
-    return this.http.get<any>(this.apiUrl, httpOptions);
-  }
 
-  createDbSetiingApi(data: any): Observable<any> {
-    let httpOptions = this.gethttpOptions()
-    return this.http.post(this.apiUrl + "db-settings", data, httpOptions)
+    return this.http.get<any>(this.apiUrl, httpOptions);
   }
   listDbSetiingApi(): Observable<any> {
     let httpOptions = this.gethttpOptions()
 
     return this.http.get(this.apiUrl + "db-settings", httpOptions)
   }
+  getDbSettingById(id: any): Observable<any> {
+    let httpOptions = this.gethttpOptions()
+    return this.http.get(this.apiUrl + `db-settings/${id}`, httpOptions)
+  }
+  createDbSetiingApi(data: any): Observable<any> {
+    let httpOptions = this.gethttpOptions()
+    return this.http.post(this.apiUrl + "db-settings", data, httpOptions)
+  }
+
+  updateDbSetiingApi(id: any, data: any): Observable<any> {
+    let httpOptions = this.gethttpOptions()
+    return this.http.put(this.apiUrl + `db-settings/${id}`, data, httpOptions)
+  }
+  deleteDbSetiingApi(id: any): Observable<any> {
+    let httpOptions = this.gethttpOptions()
+    return this.http.delete(this.apiUrl + `db-settings/${id}`, httpOptions)
+  }
+
+
   getConnectiondatabases(connection_name: any): Observable<any> {
     const params = new HttpParams().set('connection_name', connection_name)
     let httpOptions = this.gethttpOptions()
     return this.http.get(this.apiUrl + "connect/" + params.toString(), httpOptions)
   }
+
   selectDatabaseApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + 'tables', data, httpOptions);
@@ -56,10 +71,12 @@ export class ReportService {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "db-connect", data, httpOptions);
   }
+
   selectTableApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "gettabledata", data, httpOptions);
   }
+
   limitDataApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "rowlimit", data, httpOptions);
@@ -68,10 +85,12 @@ export class ReportService {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "getcolumns", data, httpOptions);
   }
+
   sortDataApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "gettablesortdata", data, httpOptions);
   }
+
   groupDataApi(data: any): Observable<any> {
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "getbygroup", data, httpOptions);
@@ -81,7 +100,7 @@ export class ReportService {
     return this.http.post<any>(this.apiUrl + "summarize", data, httpOptions);
   }
   visualizeDataApi(data: any): Observable<any> {
-    console.log("data==>V",data);
+    console.log("data==>V", data);
     let httpOptions = this.gethttpOptions()
     return this.http.post<any>(this.apiUrl + "visualize", data, httpOptions);
   }
@@ -111,6 +130,7 @@ export class ReportService {
     let httpOptions = this.gethttpOptions()
     return this.http.get<any>(this.apiUrl + "list-report", httpOptions);
   }
+
   reportupdateApi(): Observable<any> {
     let httpOptions = this.gethttpOptions()
     return this.http.put<any>(this.apiUrl + "update-report", httpOptions);

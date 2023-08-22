@@ -39,7 +39,7 @@ export class TeamMenuComponent implements OnInit {
         // removing responder menu from list for time being
         this.menuArray = [];
         item.forEach((singleMenu:any)=>{
-          if(singleMenu.name != "Responder"){
+          if((singleMenu.name != "Responder") && (singleMenu.name != "Draft") && (singleMenu.name != "Snoozed")){
             if(!this.menuArray.includes(singleMenu)){
               this.menuArray.push(singleMenu);
             }            

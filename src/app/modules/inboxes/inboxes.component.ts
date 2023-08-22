@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { RightNavService } from 'src/app/services/RightNavService/RightNav.service';
 import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
-// import { WebPhoneComponent } from '../web-phone/web-phone.component';
+import { WebPhoneComponent } from '../web-phone/web-phone.component';
 import { ConversationComponent } from './components/conversation/conversation.component';
 import { SlaComponent } from './components/SLA/sla.component';
 import { ComplaintTicketPanelComponent } from './right-sidebar-components/complaint-ticket-panel/complaint-ticket-panel/complaint-ticket-panel.component';
@@ -111,7 +111,6 @@ export class InboxesComponent implements OnInit {
 
 
   loadComponent(leftSideName: string, rightSideName: string) {
-    debugger
     let componentFactory = null;
 
     switch (leftSideName || rightSideName) {
@@ -170,11 +169,11 @@ export class InboxesComponent implements OnInit {
         );
         this.rightcontainer?.createComponent(componentFactory);
         break;
-      // case 'phone-dialer':
-      //   componentFactory =
-      //     this.resolver.resolveComponentFactory(WebPhoneComponent);
-      //     this.rightcontainer?.createComponent(componentFactory);
-      //   break;
+      case 'phone-dialer':
+        componentFactory =
+          this.resolver.resolveComponentFactory(WebPhoneComponent);
+          this.rightcontainer?.createComponent(componentFactory);
+        break;
       case 'documents':
         componentFactory =
           this.resolver.resolveComponentFactory(DocumentsComponent);

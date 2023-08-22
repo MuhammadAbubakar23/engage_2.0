@@ -757,8 +757,7 @@ export class FacebookComponent implements OnInit {
           if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.FacebookMessages = res.List?.dm;
-          this.TotalMsgQueryCount = res.TotalQueryCount;
-        //  this.pageName = this.FacebookMessages[0]?.toName;
+          this.pageName = res.List?.profile.page_Name;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
           this.TotalMsgQueryCount = res.TotalQueryCount;
 
@@ -820,7 +819,7 @@ export class FacebookComponent implements OnInit {
         if (Object.keys(res).length > 0) {
         this.SpinnerService.hide();
         this.FacebookMessages = res.List?.dm;
-        this.pageName = this.FacebookMessages[0].toName;
+        this.pageName = res.List?.profile.page_Name;
         this.totalMessages = res.TotalCount;
         this.TotalMsgQueryCount = res.TotalQueryCount;
         this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
@@ -884,7 +883,7 @@ export class FacebookComponent implements OnInit {
           if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.FacebookMessages = res.List?.dm;
-          this.pageName = this.FacebookMessages[0].toName;
+          this.pageName = res.List?.profile.page_Name;
           this.totalMessages = res.TotalCount;
           this.TotalMsgQueryCount = res.TotalQueryCount;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
@@ -1122,11 +1121,10 @@ export class FacebookComponent implements OnInit {
 
             this.radioInput.nativeElement.checked = false;
           },
-          ({ error }) => {
-            this.spinner1running = false;
-        this.SpinnerService.hide();
-        this.reloadComponent('error');
-            //  alert(error.message);
+          (error) => {
+             alert(error.message);
+             this.spinner1running = false;
+            this.SpinnerService.hide();
           }
         );
       } else {
@@ -1211,11 +1209,10 @@ export class FacebookComponent implements OnInit {
 
             this.radioInput.nativeElement.checked = false;
           },
-          ({ error }) => {
-            this.spinner1running = false;
-        this.SpinnerService.hide();
-        this.reloadComponent('error');
-            //  alert(error.message);
+          ( error ) => {
+             alert(error.message);
+             this.spinner1running = false;
+            this.SpinnerService.hide();
           }
         );
       } else {
@@ -1358,6 +1355,7 @@ export class FacebookComponent implements OnInit {
   }
 
   removeTagFromFeed(tagid: any, feedId: string, type: any) {
+    if(this.flag != 'sent'){
     if (type == 'FC') {
       this.insertTagsForFeedDto.tagId = tagid;
       this.insertTagsForFeedDto.feedId = feedId.toString();
@@ -1391,6 +1389,7 @@ export class FacebookComponent implements OnInit {
           this.checkTag = false;
         });
     }
+  }
   }
 
   Sentiments = [
@@ -1506,8 +1505,15 @@ export class FacebookComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
-    if (type == 'error') {
-      this.AlterMsg = 'Something went wrong';
+    if (type == 'starred') {
+      this.AlterMsg = 'Profile(s) has been marked as starred!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+if (type == 'removeStarred') {
+      this.AlterMsg = 'Profile(s) has been removed from starred items';
       this.toastermessage = true;
       setTimeout(() => {
         this.toastermessage = false;
@@ -1726,5 +1732,33 @@ export class FacebookComponent implements OnInit {
 
   isAudio(attachment: any): boolean {
     return attachment.contentType?.toLowerCase().startsWith('audio');
+  }
+
+  hideMessage(queryId:number, status:boolean){
+    this.commondata.HideUnhideMessage(queryId,status).subscribe((res:any)=>{
+      console.log(res);
+    })
+  }
+  itemsToBeUpdated:any[]=[];
+  starMessage(msgId:number, status:boolean){
+      var obj = {
+        channel: '',
+        flag: 'starred',
+        status: status,
+        messageId: msgId,
+        profileId: 0,
+      };
+      this.itemsToBeUpdated.push(obj);
+    this.commondata
+      .UpdateStatus(this.itemsToBeUpdated)
+      .subscribe((res: any) => {
+        if (res.message === "Status Updated Successfully") {
+          if(status == true){
+            this.reloadComponent('starred');
+          } else if (status == false) {
+            this.reloadComponent('removeStarred');
+          }
+        }
+      });
   }
 }

@@ -15,15 +15,15 @@
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li>
                                         <a class="dropdown-item"
-                                            (click)="selectedSortOption = 'All'; sortTemplates()">All</a>
+                                            (click)="selectedSortOption = 'All'; sortMessages()">All</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item"
-                                            (click)="selectedSortOption = 'Ascending'; sortTemplates()">Ascending</a>
+                                            (click)="selectedSortOption = 'Ascending'; sortMessages()">Ascending</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item"
-                                            (click)="selectedSortOption = 'Descending'; sortTemplates()">Descending</a>
+                                            (click)="selectedSortOption = 'Descending'; sortMessages()">Descending</a>
                                     </li>
                                 </ul>
                             </div>
@@ -34,7 +34,8 @@
                             <button class="iconButton medium">
                                 <i class="fal fa-search silver"></i>
                             </button>
-                            <input placeholder="Search" class="me-1">
+                            <input [(ngModel)]="searchText" placeholder="Search" class="me-1" (ngModelChange)="searchText ? applySearchFilter() : refreshMessages()">
+
                         </a>
                         <a (click)="updatevalue('consoleCreateMessageTemplatesHeader')"
                             [routerLink]="['/console/templates/messages/create']" class="ms-2">

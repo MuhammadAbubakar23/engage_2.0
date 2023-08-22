@@ -153,7 +153,8 @@ export const environment = {
       repliesList: 'SentQueries/GetRepliesList',
       signOut: 'SignalRConnector/UserLogout',
       getCustomers: 'Customer/GetAllCustomersSocialProfile',
-      updateStatus: 'Channel/UpdateMessageStatus'
+      updateStatus: 'Channel/UpdateMessageStatus',
+      hideUnhideMessage: 'Query/HideQuery'
       
     },
     facebook: {

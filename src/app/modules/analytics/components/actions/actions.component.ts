@@ -6,9 +6,19 @@ import { Route } from '@angular/router';
 import { Router } from '@angular/router';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DragDropService } from '../../services/dragdrop.service';
+import { CommonModule } from '@angular/common';
 
+import { ToastrComponent } from '../toastr/toastr.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-actions',
+  standalone: true,
+  imports: [
+    CommonModule,
+    NgSelectModule,
+    FormsModule,
+  ToastrComponent],
   templateUrl: './actions.component.html',
   styleUrls: ['./actions.component.scss']
 })
@@ -41,6 +51,7 @@ export class ActionsComponent implements OnInit {
   graphTypes: any[] = ["Bar Chart", "Pie Chart", "Line Chart", "Polar Area Chart", "Radar Chart"];
   selectedGraph = ""
   items: string[] = [];
+
   constructor(private reportService: ReportService, private shareddataService: ShareddataService, private route: Router, private dragDropService: DragDropService) { }
 
   ngOnInit(): void {
@@ -292,4 +303,21 @@ export class ActionsComponent implements OnInit {
     this.shareddataService.updatechartType(this.selectedGraph);
   }
 
+  refreshData(){
+    this.numberoftables=0;
+     this.resetTable();
+     this.limitValue=5;
+     this.columnName='Select Column';
+     this.order='Order By';
+     this.offsetValue=0;
+    this.groupName="Select Group";
+    this.groupcolumnName="Select Column";
+    this.groupselectedItems=[];
+    const q=JSON.stringify(localStorage.getItem('query'));
+    console.log("q====>",q);
+    this.query=JSON.stringify(localStorage.getItem('query'));
+    this.selectedGraph="Bar Chart"
+    this.shareddataService.updatechartType('Bar Chart')
+    this.shareddataService.emitRefreshEvent('calling');
+  }
 }

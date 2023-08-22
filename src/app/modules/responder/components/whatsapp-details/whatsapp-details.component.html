@@ -48,7 +48,7 @@
                                         <p class="app-no navy m-0 me-2">{{whatsappMsg.ticketId}}</p>
                                     </div>
                                     <div class="d-flex align-items-center agent-container">
-                                        <div class="card w-d-inline whatsapp-pdf">
+                                        <div class="card w-d-inline messageUpper">
                                             <div class="card-body shadow-sm" [ngClass]="whatsappMsg.queryStatus == 'Unresponded'?'unread-msg':''">
                                                 <div class="d-flex msg-user-info">
                                                     <div class="d-flex align-items-center">
@@ -283,7 +283,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <span class="complaintBtn" type="button"><i class="fal fa-plus-circle sky" (click)="toggle('ticket', whatsappMsg.id)"></i></span>
+                                        <!-- <span class="complaintBtn" type="button"><i class="fal fa-plus-circle sky" (click)="toggle('ticket', whatsappMsg.id)"></i></span> -->
                                     </div>
                                     <div *ngFor="let reply of whatsappMsg.replies | sort:criteria">
                                         <!-- <div class="date-wrap">
@@ -291,7 +291,7 @@
                                         </div> -->
                                         <div class="message-wrap agent-message-wrap left" >
                                             <div class="agent-container">
-                                                <div class="card w-d-inline whatsapp-pdf">
+                                                <div class="card w-d-inline card-txt ms-auto shadow-sm">
                                                     <div class="card-body">
                                                         <div class="d-flex align-items-center mb-2">
                                                             <h6 class="card-title m-0">{{senderId}}</h6>
@@ -312,23 +312,8 @@
                                                             <audio class="audio" *ngIf="isAudio(attachment)" src={{attachment.attachmentUrl}} controls
                                                                 style="width: -webkit-fill-available;"></audio>
                                                         
-                                                            <!-- <a *ngIf="isOther(attachment)" [href]="attachment.attachmentUrl" target="_blank">
-                                                                <button class="download-button">{{ attachment.name }}</button>
-                                                            </a> -->
                                                             <a *ngIf="isOther(attachment)" [href]="attachment.attachmentUrl" target="_blank">
-                                                                <div class="card-body pdf-body bg-light align-items-center">
-                                                                    <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'pdf'" class="fas fa-file-pdf iconButton file-icon radical"></i>
-                                                                    <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'docx'" class="fas fa-file-word iconButton file-icon sky"></i>
-                                                                    <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'xlsx'" class="fas fa-file-excel iconButton file-icon excelGreen"></i>
-                                                                    <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'csv'" class="fas fa-file-csv iconButton file-icon excelGreen"></i>
-        
-                                                                    <i *ngIf="(attachment.name | getFileTypeFromUrl) != 'csv' &&  
-                                                                              (attachment.name | getFileTypeFromUrl) != 'xlsx' &&
-                                                                              (attachment.name | getFileTypeFromUrl) != 'docx' &&
-                                                                              (attachment.name | getFileTypeFromUrl) != 'pdf'" class="fas fa-file-lines iconButton file-icon">
-                                                                    </i>
-                                                                    <p class="card-text ms-3">{{ attachment.name }}</p>
-                                                                </div>
+                                                                <button class="download-button">{{ attachment.name }}</button>
                                                             </a>
                                                         
                                                         </div>

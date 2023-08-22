@@ -14,30 +14,32 @@
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li>
-                                      <a class="dropdown-item" (click)="selectedSortOption = 'All'; sortTemplates()">All</a>
+                                        <a class="dropdown-item" (click)="setStatus('All')">All</a>
                                     </li>
                                     <li>
-                                      <a class="dropdown-item" (click)="selectedSortOption = 'Ascending'; sortTemplates()">Ascending</a>
+                                        <a class="dropdown-item" (click)="setStatus('Ascending')">Ascending</a>
                                     </li>
                                     <li>
-                                      <a class="dropdown-item" (click)="selectedSortOption = 'Descending'; sortTemplates()">Descending</a>
+                                        <a class="dropdown-item" (click)="setStatus('Descending')">Descending</a>
                                     </li>
-                                  </ul>
+                                </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-8 d-flex align-items-center justify-content-end">
-                        <a  class="search-btn">
+                        <a class="search-btn">
                             <button class="iconButton medium">
                                 <i class="fal fa-search silver"></i>
                             </button>
-                            <input placeholder="Search" class="me-1">
+                            <input [(ngModel)]="searchText" placeholder="Search" class="me-1"
+                                (ngModelChange)="searchText ? applySearchFilter() : refreshMessages()">
+
                         </a>
                         <a (click)="updatevalue('consoleCreateQuickResponseTemplatesHeader')"
                             [routerLink]="['/console/business-hours/create']" class="ms-2">
                             <button type="button" class="btn btn-success">
                                 <i class="fal fa-plus me-2"></i>
-                                Add Business Hours 
+                                Add Business Hours
                             </button>
                         </a>
                     </div>
@@ -94,11 +96,11 @@
                                 </div>
                             </td>
                         </tr>
-                       
+
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
- 
+
 </div>

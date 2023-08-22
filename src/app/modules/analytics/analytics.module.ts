@@ -10,7 +10,7 @@ import { ReportBuilderHeaderComponent } from './analytics-headers/report-builder
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { ReportBuilderComponent } from './components/report-builder/report-builder.component';
 import { ActionsComponent } from './components/actions/actions.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgChartsModule } from 'ng2-charts';
 import { ReportDbSettingsComponent } from './components/report-db-settings/report-db-settings.component';
@@ -19,22 +19,15 @@ import { ExcelService } from './services/excel.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { ToastrComponent } from './components/toastr/toastr.component';
 import { AnalyticsDashboardComponent } from './components/analytics-dashboard/analytics-dashboard.component';
+import { DblistingComponent } from './components/dblisting/dblisting.component';
 // import {DndModule} from 'ngx-drag-drop';
 
 @NgModule({
   declarations: [
     AnalyticsComponent,
-    ExecutiveDashboardComponent,
-    LiveMonitoringComponent,
     ExecutiveDashboardHeaderComponent,
     LiveMonitoringHeaderComponent,
-    ReportBuilderHeaderComponent,
-    ReportBuilderComponent,
-    ActionsComponent,
-    ReportDbSettingsComponent,
-    ReportlistingComponent,
-    ToastrComponent,
-    AnalyticsDashboardComponent
+    ReportBuilderHeaderComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +36,8 @@ import { AnalyticsDashboardComponent } from './components/analytics-dashboard/an
     FormsModule,
     NgSelectModule,
     NgChartsModule,
-    DragDropModule
+    DragDropModule,
+    ReactiveFormsModule,
     // DndModule
   ],
   providers: [ExcelService]

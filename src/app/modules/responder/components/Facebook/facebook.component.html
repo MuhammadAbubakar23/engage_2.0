@@ -185,6 +185,10 @@
                                                                     <small class="silver">{{fbcmnts.createdDate |
                                                                         date:'h:mm:ss a'}}</small>
                                                                 </p>
+                                                                <button class="starbtn iconButton iconHover small btn" *ngIf="fbcmnts.starred == true" [ngClass]="fbcmnts.starred?'active':''">
+                                                                    <i class="fal fa-star charcoal"></i>
+                                                                    <i class="fas fa-star sun"></i>
+                                                                </button>
                                                             </div>
                                                             <div class="dropdown w-auto"
                                                                 *ngIf="fbcmnts.queryStatus != 'Responded' && fbcmnts.queryStatus != 'Completed'">
@@ -199,9 +203,11 @@
                                                                     aria-labelledby="dropdownMenuButton1">
 
                                                                     <li>
-                                                                        <a class="dropdown-item"
-                                                                            *ngIf="fbcmnts.queryStatus != 'Responded'"
-                                                                            (click)="commentStatus(fbcmnts.id, 'FC')">Read</a>
+                                                                        <a class="dropdown-item" *ngIf="fbcmnts.queryStatus != 'Responded'" (click)="commentStatus(fbcmnts.id, 'FC')">Read</a>
+                                                                        <a class="dropdown-item" *ngIf="fbcmnts.starred == false" (click)="starMessage(fbcmnts.id, true)">Star Message</a>
+                                                                        <a class="dropdown-item" *ngIf="fbcmnts.starred == true" (click)="starMessage(fbcmnts.id, false)">Remove Star from Message</a>
+                                                                        <!-- <a class="dropdown-item" *ngIf="fbcmnts.isHide == false" (click)="hideMessage(fbcmnts.id, true)">Hide Message</a>
+                                                                        <a class="dropdown-item" *ngIf="fbcmnts.isHide == true" (click)="hideMessage(fbcmnts.id, false)">UnHide Message</a> -->
                                                                         <!-- <a class="dropdown-item" *ngIf="fbcmnts.queryStatus == 'Responded'" (click)="queryCompleted(fbcmnts.id, 'FC')">Completed</a> -->
                                                                     </li>
 
@@ -212,6 +218,7 @@
                                                                 style="margin-left: 20px;">
                                                                 <small>{{fbcmnts.queryStatus}} </small>
                                                             </div>
+                                                            
                                                         </div>
                                                         <div class="post-img-wrap whatsappImgModalBtn" type="button"
                                                             style="width:375px;"
@@ -245,7 +252,7 @@
                                                         <!-- For Sentiment Pills -->
                                                     </div>
 
-                                                    <div class="message-bottom">
+                                                    <div class="message-bottom" *ngIf="flag != 'sent'">
                                                         <div class="row">
                                                             <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                                 <div
@@ -474,10 +481,10 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <span class="complaintBtn" (click)="toggle('ticket', fbcmnts.id)"
+                                                <!-- <span *ngIf="flag != 'sent'" class="complaintBtn" (click)="toggle('ticket', fbcmnts.id)"
                                                     type="button">
                                                     <i class="fal fa-plus-circle sky"></i>
-                                                </span>
+                                                </span> -->
                                             </div>
                                             <div *ngFor="let reply of fbcmnts.replies | sort:criteria">
                                                 <!-- <div class="date-wrap">
@@ -655,6 +662,10 @@
                                                                 <small class="silver">{{fbmsgs.createdDate |
                                                                     date:'h:mm:ss a'}}</small>
                                                             </p>
+                                                            <button class="starbtn iconButton iconHover small btn" *ngIf="fbmsgs.starred == true" [ngClass]="fbmsgs.starred?'active':''">
+                                                                <i class="fal fa-star charcoal"></i>
+                                                                <i class="fas fa-star sun"></i>
+                                                            </button>
                                                         </div>
                                                         <div class="dropdown w-auto"
                                                             *ngIf="fbmsgs.queryStatus != 'Responded' && fbmsgs.queryStatus != 'Completed'">
@@ -669,9 +680,10 @@
                                                                 aria-labelledby="dropdownMenuButton1">
 
                                                                 <li>
-                                                                    <a class="dropdown-item"
-                                                                        *ngIf="fbmsgs.queryStatus != 'Responded'"
-                                                                        (click)="commentStatus(fbmsgs.id, 'FCP')">Read</a>
+                                                                    <a class="dropdown-item" *ngIf="fbmsgs.queryStatus != 'Responded'" (click)="commentStatus(fbmsgs.id, 'FCP')">Read</a>
+                                                                    
+                                                                    <a class="dropdown-item" *ngIf="fbmsgs.starred == false" (click)="starMessage(fbmsgs.id, true)">Star Message</a>
+                                                                    <a class="dropdown-item" *ngIf="fbmsgs.starred == true" (click)="starMessage(fbmsgs.id, false)">Remove Star from Message</a>
                                                                     <!-- <a class="dropdown-item" *ngIf="fbcmnts.queryStatus == 'Responded'" (click)="queryCompleted(fbcmnts.id, 'FC')">Completed</a> -->
                                                                 </li>
 
@@ -717,7 +729,7 @@
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                 </div>
-                                                <div class="message-bottom">
+                                                <div class="message-bottom" *ngIf="flag != 'sent'">
                                                     <div class="row">
                                                         <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                             <div class="message-actionlist d-flex align-items-center">
@@ -747,30 +759,28 @@
                                                                                         <h6>Tags
                                                                                         </h6>
                                                                                     </div>
-                                                                                    <!-- <a href="#"
-                                                                                            class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
-                                                                                            (click)="closeTagListDropdown()"
-                                                                                            id="dropdownMenuButton3"
-                                                                                            data-bs-toggle="dropdown"
-                                                                                            aria-expanded="false">
-                                                                                            <i class="fal fa-times silver"></i>
-                                                                                        </a> -->
+                                                                                    <!-- <a class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
+                                                                                    (click)="closeTagListDropdown()"
+                                                                                        id="dropdownMenuButton3" data-bs-toggle="dropdown"
+                                                                                        aria-expanded="false">
+                                                                                        <i class="fal fa-times silver"></i>
+                                                                                    </a> -->
                                                                                 </div>
-                                                                                <form class="custom-searchbar">
+                                                                                <!-- <form class="custom-searchbar">
                                                                                     <input
                                                                                         class="form-control rounded-pill shadow-sm"
+                                                                                        
                                                                                         placeholder="Search"
-                                                                                        aria-label="Search"
-                                                                                        [(ngModel)]="searchText">
+                                                                                        aria-label="Search">
                                                                                     <span class="btn searchbar-btn"
                                                                                         type="submit">
                                                                                         <i
                                                                                             class="fal fa-search silver"></i>
                                                                                     </span>
-                                                                                </form>
+                                                                                </form> -->
                                                                             </li>
                                                                             <li class="dropend">
-                                                                                <div *ngFor="let tag of TagsList  | filter: searchText"
+                                                                                <div *ngFor="let tag of TagsList"
                                                                                     class="list-group list-group-flush dropend">
                                                                                     <a data-bs-toggle="dropdown"
                                                                                         class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
@@ -786,44 +796,59 @@
                                                                                         </div>
 
                                                                                     </a>
-                                                                                    <ul class="dropdown-menu shadow">
+                                                                                    <ul
+                                                                                        class="dropdown-menu shadow">
+                                                                                        <form class="custom-searchbar">
+                                                                                            <input
+                                                                                                class="form-control rounded-pill shadow-sm"
+                                                                                                [(ngModel)]="searchText"
+                                                                                                placeholder="Search"
+                                                                                                aria-label="Search">
+                                                                                            <span class="btn searchbar-btn"
+                                                                                                type="submit">
+                                                                                                <i
+                                                                                                    class="fal fa-search silver"></i>
+                                                                                            </span>
+                                                                                        </form>
                                                                                         <li class="list-body small-list"
                                                                                             data-scrollbar="true"
                                                                                             tabindex="-1"
-                                                                                            style="overflow: auto; outline: none;">
-                                                                                            <div
-                                                                                                class="list-group list-group-flush">
-                                                                                                <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                    (click)="insertTagsForFeed(keyword.id, fbmsgs.id, 'FCP')"
-                                                                                                    [ngClass]="activeTag==true?'active':''"
-                                                                                                    *ngFor="let keyword of tag.keywordList">
-                                                                                                    <div
-                                                                                                        class="list-down-icon">
-                                                                                                        <span
-                                                                                                            class="btn iconButton iconHover medium">
-                                                                                                            <i
-                                                                                                                class="fal fa-tag coal"></i>
-                                                                                                        </span>
-                                                                                                    </div>
-                                                                                                    <div
-                                                                                                        class="w-100 list-txt">
+                                                                                            style="overflow-y: auto; outline: none;">
+                                                                                            <div class="scroll-content"
+                                                                                                style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
+                                                                                                <div
+                                                                                                    class="list-group list-group-flush">
+                                                                                                    <a class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                                        (click)="insertTagsForFeed(keyword.id, fbmsgs.id, 'FCP')"
+                                                                                                        [ngClass]="activeTag==true?'active':''"
+                                                                                                        *ngFor="let keyword of tag.keywordList | filter: searchText">
                                                                                                         <div
-                                                                                                            class="d-flex w-100 justify-content-between">
-                                                                                                            <h6
-                                                                                                                class="mb-1 darkblue">
-                                                                                                                {{keyword.name}}
-                                                                                                            </h6>
+                                                                                                            class="list-down-icon">
+                                                                                                            <span
+                                                                                                                class="btn iconButton iconHover medium">
+                                                                                                                <i
+                                                                                                                    class="fal fa-tag coal"></i>
+                                                                                                            </span>
                                                                                                         </div>
-                                                                                                    </div>
-                                                                                                    <small
-                                                                                                        *ngIf="keyword.id == tag.id">
-                                                                                                        <i [ngClass]="checkTag==true?'fa-check-circle':''"
-                                                                                                            class="fal sky"></i>
-                                                                                                    </small>
-                                                                                                </a>
+                                                                                                        <div
+                                                                                                            class="w-100 list-txt">
+                                                                                                            <div
+                                                                                                                class="d-flex w-100 justify-content-between">
+                                                                                                                <h6
+                                                                                                                    class="mb-1 darkblue">
+                                                                                                                    {{keyword.name}}
+                                                                                                                </h6>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <small
+                                                                                                            *ngIf="keyword.id == tag.id">
+                                                                                                            <i [ngClass]="checkTag==true?'fa-check-circle':''"
+                                                                                                                class="fal sky"></i>
+                                                                                                        </small>
+                                                                                                    </a>
+                                                                                                </div>
                                                                                             </div>
                                                                                         </li>
-
                                                                                     </ul>
                                                                                 </div>
                                                                             </li>
@@ -904,10 +929,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <span class="complaintBtn" (click)="toggle('ticket', fbmsgs.id)"
+                                            <!-- <span *ngIf="flag != 'sent'" class="complaintBtn" (click)="toggle('ticket', fbmsgs.id)"
                                                 type="button">
                                                 <i class="fal fa-plus-circle sky"></i>
-                                            </span>
+                                            </span> -->
                                         </div>
                                         <div *ngFor="let msgReply of fbmsgs.replies | sort:criteria">
                                             <!-- <div class="date-wrap">
@@ -1032,7 +1057,7 @@
         </div>
     </div>
 </div>
-<ng-container *ngIf="fbCmntReply == true">
+<ng-container *ngIf="fbCmntReply == true && flag != 'sent'">
     <div class="msgTypingField shadow-lg">
         <div class="attachment-block" [ngClass]="isAttachment == true?'':'d-none'">
             <div class="card-body p-3" *ngFor="let image of ImageName; let i = index" style="margin-right: 10px;">
@@ -1117,7 +1142,7 @@
         </form>
     </div>
 </ng-container>
-<ng-container *ngIf="fbMsgReply == true">
+<ng-container *ngIf="fbMsgReply == true && flag != 'sent' && fbCmntReply == false">
     <div class="msgTypingField shadow-lg">
         <div>
             <div class="attachment-block" [ngClass]="isAttachment == true?'':'d-none'">
