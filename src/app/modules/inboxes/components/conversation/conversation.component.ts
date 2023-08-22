@@ -707,7 +707,12 @@ export class ConversationComponent implements OnInit {
       );
     } else if (this.currentUrl.split('/')[2] == 'trash') {
       this.reloadComponent('removeFromTrashToOpen');
-    } else {
+    } else if (this.currentUrl.split('/')[2] == 'spam') {
+      this.reloadComponent('removeFromTrashToOpen');
+    } else if (this.currentUrl.split('/')[2] == 'blacklist') {
+      this.reloadComponent('removeFromTrashToOpen');
+    }
+    else {
       this.SpinnerService.show();
       this.fetchId.setPlatform(platform);
       this.fetchId.setOption(id);
