@@ -18,6 +18,7 @@ export class DblistingComponent implements OnInit {
   constructor(private _rs: ReportService, private _route: Router, private _hS:HeaderService) { }
 
   ngOnInit(): void {
+    
     const newObj = {title:'DB Settings',url:'/analytics/db-settings'};
     this._hS.setHeader(newObj);
     this._rs.login().subscribe((token: any) => {
@@ -25,10 +26,8 @@ export class DblistingComponent implements OnInit {
       this._rs.listDbSetiingApi().subscribe((res) => {
         console.log("Dblisting", res);
         this.connections = res;
-
       })
     })
-
   }
 
   deletecon(id: any) {

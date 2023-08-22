@@ -243,7 +243,7 @@ export class ReportBuilderComponent implements OnInit {
   }
 
   loadComponent(rightSideName: string) {
-    debugger;
+   
     let componentFactory = null;
 
     switch (rightSideName) {
@@ -381,7 +381,6 @@ export class ReportBuilderComponent implements OnInit {
           this.dataKeys = res.columnswithdtypes;
           this.isTabular = true;
           this.isVisual = false;
-
           this.sharedataservice.updateQuery(res.query);
           localStorage.setItem('query', res.query);
         });
