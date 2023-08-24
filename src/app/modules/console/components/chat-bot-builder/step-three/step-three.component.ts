@@ -6,6 +6,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
   templateUrl: './step-three.component.html',
   styleUrls: ['./step-three.component.scss']
 })
+
 export class StepThreeComponent implements OnInit {
   public stepThreeForm: FormGroup;
 
@@ -14,7 +15,7 @@ export class StepThreeComponent implements OnInit {
   constructor(private fb: FormBuilder) {
     this.stepThreeForm = this.fb.group({
       answers: this.fb.array([
-        this.createAnswerControl() // Initialize with one Answer control
+        this.createAnswerControl()
       ])
     });
   }

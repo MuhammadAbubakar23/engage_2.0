@@ -56,6 +56,8 @@ import { ToastrComponent } from './components/toastr/toastr.component';
 import { StepFourComponent } from './components/chat-bot-builder/step-four/step-four.component';
 import { UpdateIntentsComponent } from './components/chat-bot/update-intents/update-intents.component';
 import { AddRulesComponent } from './components/rules/add-rules/add-rules.component';
+import { BulkUploadComponent } from './components/sentiment-analysis/bulk-upload/bulk-upload.component';
+import { CreateSentimentComponent } from './components/sentiment-analysis/create-sentiment/create-sentiment.component';
 
 // import { CreateSkillsComponent } from './components/skills/create-skills/create-skills.component';
 // import { AddSkillMembersComponent } from './components/skills/add-skill-members/add-skill-members.component';
@@ -116,6 +118,8 @@ import { AddRulesComponent } from './components/rules/add-rules/add-rules.compon
     ChatwithsentimentComponent,
     ChatwithintentComponent,
     ToastrComponent,
+    BulkUploadComponent,
+    CreateSentimentComponent,
   ],
   imports: [
     CommonModule,

@@ -156,7 +156,10 @@ export class ReportBuilderComponent implements OnInit {
     });
 
     this.sharedataservice.data$.subscribe((newData: any) => {
-      this.isGraph = true;
+      console.log("newData", newData);
+      if(newData !=="Initial Data" ){
+        this.isGraph = true;
+      }
 
       this.sharedataservice.updateQuery(newData.query);
       this.visualizeData();
@@ -174,6 +177,7 @@ export class ReportBuilderComponent implements OnInit {
         this.dataKeys = newData.columnswithdtypes;
       } else {
         this.isStats = true;
+
         this.statsdataKeys = Object.keys(newData.table);
         this.tableData = this.transformDataObject(newData.table);
 
@@ -243,7 +247,7 @@ export class ReportBuilderComponent implements OnInit {
   }
 
   loadComponent(rightSideName: string) {
-   
+
     let componentFactory = null;
 
     switch (rightSideName) {
