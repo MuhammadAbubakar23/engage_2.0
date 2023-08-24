@@ -31,6 +31,13 @@ export const environment = {
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
   CommonBaseUrl: 'https://wacommon.enteract.live/api/', 
   SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
+  CCMSURL: 'https://haccms.ibex.co/jomo/api/',
+  ServiceBaseUrl : 'https://waservice.enteract.live/api/',
+
+  JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
+  // for testing purpose
+  // consoleBaseUrl: 'https://10.111.11.93:45456/api/',
+  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
   links: {
     identity: {
@@ -107,6 +114,10 @@ export const environment = {
       addRules: 'Rules/Add',
       updateRules: 'Rules/Update',
       deleteRules: 'Rules/Delete'
+    },
+    service:{
+      addSurvey:'Whatsapp/AddSurvey',
+      addCSAT:'Whatsapp/AddCSAT',
     },
     CCMS: {
       reason_types: 'Order/GetReasonTypes',
