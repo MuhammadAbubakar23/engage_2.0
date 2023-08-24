@@ -17,6 +17,7 @@ export class CommonDataService {
   IdentityBaseUrl = environment.IdentityBaseUrl;
   FacebookBaseUrl = environment.FbBaseUrl;
   InstagramBaseUrl = environment.InstaBaseUrl;
+  ServiceBaseUrl = environment.ServiceBaseUrl;
 
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
@@ -117,6 +118,11 @@ export class CommonDataService {
 
   getChannels = environment.links.identity.channels;
   deleteRoles = environment.links.identity.deleteRoles
+
+  //service
+  addSurvey = environment.links.service.addSurvey;
+  addCSAT=environment.links.service.addCSAT
+
   constructor(private http: HttpClient) { }
 
   GetTagsList() {
@@ -510,9 +516,15 @@ export class CommonDataService {
   }
 
   HideUnhideMessage(queryId: number, status: boolean) {
-    debugger
     const url = (this.CommonBaseUrl + this.hideUnhideMessage + '?QueryId=' + queryId + '&Status=' + status);
     return this.http.get(url);
+  }
+
+  AddSurvey(body:any){
+    return this.http.post(this.ServiceBaseUrl+this.addSurvey,body)
+  }
+  AddCSATSurvey(body:any){
+    return this.http.post(this.ServiceBaseUrl+this.addCSAT,body)
   }
 }
 

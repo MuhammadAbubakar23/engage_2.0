@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormControlName,FormControl, Validators } from '@angular/forms';
+import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 @Component({
   selector: 'app-serva',
   templateUrl: './serva.component.html',
@@ -8,7 +9,7 @@ import { FormGroup,FormControlName,FormControl, Validators } from '@angular/form
 export class ServaComponent implements OnInit {
   AlterMsg="Date Add Successfull"
   toastermessage:boolean=false
-  constructor() { }
+  constructor( private commondataService:CommonDataService  ) { }
  morinageForm=new FormGroup({
   date:new FormControl('',Validators.required),
   cli:new FormControl('',Validators.required),
@@ -32,25 +33,30 @@ export class ServaComponent implements OnInit {
 
   save(){
     let data={
-     "CreatedDate":this.morinageForm.value.date,
-     "Cli":this.morinageForm.value.cli,
-     "ParentName":this.morinageForm.value.parentName,
-     "ChildName ":this.morinageForm.value.childsName,
-     "KidAge":this.morinageForm.value.kidAge,
-     "IsMorinagaUser":this.morinageForm.value.formulaUser,
-     "ProductName ":this.morinageForm.value.productName,
-     "Duration ":this.morinageForm.value.timeduration1,
-     "Reason ":this.morinageForm.value.reason1,
-     "otherFormularUser":this.morinageForm.value.otherFoumulauser,
+     "createdDate":this.morinageForm.value.date,
+     "cli":this.morinageForm.value.cli,
+     "parentName":this.morinageForm.value.parentName,
+     "childName":this.morinageForm.value.childsName,
+     "kidAge":this.morinageForm.value.kidAge,
+     "isMorinagaUser":this.morinageForm.value.formulaUser,
+     "productName":this.morinageForm.value.productName,
+     "duration":this.morinageForm.value.timeduration1,
+     "reason":this.morinageForm.value.reason1,
+     "otherFormula":this.morinageForm.value.otherFoumulauser,
 
 
     }
     debugger
-    console.log("the value of morinageForm ",data)
+  
+    this.commondataService.AddSurvey(data).subscribe((res:any)=>{
+   console.log("Add Date Respons===>",res);
     this.toastermessage=true
     setTimeout(()=>{
       this.toastermessage=false
     },1000)
+    this.morinageForm.reset()
+    })
+   
   }
   closeToaster(){
     this.toastermessage=false
