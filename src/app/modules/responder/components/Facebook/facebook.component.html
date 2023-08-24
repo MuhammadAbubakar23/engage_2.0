@@ -185,46 +185,64 @@
                                                                     <small class="silver">{{fbcmnts.createdDate |
                                                                         date:'h:mm:ss a'}}</small>
                                                                 </p>
-                                                                <button class="starbtn iconButton iconHover small btn" *ngIf="fbcmnts.starred == true" [ngClass]="fbcmnts.starred?'active':''">
+                                                                <button class="starbtn iconButton iconHover small btn"
+                                                                    *ngIf="fbcmnts.starred == true"
+                                                                    [ngClass]="fbcmnts.starred?'active':''">
                                                                     <i class="fal fa-star charcoal"></i>
                                                                     <i class="fas fa-star sun"></i>
                                                                 </button>
                                                             </div>
+                                                            
                                                             <div class="dropdown w-auto"
-                                                                *ngIf="fbcmnts.queryStatus != 'Responded' && fbcmnts.queryStatus != 'Completed' && fbcmnts.spam == false">
+                                                                *ngIf="fbcmnts.queryStatus != 'Responded'">
                                                                 <button class="btn coal p-0 ps-3" type="button"
                                                                     id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                     aria-expanded="false">
-                                                                    <small>{{fbcmnts.queryStatus}} <i class="far fa-chevron-down ms-2" *ngIf="flag == 'all-inboxes' || flag == 'my_inbox'"></i>
-                                                                    </small>
+                                                                    <small
+                                                                        *ngIf="fbcmnts.spam == false">{{fbcmnts.queryStatus}}
+                                                                        <i class="far fa-chevron-down ms-2"
+                                                                            *ngIf="(flag == 'all-inboxes' || flag == 'my_inbox') && fbcmnts.queryStatus != 'Completed'"></i></small>
+                                                                    <small *ngIf="fbcmnts.spam == true">Spam <i
+                                                                            class="far fa-chevron-down ms-2"
+                                                                            *ngIf="flag == 'all-inboxes' || flag == 'my_inbox'"></i></small>
                                                                 </button>
                                                                 <ul class="dropdown-menu custom-dropdown"
-                                                                    aria-labelledby="dropdownMenuButton1" *ngIf="flag == 'all-inboxes' || flag == 'my_inbox'">
+                                                                    aria-labelledby="dropdownMenuButton1"
+                                                                    *ngIf="(flag == 'all-inboxes' || flag == 'my_inbox') && fbcmnts.queryStatus != 'Completed'">
 
                                                                     <li>
-                                                                        <a class="dropdown-item" *ngIf="fbcmnts.queryStatus != 'Responded'" (click)="commentStatus(fbcmnts.id, 'FC')">Read</a>
-                                                                        <a class="dropdown-item" *ngIf="fbcmnts.starred == false" (click)="starMessage(fbcmnts.id, true)">Star Message</a>
-                                                                        <a class="dropdown-item" *ngIf="fbcmnts.starred == true" (click)="starMessage(fbcmnts.id, false)">Remove Star from Message</a>
+                                                                        <a class="dropdown-item"
+                                                                            *ngIf="fbcmnts.queryStatus != 'Responded'"
+                                                                            (click)="commentStatus(fbcmnts.id, 'FC')">Read</a>
+                                                                        <a class="dropdown-item"
+                                                                            *ngIf="fbcmnts.starred == false"
+                                                                            (click)="starMessage(fbcmnts.id, true)">Star
+                                                                            Message</a>
+                                                                        <a class="dropdown-item"
+                                                                            *ngIf="fbcmnts.starred == true"
+                                                                            (click)="starMessage(fbcmnts.id, false)">Remove
+                                                                            Star from
+                                                                            Message</a>
                                                                         <!-- <a class="dropdown-item" *ngIf="fbcmnts.isHide == false" (click)="hideMessage(fbcmnts.id, true)">Hide Message</a>
                                                                         <a class="dropdown-item" *ngIf="fbcmnts.isHide == true" (click)="hideMessage(fbcmnts.id, false)">UnHide Message</a> -->
-                                                                        <!-- <a class="dropdown-item" *ngIf="fbcmnts.queryStatus == 'Responded'" (click)="queryCompleted(fbcmnts.id, 'FC')">Completed</a> -->
-                                                                        <a class="dropdown-item" *ngIf="spam == false" (click)="spamMessage(fbcmnts.id, true, 'FC')">Mark as Spam</a>
-                                                                        <a class="dropdown-item" *ngIf="spam == true" (click)="spamMessage(fbcmnts.id, false, 'FC')">Remove from Spam</a>
+                                                                        <a class="dropdown-item"
+                                                                            *ngIf="fbcmnts.spam == false"
+                                                                            (click)="spamMessage(fbcmnts.id, true, 'FC')">Mark
+                                                                            as Spam</a>
+                                                                        <a class="dropdown-item"
+                                                                            *ngIf="fbcmnts.spam == true"
+                                                                            (click)="spamMessage(fbcmnts.id, false, 'FC')">Remove
+                                                                            from
+                                                                            Spam</a>
                                                                     </li>
-
                                                                 </ul>
                                                             </div>
-                                                            <div class="w-auto"
+                                                            <!-- <div class="w-auto"
                                                                 *ngIf="fbcmnts.queryStatus == 'Responded' || fbcmnts.queryStatus == 'Completed' && fbcmnts.spam == false"
                                                                 style="margin-left: 20px;">
                                                                 <small>{{fbcmnts.queryStatus}} </small>
-                                                            </div>
-                                                            <div class="w-auto"
-                                                                *ngIf="fbcmnts.spam == true"
-                                                                style="margin-left: 20px;">
-                                                                <small><b>Spam</b></small>
-                                                            </div>
-                                                            
+                                                            </div> -->
+
                                                         </div>
                                                         <div class="post-img-wrap whatsappImgModalBtn" type="button"
                                                             style="width:375px;"
@@ -339,13 +357,15 @@
                                                                                         </a>
                                                                                         <ul
                                                                                             class="dropdown-menu shadow">
-                                                                                            <form class="custom-searchbar">
+                                                                                            <form
+                                                                                                class="custom-searchbar">
                                                                                                 <input
                                                                                                     class="form-control rounded-pill shadow-sm"
                                                                                                     [(ngModel)]="searchText"
                                                                                                     placeholder="Search"
                                                                                                     aria-label="Search">
-                                                                                                <span class="btn searchbar-btn"
+                                                                                                <span
+                                                                                                    class="btn searchbar-btn"
                                                                                                     type="submit">
                                                                                                     <i
                                                                                                         class="fal fa-search silver"></i>
@@ -668,42 +688,60 @@
                                                                 <small class="silver">{{fbmsgs.createdDate |
                                                                     date:'h:mm:ss a'}}</small>
                                                             </p>
-                                                            <button class="starbtn iconButton iconHover small btn" *ngIf="fbmsgs.starred == true" [ngClass]="fbmsgs.starred?'active':''">
+                                                            <button class="starbtn iconButton iconHover small btn"
+                                                                *ngIf="fbmsgs.starred == true"
+                                                                [ngClass]="fbmsgs.starred?'active':''">
                                                                 <i class="fal fa-star charcoal"></i>
                                                                 <i class="fas fa-star sun"></i>
                                                             </button>
                                                         </div>
                                                         <div class="dropdown w-auto"
-                                                            *ngIf="fbmsgs.queryStatus != 'Responded' && fbmsgs.queryStatus != 'Completed' && fbmsgs.spam == false">
+                                                            *ngIf="fbmsgs.queryStatus != 'Responded'">
                                                             <button class="btn coal p-0 ps-3" type="button"
                                                                 id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                 aria-expanded="false">
-                                                                <small>{{fbmsgs.queryStatus}} <i
-                                                                        class="far fa-chevron-down ms-2" *ngIf="flag == 'all-inboxes' || flag == 'my_inbox'"></i>
-                                                                </small>
+                                                                <small
+                                                                    *ngIf="fbmsgs.spam == false">{{fbmsgs.queryStatus}}
+                                                                    <i class="far fa-chevron-down ms-2"
+                                                                        *ngIf="(flag == 'all-inboxes' || flag == 'my_inbox') && fbmsgs.queryStatus != 'Completed'"></i></small>
+                                                                <small *ngIf="fbmsgs.spam == true">Spam <i
+                                                                        class="far fa-chevron-down ms-2"
+                                                                        *ngIf="flag == 'all-inboxes' || flag == 'my_inbox'"></i></small>
                                                             </button>
                                                             <ul class="dropdown-menu custom-dropdown"
-                                                                aria-labelledby="dropdownMenuButton1" *ngIf="flag == 'all-inboxes' || flag == 'my_inbox'">
+                                                                aria-labelledby="dropdownMenuButton1"
+                                                                *ngIf="(flag == 'all-inboxes' || flag == 'my_inbox') && fbmsgs.queryStatus != 'Completed'">
 
                                                                 <li>
-                                                                    <a class="dropdown-item" *ngIf="fbmsgs.queryStatus != 'Responded'" (click)="commentStatus(fbmsgs.id, 'FCP')">Read</a>
-                                                                    
-                                                                    <a class="dropdown-item" *ngIf="fbmsgs.starred == false" (click)="starMessage(fbmsgs.id, true)">Star Message</a>
-                                                                    <a class="dropdown-item" *ngIf="fbmsgs.starred == true" (click)="starMessage(fbmsgs.id, false)">Remove Star from Message</a>
-                                                                    <!-- <a class="dropdown-item" *ngIf="fbcmnts.queryStatus == 'Responded'" (click)="queryCompleted(fbcmnts.id, 'FC')">Completed</a> -->
-                                                                    <a class="dropdown-item" *ngIf="spam == false" (click)="spamMessage(fbmsgs.id, true, 'FCP')">Mark as Spam</a>
-                                                                        <a class="dropdown-item" *ngIf="spam == true" (click)="spamMessage(fbmsgs.id, false, 'FCP')">Remove from Spam</a>
+                                                                    <a class="dropdown-item"
+                                                                        *ngIf="fbmsgs.queryStatus != 'Responded'"
+                                                                        (click)="commentStatus(fbmsgs.id, 'FCP')">Read</a>
+                                                                    <a class="dropdown-item"
+                                                                        *ngIf="fbmsgs.starred == false"
+                                                                        (click)="starMessage(fbmsgs.id, true)">Star
+                                                                        Message</a>
+                                                                    <a class="dropdown-item"
+                                                                        *ngIf="fbmsgs.starred == true"
+                                                                        (click)="starMessage(fbmsgs.id, false)">Remove
+                                                                        Star from
+                                                                        Message</a>
+                                                                    <a class="dropdown-item"
+                                                                        *ngIf="fbmsgs.spam == false"
+                                                                        (click)="spamMessage(fbmsgs.id, true, 'FCP')">Mark
+                                                                        as Spam</a>
+                                                                    <a class="dropdown-item" *ngIf="fbmsgs.spam == true"
+                                                                        (click)="spamMessage(fbmsgs.id, false, 'FCP')">Remove
+                                                                        from
+                                                                        Spam</a>
                                                                 </li>
-</ul>
-</div>
-<div class="w-auto" *ngIf="(fbmsgs.queryStatus == 'Responded' || fbmsgs.queryStatus == 'Completed') && fbmsgs.spam == false"
-    style="margin-left: 20px;">
-    <small>{{fbmsgs.queryStatus}} </small>
-</div>
-<div class="w-auto" *ngIf="fbmsgs.spam == true" style="margin-left: 20px;">
-    <small><b>Spam</b></small>
-</div>
-</div>          <div *ngFor="let attachment of fbmsgs.attachments"
+                                                            </ul>
+                                                        </div>
+                                                        <!-- <div class="w-auto" *ngIf="(fbmsgs.queryStatus == 'Responded' || fbmsgs.queryStatus == 'Completed') && fbmsgs.spam == false"
+                                                            style="margin-left: 20px;">
+                                                            <small>{{fbmsgs.queryStatus}} </small>
+                                                        </div> -->
+                                                    </div>
+                                                    <div *ngFor="let attachment of fbmsgs.attachments"
                                                         style="width: 375px;">
                                                         <img class="whatsapp-single-img whatsappImgModalBtn"
                                                             *ngIf="isImage(attachment)" src={{attachment.attachmentUrl}}
@@ -804,15 +842,15 @@
                                                                                         </div>
 
                                                                                     </a>
-                                                                                    <ul
-                                                                                        class="dropdown-menu shadow">
+                                                                                    <ul class="dropdown-menu shadow">
                                                                                         <form class="custom-searchbar">
                                                                                             <input
                                                                                                 class="form-control rounded-pill shadow-sm"
                                                                                                 [(ngModel)]="searchText"
                                                                                                 placeholder="Search"
                                                                                                 aria-label="Search">
-                                                                                            <span class="btn searchbar-btn"
+                                                                                            <span
+                                                                                                class="btn searchbar-btn"
                                                                                                 type="submit">
                                                                                                 <i
                                                                                                     class="fal fa-search silver"></i>

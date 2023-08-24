@@ -63,5 +63,6 @@ toasters: Toaster[] = [];
     // this.signalRService.bulkQueryStatusDataListener();
     // this.signalRService.assignQueryResponseListner();
     // this.signalRService.applySentimentListner();
+    // this.signalRService.updateMessageStatusDataListener();
   }
 }

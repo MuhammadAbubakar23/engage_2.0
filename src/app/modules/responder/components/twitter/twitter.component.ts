@@ -1390,7 +1390,9 @@ export class TwitterComponent implements OnInit {
                     singleCmnt.tags.splice(index, 1);
                   }
                 } else {
-                  singleCmnt.tags.push(this.addTags);
+                  if(!(singleCmnt.tags.includes(this.addTags))){
+                    singleCmnt.tags.push(this.addTags);
+                  }
                 }
               }
             }

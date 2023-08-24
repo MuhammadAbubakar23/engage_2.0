@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit {
         this.signalRService.checkConnectionStatusListener();
         this.signalRService.assignQueryResponseListner();
         this.signalRService.applySentimentListner();
+        this.signalRService.updateMessageStatusDataListener();
       },
       (error: any) => {
         this.spinnerService.hide();
