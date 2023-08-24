@@ -32,6 +32,7 @@ export const environment = {
   CommonBaseUrl: 'https://common-engage.enteract.app/api/',
   SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
+  ServiceBaseUrl : 'https://waservice.enteract.live/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
   // for testing purpose
@@ -113,6 +114,10 @@ export const environment = {
       addRules: 'Rules/Add',
       updateRules: 'Rules/Update',
       deleteRules: 'Rules/Delete'
+    },
+    service:{
+      addSurvey:'Whatsapp/AddSurvey',
+      addCSAT:'Whatsapp/AddCSAT',
     },
     CCMS: {
       reason_types: 'Order/GetReasonTypes',
