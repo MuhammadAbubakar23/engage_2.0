@@ -21,5 +21,10 @@ export class SkillsComponent implements OnInit {
   updatevalue(string:any){
     this.headerService.updateMessage(string);
   }
-
+   userDetails:any[]=[
+    {teams:"vw",userid:333,department:"information technology"},
+    {teams:"special Projects",userid:3434,department:"Sales"},
+    {teams:"Corporte Team",userid:3422,department:"Account,Support"},
+    {teams:"lead Management",userid:9988,department:"All"}
+   ]
 }
