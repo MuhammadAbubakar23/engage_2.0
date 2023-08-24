@@ -43,27 +43,27 @@
                                     Create quick rules
                                 </a>
                             </li> -->
-                            <li class="important-option mb-0" *ngIf="spamStatus == false" (click)="Spam(profileId)">
+                            <!-- <li class="important-option mb-0" *ngIf="spamStatus == false" (click)="Spam(profileId)">
                                 <a class="dropdown-item">
                                     Mark as spam
                                 </a>
-                            </li>
+                            </li> 
                             <li class="important-option mb-0" *ngIf="spamStatus == true" (click)="RemoveSpam(profileId)">
                                 <a class="dropdown-item">
                                     Remove from Spam
                                 </a>
-                            </li>
+                            </li> -->
                             <!-- <li>
                                 <a class="dropdown-item">
                                     Report phishing
                                 </a>
                             </li> -->
-                            <li *ngIf="blockStatus == false" (click)="Block(profileId)">
+                            <li class="important-option mb-0" *ngIf="blockStatus == false" (click)="Block(profileId)">
                                 <a class="dropdown-item">
                                     Block sender
                                 </a>
                             </li>
-                            <li *ngIf="blockStatus == true" (click)="Unblock(profileId)">
+                            <li class="important-option mb-0" *ngIf="blockStatus == true" (click)="Unblock(profileId)">
                                 <a class="dropdown-item">
                                     Unblock sender
                                 </a>

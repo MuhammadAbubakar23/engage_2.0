@@ -21,7 +21,7 @@ export const environment = {
   },
   title: 'abc',
   IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  InstaBaseUrl: 'https://insta.360scrm.com/api/', // other then post and data
+  InstaBaseUrl: 'https://insta.360scrm.com/api/',
   FbBaseUrl: 'https://face.360scrm.com/api/',
   YoutubeBaseUrl: 'https://tube.360scrm.com/api/',
   TwitterBaseUrl: 'https://tweet.360scrm.com/api/',

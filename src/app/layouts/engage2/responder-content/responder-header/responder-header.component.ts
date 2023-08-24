@@ -113,7 +113,8 @@ export class ResponderHeaderComponent implements OnInit {
     private unrespondedCountService: UnRespondedCountService,
     private updateCommentsService: UpdateCommentsService,
     private updateMessagesService: UpdateMessagesService,
-    private toggleService: ToggleService
+    private toggleService: ToggleService,
+    private lodeModuleService : ModulesService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -2194,16 +2195,20 @@ if (type == 'RemoveStarred') {
       profileId: id,
     };
     this.itemsToBeUpdated.push(obj);
-  this.commondata
-    .UpdateStatus(this.itemsToBeUpdated)
-    .subscribe((res: any) => {
-      if (res.message === "Status Updated Successfully") {
-        this.itemsToBeUpdated = [];
-        this.blockStatus = true;
-        this.reloadComponent('block');
-      }
-    });
-}
+    this.commondata
+      .UpdateStatus(this.itemsToBeUpdated)
+      .subscribe((res: any) => {
+        if (res.message === 'Status Updated Successfully') {
+          this.markAllAsRead();
+          this.itemsToBeUpdated = [];
+          this.blockStatus = true;
+          this.reloadComponent('block');
+          localStorage.setItem('assignedProfile', '');
+          this.route.navigateByUrl('/all-inboxes/my_inbox');
+          this.lodeModuleService.updateModule('all-inboxes');
+        }
+      });
+  }
 
 Unblock(id:any){
     var obj = {
