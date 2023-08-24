@@ -1505,6 +1505,20 @@ export class FacebookComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
+    if (type == 'spam') {
+      this.AlterMsg = 'Message has been marked as spam!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+if (type == 'removeSpam') {
+      this.AlterMsg = 'Message has been removed from spam items';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'starred') {
       this.AlterMsg = 'Profile(s) has been marked as starred!';
       this.toastermessage = true;
@@ -1740,6 +1754,7 @@ if (type == 'removeStarred') {
     })
   }
   itemsToBeUpdated:any[]=[];
+
   starMessage(msgId:number, status:boolean){
       var obj = {
         channel: '',
@@ -1761,4 +1776,32 @@ if (type == 'removeStarred') {
         }
       });
   }
+
+  spam = false;
+
+  spamMessage(msgId:number, status:boolean, type:string){
+    debugger
+    var obj = {
+      channel: '',
+      flag: 'spam',
+      status: status,
+      messageId: msgId,
+      profileId: 0,
+    };
+    this.itemsToBeUpdated.push(obj);
+  this.commondata
+    .UpdateStatus(this.itemsToBeUpdated)
+    .subscribe((res: any) => {
+      if (res.message === "Status Updated Successfully") {
+        if(status == true){
+          this.spam = true;
+          this.commentStatus(msgId, type);
+          this.reloadComponent('spam');
+        } else if (status == false) {
+          this.spam = false;
+          this.reloadComponent('removeSpam');
+        }
+      }
+    });
+}
 }
