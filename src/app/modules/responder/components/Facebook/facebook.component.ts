@@ -250,7 +250,6 @@ export class FacebookComponent implements OnInit {
       this.Subscription = this.queryStatusService
       .receiveQueryStatus()
       .subscribe((res) => {
-        debugger
         this.updateMessageStatusDataListner(res);
       });
   }
@@ -1805,7 +1804,6 @@ if (type == 'removeStarred') {
   spam = false;
 
   spamMessage(msgId:number, status:boolean, type:string){
-    debugger
     this.itemsToBeUpdated=[];
     var obj = {
       channel: '',
@@ -1831,7 +1829,6 @@ if (type == 'removeStarred') {
     });
 }
 updateMessageStatusDataListner(res:any){
-  debugger
   if(this.FacebookData){
     this.FacebookData.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {

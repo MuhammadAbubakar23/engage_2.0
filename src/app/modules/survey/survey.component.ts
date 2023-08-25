@@ -36,7 +36,6 @@ save(){
 
   }
   
-  debugger
   console.log("the sevices value==>",this.servicesForm.value)
   this.commanDateServices.AddCSATSurvey(data).subscribe((res=>{
     console.log("AddCASTSurvey res===>",res)

@@ -42,7 +42,6 @@ export class CreateSkillsComponent implements OnInit {
   }
 
   onSubmit(){
-    debugger
     console.log("this.userForm.value===>",this.userForm.value);
   }
   
