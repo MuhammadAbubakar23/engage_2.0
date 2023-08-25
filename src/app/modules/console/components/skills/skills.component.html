@@ -11,12 +11,12 @@
                                     <button class="iconButton medium">
                                         <i class="fal fa-search silver"></i>
                                     </button>
-                                    <input placeholder="Search">
+                                    <input placeholder="Search" type="text" [(ngModel)]="search">
                                 </a>
                             </li>
                             <li class="list-inline-item">
-                                <select class="js-example-basic-single form-select"
-                                class="form-select"
+                                <select class="js-example-basic-single form-select" class="form-select"
+                                [(ngModel)]="fillter"
                                     data-select2-id="select2-data-1-st3r" tabindex="-1" aria-hidden="true">
                                     <option data-select2-id="select2-data-3-1igk">All </option>
                                     <option>Ascending </option>
@@ -40,7 +40,8 @@
                         </ul>
                     </div>
                     <div class="col-md-4 d-flex align-items-center justify-content-end">
-                        <a (click)="updatevalue('consoleCreateTeamHeader')" [routerLink]="['/console/skills/create/0']" class="ms-2">
+                        <a (click)="updatevalue('consoleCreateTeamHeader')" [routerLink]="['/console/skills/create/0']"
+                            class="ms-2">
                             <button type="button" class="btn btn-success">
                                 <i class="fal fa-plus me-2"></i>
                                 Create Team
@@ -50,7 +51,158 @@
                     </div>
                 </div>
             </div>
-            <div class="filter-container">
+            <div class="filter-container border-0">
+                <ul class="list-group list-group-horizontal border-0">
+                    <li class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle" aria-label="..."
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Refresh"
+                        aria-describedby="tooltip946912" (click)="refresh()">
+                        <i class="fal fa-redo"></i>
+                    </li>
+                    <li [ngStyle]="{
+                        'display':showIcon==true ? 'block':'none'
+                    }" 
+                     class="list-group-item after-select-fun iconHover iconButton medium rounded-circle" 
+                    aria-label="..." 
+                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    >
+                        <i class="fal fa-trash"></i>
+                        </li>
+                </ul>
+                <div class="selected-row" [ngStyle]="{
+                    'display':showIcon==true ? 'block':'none'
+                }" >
+                    Selected <span class="badge skyBg rounded-pill">{{selectedIds.length}}<span>
+                        </span></span></div>
+                <div class="pagination-bar">
+                    <div class="dropdown">
+                        <button class="btn iconHover" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            1-100 of 569
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="#">Newest</a></li>
+                            <li><a class="dropdown-item" href="#"> Oldest</a></li>
+                        </ul>
+                    </div>
+                    <span class="iconButton medium iconHover">
+                        <i class="fal fa-chevron-left"></i>
+                    </span>
+                    <span class="iconButton medium iconHover">
+                        <i class="fal fa-chevron-right"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="table-section table-scrool-y mb-3 query-container table-white">
+                <ng-container *ngIf="allSelected">
+                    <div class="alert alert-secondary text-center email-info-alert p-2" role="alert" style="display: block;">
+                        All <strong>{{selectedIds.length}}</strong> conversations on this page are selected.
+        
+                        <a  class="clear-selection" style="color: blue;" (click)="refresh()">Clear selection</a>
+                        </div>
+                </ng-container>
+           
+           
+             
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>
+                              
+                                    <ul class="list-group list-group-horizontal border-0">
+                                        <li class="list-group-item border-0 all-check-boxes">
+                                            <input class="form-check-input me-1" type="checkbox" aria-label="..."
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                data-bs-original-title="Check All"
+                                                 [checked]="isChecked" 
+                                                 (click)=" isSectedAll()" >
+                                        </li>
+                                    </ul>
+                               
+                            </th>
+                            <th>
+                                Teams
+                            </th>
+                            <th>
+                                <a href="javascript:" class="charcoal hover-icon">
+                                    Users
+                                    <i class="fas fa-long-arrow-alt-down"></i>
+                                </a>
+                            </th>
+                            <th>
+                                <a href="javascript:" class="charcoal hover-icon">
+                                    Departments
+                                    <i class="fas fa-long-arrow-alt-down"></i>
+                                </a>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of userDetails">
+                               <td><input class="form-check-input "
+                            [checked]="isSelected(data.id)"
+                            (click)="toggleSelection(data.id)"
+                             type="checkbox" aria-label="..."></td>
+                            <td>
+                              {{data.teams}}
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center darkblue">
+                                    <i class="fal fa-users coal me-2"></i>
+                                    {{data.userid}}                                </div>
+                            </td>
+                            <td>
+                                <div class="align-items-lg-center d-flex darkblue">
+                                    <i class="fal fa-share-alt coal me-2"></i>
+                                  {{data.department}}
+                                    <div class="d-inline-block dropdown w-auto ps-1">
+                                        <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
+                                            id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                            +1
+                                        </button>
+                                        <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
+                                            <li>
+                                                <a class="dropdown-item" href="#">
+                                                    Corporate
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Support</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Sales &amp; Lead Management</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="icons-list d-flex justify-content-end dropstart">
+                                    <button class="btn iconButton medium iconHover btn-group" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="far fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu fade">
+                                        <li>
+                                            <a class="dropdown-item" 
+                                            [routerLink]="[
+                                '/dashboard/cardmanagement/editcard',
+                             data.id
+                              ]"><i class="fal fa-edit me-2"></i> Edit</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item delete-dd" ><i
+                                                    class="fal fa-trash me-2"></i> Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                       
+                    </tbody>
+                </table>
+            </div>
+            <!-- <div class="filter-container">
 
                 <ul class="list-group list-group-horizontal border-0">
 
@@ -58,7 +210,16 @@
                         data-bs-placement="bottom" data-bs-original-title="Refresh">
                         <i class="fal fa-redo"></i>
                     </li>
-
+                    <li [ngStyle]="{
+                        'display': showIcon == true ? 'block' : 'none'
+                        
+                      }" class="list-group-item border-0 after-select-fun" data-bs-toggle="modal"
+                        data-bs-target="#delete-device" aria-label="..." data-bs-toggle="tooltip"
+                        data-bs-placement="bottom" title="Delete"  
+                         >
+                        <i class="fal fa-trash" 
+                       
+                     ></i>
                 </ul>
                 <div class="selected-row" style="display: none;">
                     Selected <span class="badge skyBg rounded-pill">05<span>
@@ -84,7 +245,9 @@
                                         <li class="list-group-item border-0 all-check-boxes">
                                             <input class="form-check-input me-1" type="checkbox" aria-label="..."
                                                 data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                data-bs-original-title="Check All">
+                                                data-bs-original-title="Check All" 
+                                                  [checked]="isChecked" 
+                                                  (input)="selectedunSelectedAll()">
                                         </li>
                                     </ul>
                                 </div>
@@ -110,7 +273,10 @@
                     <tbody>
                         <tr *ngFor="let data of userDetails">
                             <td>
-                                <input class="form-check-input me-1" type="checkbox" aria-label="...">
+                                <input class="form-check-input me-1"
+                                [checked]="toggleSelection(data.id)"
+                                (click)="isSelected(data.id)"
+                                 type="checkbox" aria-label="...">
                             </td>
                             <td>
                                {{data.teams}}
@@ -171,7 +337,7 @@
                     </tbody>
                 </table>
 
-            </div>
+            </div> -->
         </div>
     </div>
     <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
