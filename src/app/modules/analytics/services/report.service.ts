@@ -130,10 +130,7 @@ export class ReportService {
     let httpOptions = this.gethttpOptions()
     return this.http.get<any>(this.apiUrl + "list-report", httpOptions);
   }
-  reportExecuteApi(data:any): Observable<any> {
-    let httpOptions = this.gethttpOptions()
-    return this.http.post<any>(this.apiUrl + "reportexecute",data, httpOptions);
-  }
+
   reportupdateApi(): Observable<any> {
     let httpOptions = this.gethttpOptions()
     return this.http.put<any>(this.apiUrl + "update-report", httpOptions);

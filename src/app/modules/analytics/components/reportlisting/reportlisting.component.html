@@ -1,125 +1,92 @@
 <div class="w-auto chat-message-component w-100 inbox-container">
   <div class="d-flex main-body-wrapper">
-    <div class="agent-page-main-content">
-      <div class="d-grid">
-        <div
-          class="analytics-dashboard perfect-scrollbar"
-          data-scrollbar="true"
-          tabindex="-1"
-          style="overflow: auto; outline: none"
-        >
-          <div class="scroll-content">
-      <div class="fluid-container mt-5">
-        <div style="margin-top: 10px">
-          <div
-            class="tab-pane fade show active"
-            id="agent-stats"
-            role="tabpanel"
-            aria-labelledby="agent-stats-tab"
-          >
-          <div
-          *ngIf="tableData.length > 0"
-          style="float: right;"
-        >
-          <input
-            type="button"
-            class="btn btn-primary"
-            name="answer"
-            value="Download"
-            (click)="exportAsXLSX()"
-          />
-        </div>
-            <div class="row">
-              <div class="col-sm-2 mb-5">
-                <div class="table-section">
-                    <table
-                    class="table mb-5 align-middle"
-                    >
-                      <thead>
-                        <tr>
-                          <th *ngFor="let column of columns">{{ column }}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let report of reports">
-                          <td class="question-cell" style="width: 400px">
-                            <div class="example-list">
+      <div class="agent-page-main-content">
+        <div class="fluid-container mt-5">
+          <div style="margin-top: 10px">
+            <div
+              class="tab-pane fade show active"
+              id="agent-stats"
+              role="tabpanel"
+              aria-labelledby="agent-stats-tab">
+              <div class="row" cdkDropListGroup>
+                <div class="col-sm-2">
+                  <div class="table-section">
+                    <div style="overflow: auto; max-height: 600px">
+                      <table
+                        class="table align-middle agent-stats-table mt-0 w-100 mb-4">
+                        <thead>
+                          <tr>
+                            <th *ngFor="let column of columns">{{ column }}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let report of reports">
+                            <td class="question-cell" style="width: 400px">
                               <div
-                                class="example-box"
-                                (click)="getReportData(report.name)"
-                                [ngStyle]="{ color: report.color === 'blue' ? 'blue' : 'green' }"
+                                cdkDropList
+                                class="example-list"
+                                (cdkDropListDropped)="drop()"
                               >
-                                {{ report.name }}
+                                <div
+                                  class="example-box"
+                                  cdkDrag
+                                  (cdkDragStarted)="onDragStarted(report)"
+                                >
+                                  {{ report.name }}
+                                </div>
                               </div>
-                            </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div class="col-sm-10 mt-5">
-                <div class="table-section">
-                  <div  style="max-height: 800px;overflow-y: auto;">
-                    <table class="table mb-5 align-middle">
-                      <thead>
-                        <tr>
-                          <th *ngFor="let key of dataKeys">{{ key }}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr class="region-row" *ngFor="let row of tableData">
-                          <td *ngFor="let key of dataKeys">
-                            <div class="d-flex align-items-center darkblue">{{ row[key] }}</div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                <div class="col-sm-10">
+                  <div class="card" style="overflow: auto; height: 500px">
+                    <div class="card-body d-flex flex-wrap justify-content-center align-items-start">
+
+                      <ng-container *ngFor="let chartData of chartDataArray; let i = index">
+                        <div class="example-box m-2" style="display: flex; flex-direction: column; align-items: center;">
+
+                          <!-- ng-select -->
+                          <ng-select style="width: 250px; margin-bottom: 10px;" [(ngModel)]="chartData.type" (change)="selectGraph(i, chartData.type)">
+                            <ng-option *ngFor="let graph of graphTypes[0] | keyvalue" [value]="graph.value">{{ graph.key }}</ng-option>
+                          </ng-select>
+
+                          <!-- Canvas -->
+                          <canvas
+                            baseChart
+                            [data]="chartData.data"
+                            [options]="ChartOptions"
+                            [plugins]="ChartPlugins"
+                            [legend]="ChartLegend"
+                            [type]="chartData.type"
+
+                            style="width: 350px; height: 400px; margin-bottom: 10px;"
+                          ></canvas>
+
+                          <!-- Trash Icon -->
+                          <i class="fal fa-trash" (click)="removeGraph(i)"></i>
+
+                        </div>
+                      </ng-container>
+
+                    </div>
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
       </div>
-
-</div>
-</div>
-</div>
-
-
-    </div>
+      <!-- <div class="rightbar-expanded-wrapper">
+          <template #rightcontainer></template>
+      </div> -->
   </div>
+  <!-- <analytics-right-sidebar-menu></analytics-right-sidebar-menu> -->
 </div>
 
 
-<!--
-<div *ngIf="tableData.length > 0">
-  <mat-form-field>
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-  </mat-form-field>
 
-  <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="tableData" matSort>
 
-      <ng-container *ngFor="let column of dataKeys" [matColumnDef]="column">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column }} </th>
-        <td mat-cell *matCellDef="let row"> {{ row[column] }} </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="dataKeys"></tr>
-      <tr mat-row *matRowDef="let row; columns: dataKeys;"></tr>
-
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" [attr.colspan]="dataKeys.length">
-          No data matching the filter "{{ input.value }}"
-        </td>
-      </tr>
-    </table>
-
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
-  </div>
-
-  </div> -->

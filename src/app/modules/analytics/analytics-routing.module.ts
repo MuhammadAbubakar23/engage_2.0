@@ -29,11 +29,6 @@ const routes: Routes = [
 
     },
     {
-      path:'dashbaord-designer',
-      loadComponent: () => import('./components/dashboard-designer/dashboard-designer.component').then(c => c.DashboardDesignerComponent),
-
-    },
-    {
       path:'db-settings',
       loadComponent: () => import('./components/dblisting/dblisting.component').then(c => c.DblistingComponent),
 

@@ -1,34 +1,25 @@
-
 <div class="container">
-  <div class="d-flex justify-content-center" style="max-height: 650px;overflow-y: auto;">
+  <div class="d-flex justify-content-center">
     <div class="col-lg-6">
       <form [formGroup]="stepThreeForm" (ngSubmit)="stepThreeSubmit()" autocomplete="off" novalidate #formRef="ngForm">
         <div class="mt-3" formArrayName="answers">
           <div class="row" *ngFor="let answer of answers.controls; let i = index;" [formGroupName]="i">
+            <!-- <div class="col-sm-10" style="position: relative; margin-top:10px">
 
+              <input class="form-control" type="text" style="height: 60px; padding-top: 20px;" formControlName="questionText"/>
+              <label for="threshold" style="position: absolute; top: 2px; left: 15px; color: #999; pointer-events: none;">Question </label>
+            </div> -->
 
             <div class="col-sm-10" style="position: relative; margin-top:10px">
-              <div class="business-detail-wrap">
-                <div class="business-detail-wrap">
-                  <div class="floating-item mb-3">
-                    <div class="form-floating">
-                      <input
-                      id="floatingInputDatabase"
-                      placeholder="Answer"
-                      class="form-control" type="text" formControlName="answerText"
-                    />
-                      <label for="floatingInputValue">Answer</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <input class="form-control" type="text" formControlName="answerText" style="height: 60px; padding-top: 20px;" />
+              <label for="threshold" style="position: absolute; top: 2px; left: 15px; color: #999; pointer-events: none;">Answer </label>
             </div>
 
-            <div *ngIf="i===0;else removebutton" class="col-sm-2">
+            <div *ngIf="i===0;else removebutton" class="col-sm-2 mt-1 pt-2">
               <button class="btn btn-primary" (click)="addAnswer()">+</button>
             </div>
             <ng-template #removebutton>
-            <div class="col-sm-2">
+            <div class="col-sm-2 mt-1 pt-2">
               <button class="btn btn-primary px-3" (click)="removeAnswer(i)">-</button>
             </div>
           </ng-template>
