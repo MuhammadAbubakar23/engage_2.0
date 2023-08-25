@@ -12,7 +12,8 @@ import { SafePipe } from './pipes/safe.pipe';
 import { NavigationBackDirective } from './services/navigation/navigation-back.directive';
 import { SplitNameFromUrlPipe } from './pipes/split-name-from-url.pipe';
 import { GetFileTypeFromUrlPipe } from './pipes/get-file-type-from-url.pipe';
-
+import { TableResponsiveComponent } from './table-responsive/table-responsive.component';
+import {MatTableModule} from '@angular/material/table';
 
 
 @NgModule({
@@ -25,10 +26,12 @@ import { GetFileTypeFromUrlPipe } from './pipes/get-file-type-from-url.pipe';
     SafePipe,
     NavigationBackDirective,
     SplitNameFromUrlPipe,
-    GetFileTypeFromUrlPipe
-    
+    GetFileTypeFromUrlPipe,
+    // TableResponsiveComponent
+
   ],
   imports: [
+
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
