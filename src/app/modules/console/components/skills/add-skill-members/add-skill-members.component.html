@@ -7,11 +7,8 @@
 <div class="offcanvas-body p-0 overflow-visible">
     <div class="user-selection-for-group">
         <div class="newGroupWrapper newChatWrapper">
-            <form >
-                <input class="form-control" 
-                type="text"
-                [(ngModel)]="search"
-                placeholder="Search" aria-label="Search">
+            <form class="d-flex">
+                <input class="form-control" placeholder="Search" aria-label="Search">
             </form>
             <div class="rightbar-body-wrapper" data-scrollbar="true" tabindex="-1"
                 style="overflow-y:auto; outline: none;">
@@ -57,50 +54,183 @@
                         </ul>
                     </div>
 
-                    <div class="section-heading"  >
-                        <h6 class="silver pt-3 mb-0">
-                            <mark>
-                                {{teamMemberDetails.length}} Team Members
-                            </mark>
-                            </h6>
+                    <div class="section-heading">
+                        <h6 class="silver pt-3 mb-0">16 Team Members</h6>
                     </div>
-                  
-                        <div class="list-group-section pt-0">
-                            <div class="messenger">
-                                <div class="list-group list-group-flush suggested-users" >
-                                    <a
-                                        class="list-group-item messenger-wraper suggested-user-item form-check w-100 p-0 theme-check"
-                                        value="Zain Haider" *ngFor="let user of  teamMemberDetails" >
-    
-                                        <label class="form-check-label coal d-flex align-items-center w-100" for="check1">
-                                            <div class="avatar large" >
-                                                <img [src]="user.imageUrl" alt="-" class="rounded-circle w-100">
-                                                <span class="online-n-offline big"></span>
-                                            </div>
-                                            <div class="w-100 list-txt user-msg" >
-                                                <h6 class="mb-0 darkblue">
-                                                    <mark>
-                                                        {{user.name}}
-                                                    </mark>
-                                                   
-                                                </h6>
-                                            </div>
-                                        </label>
-                                        <form [formGroup]="teamMemberForm" >
-                                            <input class="form-check-input float-end"
-                                            [checked]="isSelected(user.id)"
-                                            (click)="toggleSelectionIds(user.id)"
-                                            formControlName="memberids"
-                                                type="checkbox">
-                                        </form>
-                                       
-                                    </a>
-                                 
-                                </div>
+                    <div class="list-group-section pt-0">
+                        <div class="messenger">
+                            <div class="list-group list-group-flush suggested-users">
+                                <a
+                                    class="list-group-item messenger-wraper suggested-user-item form-check w-100 p-0 theme-check"
+                                    value="Zain Haider">
+
+                                    <label class="form-check-label coal d-flex align-items-center w-100" for="check1">
+                                        <div class="avatar large">
+                                            <img src="../../../../../../assets/images/avatar-16.jpg" alt="-" class="rounded-circle w-100">
+                                            <span class="online-n-offline big"></span>
+                                        </div>
+                                        <div class="w-100 list-txt user-msg">
+                                            <h6 class="mb-0 darkblue">Zain Haider
+                                            </h6>
+                                        </div>
+                                    </label>
+                                    <input class="form-check-input float-end" type="checkbox" id="check1">
+                                </a>
+                                <a
+                                    class="list-group-item messenger-wraper suggested-user-item form-check w-100 p-0 theme-check"
+                                    value="Zain Haider">
+
+                                    <label class="form-check-label coal d-flex align-items-center w-100" for="check2">
+                                        <div class="avatar large">
+                                            <img src="../../../../../../assets/images/avatar-11.jpg" alt="-" class="rounded-circle w-100">
+                                            <span class="online-n-offline big away">
+                                                <i class="fas fa-clock"></i>
+                                            </span>
+                                        </div>
+                                        <div class="w-100 list-txt user-msg">
+                                            <h6 class="mb-0 darkblue">Sajjad Akber
+                                            </h6>
+                                        </div>
+                                    </label>
+                                    <input class="form-check-input float-end" type="checkbox" id="check2">
+                                </a>
+                                <a
+                                    class="list-group-item messenger-wraper suggested-user-item form-check w-100 p-0 theme-check"
+                                    value="Zain Haider">
+
+                                    <label class="form-check-label coal d-flex align-items-center w-100" for="check3">
+                                        <div class="avatar large pearlBg">
+                                            UM
+                                            <span class="online-n-offline big"></span>
+                                        </div>
+                                        <div class="w-100 list-txt user-msg">
+                                            <h6 class="mb-0 darkblue">Umer Masood
+                                            </h6>
+                                        </div>
+                                    </label>
+                                    <input class="form-check-input float-end" type="checkbox" id="check3">
+                                </a>
+                                <a
+                                    class="list-group-item messenger-wraper suggested-user-item form-check w-100 p-0 theme-check"
+                                    value="Zain Haider">
+
+                                    <label class="form-check-label coal d-flex align-items-center w-100" for="check4">
+                                        <div class="avatar large">
+                                            <img src="../../../../../../assets/images/avatar-9.jpg" alt="-" class="rounded-circle w-100">
+                                            <span class="online-n-offline big"></span>
+                                        </div>
+                                        <div class="w-100 list-txt user-msg">
+                                            <h6 class="mb-0 darkblue">Daniyal Ahmed
+                                            </h6>
+                                        </div>
+                                    </label>
+                                    <input class="form-check-input float-end" type="checkbox" id="check4">
+                                </a>
+                                <a
+                                    class="list-group-item messenger-wraper suggested-user-item form-check w-100 p-0 theme-check"
+                                    value="Zain Haider">
+
+                                    <label class="form-check-label coal d-flex align-items-center w-100" for="check5">
+                                        <div class="avatar large">
+                                            <img src="../../../../../../assets/images/avatar-14.jpg" alt="-" class="rounded-circle w-100">
+                                            <span class="online-n-offline big"></span>
+                                        </div>
+                                        <div class="w-100 list-txt user-msg">
+                                            <h6 class="mb-0 darkblue">Ahmed Haider
+                                            </h6>
+                                        </div>
+                                    </label>
+                                    <input class="form-check-input float-end" type="checkbox" id="check5">
+                                </a>
+                                <a
+                                    class="list-group-item messenger-wraper suggested-user-item form-check w-100 p-0 theme-check"
+                                    value="Zain Haider">
+
+                                    <label class="form-check-label coal d-flex align-items-center w-100" for="check6">
+                                        <div class="avatar large pearlBg">
+                                            SR
+                                            <span class="online-n-offline big away">
+                                                <i class="fas fa-clock"></i>
+                                            </span>
+                                        </div>
+                                        <div class="w-100 list-txt user-msg">
+                                            <h6 class="mb-0 darkblue">Saif Raza
+                                            </h6>
+                                        </div>
+                                    </label>
+                                    <input class="form-check-input float-end" type="checkbox" id="check6">
+                                </a>
+                                <a
+                                    class="list-group-item messenger-wraper suggested-user-item form-check w-100 p-0 theme-check"
+                                    value="Zain Haider">
+
+                                    <label class="form-check-label coal d-flex align-items-center w-100" for="check1">
+                                        <div class="avatar large">
+                                            <img src="../../../../../../assets/images/avatar-16.jpg" alt="-" class="rounded-circle w-100">
+                                            <span class="online-n-offline big"></span>
+                                        </div>
+                                        <div class="w-100 list-txt user-msg">
+                                            <h6 class="mb-0 darkblue">Zain Haider
+                                            </h6>
+                                        </div>
+                                    </label>
+                                    <input class="form-check-input float-end" type="checkbox" id="check1">
+                                </a>
+                                <a
+                                    class="list-group-item messenger-wraper suggested-user-item form-check w-100 p-0 theme-check"
+                                    value="Zain Haider">
+
+                                    <label class="form-check-label coal d-flex align-items-center w-100" for="check2">
+                                        <div class="avatar large">
+                                            <img src="../../../../../../assets/images/avatar-11.jpg" alt="-" class="rounded-circle w-100">
+                                            <span class="online-n-offline big away">
+                                                <i class="fas fa-clock"></i>
+                                            </span>
+                                        </div>
+                                        <div class="w-100 list-txt user-msg">
+                                            <h6 class="mb-0 darkblue">Sajjad Akber
+                                            </h6>
+                                        </div>
+                                    </label>
+                                    <input class="form-check-input float-end" type="checkbox" id="check2">
+                                </a>
+                                <a
+                                    class="list-group-item messenger-wraper suggested-user-item form-check w-100 p-0 theme-check"
+                                    value="Zain Haider">
+
+                                    <label class="form-check-label coal d-flex align-items-center w-100" for="check1">
+                                        <div class="avatar large">
+                                            <img src="../../../../../../assets/images/avatar-16.jpg" alt="-" class="rounded-circle w-100">
+                                            <span class="online-n-offline big"></span>
+                                        </div>
+                                        <div class="w-100 list-txt user-msg">
+                                            <h6 class="mb-0 darkblue">Zain Haider
+                                            </h6>
+                                        </div>
+                                    </label>
+                                    <input class="form-check-input float-end" type="checkbox" id="check1">
+                                </a>
+                                <a
+                                    class="list-group-item messenger-wraper suggested-user-item form-check w-100 p-0 theme-check"
+                                    value="Zain Haider">
+
+                                    <label class="form-check-label coal d-flex align-items-center w-100" for="check2">
+                                        <div class="avatar large">
+                                            <img src="../../../../../../assets/images/avatar-11.jpg" alt="-" class="rounded-circle w-100">
+                                            <span class="online-n-offline big away">
+                                                <i class="fas fa-clock"></i>
+                                            </span>
+                                        </div>
+                                        <div class="w-100 list-txt user-msg">
+                                            <h6 class="mb-0 darkblue">Sajjad Akber
+                                            </h6>
+                                        </div>
+                                    </label>
+                                    <input class="form-check-input float-end" type="checkbox" id="check2">
+                                </a>
                             </div>
                         </div>
-                
-                    
+                    </div>
 
                 </div>
                 <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
@@ -122,9 +252,8 @@
         <div class="buttons-wrap d-flex">
             <button type="button" class="btn btn-outline-secondary btn-medium" data-bs-dismiss="offcanvas"
                 aria-label="Close">Cancel</button>
-            <button type="submit" class="btn skyBg ms-2 f-nextBtn btn-medium" data-bs-dismiss="offcanvas"
-                aria-label="Close"
-                (click)="save()">Add</button>
+            <button type="button" class="btn skyBg ms-2 f-nextBtn btn-medium" data-bs-dismiss="offcanvas"
+                aria-label="Close">Add</button>
         </div>
     </div>
 </div>
