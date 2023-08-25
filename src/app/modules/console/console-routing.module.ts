@@ -23,14 +23,12 @@ import { TeamsPermissionsResolver } from './resolvers/teams/teams-permissions.re
 import { RolesResolver } from './resolvers/users/roles.resolver';
 import { TeamsResolver } from './resolvers/users/teams.resolver';
 import { UsersJsonResolver } from './resolvers/users/users-json.resolver';
-import { BulkUploadComponent } from './components/sentiment-analysis/bulk-upload/bulk-upload.component';
-import { CreateSentimentComponent } from './components/sentiment-analysis/create-sentiment/create-sentiment.component';
 
 const routes: Routes = [
   {
     path:'',
     component:ConsoleComponent,
-
+    
     children: [{
         path:'users',
         loadComponent: () => import('./components/users/users.component').then(c => c.UsersComponent),
@@ -103,16 +101,16 @@ const routes: Routes = [
       },{
         path:'tags',
         loadComponent: () => import('./components/tags/tags.component').then(c => c.TagsComponent)
-
+        
       },{
         path:'rules',
         loadComponent: () => import('./components/rules/rules.component').then(c => c.RulesComponent)
-
+        
       },
       {
         path:'add-rules',
         loadComponent: () => import('./components/rules/add-rules/add-rules.component').then(c => c.AddRulesComponent)
-
+        
       },{
         path:'skills',
         loadComponent: () => import('./components/skills/skills.component').then(c => c.SkillsComponent),
@@ -120,21 +118,21 @@ const routes: Routes = [
       },{
         path:'skills/create/:id',
         loadComponent: () => import('./components/skills/create-skills/create-skills.component').then(c => c.CreateSkillsComponent),
-        canMatch: [ConsoleRoutingGuard],
+        canMatch: [ConsoleRoutingGuard],  
       },{
         path:'routes',
         loadComponent: () => import('./components/enteract-route/enteract-route.component').then(c => c.EnteractRouteComponent)
-
+        
       },
       {
         path:'sla-policies',
         loadComponent: () => import('./components/sla-policies/sla-policies.component').then(c => c.SlaPoliciesComponent)
-
+        
       },
       {
         path:'business-hours',
         loadComponent: () => import('./components/business-hours/business-hours.component').then(c => c.BusinessHoursComponent)
-
+        
       },
       {
         path:'templates/message',
@@ -152,7 +150,7 @@ const routes: Routes = [
         path:'templates/messages/create',
         // loadComponent: () => import('../console/components/templates/messages/create-message-templates/create-message-templates.component').then(c => c.CreateMessageTemplatesComponent)
         component:CreateMessageTemplatesComponent
-
+        
       } ,
       {
         path:'templates/createSignatures',
@@ -169,7 +167,7 @@ const routes: Routes = [
       {
         path:'sla-policies',
         loadComponent: () => import('./components/sla-policies/sla-policies.component').then(c => c.SlaPoliciesComponent)
-
+        
       },
       {
         path:'sla-policy/create',
@@ -185,12 +183,8 @@ const routes: Routes = [
       component : CreateBusinessHoursComponent
      },
      {
-      path:'automation/sentiment-analysis/bulk-upload',
-      component: BulkUploadComponent
-     },
-     {
       path:'automation/sentiment-analysis',
-      component: CreateSentimentComponent
+      component: SentimentAnalysisComponent
      },
      {
       path:'automation/chat-bot-intent',

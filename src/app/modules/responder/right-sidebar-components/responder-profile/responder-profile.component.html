@@ -468,10 +468,8 @@
                                                 </div>
                                                 <!-- {{userDetailForm.controls['customerSecondaryProfiles'].value}} -->
                                                 <h6 class="silver mt-5 mb-3">Channels</h6>
-
                                                 <div>
-                                                    <div class="row mb-3" *ngIf="openedChannel != 'Facebook' && isFacebook">
-
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'Facebook'">
                                                         <label for="inputFacebook"
                                                             class="col-sm-3 col-form-label">Facebook
                                                         </label>
@@ -486,10 +484,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-
-
-                                                    <div class="row mb-3" *ngIf="openedChannel != 'Instagram' && isInstagram">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'Instagram'">
                                                         <label for="inputInstagram"
                                                             class="col-sm-3 col-form-label">Instagram</label>
                                                         <div class="col-sm-9">
@@ -503,7 +498,7 @@
 
                                                         </div>
                                                     </div>
-                                                    <div class="row mb-3" *ngIf="openedChannel != 'Twitter' && isTwitter">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'Twitter'">
                                                         <label for="inputTwitter" class="col-sm-3 col-form-label">
                                                             Twitter
                                                         </label>
@@ -517,7 +512,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row mb-3" *ngIf="openedChannel != 'Youtube' &&  isYoutube">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'Youtube'">
                                                         <label for="inputYoutube" class="col-sm-3 col-form-label">
                                                             Youtube
                                                         </label>
@@ -527,7 +522,7 @@
                                                                 value={{youtubeUniqueId}}>
                                                         </div>
                                                     </div>
-                                                    <div class="row mb-3" *ngIf="openedChannel != 'WhatsApp' && isWhatsApp">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'WhatsApp'">
                                                         <label for="inputWhatsapp"
                                                             class="col-sm-3 col-form-label">WhatsApp
                                                         </label>
@@ -537,7 +532,7 @@
                                                                 value={{whatsappUniqueId}}>
                                                         </div>
                                                     </div>
-                                                    <div class="row mb-3" *ngIf="openedChannel != 'SMS' &&  isSms">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'SMS'">
                                                         <label for="inputSMS"
                                                             class="col-sm-3 col-form-label">SMS</label>
                                                         <div class="col-sm-9">
@@ -545,7 +540,7 @@
                                                                 formControlName="smsUniqueId" value={{smsUniqueId}}>
                                                         </div>
                                                     </div>
-                                                    <div class="row mb-3" *ngIf="openedChannel != 'Email' && isEmail">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'Email'">
                                                         <label for="inputEmail2"
                                                             class="col-sm-3 col-form-label">Email</label>
                                                         <div class="col-sm-9">
@@ -553,7 +548,7 @@
                                                                 formControlName="emailUniqueId" value={{emailUniqueId}}>
                                                         </div>
                                                     </div>
-                                                    <div class="row mb-3" *ngIf="openedChannel != 'LinkedIn' && isLinkdin">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'LinkedIn'">
                                                         <label for="inputEmail2"
                                                             class="col-sm-3 col-form-label">LinkedIn</label>
                                                         <div class="col-sm-9">
@@ -562,7 +557,7 @@
                                                                 value={{linkedinUniqueId}}>
                                                         </div>
                                                     </div>
-                                                    <div class="row mb-3" *ngIf="openedChannel != 'WebChat' && isChat">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'WebChat'">
                                                         <label for="inputEmail2"
                                                             class="col-sm-3 col-form-label">WebChat</label>
                                                         <div class="col-sm-9">

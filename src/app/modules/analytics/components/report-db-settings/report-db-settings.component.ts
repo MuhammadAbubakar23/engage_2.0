@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HeaderService } from 'src/app/shared/services/header.service';
 @Component({
   selector: 'app-report-db-settings',
   standalone: true,
@@ -27,19 +26,16 @@ export class ReportDbSettingsComponent implements OnInit {
     private reportService: ReportService,
     private _route: Router,
     private _activatedroute: ActivatedRoute,
-   
   ) { }
 
   ngOnInit(): void {
-
     this.initForm();
-
     this.id = this._activatedroute.snapshot.paramMap.get('id');
     console.log("Id", this.id);
     if (this.id && this.id !== null) {
-
+      // ID exists, fetch details from API
       this.reportService.getDbSettingById(this.id).subscribe((data) => {
-        this.populateFormFields(data);
+        this.populateFormFields(data); // Populate form fields with retrieved data
       });
     }
   }
@@ -67,7 +63,31 @@ export class ReportDbSettingsComponent implements OnInit {
       PORT: data.port,
     });
   }
+  // saveSetting() {
 
+  //   if (this.dbSettingsForm.invalid) {
+  //     alert("Please fill all fields")
+  //     return;
+  //   }
+
+  //   const data = {
+  //     "connection_name": this.dbSettingsForm.value.ConnectionName,
+  //     "engine": this.dbSettingsForm.value.Engine,
+  //     "name": this.dbSettingsForm.value.DATABASE,
+  //     "user": this.dbSettingsForm.value.USER,
+  //     "password": this.dbSettingsForm.value.PASSWORD,
+  //     "host": this.dbSettingsForm.value.HOST,
+  //     "port": this.dbSettingsForm.value.PORT
+  //   };
+
+  //   console.log("ok", data);
+  //   this.reportService.createDbSetiingApi(data).subscribe((res) => {
+  //     console.log(res);
+  //     alert(res);
+  //     this._route.navigateByUrl('/analytics/db-settings')
+  //   });
+  //   console.log('Saving settings:', this.dbSettingsForm.value);
+  // }
   saveSetting() {
     if (this.dbSettingsForm.invalid) {
       alert("Please fill all fields");

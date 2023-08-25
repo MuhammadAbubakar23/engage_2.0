@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HeaderService } from 'src/app/shared/services/header.service';
 
 @Component({
   selector: 'app-analytics-dashboard',
@@ -10,11 +9,9 @@ import { HeaderService } from 'src/app/shared/services/header.service';
 })
 export class AnalyticsDashboardComponent implements OnInit {
 
-  constructor(private _hS:HeaderService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    const newObj = {title:'Dashboard',url:'/analytics/dashboard'};
-    this._hS.setHeader(newObj);
   }
 
 }
