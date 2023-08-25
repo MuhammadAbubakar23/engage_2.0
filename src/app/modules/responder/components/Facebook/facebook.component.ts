@@ -58,7 +58,7 @@ export class FacebookComponent implements OnInit {
   radioInput!: ElementRef<HTMLInputElement>;
 
   FacebookData: any;
-  FacebookMessages: any;
+  FacebookMessages: any[]=[];
   TagsList: any;
   totalUnrespondedMsgCountByCustomer: any = 0;
   pageNumber: any = 1;
@@ -227,6 +227,7 @@ export class FacebookComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
+        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
         if (res.contentCount.contentType == 'FC') {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
@@ -235,6 +236,7 @@ export class FacebookComponent implements OnInit {
           this.totalUnrespondedMsgCountByCustomer =
             res.contentCount.unrespondedCount;
         }
+      }
       });
 
     this.ticketResponseService.getTicketId().subscribe((res) => {

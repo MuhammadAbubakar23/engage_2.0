@@ -7,6 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -67,6 +68,7 @@ export class EmailComponent implements OnInit {
   public Subscription!: Subscription;
   public criteria!: SortCriteria;
   searchText: string = '';
+  flag:string='';
 
   emailReplyForm!: FormGroup;
   constructor(
@@ -81,7 +83,8 @@ export class EmailComponent implements OnInit {
     private replyService: ReplyService,
     private unrespondedCountService: UnRespondedCountService,
     private applySentimentService: ApplySentimentService,
-    private getQueryTypeService: GetQueryTypeService
+    private getQueryTypeService: GetQueryTypeService,
+    private router : Router
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = null;
@@ -106,6 +109,7 @@ export class EmailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.flag = this.router.url.split('/')[2];
     this.fullName = localStorage.getItem('storeOpenedId') || '{}';
 
     this.criteria = {
@@ -144,6 +148,7 @@ export class EmailComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
+        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
         if (
           res.contentCount.contentType == 'Mail' ||
           res.contentCount.contentType == 'OMail'
@@ -151,6 +156,7 @@ export class EmailComponent implements OnInit {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
         }
+      }
       });
     this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()

@@ -29,7 +29,7 @@
                         </div>
                     </button>
                 </li>
-                <li class="nav-item" role="presentation" *ngIf="FacebookMessages">
+                <li class="nav-item" role="presentation" *ngIf="FacebookMessages.length > 0">
                     <button (click)="facebookMessageReply()" class="nav-link h-100"
                         [class.active]="FacebookData == null" id="fb-msg-tab" data-bs-toggle="tab"
                         data-bs-target="#fb-msg" type="button" role="tab" aria-controls="fb-msg" aria-selected="false">
