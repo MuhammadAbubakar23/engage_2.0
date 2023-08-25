@@ -36,11 +36,7 @@ const routes: Routes = [
     loadChildren : () => import('./analytics/analytics.module').then(f=>f.AnalyticsModule),
     data: {preload: true}
   },
-  {
-    path:'survey',
-    loadChildren : () => import('./survey-forms/survey-forms.module').then(f=>f.SurveyFormsModule),
-    data: {preload: true}
-  },
+  
 ];
 
 @NgModule({
