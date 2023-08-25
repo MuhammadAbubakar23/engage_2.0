@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup,FormControlName,FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+
 @Component({
-  selector: 'app-serva',
-  templateUrl: './serva.component.html',
-  styleUrls: ['./serva.component.scss']
+  selector: 'app-customer-details-survey',
+  templateUrl: './customer-details-survey.component.html',
+  styleUrls: ['./customer-details-survey.component.scss']
 })
-export class ServaComponent implements OnInit {
+export class CustomerDetailsSurveyComponent implements OnInit {
   AlterMsg="Date Add Successfull"
   toastermessage:boolean=false
   constructor( private commondataService:CommonDataService  ) { }
