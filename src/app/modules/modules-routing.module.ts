@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ServaComponent } from './serva/serva.component';
-import { SurveyComponent } from './survey/survey.component';
 
 const routes: Routes = [
   {
@@ -39,14 +37,10 @@ const routes: Routes = [
     data: {preload: true}
   },
   {
-    path:'c_sat',
-    component:ServaComponent,
-  },
-  {
     path:'survey',
-    component:SurveyComponent
-
-  }
+    loadChildren : () => import('./survey-forms/survey-forms.module').then(f=>f.SurveyFormsModule),
+    data: {preload: true}
+  },
 ];
 
 @NgModule({
