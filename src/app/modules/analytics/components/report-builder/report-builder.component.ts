@@ -20,6 +20,7 @@ import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { RightNavService } from 'src/app/services/RightNavService/RightNav.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { ActionsComponent } from '../actions/actions.component';
+import { HeaderService } from 'src/app/shared/services/header.service';
 
 @Component({
   selector: 'app-report-builder',
@@ -131,12 +132,10 @@ export class ReportBuilderComponent implements OnInit {
     private sharedataservice: ShareddataService,
     private reportservice: ReportService,
     private excelService: ExcelService,
-    
+
     private resolver: ComponentFactoryResolver,
-    private route: ActivatedRoute,
-    private sharedService: SharedService,
-    private rightNavService: RightNavService,
-    private toggleService: ToggleService
+    private toggleService: ToggleService,
+    private _hS:HeaderService
   ) {}
   ngOnInit(): void {
     this.reportservice.login().subscribe((token: any) => {
@@ -145,7 +144,8 @@ export class ReportBuilderComponent implements OnInit {
         this.dbsettings = res;
       });
     });
-
+    const newObj = {title:'Report Designer',url:'/analytics/report-builder'};
+    this._hS.setHeader(newObj);
     this.sharedataservice.query$.subscribe((res: any) => {
       this.query = res;
     });
@@ -156,7 +156,10 @@ export class ReportBuilderComponent implements OnInit {
     });
 
     this.sharedataservice.data$.subscribe((newData: any) => {
-      this.isGraph = true;
+      console.log("newData", newData);
+      if(newData !=="Initial Data" ){
+        this.isGraph = true;
+      }
 
       this.sharedataservice.updateQuery(newData.query);
       this.visualizeData();
@@ -174,6 +177,7 @@ export class ReportBuilderComponent implements OnInit {
         this.dataKeys = newData.columnswithdtypes;
       } else {
         this.isStats = true;
+
         this.statsdataKeys = Object.keys(newData.table);
         this.tableData = this.transformDataObject(newData.table);
 
@@ -299,7 +303,8 @@ export class ReportBuilderComponent implements OnInit {
     localStorage.setItem('connection_name', this.DBC);
     this.reportservice.getConnectiondatabases(this.DBC).subscribe(
       (res) => {
-        this.toastermessage = 'Connection SuccessFull!';
+        // Success case
+        this.toastermessage = 'Connection Successful!';
         this.isToaster = true;
         setTimeout(() => {
           this.isToaster = false;
@@ -307,16 +312,28 @@ export class ReportBuilderComponent implements OnInit {
         this.databases = res;
       },
       (error: any) => {
+        // Error case
         console.log(error);
-        let errorMessage = error;
+        let errorMessage = 'An error occurred. Please try again later.';
 
-        this.toastermessage = `${errorMessage}`;
+        try {
+          const errorObj = JSON.parse(error.error);
+          if (errorObj && errorObj.error) {
+            errorMessage = errorObj.error;
+          }
+        } catch (parseError) {
+          console.error('Error parsing error response:', parseError);
+        }
+
+        this.toastermessage = errorMessage;
         this.isToaster = true;
         setTimeout(() => {
           this.isToaster = false;
         }, 4000);
       }
     );
+
+
   }
 
   transformDataObject(dataObject: any): any[] {
@@ -367,7 +384,6 @@ export class ReportBuilderComponent implements OnInit {
           this.dataKeys = res.columnswithdtypes;
           this.isTabular = true;
           this.isVisual = false;
-
           this.sharedataservice.updateQuery(res.query);
           localStorage.setItem('query', res.query);
         });
