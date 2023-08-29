@@ -16,7 +16,7 @@ import { ToastrComponent } from '../toastr/toastr.component';
 
 @Component({
   selector: 'app-report-designer',
-  
+
   standalone: true,
   imports: [
     CommonModule,
@@ -38,6 +38,7 @@ export class ReportDesignerComponent implements OnInit {
   dbName: any = 'All DataBases';
   tableName: any = 'All Tables';
   tableData: any = [];
+  paginatedData: any = [];
   dataKeys: { [key: string]: any } = {};
   columns = {};
   filterConditions: string[] = [];
@@ -55,6 +56,12 @@ export class ReportDesignerComponent implements OnInit {
   labels: any[] = [];
   values: any[] = [];
   collective: any[] = [];
+  page = 1;
+  pageSize = 5;
+  totalCount: number = 0;
+  startPage: number = 0;
+  endPage: number = this.pageSize;
+
 
   isGraph: boolean = false;
   Labels = [];
@@ -118,6 +125,7 @@ export class ReportDesignerComponent implements OnInit {
   finalGraphresponse = [];
   finalGrapData: any = {};
   finalTableData: any[] = [];
+  isPaginated: boolean = false;
   exportAsXLSX(): void {
     this.excelService.exportAsExcelFile(this.tableData, 'sample');
   }
@@ -128,9 +136,9 @@ export class ReportDesignerComponent implements OnInit {
 
     private resolver: ComponentFactoryResolver,
     private toggleService: ToggleService,
-    
-    private _hS:HeaderService
-  ) {}
+
+    private _hS: HeaderService
+  ) { }
   ngOnInit(): void {
     this.reportservice.login().subscribe((token: any) => {
       localStorage.setItem('token', token.access);
@@ -138,7 +146,7 @@ export class ReportDesignerComponent implements OnInit {
         this.dbsettings = res;
       });
     });
-    const newObj = {title:'Report Designer',url:'/analytics/report-builder'};
+    const newObj = { title: 'Report Designer', url: '/analytics/report-builder' };
     this._hS.setHeader(newObj);
     this.sharedataservice.query$.subscribe((res: any) => {
       this.query = res;
@@ -151,7 +159,7 @@ export class ReportDesignerComponent implements OnInit {
 
     this.sharedataservice.data$.subscribe((newData: any) => {
       console.log("newData", newData);
-      if(newData !=="Initial Data" ){
+      if (newData !== "Initial Data") {
         this.isGraph = true;
       }
 
@@ -203,7 +211,8 @@ export class ReportDesignerComponent implements OnInit {
       }
     });
     this.sharedataservice.getrRfreshEvent().subscribe((data) => {
-      this.refreshData();
+      this.refreshkeys();
+      this.refreshLabels();
     });
 
     this.subscription = this.toggleService
@@ -366,6 +375,8 @@ export class ReportDesignerComponent implements OnInit {
           this.isGraph = true;
           this.isStats = false;
           this.tableData = this.transformDataObject(res.table);
+          console.log("Res===>", res);
+          this.totalCount = res.total_count;
           this.finalTableData = this.tableData;
 
           if (this.tableData.length === 0) {
@@ -384,6 +395,41 @@ export class ReportDesignerComponent implements OnInit {
     }
   }
 
+  incrementPage() {
+    if (this.endPage + this.pageSize <= this.totalCount) {
+      this.startPage += this.pageSize;
+      this.endPage += this.pageSize;
+      this.page += 1,
+        console.log('incrementPage', this.startPage, this.endPage);
+      this.paginationApi()
+    }
+  }
+
+  decrementPage() {
+    if (this.startPage >= this.pageSize) {
+      this.startPage -= this.pageSize;
+      this.endPage -= this.pageSize;
+      this.page -= 1,
+        console.log('decrementPage', this.startPage, this.endPage);
+      this.paginationApi()
+    }
+  }
+  paginationApi() {
+    debugger
+    this.reportservice
+      .paginatedDataApi({
+        db: this.dbName,
+        query: this.query,
+        connection_name: this.DBC,
+        page: this.page,
+        page_size: this.pageSize
+      })
+      .subscribe((res: any) => {
+        this.paginatedData = res.table;
+        this.isPaginated = true;
+        this.tableData = this.transformDataObject(res.table);
+      });
+  }
   handleFilters(columntype: any, columnname: any): void {
     this.selectedFilterColumn = columnname;
     if (columntype === 'i' || columntype === 'f') {
@@ -570,7 +616,6 @@ export class ReportDesignerComponent implements OnInit {
       this.isLine = false;
       this.isPolar = false;
       this.isRadar = true;
-
       const labels4: string[] = this.barChartData.datasets.map(
         (dataset: any) => dataset.label
       );
@@ -654,10 +699,20 @@ export class ReportDesignerComponent implements OnInit {
     this.tableData = filteredArray;
   }
 
-  refreshData() {
-    this.selectedColumns = [];
+  refreshkeys() {
+    if (this.isPaginated) {
+      this.selectedColumns = [];
+      this.tableData = this.transformDataObject(this.paginatedData);
+    }
+    else {
+      this.selectedColumns = [];
+      this.tableData = this.finalTableData;
+    }
+
+
+  }
+  refreshLabels() {
     this.selectedLabels = [];
-    this.selectTable();
     this.visualizeData();
     this.selectGraph();
   }
