@@ -14,7 +14,7 @@ export class AddSkillMembersComponent implements OnInit {
   isSelectedIdstostring:string='';
   numbers:any;
   search:any='User name'
-  
+  isSelectedTeam:any=''
   AlterMsg='Team Members Added Successfully'
   toastermessage:boolean=false
   constructor() { }
@@ -23,6 +23,9 @@ export class AddSkillMembersComponent implements OnInit {
   })
 
   ngOnInit(): void {
+
+
+
   }
   
   teamMemberDetails:any[]=[
@@ -76,7 +79,7 @@ isSelected(id:number):boolean{
   return this.isSelectedIds.indexOf(id)>=1
 }
 toggleSelectionIds(id:number):void{
-  debugger
+
   const index =this.isSelectedIds.findIndex((x:any)=>x==id)
   if(index >=0){
     this.isSelectedIds.splice(index,1)
@@ -85,6 +88,7 @@ toggleSelectionIds(id:number):void{
     this.isSelectedIds.push(id)
   }
  console.log("this.isSelectedIds==>",this.isSelectedIds)
+ if(this.isSelectedIds.length>=0){}
 }
 
 

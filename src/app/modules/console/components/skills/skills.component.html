@@ -11,18 +11,19 @@
                                     <button class="iconButton medium">
                                         <i class="fal fa-search silver"></i>
                                     </button>
-                                    <input placeholder="Search" type="text" [(ngModel)]="search">
+                                    <input placeholder="Search" type="text"
+                                    (clcik)="getbySearch()"
+                                     [(ngModel)]="search">
                                 </a>
                             </li>
                             <li class="list-inline-item">
                                 <select class="js-example-basic-single form-select" class="form-select"
                                 [(ngModel)]="fillter"
+                                (change)="getByDepartment($event)"
                                     data-select2-id="select2-data-1-st3r" tabindex="-1" aria-hidden="true">
-                                    <option data-select2-id="select2-data-3-1igk">All </option>
-                                    <option>Ascending </option>
-                                    <option>Descending</option>
-                                    <option>Roles</option>
-                                    <option>Teams</option>
+                                  
+                                    <option *ngFor="let dep of isDepartmentArray ">{{dep}}</option>
+                                 
                                 </select>
                                 <!-- <span class="select2 select2-container select2-container--default" dir="ltr"
                                     data-select2-id="select2-data-2-jctd" style="width: 107px;"><span
@@ -44,7 +45,7 @@
                             class="ms-2">
                             <button type="button" class="btn btn-success">
                                 <i class="fal fa-plus me-2"></i>
-                                Create Team
+                                Create Skill
                             </button>
                         </a>
 
@@ -68,7 +69,8 @@
                         <i class="fal fa-trash"></i>
                         </li>
                 </ul>
-                <div class="selected-row" [ngStyle]="{
+                <div class="selected-row" 
+                [ngStyle]="{
                     'display':showIcon==true ? 'block':'none'
                 }" >
                     Selected <span class="badge skyBg rounded-pill">{{selectedIds.length}}<span>
@@ -80,8 +82,8 @@
                             1-100 of 569
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">Newest</a></li>
-                            <li><a class="dropdown-item" href="#"> Oldest</a></li>
+                            <li><a class="dropdown-item" >Newest</a></li>
+                            <li><a class="dropdown-item" > Oldest</a></li>
                         </ul>
                     </div>
                     <span class="iconButton medium iconHover">
@@ -102,7 +104,6 @@
                 </ng-container>
            
            
-             
                 <table class="table align-middle">
                     <thead>
                         <tr>
@@ -123,15 +124,17 @@
                                 Teams
                             </th>
                             <th>
-                                <a href="javascript:" class="charcoal hover-icon">
-                                    Users
-                                    <i class="fas fa-long-arrow-alt-down"></i>
+                                <a  class="charcoal hover-icon" (click)="sortedBy('userid')">
+                                     Users
+                                    <i *ngIf="isDecsendingorder" class="fas fa-long-arrow-alt-up"></i>
+                                    <i *ngIf="!isDecsendingorder" class="fas fa-long-arrow-alt-down"></i>
                                 </a>
                             </th>
                             <th>
-                                <a href="javascript:" class="charcoal hover-icon">
+                                <a class="charcoal hover-icon"  (click)="sortedBy('department')" >
                                     Departments
-                                    <i class="fas fa-long-arrow-alt-down"></i>
+                                    <i  *ngIf="!isDecsendingorder" class=" fas fa-long-arrow-alt-up"></i>
+                                    <i *ngIf="isDecsendingorder" class="fas fa-long-arrow-alt-down"></i>
                                 </a>
                             </th>
                             <th></th>
@@ -149,7 +152,8 @@
                             <td>
                                 <div class="d-flex align-items-center darkblue">
                                     <i class="fal fa-users coal me-2"></i>
-                                    {{data.userid}}                                </div>
+                                    {{data.userid}}
+                                </div>
                             </td>
                             <td>
                                 <div class="align-items-lg-center d-flex darkblue">
@@ -162,15 +166,17 @@
                                         </button>
                                         <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
                                             <li>
-                                                <a class="dropdown-item" href="#">
+                                                <a class="dropdown-item" >
                                                     Corporate
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" href="#">Support</a>
+                                                <a class="dropdown-item" >Support</a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" href="#">Sales &amp; Lead Management</a>
+                                                <a class="dropdown-item" >Sales
+                                                     &amp;
+                                                      Lead Management</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -186,13 +192,14 @@
                                         <li>
                                             <a class="dropdown-item" 
                                             [routerLink]="[
-                                '/dashboard/cardmanagement/editcard',
+                                '/console/skills/create',
                              data.id
                               ]"><i class="fal fa-edit me-2"></i> Edit</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item delete-dd" ><i
-                                                    class="fal fa-trash me-2"></i> Delete</a>
+                                            <a class="dropdown-item delete-dd"   (click)="deleted(data.id)">
+
+                                                <i class="fal fa-trash me-2"></i> Delete</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -348,4 +355,16 @@
         <div class="scrollbar-thumb scrollbar-thumb-y"
             style="height: 220.258px; transform: translate3d(0px, 0px, 0px);"></div>
     </div> -->
+</div>
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">Team Deleted Successfully</p>
+            <div class="toast-btn d-flex align-items-center">
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
+            </div>
+        </div>
+    </div>
 </div>

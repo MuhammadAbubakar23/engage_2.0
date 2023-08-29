@@ -8,7 +8,7 @@ import {
    UntypedFormGroup, 
    Validators ,FormControl,FormControlName,} from '@angular/forms';
 import { AddSkillMembersComponent } from '../add-skill-members/add-skill-members.component';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-create-skills',  
   standalone:true,
@@ -25,8 +25,11 @@ isChecked:boolean=false
 selectedIds:any[]=[]
 allselected:boolean=false
 showIcon:boolean=false;
-fillter:any="Roles"
+fillter:any="Roles";
+isSelectedTeam:any='';
+isSelectedTeamArray:any=[]
 sort:any=''
+sortDir=1
   userForm : UntypedFormGroup = new UntypedFormGroup({
     teamname : new UntypedFormControl(),
     description : new UntypedFormControl(),
@@ -37,9 +40,17 @@ sort:any=''
   });
   submitted = false;
   
-  constructor(private formbuilder : UntypedFormBuilder) { }
+  constructor(private formbuilder : UntypedFormBuilder,private router: Router) {
+   
+   }
 
   ngOnInit(): void {
+    this.teamMembersList.forEach((x)=>{
+      this.isSelectedTeam=x.team
+      this.isSelectedTeamArray.push(this.isSelectedTeam)
+      console.log("this.isSelectedTeamArray==>",this.isSelectedTeamArray)
+
+    })
 
     // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));
@@ -59,10 +70,11 @@ sort:any=''
     let data={
       "name":this.userForm.value,
       "assignment":this.assignment,
-      "availability":this.availability,
+     
     }
     console.log("this.userForm.value===>",data);
     this.userForm.reset()
+    this.router.navigateByUrl('/console/skills')
   }
   
   AddTeamMembers(){
@@ -75,7 +87,7 @@ sort:any=''
 
 
 
-  // the listing of teams and Member
+  // the listing of teams and Member  and other components team Members
   teamMembersList:any[]=[
     {
       imageURI:"../../../../../../assets/images/avatar-16.jpg",
@@ -90,18 +102,27 @@ sort:any=''
       id:2,
       name:"Ali Khan",
       EMPid:8989,
-      role:"Admin",
+      role:"Employee",
       team:"VW Tach"
     },
     {
-      imageURI:"../../../../../../assets/images/avatar-16.jpg",
+      imageURI:"../../../../../../assets/images/avatar-10.jpg",
       id:3,
       name:"Usman Khan",
       EMPid : 9877,
       role:"User ",
       team:"Jazz"
+    },
+    {
+      imageURI:"../../../../../../assets/images/avatar-11.jpg",
+      id:4,
+      name:"Umar khan",
+      EMPid : 9877,
+      role:"Employee ",
+      team:"Zong"
     }
   ]
+  
   isSelected(id:number){
     return this.selectedIds.indexOf (id)>=0 }
     toggleselection(id:number){
@@ -128,6 +149,7 @@ sort:any=''
       this.selectedIds=[]
       this.allselected=false
       this.isChecked=false
+      
     }
 
     selectedunselectedAll(){
@@ -142,19 +164,23 @@ sort:any=''
       }
       if(this.selectedIds.length>=0){
         this.showIcon=true
+        this.allselected=true;
+        this.isChecked=false
       }
       else{
         this.showIcon=false
         this.selectedIds=[]
         this.isChecked=false
       }
+      if(this.selectedIds.length==4){
+        this.isChecked=true
+      }
     }
-    sortedBy(data:string){
-      // this.teamMembersList.sort((a,b)=>a[data]>b[data] ? 1 :-1)
-    } 
+    
+   
     assignment:any=''
-    getAssignmentByid(id:any){
-    this.assignment=id
+    getAssignmentByid(value:string){
+    this.assignment=value
 
     }
     availability:any=''
@@ -162,4 +188,25 @@ sort:any=''
     this.availability=id
 
    }
+   isDescendingOrder: boolean = false
+   sortedBy(data: string, ) {
+this.isDescendingOrder=!this.isDescendingOrder
+   this. teamMembersList.sort((a: any, b: any) => {
+        if (a [data] < b[data]) {
+            return this.isDescendingOrder ? 1 : -1;
+        }
+        if (a[data] > b[data]) {
+          debugger
+            return this.isDescendingOrder ? -1 : 1;
+        }
+        return 0;
+    });
 }
+
+
+routerLink(){
+  debugger
+this.router.navigateByUrl('/console/skills')
+}
+
+  }
