@@ -70,17 +70,19 @@ export class ReportlistingComponent implements OnInit, AfterViewInit{
     this._hS.setHeader(newObj);
 
   }
-  getReportData(reportName: any) {
-    console.log("getReportData", reportName)
-    this.reports.forEach((report: any) => {
-      if (report.name === reportName) {
-        report.color = 'green';
-      }
-      else{
-        report.color = 'blue';
-      }
-    })
-    this.reportService.reportExecuteApi({ 'reportName': reportName }).subscribe((res: any) => {
+  reportName:any = 'Please select Report';
+  getReportData() {
+debugger
+    // console.log("getReportData", reportName)
+    // this.reports.forEach((report: any) => {
+    //   if (report.name === reportName) {
+    //     report.color = 'green';
+    //   }
+    //   else{
+    //     report.color = 'blue';
+    //   }
+    // })
+    this.reportService.reportExecuteApi({ 'reportName': this.reportName }).subscribe((res: any) => {
       console.log("Get Data", res);
       this.tableData = this.transformDataObject(res.table);
       console.log("Get Data", this.tableData)
