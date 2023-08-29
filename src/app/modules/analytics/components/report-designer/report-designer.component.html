@@ -1,0 +1,233 @@
+<div class="w-auto chat-message-component w-100 inbox-container" [ngClass]="showPanel ? 'panelToggled' : ''">
+    <div class="d-flex main-body-wrapper">
+        <div class="agent-page-main-content">
+            <app-toastr [toasterMsg]="toastermessage" [isToaster]="isToaster"></app-toastr>
+            <div class="filter-toolbar p-0 border-0 collapse show" id="filter-bar">
+                <div class="filter-panel">
+                    <div class="coal fw-bold me-4">
+                        <i class="fas fa-filter me-1"></i> Filters
+                    </div>
+                    <ng-select class="filter-buttons" [(ngModel)]="DBC" (change)="selectConnection()">
+                        <ng-option style="width: 250px; margin-right: 10px; background-color: red;"
+                            *ngFor="let db of dbsettings"
+                            [value]="db.connection_name">{{db.connection_name}}</ng-option>
+                    </ng-select>
+                    <ng-select class="filter-buttons" [(ngModel)]="dbName" (change)="selectDataBase()">
+                        <ng-option *ngFor="let database of databases" [value]="database">{{database}}</ng-option>
+                    </ng-select>
+                    <div class="filter-buttons">
+                        <ng-select style="width: 200px" [(ngModel)]="tableName" (change)="selectTable()">
+                            <ng-option *ngFor="let table of tables" [value]="table">{{ table
+                                }}</ng-option>
+                        </ng-select>
+                    </div>
+                    <div class="filter-buttons" *ngIf="isVisual">
+                        <ng-select style="width: 250px; margin-right: 10px" [(ngModel)]="selectedLabels"
+                            (change)="selectLabel()" [placeholder]="selectedLabels.length === 0 ? 'Select Column' : ''"
+                            [multiple]="true">
+                            <ng-option *ngFor="let column of graphLabels" [value]="column">{{column
+                                }}</ng-option>
+                        </ng-select>
+                    </div>
+                    <div class="filter-buttons" *ngIf="isTabular">
+                        <ng-select style="width: 250px; margin-right: 10px" [(ngModel)]="selectedColumns"
+                            (change)="selectColumn()"
+                            [placeholder]="selectedColumns.length === 0 ? 'Select Column' : ''" [multiple]="true">
+                            <ng-option *ngFor="let column of dataKeys | keyvalue" [value]="column.key">{{
+                                column.key}}</ng-option>
+                        </ng-select>
+                    </div>
+                    <div *ngIf="isFilter" class="row">
+                        <div class="filter-buttons" *ngIf="isNumber">
+                            <input style="height: 38px" type="number" [(ngModel)]="filterNumber"
+                                placeholder="Enter an ID" class="form-control" (input)="resetfilters()" />
+                        </div>
+                        <ng-select class="filter-buttons" [(ngModel)]="selectedFilter" (change)="addFilter()">
+                            <ng-option *ngFor="let con of filterConditions" [value]="con">{{
+                                con }}</ng-option>
+                        </ng-select>
+                    </div>
+                    <div *ngIf="isTabular || isVisual">
+                        <i class="fa fa-refresh" aria-hidden="true" (click)="refreshData()"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="agent-skill-stats pb-3">
+                <header class="tab-header">
+                    <div class="nav nav-tabs d-flex justify-content-center" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="agent-stats-tab" data-bs-toggle="tab"
+                            data-bs-target="#agent-stats" type="button" role="tab" aria-controls="agent-stats"
+                            aria-selected="true" (click)="tabularData()">
+                            Tabular Statistics
+                        </button>
+
+                        <button class="nav-link" id="skill-stats-tab" data-bs-toggle="tab" data-bs-target="#skill-stats"
+                            type="button" role="tab" aria-controls="skill-stats" aria-selected="false" tabindex="-1"
+                            (click)="visualizeData()">
+                            Visualization
+                        </button>
+                        <div class="analytics-pagination-bar">
+                            <div class="">
+                                <button class="btn iconHover" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    1-100 of 569
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Newest</a></li>
+                                    <li><a class="dropdown-item" href="#"> Oldest</a></li>
+                                </ul>
+                            </div>
+                            <span class="iconButton medium iconHover">
+                                <i class="fal fa-chevron-left"></i>
+                            </span>
+                            <span class="iconButton medium iconHover">
+                                <i class="fal fa-chevron-right"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                </header>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="agent-stats" role="tabpanel"
+                        aria-labelledby="agent-stats-tab">
+
+                        <div class="query-container perfect-scrollbar" data-scrollbar="true" tabindex="-1"
+                            style="overflow: auto; outline: none;">
+                            <div class="scroll-content" style="width: 45vh; white-space: nowrap;">
+                                <ng-container *ngIf="isStats; else rawdata">
+
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th class="region-row" *ngFor="let column of statsdataKeys">
+                                                    {{ column }}
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="region-row" *ngFor="let row of tableData">
+                                                <td *ngFor="let column of statsdataKeys">
+                                                    {{ row[column] }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </ng-container>
+                                <ng-template #rawdata>
+                                    <table class="table mb-5 align-middle perfect-scrollbar">
+                                        <thead>
+                                            <tr>
+                                                <th *ngFor="let column of dataKeys | keyvalue" (click)="
+                                column.value == 'i' ||
+                                column.value == 'f' ||
+                                column.value == 'dt'
+                                    ? handleFilters(
+                                        column.value,
+                                        column.key
+                                    )
+                                    : null
+                                ">
+                                                    <select class="form-select form-select-sm"
+                                                        aria-label=".form-select-lg example" name="column" style="
+                                    width: 170px !important;
+                                    height: 40px !important;
+                                ">
+                                                        <option selected>
+                                                            {{ column.key }}
+                                                        </option>
+                                                    </select>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="region-row" *ngFor="let row of tableData">
+                                                <td *ngFor="let column of dataKeys | keyvalue">
+                                                    <div class="d-flex align-items-center darkblue">
+                                                        {{ row[column.key] }}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </ng-template>
+                            </div>
+                            <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                                    <div class="scrollbar-thumb scrollbar-thumb-x"></div>
+                                </div>
+                                <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                                    <div class="scrollbar-thumb scrollbar-thumb-y"></div>
+                                </div> -->
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="skill-stats" role="tabpanel" aria-labelledby="skill-stats-tab">
+                        <ng-container *ngIf="isGraph" class="tab-content" id="nav-tabContent">
+                            <div class="table-section">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="stats-card dashboard iceBg">
+                                                <h5 class="section-heading mb-0 p-2 text-center">
+                                                    {{ tableName }}
+                                                </h5>
+                                                <div
+                                                    class="d-flex align-items-center stats-count justify-content-center">
+                                                    <div class="ocean a-section-heading fw-normal mb-2">
+                                                        <canvas *ngIf="isBar" baseChart [data]="barChartData"
+                                                            [options]="barChartOptions" [plugins]="barChartPlugins"
+                                                            [legend]="barChartLegend" [type]="'bar'"
+                                                            style="width: 600px; height: 500px">
+                                                        </canvas>
+                                                        <canvas *ngIf="isPie" baseChart class="chart"
+                                                            [data]="pieChartData" [type]="'pie'"
+                                                            [options]="pieChartOptions"
+                                                            style="width: 600px; height: 500px">
+                                                        </canvas>
+                                                        <canvas baseChart class="chart" *ngIf="isLine"
+                                                            [data]="lineChartData" [options]="lineChartOptions"
+                                                            [type]="'line'" style="width: 600px; height: 500px">
+                                                        </canvas>
+                                                        <canvas baseChart class="chart" *ngIf="isPolar"
+                                                            [data]="polarAreaChartData" [type]="'polarArea'"
+                                                            style="width: 600px; height: 500px">
+                                                        </canvas>
+                                                        <canvas baseChart class="chart" *ngIf="isRadar"
+                                                            [data]="radarChartData" [options]="radarChartOptions"
+                                                            [type]="'radar'" style="width: 600px; height: 500px">
+                                                        </canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <footer class="footer" *ngIf="tableData.length > 0">
+                    <div class="ps-3 pe-3">
+                        <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+                            <div class="row w-100">
+                                <div class="col-md-4">
+                                    <div class="f-icon-txt-wrapper d-flex align-items-center">
+                                    </div>
+                                </div>
+                                <div class="col-md-8 justify-content-end d-flex">
+                                    <div class="buttons-wrap d-flex">
+                                        <button type="button" class="btn skyBg ms-2  px-4 btn-medium saveBtn"
+                                            data-bs-target="" (click)="exportAsXLSX()">Download</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <div class="rightbar-expanded-wrapper">
+            <template #rightcontainer></template>
+        </div>
+    </div>
+    <analytics-right-sidebar-menu></analytics-right-sidebar-menu>
+</div>

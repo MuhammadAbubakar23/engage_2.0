@@ -1,0 +1,60 @@
+/* Base styles for larger screens */
+.filter-panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+.filter-buttons {
+    min-width: 200px;
+    width: auto;
+    margin: 10px;
+  }
+  
+  /* Adjust styles for medium-sized screens */
+  @media (max-width: 768px) {
+    .filter-panel {
+      justify-content: center;
+    }
+    
+    .ng-select-searchable,
+    .ng-select-multiple {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    
+    .filter-panel > div {
+      margin: 5px;
+    }
+    
+    .filter-panel i.fa-refresh {
+      margin-right: 5px;
+    }
+  }
+  
+  /* Adjust styles for small screens */
+  @media (max-width: 576px) {
+    .filter-panel {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .filter-panel > div {
+      margin: 5px 0;
+    }
+    
+    .ng-select-container {
+      width: 100%;
+    }
+  }
+  .inbox-container .tab-content .query-container {
+    max-height: calc(100vh - 350px);
+  }
+
+  .analytics-pagination-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%; /* Ensure the div takes the full width */
+  }
