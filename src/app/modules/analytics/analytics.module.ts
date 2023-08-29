@@ -14,6 +14,7 @@ import { ReportDbSettingsComponent } from './components/report-db-settings/repor
 import { ReportlistingComponent } from './components/reportlisting/reportlisting.component';
 import { ExcelService } from './services/excel.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { ReportDesignerComponent } from './components/report-designer/report-designer.component';
 
 
 // import {DndModule} from 'ngx-drag-drop';
@@ -22,8 +23,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
   declarations: [
     AnalyticsComponent,
     ExecutiveDashboardHeaderComponent,
-    LiveMonitoringHeaderComponent,
-
+    LiveMonitoringHeaderComponent
   ],
   imports: [
     CommonModule,

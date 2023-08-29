@@ -1,29 +1,22 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { ShareddataService } from '../../services/shareddata.service';
-import { ReportService } from '../../services/report.service';
-import {
-  ChartConfiguration,
-  ChartData,
-  ChartDataset,
-  ChartType,
-} from 'chart.js';
-import { ExcelService } from '../../services/excel.service';
-import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { CommonModule } from '@angular/common';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { LayoutsModule } from 'src/app/layouts/layouts.module';
-import { ToastrComponent } from '../toastr/toastr.component';
+import { ChartConfiguration, ChartData, ChartType, ChartDataset } from 'chart.js';
+import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { SharedService } from 'src/app/services/SharedService/shared.service';
-import { RightNavService } from 'src/app/services/RightNavService/RightNav.service';
+import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
-import { ActionsComponent } from '../actions/actions.component';
 import { HeaderService } from 'src/app/shared/services/header.service';
+import { ExcelService } from '../../services/excel.service';
+import { ReportService } from '../../services/report.service';
+import { ShareddataService } from '../../services/shareddata.service';
+import { ActionsComponent } from '../actions/actions.component';
+import { ToastrComponent } from '../toastr/toastr.component';
 
 @Component({
-  selector: 'app-report-builder',
+  selector: 'app-report-designer',
+  
   standalone: true,
   imports: [
     CommonModule,
@@ -33,10 +26,10 @@ import { HeaderService } from 'src/app/shared/services/header.service';
     NgChartsModule,
     ToastrComponent,
   ],
-  templateUrl: './report-builder.component.html',
-  styleUrls: ['./report-builder.component.scss'],
+  templateUrl: './report-designer.component.html',
+  styleUrls: ['./report-designer.component.scss']
 })
-export class ReportBuilderComponent implements OnInit {
+export class ReportDesignerComponent implements OnInit {
   showPanel = false;
   databases: string[] = [];
   dbsettings: any[] = [];
@@ -135,6 +128,7 @@ export class ReportBuilderComponent implements OnInit {
 
     private resolver: ComponentFactoryResolver,
     private toggleService: ToggleService,
+    
     private _hS:HeaderService
   ) {}
   ngOnInit(): void {
