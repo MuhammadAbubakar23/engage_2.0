@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path:'',
-    redirectTo:'/all-inboxes',
+    redirectTo:'/all-inboxes/my_inbox',
     pathMatch:'full'
   },
   {
@@ -35,12 +35,7 @@ const routes: Routes = [
     path:'analytics',
     loadChildren : () => import('./analytics/analytics.module').then(f=>f.AnalyticsModule),
     data: {preload: true}
-  },
-  {
-    path:'survey',
-    loadChildren : () => import('./survey-forms/survey-forms.module').then(f=>f.SurveyFormsModule),
-    data: {preload: true}
-  },
+  }  
 ];
 
 @NgModule({
