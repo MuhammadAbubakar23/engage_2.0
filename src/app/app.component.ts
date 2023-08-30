@@ -31,6 +31,7 @@ toasters: Toaster[] = [];
     //this.toasts.splice(index, 1);
   }
   ngOnInit() {
+    debugger
     this.toaster.toaster$
       .subscribe(toaster => {
         if(toaster!==null){
@@ -39,19 +40,22 @@ toasters: Toaster[] = [];
         }
 
       });
-    if (this.signalRService.hubconnection == undefined) {
-      this.spinnerService.show();
-      this.commonService.SignOut().subscribe(()=>{
-        localStorage.clear();
-        this.router.navigateByUrl('/login');
-        this.spinnerService.hide();
-      },
-      (error)=>{
-        localStorage.clear();
-        this.router.navigateByUrl('/login');
-        this.spinnerService.hide();
-      })
-    }
+      if(localStorage.getItem('signalRConnectionId')){
+        if (this.signalRService.hubconnection == undefined) {
+          this.spinnerService.show();
+          this.commonService.SignOut().subscribe(()=>{
+            localStorage.clear();
+            this.router.navigateByUrl('/login');
+            this.spinnerService.hide();
+          },
+          (error)=>{
+            localStorage.clear();
+            this.router.navigateByUrl('/login');
+            this.spinnerService.hide();
+          })
+        }
+      }
+    
     // this.signalRService.reConnect();
 
     // this.signalRService.removeTagDataListener();
