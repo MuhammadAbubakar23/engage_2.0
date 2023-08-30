@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 
@@ -14,7 +15,8 @@ export class CustomerSatisfactionComponent implements OnInit {
   toastermessage: boolean = false;
   feedbackSubmitted = false;
   constructor(private commanDateServices: CommonDataService,
-    private spinnerService : NgxSpinnerService) {}
+    private spinnerService : NgxSpinnerService,
+    private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -23,7 +25,7 @@ export class CustomerSatisfactionComponent implements OnInit {
   }
 
   save() {
-    const customerId = localStorage.getItem('storeOpenedId');
+    const customerId = this.router.url.split('=')[1];
     let data = {
       customerId: customerId,
       attempts: 0,

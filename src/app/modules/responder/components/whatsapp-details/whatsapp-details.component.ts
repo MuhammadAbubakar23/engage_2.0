@@ -1001,4 +1001,14 @@ export class WhatsappDetailsComponent implements OnInit {
       !this.isAudio(attachment)
     );
   }
+
+  c_satForm() {
+    const customerId = localStorage.getItem('storeOpenedId');
+    this.insertAtCaret('https://waengage.enteract.live/survey/customer_satisfaction'+'?customerId='+customerId+' ')
+  }
+
+  c_informationForm(){
+    const customerId = localStorage.getItem('storeOpenedId');
+    this.insertAtCaret('https://waengage.enteract.live/survey/customer_details'+'?customerId='+customerId+' ')
+  }
 }
