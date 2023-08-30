@@ -11,17 +11,19 @@
                                     <button class="iconButton medium">
                                         <i class="fal fa-search silver"></i>
                                     </button>
-                                    <input placeholder="Search">
+                                    <input placeholder="Search" type="text"
+                                    (clcik)="getbySearch()"
+                                     [(ngModel)]="search">
                                 </a>
                             </li>
                             <li class="list-inline-item">
-                                <select class="js-example-basic-single form-select"
+                                <select class="js-example-basic-single form-select" class="form-select"
+                                [(ngModel)]="fillter"
+                                (change)="getByDepartment($event)"
                                     data-select2-id="select2-data-1-st3r" tabindex="-1" aria-hidden="true">
-                                    <option data-select2-id="select2-data-3-1igk">All </option>
-                                    <option>Ascending </option>
-                                    <option> Descending</option>
-                                    <option>Roles</option>
-                                    <option>Teams</option>
+                                  
+                                    <option *ngFor="let dep of isDepartmentArray ">{{dep}}</option>
+                                 
                                 </select>
                                 <!-- <span class="select2 select2-container select2-container--default" dir="ltr"
                                     data-select2-id="select2-data-2-jctd" style="width: 107px;"><span
@@ -39,17 +41,175 @@
                         </ul>
                     </div>
                     <div class="col-md-4 d-flex align-items-center justify-content-end">
-                        <a (click)="updatevalue('consoleCreateTeamHeader')" [routerLink]="['/console/skills/create/0']" class="ms-2">
+                        <a (click)="updatevalue('consoleCreateTeamHeader')" [routerLink]="['/console/skills/create/0']"
+                            class="ms-2">
                             <button type="button" class="btn btn-success">
                                 <i class="fal fa-plus me-2"></i>
-                                Create Team
+                                Create Skill
                             </button>
                         </a>
 
                     </div>
                 </div>
             </div>
-            <div class="filter-container">
+            <div class="filter-container border-0">
+                <ul class="list-group list-group-horizontal border-0">
+                    <li class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle" aria-label="..."
+                        data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Refresh"
+                        aria-describedby="tooltip946912" (click)="refresh()">
+                        <i class="fal fa-redo"></i>
+                    </li>
+                    <li [ngStyle]="{
+                        'display':showIcon==true ? 'block':'none'
+                    }" 
+                     class="list-group-item after-select-fun iconHover iconButton medium rounded-circle" 
+                    aria-label="..." 
+                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    >
+                        <i class="fal fa-trash"></i>
+                        </li>
+                </ul>
+                <div class="selected-row" 
+                [ngStyle]="{
+                    'display':showIcon==true ? 'block':'none'
+                }" >
+                    Selected <span class="badge skyBg rounded-pill">{{selectedIds.length}}<span>
+                        </span></span></div>
+                <div class="pagination-bar">
+                    <div class="dropdown">
+                        <button class="btn iconHover" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            1-100 of 569
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" >Newest</a></li>
+                            <li><a class="dropdown-item" > Oldest</a></li>
+                        </ul>
+                    </div>
+                    <span class="iconButton medium iconHover">
+                        <i class="fal fa-chevron-left"></i>
+                    </span>
+                    <span class="iconButton medium iconHover">
+                        <i class="fal fa-chevron-right"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="table-section table-scrool-y mb-3 query-container table-white">
+                <ng-container *ngIf="allSelected">
+                    <div class="alert alert-secondary text-center email-info-alert p-2" role="alert" style="display: block;">
+                        All <strong>{{selectedIds.length}}</strong> conversations on this page are selected.
+        
+                        <a  class="clear-selection" style="color: blue;" (click)="refresh()">Clear selection</a>
+                        </div>
+                </ng-container>
+           
+           
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>
+                              
+                                    <ul class="list-group list-group-horizontal border-0">
+                                        <li class="list-group-item border-0 all-check-boxes">
+                                            <input class="form-check-input me-1" type="checkbox" aria-label="..."
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                data-bs-original-title="Check All"
+                                                 [checked]="isChecked" 
+                                                 (click)=" isSectedAll()" >
+                                        </li>
+                                    </ul>
+                               
+                            </th>
+                            <th>
+                                Teams
+                            </th>
+                            <th>
+                                <a  class="charcoal hover-icon" (click)="sortedBy('userid')">
+                                     Users
+                                    <i *ngIf="isDecsendingorder" class="fas fa-long-arrow-alt-up"></i>
+                                    <i *ngIf="!isDecsendingorder" class="fas fa-long-arrow-alt-down"></i>
+                                </a>
+                            </th>
+                            <th>
+                                <a class="charcoal hover-icon"  (click)="sortedBy('department')" >
+                                    Departments
+                                    <i  *ngIf="!isDecsendingorder" class=" fas fa-long-arrow-alt-up"></i>
+                                    <i *ngIf="isDecsendingorder" class="fas fa-long-arrow-alt-down"></i>
+                                </a>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of userDetails">
+                               <td><input class="form-check-input "
+                            [checked]="isSelected(data.id)"
+                            (click)="toggleSelection(data.id)"
+                             type="checkbox" aria-label="..."></td>
+                            <td>
+                              {{data.teams}}
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center darkblue">
+                                    <i class="fal fa-users coal me-2"></i>
+                                    {{data.userid}}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="align-items-lg-center d-flex darkblue">
+                                    <i class="fal fa-share-alt coal me-2"></i>
+                                  {{data.department}}
+                                    <div class="d-inline-block dropdown w-auto ps-1">
+                                        <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
+                                            id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                            +1
+                                        </button>
+                                        <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
+                                            <li>
+                                                <a class="dropdown-item" >
+                                                    Corporate
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" >Support</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" >Sales
+                                                     &amp;
+                                                      Lead Management</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="icons-list d-flex justify-content-end dropstart">
+                                    <button class="btn iconButton medium iconHover btn-group" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="far fa-ellipsis-v"></i>
+                                    </button>
+                                    <ul class="dropdown-menu fade">
+                                        <li>
+                                            <a class="dropdown-item" 
+                                            [routerLink]="[
+                                '/console/skills/create',
+                             data.id
+                              ]"><i class="fal fa-edit me-2"></i> Edit</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item delete-dd"   (click)="deleted(data.id)">
+
+                                                <i class="fal fa-trash me-2"></i> Delete</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                       
+                    </tbody>
+                </table>
+            </div>
+            <!-- <div class="filter-container">
 
                 <ul class="list-group list-group-horizontal border-0">
 
@@ -57,13 +217,22 @@
                         data-bs-placement="bottom" data-bs-original-title="Refresh">
                         <i class="fal fa-redo"></i>
                     </li>
-
+                    <li [ngStyle]="{
+                        'display': showIcon == true ? 'block' : 'none'
+                        
+                      }" class="list-group-item border-0 after-select-fun" data-bs-toggle="modal"
+                        data-bs-target="#delete-device" aria-label="..." data-bs-toggle="tooltip"
+                        data-bs-placement="bottom" title="Delete"  
+                         >
+                        <i class="fal fa-trash" 
+                       
+                     ></i>
                 </ul>
                 <div class="selected-row" style="display: none;">
                     Selected <span class="badge skyBg rounded-pill">05<span>
                         </span></span></div>
                 <div class="pagination-bar">
-                    <span>1-100 of 569</span>
+                    <span>1-4 of 10</span>
                     <span>
                         <i class="fal fa-chevron-left"></i>
                     </span>
@@ -83,7 +252,9 @@
                                         <li class="list-group-item border-0 all-check-boxes">
                                             <input class="form-check-input me-1" type="checkbox" aria-label="..."
                                                 data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                data-bs-original-title="Check All">
+                                                data-bs-original-title="Check All" 
+                                                  [checked]="isChecked" 
+                                                  (input)="selectedunSelectedAll()">
                                         </li>
                                     </ul>
                                 </div>
@@ -107,23 +278,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr *ngFor="let data of userDetails">
                             <td>
-                                <input class="form-check-input me-1" type="checkbox" aria-label="...">
+                                <input class="form-check-input me-1"
+                                [checked]="toggleSelection(data.id)"
+                                (click)="isSelected(data.id)"
+                                 type="checkbox" aria-label="...">
                             </td>
                             <td>
-                                Corporate Team
+                               {{data.teams}}
                             </td>
                             <td>
                                 <div class="d-flex align-items-center darkblue">
                                     <i class="fal fa-users coal me-2"></i>
-                                    12
+                                  {{data.userid}}
                                 </div>
                             </td>
                             <td>
                                 <div class="align-items-lg-center d-flex darkblue">
                                     <i class="fal fa-share-alt coal me-2"></i>
-                                    VW Tech, Support
+                                    {{data.department}}
                                     <div class="d-inline-block dropdown w-auto ps-1">
                                         <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
                                             id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -166,616 +340,11 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <input class="form-check-input me-1" type="checkbox" aria-label="...">
-                            </td>
-                            <td>
-                                Support Team
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center darkblue">
-                                    <i class="fal fa-users coal me-2"></i>
-                                    34
-                                </div>
-                            </td>
-                            <td>
-                                <div class="align-items-lg-center d-flex">
-                                    <i class="fal fa-share-alt coal me-2"></i>
-                                    <div class="d-inline-block dropdown w-auto ps-1">
-                                        <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
-                                            id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            All
-                                        </button>
-                                        <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
-                                            <li>
-                                                <a class="dropdown-item" href="#">
-                                                    Corporate
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Support</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Sales &amp; Lead Management</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Sales &amp; Lead Management</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Technical
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="icons-list d-flex justify-content-end dropstart">
-
-                                    <button class="btn iconButton medium iconHover btn-group" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu fade">
-                                        <li>
-                                            <a class="dropdown-item" href="#"><i class="fal fa-edit me-2"></i> Edit</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item delete-dd" href="#"><i
-                                                    class="fal fa-trash me-2"></i> Delete</a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input class="form-check-input me-1" type="checkbox" aria-label="...">
-                            </td>
-                            <td>
-                                Sales &amp; Lead Management
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center darkblue">
-                                    <i class="fal fa-users coal me-2"></i>
-                                    54
-                                </div>
-                            </td>
-                            <td>
-                                <div class="align-items-lg-center d-flex darkblue">
-                                    <i class="fal fa-share-alt coal me-2"></i>
-                                    Sales
-                                </div>
-                            </td>
-                            <td>
-                                <div class="icons-list d-flex justify-content-end dropstart">
-
-                                    <button class="btn iconButton medium iconHover btn-group" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu fade">
-                                        <li>
-                                            <a class="dropdown-item" href="#"><i class="fal fa-edit me-2"></i> Edit</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item delete-dd" href="#"><i
-                                                    class="fal fa-trash me-2"></i> Delete</a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input class="form-check-input me-1" type="checkbox" aria-label="...">
-                            </td>
-                            <td>
-                                Accounts
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center darkblue">
-                                    <i class="fal fa-users coal me-2"></i>
-                                    82
-                                </div>
-                            </td>
-                            <td>
-                                <div class="align-items-lg-center d-flex darkblue">
-                                    <i class="fal fa-share-alt coal me-2"></i>
-                                    Account, Support
-                                </div>
-                            </td>
-                            <td>
-                                <div class="icons-list d-flex justify-content-end dropstart">
-
-                                    <button class="btn iconButton medium iconHover btn-group" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu fade">
-                                        <li>
-                                            <a class="dropdown-item" href="#"><i class="fal fa-edit me-2"></i> Edit</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item delete-dd" href="#"><i
-                                                    class="fal fa-trash me-2"></i> Delete</a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input class="form-check-input me-1" type="checkbox" aria-label="...">
-                            </td>
-                            <td>
-                                Corporate Team
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center darkblue">
-                                    <i class="fal fa-users coal me-2"></i>
-                                    12
-                                </div>
-                            </td>
-                            <td>
-                                <div class="align-items-lg-center d-flex darkblue">
-                                    <i class="fal fa-share-alt coal me-2"></i>
-                                    VW Tech, Support
-                                    <div class="d-inline-block dropdown w-auto ps-1">
-                                        <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
-                                            id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            +1
-                                        </button>
-                                        <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
-                                            <li>
-                                                <a class="dropdown-item" href="#">
-                                                    Corporate
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Support</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Sales &amp; Lead Management</a>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="icons-list d-flex justify-content-end dropstart">
-
-                                    <button class="btn iconButton medium iconHover btn-group" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu fade">
-                                        <li>
-                                            <a class="dropdown-item" href="#"><i class="fal fa-edit me-2"></i> Edit</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item delete-dd" href="#"><i
-                                                    class="fal fa-trash me-2"></i> Delete</a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input class="form-check-input me-1" type="checkbox" aria-label="...">
-                            </td>
-                            <td>
-                                Support Team
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center darkblue">
-                                    <i class="fal fa-users coal me-2"></i>
-                                    34
-                                </div>
-                            </td>
-                            <td>
-                                <div class="align-items-lg-center d-flex">
-                                    <i class="fal fa-share-alt coal me-2"></i>
-                                    <div class="d-inline-block dropdown w-auto ps-1">
-                                        <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
-                                            id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            All
-                                        </button>
-                                        <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
-                                            <li>
-                                                <a class="dropdown-item" href="#">
-                                                    Corporate
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Support</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Sales &amp; Lead Management</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Sales &amp; Lead Management</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Technical
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="icons-list d-flex justify-content-end dropstart">
-
-                                    <button class="btn iconButton medium iconHover btn-group" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu fade">
-                                        <li>
-                                            <a class="dropdown-item" href="#"><i class="fal fa-edit me-2"></i> Edit</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item delete-dd" href="#"><i
-                                                    class="fal fa-trash me-2"></i> Delete</a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input class="form-check-input me-1" type="checkbox" aria-label="...">
-                            </td>
-                            <td>
-                                Sales &amp; Lead Management
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center darkblue">
-                                    <i class="fal fa-users coal me-2"></i>
-                                    54
-                                </div>
-                            </td>
-                            <td>
-                                <div class="align-items-lg-center d-flex darkblue">
-                                    <i class="fal fa-share-alt coal me-2"></i>
-                                    Sales
-                                </div>
-                            </td>
-                            <td>
-                                <div class="icons-list d-flex justify-content-end dropstart">
-
-                                    <button class="btn iconButton medium iconHover btn-group" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu fade">
-                                        <li>
-                                            <a class="dropdown-item" href="#"><i class="fal fa-edit me-2"></i> Edit</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item delete-dd" href="#"><i
-                                                    class="fal fa-trash me-2"></i> Delete</a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input class="form-check-input me-1" type="checkbox" aria-label="...">
-                            </td>
-                            <td>
-                                Accounts
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center darkblue">
-                                    <i class="fal fa-users coal me-2"></i>
-                                    82
-                                </div>
-                            </td>
-                            <td>
-                                <div class="align-items-lg-center d-flex darkblue">
-                                    <i class="fal fa-share-alt coal me-2"></i>
-                                    Account, Support
-                                </div>
-                            </td>
-                            <td>
-                                <div class="icons-list d-flex justify-content-end dropstart">
-
-                                    <button class="btn iconButton medium iconHover btn-group" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu fade">
-                                        <li>
-                                            <a class="dropdown-item" href="#"><i class="fal fa-edit me-2"></i> Edit</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item delete-dd" href="#"><i
-                                                    class="fal fa-trash me-2"></i> Delete</a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input class="form-check-input me-1" type="checkbox" aria-label="...">
-                            </td>
-                            <td>
-                                Corporate Team
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center darkblue">
-                                    <i class="fal fa-users coal me-2"></i>
-                                    12
-                                </div>
-                            </td>
-                            <td>
-                                <div class="align-items-lg-center d-flex darkblue">
-                                    <i class="fal fa-share-alt coal me-2"></i>
-                                    VW Tech, Support
-                                    <div class="d-inline-block dropdown w-auto ps-1">
-                                        <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
-                                            id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            +1
-                                        </button>
-                                        <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
-                                            <li>
-                                                <a class="dropdown-item" href="#">
-                                                    Corporate
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Support</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Sales &amp; Lead Management</a>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="icons-list d-flex justify-content-end dropstart">
-
-                                    <button class="btn iconButton medium iconHover btn-group" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu fade">
-                                        <li>
-                                            <a class="dropdown-item" href="#"><i class="fal fa-edit me-2"></i> Edit</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item delete-dd" href="#"><i
-                                                    class="fal fa-trash me-2"></i> Delete</a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input class="form-check-input me-1" type="checkbox" aria-label="...">
-                            </td>
-                            <td>
-                                Support Team
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center darkblue">
-                                    <i class="fal fa-users coal me-2"></i>
-                                    34
-                                </div>
-                            </td>
-                            <td>
-                                <div class="align-items-lg-center d-flex">
-                                    <i class="fal fa-share-alt coal me-2"></i>
-                                    <div class="d-inline-block dropdown w-auto ps-1">
-                                        <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
-                                            id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            All
-                                        </button>
-                                        <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
-                                            <li>
-                                                <a class="dropdown-item" href="#">
-                                                    Corporate
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Support</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Sales &amp; Lead Management</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Sales &amp; Lead Management</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Technical
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="icons-list d-flex justify-content-end dropstart">
-
-                                    <button class="btn iconButton medium iconHover btn-group" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu fade">
-                                        <li>
-                                            <a class="dropdown-item" href="#"><i class="fal fa-edit me-2"></i> Edit</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item delete-dd" href="#"><i
-                                                    class="fal fa-trash me-2"></i> Delete</a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input class="form-check-input me-1" type="checkbox" aria-label="...">
-                            </td>
-                            <td>
-                                Sales &amp; Lead Management
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center darkblue">
-                                    <i class="fal fa-users coal me-2"></i>
-                                    54
-                                </div>
-                            </td>
-                            <td>
-                                <div class="align-items-lg-center d-flex darkblue">
-                                    <i class="fal fa-share-alt coal me-2"></i>
-                                    Sales
-                                </div>
-                            </td>
-                            <td>
-                                <div class="icons-list d-flex justify-content-end dropstart">
-
-                                    <button class="btn iconButton medium iconHover btn-group" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu fade">
-                                        <li>
-                                            <a class="dropdown-item" href="#"><i class="fal fa-edit me-2"></i> Edit</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item delete-dd" href="#"><i
-                                                    class="fal fa-trash me-2"></i> Delete</a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input class="form-check-input me-1" type="checkbox" aria-label="...">
-                            </td>
-                            <td>
-                                Accounts
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center darkblue">
-                                    <i class="fal fa-users coal me-2"></i>
-                                    82
-                                </div>
-                            </td>
-                            <td>
-                                <div class="align-items-lg-center d-flex darkblue">
-                                    <i class="fal fa-share-alt coal me-2"></i>
-                                    Account, Support
-                                </div>
-                            </td>
-                            <td>
-                                <div class="icons-list d-flex justify-content-end dropstart">
-
-                                    <button class="btn iconButton medium iconHover btn-group" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu fade">
-                                        <li>
-                                            <a class="dropdown-item" href="#"><i class="fal fa-edit me-2"></i> Edit</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item delete-dd" href="#"><i
-                                                    class="fal fa-trash me-2"></i> Delete</a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input class="form-check-input me-1" type="checkbox" aria-label="...">
-                            </td>
-                            <td>
-                                Technical Support
-                            </td>
-                            <td>
-                                <div class="d-flex align-items-center darkblue">
-                                    <i class="fal fa-users coal me-2"></i>
-                                    43
-                                </div>
-                            </td>
-                            <td>
-
-                                <div class="d-flex align-items-lg-center darkblue">
-                                    <i class="fal fa-share-alt coal me-2"></i>
-                                    Support, Sales
-                                    <div class="dropdown w-auto ps-1">
-                                        <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
-                                            id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span class="darkblue">+2</span>
-                                        </button>
-                                        <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
-                                            <li>
-                                                <a class="dropdown-item" href="#">
-                                                    Support
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Sales</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Account</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#">Corporate</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="icons-list d-flex justify-content-end dropstart">
-
-                                    <button class="btn iconButton medium iconHover btn-group" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="far fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu fade">
-                                        <li>
-                                            <a class="dropdown-item" href="#"><i class="fal fa-edit me-2"></i> Edit</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item delete-dd" href="#"><i
-                                                    class="fal fa-trash me-2"></i> Delete</a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
+                    
                     </tbody>
                 </table>
 
-            </div>
+            </div> -->
         </div>
     </div>
     <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
@@ -786,4 +355,16 @@
         <div class="scrollbar-thumb scrollbar-thumb-y"
             style="height: 220.258px; transform: translate3d(0px, 0px, 0px);"></div>
     </div> -->
+</div>
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">Team Deleted Successfully</p>
+            <div class="toast-btn d-flex align-items-center">
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
+            </div>
+        </div>
+    </div>
 </div>

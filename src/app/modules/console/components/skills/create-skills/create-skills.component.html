@@ -24,7 +24,7 @@
                     <div id="team-detail" class="tab-pane fade active show" role="tabpanel" aria-labelledby="user-tab">
                         <div class="wider-container">
                             <div class="team-detail-form-box mb-5">
-                                <form class="team-detail-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                                <form class="team-detail-form" [formGroup]="userForm">
 
                                     <div class="floating-item mb-4">
                                         <div class="floating-wrap form-floating mb-2"
@@ -110,158 +110,199 @@
 
                                         </div>
                                     </div>
+                                    <div class="escalation-setting-box mb-5">
+                                        <h6 class="mb-4 darkblue">Support Channels
+                                        </h6>
+                                   
+                                
+                                            <div class="floating-item mb-4">
+                                                <div class="floating-wrap form-floating mb-2"
+                                                    [ngClass]="{'was-validated' : userForm.get('supportchannelhour')!.valid && userForm.get('supportchannelhour')!.touched}">
+                                                    <select [ngClass]="{'is-invalid' : (userForm.get('supportchannelhour')!.errors && (userForm.get('supportchannelhour')!.touched ||
+                                                    userForm.get('supportchannelhour')!.dirty))}"
+                                                        formControlName="supportchannelhour" class="form-select"
+                                                        id="supportchannelhour" aria-label="Floating label select">
+                                                        <option selected="">1 hour</option>
+                                                        <option value="1">2 hours</option>
+                                                        <option value="2">4 hours</option>
+                                                        <option value="3">6 hours</option>
+                                                    </select>
+                                                    <label for="floatingSelect">If a ticket remains unassigned for more
+                                                        than</label>
+                                                    <div class="invalid-feedback" *ngIf="(userForm.get('supportchannelhour')!.errors && (userForm.get('supportchannelhour')!.touched ||
+                                      userForm.get('supportchannelhour')!.dirty))">
+                                                        <div *ngIf="userForm.get('supportchannelhour')!.errors?.['required']">
+                                                            Please select Hours
+                                                        </div>
+                                                        <!-- <div *ngIf="userForm.get('supportchannelhour')!.errors?.['required']">
+                                      supportchannelhour is required!
+                                    </div> -->
+        
+                                                    </div>
+                                                    <div class="valid-feedback"
+                                                        *ngIf="userForm.get('supportchannelhour')!.valid && userForm.get('supportchannelhour')!.touched">
+        
+                                                        Looks Good!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="floating-item mb-4">
+                                                <div class="floating-wrap form-floating mb-2"
+                                                [ngClass]="{'was-validated' : userForm.get('supportchannelteam')!.valid && userForm.get('supportchannelteam')!.touched}">
+                                                    <select [ngClass]="{'is-invalid' : (userForm.get('supportchannelteam')!.errors && (userForm.get('supportchannelteam')!.touched ||
+                                                    userForm.get('supportchannelteam')!.dirty))}" formControlName="supportchannelteam" class="form-select" id="floatingSelect"
+                                                        aria-label="Floating label select">
+                                                        <option selected="">Any</option>
+                                                        <option value="1" selected="">Admin</option>
+                                                        <option value="2">Corporate</option>
+                                                        <option value="3">Sales</option>
+                                                    </select>
+                                                    <label for="floatingSelect">then send an email to</label>
+                                                    <div class="invalid-feedback" *ngIf="(userForm.get('supportchannelteam')!.errors && (userForm.get('supportchannelteam')!.touched ||
+                                      userForm.get('supportchannelteam')!.dirty))">
+                                                        <div *ngIf="userForm.get('supportchannelteam')!.errors?.['required']">
+                                                            Please select Team
+                                                        </div>
+                                                        <!-- <div *ngIf="userForm.get('supportchannelteam')!.errors?.['required']">
+                                      supportchannelteam is required!
+                                    </div> -->
+        
+                                                    </div>
+                                                    <div class="valid-feedback"
+                                                        *ngIf="userForm.get('supportchannelteam')!.valid && userForm.get('supportchannelteam')!.touched">
+        
+                                                        Looks Good!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                   
+                                    </div>
+                                    <ul class="list-group">
+                                        <li
+                                            class="list-group-item d-flex justify-content-between align-items-sm-center shadow-sm rounded border p-3 saltBg">
+                                            <div class="ms-2 me-auto darkblue">
+                                                <div class="fw-bold darkblue">Automatic conversation assignment</div>
+                                                Distribute and balance the number of conversation assigned to agents in this
+                                                group
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input collapsed" type="checkbox"
+                                                    id="flexSwitchCheckDefault" data-bs-toggle="collapse"
+                                                    data-bs-target="#togglecard1" aria-expanded="false"
+                                                    aria-controls="togglecard1">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="collapse" id="togglecard1">
+                                        <div class="card card-body">
+                                            <h5 class="darkblue mb-3 mt-3">Choose and assignment mode</h5>
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input"
+                                                   (click)="getAssignmentByid('round_robin_assignment')"
+                                                 type="radio" name="flexRadioDefault"
+                                                    id="flexRadioDefault1">
+                                                <div class="ms-2 me-auto silver lh-sm">
+                                                    <div class="fw-bold darkblue mb-1">Round robin assignment</div>
+                                                    Assign conversation to agents in a circular order.
+                                                </div>
+                                            </div>
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="radio" 
+                                                    (click)="getAssignmentByid('load_balanced_assignment')"
+                                                name="flexRadioDefault"
+                                                    id="flexRadioDefault1">
+                                                <div class="ms-2 me-auto silver lh-sm">
+                                                    <div class="fw-bold darkblue mb-1">Load balanced assignment ( Powered by
+                                                        EnteractRoute
+                                                        <sup>TM</sup>)
+                                                    </div>
+                                                    Distribute and balance the number of tickets assigned to agents in this
+                                                    group, based on channels.
+                                                    Edit the agent’s capping limit in
+                                                    <a href="javascript:">EnteractRoute settings.</a>
+                                                </div>
+                                            </div>
+        
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" 
+                                             (click)="getAssignmentByid('round_robin_assignment-manage_skills')"
+                                                type="radio" name="flexRadioDefault"
+                                                    id="flexRadioDefault1">
+                                                <div class="ms-2 me-auto silver lh-sm">
+                                                    <div class="fw-bold darkblue mb-1">Round robin assignment -
+                                                        <a href="javascript:">Manage skills
+                                                        </a>
+                                                    </div>
+                                                    Assign conversation to agents based on their skills.
+                                                </div>
+                                            </div>
+                                        </div>
+        
+                                        <div>
+                                            <h5 class="mb-3 mt-5 fw-bold darkblue">Agent availability</h5>
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" 
+                                             (click)="getAssignmentByid('allow_agents_to_set_their_own_availability_status')"
+                                                type="radio" name="flexRadioDefault"
+                                                    id="flexRadioDefault1">
+                                                <div class="ms-2 me-auto silver lh-sm">
+                                                    <div class="fw-bold darkblue mb-1">Allow agents to set their own
+                                                        availability status</div>
+                                                    Agents can set their status according to their activity. Admins and
+                                                    supervisors can still override
+                                                    an agent’s availability from the dashboard.
+                                                </div>
+                                            </div>
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="radio"
+                                                (click)="getAssignmentByid('centrally_manage_the_agent_availabilities')"
+                                                 name="flexRadioDefault"
+                                                    id="flexRadioDefault1">
+                                                <div class="ms-2 me-auto coal lh-sm">
+                                                    <div class="fw-bold darkblue mb-1">Centrally manage the agent availabilities
+                                                    </div>
+                                                    Admins and supervisors will manage the agent’s availability from the
+                                                    dashboard.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 
                                 </form>
                             </div>
-                            <div class="escalation-setting-box mb-5">
-                                <h6 class="mb-4 darkblue">Support Channels
-                                </h6>
-                                <form class="escalation-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                        
-                                    <div class="floating-item mb-4">
-                                        <div class="floating-wrap form-floating mb-2"
-                                            [ngClass]="{'was-validated' : userForm.get('supportchannelhour')!.valid && userForm.get('supportchannelhour')!.touched}">
-                                            <select [ngClass]="{'is-invalid' : (userForm.get('supportchannelhour')!.errors && (userForm.get('supportchannelhour')!.touched ||
-                                            userForm.get('supportchannelhour')!.dirty))}"
-                                                formControlName="supportchannelhour" class="form-select"
-                                                id="supportchannelhour" aria-label="Floating label select">
-                                                <option selected="">1 hour</option>
-                                                <option value="1">2 hours</option>
-                                                <option value="2">4 hours</option>
-                                                <option value="3">6 hours</option>
-                                            </select>
-                                            <label for="floatingSelect">If a ticket remains unassigned for more
-                                                than</label>
-                                            <div class="invalid-feedback" *ngIf="(userForm.get('supportchannelhour')!.errors && (userForm.get('supportchannelhour')!.touched ||
-                              userForm.get('supportchannelhour')!.dirty))">
-                                                <div *ngIf="userForm.get('supportchannelhour')!.errors?.['required']">
-                                                    Please select Hours
-                                                </div>
-                                                <!-- <div *ngIf="userForm.get('supportchannelhour')!.errors?.['required']">
-                              supportchannelhour is required!
-                            </div> -->
+                          
 
-                                            </div>
-                                            <div class="valid-feedback"
-                                                *ngIf="userForm.get('supportchannelhour')!.valid && userForm.get('supportchannelhour')!.touched">
-
-                                                Looks Good!
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="floating-item mb-4">
-                                        <div class="floating-wrap form-floating mb-2"
-                                        [ngClass]="{'was-validated' : userForm.get('supportchannelteam')!.valid && userForm.get('supportchannelteam')!.touched}">
-                                            <select [ngClass]="{'is-invalid' : (userForm.get('supportchannelteam')!.errors && (userForm.get('supportchannelteam')!.touched ||
-                                            userForm.get('supportchannelteam')!.dirty))}" formControlName="supportchannelteam" class="form-select" id="floatingSelect"
-                                                aria-label="Floating label select">
-                                                <option selected="">Any</option>
-                                                <option value="1" selected="">Admin</option>
-                                                <option value="2">Corporate</option>
-                                                <option value="3">Sales</option>
-                                            </select>
-                                            <label for="floatingSelect">then send an email to</label>
-                                            <div class="invalid-feedback" *ngIf="(userForm.get('supportchannelteam')!.errors && (userForm.get('supportchannelteam')!.touched ||
-                              userForm.get('supportchannelteam')!.dirty))">
-                                                <div *ngIf="userForm.get('supportchannelteam')!.errors?.['required']">
-                                                    Please select Team
-                                                </div>
-                                                <!-- <div *ngIf="userForm.get('supportchannelteam')!.errors?.['required']">
-                              supportchannelteam is required!
-                            </div> -->
-
-                                            </div>
-                                            <div class="valid-feedback"
-                                                *ngIf="userForm.get('supportchannelteam')!.valid && userForm.get('supportchannelteam')!.touched">
-
-                                                Looks Good!
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-                            <ul class="list-group">
-                                <li
-                                    class="list-group-item d-flex justify-content-between align-items-sm-center shadow-sm rounded border p-3 saltBg">
-                                    <div class="ms-2 me-auto darkblue">
-                                        <div class="fw-bold darkblue">Automatic conversation assignment</div>
-                                        Distribute and balance the number of conversation assigned to agents in this
-                                        group
-                                    </div>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input collapsed" type="checkbox"
-                                            id="flexSwitchCheckDefault" data-bs-toggle="collapse"
-                                            data-bs-target="#togglecard1" aria-expanded="false"
-                                            aria-controls="togglecard1">
-                                    </div>
-                                </li>
-                            </ul>
-                            <div class="collapse" id="togglecard1">
-                                <div class="card card-body">
-                                    <h5 class="darkblue mb-3 mt-3">Choose and assignment mode</h5>
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1">
-                                        <div class="ms-2 me-auto silver lh-sm">
-                                            <div class="fw-bold darkblue mb-1">Round robin assignment</div>
-                                            Assign conversation to agents in a circular order.
-                                        </div>
-                                    </div>
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1">
-                                        <div class="ms-2 me-auto silver lh-sm">
-                                            <div class="fw-bold darkblue mb-1">Load balanced assignment ( Powered by
-                                                EnteractRoute
-                                                <sup>TM</sup>)
-                                            </div>
-                                            Distribute and balance the number of tickets assigned to agents in this
-                                            group, based on channels.
-                                            Edit the agent’s capping limit in
-                                            <a href="javascript:">EnteractRoute settings.</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1">
-                                        <div class="ms-2 me-auto silver lh-sm">
-                                            <div class="fw-bold darkblue mb-1">Round robin assignment -
-                                                <a href="javascript:">Manage skills
-                                                </a>
-                                            </div>
-                                            Assign conversation to agents based on their skills.
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <h5 class="mb-3 mt-5 fw-bold darkblue">Agent availability</h5>
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1">
-                                        <div class="ms-2 me-auto silver lh-sm">
-                                            <div class="fw-bold darkblue mb-1">Allow agents to set their own
-                                                availability status</div>
-                                            Agents can set their status according to their activity. Admins and
-                                            supervisors can still override
-                                            an agent’s availability from the dashboard.
-                                        </div>
-                                    </div>
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1">
-                                        <div class="ms-2 me-auto coal lh-sm">
-                                            <div class="fw-bold darkblue mb-1">Centrally manage the agent availabilities
-                                            </div>
-                                            Admins and supervisors will manage the agent’s availability from the
-                                            dashboard.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                       
                         </div>
+                        <footer class="footer">
+                            <div class="ps-3 pe-3">
+                                <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+                                    <div class="row w-100">
+                                        <div class="col-md-4">
+                        
+                        
+                                        </div>
+                                        <div class="col-md-8 justify-content-end d-flex">
+                                            <div class="buttons-wrap d-flex">
+                                                <a type="button" class="btn btn-outline-secondary btn-medium me-2 px-4"
+                                         (click)="routerLink()"
+                                                    data-bs-toggle="modal" data-bs-target="">Cancel </a>
+                                                <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"></button>
+                                                <button type="button" 
+                                                (click)="onSubmit()"
+                                                
+                                                class="btn skyBg ms-2 px-4 btn-medium saveBtn" data-bs-toggle="modal"
+                                                    data-bs-target="">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </footer>
+                    
                     </div>
+
+              
 
                     <div id="team-user" class="tab-pane fade" role="tabpanel" aria-labelledby="team-tab">
                         <div class="filter-toolbar">
@@ -273,17 +314,19 @@
                                                 <button class="iconButton medium">
                                                     <i class="fal fa-search silver"></i>
                                                 </button>
-                                                <input placeholder="Search">
+                                                <input 
+                                                type="text"
+                                                [(ngModel)]="text"
+                                        
+                                                placeholder="Search">
                                             </a>
                                         </li>
                                         <li class="list-inline-item">
                                             <select class="js-example-basic-single form-select"
+                                                   [(ngModel)]="fillter"
                                                 data-select2-id="select2-data-1-wzqv" tabindex="-1" aria-hidden="true">
-                                                <option data-select2-id="select2-data-3-7fv9">All </option>
-                                                <option>Ascending </option>
-                                                <option> Descending</option>
-                                                <option>Roles</option>
-                                                <option>Teams</option>
+                                                <option *ngFor="let team of isSelectedTeamArray">{{team}}</option>
+                                                
                                             </select>
                                             <!-- <span class="select2 select2-container select2-container--default"
                                                 dir="ltr" data-select2-id="select2-data-2-pec0"
@@ -320,88 +363,117 @@
 
 
                         </div>
-                        <div class="filter-container">
-
+                        <div class="filter-container border-0">
                             <ul class="list-group list-group-horizontal border-0">
-
-                                <li class="list-group-item border-0 refreshicon" aria-label="..."
-                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                    data-bs-original-title="Refresh">
+                                <li class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle" aria-label="..."
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Refresh"
+                                    aria-describedby="tooltip946912" (click)="refresh()">
                                     <i class="fal fa-redo"></i>
                                 </li>
-
+                                <li [ngStyle]="{
+                                    'display':showIcon==true ? 'block':'none'
+                                }" 
+                                 class="list-group-item after-select-fun iconHover iconButton medium rounded-circle" 
+                                aria-label="..." 
+                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                >
+                                    <i class="fal fa-trash"></i>
+                                    </li>
                             </ul>
-                            <div class="selected-row" style="display:none;">
-                                Selected <span class="badge skyBg rounded-pill">05<span>
+                         <ng-container *ngIf="allselected">
+                            <div class="selected-row"  >
+                                Selected <span class="badge skyBg rounded-pill">{{selectedIds.length}}<span>
                                     </span></span></div>
+                         </ng-container>
                             <div class="pagination-bar">
-                                <span>1-100 of 569</span>
-                                <span>
+                                <div class="dropdown">
+                                    <button class="btn iconHover" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        1-100 of 569
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li><a class="dropdown-item">Newest</a></li>
+                                        <li><a class="dropdown-item"  > Oldest</a></li>
+                                    </ul>
+                                </div>
+                                <span class="iconButton medium iconHover">
                                     <i class="fal fa-chevron-left"></i>
                                 </span>
-                                <span>
+                                <span class="iconButton medium iconHover">
                                     <i class="fal fa-chevron-right"></i>
                                 </span>
                             </div>
                         </div>
                         <div class="table-section table-scrool-y mb-3 query-container table-white">
+                            <ng-container *ngIf="allselected">
+                                <div class="alert alert-secondary text-center email-info-alert p-2" role="alert" style="display: block;">
+                                    All <strong>{{selectedIds.length}}</strong> conversations on this page are selected.
+                    
+                                    <a  class="clear-selection" style="color: blue;" (click)="refresh()">Clear selection</a>
+                                    </div>
+                            </ng-container>
+                       
+                        <div class="table-section table-scrool-y mb-3 query-container table-white">
                             <table class="table mb-5 align-middle">
                                 <thead>
                                     <tr>
                                         <th>
-                                            <div class="filter-container checkbox-reset">
-                                                <ul class="list-group list-group-horizontal border-0">
-                                                    <li class="list-group-item border-0 all-check-boxes">
-                                                        <input class="form-check-input me-1" type="checkbox"
-                                                            aria-label="..." data-bs-toggle="tooltip"
-                                                            data-bs-placement="bottom"
-                                                            data-bs-original-title="Check All"
-                                                            aria-describedby="tooltip6548">
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                            <ul class="list-group list-group-horizontal border-0">
+                                                <li class="list-group-item border-0 all-check-boxes">
+                                                    <input class="form-check-input me-1" type="checkbox" aria-label="..."
+                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                        data-bs-original-title="Check All"
+                                                         [checked]="isChecked" 
+                                                         (click)="selectedunselectedAll()" >
+                                                </li>
+                                            </ul>
                                         </th>
                                         <th>
                                             Users
                                         </th>
                                         <th>
-                                            <a href="javascript:" class="darkblue hover-icon">
+                                            <a href="javascript:" class="darkblue hover-icon"  (click)="sortedBy('role')"
+                                 >
                                                 Roles
-                                                <i class="fas fa-long-arrow-alt-down"></i>
+                                                <i class="fas fa-long-arrow-alt-down" ></i>
                                             </a>
                                         </th>
                                         <th>
-                                            <a href="javascript:" class="darkblue hover-icon">
+                                            <a href="javascript:" class="darkblue hover-icon" style="cursor: pointer;" >
                                                 Other Teams
-                                                <i class="fas fa-long-arrow-alt-down"></i>
+                                                <i class="fas fa-long-arrow-alt-down" (click)="sortedBy('team')"
+                                                 ></i>
                                             </a>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <input class="form-check-input me-1" type="checkbox" aria-label="...">
-                                        </td>
+                                    <tr *ngFor="let  user of teamMembersList">
+                                        <td><input class="form-check-input "
+                                            [checked]="isSelected(user.id)"
+                                            (click)="toggleselection(user.id)"
+
+                                             type="checkbox" aria-label="..."></td>
+                                            
                                         <td>
                                             <a href="javascript:">
                                                 <ul class="list-group list-group-flush">
                                                     <li
                                                         class="list-group-item d-flex justify-content-between align-items-center p-0">
                                                         <span class="iconButton large">
-                                                            <img src="../../../../../../assets/images/avatar-16.jpg"
+                                                            <img [src]="user.imageURI"
                                                                 alt="-" class="rounded-circle w-100">
                                                         </span>
                                                         <div class="ms-2 me-auto coal">
-                                                            <div class="fw-bold night">Ahmed Khan</div>
-                                                            EMP-1254894
+                                                            <div class="fw-bold night">{{user.name}}</div>
+                                                            EMP-{{user.EMPid}}
                                                         </div>
                                                     </li>
                                                 </ul>
                                             </a>
                                         </td>
                                         <td>
-                                            <p class="d-inline-block">Agent, Admin</p>
+                                            <p class="d-inline-block">{{user.role}}</p>
                                             <div class="d-inline-block dropdown w-auto">
                                                 <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
                                                     id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -415,7 +487,7 @@
                                                     </li>
                                                     <li>
                                                         <a class="dropdown-item" href="#">
-                                                            Admin</a>
+                                                            ali ahdidr</a>
                                                     </li>
                                                     <li>
                                                         <a class="dropdown-item" href="#">Accounts</a>
@@ -439,132 +511,9 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <p>Support,Sales
+                                            <p>
+                                                {{user.team}}
                                             </p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="form-check-input me-1" type="checkbox" aria-label="...">
-                                        </td>
-                                        <td>
-                                            <a href="javascript:">
-                                                <ul class="list-group list-group-flush">
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center p-0">
-                                                        <span class="iconButton large">
-                                                            <img src="../../../../../../assets/images/avatar-2.jpg"
-                                                                alt="-" class="rounded-circle w-100">
-                                                        </span>
-                                                        <div class="ms-2 me-auto coal">
-                                                            <div class="fw-bold night">Nabeel Naseem</div>
-                                                            EMP-895894
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <p class="d-inline-block">Agent, Subscriber</p>
-                                            <div class="d-inline-block dropdown w-auto">
-                                                <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
-                                                    id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <span class="silver">+2</span>
-                                                </button>
-                                                <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">
-                                                            <span>Agent</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">Subscriber</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">Accounts</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">Contributor</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="d-inline-block">Support, Marketing
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input class="form-check-input me-1" type="checkbox" aria-label="...">
-                                        </td>
-                                        <td>
-                                            <a href="javascript:">
-                                                <ul class="list-group list-group-flush">
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center p-0">
-                                                        <span class="iconButton large">
-                                                            <img src="../../../../../../assets/images/avatar-3.jpg"
-                                                                alt="-" class="rounded-circle w-100">
-                                                        </span>
-                                                        <div class="ms-2 me-auto coal">
-                                                            <div class="fw-bold night">Ijteba Sultan</div>
-                                                            EMP-59894
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <p class="d-inline-block">Agent, Accounts</p>
-                                            <div class="d-inline-block dropdown w-auto">
-                                                <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
-                                                    id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <span class="silver">+2</span>
-                                                </button>
-                                                <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">
-                                                            <span>Agent</span>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">Accounts</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">Subscriber</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">Admin</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="d-inline-block">Support,Sales
-                                            </p>
-                                            <div class="d-inline-block dropdown w-auto">
-                                                <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
-                                                    id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <span class="silver">+2</span>
-                                                </button>
-                                                <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2">
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">
-                                                            Support
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">Sales</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">Marketing</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="#">Technical Support</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -584,7 +533,7 @@
             style="height: 179.594px; transform: translate3d(0px, 0px, 0px);"></div>
     </div> -->
 </div>
-<footer class="footer">
+<!-- <footer class="footer">
     <div class="ps-3 pe-3">
         <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
             <div class="row w-100">
@@ -597,14 +546,14 @@
                         <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4"
                             data-bs-toggle="modal" data-bs-target="">Cancel </button>
                         <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"></button>
-                        <button type="button" class="btn skyBg ms-2 px-4 btn-medium saveBtn" data-bs-toggle="modal"
+                        <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn" data-bs-toggle="modal"
                             data-bs-target="">Next</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</footer>
+</footer> -->
 
 <div [class.show]="isActive==true" class="offcanvas offcanvas-end" tabindex="-1" id="addteammembers"
     aria-labelledby="offcanvasRightLabel" style="visibility: visible;" aria-hidden="true">

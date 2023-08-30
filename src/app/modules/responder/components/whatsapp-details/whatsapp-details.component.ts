@@ -11,6 +11,7 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -95,6 +96,8 @@ export class WhatsappDetailsComponent implements OnInit {
   public Subscription!: Subscription;
   public criteria!: SortCriteria;
 
+  flag:string='';
+
   constructor(
     private fetchId: FetchIdService,
     private SpinnerService: NgxSpinnerService,
@@ -110,7 +113,8 @@ export class WhatsappDetailsComponent implements OnInit {
     private ticketResponseService: TicketResponseService,
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService: GetQueryTypeService,
-    private unrespondedCountService : UnRespondedCountService
+    private unrespondedCountService : UnRespondedCountService,
+    private router : Router
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -119,6 +123,7 @@ export class WhatsappDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.flag = this.router.url.split('/')[2];
     this.criteria = {
       property: 'createdDate',
       descending: true,
@@ -172,11 +177,12 @@ export class WhatsappDetailsComponent implements OnInit {
       this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        
+        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
         if (res.contentCount.contentType == 'WM') {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
         }
+      }
       });
   }
 

@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AnalyticsComponent } from './analytics.component';
-import { ReportDbSettingsComponent } from './components/report-db-settings/report-db-settings.component';
-import { ReportBuilderComponent } from './components/report-builder/report-builder.component';
 
 
 const routes: Routes = [
@@ -19,13 +17,18 @@ const routes: Routes = [
     path: '',
     component: AnalyticsComponent,
     children: [{
-      path:'report-builder',
-      loadComponent: () => import('./components/report-builder/report-builder.component').then(c => c.ReportBuilderComponent),
+      path:'report-designer',
+      loadComponent: () => import('./components/report-designer/report-designer.component').then(c => c.ReportDesignerComponent),
 
     },
     {
       path:'reports',
       loadComponent: () => import('./components/reportlisting/reportlisting.component').then(c => c.ReportlistingComponent),
+
+    },
+    {
+      path:'dashbaord-designer',
+      loadComponent: () => import('./components/dashboard-designer/dashboard-designer.component').then(c => c.DashboardDesignerComponent),
 
     },
     {

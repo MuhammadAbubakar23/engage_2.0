@@ -1,28 +1,22 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { ShareddataService } from '../../services/shareddata.service';
-import { ReportService } from '../../services/report.service';
-import {
-  ChartConfiguration,
-  ChartData,
-  ChartDataset,
-  ChartType,
-} from 'chart.js';
-import { ExcelService } from '../../services/excel.service';
-import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { CommonModule } from '@angular/common';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { LayoutsModule } from 'src/app/layouts/layouts.module';
-import { ToastrComponent } from '../toastr/toastr.component';
+import { ChartConfiguration, ChartData, ChartType, ChartDataset } from 'chart.js';
+import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { SharedService } from 'src/app/services/SharedService/shared.service';
-import { RightNavService } from 'src/app/services/RightNavService/RightNav.service';
+import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
+import { HeaderService } from 'src/app/shared/services/header.service';
+import { ExcelService } from '../../services/excel.service';
+import { ReportService } from '../../services/report.service';
+import { ShareddataService } from '../../services/shareddata.service';
 import { ActionsComponent } from '../actions/actions.component';
+import { ToastrComponent } from '../toastr/toastr.component';
 
 @Component({
-  selector: 'app-report-builder',
+  selector: 'app-report-designer',
+
   standalone: true,
   imports: [
     CommonModule,
@@ -32,10 +26,10 @@ import { ActionsComponent } from '../actions/actions.component';
     NgChartsModule,
     ToastrComponent,
   ],
-  templateUrl: './report-builder.component.html',
-  styleUrls: ['./report-builder.component.scss'],
+  templateUrl: './report-designer.component.html',
+  styleUrls: ['./report-designer.component.scss']
 })
-export class ReportBuilderComponent implements OnInit {
+export class ReportDesignerComponent implements OnInit {
   showPanel = false;
   databases: string[] = [];
   dbsettings: any[] = [];
@@ -44,6 +38,7 @@ export class ReportBuilderComponent implements OnInit {
   dbName: any = 'All DataBases';
   tableName: any = 'All Tables';
   tableData: any = [];
+  paginatedData: any = [];
   dataKeys: { [key: string]: any } = {};
   columns = {};
   filterConditions: string[] = [];
@@ -61,6 +56,12 @@ export class ReportBuilderComponent implements OnInit {
   labels: any[] = [];
   values: any[] = [];
   collective: any[] = [];
+  page = 1;
+  pageSize = 5;
+  totalCount: number = 0;
+  startPage: number = 0;
+  endPage: number = this.pageSize;
+
 
   isGraph: boolean = false;
   Labels = [];
@@ -124,6 +125,7 @@ export class ReportBuilderComponent implements OnInit {
   finalGraphresponse = [];
   finalGrapData: any = {};
   finalTableData: any[] = [];
+  isPaginated: boolean = false;
   exportAsXLSX(): void {
     this.excelService.exportAsExcelFile(this.tableData, 'sample');
   }
@@ -131,13 +133,12 @@ export class ReportBuilderComponent implements OnInit {
     private sharedataservice: ShareddataService,
     private reportservice: ReportService,
     private excelService: ExcelService,
-    
+
     private resolver: ComponentFactoryResolver,
-    private route: ActivatedRoute,
-    private sharedService: SharedService,
-    private rightNavService: RightNavService,
-    private toggleService: ToggleService
-  ) {}
+    private toggleService: ToggleService,
+
+    private _hS: HeaderService
+  ) { }
   ngOnInit(): void {
     this.reportservice.login().subscribe((token: any) => {
       localStorage.setItem('token', token.access);
@@ -145,7 +146,8 @@ export class ReportBuilderComponent implements OnInit {
         this.dbsettings = res;
       });
     });
-
+    const newObj = { title: 'Report Designer', url: '/analytics/report-builder' };
+    this._hS.setHeader(newObj);
     this.sharedataservice.query$.subscribe((res: any) => {
       this.query = res;
     });
@@ -156,7 +158,10 @@ export class ReportBuilderComponent implements OnInit {
     });
 
     this.sharedataservice.data$.subscribe((newData: any) => {
-      this.isGraph = true;
+      console.log("newData", newData);
+      if (newData !== "Initial Data") {
+        this.isGraph = true;
+      }
 
       this.sharedataservice.updateQuery(newData.query);
       this.visualizeData();
@@ -174,6 +179,7 @@ export class ReportBuilderComponent implements OnInit {
         this.dataKeys = newData.columnswithdtypes;
       } else {
         this.isStats = true;
+
         this.statsdataKeys = Object.keys(newData.table);
         this.tableData = this.transformDataObject(newData.table);
 
@@ -205,7 +211,8 @@ export class ReportBuilderComponent implements OnInit {
       }
     });
     this.sharedataservice.getrRfreshEvent().subscribe((data) => {
-      this.refreshData();
+      this.refreshkeys();
+      this.refreshLabels();
     });
 
     this.subscription = this.toggleService
@@ -299,7 +306,8 @@ export class ReportBuilderComponent implements OnInit {
     localStorage.setItem('connection_name', this.DBC);
     this.reportservice.getConnectiondatabases(this.DBC).subscribe(
       (res) => {
-        this.toastermessage = 'Connection SuccessFull!';
+        // Success case
+        this.toastermessage = 'Connection Successful!';
         this.isToaster = true;
         setTimeout(() => {
           this.isToaster = false;
@@ -307,16 +315,28 @@ export class ReportBuilderComponent implements OnInit {
         this.databases = res;
       },
       (error: any) => {
+        // Error case
         console.log(error);
-        let errorMessage = error;
+        let errorMessage = 'An error occurred. Please try again later.';
 
-        this.toastermessage = `${errorMessage}`;
+        try {
+          const errorObj = JSON.parse(error.error);
+          if (errorObj && errorObj.error) {
+            errorMessage = errorObj.error;
+          }
+        } catch (parseError) {
+          console.error('Error parsing error response:', parseError);
+        }
+
+        this.toastermessage = errorMessage;
         this.isToaster = true;
         setTimeout(() => {
           this.isToaster = false;
         }, 4000);
       }
     );
+
+
   }
 
   transformDataObject(dataObject: any): any[] {
@@ -355,6 +375,8 @@ export class ReportBuilderComponent implements OnInit {
           this.isGraph = true;
           this.isStats = false;
           this.tableData = this.transformDataObject(res.table);
+          console.log("Res===>", res);
+          this.totalCount = res.total_count;
           this.finalTableData = this.tableData;
 
           if (this.tableData.length === 0) {
@@ -367,13 +389,47 @@ export class ReportBuilderComponent implements OnInit {
           this.dataKeys = res.columnswithdtypes;
           this.isTabular = true;
           this.isVisual = false;
-
           this.sharedataservice.updateQuery(res.query);
           localStorage.setItem('query', res.query);
         });
     }
   }
 
+  incrementPage() {
+    if (this.endPage + this.pageSize <= this.totalCount) {
+      this.startPage += this.pageSize;
+      this.endPage += this.pageSize;
+      this.page += 1,
+        console.log('incrementPage', this.startPage, this.endPage);
+      this.paginationApi()
+    }
+  }
+
+  decrementPage() {
+    if (this.startPage >= this.pageSize) {
+      this.startPage -= this.pageSize;
+      this.endPage -= this.pageSize;
+      this.page -= 1,
+        console.log('decrementPage', this.startPage, this.endPage);
+      this.paginationApi()
+    }
+  }
+  paginationApi() {
+    debugger
+    this.reportservice
+      .paginatedDataApi({
+        db: this.dbName,
+        query: this.query,
+        connection_name: this.DBC,
+        page: this.page,
+        page_size: this.pageSize
+      })
+      .subscribe((res: any) => {
+        this.paginatedData = res.table;
+        this.isPaginated = true;
+        this.tableData = this.transformDataObject(res.table);
+      });
+  }
   handleFilters(columntype: any, columnname: any): void {
     this.selectedFilterColumn = columnname;
     if (columntype === 'i' || columntype === 'f') {
@@ -560,7 +616,6 @@ export class ReportBuilderComponent implements OnInit {
       this.isLine = false;
       this.isPolar = false;
       this.isRadar = true;
-
       const labels4: string[] = this.barChartData.datasets.map(
         (dataset: any) => dataset.label
       );
@@ -644,10 +699,20 @@ export class ReportBuilderComponent implements OnInit {
     this.tableData = filteredArray;
   }
 
-  refreshData() {
-    this.selectedColumns = [];
+  refreshkeys() {
+    if (this.isPaginated) {
+      this.selectedColumns = [];
+      this.tableData = this.transformDataObject(this.paginatedData);
+    }
+    else {
+      this.selectedColumns = [];
+      this.tableData = this.finalTableData;
+    }
+
+
+  }
+  refreshLabels() {
     this.selectedLabels = [];
-    this.selectTable();
     this.visualizeData();
     this.selectGraph();
   }

@@ -36,6 +36,7 @@ import { UpdateMessagesService } from 'src/app/services/UpdateMessagesService/up
 import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
 import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-instagram',
@@ -113,6 +114,8 @@ export class InstagramComponent implements OnInit {
   groupArrays: any[] = [];
   public criteria!: SortCriteria;
 
+  flag:string='';
+
   constructor(
     private fetchId: FetchIdService,
     private toggleService: ToggleService,
@@ -129,7 +132,8 @@ export class InstagramComponent implements OnInit {
     private updateMessagesService: UpdateMessagesService,
     private ticketResponseService: TicketResponseService,
     private applySentimentService: ApplySentimentService,
-    private getQueryTypeService: GetQueryTypeService
+    private getQueryTypeService: GetQueryTypeService,
+    private router : Router
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -138,6 +142,7 @@ export class InstagramComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.flag = this.router.url.split('/')[2];
     this.criteria = {
       property: 'createdDate',
       descending: true,
@@ -182,6 +187,7 @@ export class InstagramComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
+        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
         // this.totalUnrespondedCmntCountByCustomer = res.contentCount.unrespondedCount;
         if (res.contentCount.contentType == 'IC') {
           this.totalUnrespondedCmntCountByCustomer =
@@ -191,6 +197,7 @@ export class InstagramComponent implements OnInit {
           this.totalUnrespondedMsgCountByCustomer =
             res.contentCount.unrespondedCount;
         }
+      }
       });
     this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
@@ -1031,7 +1038,9 @@ export class InstagramComponent implements OnInit {
                     singleCmnt.tags.splice(index, 1);
                   }
                 } else {
-                  singleCmnt.tags.push(this.addTags);
+                  if(!(singleCmnt.tags.includes(this.addTags))){
+                    singleCmnt.tags.push(this.addTags);
+                  }
                 }
               }
             }

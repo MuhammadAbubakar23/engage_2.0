@@ -140,6 +140,12 @@ export class SignalRService {
     });
   };
 
+  public updateMessageStatusDataListener = () => {
+    this.hubconnection?.on('UpdateMessageStatus', (queryStatus) => {
+      this.queryStatusService.sendQueryStatus(queryStatus);
+    });
+  };
+
   public bulkQueryStatusDataListener = () => {
     this.hubconnection?.on('ListQueryStatusProcess', (queryStatus) => {
       this.queryStatusService.bulkSendQueryStatus(queryStatus);

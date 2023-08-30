@@ -1,0 +1,19 @@
+/* Base styles for larger screens */
+.filter-panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+.filter-buttons {
+    min-width: 200px;
+    width: auto;
+    margin: 10px;
+  }
+
+  .analytics-pagination-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%; /* Ensure the div takes the full width */
+  }

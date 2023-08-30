@@ -167,6 +167,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
+        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
         if (Object.keys(res).length > 0) {
         res.forEach((msg: any) => {
           if (msg.userId == localStorage.getItem('storeHeaderOpenedId')) {
@@ -209,11 +210,13 @@ export class ResponderHeaderComponent implements OnInit {
           }
         });
    }
+  }
    });
 
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
+        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
         if (Object.keys(res).length > 0) {
         if (res.contentCount.contentType == 'FC') {
           this.totalFbUnrespondedCountByCustomer =
@@ -274,7 +277,9 @@ export class ResponderHeaderComponent implements OnInit {
             res.contentCount.unrespondedCount;
         }
    }
+  }
    });
+   
   }
 
   param: any;

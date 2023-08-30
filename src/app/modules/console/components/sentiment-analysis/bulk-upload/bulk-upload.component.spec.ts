@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReportBuilderComponent } from './report-builder.component';
+import { BulkUploadComponent } from './bulk-upload.component';
 
-describe('ReportBuilderComponent', () => {
-  let component: ReportBuilderComponent;
-  let fixture: ComponentFixture<ReportBuilderComponent>;
+describe('BulkUploadComponent', () => {
+  let component: BulkUploadComponent;
+  let fixture: ComponentFixture<BulkUploadComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ReportBuilderComponent ]
+      declarations: [ BulkUploadComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ReportBuilderComponent);
+    fixture = TestBed.createComponent(BulkUploadComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

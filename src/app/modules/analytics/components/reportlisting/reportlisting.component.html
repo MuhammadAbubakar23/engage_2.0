@@ -1,92 +1,78 @@
 <div class="w-auto chat-message-component w-100 inbox-container">
   <div class="d-flex main-body-wrapper">
-      <div class="agent-page-main-content">
-        <div class="fluid-container mt-5">
-          <div style="margin-top: 10px">
-            <div
-              class="tab-pane fade show active"
-              id="agent-stats"
-              role="tabpanel"
-              aria-labelledby="agent-stats-tab">
-              <div class="row" cdkDropListGroup>
-                <div class="col-sm-2">
-                  <div class="table-section">
-                    <div style="overflow: auto; max-height: 600px">
-                      <table
-                        class="table align-middle agent-stats-table mt-0 w-100 mb-4">
-                        <thead>
-                          <tr>
-                            <th *ngFor="let column of columns">{{ column }}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let report of reports">
-                            <td class="question-cell" style="width: 400px">
-                              <div
-                                cdkDropList
-                                class="example-list"
-                                (cdkDropListDropped)="drop()"
-                              >
-                                <div
-                                  class="example-box"
-                                  cdkDrag
-                                  (cdkDragStarted)="onDragStarted(report)"
-                                >
-                                  {{ report.name }}
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+    <div class="agent-page-main-content">
+      <div class="filter-toolbar p-0 border-0 collapse show" id="filter-bar">
+        <div class="filter-panel">
+          <!-- <p style="display: contents;"><b>Report Name: </b></p> -->
+          <ng-select class="filter-buttons" [(ngModel)]="reportName" (change)="getReportData()">
+            <ng-option style="width: 250px; margin-right: 10px; background-color: red;" *ngFor="let report of reports"
+              [value]="report.name">{{report.name}}</ng-option>
+          </ng-select>
+          <div class="analytics-pagination-bar">
+            <div class="">
+                <button class="btn iconHover" type="button" id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    1-100 of 569
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">Newest</a></li>
+                    <li><a class="dropdown-item" href="#"> Oldest</a></li>
+                </ul>
+            </div>
+            <span class="iconButton medium iconHover">
+                <i class="fal fa-chevron-left"></i>
+            </span>
+            <span class="iconButton medium iconHover">
+                <i class="fal fa-chevron-right"></i>
+            </span>
+        </div>
+        </div>
+      </div>
+      <div class="agent-skill-stats pb-3">
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="agent-stats" role="tabpanel" aria-labelledby="agent-stats-tab">
+
+            <div class="query-container perfect-scrollbar" data-scrollbar="true" tabindex="-1"
+              style="overflow: auto; outline: none;">
+              <div class="scroll-content" style="width: 45vh">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th *ngFor="let key of dataKeys">{{ key }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="region-row" *ngFor="let row of tableData">
+                      <td *ngFor="let key of dataKeys">
+                        <div class="d-flex align-items-center darkblue">{{ row[key] }}</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="footer" *ngIf="tableData.length > 0">
+          <div class="ps-3 pe-3">
+            <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+              <div class="row w-100">
+                <div class="col-md-4">
+                  <div class="f-icon-txt-wrapper d-flex align-items-center">
                   </div>
                 </div>
-                <div class="col-sm-10">
-                  <div class="card" style="overflow: auto; height: 500px">
-                    <div class="card-body d-flex flex-wrap justify-content-center align-items-start">
-
-                      <ng-container *ngFor="let chartData of chartDataArray; let i = index">
-                        <div class="example-box m-2" style="display: flex; flex-direction: column; align-items: center;">
-
-                          <!-- ng-select -->
-                          <ng-select style="width: 250px; margin-bottom: 10px;" [(ngModel)]="chartData.type" (change)="selectGraph(i, chartData.type)">
-                            <ng-option *ngFor="let graph of graphTypes[0] | keyvalue" [value]="graph.value">{{ graph.key }}</ng-option>
-                          </ng-select>
-
-                          <!-- Canvas -->
-                          <canvas
-                            baseChart
-                            [data]="chartData.data"
-                            [options]="ChartOptions"
-                            [plugins]="ChartPlugins"
-                            [legend]="ChartLegend"
-                            [type]="chartData.type"
-
-                            style="width: 350px; height: 400px; margin-bottom: 10px;"
-                          ></canvas>
-
-                          <!-- Trash Icon -->
-                          <i class="fal fa-trash" (click)="removeGraph(i)"></i>
-
-                        </div>
-                      </ng-container>
-
-                    </div>
+                <div class="col-md-8 justify-content-end d-flex">
+                  <div class="buttons-wrap d-flex">
+                    <button type="button" class="btn skyBg ms-2  px-4 btn-medium saveBtn" data-bs-target=""
+                      (click)="exportAsXLSX()">Download</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </footer>
       </div>
-      <!-- <div class="rightbar-expanded-wrapper">
-          <template #rightcontainer></template>
-      </div> -->
+
+    </div>
   </div>
-  <!-- <analytics-right-sidebar-menu></analytics-right-sidebar-menu> -->
 </div>
-
-
-
-

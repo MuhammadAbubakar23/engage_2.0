@@ -1,6 +1,21 @@
+<!-- <div class="business-detail-wrap">
+  <div class="business-detail-wrap">
+    <div class="floating-item mb-3">
+      <div class="form-floating">
+        <input
+        id="floatingInputDatabase"
+        placeholder="intentName"
+        class="form-control" type="text"  formControlName="intentName"
+      />
+        <label for="floatingInputValue">intentName</label>
+      </div>
+    </div>
+  </div>
+</div> -->
 <div class="container">
-  <div class="d-flex justify-content-center">
-    <div class="col-lg-6">
+  <div class="d-flex justify-content-center" style="max-height: 650px;overflow-y: auto;">
+
+    <div class="col-lg-6" >
       <form  [formGroup]="stepTwoForm"
       (ngSubmit)="stepTwoSubmit()"
       autocomplete="off"
@@ -10,17 +25,29 @@
           <div class="row" *ngFor="let question of questions.controls; let i = index;" [formGroupName]="i">
 
             <div class="col-sm-10" style="position: relative; margin-top:10px">
+              <div class="business-detail-wrap">
+                <div class="business-detail-wrap">
+                  <div class="floating-item mb-3">
+                    <div class="form-floating">
+                      <input
+                      id="floatingInputDatabase"
+                      placeholder="intentName"
+                      class="form-control" type="text"  formControlName="questionText"
+                    />
+                      <label for="floatingInputValue">Question</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-              <input class="form-control" type="text" style="height: 60px; padding-top: 20px;" formControlName="questionText"/>
-              <label for="threshold" style="position: absolute; top: 2px; left: 15px; color: #999; pointer-events: none;">Question </label>
             </div>
 
-            <div *ngIf="i===0;else removebutton" class="col-sm-2 mt-1 pt-2">
+            <div *ngIf="i===0;else removebutton" class="col-sm-2 mb-2">
               <button class="btn btn-primary" (click)="addQuestion()">+</button>
             </div>
             <ng-template #removebutton>
-            <div class="col-sm-2 mt-1 pt-2">
-              <button class="btn btn-primary px-3" (click)="removeQuestion(i)">-</button>
+            <div class="col-sm-2 pt-2">
+              <button class="btn btn-primary px-3 mb-2" (click)="removeQuestion(i)">-</button>
             </div>
           </ng-template>
           </div>

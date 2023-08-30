@@ -39,7 +39,6 @@ export class LoginComponent implements OnInit {
     this.spinnerService.show();
     this.authService.login(this.loginForm.value).subscribe(
       (res: any) => {
-        debugger;
         this.stor.store('token', res.accessToken);
         this.stor.store('main', res);
         this.stor.store('nocompass', res.roles[0]);
@@ -62,6 +61,7 @@ export class LoginComponent implements OnInit {
         this.signalRService.checkConnectionStatusListener();
         this.signalRService.assignQueryResponseListner();
         this.signalRService.applySentimentListner();
+        this.signalRService.updateMessageStatusDataListener();
       },
       (error: any) => {
         this.spinnerService.hide();
