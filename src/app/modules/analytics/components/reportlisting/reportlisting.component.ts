@@ -72,7 +72,6 @@ export class ReportlistingComponent implements OnInit, AfterViewInit{
   }
   reportName:any = 'Please select Report';
   getReportData() {
-debugger
     // console.log("getReportData", reportName)
     // this.reports.forEach((report: any) => {
     //   if (report.name === reportName) {
@@ -94,7 +93,6 @@ debugger
   }
 
   applyFilter(event: Event) {
-    debugger
     const filterValue = (event.target as HTMLInputElement).value;
     this.tableData.filter = filterValue.trim().toLowerCase();
 

@@ -123,7 +123,6 @@ sortedBy(data:string){
  })
 }
 deleted(id:number){
-  debugger
 console.log("This.delted ====>",id)
 this.userDetails= this.userDetails.filter((x)=>x.id!==id)
 this.toastermessage=true
@@ -133,10 +132,7 @@ setTimeout(() => {
 }
 checkout:any=''
 getByDepartment(event:any){
-  debugger
   this.fillter=event.target.value
-
-
 }
 getbySearch(){
   if(this.search.length>=2){

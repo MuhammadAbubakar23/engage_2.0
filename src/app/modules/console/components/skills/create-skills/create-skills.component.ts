@@ -66,7 +66,6 @@ sortDir=1
   }
 
   onSubmit(){
-    debugger
     let data={
       "name":this.userForm.value,
       "assignment":this.assignment,
@@ -196,7 +195,6 @@ this.isDescendingOrder=!this.isDescendingOrder
             return this.isDescendingOrder ? 1 : -1;
         }
         if (a[data] > b[data]) {
-          debugger
             return this.isDescendingOrder ? -1 : 1;
         }
         return 0;
@@ -205,7 +203,6 @@ this.isDescendingOrder=!this.isDescendingOrder
 
 
 routerLink(){
-  debugger
 this.router.navigateByUrl('/console/skills')
 }
 
