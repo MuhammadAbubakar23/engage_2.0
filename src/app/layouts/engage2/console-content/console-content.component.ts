@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {  Component, OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'console-content',
@@ -8,11 +9,19 @@ import { Component, OnInit } from '@angular/core';
 export class ConsoleContentComponent implements OnInit {
 
   toggleLeftBar:boolean = true
-  constructor() { }
+  
+  constructor(
+
+  ) { }
 
   ngOnInit(): void {
+   
   }
-  toggle() {
+ 
+  toggleSubLeftBar() {
+
+  
     this.toggleLeftBar = !this.toggleLeftBar;
+   
   }
 }

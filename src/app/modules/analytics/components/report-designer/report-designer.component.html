@@ -1,118 +1,55 @@
-<div
-  class="w-auto chat-message-component w-100 inbox-container"
-  [ngClass]="showPanel ? 'panelToggled' : ''"
->
-  <div class="d-flex main-body-wrapper">
-    <div class="agent-page-main-content">
-      <app-toastr
-        [toasterMsg]="toastermessage"
-        [isToaster]="isToaster"
-      ></app-toastr>
-      <div class="filter-toolbar p-0 border-0 collapse show" id="filter-bar">
-        <div class="filter-panel">
-          <div class="coal fw-bold me-4">
-            <i class="fas fa-filter me-1"></i> Filters
-          </div>
-          <ng-select
-            class="filter-buttons"
-            [(ngModel)]="DBC"
-            (change)="selectConnection()"
-            [clearable]="false"
-          >
-            <ng-option
-              style="width: 250px; margin-right: 10px; background-color: red"
-              *ngFor="let db of dbsettings"
-              [value]="db.connection_name"
-              >{{ db.connection_name }}</ng-option
-            >
-          </ng-select>
-          <ng-select
-            class="filter-buttons"
-            [(ngModel)]="dbName"
-            (change)="selectDataBase()"
-            [clearable]="false"
-          >
-            <ng-option *ngFor="let database of databases" [value]="database">{{
-              database
-            }}</ng-option>
-          </ng-select>
-          <div class="filter-buttons">
-            <ng-select
-              style="width: 200px"
-              [(ngModel)]="tableName"
-              (change)="selectTable()"
-              [clearable]="false"
-            >
-              <ng-option *ngFor="let table of tables" [value]="table">{{
-                table
-              }}</ng-option>
-            </ng-select>
-          </div>
-          <div class="filter-buttons" *ngIf="tableData.length > 0 && isVisual">
-            <ng-select
-              style="width: 250px; margin-right: 10px"
-              [(ngModel)]="selectedLabels"
-              (change)="selectLabel()"
-              [placeholder]="selectedLabels.length === 0 ? 'Filter By' : ''"
-              [multiple]="true"
-              [clearable]="false"
-            >
-              <ng-option *ngFor="let column of graphLabels" [value]="column">{{
-                column
-              }}</ng-option>
-            </ng-select>
-          </div>
-          <div class="filter-buttons" *ngIf="isTabular">
-            <ng-select
-              style="width: 250px; margin-right: 10px"
-              [(ngModel)]="selectedColumns"
-              (change)="selectColumn()"
-              [placeholder]="selectedColumns.length === 0 ? 'Filter By' : ''"
-              [multiple]="true"
-              [clearable]="false"
-            >
-              <ng-option
-                *ngFor="let column of dataKeys | keyvalue"
-                [value]="column.key"
-                >{{ column.key }}</ng-option
-              >
-            </ng-select>
-          </div>
-          <div style="margin-right: 6px" *ngIf="tableData.length > 0">
-            <ng-select
-              class="filter-buttons"
-              [(ngModel)]="pageSize"
-              (change)="limitData()"
-              [clearable]="false"
-            >
-              <ng-option *ngFor="let size of pageSizes" [value]="size">{{
-                size
-              }}</ng-option>
-            </ng-select>
-          </div>
-          <div class="filter-buttons" *ngIf="tableData.length > 0">
-            <div class="row">
-              <div class="col-sm-6">
-                <ng-select [(ngModel)]="columnName" style="width: 150px"  [clearable]="false">
-                  <ng-option
-                    *ngFor="let column of dataKeys | keyvalue"
-                    [value]="column.key"
-                    >{{ column.key }}</ng-option
-                  >
-                </ng-select>
-              </div>
-              <div class="col-sm-6">
-                <ng-select
-                  [(ngModel)]="order"
-                  style="width: 120px"
-                  (change)="sortData()"
-                  [clearable]="false"
-                >
-                  <ng-option *ngFor="let orderby of orders" [value]="orderby">{{
-                    orderby
-                  }}</ng-option>
-                </ng-select>
-              </div>
+<div class="w-auto chat-message-component w-100 inbox-container" [ngClass]="showPanel ? 'panelToggled' : ''">
+    <div class="d-flex main-body-wrapper">
+        <div class="agent-page-main-content">
+            <app-toastr [toasterMsg]="toastermessage" [isToaster]="isToaster"></app-toastr>
+            <div class="filter-toolbar p-0 border-0 collapse show" id="filter-bar">
+                <div class="filter-panel">
+                    <div class="coal fw-bold me-4">
+                        <i class="fas fa-filter me-1"></i> Filters
+                    </div>
+                    <ng-select class="filter-buttons" [(ngModel)]="DBC" (change)="selectConnection()">
+                        <ng-option style="width: 250px; margin-right: 10px; background-color: red;"
+                            *ngFor="let db of dbsettings"
+                            [value]="db.connection_name">{{db.connection_name}}</ng-option>
+                    </ng-select>
+                    <ng-select class="filter-buttons" [(ngModel)]="dbName" (change)="selectDataBase()">
+                        <ng-option *ngFor="let database of databases" [value]="database">{{database}}</ng-option>
+                    </ng-select>
+                    <div class="filter-buttons">
+                        <ng-select style="width: 200px" [(ngModel)]="tableName" (change)="selectTable()">
+                            <ng-option *ngFor="let table of tables" [value]="table">{{ table
+                                }}</ng-option>
+                        </ng-select>
+                    </div>
+                    <div class="filter-buttons" *ngIf="isVisual">
+                        <ng-select style="width: 250px; margin-right: 10px" [(ngModel)]="selectedLabels"
+                            (change)="selectLabel()" [placeholder]="selectedLabels.length === 0 ? 'Select Column' : ''"
+                            [multiple]="true">
+                            <ng-option *ngFor="let column of graphLabels" [value]="column">{{column}}</ng-option>
+                        </ng-select>
+                    </div>
+                    <div class="filter-buttons" *ngIf="isTabular">
+                        <ng-select style="width: 250px; margin-right: 10px" [(ngModel)]="selectedColumns"
+                            (change)="selectColumn()"
+                            [placeholder]="selectedColumns.length === 0 ? 'Select Column' : ''" [multiple]="true">
+                            <ng-option *ngFor="let column of dataKeys | keyvalue" [value]="column.key">{{
+                                column.key}}</ng-option>
+                        </ng-select>
+                    </div>
+                    <div *ngIf="isFilter" class="row">
+                        <div class="filter-buttons" *ngIf="isNumber">
+                            <input style="height: 38px" type="number" [(ngModel)]="filterNumber"
+                                placeholder="Enter an ID" class="form-control" (input)="resetfilters()" />
+                        </div>
+                        <ng-select class="filter-buttons" [(ngModel)]="selectedFilter" (change)="addFilter()">
+                            <ng-option *ngFor="let con of filterConditions" [value]="con">{{
+                                con }}</ng-option>
+                        </ng-select>
+                    </div>
+                    <div *ngIf="isTabular || isVisual">
+                        <i class="fa fa-refresh" aria-hidden="true" (click)="refreshData()"></i>
+                    </div>
+                </div>
             </div>
           </div>
 

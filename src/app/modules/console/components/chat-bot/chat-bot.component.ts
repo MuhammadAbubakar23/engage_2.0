@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { BotService } from '../../services/bot.service';
 import { ChatwithintentComponent } from './right-sidebar-components/chatwithintent/chatwithintent.component';
+import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
 
 @Component({
   selector: 'app-chat-bot',
@@ -33,10 +34,16 @@ export class ChatBotComponent implements OnInit, AfterViewInit {
 
   constructor(private botService:BotService,private router:Router,
     private toggleService: ToggleService,
+    private closePanelservices: ClosePanelService,
     private resolver: ComponentFactoryResolver) { }
 
-  ngOnInit(): void {
-
+  ngOnInit(): void 
+  {
+    this.subscription = this.closePanelservices.receiveRightBarToggleValue().subscribe(res=>{
+      console.log("This.closePanelValue Response===>",res)
+      this.showPanel = res;
+    });
+// 
     this.botService.login().subscribe((token: any) => {
       console.log(token, token.access);
       localStorage.setItem("token", token.access);
@@ -55,6 +62,7 @@ export class ChatBotComponent implements OnInit, AfterViewInit {
           this.rightcontainer?.clear();
           localStorage.setItem('child', msg3);
           this.showPanel = true;
+          this.closePanelservices.sendLeftBarToggleValue(false)
           this.loadComponent('', msg3);
         } else {
           this.showPanel = false;
@@ -62,6 +70,7 @@ export class ChatBotComponent implements OnInit, AfterViewInit {
           localStorage.setItem('child', '');
         }
       });
+   
   }
 
   ngAfterViewInit(): void {
@@ -72,6 +81,7 @@ export class ChatBotComponent implements OnInit, AfterViewInit {
           this.rightcontainer?.clear();
           localStorage.setItem('child', msg3);
           this.showPanel = true;
+          this.closePanelservices.sendLeftBarToggleValue(false)
           this.loadComponent('', msg3);
         } else {
           this.showPanel = false;
@@ -79,6 +89,8 @@ export class ChatBotComponent implements OnInit, AfterViewInit {
           localStorage.setItem('child', '');
         }
       });
+    
+      
   }
   selectIntent(): void {
 

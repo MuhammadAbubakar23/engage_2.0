@@ -21,6 +21,7 @@ import { ResponderHeaderComponent } from '../responder-content/responder-header/
 import { ResponderMenuComponent } from '../responder-content/responder-menu/responder-menu.component';
 import { InboxHeaderComponent } from './inbox-header/inbox-header.component';
 import { InboxMenuComponent } from './inbox-menu/inbox-menu.component';
+import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
 
 @Component({
   selector: 'inbox-content',
@@ -54,11 +55,13 @@ export class InboxContentComponent implements OnInit {
 
   flag: string = '';
 
-  toggleLeftBar: boolean = true;
+  toggleLeftBar: boolean = false;
   showPanel: boolean = false;
+  
 
   constructor(
     private resolver: ComponentFactoryResolver,
+    private closePanelServices:ClosePanelService,
     private router: Router
   ) {}
 
@@ -111,6 +114,9 @@ export class InboxContentComponent implements OnInit {
         }
       }
     });
+    this.Subscription = this.closePanelServices.receiveLeftBarToggleValue().subscribe(res=>{
+      this.toggleLeftBar = res;
+    })
   }
 
   abc: any;
@@ -167,6 +173,10 @@ export class InboxContentComponent implements OnInit {
 
   toggleSubLeftBar() {
     this.toggleLeftBar = !this.toggleLeftBar;
+   
+    if(this.toggleLeftBar == true){
+      this.closePanelServices.sendRightBarToggleValue(false);
+    }
   }
   toggleRightPanel() {
     this.showPanel = !this.showPanel;
