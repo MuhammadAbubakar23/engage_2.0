@@ -675,9 +675,11 @@ export class SmsDetailsComponent implements OnInit {
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
           },
-          ({ error }) => {
-          //  alert(error.message);
-          }
+          (error) => {
+            alert(error.message);
+            this.spinner1running = false;
+           this.SpinnerService.hide();
+         }
         );
       } else {
         this.reloadComponent('empty-input-field')

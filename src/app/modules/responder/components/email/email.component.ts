@@ -1113,11 +1113,11 @@ export class EmailComponent implements OnInit {
         this.emailReplyForm.reset();
         this.clearInputField();
       },
-      ({ error }) => {
+      (error) => {
+        alert(error.message);
         this.spinner1running = false;
-        this.SpinnerService.hide();
-        this.reloadComponent('error');
-      }
+       this.SpinnerService.hide();
+     }
     );
   }
 
@@ -1485,6 +1485,7 @@ export class EmailComponent implements OnInit {
 
   detectChanges(): void {
     this.ImageName = this.fileInput.nativeElement.files;
+    this.text = this.textarea.nativeElement.value;
   }
   trimText(text: string): string {
     if (text.length < 50) {

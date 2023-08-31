@@ -759,10 +759,11 @@ export class WhatsappDetailsComponent implements OnInit {
             this.radioInput.nativeElement.checked = false;
             this.WhatsappReplyForm.reset();
           },
-          ({ error }) => {
-            //  alert(error.message);
-          }
-        );
+          (error) => {
+            alert(error.message);
+            this.spinner1running = false;
+           this.SpinnerService.hide();
+         });
       } else {
         this.reloadComponent('empty-input-field');
       }
@@ -834,6 +835,7 @@ export class WhatsappDetailsComponent implements OnInit {
 
   detectChanges(): void {
     this.ImageName = this.fileInput.nativeElement.files;
+    this.text = this.textarea.nativeElement.value;
   }
   Emojies = [
     { id: 1, emoji: '🙁', tile: 'sad' },

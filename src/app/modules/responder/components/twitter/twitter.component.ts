@@ -1056,9 +1056,11 @@ export class TwitterComponent implements OnInit {
             this.radioInput.nativeElement.checked = false;
             this.TwitterRepliesForm.reset();
           },
-          ({ error }) => {
-          //  alert(error.message);
-          }
+          (error) => {
+            alert(error.message);
+            this.spinner1running = false;
+           this.SpinnerService.hide();
+         }
         );
       } else {
         this.reloadComponent('empty-input-field')
@@ -1176,9 +1178,11 @@ export class TwitterComponent implements OnInit {
             this.radioInput.nativeElement.checked = false;
             this.twitterMessageReplyForm.reset();
           },
-          ({ error }) => {
-          //  alert(error.message);
-          }
+          (error) => {
+            alert(error.message);
+            this.spinner1running = false;
+           this.SpinnerService.hide();
+         }
         );
       } else {
         this.reloadComponent('empty-input-field')

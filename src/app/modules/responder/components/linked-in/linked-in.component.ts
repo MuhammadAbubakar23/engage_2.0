@@ -572,9 +572,11 @@ detectChanges(): void {
             this.radioInput.nativeElement.checked = false;
             this.linkedInReplyForm.reset();
           },
-          ({ error }) => {
-          //  alert(error.message);
-          }
+          (error) => {
+            alert(error.message);
+            this.spinner1running = false;
+           this.SpinnerService.hide();
+         }
         );
       } else {
         this.reloadComponent('empty-input-field')
