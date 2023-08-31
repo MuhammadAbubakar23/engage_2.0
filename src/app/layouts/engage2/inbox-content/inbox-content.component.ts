@@ -4,25 +4,19 @@ import {
   OnInit,
   ViewChild,
   ViewContainerRef,
-  OnDestroy,
   HostListener,
 } from '@angular/core';
 import {
-  ActivatedRoute,
   NavigationEnd,
-  NavigationStart,
   Router,
 } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { InboxResponderComponent } from 'src/app/modules/inboxes/components/inbox-responder/inbox-responder.component';
 import { InboxesComponent } from 'src/app/modules/inboxes/inboxes.component';
-import { ResponderGuardGuard } from 'src/app/shared/Guards/responder-guard.guard';
 import { BlacklistHeaderComponent } from 'src/app/shared/headers/blacklist-header/blacklist-header.component';
 import { SentHeaderComponent } from 'src/app/shared/headers/sent-header/sent-header.component';
 import { SpamHeaderComponent } from 'src/app/shared/headers/spam-header/spam-header.component';
 import { StarredHeaderComponent } from 'src/app/shared/headers/starred-header/starred-header.component';
 import { TrashHeaderComponent } from 'src/app/shared/headers/trash-header/trash-header.component';
-import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
 import { ResponderHeaderComponent } from '../responder-content/responder-header/responder-header.component';
 import { ResponderMenuComponent } from '../responder-content/responder-menu/responder-menu.component';
 import { InboxHeaderComponent } from './inbox-header/inbox-header.component';
