@@ -36,8 +36,8 @@ export const environment = {
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
   // for testing purpose
-  consoleBaseUrl: 'https://10.111.11.93:45456/api/',
-  //consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  // consoleBaseUrl: 'https://10.111.11.93:45456/api/',
+  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
   links: {
     identity: {
