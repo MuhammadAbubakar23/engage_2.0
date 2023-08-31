@@ -20,8 +20,8 @@ export const environment = {
     types: { local: 'LS' },
   },
   title: 'abc',
-  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  InstaBaseUrl: 'https://insta.360scrm.com/api/',
+  IdentityBaseUrl: 'https://waidentity.enteract.live/api',
+  InstaBaseUrl: 'https://insta.360scrm.com/api/', // other then post and data
   FbBaseUrl: 'https://face.360scrm.com/api/',
   YoutubeBaseUrl: 'https://tube.360scrm.com/api/',
   TwitterBaseUrl: 'https://tweet.360scrm.com/api/',
@@ -29,8 +29,8 @@ export const environment = {
   SmsBaseUrl: 'https://text.360scrm.com/api/',
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
-  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  CommonBaseUrl: 'https://wacommon.enteract.live/api/', 
+  SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
   ServiceBaseUrl : 'https://waservice.enteract.live/api/',
 
