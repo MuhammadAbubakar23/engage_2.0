@@ -1,17 +1,14 @@
-
-<div class="container mt-5" style="width: 50%;">
-
+<div class="container mt-5" style="width: 50%">
   <form [formGroup]="dbSettingsForm">
     <div class="business-detail-wrap">
       <div class="business-detail-wrap">
         <div class="floating-item mb-3">
           <div class="form-floating">
-            <ng-select formControlName="ENGINE">
+            <ng-select formControlName="ENGINE" [clearable]="false">
               <ng-option *ngFor="let engine of engineOptions" [value]="engine">
                 {{ engine }}
               </ng-option>
             </ng-select>
-
           </div>
         </div>
       </div>
@@ -21,7 +18,7 @@
         <div class="floating-item mb-3">
           <div class="form-floating">
             <input
-            type="text"
+              type="text"
               class="form-control"
               id="floatingInputValue"
               placeholder="Connection Name"
@@ -32,7 +29,6 @@
         </div>
       </div>
     </div>
-
 
     <div class="business-detail-wrap">
       <div class="business-detail-wrap">
@@ -119,16 +115,14 @@
       </div>
     </div>
 
-
-      <button
-        class="btn btn-primary"
-        style="margin-top: 20px; margin-left: 5px; width: 100px;"
-        type="button"
-        (click)="saveSetting()"
-        [disabled]="dbSettingsForm.invalid"
-      >
-        Save
-      </button>
-
+    <button
+      class="btn btn-primary"
+      style="margin-top: 20px; margin-left: 5px; width: 100px"
+      type="button"
+      (click)="saveSetting()"
+      [disabled]="dbSettingsForm.invalid"
+    >
+      Save
+    </button>
   </form>
 </div>
