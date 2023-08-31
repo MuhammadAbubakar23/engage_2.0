@@ -62,7 +62,7 @@ export class ConsoleTablePaginationComponent implements OnInit {
     this.isLoading = true;
     setTimeout(() => {
       this.isLoading = false;
-    }, 1000); // Show loader for 1 second
+    }, 1000); 
   }
 
   reloadPage(){

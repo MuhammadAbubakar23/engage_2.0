@@ -13,6 +13,7 @@ import { ReportService } from '../../services/report.service';
 import { ShareddataService } from '../../services/shareddata.service';
 import { ActionsComponent } from '../actions/actions.component';
 import { ToastrComponent } from '../toastr/toastr.component';
+import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
 
 @Component({
   selector: 'app-report-designer',
@@ -125,7 +126,7 @@ export class ReportDesignerComponent implements OnInit {
     private sharedataservice: ShareddataService,
     private reportservice: ReportService,
     private excelService: ExcelService,
-
+    private closePanelservices:ClosePanelService,
     private resolver: ComponentFactoryResolver,
     private toggleService: ToggleService,
     
@@ -213,6 +214,7 @@ export class ReportDesignerComponent implements OnInit {
           this.rightcontainer?.clear();
           localStorage.setItem('child', msg3);
           this.showPanel = true;
+          this.closePanelservices.sendLeftBarToggleValue(false)
           this.loadComponent(msg3);
         } else {
           this.showPanel = false;
@@ -220,6 +222,11 @@ export class ReportDesignerComponent implements OnInit {
           localStorage.setItem('child', '');
         }
       });
+
+      this.subscription = this.closePanelservices.receiveRightBarToggleValue().subscribe(res=>{
+        console.log("this.closeServices==>",res)
+        this.showPanel = res;
+      })
   }
 
   componentRef: any;
@@ -236,6 +243,7 @@ export class ReportDesignerComponent implements OnInit {
 
     if (this.childComponentName != null) {
       this.showPanel = true;
+      this.closePanelservices.sendLeftBarToggleValue(false)
       this.loadComponent(this.childComponentName);
     }
   }

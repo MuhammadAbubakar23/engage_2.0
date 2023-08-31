@@ -20,6 +20,7 @@ import { PhoneDialerComponent } from './right-sidebar-components/phone-dialer/ph
 import { ScheduleComponent } from './right-sidebar-components/schedule/schedule.component';
 import { TaskComponent } from './right-sidebar-components/task/task.component';
 import { TicketsComponent } from './right-sidebar-components/tickets/tickets.component';
+import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
 
 @Component({
   selector: 'app-inboxes',
@@ -42,6 +43,7 @@ export class InboxesComponent implements OnInit {
     private route: ActivatedRoute,
     private sharedService: SharedService,
     private rightNavService: RightNavService,
+    private closePanelService: ClosePanelService,
     private toggleService : ToggleService
   ) {}
 

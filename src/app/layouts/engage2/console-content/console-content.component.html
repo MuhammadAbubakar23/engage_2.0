@@ -1,12 +1,13 @@
 <main>
     <div class="main-wrapper d-flex">
         <main-menu></main-menu>
-        <div class="user-comment-widget-container">
+        <!-- <div class="user-comment-widget-container">
             <template #maximizeChat></template>
-        </div>
-        <nav id="left-sidebar-expand" [ngClass]="toggleLeftBar ? 'toggled':'' ">
-            <console-menu></console-menu>
-            <a class="panelToggle" (click)="toggle()"></a>
+        </div> -->
+        <nav id="left-sidebar-expand" class="conversation-list "
+               [ngClass]="toggleLeftBar ? 'toggled':'' ">
+            <console-menu></console-menu>     
+             <a class="panelToggle" (click)="toggleSubLeftBar()"></a>
         </nav>
         <div class="middle-wrapper d-flex w-100 flex-column">
             <console-header></console-header>

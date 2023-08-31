@@ -25,8 +25,7 @@
                         <ng-select style="width: 250px; margin-right: 10px" [(ngModel)]="selectedLabels"
                             (change)="selectLabel()" [placeholder]="selectedLabels.length === 0 ? 'Select Column' : ''"
                             [multiple]="true">
-                            <ng-option *ngFor="let column of graphLabels" [value]="column">{{column
-                                }}</ng-option>
+                            <ng-option *ngFor="let column of graphLabels" [value]="column">{{column}}</ng-option>
                         </ng-select>
                     </div>
                     <div class="filter-buttons" *ngIf="isTabular">
