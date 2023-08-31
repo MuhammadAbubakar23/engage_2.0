@@ -11,6 +11,7 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -90,9 +91,12 @@ export class WhatsappDetailsComponent implements OnInit {
   pageSize: number = 10;
 
   profileId: number = 0;
+  TotalCmntQueryCount: number = 0;
 
   public Subscription!: Subscription;
   public criteria!: SortCriteria;
+
+  flag:string='';
 
   constructor(
     private fetchId: FetchIdService,
@@ -109,7 +113,8 @@ export class WhatsappDetailsComponent implements OnInit {
     private ticketResponseService: TicketResponseService,
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService: GetQueryTypeService,
-    private unrespondedCountService : UnRespondedCountService
+    private unrespondedCountService : UnRespondedCountService,
+    private router : Router
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -118,6 +123,7 @@ export class WhatsappDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.flag = this.router.url.split('/')[2];
     this.criteria = {
       property: 'createdDate',
       descending: true,
@@ -171,11 +177,12 @@ export class WhatsappDetailsComponent implements OnInit {
       this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        
+        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
         if (res.contentCount.contentType == 'WM') {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
         }
+      }
       });
   }
 
@@ -245,7 +252,6 @@ export class WhatsappDetailsComponent implements OnInit {
 
   commentsArray: any[] = [];
   groupArrays: any[] = [];
-  TotalCmntQueryCount:any;
 
   getWhatsappData() {
     if (this.id != null || undefined) {
@@ -753,10 +759,11 @@ export class WhatsappDetailsComponent implements OnInit {
             this.radioInput.nativeElement.checked = false;
             this.WhatsappReplyForm.reset();
           },
-          ({ error }) => {
-            //  alert(error.message);
-          }
-        );
+          (error) => {
+            alert(error.message);
+            this.spinner1running = false;
+           this.SpinnerService.hide();
+         });
       } else {
         this.reloadComponent('empty-input-field');
       }
@@ -828,6 +835,7 @@ export class WhatsappDetailsComponent implements OnInit {
 
   detectChanges(): void {
     this.ImageName = this.fileInput.nativeElement.files;
+    this.text = this.textarea.nativeElement.value;
   }
   Emojies = [
     { id: 1, emoji: '🙁', tile: 'sad' },

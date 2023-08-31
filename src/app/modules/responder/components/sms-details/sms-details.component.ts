@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -88,6 +89,7 @@ export class SmsDetailsComponent implements OnInit {
   searchText: string = '';
   quickReplySearchText: string = '';
   queryStatus: any;
+  flag:string='';
 
   constructor(
     private fetchId: FetchIdService,
@@ -104,7 +106,8 @@ export class SmsDetailsComponent implements OnInit {
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService : GetQueryTypeService,
     private unrespondedCountService : UnRespondedCountService,
-    private replyService : ReplyService
+    private replyService : ReplyService,
+    private router : Router
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -113,6 +116,7 @@ export class SmsDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.flag = this.router.url.split('/')[2];
     
     this.criteria = {
       property: 'createdDate',
@@ -159,10 +163,12 @@ export class SmsDetailsComponent implements OnInit {
       this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
+        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
         if (res.contentCount.contentType == 'SMS') {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
         }
+      }
       });
 
       this.Subscription = this.queryStatusService
@@ -669,9 +675,11 @@ export class SmsDetailsComponent implements OnInit {
             this.reloadComponent('comment');
             this.radioInput.nativeElement.checked = false;
           },
-          ({ error }) => {
-          //  alert(error.message);
-          }
+          (error) => {
+            alert(error.message);
+            this.spinner1running = false;
+           this.SpinnerService.hide();
+         }
         );
       } else {
         this.reloadComponent('empty-input-field')

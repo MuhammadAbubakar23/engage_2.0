@@ -149,6 +149,7 @@ export class ResponderMenuComponent implements OnInit {
       this.AllocatedProfiles = res;
 
       this.AllocatedProfiles.forEach((profile: any) => {
+
         if (profile.userId == localStorage.getItem('agentId')) {
           this.userSpecificAllocatedProfiles.push(profile);
         }

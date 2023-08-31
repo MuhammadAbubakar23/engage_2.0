@@ -113,7 +113,8 @@ export class ResponderHeaderComponent implements OnInit {
     private unrespondedCountService: UnRespondedCountService,
     private updateCommentsService: UpdateCommentsService,
     private updateMessagesService: UpdateMessagesService,
-    private toggleService: ToggleService
+    private toggleService: ToggleService,
+    private lodeModuleService : ModulesService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -166,6 +167,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
+        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
         if (Object.keys(res).length > 0) {
         res.forEach((msg: any) => {
           if (msg.userId == localStorage.getItem('storeHeaderOpenedId')) {
@@ -208,11 +210,13 @@ export class ResponderHeaderComponent implements OnInit {
           }
         });
    }
+  }
    });
 
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
+        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
         if (Object.keys(res).length > 0) {
         if (res.contentCount.contentType == 'FC') {
           this.totalFbUnrespondedCountByCustomer =
@@ -273,7 +277,9 @@ export class ResponderHeaderComponent implements OnInit {
             res.contentCount.unrespondedCount;
         }
    }
+  }
    });
+   
   }
 
   param: any;
@@ -2194,16 +2200,20 @@ if (type == 'RemoveStarred') {
       profileId: id,
     };
     this.itemsToBeUpdated.push(obj);
-  this.commondata
-    .UpdateStatus(this.itemsToBeUpdated)
-    .subscribe((res: any) => {
-      if (res.message === "Status Updated Successfully") {
-        this.itemsToBeUpdated = [];
-        this.blockStatus = true;
-        this.reloadComponent('block');
-      }
-    });
-}
+    this.commondata
+      .UpdateStatus(this.itemsToBeUpdated)
+      .subscribe((res: any) => {
+        if (res.message === 'Status Updated Successfully') {
+          this.markAllAsRead();
+          this.itemsToBeUpdated = [];
+          this.blockStatus = true;
+          this.reloadComponent('block');
+          localStorage.setItem('assignedProfile', '');
+          this.route.navigateByUrl('/all-inboxes/my_inbox');
+          this.lodeModuleService.updateModule('all-inboxes');
+        }
+      });
+  }
 
 Unblock(id:any){
     var obj = {

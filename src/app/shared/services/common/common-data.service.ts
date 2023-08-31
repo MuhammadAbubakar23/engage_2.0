@@ -8,14 +8,11 @@ import { Observable } from 'rxjs';
 })
 export class CommonDataService {
   // for testing purpose
-  // consoleBaseUrl = environment.consoleBaseUrl;
-  consoleBaseUrl = "";
+  consoleBaseUrl = environment.consoleBaseUrl;
 
   resultData: any;
-  // CCMSURL = environment.CCMSURL;
-  CCMSURL = "";
-  // JomoAccessToken = environment.JomoAccessToken;
-  JomoAccessToken = "";
+  CCMSURL = environment.CCMSURL;
+  JomoAccessToken = environment.JomoAccessToken;
   CommonBaseUrl = environment.CommonBaseUrl;
   IdentityBaseUrl = environment.IdentityBaseUrl;
   FacebookBaseUrl = environment.FbBaseUrl;

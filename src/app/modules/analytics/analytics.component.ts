@@ -9,7 +9,6 @@ import { ActionsComponent } from './components/actions/actions.component'
 import { AnalyticsDashboardComponent } from './components/analytics-dashboard/analytics-dashboard.component';
 import { ExecutiveDashboardComponent } from './components/executive-dashboard/executive-dashboard.component';
 import { LiveMonitoringComponent } from './components/live-monitoring/live-monitoring.component';
-import { ReportBuilderComponent } from './components/report-builder/report-builder.component';
 import { ReportDbSettingsComponent } from './components/report-db-settings/report-db-settings.component';
 import { ReportlistingComponent } from './components/reportlisting/reportlisting.component';
 import { DblistingComponent } from './components/dblisting/dblisting.component';

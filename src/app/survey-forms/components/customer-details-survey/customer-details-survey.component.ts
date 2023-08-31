@@ -47,7 +47,6 @@ export class CustomerDetailsSurveyComponent implements OnInit {
 
 
     }
-    debugger
   
     this.commondataService.AddSurvey(data).subscribe((res:any)=>{
    console.log("Add Date Respons===>",res);

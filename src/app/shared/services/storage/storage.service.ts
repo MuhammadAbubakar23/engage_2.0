@@ -55,7 +55,6 @@ export class StorageService { //extends GenericService { //  extends LocalStorag
     return { data: value, key: this.type(store).get(this.renewKey("token")) } 
   }
   private unmapTokenKey(value:any, store:string = "LS", validate:boolean = false): any|null {
-    ;
     let key = value.key;
     let a = true; 
     if(validate == true){

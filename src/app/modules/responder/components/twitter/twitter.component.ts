@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { first, pipe, Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -103,6 +104,8 @@ export class TwitterComponent implements OnInit {
 
   quickReplySearchText: string = '';
 
+  flag:string='';
+
   constructor(
     private fetchId: FetchIdService,
     private changeDetect: ChangeDetectorRef,
@@ -119,7 +122,8 @@ export class TwitterComponent implements OnInit {
     private toggleService: ToggleService,
     private ticketResponseService: TicketResponseService,
     private applySentimentService: ApplySentimentService,
-    private getQueryTypeService : GetQueryTypeService
+    private getQueryTypeService : GetQueryTypeService,
+    private router : Router
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -129,6 +133,7 @@ export class TwitterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.flag = this.router.url.split('/')[2];
     this.criteria = {
       property: 'createdDate',
       descending: true,
@@ -173,6 +178,7 @@ export class TwitterComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
+        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
         if (res.contentCount.contentType == 'TT') {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
@@ -181,6 +187,7 @@ export class TwitterComponent implements OnInit {
           this.totalUnrespondedMsgCountByCustomer =
             res.contentCount.unrespondedCount;
         }
+      }
       });
     this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
@@ -1049,9 +1056,11 @@ export class TwitterComponent implements OnInit {
             this.radioInput.nativeElement.checked = false;
             this.TwitterRepliesForm.reset();
           },
-          ({ error }) => {
-          //  alert(error.message);
-          }
+          (error) => {
+            alert(error.message);
+            this.spinner1running = false;
+           this.SpinnerService.hide();
+         }
         );
       } else {
         this.reloadComponent('empty-input-field')
@@ -1169,9 +1178,11 @@ export class TwitterComponent implements OnInit {
             this.radioInput.nativeElement.checked = false;
             this.twitterMessageReplyForm.reset();
           },
-          ({ error }) => {
-          //  alert(error.message);
-          }
+          (error) => {
+            alert(error.message);
+            this.spinner1running = false;
+           this.SpinnerService.hide();
+         }
         );
       } else {
         this.reloadComponent('empty-input-field')
@@ -1390,7 +1401,9 @@ export class TwitterComponent implements OnInit {
                     singleCmnt.tags.splice(index, 1);
                   }
                 } else {
-                  singleCmnt.tags.push(this.addTags);
+                  if(!(singleCmnt.tags.includes(this.addTags))){
+                    singleCmnt.tags.push(this.addTags);
+                  }
                 }
               }
             }

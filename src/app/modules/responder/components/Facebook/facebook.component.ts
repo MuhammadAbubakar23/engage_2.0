@@ -58,7 +58,7 @@ export class FacebookComponent implements OnInit {
   radioInput!: ElementRef<HTMLInputElement>;
 
   FacebookData: any;
-  FacebookMessages: any;
+  FacebookMessages: any[]=[];
   TagsList: any;
   totalUnrespondedMsgCountByCustomer: any = 0;
   pageNumber: any = 1;
@@ -227,6 +227,7 @@ export class FacebookComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
+        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
         if (res.contentCount.contentType == 'FC') {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
@@ -235,6 +236,7 @@ export class FacebookComponent implements OnInit {
           this.totalUnrespondedMsgCountByCustomer =
             res.contentCount.unrespondedCount;
         }
+      }
       });
 
     this.ticketResponseService.getTicketId().subscribe((res) => {
@@ -245,6 +247,12 @@ export class FacebookComponent implements OnInit {
       .receiveSentiment()
       .subscribe((res) => {
         this.applySentimentListner(res);
+      });
+
+      this.Subscription = this.queryStatusService
+      .receiveQueryStatus()
+      .subscribe((res) => {
+        this.updateMessageStatusDataListner(res);
       });
   }
 
@@ -597,7 +605,10 @@ export class FacebookComponent implements OnInit {
                     singleCmnt.tags.splice(index, 1);
                   }
                 } else {
-                  singleCmnt.tags.push(this.addTags);
+                  if(!(singleCmnt.tags.includes(this.addTags))){
+                    singleCmnt.tags.push(this.addTags);
+                  }
+                  
                 }
               }
             }
@@ -659,21 +670,26 @@ export class FacebookComponent implements OnInit {
   }
 
   updateQueryStatusDataListner() {
-    this.FacebookData.forEach((post: any) => {
-      post.groupedComments.forEach((cmnt: any) => {
-        cmnt.items.forEach((singleCmnt: any) => {
-          if (singleCmnt.id == this.queryStatus.queryId) {
-            singleCmnt.queryStatus = this.queryStatus.queryStatus;
-            singleCmnt.isLikedByAdmin = this.queryStatus.isLikes;
-          }
+    if(this.FacebookData){
+      this.FacebookData.forEach((post: any) => {
+        post.groupedComments.forEach((cmnt: any) => {
+          cmnt.items.forEach((singleCmnt: any) => {
+            if (singleCmnt.id == this.queryStatus.queryId) {
+              singleCmnt.queryStatus = this.queryStatus.queryStatus;
+              singleCmnt.isLikedByAdmin = this.queryStatus.isLikes;
+            }
+          });
         });
       });
-    });
-    this.FacebookMessages?.forEach((msg: any) => {
-      if (msg.id == this.queryStatus.queryId) {
-        msg.queryStatus = this.queryStatus.queryStatus;
-      }
-    });
+    }
+    if(this.FacebookMessages){
+      this.FacebookMessages?.forEach((msg: any) => {
+        if (msg.id == this.queryStatus.queryId) {
+          msg.queryStatus = this.queryStatus.queryStatus;
+        }
+      });
+    }
+    
     this.changeDetect.detectChanges();
   }
 
@@ -1505,6 +1521,20 @@ export class FacebookComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
+    if (type == 'spam') {
+      this.AlterMsg = 'Message has been marked as spam!';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+if (type == 'removeSpam') {
+      this.AlterMsg = 'Message has been removed from spam items';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'starred') {
       this.AlterMsg = 'Profile(s) has been marked as starred!';
       this.toastermessage = true;
@@ -1682,38 +1712,47 @@ if (type == 'removeStarred') {
   }
 
   updateTicketId(res: any) {
-    this.FacebookData.forEach((post: any) => {
-      post.groupedComments.forEach((cmnt: any) => {
-        cmnt.items.forEach((singleCmnt: any) => {
-          if (singleCmnt.id == res.queryId) {
-            singleCmnt.ticketId = res.ticketId;
-          }
+    if(this.FacebookData){
+      this.FacebookData.forEach((post: any) => {
+        post.groupedComments.forEach((cmnt: any) => {
+          cmnt.items.forEach((singleCmnt: any) => {
+            if (singleCmnt.id == res.queryId) {
+              singleCmnt.ticketId = res.ticketId;
+            }
+          });
         });
       });
-    });
-    this.FacebookMessages?.forEach((msg: any) => {
-      if (msg.id == res.queryId) {
-        msg.ticketId = res.ticketId;
-      }
-    });
+    }
+    if(this.FacebookMessages){
+      this.FacebookMessages?.forEach((msg: any) => {
+        if (msg.id == res.queryId) {
+          msg.ticketId = res.ticketId;
+        }
+      });
+    }
+    
     this.changeDetect.detectChanges();
   }
 
   applySentimentListner(res: any) {
-    this.FacebookData.forEach((post: any) => {
-      post.groupedComments.forEach((cmnt: any) => {
-        cmnt.items.forEach((singleCmnt: any) => {
-          if (singleCmnt.id == res.feedId) {
-            singleCmnt.sentiment = res;
-          }
+    if(this.FacebookData){
+      this.FacebookData.forEach((post: any) => {
+        post.groupedComments.forEach((cmnt: any) => {
+          cmnt.items.forEach((singleCmnt: any) => {
+            if (singleCmnt.id == res.feedId) {
+              singleCmnt.sentiment = res;
+            }
+          });
         });
       });
-    });
-    this.FacebookMessages?.forEach((msg: any) => {
-      if (msg.id == res.feedId) {
-        msg.sentiment = res;
-      }
-    });
+    }
+    if(this.FacebookMessages){
+      this.FacebookMessages?.forEach((msg: any) => {
+        if (msg.id == res.feedId) {
+          msg.sentiment = res;
+        }
+      });
+    }
     this.changeDetect.detectChanges();
   }
 
@@ -1740,7 +1779,9 @@ if (type == 'removeStarred') {
     })
   }
   itemsToBeUpdated:any[]=[];
+
   starMessage(msgId:number, status:boolean){
+    this.itemsToBeUpdated=[];
       var obj = {
         channel: '',
         flag: 'starred',
@@ -1761,4 +1802,70 @@ if (type == 'removeStarred') {
         }
       });
   }
+
+  spam = false;
+
+  spamMessage(msgId:number, status:boolean, type:string){
+    this.itemsToBeUpdated=[];
+    var obj = {
+      channel: '',
+      flag: 'spam',
+      status: status,
+      messageId: msgId,
+      profileId: 0,
+    };
+    this.itemsToBeUpdated.push(obj);
+  this.commondata
+    .UpdateStatus(this.itemsToBeUpdated)
+    .subscribe((res: any) => {
+      if (res.message === "Status Updated Successfully") {
+        if(status == true){
+          this.spam = true;
+          this.commentStatus(msgId, type);
+          this.reloadComponent('spam');
+        } else if (status == false) {
+          this.spam = false;
+          this.reloadComponent('removeSpam');
+        }
+      }
+    });
+}
+updateMessageStatusDataListner(res:any){
+  if(this.FacebookData){
+    this.FacebookData.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          res.forEach((msgStatus:any) => {
+            if (singleCmnt.id == msgStatus.messageId) {
+              if(msgStatus.flag == 'starred'){
+                singleCmnt.starred = msgStatus.status;
+              }
+              if(msgStatus.flag == 'spam'){
+                singleCmnt.spam = msgStatus.status;
+              }
+            }
+          });
+          
+        });
+      });
+    });
+  }
+  if(this.FacebookMessages){
+    this.FacebookMessages?.forEach((msg: any) => {
+      res.forEach((msgStatus:any) => {
+        if (msg.id == msgStatus.messageId) {
+          if(msgStatus.flag == 'starred'){
+            msg.starred = msgStatus.status;
+          }
+          if(msgStatus.flag == 'spam'){
+            msg.spam = msgStatus.status;
+          }
+        }
+      });
+      
+    });
+  }
+  
+  this.changeDetect.detectChanges();
+}
 }

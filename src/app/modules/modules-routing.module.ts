@@ -35,7 +35,8 @@ const routes: Routes = [
     path:'analytics',
     loadChildren : () => import('./analytics/analytics.module').then(f=>f.AnalyticsModule),
     data: {preload: true}
-  }  
+  },
+  
 ];
 
 @NgModule({
