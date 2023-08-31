@@ -50,7 +50,7 @@
                         <div class="example-box m-2" style="display: flex; flex-direction: column; align-items: center;">
 
                           <!-- ng-select -->
-                          <ng-select style="width: 250px; margin-bottom: 10px;" [(ngModel)]="chartData.type" (change)="selectGraph(i, chartData.type)">
+                          <ng-select style="width: 250px; margin-bottom: 10px;" [(ngModel)]="chartData.type" (change)="selectGraph(i, chartData.type)"  [clearable]="false">
                             <ng-option *ngFor="let graph of graphTypes[0] | keyvalue" [value]="graph.value">{{ graph.key }}</ng-option>
                           </ng-select>
 

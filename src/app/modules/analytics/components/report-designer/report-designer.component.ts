@@ -41,6 +41,7 @@ export class ReportDesignerComponent implements OnInit {
   paginatedData: any = [];
   dataKeys: { [key: string]: any } = {};
   columns = {};
+  sortColumns:any=[];
   filterConditions: string[] = [];
   isFilter: boolean = false;
   selectedFilter = 'Select Filter';
@@ -57,12 +58,14 @@ export class ReportDesignerComponent implements OnInit {
   values: any[] = [];
   collective: any[] = [];
   page = 1;
-  pageSize = 5;
+  pageSize = 10;
   totalCount: number = 0;
-  startPage: number = 0;
+  startPage: number = 1;
   endPage: number = this.pageSize;
-
-
+  pageSizes = [10, 25, 50, 100];
+  order = "ASC";
+  orders = ["ASC", "DESC"];
+  columnName = 'Sort by';
   isGraph: boolean = false;
   Labels = [];
   graphLabels: any = [];
@@ -126,6 +129,7 @@ export class ReportDesignerComponent implements OnInit {
   finalGrapData: any = {};
   finalTableData: any[] = [];
   isPaginated: boolean = false;
+  limitValue = 10;
   exportAsXLSX(): void {
     this.excelService.exportAsExcelFile(this.tableData, 'sample');
   }
@@ -158,6 +162,7 @@ export class ReportDesignerComponent implements OnInit {
     });
 
     this.sharedataservice.data$.subscribe((newData: any) => {
+      debugger
       console.log("newData", newData);
       if (newData !== "Initial Data") {
         this.isGraph = true;
@@ -358,6 +363,11 @@ export class ReportDesignerComponent implements OnInit {
   }
 
   selectTable(): void {
+
+    this.pageSize = 10
+    this.startPage = 1;
+    this.endPage = this.pageSize;
+    this.page = 1;
     console.log('selectTable', this.tableName, this.DBC, this.dbName);
     localStorage.setItem('selectedtable', this.tableName);
     if (
@@ -370,13 +380,20 @@ export class ReportDesignerComponent implements OnInit {
           db: this.dbName,
           tableName: this.tableName,
           connection_name: this.DBC,
+          page: this.page,
+          page_size: this.pageSize
         })
         .subscribe((res) => {
+          debugger
           this.isGraph = true;
           this.isStats = false;
           this.tableData = this.transformDataObject(res.table);
           console.log("Res===>", res);
           this.totalCount = res.total_count;
+          if (res.last_records < this.pageSize) {
+            this.endPage = res.total_count;
+            this.limitValue = res.total_count;
+          }
           this.finalTableData = this.tableData;
 
           if (this.tableData.length === 0) {
@@ -395,12 +412,40 @@ export class ReportDesignerComponent implements OnInit {
     }
   }
 
+  limitData(): void {
+    this.startPage = 0;
+    this.endPage = this.pageSize;
+    this.reportservice.paginatedDataApi({
+      db: this.dbName,
+      query: this.query,
+      connection_name: this.DBC,
+      page: this.page,
+      page_size: this.pageSize
+    }).subscribe((res: any) => {
+      this.paginatedData = res.table;
+      if (res.last_records < this.pageSize) {
+        this.endPage = res.total_count;
+      }
+      this.isPaginated = true;
+      this.tableData = this.transformDataObject(res.table);
+      console.log("Pagination Results", res)
+    });
+  }
+  sortData(): void {
+    debugger
+    const db = localStorage.getItem('dbName')
+    const selectedtable = localStorage.getItem('selectedtable')
+    const connection = localStorage.getItem('connection_name')
+    this.reportservice.sortDataApi({ 'db': db, 'tableName': selectedtable, 'column': this.columnName, 'order': this.order, 'connection_name': connection }).subscribe((res: any) => {
+      this.sharedataservice.updateData(res);
+
+    });
+  }
   incrementPage() {
     if (this.endPage + this.pageSize <= this.totalCount) {
       this.startPage += this.pageSize;
       this.endPage += this.pageSize;
-      this.page += 1,
-        console.log('incrementPage', this.startPage, this.endPage);
+      this.page += 1;
       this.paginationApi()
     }
   }
@@ -415,7 +460,8 @@ export class ReportDesignerComponent implements OnInit {
     }
   }
   paginationApi() {
-    debugger
+
+
     this.reportservice
       .paginatedDataApi({
         db: this.dbName,
@@ -426,8 +472,12 @@ export class ReportDesignerComponent implements OnInit {
       })
       .subscribe((res: any) => {
         this.paginatedData = res.table;
+        if (res.last_records < this.pageSize) {
+          this.endPage = res.total_count;
+        }
         this.isPaginated = true;
         this.tableData = this.transformDataObject(res.table);
+        console.log("Pagination Results", res)
       });
   }
   handleFilters(columntype: any, columnname: any): void {
@@ -537,7 +587,7 @@ export class ReportDesignerComponent implements OnInit {
                 | null;
               return typeof value === 'number' || Array.isArray(value)
                 ? (value as number)
-                : 0; // Replace null with 0 or any other appropriate default value
+                : 0;
             }
           );
           return { data, label: label };
@@ -568,7 +618,7 @@ export class ReportDesignerComponent implements OnInit {
                 | null;
               return typeof value === 'number' || Array.isArray(value)
                 ? (value as number)
-                : 0; // Replace null with 0 or any other appropriate default value
+                : 0;
             }
           );
           return { data, label: label };

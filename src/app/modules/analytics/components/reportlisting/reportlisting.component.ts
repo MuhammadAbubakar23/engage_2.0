@@ -1,8 +1,5 @@
-import { Component, OnInit, ViewChild ,AfterViewInit} from '@angular/core';
-
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReportService } from '../../services/report.service';
-import { ShareddataService } from '../../services/shareddata.service';
-import { ChartConfiguration, ChartData, ChartDataset, ChartType, ChartTypeRegistry, Color } from 'chart.js';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,36 +7,32 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgChartsModule } from 'ng2-charts';
 import { HeaderService } from 'src/app/shared/services/header.service';
 import { ExcelService } from '../../services/excel.service';
-import { TableResponsiveComponent } from "../../../../shared/table-responsive/table-responsive.component";
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-interface CustomChartData1<TType extends ChartType, TData extends ChartData<TType, unknown, string | string[]>> {
-  type: TType | 'bar' | 'pie' | 'line' | 'polarArea' | 'radar';
 
-  data: TData;
-}
 
 @Component({
-    selector: 'app-reportlisting',
-    standalone: true,
-    templateUrl: './reportlisting.component.html',
-    styleUrls: ['./reportlisting.component.scss'],
-    imports: [
-        CommonModule,
-        FormsModule,
-        NgSelectModule,
-        NgChartsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatTableModule,
-        MatSortModule,
-        MatPaginatorModule,
-        DragDropModule]
+  selector: 'app-reportlisting',
+  standalone: true,
+  templateUrl: './reportlisting.component.html',
+  styleUrls: ['./reportlisting.component.scss'],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NgSelectModule,
+    NgChartsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    DragDropModule]
 })
-export class ReportlistingComponent implements OnInit, AfterViewInit{
+export class ReportlistingComponent implements OnInit {
   showPanel = false;
   reports: any = [];
   columns = ['Report Name']
@@ -50,6 +43,12 @@ export class ReportlistingComponent implements OnInit, AfterViewInit{
   connection = "";
   tableData: any = [];
   displayedColumns: any[] = [];
+  page = 1;
+  pageSizes = [10, 25, 50, 100];
+  pageSize = 10;
+  totalCount: number = 0;
+  startPage: number = 1;
+  endPage: number = this.pageSize;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -61,46 +60,61 @@ export class ReportlistingComponent implements OnInit, AfterViewInit{
       localStorage.setItem("token", token.access);
       this.reportService.reportslistApi().subscribe((res: any) => {
         console.log("reportlisting", res);
-        res.forEach((report: any) => {
-          this.reports.push({ 'id': report.id, 'name': report.name, 'color': 'blue' })
-        })
+        this.reports = res;
+
       });
     })
     const newObj = { title: 'Reports', url: '/analytics/reports' };
     this._hS.setHeader(newObj);
 
   }
-  reportName:any = 'Please select Report';
+  reportName: any = 'Please select Report';
   getReportData() {
-debugger
-    // console.log("getReportData", reportName)
-    // this.reports.forEach((report: any) => {
-    //   if (report.name === reportName) {
-    //     report.color = 'green';
-    //   }
-    //   else{
-    //     report.color = 'blue';
-    //   }
-    // })
-    this.reportService.reportExecuteApi({ 'reportName': this.reportName }).subscribe((res: any) => {
+    this.pageSize = 10
+    this.startPage = 1;
+    this.endPage = this.pageSize;
+    this.page = 1;
+    this.reportService.reportExecuteApi({ 'reportName': this.reportName, page: this.page, page_size: this.pageSize }).subscribe((res: any) => {
       console.log("Get Data", res);
-      this.tableData = this.transformDataObject(res.table);
+      if (res.error) {
+        alert(res.error);
+      }
+      else {
+        this.tableData = this.transformDataObject(res.table);
+        this.totalCount = res.total_count;
+        if (res.last_records < this.pageSize) {
+          this.endPage = res.total_count;
+        }
+      }
+
       console.log("Get Data", this.tableData)
     });
   }
-  ngAfterViewInit() {
-    this.tableData.paginator = this.paginator;
-    this.tableData.sort = this.sort;
+  
+  limitData(): void {
+    this.startPage = 0;
+    this.endPage = this.pageSize;
+    this.reportService.reportExecuteApi({ 'reportName': this.reportName, page: this.page, page_size: this.pageSize }).subscribe((res: any) => {
+      console.log("Get Data", res);
+      this.tableData = this.transformDataObject(res.table);
+      this.totalCount = res.total_count;
+      if (res.last_records < this.pageSize) {
+        this.endPage = res.total_count;
+      }
+      console.log("Get Data", this.tableData)
+    });
+
   }
-
-  applyFilter(event: Event) {
-    debugger
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.tableData.filter = filterValue.trim().toLowerCase();
-
-    if (this.tableData.paginator) {
-      this.tableData.paginator.firstPage();
-    }
+  getPaginatedData() {
+    this.reportService.reportExecuteApi({ 'reportName': this.reportName, page: this.page, page_size: this.pageSize }).subscribe((res: any) => {
+      console.log("Get Data", res);
+      this.tableData = this.transformDataObject(res.table);
+      this.totalCount = res.total_count;
+      if (res.last_records < this.pageSize) {
+        this.endPage = res.total_count;
+      }
+      console.log("Get Data", this.tableData)
+    });
   }
 
   exportAsXLSX(): void {
@@ -124,5 +138,23 @@ debugger
     }
 
     return rows;
+  }
+
+  incrementPage() {
+    if (this.endPage + this.pageSize <= this.totalCount) {
+      this.startPage += this.pageSize;
+      this.endPage += this.pageSize;
+      this.page += 1;
+      this.getPaginatedData();
+    }
+  }
+
+  decrementPage() {
+    if (this.startPage >= this.pageSize) {
+      this.startPage -= this.pageSize;
+      this.endPage -= this.pageSize;
+      this.page -= 1,
+        this.getPaginatedData();
+    }
   }
 }
