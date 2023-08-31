@@ -673,7 +673,9 @@ export class SmsDetailsComponent implements OnInit {
             // this.getSmsData();
             
             this.reloadComponent('comment');
-            this.radioInput.nativeElement.checked = false;
+            if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
           },
           (error) => {
             alert(error.message);
@@ -906,7 +908,9 @@ export class SmsDetailsComponent implements OnInit {
 
   closeQuickResponseSidebar(){
     this.quickReplySearchText = '';
-    this.radioInput.nativeElement.checked = false;
+    if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
     
   }
   updateQueryStatusDataListner() {

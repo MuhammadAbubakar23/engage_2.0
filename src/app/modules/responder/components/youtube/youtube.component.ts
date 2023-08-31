@@ -545,7 +545,9 @@ export class YoutubeComponent implements OnInit {
       this.youtubeCommentReplyForm.reset();
             this.clearInputField();
             this.reloadComponent('comment');
-            this.radioInput.nativeElement.checked = false;
+            if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
           },
           (error) => {
              alert(error.message);
@@ -981,7 +983,9 @@ export class YoutubeComponent implements OnInit {
 
   closeQuickResponseSidebar(){
     this.quickReplySearchText = '';
-    this.radioInput.nativeElement.checked = false;
+    if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
     
   }
 }

@@ -207,7 +207,9 @@ export class WebChatComponent implements OnInit {
       wcVisitorSessionId: this.WebChat.Session.id,
       fromName:this.WebChat.VisitorMessages[0].fromName
     });
-    this.radioInput.nativeElement.checked = false;
+    if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
     // this.quickReplySearchText = '';
 
     // this.webchatdata.SendWebChatReply(this.WebChatReplyForm.value).subscribe((res: any) => {
@@ -239,7 +241,9 @@ onScrollComments() {
 }
 closeQuickResponseSidebar(){
   // this.quickReplySearchText = '';
-  this.radioInput.nativeElement.checked = false;
+  if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
   
 }
 }

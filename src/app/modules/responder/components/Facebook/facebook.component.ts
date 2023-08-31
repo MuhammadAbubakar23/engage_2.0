@@ -1135,7 +1135,9 @@ export class FacebookComponent implements OnInit {
 
             this.facebookReplyForm.reset();
 
-            this.radioInput.nativeElement.checked = false;
+            if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
           },
           (error) => {
              alert(error.message);
@@ -1223,7 +1225,9 @@ export class FacebookComponent implements OnInit {
             this.reloadComponent('fbmessage');
             this.facebookMessageReplyForm.reset();
 
-            this.radioInput.nativeElement.checked = false;
+            if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
           },
           ( error ) => {
              alert(error.message);
@@ -1758,7 +1762,9 @@ if (type == 'removeStarred') {
 
   closeQuickResponseSidebar() {
     this.quickReplySearchText = '';
-    this.radioInput.nativeElement.checked = false;
+    if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
   }
 
   isImage(attachment: any): boolean {
