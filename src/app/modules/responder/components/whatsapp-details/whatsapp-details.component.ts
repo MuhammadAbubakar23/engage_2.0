@@ -756,8 +756,10 @@ export class WhatsappDetailsComponent implements OnInit {
             this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('comment');
-            this.radioInput.nativeElement.checked = false;
             this.WhatsappReplyForm.reset();
+            if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
           },
           (error) => {
             alert(error.message);

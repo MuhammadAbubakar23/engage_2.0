@@ -1053,7 +1053,9 @@ export class TwitterComponent implements OnInit {
       this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('comment');
-            this.radioInput.nativeElement.checked = false;
+            if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
             this.TwitterRepliesForm.reset();
           },
           (error) => {
@@ -1175,7 +1177,9 @@ export class TwitterComponent implements OnInit {
       this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('comment');
-            this.radioInput.nativeElement.checked = false;
+            if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
             this.twitterMessageReplyForm.reset();
           },
           (error) => {
@@ -1578,7 +1582,9 @@ export class TwitterComponent implements OnInit {
 
   closeQuickResponseSidebar(){
     this.quickReplySearchText = '';
-    this.radioInput.nativeElement.checked = false;
+    if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
     
   }
 

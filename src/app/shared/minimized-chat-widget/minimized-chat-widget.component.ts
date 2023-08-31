@@ -565,7 +565,9 @@ export class MinimizedChatWidgetComponent implements OnInit {
 
   closeQuickResponseSidebar(){
     // this.quickReplySearchText = '';
-    // this.radioInput.nativeElement.checked = false;
+    // if(this.radioInput.nativeElement.checked = true){
+            //   this.radioInput.nativeElement.checked = false;
+            // }
     
   }
 }
