@@ -147,7 +147,7 @@
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                     </div>
-                                                    <div class="message-bottom">
+                                                    <div class="message-bottom" *ngIf="this.flag == 'all-inboxes' || this.flag == 'my_inbox'">
                                                         <div class="row">
                                                             <div class="col-lg-12 ps-4 d-flex align-items-center">
                                                                 <div
@@ -488,7 +488,7 @@
 
 </div>
 
-<div class="msgTypingField shadow-lg">
+<div class="msgTypingField shadow-lg" *ngIf="this.flag == 'all-inboxes' || this.flag == 'my_inbox'">
     <div *ngFor="let whatsapp of WhatsappData">
         <div class="attachment-block" [ngClass]="isAttachment == true?'':'d-none'">
             <div class="card-body p-3" *ngFor="let image of ImageName; let i = index" style="margin-right: 10px;">

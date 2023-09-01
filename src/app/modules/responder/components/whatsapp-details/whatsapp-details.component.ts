@@ -189,65 +189,66 @@ export class WhatsappDetailsComponent implements OnInit {
   commentDto = new commentsDto();
   updatedComments: any;
   updateCommentsDataListener() {
-    
-    if(!this.id){
-      this.id = localStorage.getItem('storeOpenedId') || '{}'
-    }
-    this.updatedComments.forEach((xyz: any) => {
-      if (this.id == xyz.userId) {
-        this.commentDto = {
-          id: xyz.id,
-          postId: xyz.postId,
-          commentId: xyz.commentId,
-          message: xyz.message,
-          contentType: xyz.contentType,
-          userName: xyz.userName || xyz.userId,
-          queryStatus: xyz.queryStatus,
-          createdDate: xyz.createdDate,
-          fromUserProfilePic: xyz.profilePic,
-          body: xyz.body,
-          to: xyz.toId,
-          cc: xyz.cc,
-          bcc: xyz.bcc,
-          attachments: xyz.mediaAttachments,
-          replies: [],
-          sentiment: '',
-          tags: [],
-          // fromId: xyz.fromId,
-          // fromName: xyz.fromName,
-          // fromProfilePic: xyz.fromProfilePic,
-          // toId: xyz.toId,
-          // toName: xyz.toName,
-          // msgText: xyz.msgText,
-          // agentId: xyz.agentId,
-          // customerSocailProfileId: xyz.agentId,
-          // profileId: xyz.profileId,
-          // profilePageId: xyz.profilePageId,
-        };
-        this.WhatsappData[0].comments.push(this.commentDto);
-        this.commentsArray.push(this.commentDto);
-
-        let groupedItems = this.commentsArray.reduce((acc: any, item: any) => {
-          const date = item.createdDate.split('T')[0];
-          if (!acc[date]) {
-            acc[date] = [];
-          }
-          acc[date].push(item);
-          return acc;
-        }, {});
-
-        this.groupArrays = Object.keys(groupedItems).map((createdDate) => {
-          return {
-            createdDate,
-            items: groupedItems[createdDate],
-          };
-        });
-        // // console.log('hello', this.groupArrays);
-        this.totalUnrespondedCmntCountByCustomer =
-          this.totalUnrespondedCmntCountByCustomer + 1;
+    if(this.flag == 'all-inboxes' || this.flag == 'my_inbox'){
+      if(!this.id){
+        this.id = localStorage.getItem('storeOpenedId') || '{}'
       }
-    });
-    this.changeDetect.detectChanges();
+      this.updatedComments.forEach((xyz: any) => {
+        if (this.id == xyz.userId) {
+          this.commentDto = {
+            id: xyz.id,
+            postId: xyz.postId,
+            commentId: xyz.commentId,
+            message: xyz.message,
+            contentType: xyz.contentType,
+            userName: xyz.userName || xyz.userId,
+            queryStatus: xyz.queryStatus,
+            createdDate: xyz.createdDate,
+            fromUserProfilePic: xyz.profilePic,
+            body: xyz.body,
+            to: xyz.toId,
+            cc: xyz.cc,
+            bcc: xyz.bcc,
+            attachments: xyz.mediaAttachments,
+            replies: [],
+            sentiment: '',
+            tags: [],
+            // fromId: xyz.fromId,
+            // fromName: xyz.fromName,
+            // fromProfilePic: xyz.fromProfilePic,
+            // toId: xyz.toId,
+            // toName: xyz.toName,
+            // msgText: xyz.msgText,
+            // agentId: xyz.agentId,
+            // customerSocailProfileId: xyz.agentId,
+            // profileId: xyz.profileId,
+            // profilePageId: xyz.profilePageId,
+          };
+          this.WhatsappData[0].comments.push(this.commentDto);
+          this.commentsArray.push(this.commentDto);
+  
+          let groupedItems = this.commentsArray.reduce((acc: any, item: any) => {
+            const date = item.createdDate.split('T')[0];
+            if (!acc[date]) {
+              acc[date] = [];
+            }
+            acc[date].push(item);
+            return acc;
+          }, {});
+  
+          this.groupArrays = Object.keys(groupedItems).map((createdDate) => {
+            return {
+              createdDate,
+              items: groupedItems[createdDate],
+            };
+          });
+          // // console.log('hello', this.groupArrays);
+          this.totalUnrespondedCmntCountByCustomer =
+            this.totalUnrespondedCmntCountByCustomer + 1;
+        }
+      });
+      this.changeDetect.detectChanges();
+    }
   }
 
   commentsArray: any[] = [];
@@ -583,19 +584,21 @@ export class WhatsappDetailsComponent implements OnInit {
   }
 
   removeTag(id: any, comId: any) {
-    this.insertTagsForFeedDto.feedId = comId.toString();
-    this.insertTagsForFeedDto.tagId = id;
-    this.insertTagsForFeedDto.feedType = 'WM';
-    this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
-
-    this.commondata
-      .RemoveTag(this.insertTagsForFeedDto)
-      .subscribe((res: any) => {
-        this.reloadComponent('RemoveTag');
-
-        this.activeTag = false;
-        this.checkTag = false;
-      });
+    if(this.flag == 'all-inboxes' || this.flag == 'my_inbox'){
+      this.insertTagsForFeedDto.feedId = comId.toString();
+      this.insertTagsForFeedDto.tagId = id;
+      this.insertTagsForFeedDto.feedType = 'WM';
+      this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
+  
+      this.commondata
+        .RemoveTag(this.insertTagsForFeedDto)
+        .subscribe((res: any) => {
+          this.reloadComponent('RemoveTag');
+  
+          this.activeTag = false;
+          this.checkTag = false;
+        });
+    }
   }
 
   Sentiments = [
