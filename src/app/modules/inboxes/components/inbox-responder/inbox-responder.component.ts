@@ -27,6 +27,7 @@ import { ResponderScheduleComponent } from 'src/app/modules/responder/right-side
 import { ResponderTaskComponent } from 'src/app/modules/responder/right-sidebar-components/responder-task/responder-task.component';
 import { ResponderTicketsComponent } from 'src/app/modules/responder/right-sidebar-components/responder-tickets/responder-tickets.component';
 import { WebPhoneComponent } from 'src/app/modules/web-phone/web-phone.component';
+import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
 import { RightNavService } from 'src/app/services/RightNavService/RightNav.service';
 import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
@@ -65,10 +66,13 @@ export class InboxResponderComponent implements OnInit {
     private sharedService: SharedService,
     private rightNavService: RightNavService,
     private toggleService : ToggleService,
-  ) {}
+    private  closePanelservices:ClosePanelService
+  ) {} 
 
   ngOnInit(): void {
-    
+    this.subscription = this.closePanelservices.receiveRightBarToggleValue().subscribe(res=>{
+      this.showPanel = res;
+    })
     // window.onbeforeunload = () => this.onBeforeUnload();
     window.addEventListener('beforeunload', this.onBeforeUnload);
     this.route.params.subscribe((routeParams) => {
@@ -108,6 +112,7 @@ export class InboxResponderComponent implements OnInit {
         this.childComponentName != undefined
       ) {
         this.showPanel = true
+        this.closePanelservices.sendLeftBarToggleValue(false)
         this.loadComponent('', this.childComponentName);
       }
     });
@@ -118,6 +123,7 @@ export class InboxResponderComponent implements OnInit {
         this.rightcontainer?.clear();
         localStorage.setItem('child', msg3)
         this.showPanel = true
+        this.closePanelservices.sendLeftBarToggleValue(false)
         this.loadComponent('',msg3)
       }
       else {
@@ -181,6 +187,7 @@ export class InboxResponderComponent implements OnInit {
     // console.log("Old Component====>",this.oldComponent);
     if (this.childComponentName != null) {
       this.showPanel = true;
+      this.closePanelservices.sendLeftBarToggleValue(false)
       this.loadComponent('', this.childComponentName);
     }
     this.subscription = this.toggleService.getDispositionForm().subscribe(value=>{

@@ -44,6 +44,7 @@ import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ti
 import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
 import { Router } from '@angular/router';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 declare var toggleEmojis: any;
 @Component({
@@ -161,7 +162,8 @@ export class FacebookComponent implements OnInit {
     private ticketResponseService: TicketResponseService,
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService: GetQueryTypeService,
-    private router: Router
+    private router: Router,
+    private store: StorageService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -170,10 +172,12 @@ export class FacebookComponent implements OnInit {
     });
   }
 
+  teamPermissions:any;
   currentUrl:string="";
 
   ngOnInit(): void {
-
+    debugger
+    this.teamPermissions = this.store.retrive("permissionteam","O").local;
     this.currentUrl = this.router.url;
 
     this.criteria = {

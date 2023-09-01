@@ -31,7 +31,14 @@ const routes: Routes = [
     path:'',
     component:ConsoleComponent,
 
-    children: [{
+    children: [
+      {
+        path:'home',
+        loadComponent: () => import('./components/home/home.component').then(c => c.HomeComponent),
+        data: { breadcrumb: 'Home' },
+        canMatch: [ConsoleRoutingGuard],
+      },
+      {
         path:'users',
         loadComponent: () => import('./components/users/users.component').then(c => c.UsersComponent),
         data: { breadcrumb: 'Users' },

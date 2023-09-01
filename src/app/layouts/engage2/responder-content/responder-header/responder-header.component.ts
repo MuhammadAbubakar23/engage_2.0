@@ -18,6 +18,7 @@ import { HeaderDto } from 'src/app/shared/Models/HeaderDto';
 import { MarkAsCompleteDto } from 'src/app/shared/Models/MarkAsCompleteDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
   selector: 'responder-header',
@@ -98,7 +99,7 @@ export class ResponderHeaderComponent implements OnInit {
 
   currentUrl: string = '';
   flag: string = '';
-  
+  teamPermissions:any;
 
   constructor(
     private fetchId: FetchIdService,
@@ -114,7 +115,8 @@ export class ResponderHeaderComponent implements OnInit {
     private updateCommentsService: UpdateCommentsService,
     private updateMessagesService: UpdateMessagesService,
     private toggleService: ToggleService,
-    private lodeModuleService : ModulesService
+    private lodeModuleService: ModulesService,
+    private store: StorageService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -130,6 +132,7 @@ export class ResponderHeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.teamPermissions = this.store.retrive("permissionteam","O").local;
     this.currentUrl = this._route.url;
     this.flag = this.currentUrl.split('/')[2]
     this.getUserDetails();

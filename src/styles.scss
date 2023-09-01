@@ -155,3 +155,36 @@
   padding: 15px;
   background-color: #fff;
 }
+//  for model only
+
+.modal-backdrop {
+  z-index: 1040;
+}
+
+.modal {
+  z-index: 1050;
+} 
+
+
+
+
+.icon-circle {
+  min-width: 90px;
+  width: 90px;
+  height: 90px;
+  background-color: #e6f3f4;
+  color: #34b3bc;
+  font-size: 36px;
+}
+
+.modal .modal-content {
+  border-radius: 0px; 
+}
+.modal .modal-content .modal-header .h5, .modal .modal-content .modal-header h5 {
+  font-size: 1.25rem;
+}
+.modal-title {
+  margin-bottom: 0;
+  line-height: 1.5;
+
+}

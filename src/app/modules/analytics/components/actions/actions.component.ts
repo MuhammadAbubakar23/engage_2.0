@@ -18,7 +18,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     NgSelectModule,
     FormsModule,
-  ToastrComponent],
+    ToastrComponent],
   templateUrl: './actions.component.html',
   styleUrls: ['./actions.component.scss']
 })
@@ -30,7 +30,7 @@ export class ActionsComponent implements OnInit {
   groupcolumnName = "Select Column";
   columns: any = [];
   groupselectedItems: any[] = [];
-  order = "Order By";
+  order = "ASC";
   orders = ["ASC", "DESC"];
   groupsby = ["COUNT", "AVG", "MIN", "MAX", "SUM", "STDEV"];
   query = "";
@@ -102,7 +102,7 @@ export class ActionsComponent implements OnInit {
   }
 
   showTablePlaceholder(index: number): boolean {
-    return !this.selectedTables[index]; // Will return true if no table selected for this index
+    return !this.selectedTables[index];
   }
   showColumns1Placeholder(index: number): boolean {
     return !this.selectedValues1[index] || this.selectedValues1[index].length === 0;
@@ -112,7 +112,6 @@ export class ActionsComponent implements OnInit {
   }
 
   limitData(): void {
-
     const db = localStorage.getItem('dbName');
     const selectedtable = localStorage.getItem('selectedtable');
     const connection = localStorage.getItem('connection_name');
@@ -122,15 +121,16 @@ export class ActionsComponent implements OnInit {
   }
 
 
-  sortData(): void {
-    const db = localStorage.getItem('dbName')
-    const selectedtable = localStorage.getItem('selectedtable')
-    const connection = localStorage.getItem('connection_name')
-    this.reportService.sortDataApi({ 'db': db, 'tableName': selectedtable, 'column': this.columnName, 'order': this.order, 'offset': this.offsetValue, 'connection_name': connection }).subscribe((res: any) => {
-      this.shareddataService.updateData(res);
+  // sortData(): void {
+  //   debugger
+  //   const db = localStorage.getItem('dbName')
+  //   const selectedtable = localStorage.getItem('selectedtable')
+  //   const connection = localStorage.getItem('connection_name')
+  //   this.reportService.sortDataApi({ 'db': db, 'tableName': selectedtable, 'column': this.columnName, 'order': this.order, 'connection_name': connection }).subscribe((res: any) => {
+  //     this.shareddataService.updateData(res);
 
-    });
-  }
+  //   });
+  // }
   groupData(): void {
 
     const db = localStorage.getItem('dbName')
@@ -148,9 +148,7 @@ export class ActionsComponent implements OnInit {
     const db = localStorage.getItem('dbName')
     const connection = localStorage.getItem('connection_name');
     this.reportService.summarizeDataApi({ 'db': db, 'query': this.query, 'connection_name': connection }).subscribe((res: any) => {
-
       this.shareddataService.updateData(res);
-
     });
   }
   visualizeData(): void {
@@ -303,20 +301,20 @@ export class ActionsComponent implements OnInit {
     this.shareddataService.updatechartType(this.selectedGraph);
   }
 
-  refreshData(){
-    this.numberoftables=0;
-     this.resetTable();
-     this.limitValue=5;
-     this.columnName='Select Column';
-     this.order='Order By';
-     this.offsetValue=0;
-    this.groupName="Select Group";
-    this.groupcolumnName="Select Column";
-    this.groupselectedItems=[];
-    const q=JSON.stringify(localStorage.getItem('query'));
-    console.log("q====>",q);
-    this.query=JSON.stringify(localStorage.getItem('query'));
-    this.selectedGraph="Bar Chart"
+  refreshData() {
+    this.numberoftables = 0;
+    this.resetTable();
+    this.limitValue = 5;
+    this.columnName = 'Select Column';
+    this.order = 'Order By';
+    this.offsetValue = 0;
+    this.groupName = "Select Group";
+    this.groupcolumnName = "Select Column";
+    this.groupselectedItems = [];
+    const q = JSON.stringify(localStorage.getItem('query'));
+    console.log("q====>", q);
+    this.query = JSON.stringify(localStorage.getItem('query'));
+    this.selectedGraph = "Bar Chart"
     this.shareddataService.updatechartType('Bar Chart')
     this.shareddataService.emitRefreshEvent('calling');
   }
