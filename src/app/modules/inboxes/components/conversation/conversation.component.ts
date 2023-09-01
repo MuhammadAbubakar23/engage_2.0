@@ -471,7 +471,7 @@ export class ConversationComponent implements OnInit {
   }
 
   updateListDataListener(res: any) {
-    if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+    if (this.flag == '') {
       res.forEach((newMsg: any) => {
         if (this.platform == newMsg.platform && this.isAttachment != true) {
           const index = this.ConversationList?.findIndex(

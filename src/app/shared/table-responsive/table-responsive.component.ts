@@ -80,7 +80,7 @@ export class TableResponsiveComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor() {
-    debugger
+    
     console.log("this.displayedColumns", this.displayedColumns, this.dataSource)
     // const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
 

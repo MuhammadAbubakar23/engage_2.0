@@ -31,7 +31,7 @@ toasters: Toaster[] = [];
     //this.toasts.splice(index, 1);
   }
   ngOnInit() {
-    debugger
+    
     this.toaster.toaster$
       .subscribe(toaster => {
         if(toaster!==null){

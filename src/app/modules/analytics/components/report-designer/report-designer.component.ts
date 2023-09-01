@@ -415,7 +415,7 @@ export class ReportDesignerComponent implements OnInit {
     }
   }
   paginationApi() {
-    debugger
+    
     this.reportservice
       .paginatedDataApi({
         db: this.dbName,
