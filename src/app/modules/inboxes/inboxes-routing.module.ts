@@ -7,7 +7,7 @@ import { InboxesComponent } from './inboxes.component';
 
 const routes: Routes = [
   {
-    path: ':flag',
+    path: ':flag/:flag2',
     component: InboxContentComponent,
     canDeactivate: [ResponderGuardGuard],
     children: [

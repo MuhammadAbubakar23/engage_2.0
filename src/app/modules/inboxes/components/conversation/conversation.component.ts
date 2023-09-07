@@ -137,7 +137,7 @@ export class ConversationComponent implements OnInit {
       });
 
     setInterval(() => {
-      if (this.currentUrl.split('/')[2] != 'sent') {
+      if (this.currentUrl.split('/')[2] == 'all-inboxes' || this.currentUrl.split('/')[2] == 'my_inbox') {
         if (this.groupByDateList?.length > 0) {
           this.TodayDate = new Date();
           this.groupByDateList?.forEach((group: any) => {
@@ -176,11 +176,12 @@ export class ConversationComponent implements OnInit {
   filter: any;
 
   getPlatform() {
-    this.subscription = this.filterService.getTogglePanel().subscribe((res) => {
-      this.platform = res;
-      this.pageNumber = 1;
-      this.getConversationList();
-    });
+    // this.subscription = this.filterService.getTogglePanel().subscribe((res) => {
+    //   debugger
+    //   this.platform = res;
+    //   this.pageNumber = 1;
+    //   this.getConversationList();
+    // });
   }
 
   to: number = 0;
@@ -191,12 +192,26 @@ export class ConversationComponent implements OnInit {
 
   getConversationList() {
     if (
-      this.currentUrl.split('/')[2] == 'my_inbox' ||
-      this.currentUrl.split('/')[2] == 'all-inboxes'
+      (this.currentUrl.split('/')[2] == 'my_inbox' ||
+      this.currentUrl.split('/')[2] == 'all-inboxes') && (this.currentUrl.split('/')[3] == 'all')
     ) {
       this.flag = '';
-    } else {
+      this.platform = '';
+    } else if ((this.currentUrl.split('/')[2] == 'my_inbox' ||
+    this.currentUrl.split('/')[2] == 'all-inboxes') && (this.currentUrl.split('/')[3] != 'all'))
+    {
+      this.flag = '';
+      this.platform = this.currentUrl.split('/')[3];
+    }
+    else if (this.currentUrl.split('/')[2] != 'my_inbox' &&
+    this.currentUrl.split('/')[2] != 'all-inboxes' && this.currentUrl.split('/')[3] == 'all')
+    {
       this.flag = this.currentUrl.split('/')[2];
+      this.platform = '';
+    }
+     else {
+      this.flag = this.currentUrl.split('/')[2];
+      this.platform = this.currentUrl.split('/')[3];
     }
 
     if (this.searchForm.value.dateWithin == '1 day') {
@@ -485,7 +500,7 @@ export class ConversationComponent implements OnInit {
                 this.ConversationList[index] = this.listingDto;
               }
             });
-          } else if (this.ConversationList) {
+          } else if (this.ConversationList.length > 0) {
             this.listingDto = newMsg;
             this.ConversationList.unshift(this.listingDto);
             if (this.ConversationList.length > this.pageSize) {
@@ -514,7 +529,7 @@ export class ConversationComponent implements OnInit {
                   this.ConversationList[index] = this.listingDto;
                 }
               });
-            } else if (this.ConversationList) {
+            } else if (this.ConversationList.length > 0) {
               this.listingDto = newMsg;
               this.ConversationList.unshift(this.listingDto);
               if (this.ConversationList.length > this.pageSize) {
@@ -542,7 +557,7 @@ export class ConversationComponent implements OnInit {
                   this.ConversationList[index] = this.listingDto;
                 }
               });
-            } else if (this.ConversationList) {
+            } else if (this.ConversationList.length > 0) {
               this.listingDto = newMsg;
               this.ConversationList.unshift(this.listingDto);
               if (this.ConversationList.length > this.pageSize) {
@@ -571,7 +586,7 @@ export class ConversationComponent implements OnInit {
                 this.ConversationList[index] = this.listingDto;
               }
             });
-          } else if (this.ConversationList) {
+          } else if (this.ConversationList.length > 0) {
             this.listingDto = newMsg;
             this.ConversationList.unshift(this.listingDto);
             if (this.ConversationList.length > this.pageSize) {
@@ -641,8 +656,9 @@ export class ConversationComponent implements OnInit {
         this.from = this.from - 1;
       }
       this.ConversationList.forEach((item: any) => {
-        if (item.profileId == res.profileId) {
-          this.ConversationList.splice(item);
+        const index = this.ConversationList.findIndex((x:any)=>x.profileId == res.profileId);
+        if (index !== -1) {
+          this.ConversationList.splice(index, 1);
         }
       });
       this.changeDetect.detectChanges();

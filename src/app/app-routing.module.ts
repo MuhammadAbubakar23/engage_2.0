@@ -6,12 +6,12 @@ import { ModulesResolver } from './shared/resolver/modules.resolver';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/all-inboxes/my_inbox',
+    redirectTo: '/all-inboxes/my_inbox/all',
     pathMatch: 'full',
   },
   {
     path: 'all-inboxes',
-    redirectTo: '/all-inboxes/my_inbox',
+    redirectTo: '/all-inboxes/my_inbox/all',
     pathMatch: 'full',
   },
   {

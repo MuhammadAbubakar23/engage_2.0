@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
         this.stor.store('nocompass', res.roles[0]);
         localStorage.setItem('agentId', res.userId);
         localStorage.setItem('agentName', res.username);
-        this.router.navigateByUrl('all-inboxes/my_inbox');
+        this.router.navigateByUrl('all-inboxes/my_inbox/all');
         this.spinnerService.hide();
 
         //signalRRequests

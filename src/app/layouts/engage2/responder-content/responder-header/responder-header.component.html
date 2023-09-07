@@ -18,7 +18,7 @@
                 aria-expanded="false">
                 <i class="fal fa-ellipsis-v-alt"></i>
             </button>
-            <ng-container *ngIf="flag !='sent'">
+            <ng-container *ngIf="flag == 'all-inboxes' || flag == 'my_inbox'">
                 <ul class="dropdown-menu custom-dropdown medium shadow mt-2 assignFirstDropdownList"
                     aria-labelledby="dropdownMenuButton1" [ngClass]="showMoreOptions == true?'show':''">
                     <li>
@@ -154,6 +154,20 @@
                     </div>
                 </ul>
             </ng-container>
+            <ng-container *ngIf="flag == 'blacklist'">
+                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 assignFirstDropdownList"
+                    aria-labelledby="dropdownMenuButton1" [ngClass]="showMoreOptions == true?'show':''">
+                    <li>
+                        <ul>
+                            <li class="mb-0" (click)="Unblock(profileId)">
+                                <a class="dropdown-item">
+                                    Unblock sender
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </ng-container>
         </div>
 
         <div class="social-wrapper d-flex align-items-center mx-2">
@@ -282,7 +296,7 @@
                 </li>
             </ul>
         </div>
-        <div class="dropdown borderDropdown w-auto markAs-dropdown" *ngIf="flag !='sent'">
+        <div class="dropdown borderDropdown w-auto markAs-dropdown" *ngIf="flag == 'all-inboxes' || flag == 'my_inbox'">
             <a class="btn btn-secondary dropdown-toggle chevron-icon down ps-2 pe-5" role="button" id="dropdownMenuLink"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="dropdown-title">Mark As</div>

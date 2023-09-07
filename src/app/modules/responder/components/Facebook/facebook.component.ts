@@ -176,7 +176,6 @@ export class FacebookComponent implements OnInit {
   currentUrl:string="";
 
   ngOnInit(): void {
-    debugger
     this.teamPermissions = this.store.retrive("permissionteam","O").local;
     this.currentUrl = this.router.url;
 
@@ -209,8 +208,10 @@ export class FacebookComponent implements OnInit {
     this.Subscription = this.updateMessagesService
       .receiveMessage()
       .subscribe((res) => {
+        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
         this.updatedMessages = res;
         this.updateMessagesDataListener();
+        }
       });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
       this.newReply = res;
@@ -291,8 +292,6 @@ export class FacebookComponent implements OnInit {
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
-          this.SpinnerService.hide();
-          this.spinner1running = false;
           this.fbCmntReply = true;
           this.ConverstationDetailDto = res;
           this.FacebookData = this.ConverstationDetailDto.List;
@@ -330,6 +329,8 @@ export class FacebookComponent implements OnInit {
           });
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+          this.SpinnerService.hide();
+          this.spinner1running = false;
           // this.fbStats();
           // // console.log('Facebook data', this.FacebookData);
       }
@@ -413,12 +414,14 @@ export class FacebookComponent implements OnInit {
         include: ""
       };
 
+      this.spinner1running = true;
       this.SpinnerService.show();
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
-          this.SpinnerService.hide();
+            this.SpinnerService.hide();
+            this.spinner1running = false;
           this.fbCmntReply = true;
           this.ConverstationDetailDto = res;
           this.FacebookData = this.ConverstationDetailDto.List;
@@ -770,12 +773,12 @@ export class FacebookComponent implements OnInit {
         include: ""
       };
 
+      this.spinner1running = true;
       this.SpinnerService.show();
       this.commondata
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
-          this.SpinnerService.hide();
           this.FacebookMessages = res.List?.dm;
           this.pageName = res.List?.profile.page_Name;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
@@ -811,6 +814,8 @@ export class FacebookComponent implements OnInit {
                 };
               }
             );
+            this.SpinnerService.hide();
+          this.spinner1running = false;
             // // console.log('Messages ==>', this.groupedMessages);
           });
      }
@@ -896,12 +901,12 @@ export class FacebookComponent implements OnInit {
         include: ""
       };
 
+      this.spinner1running = true;
       this.SpinnerService.show();
       this.commondata
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
-          this.SpinnerService.hide();
           this.FacebookMessages = res.List?.dm;
           this.pageName = res.List?.profile.page_Name;
           this.totalMessages = res.TotalCount;
@@ -938,6 +943,8 @@ export class FacebookComponent implements OnInit {
                 };
               }
             );
+            this.SpinnerService.hide();
+          this.spinner1running = false;
             // // console.log('Messages ==>', this.groupedMessages);
           });
      }
@@ -1379,7 +1386,7 @@ export class FacebookComponent implements OnInit {
   }
 
   removeTagFromFeed(tagid: any, feedId: string, type: any) {
-    if(this.flag != 'sent'){
+    if(this.flag == 'all-inboxes' || this.flag == 'my_inbox'){
     if (type == 'FC') {
       this.insertTagsForFeedDto.tagId = tagid;
       this.insertTagsForFeedDto.feedId = feedId.toString();

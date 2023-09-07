@@ -72,7 +72,7 @@ export class InboxContentComponent implements OnInit {
       this.loadComponent('responder');
     } else {
       this.flag = this.router.url.split('/')[2];
-      if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+      if (this.flag == 'all-inboxes' || this.flag == 'my_inbox' || this.flag == 'archived') {
         this.loadComponent('all-inboxes');
       } else if (this.flag == 'starred') {
         this.loadComponent('starred');
@@ -84,9 +84,7 @@ export class InboxContentComponent implements OnInit {
         this.loadComponent('blacklist');
       } else if (this.flag == 'trash') {
         this.loadComponent('trash');
-      } else if (this.flag == 'archived') {
-        this.loadComponent('archived');
-      }
+      } 
     }
 
     this.router.events.subscribe((ev) => {
@@ -96,7 +94,7 @@ export class InboxContentComponent implements OnInit {
           this.loadComponent('responder');
         } else {
           this.flag = this.router.url.split('/')[2];
-          if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+          if (this.flag == 'all-inboxes' || this.flag == 'my_inbox' || this.flag == 'archived') {
             this.loadComponent('all-inboxes');
           } else if (this.flag == 'starred') {
             this.loadComponent('starred');
@@ -108,9 +106,7 @@ export class InboxContentComponent implements OnInit {
             this.loadComponent('blacklist');
           } else if (this.flag == 'trash') {
             this.loadComponent('trash');
-          } else if (this.flag == 'archived') {
-            this.loadComponent('archived');
-          }
+          } 
         }
       }
     });
@@ -127,7 +123,7 @@ export class InboxContentComponent implements OnInit {
       this.loadComponent('responder');
     } else {
       this.flag = this.router.url.split('/')[2];
-      if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+      if (this.flag == 'all-inboxes' || this.flag == 'my_inbox' || this.flag == 'archived') {
         this.loadComponent('all-inboxes');
       } else if (this.flag == 'starred') {
         this.loadComponent('starred');
@@ -139,9 +135,7 @@ export class InboxContentComponent implements OnInit {
         this.loadComponent('blacklist');
       } else if (this.flag == 'trash') {
         this.loadComponent('trash');
-      } else if (this.flag == 'archived') {
-        this.loadComponent('archived');
-      }
+      } 
     }
 
     this.router.events.subscribe((ev) => {
@@ -151,7 +145,7 @@ export class InboxContentComponent implements OnInit {
           this.loadComponent('responder');
         } else {
           this.flag = this.router.url.split('/')[2];
-          if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+          if (this.flag == 'all-inboxes' || this.flag == 'my_inbox' || this.flag == 'archived') {
             this.loadComponent('all-inboxes');
           } else if (this.flag == 'starred') {
             this.loadComponent('starred');
@@ -163,9 +157,7 @@ export class InboxContentComponent implements OnInit {
             this.loadComponent('blacklist');
           } else if (this.flag == 'trash') {
             this.loadComponent('trash');
-          } else if (this.flag == 'archived') {
-            this.loadComponent('archived');
-          }
+          } 
         }
       }
     });

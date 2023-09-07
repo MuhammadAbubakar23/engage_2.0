@@ -6,7 +6,7 @@
       <ul class="list-group list-group-flush" id="inboxes-list" data-scrollbar="true" tabindex="-1"
         style="overflow-y: auto; outline: none;">
         <div class="scroll-content">
-          <a (click)="updatevalue('')" [routerLink]="['/all-inboxes/my_inbox']"
+          <a [routerLink]="['/all-inboxes/'+flag+'/all']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="all-conversation">
             <div class="iconButton medium skyBg">
               <i class="far fa-inbox"></i>
@@ -16,7 +16,7 @@
             </div>
             <span class="badge twltte-bg rounded-pill">{{UnResponded}}</span>
           </a>
-          <a (click)="updatevalue('allInboxesHeader')" [routerLink]="['/all-inboxes/sla']"
+          <a (click)="updatevalue('allInboxesHeader')" [routerLink]="['/all-inboxes/'+flag+'/sla']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="all-slas">
             <div class="iconButton medium radicalBg">
               <i class="fal fa-bell"></i>
@@ -31,7 +31,7 @@
           </a>
 
 <!-- From DB -->
-          <!-- <a *ngFor="let channel of allChannels" (click)="updatevalue(channel.title)" [routerLink]="['/all-inboxes/my_inbox']"
+          <!-- <a *ngFor="let channel of allChannels" (click)="updatevalue(channel.title)" [routerLink]="['/all-inboxes/my_inbox/all']"
             class="all-inboxes-menu list-group-item list-group-item-action">
             <div [ngClass]="channel.color" [innerHTML]="channel.icon">
             </div>
@@ -46,7 +46,7 @@
 <br>
 <br>
 <br> -->
-          <a (click)="updatevalue('Email')"
+          <a [routerLink]="['/all-inboxes/'+flag+'/Email']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="email">
             <div class="iconButton medium whiteBg">
               <img width="25px" src="../../../../../assets/images/gmail-icon.png" alt="gmail"/>
@@ -58,7 +58,7 @@
             <span class="badge twltte-bg rounded-pill">{{EmailUnResponded}}</span>
           </a>
 
-          <a (click)="updatevalue('OfficeEmail')"
+          <a [routerLink]="['/all-inboxes/'+flag+'/OfficeEmail']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="email">
             <div class="iconButton medium berryBg">
               <i class="fal fa-envelope"></i>
@@ -69,7 +69,7 @@
             </div>
             <span class="badge twltte-bg rounded-pill">{{OfficeEmailUnResponded}}</span>
           </a>
-          <a (click)="updatevalue('WhatsApp')"
+          <a [routerLink]="['/all-inboxes/'+flag+'/WhatsApp']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="whatsapp">
             <div class="iconButton medium mintBg">
               <i class="fab fa-whatsapp"></i>
@@ -80,7 +80,7 @@
             </div>
             <span class="badge twltte-bg rounded-pill">{{WaUnResponded}}</span>
           </a>
-          <a (click)="updatevalue('SMS')"
+          <a [routerLink]="['/all-inboxes/'+flag+'/SMS']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="sms">
             <div class="iconButton medium cherryBg">
               <i class="fal fa-comment-alt-lines"></i>
@@ -102,7 +102,7 @@
             </div>
 
           </a>
-          <a (click)="updatevalue('Facebook')"
+          <a [routerLink]="['/all-inboxes/'+flag+'/Facebook']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="facebook">
             <div class="iconButton medium navyBg">
               <i class="fab fa-facebook-f"></i>
@@ -113,7 +113,7 @@
             </div>
             <span class="badge twltte-bg rounded-pill">{{FbUnResponded}}</span>
           </a>
-          <a (click)="updatevalue('Webchat')"
+          <a [routerLink]="['/all-inboxes/'+flag+'/Webchat']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="webchat">
             <div class="iconButton medium webchatbg">
               <i class="fa-light fa-messages"></i>
@@ -124,7 +124,7 @@
             </div>
             <span class="badge twltte-bg rounded-pill">{{WebchatUnResponded}}</span>
           </a>
-          <a (click)="updatevalue('Twitter')"
+          <a [routerLink]="['/all-inboxes/'+flag+'/Twitter']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="twitter">
             <div class="iconButton medium oceanBg">
               <i class="fab fa-twitter"></i>
@@ -135,7 +135,7 @@
             </div>
             <span class="badge twltte-bg rounded-pill">{{TwitterUnResponded}}</span>
           </a>
-          <a (click)="updatevalue('Instagram')"
+          <a [routerLink]="['/all-inboxes/'+flag+'/Instagram']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="instagram">
             <div class="iconButton medium instabg">
               <i class="fab fa-instagram"></i>
@@ -146,7 +146,7 @@
             </div>
             <span class="badge twltte-bg rounded-pill">{{InstaUnResponded}}</span>
           </a>
-          <a (click)="updatevalue('LinkedIn')"
+          <a [routerLink]="['/all-inboxes/'+flag+'/LinkedIn']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="linkedin">
             <div class="iconButton medium linkedinbg">
               <i class="fa-brands fa-linkedin-in"></i>
@@ -168,7 +168,7 @@
             </div>
             <span class="badge twltte-bg rounded-pill">{{PlaystoreUnResponded}}</span>
           </a>
-          <a (click)="updatevalue('Youtube')"
+          <a [routerLink]="['/all-inboxes/'+flag+'/Youtube']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="youtube">
             <div class="iconButton medium radicalBg">
               <i class="fab fa-youtube"></i>

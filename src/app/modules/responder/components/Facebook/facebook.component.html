@@ -193,51 +193,36 @@
                                                                 </button>
                                                             </div>
                                                             <div *ngIf="this.teamPermissions.priviledge.includes('_qrysta__')">
-                                                            <div class="dropdown w-auto"
-                                                                *ngIf="fbcmnts.queryStatus != 'Responded'">
-                                                                <button class="btn coal p-0 ps-3" type="button"
-                                                                    id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                                    aria-expanded="false">
-                                                                    <small
-                                                                        *ngIf="fbcmnts.spam == false">{{fbcmnts.queryStatus}}
-                                                                        <i class="far fa-chevron-down ms-2"
-                                                                            *ngIf="(flag == 'all-inboxes' || flag == 'my_inbox') && fbcmnts.queryStatus != 'Completed'"></i></small>
-                                                                    <small *ngIf="fbcmnts.spam == true">Spam <i
-                                                                            class="far fa-chevron-down ms-2"
-                                                                            *ngIf="flag == 'all-inboxes' || flag == 'my_inbox'"></i></small>
-                                                                </button>
-                                                                <ul class="dropdown-menu custom-dropdown"
-                                                                    aria-labelledby="dropdownMenuButton1"
-                                                                    *ngIf="(flag == 'all-inboxes' || flag == 'my_inbox') && fbcmnts.queryStatus != 'Completed'">
-
-                                                                    <li>
-                                                                        <a class="dropdown-item"
-                                                                            *ngIf="fbcmnts.queryStatus != 'Responded'"
-                                                                            (click)="commentStatus(fbcmnts.id, 'FC')">Read</a>
-                                                                        <a class="dropdown-item"
-                                                                            *ngIf="fbcmnts.starred == false"
-                                                                            (click)="starMessage(fbcmnts.id, true)">Star
-                                                                            Message</a>
-                                                                        <a class="dropdown-item"
-                                                                            *ngIf="fbcmnts.starred == true"
-                                                                            (click)="starMessage(fbcmnts.id, false)">Remove
-                                                                            Star from
-                                                                            Message</a>
-                                                                        <!-- <a class="dropdown-item" *ngIf="fbcmnts.isHide == false" (click)="hideMessage(fbcmnts.id, true)">Hide Message</a>
-                                                                        <a class="dropdown-item" *ngIf="fbcmnts.isHide == true" (click)="hideMessage(fbcmnts.id, false)">UnHide Message</a> -->
-                                                                        <a class="dropdown-item"
-                                                                            *ngIf="fbcmnts.spam == false"
-                                                                            (click)="spamMessage(fbcmnts.id, true, 'FC')">Mark
-                                                                            as Spam</a>
-                                                                        <a class="dropdown-item"
-                                                                            *ngIf="fbcmnts.spam == true"
-                                                                            (click)="spamMessage(fbcmnts.id, false, 'FC')">Remove
-                                                                            from
-                                                                            Spam</a>
-                                                                    </li>
-                                                                </ul>
+                                                                <div class="dropdown w-auto" *ngIf="fbcmnts.queryStatus != 'Responded'">
+                                                                    <button class="btn coal p-0 ps-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        <small *ngIf="fbcmnts.spam == true; else notSpam">Spam 
+                                                                            <i class="far fa-chevron-down ms-2" *ngIf="flag == 'all-inboxes' || flag == 'my_inbox'"></i>
+                                                                        </small>
+                                                                        <ng-template #notSpam>{{fbcmnts.queryStatus}}
+                                                                            <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'all-inboxes' || flag == 'my_inbox') && fbcmnts.queryStatus != 'Completed'"></i>
+                                                                        </ng-template>
+                                                                    </button>
+                                                                    <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1"
+                                                                        *ngIf="(flag == 'all-inboxes' || flag == 'my_inbox') && fbcmnts.queryStatus != 'Completed'">
+                                                            
+                                                                        <li>
+                                                                            <a class="dropdown-item" *ngIf="fbcmnts.queryStatus != 'Responded'" (click)="commentStatus(fbcmnts.id, 'FC')">Read</a>
+                                                                            <a class="dropdown-item" *ngIf="fbcmnts.starred == true; else notStarred" (click)="starMessage(fbcmnts.id, false)">Remove Star from Message</a>
+                                                                            <ng-template #notStarred>
+                                                                               <a class="dropdown-item" (click)="starMessage(fbcmnts.id, true)">Star Message</a>
+                                                                            </ng-template>
+                                                                            <!-- <a class="dropdown-item" *ngIf="fbcmnts.isHide == false" (click)="hideMessage(fbcmnts.id, true)">Hide Message</a>
+                                                                                                                                    <a class="dropdown-item" *ngIf="fbcmnts.isHide == true" (click)="hideMessage(fbcmnts.id, false)">UnHide Message</a> -->
+                                                                            
+                                                                            <a class="dropdown-item" *ngIf="fbcmnts.spam == true; else notSpamBtn" (click)="spamMessage(fbcmnts.id, false, 'FC')">Remove from Spam</a>
+                                                                            <ng-template #notSpamBtn>
+                                                                                <a class="dropdown-item"  (click)="spamMessage(fbcmnts.id, true, 'FC')">Mark as Spam</a>
+                                                                            </ng-template>
+                                                                            
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
                                                             </div>
-                                                        </div>
                                                             <!-- <div class="w-auto"
                                                                 *ngIf="fbcmnts.queryStatus == 'Responded' || fbcmnts.queryStatus == 'Completed' && fbcmnts.spam == false"
                                                                 style="margin-left: 20px;">
@@ -277,7 +262,7 @@
                                                         <!-- For Sentiment Pills -->
                                                     </div>
 
-                                                    <div class="message-bottom" *ngIf="flag != 'sent'">
+                                                    <div class="message-bottom" *ngIf="flag == 'all-inboxes' || flag == 'my_inbox'">
                                                         <div class="row">
                                                             <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                                 <div
@@ -510,7 +495,7 @@
                                                     </div>
                                                 </div>
                                                 <!-- <ng-container *ngIf="this.teamPermissions.priviledge.includes('__qrytic__')">
-                                                    <span *ngIf="flag != 'sent'" class="complaintBtn" (click)="toggle('ticket', fbcmnts.id)"
+                                                    <span *ngIf="flag == 'all-inboxes' || flag == 'my_inbox'" class="complaintBtn" (click)="toggle('ticket', fbcmnts.id)"
                                                     type="button">
                                                     <i class="fal fa-plus-circle sky"></i>
                                                 </span>
@@ -704,39 +689,25 @@
                                                             <button class="btn coal p-0 ps-3" type="button"
                                                                 id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                 aria-expanded="false">
-                                                                <small
-                                                                    *ngIf="fbmsgs.spam == false">{{fbmsgs.queryStatus}}
-                                                                    <i class="far fa-chevron-down ms-2"
-                                                                        *ngIf="(flag == 'all-inboxes' || flag == 'my_inbox') && fbmsgs.queryStatus != 'Completed'"></i></small>
-                                                                <small *ngIf="fbmsgs.spam == true">Spam <i
-                                                                        class="far fa-chevron-down ms-2"
-                                                                        *ngIf="flag == 'all-inboxes' || flag == 'my_inbox'"></i></small>
+                                                                <small *ngIf="fbmsgs.spam == true; else notSpamMsg">Spam <i class="far fa-chevron-down ms-2" *ngIf="flag == 'all-inboxes' || flag == 'my_inbox'"></i></small>
+                                                                <ng-template #notSpamMsg>{{fbmsgs.queryStatus}} 
+                                                                    <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'all-inboxes' || flag == 'my_inbox') && fbmsgs.queryStatus != 'Completed'"></i>
+                                                                </ng-template>
                                                             </button>
                                                             <ul class="dropdown-menu custom-dropdown"
                                                                 aria-labelledby="dropdownMenuButton1"
                                                                 *ngIf="(flag == 'all-inboxes' || flag == 'my_inbox') && fbmsgs.queryStatus != 'Completed'">
 
                                                                 <li>
-                                                                    <a class="dropdown-item"
-                                                                        *ngIf="fbmsgs.queryStatus != 'Responded'"
-                                                                        (click)="commentStatus(fbmsgs.id, 'FCP')">Read</a>
-                                                                    <a class="dropdown-item"
-                                                                        *ngIf="fbmsgs.starred == false"
-                                                                        (click)="starMessage(fbmsgs.id, true)">Star
-                                                                        Message</a>
-                                                                    <a class="dropdown-item"
-                                                                        *ngIf="fbmsgs.starred == true"
-                                                                        (click)="starMessage(fbmsgs.id, false)">Remove
-                                                                        Star from
-                                                                        Message</a>
-                                                                    <a class="dropdown-item"
-                                                                        *ngIf="fbmsgs.spam == false"
-                                                                        (click)="spamMessage(fbmsgs.id, true, 'FCP')">Mark
-                                                                        as Spam</a>
-                                                                    <a class="dropdown-item" *ngIf="fbmsgs.spam == true"
-                                                                        (click)="spamMessage(fbmsgs.id, false, 'FCP')">Remove
-                                                                        from
-                                                                        Spam</a>
+                                                                    <a class="dropdown-item" *ngIf="fbmsgs.queryStatus != 'Responded'" (click)="commentStatus(fbmsgs.id, 'FCP')">Read</a>
+                                                                    <a class="dropdown-item" *ngIf="fbmsgs.starred == true; else notStarredMsg" (click)="starMessage(fbmsgs.id, false)">Remove Star from Message</a>
+                                                                    <ng-template #notStarredMsg>
+                                                                        <a class="dropdown-item" (click)="starMessage(fbmsgs.id, true)">Star Message</a>
+                                                                    </ng-template>
+                                                                    <a class="dropdown-item" *ngIf="fbmsgs.spam == true; else notSpamBtn" (click)="spamMessage(fbmsgs.id, false, 'FCP')">Remove from Spam</a>
+                                                                    <ng-template #notSpamBtn>
+                                                                        <a class="dropdown-item" (click)="spamMessage(fbmsgs.id, true, 'FCP')">Mark as Spam</a>
+                                                                    </ng-template>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -779,7 +750,7 @@
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                 </div>
-                                                <div class="message-bottom" *ngIf="flag != 'sent'">
+                                                <div class="message-bottom" *ngIf="flag == 'all-inboxes' || flag == 'my_inbox'">
                                                     <div class="row">
                                                         <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                             <div class="message-actionlist d-flex align-items-center">
@@ -979,7 +950,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <span *ngIf="flag != 'sent'" class="complaintBtn" (click)="toggle('ticket', fbmsgs.id)"
+                                            <!-- <span *ngIf="flag == 'all-inboxes' || flag == 'my_inbox'" class="complaintBtn" (click)="toggle('ticket', fbmsgs.id)"
                                                 type="button">
                                                 <i class="fal fa-plus-circle sky"></i>
                                             </span> -->
@@ -1107,7 +1078,7 @@
         </div>
     </div>
 </div>
-<ng-container *ngIf="fbCmntReply == true && flag != 'sent'">
+<ng-container *ngIf="fbCmntReply == true && (flag == 'all-inboxes' || flag == 'my_inbox')">
     <div class="msgTypingField shadow-lg" *ngIf="this.teamPermissions.priviledge.includes('__repsnd__')">
         <div class="attachment-block" [ngClass]="isAttachment == true?'':'d-none'">
             <div class="card-body p-3" *ngFor="let image of ImageName; let i = index" style="margin-right: 10px;">
@@ -1192,7 +1163,7 @@
         </form>
     </div>
 </ng-container>
-<ng-container *ngIf="fbMsgReply == true && flag != 'sent' && fbCmntReply == false">
+<ng-container *ngIf="fbMsgReply == true && (flag == 'all-inboxes' || flag == 'my_inbox') && fbCmntReply == false">
     <div class="msgTypingField shadow-lg" *ngIf="this.teamPermissions.priviledge.includes('__repsnd__')" >
         <div>
             <div class="attachment-block" [ngClass]="isAttachment == true?'':'d-none'">
