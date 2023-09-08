@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class QuickReplySearchFilterPipe implements PipeTransform {
 
   transform(items: any, searchText: string): any[] {
-    
+    debugger
     if(!items) return [];
     if(!searchText) return items;
 

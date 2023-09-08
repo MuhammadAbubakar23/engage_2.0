@@ -30,3 +30,8 @@
  .excelGreen{
    color: #008000;
  }
+
+ textarea[contenteditable]{
+  max-height: 100px;
+    overflow: auto;
+ }

@@ -147,7 +147,8 @@
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                     </div>
-                                                    <div class="message-bottom" *ngIf="this.flag == 'all-inboxes' || this.flag == 'my_inbox'">
+                                                    <div class="message-bottom"
+                                                        *ngIf="this.flag == 'all-inboxes' || this.flag == 'my_inbox'">
                                                         <div class="row">
                                                             <div class="col-lg-12 ps-4 d-flex align-items-center">
                                                                 <div
@@ -566,8 +567,8 @@
                 </ul>
             </div>
             <div class="form-floating textarea-field">
-                <textarea formControlName="text" class="form-control auto" rows="1" id="text"
-                    placeholder="Write a response here" [(ngModel)]="text" style="height: 0px" #textarea></textarea>
+                <textarea formControlName="text" class="form-control auto"  id="text" contenteditable
+                    placeholder="Write a response here" [(ngModel)]="text" #textarea></textarea>
 
             </div>
             <div class="icons-list align-items-md-center d-flex ps-2">
@@ -631,8 +632,8 @@
             <div class="list-group-section quick-response" id="accordionExample">
                 <div class="collapse-toggle-card">
                     <div class="list-group list-group-flush">
-
-                        <div class="collapse-wrap mx-3" id="qr-ques1"
+                        <!-- From DB -->
+                        <!-- <div class="collapse-wrap mx-3" id="qr-ques1"
                             *ngFor="let qr of QuickReplies | quickReplySearchFilter: quickReplySearchText">
                             <div class="list-group list-group-flush mb-4 ms-4 ps-1">
                                 <div class="form-check list-group-item theme-check">
@@ -642,12 +643,43 @@
                                         (click)="sendQuickReply(qr.value)">{{qr.text}}
                                     </label>
                                 </div>
+                            </div>
+                        </div> -->
 
+                        <!-- Hard Coded -->
+                        <div class="list-group list-group-flush" *ngFor="let qr of QuickReplies | quickReplySearchFilter: quickReplySearchText; let i = index">
+                            <a class="list-group-item d-flex align-items-center menu_bar_collapse" (click)="openQuickReplyDropdown(i)"
+                                data-bs-toggle="collapse" role="button" [attr.data-bs-target]="'#qr-ques'+qr.value+i" aria-expanded="true"
+                                [attr.aria-controls]="'qr-ques'+qr.value+i">
+                                <div class="list-down-icon">
+                                    <span class="iconButton medium medium iconHover me-3">
+                                        <i class="fal fa-chevron-right rotate-down" [ngClass]="{'active': i === activeDropdown}"></i>
+                                    </span>
+                                </div>
+                                <div class="w-100 list-txt">
+                                    <div class="d-flex w-100 justify-content-between align-items-baseline">
+                                        <h6 class="mb-0 darkblue"> {{qr.text}} </h6>
+                                        <span class="badge rounded-pill blue-bg">{{qr.Message.length}}</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="collapse-wrap mx-3 collapse" [ngClass]="{'show': i === activeDropdown}" [id]="'qr-ques'+qr.value+i">
+                                <div class="list-group list-group-flush mb-4 ms-4 ps-1">
+                                    <div class="form-check list-group-item theme-check selectedmsg" *ngFor="let msg of qr.Message">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id={{msg.id}} #radioInput>
+                                        <!-- <span class="iconButton medium mintBg sendicon" data-bs-dismiss="offcanvas"
+                                            aria-label="Close">
+                                            <i class="fa-sharp fa-light fa-arrow-right"></i>
+                                        </span> -->
+                                        <label class="form-check-label" (click)="sendQuickReply(msg.id)" for={{msg.id}} [innerHTML]="msg.text"></label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
