@@ -344,13 +344,13 @@
                             <!-- <span class="badge radicalBg rounded-pill">4</span> -->
                         </a>
                     </ul>
-                    <ng-container *ngFor="let profile of userSpecificAllocatedProfiles">
-                        <ng-container *ngIf="profile.slaFlag == 'danger' || profile.slaFlag == 'warning'">
+                    <!-- <ng-container *ngFor="let profile of AllocatedProfiles">
+                        <ng-container>
                             <ul class="list-group list-group-flush" id="inboxes-list">
 
                                 <li class="postBox isSla"
-                                    [ngClass]="[profile.slaFlag == 'warning'?'slaMedium':'' || profile.slaFlag == 'danger'?'slaHigh':'']"
-                                    (click)="updatevalue(profile.fromId, profile.platform, profile.profileId)">
+                                    
+                                    (click)="updatevalue(profile.user, profile.platform, profile.profileId)">
 
                                     <a *ngIf="profile.platform == 'Facebook'">
                                         <div class="iconButton medium navyBg"><i class="fab fa-facebook-f"></i></div>
@@ -389,7 +389,7 @@
                                         <a>
                                             <div class="boxHeading">
                                                 <div class="left">
-                                                    <div class="boxId">{{profile.fromName}}</div>
+                                                    <div class="boxId">{{profile.userName}}</div>
                                                 </div>
                                                 <div class="right">
                                                     <div class="postDate">{{profile.createdDate | date:'hh:mm a'}}</div>
@@ -398,13 +398,13 @@
                                                 </div>
                                             </div>
                                         </a>
-                                        <!-- <div class="subHeading"><a >
+                                         <div class="subHeading"><a >
                                         <div class="channel">
                                             <i class="fab fa-facebook-f navy"></i>
                                         </div>
                                     </a><a href="javascript:;" class="businessName navy">/foodpanda.pk</a>
                                     <a href="javascript:;" class="skill">@Feedback</a>
-                                </div> -->
+                                </div>
                                         <div class="boxContent">
                                             {{profile.message}}
                                         </div>
@@ -413,7 +413,7 @@
                                 </li>
                             </ul>
                         </ng-container>
-                    </ng-container>
+                    </ng-container> -->
 
                     <ul class="list-group-followup list-group-flush">
                         <a href="javascript:"
@@ -423,11 +423,11 @@
                             <!-- <span class="badge berryBg rounded-pill">16</span> -->
                         </a>
                     </ul>
-                    <ng-container *ngFor="let profile of userSpecificAllocatedProfiles">
-                        <ng-container *ngIf="profile.slaFlag == 'unread'">
+                    <ng-container *ngFor="let profile of AllocatedProfiles">
+                        <ng-container >
                             <ul class="list-group list-group-flush" id="inboxes-list">
                                 <li class="postBox unRead"
-                                    (click)="updatevalue(profile.fromId, profile.platform, profile.profileId)">
+                                    (click)="updatevalue(profile.user, profile.platform, profile.profileId)">
                                     <a *ngIf="profile.platform == 'Facebook'">
                                         <div class="iconButton medium navyBg"><i class="fab fa-facebook-f"></i></div>
                                     </a>
@@ -465,7 +465,7 @@
                                         <a>
                                             <div class="boxHeading">
                                                 <div class="left">
-                                                    <div class="boxId">{{profile.fromName}}</div>
+                                                    <div class="boxId">{{profile.userName}}</div>
                                                 </div>
                                                 <div class="right">
                                                     <div class="postDate">{{profile.createdDate | date:'hh:mm a'}}</div>

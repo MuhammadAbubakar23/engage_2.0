@@ -122,7 +122,6 @@ export class ActionsComponent implements OnInit {
 
 
   // sortData(): void {
-  //   debugger
   //   const db = localStorage.getItem('dbName')
   //   const selectedtable = localStorage.getItem('selectedtable')
   //   const connection = localStorage.getItem('connection_name')

@@ -114,7 +114,6 @@ teamnameuser:any=''
   }
 
   onSubmit(){
-    debugger
     let data={
       "name":this.userForm.value,
       "assignment":this.assignment,
@@ -249,7 +248,6 @@ this.isDescendingOrder=!this.isDescendingOrder
             return this.isDescendingOrder ? 1 : -1;
         }
         if (a[data] > b[data]) {
-          debugger
             return this.isDescendingOrder ? -1 : 1;
         }
         return 0;

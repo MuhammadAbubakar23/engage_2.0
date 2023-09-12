@@ -59,7 +59,7 @@ export class FacebookComponent implements OnInit {
   radioInput!: ElementRef<HTMLInputElement>;
 
   FacebookData: any;
-  FacebookMessages: any[]=[];
+  FacebookMessages: any[] = [];
   TagsList: any;
   totalUnrespondedMsgCountByCustomer: any = 0;
   pageNumber: any = 1;
@@ -97,7 +97,6 @@ export class FacebookComponent implements OnInit {
 
   TotalCmntQueryCount: number = 0;
   TotalMsgQueryCount: number = 0;
-
 
   id = this.fetchId.getOption();
   slaId = this.fetchId.getSlaId();
@@ -165,18 +164,18 @@ export class FacebookComponent implements OnInit {
     private router: Router,
     private store: StorageService
   ) {
-    this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
-      this.id = res;
-      this.getFacebookComments();
-      this.getFacebookMessages();
-    });
+    // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
+    //   this.id = res;
+    //   this.getFacebookComments();
+    //   this.getFacebookMessages();
+    // });
   }
 
-  teamPermissions:any;
-  currentUrl:string="";
+  teamPermissions: any;
+  currentUrl: string = '';
 
   ngOnInit(): void {
-    this.teamPermissions = this.store.retrive("permissionteam","O").local;
+    this.teamPermissions = this.store.retrive('permissionteam', 'O').local;
     this.currentUrl = this.router.url;
 
     this.criteria = {
@@ -208,9 +207,9 @@ export class FacebookComponent implements OnInit {
     this.Subscription = this.updateMessagesService
       .receiveMessage()
       .subscribe((res) => {
-        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
-        this.updatedMessages = res;
-        this.updateMessagesDataListener();
+        if (this.flag == 'focused') {
+          this.updatedMessages = res;
+          this.updateMessagesDataListener();
         }
       });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
@@ -232,16 +231,16 @@ export class FacebookComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
-        if (res.contentCount.contentType == 'FC') {
-          this.totalUnrespondedCmntCountByCustomer =
-            res.contentCount.unrespondedCount;
+        if (this.flag == 'focused') {
+          if (res.contentCount.contentType == 'FC') {
+            this.totalUnrespondedCmntCountByCustomer =
+              res.contentCount.unrespondedCount;
+          }
+          if (res.contentCount.contentType == 'FCP') {
+            this.totalUnrespondedMsgCountByCustomer =
+              res.contentCount.unrespondedCount;
+          }
         }
-        if (res.contentCount.contentType == 'FCP') {
-          this.totalUnrespondedMsgCountByCustomer =
-            res.contentCount.unrespondedCount;
-        }
-      }
       });
 
     this.ticketResponseService.getTicketId().subscribe((res) => {
@@ -254,7 +253,7 @@ export class FacebookComponent implements OnInit {
         this.applySentimentListner(res);
       });
 
-      this.Subscription = this.queryStatusService
+    this.Subscription = this.queryStatusService
       .receiveQueryStatus()
       .subscribe((res) => {
         this.updateMessageStatusDataListner(res);
@@ -264,7 +263,7 @@ export class FacebookComponent implements OnInit {
   totalComments: number = 0;
   totalMessages: number = 0;
 
-  flag:string="";
+  flag: string = '';
   getFacebookComments() {
     this.flag = this.currentUrl.split('/')[2];
 
@@ -280,11 +279,11 @@ export class FacebookComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
-        text : "",
+        text: '',
         flag: this.flag,
-        userName: "",
-        notInclude: "",
-        include: ""
+        userName: '',
+        notInclude: '',
+        include: '',
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -292,12 +291,74 @@ export class FacebookComponent implements OnInit {
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
-          this.fbCmntReply = true;
-          this.ConverstationDetailDto = res;
-          this.FacebookData = this.ConverstationDetailDto.List;
-          this.TotalCmntQueryCount = res.TotalQueryCount;
-         this.pageName = this.FacebookData[0]?.post.profile.page_Name;
+            this.fbCmntReply = true;
+            this.ConverstationDetailDto = res;
+            this.FacebookData = this.ConverstationDetailDto.List;
+            this.TotalCmntQueryCount = res.TotalQueryCount;
+            this.pageName = this.FacebookData[0]?.post.profile.page_Name;
 
+            this.commentsArray = [];
+
+            this.FacebookData.forEach((item: any) => {
+              this.commentsArray = [];
+              item.comments.forEach((cmnt: any) => {
+                this.commentsArray.push(cmnt);
+
+                let groupedItems = this.commentsArray.reduce(
+                  (acc: any, aa: any) => {
+                    const date = aa.createdDate.split('T')[0];
+                    if (!acc[date]) {
+                      acc[date] = [];
+                    }
+                    acc[date].push(aa);
+                    return acc;
+                  },
+                  {}
+                );
+
+                item['groupedComments'] = Object.keys(groupedItems).map(
+                  (createdDate) => {
+                    return {
+                      createdDate,
+                      items: groupedItems[createdDate],
+                    };
+                  }
+                );
+              });
+            });
+
+            this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+            this.SpinnerService.hide();
+            this.spinner1running = false;
+            // this.fbStats();
+            // // console.log('Facebook data', this.FacebookData);
+          }
+        });
+    } else if (this.slaId != null || this.slaId != undefined) {
+      localStorage.setItem('storeOpenedId', this.slaId);
+      this.filterDto = {
+        // fromDate: new Date(),
+        // toDate: new Date(),
+        user: this.slaId,
+        pageId: '',
+        plateForm: 'Facebook',
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize,
+        isAttachment: false,
+        queryType: this.queryType,
+        text: '',
+        flag: this.flag,
+        userName: '',
+        notInclude: '',
+        include: '',
+      };
+      this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
+        if (Object.keys(res).length > 0) {
+          this.fbCmntReply = true;
+          this.FacebookData = res.List;
+          this.totalComments = res.TotalCount;
+          this.TotalCmntQueryCount = res.TotalQueryCount;
+          this.pageName = this.FacebookData[0].post.profile.page_Name;
           this.commentsArray = [];
 
           this.FacebookData.forEach((item: any) => {
@@ -329,71 +390,9 @@ export class FacebookComponent implements OnInit {
           });
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-          this.SpinnerService.hide();
-          this.spinner1running = false;
           // this.fbStats();
-          // // console.log('Facebook data', this.FacebookData);
-      }
+        }
       });
-    } else if (this.slaId != null || this.slaId != undefined) {
-      localStorage.setItem('storeOpenedId', this.slaId);
-      this.filterDto = {
-        // fromDate: new Date(),
-        // toDate: new Date(),
-        user: this.slaId,
-        pageId: '',
-        plateForm: 'Facebook',
-        pageNumber: this.pageNumber,
-        pageSize: this.pageSize,
-        isAttachment: false,
-        queryType: this.queryType,
-        text : "",
-        flag: this.flag,
-        userName: "",
-        notInclude: "",
-        include: ""
-      };
-      this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
-        if (Object.keys(res).length > 0) {
-          this.fbCmntReply = true;
-        this.FacebookData = res.List;
-        this.totalComments = res.TotalCount;
-        this.TotalCmntQueryCount = res.TotalQueryCount;
-        this.pageName = this.FacebookData[0].post.profile.page_Name;
-        this.commentsArray = [];
-
-        this.FacebookData.forEach((item: any) => {
-          this.commentsArray = [];
-          item.comments.forEach((cmnt: any) => {
-            this.commentsArray.push(cmnt);
-
-            let groupedItems = this.commentsArray.reduce(
-              (acc: any, aa: any) => {
-                const date = aa.createdDate.split('T')[0];
-                if (!acc[date]) {
-                  acc[date] = [];
-                }
-                acc[date].push(aa);
-                return acc;
-              },
-              {}
-            );
-
-            item['groupedComments'] = Object.keys(groupedItems).map(
-              (createdDate) => {
-                return {
-                  createdDate,
-                  items: groupedItems[createdDate],
-                };
-              }
-            );
-          });
-        });
-
-        this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-        // this.fbStats();
-     }
-     });
     }
     // if ((this.id == null || this.id == undefined) && (this.slaId == null || this.slaId == undefined))
     else {
@@ -407,11 +406,11 @@ export class FacebookComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
-        text : "",
+        text: '',
         flag: this.flag,
-        userName: "",
-        notInclude: "",
-        include: ""
+        userName: '',
+        notInclude: '',
+        include: '',
       };
 
       this.spinner1running = true;
@@ -422,47 +421,47 @@ export class FacebookComponent implements OnInit {
           if (Object.keys(res).length > 0) {
             this.SpinnerService.hide();
             this.spinner1running = false;
-          this.fbCmntReply = true;
-          this.ConverstationDetailDto = res;
-          this.FacebookData = this.ConverstationDetailDto.List;
-          this.totalComments = res.TotalCount;
-          this.TotalCmntQueryCount = res.TotalQueryCount;
-          this.pageName = this.FacebookData[0]?.post.profile.page_Name;
-          this.commentsArray = [];
-
-          this.FacebookData.forEach((item: any) => {
+            this.fbCmntReply = true;
+            this.ConverstationDetailDto = res;
+            this.FacebookData = this.ConverstationDetailDto.List;
+            this.totalComments = res.TotalCount;
+            this.TotalCmntQueryCount = res.TotalQueryCount;
+            this.pageName = this.FacebookData[0]?.post.profile.page_Name;
             this.commentsArray = [];
-            item.comments.forEach((cmnt: any) => {
-              this.commentsArray.push(cmnt);
 
-              let groupedItems = this.commentsArray.reduce(
-                (acc: any, aa: any) => {
-                  const date = aa.createdDate.split('T')[0];
-                  if (!acc[date]) {
-                    acc[date] = [];
+            this.FacebookData.forEach((item: any) => {
+              this.commentsArray = [];
+              item.comments.forEach((cmnt: any) => {
+                this.commentsArray.push(cmnt);
+
+                let groupedItems = this.commentsArray.reduce(
+                  (acc: any, aa: any) => {
+                    const date = aa.createdDate.split('T')[0];
+                    if (!acc[date]) {
+                      acc[date] = [];
+                    }
+                    acc[date].push(aa);
+                    return acc;
+                  },
+                  {}
+                );
+
+                item['groupedComments'] = Object.keys(groupedItems).map(
+                  (createdDate) => {
+                    return {
+                      createdDate,
+                      items: groupedItems[createdDate],
+                    };
                   }
-                  acc[date].push(aa);
-                  return acc;
-                },
-                {}
-              );
-
-              item['groupedComments'] = Object.keys(groupedItems).map(
-                (createdDate) => {
-                  return {
-                    createdDate,
-                    items: groupedItems[createdDate],
-                  };
-                }
-              );
+                );
+              });
             });
-          });
 
-          this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-          // this.fbStats();
-          // // console.log('Facebook data', this.FacebookData);
-    }
-  });
+            this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+            // this.fbStats();
+            // // console.log('Facebook data', this.FacebookData);
+          }
+        });
     }
   }
 
@@ -612,10 +611,9 @@ export class FacebookComponent implements OnInit {
                     singleCmnt.tags.splice(index, 1);
                   }
                 } else {
-                  if(!(singleCmnt.tags.includes(this.addTags))){
+                  if (!singleCmnt.tags.includes(this.addTags)) {
                     singleCmnt.tags.push(this.addTags);
                   }
-                  
                 }
               }
             }
@@ -677,7 +675,7 @@ export class FacebookComponent implements OnInit {
   }
 
   updateQueryStatusDataListner() {
-    if(this.FacebookData){
+    if (this.FacebookData) {
       this.FacebookData.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
           cmnt.items.forEach((singleCmnt: any) => {
@@ -689,14 +687,14 @@ export class FacebookComponent implements OnInit {
         });
       });
     }
-    if(this.FacebookMessages){
+    if (this.FacebookMessages) {
       this.FacebookMessages?.forEach((msg: any) => {
         if (msg.id == this.queryStatus.queryId) {
           msg.queryStatus = this.queryStatus.queryStatus;
         }
       });
     }
-    
+
     this.changeDetect.detectChanges();
   }
 
@@ -766,11 +764,11 @@ export class FacebookComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
-        text : "",
-        flag : this.flag,
-        userName: "",
-        notInclude: "",
-        include: ""
+        text: '',
+        flag: this.flag,
+        userName: '',
+        notInclude: '',
+        include: '',
       };
 
       this.spinner1running = true;
@@ -779,47 +777,51 @@ export class FacebookComponent implements OnInit {
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
-          this.FacebookMessages = res.List?.dm;
-          this.pageName = res.List?.profile.page_Name;
-          this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
-          this.TotalMsgQueryCount = res.TotalQueryCount;
+            this.FacebookMessages = res.List?.dm;
+            this.pageName = res.List?.profile.page_Name;
+            this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+            this.TotalMsgQueryCount = res.TotalQueryCount;
 
-          if(!this.FacebookData || this.FacebookData == undefined || this.FacebookData.length == 0){
-            this.fbCmntReply = false;
-            this.fbMsgReply = true;
-          }
+            if (
+              !this.FacebookData ||
+              this.FacebookData == undefined ||
+              this.FacebookData.length == 0
+            ) {
+              this.fbCmntReply = false;
+              this.fbMsgReply = true;
+            }
 
-          this.messagesArray = [];
-          this.groupedMessages = [];
+            this.messagesArray = [];
+            this.groupedMessages = [];
 
-          this.FacebookMessages.forEach((item: any) => {
-            this.messagesArray.push(item);
-            let groupedItems = this.messagesArray.reduce(
-              (acc: any, item: any) => {
-                const date = item.createdDate.split('T')[0];
-                if (!acc[date]) {
-                  acc[date] = [];
+            this.FacebookMessages.forEach((item: any) => {
+              this.messagesArray.push(item);
+              let groupedItems = this.messagesArray.reduce(
+                (acc: any, item: any) => {
+                  const date = item.createdDate.split('T')[0];
+                  if (!acc[date]) {
+                    acc[date] = [];
+                  }
+                  acc[date].push(item);
+                  return acc;
+                },
+                {}
+              );
+
+              this.groupedMessages = Object.keys(groupedItems).map(
+                (createdDate) => {
+                  return {
+                    createdDate,
+                    items: groupedItems[createdDate],
+                  };
                 }
-                acc[date].push(item);
-                return acc;
-              },
-              {}
-            );
-
-            this.groupedMessages = Object.keys(groupedItems).map(
-              (createdDate) => {
-                return {
-                  createdDate,
-                  items: groupedItems[createdDate],
-                };
-              }
-            );
-            this.SpinnerService.hide();
-          this.spinner1running = false;
-            // // console.log('Messages ==>', this.groupedMessages);
-          });
-     }
-     });
+              );
+              this.SpinnerService.hide();
+              this.spinner1running = false;
+              // // console.log('Messages ==>', this.groupedMessages);
+            });
+          }
+        });
     } else if (this.slaId != null || undefined) {
       localStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
@@ -832,88 +834,28 @@ export class FacebookComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
-        text : "",
+        text: '',
         flag: this.flag,
-        userName: "",
-        notInclude: "",
-        include: ""
+        userName: '',
+        notInclude: '',
+        include: '',
       };
 
       this.SpinnerService.show();
       this.commondata.GetSlaDM(this.filterDto).subscribe((res: any) => {
         if (Object.keys(res).length > 0) {
-        this.SpinnerService.hide();
-        this.FacebookMessages = res.List?.dm;
-        this.pageName = res.List?.profile.page_Name;
-        this.totalMessages = res.TotalCount;
-        this.TotalMsgQueryCount = res.TotalQueryCount;
-        this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
-
-        if(!this.FacebookData || this.FacebookData == undefined || this.FacebookData.length == 0){
-          this.fbCmntReply = false;
-          this.fbMsgReply = true;
-        }
-
-        this.messagesArray = [];
-        this.groupedMessages = [];
-
-        this.FacebookMessages.forEach((item: any) => {
-          this.messagesArray.push(item);
-          let groupedItems = this.messagesArray.reduce(
-            (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
-              if (!acc[date]) {
-                acc[date] = [];
-              }
-              acc[date].push(item);
-              return acc;
-            },
-            {}
-          );
-
-          this.groupedMessages = Object.keys(groupedItems).map(
-            (createdDate) => {
-              return {
-                createdDate,
-                items: groupedItems[createdDate],
-              };
-            }
-          );
-          // // console.log('Messages ==>', this.groupedMessages);
-        });
-     }
-     });
-    } else {
-      this.filterDto = {
-        // fromDate: new Date(),
-        // toDate: new Date(),
-        user: localStorage.getItem('storeOpenedId') || '{}',
-        pageId: '',
-        plateForm: localStorage.getItem('parent') || '{}',
-        pageNumber: this.pageNumber,
-        pageSize: this.pageSize,
-        isAttachment: false,
-        queryType: this.queryType,
-        text : "",
-        flag: this.flag,
-        userName: "",
-        notInclude: "",
-        include: ""
-      };
-
-      this.spinner1running = true;
-      this.SpinnerService.show();
-      this.commondata
-        .GetChannelMessageDetail(this.filterDto)
-        .subscribe((res: any) => {
-          if (Object.keys(res).length > 0) {
+          this.SpinnerService.hide();
           this.FacebookMessages = res.List?.dm;
           this.pageName = res.List?.profile.page_Name;
           this.totalMessages = res.TotalCount;
           this.TotalMsgQueryCount = res.TotalQueryCount;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
-          if(!this.FacebookData || this.FacebookData == undefined || this.FacebookData.length == 0){
+          if (
+            !this.FacebookData ||
+            this.FacebookData == undefined ||
+            this.FacebookData.length == 0
+          ) {
             this.fbCmntReply = false;
             this.fbMsgReply = true;
           }
@@ -943,12 +885,80 @@ export class FacebookComponent implements OnInit {
                 };
               }
             );
-            this.SpinnerService.hide();
-          this.spinner1running = false;
             // // console.log('Messages ==>', this.groupedMessages);
           });
-     }
-     });
+        }
+      });
+    } else {
+      this.filterDto = {
+        // fromDate: new Date(),
+        // toDate: new Date(),
+        user: localStorage.getItem('storeOpenedId') || '{}',
+        pageId: '',
+        plateForm: localStorage.getItem('parent') || '{}',
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize,
+        isAttachment: false,
+        queryType: this.queryType,
+        text: '',
+        flag: this.flag,
+        userName: '',
+        notInclude: '',
+        include: '',
+      };
+
+      this.spinner1running = true;
+      this.SpinnerService.show();
+      this.commondata
+        .GetChannelMessageDetail(this.filterDto)
+        .subscribe((res: any) => {
+          if (Object.keys(res).length > 0) {
+            this.FacebookMessages = res.List?.dm;
+            this.pageName = res.List?.profile.page_Name;
+            this.totalMessages = res.TotalCount;
+            this.TotalMsgQueryCount = res.TotalQueryCount;
+            this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+
+            if (
+              !this.FacebookData ||
+              this.FacebookData == undefined ||
+              this.FacebookData.length == 0
+            ) {
+              this.fbCmntReply = false;
+              this.fbMsgReply = true;
+            }
+
+            this.messagesArray = [];
+            this.groupedMessages = [];
+
+            this.FacebookMessages.forEach((item: any) => {
+              this.messagesArray.push(item);
+              let groupedItems = this.messagesArray.reduce(
+                (acc: any, item: any) => {
+                  const date = item.createdDate.split('T')[0];
+                  if (!acc[date]) {
+                    acc[date] = [];
+                  }
+                  acc[date].push(item);
+                  return acc;
+                },
+                {}
+              );
+
+              this.groupedMessages = Object.keys(groupedItems).map(
+                (createdDate) => {
+                  return {
+                    createdDate,
+                    items: groupedItems[createdDate],
+                  };
+                }
+              );
+              this.SpinnerService.hide();
+              this.spinner1running = false;
+              // // console.log('Messages ==>', this.groupedMessages);
+            });
+          }
+        });
     }
   }
 
@@ -1146,13 +1156,13 @@ export class FacebookComponent implements OnInit {
 
             this.facebookReplyForm.reset();
 
-            if(this.radioInput != undefined){
+            if (this.radioInput != undefined) {
               this.radioInput.nativeElement.checked = false;
             }
           },
           (error) => {
-             alert(error.message);
-             this.spinner1running = false;
+            alert(error.message);
+            this.spinner1running = false;
             this.SpinnerService.hide();
           }
         );
@@ -1236,13 +1246,13 @@ export class FacebookComponent implements OnInit {
             this.reloadComponent('fbmessage');
             this.facebookMessageReplyForm.reset();
 
-            if(this.radioInput != undefined){
+            if (this.radioInput != undefined) {
               this.radioInput.nativeElement.checked = false;
             }
           },
-          ( error ) => {
-             alert(error.message);
-             this.spinner1running = false;
+          (error) => {
+            alert(error.message);
+            this.spinner1running = false;
             this.SpinnerService.hide();
           }
         );
@@ -1295,16 +1305,16 @@ export class FacebookComponent implements OnInit {
   getTagList() {
     this.commondata.GetTagsList().subscribe((res: any) => {
       if (Object.keys(res).length > 0) {
-      this.TagsList = res;
-      this.TagsList.forEach((xyz: any) => {
-        xyz.keywordList.forEach((abc: any) => {
-          this.Keywords.push(abc);
+        this.TagsList = res;
+        this.TagsList.forEach((xyz: any) => {
+          xyz.keywordList.forEach((abc: any) => {
+            this.Keywords.push(abc);
+          });
+          // // console.log('keywords==>', this.Keywords);
         });
-        // // console.log('keywords==>', this.Keywords);
-      });
-      // // console.log('TagList', this.TagsList);
-  }
-});
+        // // console.log('TagList', this.TagsList);
+      }
+    });
   }
 
   insertTagsForFeed(id: any, comId: string, type: any) {
@@ -1386,41 +1396,44 @@ export class FacebookComponent implements OnInit {
   }
 
   removeTagFromFeed(tagid: any, feedId: string, type: any) {
-    if(this.flag == 'all-inboxes' || this.flag == 'my_inbox'){
-    if (type == 'FC') {
-      this.insertTagsForFeedDto.tagId = tagid;
-      this.insertTagsForFeedDto.feedId = feedId.toString();
-      this.insertTagsForFeedDto.feedType = 'FC';
-      this.insertTagsForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
+    if (
+      this.flag == 'focused' ||
+      this.flag == 'assigned-to-me'
+    ) {
+      if (type == 'FC') {
+        this.insertTagsForFeedDto.tagId = tagid;
+        this.insertTagsForFeedDto.feedId = feedId.toString();
+        this.insertTagsForFeedDto.feedType = 'FC';
+        this.insertTagsForFeedDto.userId = Number(
+          localStorage.getItem('agentId')
+        );
 
-      this.commondata
-        .RemoveTag(this.insertTagsForFeedDto)
-        .subscribe((res: any) => {
-          this.reloadComponent('RemoveTag');
+        this.commondata
+          .RemoveTag(this.insertTagsForFeedDto)
+          .subscribe((res: any) => {
+            this.reloadComponent('RemoveTag');
 
-          this.activeTag = false;
-          this.checkTag = false;
-        });
+            this.activeTag = false;
+            this.checkTag = false;
+          });
+      }
+      if (type == 'FCP') {
+        this.insertTagsForFeedDto.tagId = tagid;
+        this.insertTagsForFeedDto.feedId = feedId.toString();
+        this.insertTagsForFeedDto.feedType = 'FCP';
+        this.insertTagsForFeedDto.userId = Number(
+          localStorage.getItem('agentId')
+        );
+
+        this.commondata
+          .RemoveTag(this.insertTagsForFeedDto)
+          .subscribe((res: any) => {
+            this.reloadComponent('RemoveTag');
+            this.activeTag = false;
+            this.checkTag = false;
+          });
+      }
     }
-    if (type == 'FCP') {
-      this.insertTagsForFeedDto.tagId = tagid;
-      this.insertTagsForFeedDto.feedId = feedId.toString();
-      this.insertTagsForFeedDto.feedType = 'FCP';
-      this.insertTagsForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
-
-      this.commondata
-        .RemoveTag(this.insertTagsForFeedDto)
-        .subscribe((res: any) => {
-          this.reloadComponent('RemoveTag');
-          this.activeTag = false;
-          this.checkTag = false;
-        });
-    }
-  }
   }
 
   Sentiments = [
@@ -1477,7 +1490,7 @@ export class FacebookComponent implements OnInit {
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = 'Facebook';
     this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {});
@@ -1487,7 +1500,7 @@ export class FacebookComponent implements OnInit {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = 'Facebook';
-  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .QueryCompleted(this.commentStatusDto)
       .subscribe((res: any) => {
@@ -1543,7 +1556,7 @@ export class FacebookComponent implements OnInit {
         this.toastermessage = false;
       }, 4000);
     }
-if (type == 'removeSpam') {
+    if (type == 'removeSpam') {
       this.AlterMsg = 'Message has been removed from spam items';
       this.toastermessage = true;
       setTimeout(() => {
@@ -1557,7 +1570,7 @@ if (type == 'removeSpam') {
         this.toastermessage = false;
       }, 4000);
     }
-if (type == 'removeStarred') {
+    if (type == 'removeStarred') {
       this.AlterMsg = 'Profile(s) has been removed from starred items';
       this.toastermessage = true;
       setTimeout(() => {
@@ -1727,7 +1740,7 @@ if (type == 'removeStarred') {
   }
 
   updateTicketId(res: any) {
-    if(this.FacebookData){
+    if (this.FacebookData) {
       this.FacebookData.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
           cmnt.items.forEach((singleCmnt: any) => {
@@ -1738,19 +1751,19 @@ if (type == 'removeStarred') {
         });
       });
     }
-    if(this.FacebookMessages){
+    if (this.FacebookMessages) {
       this.FacebookMessages?.forEach((msg: any) => {
         if (msg.id == res.queryId) {
           msg.ticketId = res.ticketId;
         }
       });
     }
-    
+
     this.changeDetect.detectChanges();
   }
 
   applySentimentListner(res: any) {
-    if(this.FacebookData){
+    if (this.FacebookData) {
       this.FacebookData.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
           cmnt.items.forEach((singleCmnt: any) => {
@@ -1761,7 +1774,7 @@ if (type == 'removeStarred') {
         });
       });
     }
-    if(this.FacebookMessages){
+    if (this.FacebookMessages) {
       this.FacebookMessages?.forEach((msg: any) => {
         if (msg.id == res.feedId) {
           msg.sentiment = res;
@@ -1773,9 +1786,9 @@ if (type == 'removeStarred') {
 
   closeQuickResponseSidebar() {
     this.quickReplySearchText = '';
-    if(this.radioInput != undefined){
-              this.radioInput.nativeElement.checked = false;
-            }
+    if (this.radioInput != undefined) {
+      this.radioInput.nativeElement.checked = false;
+    }
   }
 
   isImage(attachment: any): boolean {
@@ -1790,28 +1803,37 @@ if (type == 'removeStarred') {
     return attachment.contentType?.toLowerCase().startsWith('audio');
   }
 
-  hideMessage(queryId:number, status:boolean){
-    this.commondata.HideUnhideMessage(queryId,status).subscribe((res:any)=>{
+  hideMessage(queryId: number, status: boolean) {
+    this.commondata.HideUnhideMessage(queryId, status).subscribe((res: any) => {
+      this.FacebookData.forEach((post: any) => {
+        post.groupedComments.forEach((cmnt: any) => {
+          cmnt.items.forEach((singleCmnt: any) => {
+            if (singleCmnt.id == queryId) {
+              singleCmnt.isHide = status;
+            }
+          });
+        });
+      });
       console.log(res);
-    })
+    });
   }
-  itemsToBeUpdated:any[]=[];
+  itemsToBeUpdated: any[] = [];
 
-  starMessage(msgId:number, status:boolean){
-    this.itemsToBeUpdated=[];
-      var obj = {
-        channel: '',
-        flag: 'starred',
-        status: status,
-        messageId: msgId,
-        profileId: 0,
-      };
-      this.itemsToBeUpdated.push(obj);
+  starMessage(msgId: number, status: boolean) {
+    this.itemsToBeUpdated = [];
+    var obj = {
+      channel: '',
+      flag: 'starred',
+      status: status,
+      messageId: msgId,
+      profileId: 0,
+    };
+    this.itemsToBeUpdated.push(obj);
     this.commondata
       .UpdateStatus(this.itemsToBeUpdated)
       .subscribe((res: any) => {
-        if (res.message === "Status Updated Successfully") {
-          if(status == true){
+        if (res.message === 'Status Updated Successfully') {
+          if (status == true) {
             this.reloadComponent('starred');
           } else if (status == false) {
             this.reloadComponent('removeStarred');
@@ -1822,8 +1844,8 @@ if (type == 'removeStarred') {
 
   spam = false;
 
-  spamMessage(msgId:number, status:boolean, type:string){
-    this.itemsToBeUpdated=[];
+  spamMessage(msgId: number, status: boolean, type: string) {
+    this.itemsToBeUpdated = [];
     var obj = {
       channel: '',
       flag: 'spam',
@@ -1832,57 +1854,55 @@ if (type == 'removeStarred') {
       profileId: 0,
     };
     this.itemsToBeUpdated.push(obj);
-  this.commondata
-    .UpdateStatus(this.itemsToBeUpdated)
-    .subscribe((res: any) => {
-      if (res.message === "Status Updated Successfully") {
-        if(status == true){
-          this.spam = true;
-          this.commentStatus(msgId, type);
-          this.reloadComponent('spam');
-        } else if (status == false) {
-          this.spam = false;
-          this.reloadComponent('removeSpam');
+    this.commondata
+      .UpdateStatus(this.itemsToBeUpdated)
+      .subscribe((res: any) => {
+        if (res.message === 'Status Updated Successfully') {
+          if (status == true) {
+            this.spam = true;
+            this.commentStatus(msgId, type);
+            this.reloadComponent('spam');
+          } else if (status == false) {
+            this.spam = false;
+            this.reloadComponent('removeSpam');
+          }
         }
-      }
-    });
-}
-updateMessageStatusDataListner(res:any){
-  if(this.FacebookData){
-    this.FacebookData.forEach((post: any) => {
-      post.groupedComments.forEach((cmnt: any) => {
-        cmnt.items.forEach((singleCmnt: any) => {
-          res.forEach((msgStatus:any) => {
-            if (singleCmnt.id == msgStatus.messageId) {
-              if(msgStatus.flag == 'starred'){
-                singleCmnt.starred = msgStatus.status;
+      });
+  }
+  updateMessageStatusDataListner(res: any) {
+    if (this.FacebookData) {
+      this.FacebookData.forEach((post: any) => {
+        post.groupedComments.forEach((cmnt: any) => {
+          cmnt.items.forEach((singleCmnt: any) => {
+            res.forEach((msgStatus: any) => {
+              if (singleCmnt.id == msgStatus.messageId) {
+                if (msgStatus.flag == 'starred') {
+                  singleCmnt.starred = msgStatus.status;
+                }
+                if (msgStatus.flag == 'spam') {
+                  singleCmnt.spam = msgStatus.status;
+                }
               }
-              if(msgStatus.flag == 'spam'){
-                singleCmnt.spam = msgStatus.status;
-              }
-            }
+            });
           });
-          
         });
       });
-    });
-  }
-  if(this.FacebookMessages){
-    this.FacebookMessages?.forEach((msg: any) => {
-      res.forEach((msgStatus:any) => {
-        if (msg.id == msgStatus.messageId) {
-          if(msgStatus.flag == 'starred'){
-            msg.starred = msgStatus.status;
+    }
+    if (this.FacebookMessages) {
+      this.FacebookMessages?.forEach((msg: any) => {
+        res.forEach((msgStatus: any) => {
+          if (msg.id == msgStatus.messageId) {
+            if (msgStatus.flag == 'starred') {
+              msg.starred = msgStatus.status;
+            }
+            if (msgStatus.flag == 'spam') {
+              msg.spam = msgStatus.status;
+            }
           }
-          if(msgStatus.flag == 'spam'){
-            msg.spam = msgStatus.status;
-          }
-        }
+        });
       });
-      
-    });
+    }
+
+    this.changeDetect.detectChanges();
   }
-  
-  this.changeDetect.detectChanges();
-}
 }

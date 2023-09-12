@@ -14,7 +14,6 @@ export class ClosePanelService {
     return this.righttoggleValue.asObservable();
   }
   public sendLeftBarToggleValue(newValue:any) : void{
-    debugger
     this.lefttoggleValue.next(newValue);
   }
   public receiveLeftBarToggleValue(): Observable<any>{

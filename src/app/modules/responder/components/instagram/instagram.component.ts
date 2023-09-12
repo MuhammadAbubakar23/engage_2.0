@@ -186,7 +186,7 @@ export class InstagramComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+        if (this.flag == 'focused') {
           // this.totalUnrespondedCmntCountByCustomer = res.contentCount.unrespondedCount;
           if (res.contentCount.contentType == 'IC') {
             this.totalUnrespondedCmntCountByCustomer =
@@ -341,6 +341,7 @@ export class InstagramComponent implements OnInit {
   ReplyDto = new ReplyDto();
 
   getInstagramData() {
+    this.flag = this.router.url.split('/')[2];
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -357,7 +358,7 @@ export class InstagramComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -418,7 +419,7 @@ export class InstagramComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -476,7 +477,7 @@ export class InstagramComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -1205,6 +1206,7 @@ export class InstagramComponent implements OnInit {
   }
 
   getInstagramMessages() {
+    this.flag = this.router.url.split('/')[2];
     if (this.id != null || undefined) {
       this.filterDto = {
         // fromDate: new Date(),
@@ -1220,7 +1222,7 @@ export class InstagramComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
 
       this.SpinnerService.show();
@@ -1276,7 +1278,7 @@ export class InstagramComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
 
       this.SpinnerService.show();
@@ -1332,7 +1334,7 @@ export class InstagramComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
 
       this.SpinnerService.show();

@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path:'',
-    redirectTo:'/all-inboxes/my_inbox/all',
+    redirectTo:'/all-inboxes/focused/all',
     pathMatch:'full'
   },
   {

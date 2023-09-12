@@ -163,7 +163,6 @@ export class ReportDesignerComponent implements OnInit {
     });
 
     this.sharedataservice.data$.subscribe((newData: any) => {
-      debugger
       console.log("newData", newData);
       if (newData !== "Initial Data") {
         this.isGraph = true;
@@ -392,7 +391,6 @@ export class ReportDesignerComponent implements OnInit {
           page_size: this.pageSize
         })
         .subscribe((res) => {
-          debugger
           this.isGraph = true;
           this.isStats = false;
           this.tableData = this.transformDataObject(res.table);
@@ -440,7 +438,6 @@ export class ReportDesignerComponent implements OnInit {
     });
   }
   sortData(): void {
-    debugger
     const db = localStorage.getItem('dbName')
     const selectedtable = localStorage.getItem('selectedtable')
     const connection = localStorage.getItem('connection_name')

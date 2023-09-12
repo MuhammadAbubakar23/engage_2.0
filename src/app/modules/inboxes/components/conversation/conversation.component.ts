@@ -112,13 +112,50 @@ export class ConversationComponent implements OnInit {
   }
 
   currentUrl: string = '';
+  FlagForAssignToMe:string = '';
 
   ngOnInit(): void {
     this.currentUrl = this.router.url;
-
+    this.FlagForAssignToMe = this.currentUrl.split('/')[2]
     this.TodayDate = new Date();
-    this.getConversationList();
-    this.getPlatform();
+
+    if (this.currentUrl.split('/')[2] == 'assigned-to-me') {
+      this.SpinnerService.show();
+      this.commondata.GetAllocatedProfiles().subscribe((res: any) => {
+        this.SpinnerService.hide();
+        this.ConversationList = res;
+        this.TotalUnresponded = this.ConversationList.length;
+        this.to = 1;
+        this.from = this.ConversationList.length;
+        let groupedItems = this.ConversationList.reduce(
+          (acc: any, item: any) => {
+            const date = item.createdDate.split('T')[0];
+            if (!acc[date]) {
+              acc[date] = [];
+            }
+            acc[date].push(item);
+            return acc;
+          },
+          {}
+        );
+
+        this.groupByDateList = Object.keys(groupedItems).map((createdDate) => {
+          return {
+            createdDate,
+            items: groupedItems[createdDate],
+          };
+        });
+      },
+      (error)=>{
+        this.SpinnerService.hide();
+        if (error.status == 401){
+          alert('Unauthorized, Please login again')
+        }
+        // this.reloadComponent('')
+      });
+    } else {
+      this.getConversationList();
+    }
 
     Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(
       (tooltipNode) => new Tooltip(tooltipNode)
@@ -137,7 +174,9 @@ export class ConversationComponent implements OnInit {
       });
 
     setInterval(() => {
-      if (this.currentUrl.split('/')[2] == 'all-inboxes' || this.currentUrl.split('/')[2] == 'my_inbox') {
+      if (
+        this.currentUrl.split('/')[2] == 'focused'
+      ) {
         if (this.groupByDateList?.length > 0) {
           this.TodayDate = new Date();
           this.groupByDateList?.forEach((group: any) => {
@@ -177,7 +216,6 @@ export class ConversationComponent implements OnInit {
 
   getPlatform() {
     // this.subscription = this.filterService.getTogglePanel().subscribe((res) => {
-    //   debugger
     //   this.platform = res;
     //   this.pageNumber = 1;
     //   this.getConversationList();
@@ -191,27 +229,12 @@ export class ConversationComponent implements OnInit {
   customersList: any[] = [];
 
   getConversationList() {
-    if (
-      (this.currentUrl.split('/')[2] == 'my_inbox' ||
-      this.currentUrl.split('/')[2] == 'all-inboxes') && (this.currentUrl.split('/')[3] == 'all')
-    ) {
-      this.flag = '';
-      this.platform = '';
-    } else if ((this.currentUrl.split('/')[2] == 'my_inbox' ||
-    this.currentUrl.split('/')[2] == 'all-inboxes') && (this.currentUrl.split('/')[3] != 'all'))
-    {
-      this.flag = '';
-      this.platform = this.currentUrl.split('/')[3];
-    }
-    else if (this.currentUrl.split('/')[2] != 'my_inbox' &&
-    this.currentUrl.split('/')[2] != 'all-inboxes' && this.currentUrl.split('/')[3] == 'all')
-    {
+    if(this.currentUrl.split('/')[2] == 'completed'){
+      this.flag = 'sent';
+      this.platform =  this.currentUrl.split('/')[3];
+    } else {
       this.flag = this.currentUrl.split('/')[2];
-      this.platform = '';
-    }
-     else {
-      this.flag = this.currentUrl.split('/')[2];
-      this.platform = this.currentUrl.split('/')[3];
+      this.platform =  this.currentUrl.split('/')[3];
     }
 
     if (this.searchForm.value.dateWithin == '1 day') {
@@ -486,7 +509,7 @@ export class ConversationComponent implements OnInit {
   }
 
   updateListDataListener(res: any) {
-    if (this.flag == '') {
+    if (this.currentUrl.split('/')[2] == 'focused') {
       res.forEach((newMsg: any) => {
         if (this.platform == newMsg.platform && this.isAttachment != true) {
           const index = this.ConversationList?.findIndex(
@@ -646,6 +669,7 @@ export class ConversationComponent implements OnInit {
   }
 
   removeAssignedQueryListener(res: any) {
+    if (this.currentUrl.split('/')[2] == 'focused') {
     this.groupByDateList.forEach((group) => {
       const index = group.items.findIndex(
         (x: any) => x.profileId == res.profileId
@@ -656,7 +680,9 @@ export class ConversationComponent implements OnInit {
         this.from = this.from - 1;
       }
       this.ConversationList.forEach((item: any) => {
-        const index = this.ConversationList.findIndex((x:any)=>x.profileId == res.profileId);
+        const index = this.ConversationList.findIndex(
+          (x: any) => x.profileId == res.profileId
+        );
         if (index !== -1) {
           this.ConversationList.splice(index, 1);
         }
@@ -664,8 +690,12 @@ export class ConversationComponent implements OnInit {
       this.changeDetect.detectChanges();
     });
   }
+  }
 
   Reload() {
+    if(this.FlagForAssignToMe == 'assigned-to-me'){
+      
+    }
     this.TotalUnresponded = 0;
     this.Ids = [];
     this.isChecked = false;
@@ -696,10 +726,8 @@ export class ConversationComponent implements OnInit {
     platform: any,
     profileId: any
   ) {
-    if (
-      this.currentUrl.split('/')[2] == 'my_inbox' ||
-      this.currentUrl.split('/')[2] == 'all-inboxes'
-    ) {
+    localStorage.setItem('previousUrl',this.currentUrl)
+    if (this.currentUrl.split('/')[2] == 'focused') {
       this.assignQuerryDto = {
         userId: Number(localStorage.getItem('agentId')),
         profileId: profileId,
@@ -730,19 +758,23 @@ export class ConversationComponent implements OnInit {
           }
         },
         (error) => {
+          this.SpinnerService.hide();
           this.reloadComponent('queryallocatedtoanotheruser');
         }
       );
     } else if (this.currentUrl.split('/')[2] == 'trash') {
       this.reloadComponent('removeFromTrashToOpen');
-    } 
-    // else if (this.currentUrl.split('/')[2] == 'spam') {
-    //   this.reloadComponent('removeFromTrashToOpen');
-    // } 
-    // else if (this.currentUrl.split('/')[2] == 'blacklist') {
-    //   this.reloadComponent('removeFromTrashToOpen');
-    // } 
-    else {
+    } else if (this.currentUrl.split('/')[2] == 'assigned-to-me') {
+      this.SpinnerService.show();
+      this.fetchId.setPlatform(platform);
+      this.fetchId.setOption(id);
+      this.fetchposttype.sendPostType(postType);
+      localStorage.setItem('profileId', profileId);
+      localStorage.setItem('assignedProfile', profileId);
+      this.router.navigateByUrl(this.currentUrl + '/responder/' + platform);
+      this.lodeModuleService.updateModule('responder');
+      this.SpinnerService.hide();
+    } else {
       this.SpinnerService.show();
       this.fetchId.setPlatform(platform);
       this.fetchId.setOption(id);

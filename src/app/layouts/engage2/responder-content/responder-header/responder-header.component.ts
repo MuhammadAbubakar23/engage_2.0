@@ -172,7 +172,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
-        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
         if (Object.keys(res).length > 0) {
         res.forEach((msg: any) => {
           if (msg.userId == localStorage.getItem('storeHeaderOpenedId')) {
@@ -221,7 +221,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
         if (Object.keys(res).length > 0) {
         if (res.contentCount.contentType == 'FC') {
           this.totalFbUnrespondedCountByCustomer =
@@ -1962,7 +1962,7 @@ export class ResponderHeaderComponent implements OnInit {
       (res: any) => {
         this.reloadComponent('queryallocatedtoanotheruser');
         this.closeTeamList();
-        this.route.navigateByUrl('/all-inboxes/my_inbox/all');
+        this.route.navigateByUrl('/all-inboxes/focused/all');
         this.loadModuleService.updateModule('all-inboxes')
         localStorage.setItem('assignedProfile', '');
       },
@@ -2215,7 +2215,7 @@ if (type == 'RemoveStarred') {
           this.blockStatus = true;
           this.reloadComponent('block');
           localStorage.setItem('assignedProfile', '');
-          this.route.navigateByUrl('/all-inboxes/my_inbox/all');
+          this.route.navigateByUrl('/all-inboxes/focused/all');
           this.lodeModuleService.updateModule('all-inboxes');
         }
       });

@@ -15,7 +15,6 @@ export class MainContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscription = this.closePanelServices.receiveLeftBarToggleValue().subscribe(res=>{
-      debugger
       this.toggleLeftBar = res;
     })
   }

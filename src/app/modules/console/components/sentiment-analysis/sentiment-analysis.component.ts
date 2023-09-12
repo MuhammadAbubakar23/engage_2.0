@@ -64,7 +64,6 @@ export class SentimentAnalysisComponent implements OnInit, AfterViewInit {
         }
       });
       this.subscription = this.closePanelServices.receiveRightBarToggleValue().subscribe(res=>{
-        debugger
         this.showPanel = res;
       })
   }
