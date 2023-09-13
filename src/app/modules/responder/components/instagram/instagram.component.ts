@@ -68,7 +68,6 @@ export class InstagramComponent implements OnInit {
   TotalCmntQueryCount: number = 0;
   TotalMsgQueryCount: number = 0;
 
-
   instagramCommentReplyDto = new InstagramCommentReplyDto();
 
   show = false;
@@ -114,7 +113,7 @@ export class InstagramComponent implements OnInit {
   groupArrays: any[] = [];
   public criteria!: SortCriteria;
 
-  flag:string='';
+  flag: string = '';
 
   constructor(
     private fetchId: FetchIdService,
@@ -133,7 +132,7 @@ export class InstagramComponent implements OnInit {
     private ticketResponseService: TicketResponseService,
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService: GetQueryTypeService,
-    private router : Router
+    private router: Router
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -187,17 +186,17 @@ export class InstagramComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
-        // this.totalUnrespondedCmntCountByCustomer = res.contentCount.unrespondedCount;
-        if (res.contentCount.contentType == 'IC') {
-          this.totalUnrespondedCmntCountByCustomer =
-            res.contentCount.unrespondedCount;
+        if (this.flag == 'focused') {
+          // this.totalUnrespondedCmntCountByCustomer = res.contentCount.unrespondedCount;
+          if (res.contentCount.contentType == 'IC') {
+            this.totalUnrespondedCmntCountByCustomer =
+              res.contentCount.unrespondedCount;
+          }
+          if (res.contentCount.contentType == 'IM') {
+            this.totalUnrespondedMsgCountByCustomer =
+              res.contentCount.unrespondedCount;
+          }
         }
-        if (res.contentCount.contentType == 'IM') {
-          this.totalUnrespondedMsgCountByCustomer =
-            res.contentCount.unrespondedCount;
-        }
-      }
       });
     this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
@@ -342,6 +341,7 @@ export class InstagramComponent implements OnInit {
   ReplyDto = new ReplyDto();
 
   getInstagramData() {
+    this.flag = this.router.url.split('/')[2];
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -354,11 +354,11 @@ export class InstagramComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
-        text : "",
-        userName: "",
-        notInclude: "",
-        include: "",
-        flag: "",
+        text: '',
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: this.flag,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -415,11 +415,11 @@ export class InstagramComponent implements OnInit {
         pageSize: 0,
         isAttachment: false,
         queryType: this.queryType,
-        text : "",
-        userName: "",
-        notInclude: "",
-        include: "",
-        flag: "",
+        text: '',
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: this.flag,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -473,11 +473,11 @@ export class InstagramComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
-        text : "",
-        userName: "",
-        notInclude: "",
-        include: "",
-        flag: "",
+        text: '',
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: this.flag,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -616,10 +616,14 @@ export class InstagramComponent implements OnInit {
             this.instagramCommentReplyForm.reset();
             this.clearInputField();
             this.reloadComponent('comment');
-            this.radioInput.nativeElement.checked = false;
+            if (this.radioInput != undefined) {
+              this.radioInput.nativeElement.checked = false;
+            }
           },
-          ({ error }) => {
-            //  alert(error.message);
+          (error) => {
+            alert(error.message);
+            this.spinner1running = false;
+            this.SpinnerService.hide();
           }
         );
       } else {
@@ -1038,7 +1042,7 @@ export class InstagramComponent implements OnInit {
                     singleCmnt.tags.splice(index, 1);
                   }
                 } else {
-                  if(!(singleCmnt.tags.includes(this.addTags))){
+                  if (!singleCmnt.tags.includes(this.addTags)) {
                     singleCmnt.tags.push(this.addTags);
                   }
                 }
@@ -1156,7 +1160,6 @@ export class InstagramComponent implements OnInit {
       this.pageSize = this.pageSize + 10;
       this.getInstagramData();
     }
-
   }
 
   onScrollMessages() {
@@ -1203,6 +1206,7 @@ export class InstagramComponent implements OnInit {
   }
 
   getInstagramMessages() {
+    this.flag = this.router.url.split('/')[2];
     if (this.id != null || undefined) {
       this.filterDto = {
         // fromDate: new Date(),
@@ -1214,11 +1218,11 @@ export class InstagramComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
-        text : "",
-        userName: "",
-        notInclude: "",
-        include: "",
-        flag: "",
+        text: '',
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: this.flag,
       };
 
       this.SpinnerService.show();
@@ -1270,11 +1274,11 @@ export class InstagramComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
-        text : "",
-        userName: "",
-        notInclude: "",
-        include: "",
-        flag: "",
+        text: '',
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: this.flag,
       };
 
       this.SpinnerService.show();
@@ -1326,11 +1330,11 @@ export class InstagramComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
-        text : "",
-        userName: "",
-        notInclude: "",
-        include: "",
-        flag: "",
+        text: '',
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: this.flag,
       };
 
       this.SpinnerService.show();
@@ -1445,11 +1449,15 @@ export class InstagramComponent implements OnInit {
             this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('comment');
-            this.radioInput.nativeElement.checked = false;
+            if (this.radioInput != undefined) {
+              this.radioInput.nativeElement.checked = false;
+            }
             this.instagramMessageReplyForm.reset();
           },
-          ({ error }) => {
-            //  alert(error.message);
+          (error) => {
+            alert(error.message);
+            this.spinner1running = false;
+            this.SpinnerService.hide();
           }
         );
       } else {
@@ -1497,6 +1505,8 @@ export class InstagramComponent implements OnInit {
 
   closeQuickResponseSidebar() {
     this.quickReplySearchText = '';
-    this.radioInput.nativeElement.checked = false;
+    if (this.radioInput != undefined) {
+      this.radioInput.nativeElement.checked = false;
+    }
   }
 }

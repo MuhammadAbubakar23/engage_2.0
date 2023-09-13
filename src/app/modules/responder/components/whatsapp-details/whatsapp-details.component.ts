@@ -116,10 +116,10 @@ export class WhatsappDetailsComponent implements OnInit {
     private unrespondedCountService : UnRespondedCountService,
     private router : Router
   ) {
-    this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
-      this.id = res;
-      this.getWhatsappData();
-    });
+    // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
+    //   this.id = res;
+    //   this.getWhatsappData();
+    // });
   }
 
   ngOnInit(): void {
@@ -177,7 +177,7 @@ export class WhatsappDetailsComponent implements OnInit {
       this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+        if (this.flag == 'focused') {
         if (res.contentCount.contentType == 'WM') {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
@@ -189,71 +189,73 @@ export class WhatsappDetailsComponent implements OnInit {
   commentDto = new commentsDto();
   updatedComments: any;
   updateCommentsDataListener() {
-    
-    if(!this.id){
-      this.id = localStorage.getItem('storeOpenedId') || '{}'
-    }
-    this.updatedComments.forEach((xyz: any) => {
-      if (this.id == xyz.userId) {
-        this.commentDto = {
-          id: xyz.id,
-          postId: xyz.postId,
-          commentId: xyz.commentId,
-          message: xyz.message,
-          contentType: xyz.contentType,
-          userName: xyz.userName || xyz.userId,
-          queryStatus: xyz.queryStatus,
-          createdDate: xyz.createdDate,
-          fromUserProfilePic: xyz.profilePic,
-          body: xyz.body,
-          to: xyz.toId,
-          cc: xyz.cc,
-          bcc: xyz.bcc,
-          attachments: xyz.mediaAttachments,
-          replies: [],
-          sentiment: '',
-          tags: [],
-          // fromId: xyz.fromId,
-          // fromName: xyz.fromName,
-          // fromProfilePic: xyz.fromProfilePic,
-          // toId: xyz.toId,
-          // toName: xyz.toName,
-          // msgText: xyz.msgText,
-          // agentId: xyz.agentId,
-          // customerSocailProfileId: xyz.agentId,
-          // profileId: xyz.profileId,
-          // profilePageId: xyz.profilePageId,
-        };
-        this.WhatsappData[0].comments.push(this.commentDto);
-        this.commentsArray.push(this.commentDto);
-
-        let groupedItems = this.commentsArray.reduce((acc: any, item: any) => {
-          const date = item.createdDate.split('T')[0];
-          if (!acc[date]) {
-            acc[date] = [];
-          }
-          acc[date].push(item);
-          return acc;
-        }, {});
-
-        this.groupArrays = Object.keys(groupedItems).map((createdDate) => {
-          return {
-            createdDate,
-            items: groupedItems[createdDate],
-          };
-        });
-        // // console.log('hello', this.groupArrays);
-        this.totalUnrespondedCmntCountByCustomer =
-          this.totalUnrespondedCmntCountByCustomer + 1;
+    if(this.flag == 'focused'){
+      if(!this.id){
+        this.id = localStorage.getItem('storeOpenedId') || '{}'
       }
-    });
-    this.changeDetect.detectChanges();
+      this.updatedComments.forEach((xyz: any) => {
+        if (this.id == xyz.userId) {
+          this.commentDto = {
+            id: xyz.id,
+            postId: xyz.postId,
+            commentId: xyz.commentId,
+            message: xyz.message,
+            contentType: xyz.contentType,
+            userName: xyz.userName || xyz.userId,
+            queryStatus: xyz.queryStatus,
+            createdDate: xyz.createdDate,
+            fromUserProfilePic: xyz.profilePic,
+            body: xyz.body,
+            to: xyz.toId,
+            cc: xyz.cc,
+            bcc: xyz.bcc,
+            attachments: xyz.mediaAttachments,
+            replies: [],
+            sentiment: '',
+            tags: [],
+            // fromId: xyz.fromId,
+            // fromName: xyz.fromName,
+            // fromProfilePic: xyz.fromProfilePic,
+            // toId: xyz.toId,
+            // toName: xyz.toName,
+            // msgText: xyz.msgText,
+            // agentId: xyz.agentId,
+            // customerSocailProfileId: xyz.agentId,
+            // profileId: xyz.profileId,
+            // profilePageId: xyz.profilePageId,
+          };
+          this.WhatsappData[0].comments.push(this.commentDto);
+          this.commentsArray.push(this.commentDto);
+  
+          let groupedItems = this.commentsArray.reduce((acc: any, item: any) => {
+            const date = item.createdDate.split('T')[0];
+            if (!acc[date]) {
+              acc[date] = [];
+            }
+            acc[date].push(item);
+            return acc;
+          }, {});
+  
+          this.groupArrays = Object.keys(groupedItems).map((createdDate) => {
+            return {
+              createdDate,
+              items: groupedItems[createdDate],
+            };
+          });
+          // // console.log('hello', this.groupArrays);
+          this.totalUnrespondedCmntCountByCustomer =
+            this.totalUnrespondedCmntCountByCustomer + 1;
+        }
+      });
+      this.changeDetect.detectChanges();
+    }
   }
 
   commentsArray: any[] = [];
   groupArrays: any[] = [];
 
   getWhatsappData() {
+    this.flag = this.router.url.split('/')[2];
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -270,7 +272,7 @@ export class WhatsappDetailsComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -329,7 +331,7 @@ export class WhatsappDetailsComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
       this.SpinnerService.show();
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
@@ -383,7 +385,7 @@ export class WhatsappDetailsComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
       this.SpinnerService.show();
       this.commondata
@@ -583,19 +585,21 @@ export class WhatsappDetailsComponent implements OnInit {
   }
 
   removeTag(id: any, comId: any) {
-    this.insertTagsForFeedDto.feedId = comId.toString();
-    this.insertTagsForFeedDto.tagId = id;
-    this.insertTagsForFeedDto.feedType = 'WM';
-    this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
-
-    this.commondata
-      .RemoveTag(this.insertTagsForFeedDto)
-      .subscribe((res: any) => {
-        this.reloadComponent('RemoveTag');
-
-        this.activeTag = false;
-        this.checkTag = false;
-      });
+    if(this.flag == 'focused'){
+      this.insertTagsForFeedDto.feedId = comId.toString();
+      this.insertTagsForFeedDto.tagId = id;
+      this.insertTagsForFeedDto.feedType = 'WM';
+      this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
+  
+      this.commondata
+        .RemoveTag(this.insertTagsForFeedDto)
+        .subscribe((res: any) => {
+          this.reloadComponent('RemoveTag');
+  
+          this.activeTag = false;
+          this.checkTag = false;
+        });
+    }
   }
 
   Sentiments = [
@@ -756,13 +760,16 @@ export class WhatsappDetailsComponent implements OnInit {
             this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('comment');
-            this.radioInput.nativeElement.checked = false;
             this.WhatsappReplyForm.reset();
+            if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
           },
-          ({ error }) => {
-            //  alert(error.message);
-          }
-        );
+          (error) => {
+            alert(error.message);
+            this.spinner1running = false;
+           this.SpinnerService.hide();
+         });
       } else {
         this.reloadComponent('empty-input-field');
       }
@@ -834,6 +841,7 @@ export class WhatsappDetailsComponent implements OnInit {
 
   detectChanges(): void {
     this.ImageName = this.fileInput.nativeElement.files;
+    this.text = this.textarea.nativeElement.value;
   }
   Emojies = [
     { id: 1, emoji: '🙁', tile: 'sad' },
@@ -1006,5 +1014,15 @@ export class WhatsappDetailsComponent implements OnInit {
       !this.isVideo(attachment) &&
       !this.isAudio(attachment)
     );
+  }
+
+  c_satForm() {
+    const customerId = localStorage.getItem('storeOpenedId');
+    this.insertAtCaret('https://waengage.enteract.live/survey/customer_satisfaction'+'?customerId='+customerId+' ')
+  }
+
+  c_informationForm(){
+    const customerId = localStorage.getItem('storeOpenedId');
+    this.insertAtCaret('https://waengage.enteract.live/survey/customer_details'+'?customerId='+customerId+' ')
   }
 }

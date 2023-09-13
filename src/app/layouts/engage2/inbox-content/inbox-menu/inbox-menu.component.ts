@@ -4,6 +4,7 @@ import { FilterService } from 'src/app/services/FilterService/filter.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateListService } from 'src/app/services/UpdateListService/update-list.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'inbox-menu',
@@ -29,13 +30,16 @@ export class InboxMenuComponent implements OnInit {
   PlaystoreUnResponded: number = 0;
   YoutubeUnResponded: number = 0;
 
+  flag:string='';
+
   constructor(private filterService: FilterService,
     private commonService: CommonDataService,
     private unrespondedCountService: UnRespondedCountService,
-    private updateListService: UpdateListService) { }
+    private updateListService: UpdateListService,
+    private router: Router) { }
 
     ngOnInit(): void {
-
+      this.flag = this.router.url.split('/')[2];
       this.Subscription = this.unrespondedCountService
         .getUnRespondedCount()
         .subscribe((res) => {

@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { DataExchangeServicesService } from 'src/app/services/dataExchangeServices/data-exchange-services.service';
 @Component({
   selector: 'app-skills',
   standalone:true,
@@ -12,27 +14,32 @@ import { FormsModule } from '@angular/forms';
 })
 export class SkillsComponent implements OnInit {
   search:any='VW'
-  fillter:any="Sales"
+  fillter:any=""
   selectedIds:any[]=[]
   isChecked:boolean=false
   showIcon:boolean=false
   allSelected:boolean=false
   Page:any=1
+  sort:any=''
   itemperpage:any=7;
   isSelectedDepartment:any='';
   toastermessage:boolean=false
-  isDepartmentArray:any[]=[]
-  constructor(private headerService: HeaderService) { }
+  isDepartmentArray:any[]=[];
+ id:any=''
+  constructor(private headerService: HeaderService,
+    private dataExChange:DataExchangeServicesService,
+    private  activeRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
     // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));
     this.userDetails.forEach((x)=>{
       this.isSelectedDepartment=x.department
-      console.log("this.isSelectedDepartment==>",this.isDepartmentArray)
+    
       this.isDepartmentArray.push(this.isSelectedDepartment)
     });
- 
+
+
     
   }
   updatevalue(string:any){
@@ -42,6 +49,7 @@ export class SkillsComponent implements OnInit {
 
   
    userDetails:any[]=[
+
     { id: 1, teams:"vw",userid:333,department:"Information technology"},
     { id: 2, teams:"special Projects",userid:3434,department:"Sales"},
     { id:3, teams:"Corporte Team",userid:3422,department:"Account,Support"},
@@ -142,4 +150,22 @@ getbySearch(){
 closeToaster(){
   this.toastermessage=false
 }
+sortedValue(event:any){
+  this.sort= event.target.innerHTML;
+}
+totaluser:string='';
+tottalDepartment:string=''
+username:string='';
+
+handOnclick(name:any,totaluser:any,dep:any){
+  let data={
+   "TeamNAme": this.username=name,
+   "tottalusers":this.totaluser=totaluser,
+   "Department":this.tottalDepartment=dep
+  }
+
+console.log("Send Data ==>",data)
+this.dataExChange.sendData(data)
+}
+
 }

@@ -17,6 +17,7 @@
             class="filter-buttons"
             [(ngModel)]="DBC"
             (change)="selectConnection()"
+            [clearable]="false"
           >
             <ng-option
               style="width: 250px; margin-right: 10px; background-color: red"
@@ -29,6 +30,7 @@
             class="filter-buttons"
             [(ngModel)]="dbName"
             (change)="selectDataBase()"
+            [clearable]="false"
           >
             <ng-option *ngFor="let database of databases" [value]="database">{{
               database
@@ -39,19 +41,21 @@
               style="width: 200px"
               [(ngModel)]="tableName"
               (change)="selectTable()"
+              [clearable]="false"
             >
               <ng-option *ngFor="let table of tables" [value]="table">{{
                 table
               }}</ng-option>
             </ng-select>
           </div>
-          <div class="filter-buttons" *ngIf="isVisual">
+          <div class="filter-buttons" *ngIf="tableData.length > 0 && isVisual">
             <ng-select
               style="width: 250px; margin-right: 10px"
               [(ngModel)]="selectedLabels"
               (change)="selectLabel()"
-              [placeholder]="selectedLabels.length === 0 ? 'Select Column' : ''"
+              [placeholder]="selectedLabels.length === 0 ? 'Filter By' : ''"
               [multiple]="true"
+              [clearable]="false"
             >
               <ng-option *ngFor="let column of graphLabels" [value]="column">{{
                 column
@@ -63,10 +67,9 @@
               style="width: 250px; margin-right: 10px"
               [(ngModel)]="selectedColumns"
               (change)="selectColumn()"
-              [placeholder]="
-                selectedColumns.length === 0 ? 'Select Column' : ''
-              "
+              [placeholder]="selectedColumns.length === 0 ? 'Filter By' : ''"
               [multiple]="true"
+              [clearable]="false"
             >
               <ng-option
                 *ngFor="let column of dataKeys | keyvalue"
@@ -75,6 +78,44 @@
               >
             </ng-select>
           </div>
+          <div style="margin-right: 6px" *ngIf="tableData.length > 0">
+            <ng-select
+              class="filter-buttons"
+              [(ngModel)]="pageSize"
+              (change)="limitData()"
+              [clearable]="false"
+            >
+              <ng-option *ngFor="let size of pageSizes" [value]="size">{{
+                size
+              }}</ng-option>
+            </ng-select>
+          </div>
+          <div class="filter-buttons" *ngIf="tableData.length > 0">
+            <div class="row">
+              <div class="col-sm-6">
+                <ng-select [(ngModel)]="columnName" style="width: 150px"  [clearable]="false">
+                  <ng-option
+                    *ngFor="let column of dataKeys | keyvalue"
+                    [value]="column.key"
+                    >{{ column.key }}</ng-option
+                  >
+                </ng-select>
+              </div>
+              <div class="col-sm-6">
+                <ng-select
+                  [(ngModel)]="order"
+                  style="width: 120px"
+                  (change)="sortData()"
+                  [clearable]="false"
+                >
+                  <ng-option *ngFor="let orderby of orders" [value]="orderby">{{
+                    orderby
+                  }}</ng-option>
+                </ng-select>
+              </div>
+            </div>
+          </div>
+
           <div *ngIf="isFilter" class="row">
             <div class="filter-buttons" *ngIf="isNumber">
               <input
@@ -90,20 +131,21 @@
               class="filter-buttons"
               [(ngModel)]="selectedFilter"
               (change)="addFilter()"
+              [clearable]="false"
             >
               <ng-option *ngFor="let con of filterConditions" [value]="con">{{
                 con
               }}</ng-option>
             </ng-select>
           </div>
-          <div *ngIf="isTabular">
+          <div *ngIf="tableData.length > 0 && isTabular">
             <i
               class="fa fa-refresh"
               aria-hidden="true"
               (click)="refreshkeys()"
             ></i>
           </div>
-          <div *ngIf="isVisual">
+          <div *ngIf="tableData.length > 0 && isVisual">
             <i
               class="fa fa-refresh"
               aria-hidden="true"
@@ -156,17 +198,23 @@
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  {{startPage}}-{{endPage}} of {{ totalCount }}
+                  {{ startPage }}-{{ endPage }} of {{ totalCount }}
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   <li><a class="dropdown-item" href="#">Newest</a></li>
                   <li><a class="dropdown-item" href="#"> Oldest</a></li>
-                </ul>
+                </ul> -->
               </div>
-              <span class="iconButton medium iconHover" (click)="decrementPage()">
+              <span
+                class="iconButton medium iconHover"
+                (click)="decrementPage()"
+              >
                 <i class="fal fa-chevron-left"></i>
               </span>
-              <span class="iconButton medium iconHover" (click)="incrementPage()">
+              <span
+                class="iconButton medium iconHover"
+                (click)="incrementPage()"
+              >
                 <i class="fal fa-chevron-right"></i>
               </span>
             </div>

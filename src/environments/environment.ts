@@ -20,7 +20,7 @@ export const environment = {
     types: { local: 'LS' },
   },
   title: 'abc',
-  IdentityBaseUrl:  'https://idtservice.enteract.live/api',
+  IdentityBaseUrl:  'https://identity-engage.enteract.app/api',
   InstaBaseUrl: 'https://insta.360scrm.com/api/', 
   FbBaseUrl: 'https://face.360scrm.com/api/',
   YoutubeBaseUrl: 'https://tube.360scrm.com/api/',

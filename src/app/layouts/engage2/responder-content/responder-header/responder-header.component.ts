@@ -18,6 +18,7 @@ import { HeaderDto } from 'src/app/shared/Models/HeaderDto';
 import { MarkAsCompleteDto } from 'src/app/shared/Models/MarkAsCompleteDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
   selector: 'responder-header',
@@ -98,7 +99,8 @@ export class ResponderHeaderComponent implements OnInit {
 
   currentUrl: string = '';
   flag: string = '';
-  
+  flag2: string = '';
+  teamPermissions:any;
 
   constructor(
     private fetchId: FetchIdService,
@@ -114,7 +116,8 @@ export class ResponderHeaderComponent implements OnInit {
     private updateCommentsService: UpdateCommentsService,
     private updateMessagesService: UpdateMessagesService,
     private toggleService: ToggleService,
-    private lodeModuleService : ModulesService
+    private lodeModuleService: ModulesService,
+    private store: StorageService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -130,8 +133,10 @@ export class ResponderHeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.teamPermissions = this.store.retrive("permissionteam","O").local;
     this.currentUrl = this._route.url;
     this.flag = this.currentUrl.split('/')[2]
+    this.flag2 = this.currentUrl.split('/')[3]
     this.getUserDetails();
     this.openedTab();
     Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(
@@ -167,7 +172,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
-        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
         if (Object.keys(res).length > 0) {
         res.forEach((msg: any) => {
           if (msg.userId == localStorage.getItem('storeHeaderOpenedId')) {
@@ -216,7 +221,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
         if (Object.keys(res).length > 0) {
         if (res.contentCount.contentType == 'FC') {
           this.totalFbUnrespondedCountByCustomer =
@@ -377,6 +382,7 @@ export class ResponderHeaderComponent implements OnInit {
   }
 
   assignQuerry(id: any, platform: any) {
+    
     this.assignQuerryDto = {
       userId: Number(localStorage.getItem('agentId')),
       profileId: this.profileId,
@@ -389,7 +395,7 @@ export class ResponderHeaderComponent implements OnInit {
         (res: any) => {
           this.reloadComponent('queryallocated');
           this._route.navigateByUrl(
-            '/all-inboxes/my_inbox/responder/' + platform
+            '/all-inboxes/'+this.flag+'/'+this.flag2+'/responder/' + platform
           );
 
           this.fetchId.setPlatform(platform);
@@ -1785,7 +1791,7 @@ export class ResponderHeaderComponent implements OnInit {
   openedTab() {
     // if(!this.postType){
 
-    const channel = this.currentUrl.split('/')[4];
+    const channel = this.currentUrl.split('/')[5];
     this.postType = channel;
     // }
 
@@ -1956,7 +1962,7 @@ export class ResponderHeaderComponent implements OnInit {
       (res: any) => {
         this.reloadComponent('queryallocatedtoanotheruser');
         this.closeTeamList();
-        this.route.navigateByUrl('/all-inboxes/my_inbox');
+        this.route.navigateByUrl('/all-inboxes/focused/all');
         this.loadModuleService.updateModule('all-inboxes')
         localStorage.setItem('assignedProfile', '');
       },
@@ -2209,7 +2215,7 @@ if (type == 'RemoveStarred') {
           this.blockStatus = true;
           this.reloadComponent('block');
           localStorage.setItem('assignedProfile', '');
-          this.route.navigateByUrl('/all-inboxes/my_inbox');
+          this.route.navigateByUrl('/all-inboxes/focused/all');
           this.lodeModuleService.updateModule('all-inboxes');
         }
       });
@@ -2231,6 +2237,7 @@ Unblock(id:any){
         this.itemsToBeUpdated = [];
         this.blockStatus=false;
         this.reloadComponent('unblock');
+        this._route.navigateByUrl('all-inboxes/blacklist/all');
       }
     });
 }

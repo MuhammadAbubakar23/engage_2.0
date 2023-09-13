@@ -71,8 +71,8 @@ export class SignalRService {
 
   reConnect() {
 
-    var conId = localStorage.getItem('signalRConnectionId')
-    if (conId) {
+    // var conId = localStorage.getItem('signalRConnectionId')
+    // if (conId) {
 
       let team = this.storage.retrive("nocompass", "O").local;
       const options: IHttpConnectionOptions = {
@@ -92,7 +92,7 @@ export class SignalRService {
         .then(() => console.log('Connection started'))
         .then(() => this.getConnectionId())
         .catch((err) => console.log('Error while starting connection: ' + err));
-    }
+    // }
   }
 
 

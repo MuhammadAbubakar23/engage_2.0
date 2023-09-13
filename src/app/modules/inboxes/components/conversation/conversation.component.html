@@ -4,7 +4,7 @@
     <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
       <p style="color: white"> Loading... </p>
     </ngx-spinner>
-    <div class="filter-toolbar p-0 border-0 collapse show" id="filter-bar">
+    <div class="filter-toolbar p-0 border-0 collapse show" id="filter-bar" *ngIf="FlagForAssignToMe != 'assigned-to-me'">
       <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
         <li class="list-inline-item">
           <div class="dropdown">
@@ -446,7 +446,7 @@
         <li class="list-group-item border-0 all-check-boxes">
           <input *ngIf="flag != 'sent'" class="form-check-input me-1" type="checkbox" aria-label="..."
             data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Check All"
-            [checked]="masterSelected" value="m1" (change)="checkUncheckAll($event)">
+            [checked]="masterSelected" value="m1" (change)="checkUncheckAll($event)" [disabled]="FlagForAssignToMe == 'assigned-to-me'">
           <div class="dropdown">
             <!-- <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -477,7 +477,7 @@
           <i class="fal fa-sliders-h"></i>
         </li>
         <li class="list-group-item border-0" (click)="Reload()" aria-label="..." data-bs-toggle="tooltip"
-          data-bs-placement="bottom" title="" data-bs-original-title="Refresh">
+          data-bs-placement="bottom" title="" data-bs-original-title="Refresh" [style.display]="FlagForAssignToMe == 'assigned-to-me'?'none':'block'">
           <i class="fal fa-redo-alt"></i>
         </li>
         <!-- <div [hidden]="flag == 'trash'"> -->
@@ -587,9 +587,9 @@
         <!-- </div> -->
         
       </ul>
-      <div class="selected-row" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+      <!-- <div class="selected-row" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
         Selected <span class="badge twltte-bg rounded-pill">{{Ids.length}}</span>
-      </div>
+      </div> -->
       <div class="pagination-bar">
         <span>{{to}}-{{from}} of {{TotalUnresponded}}</span>
         <span style="cursor: pointer;">
@@ -624,9 +624,10 @@
               <tr *ngFor="let query of group.items | sort:criteria; let i = index"
                 [class.selected]="query.isChecked==true" class="alert" [ngClass]="[query.slaFlag == 'warning'?'alert-warning':'' || query.slaFlag == 'danger'?'alert-danger':'' ||
               query.slaFlag == 'unread'?'unread':'']">
-                <td *ngIf="flag != 'sent'" style="width: 40px;"><input [checked]="query.isChecked"
+                <td *ngIf="flag != 'sent'" style="width: 40px;">
+                  <input [checked]="query.isChecked"
                     value="{{query.id}}" (change)="isAllSelected($event, i, query.platform, query.profileId, group.createdDate)"
-                    class="form-check-input me-1" type="checkbox" aria-label="...">
+                    class="form-check-input me-1" type="checkbox" aria-label="..." [disabled]="FlagForAssignToMe == 'assigned-to-me'">
                 </td>
                 <td style="width: 40px;">
                   <i *ngIf="query.platform == 'Facebook'" class="fab fa-facebook navytext" data-bs-toggle="tooltip"

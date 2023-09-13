@@ -163,7 +163,7 @@ export class SmsDetailsComponent implements OnInit {
       this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+        if (this.flag == 'focused') {
         if (res.contentCount.contentType == 'SMS') {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
@@ -238,7 +238,7 @@ export class SmsDetailsComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
   getSmsData() {
-    
+    this.flag = this.router.url.split('/')[2];
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -255,7 +255,7 @@ export class SmsDetailsComponent implements OnInit {
         userName: "",
         notInclude: "",
         include: "",
-        flag: "",
+        flag: this.flag,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -316,7 +316,7 @@ export class SmsDetailsComponent implements OnInit {
         userName: "",
         notInclude: "",
         include: "",
-        flag: "",
+        flag: this.flag,
       };
 
       this.SpinnerService.show();
@@ -373,7 +373,7 @@ export class SmsDetailsComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
 
       this.SpinnerService.show();
@@ -673,11 +673,15 @@ export class SmsDetailsComponent implements OnInit {
             // this.getSmsData();
             
             this.reloadComponent('comment');
-            this.radioInput.nativeElement.checked = false;
+            if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
           },
-          ({ error }) => {
-          //  alert(error.message);
-          }
+          (error) => {
+            alert(error.message);
+            this.spinner1running = false;
+           this.SpinnerService.hide();
+         }
         );
       } else {
         this.reloadComponent('empty-input-field')
@@ -904,7 +908,9 @@ export class SmsDetailsComponent implements OnInit {
 
   closeQuickResponseSidebar(){
     this.quickReplySearchText = '';
-    this.radioInput.nativeElement.checked = false;
+    if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
     
   }
   updateQueryStatusDataListner() {

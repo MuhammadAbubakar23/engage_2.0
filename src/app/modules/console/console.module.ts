@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ConsoleRoutingModule } from './console-routing.module';
 import { ConsoleComponent } from './console.component';
-import { HomeComponent } from './components/home/home.component';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TemplatesComponent } from './components/templates/templates.component';
 import { ConsoleContactsComponent } from './components/contacts/contacts.component';
@@ -13,16 +10,10 @@ import { ConsoleDocumentsComponent } from './components/documents/documents.comp
 import { ConsoleKnowledgeBaseComponent } from './components/knowledge-base/knowledge-base.component';
 import { PreferencesComponent } from './components/preferences/preferences.component';
 import { ConsoleHelpComponent } from './components/help/help.component';
-// import { BulkUsersAddComponent } from './components/users/bulk-users-add/bulk-users-add.component';
-// import { CreateUserComponent } from './components/users/create-user/create-user.component';
 import { RouterModule } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
-// import { CreateTeamComponent } from './components/teams/create-team/create-team.component';
-// import { AddTeamMembersComponent } from './components/teams/add-team-members/add-team-members.component';
-import { CreateTagsComponent } from './components/tags/create-tags/create-tags.component';
-// import { CreateRolesComponent } from './components/roles-and-permissions/create-roles/create-roles.component';
 import { AddPolicyComponent } from './components/sla-policies/add-policy/add-policy.component';
 import { CreateContactComponent } from './components/contacts/create-contact/create-contact.component';
 import { UserDetailsComponent } from './components/contacts/user-details/user-details.component';
@@ -34,8 +25,6 @@ import { SignaturesComponent } from './components/templates/signatures/signature
 import { CreateSignatureTemplatesComponent } from './components/templates/signatures/create-signature-templates/create-signature-templates.component';
 import { ConnectFormComponent } from './components/connect-form/connect-form.component';
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { ConsoleTableComponent } from 'src/app/layouts/engage2/console-table/console-table.component';
 import { QuickResponseComponent } from './components/templates/quick-response/quick-response.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { CKEditorModule } from 'ckeditor4-angular';
@@ -55,43 +44,20 @@ import { ChatwithintentComponent } from './components/chat-bot/right-sidebar-com
 import { ToastrComponent } from './components/toastr/toastr.component';
 import { StepFourComponent } from './components/chat-bot-builder/step-four/step-four.component';
 import { UpdateIntentsComponent } from './components/chat-bot/update-intents/update-intents.component';
-import { AddRulesComponent } from './components/rules/add-rules/add-rules.component';
 import { BulkUploadComponent } from './components/sentiment-analysis/bulk-upload/bulk-upload.component';
 import { CreateSentimentComponent } from './components/sentiment-analysis/create-sentiment/create-sentiment.component';
-
-// import { CreateSkillsComponent } from './components/skills/create-skills/create-skills.component';
-// import { AddSkillMembersComponent } from './components/skills/add-skill-members/add-skill-members.component';
 
 
 @NgModule({
   declarations: [
     ConsoleComponent,
-    //  ConsoleTableComponent,
-    HomeComponent,
     TemplatesComponent,
-    // BusinessHoursComponent,
-    // SupportChannelsComponent,
-    // UsersComponent,
-    // TeamsComponent,
-    // TagsComponent,
-    // RulesComponent,
-    // EnteractRouteComponent,
-    // RolesAndPermissionsComponent,
-    // SlaPoliciesComponent,
-    // SkillsComponent,
     ConsoleContactsComponent,
     CaseManagementComponent,
     ConsoleDocumentsComponent,
     ConsoleKnowledgeBaseComponent,
     PreferencesComponent,
     ConsoleHelpComponent,
-
-    // BulkUsersAddComponent,
-    // CreateUserComponent,
-    // CreateTeamComponent,
-    // AddTeamMembersComponent,
-    // CreateTagsComponent,
-    // CreateRolesComponent,
     AddPolicyComponent,
     CreateContactComponent,
     UserDetailsComponent,
@@ -104,8 +70,6 @@ import { CreateSentimentComponent } from './components/sentiment-analysis/create
     ConnectFormComponent,
     QuickResponseComponent,
     CreateQuickResponseTemplatesComponent,
-    // CreateSkillsComponent,
-    //AddSkillMembersComponent,
     CreateBusinessHoursComponent,
     SentimentAnalysisComponent,
     ChatBotComponent,

@@ -89,7 +89,6 @@ export class ReportDbSettingsComponent implements OnInit {
     console.log("Data:", data);
 
     if (this.id && this.id !== null) {
-
       this.reportService.updateDbSetiingApi(this.id, data).subscribe((res) => {
         console.log("Update response:", res);
         alert("successfully updated");

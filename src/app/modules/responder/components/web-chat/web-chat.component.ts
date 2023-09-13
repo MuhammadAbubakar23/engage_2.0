@@ -46,7 +46,8 @@ export class WebChatComponent implements OnInit {
     private changeDetect : ChangeDetectorRef,
     private commondata : CommonDataService,
     private ticketResponseService : TicketResponseService,
-    private getQueryTypeService : GetQueryTypeService
+    private getQueryTypeService : GetQueryTypeService,
+    private router: Router
     ) {
       // this.criteria={
       //   property: 'createdDate',
@@ -71,8 +72,9 @@ export class WebChatComponent implements OnInit {
   filterDto = new FiltersDto();
   totalUnrespondedCmntCountByCustomer:number=0;
   To:any;
-
+  flag: string='';
   getWebChat(){
+    this.flag = this.router.url.split('/')[2];
     if(this.id != null || undefined){
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -89,7 +91,7 @@ export class WebChatComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
       this.SpinnerService.show();
       this.commondata
@@ -143,7 +145,7 @@ export class WebChatComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
       this.SpinnerService.show();
       this.commondata
@@ -207,7 +209,9 @@ export class WebChatComponent implements OnInit {
       wcVisitorSessionId: this.WebChat.Session.id,
       fromName:this.WebChat.VisitorMessages[0].fromName
     });
-    this.radioInput.nativeElement.checked = false;
+    if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
     // this.quickReplySearchText = '';
 
     // this.webchatdata.SendWebChatReply(this.WebChatReplyForm.value).subscribe((res: any) => {
@@ -239,7 +243,9 @@ onScrollComments() {
 }
 closeQuickResponseSidebar(){
   // this.quickReplySearchText = '';
-  this.radioInput.nativeElement.checked = false;
+  if(this.radioInput != undefined){
+              this.radioInput.nativeElement.checked = false;
+            }
   
 }
 }

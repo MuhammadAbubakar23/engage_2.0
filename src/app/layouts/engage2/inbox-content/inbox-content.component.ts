@@ -21,6 +21,8 @@ import { ResponderHeaderComponent } from '../responder-content/responder-header/
 import { ResponderMenuComponent } from '../responder-content/responder-menu/responder-menu.component';
 import { InboxHeaderComponent } from './inbox-header/inbox-header.component';
 import { InboxMenuComponent } from './inbox-menu/inbox-menu.component';
+import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
+import { AssignToMeHeaderComponent } from 'src/app/shared/headers/assign-to-me-header/assign-to-me-header.component';
 
 @Component({
   selector: 'inbox-content',
@@ -28,7 +30,7 @@ import { InboxMenuComponent } from './inbox-menu/inbox-menu.component';
   styleUrls: ['./inbox-content.component.scss'],
   // providers: [ResponderGuardGuard]
 })
-export class InboxContentComponent implements OnInit {
+export class     InboxContentComponent implements OnInit {
   @HostListener('window:beforeunload', ['$event'])
   handleBeforeUnload(event: Event) {
     event.preventDefault();
@@ -54,11 +56,13 @@ export class InboxContentComponent implements OnInit {
 
   flag: string = '';
 
-  toggleLeftBar: boolean = true;
+  toggleLeftBar: boolean = false;
   showPanel: boolean = false;
+  
 
   constructor(
     private resolver: ComponentFactoryResolver,
+    private closePanelServices:ClosePanelService,
     private router: Router
   ) {}
 
@@ -69,7 +73,7 @@ export class InboxContentComponent implements OnInit {
       this.loadComponent('responder');
     } else {
       this.flag = this.router.url.split('/')[2];
-      if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+      if (this.flag == 'focused' || this.flag == 'archived') {
         this.loadComponent('all-inboxes');
       } else if (this.flag == 'starred') {
         this.loadComponent('starred');
@@ -81,8 +85,10 @@ export class InboxContentComponent implements OnInit {
         this.loadComponent('blacklist');
       } else if (this.flag == 'trash') {
         this.loadComponent('trash');
-      } else if (this.flag == 'archived') {
-        this.loadComponent('archived');
+      } else if (this.flag == 'assigned-to-me') {
+        this.loadComponent('assigned-to-me');
+      } else if (this.flag == 'completed') {
+        this.loadComponent('completed');
       }
     }
 
@@ -93,7 +99,7 @@ export class InboxContentComponent implements OnInit {
           this.loadComponent('responder');
         } else {
           this.flag = this.router.url.split('/')[2];
-          if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+          if (this.flag == 'focused' || this.flag == 'archived') {
             this.loadComponent('all-inboxes');
           } else if (this.flag == 'starred') {
             this.loadComponent('starred');
@@ -105,12 +111,17 @@ export class InboxContentComponent implements OnInit {
             this.loadComponent('blacklist');
           } else if (this.flag == 'trash') {
             this.loadComponent('trash');
-          } else if (this.flag == 'archived') {
-            this.loadComponent('archived');
+          } else if (this.flag == 'assigned-to-me') {
+            this.loadComponent('assigned-to-me');
+          } else if (this.flag == 'completed') {
+            this.loadComponent('completed');
           }
         }
       }
     });
+    this.Subscription = this.closePanelServices.receiveLeftBarToggleValue().subscribe(res=>{
+      this.toggleLeftBar = res;
+    })
   }
 
   abc: any;
@@ -121,7 +132,7 @@ export class InboxContentComponent implements OnInit {
       this.loadComponent('responder');
     } else {
       this.flag = this.router.url.split('/')[2];
-      if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+      if (this.flag == 'focused' || this.flag == 'archived') {
         this.loadComponent('all-inboxes');
       } else if (this.flag == 'starred') {
         this.loadComponent('starred');
@@ -133,8 +144,10 @@ export class InboxContentComponent implements OnInit {
         this.loadComponent('blacklist');
       } else if (this.flag == 'trash') {
         this.loadComponent('trash');
-      } else if (this.flag == 'archived') {
-        this.loadComponent('archived');
+      } else if (this.flag == 'assigned-to-me') {
+        this.loadComponent('assigned-to-me');
+      } else if (this.flag == 'completed') {
+        this.loadComponent('completed');
       }
     }
 
@@ -145,7 +158,7 @@ export class InboxContentComponent implements OnInit {
           this.loadComponent('responder');
         } else {
           this.flag = this.router.url.split('/')[2];
-          if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+          if (this.flag == 'focused' || this.flag == 'archived') {
             this.loadComponent('all-inboxes');
           } else if (this.flag == 'starred') {
             this.loadComponent('starred');
@@ -157,8 +170,10 @@ export class InboxContentComponent implements OnInit {
             this.loadComponent('blacklist');
           } else if (this.flag == 'trash') {
             this.loadComponent('trash');
-          } else if (this.flag == 'archived') {
-            this.loadComponent('archived');
+          } else if (this.flag == 'assigned-to-me') {
+            this.loadComponent('assigned-to-me');
+          } else if (this.flag == 'completed') {
+            this.loadComponent('completed');
           }
         }
       }
@@ -167,6 +182,10 @@ export class InboxContentComponent implements OnInit {
 
   toggleSubLeftBar() {
     this.toggleLeftBar = !this.toggleLeftBar;
+   
+    if(this.toggleLeftBar == true){
+      this.closePanelServices.sendRightBarToggleValue(false);
+    }
   }
   toggleRightPanel() {
     this.showPanel = !this.showPanel;
@@ -189,6 +208,10 @@ export class InboxContentComponent implements OnInit {
 
         header = this.resolver.resolveComponentFactory(InboxHeaderComponent);
         this.header?.createComponent(header);
+        break;
+        case 'completed':
+        submenu = this.resolver.resolveComponentFactory(InboxMenuComponent);
+        this.submenu?.createComponent(submenu);
         break;
 
       case 'responder':
@@ -232,6 +255,14 @@ export class InboxContentComponent implements OnInit {
         this.submenu?.createComponent(submenu);
 
         header = this.resolver.resolveComponentFactory(TrashHeaderComponent);
+        this.header?.createComponent(header);
+        break;
+
+        case 'assigned-to-me':
+        // submenu = this.resolver.resolveComponentFactory(InboxMenuComponent);
+        // this.submenu?.createComponent(submenu);
+
+        header = this.resolver.resolveComponentFactory(AssignToMeHeaderComponent);
         this.header?.createComponent(header);
         break;
 

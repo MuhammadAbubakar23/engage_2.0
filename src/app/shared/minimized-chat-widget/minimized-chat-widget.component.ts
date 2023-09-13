@@ -262,9 +262,11 @@ export class MinimizedChatWidgetComponent implements OnInit {
             this.clearInputField();
             this.reloadComponent('comment');
           },
-          ({ error }) => {
-          //  alert(error.message);
-          }
+          (error) => {
+            alert(error.message);
+            // this.spinner1running = false;
+           this.SpinnerService.hide();
+         }
         );
       } else {
         this.reloadComponent('empty-input-field')
@@ -563,7 +565,9 @@ export class MinimizedChatWidgetComponent implements OnInit {
 
   closeQuickResponseSidebar(){
     // this.quickReplySearchText = '';
-    // this.radioInput.nativeElement.checked = false;
+    // if(this.radioInput.nativeElement.checked = true){
+            //   this.radioInput.nativeElement.checked = false;
+            // }
     
   }
 }

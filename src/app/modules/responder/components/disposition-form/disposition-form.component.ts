@@ -45,6 +45,7 @@ export class DispositionFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  previousUrl:any;
   submitDispositionForm(){
 
     this.dispositionFormDto = {
@@ -64,7 +65,9 @@ export class DispositionFormComponent implements OnInit {
     this.commonService.SubmitDispositionForm(this.dispositionFormDto).subscribe((res:any)=>{
       // console.log('disposition response',res)
       localStorage.setItem('assignedProfile','')
-      this.route.navigateByUrl('/all-inboxes/my_inbox');
+      // this.route.navigateByUrl('/all-inboxes/focused/all');
+      this.previousUrl = localStorage.getItem('previousUrl') 
+      this.route.navigateByUrl(this.previousUrl);
       this.lodeModuleService.updateModule('all-inboxes');
       
     })

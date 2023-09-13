@@ -21,6 +21,7 @@ import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { BotService } from '../../../services/bot.service';
 import { SentimentService } from '../../../services/sentiment.service';
 import { ChatwithsentimentComponent } from '../right-sidebar-components/chatwithsentiment/chatwithsentiment.component';
+import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
 
 @Component({
   selector: 'app-create-sentiment',
@@ -49,6 +50,7 @@ export class  CreateSentimentComponent implements OnInit, AfterViewInit {
 
   constructor(private senService:SentimentService,private fb: FormBuilder,
     private toggleService: ToggleService,
+    private closePanelServices :ClosePanelService,
     private resolver: ComponentFactoryResolver) {
       this.stepThreeForm = this.fb.group(
         {
@@ -68,6 +70,7 @@ export class  CreateSentimentComponent implements OnInit, AfterViewInit {
           this.rightcontainer?.clear();
           localStorage.setItem('child', msg3);
           this.showPanel = true;
+          this.closePanelServices.sendLeftBarToggleValue(false)
           this.loadComponent('', msg3);
         } else {
           this.showPanel = false;
@@ -75,6 +78,10 @@ export class  CreateSentimentComponent implements OnInit, AfterViewInit {
           localStorage.setItem('child', '');
         }
       });
+      this.subscription = this.closePanelServices.receiveRightBarToggleValue().subscribe(res=>{
+        console.log("This.closePanelServices===>",res)
+        this.showPanel = res;
+      })
   }
 
   ngAfterViewInit(): void {
@@ -85,6 +92,7 @@ export class  CreateSentimentComponent implements OnInit, AfterViewInit {
           this.rightcontainer?.clear();
           localStorage.setItem('child', msg3);
           this.showPanel = true;
+          this.closePanelServices.sendLeftBarToggleValue(false)
           this.loadComponent('', msg3);
         } else {
           this.showPanel = false;

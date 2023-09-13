@@ -4,7 +4,7 @@
         <div class="user-comment-widget-container">
             <template #maximizeChat></template>
         </div>
-        <nav id="left-sidebar-expand" [ngClass]="toggleLeftBar ? 'toggled':'' ">
+        <nav id="left-sidebar-expand" [ngClass]="toggleLeftBar ? '':'toggled' ">
             <sub-role-menu></sub-role-menu>
             <a class="panelToggle" (click)="toggle()"></a>
         </nav>

@@ -18,6 +18,7 @@ export class AddSkillMembersComponent implements OnInit {
   AlterMsg='Team Members Added Successfully'
   toastermessage:boolean=false
   constructor() { }
+  
   teamMemberForm=new FormGroup({
  numbersIds:new FormControl('',Validators.required)
   })
@@ -73,11 +74,13 @@ export class AddSkillMembersComponent implements OnInit {
     this.isSelectedIdstostring=this.isSelectedIds.toString();
     this.teamMemberForm.value.numbersIds=this.isSelectedIdstostring;
     console.log("this.teamMemberForm===>",this.teamMemberForm.value.numbersIds)
+    this.toastermessage=true
+    setTimeout(() => {
+      this.toastermessage=false
+    }, 2000);
   }
 
-isSelected(id:number):boolean{
-  return this.isSelectedIds.indexOf(id)>=1
-}
+
 toggleSelectionIds(id:number):void{
 
   const index =this.isSelectedIds.findIndex((x:any)=>x==id)
@@ -88,7 +91,7 @@ toggleSelectionIds(id:number):void{
     this.isSelectedIds.push(id)
   }
  console.log("this.isSelectedIds==>",this.isSelectedIds)
- if(this.isSelectedIds.length>=0){}
+
 }
 
 
