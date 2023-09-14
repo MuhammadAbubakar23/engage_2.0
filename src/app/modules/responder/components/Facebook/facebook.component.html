@@ -222,6 +222,10 @@
                                                                         </li>
                                                                     </ul>
                                                                 </div>
+                                                                <div class="w-auto" *ngIf="(fbcmnts.queryStatus == 'Responded' || fbcmnts.queryStatus == 'Completed') && fbcmnts.spam == false"
+                                                                style="margin-left: 20px;">
+                                                                <small>{{fbcmnts.queryStatus}} </small>
+                                                            </div>
                                                             </div>
                                                             <!-- <div class="w-auto"
                                                                 *ngIf="fbcmnts.queryStatus == 'Responded' || fbcmnts.queryStatus == 'Completed' && fbcmnts.spam == false"

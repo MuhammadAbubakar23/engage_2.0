@@ -45,6 +45,8 @@ export class ResponderHeaderComponent implements OnInit {
   TwitterUnrespondedMsgCountByCustomer: number = 0;
   InstaUnrespondedMsgCountByCustomer: number = 0;
 
+  TwitterUnrespondedMentionCountByCustomer: number = 0;
+
   totalFbUnrespondedCountByCustomer: number = 0;
   totalInstaUnrespondedCountByCustomer: number = 0;
   totalTwitterUnrespondedCountByCustomer: number = 0;
@@ -156,7 +158,7 @@ export class ResponderHeaderComponent implements OnInit {
               this.totalFbUnrespondedCountByCustomer =
                 this.totalFbUnrespondedCountByCustomer + 1;
             }
-            if (msg.contentType == 'TM') {
+            if (msg.contentType == 'TM' || msg.contentType == 'TDM') {
               this.totalTwitterUnrespondedCountByCustomer =
                 this.totalTwitterUnrespondedCountByCustomer + 1;
             }
@@ -180,7 +182,7 @@ export class ResponderHeaderComponent implements OnInit {
               this.totalFbUnrespondedCountByCustomer =
                 this.totalFbUnrespondedCountByCustomer + 1;
             }
-            if (msg.contentType == 'TT' || msg.contentType == 'TM') {
+            if (msg.contentType == 'TT' || msg.contentType == 'TM' || msg.contentType == 'TDM') {
               this.totalTwitterUnrespondedCountByCustomer =
                 this.totalTwitterUnrespondedCountByCustomer + 1;
             }
@@ -233,15 +235,23 @@ export class ResponderHeaderComponent implements OnInit {
             res.contentCount.unrespondedCount +
             this.FbUnrespondedCmntCountByCustomer;
         }
-        if (res.contentCount.contentType == 'TT') {
+        if (res.contentCount.contentType == 'TTR') {
           this.totalTwitterUnrespondedCountByCustomer =
             res.contentCount.unrespondedCount +
-            this.TwitterUnrespondedMsgCountByCustomer;
+            this.TwitterUnrespondedMsgCountByCustomer +
+            this.TwitterUnrespondedMentionCountByCustomer;
+        }
+        if (res.contentCount.contentType == 'TDM') {
+          this.totalTwitterUnrespondedCountByCustomer =
+            res.contentCount.unrespondedCount +
+            this.TwitterUnrespondedCmntCountByCustomer +
+            this.TwitterUnrespondedMentionCountByCustomer;
         }
         if (res.contentCount.contentType == 'TM') {
           this.totalTwitterUnrespondedCountByCustomer =
             res.contentCount.unrespondedCount +
-            this.TwitterUnrespondedCmntCountByCustomer;
+            this.TwitterUnrespondedCmntCountByCustomer +
+            this.TwitterUnrespondedMsgCountByCustomer;
         }
         if (res.contentCount.contentType == 'IC') {
           this.totalInstaUnrespondedCountByCustomer =
@@ -624,16 +634,20 @@ export class ResponderHeaderComponent implements OnInit {
             }
             if (this.fetchId.platform == 'Twitter') {
               this.TwitterUnrespondedCmntCountByCustomer = res.TotalCount;
-              if (this.TwitterUnrespondedCmntCountByCustomer == 0) {
+              if (this.TwitterUnrespondedCmntCountByCustomer == 0 && this.TwitterUnrespondedMentionCountByCustomer == 0) {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedMsgCountByCustomer;
-              } else if (this.TwitterUnrespondedMsgCountByCustomer == 0) {
+              } else if (this.TwitterUnrespondedMsgCountByCustomer == 0  && this.TwitterUnrespondedMentionCountByCustomer == 0) {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedCmntCountByCustomer;
-              } else {
+              } else if (this.TwitterUnrespondedCmntCountByCustomer == 0 && this.TwitterUnrespondedMsgCountByCustomer == 0){
+                this.totalTwitterUnrespondedCountByCustomer =
+                this.TwitterUnrespondedMentionCountByCustomer;
+              } 
+              else {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedCmntCountByCustomer +
-                  this.TwitterUnrespondedMsgCountByCustomer;
+                  this.TwitterUnrespondedMsgCountByCustomer + this.TwitterUnrespondedMentionCountByCustomer;
               }
             }
             // if (this.fetchId.platform == 'Instagram') {
@@ -668,13 +682,14 @@ export class ResponderHeaderComponent implements OnInit {
             if (this.fetchId.platform == 'LinkedIn') {
               this.LinkedInUnrespondedCmntCountByCustomer = res.TotalCount;
             }
+            res.List[0]?.user.secondaryProfiles.forEach((profiles: any) => {
+              this.getSecondaryProfileDetails(
+                profiles.customerUniqueId,
+                profiles.platform
+              );
+            });
           }
-          res.List[0]?.user.secondaryProfiles.forEach((profiles: any) => {
-            this.getSecondaryProfileDetails(
-              profiles.customerUniqueId,
-              profiles.platform
-            );
-          });
+          
         });
       this.commondata
         .GetChannelMessageDetail(this.filterDto)
@@ -782,6 +797,7 @@ export class ResponderHeaderComponent implements OnInit {
             this.totalTwitterUnrespondedCountByCustomer = 0;
             this.FbUnrespondedMsgCountByCustomer = 0;
             this.TwitterUnrespondedMsgCountByCustomer = 0;
+            this.TwitterUnrespondedMentionCountByCustomer = 0;
 
             if (this.fetchId.platform == 'Facebook') {
               this.FbUnrespondedMsgCountByCustomer = res.TotalCount;
@@ -799,16 +815,20 @@ export class ResponderHeaderComponent implements OnInit {
             }
             if (this.fetchId.platform == 'Twitter') {
               this.TwitterUnrespondedMsgCountByCustomer = res.TotalCount;
-              if (this.TwitterUnrespondedCmntCountByCustomer == 0) {
+              if (this.TwitterUnrespondedCmntCountByCustomer == 0 && this.TwitterUnrespondedMentionCountByCustomer == 0) {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedMsgCountByCustomer;
-              } else if (this.TwitterUnrespondedMsgCountByCustomer == 0) {
+              } else if (this.TwitterUnrespondedMsgCountByCustomer == 0  && this.TwitterUnrespondedMentionCountByCustomer == 0) {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedCmntCountByCustomer;
-              } else {
+              } else if (this.TwitterUnrespondedCmntCountByCustomer == 0 && this.TwitterUnrespondedMsgCountByCustomer == 0){
+                this.totalTwitterUnrespondedCountByCustomer =
+                this.TwitterUnrespondedMentionCountByCustomer;
+              } 
+              else {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedCmntCountByCustomer +
-                  this.TwitterUnrespondedMsgCountByCustomer;
+                  this.TwitterUnrespondedMsgCountByCustomer + this.TwitterUnrespondedMentionCountByCustomer;
               }
             }
             if (this.fetchId.platform == 'Instagram') {
@@ -923,6 +943,7 @@ export class ResponderHeaderComponent implements OnInit {
         this.totalTwitterUnrespondedCountByCustomer = 0;
         this.FbUnrespondedMsgCountByCustomer = 0;
         this.TwitterUnrespondedMsgCountByCustomer = 0;
+        this.TwitterUnrespondedMentionCountByCustomer = 0;
 
         if (this.fetchId.platform == 'Facebook') {
           this.FbUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -1089,6 +1110,7 @@ export class ResponderHeaderComponent implements OnInit {
             this.totalTwitterUnrespondedCountByCustomer = 0;
             this.FbUnrespondedMsgCountByCustomer = 0;
             this.TwitterUnrespondedMsgCountByCustomer = 0;
+            this.TwitterUnrespondedMentionCountByCustomer = 0;
 
             if (this.platform == 'Facebook') {
               this.FbUnrespondedMsgCountByCustomer = res.TotalCount;
@@ -1115,16 +1137,20 @@ export class ResponderHeaderComponent implements OnInit {
             }
             if (this.platform == 'Twitter') {
               this.TwitterUnrespondedMsgCountByCustomer = res.TotalCount;
-              if (this.TwitterUnrespondedCmntCountByCustomer == 0) {
+              if (this.TwitterUnrespondedCmntCountByCustomer == 0 && this.TwitterUnrespondedMentionCountByCustomer == 0) {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedMsgCountByCustomer;
-              } else if (this.TwitterUnrespondedMsgCountByCustomer == 0) {
+              } else if (this.TwitterUnrespondedMsgCountByCustomer == 0  && this.TwitterUnrespondedMentionCountByCustomer == 0) {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedCmntCountByCustomer;
-              } else {
+              } else if (this.TwitterUnrespondedCmntCountByCustomer == 0 && this.TwitterUnrespondedMsgCountByCustomer == 0){
+                this.totalTwitterUnrespondedCountByCustomer =
+                this.TwitterUnrespondedMentionCountByCustomer;
+              } 
+              else {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedCmntCountByCustomer +
-                  this.TwitterUnrespondedMsgCountByCustomer;
+                  this.TwitterUnrespondedMsgCountByCustomer + this.TwitterUnrespondedMentionCountByCustomer;
               }
             }
             if (this.platform == 'Instagram') {
@@ -1292,16 +1318,20 @@ export class ResponderHeaderComponent implements OnInit {
             }
             if (this.platform == 'Twitter') {
               this.TwitterUnrespondedCmntCountByCustomer = res.TotalCount;
-              if (this.TwitterUnrespondedCmntCountByCustomer == 0) {
+              if (this.TwitterUnrespondedCmntCountByCustomer == 0 && this.TwitterUnrespondedMentionCountByCustomer == 0) {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedMsgCountByCustomer;
-              } else if (this.TwitterUnrespondedMsgCountByCustomer == 0) {
+              } else if (this.TwitterUnrespondedMsgCountByCustomer == 0  && this.TwitterUnrespondedMentionCountByCustomer == 0) {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedCmntCountByCustomer;
-              } else {
+              } else if (this.TwitterUnrespondedCmntCountByCustomer == 0 && this.TwitterUnrespondedMsgCountByCustomer == 0){
+                this.totalTwitterUnrespondedCountByCustomer =
+                this.TwitterUnrespondedMentionCountByCustomer;
+              } 
+              else {
                 this.totalTwitterUnrespondedCountByCustomer =
                   this.TwitterUnrespondedCmntCountByCustomer +
-                  this.TwitterUnrespondedMsgCountByCustomer;
+                  this.TwitterUnrespondedMsgCountByCustomer + this.TwitterUnrespondedMentionCountByCustomer;
               }
             }
             if (this.platform == 'Instagram') {

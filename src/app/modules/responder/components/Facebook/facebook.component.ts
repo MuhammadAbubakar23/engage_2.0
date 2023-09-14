@@ -394,7 +394,6 @@ export class FacebookComponent implements OnInit {
         }
       });
     }
-    // if ((this.id == null || this.id == undefined) && (this.slaId == null || this.slaId == undefined))
     else {
       this.filterDto = {
         // fromDate: new Date(),
@@ -459,7 +458,6 @@ export class FacebookComponent implements OnInit {
 
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
             // this.fbStats();
-            // // console.log('Facebook data', this.FacebookData);
           }
         });
     }

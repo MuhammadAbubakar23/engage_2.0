@@ -509,6 +509,7 @@ export class ConversationComponent implements OnInit {
   }
 
   updateListDataListener(res: any) {
+    debugger
     if (this.currentUrl.split('/')[2] == 'focused') {
       res.forEach((newMsg: any) => {
         if (this.platform == newMsg.platform && this.isAttachment != true) {
@@ -568,7 +569,7 @@ export class ConversationComponent implements OnInit {
               this.TotalUnresponded = 1;
               this.from = 1;
             }
-          } else if (this.platform == '') {
+          } else if (this.platform == 'all') {
             const index = this.ConversationList?.findIndex(
               (obj: any) => obj.user === newMsg.user
             );
@@ -597,7 +598,7 @@ export class ConversationComponent implements OnInit {
               this.from = 1;
             }
           }
-        } else if (this.platform == '' && this.isAttachment != true) {
+        } else if (this.platform == 'all' && this.isAttachment != true) {
           const index = this.ConversationList?.findIndex(
             (obj: any) => obj.user === newMsg.user
           );
