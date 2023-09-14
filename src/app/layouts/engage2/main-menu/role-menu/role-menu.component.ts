@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, share, startWith } from 'rxjs';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { loadMenusList, updateMenusList } from '../../menu-state/menu.actions';
 import { MenuModel } from '../../menu-state/menu.model';
 import { getEmargingEqual, getMenusLoading} from '../../menu-state/menu.selectors';
@@ -26,9 +27,14 @@ export class RoleMenuComponent implements OnInit {
  //menu$ :Observable<MenuModel[]>;
  //menu$ :Observable<any>;
  loading$: any;
+
+ restrictedAgentsString = "aniqa.waris@bpo.abacus-global.com, samoom.fatima@bpo.abacus-global.com, Mishal.Javed@abacus-global.com, ambreen.zubair@jazz.com.pk, naveeda.akhtar@jazz.com.pk, sidra.shafiq@jazz.com.pk, muhammad.mansoor@jazz.com.pk, ayesha.sajjad@jazz.com.pk, farrukh.saeed1@jazz.com.pk, hassam.naveed@jazz.com.pk, nadia.shabbir@jazz.com.pk, rizwan.malik@jazz.com.pk, abida.rasheed@jazz.com.pk, saba.riaz@jazz.com.pk, pringle.charles@jazz.com.pk"
+  restrictedAgent:string='';
+
  constructor(private MenuStore: Store<MenuState>, 
   private PermissionStore: Store<PermissionState>, 
-  private _route: Router) { 
+  private _route: Router,
+  private storage: StorageService) { 
   //  this.menu$ = this.MenuStore.select(getEmargingEqual("role_main_left_menu"));
   //  this.menus$ = this.menu$.pipe(share(), startWith(false));
   //  this.loading$ = this.MenuStore.select(getMenusLoading);
@@ -40,6 +46,9 @@ export class RoleMenuComponent implements OnInit {
  }
 
  ngOnInit(): void {
+  let data = this.storage.retrive('main', 'O').local;
+    this.restrictedAgent = data.originalUserName;
+
    this.MenuStore.select(getEmargingEqual("role_main_left_menu"))
    .subscribe((item:MenuModel[]) => {
      this.menus$ = [...item];

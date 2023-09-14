@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Tooltip } from 'bootstrap';
 import { Subscription } from 'rxjs';
@@ -7,6 +8,7 @@ import { LeftsidebarExpandedService } from 'src/app/services/LeftSideBar-Expande
 import { MaximizeChatService } from 'src/app/services/maximize-chat.service';
 import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { ModulesService } from '../../../shared/services/module-service/modules.service';
 import { loadMenusList, updateMenusList } from '../menu-state/menu.actions';
 // import { loadPermissionsList } from '../permission-state/permission.actions';
@@ -39,6 +41,25 @@ export class MainMenuComponent implements OnInit {
   UserDetails: any[]=[];
   id: any;
 
+  // restrictedAgents = [
+  //   {id:1, email: 'aniqa.waris@bpo.abacus-global.com'},
+  //   {id:2, email: 'samoom.fatima@bpo.abacus-global.com'},
+  //   {id:3, email: 'Mishal.Javed@abacus-global.com'},
+  //   {id:4, email: 'ambreen.zubair@jazz.com.pk'},
+  //   {id:5, email: 'naveeda.akhtar@jazz.com.pk'},
+  //   {id:6, email: 'sidra.shafiq@jazz.com.pk'},
+  //   {id:7, email: 'muhammad.mansoor@jazz.com.pk'},
+  //   {id:8, email: 'ayesha.sajjad@jazz.com.pk'},
+  //   {id:9, email: 'farrukh.saeed1@jazz.com.pk'},
+  //   {id:10, email: 'hassam.naveed@jazz.com.pk'},
+  //   {id:11, email: 'nadia.shabbir@jazz.com.pk'},
+  //   {id:12, email: 'rizwan.malik@jazz.com.pk'},
+  //   {id:13, email: 'abida.rasheed@jazz.com.pk'},
+  //   {id:14, email: 'saba.riaz@jazz.com.pk'},
+  //   {id:15, email: 'pringle.charles@jazz.com.pk'}
+  // ]
+
+  restrictedAgentsString = "aniqa.waris@bpo.abacus-global.com, samoom.fatima@bpo.abacus-global.com, Mishal.Javed@abacus-global.com, ambreen.zubair@jazz.com.pk, naveeda.akhtar@jazz.com.pk, sidra.shafiq@jazz.com.pk, muhammad.mansoor@jazz.com.pk, ayesha.sajjad@jazz.com.pk, farrukh.saeed1@jazz.com.pk, hassam.naveed@jazz.com.pk, nadia.shabbir@jazz.com.pk, rizwan.malik@jazz.com.pk, abida.rasheed@jazz.com.pk, saba.riaz@jazz.com.pk, pringle.charles@jazz.com.pk"
   constructor(
     private headerService: HeaderService,
     private _sharedData: SharedService,
@@ -47,7 +68,9 @@ export class MainMenuComponent implements OnInit {
     private moduleService : ModulesService,
     private commonService : CommonDataService,
     private MenuStore: Store<MenuState>,
-    private PermissionStore: Store<PermissionState>
+    private PermissionStore: Store<PermissionState>,
+    private storage : StorageService,
+    private router: Router
   ) { 
     // this.MenuStore.dispatch(loadMenusList());
     // this.MenuStore.dispatch(updateMenusList());
@@ -62,9 +85,16 @@ export class MainMenuComponent implements OnInit {
     // this.store.dispatch(loadPermissionsList())
 
   }
+  restrictedAgent:string='';
 
   ngOnInit(): void {
-    
+    let data = this.storage.retrive('main', 'O').local;
+    this.restrictedAgent = data.originalUserName;
+
+    if(this.restrictedAgentsString.includes(this.restrictedAgent)){
+      this.router.navigateByUrl('all-inboxes/completed/all')
+    }
+
     // this.menu$ = this.store.select(getMenuById(2)).subscribe((item) => {
     //   this.menus$ = item;
     // })
