@@ -509,7 +509,6 @@ export class ConversationComponent implements OnInit {
   }
 
   updateListDataListener(res: any) {
-    debugger
     if (this.currentUrl.split('/')[2] == 'focused') {
       res.forEach((newMsg: any) => {
         if (this.platform == newMsg.platform && this.isAttachment != true) {

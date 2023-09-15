@@ -7,11 +7,11 @@
                     [routerLink]="['/all-inboxes']">
                         <i class="fal fa-arrow-left"></i>
                     </a> -->
-        <div class="iconButton large" *ngIf="profilePic">
-            <img src={{profilePic}} class="rounded-circle w-100">
+        <div class="iconButton large" *ngIf="userInfo.profilePic">
+            <img src={{userInfo.profilePic}} class="rounded-circle w-100">
         </div>
         <!-- <h6 class="avatar-title navy m-0 ms-2">{{userName.split('<')[0]}}</h6> -->
-        <h6 class="avatar-title navy m-0 ms-2">{{userName}}</h6>
+        <h6 class="avatar-title navy m-0 ms-2">{{userInfo.userName}}</h6>
 
         <div class="dropdown w-auto">
             <button class="iconButton medium iconHover mx-2 mt-2" id="dropdownMenuButton1" data-bs-toggle="dropdown"
@@ -159,7 +159,7 @@
                     aria-labelledby="dropdownMenuButton1" [ngClass]="showMoreOptions == true?'show':''">
                     <li>
                         <ul>
-                            <li class="mb-0" (click)="Unblock(profileId)">
+                            <li class="mb-0" (click)="Unblock(userInfo.id)">
                                 <a class="dropdown-item">
                                     Unblock sender
                                 </a>

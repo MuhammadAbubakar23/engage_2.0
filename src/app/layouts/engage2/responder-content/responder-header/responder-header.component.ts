@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Tooltip } from 'bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { FetchPostTypeService } from 'src/app/services/FetchPostType/fetch-post-type.service';
+import { HeaderCountService } from 'src/app/services/headerCountService/header-count.service';
 import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
 import { UpdateMessagesService } from 'src/app/services/UpdateMessagesService/update-messages.service';
+import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
 import { AssignQuerryDto } from 'src/app/shared/Models/AssignQuerryDto';
 import { CommentStatusDto } from 'src/app/shared/Models/CommentStatusDto';
 import { DraftDto } from 'src/app/shared/Models/DraftDto';
@@ -119,27 +121,39 @@ export class ResponderHeaderComponent implements OnInit {
     private updateMessagesService: UpdateMessagesService,
     private toggleService: ToggleService,
     private lodeModuleService: ModulesService,
-    private store: StorageService
+    private store: StorageService,
+    private userInfoService: UserInformationService,
+    private headerCountService: HeaderCountService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
     //   this.getUserDetails();
     // });
 
-    this.Subscription = this.fetchposttype
-      .getPostTypeAsObservable()
-      .subscribe((res) => {
-        this.postType = res;
-        this.openedTab();
-      });
+    // this.Subscription = this.fetchposttype
+    //   .getPostTypeAsObservable()
+    //   .subscribe((res) => {
+    //     this.queryType = res;
+    //     this.openedTab();
+    //   });
   }
-
+  unrespondedCount:number=0;
+  userInfo:any;
   ngOnInit(): void {
+    debugger
+    this.Subscription = this.userInfoService.userInfo$.subscribe((userInfo) => {
+      this.userInfo = userInfo;
+    });
+    this.Subscription = this.headerCountService.count$.subscribe((count) => {
+      this.unrespondedCount = count;
+    });
     this.teamPermissions = this.store.retrive("permissionteam","O").local;
     this.currentUrl = this._route.url;
     this.flag = this.currentUrl.split('/')[2]
     this.flag2 = this.currentUrl.split('/')[3]
-    this.getUserDetails();
+    // this.getUserDetails();
+    // this.unrespondedCount =  this.headerInfoService.unrespondedCount;
+    // this.userId =  this.headerInfoService.userInfo;
     this.openedTab();
     Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(
       (tooltipNode) => new Tooltip(tooltipNode)
@@ -220,80 +234,80 @@ export class ResponderHeaderComponent implements OnInit {
   }
    });
 
-    this.Subscription = this.unrespondedCountService
-      .getUnRespondedCount()
-      .subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
-        if (Object.keys(res).length > 0) {
-        if (res.contentCount.contentType == 'FC') {
-          this.totalFbUnrespondedCountByCustomer =
-            res.contentCount.unrespondedCount +
-            this.FbUnrespondedMsgCountByCustomer;
-        }
-        if (res.contentCount.contentType == 'FCP') {
-          this.totalFbUnrespondedCountByCustomer =
-            res.contentCount.unrespondedCount +
-            this.FbUnrespondedCmntCountByCustomer;
-        }
-        if (res.contentCount.contentType == 'TTR') {
-          this.totalTwitterUnrespondedCountByCustomer =
-            res.contentCount.unrespondedCount +
-            this.TwitterUnrespondedMsgCountByCustomer +
-            this.TwitterUnrespondedMentionCountByCustomer;
-        }
-        if (res.contentCount.contentType == 'TDM') {
-          this.totalTwitterUnrespondedCountByCustomer =
-            res.contentCount.unrespondedCount +
-            this.TwitterUnrespondedCmntCountByCustomer +
-            this.TwitterUnrespondedMentionCountByCustomer;
-        }
-        if (res.contentCount.contentType == 'TM') {
-          this.totalTwitterUnrespondedCountByCustomer =
-            res.contentCount.unrespondedCount +
-            this.TwitterUnrespondedCmntCountByCustomer +
-            this.TwitterUnrespondedMsgCountByCustomer;
-        }
-        if (res.contentCount.contentType == 'IC') {
-          this.totalInstaUnrespondedCountByCustomer =
-            res.contentCount.unrespondedCount +
-            this.InstaUnrespondedMsgCountByCustomer;
-        }
-        if (res.contentCount.contentType == 'IM') {
-          this.totalInstaUnrespondedCountByCustomer =
-            res.contentCount.unrespondedCount +
-            this.InstaUnrespondedCmntCountByCustomer;
-        }
+  //   this.Subscription = this.unrespondedCountService
+  //     .getUnRespondedCount()
+  //     .subscribe((res) => {
+  //       if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
+  //       if (Object.keys(res).length > 0) {
+  //       if (res.contentCount.contentType == 'FC') {
+  //         this.totalFbUnrespondedCountByCustomer =
+  //           res.contentCount.unrespondedCount +
+  //           this.FbUnrespondedMsgCountByCustomer;
+  //       }
+  //       if (res.contentCount.contentType == 'FCP') {
+  //         this.totalFbUnrespondedCountByCustomer =
+  //           res.contentCount.unrespondedCount +
+  //           this.FbUnrespondedCmntCountByCustomer;
+  //       }
+  //       if (res.contentCount.contentType == 'TTR') {
+  //         this.totalTwitterUnrespondedCountByCustomer =
+  //           res.contentCount.unrespondedCount +
+  //           this.TwitterUnrespondedMsgCountByCustomer +
+  //           this.TwitterUnrespondedMentionCountByCustomer;
+  //       }
+  //       if (res.contentCount.contentType == 'TDM') {
+  //         this.totalTwitterUnrespondedCountByCustomer =
+  //           res.contentCount.unrespondedCount +
+  //           this.TwitterUnrespondedCmntCountByCustomer +
+  //           this.TwitterUnrespondedMentionCountByCustomer;
+  //       }
+  //       if (res.contentCount.contentType == 'TM') {
+  //         this.totalTwitterUnrespondedCountByCustomer =
+  //           res.contentCount.unrespondedCount +
+  //           this.TwitterUnrespondedCmntCountByCustomer +
+  //           this.TwitterUnrespondedMsgCountByCustomer;
+  //       }
+  //       if (res.contentCount.contentType == 'IC') {
+  //         this.totalInstaUnrespondedCountByCustomer =
+  //           res.contentCount.unrespondedCount +
+  //           this.InstaUnrespondedMsgCountByCustomer;
+  //       }
+  //       if (res.contentCount.contentType == 'IM') {
+  //         this.totalInstaUnrespondedCountByCustomer =
+  //           res.contentCount.unrespondedCount +
+  //           this.InstaUnrespondedCmntCountByCustomer;
+  //       }
 
-        if (
-          res.contentCount.contentType == 'Mail' ||
-          res.contentCount.contentType == 'OMail'
-        ) {
-          this.EmailUnrespondedCmntCountByCustomer =
-            res.contentCount.unrespondedCount;
-        }
-        if (res.contentCount.contentType == 'SMS') {
-          this.SmsUnrespondedCmntCountByCustomer =
-            res.contentCount.unrespondedCount;
-        }
-        if (res.contentCount.contentType == 'WM') {
-          this.WtsapUnrespondedCmntCountByCustomer =
-            res.contentCount.unrespondedCount;
-        }
-        if (res.contentCount.contentType == 'WC') {
-          this.WcUnrespondedCmntCountByCustomer =
-            res.contentCount.unrespondedCount;
-        }
-        if (res.contentCount.contentType == 'YC') {
-          this.YoutubeUnrespondedCmntCountByCustomer =
-            res.contentCount.unrespondedCount;
-        }
-        if (res.contentCount.contentType == 'LIC') {
-          this.LinkedInUnrespondedCmntCountByCustomer =
-            res.contentCount.unrespondedCount;
-        }
-   }
-  }
-   });
+  //       if (
+  //         res.contentCount.contentType == 'Mail' ||
+  //         res.contentCount.contentType == 'OMail'
+  //       ) {
+  //         this.EmailUnrespondedCmntCountByCustomer =
+  //           res.contentCount.unrespondedCount;
+  //       }
+  //       if (res.contentCount.contentType == 'SMS') {
+  //         this.SmsUnrespondedCmntCountByCustomer =
+  //           res.contentCount.unrespondedCount;
+  //       }
+  //       if (res.contentCount.contentType == 'WM') {
+  //         this.WtsapUnrespondedCmntCountByCustomer =
+  //           res.contentCount.unrespondedCount;
+  //       }
+  //       if (res.contentCount.contentType == 'WC') {
+  //         this.WcUnrespondedCmntCountByCustomer =
+  //           res.contentCount.unrespondedCount;
+  //       }
+  //       if (res.contentCount.contentType == 'YC') {
+  //         this.YoutubeUnrespondedCmntCountByCustomer =
+  //           res.contentCount.unrespondedCount;
+  //       }
+  //       if (res.contentCount.contentType == 'LIC') {
+  //         this.LinkedInUnrespondedCmntCountByCustomer =
+  //           res.contentCount.unrespondedCount;
+  //       }
+  //  }
+  // }
+  //  });
    
   }
 
@@ -460,7 +474,7 @@ export class ResponderHeaderComponent implements OnInit {
       userName: this.userName,
       profilePic: this.profilePic,
       platform: this.platform,
-      postType: this.postType,
+      postType: this.queryType,
       totalCount: this.totalCount,
     };
     this._sharedService.sendUserInfo(this.draftDto);
@@ -470,7 +484,7 @@ export class ResponderHeaderComponent implements OnInit {
   userId: string = '';
   userName: any;
   profilePic: any;
-  postType = this.fetchposttype.postType;
+  queryType = this.fetchposttype.postType;
   totalCount: any;
   id = this.fetchId.id;
   profileId: any;
@@ -487,7 +501,7 @@ export class ResponderHeaderComponent implements OnInit {
         pageNumber: 1,
         pageSize: 10,
         isAttachment: false,
-        queryType: '',
+        queryType: this.queryType,
         text: '',
         flag: this.flag,
         userName: "",
@@ -499,13 +513,14 @@ export class ResponderHeaderComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
+          debugger
           if (Object.keys(res).length > 0) {
             this.userId = res.List[0].user.userId;
             this.userName =
               res.List[0].user.userName || res.List[0].user.userId;
             this.profilePic = res.List[0].user.profilePic;
             this.platform = res.List[0].platform;
-            this.postType = res.List[0].comments[0].contentType;
+            this.queryType = res.List[0].comments[0].contentType;
             this.profileId = res.List[0].user.id;
 
             this.platformsArray = [];
@@ -694,13 +709,14 @@ export class ResponderHeaderComponent implements OnInit {
       this.commondata
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
+          debugger
           if (Object.keys(res).length > 0) {
             this.userId = res.List?.user.userId;
             this.profileId = res.List?.user.id;
             this.userName = res.List?.user.userName || res.List?.user.userId;
             this.profilePic = res.List?.user.profilePic;
             this.platform = res.List?.platform;
-            this.postType = res.List?.dm.contentType;
+            this.queryType = res.List?.dm.contentType;
 
             this.platformsArrayForMessages = [];
             this.facebookMessage = false;
@@ -848,6 +864,7 @@ export class ResponderHeaderComponent implements OnInit {
           }
         });
     } else if (this.fetchId.slaId != null || this.fetchId.slaId != undefined) {
+
       localStorage.setItem('storeHeaderOpenedId', this.fetchId.slaId);
       this.filterDto = {
         // fromDate: '2000-11-30T08:15:36.365Z',
@@ -858,7 +875,7 @@ export class ResponderHeaderComponent implements OnInit {
         pageNumber: 1,
         pageSize: 10,
         isAttachment: false,
-        queryType: '',
+        queryType: this.queryType,
         text: '',
         flag: this.flag,
         userName: "",
@@ -871,7 +888,7 @@ export class ResponderHeaderComponent implements OnInit {
         this.userName = res.List[0]?.user.userName || res.List[0]?.user.userId;
         this.profilePic = res.List[0]?.user.profilePic;
         this.platform = res.List[0].platform;
-        this.postType = res.List[0].comments[0].contentType;
+        this.queryType = res.List[0].comments[0].contentType;
         this.profileId = res.List[0].user.id;
 
         this.platformsArray = [];
@@ -986,6 +1003,7 @@ export class ResponderHeaderComponent implements OnInit {
     }
   });
     } else {
+      debugger
       this.filterDto = {
         // fromDate: '2000-11-30T08:15:36.365Z',
         // toDate: new Date(),
@@ -995,7 +1013,7 @@ export class ResponderHeaderComponent implements OnInit {
         pageNumber: 1,
         pageSize: 10,
         isAttachment: false,
-        queryType: '',
+        queryType: this.queryType,
         text: '',
         flag: this.flag,
         userName: "",
@@ -1007,13 +1025,14 @@ export class ResponderHeaderComponent implements OnInit {
       this.commondata
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
+          debugger
           if (Object.keys(res).length > 0) {
             this.userId = res.List?.user.userId;
             this.profileId = res.List?.user.id;
             this.userName = res.List?.user.userName || res.List?.user.userId;
             this.profilePic = res.List?.user.profilePic;
             this.platform = res.List?.platform;
-            this.postType = res.List?.dm[0].contentType;
+            this.queryType = res.List?.dm[0].contentType;
 
             this.platformsArrayForMessages = [];
             this.facebookMessage = false;
@@ -1189,7 +1208,7 @@ export class ResponderHeaderComponent implements OnInit {
               res.List[0].user.userName || res.List[0].user.userId;
             this.profilePic = res.List[0].user.profilePic;
             this.platform = res.List[0].platform;
-            this.postType = res.List[0].comments[0].contentType;
+            this.queryType = res.List[0].comments[0].contentType;
             this.profileId = res.List[0].user.id;
 
             this.platformsArray = [];
@@ -1821,12 +1840,11 @@ export class ResponderHeaderComponent implements OnInit {
   openedTab() {
     // if(!this.postType){
 
-    const channel = this.currentUrl.split('/')[5];
-    this.postType = channel;
+    const activChannel = this.currentUrl.split('/')[5];
     // }
 
     // if(localStorage.getItem('assignedProfile') == null || localStorage.getItem('assignedProfile') == '' || localStorage.getItem('assignedProfile') == undefined){
-    if (this.postType == 'Instagram') {
+    if (activChannel == 'Instagram') {
       this.facebookTab = false;
       this.instagramTab = true;
       this.whatsappTab = false;
@@ -1839,7 +1857,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'Facebook') {
+    if (activChannel == 'Facebook') {
       this.facebookTab = true;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1852,7 +1870,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'Twitter') {
+    if (activChannel == 'Twitter') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1865,7 +1883,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'Email' || this.postType == 'OfficeEmail') {
+    if (activChannel == 'Email' || activChannel == 'OfficeEmail') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1878,7 +1896,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'Youtube') {
+    if (activChannel == 'Youtube') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1890,7 +1908,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'WhatsApp') {
+    if (activChannel == 'WhatsApp') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = true;
@@ -1903,7 +1921,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'SMS') {
+    if (activChannel == 'SMS') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1916,7 +1934,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'Phone') {
+    if (activChannel == 'Phone') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1929,7 +1947,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'WebChat') {
+    if (activChannel == 'WebChat') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;
@@ -1942,7 +1960,7 @@ export class ResponderHeaderComponent implements OnInit {
       this.linkedInTab = false;
       this.playStoreTab = false;
     }
-    if (this.postType == 'LinkedIn') {
+    if (activChannel == 'LinkedIn') {
       this.facebookTab = false;
       this.instagramTab = false;
       this.whatsappTab = false;

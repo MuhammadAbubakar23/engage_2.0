@@ -579,8 +579,6 @@ export class FacebookComponent implements OnInit {
             items: groupedItems[createdDate],
           };
         });
-        // this.fbMsgReply = true;
-        // // console.log('Messages ==>', this.groupedMessages);
         this.totalUnrespondedMsgCountByCustomer =
           this.totalUnrespondedMsgCountByCustomer + 1;
       }

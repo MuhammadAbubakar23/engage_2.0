@@ -16,11 +16,9 @@ export const environment = {
   linkdinclientSecret: '4wp2Zjzqjw3PYAdt',
   twitterclientId: '57617762-IWEThd14hGdgr3bXuVNmLdb60Lo9OLEVJ1cFUE4JF',
   twitterclientSecret: 'Ex1XpdfYMFEAtWBJn9XOrtfxyu19INzNaPV155vocLomG',
-  store: {
-    types: { local: 'LS' },
-  },
+  store: { types: { local: 'LS' }},
   title: 'abc',
-  IdentityBaseUrl:  'https://identity-engage.enteract.app/api',
+  IdentityBaseUrl:  'https://idtservice.enteract.live/api',
   InstaBaseUrl: 'https://insta.360scrm.com/api/', 
   FbBaseUrl: 'https://face.360scrm.com/api/',
   YoutubeBaseUrl: 'https://tube.360scrm.com/api/',
