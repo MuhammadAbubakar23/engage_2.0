@@ -5,6 +5,7 @@ import { DispositionFormDto } from 'src/app/shared/Models/DispositionFormDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
   selector: 'app-disposition-form',
@@ -19,7 +20,8 @@ export class DispositionFormComponent implements OnInit {
   constructor(private commonService : CommonDataService,
     private route : Router,
     private toggleService : ToggleService,
-    private lodeModuleService : ModulesService) {
+    private lodeModuleService : ModulesService,
+    private stor: StorageService) {
       
     this.dispositionForm = new FormGroup({
       dispositionId: new FormControl('', Validators.required),
@@ -41,13 +43,15 @@ export class DispositionFormComponent implements OnInit {
   customerProfileId = Number(localStorage.getItem('profileId'))
   userId = localStorage.getItem('storeHeaderOpenedId')
   companyId = 0;
+  userInfo:any;
 
   ngOnInit(): void {
+    this.userInfo = this.stor.retrive('userInfo', 'O').local;
   }
 
   previousUrl:any;
   submitDispositionForm(){
-
+debugger
     this.dispositionFormDto = {
       dispositionId: this.dispositionForm.value.dispositionId,
       reasonId: this.dispositionForm.value.reasonId,
@@ -55,8 +59,8 @@ export class DispositionFormComponent implements OnInit {
       comment: this.dispositionForm.value.comment,
       completedData : 
         {
-          user: this.userId ||'{}',
-          plateFrom: this.platform ||'{}',
+          user: this.userInfo.userId ||'{}',
+          plateFrom: this.userInfo.platform ||'{}',
           userId: this.agentId,
           companyId: this.companyId,
         }

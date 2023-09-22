@@ -17,7 +17,7 @@
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active h-100" (click)="twitterTweetReply()" id="twitter-tweets-tab"
                         data-bs-toggle="tab" data-bs-target="#twitter-tweets" type="button" role="tab"
-                        aria-controls="twitter-tweets" aria-selected="true">
+                        aria-controls="twitter-tweets" aria-selected="true" *ngIf="TwitterTweets.length > 0">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
                                 <i class="fal fa-comments-alt ice"></i>
@@ -29,9 +29,9 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link h-100" (click)="twitterMentionReply()" id="twitter-mention-tab"
+                    <button class="nav-link h-100" [class.active]="TwitterTweets.length == 0 && TwitterMentions.length > 0" (click)="twitterMentionReply()" id="twitter-mention-tab"
                         data-bs-toggle="tab" data-bs-target="#twitter-mention" type="button" role="tab"
-                        aria-controls="twitter-mention" aria-selected="false" tabindex="-1">
+                        aria-controls="twitter-mention" aria-selected="false" tabindex="-1" *ngIf="TwitterMentions.length > 0">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
                                 <i class="fab fa-facebook-messenger ice"></i>
@@ -43,9 +43,9 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link h-100" (click)="twitterMessageReply()" id="twitter-message-tab"
+                    <button class="nav-link h-100" [class.active]="TwitterTweets.length == 0 && TwitterMessages.length > 0 && TwitterMentions.length == 0" (click)="twitterMessageReply()" id="twitter-message-tab"
                         data-bs-toggle="tab" data-bs-target="#twitter-message" type="button" role="tab"
-                        aria-controls="twitter-message" aria-selected="false" tabindex="-1">
+                        aria-controls="twitter-message" aria-selected="false" tabindex="-1" *ngIf="TwitterMessages.length > 0">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
                                 <i class="fab fa-facebook-messenger ice"></i>
@@ -64,7 +64,7 @@
             <div class="scroll-content">
                 <div class="tab-content m-4" id="myTabContent">
                     <div class="tab-pane fade show active" id="twitter-tweets" role="tabpanel"
-                        aria-labelledby="twitter-tweets-tab">
+                        aria-labelledby="twitter-tweets-tab" *ngIf="TwitterTweets.length > 0">
                         <div class="chat-box-wrap" *ngFor="let tweet of TwitterTweets">
                             <div class="message-wrap agent-message-wrap right">
                                 <div class="d-flex align-items-center agent-container">
@@ -73,13 +73,13 @@
                                             <div class="card-header bg-white msg-user-info p-0 border-0">
                                                 <div class="d-flex align-items-center">
                                                     <p class="card-text">
-                                                        <small class="silver">{{tweet.post.createdDate |
+                                                        <small class="silver">{{tweet?.post?.createdDate |
                                                             date:'EEEE, MMMM d, y, h:mm a'}}</small>
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="post-img-wrap whatsappImgModalBtn" type="button"
-                                                style="width:375px;" *ngFor="let attachment of tweet.post.attachments">
+                                                style="width:375px;" *ngFor="let attachment of tweet?.post?.attachments">
                                                 <img *ngIf="attachment.contentType == 'photo'"
                                                     src={{attachment.attachmentUrl}}
                                                     style="width: -webkit-fill-available;">
@@ -96,7 +96,7 @@
                                             <div class="card-body bg-light">
 
                                                 <p class="card-text nignt mb-0">
-                                                    {{tweet.post.caption}}
+                                                    {{tweet?.post?.caption}}
                                                 </p>
 
 
@@ -105,14 +105,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div *ngFor="let group of tweet.groupedComments | sort:criteria">
+                            <div *ngFor="let group of tweet?.groupedComments | sort:criteria">
                                 <div class="date-wrap">
                                     <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}}</p>
                                 </div>
                                 <ng-container *ngFor="let ttr of group.items | sort:criteria">
                                     <ng-container *ngIf="ttr.queryStatus != 'QueryCompleted'">
                                         <div class="message-wrap agent-message-wrap right"
-                                            *ngIf="tweet.post.postId == ttr.postId">
+                                            *ngIf="tweet?.post?.postId == ttr.postId">
                                             <div class="application-wrap d-flex align-items-center mb-1"
                                                 *ngIf="ttr.ticketId != null">
                                                 <p class="m-0 silver me-2 ms-1">Application ID
@@ -139,7 +139,7 @@
                                                                     <i class="fas fa-star sun"></i>
                                                                 </button>
                                                             </div>
-                                                            <div *ngIf="this.teamPermissions.priviledge.includes('_qrysta__')">
+                                                            <div >
                                                                 <div class="dropdown w-auto" *ngIf="ttr.queryStatus != 'Responded' && ttr.queryStatus != 'Completed'">
                                                                     <button class="btn coal p-0 ps-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         <small *ngIf="ttr.spam == true; else notSpam">Spam 
@@ -209,9 +209,9 @@
                                                             <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                                 <div
                                                                     class="message-actionlist d-flex align-items-center">
-                                                                    <div class="box" *ngIf="this.teamPermissions.priviledge.includes('__qrylik__')">
+                                                                    <div class="box" >
                                                                         <a class="message-actionItem coal unlikebht btn p-0 label-reactions"
-                                                                            (click)="likeByAdmin(ttr.id, ttr.isLikedByAdmin, tweet.platform, tweet.post?.profile.page_Id, tweet.post?.profile.profile_Id, tweet.user?.userId)"
+                                                                            (click)="likeByAdmin(ttr.id, ttr.isLikedByAdmin, tweet?.platform, tweet?.post?.profile.page_Id, tweet?.post?.profile.profile_Id, tweet?.user?.userId)"
                                                                             [class.active]="ttr.isLikedByAdmin == true">
                                                                             <span class="iconButton small btn">
                                                                                 <i class="fal fa-heart"></i>
@@ -222,13 +222,13 @@
                                                                     </div>
                                                                     <a class="message-actionItem replyBtn coal"
                                                                         (click)="SendCommentInformation(ttr.id)"
-                                                                        *ngIf="this.teamPermissions.priviledge.includes('__qryrep__')">
+                                                                        >
                                                                         <span class="iconButton small btn">
                                                                             <i class="fal fa-reply coal"></i>
                                                                         </span>
                                                                         Reply
                                                                     </a>
-                                                                    <div class="dropdown w-auto" *ngIf="this.teamPermissions.priviledge.includes('__qrytag__')">
+                                                                    <div class="dropdown w-auto" >
                                                                         <button class="iconButton medium"
                                                                             id="dropdownMenuButton1"
                                                                             data-bs-toggle="dropdown"
@@ -327,7 +327,7 @@
                                                                             </ul>
                                                                         </ul>
                                                                     </div>
-                                                                    <div class="dropdown w-auto" *ngIf="this.teamPermissions.priviledge.includes('__qrysnt__')">
+                                                                    <div class="dropdown w-auto" >
                                                                         <button class="iconButton medium show"
                                                                             id="sentimentButton"
                                                                             data-bs-toggle="dropdown"
@@ -387,7 +387,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!-- <ng-container *ngIf="this.teamPermissions.priviledge.includes('__qrytic__')">
+                                                <!-- <ng-container >
                                                     <span *ngIf="flag == 'focused' || flag == 'assigned-to-me'" class="complaintBtn" (click)="toggle('ticket', ttr.id)"
                                                     type="button">
                                                     <i class="fal fa-plus-circle sky"></i>
@@ -404,7 +404,7 @@
                                                             <div class="card-body shadow-sm">
                                                                 <div class="d-flex align-items-center mb-2">
                                                                     <h6 class="card-title m-0">
-                                                                        {{tweet.post.profile.page_Name}}</h6>
+                                                                        {{tweet?.post?.profile.page_Name}}</h6>
                                                                     <p class="card-text ms-3">
                                                                         <small class="silver">{{reply.createdDate
                                                                             | date:'h:mm:ss a'}}</small>
@@ -538,7 +538,7 @@
             [infiniteScrollUpDistance]="0.5" [infiniteScrollThrottle]="10" (scrolled)="onScrollMessages()">
             <div class="scroll-content">
                 <div class="tab-content m-4" id="myTabContent">
-                    <div *ngIf="TwitterMentions" class="tab-pane fade show active" id="twitter-mention" role="tabpanel"
+                    <div *ngIf="TwitterMentions.length > 0" class="tab-pane fade show active" id="twitter-mention" role="tabpanel"
                         aria-labelledby="twitter-mention-tab">
                         <div class="chat-box-wrap" *ngFor="let group of groupedMentions | sort:criteria">
 
@@ -986,7 +986,7 @@
             [infiniteScrollUpDistance]="0.5" [infiniteScrollThrottle]="10" (scrolled)="onScrollMessages()">
             <div class="scroll-content">
                 <div class="tab-content m-4" id="myTabContent">
-                    <div *ngIf="TwitterMessages" class="tab-pane fade show active" id="fb-msg" role="tabpanel"
+                    <div *ngIf="TwitterMessages.length > 0" class="tab-pane fade show active" id="fb-msg" role="tabpanel"
                         aria-labelledby="fb-msg-tab">
                         <div class="chat-box-wrap" *ngFor="let group of groupedMessages | sort:criteria">
 
@@ -1435,7 +1435,7 @@
         <ng-container *ngIf="TTReply == true">
             <div class="msgTypingField shadow-lg">
                 <div *ngFor="let tweet of TwitterTweets">
-                    <div *ngFor="let tt of tweet.comments">
+                    <div *ngFor="let tt of tweet?.comments">
                         <div class="attachment-block d-none">
                             <div class="card-body p-3">
                                 <span class="close-icon"><i class="fas fa-times"></i></span>

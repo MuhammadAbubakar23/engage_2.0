@@ -7,11 +7,11 @@
                     [routerLink]="['/all-inboxes']">
                         <i class="fal fa-arrow-left"></i>
                     </a> -->
-        <div class="iconButton large" *ngIf="userInfo.profilePic">
-            <img src={{userInfo.profilePic}} class="rounded-circle w-100">
+        <div class="iconButton large" *ngIf="userInfo?.profilePic">
+            <img src={{userInfo?.profilePic}} class="rounded-circle w-100">
         </div>
         <!-- <h6 class="avatar-title navy m-0 ms-2">{{userName.split('<')[0]}}</h6> -->
-        <h6 class="avatar-title navy m-0 ms-2">{{userInfo.userName}}</h6>
+        <h6 class="avatar-title navy m-0 ms-2">{{userInfo?.userName}}</h6>
 
         <div class="dropdown w-auto">
             <button class="iconButton medium iconHover mx-2 mt-2" id="dropdownMenuButton1" data-bs-toggle="dropdown"
@@ -159,7 +159,7 @@
                     aria-labelledby="dropdownMenuButton1" [ngClass]="showMoreOptions == true?'show':''">
                     <li>
                         <ul>
-                            <li class="mb-0" (click)="Unblock(userInfo.id)">
+                            <li class="mb-0" (click)="Unblock(id)">
                                 <a class="dropdown-item">
                                     Unblock sender
                                 </a>
@@ -173,78 +173,76 @@
         <div class="social-wrapper d-flex align-items-center mx-2">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    data-bs-original-title="facebook" *ngIf="facebookComment == true || facebookMessage == true">
-                    <button [class.active]="facebookTab == true"
+                    data-bs-original-title="facebook" *ngIf="activeChannel == 'Facebook'">
+                    <button [class.active]="activeChannel == 'Facebook'"
                         class="nav-link iconButton medium btn iconHover notification facebook " id="facebook-tab"
                         data-bs-toggle="tab" data-bs-target="#facebook" type="button" role="tab"
                         aria-controls="facebook" aria-selected="true" (click)="updatevalue(facebookId, 'Facebook')">
                         <i class="fab fa-facebook-f coal"></i>
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="totalFbUnrespondedCountByCustomer > 0">{{totalFbUnrespondedCountByCustomer}}</span>
-
+                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
                     </button>
-
                 </li>
                 <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    data-bs-original-title="Whatsapp" *ngIf="whatsapp == true">
-                    <button [class.active]="whatsappTab == true"
+                    data-bs-original-title="Whatsapp" *ngIf="activeChannel == 'WhatsApp'">
+                    <button [class.active]="activeChannel == 'WhatsApp'"
                         class="nav-link iconButton medium btn iconHover notification whatsapp" id="whatsapp-tab"
                         data-bs-toggle="tab" data-bs-target="#whatsapp" type="button" role="tab"
                         aria-controls="whatsapp" aria-selected="false" (click)="updatevalue(whatsappId, 'WhatsApp')">
                         <i class="fab fa-whatsapp coal"></i>
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="WtsapUnrespondedCmntCountByCustomer > 0">{{WtsapUnrespondedCmntCountByCustomer}}</span>
+                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
                     </button>
                 </li>
                 <li class="nav-item selector_nav_item" role="presentation" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" data-bs-original-title="WebChat" *ngIf="webChat == true">
-                    <button [class.active]="webChatTab == true"
+                    data-bs-placement="bottom" data-bs-original-title="WebChat" *ngIf="activeChannel == 'WebChat'">
+                    <button [class.active]="activeChannel == 'WebChat'"
                         class="nav-link iconButton medium btn notification iconHover webchat" id="webChat-tab"
                         data-bs-toggle="tab" data-bs-target="#webChat" type="button" role="tab" aria-controls="webChat"
                         aria-selected="false" tabindex="-1" (click)="updatevalue(webChatId, 'WebChat')">
                         <i class="fal fa-comments-alt coal"></i>
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="WcUnrespondedCmntCountByCustomer > 0">{{WcUnrespondedCmntCountByCustomer}}</span>
+                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
                     </button>
                 </li>
                 <li class="nav-item selector_nav_item" role="presentation" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" data-bs-original-title="SMS/Text" *ngIf="sms == true">
-                    <button [class.active]="smsTab == true"
+                    data-bs-placement="bottom" data-bs-original-title="SMS/Text" *ngIf="activeChannel == 'SMS'">
+                    <button [class.active]="activeChannel == 'SMS'"
                         class="nav-link iconButton medium btn iconHover notification sms" id="sms-tab"
                         data-bs-toggle="tab" data-bs-target="#sms" type="button" role="tab" aria-controls="sms"
                         aria-selected="false" (click)="updatevalue(smsId, 'SMS')">
                         <i class="fal fa-comment-alt-lines coal"></i>
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="SmsUnrespondedCmntCountByCustomer > 0">{{SmsUnrespondedCmntCountByCustomer}}</span>
+                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
                     </button>
                 </li>
 
                 <li class="nav-item selector_nav_item" role="presentation" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" data-bs-original-title="Insta" *ngIf="instagram == true">
-                    <button [class.active]="instagramTab == true"
+                    data-bs-placement="bottom" data-bs-original-title="Insta" *ngIf="activeChannel == 'Instagram'">
+                    <button [class.active]="activeChannel == 'Instagram'"
                         class="nav-link iconButton medium btn iconHover notification insta" id="insta-tab"
                         data-bs-toggle="tab" data-bs-target="#insta" type="button" role="tab" aria-controls="insta"
                         aria-selected="false" (click)="updatevalue(instagramId, 'Instagram')">
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="totalInstaUnrespondedCountByCustomer > 0">{{totalInstaUnrespondedCountByCustomer}}</span>
+                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
                         <i class="fab fa-instagram"></i>
                     </button>
                 </li>
                 <li class="nav-item selector_nav_item" role="presentation" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" data-bs-original-title="Twitter"
-                    *ngIf="twitterComment == true || twitterMessage == true">
-                    <button [class.active]="twitterTab == true"
+                    *ngIf="activeChannel == 'Twitter'">
+                    <button [class.active]="activeChannel == 'Twitter'"
                         class="nav-link iconButton medium btn iconHover notification twitter" id="twitter-tab"
                         data-bs-toggle="tab" data-bs-target="#twitter" type="button" role="tab" aria-controls="insta"
                         aria-selected="false" (click)="updatevalue(twitterId, 'Twitter')">
                         <i class="fab fa-twitter"></i>
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="totalTwitterUnrespondedCountByCustomer > 0">{{totalTwitterUnrespondedCountByCustomer}}</span>
+                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
                     </button>
                 </li>
                 <li class="nav-item selector_nav_item" role="presentation" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" data-bs-original-title="Phone" *ngIf="phone == true">
-                    <button [class.active]="phoneTab == true"
+                    data-bs-placement="bottom" data-bs-original-title="Phone" *ngIf="activeChannel == 'Phone'">
+                    <button [class.active]="activeChannel == 'Phone'"
                         class="nav-link iconButton medium btn iconHover notification phone" id="phone-tab"
                         data-bs-toggle="tab" data-bs-target="#phone" type="button" role="tab" aria-controls="phone"
                         aria-selected="false" (click)="updatevalue(phoneId, 'Phone')">
@@ -252,30 +250,30 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    data-bs-original-title="Email" *ngIf="email == true">
-                    <button [class.active]="emailTab == true"
+                    data-bs-original-title="Email" *ngIf="activeChannel == 'Email' || activeChannel == 'OfficeEmail'">
+                    <button [class.active]="activeChannel == 'Email' || activeChannel == 'OfficeEmail'"
                         class="nav-link iconButton medium btn iconHover notification email" id="emails-tab"
                         data-bs-toggle="tab" data-bs-target="#emails" type="button" role="tab" aria-controls="emails"
                         aria-selected="false" tabindex="-1" (click)="updatevalue(emailId, 'Email')">
                         <i class="fal fa-envelope coal"></i>
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="EmailUnrespondedCmntCountByCustomer > 0">{{EmailUnrespondedCmntCountByCustomer}}</span>
+                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
                     </button>
                 </li>
                 <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    data-bs-original-title="linkedin" *ngIf="linkedIn == true">
-                    <button [class.active]="linkedInTab == true"
+                    data-bs-original-title="linkedin" *ngIf="activeChannel == 'LinkedIn'">
+                    <button [class.active]="activeChannel == 'LinkedIn'"
                         class="nav-link iconButton medium btn iconHover notification linkedin" id="linkedin-tab"
                         data-bs-toggle="tab" data-bs-target="#linkedin" type="button" role="tab"
                         aria-controls="linkedin" aria-selected="false" tabindex="-1"
                         (click)="updatevalue(linkedInId, 'LinkedIn')">
                         <i class="fa-brands fa-linkedin-in"></i>
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="LinkedInUnrespondedCmntCountByCustomer > 0">{{LinkedInUnrespondedCmntCountByCustomer}}</span>
+                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
                     </button>
                 </li>
                 <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    data-bs-original-title="googleplay" *ngIf="playStore == true">
+                    data-bs-original-title="googleplay" *ngIf="activeChannel == 'PlayStore'">
                     <button class="nav-link iconButton medium btn iconHover notification googleplay" id="googleplay-tab"
                         data-bs-toggle="tab" data-bs-target="#googleplay" type="button" role="tab"
                         aria-controls="googleplay" aria-selected="false" tabindex="-1"
@@ -284,14 +282,14 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    data-bs-original-title="Youtube" *ngIf="youtube == true">
-                    <button [class.active]="youtubeTab == true"
+                    data-bs-original-title="Youtube" *ngIf="activeChannel == 'Youtube'">
+                    <button [class.active]="activeChannel == 'Youtube'"
                         class="nav-link iconButton medium btn iconHover notification youtube" id="youtube-tab"
                         data-bs-toggle="tab" data-bs-target="#youtube" type="button" role="tab" aria-controls="youtube"
                         aria-selected="false" tabindex="-1" (click)="updatevalue(youtubeId, 'Youtube')">
                         <i class="fab fa-youtube"></i>
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="YoutubeUnrespondedCmntCountByCustomer > 0">{{YoutubeUnrespondedCmntCountByCustomer}}</span>
+                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
                     </button>
                 </li>
             </ul>

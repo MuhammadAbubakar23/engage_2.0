@@ -56,6 +56,14 @@ const routes: Routes = [
     {
       path:'executive-dashboard',
       loadComponent: () => import('./components/executive-dashboard/executive-dashboard.component').then(c => c.ExecutiveDashboardComponent),
+    },
+    {
+      path:'inbound-outbound-report',
+      loadComponent: () => import('./components/inbound-ontbound-report/inbound-ontbound-report.component').then(c => c.InboundOntboundReportComponent),
+    },
+    {
+      path:'twitter-report',
+      loadComponent: () => import('./components//twitter-report/twitter-report.component').then(c => c.TwitterReportComponent),
     }
   ]
   },

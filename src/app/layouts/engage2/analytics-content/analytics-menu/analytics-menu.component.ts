@@ -12,7 +12,7 @@ export class AnalyticsMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this._hS.getHeader().subscribe((res: any) => {
-      this.activeMenu = res.title;
+      // this.activeMenu = res.title;
     });
   }
 }

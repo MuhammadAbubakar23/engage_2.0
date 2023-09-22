@@ -71,6 +71,16 @@ export class CommonDataService {
   updateStatus = environment.links.common.updateStatus;
   hideUnhideMessage = environment.links.common.hideUnhideMessage;
 
+  //Reports
+  addinboundoutbound = environment.links.common.addinboundoutbound 
+  twitterReport = environment.links.common.twitterReport
+  twitterSLAReport = environment.links.common.twitterSLAReport
+  twitterProfileWiseReport = environment.links.common.twitterProfileWiseReport
+  getUserList = environment.links.common.getUserList
+  getSentimentData = environment.links.common.getSentimentData
+
+  
+
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
   addTemplate = environment.links.console.addTemplate;
@@ -115,6 +125,7 @@ export class CommonDataService {
   updateRules = environment.links.console.updateRules
   getEntitiesRule = environment.links.console.getEntitiesRule
   getRuleEntityProperties = environment.links.console.getRuleEntityProperties
+  
 
   getChannels = environment.links.identity.channels;
   deleteRoles = environment.links.identity.deleteRoles
@@ -521,10 +532,35 @@ export class CommonDataService {
   }
 // Survey form
   AddSurvey(body:any){
-    return this.http.post(this.ServiceBaseUrl+this.addSurvey,body)
+    return this.http.post(this.ServiceBaseUrl+this.addSurvey,body);
   }
   AddCSATSurvey(body:any){
-    return this.http.post(this.ServiceBaseUrl+this.addCSAT,body)
+    return this.http.post(this.ServiceBaseUrl+this.addCSAT,body);
+  }
+
+  Addinboundoutbound(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.addinboundoutbound, body);
+  }
+
+  GetTwitterReport(body:any){
+    return this.http.post(this.CommonBaseUrl + this.twitterReport, body);
+  }
+
+  GetTwitterSLAReport(body:any){
+    return this.http.post(this.CommonBaseUrl + this.twitterSLAReport, body);
+  }
+
+  GetTwitterProfileWiseReport(body:any){
+    return this.http.post(this.CommonBaseUrl + this.twitterProfileWiseReport, body);
+  }
+
+  
+ GetUserList(){
+    return this.http.get(this.IdentityBaseUrl + this.getUserList);
+  }
+  GetSentimentData(){
+    return this.http.get(this.CommonBaseUrl + this.getSentimentData);
+
   }
 }
 

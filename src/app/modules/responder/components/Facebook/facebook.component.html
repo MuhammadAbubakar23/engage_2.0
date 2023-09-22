@@ -192,7 +192,7 @@
                                                                     <i class="fas fa-star sun"></i>
                                                                 </button>
                                                             </div>
-                                                            <div *ngIf="this.teamPermissions.priviledge.includes('_qrysta__')">
+                                                            <div >
                                                                 <div class="dropdown w-auto" *ngIf="fbcmnts.queryStatus != 'Responded'">
                                                                     <button class="btn coal p-0 ps-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         <small *ngIf="fbcmnts.spam == true; else notSpam">Spam 
@@ -271,7 +271,7 @@
                                                             <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                                 <div
                                                                     class="message-actionlist d-flex align-items-center">
-                                                                    <div class="box" *ngIf="this.teamPermissions.priviledge.includes('__qrylik__')">
+                                                                    <div class="box" >
                                                                         <a class="message-actionItem coal likebht p-0 label-reactions"
                                                                             (click)="likeByAdmin(fbcmnts.id, fbcmnts.isLikedByAdmin, facebookdata.platform, facebookdata.post?.profile.page_Id, facebookdata.post?.profile.profile_Id, facebookdata.user?.userId)"
                                                                             [class.active]="fbcmnts.isLikedByAdmin == true">
@@ -284,13 +284,13 @@
                                                                     </div>
                                                                     <a class="message-actionItem replyBtn coal"
                                                                         (click)="SendCommentInformation(fbcmnts.id)"
-                                                                        *ngIf="this.teamPermissions.priviledge.includes('__qryrep__')">
+                                                                        >
                                                                         <span class="iconButton small btn">
                                                                             <i class="fal fa-reply coal"></i>
                                                                         </span>
                                                                         Reply
                                                                     </a>
-                                                                    <div class="dropdown w-auto" *ngIf="this.teamPermissions.priviledge.includes('__qrytag__')">
+                                                                    <div class="dropdown w-auto" >
                                                                         <button class="iconButton medium"
                                                                             id="dropdownMenuButton1"
                                                                             data-bs-toggle="dropdown"
@@ -407,7 +407,7 @@
                                                                             </ul>
                                                                         </ul>
                                                                     </div>
-                                                                    <div class="dropdown w-auto" *ngIf="this.teamPermissions.priviledge.includes('__qrysnt__')">
+                                                                    <div class="dropdown w-auto" >
                                                                         <button class="iconButton medium show"
                                                                             id="sentimentButton"
                                                                             data-bs-toggle="dropdown"
@@ -498,7 +498,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!-- <ng-container *ngIf="this.teamPermissions.priviledge.includes('__qrytic__')">
+                                                <!-- <ng-container >
                                                     <span *ngIf="flag == 'focused' || flag == 'assigned-to-me'" class="complaintBtn" (click)="toggle('ticket', fbcmnts.id)"
                                                     type="button">
                                                     <i class="fal fa-plus-circle sky"></i>
@@ -1083,7 +1083,7 @@
     </div>
 </div>
 <ng-container *ngIf="fbCmntReply == true && (flag == 'focused' || flag == 'assigned-to-me')">
-    <div class="msgTypingField shadow-lg" *ngIf="this.teamPermissions.priviledge.includes('__repsnd__')">
+    <div class="msgTypingField shadow-lg" >
         <div class="attachment-block" [ngClass]="isAttachment == true?'':'d-none'">
             <div class="card-body p-3" *ngFor="let image of ImageName; let i = index" style="margin-right: 10px;">
                 <span class="close-icon" (click)="removeAttachedFile(i)"><i class="fas fa-times"></i></span>
@@ -1116,7 +1116,7 @@
         </div>
         <form [formGroup]="facebookReplyForm" (submit)="submitFacebookReply()">
             <div class="input-group input-group-lg">
-                <div class="icons-list align-items-md-center d-flex pe-2" *ngIf="this.teamPermissions.priviledge.includes('__repqik__')">
+                <div class="icons-list align-items-md-center d-flex pe-2" >
                     <a class="iconButton small notification iconHover" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                         <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></a>
@@ -1128,7 +1128,7 @@
                 </div>
                 <div class="icons-list align-items-md-center d-flex ps-2 ">
 
-                    <div class="dropdown w-auto" *ngIf="this.teamPermissions.priviledge.includes('__repemo__')">
+                    <div class="dropdown w-auto" >
                         <button class="iconButton small notification iconHover" id="emojiBox" data-bs-toggle="dropdown"
                             data-bs-auto-close="outside" data-bs-original-title="Choose an emoji">
                             <span class="iconButton small btn mx-2">
@@ -1151,7 +1151,7 @@
                     </div>
 
 
-                    <div class="upload-btn-wrapper" *ngIf="this.teamPermissions.priviledge.includes('__repatc__')">
+                    <div class="upload-btn-wrapper" >
                         <button class="iconButton small notification iconHover channels-attachment-btn">
                             <i class="fal fa-paperclip"></i></button>
                         <input type="file" formControlName="Image" class="form-control uplaoded-box"
@@ -1168,7 +1168,7 @@
     </div>
 </ng-container>
 <ng-container *ngIf="fbMsgReply == true && (flag == 'focused' || flag == 'assigned-to-me') && fbCmntReply == false">
-    <div class="msgTypingField shadow-lg" *ngIf="this.teamPermissions.priviledge.includes('__repsnd__')" >
+    <div class="msgTypingField shadow-lg"  >
         <div>
             <div class="attachment-block" [ngClass]="isAttachment == true?'':'d-none'">
                 <div class="card-body p-3" *ngFor="let image of ImageName; let i = index" style="margin-right: 10px;">

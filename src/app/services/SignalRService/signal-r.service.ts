@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import * as signalR from '@microsoft/signalr';
 import { IHttpConnectionOptions } from '@microsoft/signalr';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
@@ -44,36 +45,40 @@ export class SignalRService {
     private replyService: ReplyService,
     private queryStatusService: QueryStatusService,
     private removeAssignedQueryService: RemoveAssignedQuerryService,
-    private applySentimentService: ApplySentimentService
+    private applySentimentService: ApplySentimentService,
+    private router: Router
   ) { }
 
+  flag:string='';
+
   startConnection() {
-
-    let team = this.storage.retrive("nocompass", "O").local;
-    const options: IHttpConnectionOptions = {
-      accessTokenFactory: () => {
-        return 'Bearer ' + localStorage.getItem('token');
-      },
-      headers: { "X-Super-Team": JSON.stringify(team.id) }
-    };
-
-    this.hubconnection = new signalR.HubConnectionBuilder()
-      .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
-      .withAutomaticReconnect()
-      .configureLogging(signalR.LogLevel.Information)
-      .build();
-    this.hubconnection
-      .start()
-      .then(() => console.log('Connection started'))
-      .then(() => this.getConnectionId())
-      .catch((err) => console.log('Error while starting connection: ' + err));
+    // this.flag = this.router.url.split('/')[1];
+    // if(this.flag == 'all-inboxes'){
+      let team = this.storage.retrive("nocompass", "O").local;
+      const options: IHttpConnectionOptions = {
+        accessTokenFactory: () => {
+          return 'Bearer ' + localStorage.getItem('token');
+        },
+        headers: { "X-Super-Team": JSON.stringify(team.id) }
+      };
+  
+      this.hubconnection = new signalR.HubConnectionBuilder()
+        .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
+        .withAutomaticReconnect()
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+      this.hubconnection
+        .start()
+        .then(() => console.log('Connection started'))
+        .then(() => this.getConnectionId())
+        .catch((err) => console.log('Error while starting connection: ' + err));
+    // }
+    
   }
 
   reConnect() {
-
-    // var conId = localStorage.getItem('signalRConnectionId')
-    // if (conId) {
-
+      // this.flag = this.router.url.split('/')[1];
+      // if(this.flag == 'all-inboxes'){
       let team = this.storage.retrive("nocompass", "O").local;
       const options: IHttpConnectionOptions = {
         accessTokenFactory: () => {
@@ -92,7 +97,7 @@ export class SignalRService {
         .then(() => console.log('Connection started'))
         .then(() => this.getConnectionId())
         .catch((err) => console.log('Error while starting connection: ' + err));
-    // }
+      // }
   }
 
 

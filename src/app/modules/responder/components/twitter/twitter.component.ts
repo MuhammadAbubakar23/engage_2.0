@@ -50,7 +50,7 @@ export class TwitterComponent implements OnInit {
   queryType = this.getQueryTypeService.getQueryType();
   ImageName: any;
   ImageArray: any[] = [];
-  TwitterTweets: any;
+  TwitterTweets: any[]=[];
   TwitterMessages: any[] = [];
   TwitterMentions: any[] = [];
 
@@ -432,7 +432,7 @@ export class TwitterComponent implements OnInit {
             this.spinner1running = false;
             this.TTReply = true;
             this.TwitterTweets = res.List;
-            this.userInfoService.shareUserInformation(res.List[0].user);
+            // this.userInfoService.shareUserInformation(res.List[0].user);
             this.TotalCmntQueryCount = res.TotalQueryCount;
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
             this.pageName = this.TwitterTweets[0]?.post.profile.page_Name;
@@ -492,7 +492,7 @@ export class TwitterComponent implements OnInit {
           this.TTReply = true;
           this.TwitterTweets = res.List;
           this.TotalCmntQueryCount = res.TotalQueryCount;
-          this.userInfoService.shareUserInformation(res.List[0].user);
+          // this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.pageName = this.TwitterTweets[0]?.post.profile.page_Name;
 
@@ -556,8 +556,8 @@ export class TwitterComponent implements OnInit {
             this.spinner1running = false;
             this.TTReply = true;
             this.TwitterTweets = res.List;
-            this.userInfoService.shareUserInformation(res.List[0].user);
-            this.headerCountService.shareUnresponedCount(res.TotalCount);
+            // this.userInfoService.shareUserInformation(res.List[0].user);
+            // this.headerCountService.shareUnresponedCount(res.TotalCount);
             this.TotalCmntQueryCount = res.TotalQueryCount;
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
             this.pageName = this.TwitterTweets[0]?.post.profile.page_Name;
@@ -631,11 +631,13 @@ export class TwitterComponent implements OnInit {
             this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
             this.TotalMsgQueryCount = res.TotalQueryCount;
 
-            if (
-              !this.TwitterTweets ||
-              this.TwitterTweets == undefined ||
-              this.TwitterTweets.length == 0
-            ) {
+            if (this.TwitterTweets.length == 0 && this.TwitterMentions.length == 0) {
+              this.TTReply = false;
+              this.TMReply = false;
+              this.TDMReply = true;
+            }
+
+            if (this.TwitterTweets.length == 0) {
               this.TTReply = false;
               this.TMReply = false;
               this.TDMReply = true;
@@ -698,11 +700,7 @@ export class TwitterComponent implements OnInit {
           this.TotalMsgQueryCount = res.TotalQueryCount;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
-          if (
-            !this.TwitterTweets ||
-            this.TwitterTweets == undefined ||
-            this.TwitterTweets.length == 0
-          ) {
+          if (this.TwitterTweets.length == 0 && this.TwitterMentions.length == 0) {
             this.TTReply = false;
             this.TMReply = false;
             this.TDMReply = true;
@@ -761,16 +759,15 @@ export class TwitterComponent implements OnInit {
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
             this.TwitterMessages = res.List?.dm;
+            // this.userInfoService.shareUserInformation(res.List.user);
+            // this.headerCountService.shareUnresponedCount(res.TotalCount);
             this.userInfo = res.List?.user
             this.pageName = res.List?.profile.page_Name;
             this.TotalMsgQueryCount = res.TotalQueryCount;
             this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+            
 
-            if (
-              !this.TwitterTweets ||
-              this.TwitterTweets == undefined ||
-              this.TwitterTweets.length == 0
-            ) {
+            if (this.TwitterTweets.length == 0 && this.TwitterMentions.length == 0) {
               this.TTReply = false;
               this.TMReply = false;
               this.TDMReply = true;
@@ -842,6 +839,12 @@ export class TwitterComponent implements OnInit {
             this.pageName = res.List?.profile.page_Name;
             this.TotalMentionQueryCount = res.TotalQueryCount;
 
+            if (this.TwitterTweets.length == 0) {
+              this.TTReply = false;
+              this.TMReply = true;
+              this.TDMReply = false;
+            }
+
             this.mentionsArray = [];
             this.groupedMentions = [];
 
@@ -900,6 +903,12 @@ export class TwitterComponent implements OnInit {
           this.TotalMentionQueryCount = res.TotalQueryCount;
           this.pageName = res.List?.profile.page_Name;
 
+          if (this.TwitterTweets.length == 0) {
+            this.TTReply = false;
+            this.TMReply = true;
+            this.TDMReply = false;
+          }
+
           this.mentionsArray = [];
           this.groupedMentions = [];
 
@@ -954,10 +963,18 @@ export class TwitterComponent implements OnInit {
           if (Object.keys(res).length > 0) {
             this.SpinnerService.hide();
             this.TwitterMentions = res.List?.dm;
+            // this.userInfoService.shareUserInformation(res.List.user);
+            // this.headerCountService.shareUnresponedCount(res.TotalCount);
             this.userInfo = res.List?.user;
             this.totalUnrespondedMentionCountByCustomer = res.TotalCount;
             this.TotalMentionQueryCount = res.TotalQueryCount;
             this.pageName = res.List?.profile.page_Name;
+
+            if (this.TwitterTweets.length == 0) {
+              this.TTReply = false;
+              this.TMReply = true;
+              this.TDMReply = false;
+            }
 
             this.mentionsArray = [];
             this.groupedMentions = [];

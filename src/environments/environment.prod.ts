@@ -12,9 +12,7 @@ export const environment = {
   linkdinclientSecret: '4wp2Zjzqjw3PYAdt',
   twitterclientId: '57617762-IWEThd14hGdgr3bXuVNmLdb60Lo9OLEVJ1cFUE4JF',
   twitterclientSecret: 'Ex1XpdfYMFEAtWBJn9XOrtfxyu19INzNaPV155vocLomG',
-  store: {
-    types: { local: 'LS' },
-  },
+  store: { types: { local: 'LS' }},
   title: 'abc',
   IdentityBaseUrl:  'https://idtservice.enteract.live/api',
   InstaBaseUrl: 'https://insta.360scrm.com/api/', 
@@ -165,8 +163,15 @@ export const environment = {
       signOut: 'SignalRConnector/UserLogout',
       getCustomers: 'Customer/GetAllCustomersSocialProfile',
       updateStatus: 'Channel/UpdateMessageStatus',
-      hideUnhideMessage: 'Query/HideQuery'
+      hideUnhideMessage: 'Query/HideQuery',
 
+      //Reports
+      addinboundoutbound:'Report/GetInboundOutboundReport',
+      twitterReport:'Report/GetTwitterReport',
+      twitterSLAReport:'Report/GetTwitterSLAReport',
+      twitterProfileWiseReport:'Report/GetTwitterProfileWiseReport',
+      getUserList:'/Users/GetUserList',
+      getSentimentData:'Keyword/GetAllSentiments'
     },
     facebook: {
       comments: 'Facebook/GetFbPost',

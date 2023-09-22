@@ -167,8 +167,15 @@ export const environment = {
       signOut: 'SignalRConnector/UserLogout',
       getCustomers: 'Customer/GetAllCustomersSocialProfile',
       updateStatus: 'Channel/UpdateMessageStatus',
-      hideUnhideMessage: 'Query/HideQuery'
+      hideUnhideMessage: 'Query/HideQuery',
 
+      //Reports
+      addinboundoutbound:'Report/GetInboundOutboundReport',
+      twitterReport:'Report/GetTwitterReport',
+      twitterSLAReport:'Report/GetTwitterSLAReport',
+      twitterProfileWiseReport:'Report/GetTwitterProfileWiseReport',
+      getUserList:'/Users/GetUserList',
+      getSentimentData:'Keyword/GetAllSentiments'
     },
     facebook: {
       comments: 'Facebook/GetFbPost',
