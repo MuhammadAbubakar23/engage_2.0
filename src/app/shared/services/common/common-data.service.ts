@@ -78,6 +78,7 @@ export class CommonDataService {
   twitterProfileWiseReport = environment.links.common.twitterProfileWiseReport
   getUserList = environment.links.common.getUserList
   getSentimentData = environment.links.common.getSentimentData
+  addAgentPerformance = environment.links.common.addAgentPerformance
 
   
 
@@ -562,6 +563,11 @@ export class CommonDataService {
     return this.http.get(this.CommonBaseUrl + this.getSentimentData);
 
   }
+
+  AddAgentPerformance(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.addAgentPerformance, body)
+  }
+
 }
 
 var headers_object = new HttpHeaders({

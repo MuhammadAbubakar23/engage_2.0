@@ -5,6 +5,9 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class HeaderService {
+  setHeader(newObj: { title: string; url: string; }) {
+    throw new Error('Method not implemented.');
+  }
 
   private siblingMsg2 = new Subject<string>();
   
@@ -23,5 +26,4 @@ export class HeaderService {
    
     this.siblingMsg2.next(message2);
   }
- 
 }

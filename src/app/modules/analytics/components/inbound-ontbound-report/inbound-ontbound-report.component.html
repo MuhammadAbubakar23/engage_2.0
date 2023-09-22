@@ -8,16 +8,16 @@
                         <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
                             <li class="list-inline-item">
                                 <div class="row">
-                                  <div class="col-sm-6">
-                                    <input type="date" class="form-control" style="padding-top: 1px;padding-bottom: 10px;"
-                                      placeholder="End Date"  (change)="onCheckboxChange()" [(ngModel)]="startDate" />
-                                  </div>
-                                  <div class="col-sm-6">
-                                    <input type="date" class="form-control" placeholder="Start Date"  (change)="onCheckboxChange()" [(ngModel)]="endDate" />
-                
-                                  </div>
+                                    <div class="col-sm-6">
+                                        <input type="date" class="form-control" placeholder="End Date"
+                                            (change)="onCheckboxChange()" [(ngModel)]="startDate" />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="date" class="form-control" placeholder="Start Date"
+                                            (change)="onCheckboxChange()" [(ngModel)]="endDate" />
+                                    </div>
                                 </div>
-                              </li>
+                            </li>
                             <li class="list-inline-item">
                                 <div class="dropdown icondropdown w-auto">
                                     <button class="btn dropdown-toggle" type="button" id="columnssort"
@@ -36,12 +36,13 @@
                                         </li>
                                         <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
                                             style="overflow: hidden; outline: none;">
-                                            <div class="scroll-content" >
-                                                <li *ngFor="let channel of channelOptions" >
+                                            <div class="scroll-content">
+                                                <li *ngFor="let channel of channelOptions">
                                                     <a class="dropdown-item d-flex align-items-center">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
-                                                                [id]="channel.id" [(ngModel)]="channel.isSelected" (change)="onCheckboxChange()" >
+                                                                [id]="channel.id" [(ngModel)]="channel.isSelected"
+                                                                (change)="onCheckboxChange()">
                                                             <label class="form-check-label" [for]="channel.id">
                                                                 <i [ngClass]="channel.icon"></i> {{ channel.label }}
                                                             </label>
@@ -71,12 +72,14 @@
                                         </li>
                                         <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
                                             style="overflow: hidden; outline: none;">
-                                            <div class="scroll-content" >
+                                            <div class="scroll-content">
                                                 <li *ngFor="let contentType of contentTypes">
                                                     <a class="dropdown-item d-flex align-items-center">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
-                                                                [id]="contentType.value" [(ngModel)]="contentType.isSelected"  (change)="onCheckboxChange()">
+                                                                [id]="contentType.value"
+                                                                [(ngModel)]="contentType.isSelected"
+                                                                (change)="onCheckboxChange()">
                                                             <label class="form-check-label" [for]="contentType.value">
                                                                 <i [ngClass]="contentType.icon"></i> {{
                                                                 contentType.label }}
@@ -107,12 +110,13 @@
                                         </li>
                                         <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
                                             style="overflow: hidden; outline: none;">
-                                            <div class="scroll-content" >
+                                            <div class="scroll-content">
                                                 <li *ngFor="let tag of tagOptions">
                                                     <a class="dropdown-item d-flex align-items-center">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
-                                                                [id]="tag.id" [(ngModel)]="tag.isSelected"  (change)="onCheckboxChange()">
+                                                                [id]="tag.id" [(ngModel)]="tag.isSelected"
+                                                                (change)="onCheckboxChange()">
                                                             <label class="form-check-label" [for]="tag.id">
                                                                 <i class="fal fa-tag coal"></i> {{ tag.name }}
                                                             </label>
@@ -131,16 +135,18 @@
                                 </div>
                             </li>
                             <li class="list-inline-item">
-                                <div class="dropdown w-auto" >
+                                <div class="dropdown w-auto">
                                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                         aria-expanded="false" data-bs-auto-close="outside">
                                         Sentiments
                                     </button>
-                                    <ul class="dropdown-menu" aria-labelledby="posttype" >
+                                    <ul class="dropdown-menu" aria-labelledby="posttype">
                                         <li *ngFor="let sentiment of sentimentOptions">
                                             <a class="dropdown-item d-flex align-items-center">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" [id]="sentiment.id" [(ngModel)]="sentiment.isSelected"  (change)="onCheckboxChange()">
+                                                    <input class="form-check-input" type="checkbox" [id]="sentiment.id"
+                                                        [(ngModel)]="sentiment.isSelected"
+                                                        (change)="onCheckboxChange()">
                                                     <label class="form-check-label" [for]="sentiment.id">
                                                         {{ sentiment.name }}
                                                     </label>
@@ -167,13 +173,14 @@
                                             </form>
                                         </li>
                                         <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
-                                            style="overflow: hidden; outline: none;" >
-                                            <div class="scroll-content"  >
-                                                <li *ngFor="let option of taggedByOptions" >
+                                            style="overflow: hidden; outline: none;">
+                                            <div class="scroll-content">
+                                                <li *ngFor="let option of taggedByOptions">
                                                     <a class="dropdown-item d-flex align-items-center">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
-                                                                [id]="option.id"  [(ngModel)]="option.isSelected"  (change)="onCheckboxChange()">
+                                                                [id]="option.id" [(ngModel)]="option.isSelected"
+                                                                (change)="onCheckboxChange()">
                                                             <label class="form-check-label" [for]="option.id">{{
                                                                 option.name }}</label>
                                                         </div>
@@ -218,7 +225,7 @@
                                             </span>
                                             <p class="coal mb-0"> Sum of inbound Volume</p>
                                         </div>
-                                        <h2>{{Inbound_Outbound_Report.channelReportData.inboundSum}}</h2>
+                                        <h2>{{Inbound_Outbound_Report?.channelReportData?.inboundSum}}</h2>
                                     </div>
                                 </div>
                             </div>
@@ -233,11 +240,12 @@
                                         data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
                                         Type
                                     </button>
-                                    <ul class="dropdown-menu" aria-labelledby="columnssort" >
+                                    <ul class="dropdown-menu" aria-labelledby="columnssort">
                                         <li *ngFor="let type of typeOptions">
                                             <a class="dropdown-item d-flex align-items-center">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" [id]="type.id" [(ngModel)]="type.isSelected"  (change)="onCheckboxChange()">
+                                                    <input class="form-check-input" type="checkbox" [id]="type.id"
+                                                        [(ngModel)]="type.isSelected" (change)="onCheckboxChange()">
                                                     <label class="form-check-label" [for]="type.id">
                                                         {{ type.label }}
                                                     </label>
@@ -274,11 +282,12 @@
                         <div class="col-md-12">
                             <div class="card iceBg p-4 rounded">
                                 <h5 class="section-heading mb-4 p-0">Inbound/outbound Reports</h5>
-                                <div class="graphcontainer align-items-end" >
+                                <div class="graphcontainer align-items-end">
                                     <div class="text-center">
                                         <div>
-                                            <canvasjs-chart [options]="Inbound_Outbound_Graph" style="position: relative;"></canvasjs-chart>    
-                                        </div> 
+                                            <canvasjs-chart [options]="Inbound_Outbound_Graph"
+                                                style="position: relative;"></canvasjs-chart>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -288,9 +297,9 @@
                         <div class="col-md-12">
                             <div class="card iceBg p-4 rounded">
                                 <h5 class="section-heading mb-3 p-0">SENTIMENT Per channels </h5>
-                                <div class="graphcontainer align-items-end" >
+                                <div class="graphcontainer align-items-end">
                                     <div class="text-center">
-                                        <canvasjs-chart  [options]="senitimentalGraph"></canvasjs-chart>
+                                        <canvasjs-chart [options]="senitimentalGraph"></canvasjs-chart>
                                     </div>
                                 </div>
                             </div>
@@ -300,23 +309,26 @@
                         <h5 class="section-heading mb-4 p-0">Average Response Per Post</h5>
                         <div class="row">
                             <div class="col-md-7">
-                                <div class="graphcontainer align-items-end" >
+                                <div class="graphcontainer align-items-end">
                                     <div class="text-center">
-                                        <canvasjs-chart  [options]="ChannelWiseGraph"></canvasjs-chart>
+                                        <canvasjs-chart [options]="ChannelWiseGraph"></canvasjs-chart>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-5">
                                 <ul class="list-0 statlist list-lg mb-3">
-                                    <li *ngFor="let channelwise of Inbound_Outbound_Report.channelReportData.channelWiseData">
-                                        <span class="berry"><i class="fa-light fa-envelope"></i> {{channelwise.platform}} </span>
-                                        <span class="fw-semibold">Inbound {{channelwise.inboundData}} | Outbound {{channelwise.outboundData}}</span>
+                                    <li
+                                        *ngFor="let channelwise of Inbound_Outbound_Report.channelReportData.channelWiseData">
+                                        <span class="berry"><i class="fa-light fa-envelope"></i>
+                                            {{channelwise.platform}} </span>
+                                        <span class="fw-semibold">Inbound {{channelwise.inboundData}} | Outbound
+                                            {{channelwise.outboundData}}</span>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="card iceBg p-4 rounded mb-5"  *ngIf="tagsPerChannelDataAvailable">
+                    <div class="card iceBg p-4 rounded mb-5" *ngIf="tagsPerChannelDataAvailable">
                         <h5 class="section-heading mb-4 p-0">Tags Per Channel</h5>
                         <div class="graphcontainer align-items-end">
                             <div class="text-center">

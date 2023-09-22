@@ -64,6 +64,10 @@ const routes: Routes = [
     {
       path:'twitter-report',
       loadComponent: () => import('./components//twitter-report/twitter-report.component').then(c => c.TwitterReportComponent),
+    },
+    {
+      path:'performance-report',
+      loadComponent: () => import('./components/agent-performance-report/agent-performance-report.component').then(c => c.AgentPerformanceReportComponent),
     }
   ]
   },

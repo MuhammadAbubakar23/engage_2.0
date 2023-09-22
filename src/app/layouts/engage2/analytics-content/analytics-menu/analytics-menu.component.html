@@ -40,6 +40,12 @@
           Twitter Report
         </a>
       </li>
+      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Dashboard Designer'?'active':''"
+        value="Executive Dashboard" id="analyticstab1">
+        <a routerLink="/analytics/performance-report" class="d-flex">
+          Agent performance Graph 
+        </a>
+      </li>
       <!-- <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Executive Dashboard'?'active':''" value="Dashboard" id="analyticstab3">
         <a routerLink="/analytics/executive-dashboard" class="d-flex">Executive Dashboard</a>
       </li>
