@@ -6,68 +6,74 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { loadMenusList, updateMenusList } from '../../menu-state/menu.actions';
 import { MenuModel } from '../../menu-state/menu.model';
-import { getEmargingEqual, getMenusLoading} from '../../menu-state/menu.selectors';
+import {
+  getEmargingEqual,
+  getMenusLoading,
+} from '../../menu-state/menu.selectors';
 import { MenuState } from '../../menu-state/menu.state';
 import { updatePermissionsLetters } from '../../permission-state/permission.actions';
-import { getPermissionBySlug, getPermissionsLoading } from '../../permission-state/permission.selectors';
+import {
+  getPermissionBySlug,
+  getPermissionsLoading,
+} from '../../permission-state/permission.selectors';
 import { PermissionState } from '../../permission-state/permission.state';
-
 
 @Component({
   selector: 'role-menu',
   templateUrl: './role-menu.component.html',
-  styleUrls: ['./role-menu.component.scss']
+  styleUrls: ['./role-menu.component.scss'],
 })
 export class RoleMenuComponent implements OnInit {
+  // MenuModel = new MenuModel();
+  permissions$: any;
+  permission$: any;
+  menus$!: MenuModel[];
+  //menu$ :Observable<MenuModel[]>;
+  //menu$ :Observable<any>;
+  loading$: any;
 
- // MenuModel = new MenuModel();
- permissions$ :any;
- permission$ :any;
- menus$!:MenuModel[];
- //menu$ :Observable<MenuModel[]>;
- //menu$ :Observable<any>;
- loading$: any;
+  restrictedAgentsString =
+  'farah.khalid@abacus-global.com, aniqa.waris@bpo.abacus-global.com, samoom.fatima@bpo.abacus-global.com, Mishal.Javed@abacus-global.com, ambreen.zubair@jazz.com.pk, naveeda.akhtar@jazz.com.pk, sidra.shafiq@jazz.com.pk, muhammad.mansoor@jazz.com.pk, ayesha.sajjad@jazz.com.pk, farrukh.saeed1@jazz.com.pk, hassam.naveed@jazz.com.pk, nadia.shabbir@jazz.com.pk, rizwan.malik@jazz.com.pk, abida.rasheed@jazz.com.pk, saba.riaz@jazz.com.pk, pringle.charles@jazz.com.pk';
+  restrictedAgent: string = '';
 
- restrictedAgentsString = "aniqa.waris@bpo.abacus-global.com, samoom.fatima@bpo.abacus-global.com, Mishal.Javed@abacus-global.com, ambreen.zubair@jazz.com.pk, naveeda.akhtar@jazz.com.pk, sidra.shafiq@jazz.com.pk, muhammad.mansoor@jazz.com.pk, ayesha.sajjad@jazz.com.pk, farrukh.saeed1@jazz.com.pk, hassam.naveed@jazz.com.pk, nadia.shabbir@jazz.com.pk, rizwan.malik@jazz.com.pk, abida.rasheed@jazz.com.pk, saba.riaz@jazz.com.pk, pringle.charles@jazz.com.pk"
-  restrictedAgent:string='';
+  constructor(
+    private MenuStore: Store<MenuState>,
+    private PermissionStore: Store<PermissionState>,
+    private _route: Router,
+    private storage: StorageService
+  ) {
+    //  this.menu$ = this.MenuStore.select(getEmargingEqual("role_main_left_menu"));
+    //  this.menus$ = this.menu$.pipe(share(), startWith(false));
+    //  this.loading$ = this.MenuStore.select(getMenusLoading);
+    //  this.MenuStore.dispatch(updateMenusList());
+    //  this.permission$ = this.PermissionStore.select(getPermissionBySlug("_upur_"));
+    //  this.loading$ = this.PermissionStore.select(getPermissionsLoading);
+    //  this.PermissionStore.dispatch(updatePermissionsLetters());
+  }
 
- constructor(private MenuStore: Store<MenuState>, 
-  private PermissionStore: Store<PermissionState>, 
-  private _route: Router,
-  private storage: StorageService) { 
-  //  this.menu$ = this.MenuStore.select(getEmargingEqual("role_main_left_menu"));
-  //  this.menus$ = this.menu$.pipe(share(), startWith(false));
-  //  this.loading$ = this.MenuStore.select(getMenusLoading);
-  //  this.MenuStore.dispatch(updateMenusList());
-   
-  //  this.permission$ = this.PermissionStore.select(getPermissionBySlug("_upur_"));
-  //  this.loading$ = this.PermissionStore.select(getPermissionsLoading);
-  //  this.PermissionStore.dispatch(updatePermissionsLetters());
- }
-
- ngOnInit(): void {
-  let data = this.storage.retrive('main', 'O').local;
+  ngOnInit(): void {
+    let data = this.storage.retrive('main', 'O').local;
     this.restrictedAgent = data.originalUserName;
 
-   this.MenuStore.select(getEmargingEqual("role_main_left_menu"))
-   .subscribe((item:MenuModel[]) => {
-     this.menus$ = [...item];
-   })
-   
-   // this.permissions$  = this.PermissionStore.select(getPermissionBySlug("_upur_"));
+    this.MenuStore.select(getEmargingEqual('role_main_left_menu')).subscribe(
+      (item: MenuModel[]) => {
+        this.menus$ = [...item];
+      }
+    );
 
-   // console.log(this.permissions$);
-   // .subscribe((item) => {
-   //   this.menus$ = item;
-   // })
-   // console.log(this.menu$);
-   // console.log("this.menu$");
- }
+    // this.permissions$  = this.PermissionStore.select(getPermissionBySlug("_upur_"));
+
+    // console.log(this.permissions$);
+    // .subscribe((item) => {
+    //   this.menus$ = item;
+    // })
+    // console.log(this.menu$);
+    // console.log("this.menu$");
+  }
 
   assignedProfile = localStorage.getItem('assignedProfile');
 
   update(menuLink: any) {
-    
     if (
       localStorage.getItem('assignedProfile') == null ||
       localStorage.getItem('assignedProfile') == '' ||
@@ -75,7 +81,7 @@ export class RoleMenuComponent implements OnInit {
     ) {
       this._route.navigateByUrl('/' + menuLink);
     } else {
-      this.reloadComponent('querryAssigned')
+      this.reloadComponent('querryAssigned');
     }
   }
   closeToaster() {

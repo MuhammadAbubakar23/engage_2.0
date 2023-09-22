@@ -16,7 +16,10 @@ import { loadMenusList, updateMenusList } from '../menu-state/menu.actions';
 import { MenuModel } from '../menu-state/menu.model';
 // import { getMenuById, getMenusLoading } from '../menu-state/menu.selectors';
 import { MenuState } from '../menu-state/menu.state';
-import { loadPermissionsLetters, updatePermissionsLetters } from '../permission-state/permission.actions';
+import {
+  loadPermissionsLetters,
+  updatePermissionsLetters,
+} from '../permission-state/permission.actions';
 
 @Component({
   selector: 'main-menu',
@@ -27,18 +30,18 @@ export class MainMenuComponent implements OnInit {
   menus$: any;
   permissions$: any;
   agent$: boolean = true;
-  header$: string = "page";
+  header$: string = 'page';
   submenu$: MenuModel[] = [];
   loading$: any;
   menu$: any;
-    
+
   public Subscription!: Subscription;
 
   menu: any = [];
   UnResponded: number = 0;
   pageNumber: any = 0;
   pageSize: any = 0;
-  UserDetails: any[]=[];
+  UserDetails: any[] = [];
   id: any;
 
   // restrictedAgents = [
@@ -59,19 +62,20 @@ export class MainMenuComponent implements OnInit {
   //   {id:15, email: 'pringle.charles@jazz.com.pk'}
   // ]
 
-  restrictedAgentsString = "aniqa.waris@bpo.abacus-global.com, samoom.fatima@bpo.abacus-global.com, Mishal.Javed@abacus-global.com, ambreen.zubair@jazz.com.pk, naveeda.akhtar@jazz.com.pk, sidra.shafiq@jazz.com.pk, muhammad.mansoor@jazz.com.pk, ayesha.sajjad@jazz.com.pk, farrukh.saeed1@jazz.com.pk, hassam.naveed@jazz.com.pk, nadia.shabbir@jazz.com.pk, rizwan.malik@jazz.com.pk, abida.rasheed@jazz.com.pk, saba.riaz@jazz.com.pk, pringle.charles@jazz.com.pk"
+  restrictedAgentsString =
+    'farah.khalid@abacus-global.com, aniqa.waris@bpo.abacus-global.com, samoom.fatima@bpo.abacus-global.com, Mishal.Javed@abacus-global.com, ambreen.zubair@jazz.com.pk, naveeda.akhtar@jazz.com.pk, sidra.shafiq@jazz.com.pk, muhammad.mansoor@jazz.com.pk, ayesha.sajjad@jazz.com.pk, farrukh.saeed1@jazz.com.pk, hassam.naveed@jazz.com.pk, nadia.shabbir@jazz.com.pk, rizwan.malik@jazz.com.pk, abida.rasheed@jazz.com.pk, saba.riaz@jazz.com.pk, pringle.charles@jazz.com.pk';
   constructor(
     private headerService: HeaderService,
     private _sharedData: SharedService,
     private leftsidebar: LeftsidebarExpandedService,
-    private maximizeChatService : MaximizeChatService,
-    private moduleService : ModulesService,
-    private commonService : CommonDataService,
+    private maximizeChatService: MaximizeChatService,
+    private moduleService: ModulesService,
+    private commonService: CommonDataService,
     private MenuStore: Store<MenuState>,
     private PermissionStore: Store<PermissionState>,
-    private storage : StorageService,
+    private storage: StorageService,
     private router: Router
-  ) { 
+  ) {
     // this.MenuStore.dispatch(loadMenusList());
     // this.MenuStore.dispatch(updateMenusList());
     // this.PermissionStore.dispatch(loadPermissionsLetters());
@@ -83,16 +87,15 @@ export class MainMenuComponent implements OnInit {
     //this.menu$ = this.store.select(getMenuById(2));
     // this.loading$ = this.store.select(getMenusLoading)
     // this.store.dispatch(loadPermissionsList())
-
   }
-  restrictedAgent:string='';
+  restrictedAgent: string = '';
 
   ngOnInit(): void {
     let data = this.storage.retrive('main', 'O').local;
     this.restrictedAgent = data.originalUserName;
 
-    if(this.restrictedAgentsString.includes(this.restrictedAgent)){
-      this.router.navigateByUrl('all-inboxes/completed/all')
+    if (this.restrictedAgentsString.includes(this.restrictedAgent)) {
+      this.router.navigateByUrl('all-inboxes/completed/all');
     }
 
     // this.menu$ = this.store.select(getMenuById(2)).subscribe((item) => {
@@ -102,7 +105,7 @@ export class MainMenuComponent implements OnInit {
     // console.log("this.menu$");
     // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));
-    
+
     this.Subscription = this._sharedData.getCount().subscribe((res) => {
       this.UnResponded = res;
     });
@@ -110,21 +113,20 @@ export class MainMenuComponent implements OnInit {
     // this.getUserInfo();
 
     this.Subscription = this._sharedData.getuserInfo().subscribe((res) => {
-      
       if (this.UserDetails.length == 0) {
         this.UserDetails.push(res);
-      //  // console.log('user details', this.UserDetails);
+        //  // console.log('user details', this.UserDetails);
       } else if (this.UserDetails.length > 0) {
         var item = this.UserDetails.find((x) => x.userId == res.userId);
         if (item == null || item == undefined) {
           this.UserDetails.push(res);
-      //    // console.log('user details', this.UserDetails);
+          //    // console.log('user details', this.UserDetails);
         }
       }
     });
   }
   // getUserInfo(){
-  //   
+  //
   //   if (this.UserDetails.length == 0) {
   //     this.UserDetails.push(this._sharedData.draft);
   //     // console.log('user details', this.UserDetails);
@@ -143,7 +145,6 @@ export class MainMenuComponent implements OnInit {
   }
 
   maximizeChat(id: any, platform: any) {
-    
     this.maximizeChatService.updateMessage('maximizeChat');
     this.maximizeChatService.setId(id);
     this.maximizeChatService.setPlatform(platform);
