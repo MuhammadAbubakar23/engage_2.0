@@ -286,7 +286,7 @@
                                 <div class="card iceBg p-4 rounded">
                                     <h5 class="section-heading mb-4 p-0">Inbound/outbound Reports</h5>
                                     <div class="graphcontainer align-items-end">
-                                        <div #inboundOutboundReport style="width: 600px; height: 300px;"></div>
+                                        <div #inboundOutboundReport style="width: 600px; height: 600px;"></div>
                                         
                                     </div>
                                 </div>
@@ -295,7 +295,7 @@
                                 <div class="card iceBg p-4 rounded">
                                     <h5 class="section-heading mb-3 p-0">SENTIMENT Per channels </h5>
                                     <div class="graphcontainer align-items-end">
-                                        <div #senitimentalGraph style="height: 300px; width: 600px;"></div>
+                                        <div #senitimentalGraph style="height: 600px; width: 600px;"></div>
                                     
                                     </div>
                                 </div>
@@ -309,21 +309,21 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="graphcontainer align-items-end">
-                                    <div #ChannelWiseGraph style="height: 300px; width: 200px;"></div>
+                                    <div #ChannelWiseGraph style="height: 350px; width: 250px;"></div>
 
                                 </div>
                             </div>
                             <div class="col-md-5">
                                 <ul class="list-0 statlist list-lg mb-3">
-                                    <li
-                                        *ngFor="let channelwise of Inbound_Outbound_Report.channelReportData.channelWiseData">
-                                        <span class="berry"><i class="fa-light fa-envelope"></i>
-                                            {{channelwise.platform}} </span>
-                                        <span class="fw-semibold">Inbound {{channelwise.inboundData}} | Outbound
-                                            {{channelwise.outboundData}}</span>
-                                    </li>
+                                  <li *ngFor="let channelwise of Inbound_Outbound_Report.channelReportData.channelWiseData">
+                                    <span [ngClass]="getPlatformClass(channelwise.platform)">
+                                      <i class="fa-light fa-envelope"></i> {{channelwise.platform}}
+                                    </span>
+                                    <span class="fw-semibold">Inbound {{channelwise.inboundData}} | Outbound {{channelwise.outboundData}}</span>
+                                  </li>
                                 </ul>
-                            </div>
+                              </div>
+                              
                         </div>
                     </div>
                     <div class="card iceBg p-4 rounded mb-5">

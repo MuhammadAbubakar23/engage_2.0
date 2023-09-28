@@ -1,0 +1,83 @@
+<div class="content-box-wrapper d-flex w-100">
+    <div class="middle-content d-flex">
+        <div class="d-grid w-100">
+            <div class="analytics-dashboard p-4" >
+                <div class="scroll-content">
+                    <div class="report-toolbar mb-4">
+                        <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+                            <li class="list-inline-item">
+                                <div class="row ">
+                                    <div class="col-sm-6">
+                                        <input type="date" class="form-control" placeholder="Start Date"
+                                            (change)="onCheckboxChange()" [(ngModel)]="startDate" />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="date" class="form-control" placeholder="End Date"
+                                            (change)="onCheckboxChange()" [(ngModel)]="endDate" />
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="list-inline-item ms-auto">
+                                <button class="btn btn-success" (click)="exportToCSV()">Export as CSV</button>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="filter-container border-0">
+                        <ul class="list-group list-group-horizontal border-0">
+                            <li class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle" aria-label="..."
+                                data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Refresh"
+                                aria-describedby="tooltip946912">
+                            </li>
+                        </ul>
+                        <div class="pagination-bar">
+                            <div class="dropdown">
+                                <button class="btn iconHover" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{startingPoint}}-{{endingPoint}} of {{ TotalCount }}
+                                </button>
+                            </div>
+                            <span class="iconButton medium iconHover" (click)="prevPage(pageNumber)">
+                                <i class="fal fa-chevron-left"></i>
+                            </span>
+                            <span class="iconButton medium iconHover" (click)="nextPage(pageNumber)">
+                                <i class="fal fa-chevron-right"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card p-3 iceBg tableScroll" data-scrollbar="true" tabindex="-1"
+                    style="overflow: auto; outline: none;">
+                        <div class="table-section table-scroll-y" >
+                            <table class="table ">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>CustomerName</th>
+                                        <th>PhoneNumber</th>
+                                        <th>Platform</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let customer of unique_customer">
+                                        <td>{{ customer.id }}</td>
+                                        <td>{{ customer.customerName }}</td>
+                                        <td>{{ customer.phoneNumber }}</td>
+                                        <td>{{ customer.platform }}</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-5 b-5 space">
+                        <br>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

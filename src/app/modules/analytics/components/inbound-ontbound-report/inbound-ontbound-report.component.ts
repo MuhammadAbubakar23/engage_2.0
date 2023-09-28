@@ -29,10 +29,7 @@ export class InboundOntboundReportComponent implements OnInit {
   Inbound_Outbound_Report: any;
   startDate: string = '';
   endDate: string = '';
-  // senitimentalGraph: any;
   Inbound_Outbound_Graph: any;
-  // ChannelWiseGraph: any;
-  // TagsPerChannel: any;
   Inbound_data: any[] = [];
   Outbound_data: any[] = [];
 
@@ -56,7 +53,7 @@ export class InboundOntboundReportComponent implements OnInit {
     this.cdr.detectChanges();
   }
   AddGraph() {
-    // debugger
+
     let selectedChannelsArray = this.channelOptions.filter(item => item.isSelected).map(item => item.label);
     this.selectedChannels = selectedChannelsArray.toString();
 
@@ -80,7 +77,7 @@ export class InboundOntboundReportComponent implements OnInit {
       const today = this.currentDate;
       this.endDate = this.datePipe.transform(today, "YYYY-MM-dd") || '';
 
-      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 6);
+      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 7);
       this.startDate = this.datePipe.transform(prevDate, "YYYY-MM-dd") || '';
     }
     else if (this.startDate != "" && this.endDate != ""
@@ -127,7 +124,6 @@ export class InboundOntboundReportComponent implements OnInit {
             },
             tooltip: {
               trigger: 'axis',
-              formatter: '{a}: {c}'
             },
             legend: {
               data: ['Inbound', 'OutBound'],
@@ -166,9 +162,6 @@ export class InboundOntboundReportComponent implements OnInit {
                 type: 'line',
                 smooth: true,
                 symbolSize: 8,
-                areaStyle: {
-                  opacity: 0.9
-                },
                 data: this.Inbound_data.map(function (dataPoint) {
                   return dataPoint.y;
                 })
@@ -178,9 +171,6 @@ export class InboundOntboundReportComponent implements OnInit {
                 type: 'line',
                 smooth: true,
                 symbolSize: 8,
-                areaStyle: {
-                  opacity: 0.9
-                },
                 data: this.Outbound_data.map(function (dataPoint) {
                   return dataPoint.y;
                 })
@@ -188,6 +178,7 @@ export class InboundOntboundReportComponent implements OnInit {
             ]
           };
           myCharts.setOption(option);
+
           // Update the ChannelWiseGraph
           const dom = this.ChannelWiseGraph.nativeElement;
           const myChart = echarts.init(dom, null, {
@@ -327,7 +318,7 @@ export class InboundOntboundReportComponent implements OnInit {
           });
           option = {
             legend: {},
-            tooltip: {},
+            tooltip: { trigger: 'axis' },
             dataset: {
               source: sentimentDataPoints,
             },
@@ -340,6 +331,10 @@ export class InboundOntboundReportComponent implements OnInit {
                 itemStyle: {
                   color: '#4cc424',
                 },
+                label: {
+                  show: true,
+                  position: 'top'
+                },
               },
               {
                 type: 'bar',
@@ -347,12 +342,20 @@ export class InboundOntboundReportComponent implements OnInit {
                 itemStyle: {
                   color: 'rgba(209,60,60,255)',
                 },
+                label: {
+                  show: true,
+                  position: 'top'
+                },
               },
               {
                 type: 'bar',
                 seriesLayoutBy: 'row',
                 itemStyle: {
                   color: '#ffa800',
+                },
+                label: {
+                  show: true,
+                  position: 'top'
                 },
               },
             ],
@@ -366,7 +369,24 @@ export class InboundOntboundReportComponent implements OnInit {
       }
     );
   }
-
+  getPlatformClass(platformName: string): string {
+    switch (platformName.toLowerCase()) {
+      case 'facebook':
+        return 'facebook';
+      case 'twitter':
+        return 'twitter';
+      case 'whatsapp':
+        return 'whatsapp';
+      case 'linkedin':
+        return 'linkedin';
+      case 'email':
+        return 'email';
+      case 'instagram':
+        return 'instagram';
+      default:
+        return '';
+    }
+  }
   reportOptions = [
     { id: '11', label: 'Date' },
     { id: '22', label: 'Days' },
