@@ -79,8 +79,9 @@ export class CommonDataService {
   getUserList = environment.links.common.getUserList
   getSentimentData = environment.links.common.getSentimentData
   addAgentPerformance = environment.links.common.addAgentPerformance
-
-  
+  shiftReport = environment.links.common.shiftReport
+  getWhatsAppRawDataReport = environment.links.common.getWhatsAppRawDataReport
+  downloadWhatsAppRawDataReport = environment.links.common.downloadWhatsAppRawDataReport
 
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
@@ -566,6 +567,18 @@ export class CommonDataService {
 
   AddAgentPerformance(body: any) {
     return this.http.post(this.CommonBaseUrl + this.addAgentPerformance, body)
+  }
+
+  GetShiftReport(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.shiftReport, body)
+  }
+
+  GetWhatsAppReport(body:any){
+    return this.http.post(this.CommonBaseUrl+ this.getWhatsAppRawDataReport, body)
+  }
+
+  DownloadWhatsAppReport(body:any){
+    return this.http.post(this.CommonBaseUrl+ this.downloadWhatsAppRawDataReport, body)
   }
 
 }

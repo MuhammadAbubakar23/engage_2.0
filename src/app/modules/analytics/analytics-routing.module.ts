@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AnalyticsComponent } from './analytics.component';
+import { EchartsTestingComponent } from './components/echarts-testing/echarts-testing.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,11 @@ const routes: Routes = [
     path: '',
     component: AnalyticsComponent,
     children: [{
+      path:'echarts',
+      loadComponent: () => import('./components/echarts-testing/echarts-testing.component').then(c => c.EchartsTestingComponent),
+
+    },
+    {
       path:'report-designer',
       loadComponent: () => import('./components/report-designer/report-designer.component').then(c => c.ReportDesignerComponent),
 
@@ -68,9 +74,17 @@ const routes: Routes = [
     {
       path:'performance-report',
       loadComponent: () => import('./components/agent-performance-report/agent-performance-report.component').then(c => c.AgentPerformanceReportComponent),
+    },
+    {
+      path:'shift-report',
+      loadComponent: () => import('./components/shift-report/shift-report.component').then(c => c.ShiftReportComponent),
+    },
+    {
+      path:'whatsapp-report',
+      loadComponent: () => import('./components/whatsapp-report/whatsapp-report.component').then(c => c.WhatsappReportComponent),
     }
   ]
-  },
+  }
 
 ];
 

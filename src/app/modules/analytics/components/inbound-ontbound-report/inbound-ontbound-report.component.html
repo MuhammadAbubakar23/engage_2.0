@@ -1,4 +1,4 @@
-<div class="content-box-wrapper d-flex w-100">
+<div class="content-box-wrapper d-flex w-100  ">
     <div class="middle-content d-flex">
         <div class="d-grid w-100">
             <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1"
@@ -7,14 +7,16 @@
                     <div class="report-toolbar mb-4">
                         <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
                             <li class="list-inline-item">
-                                <div class="row">
+                                <div class="row ">
                                     <div class="col-sm-6">
-                                        <input type="date" class="form-control" placeholder="End Date"
+                                        <input type="date" class="form-control"
+                                             placeholder="End Date"
                                             (change)="onCheckboxChange()" [(ngModel)]="startDate" />
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="date" class="form-control" placeholder="Start Date"
                                             (change)="onCheckboxChange()" [(ngModel)]="endDate" />
+
                                     </div>
                                 </div>
                             </li>
@@ -225,7 +227,7 @@
                                             </span>
                                             <p class="coal mb-0"> Sum of inbound Volume</p>
                                         </div>
-                                        <h2>{{Inbound_Outbound_Report?.channelReportData?.inboundSum}}</h2>
+                                        <h2>{{Inbound_Outbound_Report.channelReportData.inboundSum}}</h2>
                                     </div>
                                 </div>
                             </div>
@@ -278,41 +280,37 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="row align-items-start h-auto mb-5" *ngIf="inboundOutboundDataAvailable">
-                        <div class="col-md-12">
-                            <div class="card iceBg p-4 rounded">
-                                <h5 class="section-heading mb-4 p-0">Inbound/outbound Reports</h5>
-                                <div class="graphcontainer align-items-end">
-                                    <div class="text-center">
-                                        <div>
-                                            <canvasjs-chart [options]="Inbound_Outbound_Graph"
-                                                style="position: relative;"></canvasjs-chart>
-                                        </div>
+                    <div class="row align-items-start h-auto mb-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card iceBg p-4 rounded">
+                                    <h5 class="section-heading mb-4 p-0">Inbound/outbound Reports</h5>
+                                    <div class="graphcontainer align-items-end">
+                                        <div #inboundOutboundReport style="width: 600px; height: 300px;"></div>
+                                        
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row align-items-start h-auto mb-5" *ngIf="sentimentalDataAvailable">
-                        <div class="col-md-12">
-                            <div class="card iceBg p-4 rounded">
-                                <h5 class="section-heading mb-3 p-0">SENTIMENT Per channels </h5>
-                                <div class="graphcontainer align-items-end">
-                                    <div class="text-center">
-                                        <canvasjs-chart [options]="senitimentalGraph"></canvasjs-chart>
+                            <div class="col-md-6">
+                                <div class="card iceBg p-4 rounded">
+                                    <h5 class="section-heading mb-3 p-0">SENTIMENT Per channels </h5>
+                                    <div class="graphcontainer align-items-end">
+                                        <div #senitimentalGraph style="height: 300px; width: 600px;"></div>
+                                    
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
-                    <div class="card iceBg p-4 rounded mb-5" *ngIf="averageResponseDataAvailable">
+
+                    <div class="card iceBg p-4 rounded mb-5">
                         <h5 class="section-heading mb-4 p-0">Average Response Per Post</h5>
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="graphcontainer align-items-end">
-                                    <div class="text-center">
-                                        <canvasjs-chart [options]="ChannelWiseGraph"></canvasjs-chart>
-                                    </div>
+                                    <div #ChannelWiseGraph style="height: 300px; width: 200px;"></div>
+
                                 </div>
                             </div>
                             <div class="col-md-5">
@@ -328,12 +326,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card iceBg p-4 rounded mb-5" *ngIf="tagsPerChannelDataAvailable">
+                    <div class="card iceBg p-4 rounded mb-5">
                         <h5 class="section-heading mb-4 p-0">Tags Per Channel</h5>
                         <div class="graphcontainer align-items-end">
-                            <div class="text-center">
-                                <canvasjs-chart [options]="TagsPerChannel"></canvasjs-chart>
-                            </div>
+                            <div #TagsPerChannel style="height: 450px; width: 500px; "></div>
                         </div>
                     </div>
                 </div>

@@ -1,17 +1,23 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { HeaderService } from 'src/app/shared/services/header.service';
-import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import * as echarts from 'echarts';
+
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule, CanvasJSAngularChartsModule],
+  imports: [CommonModule, FormsModule],
   selector: 'app-inbound-ontbound-report',
   templateUrl: './inbound-ontbound-report.component.html',
   styleUrls: ['./inbound-ontbound-report.component.scss']
 })
 export class InboundOntboundReportComponent implements OnInit {
+
+  @ViewChild('inboundOutboundReport', { static: true }) inboundOutboundReport!: ElementRef
+  @ViewChild('ChannelWiseGraph', { static: true }) ChannelWiseGraph!: ElementRef
+  @ViewChild('TagsPerChannel', { static: true }) TagsPerChannel!: ElementRef
+  @ViewChild('senitimentalGraph', { static: true }) senitimentalGraph!: ElementRef
 
 
   selectedChannels: string = ''
@@ -23,16 +29,13 @@ export class InboundOntboundReportComponent implements OnInit {
   Inbound_Outbound_Report: any;
   startDate: string = '';
   endDate: string = '';
-  senitimentalGraph: any;
+  // senitimentalGraph: any;
   Inbound_Outbound_Graph: any;
-  ChannelWiseGraph: any;
-  TagsPerChannel: any;
+  // ChannelWiseGraph: any;
+  // TagsPerChannel: any;
   Inbound_data: any[] = [];
   Outbound_data: any[] = [];
-  inboundOutboundDataAvailable = false;
-  sentimentalDataAvailable = false;
-  averageResponseDataAvailable = false;
-  tagsPerChannelDataAvailable = false;
+
 
   currentDate: any;
   constructor(private _hS: HeaderService,
@@ -101,57 +104,97 @@ export class InboundOntboundReportComponent implements OnInit {
 
     this.commonService.Addinboundoutbound(requestData).subscribe(
       (response: any) => {
-          this.Inbound_data = [];
+        this.Inbound_data = [];
         this.Outbound_data = [];
-      
+
         if (response) {
           this.Inbound_Outbound_Report = response;
           this.Inbound_Outbound_Report.channelReportData.dateWiseData.forEach((data: any) => {
             this.Inbound_data.push({ 'x': new Date(data.createdDate), 'y': data.inboundData });
             this.Outbound_data.push({ 'x': new Date(data.createdDate), 'y': data.outboundData });
           });
-
-            // inbound 
-          this.Inbound_Outbound_Graph = {
-            animationEnabled: true,
-            exportEnabled: false,
+          // inbound 
+          const doms = this.inboundOutboundReport.nativeElement;
+          const myCharts = echarts.init(doms, null, {
+            renderer: 'canvas',
+            useDirtyRect: false
+          });
+          var option: echarts.EChartsOption;
+          option = {
+            color: ['rgba(255,189,61,255)', 'rgba(96,191,235,255)'],
             title: {
-              text: ""
+              text: ''
             },
-            axisY: {
-            },
-
-            axisX: {
-              valueFormatString: "DD-MM-YYYY"
-            },
-            toolTip: {
-              shared: true,
-              content: "{name}: {y}"
+            tooltip: {
+              trigger: 'axis',
+              formatter: '{a}: {c}'
             },
             legend: {
-              fontSize: 13
+              data: ['Inbound', 'OutBound'],
+              textStyle: {
+                fontSize: 13
+              }
             },
-            data: [
+            grid: {
+              left: '3%',
+              right: '4%',
+              bottom: '3%',
+              containLabel: true
+            },
+            xAxis: [
               {
-                type: "splineArea",
-                showInLegend: true,
-                name: "Inbound",
-                markerSize: 8,
-                color: "rgba(54,158,173,.9)",
-
-                dataPoints: this.Inbound_data
+                type: 'category',
+                boundaryGap: false,
+                axisLabel: {
+                  formatter: function (value: string | number | Date) {
+                    return new Date(value).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                  }
+                },
+                data: this.Inbound_data.map(function (dataPoint) {
+                  return dataPoint.x;
+                })
+              }
+            ],
+            yAxis: [
+              {
+                type: 'value'
+              }
+            ],
+            series: [
+              {
+                name: 'Inbound',
+                type: 'line',
+                smooth: true,
+                symbolSize: 8,
+                areaStyle: {
+                  opacity: 0.9
+                },
+                data: this.Inbound_data.map(function (dataPoint) {
+                  return dataPoint.y;
+                })
               },
               {
-                type: "splineArea",
-                showInLegend: true,
-                name: "OutBound",
-                markerSize: 8,
-                color: "rgba(134,180,2,.9)",
-                dataPoints: this.Outbound_data
+                name: 'OutBound',
+                type: 'line',
+                smooth: true,
+                symbolSize: 8,
+                areaStyle: {
+                  opacity: 0.9
+                },
+                data: this.Outbound_data.map(function (dataPoint) {
+                  return dataPoint.y;
+                })
               }
             ]
-          }
+          };
+          myCharts.setOption(option);
           // Update the ChannelWiseGraph
+          const dom = this.ChannelWiseGraph.nativeElement;
+          const myChart = echarts.init(dom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false
+          });
+          var option: echarts.EChartsOption;
           const totalAnswered = this.Inbound_Outbound_Report.channelReportData.answered;
           const totalUnanswered = this.Inbound_Outbound_Report.channelReportData.unAnswered;
           let answeredPercentage: number;
@@ -163,18 +206,56 @@ export class InboundOntboundReportComponent implements OnInit {
             answeredPercentage = (totalAnswered / (totalAnswered + totalUnanswered)) * 100;
             unansweredPercentage = (totalUnanswered / (totalAnswered + totalUnanswered)) * 100;
           }
-          this.ChannelWiseGraph = {
-            animationEnabled: true,
-            data: [{
-              type: "doughnut",
-              yValueFormatString: "#,###.##'%'",
-              dataPoints: [
-                { y: unansweredPercentage, indexLabel: + '%' },
-                { y: answeredPercentage, indexLabel: + '%' },
-              ]
-            }]
+          option = {
+            color: ['#FF6B6B', '#32CD32'],
+            title: {
+              text: ''
+            },
+            tooltip: {
+              trigger: 'item',
+              formatter: '{a} <br/>{b}: {c}%'
+            },
+            legend: {
+              orient: 'vertical',
+              left: 'left',
+              data: ['Unanswered', 'Answered']
+            },
+            series: [
+              {
+                name: 'Channel Wise',
+                type: 'pie',
+                radius: ['50%', '70%'],
+                avoidLabelOverlap: false,
+                label: {
+                  show: true,
+                  position: 'outside',
+                  formatter: '{d}%'
+                },
+                emphasis: {
+                  label: {
+                    show: true,
+                    fontSize: '20',
+                    fontWeight: 'bold'
+                  }
+                },
+                labelLine: {
+                  show: true
+                },
+                data: [
+                  { value: unansweredPercentage, name: 'Unanswered' },
+                  { value: answeredPercentage, name: 'Answered' }
+                ]
+              }
+            ]
           };
+          myChart.setOption(option);
           // Update TagsPerChannel
+          const myDom = this.TagsPerChannel.nativeElement;
+          const mychart = echarts.init(myDom, null, {
+            renderer: 'canvas',
+            useDirtyRect: false
+          });
+          var option: echarts.EChartsOption;
           const tagReportData = this.Inbound_Outbound_Report.tagReportData;
           const tagDataPoints: any[] = [];
           tagReportData.forEach((platformData: any) => {
@@ -182,36 +263,55 @@ export class InboundOntboundReportComponent implements OnInit {
             const platformCounts: any[] = [];
             platformData.data.forEach((tag: any) => {
               platformCounts.push({
-                label: tag.name,
-                y: tag.count,
+                name: tag.name,
+                value: tag.count,
               });
             });
             tagDataPoints.push({
-              type: "stackedColumn",
+              type: 'bar',
               name: platformName,
-              showInLegend: true,
-              dataPoints: platformCounts,
+              stack: 'total',
+              data: platformCounts,
             });
           });
-
-          this.TagsPerChannel = {
-            animationEnabled: true,
-            toolTip: {
-              shared: true,
+          option = {
+            color: ['#544fc5', '#2ee0ca', '#36b3fe', '#32CD32', '#fe6a35'],
+            title: {
+              text: '',
+            },
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                type: 'shadow',
+              },
             },
             legend: {
-              horizontalAlign: "right",
-              verticalAlign: "center",
-              reversed: true,
+              data: tagDataPoints.map((dataPoint) => dataPoint.name),
+              orient: 'vertical',
+              left: 'right',
             },
-            axisY: {
-              includeZero: true,
+            xAxis: {
+              type: 'category',
+              axisTick: { show: false },
+              data: tagDataPoints[0].data.map((tagCount: any) => tagCount.name),
             },
-            data: tagDataPoints,
+            yAxis: {
+              type: 'value',
+              name: 'Count',
+            },
+            series: tagDataPoints,
           };
+          mychart.setOption(option);
+
           // Update senitimentalGraph
+          const myDoms = this.senitimentalGraph.nativeElement;
+          const chart = echarts.init(myDoms, null, {
+            renderer: 'canvas',
+            useDirtyRect: false
+          });
+          var option: echarts.EChartsOption;
           const sentimentReportData = this.Inbound_Outbound_Report.sentimentReportData;
-          const sentimentDataPoints: { type: string, showInLegend: boolean, name: string, dataPoints: { label: string, y: number, color: string }[] }[] = [];
+          const sentimentDataPoints: { platform: string, Positive: number, Negative: number, Neutral: number }[] = [];
           sentimentReportData.forEach((platformData: any) => {
             const platformName = platformData.platform;
             const sentimentCounts: { [key: string]: number } = {};
@@ -219,41 +319,52 @@ export class InboundOntboundReportComponent implements OnInit {
               sentimentCounts[sentiment.name] = sentiment.count;
             });
             sentimentDataPoints.push({
-              type: "column", // Change the chart type to "column"
-              showInLegend: true,
-              name: platformName,
-              dataPoints: [
-                { label: "Positive", y: sentimentCounts["Positive"] || 0, color: "green" }, // Light green for Positive
-                { label: "Negative", y: sentimentCounts["Negative"] || 0, color: "lightcoral" }, // Light coral for Negative
-                { label: "Neutral", y: sentimentCounts["Neutral"] || 0, color: "lightyellow" },   // Light yellow for Neutral
-              ],
+              platform: platformName,
+              Positive: sentimentCounts["Positive"] || 0,
+              Negative: sentimentCounts["Negative"] || 0,
+              Neutral: sentimentCounts["Neutral"] || 0,
             });
           });
-          this.senitimentalGraph = {
-            animationEnabled: true,
-            toolTip: {
-              shared: true,
-              fontColor: "dark", // Set the text color to dark
+          option = {
+            legend: {},
+            tooltip: {},
+            dataset: {
+              source: sentimentDataPoints,
             },
-            data: sentimentDataPoints,
+            xAxis: { type: 'category' },
+            yAxis: {},
+            series: [
+              {
+                type: 'bar',
+                seriesLayoutBy: 'row',
+                itemStyle: {
+                  color: '#4cc424',
+                },
+              },
+              {
+                type: 'bar',
+                seriesLayoutBy: 'row',
+                itemStyle: {
+                  color: 'rgba(209,60,60,255)',
+                },
+              },
+              {
+                type: 'bar',
+                seriesLayoutBy: 'row',
+                itemStyle: {
+                  color: '#ffa800',
+                },
+              },
+            ],
           };
-          
-          
-        }
 
-        // Check for data availability flags
-        this.inboundOutboundDataAvailable = (this.Inbound_data.length > 0 && this.Outbound_data.length > 0);
-        this.sentimentalDataAvailable = (this.senitimentalGraph && this.senitimentalGraph.data && this.senitimentalGraph.data.length > 0);
-        this.averageResponseDataAvailable = (this.ChannelWiseGraph && this.ChannelWiseGraph.data && this.ChannelWiseGraph.data.length > 0);
-        this.tagsPerChannelDataAvailable = (this.TagsPerChannel && this.TagsPerChannel.data && this.TagsPerChannel.data.length > 0);
+          option && chart.setOption(option);
+        }
       },
       (error: any) => {
         console.error('HTTP Error:', error);
       }
     );
-
-
-
   }
 
   reportOptions = [

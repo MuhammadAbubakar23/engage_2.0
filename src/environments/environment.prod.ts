@@ -171,7 +171,11 @@ export const environment = {
       twitterSLAReport:'Report/GetTwitterSLAReport',
       twitterProfileWiseReport:'Report/GetTwitterProfileWiseReport',
       getUserList:'/Users/GetUserList',
-      getSentimentData:'Keyword/GetAllSentiments'
+      getSentimentData:'Keyword/GetAllSentiments',
+      addAgentPerformance: 'Report/GetAgentPerformanceReport',
+      shiftReport: 'Report/GetShiftReport',
+      getWhatsAppRawDataReport:'Report/GetWhatsAppRawDataReport',
+      downloadWhatsAppRawDataReport:'Report/GetWhatsAppCSVData'
     },
     facebook: {
       comments: 'Facebook/GetFbPost',

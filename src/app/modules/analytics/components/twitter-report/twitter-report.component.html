@@ -12,7 +12,7 @@
                           <input type="date" class="form-control" placeholder="End Date" (change)="GetTwitterReport()" [(ngModel)]="toDate" />
       
                         </div>
-                      </div>
+                    </div>
                 </li>
                 <!-- <li class="list-inline-item">
                     <div class="dropdown icondropdown w-auto mx-2">
@@ -107,7 +107,7 @@
             <h5 class="section-heading mb-4 p-0">Posts &amp; Conversations (Inbound/Outbound) </h5>
             <div class="graphcontainer align-items-end mb-5">
                 <div class="text-center">
-                    <canvasjs-chart [options]="tweetsInboundOutboundGraph"></canvasjs-chart>
+                    <div #TwitterInboundOutboundReport style="height: 300px; width: 900px;"></div>
                 </div>
             </div>
             <div class="row align-items-start px-5">
@@ -220,7 +220,7 @@
                     <h6 class="section-heading mb-4 p-0 coal">Your Tweets</h6>
                     <div class="graphcontainer align-items-end">
                         <div class="text-center">
-                            <canvasjs-chart [options]="QueryTypeChart" [styles]="{width: '100%', height:'360px'}"></canvasjs-chart> 
+                            <div #TypesOfQueriesReport style="height: 300px; width: 900px;"></div>
                         </div>
                     </div>
                 </div>
@@ -228,7 +228,7 @@
                     <h6 class="section-heading mb-4 p-0 coal">Your Tweeting Behaviour</h6>
                     <div class="graphcontainer align-items-end">
                         <div class="text-center">
-                            <canvasjs-chart [options]="OutboundQueriesChart" [styles]="{width: '100%', height:'360px'}"></canvasjs-chart> 
+                            <div #TweetingBehaviourReport style="height: 300px; width: 900px;"></div>
                         </div>
                     </div>
                 </div>
@@ -240,7 +240,7 @@
             <h5 class="section-heading mb-4 p-0">Audience Engagement (Outbound)</h5>
             <div class="graphcontainer align-items-end mb-5">
                 <div class="text-center">
-                    <canvasjs-chart [options]="OutboundGraph"></canvasjs-chart>
+                    <div #OutboundReport style="height: 300px; width: 900px;"></div>
                 </div>
             </div>
             <div class="row align-items-start px-5">
@@ -315,7 +315,7 @@
                                 </li>
 
                             </ul>
-                            <div class="card dashboard-card">
+                            <!-- <div class="card dashboard-card">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div>
@@ -327,7 +327,7 @@
                                         <h3> 85.21%</h3>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                         </div>
 

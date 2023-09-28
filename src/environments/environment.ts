@@ -27,7 +27,7 @@ export const environment = {
   SmsBaseUrl: 'https://text.360scrm.com/api/',
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
-  CommonBaseUrl:  'https://comservices.enteract.live/api/',
+  CommonBaseUrl:  'http://10.111.11.93:45455/api/',
   SignalRCommonBaseUrl:  'https://comservices.enteract.live/',
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
   ServiceBaseUrl : 'https://waservice.enteract.live/api/',
@@ -176,7 +176,10 @@ export const environment = {
       twitterProfileWiseReport:'Report/GetTwitterProfileWiseReport',
       getUserList:'/Users/GetUserList',
       getSentimentData:'Keyword/GetAllSentiments',
-      addAgentPerformance: 'Report/GetAgentPerformanceReport'
+      addAgentPerformance: 'Report/GetAgentPerformanceReport',
+      shiftReport: 'Report/GetShiftReport',
+      getWhatsAppRawDataReport:'Report/GetWhatsAppRawDataReport',
+      downloadWhatsAppRawDataReport:'Report/GetWhatsAppCSVData'
     },
     facebook: {
       comments: 'Facebook/GetFbPost',

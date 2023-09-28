@@ -1,14 +1,15 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import {
   AfterContentChecked,
-  AfterContentInit,
-  AfterViewInit,
   Component,
+  ElementRef,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import * as echarts from 'echarts';
 
 @Component({
   selector: 'app-twitter-report',
@@ -18,9 +19,18 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
   imports: [CommonModule, CanvasJSAngularChartsModule, FormsModule],
 })
 export class TwitterReportComponent implements OnInit, AfterContentChecked {
+  @ViewChild('TwitterInboundOutboundReport', { static: true })
+  TwitterInboundOutboundReport!: ElementRef;
+  @ViewChild('TypesOfQueriesReport', { static: true })
+  TypesOfQueriesReport!: ElementRef;
+  @ViewChild('TweetingBehaviourReport', { static: true })
+  TweetingBehaviourReport!: ElementRef;
+  @ViewChild('OutboundReport', { static: true })
+  OutboundReport!: ElementRef;
+  
 
-  fromDate:string="";
-  toDate:string="";
+  fromDate: string = '';
+  toDate: string = '';
 
   TwitterReport: any;
   TwitterSLAReport: any;
@@ -41,6 +51,7 @@ export class TwitterReportComponent implements OnInit, AfterContentChecked {
   MentionsSentGraph: any[] = [];
   MentionsReceivedGraph: any[] = [];
   TotalRepliesGraph: any[] = [];
+  allDates: any[] = [];
 
   totalPlainTextPercentage: number = 0;
   totalVideoQueryPercentage: number = 0;
@@ -56,8 +67,10 @@ export class TwitterReportComponent implements OnInit, AfterContentChecked {
   QueryTypeChart: any;
   OutboundQueriesChart: any;
 
-  constructor(private commonDataService: CommonDataService,
-    private datePipe: DatePipe,) {}
+  constructor(
+    private commonDataService: CommonDataService,
+    private datePipe: DatePipe
+  ) {}
 
   ngOnInit(): void {
     this.GetTwitterReport();
@@ -222,41 +235,41 @@ export class TwitterReportComponent implements OnInit, AfterContentChecked {
     };
   }
   GetTwitterReport() {
+    this.totalTweetsSent = 0;
+    this.totalTweetReceived = 0;
+    this.totalDmSent = 0;
+    this.totalDmReceived = 0;
+    this.totalMentionSent = 0;
+    this.totalMentionReceived = 0;
+    this.totalReplies = 0;
 
-  this.totalTweetsSent = 0;
-  this.totalTweetReceived = 0;
-  this.totalDmSent = 0;
-  this.totalDmReceived = 0;
-  this.totalMentionSent = 0;
-  this.totalMentionReceived = 0;
-  this.totalReplies = 0;
+    this.TweetsSentGraph = [];
+    this.TweetsReceivedGraph = [];
+    this.DMSentGraph = [];
+    this.DMReceivedGraph = [];
+    this.MentionsSentGraph = [];
+    this.MentionsReceivedGraph = [];
+    this.TotalRepliesGraph = [];
+    this.allDates = [];
 
-  this.TweetsSentGraph = [];
-  this.TweetsReceivedGraph = [];
-  this.DMSentGraph = [];
-  this.DMReceivedGraph = [];
-  this.MentionsSentGraph = [];
-  this.MentionsReceivedGraph = [];
-  this.TotalRepliesGraph = [];
+    this.totalPlainTextPercentage = 0;
+    this.totalVideoQueryPercentage = 0;
+    this.totalImageQueryPercentage = 0;
 
-  this.totalPlainTextPercentage = 0;
-  this.totalVideoQueryPercentage = 0;
-  this.totalImageQueryPercentage = 0;
-
-  this.totalTweetsSentPercentage = 0;
-  this.totalDmSentPercentage = 0;
-  this.totalMentionSentPercentage = 0;
-
-    debugger
-    if(this.toDate == "" && this.fromDate == ""){
+    this.totalTweetsSentPercentage = 0;
+    this.totalDmSentPercentage = 0;
+    this.totalMentionSentPercentage = 0;
+ 
+    if (this.toDate == '' && this.fromDate == '') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 6);
-      const fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
+      const fromDate =
+        this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
 
-      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
-    } else if (this.fromDate != "" && this.toDate != ""
-    ) {
+      this.toDate =
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+    } else if (this.fromDate != '' && this.toDate != '') {
       this.fromDate = this.fromDate + 'T00:00:00.000Z';
       this.toDate = this.toDate + 'T23:59:59.999Z';
     }
@@ -266,8 +279,15 @@ export class TwitterReportComponent implements OnInit, AfterContentChecked {
       profileId: '1682035592165740551',
     };
     this.commonDataService.GetTwitterReport(body).subscribe((res) => {
+      this.toDate = ''
+      this.fromDate = ''
+      
       this.TwitterReport = res;
       this.TwitterReport.dateWise.forEach((data: any) => {
+        if (!this.allDates.includes(data.date)) {
+          this.allDates.push(this.datePipe.transform(data.date, 'dd MMM'));
+        }
+
         this.totalTweetsSent += data.tweetSent;
         this.totalTweetReceived += data.tweetReceived;
         this.totalDmSent += data.dmSent;
@@ -276,34 +296,13 @@ export class TwitterReportComponent implements OnInit, AfterContentChecked {
         this.totalMentionReceived += data.mentionReceived;
         this.totalReplies += data.replies;
 
-        this.TweetsSentGraph.push({
-          x: new Date(data.date.split('T')[0]),
-          y: data.tweetSent,
-        });
-        this.TweetsReceivedGraph.push({
-          x: new Date(data.date.split('T')[0]),
-          y: data.tweetReceived,
-        });
-        this.DMSentGraph.push({
-          x: new Date(data.date.split('T')[0]),
-          y: data.dmSent,
-        });
-        this.DMReceivedGraph.push({
-          x: new Date(data.date.split('T')[0]),
-          y: data.dmReceived,
-        });
-        this.MentionsSentGraph.push({
-          x: new Date(data.date.split('T')[0]),
-          y: data.mentionSent,
-        });
-        this.MentionsReceivedGraph.push({
-          x: new Date(data.date.split('T')[0]),
-          y: data.mentionReceived,
-        });
-        this.TotalRepliesGraph.push({
-          x: new Date(data.date.split('T')[0]),
-          y: data.replies,
-        });
+        this.TweetsSentGraph.push(data.tweetSent);
+        this.TweetsReceivedGraph.push(data.tweetReceived);
+        this.DMSentGraph.push(data.dmSent);
+        this.DMReceivedGraph.push(data.dmReceived);
+        this.MentionsSentGraph.push(data.mentionSent);
+        this.MentionsReceivedGraph.push(data.mentionReceived);
+        this.TotalRepliesGraph.push(data.replies);
       });
       var totalTypesOfQueries =
         this.TwitterReport?.totalPlainText +
@@ -326,19 +325,270 @@ export class TwitterReportComponent implements OnInit, AfterContentChecked {
         (this.totalMentionSent / totalOutboundQueries) * 100;
 
       console.log(res);
+
+      this.populateInboundOutboundGraph();
+      this.populateTypesOfQueriesGraph();
+      this.populateTweetingBehaviourGraph();
+      this.populateOutboundGraph();
+      
     });
   }
 
+  populateInboundOutboundGraph(){
+    type EChartsOption = echarts.EChartsOption;
+
+    const dom = this.TwitterInboundOutboundReport.nativeElement;
+    const myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false,
+    });
+    var option: EChartsOption;
+
+    option = {
+      title: {
+        text: '',
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      legend: {
+        data: [
+          'Tweets Sent',
+          'DMs Sent',
+          'Mentions Sent',
+          'Tweets Received',
+          'DMs Received',
+          'Mentions Received',
+        ],
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true,
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {},
+        },
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: this.allDates,
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          name: 'Tweets Sent',
+          type: 'line',
+          data: this.TweetsSentGraph,
+        },
+        {
+          name: 'DMs Sent',
+          type: 'line',
+          data: this.DMSentGraph,
+        },
+        {
+          name: 'Mentions Sent',
+          type: 'line',
+          data: this.MentionsSentGraph,
+        },
+        {
+          name: 'Tweets Received',
+          type: 'line',
+          data: this.TweetsReceivedGraph,
+        },
+        {
+          name: 'DMs Received',
+          type: 'line',
+          data: this.DMReceivedGraph,
+        },
+        {
+          name: 'Mentions Received',
+          type: 'line',
+          data: this.MentionsReceivedGraph,
+        },
+      ],
+    };
+
+    option && myChart.setOption(option);
+  }
+  populateTypesOfQueriesGraph(){
+    type EChartsOption = echarts.EChartsOption;
+      
+      const dom = this.TypesOfQueriesReport.nativeElement;
+      const myChart = echarts.init(dom, null, {
+        renderer: 'canvas',
+        useDirtyRect: false,
+      });
+      var option: EChartsOption;
+
+      option = {
+        title: {
+        },
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          // orient: 'vertical',
+          bottom:-5,
+          left: 'center'
+        },
+        series: [
+          {
+            name: 'Access From',
+            type: 'pie',
+            radius: ['50%', '70%'],
+            label: {
+              show: true,
+              formatter(param) {
+                // correct the percentage
+                return param.name + ' (' + param.value + '%)';
+              }
+            },
+            color: ['#5a3692', '#f41665', '#36cca2', '#fceea4'],
+            data: [
+              { value: this.totalPlainTextPercentage, name: 'Plain Text' },
+              { value: this.totalVideoQueryPercentage, name: 'Videos' },
+              { value: this.totalImageQueryPercentage, name: 'Photos' }
+            ],
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      };
+      option && myChart.setOption(option);
+  }
+
+  populateTweetingBehaviourGraph(){
+    type EChartsOption = echarts.EChartsOption;
+      
+      const dom = this.TweetingBehaviourReport.nativeElement;
+      const myChart = echarts.init(dom, null, {
+        renderer: 'canvas',
+        useDirtyRect: false,
+      });
+      var option: EChartsOption;
+
+      option = {
+        title: {
+        },
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          // orient: 'vertical',
+          bottom:-5,
+          left: 'center'
+        },
+        series: [
+          {
+            name: 'Access From',
+            type: 'pie',
+            radius: ['50%', '70%'],
+            color: ['#5a3692', '#f41665', '#36cca2', '#fceea4'],
+            label: {
+              show: true,
+              formatter(param) {
+                // correct the percentage
+                return param.name + ' (' + param.value + '%)';
+              }
+            },
+            data: [
+              { value: this.totalTweetsSentPercentage, name: 'Tweets' },
+              { value: this.totalDmSentPercentage, name: 'DMs' },
+              { value: this.totalMentionSentPercentage, name: 'Mentions' }
+            ],
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      };
+      option && myChart.setOption(option);
+  }
+  populateOutboundGraph(){
+    type EChartsOption = echarts.EChartsOption;
+
+    const dom = this.OutboundReport.nativeElement;
+    const myChart = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false,
+    });
+    var option: EChartsOption;
+
+    option = {
+      title: {
+        text: '',
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      legend: {
+        data: [
+          'Replies',
+          'Tweets Sent'
+        ],
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true,
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {},
+        },
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: this.allDates,
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          name: 'Replies',
+          type: 'line',
+          data: this.TotalRepliesGraph,
+        },
+        {
+          name: 'Tweets Sent',
+          type: 'line',
+          data: this.TweetsSentGraph,
+        }
+      ],
+    };
+
+    option && myChart.setOption(option);
+  }
+
   GetTwitterSLAReport() {
-    if(this.toDate == "" && this.fromDate == ""){
+    if (this.toDate == '' && this.fromDate == '') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 6);
-      const fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
+      const fromDate =
+        this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
 
-      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
-    } else if (this.fromDate != "" && this.toDate != ""
-    ) {
+      this.toDate =
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+    } else if (this.fromDate != '' && this.toDate != '') {
       this.fromDate = this.fromDate + 'T00:00:00.000Z';
       this.toDate = this.toDate + 'T23:59:59.999Z';
     }

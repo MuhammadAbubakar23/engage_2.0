@@ -16,6 +16,8 @@ import { ExcelService } from './services/excel.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { ReportDesignerComponent } from './components/report-designer/report-designer.component';
 import { TwitterReportComponent } from './components/twitter-report/twitter-report.component';
+import { EchartsTestingComponent } from './components/echarts-testing/echarts-testing.component';
+import { WhatsappReportComponent } from './components/whatsapp-report/whatsapp-report.component';
 
 
 // import {DndModule} from 'ngx-drag-drop';

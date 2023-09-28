@@ -15,7 +15,6 @@
                                     <div class="col-sm-6">
                                         <input type="date" class="form-control" placeholder="Start Date"
                                             (change)="onCheckboxChange()" [(ngModel)]="endDate" />
-
                                     </div>
                                 </div>
                             </li>
@@ -97,7 +96,7 @@
                                     </ul>
                                 </div>
                             </li>
-                            <li class="list-inline-item ms-auto">
+                            <!-- <li class="list-inline-item ms-auto">
                                 <div class="btn-group buttonfilter" role="group"
                                     aria-label="Basic radio toggle button group">
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
@@ -115,7 +114,7 @@
                                         autocomplete="off">
                                     <label class="btn btn-outline-secondary" for="btnradio4">90</label>
                                 </div>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                     <div class="row align-items-start h-auto mb-4">
@@ -142,7 +141,7 @@
                                             <span class="iconButton medium skyBg mb-4">
                                                 <i class="fa-light fa-retweet"></i>
                                             </span>
-                                            <p class="coal mb-0"> Comments</p>
+                                            <p class="coal mb-0"> {{ selectedChannelLabel }}</p>
                                         </div>
                                         <h2>{{agent_performance_report?.commentCount}}</h2>
                                     </div>
@@ -164,29 +163,24 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-md-6">
                             <div class="card iceBg p-4 rounded mb-5">
-                                <h5 class="section-heading mb-4 p-0">Comments/Tweets </h5>
+                                <h5 class="section-heading mb-4 p-0">{{ selectedChannelLabel }}</h5>
                                 <div class="graphcontainer align-items-end">
-                                    <div class="text-center">
-                                        <canvasjs-chart [options]="tweetsOptions"></canvasjs-chart>
+                                    <div #main style="height: 600px; width: 600px;"></div>
 
-                                    </div>
                                 </div>
 
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-md-6">
                             <div class="card iceBg p-4 rounded mb-5">
                                 <h5 class="section-heading mb-4 p-0"> Direct Message
                                 </h5>
                                 <div class="graphcontainer align-items-end">
-                                    <div class="text-center">
-                                        <canvasjs-chart [options]="directMessage"></canvasjs-chart>
-                                    </div>
+                                    <div #message style="height: 600px; width: 600px;"></div>
                                 </div>
 
                             </div>

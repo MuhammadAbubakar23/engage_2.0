@@ -219,40 +219,25 @@
               </span>
             </div>
           </div>
-        </header>
-        <div class="tab-content" id="nav-tabContent">
-          <div
-            class="tab-pane fade show active"
-            id="agent-stats"
-            role="tabpanel"
-            aria-labelledby="agent-stats-tab"
-          >
-            <div
-              class="query-container perfect-scrollbar"
-              data-scrollbar="true"
-              tabindex="-1"
-              style="overflow: auto; outline: none"
-            >
-              <div
-                class="scroll-content"
-                style="width: 45vh; white-space: nowrap"
-              >
-                <ng-container *ngIf="isStats; else rawdata">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th
-                          class="region-row"
-                          *ngFor="let column of statsdataKeys"
-                        >
-                          {{ column }}
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr class="region-row" *ngFor="let row of tableData">
-                        <td *ngFor="let column of statsdataKeys">
-                          {{ row[column] }}
+          </header>
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="agent-stats" role="tabpanel" aria-labelledby="agent-stats-tab">
+              <div class="query-container perfect-scrollbar" data-scrollbar="true" tabindex="-1"
+                style="overflow: auto; outline: none">
+                <div class="scroll-content" style="width: 45vh; white-space: nowrap">
+                  <ng-container *ngIf="isStats; else rawdata">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="region-row" *ngFor="let column of statsdataKeys">
+                            {{ column }}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="region-row" *ngFor="let row of tableData">
+                          <td *ngFor="let column of statsdataKeys">
+                            {{ row[column] }}
                         </td>
                       </tr>
                     </tbody>
