@@ -335,9 +335,7 @@ export class CommonDataService {
   }
 
   GetAgentReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.getAgentReport, body, {
-      responseType: 'text',
-    });
+    return this.http.post(this.CommonBaseUrl + this.getAgentReport, body, { responseType: 'text' });
   }
 
   GetAllocatedProfiles() {
@@ -574,11 +572,11 @@ export class CommonDataService {
   }
 
   GetWhatsAppReport(body:any){
-    return this.http.post(this.CommonBaseUrl+ this.getWhatsAppRawDataReport, body)
+    return this.http.post(this.CommonBaseUrl + this.getWhatsAppRawDataReport, body)
   }
 
   DownloadWhatsAppReport(body:any){
-    return this.http.post(this.CommonBaseUrl+ this.downloadWhatsAppRawDataReport, body)
+    return this.http.post(this.CommonBaseUrl + this.downloadWhatsAppRawDataReport, body, { responseType: 'text' })
   }
 
 }

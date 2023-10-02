@@ -42,7 +42,6 @@ export class RoleMenuComponent implements OnInit {
  ngOnInit(): void {
    this.MenuStore.select(getEmargingEqual("role_main_left_menu"))
    .subscribe((item:MenuModel[]) => {
-    debugger
      this.menus$ = [...item];
    })
    

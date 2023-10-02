@@ -31,7 +31,7 @@ export class WhatsappReportComponent implements OnInit {
 
     if (this.toDate == '' && this.fromDate == '') {
       let currentDate = new Date();
-      let prevDate = currentDate.setDate(currentDate.getDate());
+      let prevDate = currentDate.setDate(currentDate.getDate() - 5);
       const fromDate =
         this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
@@ -39,6 +39,8 @@ export class WhatsappReportComponent implements OnInit {
       this.toDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.fromDate != '' && this.toDate != '') {
+      this.toDate = this.toDate.split('T')[0];
+      this.fromDate = this.fromDate.split('T')[0];
       this.fromDate = this.fromDate + 'T00:00:00.000Z';
       this.toDate = this.toDate + 'T23:59:59.999Z';
     }
@@ -49,10 +51,6 @@ export class WhatsappReportComponent implements OnInit {
       pageSize: 0
     }
     this.commonService.GetWhatsAppReport(obj).subscribe((res:any)=>{
-      debugger
-      this.toDate = ''
-      this.fromDate = ''
-      
       this.whatsAppRawData = res.List;
       this.whatsAppColumns = Object.keys(this.whatsAppRawData[0]);
     })
@@ -61,7 +59,7 @@ export class WhatsappReportComponent implements OnInit {
   DownloadWhatsAppRawData(){
     if (this.toDate == '' && this.fromDate == '') {
       let currentDate = new Date();
-      let prevDate = currentDate.setDate(currentDate.getDate());
+      let prevDate = currentDate.setDate(currentDate.getDate() - 5);
       const fromDate =
         this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
@@ -69,17 +67,25 @@ export class WhatsappReportComponent implements OnInit {
       this.toDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.fromDate != '' && this.toDate != '') {
+      
+      this.toDate = this.toDate.split('T')[0];
+      this.fromDate = this.fromDate.split('T')[0];
       this.fromDate = this.fromDate + 'T00:00:00.000Z';
       this.toDate = this.toDate + 'T23:59:59.999Z';
     }
     var obj = {
       fromDate: this.fromDate,
       toDate: this.toDate,
-      pageNumber: 0,
-      pageSize: 0
+      pageNumber: 1,
+      pageSize: 30
     }
     this.commonService.DownloadWhatsAppReport(obj).subscribe((res:any)=>{
-      debugger
+      const a = document.createElement('a');
+        a.href = res;
+        a.download = 'AgentReport.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
       console.log(res)
     })
   }

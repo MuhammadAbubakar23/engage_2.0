@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import * as echarts from 'echarts';
+import { HeaderService } from 'src/app/shared/services/header.service';
 
 @Component({
   selector: 'app-twitter-report',
@@ -18,7 +19,7 @@ import * as echarts from 'echarts';
   standalone: true,
   imports: [CommonModule, CanvasJSAngularChartsModule, FormsModule],
 })
-export class TwitterReportComponent implements OnInit, AfterContentChecked {
+export class TwitterReportComponent implements OnInit {
   @ViewChild('TwitterInboundOutboundReport', { static: true })
   TwitterInboundOutboundReport!: ElementRef;
   @ViewChild('TypesOfQueriesReport', { static: true })
@@ -31,6 +32,9 @@ export class TwitterReportComponent implements OnInit, AfterContentChecked {
 
   fromDate: string = '';
   toDate: string = '';
+  maxEndDate:any;
+  startDate:any;
+  endDate:any;
 
   TwitterReport: any;
   TwitterSLAReport: any;
@@ -43,6 +47,7 @@ export class TwitterReportComponent implements OnInit, AfterContentChecked {
   totalMentionSent: number = 0;
   totalMentionReceived: number = 0;
   totalReplies: number = 0;
+  noData=false;
 
   TweetsSentGraph: any[] = [];
   TweetsReceivedGraph: any[] = [];
@@ -67,173 +72,25 @@ export class TwitterReportComponent implements OnInit, AfterContentChecked {
   QueryTypeChart: any;
   OutboundQueriesChart: any;
 
-  constructor(
+  constructor(private _hS: HeaderService,
     private commonDataService: CommonDataService,
     private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
+
+    const newObj = { title: 'Twitter Report', url: '/analytics/twitter-report' };
+    this._hS.setHeader(newObj);
+
+    const currentDate = new Date();
+    this.maxEndDate = currentDate.toISOString().split('T')[0];
+
     this.GetTwitterReport();
     this.GetTwitterSLAReport();
     this.GetTwitterProfileWiseReport();
   }
 
-  ngAfterContentChecked(): void {
-    this.tweetsInboundOutboundGraph = {
-      animationEnabled: true,
-      theme: 'light2',
-      title: {
-        text: '',
-      },
-      axisX: {
-        valueFormatString: 'D MMM',
-      },
-      axisY: {
-        title: '',
-      },
-      toolTip: {
-        shared: true,
-      },
-      legend: {
-        cursor: 'pointer',
-        itemclick: function (e: any) {
-          if (
-            typeof e.dataSeries.visible === 'undefined' ||
-            e.dataSeries.visible
-          ) {
-            e.dataSeries.visible = false;
-          } else {
-            e.dataSeries.visible = true;
-          }
-          e.chart.render();
-        },
-      },
-      data: [
-        {
-          type: 'line',
-          showInLegend: true,
-          name: 'Tweets Sent',
-          xValueFormatString: 'MMM DD, YYYY',
-          dataPoints: this.TweetsSentGraph,
-        },
-        {
-          type: 'line',
-          showInLegend: true,
-          name: 'DMs Sent',
-          dataPoints: this.DMSentGraph,
-        },
-        {
-          type: 'line',
-          showInLegend: true,
-          name: 'Mentions Sent',
-          dataPoints: this.MentionsSentGraph,
-        },
-        {
-          type: 'line',
-          showInLegend: true,
-          name: 'Tweets Received',
-          xValueFormatString: 'MMM DD, YYYY',
-          dataPoints: this.TweetsReceivedGraph,
-        },
-        {
-          type: 'line',
-          showInLegend: true,
-          name: 'DMs Received',
-          dataPoints: this.DMReceivedGraph,
-        },
-        {
-          type: 'line',
-          showInLegend: true,
-          name: 'Mentions Received',
-          dataPoints: this.MentionsReceivedGraph,
-        },
-      ],
-    };
-
-    this.OutboundGraph = {
-      animationEnabled: true,
-      theme: 'light2',
-      title: {
-        text: '',
-      },
-      axisX: {
-        valueFormatString: 'D MMM',
-      },
-      axisY: {
-        title: '',
-      },
-      toolTip: {
-        shared: true,
-      },
-      legend: {
-        cursor: 'pointer',
-        itemclick: function (e: any) {
-          if (
-            typeof e.dataSeries.visible === 'undefined' ||
-            e.dataSeries.visible
-          ) {
-            e.dataSeries.visible = false;
-          } else {
-            e.dataSeries.visible = true;
-          }
-          e.chart.render();
-        },
-      },
-      data: [
-        {
-          type: 'line',
-          showInLegend: true,
-          name: 'Replies',
-          xValueFormatString: 'MMM DD, YYYY',
-          dataPoints: this.TotalRepliesGraph,
-        },
-        {
-          type: 'line',
-          showInLegend: true,
-          name: 'Tweets Sent',
-          xValueFormatString: 'MMM DD, YYYY',
-          dataPoints: this.TweetsSentGraph,
-        },
-      ],
-    };
-    this.QueryTypeChart = {
-      animationEnabled: true,
-      title: {
-        text: '',
-      },
-      data: [
-        {
-          type: 'doughnut',
-          yValueFormatString: "#,###.##'%'",
-          indexLabel: '{name}',
-          dataPoints: [
-            { y: this.totalPlainTextPercentage, name: 'Plain Text' },
-            { y: this.totalVideoQueryPercentage, name: 'Videos' },
-            { y: this.totalImageQueryPercentage, name: 'Photos' },
-          ],
-        },
-      ],
-    };
-
-    this.OutboundQueriesChart = {
-      animationEnabled: true,
-      title: {
-        text: '',
-      },
-      data: [
-        {
-          type: 'doughnut',
-          yValueFormatString: "#,###.##'%'",
-          indexLabel: '{name}',
-          dataPoints: [
-            { y: this.totalTweetsSentPercentage, name: 'Tweets' },
-            { y: this.totalDmSentPercentage, name: 'DMs' },
-            { y: this.totalMentionSentPercentage, name: 'Mentions' },
-          ],
-        },
-      ],
-    };
-  }
+  
   GetTwitterReport() {
     this.totalTweetsSent = 0;
     this.totalTweetReceived = 0;
@@ -263,25 +120,22 @@ export class TwitterReportComponent implements OnInit, AfterContentChecked {
     if (this.toDate == '' && this.fromDate == '') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 6);
-      const fromDate =
-        this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
-      this.fromDate = fromDate;
+      this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
 
-      this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
     } else if (this.fromDate != '' && this.toDate != '') {
-      this.fromDate = this.fromDate + 'T00:00:00.000Z';
-      this.toDate = this.toDate + 'T23:59:59.999Z';
-    }
+      this.toDate = this.toDate.split('T')[0];
+      this.fromDate = this.fromDate.split('T')[0];
+      this.fromDate = this.fromDate;
+      this.toDate = this.toDate;
+    } 
     var body = {
       fromDate: this.fromDate,
       toDate: this.toDate,
       profileId: '1682035592165740551',
     };
+    if (this.fromDate != '' || this.toDate != '') {
     this.commonDataService.GetTwitterReport(body).subscribe((res) => {
-      this.toDate = ''
-      this.fromDate = ''
-      
       this.TwitterReport = res;
       this.TwitterReport.dateWise.forEach((data: any) => {
         if (!this.allDates.includes(data.date)) {
@@ -304,40 +158,39 @@ export class TwitterReportComponent implements OnInit, AfterContentChecked {
         this.MentionsReceivedGraph.push(data.mentionReceived);
         this.TotalRepliesGraph.push(data.replies);
       });
-      var totalTypesOfQueries =
-        this.TwitterReport?.totalPlainText +
-        this.TwitterReport?.totalVideoQuery +
-        this.TwitterReport?.totalImageQuery;
-      this.totalPlainTextPercentage =
-        (this.TwitterReport?.totalPlainText / totalTypesOfQueries) * 100;
-      this.totalVideoQueryPercentage =
-        (this.TwitterReport?.totalVideoQuery / totalTypesOfQueries) * 100;
-      this.totalImageQueryPercentage =
-        (this.TwitterReport?.totalImageQuery / totalTypesOfQueries) * 100;
+      var totalTypesOfQueries = this.TwitterReport?.totalPlainText + this.TwitterReport?.totalVideoQuery + this.TwitterReport?.totalImageQuery;
+      if(totalTypesOfQueries > 0){
+        this.totalPlainTextPercentage = (this.TwitterReport?.totalPlainText / totalTypesOfQueries) * 100;
+        this.totalVideoQueryPercentage = (this.TwitterReport?.totalVideoQuery / totalTypesOfQueries) * 100;
+        this.totalImageQueryPercentage = (this.TwitterReport?.totalImageQuery / totalTypesOfQueries) * 100;
+      }
 
-      var totalOutboundQueries =
-        this.totalTweetsSent + this.totalDmSent + this.totalMentionSent;
-      this.totalTweetsSentPercentage =
-        (this.totalTweetsSent / totalOutboundQueries) * 100;
-      this.totalDmSentPercentage =
-        (this.totalDmSent / totalOutboundQueries) * 100;
-      this.totalMentionSentPercentage =
-        (this.totalMentionSent / totalOutboundQueries) * 100;
-
+      var totalOutboundQueries = this.totalTweetsSent + this.totalDmSent + this.totalMentionSent;
+      if(totalOutboundQueries > 0){
+      this.totalTweetsSentPercentage = (this.totalTweetsSent / totalOutboundQueries) * 100;
+      this.totalDmSentPercentage = (this.totalDmSent / totalOutboundQueries) * 100;
+      this.totalMentionSentPercentage = (this.totalMentionSent / totalOutboundQueries) * 100;
+      }
       console.log(res);
+
+      if (this.allDates.length === 0) {
+        this.noData = true;
+      } else {
+        this.noData = false;
+      }
 
       this.populateInboundOutboundGraph();
       this.populateTypesOfQueriesGraph();
       this.populateTweetingBehaviourGraph();
       this.populateOutboundGraph();
-      
     });
+  }
   }
 
   populateInboundOutboundGraph(){
     type EChartsOption = echarts.EChartsOption;
 
-    const dom = this.TwitterInboundOutboundReport.nativeElement;
+    const dom =  document.getElementById('TwitterInboundOutboundReport');
     const myChart = echarts.init(dom, null, {
       renderer: 'canvas',
       useDirtyRect: false,
@@ -419,7 +272,7 @@ export class TwitterReportComponent implements OnInit, AfterContentChecked {
   populateTypesOfQueriesGraph(){
     type EChartsOption = echarts.EChartsOption;
       
-      const dom = this.TypesOfQueriesReport.nativeElement;
+      const dom = document.getElementById('TypesOfQueriesReport');
       const myChart = echarts.init(dom, null, {
         renderer: 'canvas',
         useDirtyRect: false,
@@ -471,7 +324,7 @@ export class TwitterReportComponent implements OnInit, AfterContentChecked {
   populateTweetingBehaviourGraph(){
     type EChartsOption = echarts.EChartsOption;
       
-      const dom = this.TweetingBehaviourReport.nativeElement;
+      const dom = document.getElementById('TweetingBehaviourReport');
       const myChart = echarts.init(dom, null, {
         renderer: 'canvas',
         useDirtyRect: false,
@@ -522,7 +375,7 @@ export class TwitterReportComponent implements OnInit, AfterContentChecked {
   populateOutboundGraph(){
     type EChartsOption = echarts.EChartsOption;
 
-    const dom = this.OutboundReport.nativeElement;
+    const dom = document.getElementById('OutboundReport');
     const myChart = echarts.init(dom, null, {
       renderer: 'canvas',
       useDirtyRect: false,
@@ -579,19 +432,6 @@ export class TwitterReportComponent implements OnInit, AfterContentChecked {
   }
 
   GetTwitterSLAReport() {
-    if (this.toDate == '' && this.fromDate == '') {
-      let currentDate = new Date();
-      let prevDate = currentDate.setDate(currentDate.getDate() - 6);
-      const fromDate =
-        this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
-      this.fromDate = fromDate;
-
-      this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
-    } else if (this.fromDate != '' && this.toDate != '') {
-      this.fromDate = this.fromDate + 'T00:00:00.000Z';
-      this.toDate = this.toDate + 'T23:59:59.999Z';
-    }
     var body = {
       fromDate: this.fromDate,
       toDate: this.toDate,
@@ -611,7 +451,6 @@ export class TwitterReportComponent implements OnInit, AfterContentChecked {
       .GetTwitterProfileWiseReport(body)
       .subscribe((res) => {
         this.TwitterProfileWiseReport = res;
-        console.log(res);
       });
   }
 }

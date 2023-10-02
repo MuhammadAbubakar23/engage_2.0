@@ -66,7 +66,6 @@ export class StorageService { //extends GenericService { //  extends LocalStorag
   
   store(key: string, value: string | any) {//, store : string = 'LS'
    // let types = this.env.store.types;
-   debugger
     if(typeof value === 'object' || value instanceof Object){
       let generatekey = null;      
       for(let obkey of Object.keys(this.types)){

@@ -1,246 +1,275 @@
 import { Component, OnInit,ViewChild ,ElementRef} from '@angular/core';
 import { HeaderService } from 'src/app/shared/services/header.service';
-import { FormGroup,FormControl,FormControlName } from '@angular/forms';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-import { ReactiveFormsModule,FormsModule } from '@angular/forms';
-// import { DatePipe } from '@angular/common'
-// import * as moment from 'moment';
-import { saveAs } from 'file-saver';
+ import { CommonModule, DatePipe } from '@angular/common'
 import * as echarts from 'echarts';
-import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 @Component({
-  standalone:true,
+  standalone: true,
   selector: 'app-shift-report',
   templateUrl: './shift-report.component.html',
   styleUrls: ['./shift-report.component.scss'],
-  imports:[CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule],
 })
 export class ShiftReportComponent implements OnInit {
- shiftReportData:any
- @ViewChild('shiftReport', { static: true }) shiftReport!: ElementRef;
- shifttagData:any[]=[]
- shiftChannelData:any[]=[]
-dateWise:any[]=[]
-tagsList:any[]=[]
-allDates:any[]=[]
-totaltags:number=0
-slectedtagId:any[]=[]
-selectedtagName:any=''
-shiftime:any=0
-changedateintostring:any=''
-changedateintoarray:any[]=[]
-currentdate:any
-startDate='2023-09-10T11:40:06.526Z'
-endDate='2023-09-22T11:40:06.526Z'
-tags:any
-commaSeparatedValuesLink :any
-numberArrayLink:any
-allTotalCountsfb:any[]=[]
-allTotalCountTw:any[]=[]
-allTotalCountLink:any[]=[]
-allTotalCountInsta:any[]=[]
-shiftType:any[]=[{name:'Morning',id:0},{id:1, name:'Evening'},
-{id:2, name:'Night'},{id:3, name:'Iftar'},{id:4 ,name:'Sehr'}]
-  constructor( private hs:HeaderService,
-
-    private commandataService:CommonDataService) { }
-
+  shiftReportData: any;
+  @ViewChild('shiftReport', { static: true }) shiftReport!: ElementRef;
+  shifttagData: any[] = [];
+  shiftChannelData: any[] = [];
+  dateWise: any[] = [];
+  tagsList: any[] = [];
+  allDates: any[] = [];
+  totaltags: number = 0;
+  slectedtagId: any[] = [];
+  selectedtagName: any = '';
+  shiftime: any = 0;
+  changedateintostring: any = '';
+  changeDateformat: any;
+  changedateintoarray: any[] = [];
+  formateDateArray: any[] = [];
+  // currentdate:any
+  startDate = '';
+  endDate = '';
+  maxEndDate: any;
+  currentDate: any;
+  tags: any;
+  TagsStats: any[] = [];
+  tagsStatsTotalCounts: any;
+  dateWiseTotalCounts: any[] = [];
+  commaSeparatedValuesLink: any;
+  numberArrayLink: any;
+  alltotalCount: any;
+  allTotalCountsfb: any[] = [];
+  allTotalCountTw: any[] = [];
+  allTotalCountLink: any[] = [];
+  allTotalCountInsta: any[] = [];
+  shiftType: any[] = [
+    { name: 'Morning', id: 0 },
+    { id: 1, name: 'Evening' },
+    { id: 2, name: 'Night' },
+    { id: 3, name: 'Iftar' },
+    { id: 4, name: 'Sehr' },
+  ];
+  constructor(
+    private hs: HeaderService,
+    private datePipe: DatePipe,
+    private commandataService: CommonDataService
+  ) {}
   ngOnInit(): void {
-    this.currentdate= new Date()
-    const obj={title:'Shift Report',url:'analytics/shift-report'}
-    this.hs.setHeader(obj)
+    this.currentDate = new Date();
+    this.maxEndDate = this.currentDate.toISOString().split('T')[0];
+    const obj = { title: 'Shift Report', url: 'analytics/shift-report' };
+    this.hs.setHeader(obj);
     this.getShfitReport();
     this.getAlltags();
-    // this.getCharts()
+    this.getAgentsTeamList();
   }
-  getAlltags(){
-    this.commandataService.GetTagsList().subscribe((res:any)=>{
-      console.log("All tags===>",res)
-      this.tagsList=res
- 
-    })
-  }
-  convertedintoArray:any[]=[]
-  getShfitReport(){
-  
 
-    let obj={
-      fromDate:this.startDate,
-      toDate:this.endDate,
-      shiftId:this.shiftime,
-      tags:this.changedateintostring
-    }
-this.commandataService.GetShiftReport(obj).subscribe((res:any)=>{
-  debugger
-  this.dateWise = [];
-
-console.log("this Shfit==>",res);
-this.shiftReportData=res
-this.shiftChannelData=res.channelData
-
-this.shiftChannelData.forEach((data:any)=>{
-  console.log("the data==>",data)
-  if(data.platform=="Facebook"){
- 
-    data.dateWise.forEach((singleItem:any) => {
-      this.allTotalCountsfb.push(singleItem.totalCount)
+  getAlltags() {
+    this.commandataService.GetTagsList().subscribe((res: any) => {
+      console.log('All tags===>', res);
+      this.tagsList = res;
     });
   }
-  if (data.platform === "LinkedIn") {
-   debugger
-    this.commaSeparatedValuesLink = [];
+  convertedintoArray: any;
+  graphdate: any[] = [];
+  noData: boolean = false;
 
-    data.dateWise.forEach((singleitem: any) => {
-        this.allTotalCountLink.push(singleitem.totalCount);
-    });
-    console.log("this.alltotalCounts ==>",this. allTotalCountLink);
-    
-}
+  getShfitReport() {
+    if (this.startDate == '' && this.endDate == '') {
+      const today = this.currentDate;
+      this.endDate = this.datePipe.transform(today, 'YYYY-MM-dd') || '';
 
-  if(data.platform=="Instagram"){
-    data.dateWise.forEach((singleitem:any)=>{
-      this.allTotalCountInsta.push(singleitem.totalCount)
-    })
-}
-  if(data.platform=="Twitter"){
-    data.dateWise.forEach((singleitem:any)=>{
-      this.allTotalCountTw.push(singleitem.totalCount)
-    })
-    }
-  data.dateWise.forEach((item:any) => {
-      
-    if(!this.allDates.includes(item.date)){
-      this.allDates.push(item.date )
-      console.log("this.all Dates===>",this.allDates)
+      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 3);
+      this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
+    } else if (this.startDate != '' && this.endDate != '') {
+      this.startDate = this.startDate;
+      this.endDate = this.endDate;
     }
 
-  });
+    let obj = {
+      fromDate: this.startDate,
+      toDate: this.endDate,
+      shiftId: this.shiftime,
+      tags: this.changedateintostring,
+    };
+    if (this.startDate != '' || this.endDate != '') {
+      this.commandataService.GetShiftReport(obj).subscribe((res: any) => {
+        this.allTotalCountInsta = [];
+        this.allTotalCountLink = [];
+        this.allTotalCountsfb = [];
+        this.allTotalCountTw = [];
+        this.dateWise = [];
+        this.allDates = [];
+        
+        this.shiftReportData = res;
+        this.shiftChannelData = res.channelData;
+        this.dateWiseTotalCounts = res.dateWiseTotal;
 
-})
+        this.shiftChannelData.forEach((data: any) => {
+          data.dateWise.forEach((item: any) => {
+            if (!this.allDates.includes(item.date.split('T')[0])) {
+              this.allDates.push(item.date.split('T')[0]);
 
-console.log("the chanel report data==>,",this.shiftChannelData)
-this.shifttagData=res.tagData
-this.shifttagData.forEach((x:any)=>{
-  this.totaltags+=x.totalCount
+              if (data.platform == 'Facebook') {
+                data.dateWise.forEach((singleItem: any) => {
+                  this.allTotalCountsfb.push(singleItem.totalCount);
+                });
+              }
+            }
+            if (data.platform == 'Twitter') {
+              data.dateWise.forEach((item: any) => {
+                this.allTotalCountTw.push(item.totalCount);
+              });
+            }
+            if (data.platform == 'Instagram') {
+              data.dateWise.forEach((item: any) => {
+                this.allTotalCountInsta.push(item.totalCount);
+              });
+            }
+            if (data.platform == 'LinkedIn') {
+              data.dateWise.forEach((item: any) => {
+                this.allTotalCountLink.push(item.totalCount);
+              });
+            }
+          });
+        });
 
-})
-this.getCharts();
+        this.TagsStats = res.tagData.shiftReportTag;
+        this.tagsStatsTotalCounts = res.tagData.totalTagsCount;
 
-})
-
+        console.log('this.TagsStats==>', this.TagsStats);
+        debugger
+        if (this.allDates.length === 0) {
+          this.noData = true;
+        } else {
+          this.noData = false;
+        this.getCharts()
+        }
+        // this.getCharts();
+      });
+    }
   }
-// dateformating(){
-// var changedat=this.allDates.toString()
-// const x=moment(this.allDates).format('DD/MM')
-// console.log("the change datefor==>",x)
-// }
 
-selectedunselectedtag(tag:any){
-if(this.slectedtagId.includes(tag.name)){
-  this.slectedtagId.splice(this.slectedtagId.indexOf(tag.name),1)
-}
-else{
-  this.slectedtagId.push(tag.name)
-}
-this.changedateintostring=this.slectedtagId.toString()
-console.log("this.changeDateIntoStringfor tags===>",this.changedateintostring)
-this.getShfitReport()
-}
+  selectedunselectedtag(tag: any) {
+    if (this.slectedtagId.includes(tag.id)) {
+      this.slectedtagId.splice(this.slectedtagId.indexOf(tag.id), 1);
+    } else {
+      this.slectedtagId.push(tag.id);
+    }
+    this.changedateintostring = this.slectedtagId.toString();
+    console.log(
+      'this.changeDateIntoStringfor tags===>',
+      this.changedateintostring
+    );
+    this.getShfitReport();
+  }
 
-  searchtags(event:any)
-{
-  debugger
-this.tags=event.target.value
-this.getAlltags()
-}
-getByShifTime(event:any){
-  this.shiftime=event.target.value
-  this.getShfitReport()
-}
-getByStartData(){
-  debugger
+  searchtags(event: any) {
+    this.tags = event.target.value;
+    this.getAlltags();
+  }
+  getByShifTime(event: any) {
+    this.shiftime = event.target.value;
+    this.getShfitReport();
+  }
 
-this.getShfitReport()
-}
-getByendDate(){
+  getCharts() {
+    var chartDom = document.getElementById('shiftReport')
+    var myChart = echarts.init(chartDom);
+    var option;
 
-  this.getShfitReport()
-}
-getCharts(){
-  var chartDom =this.shiftReport.nativeElement;
-  var myChart = echarts.init(chartDom);
-  var option;
-  
-  option = {
-    // title: {
-    //   text: 'Stacked Line'
-    // },
-    tooltip: {
-      trigger: 'axis'
-    },
-    _legend: {
-      data: ['Twitter','LinkedIn' ,'Facebook','Instagram']
-    },
-    get legend() {
-      return this._legend;
-    },
-    set legend(value) {
-      this._legend = value;
-    },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true
-    },
-    toolbox: {
-      feature: {
-        saveAsImage: {}
+    option = {
+      // title: {
+      //   text: 'Stacked Line'
+      // },
+      tooltip: {
+        trigger: 'axis',
+      },
+      _legend: {
+        data: ['Twitter', 'LinkedIn', 'Facebook', 'Instagram'],
+      },
+      get legend() {
+        return this._legend;
+      },
+      set legend(value) {
+        this._legend = value;
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true,
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {},
+        },
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: this.allDates,
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          name: 'Twitter',
+          type: 'line',
+          data: this.allTotalCountTw,
+        },
+        {
+          name: 'Facebook',
+          type: 'line',
+          data: this.allTotalCountsfb,
+        },
+
+        {
+          name: 'Instagram',
+          type: 'line',
+          data: this.allTotalCountInsta,
+        },
+        {
+          name: 'LinkedIn',
+          type: 'line',
+          data: this.allTotalCountLink,
+        },
+      ],
+    };
+
+    option && myChart.setOption(option);
+  }
+  ActiveAgents: any[] = [];
+  AgentsTeamList: any[] = [];
+  getAgentsTeamList() {
+    this.commandataService.GetAgentsTeamList().subscribe((res: any) => {
+      if (Object.keys(res).length > 0) {
+        this.AgentsTeamList = res;
+        this.ActiveAgents = [];
+        this.AgentsTeamList.forEach((user: any) => {
+          if (user.userId != localStorage.getItem('agentId')) {
+            this.ActiveAgents.push(user);
+          }
+        });
       }
-    },
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      date: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    },
-    yAxis: {
-      type: 'value'
-    },
-    series: [
-      {
-        name: 'Twitter',
-        type: 'line',
-        data: this.allTotalCountTw
-      },
-      {
-        name: 'Facebook',
-        type: 'line',
-        data: this.allTotalCountsfb
-      },
-   
-      {
-        name: 'Instagram',
-        type: 'line',
-        data: this.allTotalCountInsta
-      },
-      {
-        name: 'LinkedIn',
-        type: 'line',
-        data:this.allTotalCountLink
-      }
-    ]
-  };
-  
-  option && myChart.setOption(option);
-}
+    });
+  }
+  // for show 0 in totalCount if totalCount are not in date
 
-// exportToCSV() {
-//   const csvContent = 
-//     'Date,Twitter,Facebook,Instagram,LinkedIn\n' + 
-//     this.allDates.map((date, index) =>
-//       `${date},${this.allTotalCountTw[index]},${this.allTotalCountsfb[index]},${this.allTotalCountInsta[index]},${this.allTotalCountLink[index]}`
-//     ).join('\n');
-//   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
-//   saveAs(blob, 'shift_report.csv');
-// }
+  findTotalCount(channel: any, date: string): number {
+    const dateWiseItem = channel.dateWise.find(
+      (item: any) => item.date.split('T')[0] === date
+    );
+    return dateWiseItem ? dateWiseItem.totalCount : 0;
+  }
+
+  get maxDate(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
 }

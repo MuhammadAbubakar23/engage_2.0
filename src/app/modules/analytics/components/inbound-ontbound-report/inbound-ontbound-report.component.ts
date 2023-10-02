@@ -32,15 +32,15 @@ export class InboundOntboundReportComponent implements OnInit {
   Inbound_Outbound_Graph: any;
   Inbound_data: any[] = [];
   Outbound_data: any[] = [];
-
-
   currentDate: any;
+  maxEndDate:any
   constructor(private _hS: HeaderService,
     private commonService: CommonDataService,
     private datePipe: DatePipe,
     private cdr: ChangeDetectorRef) { }
   ngOnInit(): void {
     this.currentDate = new Date();
+    this.maxEndDate=this.currentDate.toISOString().split("T")[0];
     this.AddGraph()
     const newObj = { title: 'Inbound/Outbound Report', url: '/analytics/inbound-outbound-report' };
     this._hS.setHeader(newObj);

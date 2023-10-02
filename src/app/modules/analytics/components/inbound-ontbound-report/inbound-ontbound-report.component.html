@@ -7,18 +7,17 @@
                     <div class="report-toolbar mb-4">
                         <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
                             <li class="list-inline-item">
-                                <div class="row ">
+                                <div class="row">
                                     <div class="col-sm-6">
-                                        <input type="date" class="form-control"
-                                             placeholder="End Date"
-                                            (change)="onCheckboxChange()" [(ngModel)]="startDate" />
+                                      <input type="date" class="form-control" placeholder="Start Date"
+                                             [max]="maxEndDate" (change)="AddGraph()" [(ngModel)]="startDate" />
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="date" class="form-control" placeholder="Start Date"
-                                            (change)="onCheckboxChange()" [(ngModel)]="endDate" />
-
+                                      <input type="date" class="form-control" placeholder="End Date"
+                                             [min]="startDate" [max]="maxEndDate"  (change)="AddGraph()" [(ngModel)]="endDate" />
                                     </div>
-                                </div>
+                                  </div>
+                                  
                             </li>
                             <li class="list-inline-item">
                                 <div class="dropdown icondropdown w-auto">
@@ -287,7 +286,7 @@
                                     <h5 class="section-heading mb-4 p-0">Inbound/outbound Reports</h5>
                                     <div class="graphcontainer align-items-end">
                                         <div #inboundOutboundReport style="width: 600px; height: 600px;"></div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -296,7 +295,7 @@
                                     <h5 class="section-heading mb-3 p-0">SENTIMENT Per channels </h5>
                                     <div class="graphcontainer align-items-end">
                                         <div #senitimentalGraph style="height: 600px; width: 600px;"></div>
-                                    
+
                                     </div>
                                 </div>
                             </div>
@@ -315,15 +314,17 @@
                             </div>
                             <div class="col-md-5">
                                 <ul class="list-0 statlist list-lg mb-3">
-                                  <li *ngFor="let channelwise of Inbound_Outbound_Report.channelReportData.channelWiseData">
-                                    <span [ngClass]="getPlatformClass(channelwise.platform)">
-                                      <i class="fa-light fa-envelope"></i> {{channelwise.platform}}
-                                    </span>
-                                    <span class="fw-semibold">Inbound {{channelwise.inboundData}} | Outbound {{channelwise.outboundData}}</span>
-                                  </li>
+                                    <li
+                                        *ngFor="let channelwise of Inbound_Outbound_Report.channelReportData.channelWiseData">
+                                        <span [ngClass]="getPlatformClass(channelwise.platform)">
+                                            <i class="fa-light fa-envelope"></i> {{channelwise.platform}}
+                                        </span>
+                                        <span class="fw-semibold">Inbound {{channelwise.inboundData}} | Outbound
+                                            {{channelwise.outboundData}}</span>
+                                    </li>
                                 </ul>
-                              </div>
-                              
+                            </div>
+
                         </div>
                     </div>
                     <div class="card iceBg p-4 rounded mb-5">

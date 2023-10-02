@@ -61,34 +61,33 @@ export class UniqueCustomersComponent implements OnInit {
       pageSize: this.itemsPerPage
     };
 
-    this.commonService.AddUniqueCustomer(requestData).subscribe(
-      (response: any) => {
-        console.log("this is res===>",response)
-        this.unique_customer=response.List
-        this.TotalCount = response.TotalCount;
-        if(this.pageNumber==1){
-          this.startingPoint=1
-        }
-        else{
-          this.startingPoint=(this.pageNumber-1)*(this.itemsPerPage)+1
-        }
-         this.totalPages=Math.ceil(this.TotalCount/this.itemsPerPage)
-         if(this.TotalCount<=this.startingPoint+this.itemsPerPage-1){
-          this.endingPoint=this.TotalCount
-         }
-        else{
-          this.endingPoint=this.startingPoint+this.itemsPerPage-1
-        }
-      },
-      (error: any) => {
+    // this.commonService.AddUniqueCustomer(requestData).subscribe(
+    //   (response: any) => {
+    //     console.log("this is res===>",response)
+    //     this.unique_customer=response.List
+    //     this.TotalCount = response.TotalCount;
+    //     if(this.pageNumber==1){
+    //       this.startingPoint=1
+    //     }
+    //     else{
+    //       this.startingPoint=(this.pageNumber-1)*(this.itemsPerPage)+1
+    //     }
+    //      this.totalPages=Math.ceil(this.TotalCount/this.itemsPerPage)
+    //      if(this.TotalCount<=this.startingPoint+this.itemsPerPage-1){
+    //       this.endingPoint=this.TotalCount
+    //      }
+    //     else{
+    //       this.endingPoint=this.startingPoint+this.itemsPerPage-1
+    //     }
+    //   },
+    //   (error: any) => {
 
-      }
-    );
+    //   }
+    // );
   }
   exportToCSV() {
   }
   nextPage(pageNumber:any){
-    debugger
     let page=pageNumber+1
   if(page<this.totalPages+1){
     this.pageNumber=page
@@ -96,7 +95,6 @@ export class UniqueCustomersComponent implements OnInit {
   }
   }
   prevPage(pageNumber:any){
-    debugger
   if(pageNumber>=1){
     let page=pageNumber-1
     if(page>0){

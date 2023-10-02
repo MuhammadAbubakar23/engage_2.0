@@ -2,9 +2,9 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import * as echarts from 'echarts';
+import { HeaderService } from 'src/app/shared/services/header.service';
 @Component({
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule],
@@ -27,6 +27,8 @@ export class AgentPerformanceReportComponent implements OnInit {
   currentDate: any;
   tweetsOptions: any
   directMessage: any
+  maxEndDate:any;
+  noData=false;
   selectedChannelLabel: string = 'Comments';
   constructor(private _hS: HeaderService,
     private commonService: CommonDataService,
@@ -34,11 +36,16 @@ export class AgentPerformanceReportComponent implements OnInit {
     private datePipe: DatePipe,) { }
 
   ngOnInit(): void {
+    const newObj = { title: 'Agent Performance Report', url: '/analytics/performance-report' };
+    this._hS.setHeader(newObj);
+
+    const currentDate = new Date();
+    this.maxEndDate = currentDate.toISOString().split('T')[0];
+
     this.currentDate = new Date();
     this.addAgentGraph();
     this.getListUser();
-    const newObj = { title: 'Agent Performance Report', url: '/analytics/performance-report' };
-    this._hS.setHeader(newObj);
+    
   }
   getListUser(): void {
     this.commonService.GetUserList()
@@ -95,7 +102,7 @@ export class AgentPerformanceReportComponent implements OnInit {
           const date = new Date(data.date);
           this.Agent_data.push({ x: date, y: data.count });
         });
-        const doms = this.main.nativeElement;
+        const doms = document.getElementById('main');
           const myCharts = echarts.init(doms, null, {
             renderer: 'canvas',
             useDirtyRect: false
@@ -154,7 +161,7 @@ export class AgentPerformanceReportComponent implements OnInit {
           this.Message_data.push({ x: date, y: data.count });
         });
 
-        const myDom = this.message.nativeElement;
+        const myDom = document.getElementById('message');
         const myChart = echarts.init(myDom, null, {
           renderer: 'canvas',
           useDirtyRect: false

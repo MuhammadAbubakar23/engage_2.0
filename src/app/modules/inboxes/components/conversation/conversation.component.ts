@@ -726,7 +726,6 @@ export class ConversationComponent implements OnInit {
     platform: any,
     profileId: any
   ) {
-    debugger
     localStorage.setItem('previousUrl',this.currentUrl)
     if (this.currentUrl.split('/')[2] == 'focused') {
       this.assignQuerryDto = {

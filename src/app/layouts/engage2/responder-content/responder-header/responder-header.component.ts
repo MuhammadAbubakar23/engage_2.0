@@ -156,7 +156,6 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.updateMessagesService.receiveMessage().subscribe((res) => {
         if (Object.keys(res).length > 0) {
           res.forEach((msg: any) => {
-            debugger
               if (this.userInfo.userId == msg.fromId) {
                 if (this.userInfo.postType == msg.contentType) {
                   this.userInfo.unrespondedCount = this.userInfo.unrespondedCount + 1;
@@ -170,7 +169,6 @@ export class ResponderHeaderComponent implements OnInit {
         if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
           if (Object.keys(res).length > 0) {
             res.forEach((msg: any) => {
-              debugger
               if (this.userInfo.userId == msg.userId) {
                 if (this.userInfo.postType == msg.contentType) {
                   this.userInfo.unrespondedCount = this.userInfo.unrespondedCount + 1;
@@ -793,7 +791,6 @@ export class ResponderHeaderComponent implements OnInit {
   markAsCompleteDto = new MarkAsCompleteDto();
 
   markAsComplete(plateForm: any, userId: any) {
-    debugger
     this.markAsCompleteDto.user = this.userInfo.userId;
     this.markAsCompleteDto.plateFrom = this.userInfo.platform;
     this.markAsCompleteDto.userId = Number(localStorage.getItem('agentId'));
