@@ -56,7 +56,19 @@ const routes: Routes = [
     {
       path:'executive-dashboard',
       loadComponent: () => import('./components/executive-dashboard/executive-dashboard.component').then(c => c.ExecutiveDashboardComponent),
-    }
+    },
+    {
+      path:'route-to-agent',
+      loadComponent: () => import('./components/route-to-agent/route-to-agent.component').then(c => c.RouteToAgentComponent),
+    },
+    {
+      path: 'unique-customers',
+      loadComponent: () => import('./components/unique-customers/unique-customers.component').then(c => c.UniqueCustomersComponent),
+    },
+    {
+      path: 'handled-bot',
+      loadComponent: () => import('./components/handled-by-bot/handled-by-bot.component').then(c => c.HandledByBotComponent),
+    },
   ]
   },
 

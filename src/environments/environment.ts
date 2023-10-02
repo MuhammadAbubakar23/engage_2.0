@@ -169,7 +169,14 @@ export const environment = {
       signOut: 'SignalRConnector/UserLogout',
       getCustomers: 'Customer/GetAllCustomersSocialProfile',
       updateStatus: 'Channel/UpdateMessageStatus',
-      hideUnhideMessage: 'Query/HideQuery'
+      hideUnhideMessage: 'Query/HideQuery',
+      //Reports
+      routeToAgents:'Report/GetWhatsAppRouteToAgentReport',
+      routeToAgentsCsv:'Report/GetWhatsAppRouteAgentReportCSV',
+      addUniqueCustomer:'Report/GetWhatsAppUniqueCustomerReport',
+      uniqueExportCsv :'Report/GetWhatsAppUniqueCustomerReportCSV',
+      addHandledBot:'Report/GetWhatsAppBotHandleReport',
+      addHandledBotCSV:'Report/GetWhatsAppBotHandleReportCSV'
 
     },
     facebook: {

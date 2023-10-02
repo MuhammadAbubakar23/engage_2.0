@@ -71,6 +71,14 @@ export class CommonDataService {
   updateStatus = environment.links.common.updateStatus;
   hideUnhideMessage = environment.links.common.hideUnhideMessage;
 
+  //Reports
+  addUniqueCustomer =environment.links.common.addUniqueCustomer
+  uniqueExportCsv = environment.links.common.uniqueExportCsv
+  addHandledBot = environment.links.common.addHandledBot
+  addHandledBotCSV = environment.links.common.addHandledBotCSV
+  routeToAgents = environment.links.common.routeToAgents
+  routeToAgentsCsv = environment.links.common.routeToAgentsCsv
+
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
   addTemplate = environment.links.console.addTemplate;
@@ -525,6 +533,25 @@ export class CommonDataService {
   }
   AddCSATSurvey(body:any){
     return this.http.post(this.ServiceBaseUrl+this.addCSAT,body)
+  }
+  GetRouteAgentCsv(body:any){
+    return this.http.post(this.CommonBaseUrl+this.routeToAgentsCsv,body,{responseType:'text'})
+  }
+  GetRouteToagents(body:any){
+    return this. http.post(this.CommonBaseUrl+this.routeToAgents,body)
+  }
+
+  AddUniqueCustomer(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.addUniqueCustomer, body)
+  }
+  UniqueExportCsv(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.uniqueExportCsv, body,{responseType:'text'})
+  }
+  AddHandledBot(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.addHandledBot, body)
+  }
+  AddHandledBotCSV(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.addHandledBotCSV, body,{responseType:'text'})
   }
 }
 
