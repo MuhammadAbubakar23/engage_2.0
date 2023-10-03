@@ -20,10 +20,8 @@
                             <select class="form-select" id="dispositionId" formControlName="dispositionId" aria-label="Floating label select example"
                             [ngClass]="{'is-invalid' : (dispositionForm.get('dispositionId')!.errors && (dispositionForm.get('dispositionId')!.touched ||
                                 dispositionForm.get('dispositionId')!.dirty))}">
-                                <option selected="" disabled>Select Disposition</option>
-                                <option value="1">Follow Up</option>
-                                <option value="2">Completed</option>
-                                <option value="3">Responded</option>
+                                <!-- <option selected="" disabled>Select Disposition</option> -->
+                                <option *ngFor="let tag of dispositionTags" value={{tag.id}}>{{tag.name}}</option>
                             </select>
                             <label for="dispositionId">Select Disposition *</label>
                             <div class="invalid-feedback" *ngIf="(dispositionForm.get('dispositionId')!.errors && (dispositionForm.get('dispositionId')!.touched ||

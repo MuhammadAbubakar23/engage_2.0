@@ -79,7 +79,6 @@ export class  CreateSentimentComponent implements OnInit, AfterViewInit {
         }
       });
       this.subscription = this.closePanelServices.receiveRightBarToggleValue().subscribe(res=>{
-        debugger
         console.log("This.closePanelServices===>",res)
         this.showPanel = res;
       })

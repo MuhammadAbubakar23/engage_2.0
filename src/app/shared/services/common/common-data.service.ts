@@ -70,6 +70,9 @@ export class CommonDataService {
   getCustomers = environment.links.common.getCustomers;
   updateStatus = environment.links.common.updateStatus;
   hideUnhideMessage = environment.links.common.hideUnhideMessage;
+  dispositionTags = environment.links.common.dispositionTags;
+
+  
 
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
@@ -525,6 +528,10 @@ export class CommonDataService {
   }
   AddCSATSurvey(body:any){
     return this.http.post(this.ServiceBaseUrl+this.addCSAT,body)
+  }
+
+  GetDispositionTags(){
+    return this.http.get(this.CommonBaseUrl + this.dispositionTags)
   }
 }
 
