@@ -77,7 +77,6 @@ export class ConversationComponent implements OnInit {
     private fetchposttype: FetchPostTypeService,
     private changeDetect: ChangeDetectorRef,
     private commondata: CommonDataService,
-    private filterService: FilterService,
     private router: Router,
     private updateListService: UpdateListService,
     private lodeModuleService: ModulesService,
@@ -90,19 +89,14 @@ export class ConversationComponent implements OnInit {
     };
 
     this.searchForm = new FormGroup({
-      // agentId: new FormControl(0),
       user: new FormControl(''),
       userName: new FormControl(''),
       notInclude: new FormControl(''),
       include: new FormControl(''),
-      // plateForm: new FormControl(""),
       fromDate: new FormControl(null),
       toDate: new FormControl(null),
       isAttachment: new FormControl(this.isAttachment),
-      // queryType: new FormControl(""),
       text: new FormControl(''),
-      // pageNumber: new FormControl(1),
-      // pageSize: new FormControl(20),
       dateWithin: new FormControl(''),
     });
 
@@ -568,7 +562,7 @@ export class ConversationComponent implements OnInit {
               this.TotalUnresponded = 1;
               this.from = 1;
             }
-          } else if (this.platform == '') {
+          } else if (this.platform == 'all') {
             const index = this.ConversationList?.findIndex(
               (obj: any) => obj.user === newMsg.user
             );
@@ -597,7 +591,7 @@ export class ConversationComponent implements OnInit {
               this.from = 1;
             }
           }
-        } else if (this.platform == '' && this.isAttachment != true) {
+        } else if (this.platform == 'all' && this.isAttachment != true) {
           const index = this.ConversationList?.findIndex(
             (obj: any) => obj.user === newMsg.user
           );
