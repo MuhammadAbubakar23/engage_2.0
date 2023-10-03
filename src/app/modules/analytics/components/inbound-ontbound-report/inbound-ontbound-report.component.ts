@@ -52,7 +52,7 @@ export class InboundOntboundReportComponent implements OnInit {
     this.AddGraph();
     this.cdr.detectChanges();
   }
-  AddGraph() {
+   AddGraph() {
 
     let selectedChannelsArray = this.channelOptions.filter(item => item.isSelected).map(item => item.label);
     this.selectedChannels = selectedChannelsArray.toString();
@@ -98,7 +98,7 @@ export class InboundOntboundReportComponent implements OnInit {
       inboundOutbound: true,
       dateSubFilter: 0
     };
-
+    if (this.endDate >= this.startDate) {
     this.commonService.Addinboundoutbound(requestData).subscribe(
       (response: any) => {
         this.Inbound_data = [];
@@ -366,8 +366,13 @@ export class InboundOntboundReportComponent implements OnInit {
       },
       (error: any) => {
         console.error('HTTP Error:', error);
-      }
-    );
+      });
+    } else {
+      alert('End Date is less than Start Date')
+    }
+  }
+  resetEndDate() {
+    this.endDate = '';
   }
   getPlatformClass(platformName: string): string {
     switch (platformName.toLowerCase()) {

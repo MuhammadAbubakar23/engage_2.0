@@ -544,10 +544,10 @@ export class CommonDataService {
   AddCSATSurvey(body:any){
     return this.http.post(this.ServiceBaseUrl+this.addCSAT,body)
   }
-  GetRouteAgentCsv(body:any){
+  GetRouteToAgentsCsv(body:any){
     return this.http.post(this.CommonBaseUrl+this.routeToAgentsCsv,body,{responseType:'text'})
   }
-  GetRouteToagents(body:any){
+  GetRouteToAgents(body:any){
     return this. http.post(this.CommonBaseUrl+this.routeToAgents,body)
   }
 

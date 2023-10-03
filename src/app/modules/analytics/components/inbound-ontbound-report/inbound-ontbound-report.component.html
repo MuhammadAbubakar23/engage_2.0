@@ -9,15 +9,15 @@
                             <li class="list-inline-item">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                      <input type="date" class="form-control" placeholder="Start Date"
-                                             [max]="maxEndDate" (change)="AddGraph()" [(ngModel)]="startDate" />
+                                        <input type="date" class="form-control" placeholder="Start Date"
+                                            [max]="maxEndDate" (change)="resetEndDate()" [(ngModel)]="startDate" />
                                     </div>
                                     <div class="col-sm-6">
-                                      <input type="date" class="form-control" placeholder="End Date"
-                                             [min]="startDate" [max]="maxEndDate"  (change)="AddGraph()" [(ngModel)]="endDate" />
+                                        <input type="date" class="form-control" placeholder="End Date" 
+                                            [max]="maxEndDate" (change)="AddGraph()" [(ngModel)]="endDate" />
                                     </div>
-                                  </div>
-                                  
+                                </div>
+
                             </li>
                             <li class="list-inline-item">
                                 <div class="dropdown icondropdown w-auto">
@@ -226,7 +226,7 @@
                                             </span>
                                             <p class="coal mb-0"> Sum of inbound Volume</p>
                                         </div>
-                                        <h2>{{Inbound_Outbound_Report?.channelReportData?.inboundSum}}</h2>
+                                        <h2>{{Inbound_Outbound_Report.channelReportData.inboundSum}}</h2>
                                     </div>
                                 </div>
                             </div>

@@ -9,11 +9,11 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                       <input type="date" class="form-control"
-                                        placeholder="Start Date" [(ngModel)]="fromDate" [max]="maxEndDate"/>
+                                        placeholder="Start Date" [(ngModel)]="fromDate" [max]="maxEndDate" (change)="resetEndDate()"/>
                                     </div>
                                     <div class="col-sm-6">
-                                      <input type="date" class="form-control" placeholder="End Date" (change)="GetWhatsAppRawData()" 
-                                      [(ngModel)]="toDate" [max]="maxEndDate" [min]="fromDate"/>
+                                      <input type="date" class="form-control" [(ngModel)]="toDate" [max]="maxEndDate" placeholder="End Date" (change)="GetWhatsAppRawData()" 
+                                       />
                   
                                     </div>
                                 </div>
@@ -25,7 +25,23 @@
 
                     </ul>
                 </div>
-                <div class="card p-3 iceBg">
+                <span>
+                    <div class="pagination-bar" style="margin-top:70px; margin-right: 10px;">
+                        <div class="dropdown">
+                            <button class="btn iconHover" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                           <span>   {{startingPoint}}-{{endingPoint}} of {{totalCounts}}</span>
+                                  </button>
+                        </div>
+                        <span class="iconButton medium iconHover" (click)="perviousPage(pageNumber)">
+                            <i class="fal fa-chevron-left" ></i>
+                        </span>
+                        <span class="iconButton medium iconHover" (click)="nextPage(pageNumber)">
+                            <i class="fal fa-chevron-right"></i>
+                        </span>
+                    </div>
+                  </span>
+                <div class="card p-3 iceBg" style="margin-top: 70px;">
                     <div class="table-section table-scroll-x perfect-scrollbar" data-scrollbar="true" tabindex="-1"
                         style="overflow: auto; outline: none">
                         <div class="scroll-content" style="width: 45vh; white-space: nowrap">

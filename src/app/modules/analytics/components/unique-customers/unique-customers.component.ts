@@ -3,9 +3,6 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { HeaderService } from 'src/app/shared/services/header.service';
-
-
-
 @Component({
   standalone: true,
   imports: [CommonModule, FormsModule],
@@ -32,12 +29,13 @@ export class UniqueCustomersComponent implements OnInit {
   ngOnInit(): void {
     this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split("T")[0];
-
-    const newObj = { title: 'Unique Customers', url: '/analytics/umique-customers' };
+    const newObj = { title: 'Unique Interactions', url: '/analytics/umique-customers' };
     this._hS.setHeader(newObj);
     this.addUniqueData();
   }
-
+  resetEndDate() {
+    this.endDate = '';
+  }
   onCheckboxChange() {
     this.addUniqueData();
     this.cdr.detectChanges();
@@ -62,7 +60,7 @@ export class UniqueCustomersComponent implements OnInit {
       pageNumber: this.pageNumber,
       pageSize: this.itemsPerPage
     };
-
+    if (this.endDate >= this.startDate) {
     this.commonService.AddUniqueCustomer(requestData).subscribe(
       (response: any) => {
 
@@ -84,8 +82,10 @@ export class UniqueCustomersComponent implements OnInit {
       },
       (error: any) => {
 
-      }
-    );
+      });
+    } else {
+      alert('End Date is less than Start Date')
+    }
   }
   exportToCSV() {
     const requestData = {
@@ -109,8 +109,6 @@ export class UniqueCustomersComponent implements OnInit {
       }
     );
   }
-
-
   nextPage(pageNumber: any) {
     let page = pageNumber + 1
     if (page < this.totalPages + 1) {

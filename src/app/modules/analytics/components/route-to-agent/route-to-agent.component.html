@@ -12,6 +12,7 @@
                                     <input name="" id="datepickerrange" class="form-control flatpickr-input"
                                     [(ngModel)]="startDate"
                                     (change)="getBystartDate()"
+                                    [max]="changeMaxDate"
                                         placeholder=""  type="date">
                                 </div>
                             </li>
@@ -20,6 +21,7 @@
                                   
                                     <input name="" id="datepickerrange"
                                     [(ngModel)]="EndDate"
+                                    [max]="changeMaxDate"
                                     (change)="getByEndDate()"
                                      class="form-control flatpickr-input"
                                         placeholder="Date"  type="date">
@@ -41,11 +43,11 @@
                            <span>     {{startingPoint}}-{{endingPoint}} of {{totalCounts}}</span>
                                   </button>
                         </div>
-                        <span class="iconButton medium iconHover"  >
-                            <i class="fal fa-chevron-left" (click)="perviousPage(pageNumber)"></i>
+                        <span class="iconButton medium iconHover" (click)="perviousPage(pageNumber)">
+                            <i class="fal fa-chevron-left"></i>
                         </span>
-                        <span class="iconButton medium iconHover">
-                            <i class="fal fa-chevron-right"(click)="nextPage(pageNumber)"></i>
+                        <span class="iconButton medium iconHover" (click)="nextPage(pageNumber)">
+                            <i class="fal fa-chevron-right"></i>
                         </span>
                     </div>
                   </span>

@@ -8,20 +8,18 @@
                         <li class="list-inline-item">
                             <div class="iconholder">
                                 <input type="date" class="form-control" [(ngModel)]="startDate"
-                                    (change)="getShfitReport()" [max]="maxEndDate" placeholder="Start Date">
+                                    (change)="getStartDate()" [max]="maxEndDate" placeholder="Start Date">
                             </div>
                         </li>
                         <li class="list-inline-item">
                             <div class="iconholder">
-                                <input type="date" class="form-control" (change)="getShfitReport()" [min]="startDate"
+                                <input type="date" class="form-control" (change)="getEndDate()"
                                     [max]="maxEndDate" [(ngModel)]="endDate" placeholder="End Date">
                             </div>
                         </li>
                         <li class="list-inline-item">
                             <select name="" class="form-select" (change)="getByShifTime($event)">
                                 <option *ngFor="let shift of shiftType" [value]="shift.id">{{shift.name}}</option>
-
-
                             </select>
 
                         </li>
@@ -185,7 +183,7 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card iceBg p-4 rounded mb-4">
-                                <div class="table-section">
+                                <div class="table-section" style="overflow: auto;">
                                     <table class="table">
                                         <thead>
                                             <tr>

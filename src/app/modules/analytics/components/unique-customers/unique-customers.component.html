@@ -1,7 +1,7 @@
 <div class="content-box-wrapper d-flex w-100">
     <div class="middle-content d-flex">
         <div class="d-grid w-100">
-            <div class="analytics-dashboard p-4" >
+            <div class="analytics-dashboard p-4">
                 <div class="scroll-content">
                     <div class="report-toolbar mb-4">
                         <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
@@ -9,11 +9,11 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <input type="date" class="form-control" placeholder="Start Date"
-                                            [max]="maxEndDate" (change)="onCheckboxChange()" [(ngModel)]="startDate" />
+                                            [max]="maxEndDate" [(ngModel)]="startDate" (change)="resetEndDate()" />
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="date" class="form-control" placeholder="End Date" [min]="startDate"
-                                            [max]="maxEndDate" (change)="onCheckboxChange()" [(ngModel)]="endDate" />
+                                        <input type="date" class="form-control" placeholder="End Date" 
+                                            [max]="maxEndDate" (change)="addUniqueData()" [(ngModel)]="endDate" />
                                     </div>
                                 </div>
                             </li>
@@ -27,14 +27,15 @@
                     </div>
                     <div class="filter-container border-0">
                         <ul class="list-group list-group-horizontal border-0">
-                            <li class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle" aria-label="..."
-                                data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Refresh"
-                                aria-describedby="tooltip946912">
+                            <li class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle"
+                                aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                data-bs-original-title="Refresh" aria-describedby="tooltip946912">
                             </li>
                         </ul>
                         <div class="pagination-bar">
                             <div class="dropdown">
-                                <button class="btn iconHover" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn iconHover" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     {{startingPoint}}-{{endingPoint}} of {{ TotalCount }}
                                 </button>
                             </div>
@@ -47,8 +48,8 @@
                         </div>
                     </div>
                     <div class="card p-3 iceBg tableScroll" data-scrollbar="true" tabindex="-1"
-                    style="overflow: auto; outline: none;">
-                        <div class="table-section table-scroll-y" >
+                        style="overflow: auto; outline: none;">
+                        <div class="table-section table-scroll-y">
                             <table class="table ">
                                 <thead>
                                     <tr>

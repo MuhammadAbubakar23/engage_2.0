@@ -20,6 +20,7 @@ EndDate:string=''
 itemperPage:number=20
 pageNumber:number=1
 totalPages:any
+changeMaxDate:any
 downloadCsv:any
 startingPoint:any
 endingPoint:any
@@ -28,9 +29,10 @@ currentDate:any
     private datePipe : DatePipe) { }
 
   ngOnInit(): void {
-    const obj={title:'Route To Agent',url:'analytics/route-to-agent'}
+    const obj={title:'Live Agent Interactions',url:'analytics/route-to-agent'}
     this.headerServices.setHeader(obj)
     this.currentDate = new Date()
+    this.changeMaxDate=this.currentDate.toISOString().split("T")[0]
     this.getRoutetoAgent();
     // this.downloadRouteAgentsCvs()
   }
@@ -38,8 +40,8 @@ getRoutetoAgent(){
   if (this.startDate == "" && this.EndDate == "") {
 
     const today = this.currentDate;
-    this.EndDate = this.datePipe.transform(today, "YYYY-MM-dd") || '';
-
+    // this.EndDate = this.datePipe.transform(today, "YYYY-MM-dd") || '';
+ this.EndDate=today.toISOString().split("T")[0] || ""
     let prevDate = this.currentDate.setDate(this.currentDate.getDate() -1);
     this.startDate = this.datePipe.transform(prevDate, "YYYY-MM-dd") || '';
   }
@@ -54,25 +56,28 @@ getRoutetoAgent(){
     "pageNumber": this.pageNumber,
     "pageSize": this.itemperPage
   }
-this.commondataServices.GetRouteToagents(data).subscribe((res:any)=>{
-  console.log("The Agents ====>",res)
-  debugger
-  this.agentsDate=res.List
-  this.totalCounts=res.TotalCount
-if(this.pageNumber==1){
-  this.startingPoint=1
+if(this.startDate!='' || this.EndDate!=''){
+
+  this.commondataServices.GetRouteToAgents(data).subscribe((res:any)=>{
+    console.log("The Agents ====>",res)
+    debugger
+    this.agentsDate=res.List
+    this.totalCounts=res.TotalCount
+  if(this.pageNumber==1){
+    this.startingPoint=1
+  }
+  else{
+    this.startingPoint=(this.pageNumber-1)*(this.itemperPage)+1
+  }
+   this.totalPages=Math.ceil(this.totalCounts/this.itemperPage)
+   if(this.totalCounts<=this.startingPoint+this.itemperPage-1){
+    this.endingPoint=this.totalCounts
+   }
+  else{
+    this.endingPoint=this.startingPoint+this.itemperPage-1
+  }
+  })
 }
-else{
-  this.startingPoint=(this.pageNumber-1)*(this.itemperPage)+1
-}
- this.totalPages=Math.ceil(this.totalCounts/this.itemperPage)
- if(this.totalCounts<=this.startingPoint+this.itemperPage-1){
-  this.endingPoint=this.totalCounts
- }
-else{
-  this.endingPoint=this.startingPoint+this.itemperPage-1
-}
-})
 }
 downloadRouteAgentsCvs(){
   debugger
@@ -82,7 +87,7 @@ downloadRouteAgentsCvs(){
     "pageNumber": this.pageNumber,
     "pageSize": this.itemperPage
   }
-  this.commondataServices.GetRouteAgentCsv(data).subscribe((res:any)=>{
+  this.commondataServices.GetRouteToAgentsCsv(data).subscribe((res:any)=>{
     console.log("RouteAgentsCsv data===>",res)
  this.downloadCsv=res
  const a = document.createElement('a');
@@ -143,10 +148,17 @@ generateExcelFile() {
 
 
 getBystartDate(){
-  this.getRoutetoAgent()
+this.EndDate=''
 }
 getByEndDate(){
-  this.getRoutetoAgent()
+  debugger
+  if(this.EndDate>=this.startDate){
+    this.getRoutetoAgent()
+  }
+ else{
+  alert("EndDate is lessthen StartDate")
+  this.EndDate=''
+ }
 }
 nextPage(pageNumber:any){
   debugger

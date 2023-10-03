@@ -8,19 +8,17 @@
                         <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
                             <li class="list-inline-item">
                                 <div class="iconholder">
-
-                                    <input name="" id="datepickerrange" class="form-control flatpickr-input"
-                                        [(ngModel)]="startDate" (change)="getBystartDate()" placeholder="" type="date" >
+                                    <input name="" id="datepickerrange" class="form-control flatpickr-input" [max]="maxEndDate"
+                                        [(ngModel)]="startDate" (change)="resetEndDate()" placeholder="" type="date">
                                 </div>
                             </li>
                             <li class="list-inline-item">
                                 <div class="iconholder">
 
-                                    <input name="" id="datepickerrange" [(ngModel)]="EndDate" (change)="getByEndDate()"
+                                    <input name="" id="datepickerrange" [(ngModel)]="endDate" (change)="getHandleBot()"  [max]="maxEndDate"
                                         class="form-control flatpickr-input" placeholder="Date" type="date">
                                 </div>
                             </li>
-
                             <li class="list-inline-item ms-auto">
                                 <button class="btn btn-success" (click)="exportToCSV()">Export as CSV</button>
                             </li>

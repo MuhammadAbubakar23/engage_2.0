@@ -9,12 +9,12 @@
                             <li class="list-inline-item">
                                 <div class="row ">
                                     <div class="col-sm-6">
-                                        <input type="date" class="form-control" placeholder="End Date"
-                                            (change)="onCheckboxChange()" [(ngModel)]="startDate" [max]="maxEndDate"/>
+                                        <input type="date" class="form-control" placeholder="End Date" [max]="maxEndDate"
+                                            (change)="resetEndDate()" [(ngModel)]="startDate" />
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="date" class="form-control" placeholder="Start Date"
-                                            (change)="onCheckboxChange()" [(ngModel)]="endDate" [min]="startDate" [max]="maxEndDate"/>
+                                        <input type="date" class="form-control" placeholder="Start Date" [max]="maxEndDate"
+                                            (change)="addAgentGraph()" [(ngModel)]="endDate" />
                                     </div>
                                 </div>
                             </li>
@@ -169,10 +169,8 @@
                             <div class="card iceBg p-4 rounded mb-5">
                                 <h5 class="section-heading mb-4 p-0">{{ selectedChannelLabel }}</h5>
                                 <div class="graphcontainer align-items-end">
-                                    <div id="main" style="height: 300px; width: 600px;"></div>
-
+                                    <div #main style="height: 600px; width: 600px;"></div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -180,7 +178,7 @@
                                 <h5 class="section-heading mb-4 p-0"> Direct Message
                                 </h5>
                                 <div class="graphcontainer align-items-end">
-                                    <div id="message" style="height: 300px; width: 600px;"></div>
+                                    <div #message style="height: 600px; width: 600px;"></div>
                                 </div>
 
                             </div>
@@ -206,7 +204,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let agent of agent_performance_report?.agentPerformance">
+                                    <tr *ngFor="let agent of agent_performance_report.agentPerformance">
                                         <td>{{ agent.agentName }}</td>
                                         <td>{{ agent.commentCount }}</td>
                                         <td>{{ agent.messageCount }}</td>
