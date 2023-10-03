@@ -37,43 +37,46 @@
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Live Monitoring'?'active':''" value="Dashboard" id="analyticstab3">
         <a routerLink="/analytics/live-monitoring" class="d-flex">Live Monitoring</a>
       </li> -->
-      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Unique Customers'?'active':''"
-        value="Executive Dashboard" id="analyticstab1">
-        <a routerLink="/analytics/unique-customers" class="d-flex">
-          Unique Customers
+      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'WhatsApp Report'?'active':''"
+        value="Dashboard" id="analyticstab3">
+        <a routerLink="/analytics/whatsapp-report" class="d-flex">
+          WhatsApp Raw Data 
         </a>
       </li>
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Handled by Bot'?'active':''"
         value="Executive Dashboard" id="analyticstab1">
         <a routerLink="/analytics/handled-bot" class="d-flex">
-          Handled by Bot
+          BOT Interactions - (Handled by BOT)
         </a>
       </li>
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Route To Agents'?'active':''"
         value="Dashboard" id="analyticstab3">
-        <a routerLink="/analytics/route-to-agent" class="d-flex">Route To Agents </a>
+        <a routerLink="/analytics/route-to-agent" class="d-flex">
+          Live Agent Interactions - (Route To Agents) 
+        </a>
       </li>
-      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'WhatsApp Report'?'active':''"
-        value="Dashboard" id="analyticstab3">
-        <a routerLink="/analytics/whatsapp-report" class="d-flex">WhatsApp Report </a>
+      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Unique Customers'?'active':''"
+        value="Executive Dashboard" id="analyticstab1">
+        <a routerLink="/analytics/unique-customers" class="d-flex">
+          Unique Interactions - (Unique Customers)
+        </a>
       </li>
-
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Inbound/OutBound Report'?'active':''"
         value="Executive Dashboard" id="analyticstab1">
         <a routerLink="/analytics/inbound-outbound-report" class="d-flex">
           Inbound/OutBound Report
         </a>
       </li>
-      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Twitter Report'?'active':''"
+      <!-- <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Twitter Report'?'active':''"
         value="Twitter Report" id="twittertab1">
         <a routerLink="/analytics/twitter-report" class="d-flex">
           Twitter Report
         </a>
-      </li>
+      </li> -->
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Dashboard Designer'?'active':''"
         value="Executive Dashboard" id="analyticstab1">
         <a routerLink="/analytics/performance-report" class="d-flex">
-          Agent performance Graph 
+          Agent performance Graph
         </a>
       </li>
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Shift Report'?'active':''"
@@ -84,7 +87,7 @@
       </li>
     </div>
 
-    
+
     <div class="scrollbar-track scrollbar-track-x" style="display: none">
       <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 293px; transform: translate3d(0px, 0px, 0px)"></div>
     </div>

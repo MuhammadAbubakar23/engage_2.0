@@ -2,6 +2,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { HeaderService } from 'src/app/shared/services/header.service';
 
 @Component({
   selector: 'app-whatsapp-report',
@@ -16,14 +17,22 @@ export class WhatsappReportComponent implements OnInit {
   whatsAppColumns:any=[];
   columnHeadings:any;
   rowData:any;
+  maxEndDate:any;
 
   fromDate: string = '';
   toDate: string = '';
 
   constructor(private commonService: CommonDataService,
-    private datePipe: DatePipe) { }
+    private datePipe: DatePipe,
+    private _hS: HeaderService) { }
 
   ngOnInit(): void {
+    const newObj = { title: 'WhatsApp Report', url: '/analytics/whatsapp-report' };
+    this._hS.setHeader(newObj);
+
+    const currentDate = new Date();
+    this.maxEndDate = currentDate.toISOString().split('T')[0];
+    
     this.GetWhatsAppRawData();
   }
 
@@ -32,17 +41,12 @@ export class WhatsappReportComponent implements OnInit {
     if (this.toDate == '' && this.fromDate == '') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 5);
-      const fromDate =
-        this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
-      this.fromDate = fromDate;
+      this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || "";
 
-      this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || "";
     } else if (this.fromDate != '' && this.toDate != '') {
-      this.toDate = this.toDate.split('T')[0];
-      this.fromDate = this.fromDate.split('T')[0];
-      this.fromDate = this.fromDate + 'T00:00:00.000Z';
-      this.toDate = this.toDate + 'T23:59:59.999Z';
+      this.fromDate = this.fromDate;
+      this.toDate = this.toDate;
     }
     var obj = {
       fromDate: this.fromDate,
@@ -57,22 +61,22 @@ export class WhatsappReportComponent implements OnInit {
   }
 
   DownloadWhatsAppRawData(){
-    if (this.toDate == '' && this.fromDate == '') {
-      let currentDate = new Date();
-      let prevDate = currentDate.setDate(currentDate.getDate() - 5);
-      const fromDate =
-        this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
-      this.fromDate = fromDate;
+    // if (this.toDate == '' && this.fromDate == '') {
+    //   let currentDate = new Date();
+    //   let prevDate = currentDate.setDate(currentDate.getDate() - 5);
+    //   const fromDate =
+    //     this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
+    //   this.fromDate = fromDate;
 
-      this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
-    } else if (this.fromDate != '' && this.toDate != '') {
+    //   this.toDate =
+    //     this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+    // } else if (this.fromDate != '' && this.toDate != '') {
       
-      this.toDate = this.toDate.split('T')[0];
-      this.fromDate = this.fromDate.split('T')[0];
-      this.fromDate = this.fromDate + 'T00:00:00.000Z';
-      this.toDate = this.toDate + 'T23:59:59.999Z';
-    }
+    //   this.toDate = this.toDate.split('T')[0];
+    //   this.fromDate = this.fromDate.split('T')[0];
+    //   this.fromDate = this.fromDate + 'T00:00:00.000Z';
+    //   this.toDate = this.toDate + 'T23:59:59.999Z';
+    // }
     var obj = {
       fromDate: this.fromDate,
       toDate: this.toDate,
@@ -82,11 +86,10 @@ export class WhatsappReportComponent implements OnInit {
     this.commonService.DownloadWhatsAppReport(obj).subscribe((res:any)=>{
       const a = document.createElement('a');
         a.href = res;
-        a.download = 'AgentReport.csv';
+        a.download = 'WhatsAppRawDataReport.csv';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-      console.log(res)
     })
   }
 
