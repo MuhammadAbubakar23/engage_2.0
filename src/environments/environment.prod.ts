@@ -165,7 +165,8 @@ export const environment = {
       signOut: 'SignalRConnector/UserLogout',
       getCustomers: 'Customer/GetAllCustomersSocialProfile',
       updateStatus: 'Channel/UpdateMessageStatus',
-      hideUnhideMessage: 'Query/HideQuery'
+      hideUnhideMessage: 'Query/HideQuery',
+      dispositionTags: 'Keyword/GetAllDisposition'
 
     },
     facebook: {
