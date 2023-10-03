@@ -1,0 +1,421 @@
+<div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
+    <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
+        <div class="report-toolbar mb-4">
+            <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+                <li class="list-inline-item">
+                    <div class="row">
+                        <div class="col-sm-6">
+                          <input type="date" class="form-control" (change)="GetTwitterReport()"
+                            placeholder="Start Date" [(ngModel)]="fromDate" [max]="maxEndDate"/>
+                        </div>
+                        <div class="col-sm-6">
+                          <input type="date" class="form-control" placeholder="End Date" (change)="GetTwitterReport()" [(ngModel)]="toDate" 
+                          [min]="fromDate" [max]="maxEndDate"/>
+      
+                        </div>
+                    </div>
+                </li>
+                <!-- <li class="list-inline-item">
+                    <div class="dropdown icondropdown w-auto mx-2">
+                        <button class="btn dropdown-toggle" type="button" id="columnssort" data-bs-toggle="dropdown"
+                            aria-expanded="false" data-bs-auto-close="outside">
+                            Profile
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="columnssort">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="#0">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="keprofile">
+                                        <label class="form-check-label" for="keprofile">
+                                            <i class="fa-brands fa-facebook facebook pe-2"></i> K-Electric
+                                        </label>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li> -->
+                <!-- <li class="list-inline-item ms-auto">
+                    <div class="btn-group buttonfilter" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
+                            checked="">
+                        <label class="btn btn-outline-secondary" for="btnradio1">15</label>
+
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="btnradio2">30</label>
+
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="btnradio3">60</label>
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="btnradio4">90</label>
+                    </div>
+                </li> -->
+
+
+            </ul>
+        </div>
+        <div class="row align-items-start h-auto mb-4">
+
+            <div class="col-lg-4 col-md-6">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <span class="iconButton medium berryBg mb-4">
+                                    <i class="fa-light fa-user-plus"></i>
+                                </span>
+                                <p class="coal mb-0"> MENTIONS RECEIVED</p>
+                            </div>
+                            <h2>{{TwitterReport?.totalMentionReceived}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <span class="iconButton medium radicalBg mb-4">
+                                    <i class="fa-light fa-retweet"></i>
+                                </span>
+                                <p class="coal mb-0"> TWEETS/RETWEETS SENT</p>
+                            </div>
+                            <h2>N/A</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card dashboard-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <span class="iconButton medium mintBg mb-4">
+                                    <i class="fa-light fa-paper-plane"></i>
+                                </span>
+                                <p class="coal mb-0"> REPLIES SENT</p>
+                            </div>
+                            <h2>{{TwitterReport?.totalReplySent}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card iceBg p-4 rounded mb-5">
+            <h5 class="section-heading mb-4 p-0">Posts &amp; Conversations (Inbound/Outbound) </h5>
+            <div class="graphcontainer align-items-end mb-5">
+                <div class="text-center">
+                    <div id="TwitterInboundOutboundReport" style="height: 300px; width: 900px;"></div>
+                </div>
+            </div>
+            <div class="row align-items-start px-5">
+                <div class="col-md-4">
+                    <ul class="nav nav-tabs flex-column linetabs mb-3" id="myTab" role="tablist">
+                        <li class="nav-item mb-4" role="presentation">
+                            <button class="nav-link active" id="sentrec" data-bs-toggle="tab"
+                                data-bs-target="#sentrec-pane" type="button" role="tab" aria-controls="sentrec-pane"
+                                aria-selected="true">Sent Metrics</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="MENTIONS" data-bs-toggle="tab" data-bs-target="#MENTIONS-pane"
+                                type="button" role="tab" aria-controls="MENTIONS-pane" aria-selected="false"
+                                tabindex="-1">Received Metrics
+                            </button>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="col-md-8 ps-5">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="sentrec-pane" role="tabpanel"
+                            aria-labelledby="sentrec" tabindex="0">
+                            <ul class="list-0 statlist list-lg mb-3">
+                                <li>
+                                    <span class="coal"> Tweets sent </span>
+                                    <span class="fw-semibold">{{totalTweetsSent}}</span>
+                                </li>
+                                <li>
+                                    <span class="coal"> Direct Messages sent </span>
+                                    <span class="fw-semibold">{{totalDmSent}}</span>
+                                </li>
+                                <li>
+                                    <span class="coal"> Mentions sent </span>
+                                    <span class="fw-semibold">{{totalMentionSent}}</span>
+                                </li>
+                                <li>
+                                    <span class="coal"> Total Sent </span>
+                                    <span class="fw-semibold">{{totalTweetsSent + totalDmSent + totalMentionSent}}</span>
+                                </li>
+
+
+                            </ul>
+                            <!-- <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium radicalBg mb-4">
+                                                <i class="fa-light fa-arrow-down"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Tweets &amp; DMS you sent decreased </p>
+                                        </div>
+                                        <h3>93.24%</h3>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                        </div>
+                        <div class="tab-pane fade" id="MENTIONS-pane" role="tabpanel" aria-labelledby="MENTIONS"
+                            tabindex="0">
+                            <ul class="list-0 statlist list-lg mb-3">
+                                <li>
+                                    <span class="coal"> Tweets received </span>
+                                    <span class="fw-semibold">{{totalTweetReceived}}</span>
+                                </li>
+                                <li>
+                                    <span class="coal"> Direct Messages received </span>
+                                    <span class="fw-semibold">{{totalDmReceived}}</span>
+                                </li>
+                                <li>
+                                    <span class="coal"> Mentions received </span>
+                                    <span class="fw-semibold">{{totalMentionReceived}}</span>
+                                </li>
+                                <li>
+                                    <span class="coal"> Total Received </span>
+                                    <span class="fw-semibold">{{totalTweetReceived + totalDmReceived + totalMentionReceived}}</span>
+                                </li>
+
+                            </ul>
+                            <!-- <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium radicalBg mb-4">
+                                                <i class="fa-light fa-arrow-down"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Tweets &amp; DMS you received decreased</p>
+                                        </div>
+                                        <h3> 85.21%</h3>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+        <div class="card iceBg p-4 rounded mb-5">
+            <h5 class="section-heading mb-4 p-0">Your Content &amp; Engagement Habits (Outbound)
+            </h5>
+
+            <div class="row align-items-start">
+                <div class="col-md-6">
+                    <h6 class="section-heading mb-4 p-0 coal">Your Tweets</h6>
+                    <div class="graphcontainer align-items-end">
+                        <div class="text-center">
+                            <div id="TypesOfQueriesReport" style="height: 300px; width: 900px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="section-heading mb-4 p-0 coal">Your Tweeting Behaviour</h6>
+                    <div class="graphcontainer align-items-end">
+                        <div class="text-center">
+                            <div id="TweetingBehaviourReport" style="height: 300px; width: 900px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card iceBg p-4 rounded mb-5">
+            <h5 class="section-heading mb-4 p-0">Audience Engagement (Outbound)</h5>
+            <div class="graphcontainer align-items-end mb-5">
+                <div class="text-center">
+                    <div id="OutboundReport" style="height: 300px; width: 900px;"></div>
+                </div>
+            </div>
+            <div class="row align-items-start px-5">
+                <div class="col-md-4">
+                    <ul class="nav nav-tabs linetabs mb-3" id="myTab" role="tablist">
+                        <li class="nav-item mb-4" role="presentation">
+                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
+                                aria-selected="true">Engagement Metrics </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                data-bs-target="#profile-tab-pane" type="button" role="tab"
+                                aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">PreSet Time Stats
+                            </button>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="col-md-8 ps-4">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade active show" id="home-tab-pane" role="tabpanel"
+                            aria-labelledby="home-tab" tabindex="0">
+                            <ul class="list-0 statlist list-lg mb-3">
+                                <li>
+                                    <span class="coal"> Replies </span>
+                                    <span class="fw-semibold">{{totalReplies}}</span>
+                                </li>
+                                <!-- <li>
+                                    <span class="coal"> Retweets </span>
+                                    <span class="fw-semibold">862</span>
+                                </li> -->
+                                <li>
+                                    <span class="coal"> Tweets Sent </span>
+                                    <span class="fw-semibold">{{totalTweetsSent}}</span>
+                                </li>
+                                <li>
+                                    <span class="coal"> Mark As Complete (SCRM) </span>
+                                    <span class="fw-semibold">{{TwitterReport?.markAsCompleted}}</span>
+                                </li>
+
+                            </ul>
+                            <!-- <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium radicalBg mb-4">
+                                                <i class="fa-light fa-arrow-down"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Engagements Decreased </p>
+                                        </div>
+                                        <h3>220.89%</h3>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                        </div>
+                        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
+                            tabindex="0">
+                            <ul class="list-0 statlist list-lg mb-3">
+                                <li>
+                                    <span class="coal"> Replies within 120 minutes </span>
+                                    <span class="fw-semibold">{{TwitterSLAReport?.totalReplyInLimit}}</span>
+                                </li>
+                                <li>
+                                    <span class="coal"> Replies after 120 minutes </span>
+                                    <span class="fw-semibold">{{TwitterSLAReport?.totalReplyOutOfLimit}}</span>
+                                </li>
+                                <li>
+                                    <span class="coal"> Total Catered Workload </span>
+                                    <span class="fw-semibold">{{TwitterSLAReport?.totalReplyInLimit + TwitterSLAReport?.totalReplyOutOfLimit}}</span>
+                                </li>
+
+                            </ul>
+                            <!-- <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium mintBg mb-4">
+                                                <i class="fa-light fa-arrow-up"></i>
+                                            </span>
+                                            <p class="coal mb-0"> 120 minutes SLA</p>
+                                        </div>
+                                        <h3> 85.21%</h3>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+        <div class="card iceBg p-4 rounded mb-5">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h5 class="section-heading mb-0 p-0">5 Distinct Customers</h5>
+                </div>
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <div class="btn-group buttonfilter" role="group" aria-label="Basic radio toggle button group">
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio10" autocomplete="off"
+                                checked="">
+                            <label class="btn btn-outline-secondary" for="btnradio10">Top 5</label>
+
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio20" autocomplete="off">
+                            <label class="btn btn-outline-secondary" for="btnradio20">All Customers</label>
+
+                        </div>
+                        <div class="dropdown w-auto ms-3">
+                            <button class="btn iconButton medium" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-regular fa-ellipsis"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li>
+                                    <a class="dropdown-item p-1">
+                                        <button class="iconButton dropdown-iconBtn small" id="dropdownMenuButton1"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-file-export"></i>
+                                        </button>Export to CSV
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="table-section">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <!-- <th> </th> -->
+                            <th> Name </th>
+                            <th> Twitter Handle </th>
+                            <th>Tweets</th>
+                            <th> DMs </th>
+                            <th> Reply</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let cust of TwitterProfileWiseReport">
+                            <!-- <td>
+                                <span class="iconButton medium rounded-pill mintTransBg fw-bolder">
+                                    SZ
+                                </span>
+                            </td> -->
+                            <td>
+                                <a class="sky fw-semibold">{{cust.fullName}}</a>
+                            </td>
+                            <td>{{cust.fullName}}</td>
+                            <td>{{cust.totalTweet}}</td>
+                            <td>{{cust.totalDm}}</td>
+                            <td>{{cust.totalReplies}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+</div>

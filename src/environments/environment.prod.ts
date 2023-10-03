@@ -25,8 +25,8 @@ export const environment = {
   SmsBaseUrl: 'https://text.360scrm.com/api/',
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
-  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
+  SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
   ServiceBaseUrl : 'https://waservice.enteract.live/api/',
 
@@ -165,7 +165,25 @@ export const environment = {
       signOut: 'SignalRConnector/UserLogout',
       getCustomers: 'Customer/GetAllCustomersSocialProfile',
       updateStatus: 'Channel/UpdateMessageStatus',
-      hideUnhideMessage: 'Query/HideQuery'
+      hideUnhideMessage: 'Query/HideQuery',
+      //Reports
+      routeToAgents:'Report/GetWhatsAppRouteToAgentReport',
+      routeToAgentsCsv:'Report/GetWhatsAppRouteAgentReportCSV',
+      addUniqueCustomer:'Report/GetWhatsAppUniqueCustomerReport',
+      uniqueExportCsv :'Report/GetWhatsAppUniqueCustomerReportCSV',
+      addHandledBot:'Report/GetWhatsAppBotHandleReport',
+      addHandledBotCSV:'Report/GetWhatsAppBotHandleReportCSV',
+      addinboundoutbound:'Report/GetInboundOutboundReport',
+      twitterReport:'Report/GetTwitterReport',
+      twitterSLAReport:'Report/GetTwitterSLAReport',
+      twitterProfileWiseReport:'Report/GetTwitterProfileWiseReport',
+      getUserList:'/Users/GetUserList',
+      getSentimentData:'Keyword/GetAllSentiments',
+      addAgentPerformance: 'Report/GetAgentPerformanceReport',
+      shiftReport: 'Report/GetShiftReport',
+      getWhatsAppRawDataReport:'Report/GetWhatsAppRawDataReport',
+      downloadWhatsAppRawDataReport:'Report/GetWhatsAppCSVData'
+
 
     },
     facebook: {

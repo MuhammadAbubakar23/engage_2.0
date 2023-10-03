@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { AnalyticsRoutingModule } from './analytics-routing.module';
 import { AnalyticsComponent } from './analytics.component';
 import { ExecutiveDashboardHeaderComponent } from './analytics-headers/executive-dashboard-header/executive-dashboard-header.component';
@@ -36,6 +36,7 @@ import { ReportDesignerComponent } from './components/report-designer/report-des
     ReactiveFormsModule,
     // DndModule
   ],
-  providers: [ExcelService]
+  providers: [ExcelService,
+  DatePipe]
 })
 export class AnalyticsModule { }

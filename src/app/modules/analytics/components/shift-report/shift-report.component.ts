@@ -1,0 +1,275 @@
+import { Component, OnInit,ViewChild ,ElementRef} from '@angular/core';
+import { HeaderService } from 'src/app/shared/services/header.service';
+import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+ import { CommonModule, DatePipe } from '@angular/common'
+import * as echarts from 'echarts';
+import { FormsModule } from '@angular/forms';
+@Component({
+  standalone: true,
+  selector: 'app-shift-report',
+  templateUrl: './shift-report.component.html',
+  styleUrls: ['./shift-report.component.scss'],
+  imports: [CommonModule, FormsModule],
+})
+export class ShiftReportComponent implements OnInit {
+  shiftReportData: any;
+  @ViewChild('shiftReport', { static: true }) shiftReport!: ElementRef;
+  shifttagData: any[] = [];
+  shiftChannelData: any[] = [];
+  dateWise: any[] = [];
+  tagsList: any[] = [];
+  allDates: any[] = [];
+  totaltags: number = 0;
+  slectedtagId: any[] = [];
+  selectedtagName: any = '';
+  shiftime: any = 0;
+  changedateintostring: any = '';
+  changeDateformat: any;
+  changedateintoarray: any[] = [];
+  formateDateArray: any[] = [];
+  // currentdate:any
+  startDate = '';
+  endDate = '';
+  maxEndDate: any;
+  currentDate: any;
+  tags: any;
+  TagsStats: any[] = [];
+  tagsStatsTotalCounts: any;
+  dateWiseTotalCounts: any[] = [];
+  commaSeparatedValuesLink: any;
+  numberArrayLink: any;
+  alltotalCount: any;
+  allTotalCountsfb: any[] = [];
+  allTotalCountTw: any[] = [];
+  allTotalCountLink: any[] = [];
+  allTotalCountInsta: any[] = [];
+  shiftType: any[] = [
+    { name: 'Morning', id: 0 },
+    { id: 1, name: 'Evening' },
+    { id: 2, name: 'Night' },
+    { id: 3, name: 'Iftar' },
+    { id: 4, name: 'Sehr' },
+  ];
+  constructor(
+    private hs: HeaderService,
+    private datePipe: DatePipe,
+    private commandataService: CommonDataService
+  ) {}
+  ngOnInit(): void {
+    this.currentDate = new Date();
+    this.maxEndDate = this.currentDate.toISOString().split('T')[0];
+    const obj = { title: 'Shift Report', url: 'analytics/shift-report' };
+    this.hs.setHeader(obj);
+    this.getShfitReport();
+    this.getAlltags();
+    this.getAgentsTeamList();
+  }
+
+  getAlltags() {
+    this.commandataService.GetTagsList().subscribe((res: any) => {
+      console.log('All tags===>', res);
+      this.tagsList = res;
+    });
+  }
+  convertedintoArray: any;
+  graphdate: any[] = [];
+  noData: boolean = false;
+
+  getShfitReport() {
+    if (this.startDate == '' && this.endDate == '') {
+      const today = this.currentDate;
+      this.endDate = this.datePipe.transform(today, 'YYYY-MM-dd') || '';
+
+      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 3);
+      this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
+    } else if (this.startDate != '' && this.endDate != '') {
+      this.startDate = this.startDate;
+      this.endDate = this.endDate;
+    }
+
+    let obj = {
+      fromDate: this.startDate,
+      toDate: this.endDate,
+      shiftId: this.shiftime,
+      tags: this.changedateintostring,
+    };
+    if (this.startDate != '' || this.endDate != '') {
+      this.commandataService.GetShiftReport(obj).subscribe((res: any) => {
+        this.allTotalCountInsta = [];
+        this.allTotalCountLink = [];
+        this.allTotalCountsfb = [];
+        this.allTotalCountTw = [];
+        this.dateWise = [];
+        this.allDates = [];
+        
+        this.shiftReportData = res;
+        this.shiftChannelData = res.channelData;
+        this.dateWiseTotalCounts = res.dateWiseTotal;
+
+        this.shiftChannelData.forEach((data: any) => {
+          data.dateWise.forEach((item: any) => {
+            if (!this.allDates.includes(item.date.split('T')[0])) {
+              this.allDates.push(item.date.split('T')[0]);
+
+              if (data.platform == 'Facebook') {
+                data.dateWise.forEach((singleItem: any) => {
+                  this.allTotalCountsfb.push(singleItem.totalCount);
+                });
+              }
+            }
+            if (data.platform == 'Twitter') {
+              data.dateWise.forEach((item: any) => {
+                this.allTotalCountTw.push(item.totalCount);
+              });
+            }
+            if (data.platform == 'Instagram') {
+              data.dateWise.forEach((item: any) => {
+                this.allTotalCountInsta.push(item.totalCount);
+              });
+            }
+            if (data.platform == 'LinkedIn') {
+              data.dateWise.forEach((item: any) => {
+                this.allTotalCountLink.push(item.totalCount);
+              });
+            }
+          });
+        });
+
+        this.TagsStats = res.tagData.shiftReportTag;
+        this.tagsStatsTotalCounts = res.tagData.totalTagsCount;
+
+        console.log('this.TagsStats==>', this.TagsStats);
+        debugger
+        if (this.allDates.length === 0) {
+          this.noData = true;
+        } else {
+          this.noData = false;
+        this.getCharts()
+        }
+        // this.getCharts();
+      });
+    }
+  }
+
+  selectedunselectedtag(tag: any) {
+    if (this.slectedtagId.includes(tag.id)) {
+      this.slectedtagId.splice(this.slectedtagId.indexOf(tag.id), 1);
+    } else {
+      this.slectedtagId.push(tag.id);
+    }
+    this.changedateintostring = this.slectedtagId.toString();
+    console.log(
+      'this.changeDateIntoStringfor tags===>',
+      this.changedateintostring
+    );
+    this.getShfitReport();
+  }
+
+  searchtags(event: any) {
+    this.tags = event.target.value;
+    this.getAlltags();
+  }
+  getByShifTime(event: any) {
+    this.shiftime = event.target.value;
+    this.getShfitReport();
+  }
+
+  getCharts() {
+    var chartDom = document.getElementById('shiftReport')
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    option = {
+      // title: {
+      //   text: 'Stacked Line'
+      // },
+      tooltip: {
+        trigger: 'axis',
+      },
+      _legend: {
+        data: ['Twitter', 'LinkedIn', 'Facebook', 'Instagram'],
+      },
+      get legend() {
+        return this._legend;
+      },
+      set legend(value) {
+        this._legend = value;
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true,
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {},
+        },
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: this.allDates,
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          name: 'Twitter',
+          type: 'line',
+          data: this.allTotalCountTw,
+        },
+        {
+          name: 'Facebook',
+          type: 'line',
+          data: this.allTotalCountsfb,
+        },
+
+        {
+          name: 'Instagram',
+          type: 'line',
+          data: this.allTotalCountInsta,
+        },
+        {
+          name: 'LinkedIn',
+          type: 'line',
+          data: this.allTotalCountLink,
+        },
+      ],
+    };
+
+    option && myChart.setOption(option);
+  }
+  ActiveAgents: any[] = [];
+  AgentsTeamList: any[] = [];
+  getAgentsTeamList() {
+    this.commandataService.GetAgentsTeamList().subscribe((res: any) => {
+      if (Object.keys(res).length > 0) {
+        this.AgentsTeamList = res;
+        this.ActiveAgents = [];
+        this.AgentsTeamList.forEach((user: any) => {
+          if (user.userId != localStorage.getItem('agentId')) {
+            this.ActiveAgents.push(user);
+          }
+        });
+      }
+    });
+  }
+  // for show 0 in totalCount if totalCount are not in date
+
+  findTotalCount(channel: any, date: string): number {
+    const dateWiseItem = channel.dateWise.find(
+      (item: any) => item.date.split('T')[0] === date
+    );
+    return dateWiseItem ? dateWiseItem.totalCount : 0;
+  }
+
+  get maxDate(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+}

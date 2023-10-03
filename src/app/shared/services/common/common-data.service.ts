@@ -78,6 +78,16 @@ export class CommonDataService {
   addHandledBotCSV = environment.links.common.addHandledBotCSV
   routeToAgents = environment.links.common.routeToAgents
   routeToAgentsCsv = environment.links.common.routeToAgentsCsv
+  addinboundoutbound = environment.links.common.addinboundoutbound 
+  twitterReport = environment.links.common.twitterReport
+  twitterSLAReport = environment.links.common.twitterSLAReport
+  twitterProfileWiseReport = environment.links.common.twitterProfileWiseReport
+  getUserList = environment.links.common.getUserList
+  getSentimentData = environment.links.common.getSentimentData
+  addAgentPerformance = environment.links.common.addAgentPerformance
+  shiftReport = environment.links.common.shiftReport
+  getWhatsAppRawDataReport = environment.links.common.getWhatsAppRawDataReport
+  downloadWhatsAppRawDataReport = environment.links.common.downloadWhatsAppRawDataReport
 
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
@@ -552,6 +562,47 @@ export class CommonDataService {
   }
   AddHandledBotCSV(body: any) {
     return this.http.post(this.CommonBaseUrl + this.addHandledBotCSV, body,{responseType:'text'})
+  }
+
+  Addinboundoutbound(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.addinboundoutbound, body);
+  }
+
+  GetTwitterReport(body:any){
+    return this.http.post(this.CommonBaseUrl + this.twitterReport, body);
+  }
+
+  GetTwitterSLAReport(body:any){
+    return this.http.post(this.CommonBaseUrl + this.twitterSLAReport, body);
+  }
+
+  GetTwitterProfileWiseReport(body:any){
+    return this.http.post(this.CommonBaseUrl + this.twitterProfileWiseReport, body);
+  }
+
+  
+ GetUserList(){
+    return this.http.get(this.IdentityBaseUrl + this.getUserList);
+  }
+  GetSentimentData(){
+    return this.http.get(this.CommonBaseUrl + this.getSentimentData);
+
+  }
+
+  AddAgentPerformance(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.addAgentPerformance, body)
+  }
+
+  GetShiftReport(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.shiftReport, body)
+  }
+
+  GetWhatsAppReport(body:any){
+    return this.http.post(this.CommonBaseUrl + this.getWhatsAppRawDataReport, body)
+  }
+
+  DownloadWhatsAppReport(body:any){
+    return this.http.post(this.CommonBaseUrl + this.downloadWhatsAppRawDataReport, body, { responseType: 'text' })
   }
 }
 
