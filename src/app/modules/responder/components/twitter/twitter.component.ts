@@ -178,7 +178,7 @@ export class TwitterComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+        if (this.flag == 'focused') {
         if (res.contentCount.contentType == 'TT') {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
@@ -332,6 +332,7 @@ export class TwitterComponent implements OnInit {
   groupRepliesArray: any[] = [];
 
   getTwitterData() {
+    this.flag = this.router.url.split('/')[2];
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -348,7 +349,7 @@ export class TwitterComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -415,7 +416,7 @@ export class TwitterComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
 
       this.spinner1running = true;
@@ -476,7 +477,7 @@ export class TwitterComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
 
       this.spinner1running = true;
@@ -544,7 +545,7 @@ export class TwitterComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -602,7 +603,7 @@ export class TwitterComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
 
       this.SpinnerService.show();
@@ -656,7 +657,7 @@ export class TwitterComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
 
       this.SpinnerService.show();

@@ -12,7 +12,10 @@
     </div>
 
     <ul class="list-group agent_nav_bar" id="agent-list">
-        <team-menu></team-menu>
+        <ng-container *ngIf="!(restrictedAgentsString.includes(restrictedAgent))">
+            <team-menu></team-menu>
+        </ng-container>
+        
 
         <div class="leftBarDivider"></div>
         <!-- <a routerLink="/analytics/executive-dashboard"

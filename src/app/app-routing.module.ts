@@ -6,12 +6,12 @@ import { ModulesResolver } from './shared/resolver/modules.resolver';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/all-inboxes/my_inbox',
+    redirectTo: '/all-inboxes/focused/all',
     pathMatch: 'full',
   },
   {
     path: 'all-inboxes',
-    redirectTo: '/all-inboxes/my_inbox',
+    redirectTo: '/all-inboxes/focused/all',
     pathMatch: 'full',
   },
   {
@@ -21,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'analytics',
-    redirectTo: 'analytics/report-designer',
+    redirectTo: 'analytics/whatsapp-report',
     pathMatch: 'full',
   },
   {

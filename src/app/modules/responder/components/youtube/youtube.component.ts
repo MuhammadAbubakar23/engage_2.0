@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -104,7 +105,8 @@ export class YoutubeComponent implements OnInit {
     private createTicketService: CreateTicketService,
     private ticketResponseService : TicketResponseService,
     private applySentimentService: ApplySentimentService,
-    private getQueryTypeService : GetQueryTypeService
+    private getQueryTypeService : GetQueryTypeService,
+    private router: Router
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -229,9 +231,10 @@ export class YoutubeComponent implements OnInit {
         });
         this.changeDetect.detectChanges();
   };
-
+  flag:string='';
   pageName: any;
   getYoutubeData() {
+    this.flag = this.router.url.split('/')[2];
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -248,7 +251,7 @@ export class YoutubeComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -305,7 +308,7 @@ export class YoutubeComponent implements OnInit {
 
           this.YoutubeData.forEach((c: any) => {
             this.postId = c.postId;
-            this.youtubePostStats();
+            // this.youtubePostStats();
           });
         });
     } else if (this.slaId != null || undefined) {
@@ -324,7 +327,7 @@ export class YoutubeComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -365,7 +368,7 @@ export class YoutubeComponent implements OnInit {
 
         this.YoutubeData.forEach((c: any) => {
           this.postId = c.postId;
-          this.youtubePostStats();
+          // this.youtubePostStats();
         });
       });
     }
@@ -384,7 +387,7 @@ export class YoutubeComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -425,7 +428,7 @@ export class YoutubeComponent implements OnInit {
 
         this.YoutubeData.forEach((c: any) => {
           this.postId = c.postId;
-          this.youtubePostStats();
+          // this.youtubePostStats();
         });
       });
     }
@@ -683,6 +686,10 @@ export class YoutubeComponent implements OnInit {
   }
 
   removeTagFromFeed(id: any, comId: string) {
+    if (
+      this.flag == 'focused' ||
+      this.flag == 'assigned-to-me'
+    ) {
     this.insertTagsForFeedDto.feedId = comId.toString();
     this.insertTagsForFeedDto.tagId = id;
     this.insertTagsForFeedDto.feedType = 'YC';
@@ -700,6 +707,7 @@ export class YoutubeComponent implements OnInit {
       }
     );
   }
+}
 
   commentStatus(comId: any) {
     this.commentStatusDto.id = comId;

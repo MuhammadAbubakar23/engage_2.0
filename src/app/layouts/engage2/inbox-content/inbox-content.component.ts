@@ -22,6 +22,7 @@ import { ResponderMenuComponent } from '../responder-content/responder-menu/resp
 import { InboxHeaderComponent } from './inbox-header/inbox-header.component';
 import { InboxMenuComponent } from './inbox-menu/inbox-menu.component';
 import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
+import { AssignToMeHeaderComponent } from 'src/app/shared/headers/assign-to-me-header/assign-to-me-header.component';
 
 @Component({
   selector: 'inbox-content',
@@ -29,7 +30,7 @@ import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-pan
   styleUrls: ['./inbox-content.component.scss'],
   // providers: [ResponderGuardGuard]
 })
-export class InboxContentComponent implements OnInit {
+export class     InboxContentComponent implements OnInit {
   @HostListener('window:beforeunload', ['$event'])
   handleBeforeUnload(event: Event) {
     event.preventDefault();
@@ -72,7 +73,7 @@ export class InboxContentComponent implements OnInit {
       this.loadComponent('responder');
     } else {
       this.flag = this.router.url.split('/')[2];
-      if (this.flag == 'all-inboxes' || this.flag == 'my_inbox' || this.flag == 'archived') {
+      if (this.flag == 'focused' || this.flag == 'archived') {
         this.loadComponent('all-inboxes');
       } else if (this.flag == 'starred') {
         this.loadComponent('starred');
@@ -84,7 +85,11 @@ export class InboxContentComponent implements OnInit {
         this.loadComponent('blacklist');
       } else if (this.flag == 'trash') {
         this.loadComponent('trash');
-      } 
+      } else if (this.flag == 'assigned-to-me') {
+        this.loadComponent('assigned-to-me');
+      } else if (this.flag == 'completed') {
+        this.loadComponent('completed');
+      }
     }
 
     this.router.events.subscribe((ev) => {
@@ -94,7 +99,7 @@ export class InboxContentComponent implements OnInit {
           this.loadComponent('responder');
         } else {
           this.flag = this.router.url.split('/')[2];
-          if (this.flag == 'all-inboxes' || this.flag == 'my_inbox' || this.flag == 'archived') {
+          if (this.flag == 'focused' || this.flag == 'archived') {
             this.loadComponent('all-inboxes');
           } else if (this.flag == 'starred') {
             this.loadComponent('starred');
@@ -106,7 +111,11 @@ export class InboxContentComponent implements OnInit {
             this.loadComponent('blacklist');
           } else if (this.flag == 'trash') {
             this.loadComponent('trash');
-          } 
+          } else if (this.flag == 'assigned-to-me') {
+            this.loadComponent('assigned-to-me');
+          } else if (this.flag == 'completed') {
+            this.loadComponent('completed');
+          }
         }
       }
     });
@@ -123,7 +132,7 @@ export class InboxContentComponent implements OnInit {
       this.loadComponent('responder');
     } else {
       this.flag = this.router.url.split('/')[2];
-      if (this.flag == 'all-inboxes' || this.flag == 'my_inbox' || this.flag == 'archived') {
+      if (this.flag == 'focused' || this.flag == 'archived') {
         this.loadComponent('all-inboxes');
       } else if (this.flag == 'starred') {
         this.loadComponent('starred');
@@ -135,6 +144,10 @@ export class InboxContentComponent implements OnInit {
         this.loadComponent('blacklist');
       } else if (this.flag == 'trash') {
         this.loadComponent('trash');
+      } else if (this.flag == 'assigned-to-me') {
+        this.loadComponent('assigned-to-me');
+      } else if (this.flag == 'completed') {
+        this.loadComponent('completed');
       }
     }
 
@@ -145,7 +158,7 @@ export class InboxContentComponent implements OnInit {
           this.loadComponent('responder');
         } else {
           this.flag = this.router.url.split('/')[2];
-          if (this.flag == 'all-inboxes' || this.flag == 'my_inbox' || this.flag == 'archived') {
+          if (this.flag == 'focused' || this.flag == 'archived') {
             this.loadComponent('all-inboxes');
           } else if (this.flag == 'starred') {
             this.loadComponent('starred');
@@ -157,6 +170,10 @@ export class InboxContentComponent implements OnInit {
             this.loadComponent('blacklist');
           } else if (this.flag == 'trash') {
             this.loadComponent('trash');
+          } else if (this.flag == 'assigned-to-me') {
+            this.loadComponent('assigned-to-me');
+          } else if (this.flag == 'completed') {
+            this.loadComponent('completed');
           }
         }
       }
@@ -191,6 +208,10 @@ export class InboxContentComponent implements OnInit {
 
         header = this.resolver.resolveComponentFactory(InboxHeaderComponent);
         this.header?.createComponent(header);
+        break;
+        case 'completed':
+        submenu = this.resolver.resolveComponentFactory(InboxMenuComponent);
+        this.submenu?.createComponent(submenu);
         break;
 
       case 'responder':
@@ -234,6 +255,14 @@ export class InboxContentComponent implements OnInit {
         this.submenu?.createComponent(submenu);
 
         header = this.resolver.resolveComponentFactory(TrashHeaderComponent);
+        this.header?.createComponent(header);
+        break;
+
+        case 'assigned-to-me':
+        // submenu = this.resolver.resolveComponentFactory(InboxMenuComponent);
+        // this.submenu?.createComponent(submenu);
+
+        header = this.resolver.resolveComponentFactory(AssignToMeHeaderComponent);
         this.header?.createComponent(header);
         break;
 

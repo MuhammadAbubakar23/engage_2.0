@@ -170,7 +170,25 @@ export const environment = {
       getCustomers: 'Customer/GetAllCustomersSocialProfile',
       updateStatus: 'Channel/UpdateMessageStatus',
       hideUnhideMessage: 'Query/HideQuery',
-      dispositionTags: 'Keyword/GetAllDisposition'
+      dispositionTags: 'Keyword/GetAllDisposition',
+      //Reports
+      routeToAgents:'Report/GetWhatsAppRouteToAgentReport',
+      routeToAgentsCsv:'Report/GetWhatsAppRouteAgentReportCSV',
+      addUniqueCustomer:'Report/GetWhatsAppUniqueCustomerReport',
+      uniqueExportCsv :'Report/GetWhatsAppUniqueCustomerReportCSV',
+      addHandledBot:'Report/GetWhatsAppBotHandleReport',
+      addHandledBotCSV:'Report/GetWhatsAppBotHandleReportCSV',
+      addinboundoutbound:'Report/GetInboundOutboundReport',
+      twitterReport:'Report/GetTwitterReport',
+      twitterSLAReport:'Report/GetTwitterSLAReport',
+      twitterProfileWiseReport:'Report/GetTwitterProfileWiseReport',
+      getUserList:'/Users/GetUserList',
+      getSentimentData:'Keyword/GetAllSentiments',
+      addAgentPerformance: 'Report/GetAgentPerformanceReport',
+      shiftReport: 'Report/GetShiftReport',
+      getWhatsAppRawDataReport:'Report/GetWhatsAppRawDataReport',
+      downloadWhatsAppRawDataReport:'Report/GetWhatsAppCSVData'
+
 
     },
     facebook: {

@@ -116,10 +116,10 @@ export class WhatsappDetailsComponent implements OnInit {
     private unrespondedCountService : UnRespondedCountService,
     private router : Router
   ) {
-    this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
-      this.id = res;
-      this.getWhatsappData();
-    });
+    // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
+    //   this.id = res;
+    //   this.getWhatsappData();
+    // });
   }
 
   ngOnInit(): void {
@@ -177,7 +177,7 @@ export class WhatsappDetailsComponent implements OnInit {
       this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+        if (this.flag == 'focused') {
         if (res.contentCount.contentType == 'WM') {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
@@ -189,7 +189,7 @@ export class WhatsappDetailsComponent implements OnInit {
   commentDto = new commentsDto();
   updatedComments: any;
   updateCommentsDataListener() {
-    if(this.flag == 'all-inboxes' || this.flag == 'my_inbox'){
+    if(this.flag == 'focused'){
       if(!this.id){
         this.id = localStorage.getItem('storeOpenedId') || '{}'
       }
@@ -255,6 +255,7 @@ export class WhatsappDetailsComponent implements OnInit {
   groupArrays: any[] = [];
 
   getWhatsappData() {
+    this.flag = this.router.url.split('/')[2];
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -271,7 +272,7 @@ export class WhatsappDetailsComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -330,7 +331,7 @@ export class WhatsappDetailsComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
       this.SpinnerService.show();
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
@@ -384,7 +385,7 @@ export class WhatsappDetailsComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
-        flag: '',
+        flag: this.flag,
       };
       this.SpinnerService.show();
       this.commondata
@@ -584,7 +585,7 @@ export class WhatsappDetailsComponent implements OnInit {
   }
 
   removeTag(id: any, comId: any) {
-    if(this.flag == 'all-inboxes' || this.flag == 'my_inbox'){
+    if(this.flag == 'focused'){
       this.insertTagsForFeedDto.feedId = comId.toString();
       this.insertTagsForFeedDto.tagId = id;
       this.insertTagsForFeedDto.feedType = 'WM';

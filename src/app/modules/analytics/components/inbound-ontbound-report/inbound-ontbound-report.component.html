@@ -1,0 +1,340 @@
+<div class="content-box-wrapper d-flex w-100  ">
+    <div class="middle-content d-flex">
+        <div class="d-grid w-100">
+            <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1"
+                style="overflow: auto; outline: none;">
+                <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
+                    <div class="report-toolbar mb-4">
+                        <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+                            <li class="list-inline-item">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="date" class="form-control" placeholder="Start Date"
+                                            [max]="maxEndDate" (change)="resetEndDate()" [(ngModel)]="startDate" />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="date" class="form-control" placeholder="End Date" 
+                                            [max]="maxEndDate" (change)="AddGraph()" [(ngModel)]="endDate" />
+                                    </div>
+                                </div>
+
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="dropdown icondropdown w-auto">
+                                    <button class="btn dropdown-toggle" type="button" id="columnssort"
+                                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                        Channels
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="columnssort">
+                                        <li class="dropdown-listing-header">
+                                            <form class="custom-searchbar my-2 mx-0">
+                                                <input class="form-control bg-light border-0 py-2" placeholder="Search"
+                                                    aria-label="Search">
+                                                <span class="btn searchbar-btn" type="submit">
+                                                    <i class="fal fa-search silver"></i>
+                                                </span>
+                                            </form>
+                                        </li>
+                                        <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
+                                            style="overflow: hidden; outline: none;">
+                                            <div class="scroll-content">
+                                                <li *ngFor="let channel of channelOptions">
+                                                    <a class="dropdown-item d-flex align-items-center">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                [id]="channel.id" [(ngModel)]="channel.isSelected"
+                                                                (change)="onCheckboxChange()">
+                                                            <label class="form-check-label" [for]="channel.id">
+                                                                <i [ngClass]="channel.icon"></i> {{ channel.label }}
+                                                            </label>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="dropdown icondropdown w-auto">
+                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false" data-bs-auto-close="outside">
+                                        Content Types
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="posttype">
+                                        <li class="dropdown-listing-header">
+                                            <form class="custom-searchbar my-2 mx-0">
+                                                <input class="form-control bg-light border-0 py-2" placeholder="Search"
+                                                    aria-label="Search">
+                                                <span class="btn searchbar-btn" type="submit">
+                                                    <i class="fal fa-search silver"></i>
+                                                </span>
+                                            </form>
+                                        </li>
+                                        <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
+                                            style="overflow: hidden; outline: none;">
+                                            <div class="scroll-content">
+                                                <li *ngFor="let contentType of contentTypes">
+                                                    <a class="dropdown-item d-flex align-items-center">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                [id]="contentType.value"
+                                                                [(ngModel)]="contentType.isSelected"
+                                                                (change)="onCheckboxChange()">
+                                                            <label class="form-check-label" [for]="contentType.value">
+                                                                <i [ngClass]="contentType.icon"></i> {{
+                                                                contentType.label }}
+                                                            </label>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="dropdown icondropdown w-auto">
+                                    <button class="btn dropdown-toggle" id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown" aria-expanded="true">
+                                        Tag
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="columnssort">
+                                        <li class="dropdown-listing-header">
+                                            <form class="custom-searchbar my-2 mx-0">
+                                                <input class="form-control bg-light border-0 py-2" placeholder="Search"
+                                                    aria-label="Search">
+                                                <span class="btn searchbar-btn" type="submit">
+                                                    <i class="fal fa-search silver"></i>
+                                                </span>
+                                            </form>
+                                        </li>
+                                        <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
+                                            style="overflow: hidden; outline: none;">
+                                            <div class="scroll-content">
+                                                <li *ngFor="let tag of tagOptions">
+                                                    <a class="dropdown-item d-flex align-items-center">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                [id]="tag.id" [(ngModel)]="tag.isSelected"
+                                                                (change)="onCheckboxChange()">
+                                                            <label class="form-check-label" [for]="tag.id">
+                                                                <i class="fal fa-tag coal"></i> {{ tag.name }}
+                                                            </label>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </div>
+                                            <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                                                <div class="scrollbar-thumb scrollbar-thumb-x"></div>
+                                            </div>
+                                            <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                                                <div class="scrollbar-thumb scrollbar-thumb-y"></div>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="dropdown w-auto">
+                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false" data-bs-auto-close="outside">
+                                        Sentiments
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="posttype">
+                                        <li *ngFor="let sentiment of sentimentOptions">
+                                            <a class="dropdown-item d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" [id]="sentiment.id"
+                                                        [(ngModel)]="sentiment.isSelected"
+                                                        (change)="onCheckboxChange()">
+                                                    <label class="form-check-label" [for]="sentiment.id">
+                                                        {{ sentiment.name }}
+                                                    </label>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="dropdown w-auto">
+                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false" data-bs-auto-close="outside">
+                                        Tagged by
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="posttype">
+                                        <li class="dropdown-listing-header">
+                                            <form class="custom-searchbar my-2 mx-0">
+                                                <input class="form-control bg-light border-0 py-2" placeholder="Search"
+                                                    aria-label="Search">
+                                                <span class="btn searchbar-btn" type="submit">
+                                                    <i class="fal fa-search silver"></i>
+                                                </span>
+                                            </form>
+                                        </li>
+                                        <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
+                                            style="overflow: hidden; outline: none;">
+                                            <div class="scroll-content">
+                                                <li *ngFor="let option of taggedByOptions">
+                                                    <a class="dropdown-item d-flex align-items-center">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                [id]="option.id" [(ngModel)]="option.isSelected"
+                                                                (change)="onCheckboxChange()">
+                                                            <label class="form-check-label" [for]="option.id">{{
+                                                                option.name }}</label>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </div>
+                                            <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                                                <div class="scrollbar-thumb scrollbar-thumb-x"></div>
+                                            </div>
+                                            <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                                                <div class="scrollbar-thumb scrollbar-thumb-y"></div>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row align-items-start h-auto mb-4">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium radicalBg mb-4">
+                                                <i class="fa-light fa-phone-arrow-up-right"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Sum of outbound Volume</p>
+                                        </div>
+                                        <h2>{{Inbound_Outbound_Report?.channelReportData?.outboundSum}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium mintBg mb-4">
+                                                <i class="fa-light fa-phone-arrow-down-left"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Sum of inbound Volume</p>
+                                        </div>
+                                        <h2>{{Inbound_Outbound_Report?.channelReportData?.inboundSum}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="report-toolbar mb-4">
+                        <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+
+                            <li class="list-inline-item">
+                                <div class="dropdown w-auto">
+                                    <button class="btn dropdown-toggle" type="button" id="columnssort"
+                                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                        Type
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="columnssort">
+                                        <li *ngFor="let type of typeOptions">
+                                            <a class="dropdown-item d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" [id]="type.id"
+                                                        [(ngModel)]="type.isSelected" (change)="onCheckboxChange()">
+                                                    <label class="form-check-label" [for]="type.id">
+                                                        {{ type.label }}
+                                                    </label>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="dropdown w-auto">
+                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false" data-bs-auto-close="outside">
+                                        Report By
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="posttype">
+                                        <li *ngFor="let reportOption of reportOptions">
+                                            <a class="dropdown-item d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        [id]="reportOption.id">
+                                                    <label class="form-check-label" [for]="reportOption.id">
+                                                        {{ reportOption.label }}
+                                                    </label>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row align-items-start h-auto mb-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card iceBg p-4 rounded">
+                                    <h5 class="section-heading mb-4 p-0">Inbound/outbound Reports</h5>
+                                    <div class="graphcontainer align-items-end">
+                                        <div #inboundOutboundReport style="width: 600px; height: 600px;"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card iceBg p-4 rounded">
+                                    <h5 class="section-heading mb-3 p-0">SENTIMENT Per channels </h5>
+                                    <div class="graphcontainer align-items-end">
+                                        <div #senitimentalGraph style="height: 600px; width: 600px;"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">Average Response Per Post</h5>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="graphcontainer align-items-end">
+                                    <div #ChannelWiseGraph style="height: 350px; width: 250px;"></div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <ul class="list-0 statlist list-lg mb-3">
+                                    <li
+                                        *ngFor="let channelwise of Inbound_Outbound_Report.channelReportData.channelWiseData">
+                                        <span [ngClass]="getPlatformClass(channelwise.platform)">
+                                            <i class="fa-light fa-envelope"></i> {{channelwise.platform}}
+                                        </span>
+                                        <span class="fw-semibold">Inbound {{channelwise.inboundData}} | Outbound
+                                            {{channelwise.outboundData}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">Tags Per Channel</h5>
+                        <div class="graphcontainer align-items-end">
+                            <div #TagsPerChannel style="height: 450px; width: 500px; "></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

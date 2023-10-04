@@ -1,18 +1,53 @@
-<ng-container *ngFor="let menu of menus$ ">
-    <a [routerLink]="['/'+menu.link]" routerLinkActive="active" ariaCurrentWhenActive="page"
+<ng-container *ngIf="!(restrictedAgentsString.includes(restrictedAgent))">
+    <ng-container *ngFor="let menu of menus$ ">
+        <a [routerLink]="['/'+menu.link]" routerLinkActive="active" ariaCurrentWhenActive="page"
+            class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
+            <div class="list-group-text d-flex align-items-center">
+                <div class="iconButton medium" [innerHTML]="menu.icon">
+                    <!-- {{menu.icon}} -->
+                </div>
+                <a class="itemLabel">
+                    {{menu.name}}
+                </a>
+            </div>
+            <!-- <span class="badge rounded-pill bg-light text-dark">38</span> -->
+        </a>
+        <!-- (click)="updatevalue('starredHeader')" -->
+    </ng-container>
+    <!-- <a [routerLink]="['/analytics']" routerLinkActive="active" ariaCurrentWhenActive="page"
         class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
         <div class="list-group-text d-flex align-items-center">
-            <div class="iconButton medium" [innerHTML]="menu.icon">
-                <!-- {{menu.icon}} -->
+            <div class="iconButton medium">
+                <i class="fa-light fa-chart-line-up ice"></i>
             </div>
             <a class="itemLabel">
-                {{menu.name}}
+                Analytics
             </a>
         </div>
-        <!-- <span class="badge rounded-pill bg-light text-dark">38</span> -->
-    </a>
-    <!-- (click)="updatevalue('starredHeader')" -->
+    </a> -->
 </ng-container>
+<!-- <a (click)="update('all-inboxes/completed/all')"
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
+    <div class="list-group-text d-flex align-items-center">
+        <div class="iconButton medium">
+            <i class="fal fa-paper-plane ice"></i>
+        </div>
+        <div class="itemLabel">
+            Completed Interactions
+        </div>
+    </div>
+</a> -->
+<!-- <a (click)="update('analytics/whatsapp-report')"
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
+    <div class="list-group-text d-flex align-items-center">
+        <div class="iconButton medium">
+            <i class="fal fa-paper-plane ice"></i>
+        </div>
+        <div class="itemLabel">
+            Analytics
+        </div>
+    </div>
+</a> -->
 
 <!-- Hard coded -->
 <!-- <a (click)="update('console')"

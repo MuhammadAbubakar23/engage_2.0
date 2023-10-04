@@ -148,7 +148,7 @@ export class EmailComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'all-inboxes' || this.flag == 'my_inbox') {
+        if (this.flag == 'focused') {
         if (
           res.contentCount.contentType == 'Mail' ||
           res.contentCount.contentType == 'OMail'
@@ -324,6 +324,7 @@ export class EmailComponent implements OnInit {
   multipleBccInReply: any[] = [];
 
   getEmails() {
+    this.flag = this.router.url.split('/')[2];
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -340,7 +341,7 @@ export class EmailComponent implements OnInit {
         userName: "",
         notInclude: "",
         include: "",
-        flag: "",
+        flag: this.flag,
       };
 
       this.SpinnerService.show();
@@ -473,7 +474,7 @@ export class EmailComponent implements OnInit {
         userName: "",
         notInclude: "",
         include: "",
-        flag: "",
+        flag: this.flag,
       };
 
       this.SpinnerService.show();
@@ -601,7 +602,7 @@ export class EmailComponent implements OnInit {
         userName: "",
         notInclude: "",
         include: "",
-        flag: "",
+        flag: this.flag,
       };
 
       this.SpinnerService.show();

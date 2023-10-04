@@ -39,7 +39,7 @@ export class TeamMenuComponent implements OnInit {
         // removing responder menu from list for time being
         this.menuArray = [];
         item.forEach((singleMenu:any)=>{
-          if((singleMenu.name != "Responder") && (singleMenu.name != "Draft") && (singleMenu.name != "Snoozed")){
+          if((singleMenu.name != "Responder") && (singleMenu.name != "Draft") && (singleMenu.name != "Snoozed") && (singleMenu.name != "All Inboxes")){
             if(!this.menuArray.includes(singleMenu)){
               this.menuArray.push(singleMenu);
             }            
@@ -50,11 +50,11 @@ export class TeamMenuComponent implements OnInit {
         this.menus$ = [...item];
       });
     
-    // // console.log(this.menu$);
-    // // console.log("------------------------------------------");
-    // // console.log(this.menus$);
-    // // console.log("------------------------------------------");
-    // // console.log("this.menu$");
+    // console.log(this.menu$);
+    // console.log("------------------------------------------");
+    // console.log(this.menus$);
+    // console.log("------------------------------------------");
+    // console.log("this.menu$");
   }
 
   assignedProfile = localStorage.getItem('assignedProfile');

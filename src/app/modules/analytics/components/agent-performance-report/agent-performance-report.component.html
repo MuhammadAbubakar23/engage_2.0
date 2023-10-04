@@ -1,0 +1,230 @@
+<div class="content-box-wrapper d-flex w-100">
+    <div class="middle-content d-flex">
+        <div class="d-grid w-100">
+            <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1"
+                style="overflow: auto; outline: none;">
+                <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
+                    <div class="report-toolbar mb-4">
+                        <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+                            <li class="list-inline-item">
+                                <div class="row ">
+                                    <div class="col-sm-6">
+                                        <input type="date" class="form-control" placeholder="End Date" [max]="maxEndDate"
+                                            (change)="resetEndDate()" [(ngModel)]="startDate" />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="date" class="form-control" placeholder="Start Date" [max]="maxEndDate"
+                                            (change)="addAgentGraph()" [(ngModel)]="endDate" />
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="dropdown w-auto">
+                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false" data-bs-auto-close="outside">
+                                        Agents
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="posttype">
+                                        <li class="dropdown-listing-header">
+                                            <form class="custom-searchbar my-2 mx-0">
+                                                <input class="form-control bg-light border-0 py-2" placeholder="Search"
+                                                    aria-label="Search">
+                                                <span class="btn searchbar-btn" type="submit">
+                                                    <i class="fal fa-search silver"></i>
+                                                </span>
+                                            </form>
+                                        </li>
+                                        <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
+                                            style="overflow: auto; outline: none;">
+                                            <div class="scroll-content">
+                                                <li *ngFor="let option of totalAgents">
+                                                    <a class="dropdown-item d-flex align-items-center">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                [id]="option.id" [(ngModel)]="option.isSelected"
+                                                                (change)="onCheckboxChange()">
+                                                            <label class="form-check-label" [for]="option.id">{{
+                                                                option.name }}</label>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </div>
+                                            <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                                                <div class="scrollbar-thumb scrollbar-thumb-x"></div>
+                                            </div>
+                                            <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                                                <div class="scrollbar-thumb scrollbar-thumb-y"></div>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </li>
+
+                            <li class="list-inline-item">
+                                <div class="dropdown icondropdown w-auto">
+                                    <button class="btn dropdown-toggle" type="button" id="columnssort"
+                                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                        Channels
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="columnssort">
+                                        <li class="dropdown-listing-header">
+                                            <form class="custom-searchbar my-2 mx-0">
+                                                <input class="form-control bg-light border-0 py-2" placeholder="Search"
+                                                    aria-label="Search">
+                                                <span class="btn searchbar-btn" type="submit">
+                                                    <i class="fal fa-search silver"></i>
+                                                </span>
+                                            </form>
+                                        </li>
+                                        <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
+                                            style="overflow: hidden; outline: none;">
+                                            <div class="scroll-content">
+                                                <li *ngFor="let channel of channelOptions">
+                                                    <a class="dropdown-item d-flex align-items-center">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                [id]="channel.id" [(ngModel)]="channel.isSelected"
+                                                                (change)="onCheckboxChange()">
+                                                            <label class="form-check-label" [for]="channel.id">
+                                                                <i [ngClass]="channel.icon"></i> {{ channel.label }}
+                                                            </label>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </li>
+                            <!-- <li class="list-inline-item ms-auto">
+                                <div class="btn-group buttonfilter" role="group"
+                                    aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
+                                        autocomplete="off" checked="">
+                                    <label class="btn btn-outline-secondary" for="btnradio1">15</label>
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-secondary" for="btnradio2">30</label>
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-secondary" for="btnradio3">60</label>
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-secondary" for="btnradio4">90</label>
+                                </div>
+                            </li> -->
+                        </ul>
+                    </div>
+                    <div class="row align-items-start h-auto mb-4">
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium berryBg mb-4">
+                                                <i class="fa-light fa-users"></i>
+                                            </span>
+                                            <p class="coal mb-0">Total Agent</p>
+                                        </div>
+                                        <h2>{{totalAgents.length}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium skyBg mb-4">
+                                                <i class="fa-light fa-retweet"></i>
+                                            </span>
+                                            <p class="coal mb-0"> {{ selectedChannelLabel }}</p>
+                                        </div>
+                                        <h2>{{agent_performance_report?.commentCount}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium radicalBg mb-4">
+                                                <i class="fa-light fa-message"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Direct Messages</p>
+                                        </div>
+                                        <h2>{{agent_performance_report?.messageCount}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded mb-5">
+                                <h5 class="section-heading mb-4 p-0">{{ selectedChannelLabel }}</h5>
+                                <div class="graphcontainer align-items-end">
+                                    <div #main style="height: 600px; width: 600px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded mb-5">
+                                <h5 class="section-heading mb-4 p-0"> Direct Message
+                                </h5>
+                                <div class="graphcontainer align-items-end">
+                                    <div #message style="height: 600px; width: 600px;"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-3 p-0 d-flex align-items-center">
+                            <span class="iconButton small">
+                                <img src="../../../../../assets/images/xapp.svg" class="w-100" alt="">
+                            </span>
+                            <span class="ps-2">Twitter</span>
+                        </h5>
+                        <div class="table-section">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Agent</th>
+                                        <th>Tweets</th>
+                                        <th>Direct Messages</th>
+                                        <th>Avg. Reply Time</th>
+                                        <th>Min. Cater Time</th>
+                                        <th>Max. Cater Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let agent of agent_performance_report.agentPerformance">
+                                        <td>{{ agent.agentName }}</td>
+                                        <td>{{ agent.commentCount }}</td>
+                                        <td>{{ agent.messageCount }}</td>
+                                        <td>{{ agent.averageTime }}</td>
+                                        <td>{{ agent.minimumTime }}</td>
+                                        <td>{{ agent.maximumTime }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <div class="py-5 space">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

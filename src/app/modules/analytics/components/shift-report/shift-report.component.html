@@ -1,0 +1,223 @@
+<div class="content-box-wrapper d-flex w-100">
+    <div class="middle-content d-flex">
+        <div class="d-grid w-100">
+            <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1"
+                style="overflow: auto; outline: none;">
+                <div class="report-toolbar mb-4">
+                    <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+                        <li class="list-inline-item">
+                            <div class="iconholder">
+                                <input type="date" class="form-control" [(ngModel)]="startDate"
+                                    (change)="getStartDate()" [max]="maxEndDate" placeholder="Start Date">
+                            </div>
+                        </li>
+                        <li class="list-inline-item">
+                            <div class="iconholder">
+                                <input type="date" class="form-control" (change)="getEndDate()"
+                                    [max]="maxEndDate" [(ngModel)]="endDate" placeholder="End Date">
+                            </div>
+                        </li>
+                        <li class="list-inline-item">
+                            <select name="" class="form-select" (change)="getByShifTime($event)">
+                                <option *ngFor="let shift of shiftType" [value]="shift.id">{{shift.name}}</option>
+                            </select>
+
+                        </li>
+                        <li class="list-inline-item">
+                            <div class="dropdown icondropdown w-auto">
+                                <button class="btn dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                    aria-expanded="true" aria-readonly="true">
+                                    Tag
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="columnssort">
+                                    <li class="dropdown-listing-header">
+                                        <form class="custom-searchbar my-2 mx-0">
+                                            <input class="form-control bg-light border-0 py-2" placeholder="Search"
+                                                [(ngModel)]="tags" (input)="searchtags($event)" aria-label="Search">
+                                            <span class="btn searchbar-btn" type="submit">
+                                                <i class="fal fa-search silver"></i>
+                                            </span>
+                                        </form>
+                                    </li>
+
+                                    <div class="dd-scroll" data-scrollbar="true">
+                                        <li *ngFor="let tag of tagsList " [value]="tag.id">
+                                            <a class="dropdown-item d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        (click)=" selectedunselectedtag(tag)">
+                                                    <label class="form-check-label">
+                                                        <i class="fal fa-tag coal"></i> {{tag.name}}
+                                                    </label>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <!-- <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="#0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="12">
+                                                    <label class="form-check-label" for="12">
+                                                        <i class="fal fa-tag coal"></i> Feedback
+                                                    </label>
+                                                </div>
+                                            </a>
+                                        </li> -->
+                                        <!-- <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="#0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="14">
+                                                    <label class="form-check-label" for="14">
+                                                        <i class="fa-light fa-tag facebook pe-2"></i>KElectric
+                                                    </label>
+                                                </div>
+                                            </a>
+                                        </li> -->
+                                    </div>
+                                </ul>
+
+                            </div>
+                        </li>
+                        <li class="list-inline-item ms-auto">
+                            <!-- <button class="btn btn-outline-primary"><i class="fa-light fa-envelope"></i> Email
+                                Report</button> -->
+                        </li>
+
+
+                    </ul>
+                </div>
+
+                <div class="row align-items-start h-auto mb-4">
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card dashboard-card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <span class="iconButton medium berryBg mb-4">
+
+                                            <i class="fa-light fa-chart-line-up"></i>
+                                        </span>
+                                        <p class="coal mb-0"> Total Inbound Traffic</p>
+                                    </div>
+                                    <h2>{{shiftReportData?.totalIboundCount}}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-4 col-md-6">
+                        <div class="card dashboard-card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <span class="iconButton medium radicalBg mb-4">
+                                            <i class="fa-light fa-star-shooting"></i>
+                                        </span>
+                                        <p class="coal mb-0"> Top 3 Areas</p>
+                                    </div>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <span class="badge rounded-pill night badge-md text-truncate skyTransBg"
+                                                title="Malir">Malir</span>
+                                            <span class="badge rounded-pill night badge-md text-truncate mintTransBg"
+                                                title="Korangi">Korangi</span>
+                                            <span class="badge rounded-pill night badge-md text-truncate cherryTransBg"
+                                                title="Baldia">Baldia</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card dashboard-card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <span class="iconButton medium mintBg mb-4">
+                                            <i class="fa-light fa-users"></i>
+                                        </span>
+                                        <p class="coal mb-0"> On Duty Agents</p>
+                                    </div>
+                                    <ul class="list-inline" *ngFor="let agent of ActiveAgents">
+                                        <li class="list-inline-item">
+                                            <span class="badge rounded-pill night badge-md text-truncate oceanTransBg"
+                                                title="Xeeshan">{{agent.name}}</span>
+                                            <!-- <span class="badge rounded-pill night badge-md text-truncate sunTransBg"
+                                                title="Kamran">Kamran </span> -->
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- <p class="coal mb-4">Traffic Levels (4:01 PM - 12:00 AM) on September 7th 2023</p> -->
+                <!-- <button (click)="exportToCSV()">Export to CSV</button> -->
+
+                <div class="card iceBg p-4 rounded mb-5">
+                    <!-- <h5 class="section-heading mb-4 p-0">Inbound Traffic - Morning Shift </h5> -->
+                    <div class="graphcontainer align-items-end mb-5">
+                        <div class="text-center">
+                            <div id="shiftReport" style="height: 300px; width: 900px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-5 align-items-start">
+                        <div class="col-md-4">
+                            <div class="card iceBg p-4 rounded">
+                                <h5 class="mb-3">TAG STATS</h5>
+                                <ul class="list-group list-group-flush tagscroll" data-scrollbar="true">
+                                    <li class="list-group-item d-flex align-items-center justify-content-between">
+                                        <strong>Tags</strong>
+                                        <strong>Total Inbound : {{tagsStatsTotalCounts}}</strong>
+                                    </li>
+                                    <span *ngFor="let tag of TagsStats">
+                                        <li class="list-group-item d-flex align-items-center justify-content-between">
+                                            <span><i class="fa-light fa-tag"></i> {{tag.name}}</span>
+                                            <strong>{{tag.totalCount}}</strong>
+                                        </li>
+                                    </span>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card iceBg p-4 rounded mb-4">
+                                <div class="table-section" style="overflow: auto;">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Channel</th>
+                                                <th *ngFor="let item of allDates">{{ item | date: 'dd MMM' }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container *ngFor="let channel of shiftChannelData">
+                                                <tr>
+                                                    <td>{{ channel.platform }}</td>
+                                                    <ng-container *ngFor="let date of allDates">
+                                                        <td>
+                                                            <span>
+                                                                {{ findTotalCount(channel, date) }}
+                                                            </span>
+                                                        </td>
+                                                    </ng-container>
+                                                </tr>
+                                            </ng-container>
+                                            <tr>
+                                                <td>
+                                                    <h6>Total Count</h6>
+                                                </td>
+                                                <td *ngFor="let count of dateWiseTotalCounts">{{ count.totalCount }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

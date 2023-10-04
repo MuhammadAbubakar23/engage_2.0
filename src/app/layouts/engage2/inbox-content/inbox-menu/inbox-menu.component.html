@@ -1,93 +1,92 @@
 <div class="multiple-screens">
-  <div id="all-inboxes-wrapper">
-    <div class="sidebar-header border-bottom ps-4 pe-3 pt-3 pb-3">
-      <h6 class="fw-bold m-0">All Inboxes <span class="badge twltte-bg rounded-pill">{{UnResponded}}</span></h6>
-    </div>
-    <ul class="list-group list-group-flush" id="inboxes-list" data-scrollbar="true" tabindex="-1"
-      style="overflow-y: auto; outline: none;">
-      <div class="scroll-content">
-        <a (click)="updatevalue('')" [routerLink]="['/all-inboxes/my_inbox']"
-          class="all-inboxes-menu list-group-item list-group-item-action" value="all-conversation">
-          <div class="iconButton medium skyBg">
-            <i class="far fa-inbox"></i>
-          </div>
-          <div class="ms-2 me-auto">
-            <div class="black-text">All Conversations </div>
-          </div>
-          <span class="badge twltte-bg rounded-pill">{{UnResponded}}</span>
-        </a>
-        <!-- <a (click)="updatevalue('allInboxesHeader')" [routerLink]="['/all-inboxes/sla']"
-          class="all-inboxes-menu list-group-item list-group-item-action" value="all-slas">
-          <div class="iconButton medium radicalBg">
-            <i class="fal fa-bell"></i>
-          </div>
-          <div class="ms-2 me-auto">
-            <div class="black-text">SLAs Imminent</div>
-            <span class="badge rounded-pill badge-danger">{{SlaUnResponded}} High </span>
+    <div id="all-inboxes-wrapper">
+      <div class="sidebar-header border-bottom ps-4 pe-3 pt-3 pb-3">
+        <h6 class="fw-bold m-0">All Inboxes <span class="badge twltte-bg rounded-pill">{{UnResponded}}</span></h6>
+      </div>
+      <ul class="list-group list-group-flush" id="inboxes-list" data-scrollbar="true" tabindex="-1"
+        style="overflow-y: auto; outline: none;">
+        <div class="scroll-content">
+          <a [routerLink]="['/all-inboxes/'+flag+'/all']"
+            class="all-inboxes-menu list-group-item list-group-item-action" value="all-conversation">
+            <div class="iconButton medium skyBg">
+              <i class="far fa-inbox"></i>
+            </div>
+            <div class="ms-2 me-auto">
+              <div class="black-text">All Conversations </div>
+            </div>
+            <span class="badge twltte-bg rounded-pill">{{UnResponded}}</span>
+          </a>
+         <!-- <a (click)="updatevalue('allInboxesHeader')" [routerLink]="['/all-inboxes/'+flag+'/sla']"
+            class="all-inboxes-menu list-group-item list-group-item-action" value="all-slas">
+            <div class="iconButton medium radicalBg">
+              <i class="fal fa-bell"></i>
+            </div>
+            <div class="ms-2 me-auto">
+              <div class="black-text">SLAs Imminent</div>
+              <span class="badge rounded-pill badge-danger">{{SlaUnResponded}} High </span>
 
             <span class="badge rounded-pill badge-success">5 Low</span>
           </div>
           <span class="badge twltte-bg rounded-pill">{{SlaUnResponded}}</span>
         </a> -->
 
-        <!-- From DB -->
-        <!-- <a *ngFor="let channel of channels" (click)="updatevalue(channel.name)" [routerLink]="['/all-inboxes/my_inbox']"
-          class="all-inboxes-menu list-group-item list-group-item-action">
-          <div class="iconButton medium berryBg" [innerHTML]="channel.icon">
-          </div>
-          <div class="ms-2 me-auto">
-            <div class="black-text">{{channel.name}}</div>
-          </div>
-          <ng-container *ngFor="let platform of platformWiseCount">
-            <span class="badge twltte-bg rounded-pill"
-              *ngIf="platform.platform == channel.name">{{platform.count}}</span>
-            <span class="badge twltte-bg rounded-pill" *ngIf="platform.platform != channel.name">0</span>
-          </ng-container>
-        </a>
+<!-- From DB -->
+          <!-- <a *ngFor="let channel of allChannels" (click)="updatevalue(channel.title)" [routerLink]="['/all-inboxes/focused/all']"
+            class="all-inboxes-menu list-group-item list-group-item-action">
+            <div [ngClass]="channel.color" [innerHTML]="channel.icon">
+            </div>
+            <div class="ms-2 me-auto">
+              <div class="black-text">{{channel.title}}</div>
+              <small class="coal">{{channel.subtitle}}</small>
+            </div>
+            <span class="badge twltte-bg rounded-pill">{{channel.count}}</span>
+          </a>
 
-        <br>
-        <br>
-        <br>
-        <br> -->
-        <!-- <a (click)="updatevalue('Email')" class="all-inboxes-menu list-group-item list-group-item-action" value="email">
-          <div class="iconButton medium whiteBg">
-            <img width="25px" src="../../../../../assets/images/gmail-icon.png" alt="gmail" />
-          </div>
-          <div class="ms-2 me-auto">
-            <div class="black-text">Emails</div>
-            <small class="coal">/Gmail</small>
-          </div>
+<br>
+<br>
+<br>
+<br> -->
+          <!-- <a [routerLink]="['/all-inboxes/'+flag+'/Email']"
+            class="all-inboxes-menu list-group-item list-group-item-action" value="email">
+            <div class="iconButton medium whiteBg">
+              <img width="25px" src="../../../../../assets/images/gmail-icon.png" alt="gmail"/>
+            </div>
+            <div class="ms-2 me-auto">
+              <div class="black-text">Emails</div>
+              <small class="coal">/Gmail</small>
+            </div>
+            <span class="badge twltte-bg rounded-pill">{{EmailUnResponded}}</span>
+          </a>
 
-          <span class="badge twltte-bg rounded-pill">{{EmailUnResponded}}</span>
-        </a>
-        <a (click)="updatevalue('OfficeEmail')" class="all-inboxes-menu list-group-item list-group-item-action"
-          value="email">
-          <div class="iconButton medium berryBg">
-            <i class="fal fa-envelope"></i>
-          </div>
-          <div class="ms-2 me-auto">
-            <div class="black-text">Emails</div>
-            <small class="coal">/Outlook</small>
-          </div>
-          <span class="badge twltte-bg rounded-pill">{{OfficeEmailUnResponded}}</span>
-        </a> -->
-        <a (click)="updatevalue('WhatsApp')" class="all-inboxes-menu list-group-item list-group-item-action"
-          value="whatsapp">
-          <div class="iconButton medium mintBg">
-            <i class="fab fa-whatsapp"></i>
-          </div>
-          <div class="ms-2 me-auto">
-            <div>WhatsApp</div>
-            <small class="coal">03219119119</small>
-          </div>
-          <span class="badge twltte-bg rounded-pill">{{WaUnResponded}}</span>
-        </a>
-        <!-- <a (click)="updatevalue('SMS')" class="all-inboxes-menu list-group-item list-group-item-action" value="sms">
-          <div class="iconButton medium cherryBg">
-            <i class="fal fa-comment-alt-lines"></i>
-          </div>
-          <div class="ms-2 me-auto">
-            <div>SMS/Text</div>
+          <a [routerLink]="['/all-inboxes/'+flag+'/OfficeEmail']"
+            class="all-inboxes-menu list-group-item list-group-item-action" value="email">
+            <div class="iconButton medium berryBg">
+              <i class="fal fa-envelope"></i>
+            </div>
+            <div class="ms-2 me-auto">
+              <div class="black-text">Emails</div>
+              <small class="coal">/Outlook</small>
+            </div>
+            <span class="badge twltte-bg rounded-pill">{{OfficeEmailUnResponded}}</span>
+          </a> -->
+          <a [routerLink]="['/all-inboxes/'+flag+'/WhatsApp']"
+            class="all-inboxes-menu list-group-item list-group-item-action" value="whatsapp">
+            <div class="iconButton medium mintBg">
+              <i class="fab fa-whatsapp"></i>
+            </div>
+            <div class="ms-2 me-auto">
+              <div>WhatsApp</div>
+
+            </div>
+            <span class="badge twltte-bg rounded-pill">{{WaUnResponded}}</span>
+          </a>
+          <!-- <a [routerLink]="['/all-inboxes/'+flag+'/SMS']"
+            class="all-inboxes-menu list-group-item list-group-item-action" value="sms">
+            <div class="iconButton medium cherryBg">
+              <i class="fal fa-comment-alt-lines"></i>
+            </div>
+            <div class="ms-2 me-auto">
+              <div>SMS/Text</div>
 
           </div>
           <span class="badge twltte-bg rounded-pill">{{SmsUnResponded}}</span>
@@ -101,59 +100,56 @@
 
           </div>
 
-        </a>
-        <a (click)="updatevalue('Facebook')" class="all-inboxes-menu list-group-item list-group-item-action"
-          value="facebook">
-          <div class="iconButton medium navyBg">
-            <i class="fab fa-facebook-f"></i>
-          </div>
-          <div class="ms-2 me-auto">
-            <div>ibex. connect</div>
-            <small class="coal">/ibex.connect</small>
-          </div>
-          <span class="badge twltte-bg rounded-pill">{{FbUnResponded}}</span>
-        </a>
-        <a (click)="updatevalue('Webchat')" class="all-inboxes-menu list-group-item list-group-item-action"
-          value="webchat">
-          <div class="iconButton medium webchatbg">
-            <i class="fa-light fa-messages"></i>
-          </div>
+          </a>
+          <a [routerLink]="['/all-inboxes/'+flag+'/Facebook']"
+            class="all-inboxes-menu list-group-item list-group-item-action" value="facebook">
+            <div class="iconButton medium navyBg">
+              <i class="fab fa-facebook-f"></i>
+            </div>
+            <div class="ms-2 me-auto">
+              <div>Facebook</div>
+              <small class="coal">/Jazz</small>
+            </div>
+            <span class="badge twltte-bg rounded-pill">{{FbUnResponded}}</span>
+          </a>
+          <a [routerLink]="['/all-inboxes/'+flag+'/Webchat']"
+            class="all-inboxes-menu list-group-item list-group-item-action" value="webchat">
+            <div class="iconButton medium webchatbg">
+              <i class="fa-light fa-messages"></i>
+            </div>
 
-          <div class="ms-2 me-auto">
-            <div>Webchat</div>
-            <small class="coal">/ibex.connect</small>
-          </div>
-          <span class="badge twltte-bg rounded-pill">{{WebchatUnResponded}}</span>
-        </a>
-        <a (click)="updatevalue('Twitter')" class="all-inboxes-menu list-group-item list-group-item-action"
-          value="twitter">
-          <div class="iconButton medium oceanBg">
-            <i class="fab fa-twitter"></i>
-          </div>
+            <div class="ms-2 me-auto">
+              <div>Webchat</div>
+            </div>
+            <span class="badge twltte-bg rounded-pill">{{WebchatUnResponded}}</span>
+          </a>
+          <a [routerLink]="['/all-inboxes/'+flag+'/Twitter']"
+            class="all-inboxes-menu list-group-item list-group-item-action" value="twitter">
+            <div class="iconButton medium oceanBg">
+              <i class="fab fa-twitter"></i>
+            </div>
 
-          <div class="ms-2 me-auto">
-            <div>Twitter</div>
-            <small class="coal">/ibex.connect</small>
-          </div>
-          <span class="badge twltte-bg rounded-pill">{{TwitterUnResponded}}</span>
-        </a>
-        <a (click)="updatevalue('Instagram')" class="all-inboxes-menu list-group-item list-group-item-action"
-          value="instagram">
-          <div class="iconButton medium instabg">
-            <i class="fab fa-instagram"></i>
-          </div>
+            <div class="ms-2 me-auto">
+              <div>Twitter</div>
+            </div>
+            <span class="badge twltte-bg rounded-pill">{{TwitterUnResponded}}</span>
+          </a>
+          <a [routerLink]="['/all-inboxes/'+flag+'/Instagram']"
+            class="all-inboxes-menu list-group-item list-group-item-action" value="instagram">
+            <div class="iconButton medium instabg">
+              <i class="fab fa-instagram"></i>
+            </div>
 
-          <div class="ms-2 me-auto">
-            <div>Instagram</div>
-            <small class="coal">/ibex.connect</small>
-          </div>
-          <span class="badge twltte-bg rounded-pill">{{InstaUnResponded}}</span>
-        </a>
-        <a (click)="updatevalue('LinkedIn')" class="all-inboxes-menu list-group-item list-group-item-action"
-          value="linkedin">
-          <div class="iconButton medium linkedinbg">
-            <i class="fa-brands fa-linkedin-in"></i>
-          </div>
+            <div class="ms-2 me-auto">
+              <div>Instagram</div>
+            </div>
+            <span class="badge twltte-bg rounded-pill">{{InstaUnResponded}}</span>
+          </a>
+          <a [routerLink]="['/all-inboxes/'+flag+'/LinkedIn']"
+            class="all-inboxes-menu list-group-item list-group-item-action" value="linkedin">
+            <div class="iconButton medium linkedinbg">
+              <i class="fa-brands fa-linkedin-in"></i>
+            </div>
 
           <div class="ms-2 me-auto">
             <div>LinkedIn</div>
@@ -166,16 +162,16 @@
             <i class="fa-brands fa-google-play"></i>
           </div>
 
-          <div class="ms-2 me-auto">
-            <div>Google PlayStore</div>
-          </div>
-          <span class="badge twltte-bg rounded-pill">{{PlaystoreUnResponded}}</span>
-        </a>
-        <a (click)="updatevalue('Youtube')" class="all-inboxes-menu list-group-item list-group-item-action"
-          value="youtube">
-          <div class="iconButton medium radicalBg">
-            <i class="fab fa-youtube"></i>
-          </div>
+            <div class="ms-2 me-auto">
+              <div>Google PlayStore</div>
+            </div>
+            <span class="badge twltte-bg rounded-pill">{{PlaystoreUnResponded}}</span>
+          </a>
+          <a [routerLink]="['/all-inboxes/'+flag+'/Youtube']"
+            class="all-inboxes-menu list-group-item list-group-item-action" value="youtube">
+            <div class="iconButton medium radicalBg">
+              <i class="fab fa-youtube"></i>
+            </div>
 
           <div class="ms-2 me-auto">
             <div>Youtube</div>

@@ -1,6 +1,31 @@
+<a (click)="update('all-inboxes/focused/all')"
+    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
+    <div class="list-group-text d-flex align-items-center">
+        <div class="iconButton medium">
+            <i class="fal fa-inbox ice"></i>
+        </div>
+        <div class="itemLabel">
+            All Inboxes
+        </div>
+    </div>
+</a>
+
+<a (click)="update('all-inboxes/assigned-to-me/all')"
+    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
+    <div class="list-group-text d-flex align-items-center">
+        <div class="iconButton medium">
+            <i class="fa-sharp fa-light fa-money-check-pen"></i>
+        </div>
+        <div class="itemLabel">
+            Assigned To Me
+        </div>
+    </div>
+</a>
+
+
 <!-- Coming From DB -->
 <ng-container *ngFor="let menu of menus$" >
-    <a (click)="update('all-inboxes/'+menu.link)"  routerLinkActive="active" ariaCurrentWhenActive="page"
+    <a (click)="update('all-inboxes/'+menu.link+'/all')"  routerLinkActive="active" ariaCurrentWhenActive="page"
     class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
     <div class="list-group-text d-flex align-items-center" >
         <div class="iconButton medium" [innerHTML]="menu.icon">
@@ -14,6 +39,8 @@
 </a>
 </ng-container>
 
+
+
 <!-- Hard coded -->
 <!-- <a (click)="update('all-inboxes')"
     class="list-group-item list-group-item-action d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
@@ -26,7 +53,7 @@
         </div>
     </div>
 </a>
-<a (click)="update('all-inboxes/starred')"
+<a (click)="update('all-inboxes/starred/all')"
     class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
     <div class="list-group-text d-flex align-items-center">
         <div class="iconButton medium">
@@ -37,7 +64,7 @@
         </div>
     </div>
 </a>
-<a (click)="update('all-inboxes/sent')"
+<a (click)="update('all-inboxes/sent/all')"
     class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
     <div class="list-group-text d-flex align-items-center">
         <div class="iconButton medium">
