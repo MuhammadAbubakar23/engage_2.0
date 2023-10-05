@@ -182,7 +182,9 @@ export const environment = {
       addAgentPerformance: 'Report/GetAgentPerformanceReport',
       shiftReport: 'Report/GetShiftReport',
       getWhatsAppRawDataReport:'Report/GetWhatsAppRawDataReport',
-      downloadWhatsAppRawDataReport:'Report/GetWhatsAppCSVData'
+      downloadWhatsAppRawDataReport:'Report/GetWhatsAppCSVData',
+      postSocialRawData:'Report/GetAllChannelRawDataReport',
+      downloadSocialRawData:'Report/GetAllChannelRawDataReportCSV'
 
 
     },

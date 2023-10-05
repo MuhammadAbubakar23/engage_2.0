@@ -88,6 +88,10 @@ const routes: Routes = [
     {
       path:'whatsapp-report',
       loadComponent: () => import('./components/whatsapp-report/whatsapp-report.component').then(c => c.WhatsappReportComponent),
+    },
+    {
+      path:'social-raw-data',
+      loadComponent: () => import('./components/social-raw-data/social-raw-data.component').then(c => c.SocialRawDataComponent),
     }
   ]
   },

@@ -88,6 +88,8 @@ export class CommonDataService {
   shiftReport = environment.links.common.shiftReport
   getWhatsAppRawDataReport = environment.links.common.getWhatsAppRawDataReport
   downloadWhatsAppRawDataReport = environment.links.common.downloadWhatsAppRawDataReport
+  postSocialRawData = environment.links.common.postSocialRawData
+  downloadSocialRawData = environment.links.common.downloadSocialRawData
 
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
@@ -603,6 +605,13 @@ export class CommonDataService {
 
   DownloadWhatsAppReport(body:any){
     return this.http.post(this.CommonBaseUrl + this.downloadWhatsAppRawDataReport, body, { responseType: 'text' })
+  }
+
+  DownloadSocialRawData(body:any){
+    return this.http.post(this.CommonBaseUrl + this.downloadSocialRawData, body, { responseType: 'text' })
+  }
+  PostSocialRawData(body:any){
+    return this.http.post(this.CommonBaseUrl + this.postSocialRawData, body)
   }
 }
 
