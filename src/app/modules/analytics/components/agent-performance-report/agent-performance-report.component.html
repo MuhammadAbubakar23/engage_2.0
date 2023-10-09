@@ -185,13 +185,13 @@
                         </div>
                     </div>
                     <div class="card iceBg p-4 rounded mb-5">
-                        <h5 class="section-heading mb-3 p-0 d-flex align-items-center">
-                            <span class="iconButton small">
+                        <!-- <h5 class="section-heading mb-3 p-0 d-flex align-items-center">
+                           <span class="iconButton small">
                                 <img src="../../../../../assets/images/xapp.svg" class="w-100" alt="">
-                            </span>
-                            <span class="ps-2">Twitter</span>
-                        </h5>
-                        <div class="table-section">
+                            </span> -->
+                            <!-- <span class="ps-2">{{ selectedChannelLabel }}</span> 
+                        </h5> -->
+                        <div class="table-section" style="overflow: auto; height: calc(100vh - 300px);" >
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -204,7 +204,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let agent of agent_performance_report.agentPerformance">
+                                    <tr *ngFor="let agent of agent_performance_report?.agentPerformance">
                                         <td>{{ agent.agentName }}</td>
                                         <td>{{ agent.commentCount }}</td>
                                         <td>{{ agent.messageCount }}</td>

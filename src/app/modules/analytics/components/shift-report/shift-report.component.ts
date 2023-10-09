@@ -4,12 +4,13 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
  import { CommonModule, DatePipe } from '@angular/common'
 import * as echarts from 'echarts';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from "../../../../shared/shared.module";
 @Component({
-  standalone: true,
-  selector: 'app-shift-report',
-  templateUrl: './shift-report.component.html',
-  styleUrls: ['./shift-report.component.scss'],
-  imports: [CommonModule, FormsModule],
+    standalone: true,
+    selector: 'app-shift-report',
+    templateUrl: './shift-report.component.html',
+    styleUrls: ['./shift-report.component.scss'],
+    imports: [CommonModule, FormsModule, SharedModule]
 })
 export class ShiftReportComponent implements OnInit {
   shiftReportData: any;
@@ -31,6 +32,7 @@ export class ShiftReportComponent implements OnInit {
   // currentdate:any
   startDate = '';
   endDate = '';
+  searchText:string=''
   maxEndDate: any;
   currentDate: any;
   totalinboundCounts:any
@@ -68,11 +70,18 @@ export class ShiftReportComponent implements OnInit {
     this.getAgentsTeamList();
   this.calculateDateRange()
   }
-
+keywordslist:any[]=[]
   getAlltags() {
     this.commandataService.GetTagsList().subscribe((res: any) => {
+      debugger
       console.log('All tags===>', res);
       this.tagsList = res;
+      this.tagsList.forEach((xyz:any)=>{
+        xyz.keywordList.forEach((abc:any)=>{
+          this.keywordslist.push(abc)
+          console.log("this.keywordslist===>",this.keywordslist)
+        })
+      })
     });
   }
   convertedintoArray: any;
@@ -129,9 +138,14 @@ export class ShiftReportComponent implements OnInit {
     
     // }
     
- if(this.endDate<=this.startDate){
-  this.allDates.push(this.startDate)
- }
+//  if(this.endDate<=this.startDate){
+//   this.allDates.push(this.startDate)
+//  }
+         this.allTotalCountInsta = [];
+          this.allTotalCountLink = [];
+          this.allTotalCountsfb = [];
+          this.allTotalCountTw = [];
+          this.dateWise = [];
       this.commandataService.GetShiftReport(obj).subscribe((res: any) => {
        
         this.shiftReportData = res;
@@ -147,26 +161,30 @@ export class ShiftReportComponent implements OnInit {
           this.allTotalCountTw=new Array(this.daysDifference).fill(0)
 
         }
-        else{
-          this.allTotalCountInsta = [];
-          this.allTotalCountLink = [];
-          this.allTotalCountsfb = [];
-          this.allTotalCountTw = [];
-          this.dateWise = [];
+        // else{
+        //   this.allTotalCountInsta = [];
+        //   this.allTotalCountLink = [];
+        //   this.allTotalCountsfb = [];
+        //   this.allTotalCountTw = [];
+        //   this.dateWise = [];
           
 
+     
+          
+        // }
         this.shiftChannelData.forEach((data: any) => {
           data.dateWise.forEach((item: any) => {
             if (!this.allDates.includes(item.date.split('T')[0])) {
               this.allDates.push(item.date.split('T')[0]);
                
               if (data.platform == 'Facebook') {
+                debugger
                 data.dateWise.forEach((singleItem: any) => {
                   this.allTotalCountsfb.push(singleItem.totalCount);
                 });
               }
             }
-            if (data.platform == 'Twitter') {
+            if (data.platform == 'WhatsApp') {
               data.dateWise.forEach((item: any) => {
                 this.allTotalCountTw.push(item.totalCount);
               });
@@ -183,8 +201,6 @@ export class ShiftReportComponent implements OnInit {
             }
           });
         });
-          
-        }
         this.TagsStats = res.tagData.shiftReportTag;
         this.tagsStatsTotalCounts = res.tagData.totalTagsCount;
 
@@ -230,7 +246,7 @@ export class ShiftReportComponent implements OnInit {
         trigger: 'axis',
       },
       _legend: {
-        data: ['Twitter', 'LinkedIn', 'Facebook', 'Instagram'],
+        data: ['WhatsApp', 'LinkedIn', 'Facebook', 'Instagram'],
       },
       get legend() {
         return this._legend;
@@ -259,7 +275,7 @@ export class ShiftReportComponent implements OnInit {
       },
       series: [
         {
-          name: 'Twitter',
+          name: 'WhatsApp',
           type: 'line',
           data: this.allTotalCountTw,
         },

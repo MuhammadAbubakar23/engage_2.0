@@ -4,13 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { HeaderService } from 'src/app/shared/services/header.service';
 import * as echarts from 'echarts';
+import { SharedModule } from "../../../../shared/shared.module";
 
 @Component({
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  selector: 'app-inbound-ontbound-report',
-  templateUrl: './inbound-ontbound-report.component.html',
-  styleUrls: ['./inbound-ontbound-report.component.scss']
+    standalone: true,
+    selector: 'app-inbound-ontbound-report',
+    templateUrl: './inbound-ontbound-report.component.html',
+    styleUrls: ['./inbound-ontbound-report.component.scss'],
+    imports: [CommonModule, FormsModule, SharedModule]
 })
 export class InboundOntboundReportComponent implements OnInit {
 
@@ -60,7 +61,7 @@ export class InboundOntboundReportComponent implements OnInit {
     let selectedContentTypesArray = this.contentTypes.filter(item => item.isSelected).map(item => item.value);
     this.selectedContent = selectedContentTypesArray.toString();
 
-    let selectedTagOptionArray = this.tagOptions.filter(item => item.isSelected).map(item => item.id);
+    let selectedTagOptionArray = this.keywordslist.filter(item => item.isSelected).map(item => item.id);
     this.selectedTagOption = selectedTagOptionArray.toString();
 
     let selectedSentimentsArray = this.sentimentOptions.filter(item => item.isSelected).map(item => item.id);
@@ -246,6 +247,7 @@ export class InboundOntboundReportComponent implements OnInit {
             renderer: 'canvas',
             useDirtyRect: false
           });
+          debugger
           var option: echarts.EChartsOption;
           const tagReportData = this.Inbound_Outbound_Report.tagReportData;
           const tagDataPoints: any[] = [];
@@ -330,6 +332,7 @@ export class InboundOntboundReportComponent implements OnInit {
                 seriesLayoutBy: 'row',
                 itemStyle: {
                   color: '#4cc424',
+                  borderRadius: 5
                 },
                 label: {
                   show: true,
@@ -341,6 +344,7 @@ export class InboundOntboundReportComponent implements OnInit {
                 seriesLayoutBy: 'row',
                 itemStyle: {
                   color: 'rgba(209,60,60,255)',
+                  borderRadius: 5
                 },
                 label: {
                   show: true,
@@ -352,6 +356,7 @@ export class InboundOntboundReportComponent implements OnInit {
                 seriesLayoutBy: 'row',
                 itemStyle: {
                   color: '#ffa800',
+                  borderRadius: 5
                 },
                 label: {
                   show: true,
@@ -428,15 +433,18 @@ export class InboundOntboundReportComponent implements OnInit {
   tagOptions = [{ id: '', name: '', isSelected: false }];
   sentimentOptions = [{ id: '', name: '', isSelected: false }];
   taggedByOptions = [{ id: '', name: '', isSelected: false }];
-
+  keywordslist:any[]=[]
+  searchText:string=''
   getTags(): void {
-    this.commonService.GetTagsList()
-      .subscribe((response: any) => {
-        this.tagOptions = response;
-        console.log(this.tagOptions);
-      }, (error: any) => {
-        console.error(error);
-      });
+    this.commonService.GetTagsList().subscribe((res: any) => {
+      console.log('All tags===>', res);
+      this.tagOptions = res;
+      this.tagOptions.forEach((xyz:any)=>{
+        xyz.keywordList.forEach((abc:any)=>{
+          this.keywordslist.push(abc)
+        })
+      })
+    });
   }
   getSentiments(): void {
     this.commonService.GetSentimentData()
