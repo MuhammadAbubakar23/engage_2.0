@@ -29,7 +29,7 @@ export const environment = {
   SmsBaseUrl: 'https://text.360scrm.com/api/',
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
-  CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
+  CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
   SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
   ServiceBaseUrl : 'https://waservice.enteract.live/api/',
