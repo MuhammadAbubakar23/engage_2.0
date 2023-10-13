@@ -72,27 +72,29 @@ export class CommonDataService {
   hideUnhideMessage = environment.links.common.hideUnhideMessage;
   // dispositionTags = environment.links.common.dispositionTags;
 
-  
-
   //Reports
-  addUniqueCustomer =environment.links.common.addUniqueCustomer
-  uniqueExportCsv = environment.links.common.uniqueExportCsv
-  addHandledBot = environment.links.common.addHandledBot
-  addHandledBotCSV = environment.links.common.addHandledBotCSV
-  routeToAgents = environment.links.common.routeToAgents
-  routeToAgentsCsv = environment.links.common.routeToAgentsCsv
-  addinboundoutbound = environment.links.common.addinboundoutbound 
-  twitterReport = environment.links.common.twitterReport
-  twitterSLAReport = environment.links.common.twitterSLAReport
-  twitterProfileWiseReport = environment.links.common.twitterProfileWiseReport
-  getUserList = environment.links.common.getUserList
-  getSentimentData = environment.links.common.getSentimentData
-  addAgentPerformance = environment.links.common.addAgentPerformance
-  shiftReport = environment.links.common.shiftReport
-  getWhatsAppRawDataReport = environment.links.common.getWhatsAppRawDataReport
-  downloadWhatsAppRawDataReport = environment.links.common.downloadWhatsAppRawDataReport
-  postSocialRawData = environment.links.common.postSocialRawData
-  downloadSocialRawData = environment.links.common.downloadSocialRawData
+  addUniqueCustomer = environment.links.common.addUniqueCustomer;
+  uniqueExportCsv = environment.links.common.uniqueExportCsv;
+  addHandledBot = environment.links.common.addHandledBot;
+  addHandledBotCSV = environment.links.common.addHandledBotCSV;
+  routeToAgents = environment.links.common.routeToAgents;
+  routeToAgentsCsv = environment.links.common.routeToAgentsCsv;
+  addinboundoutbound = environment.links.common.addinboundoutbound;
+  twitterReport = environment.links.common.twitterReport;
+  twitterSLAReport = environment.links.common.twitterSLAReport;
+  twitterProfileWiseReport = environment.links.common.twitterProfileWiseReport;
+  getUserList = environment.links.common.getUserList;
+  getSentimentData = environment.links.common.getSentimentData;
+  addAgentPerformance = environment.links.common.addAgentPerformance;
+  shiftReport = environment.links.common.shiftReport;
+  getWhatsAppRawDataReport = environment.links.common.getWhatsAppRawDataReport;
+  downloadWhatsAppRawDataReport =
+    environment.links.common.downloadWhatsAppRawDataReport;
+  postSocialRawData = environment.links.common.postSocialRawData;
+  downloadSocialRawData = environment.links.common.downloadSocialRawData;
+  facebookReport = environment.links.common.facebookReport;
+  facebookProfile = environment.links.common.facebookProfile;
+  getAllSocialMatrics = environment.links.common.getAllSocialMatrics;
 
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
@@ -131,22 +133,22 @@ export class CommonDataService {
   deleteTags = environment.links.console.deleteTags;
   getParents = environment.links.console.getParents;
   // rules
-  deleteRules = environment.links.console.deleteRules
+  deleteRules = environment.links.console.deleteRules;
   getAllRules = environment.links.console.getAllRules;
-  getRuleById = environment.links.console.getRuleById
-  addRules = environment.links.console.addRules
-  updateRules = environment.links.console.updateRules
-  getEntitiesRule = environment.links.console.getEntitiesRule
-  getRuleEntityProperties = environment.links.console.getRuleEntityProperties
+  getRuleById = environment.links.console.getRuleById;
+  addRules = environment.links.console.addRules;
+  updateRules = environment.links.console.updateRules;
+  getEntitiesRule = environment.links.console.getEntitiesRule;
+  getRuleEntityProperties = environment.links.console.getRuleEntityProperties;
 
   getChannels = environment.links.identity.channels;
-  deleteRoles = environment.links.identity.deleteRoles
+  deleteRoles = environment.links.identity.deleteRoles;
 
   //service
   addSurvey = environment.links.service.addSurvey;
-  addCSAT=environment.links.service.addCSAT
+  addCSAT = environment.links.service.addCSAT;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   GetTagsList() {
     return this.http.get(this.CommonBaseUrl + this.tagsList);
@@ -239,11 +241,11 @@ export class CommonDataService {
   GetFbPostStats(pageId: any, postId: any) {
     return this.http.post(
       this.CommonBaseUrl +
-      this.fbPostStats +
-      '?PageId=' +
-      pageId +
-      '&postId=' +
-      postId,
+        this.fbPostStats +
+        '?PageId=' +
+        pageId +
+        '&postId=' +
+        postId,
       null
     );
   }
@@ -251,11 +253,11 @@ export class CommonDataService {
   GetFbCommentStats(pageId: any, commentId: any) {
     return this.http.post(
       this.CommonBaseUrl +
-      this.fbCommentStats +
-      '?PageId=' +
-      pageId +
-      '&CommentId=' +
-      commentId,
+        this.fbCommentStats +
+        '?PageId=' +
+        pageId +
+        '&CommentId=' +
+        commentId,
       null
     );
   }
@@ -277,11 +279,11 @@ export class CommonDataService {
   GetTwitterTweetStats(profileId: any, tweetId: any) {
     return this.http.get(
       this.CommonBaseUrl +
-      this.twitterTweetStats +
-      '?ProfileExternalId=' +
-      profileId +
-      '&TweetId=' +
-      tweetId
+        this.twitterTweetStats +
+        '?ProfileExternalId=' +
+        profileId +
+        '&TweetId=' +
+        tweetId
     );
   }
   GetLinkedInPostStats(postId: any) {
@@ -414,10 +416,13 @@ export class CommonDataService {
     return this.http.get(this.consoleBaseUrl + this.getOperationalHours);
   }
   GetBusinessHours() {
-    return this.http.get(this.consoleBaseUrl + this.getBusinessHours)
+    return this.http.get(this.consoleBaseUrl + this.getBusinessHours);
   }
   AddBusinessHours(addHours: any) {
-    return this.http.post(this.consoleBaseUrl + this.addBusinessHours, addHours)
+    return this.http.post(
+      this.consoleBaseUrl + this.addBusinessHours,
+      addHours
+    );
   }
   DeleteBusinessHours(delHours: string): Observable<any> {
     const url = `${this.consoleBaseUrl}${this.deleteBusinessHours}?Id=${delHours}`;
@@ -432,10 +437,10 @@ export class CommonDataService {
     return this.http.get(url);
   }
   GetEntractRoute() {
-    return this.http.get(this.consoleBaseUrl + this.getEntractRoute)
+    return this.http.get(this.consoleBaseUrl + this.getEntractRoute);
   }
   AddEntractRoute(addRoute: any) {
-    return this.http.post(this.consoleBaseUrl + this.addEntractRoute, addRoute)
+    return this.http.post(this.consoleBaseUrl + this.addEntractRoute, addRoute);
   }
   UpdateEntractRoute(RouteId: any, entract: any) {
     const url = `${this.consoleBaseUrl}${this.updateEntractRoute}?Id=${RouteId}`;
@@ -446,10 +451,10 @@ export class CommonDataService {
     return this.http.get(url);
   }
   GetSkill() {
-    return this.http.get(this.consoleBaseUrl + this.getSkills)
+    return this.http.get(this.consoleBaseUrl + this.getSkills);
   }
   AddSkill(addSkill: any) {
-    return this.http.post(this.consoleBaseUrl + this.addSkill, addSkill)
+    return this.http.post(this.consoleBaseUrl + this.addSkill, addSkill);
   }
   DeleteSkill(delSkill: string): Observable<any> {
     const url = `${this.consoleBaseUrl}${this.deleteSkill}?Id=${delSkill}`;
@@ -457,18 +462,20 @@ export class CommonDataService {
   }
 
   GetAllProfile() {
-    return this.http.get(this.consoleBaseUrl + this.getAllProfile)
+    return this.http.get(this.consoleBaseUrl + this.getAllProfile);
   }
   AddProfile(addProfile: any) {
-
-    return this.http.post(this.consoleBaseUrl + this.addProfile, addProfile)
+    return this.http.post(this.consoleBaseUrl + this.addProfile, addProfile);
   }
   AttachFacebookPage(body: any) {
-    return this.http.post(this.InstagramBaseUrl + this.attachFacebookPage, body)
+    return this.http.post(
+      this.InstagramBaseUrl + this.attachFacebookPage,
+      body
+    );
   }
 
   SignOut() {
-    return this.http.get(this.CommonBaseUrl + this.signOut)
+    return this.http.get(this.CommonBaseUrl + this.signOut);
   }
 
   GetTags() {
@@ -479,7 +486,7 @@ export class CommonDataService {
     return this.http.post(url, body);
   }
   AddTags(addTags: any) {
-    return this.http.post(this.consoleBaseUrl + this.addTags, addTags)
+    return this.http.post(this.consoleBaseUrl + this.addTags, addTags);
   }
   UpdateTag(tagsId: string, tag: any) {
     const url = `${this.consoleBaseUrl}${this.updateTag}?Id=${tagsId}`;
@@ -501,13 +508,13 @@ export class CommonDataService {
   // rules
 
   GetAllRules() {
-    return this.http.get(this.consoleBaseUrl + this.getAllRules)
+    return this.http.get(this.consoleBaseUrl + this.getAllRules);
   }
   GetRuleById() {
-    return this.http.get(this.consoleBaseUrl + this.getRuleById)
+    return this.http.get(this.consoleBaseUrl + this.getRuleById);
   }
   AddRules(addrule: any) {
-    return this.http.post(this.consoleBaseUrl + this.addRules, addrule)
+    return this.http.post(this.consoleBaseUrl + this.addRules, addrule);
   }
   UpdateRules(ruleId: string, rule: any) {
     const url = `${this.consoleBaseUrl}${this.updateRules}?Id=${ruleId}`;
@@ -519,11 +526,11 @@ export class CommonDataService {
   }
   GetEntitiesRule() {
     return this.http.get(this.consoleBaseUrl + this.getEntitiesRule);
-
   }
   GetRuleEntityProperties(entity: string) {
-    return this.http.get(`${this.consoleBaseUrl}${this.getRuleEntityProperties}?tableName=${entity}`);
-
+    return this.http.get(
+      `${this.consoleBaseUrl}${this.getRuleEntityProperties}?tableName=${entity}`
+    );
   }
 
   GetCustomers(body: any) {
@@ -531,94 +538,129 @@ export class CommonDataService {
   }
 
   GetChannels() {
-    return this.http.get(this.IdentityBaseUrl + '/' + this.getChannels)
+    return this.http.get(this.IdentityBaseUrl + '/' + this.getChannels);
   }
 
   UpdateStatus(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.updateStatus, body)
+    return this.http.post(this.CommonBaseUrl + this.updateStatus, body);
   }
 
   HideUnhideMessage(queryId: number, status: boolean) {
-    const url = (this.CommonBaseUrl + this.hideUnhideMessage + '?QueryId=' + queryId + '&Status=' + status);
+    const url =
+      this.CommonBaseUrl +
+      this.hideUnhideMessage +
+      '?QueryId=' +
+      queryId +
+      '&Status=' +
+      status;
     return this.http.get(url);
   }
-// Survey form
-  AddSurvey(body:any){
-    return this.http.post(this.ServiceBaseUrl+this.addSurvey,body)
+  // Survey form
+  AddSurvey(body: any) {
+    return this.http.post(this.ServiceBaseUrl + this.addSurvey, body);
   }
-  AddCSATSurvey(body:any){
-    return this.http.post(this.ServiceBaseUrl+this.addCSAT,body)
+  AddCSATSurvey(body: any) {
+    return this.http.post(this.ServiceBaseUrl + this.addCSAT, body);
   }
 
   // GetDispositionTags(){
   //   return this.http.get(this.CommonBaseUrl + this.dispositionTags)
   // }
-  GetRouteToAgentsCsv(body:any){
-    return this.http.post(this.CommonBaseUrl+this.routeToAgentsCsv,body,{responseType:'text'})
+  GetRouteToAgentsCsv(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.routeToAgentsCsv, body, {
+      responseType: 'text',
+    });
   }
-  GetRouteToAgents(body:any){
-    return this. http.post(this.CommonBaseUrl+this.routeToAgents,body)
+  GetRouteToAgents(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.routeToAgents, body);
   }
 
   AddUniqueCustomer(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.addUniqueCustomer, body)
+    return this.http.post(this.CommonBaseUrl + this.addUniqueCustomer, body);
   }
   UniqueExportCsv(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.uniqueExportCsv, body,{responseType:'text'})
+    return this.http.post(this.CommonBaseUrl + this.uniqueExportCsv, body, {
+      responseType: 'text',
+    });
   }
   AddHandledBot(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.addHandledBot, body)
+    return this.http.post(this.CommonBaseUrl + this.addHandledBot, body);
   }
   AddHandledBotCSV(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.addHandledBotCSV, body,{responseType:'text'})
+    return this.http.post(this.CommonBaseUrl + this.addHandledBotCSV, body, {
+      responseType: 'text',
+    });
   }
 
   Addinboundoutbound(body: any) {
     return this.http.post(this.CommonBaseUrl + this.addinboundoutbound, body);
   }
 
-  GetTwitterReport(body:any){
+  GetTwitterReport(body: any) {
     return this.http.post(this.CommonBaseUrl + this.twitterReport, body);
   }
 
-  GetTwitterSLAReport(body:any){
+  GetTwitterSLAReport(body: any) {
     return this.http.post(this.CommonBaseUrl + this.twitterSLAReport, body);
   }
 
-  GetTwitterProfileWiseReport(body:any){
-    return this.http.post(this.CommonBaseUrl + this.twitterProfileWiseReport, body);
+  GetTwitterProfileWiseReport(body: any) {
+    return this.http.post(
+      this.CommonBaseUrl + this.twitterProfileWiseReport,
+      body
+    );
   }
 
-  
- GetUserList(){
+  GetUserList() {
     return this.http.get(this.IdentityBaseUrl + this.getUserList);
   }
-  GetSentimentData(){
+  GetSentimentData() {
     return this.http.get(this.CommonBaseUrl + this.getSentimentData);
-
   }
 
   AddAgentPerformance(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.addAgentPerformance, body)
+    return this.http.post(this.CommonBaseUrl + this.addAgentPerformance, body);
   }
 
   GetShiftReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.shiftReport, body)
+    return this.http.post(this.CommonBaseUrl + this.shiftReport, body);
   }
 
-  GetWhatsAppReport(body:any){
-    return this.http.post(this.CommonBaseUrl + this.getWhatsAppRawDataReport, body)
+  GetWhatsAppReport(body: any) {
+    return this.http.post(
+      this.CommonBaseUrl + this.getWhatsAppRawDataReport,
+      body
+    );
   }
 
-  DownloadWhatsAppReport(body:any){
-    return this.http.post(this.CommonBaseUrl + this.downloadWhatsAppRawDataReport, body, { responseType: 'text' })
+  DownloadWhatsAppReport(body: any) {
+    return this.http.post(
+      this.CommonBaseUrl + this.downloadWhatsAppRawDataReport,
+      body,
+      { responseType: 'text' }
+    );
   }
 
-  DownloadSocialRawData(body:any){
-    return this.http.post(this.CommonBaseUrl + this.downloadSocialRawData, body, { responseType: 'text' })
+  DownloadSocialRawData(body: any) {
+    return this.http.post(
+      this.CommonBaseUrl + this.downloadSocialRawData,
+      body,
+      { responseType: 'text' }
+    );
   }
-  PostSocialRawData(body:any){
-    return this.http.post(this.CommonBaseUrl + this.postSocialRawData, body)
+  PostSocialRawData(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.postSocialRawData, body);
+  }
+  // facebookreport
+  Getfacebookreport(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.facebookReport, body);
+  }
+  GetfacebookProfile(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.facebookProfile, body);
+  }
+  // Executive Dashboard
+  GetAllSocialMatrics(body:any){
+    return this.http.post(this.CommonBaseUrl + this.getAllSocialMatrics, body)
   }
 }
 

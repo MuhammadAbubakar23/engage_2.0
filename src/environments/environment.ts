@@ -188,9 +188,10 @@ export const environment = {
       getWhatsAppRawDataReport:'Report/GetWhatsAppRawDataReport',
       downloadWhatsAppRawDataReport:'Report/GetWhatsAppCSVData',
       postSocialRawData:'Report/GetAllChannelRawDataReport',
-      downloadSocialRawData:'Report/GetAllChannelRawDataReportCSV'
-
-
+      downloadSocialRawData:'Report/GetAllChannelRawDataReportCSV',
+      facebookReport:'Report/GetFacebookReport',
+      facebookProfile:'Report/GetFacebookProfileWiseReport',
+      getAllSocialMatrics:'Report/GetAllSocialMediaMatricsReport'
     },
     facebook: {
       comments: 'Facebook/GetFbPost',

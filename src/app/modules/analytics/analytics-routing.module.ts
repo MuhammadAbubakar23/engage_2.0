@@ -92,7 +92,11 @@ const routes: Routes = [
     {
       path:'social-raw-data',
       loadComponent: () => import('./components/social-raw-data/social-raw-data.component').then(c => c.SocialRawDataComponent),
-    }
+    },
+    {
+      path:'feacbook-report',
+      loadComponent:()=>import('./components/facebook-report/facebook-report.component').then(c=>c.FacebookReportComponent)
+    },
   ]
   },
 
