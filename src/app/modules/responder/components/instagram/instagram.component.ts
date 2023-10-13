@@ -186,7 +186,7 @@ export class InstagramComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'focused') {
+        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
           // this.totalUnrespondedCmntCountByCustomer = res.contentCount.unrespondedCount;
           if (res.contentCount.contentType == 'IC') {
             this.totalUnrespondedCmntCountByCustomer =

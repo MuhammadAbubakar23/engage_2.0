@@ -4,7 +4,8 @@
     <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
       <p style="color: white"> Loading... </p>
     </ngx-spinner>
-    <div class="filter-toolbar p-0 border-0 collapse show" id="filter-bar" *ngIf="FlagForAssignToMe != 'assigned-to-me'">
+    <div class="filter-toolbar p-0 border-0 collapse show" id="filter-bar"
+      *ngIf="FlagForAssignToMe != 'assigned-to-me'">
       <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
         <li class="list-inline-item">
           <div class="dropdown">
@@ -446,7 +447,8 @@
         <li class="list-group-item border-0 all-check-boxes">
           <input *ngIf="flag != 'sent'" class="form-check-input me-1" type="checkbox" aria-label="..."
             data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Check All"
-            [checked]="masterSelected" value="m1" (change)="checkUncheckAll($event)" [disabled]="FlagForAssignToMe == 'assigned-to-me'">
+            [checked]="masterSelected" value="m1" (change)="checkUncheckAll($event)"
+            [disabled]="FlagForAssignToMe == 'assigned-to-me'">
           <div class="dropdown">
             <!-- <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -477,22 +479,23 @@
           <i class="fal fa-sliders-h"></i>
         </li>
         <li class="list-group-item border-0" (click)="Reload()" aria-label="..." data-bs-toggle="tooltip"
-          data-bs-placement="bottom" title="" data-bs-original-title="Refresh" [style.display]="FlagForAssignToMe == 'assigned-to-me'?'none':'block'">
+          data-bs-placement="bottom" title="" data-bs-original-title="Refresh"
+          [style.display]="FlagForAssignToMe == 'assigned-to-me'?'none':'block'">
           <i class="fal fa-redo-alt"></i>
         </li>
         <!-- <div [hidden]="flag == 'trash'"> -->
 
-          <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'archived'" (click)="Archive()"
-            aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-            data-bs-original-title="Archive" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
-            <i class="fal fa-archive"></i>
-          </li>
-          <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag != 'archived'" (click)="Unarchive()"
-            aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-            data-bs-original-title="Unarchive" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
-            <i class="fal fa-inbox-out"></i>
-          </li>
-          <!-- <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'spam'" (click)="Spam()" aria-label="..."
+        <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'archived'"
+          (click)="Archive()" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+          data-bs-original-title="Archive" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+          <i class="fal fa-archive"></i>
+        </li>
+        <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag != 'archived'"
+          (click)="Unarchive()" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+          data-bs-original-title="Unarchive" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+          <i class="fal fa-inbox-out"></i>
+        </li>
+        <!-- <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'spam'" (click)="Spam()" aria-label="..."
             data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Report Spam"
             [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
             <i class="fal fa-exclamation-circle"></i>
@@ -502,33 +505,33 @@
             data-bs-original-title="Undo Spam" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
             <i class="fal fa-rotate-exclamation"></i>
           </li> -->
-          <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun" (click)="Delete()"
-          [hidden]="flag == 'trash'"
-            aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-            data-bs-original-title="Delete" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
-            <i class="fal fa-trash"></i>
-          </li>
-          <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun" [hidden]="flag != 'trash'"
-            (click)="UndoDelete()" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-            data-bs-original-title="Undo Delete" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
-            <i class="fal fa-trash-slash"></i>
-          </li>
-          <!-- <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
+        <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun" (click)="Delete()"
+          [hidden]="flag == 'trash'" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+          data-bs-original-title="Delete" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+          <i class="fal fa-trash"></i>
+        </li>
+        <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun"
+          [hidden]="flag != 'trash'" (click)="UndoDelete()" aria-label="..." data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="" data-bs-original-title="Undo Delete"
+          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+          <i class="fal fa-trash-slash"></i>
+        </li>
+        <!-- <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
           data-bs-placement="bottom" title="" data-bs-original-title="Mark as Read"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="far fa-envelope-open"></i>
         </li> -->
-          <!-- <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'snoozed'" (click)="Snooze()"
+        <!-- <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'snoozed'" (click)="Snooze()"
             aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
             data-bs-original-title="Snooze" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
             <i class="fal fa-clock"></i>
           </li> -->
-          <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag != 'snoozed'" (click)="RemoveSnooze()"
-            aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-            data-bs-original-title="Remove Snooze" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
-            <i class="fal fa-trash-can-clock"></i>
-          </li>
-          <!-- <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun"
+        <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag != 'snoozed'"
+          (click)="RemoveSnooze()" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+          data-bs-original-title="Remove Snooze" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+          <i class="fal fa-trash-can-clock"></i>
+        </li>
+        <!-- <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun"
                     aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                     data-bs-original-title="Add to task" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
                     <i class="fal fa-clipboard-check"></i>
@@ -544,16 +547,16 @@
                     <i class="fal fa-tags"></i>
                 </li> -->
 
-          <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
-            data-bs-placement="bottom" title="" data-bs-original-title="More" [hidden]="flag == 'trash'"
-            [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
-            <div class="dropdown w-auto">
-              <button class="btn p-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <i class="fal fa-ellipsis-v-alt"></i>
-              </button>
-              <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1">
-                <!-- <li>
+        <li class="list-group-item border-0 after-select-fun" aria-label="..." data-bs-toggle="tooltip"
+          data-bs-placement="top" title="" data-bs-original-title="More" [hidden]="flag == 'trash'"
+          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+          <div class="dropdown w-auto">
+            <button class="btn p-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="fal fa-ellipsis-v-alt"></i>
+            </button>
+            <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1">
+              <!-- <li>
                                 <a class="dropdown-item" href="#">Mark as read </a>
                             </li>
                             <li>
@@ -562,16 +565,16 @@
                             <li>
                                 <a class="dropdown-item" href="#">Mark as important</a>
                             </li> -->
-                <li [hidden]="flag == 'starred'">
-                  <a class="dropdown-item" (click)="Starred()">Add star</a>
-                </li>
-                <li [hidden]="flag != 'starred'">
-                  <a class="dropdown-item" (click)="RemoveStarred()">Remove star</a>
-                </li>
-                <li [hidden]="flag != 'blacklist'">
-                  <a class="dropdown-item" (click)="Unblock()">Unblock User(s)</a>
-                </li>
-                <!-- <li>
+              <li [hidden]="flag == 'starred'">
+                <a class="dropdown-item" (click)="Starred()">Add star</a>
+              </li>
+              <li [hidden]="flag != 'starred'">
+                <a class="dropdown-item" (click)="RemoveStarred()">Remove star</a>
+              </li>
+              <li [hidden]="flag != 'blacklist'">
+                <a class="dropdown-item" (click)="Unblock()">Unblock User(s)</a>
+              </li>
+              <!-- <li>
                                 <a class="dropdown-item" href="#">Filter Messages like these</a>
                             </li>
                             <li>
@@ -581,11 +584,11 @@
                                 <a class="dropdown-item" href="#">Forward as Attachment</a>
                             </li> -->
 
-              </ul>
-            </div>
-          </li>
+            </ul>
+          </div>
+        </li>
         <!-- </div> -->
-        
+
       </ul>
       <!-- <div class="selected-row" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
         Selected <span class="badge twltte-bg rounded-pill">{{Ids.length}}</span>
@@ -625,18 +628,19 @@
                 [class.selected]="query.isChecked==true" class="alert" [ngClass]="[query.slaFlag == 'warning'?'alert-warning':'' || query.slaFlag == 'danger'?'alert-danger':'' ||
               query.slaFlag == 'unread'?'unread':'']">
                 <td *ngIf="flag != 'sent'" style="width: 40px;">
-                  <input [checked]="query.isChecked"
-                    value="{{query.id}}" (change)="isAllSelected($event, i, query.platform, query.profileId, group.createdDate)"
-                    class="form-check-input me-1" type="checkbox" aria-label="..." [disabled]="FlagForAssignToMe == 'assigned-to-me'">
+                  <input [checked]="query.isChecked" value="{{query.id}}"
+                    (change)="isAllSelected($event, i, query.platform, query.profileId, group.createdDate)"
+                    class="form-check-input me-1" type="checkbox" aria-label="..."
+                    [disabled]="FlagForAssignToMe == 'assigned-to-me'">
                 </td>
                 <td style="width: 40px;">
                   <i *ngIf="query.platform == 'Facebook'" class="fab fa-facebook navytext" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" title="" data-bs-original-title="Facebook" aria-label="Facebook"></i>
                   <i *ngIf="query.platform == 'Instagram'" data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                     data-bs-original-title="Instagram" aria-label="Instagram" class="fab fa-instagram"></i>
-                  <i *ngIf="query.platform == 'Email' || query.platform == 'OfficeEmail'"
-                    class="fal fa-envelope cherry" data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-                    data-bs-original-title="Email" aria-label="Email"></i>
+                  <i *ngIf="query.platform == 'Email' || query.platform == 'OfficeEmail'" class="fal fa-envelope cherry"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Email"
+                    aria-label="Email"></i>
                   <i *ngIf="query.platform == 'Youtube'" class="fab fa-youtube warning" data-bs-toggle="tooltip"
                     data-bs-placement="bottom" title="" data-bs-original-title="Youtube" aria-label="Youtube"></i>
                   <i *ngIf="query.platform == 'Twitter'" class="fab fa-twitter sky" data-bs-toggle="tooltip"
