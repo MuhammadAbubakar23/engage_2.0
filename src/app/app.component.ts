@@ -39,33 +39,33 @@ toasters: Toaster[] = [];
         }
 
       });
-      // if(localStorage.getItem('signalRConnectionId')){
-      //   if (this.signalRService.hubconnection == undefined) {
-      //     this.spinnerService.show();
-      //     this.commonService.SignOut().subscribe(()=>{
-      //       localStorage.clear();
-      //       this.router.navigateByUrl('/login');
-      //       this.spinnerService.hide();
-      //     },
-      //     (error)=>{
-      //       localStorage.clear();
-      //       this.router.navigateByUrl('/login');
-      //       this.spinnerService.hide();
-      //     })
-      //   }
-      // }
+      if(localStorage.getItem('signalRConnectionId')){
+        if (this.signalRService.hubconnection == undefined) {
+          this.spinnerService.show();
+          this.commonService.SignOut().subscribe(()=>{
+            localStorage.clear();
+            this.router.navigateByUrl('/login');
+            this.spinnerService.hide();
+          },
+          (error)=>{
+            localStorage.clear();
+            this.router.navigateByUrl('/login');
+            this.spinnerService.hide();
+          })
+        }
+      }
     
-    this.signalRService.reConnect();
+  //   this.signalRService.reConnect();
 
-    this.signalRService.removeTagDataListener();
-    this.signalRService.addTagDataListner();
-    this.signalRService.unRespondedCountDataListener();
-    this.signalRService.updateListAndDetailDataListener();
-    this.signalRService.replyDataListener();
-    this.signalRService.queryStatusDataListener();
-    this.signalRService.bulkQueryStatusDataListener();
-    this.signalRService.assignQueryResponseListner();
-    this.signalRService.applySentimentListner();
-    this.signalRService.updateMessageStatusDataListener();
+  //   this.signalRService.removeTagDataListener();
+  //   this.signalRService.addTagDataListner();
+  //   this.signalRService.unRespondedCountDataListener();
+  //   this.signalRService.updateListAndDetailDataListener();
+  //   this.signalRService.replyDataListener();
+  //   this.signalRService.queryStatusDataListener();
+  //   this.signalRService.bulkQueryStatusDataListener();
+  //   this.signalRService.assignQueryResponseListner();
+  //   this.signalRService.applySentimentListner();
+  //   this.signalRService.updateMessageStatusDataListener();
   }
 }
