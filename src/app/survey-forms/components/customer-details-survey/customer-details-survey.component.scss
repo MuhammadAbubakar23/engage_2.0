@@ -1,50 +1,50 @@
 body{
-    background-color: #fcfcfc;
-    font-family: 'Roboto', sans-serif;
-  }
-  .card{
-    border: 1px solid #f1f1f2;
-    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.03);
-  }
-  .morinaga-logo{
-    max-width: 160px;
-  }
-  .btn{
-    padding: 0.65rem 1.5rem;
-  }
-  .form-control,.form-select{
-    padding: 0.575rem 0.75rem;
-  }
-  .form-control:focus,.form-select:focus{
-    box-shadow: none;
-    outline:none;
-    border: 1px solid #afcfe9;
-  }
-  label{
-    color: #595959;
-  }
-  .timeline{
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  .timeline li{
-    position: relative;
-    padding-bottom: 30px;
-    display: flex;
-    width: 100%;
-
-  }
-  .timeline li:before{
-    content: "";
-    position: absolute;
-    left: 20px;
-    width: 1px;
-    background-color: #eee;
-    height: 100%;
+  background-color: #fcfcfc;
+  font-family: 'Roboto', sans-serif;
 }
- .timeline-icon{
-  background-color: #fafafa;
+.card{
+  border: 1px solid #f1f1f2;
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.03);
+}
+.morinaga-logo{
+  max-width: 160px;
+}
+.btn{
+  padding: 0.65rem 1.5rem;
+}
+.form-control,.form-select{
+  padding: 0.575rem 0.75rem;
+}
+.form-control:focus,.form-select:focus{
+  box-shadow: none;
+  outline:none;
+  border: 1px solid #afcfe9;
+}
+label{
+  color: #595959;
+}
+.timeline{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.timeline li{
+  position: relative;
+  padding-bottom: 30px;
+  display: flex;
+  width: 100%;
+
+}
+.timeline li:before{
+  content: "";
+  position: absolute;
+  left: 20px;
+  width: 1px;
+  background-color: #eee;
+  height: 100%;
+}
+.timeline-icon{
+background-color: #fafafa;
 -webkit-transition: all .21s ease-in;
 transition: all .21s ease-in;
 position: relative;    width: 40px;
@@ -84,10 +84,44 @@ letter-spacing: 2px;
 color: #aaa;
 left: 0;
 }
+@media screen and (max-width: 575px) {
+.morinaga-wrapper .card-body.p-5 {
+padding:8px !important;
+}
+.timeline-icon{
+width: 32px;
+height: 32px;
+-webkit-box-flex: 0;
+-ms-flex: 0 0 32px;
+flex: 0 0 32px;
+}
+.timeline li article {
+padding-left: 12px !important;
+
+}
+.timeline li article:before {
+
+content: ".";
+
+}
+.morinaga-main{
+margin:0 !important;
+padding-bottom: 100px;
+}
+.card-footer {
+position: fixed;
+padding: 16px !important;
+bottom: 0;
+left: 0;
+width: 100%;
+z-index: 1;
+background: #fff;
+border-top: 1px solid #c3c3c3 !important;
+}
+}
  
 
   .scroll{
-
-    height: 900px;
+    height: calc(100vh - 200px);
     overflow: scroll;
   }

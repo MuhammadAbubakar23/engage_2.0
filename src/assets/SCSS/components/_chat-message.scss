@@ -363,7 +363,8 @@
   .input-group{
     justify-content: flex-start;
     .form-control{
-      height: 35px;
+      // height: 35px;
+      height: 60px;
       font-size: 1rem;
       &::placeholder{
         color:$silver;

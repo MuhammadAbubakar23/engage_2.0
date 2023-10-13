@@ -148,7 +148,7 @@ export class EmailComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'focused') {
+        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
         if (
           res.contentCount.contentType == 'Mail' ||
           res.contentCount.contentType == 'OMail'
