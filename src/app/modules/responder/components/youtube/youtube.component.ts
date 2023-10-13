@@ -308,7 +308,7 @@ export class YoutubeComponent implements OnInit {
 
           this.YoutubeData.forEach((c: any) => {
             this.postId = c.postId;
-            this.youtubePostStats();
+            // this.youtubePostStats();
           });
         });
     } else if (this.slaId != null || undefined) {
@@ -368,7 +368,7 @@ export class YoutubeComponent implements OnInit {
 
         this.YoutubeData.forEach((c: any) => {
           this.postId = c.postId;
-          this.youtubePostStats();
+          // this.youtubePostStats();
         });
       });
     }
@@ -428,7 +428,7 @@ export class YoutubeComponent implements OnInit {
 
         this.YoutubeData.forEach((c: any) => {
           this.postId = c.postId;
-          this.youtubePostStats();
+          // this.youtubePostStats();
         });
       });
     }
@@ -686,6 +686,10 @@ export class YoutubeComponent implements OnInit {
   }
 
   removeTagFromFeed(id: any, comId: string) {
+    if (
+      this.flag == 'focused' ||
+      this.flag == 'assigned-to-me'
+    ) {
     this.insertTagsForFeedDto.feedId = comId.toString();
     this.insertTagsForFeedDto.tagId = id;
     this.insertTagsForFeedDto.feedType = 'YC';
@@ -703,6 +707,7 @@ export class YoutubeComponent implements OnInit {
       }
     );
   }
+}
 
   commentStatus(comId: any) {
     this.commentStatusDto.id = comId;

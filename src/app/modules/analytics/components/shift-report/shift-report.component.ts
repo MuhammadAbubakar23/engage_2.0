@@ -4,12 +4,13 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
  import { CommonModule, DatePipe } from '@angular/common'
 import * as echarts from 'echarts';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from "../../../../shared/shared.module";
 @Component({
-  standalone: true,
-  selector: 'app-shift-report',
-  templateUrl: './shift-report.component.html',
-  styleUrls: ['./shift-report.component.scss'],
-  imports: [CommonModule, FormsModule],
+    standalone: true,
+    selector: 'app-shift-report',
+    templateUrl: './shift-report.component.html',
+    styleUrls: ['./shift-report.component.scss'],
+    imports: [CommonModule, FormsModule, SharedModule]
 })
 export class ShiftReportComponent implements OnInit {
   shiftReportData: any;
@@ -19,6 +20,7 @@ export class ShiftReportComponent implements OnInit {
   dateWise: any[] = [];
   tagsList: any[] = [];
   allDates: any[] = [];
+  newAlldates:any[]=[]
   totaltags: number = 0;
   slectedtagId: any[] = [];
   selectedtagName: any = '';
@@ -30,8 +32,10 @@ export class ShiftReportComponent implements OnInit {
   // currentdate:any
   startDate = '';
   endDate = '';
+  searchText:string=''
   maxEndDate: any;
   currentDate: any;
+  totalinboundCounts:any
   tags: any;
   TagsStats: any[] = [];
   tagsStatsTotalCounts: any;
@@ -39,6 +43,7 @@ export class ShiftReportComponent implements OnInit {
   commaSeparatedValuesLink: any;
   numberArrayLink: any;
   alltotalCount: any;
+  daysDifference:number=0
   allTotalCountsfb: any[] = [];
   allTotalCountTw: any[] = [];
   allTotalCountLink: any[] = [];
@@ -63,61 +68,123 @@ export class ShiftReportComponent implements OnInit {
     this.getShfitReport();
     this.getAlltags();
     this.getAgentsTeamList();
+  this.calculateDateRange()
   }
-
+keywordslist:any[]=[]
   getAlltags() {
     this.commandataService.GetTagsList().subscribe((res: any) => {
+      
       console.log('All tags===>', res);
       this.tagsList = res;
+      this.tagsList.forEach((xyz:any)=>{
+        xyz.keywordList.forEach((abc:any)=>{
+          this.keywordslist.push(abc)
+          console.log("this.keywordslist===>",this.keywordslist)
+        })
+      })
     });
   }
   convertedintoArray: any;
   graphdate: any[] = [];
   noData: boolean = false;
-
+ 
+  calculateDateRange() {
+   
+  }
+  
+  
   getShfitReport() {
+    this.allDates = [];
     if (this.startDate == '' && this.endDate == '') {
       const today = this.currentDate;
       this.endDate = this.datePipe.transform(today, 'YYYY-MM-dd') || '';
 
-      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 3);
+      let prevDate = this.currentDate.setDate(this.currentDate.getDate()-2 );
       this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     } else if (this.startDate != '' && this.endDate != '') {
       this.startDate = this.startDate;
       this.endDate = this.endDate;
     }
-
     let obj = {
       fromDate: this.startDate,
       toDate: this.endDate,
       shiftId: this.shiftime,
       tags: this.changedateintostring,
     };
-    if (this.startDate != '' || this.endDate != '') {
+
+    if (this.startDate && this.endDate) {
+      const startDateObj = new Date(this.startDate);
+      const endDateObj = new Date(this.endDate);
+      const timeDifference = endDateObj.getTime() - startDateObj.getTime();
+      this.daysDifference=timeDifference / (1000 * 3600 * 24)
+    }
+    // find date
+    // if (this.startDate && this.endDate) {
+    //   const start = new Date(this.startDate);
+    //   const end = new Date(this.endDate);
+    //   const currentDate = new Date();
+   
+  
+    //   if (start < currentDate) {
+    //     start.setDate(currentDate.getDate() + 1);
+    //   }
+  
+    //   while (start <= end) {
+    //     const currentDateISO = start.toISOString().split('T')[0];
+    //     this.allDates.push(currentDateISO);
+    //     start.setDate(start.getDate() + 1);
+    //   }
+  
+    
+    // }
+    
+//  if(this.endDate<=this.startDate){
+//   this.allDates.push(this.startDate)
+//  }
+         this.allTotalCountInsta = [];
+          this.allTotalCountLink = [];
+          this.allTotalCountsfb = [];
+          this.allTotalCountTw = [];
+          this.dateWise = [];
       this.commandataService.GetShiftReport(obj).subscribe((res: any) => {
-        this.allTotalCountInsta = [];
-        this.allTotalCountLink = [];
-        this.allTotalCountsfb = [];
-        this.allTotalCountTw = [];
-        this.dateWise = [];
-        this.allDates = [];
-        
+       
         this.shiftReportData = res;
         this.shiftChannelData = res.channelData;
         this.dateWiseTotalCounts = res.dateWiseTotal;
+        this.totalinboundCounts=res.totalIboundCount;
+    
+        
+        if(this.totalinboundCounts==0){
+          this.allTotalCountInsta= new Array(this.daysDifference).fill(0)
+          this.allTotalCountLink=new Array(this.daysDifference).fill(0)
+          this.allTotalCountsfb=new Array(this.daysDifference).fill(0)
+          this.allTotalCountTw=new Array(this.daysDifference).fill(0)
 
+        }
+        // else{
+        //   this.allTotalCountInsta = [];
+        //   this.allTotalCountLink = [];
+        //   this.allTotalCountsfb = [];
+        //   this.allTotalCountTw = [];
+        //   this.dateWise = [];
+          
+
+     
+          
+        // }
         this.shiftChannelData.forEach((data: any) => {
           data.dateWise.forEach((item: any) => {
             if (!this.allDates.includes(item.date.split('T')[0])) {
               this.allDates.push(item.date.split('T')[0]);
-
+               
               if (data.platform == 'Facebook') {
+                
                 data.dateWise.forEach((singleItem: any) => {
                   this.allTotalCountsfb.push(singleItem.totalCount);
                 });
               }
             }
-            if (data.platform == 'Twitter') {
+            if (data.platform == 'WhatsApp') {
               data.dateWise.forEach((item: any) => {
                 this.allTotalCountTw.push(item.totalCount);
               });
@@ -134,21 +201,12 @@ export class ShiftReportComponent implements OnInit {
             }
           });
         });
-
         this.TagsStats = res.tagData.shiftReportTag;
         this.tagsStatsTotalCounts = res.tagData.totalTagsCount;
 
-        console.log('this.TagsStats==>', this.TagsStats);
-        debugger
-        if (this.allDates.length === 0) {
-          this.noData = true;
-        } else {
-          this.noData = false;
-        this.getCharts()
-        }
-        // this.getCharts();
+        this.getCharts();
       });
-    }
+    
   }
 
   selectedunselectedtag(tag: any) {
@@ -175,6 +233,7 @@ export class ShiftReportComponent implements OnInit {
   }
 
   getCharts() {
+    
     var chartDom = document.getElementById('shiftReport')
     var myChart = echarts.init(chartDom);
     var option;
@@ -187,7 +246,7 @@ export class ShiftReportComponent implements OnInit {
         trigger: 'axis',
       },
       _legend: {
-        data: ['Twitter', 'LinkedIn', 'Facebook', 'Instagram'],
+        data: ['WhatsApp', 'LinkedIn', 'Facebook', 'Instagram'],
       },
       get legend() {
         return this._legend;
@@ -216,7 +275,7 @@ export class ShiftReportComponent implements OnInit {
       },
       series: [
         {
-          name: 'Twitter',
+          name: 'WhatsApp',
           type: 'line',
           data: this.allTotalCountTw,
         },
@@ -265,11 +324,16 @@ export class ShiftReportComponent implements OnInit {
     return dateWiseItem ? dateWiseItem.totalCount : 0;
   }
 
-  get maxDate(): string {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = (today.getMonth() + 1).toString().padStart(2, '0');
-    const day = today.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
+  getStartDate(){
+    this.endDate=''
+  }
+  getEndDate(){
+    if(this.endDate>=this.startDate){
+      this.getShfitReport()
+    }
+    else{
+      alert("EndDate is lessthen StartDate")
+      this.endDate=''
+    }
   }
 }

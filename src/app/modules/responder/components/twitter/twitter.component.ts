@@ -190,10 +190,13 @@ export class TwitterComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'focused') {
-          this.updateUnRespondedCountDataListener(res);
+        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
+        if (res.contentCount.contentType == 'TT') {
+          this.totalUnrespondedCmntCountByCustomer =
+            res.contentCount.unrespondedCount;
         }
-      });
+      }
+    });
     this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
       .subscribe((res) => {

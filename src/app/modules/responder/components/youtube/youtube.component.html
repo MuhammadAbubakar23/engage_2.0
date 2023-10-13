@@ -52,8 +52,7 @@
                                             <div class="post-img-wrap whatsappImgModalBtn" type="button">
                                                 <a class="video-link"
                                                     *ngFor="let attachment of youtubedata.post.attachments">
-                                                    <img *ngIf="attachment.description == 'High'"
-                                                        src={{attachment.attachmentUrl}}>
+                                                    <img src={{attachment.attachmentUrl}}>
                                                 </a>
                                             </div>
 
@@ -61,7 +60,7 @@
                                                 <p class="card-text nignt mb-0">
                                                     {{youtubedata.post.caption}}</p>
                                             </div>
-                                            <div class="card-footer pb-0" *ngIf="!youtubedata.post.postStats">
+                                            <!-- <div class="card-footer pb-0" *ngIf="!youtubedata.post.postStats">
                                                 <p class="card-text ms-3 single-img-time">
                                                 </p>
                                                 <div class="silver">
@@ -72,14 +71,14 @@
                                                     <a class="message-actionItem coal me-3">
                                                         0 Comments
                                                     </a>
-                                                    <!-- <a class="message-actionItem coal me-3">
+                                                    <a class="message-actionItem coal me-3">
                                                         23 Shares
-                                                    </a> -->
+                                                    </a>
 
-                                                    <!-- <a class="message-actionItem coal me-3">
+                                                    <a class="message-actionItem coal me-3">
                                                         <i class="fas fa-thumbs-down radical"></i>
                                                         100
-                                                    </a> -->
+                                                    </a>
                                                     <a class="message-actionItem coal me-2">
                                                         0 Views
                                                     </a>
@@ -97,20 +96,20 @@
                                                     <a class="message-actionItem coal me-3">
                                                         {{youtubedata.post?.postStats?.commentCount}} Comments
                                                     </a>
-                                                    <!-- <a class="message-actionItem coal me-3">
+                                                    <a class="message-actionItem coal me-3">
                                                         23 Shares
-                                                    </a> -->
+                                                    </a>
 
-                                                    <!-- <a class="message-actionItem coal me-3">
+                                                    <a class="message-actionItem coal me-3">
                                                         <i class="fas fa-thumbs-down radical"></i>
                                                         100
-                                                    </a> -->
+                                                    </a>
                                                     <a class="message-actionItem coal me-2">
                                                         {{youtubedata.post?.postStats?.viewCount}} Views
                                                     </a>
                                                 </div>
                                                 <p></p>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -183,7 +182,7 @@
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                     </div>
-                                                    <div class="message-bottom">
+                                                    <div class="message-bottom" *ngIf="flag == 'focused' || flag == 'assigned-to-me'">
                                                         <div class="row">
                                                             <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                                 <div
@@ -503,7 +502,7 @@
     </div>
 </div>
 
-<div class="msgTypingField shadow-lg">
+<div class="msgTypingField shadow-lg" *ngIf="flag == 'focused' || flag == 'assigned-to-me'">
     <div *ngFor="let youtubedata of YoutubeData">
         <div class="attachment-block d-none">
             <div class="card-body p-3">

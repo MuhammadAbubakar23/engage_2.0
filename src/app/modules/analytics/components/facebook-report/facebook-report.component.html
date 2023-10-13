@@ -1,0 +1,651 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+[fullScreen]="false">
+ <p style="color: white"> Loading... </p>
+</ngx-spinner>
+ <div class="content-box-wrapper d-flex w-100">
+    <div class="middle-content d-flex">
+        <div class="d-grid w-100">
+            <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1"
+                style="overflow: auto; outline: none; overflow-x: hidden; ">
+                <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
+                    <div class="report-toolbar mb-4">
+                        <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+                            <li class="list-inline-item">
+                                <div class="iconholder">
+                               
+                                    <input name=""class="form-control flatpickr-input"
+                                    [max]="maxEndDate"
+                                        placeholder="Date" [(ngModel)]="startDate" type="date">
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="iconholder">
+                               
+                                    <input name=""class="form-control flatpickr-input"
+                                    [max]="maxEndDate"
+                                        placeholder="Date" (change)="getAllfeacebookData()" [(ngModel)]="enddate" type="date">
+                                </div>
+                            </li>
+                            <!-- <li class="list-inline-item">
+                                <div class="dropdown icondropdown w-auto mx-2">
+                                    <button class="btn dropdown-toggle" type="button" id="columnssort"
+                                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                        Profile
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="columnssort">
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="#0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" id="keprofile">
+                                                    <label class="form-check-label" for="keprofile">
+                                                        <i class="fa-brands fa-facebook facebook pe-2"></i> K-Electric
+                                                    </label>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li> -->
+                            <!-- <li class="list-inline-item ms-auto">
+                                <div class="btn-group buttonfilter" role="group"
+                                    aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
+                                        autocomplete="off" checked="">
+                                    <label class="btn btn-outline-secondary" for="btnradio1">15</label>
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-secondary" for="btnradio2">30</label>
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-secondary" for="btnradio3">60</label>
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-secondary" for="btnradio4">90</label>
+                                </div>
+                            </li> -->
+
+
+                        </ul>
+                    </div>
+                    <div class="row align-items-start h-auto mb-4">
+
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium berryBg mb-4">
+                                                <i class="fa-light fa-thumbs-up"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Likes</p>
+                                        </div>
+                                        <h2>{{totallikes}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium radicalBg mb-4">
+                                                <i class="fa-light fa-comments"></i>
+                                            </span>
+                                            <p class="coal mb-0"> COMMENTS</p>
+                                        </div>
+                                        <h2>{{totalMessagePostCommentsAndreplies}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium mintBg mb-4">
+                                                <i class="fa-light fa-share-all"></i>
+                                            </span>
+                                            <p class="coal mb-0"> SHARES</p>
+                                        </div>
+                                        <h2>{{totalShares}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-start h-auto mb-5">
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded">
+                                <h5 class="section-heading mb-4 p-0">Followers by Age</h5>
+                                <ul class="list-0 statlist list-lg" *ngFor="let fans of  fansGenderAge">
+                                    <li>
+                                        <span class="coal">{{fans?.ageRange}}</span>
+                                        <span class="fw-semibold">{{fans?.maleFemaleCombinedCount}}</span>
+                                    </li>
+                                
+                                    <!-- <li>
+                                        <span class="coal">18-24</span>
+                                        <span class="fw-semibold">5006236</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">25-34</span>
+                                        <span class="fw-semibold">7006237</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">35-44</span>
+                                        <span class="fw-semibold">1002230</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">45-64</span>
+                                        <span class="fw-semibold">606230</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">65+</span>
+                                        <span class="fw-semibold">56230</span>
+                                    </li> -->
+
+                                </ul>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded">
+                                <h5 class="section-heading mb-3 p-0">Followers by Gender </h5>
+                                <div class="pt-5 pb-4 px-4">
+                                    <div class="row mb-4">
+                                        <div class="col-md-6 border-end">
+                                            <h3>{{totalmaleCountK}}K</h3>
+                                            <h6 class="fw-normal">Male Candidates</h6>
+                                        </div>
+                                        <div class="col-md-6 ps-4">
+                                            <p class="m-0 sky"><i class="fa-light fa-mars"></i> Male</p>
+                                            <div class="progress progress-sky" role="progressbar"
+                                                aria-label="Example with label" aria-valuenow="25" aria-valuemin="0"
+                                                aria-valuemax="100">
+                                                <div class="progress-bar"  [style.width.%]="malepersentage">{{malepersentage}}%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 border-end">
+                                            <h3>{{totalfemaleCountK}}K</h3>
+                                            <h6 class="fw-normal">Female Candidates</h6>
+                                        </div>
+                                        <div class="col-md-6 ps-4">
+                                            <p class="m-0 cherry"><i class="fa-light fa-venus"></i> FeMale</p>
+                                            <div class="progress progress-cheery" role="progressbar"
+                                                aria-label="Example with label" aria-valuenow="25" aria-valuemin="0"
+                                                aria-valuemax="100">
+                                                <div class="progress-bar" [style.width.%]="femalepersentage">{{femalepersentage}}%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">Publishin behavior</h5>
+                        <div class="graphcontainer align-items-end mb-5">
+                            <div class="text-center">
+                               <div id="publishin" style="height: 500px; width: 900px;"></div>
+                               <!-- <div id="container" style="height: 500px; width: 900px;"></div> -->
+                            </div>
+                        </div>
+
+                        <!-- <div class="row justify-content-between px-5">
+                            <div class="col-md-5">
+                                <ul class="list-0 statlist list-lg mb-3">
+                                    <li>
+                                        <span class="coal">Page Likes </span>
+                                        <span class="fw-semibold">{{numberofPagelikes}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">Page Unlikes </span>
+                                        <span class="fw-semibold">{{numberofpageUnlikes}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">Net Difference </span>
+                                        <span class="fw-semibold">{{netDeffernce}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="card dashboard-card">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <span class="iconButton medium mintBg mb-4">
+                                                    <i class="fa-light fa-arrow-up"></i>
+                                                </span>
+                                                <p class="coal mb-0"> Likes Increased</p>
+                                            </div>
+                                            <h3>23,906.25%</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div  class="row justify-content-between px-5">
+                            <div class="col-md-5 px-4">
+                                <ul class="list-0 statlist list-lg mb-3">
+                                    <li>
+                                        <span class="coal">Page Posts </span>
+                                        <span class="fw-semibold">{{pageperPost}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">Users Posts </span>
+                                        <span class="fw-semibold">{{userPerPost}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">Total Posts </span>
+                                        <span class="fw-semibold">{{totalNumberofpost}}</span>
+                                    </li>
+                                </ul>
+                       
+                            </div>
+                            <div class="col-md-5">
+                                <div class="card dashboard-card">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <span class="iconButton medium radicalBg mb-4">
+                                                    <i class="fa-light fa-arrow-down"></i>
+                                                </span>
+                                                <p class="coal mb-0"> Post Decreased</p>
+                                            </div>
+                                            <h3> 57.77%</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     
+                        
+                    </div>
+
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">Audience Growth </h5>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="graphcontainer align-items-end">
+                                    <div class="text-center">
+                                      <div id="growth" style="height: 300px; width: 690px; margin-right: 20px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 px-4">
+                                <ul class="list-0 statlist list-lg mb-3">
+                                    <li>
+                                      <span class="coal"> Page Likes</span>
+                                      <span class="fw-semibold">{{numberofPagelikes}}</span>
+                                    </li>
+                                    <li>
+                                      <span class="coal">Page Unlikes</span>
+                                      <span class="fw-semibold">{{numberofpageUnlikes}}</span>
+                                    </li>
+                                    <li>
+                                      <span class="coal"> Net Difference</span>
+                                      <span class="fw-semibold">{{netDeffernce}}</span>
+                                    </li>
+                                  </ul>
+                                  <div class="card dashboard-card">
+                                    <div class="card-body">
+                                      <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                          <span class="iconButton medium mintBg mb-4">
+                                            <i class="fa-light fa-arrow-up"></i>
+                                          </span>
+                                          <p class="coal mb-0"> Likes Increased</p>
+                                        </div>
+                                        <h3> 57.77%</h3>
+                                      </div>
+                                    </div>
+                                  </div>
+                              </div>
+                           
+                        </div>
+                    </div>
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">Audience Engagements</h5>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="graphcontainer align-items-end">
+                                    <div class="text-center">
+                                      <div id="engagement" style="height: 500px; width: 700px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 px-4">
+                                <ul class="nav nav-tabs linetabs mb-3" id="myTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                            data-bs-target="#home-tab-pane" type="button" role="tab"
+                                            aria-controls="home-tab-pane" aria-selected="true">Engagements</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                            data-bs-target="#profile-tab-pane" type="button" role="tab"
+                                            aria-controls="profile-tab-pane" aria-selected="false"
+                                            tabindex="-1">SLA</button>
+                                    </li>
+
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
+                                        aria-labelledby="home-tab" tabindex="0">
+                                        <ul class="list-0 statlist list-lg mb-3">
+                                            <li>
+                                                <span class="coal"> Likes </span>
+                                                <span class="fw-semibold">{{totallikes}}</span>
+                                            </li>
+                                            <li>
+                                                <span class="coal"> Comments </span>
+                                                <span class="fw-semibold">{{totalComments}}</span>
+                                            </li>
+                                            <li>
+                                                <span class="coal"> Chat Messages </span>
+                                                <span class="fw-semibold">{{totalMessageAndrepliesCount}}</span>
+                                            </li>
+                                            <li>
+                                                <span class="coal"> Shares </span>
+                                                <span class="fw-semibold">{{totalShares}}</span>
+                                            </li>
+                                            <li>
+                                                <span class="coal"> Total Engagement </span>
+                                                <span class="fw-semibold">{{totalengagement}}</span>
+                                            </li>
+                                        </ul>
+                                        <div class="card dashboard-card">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <div>
+                                                        <span class="iconButton medium mintBg mb-4">
+                                                            <i class="fa-light fa-arrow-up"></i>
+                                                        </span>
+                                                        <p class="coal mb-0"> Engagements Increased </p>
+                                                    </div>
+                                                    <h3>220.89%</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel"
+                                        aria-labelledby="profile-tab" tabindex="0">
+                                        <ul class="list-0 statlist list-lg mb-3">
+                                            <li>
+                                                <span class="coal"> Replies within 120 minutes </span>
+                                                <span class="fw-semibold">{{replieswithin}}</span>
+                                            </li>
+                                            <li>
+                                                <span class="coal"> Replies after 120 minutes </span>
+                                                <span class="fw-semibold">{{repliesAfter}}</span>
+                                            </li>
+                                            <li>
+                                                <span class="coal"> Total Catered Workload </span>
+                                                <span class="fw-semibold">{{totalCateredWorkload}}</span>
+                                            </li>
+
+                                        </ul>
+                                        <div class="card dashboard-card">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <div>
+                                                        <span class="iconButton medium mintBg mb-4">
+                                                            <i class="fa-light fa-arrow-up"></i>
+                                                        </span>
+                                                        <p class="coal mb-0"> 120 minutes SLA</p>
+                                                    </div>
+                                                    <h3> 85.21%</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-5 align-items-start">
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded">
+                                <div class="d-flex align-items-center mb-4">
+                                    <span class="iconButton large rounded-pill">
+                                        <img src="../images/ke.png" class="img-fluid rounded-pill" alt="">
+                                    </span>
+                                    <h6 class="ms-3">K-Electric</h6>
+                                </div>
+                                <div class="row align-items-start mb-2">
+                                    <div class="col">
+                                        <small class="coal">Fans</small>
+                                        <p class="fw-semibold">{{totallikes}}</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="coal">Fans Increased</small>
+                                        <p class="fw-semibold">23,906.25%</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="coal">Posts Sent</small>
+                                        <p class="fw-semibold">1266</p>
+                                    </div>
+                                </div>
+                                <div class="row align-items-start">
+                                    <div class="col">
+                                        <small class="coal">Engagements</small>
+                                        <p class="fw-semibold">{{totalengagement}}</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="coal"> Engagements per Follower</small>
+                                        <p class="fw-semibold">122664</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="coal">Link Clicks </small>
+                                        <p class="fw-semibold">{{faecbookresponce?.totalLinkClicks}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <h6>Agent Replies</h6>
+                                </div>
+                                <div class="row mb-2 align-items-start">
+                                    <div class="col">
+                                        <small class="coal">Customer Posts </small>
+                                        <p class="fw-semibold">{{agentMessages?.customerPost}}</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="coal"> Customer Comments </small>
+                                        <p class="fw-semibold">{{agentMessages?.customerComment}}</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="coal"> Customer Messages </small>
+                                        <p class="fw-semibold">{{agentMessages?.customerMessage}}</p>
+                                    </div>
+                                </div>
+                                <div class="row align-items-start">
+                                    <div class="col">
+                                        <small class="coal">Agent Comments </small>
+                                        <p class="fw-semibold">{{agentMessages?.agentComment}}</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="coal">Agent Messages </small>
+                                        <p class="fw-semibold">{{agentMessages?.agentMessage}}</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="coal"> Mark As Completed </small>
+                                        <p class="fw-semibold">{{faecbookresponce?.markCompleted}}</p>
+                                    </div>
+                                </div>
+                                <div class="pt-3 border-top d-flex align-items-center justify-content-between">
+                                    <span class="sky">Total Completed </span>
+                                    <p class="fw-semibold night mb-0">71559</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">REACTIONS GRAPH</h5>
+                        <div class="graphcontainer align-items-end">
+                            <div class="text-center">
+                                <div id="reaction" style="height: 400px; width: 900px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded mb-5">
+                                <h5 class="section-heading mb-4 p-0">TOTAL PEOPLE WHO VIEWED</h5>
+                                <div class="graphcontainer align-items-end">
+                                    <div class="text-center">
+                                        <div id="totalpeople" style="height: 400px; width: 500px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded mb-5">
+                                <h5 class="section-heading mb-4 p-0">PAGE REACHABILITY</h5>
+                                <div class="graphcontainer align-items-end">
+                                    <div class="text-center">
+                                       <div id="pagereachablity" style="height: 400px; width: 500px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">Recent Posts (Top 5)</h5>
+                        <div class="table-section">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Created Date </th>
+                                        <th> </th>
+                                        <th>Post </th>
+                                        <th>Type </th>
+                                        <th>Reach </th>
+                                        <th>Post Clicks </th>
+                                        <th>Reactions </th>
+                                        <th>Comments </th>
+                                        <th>Shares </th>
+                                        <th>Engagment Rate </th>
+                                        <th>Grade </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let recents  of recentPosts">
+                                        <td>{{recents?.strCreatedDate}} <small>{{recents?.strCreatedTime}}</small></td>
+                                        <td>
+                                            <span class="iconButton medium rounded-pill">
+                                                <!-- <img src="../images/ke.png" class="img-fluid rounded-pill" alt=""> -->
+                                            </span>
+                                        </td>
+                                        <td>
+                                         {{recents?.messageText}}
+                                        </td>
+                                        <td><span class="iconButton small">
+                                                <i class="fa-light fa-pencil"></i>
+                                           {{recents?.type}} </span> </td>
+                                        <td>{{recents?.postReach}}</td>
+                                        <td>{{recents?.postClicks}}</td>
+                                        <td>{{recents?.postReactions}}</td>
+                                        <td>{{recents?.postComments}}</td>
+                                        <td>{{recents?.postShares}}</td>
+                                        <td>{{recents?.engagementRate}} %</td>
+                                        <td>{{recents?.postGrade
+                                        }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row align-items-start mb-5" >
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded mb-5">
+                                <h5 class="section-heading mb-5 p-0">Top {{cutomerdata ?.length}} Customers</h5>
+                                <div class="table-section" style="height: 410px;">
+                                    <table class="table table-sm"  >
+                                        <thead>
+                                            <tr >
+                                            <th></th>
+                                                <th> Name </th>
+                                                <th> Posts </th>
+                                                <th> Comments </th>
+                                                <th> Messages</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of cutomerdata">
+                                                <td>
+                                                    <span
+                                                        class="iconButton medium rounded-pill mintTransBg night fw-bolder">
+                                                        <img src={{item.profilePic}} style="height: 40px; width: 150px; border-radius: 50%;" />
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <a href="" class="sky fw-semibold">{{item?.name}}</a>
+                                                </td>
+                                                <td>{{item?.post}}</td>
+                                                <td>{{item?.comment}}</td>
+                                                <td>{{item?.message}}</td>
+                                            </tr>
+                                            
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded mb-5">
+                                <h5 class="section-heading mb-4 p-0">Top 10 External Sources
+                                </h5>
+                                <div class="graphcontainer align-items-end">
+                                    <div class="text-center">
+                                       <div id="externalsources" style="height: 440px; width: 900px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                    <div class="scrollbar-thumb scrollbar-thumb-x"
+                        style="width: 1457px; transform: translate3d(0px, 0px, 0px);"></div>
+                </div>
+                <div class="scrollbar-track scrollbar-track-y" style="display: block;">
+                    <div class="scrollbar-thumb scrollbar-thumb-y"
+                        style="height: 24.4854px; transform: translate3d(0px, 0px, 0px);"></div>
+                </div> -->
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+</div>

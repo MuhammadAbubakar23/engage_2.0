@@ -8,40 +8,34 @@
                         <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
                             <li class="list-inline-item">
                                 <div class="iconholder">
-                                  
-                                    <input name="" id="datepickerrange" class="form-control flatpickr-input"
-                                    [(ngModel)]="startDate"
-                                    (change)="getBystartDate()"
-                                        placeholder=""  type="date">
+                                    <input name="" id="datepickerrange" class="form-control flatpickr-input" [max]="maxEndDate"
+                                        [(ngModel)]="startDate" (change)="resetEndDate()" placeholder="" type="date">
                                 </div>
                             </li>
                             <li class="list-inline-item">
                                 <div class="iconholder">
-                                  
-                                    <input name="" id="datepickerrange"
-                                    [(ngModel)]="EndDate"
-                                    (change)="getByEndDate()"
-                                     class="form-control flatpickr-input"
-                                        placeholder="Date"  type="date">
+
+                                    <input name="" id="datepickerrange" [(ngModel)]="endDate" (change)="getHandleBot()"  [max]="maxEndDate"
+                                        class="form-control flatpickr-input" placeholder="Date" type="date">
                                 </div>
                             </li>
-
                             <li class="list-inline-item ms-auto">
-                                <button class="btn btn-success">Export as CSV</button>
+                                <button class="btn btn-success" (click)="exportToCSV()">Export as CSV</button>
                             </li>
 
                         </ul>
                     </div>
                     <div class="filter-container border-0">
                         <ul class="list-group list-group-horizontal border-0">
-                            <li class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle" aria-label="..."
-                                data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Refresh"
-                                aria-describedby="tooltip946912">
+                            <li class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle"
+                                aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                data-bs-original-title="Refresh" aria-describedby="tooltip946912">
                             </li>
                         </ul>
                         <div class="pagination-bar">
                             <div class="dropdown">
-                                <button class="btn iconHover" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn iconHover" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     {{startingPoint}}-{{endingPoint}} of {{ TotalCount }}
                                 </button>
                             </div>
@@ -54,7 +48,7 @@
                         </div>
                     </div>
                     <div class="card p-3 iceBg tableScroll" data-scrollbar="true" tabindex="-1"
-                    style="overflow: auto; outline: none;">
+                        style="overflow: auto; outline: none;">
                         <div class="table-section table-scroll-x">
                             <table class="table table-sm">
                                 <thead>
@@ -127,7 +121,7 @@
                                         <td>{{item.insertionDate}} </td>
                                         <td>{{item.attachment}}</td>
                                         <td>{{item.attachmentType}}</td>
-                                        <td>{{item.contentType}}  </td>
+                                        <td>{{item.contentType}} </td>
                                         <td>
                                             <div class="ttholder">
                                                 <span class="tttext">{{item.isLikedByAdmin}}</span>
@@ -174,7 +168,7 @@
                                         <td>{{item.customerCreatedDate}} </td>
                                         <td>{{item.customerActive}} </td>
                                     </tr>
-                                   
+
 
 
                                 </tbody>

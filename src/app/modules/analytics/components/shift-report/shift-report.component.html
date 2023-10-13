@@ -8,20 +8,18 @@
                         <li class="list-inline-item">
                             <div class="iconholder">
                                 <input type="date" class="form-control" [(ngModel)]="startDate"
-                                    (change)="getShfitReport()" [max]="maxEndDate" placeholder="Start Date">
+                                    (change)="getStartDate()" [max]="maxEndDate" placeholder="Start Date">
                             </div>
                         </li>
                         <li class="list-inline-item">
                             <div class="iconholder">
-                                <input type="date" class="form-control" (change)="getShfitReport()" [min]="startDate"
+                                <input type="date" class="form-control" (change)="getEndDate()"
                                     [max]="maxEndDate" [(ngModel)]="endDate" placeholder="End Date">
                             </div>
                         </li>
                         <li class="list-inline-item">
                             <select name="" class="form-select" (change)="getByShifTime($event)">
                                 <option *ngFor="let shift of shiftType" [value]="shift.id">{{shift.name}}</option>
-
-
                             </select>
 
                         </li>
@@ -35,15 +33,15 @@
                                     <li class="dropdown-listing-header">
                                         <form class="custom-searchbar my-2 mx-0">
                                             <input class="form-control bg-light border-0 py-2" placeholder="Search"
-                                                [(ngModel)]="tags" (input)="searchtags($event)" aria-label="Search">
+                                            [(ngModel)]="searchText" aria-label="Search">
                                             <span class="btn searchbar-btn" type="submit">
                                                 <i class="fal fa-search silver"></i>
                                             </span>
                                         </form>
                                     </li>
 
-                                    <div class="dd-scroll" data-scrollbar="true">
-                                        <li *ngFor="let tag of tagsList " [value]="tag.id">
+                                    <div class="dd-scroll" data-scrollbar="true" style="overflow: auto; height: 400px;">
+                                        <li *ngFor="let tag of keywordslist |filter:searchText " [value]="tag.id">
                                             <a class="dropdown-item d-flex align-items-center">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
@@ -169,7 +167,7 @@
                         <div class="col-md-4">
                             <div class="card iceBg p-4 rounded">
                                 <h5 class="mb-3">TAG STATS</h5>
-                                <ul class="list-group list-group-flush tagscroll" data-scrollbar="true">
+                                <ul class="list-group list-group-flush tagscroll" data-scrollbar="true" style="overflow: auto; height: 300px;">
                                     <li class="list-group-item d-flex align-items-center justify-content-between">
                                         <strong>Tags</strong>
                                         <strong>Total Inbound : {{tagsStatsTotalCounts}}</strong>
@@ -185,7 +183,7 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card iceBg p-4 rounded mb-4">
-                                <div class="table-section">
+                                <div class="table-section" style="overflow: auto;">
                                     <table class="table">
                                         <thead>
                                             <tr>

@@ -9,12 +9,12 @@
                             <li class="list-inline-item">
                                 <div class="row ">
                                     <div class="col-sm-6">
-                                        <input type="date" class="form-control" placeholder="End Date"
-                                            (change)="onCheckboxChange()" [(ngModel)]="startDate" [max]="maxEndDate"/>
+                                        <input type="date" class="form-control" placeholder="End Date" [max]="maxEndDate"
+                                            (change)="resetEndDate()" [(ngModel)]="startDate" />
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="date" class="form-control" placeholder="Start Date"
-                                            (change)="onCheckboxChange()" [(ngModel)]="endDate" [min]="startDate" [max]="maxEndDate"/>
+                                        <input type="date" class="form-control" placeholder="Start Date" [max]="maxEndDate"
+                                            (change)="addAgentGraph()" [(ngModel)]="endDate" />
                                     </div>
                                 </div>
                             </li>
@@ -169,10 +169,8 @@
                             <div class="card iceBg p-4 rounded mb-5">
                                 <h5 class="section-heading mb-4 p-0">{{ selectedChannelLabel }}</h5>
                                 <div class="graphcontainer align-items-end">
-                                    <div id="main" style="height: 300px; width: 600px;"></div>
-
+                                    <div #main style="height: 600px; width: 600px;"></div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -180,20 +178,20 @@
                                 <h5 class="section-heading mb-4 p-0"> Direct Message
                                 </h5>
                                 <div class="graphcontainer align-items-end">
-                                    <div id="message" style="height: 300px; width: 600px;"></div>
+                                    <div #message style="height: 600px; width: 600px;"></div>
                                 </div>
 
                             </div>
                         </div>
                     </div>
                     <div class="card iceBg p-4 rounded mb-5">
-                        <h5 class="section-heading mb-3 p-0 d-flex align-items-center">
-                            <span class="iconButton small">
+                        <!-- <h5 class="section-heading mb-3 p-0 d-flex align-items-center">
+                           <span class="iconButton small">
                                 <img src="../../../../../assets/images/xapp.svg" class="w-100" alt="">
-                            </span>
-                            <span class="ps-2">Twitter</span>
-                        </h5>
-                        <div class="table-section">
+                            </span> -->
+                            <!-- <span class="ps-2">{{ selectedChannelLabel }}</span> 
+                        </h5> -->
+                        <div class="table-section" style="overflow: auto; height: calc(100vh - 300px);" >
                             <table class="table">
                                 <thead>
                                     <tr>

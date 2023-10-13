@@ -16,7 +16,7 @@ export class AgentPerformanceReportComponent implements OnInit {
 
   @ViewChild('main', { static: true }) main!: ElementRef
   @ViewChild('message', { static: true }) message!: ElementRef
-  
+
   startDate: string = '';
   endDate: string = '';
   selectedTagBy: string = ''
@@ -27,25 +27,21 @@ export class AgentPerformanceReportComponent implements OnInit {
   currentDate: any;
   tweetsOptions: any
   directMessage: any
-  maxEndDate:any;
-  noData=false;
   selectedChannelLabel: string = 'Comments';
+  maxEndDate:any
   constructor(private _hS: HeaderService,
     private commonService: CommonDataService,
     private cdr: ChangeDetectorRef,
     private datePipe: DatePipe,) { }
 
   ngOnInit(): void {
-    const newObj = { title: 'Agent Performance Report', url: '/analytics/performance-report' };
-    this._hS.setHeader(newObj);
-
-    const currentDate = new Date();
-    this.maxEndDate = currentDate.toISOString().split('T')[0];
-
     this.currentDate = new Date();
+    this.maxEndDate = this.currentDate.toISOString().split("T")[0];
+
     this.addAgentGraph();
     this.getListUser();
-    
+    const newObj = { title: 'Agent Performance Report', url: '/analytics/performance-report' };
+    this._hS.setHeader(newObj);
   }
   getListUser(): void {
     this.commonService.GetUserList()
@@ -60,6 +56,10 @@ export class AgentPerformanceReportComponent implements OnInit {
     this.addAgentGraph();
     this.cdr.detectChanges();
   }
+  resetEndDate() {
+    this.endDate = '';
+  }
+  
   addAgentGraph() {
     let selectedChannelsArray = this.channelOptions.filter(item => item.isSelected).map(item => item.label);
     this.selectedChannels = selectedChannelsArray.toString();
@@ -91,7 +91,7 @@ export class AgentPerformanceReportComponent implements OnInit {
       agents: this.selectedTagBy,
       channels: this.selectedChannels
     };
-
+    if (this.endDate >= this.startDate) {
     this.commonService.AddAgentPerformance(requestData).subscribe(
       (response: any) => {
         this.agent_performance_report = response;
@@ -102,11 +102,11 @@ export class AgentPerformanceReportComponent implements OnInit {
           const date = new Date(data.date);
           this.Agent_data.push({ x: date, y: data.count });
         });
-        const doms = document.getElementById('main');
-          const myCharts = echarts.init(doms, null, {
-            renderer: 'canvas',
-            useDirtyRect: false
-          });
+        const doms = this.main.nativeElement;
+        const myCharts = echarts.init(doms, null, {
+          renderer: 'canvas',
+          useDirtyRect: false
+        });
         var option: echarts.EChartsOption;
 
         function dataFormat(date: Date): string {
@@ -115,7 +115,6 @@ export class AgentPerformanceReportComponent implements OnInit {
           const month: string = monthNames[date.getMonth()];
           return `${day} ${month}`;
         }
-
         option = {
           xAxis: {
             type: 'category',
@@ -161,7 +160,7 @@ export class AgentPerformanceReportComponent implements OnInit {
           this.Message_data.push({ x: date, y: data.count });
         });
 
-        const myDom = document.getElementById('message');
+        const myDom = this.message.nativeElement;
         const myChart = echarts.init(myDom, null, {
           renderer: 'canvas',
           useDirtyRect: false
@@ -215,10 +214,10 @@ export class AgentPerformanceReportComponent implements OnInit {
       },
       (error: any) => {
         console.error('Error adding agent performance report:', error);
-      }
-
-
-    );
+      });
+    } else {
+      alert('End Date is less than Start Date')
+    }
   }
   totalAgents = [{ id: '', name: '', isSelected: false }];
 

@@ -3,7 +3,6 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { HeaderService } from 'src/app/shared/services/header.service';
-
 @Component({
   standalone: true,
   imports: [CommonModule, FormsModule],
@@ -15,27 +14,28 @@ export class UniqueCustomersComponent implements OnInit {
   startDate: string = '';
   endDate: string = '';
   currentDate: any;
-  TotalCount:any=[]
-  totalPages:any
-  endingPoint:any
-  startingPoint:any
+  TotalCount: any = []
+  totalPages: any
+  endingPoint: any
+  startingPoint: any
   unique_customer: any[] = [];
   pageNumber = 1;
-  itemsPerPage = 20; // 
+  itemsPerPage = 20;
+  maxEndDate: any
   constructor(private _hS: HeaderService,
     private commonService: CommonDataService,
     private cdr: ChangeDetectorRef,
     private datePipe: DatePipe,) { }
-
   ngOnInit(): void {
     this.currentDate = new Date();
-
-    const newObj = { title: 'Unique Customers', url: '/analytics/umique-customers' };
+    this.maxEndDate = this.currentDate.toISOString().split("T")[0];
+    const newObj = { title: 'Unique Interactions', url: '/analytics/umique-customers' };
     this._hS.setHeader(newObj);
     this.addUniqueData();
-    this.exportToCSV()
   }
-
+  resetEndDate() {
+    this.endDate = '';
+  }
   onCheckboxChange() {
     this.addUniqueData();
     this.cdr.detectChanges();
@@ -57,51 +57,73 @@ export class UniqueCustomersComponent implements OnInit {
     const requestData = {
       fromDate: this.startDate,
       toDate: this.endDate,
-      pageNumber: this.pageNumber ,
+      pageNumber: this.pageNumber,
       pageSize: this.itemsPerPage
     };
+    if (this.endDate >= this.startDate) {
+    this.commonService.AddUniqueCustomer(requestData).subscribe(
+      (response: any) => {
 
-    // this.commonService.AddUniqueCustomer(requestData).subscribe(
-    //   (response: any) => {
-    //     console.log("this is res===>",response)
-    //     this.unique_customer=response.List
-    //     this.TotalCount = response.TotalCount;
-    //     if(this.pageNumber==1){
-    //       this.startingPoint=1
-    //     }
-    //     else{
-    //       this.startingPoint=(this.pageNumber-1)*(this.itemsPerPage)+1
-    //     }
-    //      this.totalPages=Math.ceil(this.TotalCount/this.itemsPerPage)
-    //      if(this.TotalCount<=this.startingPoint+this.itemsPerPage-1){
-    //       this.endingPoint=this.TotalCount
-    //      }
-    //     else{
-    //       this.endingPoint=this.startingPoint+this.itemsPerPage-1
-    //     }
-    //   },
-    //   (error: any) => {
+        this.unique_customer = response.List
+        this.TotalCount = response.TotalCount;
+        if (this.pageNumber == 1) {
+          this.startingPoint = 1
+        }
+        else {
+          this.startingPoint = (this.pageNumber - 1) * (this.itemsPerPage) + 1
+        }
+        this.totalPages = Math.ceil(this.TotalCount / this.itemsPerPage)
+        if (this.TotalCount <= this.startingPoint + this.itemsPerPage - 1) {
+          this.endingPoint = this.TotalCount
+        }
+        else {
+          this.endingPoint = this.startingPoint + this.itemsPerPage - 1
+        }
+      },
+      (error: any) => {
 
-    //   }
-    // );
-  }
-  exportToCSV() {
-  }
-  nextPage(pageNumber:any){
-    let page=pageNumber+1
-  if(page<this.totalPages+1){
-    this.pageNumber=page
-    this.addUniqueData()
-  }
-  }
-  prevPage(pageNumber:any){
-  if(pageNumber>=1){
-    let page=pageNumber-1
-    if(page>0){
-      this.pageNumber=page
+      });
+    } else {
+      alert('End Date is less than Start Date')
     }
   }
-  this.addUniqueData()
+  exportToCSV() {
+    const requestData = {
+      fromDate: this.startDate,
+      toDate: this.endDate,
+      pageNumber: this.pageNumber,
+      pageSize: this.itemsPerPage
+    };
+    this.commonService.UniqueExportCsv(requestData).subscribe(
+      (response: any) => {
+        console.log('Response Data:', response);
+        const a = document.createElement('a');
+        a.href = response;
+        a.download = 'uniqueReport.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      },
+      (error: any) => {
+        console.error("error", error)
+      }
+    );
+  }
+  nextPage(pageNumber: any) {
+    let page = pageNumber + 1
+    if (page < this.totalPages + 1) {
+      this.pageNumber = page
+      this.addUniqueData()
+    }
+  }
+  prevPage(pageNumber: any) {
+    if (pageNumber >= 1) {
+      let page = pageNumber - 1
+      if (page > 0) {
+        this.pageNumber = page
+      }
+    }
+    this.addUniqueData()
   }
 
 

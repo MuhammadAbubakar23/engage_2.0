@@ -9,15 +9,15 @@
                             <li class="list-inline-item">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                      <input type="date" class="form-control" placeholder="Start Date"
-                                             [max]="maxEndDate" (change)="AddGraph()" [(ngModel)]="startDate" />
+                                        <input type="date" class="form-control" placeholder="Start Date"
+                                            [max]="maxEndDate" (change)="resetEndDate()" [(ngModel)]="startDate" />
                                     </div>
                                     <div class="col-sm-6">
-                                      <input type="date" class="form-control" placeholder="End Date"
-                                             [min]="startDate" [max]="maxEndDate"  (change)="AddGraph()" [(ngModel)]="endDate" />
+                                        <input type="date" class="form-control" placeholder="End Date" 
+                                            [max]="maxEndDate" (change)="AddGraph()" [(ngModel)]="endDate" />
                                     </div>
-                                  </div>
-                                  
+                                </div>
+
                             </li>
                             <li class="list-inline-item">
                                 <div class="dropdown icondropdown w-auto">
@@ -102,17 +102,18 @@
                                     <ul class="dropdown-menu" aria-labelledby="columnssort">
                                         <li class="dropdown-listing-header">
                                             <form class="custom-searchbar my-2 mx-0">
-                                                <input class="form-control bg-light border-0 py-2" placeholder="Search"
-                                                    aria-label="Search">
+                                                <input [(ngModel)]="searchText" placeholder="Search" class="me-1"
+                                                class="form-control"
+                 >
                                                 <span class="btn searchbar-btn" type="submit">
                                                     <i class="fal fa-search silver"></i>
                                                 </span>
                                             </form>
                                         </li>
-                                        <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
-                                            style="overflow: hidden; outline: none;">
-                                            <div class="scroll-content">
-                                                <li *ngFor="let tag of tagOptions">
+                                        <div class="dd-scroll" data-scrollbar="true" tabindex="-1" style="overflow: auto; height: 400px;"
+                                  >
+                                            <div class="scroll-content" >
+                                                <li *ngFor="let tag of keywordslist  | filter:searchText">
                                                     <a class="dropdown-item d-flex align-items-center">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
@@ -226,7 +227,7 @@
                                             </span>
                                             <p class="coal mb-0"> Sum of inbound Volume</p>
                                         </div>
-                                        <h2>{{Inbound_Outbound_Report.channelReportData.inboundSum}}</h2>
+                                        <h2>{{Inbound_Outbound_Report?.channelReportData?.inboundSum}}</h2>
                                     </div>
                                 </div>
                             </div>
@@ -315,7 +316,7 @@
                             <div class="col-md-5">
                                 <ul class="list-0 statlist list-lg mb-3">
                                     <li
-                                        *ngFor="let channelwise of Inbound_Outbound_Report.channelReportData.channelWiseData">
+                                        *ngFor="let channelwise of Inbound_Outbound_Report?.channelReportData?.channelWiseData">
                                         <span [ngClass]="getPlatformClass(channelwise.platform)">
                                             <i class="fa-light fa-envelope"></i> {{channelwise.platform}}
                                         </span>
@@ -330,7 +331,7 @@
                     <div class="card iceBg p-4 rounded mb-5">
                         <h5 class="section-heading mb-4 p-0">Tags Per Channel</h5>
                         <div class="graphcontainer align-items-end">
-                            <div #TagsPerChannel style="height: 450px; width: 500px; "></div>
+                            <div #TagsPerChannel style="height: 450px; width: 900px; "></div>
                         </div>
                     </div>
                 </div>

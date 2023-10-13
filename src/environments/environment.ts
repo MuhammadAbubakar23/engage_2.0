@@ -168,18 +168,28 @@ export const environment = {
       getCustomers: 'Customer/GetAllCustomersSocialProfile',
       updateStatus: 'Channel/UpdateMessageStatus',
       hideUnhideMessage: 'Query/HideQuery',
-
       //Reports
+      routeToAgents:'Report/GetWhatsAppRouteToAgentReport',
+      routeToAgentsCsv:'Report/GetWhatsAppRouteAgentReportCSV',
+      addUniqueCustomer:'Report/GetWhatsAppUniqueCustomerReport',
+      uniqueExportCsv :'Report/GetWhatsAppUniqueCustomerReportCSV',
+      addHandledBot:'Report/GetWhatsAppBotHandleReport',
+      addHandledBotCSV:'Report/GetWhatsAppBotHandleReportCSV',
       addinboundoutbound:'Report/GetInboundOutboundReport',
       twitterReport:'Report/GetTwitterReport',
       twitterSLAReport:'Report/GetTwitterSLAReport',
       twitterProfileWiseReport:'Report/GetTwitterProfileWiseReport',
-      getUserList:'/Users/GetUserList',
+      getUserList:'StatManagement/GetAllUser',
       getSentimentData:'Keyword/GetAllSentiments',
       addAgentPerformance: 'Report/GetAgentPerformanceReport',
       shiftReport: 'Report/GetShiftReport',
       getWhatsAppRawDataReport:'Report/GetWhatsAppRawDataReport',
-      downloadWhatsAppRawDataReport:'Report/GetWhatsAppCSVData'
+      downloadWhatsAppRawDataReport:'Report/GetWhatsAppCSVData',
+      postSocialRawData:'Report/GetAllChannelRawDataReport',
+      downloadSocialRawData:'Report/GetAllChannelRawDataReportCSV',
+      facebookReport:'Report/GetFacebookReport',
+      facebookProfile:'Report/GetFacebookProfileWiseReport',
+      getAllSocialMatrics:'Report/GetAllSocialMediaMatricsReport'
     },
     facebook: {
       comments: 'Facebook/GetFbPost',

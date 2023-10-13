@@ -64,6 +64,18 @@ const routes: Routes = [
       loadComponent: () => import('./components/executive-dashboard/executive-dashboard.component').then(c => c.ExecutiveDashboardComponent),
     },
     {
+      path:'route-to-agent',
+      loadComponent: () => import('./components/route-to-agent/route-to-agent.component').then(c => c.RouteToAgentComponent),
+    },
+    {
+      path: 'unique-customers',
+      loadComponent: () => import('./components/unique-customers/unique-customers.component').then(c => c.UniqueCustomersComponent),
+    },
+    {
+      path: 'handled-bot',
+      loadComponent: () => import('./components/handled-by-bot/handled-by-bot.component').then(c => c.HandledByBotComponent),
+    },
+    {
       path:'inbound-outbound-report',
       loadComponent: () => import('./components/inbound-ontbound-report/inbound-ontbound-report.component').then(c => c.InboundOntboundReportComponent),
     },
@@ -82,7 +94,15 @@ const routes: Routes = [
     {
       path:'whatsapp-report',
       loadComponent: () => import('./components/whatsapp-report/whatsapp-report.component').then(c => c.WhatsappReportComponent),
-    }
+    },
+    {
+      path:'social-raw-data',
+      loadComponent: () => import('./components/social-raw-data/social-raw-data.component').then(c => c.SocialRawDataComponent),
+    },
+    {
+      path:'feacbook-report',
+      loadComponent:()=>import('./components/facebook-report/facebook-report.component').then(c=>c.FacebookReportComponent)
+    },
   ]
   }
 

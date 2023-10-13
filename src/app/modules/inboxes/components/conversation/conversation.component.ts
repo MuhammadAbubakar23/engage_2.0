@@ -79,7 +79,6 @@ export class ConversationComponent implements OnInit {
     private fetchposttype: FetchPostTypeService,
     private changeDetect: ChangeDetectorRef,
     private commondata: CommonDataService,
-    private filterService: FilterService,
     private router: Router,
     private updateListService: UpdateListService,
     private lodeModuleService: ModulesService,
@@ -94,19 +93,14 @@ export class ConversationComponent implements OnInit {
     };
 
     this.searchForm = new FormGroup({
-      // agentId: new FormControl(0),
       user: new FormControl(''),
       userName: new FormControl(''),
       notInclude: new FormControl(''),
       include: new FormControl(''),
-      // plateForm: new FormControl(""),
       fromDate: new FormControl(null),
       toDate: new FormControl(null),
       isAttachment: new FormControl(this.isAttachment),
-      // queryType: new FormControl(""),
       text: new FormControl(''),
-      // pageNumber: new FormControl(1),
-      // pageSize: new FormControl(20),
       dateWithin: new FormControl(''),
     });
 
