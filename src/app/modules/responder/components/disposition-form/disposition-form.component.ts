@@ -15,6 +15,7 @@ export class DispositionFormComponent implements OnInit {
 
   dispositionForm!: FormGroup;
   dispositionFormDto = new DispositionFormDto();
+  dispositionTags:any;
 
   constructor(private commonService : CommonDataService,
     private route : Router,
@@ -43,7 +44,14 @@ export class DispositionFormComponent implements OnInit {
   companyId = 0;
 
   ngOnInit(): void {
+    // this.getDispositionTags();
   }
+
+  // getDispositionTags(){
+  //   this.commonService.GetDispositionTags().subscribe((res:any)=>{
+  //     this.dispositionTags = res;
+  //   })
+  // }
 
   previousUrl:any;
   submitDispositionForm(){
