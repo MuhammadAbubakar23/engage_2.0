@@ -5,9 +5,10 @@ import { RouterModule } from '@angular/router';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import * as echarts from 'echarts';
 import { HeaderService } from 'src/app/shared/services/header.service';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, NgxSpinnerModule],
   selector: 'app-agent-performance-report',
   templateUrl: './agent-performance-report.component.html',
   styleUrls: ['./agent-performance-report.component.scss']
@@ -29,10 +30,16 @@ export class AgentPerformanceReportComponent implements OnInit {
   directMessage: any
   selectedChannelLabel: string = 'Comments';
   maxEndDate:any
+
+  downloading = false;
+  toastermessage = false;
+  AlterMsg: any = '';
+
   constructor(private _hS: HeaderService,
     private commonService: CommonDataService,
     private cdr: ChangeDetectorRef,
-    private datePipe: DatePipe,) { }
+    private datePipe: DatePipe,
+    private SpinnerService: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.currentDate = new Date();
@@ -92,8 +99,10 @@ export class AgentPerformanceReportComponent implements OnInit {
       channels: this.selectedChannels
     };
     if (this.endDate >= this.startDate) {
+      this.SpinnerService.show();
     this.commonService.AddAgentPerformance(requestData).subscribe(
       (response: any) => {
+        this.SpinnerService.hide();
         this.agent_performance_report = response;
         this.Agent_data = [];
         this.Message_data = []
@@ -216,6 +225,7 @@ export class AgentPerformanceReportComponent implements OnInit {
         console.error('Error adding agent performance report:', error);
       });
     } else {
+      this.SpinnerService.hide();
       alert('End Date is less than Start Date')
     }
   }
@@ -234,4 +244,7 @@ export class AgentPerformanceReportComponent implements OnInit {
     { id: '14', label: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
   ];
 
+  closeToaster() {
+    this.toastermessage = false;
+  }
 }

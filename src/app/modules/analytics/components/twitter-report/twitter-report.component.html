@@ -1,19 +1,22 @@
 <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+        <p style="color: white"> Loading... </p>
+    </ngx-spinner>
     <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
         <div class="report-toolbar mb-4">
             <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
                 <li class="list-inline-item">
                     <div class="row">
                         <div class="col-sm-6">
-                          <input type="date" class="form-control" (change)="GetTwitterReport()"
-                            placeholder="Start Date" [(ngModel)]="fromDate" [max]="maxEndDate"/>
+                            <input type="date" class="form-control" placeholder="Start Date"
+                                [max]="maxEndDate" (change)="resetEndDate()" [(ngModel)]="fromDate" />
                         </div>
                         <div class="col-sm-6">
-                          <input type="date" class="form-control" placeholder="End Date" (change)="GetTwitterReport()" [(ngModel)]="toDate" 
-                          [min]="fromDate" [max]="maxEndDate"/>
-      
+                            <input type="date" class="form-control" placeholder="End Date" 
+                                [max]="maxEndDate" (change)="GetTwitterReport()" [(ngModel)]="toDate" />
                         </div>
                     </div>
+                    
                 </li>
                 <!-- <li class="list-inline-item">
                     <div class="dropdown icondropdown w-auto mx-2">
@@ -147,7 +150,8 @@
                                 </li>
                                 <li>
                                     <span class="coal"> Total Sent </span>
-                                    <span class="fw-semibold">{{totalTweetsSent + totalDmSent + totalMentionSent}}</span>
+                                    <span class="fw-semibold">{{totalTweetsSent + totalDmSent +
+                                        totalMentionSent}}</span>
                                 </li>
 
 
@@ -184,7 +188,8 @@
                                 </li>
                                 <li>
                                     <span class="coal"> Total Received </span>
-                                    <span class="fw-semibold">{{totalTweetReceived + totalDmReceived + totalMentionReceived}}</span>
+                                    <span class="fw-semibold">{{totalTweetReceived + totalDmReceived +
+                                        totalMentionReceived}}</span>
                                 </li>
 
                             </ul>
@@ -312,7 +317,8 @@
                                 </li>
                                 <li>
                                     <span class="coal"> Total Catered Workload </span>
-                                    <span class="fw-semibold">{{TwitterSLAReport?.totalReplyInLimit + TwitterSLAReport?.totalReplyOutOfLimit}}</span>
+                                    <span class="fw-semibold">{{TwitterSLAReport?.totalReplyInLimit +
+                                        TwitterSLAReport?.totalReplyOutOfLimit}}</span>
                                 </li>
 
                             </ul>
@@ -411,11 +417,20 @@
                 </table>
             </div>
         </div>
+    </div>
+</div>
 
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+            <div class="toast-btn d-flex align-items-center">
 
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
 
-
-
-
+            </div>
+        </div>
     </div>
 </div>

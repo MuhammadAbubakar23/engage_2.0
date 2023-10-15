@@ -1,29 +1,28 @@
-<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
-[fullScreen]="false">
- <p style="color: white"> Loading... </p>
-</ngx-spinner>
- <div class="content-box-wrapper d-flex w-100">
+<div class="content-box-wrapper d-flex w-100">
     <div class="middle-content d-flex">
         <div class="d-grid w-100">
             <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1"
                 style="overflow: auto; outline: none; overflow-x: hidden; ">
+                <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                    [fullScreen]="false">
+                    <p style="color: white"> Loading... </p>
+                </ngx-spinner>
                 <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
                     <div class="report-toolbar mb-4">
                         <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
                             <li class="list-inline-item">
                                 <div class="iconholder">
-                               
-                                    <input name=""class="form-control flatpickr-input"
-                                    [max]="maxEndDate"
+
+                                    <input name="" class="form-control flatpickr-input" [max]="maxEndDate"
                                         placeholder="Date" [(ngModel)]="startDate" type="date">
                                 </div>
                             </li>
                             <li class="list-inline-item">
                                 <div class="iconholder">
-                               
-                                    <input name=""class="form-control flatpickr-input"
-                                    [max]="maxEndDate"
-                                        placeholder="Date" (change)="getAllfeacebookData()" [(ngModel)]="enddate" type="date">
+
+                                    <input name="" class="form-control flatpickr-input" [max]="maxEndDate"
+                                        placeholder="Date" (change)="getAllfeacebookData()" [(ngModel)]="enddate"
+                                        type="date">
                                 </div>
                             </li>
                             <!-- <li class="list-inline-item">
@@ -127,7 +126,7 @@
                                         <span class="coal">{{fans?.ageRange}}</span>
                                         <span class="fw-semibold">{{fans?.maleFemaleCombinedCount}}</span>
                                     </li>
-                                
+
                                     <!-- <li>
                                         <span class="coal">18-24</span>
                                         <span class="fw-semibold">5006236</span>
@@ -167,7 +166,8 @@
                                             <div class="progress progress-sky" role="progressbar"
                                                 aria-label="Example with label" aria-valuenow="25" aria-valuemin="0"
                                                 aria-valuemax="100">
-                                                <div class="progress-bar"  [style.width.%]="malepersentage">{{malepersentage}}%</div>
+                                                <div class="progress-bar" [style.width.%]="malepersentage">
+                                                    {{malepersentage}}%</div>
                                             </div>
                                         </div>
                                     </div>
@@ -181,7 +181,8 @@
                                             <div class="progress progress-cheery" role="progressbar"
                                                 aria-label="Example with label" aria-valuenow="25" aria-valuemin="0"
                                                 aria-valuemax="100">
-                                                <div class="progress-bar" [style.width.%]="femalepersentage">{{femalepersentage}}%</div>
+                                                <div class="progress-bar" [style.width.%]="femalepersentage">
+                                                    {{femalepersentage}}%</div>
                                             </div>
                                         </div>
                                     </div>
@@ -193,8 +194,8 @@
                         <h5 class="section-heading mb-4 p-0">Publishin behavior</h5>
                         <div class="graphcontainer align-items-end mb-5">
                             <div class="text-center">
-                               <div id="publishin" style="height: 500px; width: 900px;"></div>
-                               <!-- <div id="container" style="height: 500px; width: 900px;"></div> -->
+                                <div id="publishin" style="height: 500px; width: 900px;"></div>
+                                <!-- <div id="container" style="height: 500px; width: 900px;"></div> -->
                             </div>
                         </div>
 
@@ -231,7 +232,7 @@
                                 </div>
                             </div>
                         </div> -->
-                        <div  class="row justify-content-between px-5">
+                        <div class="row justify-content-between px-5">
                             <div class="col-md-5 px-4">
                                 <ul class="list-0 statlist list-lg mb-3">
                                     <li>
@@ -247,7 +248,7 @@
                                         <span class="fw-semibold">{{totalNumberofpost}}</span>
                                     </li>
                                 </ul>
-                       
+
                             </div>
                             <div class="col-md-5">
                                 <div class="card dashboard-card">
@@ -265,8 +266,8 @@
                                 </div>
                             </div>
                         </div>
-                     
-                        
+
+
                     </div>
 
                     <div class="card iceBg p-4 rounded mb-5">
@@ -275,40 +276,40 @@
                             <div class="col-md-7">
                                 <div class="graphcontainer align-items-end">
                                     <div class="text-center">
-                                      <div id="growth" style="height: 300px; width: 690px; margin-right: 20px;"></div>
+                                        <div id="growth" style="height: 300px; width: 690px; margin-right: 20px;"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-5 px-4">
                                 <ul class="list-0 statlist list-lg mb-3">
                                     <li>
-                                      <span class="coal"> Page Likes</span>
-                                      <span class="fw-semibold">{{numberofPagelikes}}</span>
+                                        <span class="coal"> Page Likes</span>
+                                        <span class="fw-semibold">{{numberofPagelikes}}</span>
                                     </li>
                                     <li>
-                                      <span class="coal">Page Unlikes</span>
-                                      <span class="fw-semibold">{{numberofpageUnlikes}}</span>
+                                        <span class="coal">Page Unlikes</span>
+                                        <span class="fw-semibold">{{numberofpageUnlikes}}</span>
                                     </li>
                                     <li>
-                                      <span class="coal"> Net Difference</span>
-                                      <span class="fw-semibold">{{netDeffernce}}</span>
+                                        <span class="coal"> Net Difference</span>
+                                        <span class="fw-semibold">{{netDeffernce}}</span>
                                     </li>
-                                  </ul>
-                                  <div class="card dashboard-card">
+                                </ul>
+                                <div class="card dashboard-card">
                                     <div class="card-body">
-                                      <div class="d-flex align-items-center justify-content-between">
-                                        <div>
-                                          <span class="iconButton medium mintBg mb-4">
-                                            <i class="fa-light fa-arrow-up"></i>
-                                          </span>
-                                          <p class="coal mb-0"> Likes Increased</p>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <span class="iconButton medium mintBg mb-4">
+                                                    <i class="fa-light fa-arrow-up"></i>
+                                                </span>
+                                                <p class="coal mb-0"> Likes Increased</p>
+                                            </div>
+                                            <h3> 57.77%</h3>
                                         </div>
-                                        <h3> 57.77%</h3>
-                                      </div>
                                     </div>
-                                  </div>
-                              </div>
-                           
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <div class="card iceBg p-4 rounded mb-5">
@@ -317,7 +318,7 @@
                             <div class="col-md-7">
                                 <div class="graphcontainer align-items-end">
                                     <div class="text-center">
-                                      <div id="engagement" style="height: 500px; width: 700px;"></div>
+                                        <div id="engagement" style="height: 500px; width: 700px;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -519,7 +520,7 @@
                                 <h5 class="section-heading mb-4 p-0">PAGE REACHABILITY</h5>
                                 <div class="graphcontainer align-items-end">
                                     <div class="text-center">
-                                       <div id="pagereachablity" style="height: 400px; width: 500px;"></div>
+                                        <div id="pagereachablity" style="height: 400px; width: 500px;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -557,11 +558,11 @@
                                             </span>
                                         </td>
                                         <td>
-                                         {{recents?.messageText}}
+                                            {{recents?.messageText}}
                                         </td>
                                         <td><span class="iconButton small">
                                                 <i class="fa-light fa-pencil"></i>
-                                           {{recents?.type}} </span> </td>
+                                                {{recents?.type}} </span> </td>
                                         <td>{{recents?.postReach}}</td>
                                         <td>{{recents?.postClicks}}</td>
                                         <td>{{recents?.postReactions}}</td>
@@ -569,22 +570,22 @@
                                         <td>{{recents?.postShares}}</td>
                                         <td>{{recents?.engagementRate}} %</td>
                                         <td>{{recents?.postGrade
-                                        }}
+                                            }}
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="row align-items-start mb-5" >
+                    <div class="row align-items-start mb-5">
                         <div class="col-md-6">
                             <div class="card iceBg p-4 rounded mb-5">
                                 <h5 class="section-heading mb-5 p-0">Top {{cutomerdata ?.length}} Customers</h5>
                                 <div class="table-section" style="height: 410px;">
-                                    <table class="table table-sm"  >
+                                    <table class="table table-sm">
                                         <thead>
-                                            <tr >
-                                            <th></th>
+                                            <tr>
+                                                <th></th>
                                                 <th> Name </th>
                                                 <th> Posts </th>
                                                 <th> Comments </th>
@@ -596,7 +597,8 @@
                                                 <td>
                                                     <span
                                                         class="iconButton medium rounded-pill mintTransBg night fw-bolder">
-                                                        <img src={{item.profilePic}} style="height: 40px; width: 150px; border-radius: 50%;" />
+                                                        <img src={{item.profilePic}}
+                                                            style="height: 40px; width: 150px; border-radius: 50%;" />
                                                     </span>
                                                 </td>
                                                 <td>
@@ -606,7 +608,7 @@
                                                 <td>{{item?.comment}}</td>
                                                 <td>{{item?.message}}</td>
                                             </tr>
-                                            
+
 
                                         </tbody>
                                     </table>
@@ -620,7 +622,7 @@
                                 </h5>
                                 <div class="graphcontainer align-items-end">
                                     <div class="text-center">
-                                       <div id="externalsources" style="height: 440px; width: 900px;"></div>
+                                        <div id="externalsources" style="height: 440px; width: 900px;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -642,10 +644,21 @@
                 </div> -->
             </div>
         </div>
-
-
-
-
     </div>
 
+</div>
+
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+            <div class="toast-btn d-flex align-items-center">
+
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
+
+            </div>
+        </div>
+    </div>
 </div>

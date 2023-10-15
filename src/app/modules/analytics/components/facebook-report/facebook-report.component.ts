@@ -93,6 +93,10 @@ export class FacebookReportComponent implements OnInit {
   externalRefernalsName: any;
   totalMessagePostCommentsAndreplies: any;
   totalMessageAndrepliesCount: any;
+
+  downloading = false;
+  toastermessage = false;
+  AlterMsg: any = '';
   constructor(
     private headerServices: HeaderService,
     private spinerServices: NgxSpinnerService,
@@ -754,5 +758,8 @@ export class FacebookReportComponent implements OnInit {
       this.cutomerdata = res;
       console.log('Top 5 Customer Data==>', res);
     });
+  }
+  closeToaster() {
+    this.toastermessage = false;
   }
 }

@@ -11,13 +11,14 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import * as echarts from 'echarts';
 import { HeaderService } from 'src/app/shared/services/header.service';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-twitter-report',
   templateUrl: './twitter-report.component.html',
   styleUrls: ['./twitter-report.component.scss'],
   standalone: true,
-  imports: [CommonModule, CanvasJSAngularChartsModule, FormsModule],
+  imports: [CommonModule, CanvasJSAngularChartsModule, FormsModule, NgxSpinnerModule],
 })
 export class TwitterReportComponent implements OnInit {
   @ViewChild('TwitterInboundOutboundReport', { static: true })
@@ -33,8 +34,10 @@ export class TwitterReportComponent implements OnInit {
   fromDate: string = '';
   toDate: string = '';
   maxEndDate:any;
-  startDate:any;
-  endDate:any;
+
+  downloading = false;
+  toastermessage = false;
+  AlterMsg: any = '';
 
   TwitterReport: any;
   TwitterSLAReport: any;
@@ -74,7 +77,8 @@ export class TwitterReportComponent implements OnInit {
 
   constructor(private _hS: HeaderService,
     private commonDataService: CommonDataService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private SpinnerService: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -134,8 +138,10 @@ export class TwitterReportComponent implements OnInit {
       toDate: this.toDate,
       profileId: '1682035592165740551',
     };
-    if (this.fromDate != '' || this.toDate != '') {
+    if (this.toDate >= this.fromDate) {
+      this.SpinnerService.show();
     this.commonDataService.GetTwitterReport(body).subscribe((res) => {
+      this.SpinnerService.hide();
       this.TwitterReport = res;
       this.TwitterReport.dateWise.forEach((data: any) => {
         if (!this.allDates.includes(data.date)) {
@@ -184,6 +190,8 @@ export class TwitterReportComponent implements OnInit {
       this.populateTweetingBehaviourGraph();
       this.populateOutboundGraph();
     });
+  } else {
+    alert('End Date is less than Start Date');
   }
   }
 
@@ -437,7 +445,9 @@ export class TwitterReportComponent implements OnInit {
       toDate: this.toDate,
       profileId: '1682035592165740551',
     };
+    this.SpinnerService.show();
     this.commonDataService.GetTwitterSLAReport(body).subscribe((res) => {
+      this.SpinnerService.hide();
       this.TwitterSLAReport = res;
     });
   }
@@ -447,10 +457,18 @@ export class TwitterReportComponent implements OnInit {
       pageNumber: 0,
       pageSize: 0,
     };
+    this.SpinnerService.show();
     this.commonDataService
       .GetTwitterProfileWiseReport(body)
       .subscribe((res) => {
+        this.SpinnerService.hide();
         this.TwitterProfileWiseReport = res;
       });
+  }
+  closeToaster() {
+    this.toastermessage = false;
+  }
+  resetEndDate() {
+    this.toDate = '';
   }
 }

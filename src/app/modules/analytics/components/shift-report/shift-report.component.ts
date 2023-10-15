@@ -5,12 +5,13 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import * as echarts from 'echarts';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from "../../../../shared/shared.module";
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({
     standalone: true,
     selector: 'app-shift-report',
     templateUrl: './shift-report.component.html',
     styleUrls: ['./shift-report.component.scss'],
-    imports: [CommonModule, FormsModule, SharedModule]
+    imports: [CommonModule, FormsModule, SharedModule, NgxSpinnerModule]
 })
 export class ShiftReportComponent implements OnInit {
   shiftReportData: any;
@@ -55,10 +56,15 @@ export class ShiftReportComponent implements OnInit {
     { id: 3, name: 'Iftar' },
     { id: 4, name: 'Sehr' },
   ];
+
+  downloading = false;
+  toastermessage = false;
+  AlterMsg: any = '';
   constructor(
     private hs: HeaderService,
     private datePipe: DatePipe,
-    private commandataService: CommonDataService
+    private commandataService: CommonDataService,
+    private SpinnerService: NgxSpinnerService
   ) {}
   ngOnInit(): void {
     this.currentDate = new Date();
@@ -146,7 +152,9 @@ keywordslist:any[]=[]
           this.allTotalCountsfb = [];
           this.allTotalCountTw = [];
           this.dateWise = [];
+          this.SpinnerService.show();
       this.commandataService.GetShiftReport(obj).subscribe((res: any) => {
+        this.SpinnerService.hide();
        
         this.shiftReportData = res;
         this.shiftChannelData = res.channelData;
@@ -335,5 +343,8 @@ keywordslist:any[]=[]
       alert("EndDate is lessthen StartDate")
       this.endDate=''
     }
+  }
+  closeToaster() {
+    this.toastermessage = false;
   }
 }

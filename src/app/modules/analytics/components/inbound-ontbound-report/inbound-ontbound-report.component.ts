@@ -11,13 +11,14 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { HeaderService } from 'src/app/shared/services/header.service';
 import * as echarts from 'echarts';
 import { SharedModule } from '../../../../shared/shared.module';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   standalone: true,
   selector: 'app-inbound-ontbound-report',
   templateUrl: './inbound-ontbound-report.component.html',
   styleUrls: ['./inbound-ontbound-report.component.scss'],
-  imports: [CommonModule, FormsModule, SharedModule],
+  imports: [CommonModule, FormsModule, SharedModule, NgxSpinnerModule],
 })
 export class InboundOntboundReportComponent implements OnInit {
   @ViewChild('inboundOutboundReport', { static: true })
@@ -43,12 +44,17 @@ export class InboundOntboundReportComponent implements OnInit {
   currentDate: any;
   maxEndDate: any;
 
+  downloading = false;
+  toastermessage = false;
+  AlterMsg: any = '';
+
   tagsPerChannel: any[] = [];
   constructor(
     private _hS: HeaderService,
     private commonService: CommonDataService,
     private datePipe: DatePipe,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private SpinnerService: NgxSpinnerService
   ) {}
   ngOnInit(): void {
     this.currentDate = new Date();
@@ -122,8 +128,10 @@ export class InboundOntboundReportComponent implements OnInit {
       dateSubFilter: 0,
     };
     if (this.endDate >= this.startDate) {
+      this.SpinnerService.show();
       this.commonService.Addinboundoutbound(requestData).subscribe(
         (response: any) => {
+          this.SpinnerService.hide();
           this.Inbound_data = [];
           this.Outbound_data = [];
 
@@ -581,6 +589,9 @@ export class InboundOntboundReportComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+  closeToaster() {
+    this.toastermessage = false;
   }
   getListUser(): void {
     this.commonService.GetUserList().subscribe(

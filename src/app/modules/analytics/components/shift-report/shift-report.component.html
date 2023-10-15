@@ -3,6 +3,10 @@
         <div class="d-grid w-100">
             <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1"
                 style="overflow: auto; outline: none;">
+                <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                    [fullScreen]="false">
+                    <p style="color: white"> Loading... </p>
+                </ngx-spinner>
                 <div class="report-toolbar mb-4">
                     <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
                         <li class="list-inline-item">
@@ -13,8 +17,8 @@
                         </li>
                         <li class="list-inline-item">
                             <div class="iconholder">
-                                <input type="date" class="form-control" (change)="getEndDate()"
-                                    [max]="maxEndDate" [(ngModel)]="endDate" placeholder="End Date">
+                                <input type="date" class="form-control" (change)="getEndDate()" [max]="maxEndDate"
+                                    [(ngModel)]="endDate" placeholder="End Date">
                             </div>
                         </li>
                         <li class="list-inline-item">
@@ -33,7 +37,7 @@
                                     <li class="dropdown-listing-header">
                                         <form class="custom-searchbar my-2 mx-0">
                                             <input class="form-control bg-light border-0 py-2" placeholder="Search"
-                                            [(ngModel)]="searchText" aria-label="Search">
+                                                [(ngModel)]="searchText" aria-label="Search">
                                             <span class="btn searchbar-btn" type="submit">
                                                 <i class="fal fa-search silver"></i>
                                             </span>
@@ -167,7 +171,8 @@
                         <div class="col-md-4">
                             <div class="card iceBg p-4 rounded">
                                 <h5 class="mb-3">TAG STATS</h5>
-                                <ul class="list-group list-group-flush tagscroll" data-scrollbar="true" style="overflow: auto; height: 300px;">
+                                <ul class="list-group list-group-flush tagscroll" data-scrollbar="true"
+                                    style="overflow: auto; height: 300px;">
                                     <li class="list-group-item d-flex align-items-center justify-content-between">
                                         <strong>Tags</strong>
                                         <strong>Total Inbound : {{tagsStatsTotalCounts}}</strong>
@@ -221,3 +226,18 @@
             </div>
         </div>
     </div>
+</div>
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+            <div class="toast-btn d-flex align-items-center">
+
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
+
+            </div>
+        </div>
+    </div>
+</div>
