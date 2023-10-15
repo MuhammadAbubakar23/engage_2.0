@@ -25,7 +25,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     NgSelectModule,
     NgChartsModule,
     DragDropModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [ExcelService,
   DatePipe]

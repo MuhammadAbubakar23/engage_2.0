@@ -70,7 +70,7 @@ export class CommonDataService {
   getCustomers = environment.links.common.getCustomers;
   updateStatus = environment.links.common.updateStatus;
   hideUnhideMessage = environment.links.common.hideUnhideMessage;
-  // dispositionTags = environment.links.common.dispositionTags;
+  dispositionTags = environment.links.common.dispositionTags;
 
   //Reports
   addUniqueCustomer = environment.links.common.addUniqueCustomer;
@@ -561,9 +561,9 @@ export class CommonDataService {
     return this.http.post(this.ServiceBaseUrl + this.addCSAT, body);
   }
 
-  // GetDispositionTags(){
-  //   return this.http.get(this.CommonBaseUrl + this.dispositionTags)
-  // }
+  GetDispositionTags(){
+    return this.http.get(this.CommonBaseUrl + this.dispositionTags)
+  }
   GetRouteToAgentsCsv(body: any) {
     return this.http.post(this.CommonBaseUrl + this.routeToAgentsCsv, body, {
       responseType: 'text',

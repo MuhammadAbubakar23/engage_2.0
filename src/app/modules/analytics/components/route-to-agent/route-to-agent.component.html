@@ -1,60 +1,61 @@
 <div class="content-box-wrapper d-flex w-100">
     <div class="middle-content d-flex">
         <div class="d-grid w-100">
-            <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1"
-                class="scroll">
+            <div class="analytics-dashboard p-4 scroll" data-scrollbar="true" tabindex="-1">
+                <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                    [fullScreen]="false">
+                    <p style="color: white"> Loading... </p>
+                </ngx-spinner>
                 <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
                     <div class="report-toolbar mb-4">
                         <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
                             <li class="list-inline-item">
                                 <div class="iconholder">
-                                  
-                                    <input name="" id="datepickerrange" class="form-control flatpickr-input"
-                                    [(ngModel)]="startDate"
-                                    (change)="getBystartDate()"
-                                    [max]="changeMaxDate"
-                                        placeholder=""  type="date">
-                                </div>
-                            </li>
-                            <li class="list-inline-item">
-                                <div class="iconholder">
-                                  
-                                    <input name="" id="datepickerrange"
-                                    [(ngModel)]="EndDate"
-                                    [max]="changeMaxDate"
-                                    (change)="getByEndDate()"
-                                     class="form-control flatpickr-input"
-                                        placeholder="Date"  type="date">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <input type="date" class="form-control" placeholder="Start Date"
+                                                [(ngModel)]="startDate" [max]="maxEndDate"
+                                                (change)="getRoutetoAgent()" />
+                                        </div>
+                                        <!-- <div class="col-sm-6">
+                                          <input type="date" class="form-control" [(ngModel)]="toDate" [max]="maxEndDate" placeholder="End Date" (change)="GetWhatsAppRawData()" 
+                                           />
+                      
+                                        </div> -->
+                                    </div>
                                 </div>
                             </li>
 
-                            <li class="list-inline-item ms-auto" style="margin-right: 10px;"> 
-                                <button class="btn btn-success"(click)='downloadRouteAgentsCvs()' >Export as CSV</button>
+                            <li class="list-inline-item ms-auto" style="margin-right: 10px;">
+                                <button class="btn btn-success" (click)="downloadRouteAgentsCvs()"
+                                    [disabled]="downloading">Export as CSV
+                                    <div *ngIf="downloading" class="loader"></div>
+                                </button>
                             </li>
-                          
+
                         </ul>
-                     
+
                     </div>
-                  <span>
-                    <div class="pagination-bar" style="margin-top:50px;">
-                        <div class="dropdown">
-                            <button class="btn iconHover" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                           <span>     {{startingPoint}}-{{endingPoint}} of {{totalCounts}}</span>
-                                  </button>
+                    <span>
+                        <div class="pagination-bar" style="margin-top:50px;">
+                            <div class="dropdown">
+                                <button class="btn iconHover" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span> {{startingPoint}}-{{endingPoint}} of {{totalCounts}}</span>
+                                </button>
+                            </div>
+                            <span class="iconButton medium iconHover" (click)="perviousPage(pageNumber)">
+                                <i class="fal fa-chevron-left"></i>
+                            </span>
+                            <span class="iconButton medium iconHover" (click)="nextPage(pageNumber)">
+                                <i class="fal fa-chevron-right"></i>
+                            </span>
                         </div>
-                        <span class="iconButton medium iconHover" (click)="perviousPage(pageNumber)">
-                            <i class="fal fa-chevron-left"></i>
-                        </span>
-                        <span class="iconButton medium iconHover" (click)="nextPage(pageNumber)">
-                            <i class="fal fa-chevron-right"></i>
-                        </span>
-                    </div>
-                  </span>
+                    </span>
                     <div class="card p-3 iceBg" style="margin-top: 60px;">
-                        
+
                         <div class="table-section table-scroll-x" style="overflow: auto; height: calc(100vh - 250px);">
-                         
+
                             <table class="table table-sm">
                                 <thead>
                                     <tr>
@@ -105,7 +106,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let item of agentsDate" >
+                                    <tr *ngFor="let item of agentsDate">
                                         <td>{{item.id}} </td>
                                         <td>
                                             <div class="ttholder">
@@ -126,7 +127,7 @@
                                         <td>{{item.insertionDate}} </td>
                                         <td>{{item.attachment}}</td>
                                         <td>{{item.attachmentType}}</td>
-                                        <td>{{item.contentType}}  </td>
+                                        <td>{{item.contentType}} </td>
                                         <td>
                                             <div class="ttholder">
                                                 <span class="tttext">{{item.isLikedByAdmin}}</span>
@@ -197,4 +198,19 @@
 
     </div>
 
+</div>
+
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+            <div class="toast-btn d-flex align-items-center">
+
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
+
+            </div>
+        </div>
+    </div>
 </div>

@@ -122,6 +122,10 @@ export class FacebookReportComponent implements OnInit {
       let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 7);
       this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     } else if (this.startDate != '' && this.enddate != '') {
+      debugger;
+      // const startDate = new Date(this.startDate);
+      // const abc = startDate.setDate(startDate.getDate() - 1);
+      // this.startDate = this.datePipe.transform(abc, 'YYYY-MM-dd') || '';
       this.startDate = this.startDate;
       this.enddate = this.enddate;
     }
@@ -252,10 +256,8 @@ export class FacebookReportComponent implements OnInit {
       // agentMessageData
       this.agentMessages = res.agentReplies;
       this.agentMessagesData = res.agentReplies;
-      // this.agentMessagesData?.forEach((x: any) => {
         this.totalMessageAndrepliesCount = this.agentMessagesData.totalMessagesAndRepliesCount;
         this.totalMessagePostCommentsAndreplies = this.agentMessagesData.totalPostCommentsAndReplies;
-      // });
       // Publishin Behavior
       this.publishedPegePostSpan = res.publishedPagePostSpan;
       this.publishedPegePostSpan?.forEach((x: any) => {

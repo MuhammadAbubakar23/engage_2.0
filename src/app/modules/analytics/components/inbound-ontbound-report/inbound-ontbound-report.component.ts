@@ -60,7 +60,7 @@ export class InboundOntboundReportComponent implements OnInit {
     };
     this._hS.setHeader(newObj);
     this.getTags();
-    this.getListUser();
+    // this.getListUser();
     this.getSentiments();
   }
   onCheckboxChange() {
@@ -313,8 +313,8 @@ export class InboundOntboundReportComponent implements OnInit {
             });
             option = {
               tooltip: { trigger: 'axis' },
-              legend: {top: 10,
-                left: 10},
+              // legend: {top: 10,
+              //   left: 10},
               xAxis: [{ type: 'category', data: platformsArray }],
               yAxis: [{ type: 'value' }],
               series: this.tagsPerChannel,

@@ -47,14 +47,14 @@ export class DispositionFormComponent implements OnInit {
   userInfo:any;
 
   ngOnInit(): void {
-    // this.getDispositionTags();
+    this.getDispositionTags();
   }
 
-  // getDispositionTags(){
-  //   this.commonService.GetDispositionTags().subscribe((res:any)=>{
-  //     this.dispositionTags = res;
-  //   })
-  // }
+  getDispositionTags(){
+    this.commonService.GetDispositionTags().subscribe((res:any)=>{
+      this.dispositionTags = res;
+    })
+  }
 
   previousUrl:any;
   submitDispositionForm(){
