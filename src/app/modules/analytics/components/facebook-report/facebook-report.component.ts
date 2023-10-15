@@ -4,8 +4,7 @@ import { HeaderService } from 'src/app/shared/services/header.service';
 import * as echarts from 'echarts';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { FormsModule } from '@angular/forms';
-import { NgxSpinnerModule } from 'ngx-spinner';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   standalone: true,
@@ -167,7 +166,7 @@ export class FacebookReportComponent implements OnInit {
     this.externalRefernalsData = [];
     this.spinerServices.show();
     this.commandataSerivecs.Getfacebookreport(data).subscribe((res: any) => {
-      console.log('Response  of api facebook===>', res);
+      this.spinerServices.hide();
 
       this.faecbookresponce = res;
       //  SlA replies
@@ -338,7 +337,6 @@ export class FacebookReportComponent implements OnInit {
       this.getPublishinBehaviorChart();
       this.getExternalSourcesChart();
     });
-    this.spinerServices.hide();
   }
   getPageReachablityChart() {
     var chartDom = document.getElementById('pagereachablity');
