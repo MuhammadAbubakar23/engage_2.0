@@ -21,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'analytics',
-    redirectTo: 'analytics/whatsapp-report',
+    redirectTo: 'analytics/inbound-outbound-report',
     pathMatch: 'full',
   },
   {
