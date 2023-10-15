@@ -166,6 +166,7 @@ export const environment = {
       getCustomers: 'Customer/GetAllCustomersSocialProfile',
       updateStatus: 'Channel/UpdateMessageStatus',
       hideUnhideMessage: 'Query/HideQuery',
+      dispositionTags:'Keyword/GetAllDisposition',
       //Reports
       routeToAgents:'Report/GetWhatsAppRouteToAgentReport',
       routeToAgentsCsv:'Report/GetWhatsAppRouteAgentReportCSV',
