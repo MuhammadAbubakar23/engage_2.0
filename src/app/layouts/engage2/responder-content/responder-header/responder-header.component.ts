@@ -491,8 +491,7 @@ export class ResponderHeaderComponent implements OnInit {
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
             this.userId = res.List[0].user.userId;
-            this.userName =
-              res.List[0].user.userName || res.List[0].user.userId;
+            this.userName =  res.List[0].user.userName || res.List[0].user.userId;
             this.profilePic = res.List[0].user.profilePic;
             this.platform = res.List[0].platform;
             this.postType = res.List[0].comments[0].contentType;
@@ -669,12 +668,12 @@ export class ResponderHeaderComponent implements OnInit {
               this.LinkedInUnrespondedCmntCountByCustomer = res.TotalCount;
             }
           }
-          res.List[0]?.user.secondaryProfiles.forEach((profiles: any) => {
-            this.getSecondaryProfileDetails(
-              profiles.customerUniqueId,
-              profiles.platform
-            );
-          });
+          // res.List[0]?.user.secondaryProfiles.forEach((profiles: any) => {
+          //   this.getSecondaryProfileDetails(
+          //     profiles.customerUniqueId,
+          //     profiles.platform
+          //   );
+          // });
         });
       this.commondata
         .GetChannelMessageDetail(this.filterDto)

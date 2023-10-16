@@ -39,21 +39,21 @@ toasters: Toaster[] = [];
         }
 
       });
-      if(localStorage.getItem('signalRConnectionId')){
-        if (this.signalRService.hubconnection == undefined) {
-          this.spinnerService.show();
-          this.commonService.SignOut().subscribe(()=>{
-            localStorage.clear();
-            this.router.navigateByUrl('/login');
-            this.spinnerService.hide();
-          },
-          (error)=>{
-            localStorage.clear();
-            this.router.navigateByUrl('/login');
-            this.spinnerService.hide();
-          })
-        }
-      }
+      // if(localStorage.getItem('signalRConnectionId')){
+      //   if (this.signalRService.hubconnection == undefined) {
+      //     this.spinnerService.show();
+      //     this.commonService.SignOut().subscribe(()=>{
+      //       localStorage.clear();
+      //       this.router.navigateByUrl('/login');
+      //       this.spinnerService.hide();
+      //     },
+      //     (error)=>{
+      //       localStorage.clear();
+      //       this.router.navigateByUrl('/login');
+      //       this.spinnerService.hide();
+      //     })
+      //   }
+      // }
     
   //   this.signalRService.reConnect();
 

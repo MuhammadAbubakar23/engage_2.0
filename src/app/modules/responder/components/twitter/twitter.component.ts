@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@an
 import { FormControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { first, pipe, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
 import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
@@ -11,7 +11,6 @@ import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-qu
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
-import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
@@ -28,6 +27,7 @@ import { InsertTagsForFeedDto } from 'src/app/shared/Models/InsertTagsForFeedDto
 import { LikeByAdminDto } from 'src/app/shared/Models/LikeByAdminDto';
 import { ReplyDto } from 'src/app/shared/Models/ReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
 
 @Component({
@@ -36,9 +36,9 @@ import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ti
   styleUrls: ['./twitter.component.scss'],
 })
 export class TwitterComponent implements OnInit {
-
   @ViewChild('fileInput') fileInput!: ElementRef;
-  @ViewChild('radioInput', { static: false }) radioInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('radioInput', { static: false })
+  radioInput!: ElementRef<HTMLInputElement>;
 
   checkTag = false;
   activeTag = false;
@@ -47,17 +47,22 @@ export class TwitterComponent implements OnInit {
   userIdsDto = this.fetchId.getIds();
   queryType = this.getQueryTypeService.getQueryType();
   ImageName: any;
-  ImageArray:any[]=[];
-  TwitterConversation: any;
-  TwitterMessage: any[] = [];
+  ImageArray: any[] = [];
+  TwitterTweets: any[]=[];
+  TwitterMessages: any[] = [];
+  TwitterMentions: any[] = [];
 
   pageNumber: any = 1;
   pageSize: any = 10;
   totalUnrespondedCmntCountByCustomer: number = 0;
+  totalUnrespondedMsgCountByCustomer: number = 0;
+  totalUnrespondedMentionCountByCustomer: number = 0;
 
   TotalCmntQueryCount: number = 0;
   TotalMsgQueryCount: number = 0;
+  TotalMentionQueryCount: number = 0;
 
+  pageName: string = '';
 
   show = false;
   isOpen = false;
@@ -82,7 +87,7 @@ export class TwitterComponent implements OnInit {
   isLikedByAdmin: any;
   ticketId: any;
 
-  tweetId: number=0;
+  tweetId: number = 0;
   newReply: any;
 
   commentStatusDto = new CommentStatusDto();
@@ -93,7 +98,7 @@ export class TwitterComponent implements OnInit {
   insertTagsForFeedDto = new InsertTagsForFeedDto();
 
   getAppliedTagsList: any;
-  totalUnrespondedMsgCountByCustomer: any;
+
   TodayDate: any;
 
   public Subscription!: Subscription;
@@ -104,7 +109,8 @@ export class TwitterComponent implements OnInit {
 
   quickReplySearchText: string = '';
 
-  flag:string='';
+  flag: string = '';
+  teamPermissions: any;
 
   constructor(
     private fetchId: FetchIdService,
@@ -122,17 +128,19 @@ export class TwitterComponent implements OnInit {
     private toggleService: ToggleService,
     private ticketResponseService: TicketResponseService,
     private applySentimentService: ApplySentimentService,
-    private getQueryTypeService : GetQueryTypeService,
-    private router : Router
+    private getQueryTypeService: GetQueryTypeService,
+    private router: Router,
+    private store: StorageService
   ) {
-    this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
-      this.id = res;
-      this.getTwitterData();
-      this.getTwitterMessages();
-    });
+    // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
+    //   this.id = res;
+    //   this.getTwitterTweets();
+    //   this.getTwitterDM();
+    // });
   }
 
   ngOnInit(): void {
+    this.teamPermissions = this.store.retrive('permissionteam', 'O').local;
     this.flag = this.router.url.split('/')[2];
     this.criteria = {
       property: 'createdDate',
@@ -140,14 +148,15 @@ export class TwitterComponent implements OnInit {
     };
 
     this.TodayDate = new Date();
-    this.getTwitterData();
+    this.getTwitterTweets();
     this.getTagList();
-    this.getTwitterMessages();
+    this.getTwitterDM();
+    this.getTwitterMentions();
     this.quickReplyList();
 
     this.Subscription = this.addTagService.receiveTags().subscribe((res) => {
       this.addTags = res;
-      this.addTagDataListner();
+      this.addTagDataListener();
     });
     this.Subscription = this.removeTagService.receiveTags().subscribe((res) => {
       this.removeTags = res;
@@ -162,18 +171,17 @@ export class TwitterComponent implements OnInit {
     this.Subscription = this.updateMessagesService
       .receiveMessage()
       .subscribe((res) => {
-        this.updatedMessages = res;
-        this.updateMessagesDataListener();
+        this.updateMessagesDataListener(res);
       });
     this.Subscription = this.queryStatusService
       .receiveQueryStatus()
       .subscribe((res) => {
         this.queryStatus = res;
-        this.updateQueryStatusDataListner();
+        this.updateQueryStatusDataListener();
       });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
       this.newReply = res;
-      this.replyDataListner();
+      this.replyDataListener();
     });
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
@@ -183,17 +191,13 @@ export class TwitterComponent implements OnInit {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
         }
-        if (res.contentCount.contentType == 'TM') {
-          this.totalUnrespondedMsgCountByCustomer =
-            res.contentCount.unrespondedCount;
-        }
       }
-      });
+    });
     this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
         this.queryStatus = res;
-        this.updateBulkQueryStatusDataListner();
+        this.updateBulkQueryStatusDataListener();
       });
 
     this.ticketResponseService.getTicketId().subscribe((res) => {
@@ -205,17 +209,23 @@ export class TwitterComponent implements OnInit {
       .subscribe((res) => {
         this.applySentimentListner(res);
       });
+
+    this.Subscription = this.queryStatusService
+      .receiveQueryStatus()
+      .subscribe((res) => {
+        this.updateMessageStatusDataListener(res);
+      });
   }
 
   commentDto = new commentsDto();
   messageDto = new messagesDto();
 
   updatedComments: any;
-  updatedMessages: any;
+  // updatedMessages: any;
   userProfileId = 0;
   updateCommentsDataListener() {
-    if(!this.id){
-      this.id = localStorage.getItem('storeOpenedId') || '{}'
+    if (!this.id) {
+      this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
     this.updatedComments.forEach((xyz: any) => {
       if (this.id == xyz.userId) {
@@ -238,7 +248,7 @@ export class TwitterComponent implements OnInit {
           sentiment: '',
           tags: [],
         };
-        this.TwitterConversation.forEach((item: any) => {
+        this.TwitterTweets.forEach((item: any) => {
           this.commentsArray = [];
           if (item.post.postId == xyz.postId) {
             item.comments.push(this.commentDto);
@@ -275,47 +285,104 @@ export class TwitterComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  updateMessagesDataListener() {
-    this.updatedMessages.forEach((xyz: any) => {
-      if (this.id == xyz.fromId) {
-        this.messageDto = {
-          id: xyz.id,
-          contentType: xyz.contentType,
-          queryStatus: xyz.queryStatus,
-          createdDate: xyz.createdDate,
-          attachments: xyz.mediaAttachments,
-          replies: [],
-          sentiment: '',
-          tags: [],
-          msgId: xyz.msgId,
-          fromId: xyz.fromId,
-          fromName: xyz.fromName,
-          fromProfilePic: xyz.fromProfilePic,
-          toId: xyz.toId,
-          toName: xyz.toName,
-          msgText: xyz.msgText,
-          agentId: xyz.agentId,
-          customerSocailProfileId: xyz.agentId,
-          profileId: xyz.profileId,
-          profilePageId: xyz.profilePageId,
-        };
-        this.messagesArray.push(this.messageDto);
-        let groupedItems = this.messagesArray.reduce((acc: any, item: any) => {
-          const date = item.createdDate.split('T')[0];
-          if (!acc[date]) {
-            acc[date] = [];
-          }
-          acc[date].push(item);
-          return acc;
-        }, {});
-
-        this.groupedMessages = Object.keys(groupedItems).map((date) => {
-          return {
-            date,
-            items: groupedItems[date],
+  updateMessagesDataListener(res: any) {
+    res.forEach((xyz: any) => {
+      if (xyz.contentType == 'TDM') {
+        if (this.id == xyz.fromId) {
+          this.messageDto = {
+            id: xyz.id,
+            contentType: xyz.contentType,
+            queryStatus: xyz.queryStatus,
+            createdDate: xyz.createdDate,
+            attachments: xyz.mediaAttachments,
+            replies: [],
+            sentiment: '',
+            tags: [],
+            msgId: xyz.msgId,
+            fromId: xyz.fromId,
+            fromName: xyz.fromName,
+            fromProfilePic: xyz.fromProfilePic,
+            toId: xyz.toId,
+            toName: xyz.toName,
+            msgText: xyz.msgText,
+            agentId: xyz.agentId,
+            customerSocailProfileId: xyz.agentId,
+            profileId: xyz.profileId,
+            profilePageId: xyz.profilePageId,
           };
-        });
-        // // console.log('Messages ==>', this.groupedMessages);
+          this.TwitterMessages.unshift(this.messageDto);
+          this.messagesArray.push(this.messageDto);
+          let groupedItems = this.messagesArray.reduce(
+            (acc: any, item: any) => {
+              const date = item.createdDate.split('T')[0];
+              if (!acc[date]) {
+                acc[date] = [];
+              }
+              acc[date].push(item);
+              return acc;
+            },
+            {}
+          );
+
+          this.groupedMessages = Object.keys(groupedItems).map((date) => {
+            return {
+              date,
+              items: groupedItems[date],
+            };
+          });
+          this.totalUnrespondedMsgCountByCustomer =
+            this.totalUnrespondedMsgCountByCustomer + 1;
+        }
+      }
+    });
+
+    res.forEach((xyz: any) => {
+      if (xyz.contentType == 'TM') {
+        if (this.id == xyz.fromId) {
+          this.messageDto = {
+            id: xyz.id,
+            contentType: xyz.contentType,
+            queryStatus: xyz.queryStatus,
+            createdDate: xyz.createdDate,
+            attachments: xyz.mediaAttachments,
+            replies: [],
+            sentiment: '',
+            tags: [],
+            msgId: xyz.msgId,
+            fromId: xyz.fromId,
+            fromName: xyz.fromName,
+            fromProfilePic: xyz.fromProfilePic,
+            toId: xyz.toId,
+            toName: xyz.toName,
+            msgText: xyz.msgText,
+            agentId: xyz.agentId,
+            customerSocailProfileId: xyz.agentId,
+            profileId: xyz.profileId,
+            profilePageId: xyz.profilePageId,
+          };
+          this.TwitterMentions.unshift(this.messageDto);
+          this.mentionsArray.push(this.messageDto);
+          let groupedItems = this.mentionsArray.reduce(
+            (acc: any, item: any) => {
+              const date = item.createdDate.split('T')[0];
+              if (!acc[date]) {
+                acc[date] = [];
+              }
+              acc[date].push(item);
+              return acc;
+            },
+            {}
+          );
+
+          this.groupedMentions = Object.keys(groupedItems).map((date) => {
+            return {
+              date,
+              items: groupedItems[date],
+            };
+          });
+          this.totalUnrespondedMentionCountByCustomer =
+            this.totalUnrespondedMentionCountByCustomer + 1;
+        }
       }
     });
     this.changeDetect.detectChanges();
@@ -327,80 +394,81 @@ export class TwitterComponent implements OnInit {
   groupArrays: any[] = [];
 
   messagesArray: any[] = [];
+  mentionsArray: any[] = [];
   groupedMessages: any[] = [];
+  groupedMentions: any[] = [];
   repliesArray: any[] = [];
   groupRepliesArray: any[] = [];
+  userInfo:any;
 
-  getTwitterData() {
+  getTwitterTweets() {
     this.flag = this.router.url.split('/')[2];
-    if (this.id != null || undefined) {
+    if (this.id != null || this.id != undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
         user: this.id,
         pageId: '',
-        plateForm: 'Twitter',
+        plateForm: this.fetchId.platform,
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType,
-        text : "",
+        queryType: 'TTR',
+        text: '',
+        flag: this.flag,
         userName: '',
         notInclude: '',
         include: '',
-        flag: this.flag,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
-          this.SpinnerService.hide();
-          this.spinner1running = false;
-          this.TwitterConversation = res.List;
-          this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-          this.TotalCmntQueryCount = res.TotalQueryCount;
-          this.pageName = this.TwitterConversation[0]?.post.profile?.page_Name;
+          if (Object.keys(res).length > 0) {
+            this.SpinnerService.hide();
+            this.spinner1running = false;
+            this.TTReply = true;
+            this.TwitterTweets = res.List;
+            // this.userInfoService.shareUserInformation(res.List[0].user);
+            this.TotalCmntQueryCount = res.TotalQueryCount;
+            this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+            // this.pageName = this.TwitterTweets[0]?.post.profile.page_Name;
 
-          // group by date function
-          this.commentsArray = [];
-          this.TwitterConversation.forEach((item: any) => {
             this.commentsArray = [];
-            item.comments.forEach((cmnt: any) => {
-              this.commentsArray.push(cmnt);
 
-              cmnt.replies.forEach((reply: any) => {
-                this.repliesArray.push(reply);
+            this.TwitterTweets.forEach((item: any) => {
+              this.commentsArray = [];
+              item.comments.forEach((cmnt: any) => {
+                this.commentsArray.push(cmnt);
+
+                let groupedItems = this.commentsArray.reduce(
+                  (acc: any, aa: any) => {
+                    const date = aa.createdDate.split('T')[0];
+                    if (!acc[date]) {
+                      acc[date] = [];
+                    }
+                    acc[date].push(aa);
+                    return acc;
+                  },
+                  {}
+                );
+
+                item['groupedComments'] = Object.keys(groupedItems).map(
+                  (createdDate) => {
+                    return {
+                      createdDate,
+                      items: groupedItems[createdDate],
+                    };
+                  }
+                );
               });
             });
-            let groupedItems = this.commentsArray.reduce(
-              (acc: any, item: any) => {
-                const date = item.createdDate.split('T')[0];
-                if (!acc[date]) {
-                  acc[date] = [];
-                }
-                acc[date].push(item);
-                return acc;
-              },
-              {}
-            );
-
-            item['groupedComments'] = Object.keys(groupedItems).map(
-              (createdDate) => {
-                return {
-                  createdDate,
-                  items: groupedItems[createdDate],
-                };
-              }
-            );
-            this.tweetStats();
-          });
+            // this.tweetStats();
+          }
         });
-      setTimeout(() => {
-        this.SpinnerService.hide();
-      }, 3000);
-    } else if (this.slaId != null || undefined) {
+    } else if (this.slaId != null || this.slaId != undefined) {
       localStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
         // fromDate: new Date(),
@@ -408,60 +476,57 @@ export class TwitterComponent implements OnInit {
         user: this.slaId,
         pageId: '',
         plateForm: 'Twitter',
-        pageNumber: 0,
-        pageSize: 0,
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType,
-        text : "",
+        queryType: 'TTR',
+        text: '',
+        flag: this.flag,
         userName: '',
         notInclude: '',
         include: '',
-        flag: this.flag,
       };
-
-      this.spinner1running = true;
-      this.SpinnerService.show();
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
-        this.SpinnerService.hide();
-        this.spinner1running = false;
-        this.TwitterConversation = res.List;
-        this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-        this.TotalCmntQueryCount = res.TotalQueryCount;
-        this.pageName = this.TwitterConversation[0].post.profile?.page_Name;
+        if (Object.keys(res).length > 0) {
+          this.TTReply = true;
+          this.TwitterTweets = res.List;
+          this.TotalCmntQueryCount = res.TotalQueryCount;
+          // this.userInfoService.shareUserInformation(res.List[0].user);
+          this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+          // this.pageName = this.TwitterTweets[0]?.post.profile.page_Name;
 
-        this.commentsArray = [];
-        this.TwitterConversation.forEach((item: any) => {
           this.commentsArray = [];
-          item.comments.forEach((cmnt: any) => {
-            this.commentsArray.push(cmnt);
-          });
-          let groupedItems = this.commentsArray.reduce(
-            (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
-              if (!acc[date]) {
-                acc[date] = [];
-              }
-              acc[date].push(item);
-              return acc;
-            },
-            {}
-          );
 
-          item['groupedComments'] = Object.keys(groupedItems).map(
-            (createdDate) => {
-              return {
-                createdDate,
-                items: groupedItems[createdDate],
-              };
-            }
-          );
-          // // console.log('hello', this.groupArrays);
-          this.tweetStats();
-        });
+          this.TwitterTweets.forEach((item: any) => {
+            this.commentsArray = [];
+            item.comments.forEach((cmnt: any) => {
+              this.commentsArray.push(cmnt);
+
+              let groupedItems = this.commentsArray.reduce(
+                (acc: any, aa: any) => {
+                  const date = aa.createdDate.split('T')[0];
+                  if (!acc[date]) {
+                    acc[date] = [];
+                  }
+                  acc[date].push(aa);
+                  return acc;
+                },
+                {}
+              );
+
+              item['groupedComments'] = Object.keys(groupedItems).map(
+                (createdDate) => {
+                  return {
+                    createdDate,
+                    items: groupedItems[createdDate],
+                  };
+                }
+              );
+            });
+          });
+          // this.tweetStats();
+        }
       });
-      setTimeout(() => {
-        this.SpinnerService.hide();
-      }, 3000);
     } else {
       this.filterDto = {
         // fromDate: new Date(),
@@ -472,63 +537,66 @@ export class TwitterComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType,
-        text : "",
+        queryType: 'TTR',
+        text: '',
+        flag: this.flag,
         userName: '',
         notInclude: '',
         include: '',
-        flag: this.flag,
       };
 
       this.spinner1running = true;
       this.SpinnerService.show();
-      this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
-        this.SpinnerService.hide();
-        this.spinner1running = false;
-        this.TwitterConversation = res.List;
-        this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-        this.TotalCmntQueryCount = res.TotalQueryCount;
-        this.pageName = this.TwitterConversation[0].post.profile?.page_Name;
+      this.commondata
+        .GetChannelConversationDetail(this.filterDto)
+        .subscribe((res: any) => {
+          if (Object.keys(res).length > 0) {
+            this.SpinnerService.hide();
+            this.spinner1running = false;
+            this.TTReply = true;
+            this.TwitterTweets = res.List;
+            // this.userInfoService.shareUserInformation(res.List[0].user);
+            // this.headerCountService.shareUnresponedCount(res.TotalCount);
+            this.TotalCmntQueryCount = res.TotalQueryCount;
+            this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+            // this.pageName = this.TwitterTweets[0]?.post.profile.page_Name;
 
-        this.commentsArray = [];
-        this.TwitterConversation.forEach((item: any) => {
-          this.commentsArray = [];
-          item.comments.forEach((cmnt: any) => {
-            this.commentsArray.push(cmnt);
-          });
-          let groupedItems = this.commentsArray.reduce(
-            (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
-              if (!acc[date]) {
-                acc[date] = [];
-              }
-              acc[date].push(item);
-              return acc;
-            },
-            {}
-          );
+            this.commentsArray = [];
 
-          item['groupedComments'] = Object.keys(groupedItems).map(
-            (createdDate) => {
-              return {
-                createdDate,
-                items: groupedItems[createdDate],
-              };
-            }
-          );
-          // // console.log('hello', this.groupArrays);
-          this.tweetStats();
+            this.TwitterTweets.forEach((item: any) => {
+              this.commentsArray = [];
+              item.comments.forEach((cmnt: any) => {
+                this.commentsArray.push(cmnt);
+
+                let groupedItems = this.commentsArray.reduce(
+                  (acc: any, aa: any) => {
+                    const date = aa.createdDate.split('T')[0];
+                    if (!acc[date]) {
+                      acc[date] = [];
+                    }
+                    acc[date].push(aa);
+                    return acc;
+                  },
+                  {}
+                );
+
+                item['groupedComments'] = Object.keys(groupedItems).map(
+                  (createdDate) => {
+                    return {
+                      createdDate,
+                      items: groupedItems[createdDate],
+                    };
+                  }
+                );
+              });
+            });
+            // this.tweetStats();
+          }
         });
-      });
-      setTimeout(() => {
-        this.SpinnerService.hide();
-      }, 3000);
     }
   }
 
-  pageName?: any;
-
-  getTwitterMessages() {
+  getTwitterDM() {
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
       this.filterDto = {
@@ -537,32 +605,110 @@ export class TwitterComponent implements OnInit {
         user: this.id,
         pageId: '',
         plateForm: 'Twitter',
-        pageNumber: 0,
-        pageSize: 0,
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType,
-        text : "",
+        queryType: 'TDM',
+        text: '',
+        flag: this.flag,
         userName: '',
         notInclude: '',
         include: '',
-        flag: this.flag,
       };
+
       this.spinner1running = true;
       this.SpinnerService.show();
       this.commondata
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
+          if (Object.keys(res).length > 0) {
+            this.SpinnerService.hide();
+            this.spinner1running = false;
+            this.TwitterMessages = res.List?.dm;
+            this.userInfo = res.List?.user
+            // this.pageName = res.List?.profile.page_Name;
+            this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+            this.TotalMsgQueryCount = res.TotalQueryCount;
+
+            if (this.TwitterTweets.length == 0 && this.TwitterMentions.length == 0) {
+              this.TTReply = false;
+              this.TMReply = false;
+              this.TDMReply = true;
+            }
+
+            if (this.TwitterTweets.length == 0) {
+              this.TTReply = false;
+              this.TMReply = false;
+              this.TDMReply = true;
+            }
+
+            this.messagesArray = [];
+            this.groupedMessages = [];
+
+            this.TwitterMessages.forEach((item: any) => {
+              this.messagesArray.push(item);
+              let groupedItems = this.messagesArray.reduce(
+                (acc: any, item: any) => {
+                  const date = item.createdDate.split('T')[0];
+                  if (!acc[date]) {
+                    acc[date] = [];
+                  }
+                  acc[date].push(item);
+                  return acc;
+                },
+                {}
+              );
+
+              this.groupedMessages = Object.keys(groupedItems).map(
+                (createdDate) => {
+                  return {
+                    createdDate,
+                    items: groupedItems[createdDate],
+                  };
+                }
+              );
+            });
+          }
+        });
+    } else if (this.slaId != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.slaId);
+      this.filterDto = {
+        // fromDate: new Date(),
+        // toDate: new Date(),
+        user: this.slaId,
+        pageId: '',
+        plateForm: 'Twitter',
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize,
+        isAttachment: false,
+        queryType: 'TDM',
+        text: '',
+        flag: this.flag,
+        userName: '',
+        notInclude: '',
+        include: '',
+      };
+
+      this.SpinnerService.show();
+      this.commondata.GetSlaDM(this.filterDto).subscribe((res: any) => {
+        if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
-          this.spinner1running = false;
-          this.TwitterMessage = res.List?.dm;
-          this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
-          this.pageName = this.TwitterMessage[0]?.toName;
+          this.TwitterMessages = res.List?.dm;
+            this.userInfo = res.List?.user
+          // this.pageName = res.List?.profile.page_Name;
           this.TotalMsgQueryCount = res.TotalQueryCount;
+          this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+
+          if (this.TwitterTweets.length == 0 && this.TwitterMentions.length == 0) {
+            this.TTReply = false;
+            this.TMReply = false;
+            this.TDMReply = true;
+          }
 
           this.messagesArray = [];
           this.groupedMessages = [];
 
-          this.TwitterMessage.forEach((item: any) => {
+          this.TwitterMessages.forEach((item: any) => {
             this.messagesArray.push(item);
             let groupedItems = this.messagesArray.reduce(
               (acc: any, item: any) => {
@@ -584,8 +730,148 @@ export class TwitterComponent implements OnInit {
                 };
               }
             );
-            // // console.log('Messages ==>', this.groupedMessages);
           });
+        }
+      });
+    } else {
+      this.filterDto = {
+        // fromDate: new Date(),
+        // toDate: new Date(),
+        user: localStorage.getItem('storeOpenedId') || '{}',
+        pageId: '',
+        plateForm: localStorage.getItem('parent') || '{}',
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize,
+        isAttachment: false,
+        queryType: 'TDM',
+        text: '',
+        flag: this.flag,
+        userName: '',
+        notInclude: '',
+        include: '',
+      };
+
+      this.spinner1running = true;
+      this.SpinnerService.show();
+      this.commondata
+        .GetChannelMessageDetail(this.filterDto)
+        .subscribe((res: any) => {
+          if (Object.keys(res).length > 0) {
+            this.TwitterMessages = res.List?.dm;
+            // this.userInfoService.shareUserInformation(res.List.user);
+            // this.headerCountService.shareUnresponedCount(res.TotalCount);
+            this.userInfo = res.List?.user
+            // this.pageName = res.List?.profile.page_Name;
+            this.TotalMsgQueryCount = res.TotalQueryCount;
+            this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+            
+
+            if (this.TwitterTweets.length == 0 && this.TwitterMentions.length == 0) {
+              this.TTReply = false;
+              this.TMReply = false;
+              this.TDMReply = true;
+            }
+
+            this.messagesArray = [];
+            this.groupedMessages = [];
+
+            this.TwitterMessages.forEach((item: any) => {
+              this.messagesArray.push(item);
+              let groupedItems = this.messagesArray.reduce(
+                (acc: any, item: any) => {
+                  const date = item.createdDate.split('T')[0];
+                  if (!acc[date]) {
+                    acc[date] = [];
+                  }
+                  acc[date].push(item);
+                  return acc;
+                },
+                {}
+              );
+
+              this.groupedMessages = Object.keys(groupedItems).map(
+                (createdDate) => {
+                  return {
+                    createdDate,
+                    items: groupedItems[createdDate],
+                  };
+                }
+              );
+              this.SpinnerService.hide();
+              this.spinner1running = false;
+            });
+          }
+        });
+    }
+  }
+
+  getTwitterMentions() {
+    if (this.id != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.id);
+      this.filterDto = {
+        // fromDate: new Date(),
+        // toDate: new Date(),
+        user: this.id,
+        pageId: '',
+        plateForm: 'Twitter',
+        pageNumber: 0,
+        pageSize: 0,
+        isAttachment: false,
+        queryType: 'TM',
+        text: '',
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: this.flag,
+      };
+      this.spinner1running = true;
+      this.SpinnerService.show();
+      this.commondata
+        .GetChannelMessageDetail(this.filterDto)
+        .subscribe((res: any) => {
+          if (Object.keys(res).length > 0) {
+            this.SpinnerService.hide();
+            this.spinner1running = false;
+            this.TwitterMentions = res.List?.dm;
+            this.userInfo = res.List?.user;
+            this.totalUnrespondedMentionCountByCustomer = res.TotalCount;
+            // this.pageName = res.List?.profile.page_Name;
+            this.TotalMentionQueryCount = res.TotalQueryCount;
+
+            if (this.TwitterTweets.length == 0) {
+              this.TTReply = false;
+              this.TMReply = true;
+              this.TDMReply = false;
+            }
+
+            this.mentionsArray = [];
+            this.groupedMentions = [];
+
+            this.TwitterMentions.forEach((item: any) => {
+              this.mentionsArray.push(item);
+              let groupedItems = this.mentionsArray.reduce(
+                (acc: any, item: any) => {
+                  const date = item.createdDate.split('T')[0];
+                  if (!acc[date]) {
+                    acc[date] = [];
+                  }
+                  acc[date].push(item);
+                  return acc;
+                },
+                {}
+              );
+
+              this.groupedMentions = Object.keys(groupedItems).map(
+                (createdDate) => {
+                  return {
+                    createdDate,
+                    items: groupedItems[createdDate],
+                  };
+                }
+              );
+              // // console.log('Messages ==>', this.groupedMessages);
+            });
+          }
         });
     } else if (this.slaId != null || undefined) {
       localStorage.setItem('storeOpenedId', this.slaId);
@@ -598,8 +884,8 @@ export class TwitterComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
-        queryType: this.queryType,
-        text : "",
+        queryType: 'TM',
+        text: '',
         userName: '',
         notInclude: '',
         include: '',
@@ -608,39 +894,48 @@ export class TwitterComponent implements OnInit {
 
       this.SpinnerService.show();
       this.commondata.GetSlaDM(this.filterDto).subscribe((res: any) => {
-        this.SpinnerService.hide();
-        this.TwitterMessage = res.List.dm;
-        this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
-        this.TotalMsgQueryCount = res.TotalQueryCount;
-        this.pageName = this.TwitterMessage[0]?.toName;
+        if (Object.keys(res).length > 0) {
+          this.SpinnerService.hide();
+          this.TwitterMentions = res.List?.dm;
+            this.userInfo = res.List?.user;
+          this.totalUnrespondedMentionCountByCustomer = res.TotalCount;
+          this.TotalMentionQueryCount = res.TotalQueryCount;
+          // this.pageName = res.List?.profile.page_Name;
 
-        this.messagesArray = [];
-        this.groupedMessages = [];
+          if (this.TwitterTweets.length == 0) {
+            this.TTReply = false;
+            this.TMReply = true;
+            this.TDMReply = false;
+          }
 
-        this.TwitterMessage.forEach((item: any) => {
-          this.messagesArray.push(item);
-          let groupedItems = this.messagesArray.reduce(
-            (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
-              if (!acc[date]) {
-                acc[date] = [];
+          this.mentionsArray = [];
+          this.groupedMentions = [];
+
+          this.TwitterMentions.forEach((item: any) => {
+            this.mentionsArray.push(item);
+            let groupedItems = this.mentionsArray.reduce(
+              (acc: any, item: any) => {
+                const date = item.createdDate.split('T')[0];
+                if (!acc[date]) {
+                  acc[date] = [];
+                }
+                acc[date].push(item);
+                return acc;
+              },
+              {}
+            );
+
+            this.groupedMentions = Object.keys(groupedItems).map(
+              (createdDate) => {
+                return {
+                  createdDate,
+                  items: groupedItems[createdDate],
+                };
               }
-              acc[date].push(item);
-              return acc;
-            },
-            {}
-          );
-
-          this.groupedMessages = Object.keys(groupedItems).map(
-            (createdDate) => {
-              return {
-                createdDate,
-                items: groupedItems[createdDate],
-              };
-            }
-          );
-          // console.log('Messages ==>', this.groupedMessages);
-        });
+            );
+            // console.log('Messages ==>', this.groupedMessages);
+          });
+        }
       });
     } else {
       this.filterDto = {
@@ -652,8 +947,8 @@ export class TwitterComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType,
-        text : "",
+        queryType: 'TM',
+        text: '',
         userName: '',
         notInclude: '',
         include: '',
@@ -661,52 +956,56 @@ export class TwitterComponent implements OnInit {
       };
 
       this.SpinnerService.show();
-      this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
-        this.SpinnerService.hide();
-        this.TwitterMessage = res.List.dm;
-        this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
-        this.TotalMsgQueryCount = res.TotalQueryCount;
-        this.pageName = this.TwitterMessage[0]?.toName;
+      this.commondata
+        .GetChannelMessageDetail(this.filterDto)
+        .subscribe((res: any) => {
+          if (Object.keys(res).length > 0) {
+            this.SpinnerService.hide();
+            this.TwitterMentions = res.List?.dm;
+            // this.userInfoService.shareUserInformation(res.List.user);
+            // this.headerCountService.shareUnresponedCount(res.TotalCount);
+            this.userInfo = res.List?.user;
+            this.totalUnrespondedMentionCountByCustomer = res.TotalCount;
+            this.TotalMentionQueryCount = res.TotalQueryCount;
+            // this.pageName = res.List?.profile.page_Name;
 
-        this.messagesArray = [];
-        this.groupedMessages = [];
-
-        this.TwitterMessage.forEach((item: any) => {
-          this.messagesArray.push(item);
-          let groupedItems = this.messagesArray.reduce(
-            (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
-              if (!acc[date]) {
-                acc[date] = [];
-              }
-              acc[date].push(item);
-              return acc;
-            },
-            {}
-          );
-
-          this.groupedMessages = Object.keys(groupedItems).map(
-            (createdDate) => {
-              return {
-                createdDate,
-                items: groupedItems[createdDate],
-              };
+            if (this.TwitterTweets.length == 0) {
+              this.TTReply = false;
+              this.TMReply = true;
+              this.TDMReply = false;
             }
-          );
-          // // console.log('Messages ==>', this.groupedMessages);
+
+            this.mentionsArray = [];
+            this.groupedMentions = [];
+
+            this.TwitterMentions.forEach((item: any) => {
+              this.mentionsArray.push(item);
+              let groupedItems = this.mentionsArray.reduce(
+                (acc: any, item: any) => {
+                  const date = item.createdDate.split('T')[0];
+                  if (!acc[date]) {
+                    acc[date] = [];
+                  }
+                  acc[date].push(item);
+                  return acc;
+                },
+                {}
+              );
+
+              this.groupedMentions = Object.keys(groupedItems).map(
+                (createdDate) => {
+                  return {
+                    createdDate,
+                    items: groupedItems[createdDate],
+                  };
+                }
+              );
+              // // console.log('Messages ==>', this.groupedMessages);
+            });
+          }
         });
-      });
     }
   }
-
-  //   getTwitterReplies(){
-  //
-  //   this.twitterdata.GetTwitterReplies(this.userIdsDto).subscribe((res:any)=>{
-
-  //     this.TwitterReplies = res.result;
-  //     // // console.log("Twitter Replies ==>", this.TwitterReplies)
-  //   })
-  // }
 
   closeMentionedReply() {
     this.show = false;
@@ -742,8 +1041,8 @@ export class TwitterComponent implements OnInit {
   tweetIdForStats: any;
 
   tweetStats() {
-    if (this.TwitterConversation != null || undefined) {
-      this.TwitterConversation.forEach(async (tweet: any): Promise<void> => {
+    if (this.TwitterTweets != null || undefined) {
+      this.TwitterTweets.forEach(async (tweet: any): Promise<void> => {
         this.profileIdForStats = tweet.post.profile.profile_Id;
         tweet.comments.forEach(async (cmnt: any) => {
           this.tweetIdForStats = cmnt?.postId;
@@ -752,8 +1051,6 @@ export class TwitterComponent implements OnInit {
             .GetTwitterTweetStats(this.profileIdForStats, this.tweetIdForStats)
             .subscribe((postStats: any) => {
               cmnt['postStats'] = postStats;
-
-              // // console.log("Stats==>", this.TwitterConversation)
             });
         });
       });
@@ -765,22 +1062,21 @@ export class TwitterComponent implements OnInit {
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = 'Twitter';
     this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-   // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {});
   }
 
   insertTagsForFeed(id: any, comId: string, type: any) {
-    if (type == 'TT') {
+    if (type == 'TTR') {
       this.insertTagsForFeedDto.feedId = comId.toString();
       this.insertTagsForFeedDto.tagId = id;
-      this.insertTagsForFeedDto.feedType = 'TT';
+      this.insertTagsForFeedDto.feedType = 'TTR';
       this.insertTagsForFeedDto.userId = Number(
         localStorage.getItem('agentId')
       );
 
-      this.TwitterConversation.forEach((abc: any) => {
+      this.TwitterTweets.forEach((abc: any) => {
         abc.comments.forEach((comment: any) => {
           if (comment.id == comId) {
             if (comment.tags.length == 0) {
@@ -809,15 +1105,15 @@ export class TwitterComponent implements OnInit {
         });
       });
     }
-    if (type == 'TM') {
+    if (type == 'TDM') {
       this.insertTagsForFeedDto.feedId = comId.toString();
       this.insertTagsForFeedDto.tagId = id;
-      this.insertTagsForFeedDto.feedType = 'TM';
+      this.insertTagsForFeedDto.feedType = 'TDM';
       this.insertTagsForFeedDto.userId = Number(
         localStorage.getItem('agentId')
       );
 
-      this.TwitterMessage.forEach((msg: any) => {
+      this.TwitterMessages.forEach((msg: any) => {
         if (msg.id == comId) {
           if (msg.tags.length == 0) {
             this.commondata
@@ -846,13 +1142,50 @@ export class TwitterComponent implements OnInit {
         }
       });
     }
+    if (type == 'TM') {
+      this.insertTagsForFeedDto.feedId = comId.toString();
+      this.insertTagsForFeedDto.tagId = id;
+      this.insertTagsForFeedDto.feedType = 'TM';
+      this.insertTagsForFeedDto.userId = Number(
+        localStorage.getItem('agentId')
+      );
+
+      this.TwitterMentions.forEach((mention: any) => {
+        if (mention.id == comId) {
+          if (mention.tags.length == 0) {
+            this.commondata
+              .InsertTag(this.insertTagsForFeedDto)
+              .subscribe((res: any) => {
+                this.reloadComponent('ApplyTag');
+
+                this.activeTag = true;
+                this.checkTag = true;
+              });
+          } else if (mention.tags.length > 0) {
+            const value = mention.tags.find((x: any) => x.id == id);
+            if (value != null || value != undefined) {
+              this.removeTagFromFeed(id, comId, type);
+            } else {
+              this.commondata
+                .InsertTag(this.insertTagsForFeedDto)
+                .subscribe((res: any) => {
+                  this.reloadComponent('ApplyTag');
+
+                  this.activeTag = true;
+                  this.checkTag = true;
+                });
+            }
+          }
+        }
+      });
+    }
   }
 
   removeTagFromFeed(tagid: any, feedId: string, type: any) {
-    if (type == 'TT') {
+    if (type == 'TTR') {
       this.insertTagsForFeedDto.tagId = tagid;
       this.insertTagsForFeedDto.feedId = feedId.toString();
-      this.insertTagsForFeedDto.feedType = 'TT';
+      this.insertTagsForFeedDto.feedType = 'TTR';
       this.insertTagsForFeedDto.userId = Number(
         localStorage.getItem('agentId')
       );
@@ -870,6 +1203,22 @@ export class TwitterComponent implements OnInit {
       this.insertTagsForFeedDto.tagId = tagid;
       this.insertTagsForFeedDto.feedId = feedId.toString();
       this.insertTagsForFeedDto.feedType = 'TM';
+      this.insertTagsForFeedDto.userId = Number(
+        localStorage.getItem('agentId')
+      );
+
+      this.commondata
+        .RemoveTag(this.insertTagsForFeedDto)
+        .subscribe((res: any) => {
+          this.reloadComponent('RemoveTag');
+          this.activeTag = false;
+          this.checkTag = false;
+        });
+    }
+    if (type == 'TDM') {
+      this.insertTagsForFeedDto.tagId = tagid;
+      this.insertTagsForFeedDto.feedId = feedId.toString();
+      this.insertTagsForFeedDto.feedType = 'TDM';
       this.insertTagsForFeedDto.userId = Number(
         localStorage.getItem('agentId')
       );
@@ -923,9 +1272,9 @@ export class TwitterComponent implements OnInit {
   ];
 
   insertSentimentForFeed(feedId: any, sentimenName: any, type: any) {
-    if (type == 'TT') {
+    if (type == 'TTR') {
       this.insertSentimentForFeedDto.feedId = feedId.toString();
-      this.insertSentimentForFeedDto.feedType = 'TT';
+      this.insertSentimentForFeedDto.feedType = 'TTR';
       this.insertSentimentForFeedDto.sentiment = sentimenName;
       this.insertSentimentForFeedDto.userId = Number(
         localStorage.getItem('agentId')
@@ -937,6 +1286,21 @@ export class TwitterComponent implements OnInit {
           this.reloadComponent('Sentiment');
         });
     }
+    if (type == 'TDM') {
+      this.insertSentimentForFeedDto.feedId = feedId.toString();
+      this.insertSentimentForFeedDto.feedType = 'TDM';
+      this.insertSentimentForFeedDto.sentiment = sentimenName;
+      this.insertSentimentForFeedDto.userId = Number(
+        localStorage.getItem('agentId')
+      );
+
+      this.commondata
+        .InsertSentiment(this.insertSentimentForFeedDto)
+        .subscribe((res: any) => {
+          this.reloadComponent('Sentiment');
+        });
+    }
+
     if (type == 'TM') {
       this.insertSentimentForFeedDto.feedId = feedId.toString();
       this.insertSentimentForFeedDto.feedType = 'TM';
@@ -971,7 +1335,7 @@ export class TwitterComponent implements OnInit {
   ReplyDto = new ReplyDto();
 
   SendCommentInformation(comId: any) {
-    this.TwitterConversation.forEach((xyz: any) => {
+    this.TwitterTweets.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
         if (comment.id == comId) {
           // show mentioned reply
@@ -985,7 +1349,7 @@ export class TwitterComponent implements OnInit {
           this.postType = comment.contentType;
           this.profileId = xyz.post.profile.profile_Id;
           this.profilePageId = xyz.post.profile.page_Id;
-          this.userProfileId = this.TwitterConversation[0].user.id;
+          this.userProfileId = this.TwitterTweets[0].user.id;
         }
       });
     });
@@ -1002,10 +1366,10 @@ export class TwitterComponent implements OnInit {
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
   });
 
-  text:string="";
+  text: string = '';
 
-  submitTwitterReply() {
-    if(this.tweetId == 0){
+  submitTweetReply() {
+    if (this.tweetId == 0) {
       this.reloadComponent('selectComment');
     } else {
       var formData = new FormData();
@@ -1014,21 +1378,20 @@ export class TwitterComponent implements OnInit {
           formData.append('File', this.ImageName[index]);
         }
       }
-      
 
-    // if (!this.TwitterRepliesForm.get('text')?.dirty) {
-      if(this.text !== ""){
+      // if (!this.TwitterRepliesForm.get('text')?.dirty) {
+      if (this.text !== '') {
         this.TwitterRepliesForm.patchValue({
-          text: this.text
-        })
-    }
-    // } else {
-    //   if (this.TwitterRepliesForm.value.text) {
-    //     this.TwitterRepliesForm.patchValue({
-    //       to: this.TwitterRepliesForm.value.text
-    //     });
-    //   }
-    // }
+          text: this.text,
+        });
+      }
+      // } else {
+      //   if (this.TwitterRepliesForm.value.text) {
+      //     this.TwitterRepliesForm.patchValue({
+      //       to: this.TwitterRepliesForm.value.text
+      //     });
+      //   }
+      // }
       this.TwitterRepliesForm.patchValue({
         commentId: this.tweetId,
         teamId: this.agentId,
@@ -1036,25 +1399,27 @@ export class TwitterComponent implements OnInit {
         contentType: this.postType,
         profileId: this.profileId,
         profilePageId: this.profilePageId,
-        userProfileId : this.userProfileId
+        userProfileId: this.userProfileId,
       });
-  
+
       formData.append(
         'CommentReply',
         JSON.stringify(this.TwitterRepliesForm.value)
       );
-      if((this.TwitterRepliesForm.value.text !== "" && this.TwitterRepliesForm.value.text !== null) 
-            || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
-              
-    this.spinner1running = true;
-    this.SpinnerService.show();
+      if (
+        (this.TwitterRepliesForm.value.text !== '' &&
+          this.TwitterRepliesForm.value.text !== null) ||
+        (this?.ImageName?.length > 0 && this.ImageName != undefined)
+      ) {
+        this.spinner1running = true;
+        this.SpinnerService.show();
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.spinner1running = false;
-      this.SpinnerService.hide();
+            this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('comment');
-            if(this.radioInput != undefined){
+            if (this.radioInput != undefined) {
               this.radioInput.nativeElement.checked = false;
             }
             this.TwitterRepliesForm.reset();
@@ -1062,49 +1427,50 @@ export class TwitterComponent implements OnInit {
           (error) => {
             alert(error.message);
             this.spinner1running = false;
-           this.SpinnerService.hide();
-         }
+            this.SpinnerService.hide();
+          }
         );
       } else {
-        this.reloadComponent('empty-input-field')
+        this.reloadComponent('empty-input-field');
       }
     }
     this.quickReplySearchText = '';
   }
 
   UploadedFile: FormData = new FormData();
-  isAttachment=false;
+  isAttachment = false;
 
   onFileChanged() {
     if (this.fileInput.nativeElement.files.length > 0) {
       this.isAttachment = true;
 
       const filesArray = Array.from(this.fileInput.nativeElement.files);
-      filesArray.forEach((attachment:any) => {
-        this.ImageArray.push(attachment)
+      filesArray.forEach((attachment: any) => {
+        this.ImageArray.push(attachment);
       });
-      const files = this.ImageArray.map((file:any) => file); // Create a new array with the remaining files
-        const newFileList = new DataTransfer();
-        files.forEach((file:any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
-        this.ImageName = newFileList.files;
+      const files = this.ImageArray.map((file: any) => file); // Create a new array with the remaining files
+      const newFileList = new DataTransfer();
+      files.forEach((file: any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+      this.ImageName = newFileList.files;
     }
   }
 
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
-    this.text = abc?.text + " ";
+    this.text = abc?.text + ' ';
     this.insertAtCaret(this.text);
   }
 
-  twitterMsgId: number=0;
+  twitterMsgId: number = 0;
+  twitterMentionId: number = 0;
 
   detectChanges(): void {
-    this.ImageName = this.fileInput.nativeElement.files;
-    this.text = this.textarea.nativeElement.value
+    // this.ImageName = this.fileInput.nativeElement.files;
+    this.text = this.textarea.nativeElement.value;
   }
 
   SendMessageInformation(id: any) {
-    this.TwitterMessage.forEach((msg: any) => {
+    this.TwitterMessages.forEach((msg: any) => {
       if (msg.id == id) {
         // show mentioned reply
         this.show = true;
@@ -1114,7 +1480,23 @@ export class TwitterComponent implements OnInit {
         this.postType = msg.contentType;
         this.profileId = msg.profileId;
         this.profilePageId = msg.profilePageId;
-        this.userProfileId = this.TwitterMessage[0].user.id;
+        this.userProfileId = this.TwitterMessages[0].fromId;
+      }
+    });
+  }
+
+  SendMentionInformation(id: any) {
+    this.TwitterMentions.forEach((mention: any) => {
+      if (mention.id == id) {
+        // show mentioned reply
+        this.show = true;
+        this.twitterMentionId = mention.id;
+        this.agentId = localStorage.getItem('agentId') || '{}';
+        this.platform = this.fetchId.platform;
+        this.postType = mention.contentType;
+        this.profileId = mention.profileId;
+        this.profilePageId = mention.profilePageId;
+        this.userProfileId = this.TwitterMessages[0].fromId;
       }
     });
   }
@@ -1129,7 +1511,7 @@ export class TwitterComponent implements OnInit {
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
   });
   submitTwitterMessageReply() {
-    if(this.twitterMsgId == 0){
+    if (this.twitterMsgId == 0) {
       this.reloadComponent('selectComment');
     } else {
       var formData = new FormData();
@@ -1138,21 +1520,20 @@ export class TwitterComponent implements OnInit {
           formData.append('File', this.ImageName[index]);
         }
       }
-      
 
-    if (!this.twitterMessageReplyForm.get('text')?.dirty) {
-      if(this.text !== ""){
-        this.twitterMessageReplyForm.patchValue({
-          text: this.text
-        })
-    }
-    } else {
-      if (this.twitterMessageReplyForm.value.text) {
-        this.twitterMessageReplyForm.patchValue({
-          to: this.twitterMessageReplyForm.value.text
-        });
+      if (!this.twitterMessageReplyForm.get('text')?.dirty) {
+        if (this.text !== '') {
+          this.twitterMessageReplyForm.patchValue({
+            text: this.text,
+          });
+        }
+      } else {
+        if (this.twitterMessageReplyForm.value.text) {
+          this.twitterMessageReplyForm.patchValue({
+            to: this.twitterMessageReplyForm.value.text,
+          });
+        }
       }
-    }
       this.twitterMessageReplyForm.patchValue({
         commentId: this.twitterMsgId,
         teamId: this.agentId,
@@ -1160,25 +1541,27 @@ export class TwitterComponent implements OnInit {
         contentType: this.postType,
         profileId: this.profileId,
         profilePageId: this.profilePageId,
-        userProfileId : this.userProfileId
+        userProfileId: this.userProfileId,
       });
-  
+
       formData.append(
         'CommentReply',
         JSON.stringify(this.twitterMessageReplyForm.value)
       );
-      if((this.twitterMessageReplyForm.value.text !== "" && this.twitterMessageReplyForm.value.text !== null) 
-            || (this?.ImageName?.length > 0 && this.ImageName != undefined)){
-              
-    this.spinner1running = true;
-    this.SpinnerService.show();
+      if (
+        (this.twitterMessageReplyForm.value.text !== '' &&
+          this.twitterMessageReplyForm.value.text !== null) ||
+        (this?.ImageName?.length > 0 && this.ImageName != undefined)
+      ) {
+        this.spinner1running = true;
+        this.SpinnerService.show();
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.spinner1running = false;
-      this.SpinnerService.hide();
+            this.SpinnerService.hide();
             this.clearInputField();
             this.reloadComponent('comment');
-            if(this.radioInput != undefined){
+            if (this.radioInput != undefined) {
               this.radioInput.nativeElement.checked = false;
             }
             this.twitterMessageReplyForm.reset();
@@ -1186,11 +1569,11 @@ export class TwitterComponent implements OnInit {
           (error) => {
             alert(error.message);
             this.spinner1running = false;
-           this.SpinnerService.hide();
-         }
+            this.SpinnerService.hide();
+          }
         );
       } else {
-        this.reloadComponent('empty-input-field')
+        this.reloadComponent('empty-input-field');
       }
     }
     this.quickReplySearchText = '';
@@ -1305,31 +1688,42 @@ export class TwitterComponent implements OnInit {
     this.msgText = '';
     this.show = false;
     this.tweetId = 0;
+    this.twitterMsgId = 0;
+    this.twitterMentionId = 0;
     this.agentId = '';
     this.platform = '';
     this.postType = '';
-    this.fileInput.nativeElement.value = '';
+    // this.fileInput.nativeElement.value = '';
     this.detectChanges();
   }
 
   TTReply: boolean = true;
   TMReply: boolean = false;
+  TDMReply: boolean = false;
 
   twitterTweetReply() {
     this.TTReply = true;
     this.TMReply = false;
+    this.TDMReply = false;
   }
 
   twitterMessageReply() {
     this.TTReply = false;
+    this.TMReply = false;
+    this.TDMReply = true;
+  }
+
+  twitterMentionReply() {
+    this.TTReply = false;
     this.TMReply = true;
+    this.TDMReply = false;
   }
 
   queryCompleted(comId: any, type: any) {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = 'Twitter';
-   // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .QueryCompleted(this.commentStatusDto)
       .subscribe((res: any) => {
@@ -1340,7 +1734,7 @@ export class TwitterComponent implements OnInit {
   markAsComplete = false;
 
   markAsCompleteExpanded(comId: any) {
-    this.TwitterConversation.forEach((abc: any) => {
+    this.TwitterTweets.forEach((abc: any) => {
       abc.comments.forEach((comment: any) => {
         if (comment.id == comId) {
           this.markAsComplete = !this.markAsComplete;
@@ -1388,27 +1782,22 @@ export class TwitterComponent implements OnInit {
   addTags: any;
   removeTags: any;
 
-  addTagDataListner() {
-    if (this.addTags.feedType == 'TT') {
-      this.TwitterConversation.forEach((post: any) => {
+  addTagDataListener() {
+    if (this.addTags.feedType == 'TTR') {
+      this.TwitterTweets.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
           cmnt.items.forEach((singleCmnt: any) => {
             if (singleCmnt.id == this.addTags.feedId) {
               if (singleCmnt.tags.length == 0) {
                 singleCmnt.tags.push(this.addTags);
               } else if (singleCmnt.tags.length > 0) {
-                const tag = singleCmnt.tags.find(
-                  (x: any) => x.id == this.addTags.feedId
+                const index = singleCmnt.tags.findIndex(
+                  (x: any) => x.id == this.addTags.id
                 );
-                if (tag != null || tag != undefined) {
-                  const index = singleCmnt.tags.indexOf(tag);
-                  if (index !== -1) {
-                    singleCmnt.tags.splice(index, 1);
-                  }
+                if (index !== -1) {
+                  singleCmnt.tags.splice(index, 1);
                 } else {
-                  if(!(singleCmnt.tags.includes(this.addTags))){
-                    singleCmnt.tags.push(this.addTags);
-                  }
+                  singleCmnt.tags.push(this.addTags);
                 }
               }
             }
@@ -1416,20 +1805,37 @@ export class TwitterComponent implements OnInit {
         });
       });
     }
-    if (this.addTags.feedType == 'TM') {
-      this.TwitterMessage.forEach((msg: any) => {
+    if (this.addTags.feedType == 'TDM') {
+      this.TwitterMessages.forEach((msg: any) => {
         if (msg.id == this.addTags.feedId) {
           if (msg.tags.length == 0) {
             msg.tags.push(this.addTags);
           } else if (msg.tags.length > 0) {
-            const tag = msg.tags.find((x: any) => x.id == this.addTags.feedId);
-            if (tag != null || tag != undefined) {
-              const index = msg.tags.indexOf(tag);
-              if (index !== -1) {
-                msg.tags.splice(index, 1);
-              }
+            const index = msg.tags.findIndex(
+              (x: any) => x.id == this.addTags.id
+            );
+            if (index !== -1) {
+              msg.tags.splice(index, 1);
             } else {
               msg.tags.push(this.addTags);
+            }
+          }
+        }
+      });
+    }
+    if (this.addTags.feedType == 'TM') {
+      this.TwitterMentions.forEach((mention: any) => {
+        if (mention.id == this.addTags.feedId) {
+          if (mention.tags.length == 0) {
+            mention.tags.push(this.addTags);
+          } else if (mention.tags.length > 0) {
+            const index = mention.tags.findIndex(
+              (x: any) => x.id == this.addTags.id
+            );
+            if (index !== -1) {
+              mention.tags.splice(index, 1);
+            } else {
+              mention.tags.push(this.addTags);
             }
           }
         }
@@ -1438,8 +1844,8 @@ export class TwitterComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
   removeTagDataListener() {
-    if (this.removeTags.feedType == 'TT') {
-      this.TwitterConversation.forEach((post: any) => {
+    if (this.removeTags.feedType == 'TTR') {
+      this.TwitterTweets.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
           cmnt.items.forEach((singleCmnt: any) => {
             if (singleCmnt.id == this.removeTags.feedId) {
@@ -1455,8 +1861,8 @@ export class TwitterComponent implements OnInit {
         });
       });
     }
-    if (this.removeTags.feedType == 'TM') {
-      this.TwitterMessage.forEach((msg: any) => {
+    if (this.removeTags.feedType == 'TDM') {
+      this.TwitterMessages.forEach((msg: any) => {
         if (msg.id == this.removeTags.feedId) {
           var tag = msg.tags.find((x: any) => x.id == this.removeTags.tagId);
           const index = msg.tags.indexOf(tag);
@@ -1466,11 +1872,24 @@ export class TwitterComponent implements OnInit {
         }
       });
     }
+    if (this.removeTags.feedType == 'TM') {
+      this.TwitterMentions.forEach((mention: any) => {
+        if (mention.id == this.removeTags.feedId) {
+          var tag = mention.tags.find(
+            (x: any) => x.id == this.removeTags.tagId
+          );
+          const index = mention.tags.indexOf(tag);
+          if (index !== -1) {
+            mention.tags.splice(index, 1);
+          }
+        }
+      });
+    }
     this.changeDetect.detectChanges();
   }
 
-  updateQueryStatusDataListner() {
-    this.TwitterConversation.forEach((post: any) => {
+  updateQueryStatusDataListener() {
+    this.TwitterTweets.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
           if (singleCmnt.id == this.queryStatus.queryId) {
@@ -1480,16 +1899,21 @@ export class TwitterComponent implements OnInit {
         });
       });
     });
-    this.TwitterMessage.forEach((msg: any) => {
+    this.TwitterMessages.forEach((msg: any) => {
       if (msg.id == this.queryStatus.queryId) {
         msg.queryStatus = this.queryStatus.queryStatus;
+      }
+    });
+    this.TwitterMentions.forEach((mention: any) => {
+      if (mention.id == this.queryStatus.queryId) {
+        mention.queryStatus = this.queryStatus.queryStatus;
       }
     });
     this.changeDetect.detectChanges();
   }
 
-  replyDataListner() {
-    this.TwitterConversation.forEach((post: any) => {
+  replyDataListener() {
+    this.TwitterTweets.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
           if (singleCmnt.id == this.newReply.commentId) {
@@ -1499,7 +1923,7 @@ export class TwitterComponent implements OnInit {
         });
       });
     });
-    this.TwitterMessage.forEach((msg: any) => {
+    this.TwitterMessages.forEach((msg: any) => {
       if (msg.id == this.newReply.commentId) {
         msg.replies.push(this.newReply);
         msg.queryStatus = this.newReply.queryStatus;
@@ -1508,9 +1932,8 @@ export class TwitterComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-
-  updateBulkQueryStatusDataListner() {
-    this.TwitterConversation.forEach((post: any) => {
+  updateBulkQueryStatusDataListener() {
+    this.TwitterTweets.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
           this.queryStatus.forEach((querry: any) => {
@@ -1522,7 +1945,7 @@ export class TwitterComponent implements OnInit {
         });
       });
     });
-    this.TwitterMessage.forEach((msg: any) => {
+    this.TwitterMessages.forEach((msg: any) => {
       this.queryStatus.forEach((querry: any) => {
         if (msg.id == querry.queryId) {
           msg.queryStatus = querry.queryStatus;
@@ -1530,11 +1953,19 @@ export class TwitterComponent implements OnInit {
         }
       });
     });
+    this.TwitterMentions.forEach((mention: any) => {
+      this.queryStatus.forEach((querry: any) => {
+        if (mention.id == querry.queryId) {
+          mention.queryStatus = querry.queryStatus;
+          this.totalUnrespondedMentionCountByCustomer = 0;
+        }
+      });
+    });
     this.changeDetect.detectChanges();
   }
 
   updateTicketId(res: any) {
-    this.TwitterConversation.forEach((post: any) => {
+    this.TwitterTweets.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
           if (singleCmnt.id == res.queryId) {
@@ -1543,7 +1974,7 @@ export class TwitterComponent implements OnInit {
         });
       });
     });
-    this.TwitterMessage.forEach((msg: any) => {
+    this.TwitterMessages.forEach((msg: any) => {
       if (msg.id == res.queryId) {
         msg.ticketId = res.ticketId;
       }
@@ -1551,7 +1982,7 @@ export class TwitterComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
   applySentimentListner(res: any) {
-    this.TwitterConversation.forEach((post: any) => {
+    this.TwitterTweets.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
           if (singleCmnt.id == res.feedId) {
@@ -1560,7 +1991,12 @@ export class TwitterComponent implements OnInit {
         });
       });
     });
-    this.TwitterMessage.forEach((msg: any) => {
+    this.TwitterMessages.forEach((msg: any) => {
+      if (msg.id == res.feedId) {
+        msg.sentiment = res;
+      }
+    });
+    this.TwitterMentions.forEach((msg: any) => {
       if (msg.id == res.feedId) {
         msg.sentiment = res;
       }
@@ -1570,23 +2006,21 @@ export class TwitterComponent implements OnInit {
   onScrollComments() {
     if (this.TotalCmntQueryCount > this.pageSize) {
       this.pageSize = this.pageSize + 10;
-      this.getTwitterData();
+      this.getTwitterTweets();
     }
   }
   onScrollMessages() {
     if (this.TotalMsgQueryCount > this.pageSize) {
       this.pageSize = this.pageSize + 10;
-      this.getTwitterMessages();
+      this.getTwitterDM();
     }
   }
 
-
-  closeQuickResponseSidebar(){
+  closeQuickResponseSidebar() {
     this.quickReplySearchText = '';
-    if(this.radioInput != undefined){
-              this.radioInput.nativeElement.checked = false;
-            }
-    
+    if (this.radioInput != undefined) {
+      this.radioInput.nativeElement.checked = false;
+    }
   }
 
   isImage(attachment: any): boolean {
@@ -1595,5 +2029,141 @@ export class TwitterComponent implements OnInit {
 
   isVideo(attachment: any): boolean {
     return attachment.contentType?.toLowerCase().startsWith('video');
+  }
+
+  itemsToBeUpdated: any[] = [];
+
+  starMessage(msgId: number, status: boolean) {
+    this.itemsToBeUpdated = [];
+    var obj = {
+      channel: '',
+      flag: 'starred',
+      status: status,
+      messageId: msgId,
+      profileId: 0,
+    };
+    this.itemsToBeUpdated.push(obj);
+    this.commondata
+      .UpdateStatus(this.itemsToBeUpdated)
+      .subscribe((res: any) => {
+        if (res.message === 'Status Updated Successfully') {
+          if (status == true) {
+            this.reloadComponent('starred');
+          } else if (status == false) {
+            this.reloadComponent('removeStarred');
+          }
+        }
+      });
+  }
+
+  spam = false;
+
+  spamMessage(msgId: number, status: boolean, type: string) {
+    this.itemsToBeUpdated = [];
+    var obj = {
+      channel: '',
+      flag: 'spam',
+      status: status,
+      messageId: msgId,
+      profileId: 0,
+    };
+    this.itemsToBeUpdated.push(obj);
+    this.commondata
+      .UpdateStatus(this.itemsToBeUpdated)
+      .subscribe((res: any) => {
+        if (res.message === 'Status Updated Successfully') {
+          if (status == true) {
+            this.spam = true;
+            this.commentStatus(msgId, type);
+            this.reloadComponent('spam');
+          } else if (status == false) {
+            this.spam = false;
+            this.reloadComponent('removeSpam');
+          }
+        }
+      });
+  }
+
+  updateMessageStatusDataListener(res: any) {
+    if (this.TwitterTweets) {
+      this.TwitterTweets.forEach((post: any) => {
+        post.groupedComments.forEach((cmnt: any) => {
+          cmnt.items.forEach((singleCmnt: any) => {
+            res.forEach((msgStatus: any) => {
+              if (singleCmnt.id == msgStatus.messageId) {
+                if (msgStatus.flag == 'starred') {
+                  singleCmnt.starred = msgStatus.status;
+                }
+                if (msgStatus.flag == 'spam') {
+                  singleCmnt.spam = msgStatus.status;
+                }
+              }
+            });
+          });
+        });
+      });
+    }
+    if (this.TwitterMessages) {
+      this.TwitterMessages?.forEach((msg: any) => {
+        res.forEach((msgStatus: any) => {
+          if (msg.id == msgStatus.messageId) {
+            if (msgStatus.flag == 'starred') {
+              msg.starred = msgStatus.status;
+            }
+            if (msgStatus.flag == 'spam') {
+              msg.spam = msgStatus.status;
+            }
+          }
+        });
+      });
+    }
+
+    if (this.TwitterMentions) {
+      this.TwitterMentions?.forEach((msg: any) => {
+        res.forEach((msgStatus: any) => {
+          if (msg.id == msgStatus.messageId) {
+            if (msgStatus.flag == 'starred') {
+              msg.starred = msgStatus.status;
+            }
+            if (msgStatus.flag == 'spam') {
+              msg.spam = msgStatus.status;
+            }
+          }
+        });
+      });
+    }
+
+    this.changeDetect.detectChanges();
+  }
+
+  updateUnRespondedCountDataListener(res: any) {
+    if (this.TwitterTweets) {
+      this.TwitterTweets.forEach((item: any) => {
+        if (item.user.id == res.contentCount.profileId) {
+          if (res.contentCount.contentType == 'TTR') {
+            this.totalUnrespondedCmntCountByCustomer =
+              res.contentCount.unrespondedCount;
+          }
+        }
+      });
+    }
+    if (this.TwitterMessages) {
+        if (this.userInfo.id == res.contentCount.profileId) {
+          if (res.contentCount.contentType == 'TDM') {
+            this.totalUnrespondedMsgCountByCustomer =
+              res.contentCount.unrespondedCount;
+          }
+        }
+    }
+
+    if (this.TwitterMentions) {
+        if (this.userInfo.id == res.contentCount.profileId) {
+          if (res.contentCount.contentType == 'TM') {
+            this.totalUnrespondedMentionCountByCustomer =
+              res.contentCount.unrespondedCount;
+          }
+        }
+    }
+    this.changeDetect.detectChanges();
   }
 }
