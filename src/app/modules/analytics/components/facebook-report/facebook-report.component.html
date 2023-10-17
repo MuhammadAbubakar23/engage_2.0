@@ -14,14 +14,14 @@
                                 <div class="iconholder">
 
                                     <input name="" class="form-control flatpickr-input" [max]="maxEndDate"
-                                        placeholder="Date" [(ngModel)]="startDate" type="date">
+                                        placeholder="Date"(change)="resetStartDate()" [(ngModel)]="startDate" type="date">
                                 </div>
                             </li>
                             <li class="list-inline-item">
                                 <div class="iconholder">
 
                                     <input name="" class="form-control flatpickr-input" [max]="maxEndDate"
-                                        placeholder="Date" (change)="getAllfeacebookData()" [(ngModel)]="enddate"
+                                        placeholder="Date" (change)="resetEndDate()" [(ngModel)]="enddate"
                                         type="date">
                                 </div>
                             </li>
@@ -45,25 +45,24 @@
                                     </ul>
                                 </div>
                             </li> -->
-                            <!-- <li class="list-inline-item ms-auto">
-                                <div class="btn-group buttonfilter" role="group"
-                                    aria-label="Basic radio toggle button group">
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
-                                        autocomplete="off" checked="">
-                                    <label class="btn btn-outline-secondary" for="btnradio1">15</label>
-
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
-                                        autocomplete="off">
-                                    <label class="btn btn-outline-secondary" for="btnradio2">30</label>
-
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
-                                        autocomplete="off">
-                                    <label class="btn btn-outline-secondary" for="btnradio3">60</label>
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
-                                        autocomplete="off">
-                                    <label class="btn btn-outline-secondary" for="btnradio4">90</label>
+                            <li class="list-inline-item ms-auto">
+                                <div class="btn-group buttonfilter" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
+                                        checked="" (click)="date_pagination(5)">
+                                    <label class="btn btn-outline-secondary" for="btnradio1">5</label>
+            
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+                                        (click)="date_pagination(10)">
+                                    <label class="btn btn-outline-secondary" for="btnradio2">10</label>
+            
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off"
+                                        (click)="date_pagination(20)">
+                                    <label class="btn btn-outline-secondary" for="btnradio3">20</label>
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off"
+                                        (click)="date_pagination(30)">
+                                    <label class="btn btn-outline-secondary" for="btnradio4">30</label>
                                 </div>
-                            </li> -->
+                            </li>
 
 
                         </ul>
@@ -422,7 +421,7 @@
                             <div class="card iceBg p-4 rounded">
                                 <div class="d-flex align-items-center mb-4">
                                     <span class="iconButton large rounded-pill">
-                                        <img src="../images/ke.png" class="img-fluid rounded-pill" alt="">
+                                        <img src="../../../../../assets/images/ke.png" class="img-fluid rounded-pill" alt="">
                                     </span>
                                     <h6 class="ms-3">K-Electric</h6>
                                 </div>
@@ -554,7 +553,7 @@
                                         <td>{{recents?.strCreatedDate}} <small>{{recents?.strCreatedTime}}</small></td>
                                         <td>
                                             <span class="iconButton medium rounded-pill">
-                                                <!-- <img src="../images/ke.png" class="img-fluid rounded-pill" alt=""> -->
+                                                <img src="../../../../../assets/images/ke.png" class="img-fluid rounded-pill" alt="">
                                             </span>
                                         </td>
                                         <td>
@@ -602,7 +601,7 @@
                                                     </span>
                                                 </td>
                                                 <td>
-                                                    <a href="" class="sky fw-semibold">{{item?.name}}</a>
+                                                    <a  class="sky fw-semibold">{{item?.name}}</a>
                                                 </td>
                                                 <td>{{item?.post}}</td>
                                                 <td>{{item?.comment}}</td>

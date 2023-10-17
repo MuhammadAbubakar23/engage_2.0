@@ -12,13 +12,14 @@ import { HeaderService } from 'src/app/shared/services/header.service';
 import * as echarts from 'echarts';
 import { SharedModule } from '../../../../shared/shared.module';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { FilterPipe } from 'src/app/shared/CustomPipes/filter.pipe';
 
 @Component({
   standalone: true,
   selector: 'app-inbound-ontbound-report',
   templateUrl: './inbound-ontbound-report.component.html',
   styleUrls: ['./inbound-ontbound-report.component.scss'],
-  imports: [CommonModule, FormsModule, SharedModule, NgxSpinnerModule],
+  imports: [CommonModule, FormsModule, SharedModule, NgxSpinnerModule ],
 })
 export class InboundOntboundReportComponent implements OnInit {
   @ViewChild('inboundOutboundReport', { static: true })
@@ -55,7 +56,7 @@ export class InboundOntboundReportComponent implements OnInit {
     private datePipe: DatePipe,
     private cdr: ChangeDetectorRef,
     private SpinnerService: NgxSpinnerService
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split('T')[0];
@@ -76,7 +77,7 @@ export class InboundOntboundReportComponent implements OnInit {
   AddGraph() {
     let selectedChannelsArray = this.channelOptions
       .filter((item) => item.isSelected)
-      .map((item) => item.label);
+      .map((item) => item.name);
     this.selectedChannels = selectedChannelsArray.toString();
 
     let selectedContentTypesArray = this.contentTypes
@@ -299,7 +300,7 @@ export class InboundOntboundReportComponent implements OnInit {
             const platformsArray: any[] = [];
 
             tagReportData.forEach((channel: any) => {
-              ;
+              debugger;
               if (!platformsArray.includes(channel.platform)) {
                 platformsArray.push(channel.platform);
               }
@@ -448,61 +449,61 @@ export class InboundOntboundReportComponent implements OnInit {
   channelOptions = [
     {
       id: '123',
-      label: 'Twitter',
+      name: 'Twitter',
       icon: 'fa-brands fa-twitter sky pe-2',
       isSelected: false,
     },
     {
       id: '12',
-      label: 'Instagram',
+      name: 'Instagram',
       icon: 'fa-brands fa-instagram pe-2',
       isSelected: false,
     },
     {
       id: '14',
-      label: 'LinkedIn',
+      name: 'LinkedIn',
       icon: 'fa-brands fa-linkedin pe-2',
       isSelected: false,
     },
     {
       id: '15',
-      label: 'Facebook',
+      name: 'Facebook',
       icon: 'fa-brands fa-facebook facebook pe-2',
       isSelected: false,
     },
     {
       id: '14',
-      label: 'YouTube',
+      name: 'YouTube',
       icon: 'fa-brands fa-youtube pe-2',
       isSelected: false,
     },
     {
       id: '15',
-      label: 'SMS',
+      name: 'SMS',
       icon: 'fa-solid fa-comment-alt pe-2',
       isSelected: false,
     },
     {
       id: '14',
-      label: 'WhatsApp',
+      name: 'WhatsApp',
       icon: 'fa-brands fa-whatsapp pe-2',
       isSelected: false,
     },
     {
       id: '15',
-      label: 'Email',
+      name: 'Email',
       icon: 'fa-solid fa-envelope pe-2',
       isSelected: false,
     },
     {
       id: '14',
-      label: 'OfficeEmail',
+      name: 'OfficeEmail',
       icon: 'fa-solid fa-envelope pe-2',
       isSelected: false,
     },
     {
       id: '14',
-      label: 'WebChat',
+      name: 'WebChat',
       icon: 'fa-solid fa-comment-dots pe-2',
       isSelected: false,
     },
@@ -510,49 +511,49 @@ export class InboundOntboundReportComponent implements OnInit {
   contentTypes = [
     {
       id: '11',
-      label: 'Twitter Tweets',
+      name: 'Twitter Tweets',
       value: 'TTR',
       icon: 'fa-brands fa-twitter sky pe-2',
       isSelected: false,
     },
     {
       id: '22',
-      label: 'Twitter DMs',
+      name: 'Twitter DMs',
       value: 'TDM',
       icon: 'fa-brands fa-twitter sky pe-2',
       isSelected: false,
     },
     {
       id: '23',
-      label: 'Facebook Posts',
+      name: 'Facebook Posts',
       value: '',
       icon: 'fa-brands fa-facebook facebook pe-2',
       isSelected: false,
     },
     {
       id: '94',
-      label: 'Facebook Comments',
+      name: 'Facebook Comments',
       value: 'FC',
       icon: 'fa-brands fa-facebook facebook pe-2',
       isSelected: false,
     },
     {
       id: '66',
-      label: 'Instagram Post',
+      name: 'Instagram Post',
       value: '',
       icon: 'fa-brands fa-instagram night pe-2',
       isSelected: false,
     },
     {
       id: '65',
-      label: 'Instagram Comments',
+      name: 'Instagram Comments',
       value: 'IC',
       icon: 'fa-brands fa-instagram night pe-2',
       isSelected: false,
     },
     {
       id: '24',
-      label: 'Youtube Comments',
+      name: 'Youtube Comments',
       value: 'YC',
       icon: 'fa-brands fa-youtube youtube pe-2',
       isSelected: false,

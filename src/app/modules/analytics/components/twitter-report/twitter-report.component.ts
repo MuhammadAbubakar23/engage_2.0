@@ -7,18 +7,17 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import * as echarts from 'echarts';
 import { HeaderService } from 'src/app/shared/services/header.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
-
+import { ExcelService } from '../../services/excel.service';
 @Component({
   selector: 'app-twitter-report',
   templateUrl: './twitter-report.component.html',
   styleUrls: ['./twitter-report.component.scss'],
   standalone: true,
-  imports: [CommonModule, CanvasJSAngularChartsModule, FormsModule, NgxSpinnerModule],
+  imports: [CommonModule, FormsModule, NgxSpinnerModule],
 })
 export class TwitterReportComponent implements OnInit {
   @ViewChild('TwitterInboundOutboundReport', { static: true })
@@ -77,6 +76,7 @@ export class TwitterReportComponent implements OnInit {
 
   constructor(private _hS: HeaderService,
     private commonDataService: CommonDataService,
+    private excelServices:ExcelService,
     private datePipe: DatePipe,
     private SpinnerService: NgxSpinnerService
   ) {}
@@ -93,7 +93,14 @@ export class TwitterReportComponent implements OnInit {
     this.GetTwitterSLAReport();
     this.GetTwitterProfileWiseReport();
   }
-
+  date_pagination( days:number){
+    debugger
+      let currentDate = new Date();
+      let prevDate = currentDate.setDate(currentDate.getDate() - days);
+      this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
+      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
+    this.GetTwitterReport()
+  }
   
   GetTwitterReport() {
     this.totalTweetsSent = 0;
@@ -470,5 +477,9 @@ export class TwitterReportComponent implements OnInit {
   }
   resetEndDate() {
     this.toDate = '';
+  }
+  export(){
+    debugger
+    this.excelServices.exportAsExcelFile(this.TwitterProfileWiseReport,'Twitter-Report')
   }
 }

@@ -111,12 +111,17 @@ export class FacebookReportComponent implements OnInit {
     this.headerServices.setHeader(newObj);
     this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split('T')[0];
-    // this.getPublishinBehaviorChart();
-    // this.getExternalSourcesChart()
+    
     this.getAllfeacebookData();
     this.getTopFiveCustomers();
   }
-
+  date_pagination( days:number){
+      let currentDate = new Date();
+      let prevDate = currentDate.setDate(currentDate.getDate() - days);
+      this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
+      this.enddate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
+    this.getAllfeacebookData()
+  }
   getAllfeacebookData() {
     if (this.startDate == '' && this.enddate == '') {
       const today = this.currentDate;
@@ -176,11 +181,8 @@ export class FacebookReportComponent implements OnInit {
       this.totallikes = res.totalPostLikes;
       this.totalComments = res.totalPostComments;
       this.totalShares = res.totalPostShares;
-      this.totalengagement =
-        this.totallikes +
-        this.totalComments +
-        this.totalShares +
-        this.totalMessageAndrepliesCount;
+
+      this.totalengagement = this.totallikes + this.totalComments + this.totalShares + this.totalMessageAndrepliesCount;
       // net differnce of page likes and unlike
 
       this.numberofPagelikes = res.totalPageLikes;
@@ -258,6 +260,7 @@ export class FacebookReportComponent implements OnInit {
       // agentMessageData
       this.agentMessages = res.agentReplies;
       this.agentMessagesData = res.agentReplies;
+       debugger
         this.totalMessageAndrepliesCount = this.agentMessagesData.totalMessagesAndRepliesCount;
         this.totalMessagePostCommentsAndreplies = this.agentMessagesData.totalPostCommentsAndReplies;
       // Publishin Behavior
@@ -302,12 +305,12 @@ export class FacebookReportComponent implements OnInit {
       });
 
       this.totalmaleandfemalCount = this.totalmaleCount + this.totalfemaleCount;
-      this.malepersentage = Math.floor(
-        (this.totalfemaleCount / this.totalmaleandfemalCount) * 100
-      );
-      this.femalepersentage = Math.floor(
+      this.malepersentage = (
         (this.totalmaleCount / this.totalmaleandfemalCount) * 100
-      );
+      ).toFixed(2)
+      this.femalepersentage =(
+        (this.totalfemaleCount / this.totalmaleandfemalCount) * 100
+      ).toFixed(2)
       // RecentPost
 
       this.recentPosts = res.recentPosts;
@@ -321,7 +324,7 @@ export class FacebookReportComponent implements OnInit {
           this.audiencelikesdate.push(a.dateValue.split('T')[0]);
         }
       });
-      this.pagelikeSpan.forEach((x: any) => {
+      this.pagelikeSpan?.forEach((x: any) => {
         if (!this.audiencelikesdate.includes(x.dateValue.split('T')[0])) {
           this.audiencelikesdate.push(x.dateValue.split('T')[0]);
         }
@@ -757,5 +760,17 @@ export class FacebookReportComponent implements OnInit {
   }
   closeToaster() {
     this.toastermessage = false;
+  }
+  resetStartDate(){
+    this.enddate=''
+  }
+  resetEndDate(){
+    if(this.enddate>=this.startDate){
+      this.getAllfeacebookData()
+    }
+    else{
+      alert("EndDate is greater then StartDate")
+      this.enddate=''
+    }
   }
 }

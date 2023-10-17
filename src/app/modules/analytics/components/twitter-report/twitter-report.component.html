@@ -38,21 +38,24 @@
                         </ul>
                     </div>
                 </li> -->
-                <!-- <li class="list-inline-item ms-auto">
+                <li class="list-inline-item ms-auto">
                     <div class="btn-group buttonfilter" role="group" aria-label="Basic radio toggle button group">
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
-                            checked="">
-                        <label class="btn btn-outline-secondary" for="btnradio1">15</label>
+                            checked="" (click)="date_pagination(5)">
+                        <label class="btn btn-outline-secondary" for="btnradio1">5</label>
 
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="btnradio2">30</label>
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+                            (click)="date_pagination(10)">
+                        <label class="btn btn-outline-secondary" for="btnradio2">10</label>
 
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="btnradio3">60</label>
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
-                        <label class="btn btn-outline-secondary" for="btnradio4">90</label>
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off"
+                            (click)="date_pagination(20)">
+                        <label class="btn btn-outline-secondary" for="btnradio3">20</label>
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off"
+                            (click)="date_pagination(30)">
+                        <label class="btn btn-outline-secondary" for="btnradio4">30</label>
                     </div>
-                </li> -->
+                </li>
 
 
             </ul>
@@ -370,7 +373,7 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li>
-                                    <a class="dropdown-item p-1">
+                                    <a class="dropdown-item p-1" (click)="export()">
                                         <button class="iconButton dropdown-iconBtn small" id="dropdownMenuButton1"
                                             data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="fa-solid fa-file-export"></i>

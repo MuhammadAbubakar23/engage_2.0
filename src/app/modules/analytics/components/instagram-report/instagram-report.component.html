@@ -1,0 +1,384 @@
+<div class="content-box-wrapper d-flex w-100">
+    <div class="middle-content d-flex">
+        <div class="d-grid w-100">
+            <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1"
+                style="overflow: auto; outline: none;">
+                <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
+                    <div class="report-toolbar mb-4">
+                        <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+                            <li class="list-inline-item">
+                                <div class="iconholder">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                          <input type="date" class="form-control"
+                                            placeholder="Start Date" [(ngModel)]="startDate" [max]="maxEndDate" (change)="resetStartDate()"/>
+                                        </div>
+                                        <div class="col-sm-6">
+                                          <input type="date" class="form-control" [(ngModel)]="endDate" [max]="maxEndDate" placeholder="End Date"
+                                           (change)="resetEndDate()" 
+                                           />
+                      
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- <li class="list-inline-item">
+                                <div class="dropdown icondropdown w-auto mx-2">
+                                    <button class="btn dropdown-toggle" type="button" id="columnssort"
+                                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                        Profile
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="columnssort">
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="#0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" id="keprofile">
+                                                    <label class="form-check-label" for="keprofile">
+                                                        <i class="fa-brands fa-facebook facebook pe-2"></i> K-Electric
+                                                    </label>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li> -->
+                            <li class="list-inline-item ms-auto">
+                                <div class="btn-group buttonfilter" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
+                                        checked="" (click)="date_pagination(5)">
+                                    <label class="btn btn-outline-secondary" for="btnradio1">5</label>
+            
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+                                        (click)="date_pagination(10)">
+                                    <label class="btn btn-outline-secondary" for="btnradio2">10</label>
+            
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off"
+                                        (click)="date_pagination(20)">
+                                    <label class="btn btn-outline-secondary" for="btnradio3">20</label>
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off"
+                                        (click)="date_pagination(30)">
+                                    <label class="btn btn-outline-secondary" for="btnradio4">30</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row align-items-start h-auto mb-4">
+
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium berryBg mb-4">
+                                                <i class="fa-light fa-user-plus"></i>
+                                            </span>
+                                            <p class="coal mb-0">Likes</p>
+                                        </div>
+                                        <h2>{{instagramReport?.total_likes}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium radicalBg mb-4">
+                                                <i class="fa-light fa-retweet"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Comments</p>
+                                        </div>
+                                        <h2>{{instagramReport?.total_comments}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded mb-5">
+                                <h5 class="section-heading mb-4 p-0">TOTAL PEOPLE WHO VIEWED </h5>
+                                <div class="graphcontainer align-items-end">
+                                    <div class="text-center">
+                                        <div #peopleViewed style="height: 400px; width: 600px;"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded mb-5">
+                                <h5 class="section-heading mb-4 p-0"> PAGE REACHABILITY
+                                </h5>
+                                <div class="graphcontainer align-items-end">
+                                    <div class="text-center">
+                                        <div #pageReachabilty style="height: 400px; width: 600px;"></div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">Audience Demographics</h5>
+                        <div class="graphcontainer align-items-end">
+                            <div class="text-center">
+                                <div #audienceGraph style="height: 400px; width: 600px;"></div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded mb-5">
+                                <h5 class="section-heading mb-4 p-0">Engagement </h5>
+                                <ul class="list-0 statlist list-lg mb-3">
+                                    <li>
+                                        <span class="coal"> Likes </span>
+                                        <span class="fw-semibold">{{totalLikes}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">Comments </span>
+                                        <span class="fw-semibold">{{totalComments}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal"> Total Engagement </span>
+                                        <span class="fw-semibold">{{totalEngagements}}</span>
+                                    </li>
+
+
+                                </ul>
+                                <div class="card dashboard-card">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <span class="iconButton medium mintBg mb-4">
+                                                    <i class="fa-light fa-arrow-up"></i>
+                                                </span>
+                                                <p class="coal mb-0"> Engagements Increased by </p>
+                                            </div>
+                                            <h3>78.00%</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded mb-5">
+                                <h5 class="section-heading mb-4 p-0"> SLA </h5>
+                                <ul class="list-0 statlist list-lg mb-3">
+                                    <li>
+                                        <span class="coal"> Replies within 120 minutes </span>
+                                        <span class="fw-semibold">{{instagra_report?.replyWithinTime}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal"> Replies after 120 minutes </span>
+                                        <span class="fw-semibold">{{instagra_report?.replyAfterTime}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">Total Catered Workload </span>
+                                        <span class="fw-semibold">{{instagra_report?.totalCateredWorkload}}</span>
+                                    </li>
+
+                                </ul>
+                                <div class="card dashboard-card">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <span class="iconButton medium radicalBg mb-4">
+                                                    <i class="fa-light fa-arrow-down"></i>
+                                                </span>
+                                                <p class="coal mb-0"> 120 minutes SLA </p>
+                                            </div>
+                                            <h3> 11.21%</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row mb-5 align-items-start">
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded">
+                                <h5 class="section-heading mb-3 p-0">Top 5 Customers</h5>
+                                <div class="table-section">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th> </th>
+                                                <th> Name </th>
+                                                <th> Posts </th>
+                                                <th> Comments </th>
+                                                <th> Messages</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let customer of  topfiveCustomer">
+                                                <td>
+                                                    <span
+                                                        class="iconButton medium rounded-pill {{ customer.iconClass }} night fw-bolder">
+                                                        {{ customer.initials }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <a class="sky fw-semibold">{{ customer?.name }}</a>
+                                                </td>
+                                                <td>{{ customer?.post }}</td>
+                                                <td>{{ customer?.comment }}</td>
+                                                <td>{{ customer ?.comment }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <h5 class="section-heading mb-5 p-0">Agent Replies</h5>
+                                </div>
+                                <div class="row mt-5 mb-2 align-items-start">
+                                    <div class="col">
+                                        <small class="coal">Customer Posts </small>
+                                        <p class="fw-semibold">{{instagra_report?.agentReplies?.customerPost}}</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="coal"> Customer Comments </small>
+                                        <p class="fw-semibold">{{instagra_report?.agentReplies?.customerComment}}</p>
+                                    </div>
+
+                                </div>
+                                <div class="row align-items-start">
+                                    <div class="col">
+                                        <small class="coal">Agent Comments </small>
+                                        <p class="fw-semibold">{{instagra_report?.agentReplies?.agentComment}}</p>
+                                    </div>
+
+                                    <div class="col">
+                                        <small class="coal"> Mark As Completed </small>
+                                        <p class="fw-semibold">44950</p>
+                                    </div>
+                                </div>
+                                <div class="pt-3 border-top d-flex align-items-center justify-content-between">
+                                    <span class="sky">Total Completed </span>
+                                    <p class="fw-semibold night mb-0">71559</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <div class="row mb-4">
+                          <div class="col-md-6">
+                            <h5 class="section-heading mb-0 p-0">Instagram Stats by Page</h5>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="dropdown d-flex justify-content-end">
+                              <button class="btn iconButton medium" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-regular fa-ellipsis"></i>
+                              </button>
+                              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li>
+                                  <a class="dropdown-item p-1" href="#">
+                                    <button class="iconButton dropdown-iconBtn small" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                      <i class="fa-solid fa-file-export"></i>
+                                    </button>Export to CSV
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="table-section">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th> Impressions</th>
+                                <th> Reachability</th>
+                                <th> Follower Count</th>
+                                <th> Email Contacts</th>
+                                <th> Phone Call Clicks</th>
+                                <th> Get Directions Clicks</th>
+                                <th> Website Clicks</th>
+                                <th> Profile Views</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let data of InstagramStats">
+                                <td>{{ data.impressions }}</td>
+                                <td>{{ data.reachability }}</td>
+                                <td>{{ data.followerCount }}</td>
+                                <td>{{ data.emailContacts }}</td>
+                                <td>{{ data.phoneCallClicks }}</td>
+                                <td>{{ data.getDirectionsClicks }}</td>
+                                <td>{{ data.websiteClicks }}</td>
+                                <td>{{ data.profileViews }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      
+
+                      <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">Recent Posts (Top 5)</h5>
+                        <div class="table-section">
+                          <table class="table table-sm">
+                            <thead>
+                              <tr>
+                                <th>Created Date</th>
+                                <th></th>
+                                <th>Post</th>
+                                <th>Type</th>
+                                <th>Reach</th>
+                                <th>Post Clicks</th>
+                                <th>Reactions</th>
+                                <th>Comments</th>
+                                <th>Shares</th>
+                                <th>Engagement Rate</th>
+                                <th>Grade</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let post of posts">
+                                <td>{{ post.createdDate }}</td>
+                                <td>
+                                  <span class="iconButton medium rounded-pill">
+                            <img src="../../../../../assets/images/ke.png" class="img-fluid rounded-pill" alt=""> 
+                                  </span>
+                                </td>
+                                <td>{{ post.postContent }}</td>
+                                <td>
+                                  <span class="iconButton small">
+                                    <i class="fa-light fa-pencil"></i>
+                                  </span>
+                                </td>
+                                <td>{{ post.reach }}</td>
+                                <td>{{ post.postClicks }}</td>
+                                <td>{{ post.reactions }}</td>
+                                <td>{{ post.comments }}</td>
+                                <td>{{ post.shares }}</td>
+                                <td>{{ post.engagementRate }}</td>
+                                <td>{{ post.grade }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>

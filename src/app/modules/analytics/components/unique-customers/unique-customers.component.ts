@@ -23,7 +23,7 @@ export class UniqueCustomersComponent implements OnInit {
   pageNumber = 1;
   itemsPerPage = 20;
   maxEndDate: any;
-
+  unique_customerColumn:any[]=[]
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
@@ -82,6 +82,7 @@ export class UniqueCustomersComponent implements OnInit {
         (response: any) => {
           this.SpinnerService.hide();
           this.unique_customer = response.List;
+          this.unique_customerColumn = Object.keys(this.unique_customer[0]);
           this.TotalCount = response.TotalCount;
           if (this.pageNumber == 1) {
             this.startingPoint = 1;

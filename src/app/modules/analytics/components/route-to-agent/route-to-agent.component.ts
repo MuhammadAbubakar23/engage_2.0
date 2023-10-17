@@ -26,7 +26,7 @@ export class RouteToAgentComponent implements OnInit {
   startingPoint: any;
   endingPoint: any;
   currentDate: any;
-
+  agentsDataColumns:any[]=[]
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
@@ -78,6 +78,7 @@ export class RouteToAgentComponent implements OnInit {
       this.commondataServices.GetRouteToAgents(data).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.agentsDate = res.List;
+        this.agentsDataColumns=Object.keys(this.agentsDate[0])
         this.totalCounts = res.TotalCount;
         if (this.pageNumber == 1) {
           this.startingPoint = 1;

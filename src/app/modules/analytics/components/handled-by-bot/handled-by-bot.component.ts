@@ -14,6 +14,7 @@ import { HeaderService } from 'src/app/shared/services/header.service';
 })
 export class HandledByBotComponent implements OnInit {
   TotalCount: any = [];
+  unique_customerColumns:any[]=[]
   startDate: string = '';
   itemperPage: number = 10;
   page: number = 1;
@@ -73,8 +74,10 @@ export class HandledByBotComponent implements OnInit {
     if (this.endDate >= this.startDate) {
       this.SpinnerService.show();
       this.commonService.AddHandledBot(data).subscribe((res: any) => {
+
         this.SpinnerService.hide();
         this.unique_customer = res.List;
+        this.unique_customerColumns=Object.keys(this.unique_customer[0])
         this.TotalCount = res.TotalCount;
         if (this.pageNumber == 1) {
           this.startingPoint = 1;

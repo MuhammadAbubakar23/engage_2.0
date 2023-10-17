@@ -59,127 +59,20 @@
                     </div>
                     <div class="card p-3 iceBg tableScroll" data-scrollbar="true" tabindex="-1"
                         style="overflow: auto; outline: none;">
-                        <div class="table-section table-scroll-x">
+                        <div class="table-section table-scroll-x" >
                             <table class="table table-sm">
                                 <thead>
-                                    <tr>
-                                        <th>Id </th>
-                                        <th>PostId </th>
-                                        <th>Comment_Msg_Id </th>
-                                        <th>Message </th>
-                                        <th>CompanyId </th>
-                                        <th>ToId </th>
-                                        <th>ToName </th>
-                                        <th>InsertionDate </th>
-                                        <th>Attachment </th>
-                                        <th> AttachmentType </th>
-                                        <th> ContentType </th>
-                                        <th> IsLikedByAdmin </th>
-                                        <th> ProfileId </th>
-                                        <th> ProfilePageId </th>
-                                        <th>PageName </th>
-                                        <th> PageProfilePic </th>
-                                        <th> MaxCommentId </th>
-                                        <th>QueryStatus </th>
-                                        <th>Body </th>
-                                        <th> Cc </th>
-                                        <th>Bcc </th>
-                                        <th>SessionId </th>
-                                        <th>SessionName </th>
-                                        <th>ChannelId </th>
-                                        <th>ConversationId </th>
-                                        <th>IsMention </th>
-                                        <th>IsRetweet </th>
-                                        <th> CustomerSocialProfileId </th>
-                                        <th> CreatedDate </th>
-                                        <th> CreatedBy </th>
-                                        <th> ModifiedDate </th>
-                                        <th> ModifiedBy </th>
-                                        <th> IsActive </th>
-                                        <th> IsBlock </th>
-                                        <th> Snoozed </th>
-                                        <th> IsHide </th>
-                                        <th>Starred </th>
-                                        <th>Spam </th>
-                                        <th>IsCompleted </th>
-                                        <th> Name </th>
-                                        <th>PhoneNumber </th>
-                                        <th>Platform </th>
-                                        <th>CustomerCreatedDate</th>
-                                        <th>CustomerActive</th>
+                                    <tr >
+                                        <th *ngFor="let column of unique_customerColumns">{{column}}</th>
                                     </tr>
+                               
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let item of unique_customer">
-                                        <td>{{item.id}} </td>
-                                        <td>
-                                            <div class="ttholder">
-                                                <span class="tttext">{{item.postId}}</span>
-                                                <span class="ttfulltext">{{item.postId}}</span>
-                                            </div>
+                                    <tr class="region-row" *ngFor="let row of unique_customer ">
+                                        <td *ngFor="let column of unique_customerColumns">
+                                            {{ row[column] }}
                                         </td>
-                                        <td>
-                                            <div class="ttholder">
-                                                <span class="tttext">{{item.comment_Msg_Id}}</span>
-                                                <span class="ttfulltext">{{item.comment_Msg_Id}}</span>
-                                            </div>
-                                        </td>
-                                        <td> {{item.message}} </td>
-                                        <td>{{item.companyId}} </td>
-                                        <td> {{item.toId}} </td>
-                                        <td>{{item.toName}} </td>
-                                        <td>{{item.insertionDate}} </td>
-                                        <td>{{item.attachment}}</td>
-                                        <td>{{item.attachmentType}}</td>
-                                        <td>{{item.contentType}} </td>
-                                        <td>
-                                            <div class="ttholder">
-                                                <span class="tttext">{{item.isLikedByAdmin}}</span>
-                                                <span class="ttfulltext">{{item.isLikedByAdmin}}</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="ttholder">
-                                                <span class="tttext">{{item.profileId}}</span>
-                                                <span class="ttfulltext">{{item.profileId}}</span>
-                                            </div>
-                                        </td>
-                                        <td> {{item.profilePageId}} </td>
-                                        <td> {{item.pageName}} </td>
-                                        <td>{{item.pageProfilePic}}</td>
-                                        <td>{{item. maxCommentId}} </td>
-                                        <td> {{item.queryStatus}} </td>
-                                        <td> {{item.body}} </td>
-                                        <td> {{item.cc}} </td>
-                                        <td>{{item.bcc}}</td>
-                                        <td>{{item.SessionId}} </td>
-                                        <td>{{item.SessionName}} </td>
-                                        <td>{{item.ChannelId}}</td>
-                                        <td>{{item.ConversationId}} </td>
-                                        <td>{{item.IsMention}} </td>
-                                        <td>{{item.IsRetweet}} </td>
-                                        <td>{{item.customerSocialProfileId}} </td>
-                                        <td>{{item.createdDate}}</td>
-                                        <td>{{item.createdBy}}</td>
-                                        <td> {{item.modifiedDate}} </td>
-                                        <td> {{item.modifiedBy}} </td>
-                                        <td> {{item.isActive}}</td>
-                                        <td>{{item.isBlock}} </td>
-                                        <td>{{item.snoozed}}</td>
-                                        <td>{{item.isHide}}</td>
-                                        <td>
-                                            {{item.starred}}
-                                        </td>
-                                        <td> {{item.spam}} </td>
-                                        <td>{{item.isCompleted}}</td>
-                                        <td>{{item.name}}</td>
-                                        <td>{{item.phoneNumber}} </td>
-                                        <td>{{item.platform}} </td>
-                                        <td>{{item.customerCreatedDate}} </td>
-                                        <td>{{item.customerActive}} </td>
                                     </tr>
-
-
 
                                 </tbody>
                             </table>

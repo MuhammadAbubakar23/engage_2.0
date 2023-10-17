@@ -31,7 +31,7 @@
                                     <ul class="dropdown-menu" aria-labelledby="posttype">
                                         <li class="dropdown-listing-header">
                                             <form class="custom-searchbar my-2 mx-0">
-                                                <input class="form-control bg-light border-0 py-2" placeholder="Search"
+                                                <input class="form-control bg-light border-0 py-2" placeholder="Search" [(ngModel)]="searchText"
                                                     aria-label="Search">
                                                 <span class="btn searchbar-btn" type="submit">
                                                     <i class="fal fa-search silver"></i>
@@ -41,7 +41,7 @@
                                         <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
                                             style="overflow: auto; outline: none;">
                                             <div class="scroll-content">
-                                                <li *ngFor="let option of totalAgents">
+                                                <li *ngFor="let option of totalAgents | filter:searchText">
                                                     <a class="dropdown-item d-flex align-items-center">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
@@ -73,24 +73,24 @@
                                     <ul class="dropdown-menu" aria-labelledby="columnssort">
                                         <li class="dropdown-listing-header">
                                             <form class="custom-searchbar my-2 mx-0">
-                                                <input class="form-control bg-light border-0 py-2" placeholder="Search"
-                                                    aria-label="Search">
+                                                <input class="form-control bg-light border-0 py-2" placeholder="Search" [(ngModel)]="searchText"
+                                                    aria-label="Search"> 
                                                 <span class="btn searchbar-btn" type="submit">
                                                     <i class="fal fa-search silver"></i>
                                                 </span>
                                             </form>
                                         </li>
                                         <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
-                                            style="overflow: hidden; outline: none;">
+                                            style="overflow: auto; outline: none;">
                                             <div class="scroll-content">
-                                                <li *ngFor="let channel of channelOptions">
+                                                <li *ngFor="let channel of channelOptions | filter:searchText">
                                                     <a class="dropdown-item d-flex align-items-center">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
                                                                 [id]="channel.id" [(ngModel)]="channel.isSelected"
                                                                 (change)="onCheckboxChange()">
                                                             <label class="form-check-label" [for]="channel.id">
-                                                                <i [ngClass]="channel.icon"></i> {{ channel.label }}
+                                                                <i [ngClass]="channel.icon"></i> {{ channel.name }}
                                                             </label>
                                                         </div>
                                                     </a>

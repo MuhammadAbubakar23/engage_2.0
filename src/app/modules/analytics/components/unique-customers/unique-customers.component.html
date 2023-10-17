@@ -61,18 +61,14 @@
                             <table class="table ">
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>CustomerName</th>
-                                        <th>PhoneNumber</th>
-                                        <th>Platform</th>
+                                        <th *ngFor="let column of unique_customerColumn">{{column}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let customer of unique_customer">
-                                        <td>{{ customer.id }}</td>
-                                        <td>{{ customer.customerName }}</td>
-                                        <td>{{ customer.phoneNumber }}</td>
-                                        <td>{{ customer.platform }}</td>
+                                    <tr class="region-row" *ngFor="let row of unique_customer">
+                                        <td *ngFor="let column of unique_customerColumn">
+                                            {{ row[column] }}
+                                        </td>
                                     </tr>
                                 </tbody>
 

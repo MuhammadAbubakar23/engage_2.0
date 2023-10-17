@@ -55,125 +55,20 @@
                     <div class="card p-3 iceBg" style="margin-top: 60px;">
 
                         <div class="table-section table-scroll-x" style="overflow: auto; height: calc(100vh - 250px);">
-
                             <table class="table table-sm">
                                 <thead>
                                     <tr>
-                                        <th>Id </th>
-                                        <th>PostId </th>
-                                        <th>Comment_Msg_Id </th>
-                                        <th>Message </th>
-                                        <th>CompanyId </th>
-                                        <th>ToId </th>
-                                        <th>ToName </th>
-                                        <th>InsertionDate </th>
-                                        <th>Attachment </th>
-                                        <th> AttachmentType </th>
-                                        <th> ContentType </th>
-                                        <th> IsLikedByAdmin </th>
-                                        <th> ProfileId </th>
-                                        <th> ProfilePageId </th>
-                                        <th>PageName </th>
-                                        <th> PageProfilePic </th>
-                                        <th> MaxCommentId </th>
-                                        <th>QueryStatus </th>
-                                        <th>Body </th>
-                                        <th> Cc </th>
-                                        <th>Bcc </th>
-                                        <th>SessionId </th>
-                                        <th>SessionName </th>
-                                        <th>ChannelId </th>
-                                        <th>ConversationId </th>
-                                        <th>IsMention </th>
-                                        <th>IsRetweet </th>
-                                        <th> CustomerSocialProfileId </th>
-                                        <th> CreatedDate </th>
-                                        <th> CreatedBy </th>
-                                        <th> ModifiedDate </th>
-                                        <th> ModifiedBy </th>
-                                        <th> IsActive </th>
-                                        <th> IsBlock </th>
-                                        <th> Snoozed </th>
-                                        <th> IsHide </th>
-                                        <th>Starred </th>
-                                        <th>Spam </th>
-                                        <th>IsCompleted </th>
-                                        <th> Name </th>
-                                        <th>PhoneNumber </th>
-                                        <th>Platform </th>
-                                        <th>CustomerCreatedDate</th>
-                                        <th>CustomerActive</th>
+                                        <th *ngFor="let column of agentsDataColumns"> {{column}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let item of agentsDate">
-                                        <td>{{item.id}} </td>
-                                        <td>
-                                            <div class="ttholder">
-                                                <span class="tttext">{{item.postId}}</span>
-                                                <span class="ttfulltext">{{item.postId}}</span>
-                                            </div>
+                                    <tr class="region-row" *ngFor="let row of agentsDate">
+                                        <td *ngFor="let column of agentsDataColumns">
+                                            {{ row[column] }}
                                         </td>
-                                        <td>
-                                            <div class="ttholder">
-                                                <span class="tttext">{{item.comment_Msg_Id}}</span>
-                                                <span class="ttfulltext">{{item.comment_Msg_Id}}</span>
-                                            </div>
-                                        </td>
-                                        <td> {{item.message}} </td>
-                                        <td>{{item.companyId}} </td>
-                                        <td> {{item.toId}} </td>
-                                        <td>{{item.toName}} </td>
-                                        <td>{{item.insertionDate}} </td>
-                                        <td>{{item.attachment}}</td>
-                                        <td>{{item.attachmentType}}</td>
-                                        <td>{{item.contentType}} </td>
-                                        <td>
-                                            <div class="ttholder">
-                                                <span class="tttext">{{item.isLikedByAdmin}}</span>
-                                                <span class="ttfulltext">{{item.isLikedByAdmin}}</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="ttholder">
-                                                <span class="tttext">{{item.profileId}}</span>
-                                                <span class="ttfulltext">{{item.profileId}}</span>
-                                            </div>
-                                        </td>
-                                        <td> {{item.profilePageId}} </td>
-                                        <td> {{item.pageName}} </td>
-                                        <td>{{item.pageProfilePic}}</td>
-                                        <td>{{item. maxCommentId}} </td>
-                                        <td> {{item.queryStatus}} </td>
-                                        <td> {{item.body}} </td>
-                                        <td> {{item.cc}} </td>
-                                        <td>{{item.bcc}}</td>
-                                        <td>{{item.SessionId}} </td>
-                                        <td>{{item.SessionName}} </td>
-                                        <td>{{item.ChannelId}}</td>
-                                        <td>{{item.ConversationId}} </td>
-                                        <td>{{item.IsMention}} </td>
-                                        <td>{{item.IsRetweet}} </td>
-                                        <td>{{item.customerSocialProfileId}} </td>
-                                        <td>{{item.createdDate|date}}</td>
-                                        <td>{{item.createdBy}}</td>
-                                        <td> {{item.modifiedDate}} </td>
-                                        <td> {{item.modifiedBy}} </td>
-                                        <td> {{item.isActive}}</td>
-                                        <td>{{item.isBlock}} </td>
-                                        <td>{{item.snoozed}}</td>
-                                        <td>{{item.isHide}}</td>
-                                        <td>
-                                            {{item.starred}}
-                                        </td>
-                                        <td> {{item.spam}} </td>
-                                        <td>{{item.isCompleted}}</td>
-                                        <td>{{item.name}}</td>
-                                        <td>{{item.phoneNumber}} </td>
-                                        <td>{{item.platform}} </td>
-                                        <td>{{item.customerCreatedDate | date}} </td>
-                                        <td>{{item.customerActive}} </td>
                                     </tr>
+
+
                                 </tbody>
                             </table>
                         </div>
@@ -182,29 +77,16 @@
                         <br>
                     </div>
                 </div>
-                <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
-                    <div class="scrollbar-thumb scrollbar-thumb-x"
-                        style="width: 1457px; transform: translate3d(0px, 0px, 0px);"></div>
-                </div>
-                <div class="scrollbar-track scrollbar-track-y" style="display: block;">
-                    <div class="scrollbar-thumb scrollbar-thumb-y"
-                        style="height: 160.002px; transform: translate3d(0px, 0px, 0px);"></div>
-                </div> -->
             </div>
         </div>
-
-
-
-
     </div>
-
 </div>
 
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
-            <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+            <p class="toast-line-para ice m-0"> {{AlterMsg}}</p>
             <div class="toast-btn d-flex align-items-center">
 
                 <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
