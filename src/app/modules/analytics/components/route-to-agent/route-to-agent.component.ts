@@ -144,7 +144,6 @@ export class RouteToAgentComponent implements OnInit {
     this.EndDate = '';
   }
   getByEndDate() {
-    debugger;
     if (this.EndDate >= this.startDate) {
       this.getRoutetoAgent();
     } else {
@@ -153,7 +152,6 @@ export class RouteToAgentComponent implements OnInit {
     }
   }
   nextPage(pageNumber: any) {
-    debugger;
     let page = pageNumber + 1;
     if (page < this.totalPages + 1) {
       this.pageNumber = page;
@@ -161,7 +159,6 @@ export class RouteToAgentComponent implements OnInit {
     }
   }
   perviousPage(pageNumber: any) {
-    debugger;
     if (pageNumber >= 1) {
       let page = pageNumber - 1;
       if (page > 0) {

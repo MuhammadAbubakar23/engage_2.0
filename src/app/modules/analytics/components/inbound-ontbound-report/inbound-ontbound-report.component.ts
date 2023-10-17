@@ -299,7 +299,7 @@ export class InboundOntboundReportComponent implements OnInit {
             const platformsArray: any[] = [];
 
             tagReportData.forEach((channel: any) => {
-              debugger;
+              ;
               if (!platformsArray.includes(channel.platform)) {
                 platformsArray.push(channel.platform);
               }

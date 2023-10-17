@@ -79,7 +79,7 @@ export class ShiftReportComponent implements OnInit {
 keywordslist:any[]=[]
   getAlltags() {
     this.commandataService.GetTagsList().subscribe((res: any) => {
-      debugger
+      
       console.log('All tags===>', res);
       this.tagsList = res;
       this.tagsList.forEach((xyz:any)=>{
@@ -186,7 +186,7 @@ keywordslist:any[]=[]
               this.allDates.push(item.date.split('T')[0]);
                
               if (data.platform == 'Facebook') {
-                debugger
+                
                 data.dateWise.forEach((singleItem: any) => {
                   this.allTotalCountsfb.push(singleItem.totalCount);
                 });
@@ -241,7 +241,7 @@ keywordslist:any[]=[]
   }
 
   getCharts() {
-    debugger
+    
     var chartDom = document.getElementById('shiftReport')
     var myChart = echarts.init(chartDom);
     var option;

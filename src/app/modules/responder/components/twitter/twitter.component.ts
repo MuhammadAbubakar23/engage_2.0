@@ -8,6 +8,7 @@ import { ApplySentimentService } from 'src/app/services/ApplySentimentService/ap
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
+import { HeaderCountService } from 'src/app/services/headerCountService/header-count.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
@@ -15,6 +16,7 @@ import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
 import { UpdateMessagesService } from 'src/app/services/UpdateMessagesService/update-messages.service';
+import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
 import { CommentStatusDto } from 'src/app/shared/Models/CommentStatusDto';
 import {
@@ -130,7 +132,8 @@ export class TwitterComponent implements OnInit {
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService: GetQueryTypeService,
     private router: Router,
-    private store: StorageService
+    private store: StorageService,
+    private userInfoService: UserInformationService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -431,7 +434,8 @@ export class TwitterComponent implements OnInit {
             this.spinner1running = false;
             this.TTReply = true;
             this.TwitterTweets = res.List;
-            // this.userInfoService.shareUserInformation(res.List[0].user);
+            
+            this.userInfoService.shareUserInformation(res.List[0].user);
             this.TotalCmntQueryCount = res.TotalQueryCount;
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
             // this.pageName = this.TwitterTweets[0]?.post.profile.page_Name;
@@ -491,7 +495,7 @@ export class TwitterComponent implements OnInit {
           this.TTReply = true;
           this.TwitterTweets = res.List;
           this.TotalCmntQueryCount = res.TotalQueryCount;
-          // this.userInfoService.shareUserInformation(res.List[0].user);
+          this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           // this.pageName = this.TwitterTweets[0]?.post.profile.page_Name;
 
@@ -555,7 +559,7 @@ export class TwitterComponent implements OnInit {
             this.spinner1running = false;
             this.TTReply = true;
             this.TwitterTweets = res.List;
-            // this.userInfoService.shareUserInformation(res.List[0].user);
+            this.userInfoService.shareUserInformation(res.List[0].user);
             // this.headerCountService.shareUnresponedCount(res.TotalCount);
             this.TotalCmntQueryCount = res.TotalQueryCount;
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -626,6 +630,8 @@ export class TwitterComponent implements OnInit {
             this.spinner1running = false;
             this.TwitterMessages = res.List?.dm;
             this.userInfo = res.List?.user
+            
+            this.userInfoService.shareUserInformation(res.List.user);
             // this.pageName = res.List?.profile.page_Name;
             this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
             this.TotalMsgQueryCount = res.TotalQueryCount;
@@ -694,6 +700,7 @@ export class TwitterComponent implements OnInit {
         if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.TwitterMessages = res.List?.dm;
+          this.userInfoService.shareUserInformation(res.List.user);
             this.userInfo = res.List?.user
           // this.pageName = res.List?.profile.page_Name;
           this.TotalMsgQueryCount = res.TotalQueryCount;
@@ -758,7 +765,7 @@ export class TwitterComponent implements OnInit {
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
             this.TwitterMessages = res.List?.dm;
-            // this.userInfoService.shareUserInformation(res.List.user);
+            this.userInfoService.shareUserInformation(res.List.user);
             // this.headerCountService.shareUnresponedCount(res.TotalCount);
             this.userInfo = res.List?.user
             // this.pageName = res.List?.profile.page_Name;
@@ -833,9 +840,11 @@ export class TwitterComponent implements OnInit {
             this.SpinnerService.hide();
             this.spinner1running = false;
             this.TwitterMentions = res.List?.dm;
+            
+            this.userInfoService.shareUserInformation(res.List.user);
             this.userInfo = res.List?.user;
             this.totalUnrespondedMentionCountByCustomer = res.TotalCount;
-            // this.pageName = res.List?.profile.page_Name;
+            this.pageName = res?.List?.profile?.page_Name;
             this.TotalMentionQueryCount = res.TotalQueryCount;
 
             if (this.TwitterTweets.length == 0) {
@@ -897,10 +906,11 @@ export class TwitterComponent implements OnInit {
         if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.TwitterMentions = res.List?.dm;
+          this.userInfoService.shareUserInformation(res.List.user);
             this.userInfo = res.List?.user;
           this.totalUnrespondedMentionCountByCustomer = res.TotalCount;
           this.TotalMentionQueryCount = res.TotalQueryCount;
-          // this.pageName = res.List?.profile.page_Name;
+          this.pageName = res?.List?.profile?.page_Name;
 
           if (this.TwitterTweets.length == 0) {
             this.TTReply = false;
@@ -962,12 +972,12 @@ export class TwitterComponent implements OnInit {
           if (Object.keys(res).length > 0) {
             this.SpinnerService.hide();
             this.TwitterMentions = res.List?.dm;
-            // this.userInfoService.shareUserInformation(res.List.user);
+            this.userInfoService.shareUserInformation(res.List.user);
             // this.headerCountService.shareUnresponedCount(res.TotalCount);
             this.userInfo = res.List?.user;
             this.totalUnrespondedMentionCountByCustomer = res.TotalCount;
             this.TotalMentionQueryCount = res.TotalQueryCount;
-            // this.pageName = res.List?.profile.page_Name;
+            this.pageName = res?.List?.profile?.page_Name;
 
             if (this.TwitterTweets.length == 0) {
               this.TTReply = false;
@@ -1476,7 +1486,8 @@ export class TwitterComponent implements OnInit {
         this.show = true;
         this.twitterMsgId = msg.id;
         this.agentId = localStorage.getItem('agentId') || '{}';
-        this.platform = this.fetchId.platform;
+        // this.platform = this.fetchId.platform;
+        this.platform = localStorage.getItem('parent') || '';
         this.postType = msg.contentType;
         this.profileId = msg.profileId;
         this.profilePageId = msg.profilePageId;
@@ -1492,11 +1503,11 @@ export class TwitterComponent implements OnInit {
         this.show = true;
         this.twitterMentionId = mention.id;
         this.agentId = localStorage.getItem('agentId') || '{}';
-        this.platform = this.fetchId.platform;
+        this.platform =  localStorage.getItem('parent') || '';;
         this.postType = mention.contentType;
         this.profileId = mention.profileId;
         this.profilePageId = mention.profilePageId;
-        this.userProfileId = this.TwitterMessages[0].fromId;
+        this.userProfileId = this.TwitterMentions[0].fromId;
       }
     });
   }
@@ -1555,6 +1566,77 @@ export class TwitterComponent implements OnInit {
       ) {
         this.spinner1running = true;
         this.SpinnerService.show();
+        this.commondata.ReplyComment(formData).subscribe(
+          (res: any) => {
+            this.spinner1running = false;
+            this.SpinnerService.hide();
+            this.clearInputField();
+            this.reloadComponent('comment');
+            if (this.radioInput != undefined) {
+              this.radioInput.nativeElement.checked = false;
+            }
+            this.twitterMessageReplyForm.reset();
+          },
+          (error) => {
+            alert(error.message);
+            this.spinner1running = false;
+            this.SpinnerService.hide();
+          }
+        );
+      } else {
+        this.reloadComponent('empty-input-field');
+      }
+    }
+    this.quickReplySearchText = '';
+  }
+
+  submitTwitterMentionReply() {
+    
+    if (this.twitterMentionId == 0) {
+      this.reloadComponent('selectComment');
+    } else {
+      var formData = new FormData();
+      if (this.ImageName != null || undefined) {
+        for (let index = 0; index < this.ImageName.length; index++) {
+          formData.append('File', this.ImageName[index]);
+        }
+      }
+
+      if (!this.twitterMessageReplyForm.get('text')?.dirty) {
+        if (this.text !== '') {
+          this.twitterMessageReplyForm.patchValue({
+            text: this.text,
+          });
+        }
+      } else {
+        if (this.twitterMessageReplyForm.value.text) {
+          this.twitterMessageReplyForm.patchValue({
+            to: this.twitterMessageReplyForm.value.text,
+          });
+        }
+      }
+      this.twitterMessageReplyForm.patchValue({
+        commentId: this.twitterMentionId,
+        teamId: this.agentId,
+        platform: this.platform,
+        contentType: this.postType,
+        profileId: this.profileId,
+        profilePageId: this.profilePageId,
+        userProfileId: this.userProfileId,
+      });
+
+      formData.append(
+        'CommentReply',
+        JSON.stringify(this.twitterMessageReplyForm.value)
+      );
+      if (
+        (this.twitterMessageReplyForm.value.text !== '' &&
+          this.twitterMessageReplyForm.value.text !== null) ||
+        (this?.ImageName?.length > 0 && this.ImageName != undefined)
+      ) {
+        this.spinner1running = true;
+        this.SpinnerService.show();
+        
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.spinner1running = false;
@@ -1924,6 +2006,13 @@ export class TwitterComponent implements OnInit {
       });
     });
     this.TwitterMessages.forEach((msg: any) => {
+      if (msg.id == this.newReply.commentId) {
+        msg.replies.push(this.newReply);
+        msg.queryStatus = this.newReply.queryStatus;
+      }
+    });
+    
+    this.TwitterMentions.forEach((msg: any) => {
       if (msg.id == this.newReply.commentId) {
         msg.replies.push(this.newReply);
         msg.queryStatus = this.newReply.queryStatus;

@@ -38,7 +38,7 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.GetAllSocialMediaReport()
   }
   GetAllSocialMediaReport() {
-    debugger
+    
     if (this.endDate == '' && this.startDate == '') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 5);
@@ -81,7 +81,7 @@ export class ExecutiveDashboardComponent implements OnInit {
         // Audience Chart
 
         this.social_media_report.facebookReportResponseDto.postLikeSpan?.forEach((data: any) => {
-          debugger
+          
           this.post_likes.push(data.activityCount);
           if (!this.date_Audience.includes(data.dateValue)) {
             this.date_Audience.push(data.dateValue)
@@ -101,7 +101,7 @@ export class ExecutiveDashboardComponent implements OnInit {
         });
         // facebook Reaction 
         const pageReactionsSpan = this.social_media_report.facebookReportResponseDto.pageReactionsSpan;
-        debugger
+        
         pageReactionsSpan?.forEach((data: any) => {
           const date = (data.totalReactionsDateValue);
           this.facebook_reaction.push(data.like + data.love + data.wow + data.haha + data.sorry + data.anger + data.sad + data.tHANKFUL + data.pride + data.cARE);
@@ -184,7 +184,7 @@ export class ExecutiveDashboardComponent implements OnInit {
     option && myChart.setOption(option);
   }
   getChartAudienceEngagement() {
-    debugger
+    
     type EChartsOption = echarts.EChartsOption;
     var chartDom = document.getElementById('audience')!;
     var myChart = echarts.init(chartDom);

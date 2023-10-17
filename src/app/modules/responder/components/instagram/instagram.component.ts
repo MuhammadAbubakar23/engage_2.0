@@ -37,6 +37,7 @@ import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ti
 import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
 import { Router } from '@angular/router';
+import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
 
 @Component({
   selector: 'app-instagram',
@@ -132,12 +133,13 @@ export class InstagramComponent implements OnInit {
     private ticketResponseService: TicketResponseService,
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService: GetQueryTypeService,
-    private router: Router
+    private router: Router,
+    private userInfoService: UserInformationService
   ) {
-    this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
-      this.id = res;
-      this.getInstagramData();
-    });
+    // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
+    //   this.id = res;
+    //   this.getInstagramData();
+    // });
   }
 
   ngOnInit(): void {
@@ -365,9 +367,11 @@ export class InstagramComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
+          if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.InstagramData = res.List;
+          this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
           this.pageName = this.InstagramData[0]?.post.profile.page_Name;
@@ -401,7 +405,8 @@ export class InstagramComponent implements OnInit {
             );
           });
 
-          this.instaStats();
+          // this.instaStats();
+        }
         });
     } else if (this.slaId != null || undefined) {
       localStorage.setItem('storeOpenedId', this.slaId);
@@ -424,9 +429,11 @@ export class InstagramComponent implements OnInit {
       this.spinner1running = true;
       this.SpinnerService.show();
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
+        if (Object.keys(res).length > 0) {
         this.SpinnerService.hide();
         this.spinner1running = false;
         this.InstagramData = res.List;
+        this.userInfoService.shareUserInformation(res.List[0].user);
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
         this.TotalCmntQueryCount = res.TotalQueryCount;
         this.pageName = this.InstagramData[0]?.post.profile.page_Name;
@@ -460,8 +467,9 @@ export class InstagramComponent implements OnInit {
           );
         });
 
-        this.instaStats();
-      });
+        // this.instaStats();
+    }
+  });
     } else {
       this.filterDto = {
         // fromDate: new Date(),
@@ -484,9 +492,11 @@ export class InstagramComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
+          if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.InstagramData = res.List;
+          this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
           this.pageName = this.InstagramData[0]?.post.profile.page_Name;
@@ -520,8 +530,9 @@ export class InstagramComponent implements OnInit {
             );
           });
 
-          this.instaStats();
-        });
+          // this.instaStats();
+    }
+  });
     }
   }
 
@@ -1229,8 +1240,10 @@ export class InstagramComponent implements OnInit {
       this.commondata
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
+          if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.InstagramMessages = res.List?.dm;
+          this.userInfoService.shareUserInformation(res.List.user);
           this.TotalMsgQueryCount = res.TotalQueryCount;
           this.pageName = this.InstagramMessages[0]?.toName;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
@@ -1262,7 +1275,8 @@ export class InstagramComponent implements OnInit {
             );
             // // console.log('Messages ==>', this.groupedMessages);
           });
-        });
+    }
+  });
     } else if (this.slaId != null || undefined) {
       this.filterDto = {
         // fromDate: new Date(),
@@ -1283,8 +1297,10 @@ export class InstagramComponent implements OnInit {
 
       this.SpinnerService.show();
       this.commondata.GetSlaDM(this.filterDto).subscribe((res: any) => {
+        if (Object.keys(res).length > 0) {
         this.SpinnerService.hide();
         this.InstagramMessages = res.List?.dm;
+        this.userInfoService.shareUserInformation(res.List.user);
         this.TotalMsgQueryCount = res.TotalQueryCount;
         this.pageName = this.InstagramMessages[0].toName;
         this.totalMessages = res.TotalCount;
@@ -1318,7 +1334,8 @@ export class InstagramComponent implements OnInit {
           );
           // // console.log('Messages ==>', this.groupedMessages);
         });
-      });
+     }
+     });
     } else {
       this.filterDto = {
         // fromDate: new Date(),
@@ -1341,8 +1358,10 @@ export class InstagramComponent implements OnInit {
       this.commondata
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
+          if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.InstagramMessages = res.List?.dm;
+          this.userInfoService.shareUserInformation(res.List.user);
           this.pageName = this.InstagramMessages[0].toName;
           this.totalMessages = res.TotalCount;
           this.TotalMsgQueryCount = res.TotalQueryCount;
@@ -1376,7 +1395,8 @@ export class InstagramComponent implements OnInit {
             );
             // // console.log('Messages ==>', this.groupedMessages);
           });
-        });
+    }
+  });
     }
   }
 

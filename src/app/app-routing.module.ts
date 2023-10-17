@@ -39,13 +39,6 @@ const routes: Routes = [
       modeuls: ModulesResolver,
     },
   },
-  {
-    path: 'survey',
-    loadChildren: () =>
-      import('./survey-forms/survey-forms.module').then(
-        (f) => f.SurveyFormsModule
-      ),
-  },
   // { path: 'administration', loadChildren: () => import('./administration/administration.module').then(m => m.AdministrationModule) },
   // { path: '404', component : NotFoundComponent},
   // { path: '**', redirectTo: '/404', pathMatch: 'full'},

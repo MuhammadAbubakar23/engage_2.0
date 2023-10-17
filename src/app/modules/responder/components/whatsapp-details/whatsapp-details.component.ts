@@ -25,6 +25,7 @@ import { ReplyService } from 'src/app/services/replyService/reply.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
+import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
 import { CommentStatusDto } from 'src/app/shared/Models/CommentStatusDto';
 import { commentsDto } from 'src/app/shared/Models/concersationDetailDto';
@@ -114,7 +115,8 @@ export class WhatsappDetailsComponent implements OnInit {
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService: GetQueryTypeService,
     private unrespondedCountService : UnRespondedCountService,
-    private router : Router
+    private router : Router,
+    private userInfoService: UserInformationService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -279,9 +281,11 @@ export class WhatsappDetailsComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
+          if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.WhatsappData = res.List;
+          this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
 
@@ -314,7 +318,8 @@ export class WhatsappDetailsComponent implements OnInit {
             });
             // // console.log('hello', this.groupArrays);
           });
-        });
+    }
+  });
     } else if (this.slaId != null || undefined) {
       localStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
@@ -335,8 +340,10 @@ export class WhatsappDetailsComponent implements OnInit {
       };
       this.SpinnerService.show();
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
+        if (Object.keys(res).length > 0) {
         this.SpinnerService.hide();
         this.WhatsappData = res.List;
+        this.userInfoService.shareUserInformation(res.List[0].user);
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
         this.TotalCmntQueryCount = res.TotalQueryCount;
 
@@ -369,7 +376,8 @@ export class WhatsappDetailsComponent implements OnInit {
         this.WhatsappData.forEach((msg: any) => {
           this.senderId = msg.comments[0].sendTo;
         });
-      });
+     }
+     });
     } else {
       this.filterDto = {
         // fromDate: new Date(),
@@ -391,8 +399,10 @@ export class WhatsappDetailsComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
+          if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.WhatsappData = res.List;
+          this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
 
@@ -425,7 +435,8 @@ export class WhatsappDetailsComponent implements OnInit {
           this.WhatsappData.forEach((msg: any) => {
             this.senderId = msg.comments[0].sendTo;
           });
-        });
+    }
+  });
     }
   }
 

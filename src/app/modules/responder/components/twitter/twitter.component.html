@@ -928,8 +928,7 @@
                                                                     </span>
                                                                 </small>
                                                             </div>
-                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM
-                                                                dd, yyyy, h:mm a'}}</small>
+                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM dd, yyyy, h:mm a'}}</small>
                                                         </div>
                                                         <div class="msg-snippet show-text">
                                                             <p class="mb-1 coal" data-maxlength="240">
@@ -1378,8 +1377,7 @@
                                                                     </span>
                                                                 </small>
                                                             </div>
-                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM
-                                                                dd, yyyy, h:mm a'}}</small>
+                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM dd, yyyy, h:mm a'}}</small>
                                                         </div>
                                                         <div class="msg-snippet show-text">
                                                             <p class="mb-1 coal" data-maxlength="240">
@@ -1656,7 +1654,7 @@
                         </div>
                     </div>
                 </div>
-                <form [formGroup]="twitterMessageReplyForm" (submit)="submitTwitterMessageReply()">
+                <form [formGroup]="twitterMessageReplyForm" (submit)="submitTwitterMentionReply()">
                     <div class="input-group input-group-lg">
                         <div class="icons-list align-items-md-center d-flex pe-2">
                             <a class="iconButton small notification iconHover" data-bs-toggle="offcanvas"

@@ -45,6 +45,7 @@ import { ApplySentimentService } from 'src/app/services/ApplySentimentService/ap
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
+import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
 
 declare var toggleEmojis: any;
 @Component({
@@ -162,7 +163,8 @@ export class FacebookComponent implements OnInit {
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService: GetQueryTypeService,
     private router: Router,
-    private store: StorageService
+    private store: StorageService,
+    private userInfoService: UserInformationService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -294,6 +296,7 @@ export class FacebookComponent implements OnInit {
             this.fbCmntReply = true;
             this.ConverstationDetailDto = res;
             this.FacebookData = this.ConverstationDetailDto.List;
+            this.userInfoService.shareUserInformation(res.List[0].user);
             this.TotalCmntQueryCount = res.TotalQueryCount;
             this.pageName = this.FacebookData[0]?.post.profile.page_Name;
 
@@ -356,6 +359,7 @@ export class FacebookComponent implements OnInit {
         if (Object.keys(res).length > 0) {
           this.fbCmntReply = true;
           this.FacebookData = res.List;
+          this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalComments = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
           this.pageName = this.FacebookData[0].post.profile.page_Name;
@@ -394,7 +398,6 @@ export class FacebookComponent implements OnInit {
         }
       });
     }
-    // if ((this.id == null || this.id == undefined) && (this.slaId == null || this.slaId == undefined))
     else {
       this.filterDto = {
         // fromDate: new Date(),
@@ -424,6 +427,7 @@ export class FacebookComponent implements OnInit {
             this.fbCmntReply = true;
             this.ConverstationDetailDto = res;
             this.FacebookData = this.ConverstationDetailDto.List;
+            this.userInfoService.shareUserInformation(res.List[0].user);
             this.totalComments = res.TotalCount;
             this.TotalCmntQueryCount = res.TotalQueryCount;
             this.pageName = this.FacebookData[0]?.post.profile.page_Name;
@@ -459,7 +463,6 @@ export class FacebookComponent implements OnInit {
 
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
             // this.fbStats();
-            // // console.log('Facebook data', this.FacebookData);
           }
         });
     }
@@ -581,8 +584,6 @@ export class FacebookComponent implements OnInit {
             items: groupedItems[createdDate],
           };
         });
-        // this.fbMsgReply = true;
-        // // console.log('Messages ==>', this.groupedMessages);
         this.totalUnrespondedMsgCountByCustomer =
           this.totalUnrespondedMsgCountByCustomer + 1;
       }
@@ -778,6 +779,7 @@ export class FacebookComponent implements OnInit {
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
             this.FacebookMessages = res.List?.dm;
+            this.userInfoService.shareUserInformation(res.List.user);
             this.pageName = res.List?.profile.page_Name;
             this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
             this.TotalMsgQueryCount = res.TotalQueryCount;
@@ -846,6 +848,7 @@ export class FacebookComponent implements OnInit {
         if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.FacebookMessages = res.List?.dm;
+          this.userInfoService.shareUserInformation(res.List.user);
           this.pageName = res.List?.profile.page_Name;
           this.totalMessages = res.TotalCount;
           this.TotalMsgQueryCount = res.TotalQueryCount;
@@ -914,6 +917,7 @@ export class FacebookComponent implements OnInit {
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
             this.FacebookMessages = res.List?.dm;
+            this.userInfoService.shareUserInformation(res.List.user);
             this.pageName = res.List?.profile.page_Name;
             this.totalMessages = res.TotalCount;
             this.TotalMsgQueryCount = res.TotalQueryCount;

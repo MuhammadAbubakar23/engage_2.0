@@ -347,9 +347,7 @@ export class CommonDataService {
   }
 
   GetAgentReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.getAgentReport, body, {
-      responseType: 'text',
-    });
+    return this.http.post(this.CommonBaseUrl + this.getAgentReport, body, { responseType: 'text' });
   }
 
   GetAllocatedProfiles() {
@@ -662,6 +660,7 @@ export class CommonDataService {
   GetAllSocialMatrics(body:any){
     return this.http.post(this.CommonBaseUrl + this.getAllSocialMatrics, body)
   }
+
 }
 
 var headers_object = new HttpHeaders({

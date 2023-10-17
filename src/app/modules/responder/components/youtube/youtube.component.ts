@@ -13,6 +13,7 @@ import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.s
 import { ReplyService } from 'src/app/services/replyService/reply.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
+import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
 import { CommentStatusDto } from 'src/app/shared/Models/CommentStatusDto';
 import { commentsDto } from 'src/app/shared/Models/concersationDetailDto';
@@ -106,7 +107,8 @@ export class YoutubeComponent implements OnInit {
     private ticketResponseService : TicketResponseService,
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService : GetQueryTypeService,
-    private router: Router
+    private router: Router,
+    private userInfoService: UserInformationService
   ) {
     this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
       this.id = res;
@@ -258,9 +260,11 @@ export class YoutubeComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
+          if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.YoutubeData = res.List;
+          this.userInfoService.shareUserInformation(res.List[0].user);
           this.pageName = this.YoutubeData[0]?.post.profile.page_Name;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
@@ -310,7 +314,8 @@ export class YoutubeComponent implements OnInit {
             this.postId = c.postId;
             // this.youtubePostStats();
           });
-        });
+    }
+  });
     } else if (this.slaId != null || undefined) {
       localStorage.setItem('storeOpenedId', this.slaId);
       this.filterDto = {
@@ -332,9 +337,11 @@ export class YoutubeComponent implements OnInit {
       this.spinner1running = true;
       this.SpinnerService.show();
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
+        if (Object.keys(res).length > 0) {
         this.SpinnerService.hide();
         this.spinner1running = false;
         this.YoutubeData = res.List;
+        this.userInfoService.shareUserInformation(res.List[0].user);
           this.pageName = this.YoutubeData[0]?.post.profile.page_Name;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
@@ -370,7 +377,8 @@ export class YoutubeComponent implements OnInit {
           this.postId = c.postId;
           // this.youtubePostStats();
         });
-      });
+    }
+  });
     }
     else {
       this.filterDto = {
@@ -392,9 +400,11 @@ export class YoutubeComponent implements OnInit {
       this.spinner1running = true;
       this.SpinnerService.show();
       this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
+        if (Object.keys(res).length > 0) {
         this.SpinnerService.hide();
         this.spinner1running = false;
         this.YoutubeData = res.List;
+        this.userInfoService.shareUserInformation(res.List[0].user);
           this.pageName = this.YoutubeData[0]?.post.profile.page_Name;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
@@ -430,7 +440,8 @@ export class YoutubeComponent implements OnInit {
           this.postId = c.postId;
           // this.youtubePostStats();
         });
-      });
+    }
+  });
     }
   }
 

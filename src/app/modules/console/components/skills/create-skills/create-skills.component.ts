@@ -256,7 +256,6 @@ this.isDescendingOrder=!this.isDescendingOrder
 
 
 routerLink(){
-
 this.router.navigateByUrl('/console/skills')
 }
 sortedValue(event:any){

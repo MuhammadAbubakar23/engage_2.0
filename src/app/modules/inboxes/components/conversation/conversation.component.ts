@@ -17,6 +17,8 @@ import { ModulesService } from 'src/app/shared/services/module-service/modules.s
 import { RemoveAssignedQuerryService } from 'src/app/services/RemoveAssignedQuery/remove-assigned-querry.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
+import { HeaderCountService } from 'src/app/services/headerCountService/header-count.service';
 
 @Component({
   selector: 'app-conversation',
@@ -81,7 +83,9 @@ export class ConversationComponent implements OnInit {
     private updateListService: UpdateListService,
     private lodeModuleService: ModulesService,
     private removeAssignedQueryService: RemoveAssignedQuerryService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private userInfoService: UserInformationService,
+    private headerCountService: HeaderCountService
   ) {
     this.criteria = {
       property: 'createdDate',
@@ -239,21 +243,17 @@ export class ConversationComponent implements OnInit {
     } else if (this.searchForm.value.dateWithin == '3 days') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 2);
-      const fromDate =
-        this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
+      const fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
 
-      this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '1 week') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 6);
-      const fromDate =
-        this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
+      const fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
 
-      this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '2 weeks') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 13);
@@ -712,11 +712,11 @@ export class ConversationComponent implements OnInit {
   }
 
   updatevalue(
-    string: any,
+    count: any,
     id: any,
     postType: any,
-    userId: any,
-    leftExpandedMenu: any,
+    userName: any,
+    profilePic: any,
     platform: any,
     profileId: any
   ) {
@@ -732,6 +732,17 @@ export class ConversationComponent implements OnInit {
       this.commondata.AssignQuerry(this.assignQuerryDto).subscribe(
         (res: any) => {
           this.SpinnerService.hide();
+          var userInfo = {
+            "unrespondedCount": count,
+            "userId" : id,
+            "postType": postType,
+            "userName" : userName,
+            "profilePic" : profilePic,
+            "platform" : platform,
+            "profileId" : profileId
+          }
+          this.userInfoService.shareUserInformation(userInfo);
+            // this.headerCountService.shareUnresponedCount(count);
           this.reloadComponent('queryallocated');
 
           // this.headerService.updateMessage(string);
