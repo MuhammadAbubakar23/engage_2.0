@@ -103,6 +103,10 @@ const routes: Routes = [
       path:'feacbook-report',
       loadComponent:()=>import('./components/facebook-report/facebook-report.component').then(c=>c.FacebookReportComponent)
     },
+    {
+      path:'instagram-report',
+      loadComponent:()=>import('./components/instagram-report/instagram-report.component').then(c=>c.InstagramReportComponent)
+    }
   ]
   }
 

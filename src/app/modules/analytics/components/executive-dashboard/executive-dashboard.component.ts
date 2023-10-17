@@ -4,10 +4,13 @@ import * as echarts from 'echarts';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { RouterModule } from '@angular/router';
+
 @Component({
   selector: 'app-executive-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule, NgxSpinnerModule],
   templateUrl: './executive-dashboard.component.html',
   styleUrls: ['./executive-dashboard.component.scss']
 })
@@ -17,28 +20,49 @@ export class ExecutiveDashboardComponent implements OnInit {
   endDate: string = ''
   maxEndDate: any;
   social_media_report: any
+  // enagemenet_percentage:any
   inbound_traffic: any
   sentimental_analysis: any
   date_Audience: any
   post_likes: any
   post_comments: any
+  countDiffernce: any
   post_share: any
   facebook_reaction: any
+  tpl: any
+  tpc: any
+  tps: any
+  ltpl: any
+  ltpc: any
+  ltps: any
+  last: any
+  today: any
+  addTotalCount: any
+  countDifferncePostive: any
+  percentageData: any
+  percentageDataFormatted: any
+  percentageDataSmall: any
+  percentageDataFormatteds:any
+  reactionDate:any
   constructor(private _hS: HeaderService,
     private commonDataService: CommonDataService,
-    private datePipe: DatePipe,) { }
+    private datePipe: DatePipe,
+    private SpinnerService: NgxSpinnerService) { }
 
   ngOnInit(): void {
     const newObj = { title: 'Executive Dashboard', url: '/analytics/executive-dashboard' };
     this._hS.setHeader(newObj);
     const currentDate = new Date();
     this.maxEndDate = currentDate.toISOString().split('T')[0];
-    this.getEnagementChart()
+    // this.getEnagementChart()
     this.getRefionWiseTrafic()
     this.GetAllSocialMediaReport()
   }
+  EngagementPercentage() {
+
+  }
   GetAllSocialMediaReport() {
-    
+    // debugger
     if (this.endDate == '' && this.startDate == '') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 5);
@@ -51,8 +75,8 @@ export class ExecutiveDashboardComponent implements OnInit {
     }
     const requestData = {
       pageId: "622038187854126",
-      from: "2023-09-15",
-      to: "2023-10-05",
+      from: this.startDate,
+      to: this.endDate,
     };
     this.inbound_traffic = []
     this.sentimental_analysis = []
@@ -61,11 +85,32 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.post_likes = []
     this.post_share = []
     this.facebook_reaction = [];
-
+this.reactionDate=[]
     if (this.startDate <= this.endDate) {
+      this.SpinnerService.show();
       this.commonDataService.GetAllSocialMatrics(requestData).subscribe((res: any) => {
-        this.social_media_report = res
 
+        this.SpinnerService.hide();
+        this.social_media_report = res
+        this.tpl = this.social_media_report.facebookReportResponseDto.totalPostLikes
+        this.tpc = this.social_media_report.facebookReportResponseDto.totalPostComments
+        this.tps = this.social_media_report.facebookReportResponseDto.totalPostShares
+        this.ltpl = this.social_media_report.facebookReportResponseDto.lastTotalPostLikes
+        this.ltpc = this.social_media_report.facebookReportResponseDto.lastTotalPostComments
+        this.ltps = this.social_media_report.facebookReportResponseDto.lastTotalPostShares
+        this.today = this.tpl + this.tpc + this.tps
+        this.last = this.ltpl + this.ltpc + this.ltps
+        this.countDiffernce = this.today - this.last
+        if (this.today >= this.last) {
+          // debugger
+        this.countDifferncePostive = Math.abs(this.countDiffernce)
+          this.percentageData = (this.countDiffernce / this.today) * 100
+          // this.percentageDataFormatted = this.percentageData.toFixed(2) + '%';
+        } else {
+        this.countDifferncePostive = Math.abs(this.countDiffernce)
+          this.percentageDataSmall = (this.countDiffernce / this.last) * 100
+          // this.percentageDataFormatteds = this.percentageDataSmall.toFixed(2) + '%';
+        }
         const inBoundTrafficDto = this.social_media_report.inBoundTrafficDto;
         inBoundTrafficDto.forEach((data: any) => {
           const date = new Date(data.date);
@@ -81,7 +126,7 @@ export class ExecutiveDashboardComponent implements OnInit {
         // Audience Chart
 
         this.social_media_report.facebookReportResponseDto.postLikeSpan?.forEach((data: any) => {
-          
+          // debugger
           this.post_likes.push(data.activityCount);
           if (!this.date_Audience.includes(data.dateValue)) {
             this.date_Audience.push(data.dateValue)
@@ -101,10 +146,11 @@ export class ExecutiveDashboardComponent implements OnInit {
         });
         // facebook Reaction 
         const pageReactionsSpan = this.social_media_report.facebookReportResponseDto.pageReactionsSpan;
-        
+        debugger
         pageReactionsSpan?.forEach((data: any) => {
           const date = (data.totalReactionsDateValue);
           this.facebook_reaction.push(data.like + data.love + data.wow + data.haha + data.sorry + data.anger + data.sad + data.tHANKFUL + data.pride + data.cARE);
+          this.reactionDate.push(date)
         });
         this.getChartInbound()
         this.getSentimentChart()
@@ -113,6 +159,7 @@ export class ExecutiveDashboardComponent implements OnInit {
       })
 
     } else {
+      this.SpinnerService.hide();
       alert('select end date greater then start date')
     }
 
@@ -140,7 +187,7 @@ export class ExecutiveDashboardComponent implements OnInit {
         }
       },
       legend: {
-        data: ['Inbound']
+        data: ['Email']
       },
       toolbox: {
         feature: {
@@ -184,7 +231,7 @@ export class ExecutiveDashboardComponent implements OnInit {
     option && myChart.setOption(option);
   }
   getChartAudienceEngagement() {
-    
+    // debugger
     type EChartsOption = echarts.EChartsOption;
     var chartDom = document.getElementById('audience')!;
     var myChart = echarts.init(chartDom);
@@ -202,7 +249,7 @@ export class ExecutiveDashboardComponent implements OnInit {
         }
       },
       legend: {
-        data: ['Likes', 'Comments', 'Share', 'Tweets', 'Search Engine']
+        data: ['Likes', 'Comments', 'Share',]
       },
       toolbox: {
         feature: {
@@ -338,6 +385,7 @@ export class ExecutiveDashboardComponent implements OnInit {
     option && myChart.setOption(option);
   }
   getFacebookReaction() {
+    debugger
     type EChartsOption = echarts.EChartsOption;
 
     var chartDom = document.getElementById('facebookReaction')!;
@@ -357,7 +405,7 @@ export class ExecutiveDashboardComponent implements OnInit {
         }
       },
       legend: {
-        data: ['Line 1']
+        data: ['Reaction']
       },
       grid: {
         left: '3%',
@@ -369,7 +417,7 @@ export class ExecutiveDashboardComponent implements OnInit {
         {
           type: 'category',
           boundaryGap: false,
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: this.reactionDate
         }
       ],
       yAxis: [
@@ -379,7 +427,7 @@ export class ExecutiveDashboardComponent implements OnInit {
       ],
       series: [
         {
-          name: 'Line 1',
+          name: 'Reaction',
           type: 'line',
 
           smooth: true,

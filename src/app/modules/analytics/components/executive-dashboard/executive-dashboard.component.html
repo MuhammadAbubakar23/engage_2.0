@@ -2,6 +2,10 @@
     <div class="middle-content d-flex">
         <div class="p-4 d-grid w-100">
             <div class="analytics-dashboard" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
+                <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                    [fullScreen]="false">
+                    <p style="color: white"> Loading... </p>
+                </ngx-spinner>
                 <div class="scroll-content">
                     <div class="d-flex align-items-center">
                         <ul class="nav nav-tabs buttontabs">
@@ -121,34 +125,31 @@
                             </li>
 
                         </ul>
+
                         <div class="my-4">
                             <div class="row align-items-start h-auto">
                                 <div class="col-md-8">
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-4 p-0">Engagement</h5>
-                                        <ul class="nav nav-tabs buttontabs">
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="channel-tab">Channel Wise</button>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="category-tab">Category wise</button>
-                                            </li>
-                                        </ul>
-                                        <div class="graphcontainer align-items-end">
-                                            <div class="tab-content">
-                                                <div class="tab-pane active" id="channelwise" role="tabpanel"
-                                                    aria-labelledby="channelwise-tab" tabindex="0">
-                                                    <div id="enagement" style="height: 400px; width: 600px;">
 
-                                                    </div>
-                                                </div>
-                                                <!-- <div class="tab-pane" id="categorywise" role="tabpanel"
-                                                    aria-labelledby="categorywise-tab" tabindex="0">
-                                                    <div>
-                                                        <img src="../images/kgraph12.png" class="img-fluid" alt="">
-                                                    </div>
-                                                </div> -->
+                                        <div class="tab_content">
+                                            <div class="col-md-12 text-center bord_bottom engag_col" > FACEBOOK
+                                                ENGAGEMENT METRIC<br>
+                                                <span *ngIf="percentageData">
+                                                <i class="fa fa-arrow-up" ></i>
+                                                {{percentageData}}%</span>
+                                                <span *ngIf="percentageDataSmall">
+                                                <i class="fa fa-arrow-down" ></i>
+                                                {{percentageDataSmall}}</span>
                                             </div>
+                                            <!-- <div class="col-md-12 text-center engag_col "> TWITTER ENGAGEMENT METRIC<br>
+
+                                                <i class="fa fa-arrow-up"></i>
+                                                0.00%
+
+
+                                            </div> -->
+
                                         </div>
 
 

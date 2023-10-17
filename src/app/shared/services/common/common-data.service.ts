@@ -95,6 +95,8 @@ export class CommonDataService {
   facebookReport = environment.links.common.facebookReport;
   facebookProfile = environment.links.common.facebookProfile;
   getAllSocialMatrics = environment.links.common.getAllSocialMatrics;
+  instagramReport = environment.links.common.instagramReport;
+  instagramProfile=environment.links.common.instagramProfile;
 
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
@@ -661,6 +663,13 @@ export class CommonDataService {
     return this.http.post(this.CommonBaseUrl + this.getAllSocialMatrics, body)
   }
 
+  PostInstagramReport(body:any){
+    return this.http.post(this.CommonBaseUrl + this.instagramReport, body)
+  }
+
+  GetInstagramProfile(body:any){
+    return this.http.post(this.CommonBaseUrl+this.instagramProfile,body)
+  }
 }
 
 var headers_object = new HttpHeaders({
