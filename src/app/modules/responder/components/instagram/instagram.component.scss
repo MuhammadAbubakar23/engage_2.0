@@ -12,3 +12,8 @@
     animation: drop 0.5s ease 1;
     min-width: 13rem;
  }
+
+ textarea {
+   max-height: 100px;
+   overflow: auto;
+ }

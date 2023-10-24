@@ -31,6 +31,7 @@ import { ResponderHistoryComponent } from './right-sidebar-components/responder-
 import { ResponderProfileComponent } from './right-sidebar-components/responder-profile/responder-profile.component';
 import { DispositionFormComponent } from './components/disposition-form/disposition-form.component';
 import { WebPhoneComponent } from '../web-phone/web-phone.component';
+import { PlaystoreComponent } from './components/playstore/playstore.component';
 
 
 @Component({
@@ -161,7 +162,7 @@ export class ResponderComponent implements OnInit {
   }
 
   loadComponent(leftSideName: string, rightSideName: string) {
-    
+    debugger
     let componentFactory = null;
 
     switch (leftSideName || rightSideName) {
@@ -182,6 +183,14 @@ export class ResponderComponent implements OnInit {
         localStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(InstagramComponent);
+        this.target?.createComponent(componentFactory);
+        
+        break;
+        case 'PlayStore':
+        this.showPanel = false;
+        localStorage.setItem('child', '')
+        componentFactory =
+          this.resolver.resolveComponentFactory(PlaystoreComponent);
         this.target?.createComponent(componentFactory);
         
         break;

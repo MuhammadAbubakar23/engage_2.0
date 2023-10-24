@@ -24,6 +24,7 @@ import { DispositionFormComponent } from './components/disposition-form/disposit
 import { FilterPipe } from 'src/app/shared/CustomPipes/filter.pipe';
 import { PostStatsComponent } from './sharedComponents/post-stats/post-stats.component';
 import { ConsoleTableWithImageComponent } from 'src/app/layouts/engage2/console-table/console-table-with-image/console-table-with-image.component';
+import { PlaystoreComponent } from './components/playstore/playstore.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { ConsoleTableWithImageComponent } from 'src/app/layouts/engage2/console-
     YoutubeComponent,
     RemovewhitespacesPipe,
     DispositionFormComponent,
-    PostStatsComponent
+    PostStatsComponent,
+    PlaystoreComponent
   ],
   imports: [
     CommonModule,

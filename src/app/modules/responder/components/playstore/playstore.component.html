@@ -1,0 +1,498 @@
+<div class="tab-content " id="myTabContent">
+
+    <div class="tab-pane fade show active socila-channels-tab position-relative" id="googleplay" role="tabpanel"
+        aria-labelledby="googleplay-tab">
+        <div *ngIf="spinner1running">
+            <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                [fullScreen]="false">
+                <p style="color: white"> Loading... </p>
+            </ngx-spinner>
+        </div>
+        <div class="headerWrap googleplaybg d-flex align-items-center shadow-sm">
+            <div class="titleIcon d-flex align-items-center">
+                <i class="fa-brands fa-google-play"></i>
+                <div class="titleLink ms-1">
+                    /{{appName}}</div>
+            </div>
+            <ul class="nav nav-tabs ms-3 h-100" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link h-100 active" id="googleplay-comment-tab" data-bs-toggle="tab"
+                        data-bs-target="#googleplay-comment" type="button" role="tab" aria-controls="googleplay-comment" aria-selected="false">
+                        <div class="chat-tab-title d-flex align-items-center">
+                            <span class="iconButton medium btn">
+                                <i class="fal fa-comments-alt ice"></i>
+                            </span>
+                            Reviews
+                            <span class="badge rounded-pill bg-light text-dark ms-3"
+                                *ngIf="totalUnrespondedReviewCountByCustomer > 0">{{totalUnrespondedReviewCountByCustomer}}</span>
+                        </div>
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="chat-body" data-scrollbar="true" tabindex="-1"
+            style="overflow-y: auto; outline: none;" infinite-scroll [scrollWindow]="false"
+            [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5" [infiniteScrollThrottle]="10"
+            (scrolled)="onScrollMessages()">
+            <div class="scroll-content">
+                <div class="tab-content m-4" id="myTabContent">
+                    <div class="tab-pane fade show active" id="googleplay-comment" role="tabpanel"
+                        aria-labelledby="googleplay-comment-tab">
+                        <div class="chat-box-wrap" *ngFor="let group of groupedMessages | sort:criteria">
+
+                            <div class="date-wrap">
+                                <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}}</p>
+                            </div>
+                            <ng-container *ngFor="let playstoreReview of group.items | sort:criteria">
+                                    <div class="message-wrap agent-message-wrap right">
+                                        <div class="application-wrap d-flex align-items-center mb-1"
+                                            *ngIf="playstoreReview.ticketId != null">
+                                            <p class="m-0 silver me-2 ms-1">Application ID
+                                            </p>
+                                            <p class="app-no navy m-0 me-2">{{playstoreReview.ticketId}}</p>
+                                        </div>
+                                        <div class="d-flex align-items-center agent-container">
+                                            <div class="card w-d-inline messageUpper">
+                                                <div class="card-body shadow-sm" style="min-width: 400px;"
+                                                    [ngClass]="playstoreReview.queryStatus == 'Unresponded'?'unread-msg':''">
+
+                                                    <div class="d-flex msg-user-info">
+                                                        <div class="d-flex align-items-center">
+                                                            <h6 class="card-title navy m-0">
+                                                                {{playstoreReview.fromName}}</h6>
+
+                                                            <p class="card-text ms-3">
+                                                                <small class="silver">{{playstoreReview.createdDate |
+                                                                    date:'h:mm:ss a'}}</small>
+                                                            </p>
+                                                            <button class="starbtn iconButton iconHover small btn"
+                                                                *ngIf="playstoreReview.starred == true"
+                                                                [ngClass]="playstoreReview.starred?'active':''">
+                                                                <i class="fal fa-star charcoal"></i>
+                                                                <i class="fas fa-star sun"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="dropdown w-auto"
+                                                            *ngIf="playstoreReview.queryStatus != 'Responded'">
+                                                            <button class="btn coal p-0 ps-3" type="button"
+                                                                id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                                aria-expanded="false">
+                                                                <small *ngIf="playstoreReview.spam == true; else notSpamMsg">Spam <i class="far fa-chevron-down ms-2" *ngIf="flag == 'focused' || flag == 'assigned-to-me'"></i></small>
+                                                                <ng-template #notSpamMsg>{{playstoreReview.queryStatus}} 
+                                                                    <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned-to-me') && playstoreReview.queryStatus != 'Completed'"></i>
+                                                                </ng-template>
+                                                            </button>
+                                                            <ul class="dropdown-menu custom-dropdown"
+                                                                aria-labelledby="dropdownMenuButton1"
+                                                                *ngIf="(flag == 'focused' || flag == 'assigned-to-me') && playstoreReview.queryStatus != 'Completed'">
+
+                                                                <li>
+                                                                    <a class="dropdown-item" *ngIf="playstoreReview.queryStatus != 'Responded'" (click)="commentStatus(playstoreReview.id, 'PSR')">Read</a>
+                                                                    <a class="dropdown-item" *ngIf="playstoreReview.starred == true; else notStarredMsg" (click)="starMessage(playstoreReview.id, false)">Remove Star from Message</a>
+                                                                    <ng-template #notStarredMsg>
+                                                                        <a class="dropdown-item" (click)="starMessage(playstoreReview.id, true)">Star Message</a>
+                                                                    </ng-template>
+                                                                    <a class="dropdown-item" *ngIf="playstoreReview.spam == true; else notSpamBtn" (click)="spamMessage(playstoreReview.id, false, 'PSR')">Remove from Spam</a>
+                                                                    <ng-template #notSpamBtn>
+                                                                        <a class="dropdown-item" (click)="spamMessage(playstoreReview.id, true, 'PSR')">Mark as Spam</a>
+                                                                    </ng-template>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <!-- <div class="w-auto" *ngIf="(playstoreReview.queryStatus == 'Responded' || playstoreReview.queryStatus == 'Completed') && playstoreReview.spam == false"
+                                                            style="margin-left: 20px;">
+                                                            <small>{{playstoreReview.queryStatus}} </small>
+                                                        </div> -->
+                                                    </div>
+                                                    <p class="card-text nignt">{{playstoreReview.msgText}}</p>
+                                                    <div class="tags" *ngFor="let tag of playstoreReview.tags">
+                                                        <span class="badge rounded-pill tag tag1 selected googleplaystore-pill"
+                                                            (click)="removeTagFromFeed(tag.id, tag.feedId, 'PSR')">{{tag.name}}</span>
+
+                                                    </div>
+                                                    <!-- For Sentiment Pills -->
+                                                    <div class="tags" *ngIf="playstoreReview.sentiment">
+                                                        <span
+                                                            class="badge rounded-pill tag tag1 selected googleplaystore-pill">{{playstoreReview.sentiment?.text}}</span>
+                                                    </div>
+                                                    <!-- For Sentiment Pills -->
+                                                </div>
+                                                <div class="message-bottom" *ngIf="flag == 'focused' || flag == 'assigned-to-me'">
+                                                    <div class="row">
+                                                        <div class="col-lg-10 ps-4 d-flex align-items-center">
+                                                            <div class="message-actionlist d-flex align-items-center">
+                                                                <a class="message-actionItem replyBtn coal"
+                                                                    (click)="SendReviewInformation(playstoreReview.id)">
+                                                                    <span class="iconButton small btn">
+                                                                        <i class="fal fa-reply coal"></i>
+                                                                    </span>
+                                                                    Reply
+                                                                </a>
+                                                                <div class="dropdown w-auto">
+                                                                    <button class="iconButton medium"
+                                                                        id="dropdownMenuButton1"
+                                                                        data-bs-toggle="dropdown"
+                                                                        data-bs-auto-close="outside">
+                                                                        <span class="iconButton small btn mx-2">
+                                                                            <i class="fal fa-tag coal"></i>
+                                                                        </span>
+                                                                        Tag
+                                                                    </button>
+                                                                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                                        aria-labelledby="dropdownMenuButton2">
+                                                                        <ul class="dropdown-listing">
+                                                                            <li class="dropdown-listing-header">
+                                                                                <div class="head-section">
+                                                                                    <div class="left">
+                                                                                        <h6>Tags
+                                                                                        </h6>
+                                                                                    </div>
+                                                                                    <!-- <a class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
+                                                                                    (click)="closeTagListDropdown()"
+                                                                                        id="dropdownMenuButton3" data-bs-toggle="dropdown"
+                                                                                        aria-expanded="false">
+                                                                                        <i class="fal fa-times silver"></i>
+                                                                                    </a> -->
+                                                                                </div>
+                                                                                <!-- <form class="custom-searchbar">
+                                                                                    <input
+                                                                                        class="form-control rounded-pill shadow-sm"
+                                                                                        
+                                                                                        placeholder="Search"
+                                                                                        aria-label="Search">
+                                                                                    <span class="btn searchbar-btn"
+                                                                                        type="submit">
+                                                                                        <i
+                                                                                            class="fal fa-search silver"></i>
+                                                                                    </span>
+                                                                                </form> -->
+                                                                            </li>
+                                                                            <li class="dropend">
+                                                                                <div *ngFor="let tag of TagsList"
+                                                                                    class="list-group list-group-flush dropend">
+                                                                                    <a data-bs-toggle="dropdown"
+                                                                                        class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
+
+                                                                                        <div class="w-100 list-txt">
+                                                                                            <div
+                                                                                                class="d-flex w-100 justify-content-between">
+                                                                                                <h6
+                                                                                                    class="mb-1 darkblue">
+                                                                                                    {{tag.name}}
+                                                                                                </h6>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </a>
+                                                                                    <ul class="dropdown-menu shadow">
+                                                                                        <form class="custom-searchbar">
+                                                                                            <input
+                                                                                                class="form-control rounded-pill shadow-sm"
+                                                                                                [(ngModel)]="searchText"
+                                                                                                placeholder="Search"
+                                                                                                aria-label="Search">
+                                                                                            <span
+                                                                                                class="btn searchbar-btn"
+                                                                                                type="submit">
+                                                                                                <i
+                                                                                                    class="fal fa-search silver"></i>
+                                                                                            </span>
+                                                                                        </form>
+                                                                                        <li class="list-body small-list"
+                                                                                            data-scrollbar="true"
+                                                                                            tabindex="-1"
+                                                                                            style="overflow-y: auto; outline: none;">
+                                                                                            <div class="scroll-content"
+                                                                                                style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
+                                                                                                <div
+                                                                                                    class="list-group list-group-flush">
+                                                                                                    <a class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                                        (click)="insertTagsForFeed(keyword.id, playstoreReview.id, 'PSR')"
+                                                                                                        [ngClass]="activeTag==true?'active':''"
+                                                                                                        *ngFor="let keyword of tag.keywordList | filter: searchText">
+                                                                                                        <div
+                                                                                                            class="list-down-icon">
+                                                                                                            <span
+                                                                                                                class="btn iconButton iconHover medium">
+                                                                                                                <i
+                                                                                                                    class="fal fa-tag coal"></i>
+                                                                                                            </span>
+                                                                                                        </div>
+                                                                                                        <div
+                                                                                                            class="w-100 list-txt">
+                                                                                                            <div
+                                                                                                                class="d-flex w-100 justify-content-between">
+                                                                                                                <h6
+                                                                                                                    class="mb-1 darkblue">
+                                                                                                                    {{keyword.name}}
+                                                                                                                </h6>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <small
+                                                                                                            *ngIf="keyword.id == tag.id">
+                                                                                                            <i [ngClass]="checkTag==true?'fa-check-circle':''"
+                                                                                                                class="fal sky"></i>
+                                                                                                        </small>
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="dropdown w-auto">
+                                                                    <button class="iconButton medium show"
+                                                                        id="sentimentButton" data-bs-toggle="dropdown"
+                                                                        aria-expanded="true" style="margin-left:43px">
+                                                                        <span class="iconButton small btn mx-2">
+                                                                            <i class="fal fa-smile"></i>
+                                                                        </span>
+                                                                        Sentiment
+                                                                    </button>
+                                                                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                                        aria-labelledby="dropdownMenuButton2"
+                                                                        style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 42px);"
+                                                                        data-popper-placement="bottom-start">
+                                                                        <ul class="dropdown-listing">
+                                                                            <li class="list-body small-list"
+                                                                                data-scrollbar="true" tabindex="-1"
+                                                                                style="overflow: auto; outline: none;">
+                                                                                <div class="scroll-content">
+                                                                                    <div class="list-group list-group-flush"
+                                                                                        *ngFor="let sentiment of Sentiments">
+                                                                                        <a class="list-group-item d-flex level1Btn "
+                                                                                            (click)="insertSentimentForFeed(playstoreReview.id, sentiment.name, 'PSR')">
+                                                                                            <div class="list-down-icon">
+                                                                                                <span
+                                                                                                    class="btn iconButton iconHover medium">
+                                                                                                    <i
+                                                                                                        class={{sentiment.icon}}></i>
+                                                                                                </span>
+                                                                                            </div>
+                                                                                            <div class="w-100 list-txt">
+                                                                                                <div
+                                                                                                    class="d-flex w-100 justify-content-between">
+                                                                                                    <h6
+                                                                                                        class="mb-1 darkblue">
+                                                                                                        {{sentiment.name}}
+                                                                                                    </h6>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!-- <small>
+                                                                                                    <i
+                                                                                                        class="fal fa-check-circle sky"></i>
+                                                                                                </small> -->
+                                                                                        </a>
+
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Facebook message reactions div -->
+                                                        <!-- <div
+                                                                class="col-lg-2 pe-4 d-flex align-items-center justify-content-end">
+                                                                <div class="reactionsWrap d-flex align-items-center">
+                                                                    <div class="reactImg happy emoji">
+                                                                        <img class="me-1"
+                                                                            src="../../../../assets/images/wow-emoji.svg" alt="...">
+                                                                    </div>
+                                                                    <div class="reactImg sad emoji">
+                                                                        <img class="me-1"
+                                                                            src="../../../../assets/images/haha-emoji.svg"
+                                                                            alt="...">
+                                                                    </div>
+                                                                    <p class="m-0 coal ps-2">34
+                                                                    </p>
+                                                                </div>
+                                                            </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <span *ngIf="flag == 'focused' || flag == 'assigned-to-me'" class="complaintBtn" (click)="toggle('ticket', playstoreReview.id)"
+                                                type="button">
+                                                <i class="fal fa-plus-circle sky"></i>
+                                            </span> -->
+                                        </div>
+                                        <div *ngFor="let msgReply of playstoreReview.replies | sort:criteria">
+                                            <!-- <div class="date-wrap">
+                                                    <p class="date">{{msgReply.createdDate | date:'EEEE, MMMM d, y'}}</p>
+                                                </div> -->
+                                            <div class="message-wrap agent-message-wrap left">
+                                                <div class="agent-container">
+                                                    <div class="card card-txt ms-auto">
+                                                        <div class="card-body shadow-sm">
+                                                            <div class="d-flex align-items-center mb-2">
+                                                                <h6 class="card-title m-0">
+                                                                    {{appName}}</h6>
+                                                                <p class="card-text ms-3">
+                                                                    <small class="silver">{{msgReply.createdDate
+                                                                        | date:'h:mm:ss a'}}</small>
+                                                                </p>
+                                                            </div>
+                                                            <p class="card-textnignt p-0">{{msgReply.message}}</p>
+                                                        </div>
+                                                        <div class="message-bottom">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 ps-4 d-flex align-items-center">
+                                                                    <div class="commentWrap">
+                                                                        Commented on by
+                                                                        <a class="fw-bold">{{msgReply.replyByName}}</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="flag == 'focused' || flag == 'assigned-to-me'">
+    <div class="msgTypingField shadow-lg">
+        <div *ngFor="let msg of PlayStoreReviews">
+            <div *ngIf="msg.id == msgId">
+                <div [ngClass]="show == true? 'show':''" class="card hideMsg">
+                    <div class="card-body">
+                        <div class="card-text">
+                            <span class="fw-bold navy">{{msg.id}} </span>
+                            <p>{{msg.msgText}}</p>
+
+                        </div>
+                        <button class="iconButton small closeMsgBtn" data-bs-toggle="tooltip" data-bs-placement="top"
+                            id="searchbtn" data-bs-original-title="Close" (click)="closeMentionedReply()">
+                            <i class="fal fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form [formGroup]="playStoreReviewReplyForm" (submit)="submitPlayStoreReviewReply()">
+            <div class="input-group input-group-lg">
+                <div class="icons-list align-items-md-center d-flex pe-2">
+                    <a class="iconButton small notification iconHover" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                        <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></a>
+                </div>
+                <div class="form-floating textarea-field">
+                    <textarea formControlName="text" class="form-control auto" rows="1" id="text"
+                        placeholder="Write a reply of review here" [(ngModel)]="text" style="height: 50px"
+                        #textarea></textarea>
+                </div>
+                <div class="icons-list align-items-md-center d-flex ps-2">
+                    <div class="dropdown w-auto">
+                        <button class="iconButton small notification iconHover" id="emojiBox" data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside" data-bs-original-title="Choose an emoji">
+                            <span class="iconButton small btn mx-2">
+                                <i class="far fa-smile"></i>
+                            </span>
+                        </button>
+                        <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                            aria-labelledby="dropdownMenuButton2">
+                            <ul class="dropdown-listing">
+                                <li class="dropdown-listing-header">
+                                    <div class="head-section">
+                                        <div class="left" *ngFor="let emoji of Emojies">
+                                            <span style="cursor: pointer; font-size: 17px;"
+                                                (click)="insertEmoji(emoji.emoji)">{{emoji.emoji}}</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <button class="iconButton small notification iconHover" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="" type="submit" data-bs-original-title="Send">
+                        <i class="fal fa-paper-plane"></i>
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</ng-container>
+
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+            <div class="toast-btn d-flex align-items-center">
+
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="quickResWrapper">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"
+        style="visibility: visible;" aria-modal="true" role="dialog">
+        <div class="offcanvas-header">
+            <div class="section-heading">
+                <h6 class="silver pt-3 mb-0">Quick Response</h6>
+            </div>
+            <button type="button" class="btn iconButton iconHover medium" data-bs-dismiss="offcanvas" aria-label="Close"
+                (click)="closeQuickResponseSidebar()"><i class="fal fa-times"></i></button>
+        </div>
+        <div class="offcanvas-body">
+
+            <form class="custom-searchbar">
+                <input class="form-control me-2 rounded-pill shadow-sm" placeholder="Search" aria-label="Search"
+                    [(ngModel)]="quickReplySearchText">
+                <span class="btn searchbar-btn" type="submit">
+                    <i class="fal fa-search silver"></i>
+                </span>
+            </form>
+            <div class="list-group-section quick-response" id="accordionExample">
+                <div class="collapse-toggle-card">
+                    <div class="list-group list-group-flush">
+
+                        <div class="collapse-wrap mx-3" id="qr-ques1"
+                            *ngFor="let qr of QuickReplies | quickReplySearchFilter: quickReplySearchText">
+                            <div class="list-group list-group-flush mb-4 ms-4 ps-1">
+                                <div class="form-check list-group-item theme-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id={{qr.value}}
+                                        #radioInput>
+                                    <label class="form-check-label" for={{qr.value}}
+                                        (click)="sendQuickReply(qr.value)">{{qr.text}}
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div style="position: absolute; border: 1px solid gray; background-color: rgb(255, 255, 255); display: none;">
+    <span style="cursor: pointer; font-size: 17px;">🙁</span><span
+        style="cursor: pointer; font-size: 17px;">😀</span><span
+        style="cursor: pointer; font-size: 17px;">😇</span><span
+        style="cursor: pointer; font-size: 17px;">😊</span><span
+        style="cursor: pointer; font-size: 17px;">😔</span><span
+        style="cursor: pointer; font-size: 17px;">😧</span><span
+        style="cursor: pointer; font-size: 17px;">👌</span><span
+        style="cursor: pointer; font-size: 17px;">👍</span><span style="cursor: pointer; font-size: 17px;">🤩</span>
+</div>

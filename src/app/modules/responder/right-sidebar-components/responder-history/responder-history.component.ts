@@ -11,6 +11,7 @@ export class ResponderHistoryComponent implements OnInit {
 
   dispositionHistory:any;
   searchText:string='';
+  dispositionTags:any;
 
   getDispositionHistoryDto = new GetDispositionHistoryDto;
 
@@ -19,6 +20,7 @@ export class ResponderHistoryComponent implements OnInit {
   constructor(private commonService : CommonDataService) { }
 
   ngOnInit(): void {
+    this.getDispositionTags();
     this.getDispositionHistory();
   }
 
@@ -31,6 +33,12 @@ export class ResponderHistoryComponent implements OnInit {
     this.commonService.GetDispositionHistory(this.getDispositionHistoryDto).subscribe((res:any)=>{
       
       this.dispositionHistory = res;
+    })
+  }
+
+  getDispositionTags(){
+    this.commonService.GetDispositionTags().subscribe((res:any)=>{
+      this.dispositionTags = res;
     })
   }
 

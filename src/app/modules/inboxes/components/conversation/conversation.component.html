@@ -606,14 +606,14 @@
     <div class="query-container perfect-scrollbar" data-scrollbar="true" tabindex="-1"
       style="overflow-y: auto; outline: none;">
       <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
-        <div class="alert alert-secondary text-center email-info-alert" role="alert"
+        <!-- <div class="alert alert-secondary text-center email-info-alert" role="alert"
           [ngStyle]="{'display': isCheckedAll==true  ? 'block' : 'none'}">
           All <strong>{{Ids.length}}</strong> conversations on this page are selected.
           <a class="all-conversation" *ngIf="ConversationList != null">Select all
             <strong> {{TotalUnresponded}}</strong>
             conversations in Focused</a>
           <a class="clear-selection" style="display: none;">Clear selection</a>
-        </div>
+        </div> -->
 
         <table class="table">
           <tbody>
@@ -653,8 +653,10 @@
                     data-bs-placement="bottom" data-bs-original-title="Webchat" aria-label="Webchat"></i>
                   <i *ngIf="query.platform == 'LinkedIn'" class="fa-brands fa-linkedin-in linkedinTxt"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="LinkedIn"
-                    aria-label="LinkedIn">
-                  </i>
+                    aria-label="LinkedIn"></i>
+                    <i *ngIf="query.platform == 'PlayStore'" class="fa-brands fa-google-play darkorange"
+                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="PlayStore"
+                    aria-label="PlayStore"></i>
                 </td>
                 <td style="width: 300px;">
                   <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">

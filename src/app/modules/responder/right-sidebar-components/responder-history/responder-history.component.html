@@ -109,9 +109,9 @@
                                         <div class="ps-5 timeline_content">
                                             <small class="silver"><span class="berry">{{history.createdDate | date:'MMM dd, YYYY'}}
                                             </span> {{history.createdDate | date:'hh:mm a'}}</small>
-                                            <h6 class="mb-1 darkblue" *ngIf="history.disposition == 1">Follow Up</h6>
-                                            <h6 class="mb-1 darkblue" *ngIf="history.disposition == 2">Completed</h6>
-                                            <h6 class="mb-1 darkblue" *ngIf="history.disposition == 3">Responded</h6>
+                                            <div *ngFor="let tag of dispositionTags">
+                                                <h6 class="mb-1 darkblue" *ngIf="history.disposition == tag.id">{{tag.name}}</h6>
+                                            </div>
                                             <p class="mb-1 coal">
                                                 {{history.comment}}
                                                 <!-- <span class="more-text">11111Fatima Ahmed to visit ibex to submit all

@@ -7,6 +7,7 @@ import { FacebookComponent } from 'src/app/modules/responder/components/Facebook
 import { InstagramComponent } from 'src/app/modules/responder/components/instagram/instagram.component';
 import { LinkedInComponent } from 'src/app/modules/responder/components/linked-in/linked-in.component';
 import { PhoneComponent } from 'src/app/modules/responder/components/phone/phone.component';
+import { PlaystoreComponent } from 'src/app/modules/responder/components/playstore/playstore.component';
 import { SmsDetailsComponent } from 'src/app/modules/responder/components/sms-details/sms-details.component';
 import { TwitterComponent } from 'src/app/modules/responder/components/twitter/twitter.component';
 import { WebChatComponent } from 'src/app/modules/responder/components/web-chat/web-chat.component';
@@ -205,7 +206,7 @@ export class InboxResponderComponent implements OnInit {
   }
 
   loadComponent(leftSideName: string, rightSideName: string) {
-    
+    debugger
     let componentFactory = null;
 
     switch (leftSideName || rightSideName) {
@@ -226,6 +227,14 @@ export class InboxResponderComponent implements OnInit {
         localStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(InstagramComponent);
+        this.target?.createComponent(componentFactory);
+        
+        break;
+        case 'PlayStore':
+        this.showPanel = false;
+        localStorage.setItem('child', '')
+        componentFactory =
+          this.resolver.resolveComponentFactory(PlaystoreComponent);
         this.target?.createComponent(componentFactory);
         
         break;

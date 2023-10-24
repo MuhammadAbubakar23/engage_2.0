@@ -110,47 +110,51 @@ export class ConversationComponent implements OnInit {
   }
 
   currentUrl: string = '';
-  FlagForAssignToMe:string = '';
+  FlagForAssignToMe: string = '';
 
   ngOnInit(): void {
     this.currentUrl = this.router.url;
-    this.FlagForAssignToMe = this.currentUrl.split('/')[2]
+    this.FlagForAssignToMe = this.currentUrl.split('/')[2];
     this.TodayDate = new Date();
 
     if (this.currentUrl.split('/')[2] == 'assigned-to-me') {
       this.SpinnerService.show();
-      this.commondata.GetAllocatedProfiles().subscribe((res: any) => {
-        this.SpinnerService.hide();
-        this.ConversationList = res;
-        this.TotalUnresponded = this.ConversationList.length;
-        this.to = 1;
-        this.from = this.ConversationList.length;
-        let groupedItems = this.ConversationList.reduce(
-          (acc: any, item: any) => {
-            const date = item.createdDate.split('T')[0];
-            if (!acc[date]) {
-              acc[date] = [];
-            }
-            acc[date].push(item);
-            return acc;
-          },
-          {}
-        );
+      this.commondata.GetAllocatedProfiles().subscribe(
+        (res: any) => {
+          this.SpinnerService.hide();
+          this.ConversationList = res;
+          this.TotalUnresponded = this.ConversationList.length;
+          this.to = 1;
+          this.from = this.ConversationList.length;
+          let groupedItems = this.ConversationList.reduce(
+            (acc: any, item: any) => {
+              const date = item.createdDate.split('T')[0];
+              if (!acc[date]) {
+                acc[date] = [];
+              }
+              acc[date].push(item);
+              return acc;
+            },
+            {}
+          );
 
-        this.groupByDateList = Object.keys(groupedItems).map((createdDate) => {
-          return {
-            createdDate,
-            items: groupedItems[createdDate],
-          };
-        });
-      },
-      (error)=>{
-        this.SpinnerService.hide();
-        if (error.status == 401){
-          alert('Unauthorized, Please login again')
+          this.groupByDateList = Object.keys(groupedItems).map(
+            (createdDate) => {
+              return {
+                createdDate,
+                items: groupedItems[createdDate],
+              };
+            }
+          );
+        },
+        (error) => {
+          this.SpinnerService.hide();
+          if (error.status == 401) {
+            alert('Unauthorized, Please login again');
+          }
+          // this.reloadComponent('')
         }
-        // this.reloadComponent('')
-      });
+      );
     } else {
       this.getConversationList();
     }
@@ -172,9 +176,7 @@ export class ConversationComponent implements OnInit {
       });
 
     setInterval(() => {
-      if (
-        this.currentUrl.split('/')[2] == 'focused'
-      ) {
+      if (this.currentUrl.split('/')[2] == 'focused') {
         if (this.groupByDateList?.length > 0) {
           this.TodayDate = new Date();
           this.groupByDateList?.forEach((group: any) => {
@@ -227,12 +229,12 @@ export class ConversationComponent implements OnInit {
   customersList: any[] = [];
 
   getConversationList() {
-    if(this.currentUrl.split('/')[2] == 'completed'){
+    if (this.currentUrl.split('/')[2] == 'completed') {
       this.flag = 'sent';
-      this.platform =  this.currentUrl.split('/')[3];
+      this.platform = this.currentUrl.split('/')[3];
     } else {
       this.flag = this.currentUrl.split('/')[2];
-      this.platform =  this.currentUrl.split('/')[3];
+      this.platform = this.currentUrl.split('/')[3];
     }
 
     if (this.searchForm.value.dateWithin == '1 day') {
@@ -243,17 +245,21 @@ export class ConversationComponent implements OnInit {
     } else if (this.searchForm.value.dateWithin == '3 days') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 2);
-      const fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
+      const fromDate =
+        this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
 
-      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+      this.toDate =
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '1 week') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 6);
-      const fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
+      const fromDate =
+        this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
       this.fromDate = fromDate;
 
-      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+      this.toDate =
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     } else if (this.searchForm.value.dateWithin == '2 weeks') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 13);
@@ -503,192 +509,93 @@ export class ConversationComponent implements OnInit {
   }
 
   updateListDataListener(res: any) {
-    if (this.currentUrl.split('/')[2] == 'focused') {
+    if (this.currentUrl.split('/')[2] === 'focused') {
       res.forEach((newMsg: any) => {
-        if (this.platform == newMsg.platform && this.isAttachment != true) {
-          const index = this.ConversationList?.findIndex(
-            (obj: any) => obj.user === newMsg.user
-          );
-          if (index >= 0) {
-            this.ConversationList.forEach((main: any) => {
-              if (newMsg.user == main.user) {
-                this.listingDto = newMsg;
-                this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-                this.ConversationList[index] = this.listingDto;
-              }
-            });
-          } else if (this.ConversationList.length > 0) {
-            this.listingDto = newMsg;
-            this.ConversationList.unshift(this.listingDto);
-            if (this.ConversationList.length > this.pageSize) {
-              this.ConversationList.pop();
-              this.TotalUnresponded = this.TotalUnresponded + 1;
-            } else if (this.ConversationList.length <= this.pageSize) {
-              this.TotalUnresponded = this.TotalUnresponded + 1;
-              this.from = this.from + 1;
-            }
-          } else {
-            this.ConversationList = res;
-            this.to = 1;
-            this.TotalUnresponded = 1;
-            this.from = 1;
+        if (this.platform === newMsg.platform && !this.isAttachment) {
+          this.updateConversationList(newMsg);
+        } else if (newMsg.isAttachment && this.isAttachment) {
+          if (this.platform === newMsg.platform || this.platform === 'all') {
+            this.updateConversationList(newMsg);
           }
-        } else if (newMsg.isAttachment == true && this.isAttachment == true) {
-          if (this.platform == newMsg.platform) {
-            const index = this.ConversationList?.findIndex(
-              (obj: any) => obj.user === newMsg.user
-            );
-            if (index >= 0) {
-              this.ConversationList.forEach((main: any) => {
-                if (newMsg.user == main.user) {
-                  this.listingDto = newMsg;
-                  this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-                  this.ConversationList[index] = this.listingDto;
-                }
-              });
-            } else if (this.ConversationList.length > 0) {
-              this.listingDto = newMsg;
-              this.ConversationList.unshift(this.listingDto);
-              if (this.ConversationList.length > this.pageSize) {
-                this.ConversationList.pop();
-                this.TotalUnresponded = this.TotalUnresponded + 1;
-              } else if (this.ConversationList.length <= this.pageSize) {
-                this.TotalUnresponded = this.TotalUnresponded + 1;
-                this.from = this.from + 1;
-              }
-            } else {
-              this.ConversationList = res;
-              this.to = 1;
-              this.TotalUnresponded = 1;
-              this.from = 1;
-            }
-          } else if (this.platform == 'all') {
-            const index = this.ConversationList?.findIndex(
-              (obj: any) => obj.user === newMsg.user
-            );
-            if (index >= 0) {
-              this.ConversationList.forEach((main: any) => {
-                if (newMsg.user == main.user) {
-                  this.listingDto = newMsg;
-                  this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-                  this.ConversationList[index] = this.listingDto;
-                }
-              });
-            } else if (this.ConversationList.length > 0) {
-              this.listingDto = newMsg;
-              this.ConversationList.unshift(this.listingDto);
-              if (this.ConversationList.length > this.pageSize) {
-                this.ConversationList.pop();
-                this.TotalUnresponded = this.TotalUnresponded + 1;
-              } else if (this.ConversationList.length <= this.pageSize) {
-                this.TotalUnresponded = this.TotalUnresponded + 1;
-                this.from = this.from + 1;
-              }
-            } else {
-              this.ConversationList = res;
-              this.to = 1;
-              this.TotalUnresponded = 1;
-              this.from = 1;
-            }
-          }
-        } else if (this.platform == 'all' && this.isAttachment != true) {
-          const index = this.ConversationList?.findIndex(
-            (obj: any) => obj.user === newMsg.user
-          );
-          if (index >= 0) {
-            this.ConversationList.forEach((main: any) => {
-              if (newMsg.user == main.user) {
-                this.listingDto = newMsg;
-                this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-                this.ConversationList[index] = this.listingDto;
-              }
-            });
-          } else if (this.ConversationList.length > 0) {
-            this.listingDto = newMsg;
-            this.ConversationList.unshift(this.listingDto);
-            if (this.ConversationList.length > this.pageSize) {
-              this.ConversationList.pop();
-              this.TotalUnresponded = this.TotalUnresponded + 1;
-            } else if (this.ConversationList.length <= this.pageSize) {
-              this.TotalUnresponded = this.TotalUnresponded + 1;
-              this.from = this.from + 1;
-            }
-          } else {
-            this.ConversationList = res;
-            this.to = 1;
-            this.TotalUnresponded = 1;
-            this.from = 1;
-          }
-        }
-
-        let groupedItems = this.ConversationList.reduce(
-          (acc: any, item: any) => {
-            const date = item.createdDate.split('T')[0];
-            if (!acc[date]) {
-              acc[date] = [];
-            }
-            acc[date].push(item);
-            return acc;
-          },
-          {}
-        );
-
-        this.groupByDateList = Object.keys(groupedItems).map((createdDate) => {
-          return {
-            createdDate,
-            items: groupedItems[createdDate],
-          };
-        });
-
-        if (this.TotalUnresponded < this.pageSize) {
-          this.from = this.TotalUnresponded;
-        } else if (
-          this.TotalUnresponded > this.pageSize &&
-          this.from < this.pageSize
-        ) {
-          this.from = this.pageSize;
-        }
-        if (this.ConversationList.length == 0) {
-          this.to = 0;
-        } else if (
-          this.ConversationList.length != 0 &&
-          this.from != 0 &&
-          this.pageNumber == 1
-        ) {
-          this.to = 1;
+        } else if (this.platform === 'all' && !this.isAttachment) {
+          this.updateConversationList(newMsg);
         }
       });
+    
+      const groupedItems = this.groupItemsByDate();
+      this.groupByDateList = Object.keys(groupedItems).map((createdDate) => ({
+        createdDate,
+        items: groupedItems[createdDate],
+      }));
+    
+      this.setFromAndToValues();
       this.changeDetect.detectChanges();
     }
+  }
+  updateConversationList(newMsg: any) {
+    const index = this.ConversationList.findIndex((obj: any) => obj.user === newMsg.user);
+    this.listingDto = newMsg;
+    if (index >= 0) {
+      const main = this.ConversationList[index];
+      this.listingDto.unrespondedCount = main.unrespondedCount + 1;
+      this.ConversationList[index] = this.listingDto;
+    } else {
+      this.ConversationList.unshift(this.listingDto);
+      if (this.ConversationList.length > this.pageSize) {
+        this.ConversationList.pop();
+        this.TotalUnresponded++;
+      } else if (this.ConversationList.length <= this.pageSize) {
+        this.TotalUnresponded++;
+        this.from++;
+      }
+    }
+  }
+  
+  groupItemsByDate() {
+    return this.ConversationList.reduce((acc: any, item: any) => {
+      const date = item.createdDate.split('T')[0];
+      acc[date] = acc[date] || [];
+      acc[date].push(item);
+      return acc;
+    }, {});
+  }
+  
+  setFromAndToValues() {
+    if (this.TotalUnresponded < this.pageSize) {
+      this.from = this.TotalUnresponded;
+    } else if (this.TotalUnresponded > this.pageSize && this.from < this.pageSize) {
+      this.from = this.pageSize;
+    }
+  
+    this.to = this.ConversationList.length === 0 ? 0 : (this.from === 0 && this.pageNumber === 1 ? 1 : 0);
   }
 
   removeAssignedQueryListener(res: any) {
     if (this.currentUrl.split('/')[2] == 'focused') {
-    this.groupByDateList.forEach((group) => {
-      const index = group.items.findIndex(
-        (x: any) => x.profileId == res.profileId
-      );
-      if (index !== -1) {
-        group.items.splice(index, 1);
-        this.TotalUnresponded = this.TotalUnresponded - 1;
-        this.from = this.from - 1;
-      }
-      this.ConversationList.forEach((item: any) => {
-        const index = this.ConversationList.findIndex(
+      this.groupByDateList.forEach((group) => {
+        const index = group.items.findIndex(
           (x: any) => x.profileId == res.profileId
         );
         if (index !== -1) {
-          this.ConversationList.splice(index, 1);
+          group.items.splice(index, 1);
+          this.TotalUnresponded = this.TotalUnresponded - 1;
+          this.from = this.from - 1;
         }
+        this.ConversationList.forEach((item: any) => {
+          const index = this.ConversationList.findIndex(
+            (x: any) => x.profileId == res.profileId
+          );
+          if (index !== -1) {
+            this.ConversationList.splice(index, 1);
+          }
+        });
+        this.changeDetect.detectChanges();
       });
-      this.changeDetect.detectChanges();
-    });
-  }
+    }
   }
 
   Reload() {
-    if(this.FlagForAssignToMe == 'assigned-to-me'){
-      
+    if (this.FlagForAssignToMe == 'assigned-to-me') {
     }
     this.TotalUnresponded = 0;
     this.Ids = [];
@@ -720,7 +627,8 @@ export class ConversationComponent implements OnInit {
     platform: any,
     profileId: any
   ) {
-    localStorage.setItem('previousUrl',this.currentUrl)
+    debugger;
+    localStorage.setItem('previousUrl', this.currentUrl);
     if (this.currentUrl.split('/')[2] == 'focused') {
       this.assignQuerryDto = {
         userId: Number(localStorage.getItem('agentId')),
@@ -733,16 +641,17 @@ export class ConversationComponent implements OnInit {
         (res: any) => {
           this.SpinnerService.hide();
           var userInfo = {
-            "unrespondedCount": count,
-            "userId" : id,
-            "postType": postType,
-            "userName" : userName,
-            "profilePic" : profilePic,
-            "platform" : platform,
-            "profileId" : profileId
-          }
-          this.userInfoService.shareUserInformation(userInfo);
-            // this.headerCountService.shareUnresponedCount(count);
+            unrespondedCount: count,
+            userId: id,
+            postType: postType,
+            userName: userName,
+            profilePic: profilePic,
+            platform: platform,
+            profileId: profileId,
+          };
+          debugger
+          // this.userInfoService.shareUserInformation(userInfo);
+          this.headerCountService.shareUnresponedCount(count);
           this.reloadComponent('queryallocated');
 
           // this.headerService.updateMessage(string);
@@ -771,6 +680,7 @@ export class ConversationComponent implements OnInit {
       this.reloadComponent('removeFromTrashToOpen');
     } else if (this.currentUrl.split('/')[2] == 'assigned-to-me') {
       this.SpinnerService.show();
+      this.headerCountService.shareUnresponedCount(count);
       this.fetchId.setPlatform(platform);
       this.fetchId.setOption(id);
       this.fetchposttype.sendPostType(postType);
@@ -781,6 +691,7 @@ export class ConversationComponent implements OnInit {
       this.SpinnerService.hide();
     } else {
       this.SpinnerService.show();
+      this.headerCountService.shareUnresponedCount(count);
       this.fetchId.setPlatform(platform);
       this.fetchId.setOption(id);
       this.fetchposttype.sendPostType(postType);
