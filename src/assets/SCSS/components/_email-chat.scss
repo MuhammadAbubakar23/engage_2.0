@@ -39,21 +39,21 @@
                 position: absolute;
                 right: 9px;
                 top: 11px;
-                .defult-card-header-actions{
+                // .defult-card-header-actions{
                     // display: flex;
                     // align-items: center;
                     // &.unactive{
                     //     display: none;
                     // }
                    
-                }
-                .expanded-card-header-actions{
+                // }
+                // .expanded-card-header-actions{
                     // display: none;
                     // &.active{
                     //     display: flex;
                     //     align-items: center;
                     // }
-                }
+                // }
             }
             .accordion-button{
                 box-shadow: none;
@@ -80,7 +80,7 @@
                     // &.open{
                     //     border-bottom: 1px solid $powder;
                     // }
-                    .card-header-top{
+                    // .card-header-top{
                         // display: flex;
                         // justify-content: space-between;
                         // width: 100%;
@@ -89,7 +89,7 @@
                         //         display: none;
                         //     }
                         // }
-                    }
+                    // }
                 }
 
                 &.unread{

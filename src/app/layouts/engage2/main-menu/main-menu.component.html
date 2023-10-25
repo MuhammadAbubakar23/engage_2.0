@@ -12,7 +12,7 @@
     </div>
 
     <ul class="list-group agent_nav_bar" id="agent-list">
-        <ng-container *ngIf="!(restrictedAgentsString.includes(restrictedAgent))">
+        <ng-container *ngIf="!(restrictedAgentsString.includes(restrictedAgent)) && !(onlyAnalyticsTabVisible.includes(restrictedAgent))">
             <team-menu></team-menu>
         </ng-container>
         

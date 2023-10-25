@@ -150,7 +150,7 @@
            
 
             &.active {
-              font-weight: 600;
+              font-weight: 500 !important;
             }
           }
         }
@@ -492,5 +492,28 @@
     .timeline_content{
 
     }
+  }
+}
+.right-bar-wrapper{
+  .table-sm{
+    tr{
+      td,th{
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
+.list-group-item-action{
+  &.collapsed{
+    a{
+        &:after{
+          transform: rotate(0deg);
+        }
+    }
+  }
+  a{
+      &:after{
+        transform: rotate(90deg);
+      }
   }
 }

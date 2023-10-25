@@ -16,7 +16,6 @@
     img{
       max-width: 100%;
     }
-    
   }
   &.active{
     transform: translate3d(0, 110%, 0);
@@ -149,6 +148,9 @@
     
     .messagewrap{
       padding: 12px 16px;
+      &.buttonmsg{
+        max-width: 260px;
+      }
       &.suggestions{
         ul{
           li{
@@ -228,6 +230,20 @@
           max-width: 100%;
           padding: 12px 16px;
           display: flex;
+          
+          .buttons{
+            display: flex;
+            flex-direction: column;
+              .btn{
+                display: block;
+                width: 100%;
+                background: #fafafa;
+                &.active{
+                  background-color: #6E2585;
+                  color: #fff;
+                }
+              }
+          }
         }
       }
       &.e-left{

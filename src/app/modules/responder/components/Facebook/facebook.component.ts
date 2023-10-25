@@ -969,7 +969,10 @@ export class FacebookComponent implements OnInit {
   isAttachment = false;
 
   onFileChanged() {
-    if (this.fileInput.nativeElement.files.length > 0) {
+    Array.from(this.fileInput.nativeElement.files).forEach((file:any) => {
+      if(file.size > 4 * 1024 * 1024){
+        this.reloadComponent('Attachments');
+      } else if (this.fileInput.nativeElement.files.length > 0) {
       this.isAttachment = true;
 
       const filesArray = Array.from(this.fileInput.nativeElement.files);
@@ -981,6 +984,7 @@ export class FacebookComponent implements OnInit {
       files.forEach((file: any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
       this.ImageName = newFileList.files;
     }
+    });
   }
 
   fbStats() {
@@ -1553,6 +1557,13 @@ export class FacebookComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
+    if (type == 'Attachments') {
+      this.AlterMsg = 'File size must be less than 4MB';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'spam') {
       this.AlterMsg = 'Message has been marked as spam!';
       this.toastermessage = true;

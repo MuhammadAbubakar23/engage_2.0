@@ -1,4 +1,4 @@
-#loginWrapper {
+#signupWrapper{
   background-color: #F2F4F8;
   height: 100vh;
   @include flex();
@@ -6,9 +6,7 @@
   align-items: center;
   overflow: hidden;
   position: relative;
-  a{
-    color: #DD0041;
-  }
+ 
   .circlebg{
     width: 130px;
     height: 130px;
@@ -56,8 +54,9 @@
     }
     .illustration{
       text-align: center;
+      margin-top: 180px;
       img{
-        max-width: 200px;
+        width: 100%;
         display: inline-block;
 
       }
@@ -74,44 +73,49 @@
       font-size: 20px;
       &.iconfacebook{
         background: #3C5A9A;
-        top: 230px;
+        top: 223px;
         left: 40px;
+        width: 42px;
+        height: 42px;
       }
       &.icongoogle{
         background: #EB4335;
-        top: 180px;
-        left: 70px;
-      }
-      &.icontwitter{
-
+        top: 162px;
+        left: 80px;
       }
       &.icontiktok{
         background: #000000;
         top: 290px;
         left: 70px;
+        width: 34px;
+        height: 34px;
+        line-height: 30px;
       }
       &.iconinstagram{
         background: linear-gradient(45deg, #FFC107 9.15%, #F44336 50.57%, #9C27B0 90.03%);
-        top: 320px;
-        right: 120px;
+        top: 345px;
+        right: 73px;
+        width: 36px;
+        height: 36px;
+        line-height: 35px;
       }
       &.iconwhatsapp{
         background: linear-gradient(0deg, #20B038 0%, #60D66A 100%);
-        top: 160px;
-        right: 100px;
+        top: 131px;
+        right: 61px;
       }
       &.iconlinkedin{
         background: #1976D2;
         top: 270px;
-        right: 80px;
+        right: 43px;
         width: 44px;
         height: 44px;
         line-height: 44px;
       }
       &.iconyoutube{
         background: #F44336;
-        top: 200px;
-        right: 50px;
+        top: 189px;
+        right: 15px;
         width: 52px;
         height: 52px;
         line-height: 52px;
@@ -132,6 +136,46 @@
       justify-content: space-between;
       width: 340px;
       text-align: center;
+      .iconsbox{
+        position: relative;
+        bottom: 175px;
+        .iconButton{
+          animation: move-the-circle 3s infinite;
+	        transform-origin: center center;
+          &:nth-child(1) {
+            bottom: 0px;
+            animation-delay: 0.1s;
+         }
+          &:nth-child(2) {
+            bottom: 30px;
+             animation-delay: 0.2s;
+         }
+          &:nth-child(3) {
+            bottom: 60px;
+             animation-delay: 0.3s;
+         }
+          &:nth-child(4) {
+            bottom: 90px;
+             animation-delay: 0.4s;
+         }
+          &:nth-child(5) {
+            bottom: 120px;
+             animation-delay: 0.5s;
+         }
+          &:nth-child(6) {
+            bottom: 150px;
+             animation-delay: 0.6s;
+         }
+          &:nth-child(7) {
+            bottom: 180px;
+             animation-delay: 0.7s;
+         }
+          &:nth-child(8) {
+            bottom: 210px;
+             animation-delay: 0.8s;
+         }
+        }
+      }
     }
     &:before{
       content:'';
@@ -153,12 +197,7 @@
     justify-content: center;
     position: relative;
     z-index: 99;
-    .loginbtn{
-      background: #EF6179;
-      box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05); 
-      color: $white; 
-      padding: 12px;
-    }
+ 
     .social-list{
       >li{
         >a{
@@ -193,13 +232,176 @@
   }
 }
 
+#loginWrapper{
+  .left-wrap{
+    width: 100%;
+    height: 100vh;
+    // background: url(../images/left-bg.jpg) no-repeat center top;
+    background-size: cover;
+    display: flex;
+    .blur-box{
+      width: 56%;
+      height: 476px;
+      margin: auto;
+      padding: 72px 48px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      border-radius: 20px;
+      color: $white;
+      h1{
+        font-size: 65px;
+        margin-bottom: 20px;
+        span{
+          font-weight: 700;
+        }
+        i{
+          font-size: 40px;
+        }
+      }
+      p{
+        font-size: 18px;
+      }
+    }
+  }
+  .right-wrap{
+    width: 100%;
+    height: 100vh;
+    .login-form{
+      width: 50%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: auto;
+    }
+  }
+  .forms-step{
+    height: 100vh;
+    padding: 67px;
+    position: relative;
+    .slide-header{
+      .progress{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: $white;
+        border-radius: 0;
+        height: 5px;
+        &:after {
+          content: '';
+          display: block;
+          width: 0;
+          height: 8px;
+          background: #EB0045;
+          transition: width .5s ease-out;
+        }
+      }
+    }
+    .loginStepFormWrap{
+      display: flex;
+      .arrow-icon{
+        position: absolute;
+        top: 171px;
+        font-size: 24px;
+      }
+      .step-form-box{
+        margin:67px auto;
+        width: 33%;
+        height: 615px;
+        background: $white;
+        padding: 70px;
+        border-radius: 10px;
+        text-align: center;
+        .upload-logo-input{
+          width: 116px;
+          height: 116px;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          padding: 20px;
+          margin: auto;
+          border: 1px dashed $silver;
+          margin-bottom: 40px;
+          background-color: $white;
+        }
+        &.full-width-screen{
+          background-color: transparent;
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          text-align: left;
+          padding-top: 55px;
+          .goals-wrap{
+            .goal{
+              display: flex;
+              align-items: center;
+              padding: 25px;
+              border-radius: 8px;
+              background-color: $white;
+              margin-bottom: 25px;
+              position: relative;
+              @include webkit(transition, all 0.3s ease);
+              border: 1px solid transparent;
+              cursor: pointer;
+              .goal-tag{
+                position: absolute;
+                top: 0;
+                right: 0;
+                background-color: rgba($orange, 0.12);
+                padding: 5px 12px;
+                font-size: 14px;
+                color: $orange;
+              }
+              .goal-icon{
+                margin-right: 20px;
+                i{
+                  font-size: 30px;
+                }
+              }
+            
+              &:hover{
+                &.lightinkbg{
+                  border-color: $lightink;
+                }
+                &.lightorangebg{
+                  border-color: $lightorange2;
+                }
+                &.lightredbg{
+                  border-color: $lightred;
+                }
+                &.lightpurplebg{
+                  border-color: $lightpurple;
+                }
+                &.skybluebg{
+                  border-color: $skyblue;
+                }
+                &.purplebg{
+                  border-color: $purple;
+                }
+              }
+            }
+          }
+          
 
-
-
-
-
-
-
+          .buttons-wrap{
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin: 30px auto;
+              .linkbtn{
+                @include webkit(transition, all 0.3s ease);
+                &:hover{
+                  color: #EF6179;
+                }
+              }
+          }
+        }
+      }
+    }
+  }
+}
 
 .center-section{
   display: flex;
@@ -219,45 +421,373 @@
     margin-right: 0;
   }
 }
-
-.another-account-accordion{
-  .dropdown-toggle{
-    width: 100%;
-    padding: 1rem 0.75rem;
-    line-height: 1.5;
-    color: #212529;
-    background-color: $ice;
-    border-radius: 0.25rem;
-    border: 1px solid $powder;
-    
+.loginas{
+  .user-number{
+    font-size: 0.9rem;
   }
-  .another-login-info{
-    border: 1px solid $powder;
-    border-bottom: 0;
-    padding: 0;
+  .user-email{
+    font-size: 0.8rem;
+  }
+  .dropdown-menu{
     width: 100%;
-    .info-head{
-      padding: 16px;
-      margin-bottom: 0;
-      background: #eee;
+    padding: 0;
+    .dropdown-item{
+      border: 1px solid $powder;
+      &:hover{
+        cursor: pointer;
+      }
     }
-    .info-box{
-    
-      .account-info{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px;
-        border-bottom: 1px solid $powder;
-        .user-number{
-          filter: blur(4px);
-          cursor: not-allowed;
+  }
+  .btn{
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: #fff;
+    border: 1px solid $powder;
+    padding: 16px;
+    margin: 0 0 16px;
+    .fa-angle-down{
+      transform: rotate(0deg);
+      transition: all ease 0.31ms;
+    }
+    &.show{
+      color: #EF6179;
+      border-color: #EF6179;
+      .fa-angle-down{
+        transform: rotate(180deg);
+        transition: all ease 0.31ms;
+      }
+    }
+    &:hover{
+      background: #fff;
+      border: 1px solid #EF6179;
+    }
+  }
+ 
+}
+
+.verify-code{
+  display: flex;
+  justify-content: center;
+  margin: 50px auto 98px;
+  input{
+    width: 58px;
+    height: 58px;
+    border-radius: 4px;
+    margin: 0 10px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+  }
+}
+
+.loginbtn{
+  background: #EF6179;
+  border: 1px solid #EF6179;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05); 
+  color: $white; 
+  padding: 12px;
+  @include webkit(transition, all 0.3s ease);
+  &:hover{
+    background-color: $white;
+    border: 1px solid #EF6179;
+    color: #EF6179;
+  }
+}
+
+.vertical-box-wrap{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  .vertical-box{
+    background: $white;
+    width: 248px;
+    margin: 25px 15px;
+    height: 200px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 10px;
+    @include webkit(transition, all 0.5s linear 0s);
+    cursor: pointer;
+    .icon-wrap{
+      margin-bottom: 16px;
+      i{
+        font-size: 32px;
+         @include webkit(transition, all 0.3s linear 0s);
+      }
+      img{
+        width: 40px;
+         @include webkit(transition, all 0.3s linear 0s);
+      }
+    }
+    .txt-wrap{
+      .mainheading, p{
+        @include webkit(transition, all 0.3s linear 0s);
+      }
+      .mainheading{
+        font-size: 18px;
+      }
+    }
+    &:hover{
+      .txt-wrap{
+        p, h6{
+          color: $white !important;
         }
-        .left,
-        .right{
-          width: 50%;
+      }
+      .icon-wrap{
+        .white-icon{
+          display: block !important;
+        }
+        .color-icon{
+          display: none;
+        }
+      }
+      &.facebookbg{
+        background: linear-gradient(180deg, #4997FE 0%, #1E7BF4 100%);
+        .icon-wrap{
+          i{
+            color: $white;
+          }
+        }
+       
+      }
+      &.twitterbg{
+        background: linear-gradient(180deg, #59BAF7 0%, #24A4F2 100%);
+        .icon-wrap{
+          .white-icon{
+            display: block !important;
+          }
+          .color-icon{
+            display: none;
+          }
+        }
+      }
+      &.youtubebg{
+        background: #FF1D1D;
+        .icon-wrap{
+          .white-icon{
+            display: block !important;
+          }
+          .color-icon{
+            display: none;
+          }
+        }
+      }
+      &.instabg{
+        background: linear-gradient(180deg, #FFFFFF 0%, #EE6B7C 0.01%, #E2346D 100%);
+        .icon-wrap{
+          .white-icon{
+            display: block !important;
+          }
+          .color-icon{
+            display: none;
+          }
+        }
+      }
+      &.linkedinbg{
+        background: linear-gradient(180deg, #1976D2 0%, #0064C8 100%);
+        .icon-wrap{
+          .white-icon{
+            display: block !important;
+          }
+          .color-icon{
+            display: none;
+          }
+        }
+      }
+      &.whatsappbg{
+        background: linear-gradient(180deg, #54CF61 0%, #2CB741 100%);
+        .icon-wrap{
+          .white-icon{
+            display: block !important;
+          }
+          .color-icon{
+            display: none;
+          }
+        }
+      }
+      &.googlebg{
+        background: linear-gradient(180deg, #FB6161 0%, #E90606 100%);
+        .icon-wrap{
+          .white-icon{
+            display: block !important;
+          }
+          .color-icon{
+            display: none;
+          }
+        }
+      }
+      &.emailbg{
+        background: linear-gradient(180deg, #FFFFFF 0%, #9C87EE  0.01%, #ab87ee 100%);
+        .icon-wrap{
+          .white-icon{
+            display: block !important;
+          }
+          .color-icon{
+            display: none;
+          }
+        }
+      }
+      &.smsbg{
+        background: linear-gradient(180deg, #FFFFFF 0%, #CF61EA  0.01%,#CF61EA  100%);
+        .icon-wrap{
+          .white-icon{
+            display: block !important;
+          }
+          .color-icon{
+            display: none;
+          }
+        }
+      }
+    }
+
+    &.dashed-border{
+      border: 1px dashed $coal;
+    }
+  }
+}
+
+.connect-page-modal{
+  .modal-content{
+    width: 707px;
+    height: 523px;
+    border: 0;
+    .modal-header{
+      border-top: 0 !important;
+      .channel-popup-head{
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        .facebook{
+          background: #1976D2;
+          i{
+            color: $white;
+          }
+        }
+        .txt-wrap{
+          margin-left: 20px;
+        }
+      }
+    }
+    .modal-body{
+      border-radius: 10px;
+      align-items: center;
+      .addPagesWrap{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 60%;
+        margin: auto;
+        .file-input{
+          position: relative;
+          background: $white;
+          border: 1px dashed;
+          display: flex;
+          width: 116px;
+          height: 116px;
+          flex-direction: column;
+          padding: 10px;
+          text-align: center;
+          margin-bottom: 16px;
+          i{
+            margin-bottom: 8px;
+            font-size: 21px;
+          }
         }
       }
     }
   }
 }
+
+.connectPages{
+  .vertical-box{
+    position: relative;
+    .cross-icon{
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      font-size: 19px;
+      border: 1px dashed;
+      padding: 6px 10px;
+      background: #ececec;
+      border-radius: 4px;
+    }
+    .tick-icon{
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      font-size: 23px;
+      border-radius: 50%;
+      padding: 5px;
+      color: $white;
+      background-color: #61EF78;
+    }
+    .icon-wrap{
+     img{
+        width: 52px;
+        height: 52px;
+      }
+    }
+    &:hover{
+          box-shadow: 0 0.5rem 1rem rgba(0, 0, 0 , 0.2%) !important;
+      .icon-wrap{
+        img{
+          display: block !important;
+        }
+      }
+      .txt-wrap{
+        h6{
+          color: $charcoal !important;
+        }
+        p{
+          color: $coal !important;
+        }
+      }
+    }
+  }
+}
+
+.modal-xl {
+  --bs-modal-width: 1280px;
+}
+
+@keyframes move-the-circle
+{
+	0%
+	{
+		transform: translate(0,0) scale(1.0);
+		opacity: 1;
+	}
+	50%
+	{
+		transform: translate(0,50px) scale(1);
+		opacity: 0.5;
+	}
+	100%
+	{
+		transform: translate(0,0) scale(1.0);
+		opacity: 1;
+	}
+}
+
+$steps: 8;
+@mixin progress_bar($steps) {
+
+  $width: (100/$steps)*1%;
+
+  @for $i from 1 through $steps {
+
+    [data-progress='#{$i}']:after {
+      width: $width*$i !important;
+    }
+
+    $steps: $steps - 1;
+  }
+}
+@include progress_bar($steps);

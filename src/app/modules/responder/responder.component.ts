@@ -162,7 +162,7 @@ export class ResponderComponent implements OnInit {
   }
 
   loadComponent(leftSideName: string, rightSideName: string) {
-    debugger
+    
     let componentFactory = null;
 
     switch (leftSideName || rightSideName) {

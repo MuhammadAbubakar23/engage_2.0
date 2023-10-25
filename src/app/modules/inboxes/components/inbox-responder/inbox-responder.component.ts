@@ -206,7 +206,7 @@ export class InboxResponderComponent implements OnInit {
   }
 
   loadComponent(leftSideName: string, rightSideName: string) {
-    debugger
+    
     let componentFactory = null;
 
     switch (leftSideName || rightSideName) {

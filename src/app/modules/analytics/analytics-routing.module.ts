@@ -100,7 +100,7 @@ const routes: Routes = [
       loadComponent: () => import('./components/social-raw-data/social-raw-data.component').then(c => c.SocialRawDataComponent),
     },
     {
-      path:'feacbook-report',
+      path:'facebook-report',
       loadComponent:()=>import('./components/facebook-report/facebook-report.component').then(c=>c.FacebookReportComponent)
     },
     {

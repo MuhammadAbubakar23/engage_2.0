@@ -214,10 +214,10 @@
                                                                             <a class="dropdown-item" *ngIf="fbcmnts.isHide == false" (click)="hideMessage(fbcmnts.id, true)">Hide Message</a>
                                                                             <a class="dropdown-item" *ngIf="fbcmnts.isHide == true" (click)="hideMessage(fbcmnts.id, false)">UnHide Message</a>
                                                                             
-                                                                            <a class="dropdown-item" *ngIf="fbcmnts.spam == true; else notSpamBtn" (click)="spamMessage(fbcmnts.id, false, 'FC')">Remove from Spam</a>
+                                                                            <!-- <a class="dropdown-item" *ngIf="fbcmnts.spam == true; else notSpamBtn" (click)="spamMessage(fbcmnts.id, false, 'FC')">Remove from Spam</a>
                                                                             <ng-template #notSpamBtn>
                                                                                 <a class="dropdown-item"  (click)="spamMessage(fbcmnts.id, true, 'FC')">Mark as Spam</a>
-                                                                            </ng-template>
+                                                                            </ng-template> -->
                                                                             
                                                                         </li>
                                                                     </ul>
@@ -704,10 +704,10 @@
                                                                     <ng-template #notStarredMsg>
                                                                         <a class="dropdown-item" (click)="starMessage(fbmsgs.id, true)">Star Message</a>
                                                                     </ng-template>
-                                                                    <a class="dropdown-item" *ngIf="fbmsgs.spam == true; else notSpamBtn" (click)="spamMessage(fbmsgs.id, false, 'FCP')">Remove from Spam</a>
+                                                                    <!-- <a class="dropdown-item" *ngIf="fbmsgs.spam == true; else notSpamBtn" (click)="spamMessage(fbmsgs.id, false, 'FCP')">Remove from Spam</a>
                                                                     <ng-template #notSpamBtn>
                                                                         <a class="dropdown-item" (click)="spamMessage(fbmsgs.id, true, 'FCP')">Mark as Spam</a>
-                                                                    </ng-template>
+                                                                    </ng-template> -->
                                                                 </li>
                                                             </ul>
                                                         </div>

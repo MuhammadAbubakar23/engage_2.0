@@ -402,12 +402,25 @@ header.tab-header.rightbar-tab-header {
       pointer-events: inherit;
       display: block;
     }
-    header{
-
-    }
     footer{
       button{
         position: static;
       }
     }
+}
+
+.icon-input{
+  position: relative;
+  i{
+    position: absolute;
+    top: 12px;
+    left: 10px;
+    font-size: 14px;
+    color: $metal;
+  }
+  input{
+    width: 100%;
+    background: transparent;
+    padding-left: 32px;
+  }
 }

@@ -62,7 +62,6 @@ export class ExecutiveDashboardComponent implements OnInit {
 
   }
   GetAllSocialMediaReport() {
-    // debugger
     if (this.endDate == '' && this.startDate == '') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 5);
@@ -102,7 +101,6 @@ this.reactionDate=[]
         this.last = this.ltpl + this.ltpc + this.ltps
         this.countDiffernce = this.today - this.last
         if (this.today >= this.last) {
-          // debugger
         this.countDifferncePostive = Math.abs(this.countDiffernce)
           this.percentageData = (this.countDiffernce / this.today) * 100
           // this.percentageDataFormatted = this.percentageData.toFixed(2) + '%';
@@ -126,7 +124,6 @@ this.reactionDate=[]
         // Audience Chart
 
         this.social_media_report.facebookReportResponseDto.postLikeSpan?.forEach((data: any) => {
-          // debugger
           this.post_likes.push(data.activityCount);
           if (!this.date_Audience.includes(data.dateValue)) {
             this.date_Audience.push(data.dateValue)
@@ -146,7 +143,7 @@ this.reactionDate=[]
         });
         // facebook Reaction 
         const pageReactionsSpan = this.social_media_report.facebookReportResponseDto.pageReactionsSpan;
-        debugger
+        
         pageReactionsSpan?.forEach((data: any) => {
           const date = (data.totalReactionsDateValue);
           this.facebook_reaction.push(data.like + data.love + data.wow + data.haha + data.sorry + data.anger + data.sad + data.tHANKFUL + data.pride + data.cARE);
@@ -231,7 +228,6 @@ this.reactionDate=[]
     option && myChart.setOption(option);
   }
   getChartAudienceEngagement() {
-    // debugger
     type EChartsOption = echarts.EChartsOption;
     var chartDom = document.getElementById('audience')!;
     var myChart = echarts.init(chartDom);
@@ -385,7 +381,7 @@ this.reactionDate=[]
     option && myChart.setOption(option);
   }
   getFacebookReaction() {
-    debugger
+    
     type EChartsOption = echarts.EChartsOption;
 
     var chartDom = document.getElementById('facebookReaction')!;

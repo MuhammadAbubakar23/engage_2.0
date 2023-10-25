@@ -70,7 +70,7 @@ export class WhatsappDetailsComponent implements OnInit {
   totalUnrespondedCmntCountByCustomer: number = 0;
   TagsList: any;
   getAppliedTagsList: any;
-  // QuickReplies: any;
+  QuickReplies: any;
   storeComId: any;
   WhatsappMsgId: number = 0;
   agentId: string = '';
@@ -526,6 +526,13 @@ export class WhatsappDetailsComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
+    if (type == 'Attachments') {
+      this.AlterMsg = 'File size must be less than 4MB';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'spam') {
       this.AlterMsg = 'Message has been marked as spam!';
       this.toastermessage = true;
@@ -681,24 +688,25 @@ export class WhatsappDetailsComponent implements OnInit {
   textWithHtmlTags:any;
   sendQuickReply(value: any) {
     let counter = 1;
-    var abc = {id:0,text:''};
-    // var abc = this.QuickReplies.find((res: any) => res.value == value);
-    this.QuickReplies.forEach((qr:any)=>{
-      abc = qr.Message.find((msg:any)=> msg.id == value);
-      if(abc != undefined){
-        this.textWithHtmlTags = abc?.text + ' ';
-        this.text = abc?.text.replace(/<\/p>/g, '\n') // Replace </p> with line breaks
-        .replace(/<\/ul>/g, '\n') // Replace </ul> with line breaks
-        .replace(/<\/ol>/g, '\n') // Replace </ol> with line breaks
-        .replace(/<\/li>/g, '\n') // Replace </li> with line breaks and bullets
-        .replace(/<li[^>]*>/g, () => { // Replace <ol> opening tags with numbers
-          return '\n' + (counter++) + '. ';
-        })
-        .replace(/<ul[^>]*>/g, '\n') // Remove <ul> opening tags
-        .replace(/<\/[ou]l>/g, '') // Remove </ul> and </ol> closing tags
-        .replace(/<\/?[^>]+(>|$)/g, ''); // Remove other HTML tags
-      }
-    })
+    // var abc = {id:0,text:''};
+    var abc = this.QuickReplies.find((res: any) => res.value == value);
+    this.text = abc?.text + ' ';
+    // this.QuickRepliesHardCoded.forEach((qr:any)=>{
+    //   abc = qr.Message.find((msg:any)=> msg.id == value);
+    //   if(abc != undefined){
+    //     this.textWithHtmlTags = abc?.text + ' ';
+    //     this.text = abc?.text.replace(/<\/p>/g, '\n') // Replace </p> with line breaks
+    //     .replace(/<\/ul>/g, '\n') // Replace </ul> with line breaks
+    //     .replace(/<\/ol>/g, '\n') // Replace </ol> with line breaks
+    //     .replace(/<\/li>/g, '\n') // Replace </li> with line breaks and bullets
+    //     .replace(/<li[^>]*>/g, () => { // Replace <ol> opening tags with numbers
+    //       return '\n' + (counter++) + '. ';
+    //     })
+    //     .replace(/<ul[^>]*>/g, '\n') // Remove <ul> opening tags
+    //     .replace(/<\/[ou]l>/g, '') // Remove </ul> and </ol> closing tags
+    //     .replace(/<\/?[^>]+(>|$)/g, ''); // Remove other HTML tags
+    //   }
+    // })
     this.insertAtCaret(this.text);
   }
 
@@ -708,7 +716,7 @@ export class WhatsappDetailsComponent implements OnInit {
     // });
   }
 
-  QuickReplies = [
+  QuickRepliesHardCoded = [
     {value:1, text:'Auto Response/Privacy acknowledgement', Message: [{id:100, text : "<p>Dear Consumer, Welcome to Morinaga Pakistan. One of our representatives will be in touch with you soon.</p><p>Before proceeding, please confirm that you have read the Privacy Policy and accept the use of your personal data by Morinaga.</p>"}]},
     {value:2, text:'Opening Greeting', Message: [{id:101, text : "Hello, Thank you for reaching out to us. How may I help you?"}]},
     {value:3, text:'Help/Assist', Message: [{id:102, text : "I'm here to assist you with any questions or issues you may have"}]},
@@ -883,7 +891,10 @@ export class WhatsappDetailsComponent implements OnInit {
   isAttachment = false;
 
   onFileChanged() {
-    if (this.fileInput.nativeElement.files.length > 0) {
+    Array.from(this.fileInput.nativeElement.files).forEach((file:any) => {
+      if(file.size > 4 * 1024 * 1024){
+        this.reloadComponent('Attachments');
+      } else if (this.fileInput.nativeElement.files.length > 0) {
       this.isAttachment = true;
 
       const filesArray = Array.from(this.fileInput.nativeElement.files);
@@ -895,6 +906,7 @@ export class WhatsappDetailsComponent implements OnInit {
       files.forEach((file: any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
       this.ImageName = newFileList.files;
     }
+    });
   }
 
   clearInputField() {

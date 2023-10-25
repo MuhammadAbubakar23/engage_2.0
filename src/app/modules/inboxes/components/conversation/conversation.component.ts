@@ -627,7 +627,6 @@ export class ConversationComponent implements OnInit {
     platform: any,
     profileId: any
   ) {
-    debugger;
     localStorage.setItem('previousUrl', this.currentUrl);
     if (this.currentUrl.split('/')[2] == 'focused') {
       this.assignQuerryDto = {
@@ -649,7 +648,7 @@ export class ConversationComponent implements OnInit {
             platform: platform,
             profileId: profileId,
           };
-          debugger
+          
           // this.userInfoService.shareUserInformation(userInfo);
           this.headerCountService.shareUnresponedCount(count);
           this.reloadComponent('queryallocated');

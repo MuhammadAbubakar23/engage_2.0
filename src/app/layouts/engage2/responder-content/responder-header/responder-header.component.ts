@@ -122,6 +122,7 @@ export class ResponderHeaderComponent implements OnInit {
     private lodeModuleService: ModulesService,
     private store: StorageService,
     private userInfoService: UserInformationService,
+    private headerCountService: HeaderCountService,
     private stor: StorageService,
     private queryStatusService: QueryStatusService
   ) {
@@ -136,9 +137,17 @@ export class ResponderHeaderComponent implements OnInit {
     this.activeChannel = this._route.url.split('/')[5];
 
     this.Subscription = this.userInfoService.userInfo$.subscribe((userInfo) => {
+      
       if (userInfo != null) {
         this.userInfo = userInfo;
         localStorage.setItem('storeHeaderOpenedId', this.userInfo.userId);
+      }
+    });
+    this.Subscription = this.headerCountService.count$.subscribe((count) => {
+      
+      if (count != null) {
+        this.unrespondedCount = count;
+        // localStorage.setItem('unrespondedCount', this.userInfo.userId);
       }
     });
 
@@ -158,9 +167,9 @@ export class ResponderHeaderComponent implements OnInit {
         if (Object.keys(res).length > 0) {
           res.forEach((msg: any) => {
               if (this.userInfo.userId == msg.fromId) {
-                if (this.userInfo.postType == msg.contentType) {
-                  this.userInfo.unrespondedCount = this.userInfo.unrespondedCount + 1;
-                }
+                // if (this.userInfo.postType == msg.contentType) {
+                  this.unrespondedCount = this.unrespondedCount + 1;
+                // }
               }
           });
         }
@@ -171,9 +180,9 @@ export class ResponderHeaderComponent implements OnInit {
           if (Object.keys(res).length > 0) {
             res.forEach((msg: any) => {
               if (this.userInfo.userId == msg.userId) {
-                if (this.userInfo.postType == msg.contentType) {
-                  this.userInfo.unrespondedCount = this.userInfo.unrespondedCount + 1;
-                }
+                // if (this.userInfo.postType == msg.contentType) {
+                  this.unrespondedCount = this.unrespondedCount + 1;
+                // }
               }
             });
           }
@@ -183,10 +192,10 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.unrespondedCountService.getUnRespondedCount().subscribe((res) => {
         if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
           if (Object.keys(res).length > 0) {
-            if (this.userInfo.profileId == res.contentCount.profileId) {
-              if (this.userInfo.postType == res.contentCount.contentType) {
-                this.userInfo.unrespondedCount = res.contentCount.unrespondedCount;
-              }
+            if (this.userInfo.id == res.contentCount.profileId) {
+              // if (this.userInfo.postType == res.contentCount.contentType) {
+                this.unrespondedCount = res.contentCount.unrespondedCount;
+              // }
             }
           }
         }
@@ -195,8 +204,8 @@ export class ResponderHeaderComponent implements OnInit {
       this.Subscription = this.queryStatusService.bulkReceiveQueryStatus().subscribe((res) => {
         if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
           if (Object.keys(res).length > 0) {
-              if (this.userInfo.postType == res[0].feedType) {
-                this.userInfo.unrespondedCount = 0;
+              if (this.userInfo.id == localStorage.getItem('assignedProfile')) {
+                this.unrespondedCount = 0;
               }
           }
         }
@@ -792,8 +801,9 @@ export class ResponderHeaderComponent implements OnInit {
   markAsCompleteDto = new MarkAsCompleteDto();
 
   markAsComplete(plateForm: any, userId: any) {
+    
     this.markAsCompleteDto.user = this.userInfo.userId;
-    this.markAsCompleteDto.plateFrom = this.userInfo.platform;
+    this.markAsCompleteDto.plateFrom = localStorage.getItem('parent') || '';
     this.markAsCompleteDto.userId = Number(localStorage.getItem('agentId'));
 
     this.commondata.MarkAsComplete(this.markAsCompleteDto).subscribe(

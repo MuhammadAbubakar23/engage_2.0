@@ -135,3 +135,14 @@
         }
     }
 }
+.radiolist{
+    .form-check {
+        .form-check-input{
+            min-width: 20px;
+            height: 20px;
+        }
+    }
+}
+.list-group-item{
+    border-bottom: 1px solid $powder;
+}

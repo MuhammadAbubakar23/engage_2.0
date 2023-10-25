@@ -151,7 +151,7 @@ export class PlaystoreComponent implements OnInit {
   currentUrl: string = '';
 
   ngOnInit(): void {
-    debugger
+    
     this.teamPermissions = this.store.retrive('permissionteam', 'O').local;
     this.currentUrl = this.router.url;
 

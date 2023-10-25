@@ -64,7 +64,10 @@ export class MainMenuComponent implements OnInit {
 
   restrictedAgentsString =
     'Farah.khalid@abacus-global.com, aniqa.waris@bpo.abacus-global.com, samoom.fatima@bpo.abacus-global.com, Mishal.Javed@abacus-global.com, ambreen.zubair@jazz.com.pk, naveeda.akhtar@jazz.com.pk, sidra.shafiq@jazz.com.pk, muhammad.mansoor@jazz.com.pk, ayesha.sajjad@jazz.com.pk, farrukh.saeed1@jazz.com.pk, hassam.naveed@jazz.com.pk, nadia.shabbir@jazz.com.pk, rizwan.malik@jazz.com.pk, abida.rasheed@jazz.com.pk, saba.riaz@jazz.com.pk, pringle.charles@jazz.com.pk';
-  constructor(
+  
+  onlyAnalyticsTabVisible = 'kashif.waheed@ibex.co, jazzlhrwfm@ibex.co, JazzLHRWFM@ibex.co'
+
+    constructor(
     private headerService: HeaderService,
     private _sharedData: SharedService,
     private leftsidebar: LeftsidebarExpandedService,
@@ -96,6 +99,10 @@ export class MainMenuComponent implements OnInit {
 
     if (this.restrictedAgentsString.includes(this.restrictedAgent)) {
       this.router.navigateByUrl('all-inboxes/completed/all');
+    }
+
+    if (this.onlyAnalyticsTabVisible.includes(this.restrictedAgent)) {
+      this.router.navigateByUrl('analytics/whatsapp-report');
     }
 
     // this.menu$ = this.store.select(getMenuById(2)).subscribe((item) => {

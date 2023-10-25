@@ -3,7 +3,7 @@
   right: 0;
   top: 12px;
   display: flex;
-  width: 210px;
+  width: 200px;
   justify-content: space-around;
   .btn{
     color: #5f6368;
@@ -54,25 +54,19 @@
    }
   .tab-content {
     .query-container{
-      height: calc(100vh - 250px);
+      height: calc(100vh - 200px);
       overflow: hidden;
       &.active{
         height: calc(100vh - 140px);
       }
       .table{
        tr{
-         &:hover{
-          &:first-child{
-            box-shadow: none;
-          }
-          box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60, 64, 67, 0.28), 0 1px 3px 1px rgba(60, 64, 67, 0.18);
-          z-index: 2;
-          border-radius: 0;
-         }
+       
          td{
           &:nth-child(4){
             max-width: 550px
           }
+          
          }
           .maintext{
             @include text-truncate();
@@ -80,7 +74,20 @@
           }
        } 
       
-      
+      &.monitoringtable{
+        tr{
+          td{
+            &:nth-child(4){
+              max-width: 490px
+            }
+            .maintext{
+              @include text-truncate();
+              max-width: 600px;
+            }
+          }
+          
+        }
+      }
       }
     }
     .tab-pane{
@@ -146,8 +153,9 @@
           }
         }
         td {
-          transition: 0.5s;
-          // border-bottom: 1px solid $powder;
+          transition: .5s;
+          background: transparent;
+          border-bottom-width: 1px;
           .email-date{
             font-weight: 500;
           }
@@ -248,8 +256,8 @@ a[data-toggle="tooltip"] {
 
 .selected-row {
   position: absolute;
-  right: 200px;
-  top: 12px;
+  right: 180px;
+  top: 20px;
 }
 
 
@@ -277,4 +285,9 @@ a[data-toggle="tooltip"] {
     background-color: $white !important;
     color: $darkerblue !important;
   }
+}
+.agenttime{
+  background-color: rgba(255, 255, 255 , 0.40);
+  padding: 2px 8px;
+  border-radius: 25px;
 }

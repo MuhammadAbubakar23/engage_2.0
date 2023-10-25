@@ -54,10 +54,10 @@
             background-color: $ocean !important;
           }
           &.linkedin{
-            background-color: #0a66c2!important;
+            background-color: $linkedinColor !important;
           }
           &.googleplay{
-            background-color: #00a173!important;
+            background-color: $googleplaycolor !important;
           }
         }
       }
@@ -71,7 +71,7 @@
           padding: 15px 12px;
           border: none;
           &.active {
-            font-weight: 600;
+            font-weight: 500 !important;
             color: $black;
             background-color: transparent;
             border-bottom: 3px solid #2f9df2;
@@ -289,7 +289,7 @@
         padding-left: 5px;
         span {
           color: $black;
-          font-weight: 600;
+          font-weight: 500;
         }
         small {
           color: $coal;

@@ -6,7 +6,7 @@
             tr{
                 th{
                     color: $charcoal;
-                    font-weight: 600;
+                    font-weight: 500;
                     
                 }
                 
@@ -41,6 +41,16 @@
 
        
     }
+    .table-reset{
+      tr{
+        td{
+          vertical-align: middle;
+        }
+        .all-check-boxes{
+          padding: 0 !important;
+        }
+      }
+    }
 }
 // Disable Items
 .disable-item{
@@ -61,7 +71,7 @@
             tr {
                 th{
                     color: #2E4453;
-                    font-weight: 600;
+                    font-weight: 500;
                     text-transform: uppercase;
                     background: #fff;
                     padding: 0.8rem 0.5rem;

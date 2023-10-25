@@ -268,8 +268,8 @@
   color: $white;
   &:hover{
     background-color: darken($success,5%) !important;
-  border-color: ($success,5%) !important;
-  color: $white !important;
+    border-color: ($success,5%) !important;
+    color: $white !important;
   }
 }
 .btn-outline-success,
@@ -281,3 +281,75 @@
 .btn-outline-secondary{
   background-color: $white;
 }
+
+.other-channels-btn{
+  border: 1px solid $lightGray;
+  border-radius: 0.375rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 4px;
+  @include webkit(transition, all 0.3s ease);
+  img, i{
+    padding-right: 15px;
+  }
+  &:hover{
+    background-color: $salt;
+  }
+}
+
+
+
+
+
+@keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+  } 
+  .ailoader{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: #fff;
+    height: 0;
+    transition: all 0.31s ease-in-out;
+    opacity: 0;
+    z-index: -1;
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    &.active{
+      opacity: 1;
+      z-index: 0;
+      visibility: visible;
+      height: 38px;
+      .loadingbtn{
+        position: relative;
+          &::after {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            inset: 0px;
+            border: 3px solid transparent;
+            border-top-color: $sky;
+            border-radius: 50%;
+            animation: button-loading-spinner 1s ease infinite;
+            animation: rotation 1s linear infinite;
+          }
+      
+      }
+    }
+   
+  }

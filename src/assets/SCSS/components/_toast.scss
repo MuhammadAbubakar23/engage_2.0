@@ -46,3 +46,28 @@
     }
    
 }
+.seekhelp-toaster{
+    right: 80px;
+    max-width: 460px;
+    bottom: 20px;
+    background-image: linear-gradient(6deg, #fa8e6f, #f6428b);
+    box-shadow: 0 0 50px 0 rgba(82,63,105,.1);
+    transition: all 0.31s ease-in-out;
+    transform:translate3d(0,100%,0);
+    opacity: 0;
+    min-width: 420px;
+    visibility: hidden;
+    color: $ice;
+    .seek-header{
+        border-bottom: 1px solid #f6428b;
+        padding: 1rem;
+    }
+    .seekfooter{
+        background: rgba(255, 255, 255, 0.10);
+    }
+    &.active{
+        transform: translate3d(0,0,0);
+        opacity: 1;
+        visibility: visible;
+    }
+}

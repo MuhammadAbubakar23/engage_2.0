@@ -43,12 +43,12 @@
                                     Create quick rules
                                 </a>
                             </li> -->
-                            <!-- <li class="important-option mb-0" *ngIf="spamStatus == false" (click)="Spam(profileId)">
+                            <!-- <li class="important-option mb-0" *ngIf="spamStatus == false" (click)="Spam(userInfo.id)">
                                 <a class="dropdown-item">
                                     Mark as spam
                                 </a>
                             </li> 
-                            <li class="important-option mb-0" *ngIf="spamStatus == true" (click)="RemoveSpam(profileId)">
+                            <li class="important-option mb-0" *ngIf="spamStatus == true" (click)="RemoveSpam(userInfo.id)">
                                 <a class="dropdown-item">
                                     Remove from Spam
                                 </a>
@@ -58,12 +58,12 @@
                                     Report phishing
                                 </a>
                             </li> -->
-                            <li class="important-option mb-0" *ngIf="blockStatus == false" (click)="Block(profileId)">
+                            <li class="important-option mb-0" *ngIf="blockStatus == false" (click)="Block(userInfo.id)">
                                 <a class="dropdown-item">
                                     Block sender
                                 </a>
                             </li>
-                            <li class="important-option mb-0" *ngIf="blockStatus == true" (click)="Unblock(profileId)">
+                            <li class="important-option mb-0" *ngIf="blockStatus == true" (click)="Unblock(userInfo.id)">
                                 <a class="dropdown-item">
                                     Unblock sender
                                 </a>
@@ -159,7 +159,7 @@
                     aria-labelledby="dropdownMenuButton1" [ngClass]="showMoreOptions == true?'show':''">
                     <li>
                         <ul>
-                            <li class="mb-0" (click)="Unblock(id)">
+                            <li class="mb-0" (click)="Unblock(userInfo.id)">
                                 <a class="dropdown-item">
                                     Unblock sender
                                 </a>
@@ -180,7 +180,7 @@
                         aria-controls="facebook" aria-selected="true" (click)="updatevalue(facebookId, 'Facebook')">
                         <i class="fab fa-facebook-f coal"></i>
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
+                            *ngIf="unrespondedCount > 0">{{unrespondedCount}}</span>
                     </button>
                 </li>
                 <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -191,7 +191,7 @@
                         aria-controls="whatsapp" aria-selected="false" (click)="updatevalue(whatsappId, 'WhatsApp')">
                         <i class="fab fa-whatsapp coal"></i>
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
+                            *ngIf="unrespondedCount > 0">{{unrespondedCount}}</span>
                     </button>
                 </li>
                 <li class="nav-item selector_nav_item" role="presentation" data-bs-toggle="tooltip"
@@ -202,7 +202,7 @@
                         aria-selected="false" tabindex="-1" (click)="updatevalue(webChatId, 'WebChat')">
                         <i class="fal fa-comments-alt coal"></i>
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
+                            *ngIf="unrespondedCount > 0">{{unrespondedCount}}</span>
                     </button>
                 </li>
                 <li class="nav-item selector_nav_item" role="presentation" data-bs-toggle="tooltip"
@@ -213,7 +213,7 @@
                         aria-selected="false" (click)="updatevalue(smsId, 'SMS')">
                         <i class="fal fa-comment-alt-lines coal"></i>
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
+                            *ngIf="unrespondedCount > 0">{{unrespondedCount}}</span>
                     </button>
                 </li>
 
@@ -224,7 +224,7 @@
                         data-bs-toggle="tab" data-bs-target="#insta" type="button" role="tab" aria-controls="insta"
                         aria-selected="false" (click)="updatevalue(instagramId, 'Instagram')">
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
+                            *ngIf="unrespondedCount > 0">{{unrespondedCount}}</span>
                         <i class="fab fa-instagram"></i>
                     </button>
                 </li>
@@ -237,7 +237,7 @@
                         aria-selected="false" (click)="updatevalue(twitterId, 'Twitter')">
                         <i class="fab fa-twitter"></i>
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
+                            *ngIf="unrespondedCount > 0">{{unrespondedCount}}</span>
                     </button>
                 </li>
                 <li class="nav-item selector_nav_item" role="presentation" data-bs-toggle="tooltip"
@@ -257,7 +257,7 @@
                         aria-selected="false" tabindex="-1" (click)="updatevalue(emailId, 'Email')">
                         <i class="fal fa-envelope coal"></i>
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
+                            *ngIf="unrespondedCount > 0">{{unrespondedCount}}</span>
                     </button>
                 </li>
                 <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -269,12 +269,12 @@
                         (click)="updatevalue(linkedInId, 'LinkedIn')">
                         <i class="fa-brands fa-linkedin-in"></i>
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
+                            *ngIf="unrespondedCount > 0">{{unrespondedCount}}</span>
                     </button>
                 </li>
                 <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom"
                     data-bs-original-title="googleplay" *ngIf="activeChannel == 'PlayStore'">
-                    <button class="nav-link iconButton medium btn iconHover notification googleplay" id="googleplay-tab"
+                    <button class="nav-link iconButton medium btn iconHover notification googleplay" [class.active]="activeChannel == 'PlayStore'" id="googleplay-tab"
                         data-bs-toggle="tab" data-bs-target="#googleplay" type="button" role="tab"
                         aria-controls="googleplay" aria-selected="false" tabindex="-1"
                         (click)="updatevalue(playStoreId, 'PlayStore')">
@@ -289,7 +289,7 @@
                         aria-selected="false" tabindex="-1" (click)="updatevalue(youtubeId, 'Youtube')">
                         <i class="fab fa-youtube"></i>
                         <span class="badge badge-pill badge-dark"
-                            *ngIf="userInfo?.unrespondedCount > 0">{{userInfo?.unrespondedCount}}</span>
+                            *ngIf="unrespondedCount > 0">{{unrespondedCount}}</span>
                     </button>
                 </li>
             </ul>
@@ -308,7 +308,7 @@
                     <a class="dropdown-item" (click)="markAllAsRead()">Read All</a>
                 </li>
                 <li>
-                    <a class="dropdown-item" (click)="markAsComplete(platform, userId)">Save</a>
+                    <a class="dropdown-item" (click)="markAsComplete(userInfo?.platform, userInfo?.userId)">Save</a>
                 </li>
             </ul>
         </div>

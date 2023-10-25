@@ -319,7 +319,6 @@ export class InboundOntboundReportComponent implements OnInit {
             const platformsArray: any[] = [];
 
             tagReportData.forEach((channel: any) => {
-              debugger;
               if (!platformsArray.includes(channel.platform)) {
                 platformsArray.push(channel.platform);
               }
@@ -451,7 +450,7 @@ export class InboundOntboundReportComponent implements OnInit {
     this.endDate = '';
   }
    getPlatformIconClass(platformName: string): string {
-    debugger
+    
     switch (platformName.toLowerCase()) {
       case 'facebook':
         return 'fa-facebook';

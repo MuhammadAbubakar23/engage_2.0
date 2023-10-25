@@ -413,7 +413,7 @@ a {
          font-size: 0.9rem;
          i{
           color: $sky;
-          font-weight: 400;
+          font-weight: 400 !important;
          }
           &:hover{
             background-color: white;
@@ -425,7 +425,7 @@ a {
         color: #5f6368;
         i{
           color: $sky;
-          font-weight: 400;
+          font-weight: 400 !important;
          }
         &:hover{
           background-color: white;
@@ -458,4 +458,26 @@ a {
     height: auto !important;
     line-height: normal !important;
   }
+}
+.leftactive{
+  .inbox-container {
+    .tab-content {
+      .query-container {
+        .table {
+          tr {
+            .maintext{
+              max-width: 500px;
+            }
+            td:nth-child(4) {
+              max-width: 320px;
+          }
+          }
+        }
+      }
+    }
+  }
+  
+}
+.w-40{
+  width: 40% !important;
 }

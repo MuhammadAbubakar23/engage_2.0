@@ -87,7 +87,7 @@ export class TwitterReportComponent implements OnInit {
     this.GetTwitterProfileWiseReport();
   }
   date_pagination(days: number) {
-    debugger
+    
     let currentDate = new Date();
     let prevDate = currentDate.setDate(currentDate.getDate() - days);
     this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
@@ -481,7 +481,7 @@ export class TwitterReportComponent implements OnInit {
     this.toDate = '';
   }
   export() {
-    debugger
+    
     this.excelServices.exportAsExcelFile(this.TwitterProfileWiseReport, 'Twitter-Report')
   }
 }

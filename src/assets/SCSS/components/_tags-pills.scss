@@ -46,10 +46,6 @@
                 background-color: $ocean;
                 border-color: $ocean;
             }
-            &.googleplaystore-pill{
-                color: #fff;
-                background-color: #00a173;
-            }
         }
     
     }
@@ -67,7 +63,19 @@
        display: block;
     }
 }
-
+.tags .tag.selected{
+    &.linkedin{
+        background-color: $linkedinColor;
+        border-color: $linkedinColor;
+    }
+}
+.tags .tag.selected{
+    &.googleplay{
+        background-color: $googleplaycolor;
+        border-color: $googleplaycolor;
+    }
+}
+googleplaybg
 .menuPopWrap{
     width: 22rem;
     position: absolute;
@@ -98,15 +106,18 @@
                 border:1px solid $silver;
                 color: $silver;
                 cursor: pointer;
+                
                 &.selected{
                     display: inline-flex;
                     color: $ice;
                     background: $navy;
                     border: 1px solid $navy;
+                    
                     &.whatsapp{
                         background-color: $mint;
                         border-color: $mint;
                     }
+                    
                     &.sms{
                         background-color: $cherry;
                         border-color: $cherry;

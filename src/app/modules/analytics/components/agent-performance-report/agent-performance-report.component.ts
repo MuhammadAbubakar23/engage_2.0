@@ -84,7 +84,6 @@ export class AgentPerformanceReportComponent implements OnInit {
   }
 
   addAgentGraph() {
-    // debugger
     if (this.singleChanenel != '') {
       this.AllChannels = this.singleChanenel
     }
@@ -293,7 +292,7 @@ export class AgentPerformanceReportComponent implements OnInit {
     this.toastermessage = false;
   }
   date_pagination(days: number) {
-    debugger
+    
     let currentDate = new Date();
     let prevDate = currentDate.setDate(currentDate.getDate() - days);
     this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
