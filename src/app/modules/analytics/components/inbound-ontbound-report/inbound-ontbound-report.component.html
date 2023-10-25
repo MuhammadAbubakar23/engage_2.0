@@ -316,7 +316,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-5">
+                            <!-- <div class="col-md-5">
                                 <ul class="list-0 statlist list-lg mb-3">
                                     <li
                                         *ngFor="let channelwise of Inbound_Outbound_Report?.channelReportData?.channelWiseData">
@@ -327,8 +327,22 @@
                                             {{channelwise.outboundData}}</span>
                                     </li>
                                 </ul>
+                            </div> -->
+                            <div class="col-md-5">
+                                <ul class="list-0 statlist list-lg mb-3">
+                                    <li
+                                        *ngFor="let channelwise of Inbound_Outbound_Report?.channelReportData?.channelWiseData">
+                                        <span
+                                            [ngClass]="channelwise.platform=='Facebook'?'navy':'' || channelwise.platform=='Instagram'?'cherry':'' || channelwise.platform=='Email'?'berry':''|| channelwise.platform=='Twitter'?'ocean':''|| channelwise.platform=='LinkedIn'?'pearl  ':''|| channelwise.platform=='YouTube'?'radical':''|| channelwise.platform=='SMS'?'cherry':''|| channelwise.platform=='Whatsapp'?'mint':''|| channelwise.platform=='OfficeEmail'?'berry':''|| channelwise.platform=='WebChat'?'webchatcolor':''">
+                                            <i class=""
+                                                [ngClass]="channelwise.platform=='Facebook'?'fab fa-facebook navytext':'' || channelwise.platform=='Instagram'?'fa-brands fa-instagram':''|| channelwise.platform=='Email'?'fa-light fa-envelope':''  || channelwise.platform=='Twitter'?'fab fa-twitter':'' || channelwise.platform=='LinkedIn'?'fa-brands fa-linkedin-in linkedinTxt':'' || channelwise.platform=='YouTube'?'fa-message-sms':'' || channelwise.platform=='SMS'?'fa-message-sms':'' || channelwise.platform=='Whatsapp'?'fa-brands fa-whatsapp':'' || channelwise.platform=='OfficeEmail'?'fa-message-sms':'' || channelwise.platform=='WebChat'?'fa-light fa-messages':''"></i>
+                                            {{channelwise.platform}}
+                                        </span>
+                                        <span class="fw-semibold">Inbound {{channelwise.inboundData}} | Outbound
+                                            {{channelwise.outboundData}}</span>
+                                    </li>
+                                </ul>
                             </div>
-
                         </div>
                     </div>
                     <div class="card iceBg p-4 rounded mb-5">

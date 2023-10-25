@@ -112,9 +112,18 @@ export class InboundOntboundReportComponent implements OnInit {
       let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 7);
       this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     } else if (this.startDate != '' && this.endDate != '') {
-      this.startDate = this.startDate;
-      this.endDate = this.endDate;
+      // this.startDate = this.startDate;
+      // this.endDate = this.endDate;
+      const startDateObj = new Date(this.startDate);
+      const endDateObj = new Date(this.endDate);
+      const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
+      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      if (diffDays > 30) {
+        alert('Select a date range of 30 days or less');
+        return;
+      }
     }
+    
     const requestData = {
       fromDate: this.startDate,
       toDate: this.endDate,
@@ -164,6 +173,11 @@ export class InboundOntboundReportComponent implements OnInit {
               },
               tooltip: {
                 trigger: 'axis',
+              },
+              toolbox: {
+                feature: {
+                  saveAsImage: {},
+                },
               },
               legend: {
                 data: ['Inbound', 'OutBound'],
@@ -254,6 +268,11 @@ export class InboundOntboundReportComponent implements OnInit {
                 trigger: 'item',
                 formatter: '{a} <br/>{b}: {c}%',
               },
+              toolbox: {
+                feature: {
+                  saveAsImage: {},
+                },
+              },
               legend: {
                 orient: 'vertical',
                 left: 'left',
@@ -322,6 +341,11 @@ export class InboundOntboundReportComponent implements OnInit {
             });
             option = {
               tooltip: { trigger: 'axis' },
+              toolbox: {
+                feature: {
+                  saveAsImage: {},
+                },
+              },
               // legend: {top: 10,
               //   left: 10},
               xAxis: [{ type: 'category', data: platformsArray }],
@@ -362,6 +386,11 @@ export class InboundOntboundReportComponent implements OnInit {
             option = {
               legend: {},
               tooltip: { trigger: 'axis' },
+              toolbox: {
+                feature: {
+                  saveAsImage: {},
+                },
+              },
               dataset: {
                 source: sentimentDataPoints,
               },
@@ -421,20 +450,21 @@ export class InboundOntboundReportComponent implements OnInit {
   resetEndDate() {
     this.endDate = '';
   }
-  getPlatformClass(platformName: string): string {
+   getPlatformIconClass(platformName: string): string {
+    debugger
     switch (platformName.toLowerCase()) {
       case 'facebook':
-        return 'facebook';
+        return 'fa-facebook';
       case 'twitter':
-        return 'twitter';
+        return 'fa-twitter';
       case 'whatsapp':
-        return 'whatsapp';
+        return 'fa-whatsapp';
       case 'linkedin':
-        return 'linkedin';
+        return 'fa-linkedin';
       case 'email':
-        return 'email';
+        return 'fa-envelope';
       case 'instagram':
-        return 'instagram';
+        return 'fa-instagram';
       default:
         return '';
     }

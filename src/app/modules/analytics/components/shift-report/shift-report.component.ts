@@ -1,17 +1,17 @@
-import { Component, OnInit,ViewChild ,ElementRef} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HeaderService } from 'src/app/shared/services/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
- import { CommonModule, DatePipe } from '@angular/common'
+import { CommonModule, DatePipe } from '@angular/common'
 import * as echarts from 'echarts';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from "../../../../shared/shared.module";
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({
-    standalone: true,
-    selector: 'app-shift-report',
-    templateUrl: './shift-report.component.html',
-    styleUrls: ['./shift-report.component.scss'],
-    imports: [CommonModule, FormsModule, SharedModule, NgxSpinnerModule]
+  standalone: true,
+  selector: 'app-shift-report',
+  templateUrl: './shift-report.component.html',
+  styleUrls: ['./shift-report.component.scss'],
+  imports: [CommonModule, FormsModule, SharedModule, NgxSpinnerModule]
 })
 export class ShiftReportComponent implements OnInit {
   shiftReportData: any;
@@ -21,7 +21,7 @@ export class ShiftReportComponent implements OnInit {
   dateWise: any[] = [];
   tagsList: any[] = [];
   allDates: any[] = [];
-  newAlldates:any[]=[]
+  newAlldates: any[] = []
   totaltags: number = 0;
   slectedtagId: any[] = [];
   selectedtagName: any = '';
@@ -33,10 +33,10 @@ export class ShiftReportComponent implements OnInit {
   // currentdate:any
   startDate = '';
   endDate = '';
-  searchText:string=''
+  searchText: string = ''
   maxEndDate: any;
   currentDate: any;
-  totalinboundCounts:any
+  totalinboundCounts: any
   tags: any;
   TagsStats: any[] = [];
   tagsStatsTotalCounts: any;
@@ -44,7 +44,7 @@ export class ShiftReportComponent implements OnInit {
   commaSeparatedValuesLink: any;
   numberArrayLink: any;
   alltotalCount: any;
-  daysDifference:number=0
+  daysDifference: number = 0
   allTotalCountsfb: any[] = [];
   allTotalCountTw: any[] = [];
   allTotalCountLink: any[] = [];
@@ -65,7 +65,7 @@ export class ShiftReportComponent implements OnInit {
     private datePipe: DatePipe,
     private commandataService: CommonDataService,
     private SpinnerService: NgxSpinnerService
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split('T')[0];
@@ -74,18 +74,18 @@ export class ShiftReportComponent implements OnInit {
     this.getShfitReport();
     this.getAlltags();
     this.getAgentsTeamList();
-  this.calculateDateRange()
+    this.calculateDateRange()
   }
-keywordslist:any[]=[]
+  keywordslist: any[] = []
   getAlltags() {
     this.commandataService.GetTagsList().subscribe((res: any) => {
       
       console.log('All tags===>', res);
       this.tagsList = res;
-      this.tagsList.forEach((xyz:any)=>{
-        xyz.keywordList.forEach((abc:any)=>{
+      this.tagsList.forEach((xyz: any) => {
+        xyz.keywordList.forEach((abc: any) => {
           this.keywordslist.push(abc)
-          console.log("this.keywordslist===>",this.keywordslist)
+          console.log("this.keywordslist===>", this.keywordslist)
         })
       })
     });
@@ -93,23 +93,32 @@ keywordslist:any[]=[]
   convertedintoArray: any;
   graphdate: any[] = [];
   noData: boolean = false;
- 
+
   calculateDateRange() {
-   
+
   }
-  
-  
+
+
   getShfitReport() {
     this.allDates = [];
     if (this.startDate == '' && this.endDate == '') {
       const today = this.currentDate;
       this.endDate = this.datePipe.transform(today, 'YYYY-MM-dd') || '';
 
-      let prevDate = this.currentDate.setDate(this.currentDate.getDate()-2 );
+      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 2);
       this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     } else if (this.startDate != '' && this.endDate != '') {
-      this.startDate = this.startDate;
-      this.endDate = this.endDate;
+      //   this.startDate = this.startDate;
+      //   this.endDate = this.endDate;
+      // }
+      const startDateObj = new Date(this.startDate);
+      const endDateObj = new Date(this.endDate);
+      const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
+      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      if (diffDays > 30) {
+        alert('Select a date range of 30 days or less');
+        return;
+      }
     }
     let obj = {
       fromDate: this.startDate,
@@ -122,99 +131,99 @@ keywordslist:any[]=[]
       const startDateObj = new Date(this.startDate);
       const endDateObj = new Date(this.endDate);
       const timeDifference = endDateObj.getTime() - startDateObj.getTime();
-      this.daysDifference=timeDifference / (1000 * 3600 * 24)
+      this.daysDifference = timeDifference / (1000 * 3600 * 24)
     }
     // find date
     // if (this.startDate && this.endDate) {
     //   const start = new Date(this.startDate);
     //   const end = new Date(this.endDate);
     //   const currentDate = new Date();
-   
-  
+
+
     //   if (start < currentDate) {
     //     start.setDate(currentDate.getDate() + 1);
     //   }
-  
+
     //   while (start <= end) {
     //     const currentDateISO = start.toISOString().split('T')[0];
     //     this.allDates.push(currentDateISO);
     //     start.setDate(start.getDate() + 1);
     //   }
-  
-    
+
+
     // }
-    
-//  if(this.endDate<=this.startDate){
-//   this.allDates.push(this.startDate)
-//  }
-         this.allTotalCountInsta = [];
-          this.allTotalCountLink = [];
-          this.allTotalCountsfb = [];
-          this.allTotalCountTw = [];
-          this.dateWise = [];
-          this.SpinnerService.show();
-      this.commandataService.GetShiftReport(obj).subscribe((res: any) => {
-        this.SpinnerService.hide();
-       
-        this.shiftReportData = res;
-        this.shiftChannelData = res.channelData;
-        this.dateWiseTotalCounts = res.dateWiseTotal;
-        this.totalinboundCounts=res.totalIboundCount;
-    
-        
-        if(this.totalinboundCounts==0){
-          this.allTotalCountInsta= new Array(this.daysDifference).fill(0)
-          this.allTotalCountLink=new Array(this.daysDifference).fill(0)
-          this.allTotalCountsfb=new Array(this.daysDifference).fill(0)
-          this.allTotalCountTw=new Array(this.daysDifference).fill(0)
 
-        }
-        // else{
-        //   this.allTotalCountInsta = [];
-        //   this.allTotalCountLink = [];
-        //   this.allTotalCountsfb = [];
-        //   this.allTotalCountTw = [];
-        //   this.dateWise = [];
-          
+    //  if(this.endDate<=this.startDate){
+    //   this.allDates.push(this.startDate)
+    //  }
+    this.allTotalCountInsta = [];
+    this.allTotalCountLink = [];
+    this.allTotalCountsfb = [];
+    this.allTotalCountTw = [];
+    this.dateWise = [];
+    this.SpinnerService.show();
+    this.commandataService.GetShiftReport(obj).subscribe((res: any) => {
+      this.SpinnerService.hide();
 
-     
-          
-        // }
-        this.shiftChannelData.forEach((data: any) => {
-          data.dateWise.forEach((item: any) => {
-            if (!this.allDates.includes(item.date.split('T')[0])) {
-              this.allDates.push(item.date.split('T')[0]);
-               
-              if (data.platform == 'Facebook') {
-                
-                data.dateWise.forEach((singleItem: any) => {
-                  this.allTotalCountsfb.push(singleItem.totalCount);
-                });
-              }
-            }
-            if (data.platform == 'WhatsApp') {
-              data.dateWise.forEach((item: any) => {
-                this.allTotalCountTw.push(item.totalCount);
+      this.shiftReportData = res;
+      this.shiftChannelData = res.channelData;
+      this.dateWiseTotalCounts = res.dateWiseTotal;
+      this.totalinboundCounts = res.totalIboundCount;
+
+
+      if (this.totalinboundCounts == 0) {
+        this.allTotalCountInsta = new Array(this.daysDifference).fill(0)
+        this.allTotalCountLink = new Array(this.daysDifference).fill(0)
+        this.allTotalCountsfb = new Array(this.daysDifference).fill(0)
+        this.allTotalCountTw = new Array(this.daysDifference).fill(0)
+
+      }
+      // else{
+      //   this.allTotalCountInsta = [];
+      //   this.allTotalCountLink = [];
+      //   this.allTotalCountsfb = [];
+      //   this.allTotalCountTw = [];
+      //   this.dateWise = [];
+
+
+
+
+      // }
+      this.shiftChannelData.forEach((data: any) => {
+        data.dateWise.forEach((item: any) => {
+          if (!this.allDates.includes(item.date.split('T')[0])) {
+            this.allDates.push(item.date.split('T')[0]);
+
+            if (data.platform == 'Facebook') {
+              
+              data.dateWise.forEach((singleItem: any) => {
+                this.allTotalCountsfb.push(singleItem.totalCount);
               });
             }
-            if (data.platform == 'Instagram') {
-              data.dateWise.forEach((item: any) => {
-                this.allTotalCountInsta.push(item.totalCount);
-              });
-            }
-            if (data.platform == 'LinkedIn') {
-              data.dateWise.forEach((item: any) => {
-                this.allTotalCountLink.push(item.totalCount);
-              });
-            }
-          });
+          }
+          if (data.platform == 'WhatsApp') {
+            data.dateWise.forEach((item: any) => {
+              this.allTotalCountTw.push(item.totalCount);
+            });
+          }
+          if (data.platform == 'Instagram') {
+            data.dateWise.forEach((item: any) => {
+              this.allTotalCountInsta.push(item.totalCount);
+            });
+          }
+          if (data.platform == 'LinkedIn') {
+            data.dateWise.forEach((item: any) => {
+              this.allTotalCountLink.push(item.totalCount);
+            });
+          }
         });
-        this.TagsStats = res.tagData.shiftReportTag;
-        this.tagsStatsTotalCounts = res.tagData.totalTagsCount;
-
-        this.getCharts();
       });
-    
+      this.TagsStats = res.tagData.shiftReportTag;
+      this.tagsStatsTotalCounts = res.tagData.totalTagsCount;
+
+      this.getCharts();
+    });
+
   }
 
   selectedunselectedtag(tag: any) {
@@ -247,8 +256,9 @@ keywordslist:any[]=[]
     var option;
 
     option = {
+      color:['#0ed4a7','#fb468c', '#8e60a8','#99bdc9'],
       // title: {
-      //   text: 'Stacked Line'
+      //   text: 'Inbound Traffic - Morning Shift'
       // },
       tooltip: {
         trigger: 'axis',
@@ -332,16 +342,16 @@ keywordslist:any[]=[]
     return dateWiseItem ? dateWiseItem.totalCount : 0;
   }
 
-  getStartDate(){
-    this.endDate=''
+  getStartDate() {
+    this.endDate = ''
   }
-  getEndDate(){
-    if(this.endDate>=this.startDate){
+  getEndDate() {
+    if (this.endDate >= this.startDate) {
       this.getShfitReport()
     }
-    else{
+    else {
       alert("EndDate is lessthen StartDate")
-      this.endDate=''
+      this.endDate = ''
     }
   }
   closeToaster() {

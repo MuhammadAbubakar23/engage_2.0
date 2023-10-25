@@ -13,12 +13,12 @@
                             <li class="list-inline-item">
                                 <div class="row ">
                                     <div class="col-sm-6">
-                                        <input type="date" class="form-control" placeholder="End Date" [max]="maxEndDate"
-                                            (change)="resetEndDate()" [(ngModel)]="startDate" />
+                                        <input type="date" class="form-control" placeholder="End Date"
+                                            [max]="maxEndDate" (change)="resetEndDate()" [(ngModel)]="startDate" />
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="date" class="form-control" placeholder="Start Date" [max]="maxEndDate"
-                                            (change)="addAgentGraph()" [(ngModel)]="endDate" />
+                                        <input type="date" class="form-control" placeholder="Start Date"
+                                            [max]="maxEndDate" (change)="addAgentGraph()" [(ngModel)]="endDate" />
                                     </div>
                                 </div>
                             </li>
@@ -31,8 +31,8 @@
                                     <ul class="dropdown-menu" aria-labelledby="posttype">
                                         <li class="dropdown-listing-header">
                                             <form class="custom-searchbar my-2 mx-0">
-                                                <input class="form-control bg-light border-0 py-2" placeholder="Search" [(ngModel)]="searchText"
-                                                    aria-label="Search">
+                                                <input class="form-control bg-light border-0 py-2" placeholder="Search"
+                                                    [(ngModel)]="searchText" aria-label="Search">
                                                 <span class="btn searchbar-btn" type="submit">
                                                     <i class="fal fa-search silver"></i>
                                                 </span>
@@ -46,7 +46,7 @@
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
                                                                 [id]="option.id" [(ngModel)]="option.isSelected"
-                                                                (change)="onCheckboxChange()">
+                                                                (change)="addAgentGraph()">
                                                             <label class="form-check-label" [for]="option.id">{{
                                                                 option.name }}</label>
                                                         </div>
@@ -73,52 +73,67 @@
                                     <ul class="dropdown-menu" aria-labelledby="columnssort">
                                         <li class="dropdown-listing-header">
                                             <form class="custom-searchbar my-2 mx-0">
-                                                <input class="form-control bg-light border-0 py-2" placeholder="Search" [(ngModel)]="searchText"
-                                                    aria-label="Search"> 
+                                                <input class="form-control bg-light border-0 py-2" placeholder="Search"
+                                                    [(ngModel)]="searchText" aria-label="Search">
                                                 <span class="btn searchbar-btn" type="submit">
                                                     <i class="fal fa-search silver"></i>
                                                 </span>
                                             </form>
                                         </li>
-                                        <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
+                                        <div class="" data-scrollbar="true" tabindex="-1"
                                             style="overflow: auto; outline: none;">
                                             <div class="scroll-content">
-                                                <li *ngFor="let channel of channelOptions | filter:searchText">
+                                                <div class="collapse-wrap mx-3" id="qr-ques1"
+                                                    *ngFor="let channel of channelOptions | filter:searchText">
+                                                    <div class="dropdown-item d-flex align-items-center">
+                                                        <div class="form-check"
+                                                            (click)="onCheckboxChange(channel.name)">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="flexRadioDefault" id={{channel.id}} #radioInput>
+                                                            <label class="form-check-label" for={{channel.id}}>
+                                                                <i [ngClass]="channel.icon"></i>{{channel.name}}
+                                                            </label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <!-- <li *ngFor="let channel of channelOptions | filter:searchText">
                                                     <a class="dropdown-item d-flex align-items-center">
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                [id]="channel.id" [(ngModel)]="channel.isSelected"
-                                                                (change)="onCheckboxChange()">
-                                                            <label class="form-check-label" [for]="channel.id">
+                                                            <input class="form-check-input" type="radio"
+                                                                id={{channel.id}} [(ngModel)]="channel.isSelected"
+                                                                name="flexRadioDefault">
+                                                            <label class="form-check-label" for={{channel.id}}
+                                                                (change)="onCheckboxChange(channel.name)">
                                                                 <i [ngClass]="channel.icon"></i> {{ channel.name }}
                                                             </label>
                                                         </div>
                                                     </a>
-                                                </li>
+                                                </li> -->
                                             </div>
                                         </div>
                                     </ul>
                                 </div>
                             </li>
-                            <!-- <li class="list-inline-item ms-auto">
+                            <li class="list-inline-item ms-auto">
                                 <div class="btn-group buttonfilter" role="group"
                                     aria-label="Basic radio toggle button group">
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
-                                        autocomplete="off" checked="">
-                                    <label class="btn btn-outline-secondary" for="btnradio1">15</label>
+                                        autocomplete="off" checked="" (click)="date_pagination(5)">
+                                    <label class="btn btn-outline-secondary" for="btnradio1">5</label>
 
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
-                                        autocomplete="off">
-                                    <label class="btn btn-outline-secondary" for="btnradio2">30</label>
+                                        autocomplete="off" (click)="date_pagination(10)">
+                                    <label class="btn btn-outline-secondary" for="btnradio2">10</label>
 
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
-                                        autocomplete="off">
-                                    <label class="btn btn-outline-secondary" for="btnradio3">60</label>
+                                        autocomplete="off" (click)="date_pagination(20)">
+                                    <label class="btn btn-outline-secondary" for="btnradio3">20</label>
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
-                                        autocomplete="off">
-                                    <label class="btn btn-outline-secondary" for="btnradio4">90</label>
+                                        autocomplete="off" (click)="date_pagination(30)">
+                                    <label class="btn btn-outline-secondary" for="btnradio4">30</label>
                                 </div>
-                            </li> -->
+                            </li>
                         </ul>
                     </div>
                     <div class="row align-items-start h-auto mb-4">
@@ -189,13 +204,15 @@
                         </div>
                     </div>
                     <div class="card iceBg p-4 rounded mb-5">
-                        <!-- <h5 class="section-heading mb-3 p-0 d-flex align-items-center">
-                           <span class="iconButton small">
-                                <img src="../../../../../assets/images/xapp.svg" class="w-100" alt="">
-                            </span> -->
-                            <!-- <span class="ps-2">{{ selectedChannelLabel }}</span> 
-                        </h5> -->
-                        <div class="table-section" style="overflow: auto; height: calc(100vh - 300px);" >
+                        <h5 class="section-heading mb-3 p-0 d-flex align-items-center">
+                            <span class="iconButton small icons" *ngFor="let channel of channelOptions">
+                                <span *ngIf="selectedChannelLabel == channel.name" class=" ms-3">
+                                    <i [ngClass]="channel.icon"></i>
+                                </span>
+                            </span>
+                            <span class="ps-3">{{ selectedChannelLabel }}</span>
+                        </h5>
+                        <div class="table-section" style="overflow: auto; height: calc(100vh - 300px);">
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -215,6 +232,15 @@
                                         <td>{{ agent.averageTime }}</td>
                                         <td>{{ agent.minimumTime }}</td>
                                         <td>{{ agent.maximumTime }}</td>
+
+                                    </tr>
+                                    <tr class="bg-light">
+                                        <td><strong>Total</strong> </td>
+                                        <td><strong>{{ calculateTotalTweets() }}</strong></td>
+                                        <td><strong>{{ calculateTotalDirectMessages() }}</strong></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
                                 </tbody>
                             </table>

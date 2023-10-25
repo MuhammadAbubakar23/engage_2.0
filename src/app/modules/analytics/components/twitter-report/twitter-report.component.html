@@ -8,36 +8,34 @@
                 <li class="list-inline-item">
                     <div class="row">
                         <div class="col-sm-6">
-                            <input type="date" class="form-control" placeholder="Start Date"
-                                [max]="maxEndDate" (change)="resetEndDate()" [(ngModel)]="fromDate" />
+                            <input type="date" class="form-control" placeholder="Start Date" [max]="maxEndDate"
+                                (change)="resetEndDate()" [(ngModel)]="fromDate" />
                         </div>
                         <div class="col-sm-6">
-                            <input type="date" class="form-control" placeholder="End Date" 
-                                [max]="maxEndDate" (change)="GetTwitterReport()" [(ngModel)]="toDate" />
+                            <input type="date" class="form-control" placeholder="End Date" [max]="maxEndDate"
+                                (change)="GetTwitterReport()" [(ngModel)]="toDate" />
                         </div>
                     </div>
-                    
                 </li>
-                <!-- <li class="list-inline-item">
+                <li class="list-inline-item">
                     <div class="dropdown icondropdown w-auto mx-2">
-                        <button class="btn dropdown-toggle" type="button" id="columnssort" data-bs-toggle="dropdown"
-                            aria-expanded="false" data-bs-auto-close="outside">
-                            Profile
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="columnssort">
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="#0">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="keprofile">
-                                        <label class="form-check-label" for="keprofile">
-                                            <i class="fa-brands fa-facebook facebook pe-2"></i> K-Electric
-                                        </label>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
+                      <button class="btn dropdown-toggle" type="button" id="columnssort" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" >
+                        Profile
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="columnssort">
+                        <li>
+                          <a class="dropdown-item d-flex align-items-center">
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="flexRadioDefault" id="keprofile" checked>
+                              <label class="form-check-label" for="keprofile">
+                                <i class="fa-brands fa-twitter twitter pe-2"></i> K-Electric
+                              </label>
+                            </div>
+                          </a>
+                        </li>
+                      </ul>
                     </div>
-                </li> -->
+                  </li>
                 <li class="list-inline-item ms-auto">
                     <div class="btn-group buttonfilter" role="group" aria-label="Basic radio toggle button group">
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
@@ -56,12 +54,9 @@
                         <label class="btn btn-outline-secondary" for="btnradio4">30</label>
                     </div>
                 </li>
-
-
             </ul>
         </div>
         <div class="row align-items-start h-auto mb-4">
-
             <div class="col-lg-4 col-md-6">
                 <div class="card dashboard-card">
                     <div class="card-body">
@@ -87,7 +82,7 @@
                                 </span>
                                 <p class="coal mb-0"> TWEETS/RETWEETS SENT</p>
                             </div>
-                            <h2>N/A</h2>
+                            <h2>0</h2>
                         </div>
                     </div>
                 </div>
@@ -108,7 +103,6 @@
                 </div>
             </div>
         </div>
-
 
         <div class="card iceBg p-4 rounded mb-5">
             <h5 class="section-heading mb-4 p-0">Posts &amp; Conversations (Inbound/Outbound) </h5>
@@ -244,7 +238,6 @@
             </div>
         </div>
 
-
         <div class="card iceBg p-4 rounded mb-5">
             <h5 class="section-heading mb-4 p-0">Audience Engagement (Outbound)</h5>
             <div class="graphcontainer align-items-end mb-5">
@@ -252,6 +245,7 @@
                     <div id="OutboundReport" style="height: 300px; width: 900px;"></div>
                 </div>
             </div>
+            
             <div class="row align-items-start px-5">
                 <div class="col-md-4">
                     <ul class="nav nav-tabs linetabs mb-3" id="myTab" role="tablist">
@@ -260,12 +254,12 @@
                                 data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
                                 aria-selected="true">Engagement Metrics </button>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        <!-- <li class="nav-item" role="presentation">
                             <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
                                 data-bs-target="#profile-tab-pane" type="button" role="tab"
                                 aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">PreSet Time Stats
                             </button>
-                        </li>
+                        </li> -->
 
                     </ul>
                 </div>
@@ -307,7 +301,7 @@
                             </div> -->
 
                         </div>
-                        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
+                        <!-- <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
                             tabindex="0">
                             <ul class="list-0 statlist list-lg mb-3">
                                 <li>
@@ -325,7 +319,7 @@
                                 </li>
 
                             </ul>
-                            <!-- <div class="card dashboard-card">
+                            <div class="card dashboard-card">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div>
@@ -337,9 +331,9 @@
                                         <h3> 85.21%</h3>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
 
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>
@@ -359,7 +353,7 @@
                     <div class="d-flex justify-content-end align-items-center">
                         <div class="btn-group buttonfilter" role="group" aria-label="Basic radio toggle button group">
                             <input type="radio" class="btn-check" name="btnradio" id="btnradio10" autocomplete="off"
-                                checked="">
+                                checked>
                             <label class="btn btn-outline-secondary" for="btnradio10">Top 5</label>
 
                             <input type="radio" class="btn-check" name="btnradio" id="btnradio20" autocomplete="off">

@@ -2,11 +2,11 @@
     <div class="middle-content d-flex">
         <div class="d-grid w-100">
             <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1"
-                style="overflow: auto; outline: none;">
+                style="overflow: auto; outline: none; overflow-x: hidden;">
                 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
-                [fullScreen]="false">
-                <p style="color: white"> Loading... </p>
-            </ngx-spinner>
+                    [fullScreen]="false">
+                    <p style="color: white"> Loading... </p>
+                </ngx-spinner>
                 <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
                     <div class="report-toolbar mb-4">
                         <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
@@ -26,6 +26,26 @@
                                     </div>
                                 </div>
                             </li>
+                            <li class="list-inline-item">
+                                <div class="dropdown icondropdown w-auto mx-2">
+                                    <button class="btn dropdown-toggle" type="button" id="columnssort"
+                                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                        Profile
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="columnssort">
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" id="keprofile" checked>
+                                                    <label class="form-check-label" for="keprofile">
+                                                        <i class="fa-brands fa-instagram instagram pe-2"></i> K-Electric
+                                                    </label>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                             <li class="list-inline-item ms-auto">
                                 <div class="btn-group buttonfilter" role="group"
                                     aria-label="Basic radio toggle button group">
@@ -40,9 +60,9 @@
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
                                         autocomplete="off" (click)="date_pagination(20)">
                                     <label class="btn btn-outline-secondary" for="btnradio3">20</label>
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
+                                    <!-- <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
                                         autocomplete="off" (click)="date_pagination(30)">
-                                    <label class="btn btn-outline-secondary" for="btnradio4">30</label>
+                                    <label class="btn btn-outline-secondary" for="btnradio4">30</label> -->
                                 </div>
                             </li>
                         </ul>
@@ -59,7 +79,7 @@
                                             </span>
                                             <p class="coal mb-0">Likes</p>
                                         </div>
-                                        <h2>{{instagramReport?.total_likes}}</h2>
+                                        <h2>{{totalLikes}}</h2>
                                     </div>
                                 </div>
                             </div>
@@ -124,7 +144,7 @@
 
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card iceBg p-4 rounded mb-5">
                                 <h5 class="section-heading mb-4 p-0">Engagement </h5>
                                 <ul class="list-0 statlist list-lg mb-3">
@@ -152,13 +172,13 @@
                                                 </span>
                                                 <p class="coal mb-0"> Engagements Increased by </p>
                                             </div>
-                                            <h3>78.00%</h3>
+                                            <h3>{{engagementPersentage}}%</h3>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="card iceBg p-4 rounded mb-5">
                                 <h5 class="section-heading mb-4 p-0"> SLA </h5>
                                 <ul class="list-0 statlist list-lg mb-3">
@@ -190,7 +210,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="row mb-5 align-items-start">
                         <div class="col-md-6">
@@ -252,12 +272,12 @@
 
                                     <div class="col">
                                         <small class="coal"> Mark As Completed </small>
-                                        <p class="fw-semibold">44950</p>
+                                        <p class="fw-semibold">{{agentReplies?.completedQuery}}</p>
                                     </div>
                                 </div>
                                 <div class="pt-3 border-top d-flex align-items-center justify-content-between">
                                     <span class="sky">Total Completed </span>
-                                    <p class="fw-semibold night mb-0">71559</p>
+                                    <p class="fw-semibold night mb-0">{{totalComleted}}</p>
                                 </div>
                             </div>
                         </div>
@@ -275,7 +295,7 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                         <li>
-                                            <a class="dropdown-item p-1" href="#">
+                                            <a class="dropdown-item p-1" (click)="exportCsv()">
                                                 <button class="iconButton dropdown-iconBtn small"
                                                     id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                     aria-expanded="false">
@@ -302,15 +322,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let data of InstagramStats">
-                                        <td>{{ data?.impressions }}</td>
-                                        <td>{{ data?.reachability }}</td>
-                                        <td>{{ data?.followerCount }}</td>
-                                        <td>{{ data?.emailContacts }}</td>
-                                        <td>{{ data?.phoneCallClicks }}</td>
-                                        <td>{{ data?.getDirectionsClicks }}</td>
-                                        <td>{{ data?.websiteClicks }}</td>
-                                        <td>{{ data?.profileViews }}</td>
+                                    <tr>
+                                        <td>{{ InstagramStats?.impressions_totalcount }}</td>
+                                        <td>{{ InstagramStats?.reach_totalcount }}</td>
+                                        <td>{{ InstagramStats?.follower_totalcount }}</td>
+                                        <td>{{ InstagramStats?.email_contacts_totalcount }}</td>
+                                        <td>{{ InstagramStats?.phone_call_clicks_totalcount }}</td>
+                                        <td>{{ InstagramStats?.get_directions_clicks_totalcount }}</td>
+                                        <td>{{ InstagramStats?.website_clicks_totalcount }}</td>
+                                        <td>{{ InstagramStats?.profile_views_totalcount }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -324,7 +344,7 @@
                                 <thead>
                                     <tr>
                                         <th>Created Date</th>
-                                        <th></th>
+                                        <th>Image</th>
                                         <th>Post</th>
                                         <th>Type</th>
                                         <th>Reach</th>
@@ -337,27 +357,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let post of posts">
-                                        <td>{{ post.createdDate }}</td>
+                                    <tr *ngFor="let post of recentPost">
+                                        <td>{{ post ?.createdDate |date }}</td>
                                         <td>
                                             <span class="iconButton medium rounded-pill">
-                                                <img src="../../../../../assets/images/ke.png"
-                                                    class="img-fluid rounded-pill" alt="">
+                                                <img src={{post?.pictureURL}} class="img-fluid rounded-pill" alt="">
                                             </span>
                                         </td>
-                                        <td>{{ post.postContent }}</td>
+                                        <td>{{ post ?.messageText }}</td>
                                         <td>
-                                            <span class="iconButton small">
-                                                <i class="fa-light fa-pencil"></i>
-                                            </span>
+                                            {{post?.type}}
                                         </td>
-                                        <td>{{ post?.reach }}</td>
+                                        <td>{{ post?.postReach }}</td>
                                         <td>{{ post?.postClicks }}</td>
-                                        <td>{{ post?.reactions }}</td>
-                                        <td>{{ post?.comments }}</td>
-                                        <td>{{ post?.shares }}</td>
+                                        <td>{{ post?.postReactions }}</td>
+                                        <td>{{ post?.postComments }}</td>
+                                        <td>{{ post?.postShares }}</td>
                                         <td>{{ post?.engagementRate }}</td>
-                                        <td>{{ post?.grade }}</td>
+                                        <td>{{ post?.postGrade }}</td>
                                     </tr>
                                 </tbody>
                             </table>

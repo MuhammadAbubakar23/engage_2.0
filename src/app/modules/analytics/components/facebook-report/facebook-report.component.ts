@@ -106,7 +106,7 @@ export class FacebookReportComponent implements OnInit {
   ngOnInit(): void {
     const newObj = {
       title: 'Facebook Report',
-      url: '/analytics/feacbook-report',
+      url: '/analytics/facebook-report',
     };
     this.headerServices.setHeader(newObj);
     this.currentDate = new Date();
@@ -116,6 +116,7 @@ export class FacebookReportComponent implements OnInit {
     this.getTopFiveCustomers();
   }
   date_pagination( days:number){
+    debugger
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - days);
       this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
@@ -130,12 +131,22 @@ export class FacebookReportComponent implements OnInit {
       let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 7);
       this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     } else if (this.startDate != '' && this.enddate != '') {
+      // debugger;
       // const startDate = new Date(this.startDate);
       // const abc = startDate.setDate(startDate.getDate() - 1);
       // this.startDate = this.datePipe.transform(abc, 'YYYY-MM-dd') || '';
-      this.startDate = this.startDate;
-      this.enddate = this.enddate;
+      // this.startDate = this.startDate;
+      // this.enddate = this.enddate;
+      const startDateObj = new Date(this.startDate);
+      const endDateObj = new Date(this.enddate);
+      const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
+      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      if (diffDays > 30) {
+        alert('Select a date range of 30 days or less');
+        return;
+      }
     }
+    
 
     let data = {
       pageId: '622038187854126',
@@ -345,6 +356,7 @@ export class FacebookReportComponent implements OnInit {
     var option;
 
     option = {
+      color:['#fc1c72'],
       tooltip: {
         trigger: 'axis',
       },
@@ -486,6 +498,7 @@ export class FacebookReportComponent implements OnInit {
     var option;
 
     option = {
+      
       tooltip: {
         trigger: 'axis',
       },
@@ -535,6 +548,7 @@ export class FacebookReportComponent implements OnInit {
     var option: EChartsOption;
 
     option = {
+      color:['#4867aa' , '#ffa800' , '#0095ff'],
       tooltip: {
         trigger: 'item',
       },
@@ -546,7 +560,13 @@ export class FacebookReportComponent implements OnInit {
         {
           // name: this.externalRefernalsName,
           type: 'pie',
-          radius: '50%',
+          radius: ['40%', '70%'],
+          avoidLabelOverlap: false,
+          itemStyle: {
+            borderRadius: 10,
+            borderColor: '#fff',
+            borderWidth: 2
+          },
           data: this.externalRefernalsData,
           emphasis: {
             itemStyle: {
@@ -566,13 +586,17 @@ export class FacebookReportComponent implements OnInit {
     var option;
 
     option = {
+      color: ['#6441a5', '#e7edf1'],
       legend: {
-        data: ['Page Posts', 'Users Posts'],
-        orient: 'horizontal',
-        bottom: 'bottom',
+        data: ['Page Posts', 'Users Posts']
       },
       tooltip: {
         trigger: 'axis',
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {},
+        },
       },
       xAxis: {
         type: 'category',
@@ -586,11 +610,17 @@ export class FacebookReportComponent implements OnInit {
           name: 'Page Posts',
           data: this.publishedPegePostSpanCounts,
           type: 'bar',
+          itemStyle: {
+            borderRadius: 5,
+          }
         },
         {
           name: 'Users Posts',
           data: this.publishedUserPostSpanCounts,
           type: 'bar',
+          itemStyle: {
+            borderRadius: 5,
+          }
         },
       ],
     };
@@ -606,6 +636,7 @@ export class FacebookReportComponent implements OnInit {
     var option: EChartsOption;
 
     option = {
+      color:['#6441a5','#fa0060', '#00d3a2'],
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -686,6 +717,7 @@ export class FacebookReportComponent implements OnInit {
     var option: EChartsOption;
 
     option = {
+      color:['#6441a5','#fa0060' ],
       tooltip: {
         trigger: 'axis',
         axisPointer: {
