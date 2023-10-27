@@ -19,6 +19,13 @@ const routes: Routes = [
     redirectTo: '/console/home',
     pathMatch: 'full',
   },
+  // For Jazz, TPPL, Morinaga
+  // {
+  //   path: 'analytics',
+  //   redirectTo: 'analytics/whatsapp-report',
+  //   pathMatch: 'full',
+  // },
+  // For KE
   {
     path: 'analytics',
     redirectTo: 'analytics/inbound-outbound-report',
@@ -28,6 +35,10 @@ const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./identity/identity.module').then((f) => f.IdentityModule),
+  },{
+    path: 'survey',
+    loadChildren: () =>
+      import('./survey-forms/survey-forms.module').then((f) => f.SurveyFormsModule),
   },
   {
     path: '',

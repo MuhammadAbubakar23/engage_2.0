@@ -130,6 +130,8 @@ export class ResponderHeaderComponent implements OnInit {
   unrespondedCount: number = 0;
   userInfo: any;
   activeChannel: string = '';
+  finalStatus:any[]=[];
+  profileStatus:any[]=[];
 
   ngOnInit(): void {
     this.flag = this._route.url.split('/')[2];
@@ -155,6 +157,25 @@ export class ResponderHeaderComponent implements OnInit {
       this.userInfo = this.stor.retrive('userInfo', 'O').local;
     }
 
+    const menu = this.stor.retrive('Tags', 'O').local;
+      menu.forEach((item:any) => {
+        if(item.name == "Final Status"){
+          item.subTags.forEach((finalStatusObj:any) => {
+            if(!this.finalStatus.includes(finalStatusObj)){
+            this.finalStatus.push(finalStatusObj)
+            }
+          });
+        }
+        if(item.name == "Profile Status"){
+          item.subTags.forEach((profileStatusObj:any) => {
+            if(!this.profileStatus.includes(profileStatusObj)){
+            this.profileStatus.push(profileStatusObj)
+            }
+          });
+        }
+
+      });
+
     this.teamPermissions = this.store.retrive('permissionteam', 'O').local;
     Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(
       (tooltipNode) => new Tooltip(tooltipNode)
@@ -176,7 +197,7 @@ export class ResponderHeaderComponent implements OnInit {
       });
 
     this.Subscription = this.updateCommentsService.receiveComment().subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
+        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
           if (Object.keys(res).length > 0) {
             res.forEach((msg: any) => {
               if (this.userInfo.userId == msg.userId) {
@@ -190,7 +211,7 @@ export class ResponderHeaderComponent implements OnInit {
       });
 
     this.Subscription = this.unrespondedCountService.getUnRespondedCount().subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
+        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
           if (Object.keys(res).length > 0) {
             if (this.userInfo.id == res.contentCount.profileId) {
               // if (this.userInfo.postType == res.contentCount.contentType) {
@@ -202,7 +223,7 @@ export class ResponderHeaderComponent implements OnInit {
       });
 
       this.Subscription = this.queryStatusService.bulkReceiveQueryStatus().subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
+        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
           if (Object.keys(res).length > 0) {
               if (this.userInfo.id == localStorage.getItem('assignedProfile')) {
                 this.unrespondedCount = 0;
@@ -1092,7 +1113,7 @@ export class ResponderHeaderComponent implements OnInit {
   Block(id: any) {
     var obj = {
       channel: '',
-      flag: 'blacklist',
+      flag: 'black_list',
       status: true,
       messageId: 0,
       profileId: id,
@@ -1116,7 +1137,7 @@ export class ResponderHeaderComponent implements OnInit {
   Unblock(id: any) {
     var obj = {
       channel: '',
-      flag: 'blacklist',
+      flag: 'black_list',
       status: false,
       messageId: 0,
       profileId: id,
@@ -1129,7 +1150,7 @@ export class ResponderHeaderComponent implements OnInit {
           this.itemsToBeUpdated = [];
           this.blockStatus = false;
           this.reloadComponent('unblock');
-          this._route.navigateByUrl('all-inboxes/blacklist/all');
+          this._route.navigateByUrl('all-inboxes/black_list/all');
         }
       });
   }

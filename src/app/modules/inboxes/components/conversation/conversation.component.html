@@ -5,7 +5,7 @@
       <p style="color: white"> Loading... </p>
     </ngx-spinner>
     <div class="filter-toolbar p-0 border-0 collapse show" id="filter-bar"
-      *ngIf="FlagForAssignToMe != 'assigned-to-me'">
+      *ngIf="FlagForAssignToMe != 'assigned_to_me'">
       <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
         <li class="list-inline-item">
           <div class="dropdown">
@@ -448,7 +448,7 @@
           <input *ngIf="flag != 'sent'" class="form-check-input me-1" type="checkbox" aria-label="..."
             data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Check All"
             [checked]="masterSelected" value="m1" (change)="checkUncheckAll($event)"
-            [disabled]="FlagForAssignToMe == 'assigned-to-me'">
+            [disabled]="FlagForAssignToMe == 'assigned_to_me'">
           <div class="dropdown">
             <!-- <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -480,7 +480,7 @@
         </li>
         <li class="list-group-item border-0" (click)="Reload()" aria-label="..." data-bs-toggle="tooltip"
           data-bs-placement="bottom" title="" data-bs-original-title="Refresh"
-          [style.display]="FlagForAssignToMe == 'assigned-to-me'?'none':'block'">
+          [style.display]="FlagForAssignToMe == 'assigned_to_me'?'none':'block'">
           <i class="fal fa-redo-alt"></i>
         </li>
         <!-- <div [hidden]="flag == 'trash'"> -->
@@ -571,7 +571,7 @@
               <li [hidden]="flag != 'starred'">
                 <a class="dropdown-item" (click)="RemoveStarred()">Remove star</a>
               </li>
-              <li [hidden]="flag != 'blacklist'">
+              <li [hidden]="flag != 'black_list'">
                 <a class="dropdown-item" (click)="Unblock()">Unblock User(s)</a>
               </li>
               <!-- <li>
@@ -631,7 +631,7 @@
                   <input [checked]="query.isChecked" value="{{query.id}}"
                     (change)="isAllSelected($event, i, query.platform, query.profileId, group.createdDate)"
                     class="form-check-input me-1" type="checkbox" aria-label="..."
-                    [disabled]="FlagForAssignToMe == 'assigned-to-me'">
+                    [disabled]="FlagForAssignToMe == 'assigned_to_me'">
                 </td>
                 <td style="width: 40px;">
                   <i *ngIf="query.platform == 'Facebook'" class="fab fa-facebook navytext" data-bs-toggle="tooltip"

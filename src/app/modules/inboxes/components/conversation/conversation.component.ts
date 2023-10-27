@@ -117,7 +117,7 @@ export class ConversationComponent implements OnInit {
     this.FlagForAssignToMe = this.currentUrl.split('/')[2];
     this.TodayDate = new Date();
 
-    if (this.currentUrl.split('/')[2] == 'assigned-to-me') {
+    if (this.currentUrl.split('/')[2] == 'assigned_to_me') {
       this.SpinnerService.show();
       this.commondata.GetAllocatedProfiles().subscribe(
         (res: any) => {
@@ -595,7 +595,7 @@ export class ConversationComponent implements OnInit {
   }
 
   Reload() {
-    if (this.FlagForAssignToMe == 'assigned-to-me') {
+    if (this.FlagForAssignToMe == 'assigned_to_me') {
     }
     this.TotalUnresponded = 0;
     this.Ids = [];
@@ -677,7 +677,7 @@ export class ConversationComponent implements OnInit {
       );
     } else if (this.currentUrl.split('/')[2] == 'trash') {
       this.reloadComponent('removeFromTrashToOpen');
-    } else if (this.currentUrl.split('/')[2] == 'assigned-to-me') {
+    } else if (this.currentUrl.split('/')[2] == 'assigned_to_me') {
       this.SpinnerService.show();
       this.headerCountService.shareUnresponedCount(count);
       this.fetchId.setPlatform(platform);
@@ -1258,7 +1258,7 @@ export class ConversationComponent implements OnInit {
     this.Ids.forEach((id: any) => {
       var obj = {
         channel: '',
-        flag: 'blacklist',
+        flag: 'black_list',
         status: false,
         messageId: 0,
         profileId: id,

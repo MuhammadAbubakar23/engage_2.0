@@ -134,6 +134,7 @@ export class CommonDataService {
   updateTag = environment.links.console.updateTag;
   deleteTags = environment.links.console.deleteTags;
   getParents = environment.links.console.getParents;
+  getAllTags = environment.links.console.defaultTags;
   // rules
   deleteRules = environment.links.console.deleteRules;
   getAllRules = environment.links.console.getAllRules;
@@ -669,6 +670,10 @@ export class CommonDataService {
 
   GetInstagramProfile(body:any){
     return this.http.post(this.CommonBaseUrl+this.instagramProfile,body)
+  }
+
+  GetAllTags(){
+    return this.http.get(this.consoleBaseUrl+this.getAllTags)
   }
 }
 

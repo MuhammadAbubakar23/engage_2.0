@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/identity/AuthService/auth.service';
 import { AgentDetailsService } from 'src/app/services/AgentDetailsService/agent-details.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import { LoginDto } from 'src/app/shared/Models/LoginDto';
+import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
@@ -30,10 +31,13 @@ export class LoginComponent implements OnInit {
     private stor: StorageService,
     private router: Router,
     private spinnerService: NgxSpinnerService,
-    private signalRService: SignalRService
+    private signalRService: SignalRService,
+    private commonService: CommonDataService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getAllTags();
+  }
 
   submit() {
     this.spinnerService.show();
@@ -82,5 +86,11 @@ export class LoginComponent implements OnInit {
   }
   closeToaster() {
     this.toastermessage = false;
+  }
+
+  getAllTags() {
+    this.commonService.GetAllTags().subscribe((res:any)=>{
+      this.stor.store('Tags', res);
+    })
   }
 }

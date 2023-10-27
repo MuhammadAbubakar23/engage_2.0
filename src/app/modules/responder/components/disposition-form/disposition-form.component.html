@@ -23,6 +23,15 @@
                                 <!-- <option selected="" disabled>Select Disposition</option> -->
                                 <option *ngFor="let tag of dispositionTags" value={{tag.id}}>{{tag.name}}</option>
                             </select>
+
+                            <!-- From DB -->
+                            <!-- <select class="form-select" id="dispositionId" formControlName="dispositionId" aria-label="Floating label select example"
+                            [ngClass]="{'is-invalid' : (dispositionForm.get('dispositionId')!.errors && (dispositionForm.get('dispositionId')!.touched ||
+                                dispositionForm.get('dispositionId')!.dirty))}">
+                                <option selected="" disabled>Select Disposition</option>
+                                <option *ngFor="let tag of dispositionMenu" value={{tag.id}}>{{tag.name}}</option>
+                            </select> -->
+                            
                             <!-- <select class="form-select" id="dispositionId" formControlName="dispositionId" aria-label="Floating label select example"
                             [ngClass]="{'is-invalid' : (dispositionForm.get('dispositionId')!.errors && (dispositionForm.get('dispositionId')!.touched ||
                                 dispositionForm.get('dispositionId')!.dirty))}">

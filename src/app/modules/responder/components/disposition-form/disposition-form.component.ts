@@ -5,6 +5,7 @@ import { DispositionFormDto } from 'src/app/shared/Models/DispositionFormDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
   selector: 'app-disposition-form',
@@ -16,11 +17,13 @@ export class DispositionFormComponent implements OnInit {
   dispositionForm!: FormGroup;
   dispositionFormDto = new DispositionFormDto();
   dispositionTags:any;
+  dispositionMenu:any[]=[];
 
   constructor(private commonService : CommonDataService,
     private route : Router,
     private toggleService : ToggleService,
-    private lodeModuleService : ModulesService) {
+    private lodeModuleService : ModulesService,
+    private stor : StorageService) {
       
     this.dispositionForm = new FormGroup({
       dispositionId: new FormControl('', Validators.required),
@@ -45,6 +48,17 @@ export class DispositionFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDispositionTags();
+
+    const menu = this.stor.retrive('Tags', 'O').local;
+      menu.forEach((item:any) => {
+        if(item.name == "Dispositions"){
+          item.subTags.forEach((singleMenu:any) => {
+            if(!this.dispositionMenu.includes(singleMenu)){
+            this.dispositionMenu.push(singleMenu)
+            }
+          });
+        }
+      });
   }
 
   getDispositionTags(){
