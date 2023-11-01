@@ -26,7 +26,8 @@
                             <li class="list-inline-item">
                                 <div class="dropdown icondropdown w-auto">
                                     <button class="btn dropdown-toggle" type="button" id="columnssort"
-                                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                        (click)="mouseClickReset()" data-bs-toggle="dropdown" aria-expanded="false"
+                                        data-bs-auto-close="outside">
                                         Channels
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="columnssort">
@@ -40,7 +41,7 @@
                                             </form>
                                         </li>
                                         <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
-                                            style="overflow: auto; outline: none;">
+                                            style="overflow: auto; height: 400px;">
                                             <div class="scroll-content">
                                                 <li *ngFor="let channel of channelOptions | filter:searchText">
                                                     <a class="dropdown-item d-flex align-items-center">
@@ -62,7 +63,7 @@
                             <li class="list-inline-item">
                                 <div class="dropdown icondropdown w-auto">
                                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false" data-bs-auto-close="outside">
+                                        (click)="mouseClickReset()" aria-expanded="false" data-bs-auto-close="outside">
                                         Content Types
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="posttype">
@@ -76,7 +77,7 @@
                                             </form>
                                         </li>
                                         <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
-                                            style="overflow: auto; outline: none;">
+                                            style="overflow: auto; height: 400px;">
                                             <div class="scroll-content">
                                                 <li *ngFor="let contentType of contentTypes | filter:searchText">
                                                     <a class="dropdown-item d-flex align-items-center">
@@ -100,7 +101,7 @@
                             <li class="list-inline-item">
                                 <div class="dropdown icondropdown w-auto">
                                     <button class="btn dropdown-toggle" id="dropdownMenuButton1"
-                                        data-bs-toggle="dropdown" aria-expanded="true">
+                                        (click)="mouseClickReset()" data-bs-toggle="dropdown" aria-expanded="true">
                                         Tag
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="columnssort">
@@ -116,13 +117,13 @@
                                         <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
                                             style="overflow: auto; height: 400px;">
                                             <div class="scroll-content">
-                                                <li *ngFor="let tag of keywordslist  | filter:searchText">
+                                                <li *ngFor="let tag of subTags  | filter:searchText">
                                                     <a class="dropdown-item d-flex align-items-center">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
-                                                                [id]="tag.id" [(ngModel)]="tag.isSelected"
+                                                                [id]="tag.slug" [(ngModel)]="tag.isSelected"
                                                                 (change)="onCheckboxChange()">
-                                                            <label class="form-check-label" [for]="tag.id">
+                                                            <label class="form-check-label" [for]="tag.slug">
                                                                 <i class="fal fa-tag coal"></i> {{ tag.name }}
                                                             </label>
                                                         </div>
@@ -149,10 +150,10 @@
                                         <li *ngFor="let sentiment of sentimentOptions">
                                             <a class="dropdown-item d-flex align-items-center">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" [id]="sentiment.id"
+                                                    <input class="form-check-input" type="checkbox" [id]="sentiment.slug"
                                                         [(ngModel)]="sentiment.isSelected"
                                                         (change)="onCheckboxChange()">
-                                                    <label class="form-check-label" [for]="sentiment.id">
+                                                    <label class="form-check-label" [for]="sentiment.slug">
                                                         {{ sentiment.name }}
                                                     </label>
                                                 </div>
@@ -164,7 +165,7 @@
                             <li class="list-inline-item">
                                 <div class="dropdown w-auto">
                                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false" data-bs-auto-close="outside" (click)="getListUser()">
+                                        (click)="mouseClickReset()" aria-expanded="false" data-bs-auto-close="outside">
                                         Tagged by
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="posttype">
@@ -178,7 +179,7 @@
                                             </form>
                                         </li>
                                         <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
-                                            style="overflow: auto; outline: none;">
+                                            style="overflow: auto; height: 400px;">
                                             <div class="scroll-content">
                                                 <li *ngFor="let option of taggedByOptions | filter:searchText">
                                                     <a class="dropdown-item d-flex align-items-center">
@@ -192,12 +193,6 @@
                                                     </a>
                                                 </li>
                                             </div>
-                                            <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
-                                                <div class="scrollbar-thumb scrollbar-thumb-x"></div>
-                                            </div>
-                                            <div class="scrollbar-track scrollbar-track-y" style="display: none;">
-                                                <div class="scrollbar-thumb scrollbar-thumb-y"></div>
-                                            </div> -->
                                         </div>
                                     </ul>
                                 </div>
@@ -333,9 +328,9 @@
                                     <li
                                         *ngFor="let channelwise of Inbound_Outbound_Report?.channelReportData?.channelWiseData">
                                         <span
-                                            [ngClass]="channelwise.platform=='Facebook'?'navy':'' || channelwise.platform=='Instagram'?'cherry':'' || channelwise.platform=='Email'?'berry':''|| channelwise.platform=='Twitter'?'ocean':''|| channelwise.platform=='LinkedIn'?'pearl  ':''|| channelwise.platform=='YouTube'?'radical':''|| channelwise.platform=='SMS'?'cherry':''|| channelwise.platform=='Whatsapp'?'mint':''|| channelwise.platform=='OfficeEmail'?'berry':''|| channelwise.platform=='WebChat'?'webchatcolor':''">
+                                            [ngClass]="channelwise.platform=='Facebook'?'navy':'' || channelwise.platform=='Instagram'?'cherry':'' || channelwise.platform=='Email'?'berry':''|| channelwise.platform=='Twitter'?'ocean':''|| channelwise.platform=='LinkedIn'?'pearl  ':''|| channelwise.platform=='Youtube'?'radical':''|| channelwise.platform=='SMS'?'cherry':''|| channelwise.platform=='WhatsApp'?'mint':''|| channelwise.platform=='OfficeEmail'?'berry':''|| channelwise.platform=='WebChat'?'webchatcolor':''|| channelwise.platform=='PlayStore'?'googleplay':''">
                                             <i class=""
-                                                [ngClass]="channelwise.platform=='Facebook'?'fab fa-facebook navytext':'' || channelwise.platform=='Instagram'?'fa-brands fa-instagram':''|| channelwise.platform=='Email'?'fa-light fa-envelope':''  || channelwise.platform=='Twitter'?'fab fa-twitter':'' || channelwise.platform=='LinkedIn'?'fa-brands fa-linkedin-in linkedinTxt':'' || channelwise.platform=='YouTube'?'fa-message-sms':'' || channelwise.platform=='SMS'?'fa-message-sms':'' || channelwise.platform=='Whatsapp'?'fa-brands fa-whatsapp':'' || channelwise.platform=='OfficeEmail'?'fa-message-sms':'' || channelwise.platform=='WebChat'?'fa-light fa-messages':''"></i>
+                                                [ngClass]="channelwise.platform=='Facebook'?'fab fa-facebook navytext':'' || channelwise.platform=='Instagram'?'fa-brands fa-instagram':''|| channelwise.platform=='Email'?'fa-light fa-envelope':''  || channelwise.platform=='Twitter'?'fab fa-twitter':'' || channelwise.platform=='LinkedIn'?'fa-brands fa-linkedin-in linkedinTxt':'' || channelwise.platform=='Youtube'?'fa-brands fa-youtube':'' || channelwise.platform=='SMS'?'fa-message-sms':'' || channelwise.platform=='WhatsApp'?'fab fa-whatsapp ':'' || channelwise.platform=='OfficeEmail'?'fa-message-sms':'' || channelwise.platform=='PlayStore'?'fa-brands fa-google-play':'' || channelwise.platform=='WebChat'?'fa-light fa-messages':''"></i>
                                             {{channelwise.platform}}
                                         </span>
                                         <span class="fw-semibold">Inbound {{channelwise.inboundData}} | Outbound

@@ -45,7 +45,7 @@
                                     </li>
 
                                     <div class="dd-scroll" data-scrollbar="true" style="overflow: auto; height: 400px;">
-                                        <li *ngFor="let tag of keywordslist |filter:searchText " [value]="tag.id">
+                                        <li *ngFor="let tag of keywordslist |filter:searchText " [value]="tag.slug">
                                             <a class="dropdown-item d-flex align-items-center">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox"
@@ -160,13 +160,12 @@
                 <!-- <button (click)="exportToCSV()">Export to CSV</button> -->
 
                 <div class="card iceBg p-4 rounded mb-5">
-                    <h5 class="section-heading mb-4 p-0">Inbound Traffic - Morning Shift </h5>
+                    <!-- <h5 class="section-heading mb-4 p-0">Inbound Traffic - Morning Shift </h5> -->
                     <div class="graphcontainer align-items-end mb-5">
                         <div class="text-center">
                             <div id="shiftReport" style="height: 300px; width: 900px;"></div>
                         </div>
                     </div>
-                </div>
 
                     <div class="row mb-5 align-items-start">
                         <div class="col-md-4">
@@ -227,6 +226,7 @@
             </div>
         </div>
     </div>
+</div>
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
         aria-live="assertive" aria-atomic="true">

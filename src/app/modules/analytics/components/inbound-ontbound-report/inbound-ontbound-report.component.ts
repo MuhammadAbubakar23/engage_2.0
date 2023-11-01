@@ -13,13 +13,14 @@ import * as echarts from 'echarts';
 import { SharedModule } from '../../../../shared/shared.module';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { FilterPipe } from 'src/app/shared/CustomPipes/filter.pipe';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
   standalone: true,
   selector: 'app-inbound-ontbound-report',
   templateUrl: './inbound-ontbound-report.component.html',
   styleUrls: ['./inbound-ontbound-report.component.scss'],
-  imports: [CommonModule, FormsModule, SharedModule, NgxSpinnerModule ],
+  imports: [CommonModule, FormsModule, SharedModule, NgxSpinnerModule],
 })
 export class InboundOntboundReportComponent implements OnInit {
   @ViewChild('inboundOutboundReport', { static: true })
@@ -42,6 +43,7 @@ export class InboundOntboundReportComponent implements OnInit {
   Inbound_Outbound_Graph: any;
   Inbound_data: any[] = [];
   Outbound_data: any[] = [];
+  platformsArray: any[] = [];
   currentDate: any;
   maxEndDate: any;
 
@@ -55,21 +57,47 @@ export class InboundOntboundReportComponent implements OnInit {
     private commonService: CommonDataService,
     private datePipe: DatePipe,
     private cdr: ChangeDetectorRef,
-    private SpinnerService: NgxSpinnerService
-  ) { }
+    private SpinnerService: NgxSpinnerService,
+    private stor: StorageService
+  ) {}
   ngOnInit(): void {
+    const menu = this.stor.retrive('Tags', 'O').local;
+    menu.forEach((item: any) => {
+      if (item.name == 'Tags') {
+        item.subTags.forEach((parentTagObj: any) => {
+          parentTagObj.subTags.forEach((singleTagObj: any) => {
+            if (!this.subTags.includes(singleTagObj)) {
+              this.subTags.push(singleTagObj);
+            }
+          });
+        });
+      }
+      if (item.name == 'Sentiments') {
+        item.subTags.forEach((sentimentObj: any) => {
+          if (!this.sentimentOptions.includes(sentimentObj)) {
+            this.sentimentOptions.push(sentimentObj);
+          }
+        });
+      }
+    });
+
     this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split('T')[0];
     this.AddGraph();
+    this.getListUser();
     const newObj = {
       title: 'Inbound/Outbound Report',
       url: '/analytics/inbound-outbound-report',
     };
     this._hS.setHeader(newObj);
-    this.getTags();
+    // this.getTags();
     // this.getListUser();
-    this.getSentiments();
+    // this.getSentiments();
   }
+  mouseClickReset() {
+    this.searchText = '';
+  }
+
   onCheckboxChange() {
     this.AddGraph();
     this.cdr.detectChanges();
@@ -85,14 +113,14 @@ export class InboundOntboundReportComponent implements OnInit {
       .map((item) => item.value);
     this.selectedContent = selectedContentTypesArray.toString();
 
-    let selectedTagOptionArray = this.keywordslist
+    let selectedTagOptionArray = this.subTags
       .filter((item) => item.isSelected)
-      .map((item) => item.id);
+      .map((item) => item.slug);
     this.selectedTagOption = selectedTagOptionArray.toString();
 
     let selectedSentimentsArray = this.sentimentOptions
       .filter((item) => item.isSelected)
-      .map((item) => item.id);
+      .map((item) => item.slug);
     this.selectedSentiment = selectedSentimentsArray.toString();
 
     let selectedTagByArray = this.taggedByOptions
@@ -123,7 +151,7 @@ export class InboundOntboundReportComponent implements OnInit {
         return;
       }
     }
-    
+
     const requestData = {
       fromDate: this.startDate,
       toDate: this.endDate,
@@ -139,22 +167,23 @@ export class InboundOntboundReportComponent implements OnInit {
     };
     if (this.endDate >= this.startDate) {
       this.SpinnerService.show();
+      this.Inbound_data = [];
+      this.Outbound_data = [];
+      this.platformsArray = [];
       this.commonService.Addinboundoutbound(requestData).subscribe(
         (response: any) => {
           this.SpinnerService.hide();
-          this.Inbound_data = [];
-          this.Outbound_data = [];
-
           if (response) {
             this.Inbound_Outbound_Report = response;
             this.Inbound_Outbound_Report.channelReportData.dateWiseData.forEach(
               (data: any) => {
+                const date = new Date(data.createdDate);
                 this.Inbound_data.push({
-                  x: new Date(data.createdDate),
+                  x: date.toLocaleDateString(),
                   y: data.inboundData,
                 });
                 this.Outbound_data.push({
-                  x: new Date(data.createdDate),
+                  x: date.toLocaleDateString(),
                   y: data.outboundData,
                 });
               }
@@ -168,22 +197,11 @@ export class InboundOntboundReportComponent implements OnInit {
             var option: echarts.EChartsOption;
             option = {
               color: ['rgba(255,189,61,255)', 'rgba(96,191,235,255)'],
-              title: {
-                text: '',
-              },
               tooltip: {
                 trigger: 'axis',
               },
-              toolbox: {
-                feature: {
-                  saveAsImage: {},
-                },
-              },
               legend: {
                 data: ['Inbound', 'OutBound'],
-                textStyle: {
-                  fontSize: 13,
-                },
               },
               grid: {
                 left: '3%',
@@ -191,35 +209,25 @@ export class InboundOntboundReportComponent implements OnInit {
                 bottom: '3%',
                 containLabel: true,
               },
-              xAxis: [
-                {
-                  type: 'category',
-                  boundaryGap: false,
-                  axisLabel: {
-                    formatter: function (value: string | number | Date) {
-                      return new Date(value).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      });
-                    },
-                  },
-                  data: this.Inbound_data.map(function (dataPoint) {
-                    return dataPoint.x;
-                  }),
+              toolbox: {
+                feature: {
+                  saveAsImage: {},
                 },
-              ],
-              yAxis: [
-                {
-                  type: 'value',
-                },
-              ],
+              },
+              xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: this.Inbound_data.map(function (dataPoint) {
+                  return dataPoint.x;
+                }),
+              },
+              yAxis: {
+                type: 'value',
+              },
               series: [
                 {
                   name: 'Inbound',
                   type: 'line',
-                  smooth: true,
-                  symbolSize: 8,
                   data: this.Inbound_data.map(function (dataPoint) {
                     return dataPoint.y;
                   }),
@@ -227,8 +235,6 @@ export class InboundOntboundReportComponent implements OnInit {
                 {
                   name: 'OutBound',
                   type: 'line',
-                  smooth: true,
-                  symbolSize: 8,
                   data: this.Outbound_data.map(function (dataPoint) {
                     return dataPoint.y;
                   }),
@@ -267,11 +273,6 @@ export class InboundOntboundReportComponent implements OnInit {
               tooltip: {
                 trigger: 'item',
                 formatter: '{a} <br/>{b}: {c}%',
-              },
-              toolbox: {
-                feature: {
-                  saveAsImage: {},
-                },
               },
               legend: {
                 orient: 'vertical',
@@ -316,16 +317,16 @@ export class InboundOntboundReportComponent implements OnInit {
 
             var option: echarts.EChartsOption;
             const tagReportData = this.Inbound_Outbound_Report.tagReportData;
-            const platformsArray: any[] = [];
-
             tagReportData.forEach((channel: any) => {
-              if (!platformsArray.includes(channel.platform)) {
-                platformsArray.push(channel.platform);
+              if (!this.platformsArray.includes(channel.platform)) {
+                this.platformsArray.push(channel.platform);
               }
               channel.data.forEach((tag: any) => {
                 const name = tag.name;
                 const count = tag.count;
-                const existingNameCount = this.tagsPerChannel.find((n) => n.name === name);
+                const existingNameCount = this.tagsPerChannel.find(
+                  (n) => n.name === name
+                );
                 if (existingNameCount) {
                   existingNameCount.data.push(count);
                 } else {
@@ -340,14 +341,9 @@ export class InboundOntboundReportComponent implements OnInit {
             });
             option = {
               tooltip: { trigger: 'axis' },
-              toolbox: {
-                feature: {
-                  saveAsImage: {},
-                },
-              },
               // legend: {top: 10,
               //   left: 10},
-              xAxis: [{ type: 'category', data: platformsArray }],
+              xAxis: [{ type: 'category', data: this.platformsArray }],
               yAxis: [{ type: 'value' }],
               series: this.tagsPerChannel,
             };
@@ -385,11 +381,6 @@ export class InboundOntboundReportComponent implements OnInit {
             option = {
               legend: {},
               tooltip: { trigger: 'axis' },
-              toolbox: {
-                feature: {
-                  saveAsImage: {},
-                },
-              },
               dataset: {
                 source: sentimentDataPoints,
               },
@@ -434,7 +425,6 @@ export class InboundOntboundReportComponent implements OnInit {
                 },
               ],
             };
-
             option && chart.setOption(option);
           }
         },
@@ -448,25 +438,6 @@ export class InboundOntboundReportComponent implements OnInit {
   }
   resetEndDate() {
     this.endDate = '';
-  }
-   getPlatformIconClass(platformName: string): string {
-    
-    switch (platformName.toLowerCase()) {
-      case 'facebook':
-        return 'fa-facebook';
-      case 'twitter':
-        return 'fa-twitter';
-      case 'whatsapp':
-        return 'fa-whatsapp';
-      case 'linkedin':
-        return 'fa-linkedin';
-      case 'email':
-        return 'fa-envelope';
-      case 'instagram':
-        return 'fa-instagram';
-      default:
-        return '';
-    }
   }
   reportOptions = [
     { id: '11', label: 'Date' },
@@ -594,44 +565,63 @@ export class InboundOntboundReportComponent implements OnInit {
     { id: '14', label: 'Outbound Report', isSelected: false },
   ];
   tagOptions = [{ id: '', name: '', isSelected: false }];
-  sentimentOptions = [{ id: '', name: '', isSelected: false }];
+  sentimentOptions: any[] = [];
   taggedByOptions = [{ id: '', name: '', isSelected: false }];
-  keywordslist: any[] = [];
+  subTags: any[] = [];
   searchText: string = '';
-  getTags(): void {
-    this.commonService.GetTagsList().subscribe((res: any) => {
-      console.log('All tags===>', res);
-      this.tagOptions = res;
-      this.tagOptions.forEach((xyz: any) => {
-        xyz.keywordList.forEach((abc: any) => {
-          this.keywordslist.push(abc);
-        });
-      });
-    });
-  }
-  getSentiments(): void {
-    this.commonService.GetSentimentData().subscribe(
-      (response: any) => {
-        this.sentimentOptions = response;
-        console.log(this.sentimentOptions);
-      },
-      (error: any) => {
-        console.error(error);
-      }
-    );
-  }
+  // getTags(): void {
+  //   this.commonService.GetTagsList().subscribe((res: any) => {
+  //     debugger
+  //     res.forEach((tags: any) => {
+  //       if (tags.name == 'Tags') {
+  //         tags.subTags.forEach((parentTag: any) => {
+  //           parentTag.subTags.forEach((singleTagObj: any) => {
+  //             if (!this.subTags.includes(singleTagObj)) {
+  //               this.subTags.push(singleTagObj);
+  //             }
+  //           });
+  //         });
+  //       }
+  //       if (tags.name == "Sentiments") {
+  //         tags.subTags.forEach((sentimentObj: any) => {
+  //           if (!this.sentimentOptions.includes(sentimentObj)) {
+  //             this.sentimentOptions.push(sentimentObj)
+  //           }
+  //         });
+  //       }
+  //     });
+  //   });
+  // }
+  // getSentiments(): void {
+  //   this.commonService.GetSentimentData().subscribe(
+  //     (response: any) => {
+  //       this.sentimentOptions = response;
+  //       console.log(this.sentimentOptions);
+  //     },
+  //     (error: any) => {
+  //       console.error(error);
+  //     }
+  //   );
+  // }
   closeToaster() {
     this.toastermessage = false;
   }
-  getListUser(): void {
-    this.commonService.GetUserList().subscribe(
-      (response: any) => {
-        this.taggedByOptions = response;
-        console.log(this.taggedByOptions);
-      },
-      (error: any) => {
-        console.error(error);
-      }
-    );
+
+  responseReceived: boolean = false;
+  getListUser() {
+    debugger;
+    if (!this.responseReceived) {
+      this.responseReceived = true;
+      this.commonService.GetUserList().subscribe(
+        (response: any) => {
+          this.taggedByOptions = response;
+          this.responseReceived = false;
+        },
+        (error: any) => {
+          console.error(error);
+          this.responseReceived = false;
+        }
+      );
+    }
   }
 }
