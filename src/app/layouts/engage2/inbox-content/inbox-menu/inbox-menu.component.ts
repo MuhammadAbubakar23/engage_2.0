@@ -31,7 +31,7 @@ export class InboxMenuComponent implements OnInit {
   YoutubeUnResponded: number = 0;
 
   flag:string='';
-
+  activeChannel: string = '';
   constructor(private filterService: FilterService,
     private commonService: CommonDataService,
     private unrespondedCountService: UnRespondedCountService,
@@ -39,6 +39,8 @@ export class InboxMenuComponent implements OnInit {
     private router: Router) { }
 
     ngOnInit(): void {
+      this.activeChannel = this.router.url.split('/')[3];
+
       this.flag = this.router.url.split('/')[2];
       if(this.flag == 'focused'){
         this.Subscription = this.unrespondedCountService

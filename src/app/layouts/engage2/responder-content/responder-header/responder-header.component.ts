@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { AfterViewInit, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Tooltip } from 'bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -131,7 +125,8 @@ export class ResponderHeaderComponent implements OnInit {
     private headerCountService: HeaderCountService,
     private stor: StorageService,
     private queryStatusService: QueryStatusService
-  ) {}
+  ) {
+  }
   unrespondedCount: number = 0;
   userInfo: any;
   activeChannel: string = '';
@@ -144,13 +139,14 @@ export class ResponderHeaderComponent implements OnInit {
     this.activeChannel = this._route.url.split('/')[5];
 
     this.Subscription = this.userInfoService.userInfo$.subscribe((userInfo) => {
-      debugger;
+      debugger
       if (userInfo != null) {
         this.userInfo = userInfo;
         localStorage.setItem('storeHeaderOpenedId', this.userInfo.userId);
       }
     });
     this.Subscription = this.headerCountService.count$.subscribe((count) => {
+
       if (count != null) {
         this.unrespondedCount = count;
         // localStorage.setItem('unrespondedCount', this.userInfo.userId);
@@ -163,85 +159,78 @@ export class ResponderHeaderComponent implements OnInit {
 
     const menu = this.stor.retrive('Tags', 'O').local;
     menu.forEach((item: any) => {
-      if (item.name == 'Final Status') {
+      if (item.name == "Final Status") {
         item.subTags.forEach((finalStatusObj: any) => {
           if (!this.finalStatus.includes(finalStatusObj)) {
-            this.finalStatus.push(finalStatusObj);
+            this.finalStatus.push(finalStatusObj)
           }
         });
       }
-      if (item.name == 'Profile Status') {
+      if (item.name == "Profile Status") {
         item.subTags.forEach((profileStatusObj: any) => {
           if (!this.profileStatus.includes(profileStatusObj)) {
-            this.profileStatus.push(profileStatusObj);
+            this.profileStatus.push(profileStatusObj)
           }
         });
       }
+
     });
 
     this.teamPermissions = this.store.retrive('permissionteam', 'O').local;
     Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(
       (tooltipNode) => new Tooltip(tooltipNode)
     ),
-      {
-        trigger: 'hover',
-      };
+    {
+      trigger: 'hover',
+    };
 
-    this.Subscription = this.updateMessagesService
-      .receiveMessage()
-      .subscribe((res) => {
+    this.Subscription = this.updateMessagesService.receiveMessage().subscribe((res) => {
+      if (Object.keys(res).length > 0) {
+        res.forEach((msg: any) => {
+          if (this.userInfo.userId == msg.fromId) {
+            // if (this.userInfo.postType == msg.contentType) {
+            this.unrespondedCount = this.unrespondedCount + 1;
+            // }
+          }
+        });
+      }
+    });
+
+    this.Subscription = this.updateCommentsService.receiveComment().subscribe((res) => {
+      if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
         if (Object.keys(res).length > 0) {
           res.forEach((msg: any) => {
-            if (this.userInfo.userId == msg.fromId) {
+            if (this.userInfo.userId == msg.userId) {
               // if (this.userInfo.postType == msg.contentType) {
               this.unrespondedCount = this.unrespondedCount + 1;
               // }
             }
           });
         }
-      });
+      }
+    });
 
-    this.Subscription = this.updateCommentsService
-      .receiveComment()
-      .subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
-          if (Object.keys(res).length > 0) {
-            res.forEach((msg: any) => {
-              if (this.userInfo.userId == msg.userId) {
-                // if (this.userInfo.postType == msg.contentType) {
-                this.unrespondedCount = this.unrespondedCount + 1;
-                // }
-              }
-            });
+    this.Subscription = this.unrespondedCountService.getUnRespondedCount().subscribe((res) => {
+      if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
+        if (Object.keys(res).length > 0) {
+          if (this.userInfo.id == res.contentCount.profileId) {
+            // if (this.userInfo.postType == res.contentCount.contentType) {
+            this.unrespondedCount = res.contentCount.unrespondedCount;
+            // }
           }
         }
-      });
+      }
+    });
 
-    this.Subscription = this.unrespondedCountService
-      .getUnRespondedCount()
-      .subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
-          if (Object.keys(res).length > 0) {
-            if (this.userInfo.id == res.contentCount.profileId) {
-              // if (this.userInfo.postType == res.contentCount.contentType) {
-              this.unrespondedCount = res.contentCount.unrespondedCount;
-              // }
-            }
+    this.Subscription = this.queryStatusService.bulkReceiveQueryStatus().subscribe((res) => {
+      if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
+        if (Object.keys(res).length > 0) {
+          if (this.userInfo.id == localStorage.getItem('assignedProfile')) {
+            this.unrespondedCount = 0;
           }
         }
-      });
-
-    this.Subscription = this.queryStatusService
-      .bulkReceiveQueryStatus()
-      .subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
-          if (Object.keys(res).length > 0) {
-            if (this.userInfo.id == localStorage.getItem('assignedProfile')) {
-              this.unrespondedCount = 0;
-            }
-          }
-        }
-      });
+      }
+    });
   }
 
   draftDto = new DraftDto();
@@ -334,11 +323,11 @@ export class ResponderHeaderComponent implements OnInit {
           this.reloadComponent('queryallocated');
           this._route.navigateByUrl(
             '/all-inboxes/' +
-              this.flag +
-              '/' +
-              this.flag2 +
-              '/responder/' +
-              platform
+            this.flag +
+            '/' +
+            this.flag2 +
+            '/responder/' +
+            platform
           );
 
           this.fetchId.setPlatform(platform);
@@ -831,14 +820,22 @@ export class ResponderHeaderComponent implements OnInit {
   }
 
   completeQuery(slug: string) {
-    if (slug == 'read') {
+    if (slug == 'read_all') {
       this.markAllAsRead();
     } else if (slug == 'save') {
       this.markAsComplete();
     }
   }
   markAsCompleteDto = new MarkAsCompleteDto();
-
+  // only for KE
+  removeAssignedQuery() {
+    const ProfileId = localStorage.getItem('profileId')
+    this.commondata.RemoveAssignedQuery(ProfileId).subscribe((res: any) => {
+      this.route.navigateByUrl('/all-inboxes/follow_up/all');
+      localStorage.setItem('assignedProfile', '')
+      console.log('remove Response===>', res)
+    })
+  }
   markAsComplete() {
     this.markAsCompleteDto.user = this.userInfo.userId;
     this.markAsCompleteDto.plateFrom = localStorage.getItem('parent') || '';
@@ -858,6 +855,7 @@ export class ResponderHeaderComponent implements OnInit {
       }
     );
   }
+
 
   showAgentsList: boolean = false;
   showMoreOptions: boolean = false;
@@ -1088,7 +1086,7 @@ export class ResponderHeaderComponent implements OnInit {
   itemsToBeUpdated: any[] = [];
 
   InsertTagInProfile(tagName: string, type: string, profileId: any) {
-    debugger;
+    debugger
     var obj = {
       feedId: profileId,
       tagName: tagName,
@@ -1111,7 +1109,7 @@ export class ResponderHeaderComponent implements OnInit {
   }
 
   RemoveTagInProfile(tagName: string, type: string, profileId: any) {
-    debugger;
+    debugger
     var obj = {
       feedId: profileId,
       tagName: tagName,

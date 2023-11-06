@@ -7,6 +7,7 @@
       style="overflow-y: auto; outline: none;">
       <div class="scroll-content">
         <a [routerLink]="['/all-inboxes/'+flag+'/all']" class="all-inboxes-menu list-group-item list-group-item-action"
+        [class.active]="activeChannel == 'all'" 
           value="all-conversation">
           <div class="iconButton medium skyBg">
             <i class="far fa-inbox"></i>
@@ -70,6 +71,7 @@
             <span class="badge twltte-bg rounded-pill" *ngIf="OfficeEmailUnResponded > 0">{{OfficeEmailUnResponded}}</span>
           </a> -->
         <a [routerLink]="['/all-inboxes/'+flag+'/WhatsApp']"
+        [class.active]="activeChannel == 'WhatsApp'" 
           class="all-inboxes-menu list-group-item list-group-item-action" value="whatsapp">
           <div class="iconButton medium mintBg">
             <i class="fab fa-whatsapp"></i>
@@ -103,6 +105,7 @@
 
           </a> -->
         <a [routerLink]="['/all-inboxes/'+flag+'/Facebook']"
+        [class.active]="activeChannel == 'Facebook'" 
           class="all-inboxes-menu list-group-item list-group-item-action" value="facebook">
           <div class="iconButton medium navyBg">
             <i class="fab fa-facebook-f"></i>
@@ -124,18 +127,25 @@
             </div>
             <span class="badge twltte-bg rounded-pill" *ngIf="WebchatUnResponded > 0">{{WebchatUnResponded}}</span>
           </a> -->
-        <a [routerLink]="['/all-inboxes/'+flag+'/Twitter']"
-          class="all-inboxes-menu list-group-item list-group-item-action" value="twitter">
-          <div class="iconButton medium oceanBg">
-            <i class="fab fa-twitter"></i>
-          </div>
-
-          <div class="ms-2 me-auto">
-            <div>Twitter</div>
-          </div>
-          <span class="badge twltte-bg rounded-pill" *ngIf="TwitterUnResponded > 0">{{TwitterUnResponded}}</span>
-        </a>
+     <li>
+      <a [routerLink]="['/all-inboxes/'+flag+'/Twitter']"
+      [class.active]="activeChannel == 'Twitter'" 
+      class="all-inboxes-menu list-group-item list-group-item-action" value="twitter" >
+      <div class="iconButton medium oceanBg">
+        <i class="fab fa-twitter"></i>
+      </div>
+      <div class="ms-2 me-auto"    
+      >
+        <div>Twitter</div>
+      </div>
+      <span class="badge twltte-bg rounded-pill" *ngIf="TwitterUnResponded > 0">{{TwitterUnResponded}}</span>
+    </a>
+     </li>
+        
+        
+   
         <a [routerLink]="['/all-inboxes/'+flag+'/Instagram']"
+        [class.active]="activeChannel == 'Instagram'" 
           class="all-inboxes-menu list-group-item list-group-item-action" value="instagram">
           <div class="iconButton medium instabg">
             <i class="fab fa-instagram"></i>
@@ -147,6 +157,7 @@
           <span class="badge twltte-bg rounded-pill" *ngIf="InstaUnResponded > 0">{{InstaUnResponded}}</span>
         </a>
         <a [routerLink]="['/all-inboxes/'+flag+'/LinkedIn']"
+        [class.active]="activeChannel == 'LinkedIn'" 
           class="all-inboxes-menu list-group-item list-group-item-action" value="linkedin">
           <div class="iconButton medium linkedinbg">
             <i class="fa-brands fa-linkedin-in"></i>
@@ -158,12 +169,13 @@
           <span class="badge twltte-bg rounded-pill" *ngIf="LinkedInUnResponded > 0">{{LinkedInUnResponded}}</span>
         </a>
         <a [routerLink]="['/all-inboxes/'+flag+'/PlayStore']"
+        [class.active]="activeChannel == 'PlayStore'"
         class="all-inboxes-menu list-group-item list-group-item-action" value="playstore">
-          <!-- <div class="iconButton medium googleplaybg">
-            <i class="fa-brands fa-google-play"></i>
-          </div> -->
+          <div class="iconButton medium googleplaybg"> 
+            <img src=".././../../../../assets/images/googleplaystor.png" style="width: 30px; height: 30px;">
+          </div>
                 <span>
-                  <img src=".././../../../../assets/images/googleplaystor.png">
+           
                 </span>
           <div class="ms-2 me-auto">
             <div>Google Play </div>
@@ -171,6 +183,7 @@
           <span class="badge twltte-bg rounded-pill" *ngIf="PlaystoreUnResponded > 0">{{PlaystoreUnResponded}}</span>
         </a>
         <a [routerLink]="['/all-inboxes/'+flag+'/Youtube']"
+        [class.active]="activeChannel == 'Youtube'"
           class="all-inboxes-menu list-group-item list-group-item-action" value="youtube">
           <div class="iconButton medium radicalBg">
             <i class="fab fa-youtube"></i>

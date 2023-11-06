@@ -17,16 +17,16 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 })
 export class TeamMenuComponent implements OnInit {
   menus$!: MenuModel[];
-  permissions$ :any;
-  permission$ :any;
+  permissions$: any;
+  permission$: any;
   menu$: any;
   loading$: any;
 
-  mainMenu:any[]=[];
-
-  menuArray:any[]=[];
+  mainMenu: any[] = [];
+  activeChannel: string = ''
+  menuArray: any[] = [];
   constructor(private MenuStore: Store<MenuState>, private PermissionStore: Store<PermissionState>, private _route: Router,
-    private stor : StorageService) {
+    private stor: StorageService) {
     // this.menu$ = this.MenuStore.select(getEmargingEqual('team_main_left_menu'));
     // this.loading$ = this.MenuStore.select(getMenusLoading);
     // this.MenuStore.dispatch(loadMenusList());
@@ -36,17 +36,20 @@ export class TeamMenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger
+    this.activeChannel = this._route.url.split('/')[2]
+
     this.MenuStore
       .select(getEmargingEqual('team_main_left_menu'))
-      .subscribe((item:MenuModel[]) => {
+      .subscribe((item: MenuModel[]) => {
 
         // removing responder menu from list for time being
         this.menuArray = [];
-        item.forEach((singleMenu:any)=>{
-          if((singleMenu.name != "Responder") && (singleMenu.name != "Draft") && (singleMenu.name != "Snoozed") && (singleMenu.name != "All Inboxes")){
-            if(!this.menuArray.includes(singleMenu)){
+        item.forEach((singleMenu: any) => {
+          if ((singleMenu.name != "Responder") && (singleMenu.name != "Draft") && (singleMenu.name != "Snoozed") && (singleMenu.name != "All Inboxes")) {
+            if (!this.menuArray.includes(singleMenu)) {
               this.menuArray.push(singleMenu);
-            }            
+            }
           }
         });
         item = this.menuArray;
@@ -54,23 +57,27 @@ export class TeamMenuComponent implements OnInit {
         this.menus$ = [...item];
       });
 
-      const menu = this.stor.retrive('Tags', 'O').local;
-      menu.forEach((item:any) => {
-        if(item.name == "Engage"){
-          item.subTags.forEach((singleMenu:any) => {
-            if(!this.mainMenu.includes(singleMenu)){
+    const menu = this.stor.retrive('Tags', 'O').local;
+    menu.forEach((item: any) => {
+      if (item.name == "Engage") {
+        item.subTags.forEach((singleMenu: any) => {
+          if (!this.mainMenu.includes(singleMenu)) {
             this.mainMenu.push(singleMenu)
-            }
-          });
-        }
-      });
-      
+          }
+        });
+      }
+    });
+
   }
 
   assignedProfile = localStorage.getItem('assignedProfile');
 
   update(menuLink: any) {
-    
+    debugger
+    // this.activeChannel = this._route.url.split('/')[2];
+    this.activeChannel=menuLink.split('/')[1]
+
+
     if (
       localStorage.getItem('assignedProfile') == null ||
       localStorage.getItem('assignedProfile') == '' ||

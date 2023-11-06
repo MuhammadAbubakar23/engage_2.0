@@ -216,7 +216,7 @@ export class TwitterComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
+        if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
         if (res.contentCount.contentType == 'TT') {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;

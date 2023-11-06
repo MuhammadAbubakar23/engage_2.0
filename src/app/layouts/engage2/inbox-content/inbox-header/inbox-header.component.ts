@@ -23,6 +23,7 @@ export class InboxHeaderComponent implements OnInit {
     const headerMenu = this.stor.retrive('Tags', 'O').local;
       headerMenu.forEach((item:any) => {
         if(item.name == "Engage Header"){
+          debugger
           item.subTags.forEach((singleInboxHeaderMenu:any) => {
             if(!this.inboxHeader.includes(singleInboxHeaderMenu)){
             this.inboxHeader.push(singleInboxHeaderMenu)
@@ -62,7 +63,9 @@ export class InboxHeaderComponent implements OnInit {
   }
 
   update(menuLink: any) {
+    debugger
     this.flag = this._route.url.split('/')[2];
+
     if (
       localStorage.getItem('assignedProfile') == null ||
       localStorage.getItem('assignedProfile') == '' ||

@@ -205,7 +205,7 @@ export class WhatsappDetailsComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
+        if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
           if (res.contentCount.contentType == 'WM') {
             this.totalUnrespondedCmntCountByCustomer =
               res.contentCount.unrespondedCount;
@@ -220,7 +220,7 @@ export class WhatsappDetailsComponent implements OnInit {
   commentDto = new commentsDto();
   updatedComments: any;
   updateCommentsDataListener() {
-    if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
+    if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
       if (!this.id) {
         this.id = localStorage.getItem('storeOpenedId') || '{}';
       }
@@ -551,7 +551,7 @@ export class WhatsappDetailsComponent implements OnInit {
   }
 
   removeTagFromFeed(feedId: number, tagName: any) {
-    if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
+    if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
       this.insertTagsForFeedDto.tagName = tagName;
       this.insertTagsForFeedDto.feedId = feedId;
       this.insertTagsForFeedDto.type = 'Tag';

@@ -196,14 +196,14 @@
                                                                 <div class="dropdown w-auto" *ngIf="fbcmnts.queryStatus != 'Responded'">
                                                                     <button class="btn coal p-0 ps-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         <small *ngIf="fbcmnts.spam == true; else notSpam">Spam 
-                                                                            <i class="far fa-chevron-down ms-2" *ngIf="flag == 'focused' || flag == 'assigned_to_me'"></i>
+                                                                            <i class="far fa-chevron-down ms-2" *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'"></i>
                                                                         </small>
                                                                         <ng-template #notSpam>{{fbcmnts.queryStatus}}
-                                                                            <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && fbcmnts.queryStatus != 'Completed'"></i>
+                                                                            <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && fbcmnts.queryStatus != 'Completed'"></i>
                                                                         </ng-template>
                                                                     </button>
                                                                     <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1"
-                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && fbcmnts.queryStatus != 'Completed'">
+                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && fbcmnts.queryStatus != 'Completed'">
                                                             
                                                                         <li>
                                                                             <a class="dropdown-item" *ngIf="fbcmnts.queryStatus != 'Responded'" (click)="commentStatus(fbcmnts.id, 'FC')">Read</a>
@@ -262,7 +262,7 @@
                                                         <!-- For Sentiment Pills -->
                                                     </div>
 
-                                                    <div class="message-bottom" *ngIf="flag == 'focused' || flag == 'assigned_to_me'">
+                                                    <div class="message-bottom" *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
                                                         <div class="row">
                                                             <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                                 <div
@@ -468,7 +468,7 @@
                                                     </div>
                                                 </div>
                                                 <!-- <ng-container >
-                                                    <span *ngIf="flag == 'focused' || flag == 'assigned_to_me'" class="complaintBtn" (click)="toggle('ticket', fbcmnts.id)"
+                                                    <span *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'" class="complaintBtn" (click)="toggle('ticket', fbcmnts.id)"
                                                     type="button">
                                                     <i class="fal fa-plus-circle sky"></i>
                                                 </span>
@@ -662,14 +662,14 @@
                                                             <button class="btn coal p-0 ps-3" type="button"
                                                                 id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                 aria-expanded="false">
-                                                                <small *ngIf="fbmsgs.spam == true; else notSpamMsg">Spam <i class="far fa-chevron-down ms-2" *ngIf="flag == 'focused' || flag == 'assigned_to_me'"></i></small>
+                                                                <small *ngIf="fbmsgs.spam == true; else notSpamMsg">Spam <i class="far fa-chevron-down ms-2" *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'"></i></small>
                                                                 <ng-template #notSpamMsg>{{fbmsgs.queryStatus}} 
-                                                                    <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && fbmsgs.queryStatus != 'Completed'"></i>
+                                                                    <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && fbmsgs.queryStatus != 'Completed'"></i>
                                                                 </ng-template>
                                                             </button>
                                                             <ul class="dropdown-menu custom-dropdown"
                                                                 aria-labelledby="dropdownMenuButton1"
-                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && fbmsgs.queryStatus != 'Completed'">
+                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && fbmsgs.queryStatus != 'Completed'">
 
                                                                 <li>
                                                                     <a class="dropdown-item" *ngIf="fbmsgs.queryStatus != 'Responded'" (click)="commentStatus(fbmsgs.id, 'FCP')">Read</a>
@@ -723,7 +723,7 @@
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                 </div>
-                                                <div class="message-bottom" *ngIf="flag == 'focused' || flag == 'assigned_to_me'">
+                                                <div class="message-bottom" *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
                                                     <div class="row">
                                                         <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                             <div class="message-actionlist d-flex align-items-center">
@@ -895,7 +895,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <span *ngIf="flag == 'focused' || flag == 'assigned_to_me'" class="complaintBtn" (click)="toggle('ticket', fbmsgs.id)"
+                                            <!-- <span *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'" class="complaintBtn" (click)="toggle('ticket', fbmsgs.id)"
                                                 type="button">
                                                 <i class="fal fa-plus-circle sky"></i>
                                             </span> -->
@@ -1023,7 +1023,7 @@
         </div>
     </div>
 </div>
-<ng-container *ngIf="fbCmntReply == true && (flag == 'focused' || flag == 'assigned_to_me')">
+<ng-container *ngIf="fbCmntReply == true && (flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up')">
     <div class="msgTypingField shadow-lg" >
         <div class="attachment-block" [ngClass]="isAttachment == true?'':'d-none'">
             <div class="card-body p-3" *ngFor="let image of ImageName; let i = index" style="margin-right: 10px;">
@@ -1108,7 +1108,7 @@
         </form>
     </div>
 </ng-container>
-<ng-container *ngIf="fbMsgReply == true && (flag == 'focused' || flag == 'assigned_to_me') && fbCmntReply == false">
+<ng-container *ngIf="fbMsgReply == true && (flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && fbCmntReply == false">
     <div class="msgTypingField shadow-lg"  >
         <div>
             <div class="attachment-block" [ngClass]="isAttachment == true?'':'d-none'">

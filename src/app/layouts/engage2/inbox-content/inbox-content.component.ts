@@ -73,7 +73,7 @@ export class     InboxContentComponent implements OnInit {
       this.loadComponent('responder');
     } else {
       this.flag = this.router.url.split('/')[2];
-      if (this.flag == 'focused' || this.flag == 'archived' || this.flag == 'assigned' || this.flag == 'assigned_to_me') {
+      if (this.flag == 'focused' || this.flag == 'archived' || this.flag == 'assigned' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
         this.loadComponent('all-inboxes');
       } else if (this.flag == 'starred') {
         this.loadComponent('starred');
@@ -99,7 +99,7 @@ export class     InboxContentComponent implements OnInit {
           this.loadComponent('responder');
         } else {
           this.flag = this.router.url.split('/')[2];
-          if (this.flag == 'focused' || this.flag == 'archived' || this.flag == 'assigned' || this.flag == 'assigned_to_me') {
+          if (this.flag == 'focused' || this.flag == 'archived' || this.flag == 'assigned' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
             this.loadComponent('all-inboxes');
           } else if (this.flag == 'starred') {
             this.loadComponent('starred');
@@ -132,7 +132,7 @@ export class     InboxContentComponent implements OnInit {
       this.loadComponent('responder');
     } else {
       this.flag = this.router.url.split('/')[2];
-      if (this.flag == 'focused' || this.flag == 'archived' || this.flag == 'assigned' || this.flag == 'assigned_to_me') {
+      if (this.flag == 'focused' || this.flag == 'archived' || this.flag == 'assigned' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
         this.loadComponent('all-inboxes');
       } else if (this.flag == 'starred') {
         this.loadComponent('starred');
@@ -158,7 +158,7 @@ export class     InboxContentComponent implements OnInit {
           this.loadComponent('responder');
         } else {
           this.flag = this.router.url.split('/')[2];
-          if (this.flag == 'focused' || this.flag == 'archived' || this.flag == 'assigned' || this.flag == 'assigned_to_me') {
+          if (this.flag == 'focused' || this.flag == 'archived' || this.flag == 'assigned' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
             this.loadComponent('all-inboxes');
           } else if (this.flag == 'starred') {
             this.loadComponent('starred');

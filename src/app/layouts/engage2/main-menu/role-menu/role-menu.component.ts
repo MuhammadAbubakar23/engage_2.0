@@ -24,6 +24,7 @@ import { PermissionState } from '../../permission-state/permission.state';
   styleUrls: ['./role-menu.component.scss'],
 })
 export class RoleMenuComponent implements OnInit {
+
   // MenuModel = new MenuModel();
   permissions$: any;
   permission$: any;
@@ -31,13 +32,13 @@ export class RoleMenuComponent implements OnInit {
   //menu$ :Observable<MenuModel[]>;
   //menu$ :Observable<any>;
   loading$: any;
-
+  
   restrictedAgentsString =
   'Farah.khalid@abacus-global.com, aniqa.waris@bpo.abacus-global.com, samoom.fatima@bpo.abacus-global.com, Mishal.Javed@abacus-global.com, ambreen.zubair@jazz.com.pk, naveeda.akhtar@jazz.com.pk, sidra.shafiq@jazz.com.pk, muhammad.mansoor@jazz.com.pk, ayesha.sajjad@jazz.com.pk, farrukh.saeed1@jazz.com.pk, hassam.naveed@jazz.com.pk, nadia.shabbir@jazz.com.pk, rizwan.malik@jazz.com.pk, abida.rasheed@jazz.com.pk, saba.riaz@jazz.com.pk, pringle.charles@jazz.com.pk';
   restrictedAgent: string = '';
 
   onlyAnalyticsTabVisible = 'kashif.waheed@ibex.co, jazzlhrwfm@ibex.co, JazzLHRWFM@ibex.co'
-
+  activeChannel:string=''
   constructor(
     private MenuStore: Store<MenuState>,
     private PermissionStore: Store<PermissionState>,
@@ -54,6 +55,7 @@ export class RoleMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.activeChannel=this._route.url.split('T')[2]
     let data = this.storage.retrive('main', 'O').local;
     this.restrictedAgent = data.originalUserName;
 
@@ -76,6 +78,7 @@ export class RoleMenuComponent implements OnInit {
   assignedProfile = localStorage.getItem('assignedProfile');
 
   update(menuLink: any) {
+    this.activeChannel=menuLink.split('/')[1]
     if (
       localStorage.getItem('assignedProfile') == null ||
       localStorage.getItem('assignedProfile') == '' ||

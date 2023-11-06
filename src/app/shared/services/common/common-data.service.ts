@@ -73,6 +73,7 @@ export class CommonDataService {
   removeTagOnProfile = environment.links.common.removeTagOnProfile;
   hideUnhideMessage = environment.links.common.hideUnhideMessage;
   dispositionTags = environment.links.common.dispositionTags;
+  removeAssignedQuery =environment.links.common.removeAssignedQuery
 
   //Reports
   addUniqueCustomer = environment.links.common.addUniqueCustomer;
@@ -697,6 +698,11 @@ export class CommonDataService {
     return this.http.post(this.CommonBaseUrl + this.downloadTagReport, body, {
       responseType: 'text',
     });
+  }
+
+  RemoveAssignedQuery(ProfileId: any) {
+    const url = `${this.CommonBaseUrl}${this.removeAssignedQuery}?ProfileId=${ProfileId}`;
+    return this.http.get(url);
   }
 }
 

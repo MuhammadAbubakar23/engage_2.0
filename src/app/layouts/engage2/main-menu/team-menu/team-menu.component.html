@@ -16,7 +16,8 @@
 
 <!-- From Tags -->
 <a (click)="update('all-inboxes/focused/all')"
-    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
+    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+    [class.active]="activeChannel=='focused'">
     <div class="list-group-text d-flex align-items-center">
         <div class="iconButton medium">
             <i class="fal fa-inbox ice"></i>
@@ -27,7 +28,8 @@
     </div>
 </a>
 <a (click)="update('all-inboxes/sent/all')"
-    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
+    class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
+    [class.active]="activeChannel=='sent'">
     <div class="list-group-text d-flex align-items-center">
         <div class="iconButton medium">
             <i class="fal fa-paper-plane ice"></i>
@@ -37,14 +39,14 @@
         </div>
     </div>
 </a>
-<ng-container *ngFor="let menu of mainMenu" >
-    <a (click)="update('all-inboxes/'+menu.slug+'/all')"  routerLinkActive="active" ariaCurrentWhenActive="page"
+<ng-container *ngFor="let menu of mainMenu"  >
+    <a (click)="update('all-inboxes/'+menu.slug+'/all')" ariaCurrentWhenActive="page" [class.active]="activeChannel==menu.slug"
     class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
     <div class="list-group-text d-flex align-items-center" >
         <div class="iconButton medium" [innerHTML]="menu.icon">
             {{menu.icon}}
         </div>
-        <a class="itemLabel">
+        <a class="itemLabel" >
             {{menu.name}}
         </a>
     </div>

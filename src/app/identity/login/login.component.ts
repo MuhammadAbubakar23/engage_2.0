@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // this.getAllTags();
   }
 
   submit() {
@@ -85,5 +86,11 @@ export class LoginComponent implements OnInit {
   }
   closeToaster() {
     this.toastermessage = false;
+  }
+
+  getAllTags() {
+    // this.commonService.GetAllTags().subscribe((res:any)=>{
+    //   this.stor.store('Tags', res);
+    // });
   }
 }

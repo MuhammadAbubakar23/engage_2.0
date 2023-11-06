@@ -638,7 +638,7 @@ export class ConversationComponent implements OnInit {
     profileId: any
   ) {
     localStorage.setItem('previousUrl', this.currentUrl);
-    if (this.currentUrl.split('/')[2] == 'focused') {
+    if (this.currentUrl.split('/')[2] == 'focused' || this.currentUrl.split('/')[2] == 'follow_up') {
       this.assignQuerryDto = {
         userId: Number(localStorage.getItem('agentId')),
         profileId: profileId,

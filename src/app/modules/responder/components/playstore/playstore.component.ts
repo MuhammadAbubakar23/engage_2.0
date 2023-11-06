@@ -200,7 +200,7 @@ export class PlaystoreComponent implements OnInit {
       this.removeTagDataListener();
     });
     this.Subscription = this.updateMessagesService.receiveMessage().subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
+        if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
           this.updatedMessages = res;
           this.updateMessagesDataListener();
         }
@@ -218,7 +218,7 @@ export class PlaystoreComponent implements OnInit {
         this.updateBulkQueryStatusDataListner();
       });
     this.Subscription = this.unrespondedCountService.getUnRespondedCount().subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
+        if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
           if (res.contentCount.contentType == 'PSR') {
             this.totalUnrespondedCmntCountByCustomer =
               res.contentCount.unrespondedCount;

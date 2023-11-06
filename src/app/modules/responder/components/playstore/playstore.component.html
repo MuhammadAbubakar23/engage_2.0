@@ -75,13 +75,13 @@
                                                         <div class="dropdown w-auto"
                                                             *ngIf="playstoreReview.queryStatus != 'Responded'">
                                                             <button class="btn coal p-0 ps-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                <small *ngIf="playstoreReview.spam == true; else notSpamMsg">Spam <i class="far fa-chevron-down ms-2" *ngIf="flag == 'focused' || flag == 'assigned_to_me'"></i></small>
+                                                                <small *ngIf="playstoreReview.spam == true; else notSpamMsg">Spam <i class="far fa-chevron-down ms-2" *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'"></i></small>
                                                                 <ng-template #notSpamMsg>{{playstoreReview.queryStatus}} 
-                                                                    <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && playstoreReview.queryStatus != 'Completed'"></i>
+                                                                    <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && playstoreReview.queryStatus != 'Completed'"></i>
                                                                 </ng-template>
                                                             </button>
                                                             <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1"
-                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && playstoreReview.queryStatus != 'Completed'">
+                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && playstoreReview.queryStatus != 'Completed'">
 
                                                                 <li>
                                                                     <!-- From Tags Api -->
@@ -118,7 +118,7 @@
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                 </div>
-                                                <div class="message-bottom" *ngIf="flag == 'focused' || flag == 'assigned_to_me'">
+                                                <div class="message-bottom" *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
                                                     <div class="row">
                                                         <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                             <div class="message-actionlist d-flex align-items-center">
@@ -291,7 +291,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <span *ngIf="flag == 'focused' || flag == 'assigned_to_me'" class="complaintBtn" (click)="toggle('ticket', playstoreReview.id)"
+                                            <!-- <span *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'" class="complaintBtn" (click)="toggle('ticket', playstoreReview.id)"
                                                 type="button">
                                                 <i class="fal fa-plus-circle sky"></i>
                                             </span> -->
@@ -338,7 +338,7 @@
         </div>
     </div>
 </div>
-<ng-container *ngIf="flag == 'focused' || flag == 'assigned_to_me'">
+<ng-container *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
     <div class="msgTypingField shadow-lg">
         <div *ngFor="let msg of PlayStoreReviews">
             <div *ngIf="msg.id == msgId">

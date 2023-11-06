@@ -195,6 +195,7 @@ export const environment = {
       removeTagOnProfile: 'Tags/RemoveTagProfileFeed',
       hideUnhideMessage: 'Query/HideQuery',
       dispositionTags:'Keyword/GetAllDisposition',
+      removeAssignedQuery:'Query/RemoveAssignQuery',
       //Reports
       routeToAgents:'Report/GetWhatsAppRouteToAgentReport',
       routeToAgentsCsv:'Report/GetWhatsAppRouteAgentReportCSV',

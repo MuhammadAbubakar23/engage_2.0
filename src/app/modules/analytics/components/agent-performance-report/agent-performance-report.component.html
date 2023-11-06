@@ -160,7 +160,7 @@
                                             <span class="iconButton medium skyBg mb-4">
                                                 <i class="fa-light fa-retweet"></i>
                                             </span>
-                                            <p class="coal mb-0"> {{ selectedChannelLabel }}</p>
+                                            <p class="coal mb-0"> {{ selectedChannelLabel === 'Twitter' ? 'Tweets' : 'Comments' }}</p>
                                         </div>
                                         <h2>{{agent_performance_report?.commentCount}}</h2>
                                     </div>
@@ -217,7 +217,7 @@
                                 <thead>
                                     <tr>
                                         <th>Agent</th>
-                                        <th>Tweets</th>
+                                        <th>{{ selectedChannelLabel === 'Twitter' ? 'Tweets' : 'Comments' }}</th>
                                         <th>Direct Messages</th>
                                         <th>Avg. Reply Time</th>
                                         <th>Min. Cater Time</th>

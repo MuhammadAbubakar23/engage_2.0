@@ -143,14 +143,14 @@
                                                                 <div class="dropdown w-auto" *ngIf="ttr.queryStatus != 'Responded' && ttr.queryStatus != 'Completed'">
                                                                     <button class="btn coal p-0 ps-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         <small *ngIf="ttr.spam == true; else notSpam">Spam 
-                                                                            <i class="far fa-chevron-down ms-2" *ngIf="flag == 'focused' || flag == 'assigned_to_me'"></i>
+                                                                            <i class="far fa-chevron-down ms-2" *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'"></i>
                                                                         </small>
                                                                         <ng-template #notSpam>{{ttr.queryStatus}}
-                                                                            <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && ttr.queryStatus != 'Completed'"></i>
+                                                                            <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && ttr.queryStatus != 'Completed'"></i>
                                                                         </ng-template>
                                                                     </button>
                                                                     <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1"
-                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && ttr.queryStatus != 'Completed'">
+                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && ttr.queryStatus != 'Completed'">
                                                             
                                                                         <li>
                                                                             <a class="dropdown-item" *ngIf="ttr.queryStatus != 'Responded'" (click)="commentStatus(ttr.id, 'TTR')">Read</a>
@@ -204,7 +204,7 @@
                                                         <!-- For Sentiment Pills -->
                                                     </div>
 
-                                                    <div class="message-bottom" *ngIf="flag == 'focused' || flag == 'assigned_to_me'">
+                                                    <div class="message-bottom" *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
                                                         <div class="row">
                                                             <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                                 <div
@@ -374,7 +374,7 @@
                                                     </div>
                                                 </div>
                                                 <!-- <ng-container >
-                                                    <span *ngIf="flag == 'focused' || flag == 'assigned_to_me'" class="complaintBtn" (click)="toggle('ticket', ttr.id)"
+                                                    <span *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'" class="complaintBtn" (click)="toggle('ticket', ttr.id)"
                                                     type="button">
                                                     <i class="fal fa-plus-circle sky"></i>
                                                 </span>
@@ -568,15 +568,15 @@
                                                                 aria-expanded="false">
                                                                 <small *ngIf="tm.spam == true; else notSpamMsg">Spam <i
                                                                         class="far fa-chevron-down ms-2"
-                                                                        *ngIf="flag == 'focused' || flag == 'assigned_to_me'"></i></small>
+                                                                        *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'"></i></small>
                                                                 <ng-template #notSpamMsg>{{tm.queryStatus}}
                                                                     <i class="far fa-chevron-down ms-2"
-                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && tm.queryStatus != 'Completed'"></i>
+                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && tm.queryStatus != 'Completed'"></i>
                                                                 </ng-template>
                                                             </button>
                                                             <ul class="dropdown-menu custom-dropdown"
                                                                 aria-labelledby="dropdownMenuButton1"
-                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && tm.queryStatus != 'Completed'">
+                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && tm.queryStatus != 'Completed'">
 
                                                                 <li>
                                                                     <a class="dropdown-item"
@@ -643,7 +643,7 @@
                                                     <!-- For Sentiment Pills -->
                                                 </div>
                                                 <div class="message-bottom"
-                                                    *ngIf="flag == 'focused' || flag == 'assigned_to_me'">
+                                                    *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
                                                     <div class="row">
                                                         <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                             <div class="message-actionlist d-flex align-items-center">
@@ -815,7 +815,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <span *ngIf="flag == 'focused' || flag == 'assigned_to_me'" class="complaintBtn" (click)="toggle('ticket', tm.id)"
+                                            <!-- <span *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'" class="complaintBtn" (click)="toggle('ticket', tm.id)"
                                                 type="button">
                                                 <i class="fal fa-plus-circle sky"></i>
                                             </span> -->
@@ -989,15 +989,15 @@
                                                                 aria-expanded="false">
                                                                 <small *ngIf="tdm.spam == true; else notSpamMsg">Spam <i
                                                                         class="far fa-chevron-down ms-2"
-                                                                        *ngIf="flag == 'focused' || flag == 'assigned_to_me'"></i></small>
+                                                                        *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'"></i></small>
                                                                 <ng-template #notSpamMsg>{{tdm.queryStatus}}
                                                                     <i class="far fa-chevron-down ms-2"
-                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && tdm.queryStatus != 'Completed'"></i>
+                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && tdm.queryStatus != 'Completed'"></i>
                                                                 </ng-template>
                                                             </button>
                                                             <ul class="dropdown-menu custom-dropdown"
                                                                 aria-labelledby="dropdownMenuButton1"
-                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && tdm.queryStatus != 'Completed'">
+                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && tdm.queryStatus != 'Completed'">
 
                                                                 <li>
                                                                     <a class="dropdown-item"
@@ -1064,7 +1064,7 @@
                                                     <!-- For Sentiment Pills -->
                                                 </div>
                                                 <div class="message-bottom"
-                                                    *ngIf="flag == 'focused' || flag == 'assigned_to_me'">
+                                                    *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
                                                     <div class="row">
                                                         <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                             <div class="message-actionlist d-flex align-items-center">
@@ -1237,7 +1237,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <span *ngIf="flag == 'focused' || flag == 'assigned_to_me'" class="complaintBtn" (click)="toggle('ticket', tdm.id)"
+                                            <!-- <span *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'" class="complaintBtn" (click)="toggle('ticket', tdm.id)"
                                                 type="button">
                                                 <i class="fal fa-plus-circle sky"></i>
                                             </span> -->
@@ -1362,7 +1362,7 @@
                 </div>
             </div>
         </div>
-<ng-container *ngIf="flag == 'focused' || flag == 'assigned_to_me'">
+<ng-container *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
         <ng-container *ngIf="TTReply == true">
             <div class="msgTypingField shadow-lg">
                 <div *ngFor="let tweet of TwitterTweets">

@@ -3,10 +3,11 @@
         <div class="col-9"> -->
 <div class="social-header-left">
     <div class="header-left d-flex align-items-center">
-        <!-- <a class="btn iconButton medium iconHover btn-group me-1 back-to-dashboard-btn" type="button"
-                    [routerLink]="['/all-inboxes']">
-                        <i class="fal fa-arrow-left"></i>
-                    </a> -->
+        <!-- only for KE -->
+        <a class="btn iconButton medium iconHover btn-group me-1 back-to-dashboard-btn" type="button"
+            (click)="removeAssignedQuery()">
+            <i class="fal fa-arrow-left"></i>
+        </a>
         <div class="iconButton large" *ngIf="userInfo?.profilePic">
             <img src={{userInfo?.profilePic}} class="rounded-circle w-100">
         </div>
@@ -18,19 +19,20 @@
                 aria-expanded="false">
                 <i class="fal fa-ellipsis-v-alt"></i>
             </button>
-            <ng-container *ngIf="flag == 'focused' || flag == 'assigned_to_me'">
+            <ng-container *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
                 <ul class="dropdown-menu custom-dropdown medium shadow mt-2 assignFirstDropdownList"
                     aria-labelledby="dropdownMenuButton1" [ngClass]="showMoreOptions == true?'show':''">
                     <li>
                         <ul>
-                            
+
                             <li>
                                 <a class="dropdown-item" (click)="showTeamList()" id="assignToList">
                                     Assign to...
                                 </a>
                             </li>
                             <li class="important-option mb-0" *ngFor="let status of profileStatus">
-                                <a class="dropdown-item" id="assignToList" (click)="InsertTagInProfile('black_list', 'Tag', userInfo.id)">
+                                <a class="dropdown-item" id="assignToList"
+                                    (click)="InsertTagInProfile('black_list', 'Tag', userInfo.id)">
                                     {{status.name}}
                                 </a>
                             </li>
@@ -105,7 +107,8 @@
                     <li>
                         <ul>
                             <li class="mb-0" *ngFor="let status of profileStatus">
-                                <a class="dropdown-item" id="assignToList" (click)="RemoveTagInProfile('black_list', 'Tag', userInfo.id)">
+                                <a class="dropdown-item" id="assignToList"
+                                    (click)="RemoveTagInProfile('black_list', 'Tag', userInfo.id)">
                                     {{'Un'+status.name}}
                                 </a>
                             </li>
@@ -174,8 +177,7 @@
                     </button>
                 </li>
                 <li class="nav-item selector_nav_item" role="presentation" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" data-bs-original-title="Twitter"
-                    *ngIf="activeChannel == 'Twitter'">
+                    data-bs-placement="bottom" data-bs-original-title="Twitter" *ngIf="activeChannel == 'Twitter'">
                     <button [class.active]="activeChannel == 'Twitter'"
                         class="nav-link iconButton medium btn iconHover notification twitter" id="twitter-tab"
                         data-bs-toggle="tab" data-bs-target="#twitter" type="button" role="tab" aria-controls="insta"
@@ -219,10 +221,10 @@
                 </li>
                 <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-placement="bottom"
                     data-bs-original-title="googleplay" *ngIf="activeChannel == 'PlayStore'">
-                    <button class="nav-link iconButton medium btn iconHover notification googleplay" [class.active]="activeChannel == 'PlayStore'" id="googleplay-tab"
-                        data-bs-toggle="tab" data-bs-target="#googleplay" type="button" role="tab"
-                        aria-controls="googleplay" aria-selected="false" tabindex="-1"
-                        (click)="updatevalue(playStoreId, 'PlayStore')">
+                    <button class="nav-link iconButton medium btn iconHover notification googleplay"
+                        [class.active]="activeChannel == 'PlayStore'" id="googleplay-tab" data-bs-toggle="tab"
+                        data-bs-target="#googleplay" type="button" role="tab" aria-controls="googleplay"
+                        aria-selected="false" tabindex="-1" (click)="updatevalue(playStoreId, 'PlayStore')">
                         <i class="fa-brands fa-google-play"></i>
                     </button>
                 </li>
@@ -239,7 +241,8 @@
                 </li>
             </ul>
         </div>
-        <div class="dropdown borderDropdown w-auto markAs-dropdown" *ngIf="flag == 'focused' || flag == 'assigned_to_me'">
+        <div class="dropdown borderDropdown w-auto markAs-dropdown"
+            *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
             <a class="btn btn-secondary dropdown-toggle chevron-icon down ps-2 pe-5" role="button" id="dropdownMenuLink"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="dropdown-title">Mark As</div>

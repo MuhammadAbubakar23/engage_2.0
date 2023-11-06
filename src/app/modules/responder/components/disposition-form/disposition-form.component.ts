@@ -6,6 +6,7 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-disposition-form',
@@ -18,28 +19,30 @@ export class DispositionFormComponent implements OnInit {
   dispositionFormDto = new DispositionFormDto();
   dispositionTags:any;
   dispositionMenu:any[]=[];
-
+  selectedTag: any; // This will hold the selected tag
+  isFollowUp: boolean = false
   constructor(private commonService : CommonDataService,
     private route : Router,
+    private datePipe:DatePipe,
     private toggleService : ToggleService,
     private lodeModuleService : ModulesService,
     private stor : StorageService) {
       
-    this.dispositionForm = new FormGroup({
-      disposition: new FormControl('', Validators.required),
-      reasonId: new FormControl(''),
-      agentId: new FormControl(''),
-      customerProfileId: new FormControl(''),
-      follow_Up_Date: new FormControl(null),
-      comment: new FormControl('', Validators.required),
-
-      user: new FormControl(''),
-      plateFrom: new FormControl(''),
-      userId: new FormControl(''),
-      companyId: new FormControl(''),
-      
-    });
-   }
+      this.dispositionForm = new FormGroup({
+        disposition: new FormControl('completed', Validators.required),
+        reasonId: new FormControl(''),
+        agentId: new FormControl(''),
+        customerProfileId: new FormControl(''),
+        follow_Up_Date: new FormControl(null),
+        comment: new FormControl('Completed', Validators.required),
+  
+        user: new FormControl(''),
+        plateFrom: new FormControl(''),
+        userId: new FormControl(''),
+        companyId: new FormControl(''),
+  
+      });
+    }
 
   platform = localStorage.getItem('parent');
   agentId = Number(localStorage.getItem('agentId'))
@@ -48,8 +51,6 @@ export class DispositionFormComponent implements OnInit {
   companyId = 0;
 
   ngOnInit(): void {
-    // this.getDispositionTags();
-
     const menu = this.stor.retrive('Tags', 'O').local;
       menu.forEach((item:any) => {
         if(item.name == "Dispositions"){
@@ -67,10 +68,12 @@ export class DispositionFormComponent implements OnInit {
       this.dispositionTags = res;
     })
   }
-
   previousUrl:any;
   submitDispositionForm(){
-
+debugger
+// if(this.dispositionForm.value.follow_Up_Date!==''){
+//   this.dispositionForm.value.follow_Up_Date=this.dispositionForm.value.follow_Up_Date
+// }
     this.dispositionFormDto = {
       disposition: this.dispositionForm.value.disposition,
       reasonId: this.dispositionForm.value.reasonId,
@@ -85,7 +88,6 @@ export class DispositionFormComponent implements OnInit {
           companyId: this.companyId,
         }
     };
-
     this.commonService.SubmitDispositionForm(this.dispositionFormDto).subscribe((res:any)=>{
       // console.log('disposition response',res)
       localStorage.setItem('assignedProfile','')
@@ -96,10 +98,27 @@ export class DispositionFormComponent implements OnInit {
       
     })
   }
-
-  routeToParentComponent() {
-    
+  routeToParentComponent() { 
     this.toggleService.updateDispositionForm('close-disposition-form')
   }
 
+  updateCommentBasedOnDisposition() {
+    if(this.dispositionForm.value.disposition=='follow_up'){
+      this.isFollowUp=true
+    }
+    else{
+      this.isFollowUp=false
+    }
+    const disposition = this.dispositionForm.get('disposition')?.value;
+    if (disposition === 'follow_up') {
+      this.dispositionForm.get('comment')?.setValue('Follow-up');
+    } else if (disposition === 'responded') {
+      this.dispositionForm.get('comment')?.setValue('Responded');
+    } else {
+      this.dispositionForm.get('comment')?.setValue('Completed');
+    }
+  }
 }
+
+  
+
