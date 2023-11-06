@@ -23,6 +23,7 @@ import { InsertTagsForFeedDto } from 'src/app/shared/Models/InsertTagsForFeedDto
 import { LikeByAdminDto } from 'src/app/shared/Models/LikeByAdminDto';
 import { ReplyDto } from 'src/app/shared/Models/ReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
 
 @Component({
@@ -55,7 +56,7 @@ export class YoutubeComponent implements OnInit {
   platform: string = '';
   postType: string = '';
   QuickReplies: any;
-  TagsList: any;
+  TagsList: any[]=[];
   getAppliedTagsList: any;
   storeComId: any;
   AlterMsg: any = '';
@@ -108,15 +109,45 @@ export class YoutubeComponent implements OnInit {
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService : GetQueryTypeService,
     private router: Router,
-    private userInfoService: UserInformationService
+    private userInfoService: UserInformationService,
+    private stor: StorageService
   ) {
-    this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
-      this.id = res;
-      this.getYoutubeData();
-    });
+    // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
+    //   this.id = res;
+    //   this.getYoutubeData();
+    // });
   }
 
+  messagesStatus:any[]=[];
+  Sentiments:any[]=[];
+
   ngOnInit(): void {
+
+    const menu = this.stor.retrive('Tags', 'O').local;
+      menu.forEach((item:any) => {
+        if(item.name == "Tags"){
+          item.subTags.forEach((singleTagObj:any) => {
+            if(!this.TagsList.includes(singleTagObj)){
+            this.TagsList.push(singleTagObj)
+            }
+          });
+        }
+        if(item.name == "Messages Status"){
+          item.subTags.forEach((messagesStatusObj:any) => {
+            if(!this.messagesStatus.includes(messagesStatusObj)){
+            this.messagesStatus.push(messagesStatusObj)
+            }
+          });
+        }
+        if(item.name == "Sentiments"){
+          item.subTags.forEach((sentimentObj:any) => {
+            if(!this.Sentiments.includes(sentimentObj)){
+            this.Sentiments.push(sentimentObj)
+            }
+          });
+        }
+      });
+
     this.criteria = {
       property: 'createdDate',
       descending: true,
@@ -126,11 +157,11 @@ export class YoutubeComponent implements OnInit {
 
     this.getYoutubeData();
     this.quickReplyList();
-    this.getTagList();
+    // this.getTagList();
     
     this.Subscription = this.addTagService.receiveTags().subscribe((res) => {
       this.addTags = res;
-      this.addTagDataListner();
+      this.addTagDataListener();
     });
     this.Subscription = this.removeTagService.receiveTags().subscribe((res) => {
       this.removeTags = res;
@@ -160,11 +191,11 @@ export class YoutubeComponent implements OnInit {
         this.updateTicketId(res)
       });
 
-      this.Subscription = this.applySentimentService
-      .receiveSentiment()
-      .subscribe((res) => {
-        this.applySentimentListner(res);
-      });
+      // this.Subscription = this.applySentimentService
+      // .receiveSentiment()
+      // .subscribe((res) => {
+      //   this.applySentimentListner(res);
+      // });
   }
 
   commentDto = new commentsDto();
@@ -599,36 +630,17 @@ export class YoutubeComponent implements OnInit {
     this.commondata.LikedByAdmin(this.likeByAdminDto).subscribe((res: any) => {
     });
   }
-  Sentiments = [
-    {
-      id: 1,
-      name: 'Positive',
-      icon: 'fal fa-smile',
-    },
-    {
-      id: 2,
-      name: 'Neutral',
-      icon: 'fal fa-meh-blank',
-    },
-    {
-      id: 3,
-      name: 'Negative',
-      icon: 'fal fa-frown',
-    },
-  ];
 
-  insertSentimentForFeed(feedId: any, sentimenName: any) {
-    this.insertSentimentForFeedDto.feedId = feedId.toString();
-    this.insertSentimentForFeedDto.sentiment = sentimenName;
-    this.insertSentimentForFeedDto.feedType = 'YC';
-    this.insertSentimentForFeedDto.userId = Number(localStorage.getItem('agentId'));
+  insertSentimentForFeed(comId: number, sentimenName: any) {
+    this.insertTagsForFeedDto.feedId = comId;
+    this.insertTagsForFeedDto.tagName = sentimenName;
+    this.insertTagsForFeedDto.type = 'Sentiment';
+    this.insertTagsForFeedDto.platform = 'Youtube';
 
-    this.commondata
-      .InsertSentiment(this.insertSentimentForFeedDto)
-      .subscribe((res: any) => {
+    this.commondata.InsertSentiment(this.insertTagsForFeedDto).subscribe((res: any) => {
         this.reloadComponent('Sentiment');
       });
-  }
+}
 
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
@@ -660,65 +672,64 @@ export class YoutubeComponent implements OnInit {
     });
   }
 
-  insertTagsForFeed(id: any, comId: string) {
-    this.insertTagsForFeedDto.feedId = comId.toString();
-    this.insertTagsForFeedDto.tagId = id;
-    this.insertTagsForFeedDto.feedType = 'YC';
-    this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
+  insertTagsForFeed(comId: number, tagName: string) {
+    this.insertTagsForFeedDto.feedId = comId;
+    this.insertTagsForFeedDto.tagName = tagName;
+    this.insertTagsForFeedDto.type = 'Tag';
+    this.insertTagsForFeedDto.platform = 'Youtube';
 
-    this.YoutubeData.forEach((abc: any) => {
-      abc.comments.forEach((comment: any) => {
-        if (comment.id == comId) {
-          if(comment.tags.length == 0){
-            this.commondata.InsertTag(this.insertTagsForFeedDto).subscribe((res: any) => {
-              this.reloadComponent('ApplyTag');
+      this.YoutubeData?.forEach((abc: any) => {
+        abc.comments.forEach((comment: any) => {
+          if (comment.id == comId) {
+            if (comment.tags.length == 0) {
+              this.commondata
+                .InsertTag(this.insertTagsForFeedDto)
+                .subscribe((res: any) => {
+                  this.reloadComponent('ApplyTag');
 
-              this.activeTag = true;
-              this.checkTag = true;
-            });
-          }
-          else if(comment.tags.length > 0){
-            const value = comment.tags.find((x:any)=>x.id == id)
-            if(value != null || value != undefined){
-              this.removeTagFromFeed(id, comId);
-            } else {
-              this.commondata.InsertTag(this.insertTagsForFeedDto).subscribe((res: any) => {
-                
-                this.reloadComponent('ApplyTag');
+                  this.activeTag = true;
+                  this.checkTag = true;
+                });
+            } else if (comment.tags.length > 0) {
+              const value = comment.tags.find((x: any) => x.name == tagName);
+              if (value != null || value != undefined) {
+                this.removeTagFromFeed(comId, tagName);
+              } else {
+                this.commondata
+                  .InsertTag(this.insertTagsForFeedDto)
+                  .subscribe((res: any) => {
+                    this.reloadComponent('ApplyTag');
 
-                this.activeTag = true;
-                this.checkTag = true;
-              });
+                    this.activeTag = true;
+                    this.checkTag = true;
+                  });
+              }
             }
           }
-        }
+        });
       });
-    });
   }
 
-  removeTagFromFeed(id: any, comId: string) {
+  removeTagFromFeed(feedId: number, tagName: any) {
     if (
       this.flag == 'focused' ||
-      this.flag == 'assigned-to-me'
+      this.flag == 'assigned_to_me'
     ) {
-    this.insertTagsForFeedDto.feedId = comId.toString();
-    this.insertTagsForFeedDto.tagId = id;
-    this.insertTagsForFeedDto.feedType = 'YC';
-    this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
+        this.insertTagsForFeedDto.tagName = tagName;
+        this.insertTagsForFeedDto.feedId = feedId;
+        this.insertTagsForFeedDto.type = 'Tag';
+        this.insertTagsForFeedDto.platform = 'Youtube';
 
-    this.commondata.RemoveTag(this.insertTagsForFeedDto).subscribe(
-      (res: any) => {
-        this.reloadComponent('RemoveTag');
+        this.commondata
+          .RemoveTag(this.insertTagsForFeedDto)
+          .subscribe((res: any) => {
+            this.reloadComponent('RemoveTag');
 
-        this.activeTag = false;
-        this.checkTag = false;
-      },
-      ({ error }) => {
-        // alert(error.message || error.title)
-      }
-    );
+            this.activeTag = false;
+            this.checkTag = false;
+          });
+    }
   }
-}
 
   commentStatus(comId: any) {
     this.commentStatusDto.id = comId;
@@ -874,16 +885,17 @@ export class YoutubeComponent implements OnInit {
   addTags: any;
   removeTags: any;
 
-  addTagDataListner() {
-    this.YoutubeData.forEach((post: any) => {
+  addTagDataListener() {
+    this.YoutubeData?.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
           if (singleCmnt.id == this.addTags.feedId) {
+            if(this.addTags.type == 'Tag'){
             if (singleCmnt.tags.length == 0) {
               singleCmnt.tags.push(this.addTags);
             } else if (singleCmnt.tags.length > 0) {
               const tag = singleCmnt.tags.find(
-                (x: any) => x.id == this.addTags.feedId
+                (x: any) => x.name == this.addTags.name
               );
               if (tag != null || tag != undefined) {
                 const index = singleCmnt.tags.indexOf(tag);
@@ -891,22 +903,29 @@ export class YoutubeComponent implements OnInit {
                   singleCmnt.tags.splice(index, 1);
                 }
               } else {
-                singleCmnt.tags.push(this.addTags);
+                if (!singleCmnt.tags.includes(this.addTags)) {
+                  singleCmnt.tags.push(this.addTags);
+                }
               }
             }
+          }
+          if(this.addTags.type == 'Sentiment'){
+            singleCmnt.sentiment = this.addTags;
+          }
           }
         });
       });
     });
-    this.changeDetect.detectChanges();
-  }
-  removeTagDataListener() {
-    this.YoutubeData.forEach((post: any) => {
+
+  this.changeDetect.detectChanges();
+}
+removeTagDataListener() {
+    this.YoutubeData?.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
           if (singleCmnt.id == this.removeTags.feedId) {
             var tag = singleCmnt.tags.find(
-              (x: any) => x.id == this.removeTags.tagId
+              (x: any) => x.name == this.removeTags.tagName
             );
             const index = singleCmnt.tags.indexOf(tag);
             if (index !== -1) {
@@ -916,8 +935,8 @@ export class YoutubeComponent implements OnInit {
         });
       });
     });
-    this.changeDetect.detectChanges();
-  }
+  this.changeDetect.detectChanges();
+}
 
   updateQueryStatusDataListner() {
     
@@ -980,18 +999,18 @@ export class YoutubeComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  applySentimentListner(res: any) {
-    this.YoutubeData.forEach((post: any) => {
-      post.groupedComments.forEach((cmnt: any) => {
-        cmnt.items.forEach((singleCmnt: any) => {
-          if (singleCmnt.id == res.feedId) {
-            singleCmnt.sentiment = res;
-          }
-        });
-      });
-    });
-    this.changeDetect.detectChanges();
-  }
+  // applySentimentListner(res: any) {
+  //   this.YoutubeData.forEach((post: any) => {
+  //     post.groupedComments.forEach((cmnt: any) => {
+  //       cmnt.items.forEach((singleCmnt: any) => {
+  //         if (singleCmnt.id == res.feedId) {
+  //           singleCmnt.sentiment = res;
+  //         }
+  //       });
+  //     });
+  //   });
+  //   this.changeDetect.detectChanges();
+  // }
 
   onScrollComments() {
     if (this.TotalCmntQueryCount > this.pageSize) {

@@ -4,64 +4,305 @@ import * as echarts from 'echarts';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
-import { RouterModule } from '@angular/router';
-
+import { CloudData, CloudOptions } from 'angular-tag-cloud-module';
+import { TagCloudComponent } from 'angular-tag-cloud-module';
 @Component({
   selector: 'app-executive-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, NgxSpinnerModule],
+  imports: [CommonModule, FormsModule,TagCloudComponent],
   templateUrl: './executive-dashboard.component.html',
   styleUrls: ['./executive-dashboard.component.scss']
 })
 export class ExecutiveDashboardComponent implements OnInit {
+  options: CloudOptions = { 
+    width: 300,
+    height: 400,
+    overflow: false,
+  };
+  data = [
+    {
+      "text": "w9-color",
+      "weight": 9,
+      "color": "#67402b",
+      "rotate": 0
+    },
+    {
+      "text": "w4",
+      "weight": 4,
+      "rotate": 0
+    },
+    {
+      "text": "w7-color",
+      "weight": 7,
+      "color": "#c90296",
+      "rotate": 0
+    },
+    {
+      "text": "w6-color",
+      "weight": 6,
+      "color": "#1041c7",
+      "rotate": 0
+    },
+    {
+      "text": "w4",
+      "weight": 4,
+      "rotate": 0
+    },
+    {
+      "text": "w8-link",
+      "weight": 8,
+  
+      "rotate": 0
+    },
+    {
+      "text": "w10-link-ext",
+      "weight": 10,
 
+      "external": true,
+      "rotate": 0
+    },
+    {
+      "text": "w7-color-link-ext",
+      "weight": 7,
+      "color": "#81f31a",
+
+      "external": true,
+      "rotate": 0
+    },
+    {
+      "text": "w1-color",
+      "weight": 1,
+      "color": "#3df06e",
+      "rotate": -13
+    },
+    {
+      "text": "w8-link",
+      "weight": 8,
+
+      "rotate": 0
+    },
+    {
+      "text": "w5-link",
+      "weight": 5,
+
+      "rotate": 5
+    },
+    {
+      "text": "w6-link-ext",
+      "weight": 6,
+
+      "external": true,
+      "rotate": 0
+    },
+    {
+      "text": "w2-link-ext",
+      "weight": 2,
+
+      "external": true,
+      "rotate": 0
+    },
+    {
+      "text": "w3-color-link-ext",
+      "weight": 3,
+      "color": "#7be66",
+
+      "external": true,
+      "rotate": 0
+    },
+    {
+      "text": "w10-color-link-ext",
+      "weight": 10,
+      "color": "#db41a2",
+
+      "external": true,
+      "rotate": 6
+    },
+    {
+      "text": "w4-link-ext",
+      "weight": 4,
+
+      "external": true,
+      "rotate": -16
+    },
+    {
+      "text": "w5-color",
+      "weight": 5,
+      "color": "#a16978",
+      "rotate": 0
+    },
+    {
+      "text": "w5-link-ext",
+      "weight": 5,
+
+      "external": true,
+      "rotate": 0
+    },
+    {
+      "text": "w8",
+      "weight": 8,
+      "rotate": 0
+    },
+    {
+      "text": "w3",
+      "weight": 3,
+      "rotate": 0
+    },
+    {
+      "text": "w1-color",
+      "weight": 1,
+      "color": "#32a283",
+      "rotate": 13
+    },
+    {
+      "text": "w4-color-link-ext",
+      "weight": 4,
+      "color": "#ead416",
+
+      "external": true,
+      "rotate": 0
+    },
+    {
+      "text": "w3-color",
+      "weight": 3,
+      "color": "#453cf",
+      "rotate": 7
+    },
+    {
+      "text": "w7-link-ext",
+      "weight": 7,
+
+      "external": true,
+      "rotate": 0
+    },
+    {
+      "text": "w7-color",
+      "weight": 7,
+      "color": "#587453",
+      "rotate": 0
+    },
+    {
+      "text": "w1-color-link",
+      "weight": 1,
+      "color": "#526f88",
+
+      "rotate": 0
+    },
+    {
+      "text": "w2",
+      "weight": 2,
+      "rotate": 0
+    },
+    {
+      "text": "w10-color",
+      "weight": 10,
+      "color": "#fda4d7",
+      "rotate": -14
+    },
+    {
+      "text": "w8-link",
+      "weight": 8,
+
+      "rotate": -12
+    },
+    {
+      "text": "w2-link",
+      "weight": 2,
+
+      "rotate": 0
+    },
+    {
+      "text": "w2-color-link-ext",
+      "weight": 2,
+      "color": "#7f618",
+
+      "external": true,
+      "rotate": 17
+    },
+    {
+      "text": "w2-color-link",
+      "weight": 2,
+      "color": "#66f18c",
+
+      "rotate": 0
+    },
+    {
+      "text": "w9-link",
+      "weight": 9,
+
+      "rotate": 0
+    },
+    {
+      "text": "w4",
+      "weight": 4,
+      "rotate": 0
+    },
+    {
+      "text": "w6-color",
+      "weight": 6,
+      "color": "#8bc27",
+      "rotate": 0
+    },
+    {
+      "text": "w3-link",
+      "weight": 3,
+
+      "rotate": 0
+    },
+    {
+      "text": "w8-color-link",
+      "weight": 8,
+      "color": "#b0a84a",
+
+      "rotate": 0
+    },
+    {
+      "text": "w2-link",
+      "weight": 2,
+
+      "rotate": -19
+    },
+    {
+      "text": "w4-color",
+      "weight": 4,
+      "color": "#db6279",
+      "rotate": 0
+    },
+    {
+      "text": "w4",
+      "weight": 4,
+      "rotate": -17
+    }
+  ];
   startDate: string = ''
   endDate: string = ''
   maxEndDate: any;
   social_media_report: any
-  // enagemenet_percentage:any
   inbound_traffic: any
   sentimental_analysis: any
   date_Audience: any
   post_likes: any
   post_comments: any
-  countDiffernce: any
   post_share: any
   facebook_reaction: any
-  tpl: any
-  tpc: any
-  tps: any
-  ltpl: any
-  ltpc: any
-  ltps: any
-  last: any
-  today: any
-  addTotalCount: any
-  countDifferncePostive: any
-  percentageData: any
-  percentageDataFormatted: any
-  percentageDataSmall: any
-  percentageDataFormatteds:any
-  reactionDate:any
   constructor(private _hS: HeaderService,
     private commonDataService: CommonDataService,
-    private datePipe: DatePipe,
-    private SpinnerService: NgxSpinnerService) { }
+    private datePipe: DatePipe,) { }
 
   ngOnInit(): void {
     const newObj = { title: 'Executive Dashboard', url: '/analytics/executive-dashboard' };
     this._hS.setHeader(newObj);
     const currentDate = new Date();
     this.maxEndDate = currentDate.toISOString().split('T')[0];
-    // this.getEnagementChart()
+    this.getEnagementChart()
     this.getRefionWiseTrafic()
     this.GetAllSocialMediaReport()
-  }
-  EngagementPercentage() {
 
+
+
+    
   }
   GetAllSocialMediaReport() {
+    debugger
     if (this.endDate == '' && this.startDate == '') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 5);
@@ -74,8 +315,8 @@ export class ExecutiveDashboardComponent implements OnInit {
     }
     const requestData = {
       pageId: "622038187854126",
-      from: this.startDate,
-      to: this.endDate,
+      from: "2023-09-15",
+      to: "2023-10-05",
     };
     this.inbound_traffic = []
     this.sentimental_analysis = []
@@ -84,31 +325,11 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.post_likes = []
     this.post_share = []
     this.facebook_reaction = [];
-this.reactionDate=[]
-    if (this.startDate <= this.endDate) {
-      this.SpinnerService.show();
-      this.commonDataService.GetAllSocialMatrics(requestData).subscribe((res: any) => {
 
-        this.SpinnerService.hide();
+    if (this.startDate <= this.endDate) {
+      this.commonDataService.GetAllSocialMatrics(requestData).subscribe((res: any) => {
         this.social_media_report = res
-        this.tpl = this.social_media_report.facebookReportResponseDto.totalPostLikes
-        this.tpc = this.social_media_report.facebookReportResponseDto.totalPostComments
-        this.tps = this.social_media_report.facebookReportResponseDto.totalPostShares
-        this.ltpl = this.social_media_report.facebookReportResponseDto.lastTotalPostLikes
-        this.ltpc = this.social_media_report.facebookReportResponseDto.lastTotalPostComments
-        this.ltps = this.social_media_report.facebookReportResponseDto.lastTotalPostShares
-        this.today = this.tpl + this.tpc + this.tps
-        this.last = this.ltpl + this.ltpc + this.ltps
-        this.countDiffernce = this.today - this.last
-        if (this.today >= this.last) {
-        this.countDifferncePostive = Math.abs(this.countDiffernce)
-          this.percentageData = (this.countDiffernce / this.today) * 100
-          // this.percentageDataFormatted = this.percentageData.toFixed(2) + '%';
-        } else {
-        this.countDifferncePostive = Math.abs(this.countDiffernce)
-          this.percentageDataSmall = (this.countDiffernce / this.last) * 100
-          // this.percentageDataFormatteds = this.percentageDataSmall.toFixed(2) + '%';
-        }
+
         const inBoundTrafficDto = this.social_media_report.inBoundTrafficDto;
         inBoundTrafficDto.forEach((data: any) => {
           const date = new Date(data.date);
@@ -124,6 +345,7 @@ this.reactionDate=[]
         // Audience Chart
 
         this.social_media_report.facebookReportResponseDto.postLikeSpan?.forEach((data: any) => {
+          debugger
           this.post_likes.push(data.activityCount);
           if (!this.date_Audience.includes(data.dateValue)) {
             this.date_Audience.push(data.dateValue)
@@ -143,11 +365,10 @@ this.reactionDate=[]
         });
         // facebook Reaction 
         const pageReactionsSpan = this.social_media_report.facebookReportResponseDto.pageReactionsSpan;
-        
+        debugger
         pageReactionsSpan?.forEach((data: any) => {
           const date = (data.totalReactionsDateValue);
           this.facebook_reaction.push(data.like + data.love + data.wow + data.haha + data.sorry + data.anger + data.sad + data.tHANKFUL + data.pride + data.cARE);
-          this.reactionDate.push(date)
         });
         this.getChartInbound()
         this.getSentimentChart()
@@ -156,7 +377,6 @@ this.reactionDate=[]
       })
 
     } else {
-      this.SpinnerService.hide();
       alert('select end date greater then start date')
     }
 
@@ -184,7 +404,7 @@ this.reactionDate=[]
         }
       },
       legend: {
-        data: ['Email']
+        data: ['Inbound']
       },
       toolbox: {
         feature: {
@@ -228,6 +448,7 @@ this.reactionDate=[]
     option && myChart.setOption(option);
   }
   getChartAudienceEngagement() {
+    debugger
     type EChartsOption = echarts.EChartsOption;
     var chartDom = document.getElementById('audience')!;
     var myChart = echarts.init(chartDom);
@@ -245,7 +466,7 @@ this.reactionDate=[]
         }
       },
       legend: {
-        data: ['Likes', 'Comments', 'Share',]
+        data: ['Likes', 'Comments', 'Share', 'Tweets', 'Search Engine']
       },
       toolbox: {
         feature: {
@@ -381,7 +602,6 @@ this.reactionDate=[]
     option && myChart.setOption(option);
   }
   getFacebookReaction() {
-    
     type EChartsOption = echarts.EChartsOption;
 
     var chartDom = document.getElementById('facebookReaction')!;
@@ -401,7 +621,7 @@ this.reactionDate=[]
         }
       },
       legend: {
-        data: ['Reaction']
+        data: ['Line 1']
       },
       grid: {
         left: '3%',
@@ -413,7 +633,7 @@ this.reactionDate=[]
         {
           type: 'category',
           boundaryGap: false,
-          data: this.reactionDate
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         }
       ],
       yAxis: [
@@ -423,7 +643,7 @@ this.reactionDate=[]
       ],
       series: [
         {
-          name: 'Reaction',
+          name: 'Line 1',
           type: 'line',
 
           smooth: true,

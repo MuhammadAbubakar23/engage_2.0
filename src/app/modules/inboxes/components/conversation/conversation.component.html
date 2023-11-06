@@ -160,7 +160,7 @@
                       </li>
                       <div class="perfect-scrollbar dd-scroll" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;"><div class="scroll-content">
                         <li>
-                          <a class="dropdown-item d-flex contact-user" href="#">
+                          <a class="dropdown-item d-flex contact-user" >
 
                             <div class="list-down-icon">
                               <div class="iconButton medium mintBg me-3">
@@ -486,16 +486,16 @@
         <!-- <div [hidden]="flag == 'trash'"> -->
 
         <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'archived'"
-          (click)="Archive()" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+          (click)="InsertTagInProfile('archived','Tag')" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
           data-bs-original-title="Archive" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-archive"></i>
         </li>
         <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag != 'archived'"
-          (click)="Unarchive()" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+          (click)="RemoveTagInProfile('archived', 'Tag')" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
           data-bs-original-title="Unarchive" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-inbox-out"></i>
         </li>
-        <!-- <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'spam'" (click)="Spam()" aria-label="..."
+        <!-- <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'spam'" (click)="UpdateMessageStatus('Spam','Tag')" aria-label="..."
             data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Report Spam"
             [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
             <i class="fal fa-exclamation-circle"></i>
@@ -505,13 +505,13 @@
             data-bs-original-title="Undo Spam" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
             <i class="fal fa-rotate-exclamation"></i>
           </li> -->
-        <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun" (click)="Delete()"
+        <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun" (click)="InsertTagInProfile('trash','Tag')"
           [hidden]="flag == 'trash'" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
           data-bs-original-title="Delete" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-trash"></i>
         </li>
         <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun"
-          [hidden]="flag != 'trash'" (click)="UndoDelete()" aria-label="..." data-bs-toggle="tooltip"
+          [hidden]="flag != 'trash'" (click)="RemoveTagInProfile('trash', 'Tag')" aria-label="..." data-bs-toggle="tooltip"
           data-bs-placement="bottom" title="" data-bs-original-title="Undo Delete"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-trash-slash"></i>
@@ -521,16 +521,16 @@
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="far fa-envelope-open"></i>
         </li> -->
-        <!-- <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'snoozed'" (click)="Snooze()"
+        <!-- <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'snoozed'" (click)="UpdateMessageStatus('Spam','Tag')"
             aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
             data-bs-original-title="Snooze" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
             <i class="fal fa-clock"></i>
           </li> -->
-        <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag != 'snoozed'"
-          (click)="RemoveSnooze()" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+        <!-- <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag != 'snoozed'"
+          (click)="RemoveTagInProfile('snooze', 'Tag')" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
           data-bs-original-title="Remove Snooze" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-trash-can-clock"></i>
-        </li>
+        </li> -->
         <!-- <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun"
                     aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
                     data-bs-original-title="Add to task" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
@@ -557,31 +557,31 @@
             </button>
             <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1">
               <!-- <li>
-                                <a class="dropdown-item" href="#">Mark as read </a>
+                                <a class="dropdown-item" >Mark as read </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Mark as unread</a>
+                                <a class="dropdown-item" >Mark as unread</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Mark as important</a>
+                                <a class="dropdown-item" >Mark as important</a>
                             </li> -->
               <li [hidden]="flag == 'starred'">
-                <a class="dropdown-item" (click)="Starred()">Add star</a>
+                <a class="dropdown-item" (click)="InsertTagInProfile('starred','Tag')">Add star</a>
               </li>
               <li [hidden]="flag != 'starred'">
-                <a class="dropdown-item" (click)="RemoveStarred()">Remove star</a>
+                <a class="dropdown-item" (click)="RemoveTagInProfile('starred', 'Tag')">Remove star</a>
               </li>
               <li [hidden]="flag != 'black_list'">
-                <a class="dropdown-item" (click)="Unblock()">Unblock User(s)</a>
+                <a class="dropdown-item" (click)="RemoveTagInProfile('black_list', 'Tag')">Unblock User(s)</a>
               </li>
               <!-- <li>
-                                <a class="dropdown-item" href="#">Filter Messages like these</a>
+                                <a class="dropdown-item" >Filter Messages like these</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Mute</a>
+                                <a class="dropdown-item" >Mute</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Forward as Attachment</a>
+                                <a class="dropdown-item" >Forward as Attachment</a>
                             </li> -->
 
             </ul>
@@ -690,12 +690,12 @@
                                 <li class="dropdown-listing-header">
                                   <div class="head-section p-3">
                                     <div class="left">
-                                      <a href="#" class="dropdown-item p-1 active dropdownBackBtn iconButton dropdown-iconBtn small active">
+                                      <a  class="dropdown-item p-1 active dropdownBackBtn iconButton dropdown-iconBtn small active">
                                         <i class="fal fa-arrow-left silver"></i>
                                       </a>
                                       <h6>Assign to</h6>
                                     </div>
-                                    <a href="#" class="iconButton dropdown-iconBtn small active dropdownCrossBtn" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a  class="iconButton dropdown-iconBtn small active dropdownCrossBtn" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
                                       <i class="fal fa-times silver"></i>
                                     </a>
                                   </div>
@@ -764,15 +764,15 @@
 
                 <!-- <td class="more-action-container">
                 <span class="more-action-btns">
-                  <a href="#" class="px-2" data-bs-toggle="tooltip" data-bs-placement="bottom" tabindex="1"
+                  <a  class="px-2" data-bs-toggle="tooltip" data-bs-placement="bottom" tabindex="1"
                     aria-label="Snooze">
                     <i class="fal fa-clock coal"></i>
                   </a>
-                  <a href="#" class="px-2" data-bs-toggle="tooltip" data-bs-placement="bottom" tabindex="2"
+                  <a  class="px-2" data-bs-toggle="tooltip" data-bs-placement="bottom" tabindex="2"
                     aria-label="archive">
                     <i class="far fa-archive coal"></i>
                   </a>
-                  <a href="#" class="px-2" data-bs-toggle="tooltip" data-bs-placement="bottom" tabindex="3"
+                  <a  class="px-2" data-bs-toggle="tooltip" data-bs-placement="bottom" tabindex="3"
                     id="deleteToast" aria-label="Delete">
                     <i class="fal fa-trash coal"></i>
                   </a>

@@ -57,7 +57,7 @@
                                             </a>
                                         </li>
                                         <!-- <li>
-                                            <a class="dropdown-item d-flex align-items-center" >
+                                            <a class="dropdown-item d-flex align-items-center" href="#0">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" id="12">
                                                     <label class="form-check-label" for="12">
@@ -67,7 +67,7 @@
                                             </a>
                                         </li> -->
                                         <!-- <li>
-                                            <a class="dropdown-item d-flex align-items-center" >
+                                            <a class="dropdown-item d-flex align-items-center" href="#0">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" id="14">
                                                     <label class="form-check-label" for="14">
@@ -81,15 +81,12 @@
 
                             </div>
                         </li>
-                        <li class="list-inline-item ms-auto">
-                            <!-- <button class="btn btn-outline-primary"><i class="fa-light fa-envelope"></i> Email
-                                Report</button> -->
-                        </li>
-
-
+                        <!-- <li class="list-inline-item ms-auto">
+                            <button class="btn btn-outline-primary"><i class="fa-light fa-envelope"></i> Email
+                                Report</button>
+                        </li> -->
                     </ul>
                 </div>
-
                 <div class="row align-items-start h-auto mb-4">
 
                     <div class="col-lg-4 col-md-6">
@@ -199,7 +196,57 @@
                                         <tbody>
                                             <ng-container *ngFor="let channel of shiftChannelData">
                                                 <tr>
-                                                    <td>{{ channel.platform }}</td>
+                                                    <td>
+                                                        <span *ngIf="channel.platform=='Facebook'">
+                                                            <div class="d-flex align-items-center">
+                                                                <span class="iconButton medium navyBg">
+                                                                    <i class="fa-brands fa-facebook-f fa-beat-fade"></i>
+                                                                </span>
+                                                                <span class="ms-2"> {{ channel.platform }}</span>
+                                                            </div>
+                                                        </span>
+                                                        <span *ngIf="channel.platform=='Twitter'">
+                                                            <div class="d-flex align-items-center">
+                                                                <span class="iconButton medium twltte-bg ice">
+                                                                    <i class="fa-brands fa-twitter fa-beat-fade"></i>
+                                                                </span>
+                                                                <span class="ms-2"> {{ channel.platform }}</span>
+                                                            </div>
+                                                        </span>
+                                                        <span *ngIf="channel.platform=='Instagram'">
+                                                            <div class="d-flex align-items-center">
+                                                                <span class="iconButton medium twltte-bg ice insta">
+                                                                    <i class="fab fa-instagram fa-beat-fade"></i>
+                                                                </span>
+                                                                <span class="ms-2"> {{ channel.platform }}</span>
+                                                            </div>
+                                                        </span>
+                                                        <span *ngIf="channel.platform=='LinkedIn'">
+                                                            <div class="d-flex align-items-center">
+                                                                <span class="iconButton medium linkedinBg ice">
+                                                                    <i class="fa-brands fa-linkedin fa-beat-fade"></i>
+                                                                </span>
+                                                                <span class="ms-2"> {{ channel.platform }}</span>
+                                                            </div>
+                                                        </span>
+                                                        <span *ngIf="channel.platform=='PlayStore'">
+                                                            <div class="d-flex align-items-center">
+                                                                <span class="iconButton medium darkorangeBg ice">
+                                                                    <i
+                                                                        class="fa-brands fa-google-play fa-beat-fade"></i>
+                                                                </span>
+                                                                <span class="ms-2"> {{ channel.platform }}</span>
+                                                            </div>
+                                                        </span>
+                                                        <span *ngIf="channel.platform=='WhatsApp'">
+                                                            <div class="d-flex align-items-center">
+                                                                <span class="iconButton medium mintBg ice">
+                                                                    <i class="fab fa-whatsapp fa-beat-fade"></i>
+                                                                </span>
+                                                                <span class="ms-2"> {{ channel.platform }}</span>
+                                                            </div>
+                                                        </span>
+                                                    </td>
                                                     <ng-container *ngFor="let date of allDates">
                                                         <td>
                                                             <span>

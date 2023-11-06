@@ -44,7 +44,7 @@ export class TwitterComponent implements OnInit {
 
   checkTag = false;
   activeTag = false;
-  TagsList: any;
+  TagsList: any[]=[];
 
   userIdsDto = this.fetchId.getIds();
   queryType = this.getQueryTypeService.getQueryType();
@@ -132,7 +132,7 @@ export class TwitterComponent implements OnInit {
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService: GetQueryTypeService,
     private router: Router,
-    private store: StorageService,
+    private stor: StorageService,
     private userInfoService: UserInformationService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
@@ -141,9 +141,36 @@ export class TwitterComponent implements OnInit {
     //   this.getTwitterDM();
     // });
   }
-
+  messagesStatus:any[]=[];
+  Sentiments:any[]=[];
   ngOnInit(): void {
-    this.teamPermissions = this.store.retrive('permissionteam', 'O').local;
+    this.teamPermissions = this.stor.retrive('permissionteam', 'O').local;
+
+    const menu = this.stor.retrive('Tags', 'O').local;
+      menu.forEach((item:any) => {
+        if(item.name == "Tags"){
+          item.subTags.forEach((singleTagObj:any) => {
+            if(!this.TagsList.includes(singleTagObj)){
+            this.TagsList.push(singleTagObj)
+            }
+          });
+        }
+        if(item.name == "Messages Status"){
+          item.subTags.forEach((messagesStatusObj:any) => {
+            if(!this.messagesStatus.includes(messagesStatusObj)){
+            this.messagesStatus.push(messagesStatusObj)
+            }
+          });
+        }
+        if(item.name == "Sentiments"){
+          item.subTags.forEach((sentimentObj:any) => {
+            if(!this.Sentiments.includes(sentimentObj)){
+            this.Sentiments.push(sentimentObj)
+            }
+          });
+        }
+      });
+
     this.flag = this.router.url.split('/')[2];
     this.criteria = {
       property: 'createdDate',
@@ -152,7 +179,7 @@ export class TwitterComponent implements OnInit {
 
     this.TodayDate = new Date();
     this.getTwitterTweets();
-    this.getTagList();
+    // this.getTagList();
     this.getTwitterDM();
     this.getTwitterMentions();
     this.quickReplyList();
@@ -189,7 +216,7 @@ export class TwitterComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
+        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
         if (res.contentCount.contentType == 'TT') {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
@@ -207,17 +234,17 @@ export class TwitterComponent implements OnInit {
       this.updateTicketId(res);
     });
 
-    this.Subscription = this.applySentimentService
-      .receiveSentiment()
-      .subscribe((res) => {
-        this.applySentimentListner(res);
-      });
+    // this.Subscription = this.applySentimentService
+    //   .receiveSentiment()
+    //   .subscribe((res) => {
+    //     this.applySentimentListner(res);
+    //   });
 
-    this.Subscription = this.queryStatusService
-      .receiveQueryStatus()
-      .subscribe((res) => {
-        this.updateMessageStatusDataListener(res);
-      });
+    // this.Subscription = this.queryStatusService
+    //   .receiveQueryStatus()
+    //   .subscribe((res) => {
+    //     this.updateMessageStatusDataListener(res);
+    //   });
   }
 
   commentDto = new commentsDto();
@@ -1077,14 +1104,11 @@ export class TwitterComponent implements OnInit {
       .subscribe((res: any) => {});
   }
 
-  insertTagsForFeed(id: any, comId: string, type: any) {
-    if (type == 'TTR') {
-      this.insertTagsForFeedDto.feedId = comId.toString();
-      this.insertTagsForFeedDto.tagId = id;
-      this.insertTagsForFeedDto.feedType = 'TTR';
-      this.insertTagsForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
+  insertTagsForFeed(comId: number, tagName: string) {
+    this.insertTagsForFeedDto.feedId = comId;
+    this.insertTagsForFeedDto.tagName = tagName;
+    this.insertTagsForFeedDto.type = 'Tag';
+    this.insertTagsForFeedDto.platform = 'Twitter';
 
       this.TwitterTweets.forEach((abc: any) => {
         abc.comments.forEach((comment: any) => {
@@ -1098,9 +1122,9 @@ export class TwitterComponent implements OnInit {
                   this.checkTag = true;
                 });
             } else if (comment.tags.length > 0) {
-              const value = comment.tags.find((x: any) => x.id == id);
+              const value = comment.tags.find((x: any) => x.name == tagName);
               if (value != null || value != undefined) {
-                this.removeTagFromFeed(id, comId, type);
+                this.removeTagFromFeed(comId, tagName);
               } else {
                 this.commondata
                   .InsertTag(this.insertTagsForFeedDto)
@@ -1114,14 +1138,6 @@ export class TwitterComponent implements OnInit {
           }
         });
       });
-    }
-    if (type == 'TDM') {
-      this.insertTagsForFeedDto.feedId = comId.toString();
-      this.insertTagsForFeedDto.tagId = id;
-      this.insertTagsForFeedDto.feedType = 'TDM';
-      this.insertTagsForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
 
       this.TwitterMessages.forEach((msg: any) => {
         if (msg.id == comId) {
@@ -1135,9 +1151,9 @@ export class TwitterComponent implements OnInit {
                 this.checkTag = true;
               });
           } else if (msg.tags.length > 0) {
-            const value = msg.tags.find((x: any) => x.id == id);
+            const value = msg.tags.find((x: any) => x.name == tagName);
             if (value != null || value != undefined) {
-              this.removeTagFromFeed(id, comId, type);
+              this.removeTagFromFeed(comId, tagName);
             } else {
               this.commondata
                 .InsertTag(this.insertTagsForFeedDto)
@@ -1151,15 +1167,6 @@ export class TwitterComponent implements OnInit {
           }
         }
       });
-    }
-    if (type == 'TM') {
-      this.insertTagsForFeedDto.feedId = comId.toString();
-      this.insertTagsForFeedDto.tagId = id;
-      this.insertTagsForFeedDto.feedType = 'TM';
-      this.insertTagsForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
-
       this.TwitterMentions.forEach((mention: any) => {
         if (mention.id == comId) {
           if (mention.tags.length == 0) {
@@ -1172,9 +1179,9 @@ export class TwitterComponent implements OnInit {
                 this.checkTag = true;
               });
           } else if (mention.tags.length > 0) {
-            const value = mention.tags.find((x: any) => x.id == id);
+            const value = mention.tags.find((x: any) => x.name == tagName);
             if (value != null || value != undefined) {
-              this.removeTagFromFeed(id, comId, type);
+              this.removeTagFromFeed(comId, tagName);
             } else {
               this.commondata
                 .InsertTag(this.insertTagsForFeedDto)
@@ -1188,35 +1195,17 @@ export class TwitterComponent implements OnInit {
           }
         }
       });
-    }
   }
 
-  removeTagFromFeed(tagid: any, feedId: string, type: any) {
-    if (type == 'TTR') {
-      this.insertTagsForFeedDto.tagId = tagid;
-      this.insertTagsForFeedDto.feedId = feedId.toString();
-      this.insertTagsForFeedDto.feedType = 'TTR';
-      this.insertTagsForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
-
-      this.commondata
-        .RemoveTag(this.insertTagsForFeedDto)
-        .subscribe((res: any) => {
-          this.reloadComponent('RemoveTag');
-
-          this.activeTag = false;
-          this.checkTag = false;
-        });
-    }
-    if (type == 'TM') {
-      this.insertTagsForFeedDto.tagId = tagid;
-      this.insertTagsForFeedDto.feedId = feedId.toString();
-      this.insertTagsForFeedDto.feedType = 'TM';
-      this.insertTagsForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
-
+  removeTagFromFeed(feedId: number, tagName: any) {
+    if (
+      this.flag == 'focused' ||
+      this.flag == 'assigned_to_me'
+    ) {
+        this.insertTagsForFeedDto.tagName = tagName;
+        this.insertTagsForFeedDto.feedId = feedId;
+        this.insertTagsForFeedDto.type = 'Tag';
+        this.insertTagsForFeedDto.platform = 'Twitter';
       this.commondata
         .RemoveTag(this.insertTagsForFeedDto)
         .subscribe((res: any) => {
@@ -1224,23 +1213,7 @@ export class TwitterComponent implements OnInit {
           this.activeTag = false;
           this.checkTag = false;
         });
-    }
-    if (type == 'TDM') {
-      this.insertTagsForFeedDto.tagId = tagid;
-      this.insertTagsForFeedDto.feedId = feedId.toString();
-      this.insertTagsForFeedDto.feedType = 'TDM';
-      this.insertTagsForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
-
-      this.commondata
-        .RemoveTag(this.insertTagsForFeedDto)
-        .subscribe((res: any) => {
-          this.reloadComponent('RemoveTag');
-          this.activeTag = false;
-          this.checkTag = false;
-        });
-    }
+      }
   }
 
   openDropdown() {
@@ -1263,69 +1236,16 @@ export class TwitterComponent implements OnInit {
 
   insertSentimentForFeedDto = new InsertSentimentForFeedDto();
 
-  Sentiments = [
-    {
-      id: 1,
-      name: 'Positive',
-      icon: 'fal fa-smile',
-    },
-    {
-      id: 2,
-      name: 'Neutral',
-      icon: 'fal fa-meh-blank',
-    },
-    {
-      id: 3,
-      name: 'Negative',
-      icon: 'fal fa-frown',
-    },
-  ];
+  insertSentimentForFeed(comId: number, sentimenName: any) {
+    this.insertTagsForFeedDto.feedId = comId;
+    this.insertTagsForFeedDto.tagName = sentimenName;
+    this.insertTagsForFeedDto.type = 'Sentiment';
+    this.insertTagsForFeedDto.platform = 'Twitter';
 
-  insertSentimentForFeed(feedId: any, sentimenName: any, type: any) {
-    if (type == 'TTR') {
-      this.insertSentimentForFeedDto.feedId = feedId.toString();
-      this.insertSentimentForFeedDto.feedType = 'TTR';
-      this.insertSentimentForFeedDto.sentiment = sentimenName;
-      this.insertSentimentForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
-
-      this.commondata
-        .InsertSentiment(this.insertSentimentForFeedDto)
-        .subscribe((res: any) => {
-          this.reloadComponent('Sentiment');
-        });
-    }
-    if (type == 'TDM') {
-      this.insertSentimentForFeedDto.feedId = feedId.toString();
-      this.insertSentimentForFeedDto.feedType = 'TDM';
-      this.insertSentimentForFeedDto.sentiment = sentimenName;
-      this.insertSentimentForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
-
-      this.commondata
-        .InsertSentiment(this.insertSentimentForFeedDto)
-        .subscribe((res: any) => {
-          this.reloadComponent('Sentiment');
-        });
-    }
-
-    if (type == 'TM') {
-      this.insertSentimentForFeedDto.feedId = feedId.toString();
-      this.insertSentimentForFeedDto.feedType = 'TM';
-      this.insertSentimentForFeedDto.sentiment = sentimenName;
-      this.insertSentimentForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
-
-      this.commondata
-        .InsertSentiment(this.insertSentimentForFeedDto)
-        .subscribe((res: any) => {
-          this.reloadComponent('Sentiment');
-        });
-    }
-  }
+    this.commondata.InsertSentiment(this.insertTagsForFeedDto).subscribe((res: any) => {
+        this.reloadComponent('Sentiment');
+      });
+}
 
   QuickReplies: any;
 
@@ -1876,110 +1796,119 @@ export class TwitterComponent implements OnInit {
   removeTags: any;
 
   addTagDataListener() {
-    if (this.addTags.feedType == 'TTR') {
-      this.TwitterTweets.forEach((post: any) => {
-        post.groupedComments.forEach((cmnt: any) => {
-          cmnt.items.forEach((singleCmnt: any) => {
-            if (singleCmnt.id == this.addTags.feedId) {
-              if (singleCmnt.tags.length == 0) {
-                singleCmnt.tags.push(this.addTags);
-              } else if (singleCmnt.tags.length > 0) {
-                const index = singleCmnt.tags.findIndex(
-                  (x: any) => x.id == this.addTags.id
-                );
+    this.TwitterTweets?.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == this.addTags.feedId) {
+            if(this.addTags.type == 'Tag'){
+            if (singleCmnt.tags.length == 0) {
+              singleCmnt.tags.push(this.addTags);
+            } else if (singleCmnt.tags.length > 0) {
+              const tag = singleCmnt.tags.find(
+                (x: any) => x.name == this.addTags.name
+              );
+              if (tag != null || tag != undefined) {
+                const index = singleCmnt.tags.indexOf(tag);
                 if (index !== -1) {
                   singleCmnt.tags.splice(index, 1);
-                } else {
+                }
+              } else {
+                if (!singleCmnt.tags.includes(this.addTags)) {
                   singleCmnt.tags.push(this.addTags);
                 }
               }
             }
-          });
+          }
+          if(this.addTags.type == 'Sentiment'){
+            singleCmnt.sentiment = this.addTags;
+          }
+          }
         });
       });
-    }
-    if (this.addTags.feedType == 'TDM') {
-      this.TwitterMessages.forEach((msg: any) => {
-        if (msg.id == this.addTags.feedId) {
+    });
+    this.TwitterMessages?.forEach((msg: any) => {
+      if (msg.id == this.addTags.feedId) {
+        if(this.addTags.type == 'Tag'){
           if (msg.tags.length == 0) {
             msg.tags.push(this.addTags);
           } else if (msg.tags.length > 0) {
-            const index = msg.tags.findIndex(
-              (x: any) => x.id == this.addTags.id
-            );
-            if (index !== -1) {
-              msg.tags.splice(index, 1);
+            const tag = msg.tags.find((x: any) => x.name == this.addTags.tagName);
+            if (tag != null || tag != undefined) {
+              const index = msg.tags.indexOf(tag);
+              if (index !== -1) {
+                msg.tags.splice(index, 1);
+              }
             } else {
               msg.tags.push(this.addTags);
             }
           }
         }
-      });
-    }
-    if (this.addTags.feedType == 'TM') {
-      this.TwitterMentions.forEach((mention: any) => {
-        if (mention.id == this.addTags.feedId) {
-          if (mention.tags.length == 0) {
-            mention.tags.push(this.addTags);
-          } else if (mention.tags.length > 0) {
-            const index = mention.tags.findIndex(
-              (x: any) => x.id == this.addTags.id
-            );
-            if (index !== -1) {
-              mention.tags.splice(index, 1);
-            } else {
-              mention.tags.push(this.addTags);
-            }
-          }
+        if(this.addTags.type == 'Sentiment'){
+          msg.sentiment = this.addTags;
         }
-      });
-    }
-    this.changeDetect.detectChanges();
-  }
-  removeTagDataListener() {
-    if (this.removeTags.feedType == 'TTR') {
-      this.TwitterTweets.forEach((post: any) => {
-        post.groupedComments.forEach((cmnt: any) => {
-          cmnt.items.forEach((singleCmnt: any) => {
-            if (singleCmnt.id == this.removeTags.feedId) {
-              var tag = singleCmnt.tags.find(
-                (x: any) => x.id == this.removeTags.tagId
-              );
-              const index = singleCmnt.tags.indexOf(tag);
-              if (index !== -1) {
-                singleCmnt.tags.splice(index, 1);
-              }
-            }
-          });
-        });
-      });
-    }
-    if (this.removeTags.feedType == 'TDM') {
-      this.TwitterMessages.forEach((msg: any) => {
-        if (msg.id == this.removeTags.feedId) {
-          var tag = msg.tags.find((x: any) => x.id == this.removeTags.tagId);
-          const index = msg.tags.indexOf(tag);
-          if (index !== -1) {
-            msg.tags.splice(index, 1);
-          }
-        }
-      });
-    }
-    if (this.removeTags.feedType == 'TM') {
-      this.TwitterMentions.forEach((mention: any) => {
-        if (mention.id == this.removeTags.feedId) {
-          var tag = mention.tags.find(
-            (x: any) => x.id == this.removeTags.tagId
+      }
+    });
+    this.TwitterMentions.forEach((mention: any) => {
+      if (mention.id == this.addTags.feedId) {
+        if(this.addTags.type == 'Tag'){
+        if (mention.tags.length == 0) {
+          mention.tags.push(this.addTags);
+        } else if (mention.tags.length > 0) {
+          const index = mention.tags.findIndex(
+            (x: any) => x.name == this.addTags.tagName
           );
-          const index = mention.tags.indexOf(tag);
           if (index !== -1) {
             mention.tags.splice(index, 1);
+          } else {
+            mention.tags.push(this.addTags);
           }
         }
+      }
+      if(this.addTags.type == 'Sentiment'){
+        mention.sentiment = this.addTags;
+      }
+      }
+    });
+  this.changeDetect.detectChanges();
+}
+removeTagDataListener() {
+    this.TwitterTweets?.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == this.removeTags.feedId) {
+            var tag = singleCmnt.tags.find(
+              (x: any) => x.name == this.removeTags.tagName
+            );
+            const index = singleCmnt.tags.indexOf(tag);
+            if (index !== -1) {
+              singleCmnt.tags.splice(index, 1);
+            }
+          }
+        });
       });
-    }
-    this.changeDetect.detectChanges();
-  }
+    });
+    this.TwitterMessages?.forEach((msg: any) => {
+      if (msg.id == this.removeTags.feedId) {
+        var tag = msg.tags.find((x: any) => x.name == this.removeTags.tagName);
+        const index = msg.tags.indexOf(tag);
+        if (index !== -1) {
+          msg.tags.splice(index, 1);
+        }
+      }
+    });
+    this.TwitterMentions.forEach((mention: any) => {
+      if (mention.id == this.removeTags.feedId) {
+        var tag = mention.tags.find(
+          (x: any) => x.name == this.removeTags.tagName
+        );
+        const index = mention.tags.indexOf(tag);
+        if (index !== -1) {
+          mention.tags.splice(index, 1);
+        }
+      }
+    });
+  this.changeDetect.detectChanges();
+}
 
   updateQueryStatusDataListener() {
     this.TwitterTweets.forEach((post: any) => {
@@ -2081,28 +2010,28 @@ export class TwitterComponent implements OnInit {
     });
     this.changeDetect.detectChanges();
   }
-  applySentimentListner(res: any) {
-    this.TwitterTweets.forEach((post: any) => {
-      post.groupedComments.forEach((cmnt: any) => {
-        cmnt.items.forEach((singleCmnt: any) => {
-          if (singleCmnt.id == res.feedId) {
-            singleCmnt.sentiment = res;
-          }
-        });
-      });
-    });
-    this.TwitterMessages.forEach((msg: any) => {
-      if (msg.id == res.feedId) {
-        msg.sentiment = res;
-      }
-    });
-    this.TwitterMentions.forEach((msg: any) => {
-      if (msg.id == res.feedId) {
-        msg.sentiment = res;
-      }
-    });
-    this.changeDetect.detectChanges();
-  }
+  // applySentimentListner(res: any) {
+  //   this.TwitterTweets.forEach((post: any) => {
+  //     post.groupedComments.forEach((cmnt: any) => {
+  //       cmnt.items.forEach((singleCmnt: any) => {
+  //         if (singleCmnt.id == res.feedId) {
+  //           singleCmnt.sentiment = res;
+  //         }
+  //       });
+  //     });
+  //   });
+  //   this.TwitterMessages.forEach((msg: any) => {
+  //     if (msg.id == res.feedId) {
+  //       msg.sentiment = res;
+  //     }
+  //   });
+  //   this.TwitterMentions.forEach((msg: any) => {
+  //     if (msg.id == res.feedId) {
+  //       msg.sentiment = res;
+  //     }
+  //   });
+  //   this.changeDetect.detectChanges();
+  // }
   onScrollComments() {
     if (this.TotalCmntQueryCount > this.pageSize) {
       this.pageSize = this.pageSize + 10;
@@ -2131,139 +2060,139 @@ export class TwitterComponent implements OnInit {
     return attachment.contentType?.toLowerCase().startsWith('video');
   }
 
-  itemsToBeUpdated: any[] = [];
+  // itemsToBeUpdated: any[] = [];
 
-  starMessage(msgId: number, status: boolean) {
-    this.itemsToBeUpdated = [];
-    var obj = {
-      channel: '',
-      flag: 'starred',
-      status: status,
-      messageId: msgId,
-      profileId: 0,
-    };
-    this.itemsToBeUpdated.push(obj);
-    this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
-      .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
-          if (status == true) {
-            this.reloadComponent('starred');
-          } else if (status == false) {
-            this.reloadComponent('removeStarred');
-          }
-        }
-      });
-  }
+  // starMessage(msgId: number, status: boolean) {
+  //   this.itemsToBeUpdated = [];
+  //   var obj = {
+  //     channel: '',
+  //     flag: 'starred',
+  //     status: status,
+  //     messageId: msgId,
+  //     profileId: 0,
+  //   };
+  //   this.itemsToBeUpdated.push(obj);
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         if (status == true) {
+  //           this.reloadComponent('starred');
+  //         } else if (status == false) {
+  //           this.reloadComponent('removeStarred');
+  //         }
+  //       }
+  //     });
+  // }
 
-  spam = false;
+  // spam = false;
 
-  spamMessage(msgId: number, status: boolean, type: string) {
-    this.itemsToBeUpdated = [];
-    var obj = {
-      channel: '',
-      flag: 'spam',
-      status: status,
-      messageId: msgId,
-      profileId: 0,
-    };
-    this.itemsToBeUpdated.push(obj);
-    this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
-      .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
-          if (status == true) {
-            this.spam = true;
-            this.commentStatus(msgId, type);
-            this.reloadComponent('spam');
-          } else if (status == false) {
-            this.spam = false;
-            this.reloadComponent('removeSpam');
-          }
-        }
-      });
-  }
+  // spamMessage(msgId: number, status: boolean, type: string) {
+  //   this.itemsToBeUpdated = [];
+  //   var obj = {
+  //     channel: '',
+  //     flag: 'spam',
+  //     status: status,
+  //     messageId: msgId,
+  //     profileId: 0,
+  //   };
+  //   this.itemsToBeUpdated.push(obj);
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         if (status == true) {
+  //           this.spam = true;
+  //           this.commentStatus(msgId, type);
+  //           this.reloadComponent('spam');
+  //         } else if (status == false) {
+  //           this.spam = false;
+  //           this.reloadComponent('removeSpam');
+  //         }
+  //       }
+  //     });
+  // }
 
-  updateMessageStatusDataListener(res: any) {
-    if (this.TwitterTweets) {
-      this.TwitterTweets.forEach((post: any) => {
-        post.groupedComments.forEach((cmnt: any) => {
-          cmnt.items.forEach((singleCmnt: any) => {
-            res.forEach((msgStatus: any) => {
-              if (singleCmnt.id == msgStatus.messageId) {
-                if (msgStatus.flag == 'starred') {
-                  singleCmnt.starred = msgStatus.status;
-                }
-                if (msgStatus.flag == 'spam') {
-                  singleCmnt.spam = msgStatus.status;
-                }
-              }
-            });
-          });
-        });
-      });
-    }
-    if (this.TwitterMessages) {
-      this.TwitterMessages?.forEach((msg: any) => {
-        res.forEach((msgStatus: any) => {
-          if (msg.id == msgStatus.messageId) {
-            if (msgStatus.flag == 'starred') {
-              msg.starred = msgStatus.status;
-            }
-            if (msgStatus.flag == 'spam') {
-              msg.spam = msgStatus.status;
-            }
-          }
-        });
-      });
-    }
+  // updateMessageStatusDataListener(res: any) {
+  //   if (this.TwitterTweets) {
+  //     this.TwitterTweets.forEach((post: any) => {
+  //       post.groupedComments.forEach((cmnt: any) => {
+  //         cmnt.items.forEach((singleCmnt: any) => {
+  //           res.forEach((msgStatus: any) => {
+  //             if (singleCmnt.id == msgStatus.messageId) {
+  //               if (msgStatus.flag == 'starred') {
+  //                 singleCmnt.starred = msgStatus.status;
+  //               }
+  //               if (msgStatus.flag == 'spam') {
+  //                 singleCmnt.spam = msgStatus.status;
+  //               }
+  //             }
+  //           });
+  //         });
+  //       });
+  //     });
+  //   }
+  //   if (this.TwitterMessages) {
+  //     this.TwitterMessages?.forEach((msg: any) => {
+  //       res.forEach((msgStatus: any) => {
+  //         if (msg.id == msgStatus.messageId) {
+  //           if (msgStatus.flag == 'starred') {
+  //             msg.starred = msgStatus.status;
+  //           }
+  //           if (msgStatus.flag == 'spam') {
+  //             msg.spam = msgStatus.status;
+  //           }
+  //         }
+  //       });
+  //     });
+  //   }
 
-    if (this.TwitterMentions) {
-      this.TwitterMentions?.forEach((msg: any) => {
-        res.forEach((msgStatus: any) => {
-          if (msg.id == msgStatus.messageId) {
-            if (msgStatus.flag == 'starred') {
-              msg.starred = msgStatus.status;
-            }
-            if (msgStatus.flag == 'spam') {
-              msg.spam = msgStatus.status;
-            }
-          }
-        });
-      });
-    }
+  //   if (this.TwitterMentions) {
+  //     this.TwitterMentions?.forEach((msg: any) => {
+  //       res.forEach((msgStatus: any) => {
+  //         if (msg.id == msgStatus.messageId) {
+  //           if (msgStatus.flag == 'starred') {
+  //             msg.starred = msgStatus.status;
+  //           }
+  //           if (msgStatus.flag == 'spam') {
+  //             msg.spam = msgStatus.status;
+  //           }
+  //         }
+  //       });
+  //     });
+  //   }
 
-    this.changeDetect.detectChanges();
-  }
+  //   this.changeDetect.detectChanges();
+  // }
 
-  updateUnRespondedCountDataListener(res: any) {
-    if (this.TwitterTweets) {
-      this.TwitterTweets.forEach((item: any) => {
-        if (item.user.id == res.contentCount.profileId) {
-          if (res.contentCount.contentType == 'TTR') {
-            this.totalUnrespondedCmntCountByCustomer =
-              res.contentCount.unrespondedCount;
-          }
-        }
-      });
-    }
-    if (this.TwitterMessages) {
-        if (this.userInfo.id == res.contentCount.profileId) {
-          if (res.contentCount.contentType == 'TDM') {
-            this.totalUnrespondedMsgCountByCustomer =
-              res.contentCount.unrespondedCount;
-          }
-        }
-    }
+  // updateUnRespondedCountDataListener(res: any) {
+  //   if (this.TwitterTweets) {
+  //     this.TwitterTweets.forEach((item: any) => {
+  //       if (item.user.id == res.contentCount.profileId) {
+  //         if (res.contentCount.contentType == 'TTR') {
+  //           this.totalUnrespondedCmntCountByCustomer =
+  //             res.contentCount.unrespondedCount;
+  //         }
+  //       }
+  //     });
+  //   }
+  //   if (this.TwitterMessages) {
+  //       if (this.userInfo.id == res.contentCount.profileId) {
+  //         if (res.contentCount.contentType == 'TDM') {
+  //           this.totalUnrespondedMsgCountByCustomer =
+  //             res.contentCount.unrespondedCount;
+  //         }
+  //       }
+  //   }
 
-    if (this.TwitterMentions) {
-        if (this.userInfo.id == res.contentCount.profileId) {
-          if (res.contentCount.contentType == 'TM') {
-            this.totalUnrespondedMentionCountByCustomer =
-              res.contentCount.unrespondedCount;
-          }
-        }
-    }
-    this.changeDetect.detectChanges();
-  }
+  //   if (this.TwitterMentions) {
+  //       if (this.userInfo.id == res.contentCount.profileId) {
+  //         if (res.contentCount.contentType == 'TM') {
+  //           this.totalUnrespondedMentionCountByCustomer =
+  //             res.contentCount.unrespondedCount;
+  //         }
+  //       }
+  //   }
+  //   this.changeDetect.detectChanges();
+  // }
 }

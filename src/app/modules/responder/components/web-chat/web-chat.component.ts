@@ -12,6 +12,7 @@ import { FiltersDto } from 'src/app/shared/Models/FiltersDto';
 import { WebChatDto } from 'src/app/shared/Models/WebChatDto';
 import { WebChatReplyDto } from 'src/app/shared/Models/WebChatReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
 
 @Component({
@@ -47,15 +48,35 @@ export class WebChatComponent implements OnInit {
     private commondata : CommonDataService,
     private ticketResponseService : TicketResponseService,
     private getQueryTypeService : GetQueryTypeService,
-    private router: Router
+    private router: Router,
+    private stor: StorageService
     ) {
       // this.criteria={
       //   property: 'createdDate',
       //   descending: false
       // };
      }
-
+     messagesStatus:any[]=[];
+     TagsList:any[]=[];
   ngOnInit(): void {
+
+    const menu = this.stor.retrive('Tags', 'O').local;
+      menu.forEach((item:any) => {
+        if(item.name == "Tags"){
+          item.subTags.forEach((singleTagObj:any) => {
+            if(!this.TagsList.includes(singleTagObj)){
+            this.TagsList.push(singleTagObj)
+            }
+          });
+        }
+        if(item.name == "Messages Status"){
+          item.subTags.forEach((messagesStatusObj:any) => {
+            if(!this.messagesStatus.includes(messagesStatusObj)){
+            this.messagesStatus.push(messagesStatusObj)
+            }
+          });
+        }
+      });
 
     // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));

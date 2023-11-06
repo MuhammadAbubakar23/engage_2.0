@@ -13,7 +13,6 @@ import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.s
 import { ReplyService } from 'src/app/services/replyService/reply.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
-import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
 import { UpdateMessagesService } from 'src/app/services/UpdateMessagesService/update-messages.service';
 import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
@@ -23,7 +22,6 @@ import { FacebookMessageReplyDto } from 'src/app/shared/Models/FacebookMessageRe
 import { FiltersDto } from 'src/app/shared/Models/FiltersDto';
 import { InsertSentimentForFeedDto } from 'src/app/shared/Models/InsertSentimentForFeedDto';
 import { InsertTagsForFeedDto } from 'src/app/shared/Models/InsertTagsForFeedDto';
-import { LikeByAdminDto } from 'src/app/shared/Models/LikeByAdminDto';
 import { ReplyDto } from 'src/app/shared/Models/ReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
@@ -40,7 +38,7 @@ export class PlaystoreComponent implements OnInit {
 
 
   PlayStoreReviews: any[] = [];
-  TagsList: any;
+  TagsList: any[]=[];
   totalUnrespondedReviewCountByCustomer: any = 0;
   pageNumber: any = 1;
   pageSize: any = 10;
@@ -134,7 +132,6 @@ export class PlaystoreComponent implements OnInit {
     private addTagService: AddTagService,
     private removeTagService: RemoveTagService,
     private unrespondedCountService: UnRespondedCountService,
-    private updateCommentsService: UpdateCommentsService,
     private updateMessagesService: UpdateMessagesService,
     private replyService: ReplyService,
     private queryStatusService: QueryStatusService,
@@ -143,17 +140,44 @@ export class PlaystoreComponent implements OnInit {
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService: GetQueryTypeService,
     private router: Router,
-    private store: StorageService,
+    private stor: StorageService,
     private userInfoService: UserInformationService
   ) { }
 
   teamPermissions: any;
   currentUrl: string = '';
+  messagesStatus:any[]=[];
+  Sentiments:any[]=[];
 
   ngOnInit(): void {
     
-    this.teamPermissions = this.store.retrive('permissionteam', 'O').local;
+    this.teamPermissions = this.stor.retrive('permissionteam', 'O').local;
     this.currentUrl = this.router.url;
+
+    const menu = this.stor.retrive('Tags', 'O').local;
+      menu.forEach((item:any) => {
+        if(item.name == "Tags"){
+          item.subTags.forEach((singleTagObj:any) => {
+            if(!this.TagsList.includes(singleTagObj)){
+            this.TagsList.push(singleTagObj)
+            }
+          });
+        }
+        if(item.name == "Messages Status"){
+          item.subTags.forEach((messagesStatusObj:any) => {
+            if(!this.messagesStatus.includes(messagesStatusObj)){
+            this.messagesStatus.push(messagesStatusObj)
+            }
+          });
+        }
+        if(item.name == "Sentiments"){
+          item.subTags.forEach((sentimentObj:any) => {
+            if(!this.Sentiments.includes(sentimentObj)){
+            this.Sentiments.push(sentimentObj)
+            }
+          });
+        }
+      });
 
     this.criteria = {
       property: 'createdDate',
@@ -162,19 +186,21 @@ export class PlaystoreComponent implements OnInit {
     this.TodayDate = new Date();
 
     this.getPlayStoreReviewsDetail();
-    this.getTagList();
+    // // this.getTagList();
     this.quickReplyList();
 
     this.Subscription = this.addTagService.receiveTags().subscribe((res) => {
+      
       this.addTags = res;
-      this.addTagDataListner();
+      this.addTagDataListener();
     });
     this.Subscription = this.removeTagService.receiveTags().subscribe((res) => {
+      
       this.removeTags = res;
       this.removeTagDataListener();
     });
     this.Subscription = this.updateMessagesService.receiveMessage().subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
+        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
           this.updatedMessages = res;
           this.updateMessagesDataListener();
         }
@@ -192,7 +218,7 @@ export class PlaystoreComponent implements OnInit {
         this.updateBulkQueryStatusDataListner();
       });
     this.Subscription = this.unrespondedCountService.getUnRespondedCount().subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
+        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
           if (res.contentCount.contentType == 'PSR') {
             this.totalUnrespondedCmntCountByCustomer =
               res.contentCount.unrespondedCount;
@@ -200,13 +226,13 @@ export class PlaystoreComponent implements OnInit {
         }
       });
 
-    this.Subscription = this.applySentimentService.receiveSentiment().subscribe((res) => {
-        this.applySentimentListner(res);
-      });
+    // this.Subscription = this.applySentimentService.receiveSentiment().subscribe((res) => {
+    //     this.applySentimentListner(res);
+    //   });
 
-    this.Subscription = this.queryStatusService.receiveQueryStatus().subscribe((res) => {
-        this.updateMessageStatusDataListner(res);
-      });
+    // this.Subscription = this.queryStatusService.receiveQueryStatus().subscribe((res) => {
+    //     this.updateMessageStatusDataListner(res);
+    //   });
 
       this.ticketResponseService.getTicketId().subscribe((res) => {
         this.updateTicketId(res);
@@ -281,40 +307,41 @@ export class PlaystoreComponent implements OnInit {
   addTags: any;
   removeTags: any;
 
-  addTagDataListner() {
-    if (this.addTags.feedType == 'PSR') {
+  addTagDataListener() {
       this.PlayStoreReviews?.forEach((msg: any) => {
         if (msg.id == this.addTags.feedId) {
-          if (msg.tags.length == 0) {
-            msg.tags.push(this.addTags);
-          } else if (msg.tags.length > 0) {
-            const tag = msg.tags.find((x: any) => x.id == this.addTags.feedId);
-            if (tag != null || tag != undefined) {
-              const index = msg.tags.indexOf(tag);
-              if (index !== -1) {
-                msg.tags.splice(index, 1);
-              }
-            } else {
+          if(this.addTags.type == 'Tag'){
+            if (msg.tags.length == 0) {
               msg.tags.push(this.addTags);
+            } else if (msg.tags.length > 0) {
+              const tag = msg.tags.find((x: any) => x.name == this.addTags.tagName);
+              if (tag != null || tag != undefined) {
+                const index = msg.tags.indexOf(tag);
+                if (index !== -1) {
+                  msg.tags.splice(index, 1);
+                }
+              } else {
+                msg.tags.push(this.addTags);
+              }
             }
+          }
+          if(this.addTags.type == 'Sentiment'){
+            msg.sentiment = this.addTags;
           }
         }
       });
-    }
     this.changeDetect.detectChanges();
   }
   removeTagDataListener() {
-    if (this.removeTags.feedType == 'PSR') {
       this.PlayStoreReviews?.forEach((msg: any) => {
         if (msg.id == this.removeTags.feedId) {
-          var tag = msg.tags.find((x: any) => x.id == this.removeTags.tagId);
+          var tag = msg.tags.find((x: any) => x.name == this.removeTags.tagName);
           const index = msg.tags.indexOf(tag);
           if (index !== -1) {
             msg.tags.splice(index, 1);
           }
         }
       });
-    }
     this.changeDetect.detectChanges();
   }
 
@@ -705,14 +732,11 @@ export class PlaystoreComponent implements OnInit {
     });
   }
 
-  insertTagsForFeed(id: any, comId: string, type: any) {
-    if (type == 'PSR') {
-      this.insertTagsForFeedDto.feedId = comId.toString();
-      this.insertTagsForFeedDto.tagId = id;
-      this.insertTagsForFeedDto.feedType = 'PSR';
-      this.insertTagsForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
+  insertTagsForFeed(comId: number, tagName: string) {
+      this.insertTagsForFeedDto.feedId = comId;
+      this.insertTagsForFeedDto.tagName = tagName;
+      this.insertTagsForFeedDto.type = 'Tag';
+      this.insertTagsForFeedDto.platform = 'PlayStore';
 
       this.PlayStoreReviews?.forEach((msg: any) => {
         if (msg.id == comId) {
@@ -726,9 +750,9 @@ export class PlaystoreComponent implements OnInit {
                 this.checkTag = true;
               });
           } else if (msg.tags.length > 0) {
-            const value = msg.tags.find((x: any) => x.id == id);
+            const value = msg.tags.find((x: any) => x.name == tagName);
             if (value != null || value != undefined) {
-              this.removeTagFromFeed(id, comId, type);
+              this.removeTagFromFeed(comId, tagName);
             } else {
               this.commondata
                 .InsertTag(this.insertTagsForFeedDto)
@@ -741,21 +765,17 @@ export class PlaystoreComponent implements OnInit {
           }
         }
       });
-    }
   }
 
-  removeTagFromFeed(tagid: any, feedId: string, type: any) {
+  removeTagFromFeed(feedId: number, tagName: any) {
     if (
       this.flag == 'focused' ||
-      this.flag == 'assigned-to-me'
+      this.flag == 'assigned_to_me'
     ) {
-      if (type == 'PSR') {
-        this.insertTagsForFeedDto.tagId = tagid;
-        this.insertTagsForFeedDto.feedId = feedId.toString();
-        this.insertTagsForFeedDto.feedType = 'PSR';
-        this.insertTagsForFeedDto.userId = Number(
-          localStorage.getItem('agentId')
-        );
+        this.insertTagsForFeedDto.tagName = tagName;
+        this.insertTagsForFeedDto.feedId = feedId;
+        this.insertTagsForFeedDto.type = 'Tag';
+        this.insertTagsForFeedDto.platform = 'PlayStore';
 
         this.commondata
           .RemoveTag(this.insertTagsForFeedDto)
@@ -764,44 +784,21 @@ export class PlaystoreComponent implements OnInit {
             this.activeTag = false;
             this.checkTag = false;
           });
-      }
     }
   }
 
-  Sentiments = [
-    {
-      id: 1,
-      name: 'Positive',
-      icon: 'fal fa-smile',
-    },
-    {
-      id: 2,
-      name: 'Neutral',
-      icon: 'fal fa-meh-blank',
-    },
-    {
-      id: 3,
-      name: 'Negative',
-      icon: 'fal fa-frown',
-    },
-  ];
 
-  insertSentimentForFeed(feedId: string, sentimenName: any, type: any) {
-    if (type == 'PSR') {
-      this.insertSentimentForFeedDto.feedId = feedId.toString();
-      this.insertSentimentForFeedDto.sentiment = sentimenName;
-      this.insertSentimentForFeedDto.feedType = 'PSR';
-      this.insertSentimentForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
 
-      this.commondata
-        .InsertSentiment(this.insertSentimentForFeedDto)
-        .subscribe((res: any) => {
-          this.reloadComponent('Sentiment');
-        });
-    }
-  }
+  insertSentimentForFeed(comId: number, sentimenName: any) {
+    this.insertTagsForFeedDto.feedId = comId;
+    this.insertTagsForFeedDto.tagName = sentimenName;
+    this.insertTagsForFeedDto.type = 'Sentiment';
+    this.insertTagsForFeedDto.platform = 'PlayStore';
+
+    this.commondata.InsertSentiment(this.insertTagsForFeedDto).subscribe((res: any) => {
+        this.reloadComponent('Sentiment');
+      });
+}
 
   commentStatus(comId: any, type: any) {
     this.commentStatusDto.id = comId;
@@ -997,16 +994,16 @@ export class PlaystoreComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  applySentimentListner(res: any) {
-    if (this.PlayStoreReviews) {
-      this.PlayStoreReviews?.forEach((msg: any) => {
-        if (msg.id == res.feedId) {
-          msg.sentiment = res;
-        }
-      });
-    }
-    this.changeDetect.detectChanges();
-  }
+  // applySentimentListner(res: any) {
+  //   if (this.PlayStoreReviews) {
+  //     this.PlayStoreReviews?.forEach((msg: any) => {
+  //       if (msg.id == res.feedId) {
+  //         msg.sentiment = res;
+  //       }
+  //     });
+  //   }
+  //   this.changeDetect.detectChanges();
+  // }
 
   closeQuickResponseSidebar() {
     this.quickReplySearchText = '';
@@ -1015,74 +1012,91 @@ export class PlaystoreComponent implements OnInit {
     }
   }
 
-  itemsToBeUpdated: any[] = [];
+  // itemsToBeUpdated: any[] = [];
 
-  starMessage(msgId: number, status: boolean) {
-    this.itemsToBeUpdated = [];
-    var obj = {
-      channel: '',
-      flag: 'starred',
-      status: status,
-      messageId: msgId,
-      profileId: 0,
-    };
-    this.itemsToBeUpdated.push(obj);
-    this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
-      .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
-          if (status == true) {
-            this.reloadComponent('starred');
-          } else if (status == false) {
-            this.reloadComponent('removeStarred');
-          }
-        }
-      });
-  }
+  // starMessage(msgId: number, status: boolean) {
+  //   this.itemsToBeUpdated = [];
+  //   var obj = {
+  //     channel: '',
+  //     flag: 'starred',
+  //     status: status,
+  //     messageId: msgId,
+  //     profileId: 0,
+  //   };
+  //   this.itemsToBeUpdated.push(obj);
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         if (status == true) {
+  //           this.reloadComponent('starred');
+  //         } else if (status == false) {
+  //           this.reloadComponent('removeStarred');
+  //         }
+  //       }
+  //     });
+  // }
 
-  spam = false;
+  // spam = false;
 
-  spamMessage(msgId: number, status: boolean, type: string) {
-    this.itemsToBeUpdated = [];
-    var obj = {
-      channel: '',
-      flag: 'spam',
-      status: status,
-      messageId: msgId,
-      profileId: 0,
-    };
-    this.itemsToBeUpdated.push(obj);
-    this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
-      .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
-          if (status == true) {
-            this.spam = true;
-            this.commentStatus(msgId, type);
-            this.reloadComponent('spam');
-          } else if (status == false) {
-            this.spam = false;
-            this.reloadComponent('removeSpam');
-          }
-        }
-      });
-  }
-  updateMessageStatusDataListner(res: any) {
-    if (this.PlayStoreReviews) {
-      this.PlayStoreReviews?.forEach((msg: any) => {
-        res.forEach((msgStatus: any) => {
-          if (msg.id == msgStatus.messageId) {
-            if (msgStatus.flag == 'starred') {
-              msg.starred = msgStatus.status;
-            }
-            if (msgStatus.flag == 'spam') {
-              msg.spam = msgStatus.status;
-            }
-          }
-        });
-      });
+  // spamMessage(msgId: number, status: boolean, type: string) {
+  //   this.itemsToBeUpdated = [];
+  //   var obj = {
+  //     channel: '',
+  //     flag: 'spam',
+  //     status: status,
+  //     messageId: msgId,
+  //     profileId: 0,
+  //   };
+  //   this.itemsToBeUpdated.push(obj);
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         if (status == true) {
+  //           this.spam = true;
+  //           this.commentStatus(msgId, type);
+  //           this.reloadComponent('spam');
+  //         } else if (status == false) {
+  //           this.spam = false;
+  //           this.reloadComponent('removeSpam');
+  //         }
+  //       }
+  //     });
+  // }
+  // updateMessageStatusDataListner(res: any) {
+  //   if (this.PlayStoreReviews) {
+  //     this.PlayStoreReviews?.forEach((msg: any) => {
+  //       res.forEach((msgStatus: any) => {
+  //         if (msg.id == msgStatus.messageId) {
+  //           if (msgStatus.flag == 'starred') {
+  //             msg.starred = msgStatus.status;
+  //           }
+  //           if (msgStatus.flag == 'spam') {
+  //             msg.spam = msgStatus.status;
+  //           }
+  //         }
+  //       });
+  //     });
+  //   }
+
+  //   this.changeDetect.detectChanges();
+  // }
+
+  handleTextareaKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.submitPlayStoreReviewReply();
     }
-
-    this.changeDetect.detectChanges();
+  }
+  adjustTextareaHeight(textarea: HTMLTextAreaElement) {
+    const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight);
+    const numberOfLines = Math.floor(textarea.scrollHeight / lineHeight);
+    const newHeight = numberOfLines < 3 ? `${numberOfLines}em` : '6em';
+    textarea.style.height = newHeight;
+    textarea.style.overflow = numberOfLines > 4 ? 'auto' : 'hidden';
+    if (textarea.value.trim() === '') {
+      textarea.style.height = '40px'; 
+    }
   }
 }

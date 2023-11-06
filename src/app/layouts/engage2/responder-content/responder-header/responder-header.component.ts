@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Tooltip } from 'bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -125,13 +131,12 @@ export class ResponderHeaderComponent implements OnInit {
     private headerCountService: HeaderCountService,
     private stor: StorageService,
     private queryStatusService: QueryStatusService
-  ) {
-  }
+  ) {}
   unrespondedCount: number = 0;
   userInfo: any;
   activeChannel: string = '';
-  finalStatus:any[]=[];
-  profileStatus:any[]=[];
+  finalStatus: any[] = [];
+  profileStatus: any[] = [];
 
   ngOnInit(): void {
     this.flag = this._route.url.split('/')[2];
@@ -139,14 +144,13 @@ export class ResponderHeaderComponent implements OnInit {
     this.activeChannel = this._route.url.split('/')[5];
 
     this.Subscription = this.userInfoService.userInfo$.subscribe((userInfo) => {
-      
+      debugger;
       if (userInfo != null) {
         this.userInfo = userInfo;
         localStorage.setItem('storeHeaderOpenedId', this.userInfo.userId);
       }
     });
     this.Subscription = this.headerCountService.count$.subscribe((count) => {
-      
       if (count != null) {
         this.unrespondedCount = count;
         // localStorage.setItem('unrespondedCount', this.userInfo.userId);
@@ -158,23 +162,22 @@ export class ResponderHeaderComponent implements OnInit {
     }
 
     const menu = this.stor.retrive('Tags', 'O').local;
-      menu.forEach((item:any) => {
-        if(item.name == "Final Status"){
-          item.subTags.forEach((finalStatusObj:any) => {
-            if(!this.finalStatus.includes(finalStatusObj)){
-            this.finalStatus.push(finalStatusObj)
-            }
-          });
-        }
-        if(item.name == "Profile Status"){
-          item.subTags.forEach((profileStatusObj:any) => {
-            if(!this.profileStatus.includes(profileStatusObj)){
-            this.profileStatus.push(profileStatusObj)
-            }
-          });
-        }
-
-      });
+    menu.forEach((item: any) => {
+      if (item.name == 'Final Status') {
+        item.subTags.forEach((finalStatusObj: any) => {
+          if (!this.finalStatus.includes(finalStatusObj)) {
+            this.finalStatus.push(finalStatusObj);
+          }
+        });
+      }
+      if (item.name == 'Profile Status') {
+        item.subTags.forEach((profileStatusObj: any) => {
+          if (!this.profileStatus.includes(profileStatusObj)) {
+            this.profileStatus.push(profileStatusObj);
+          }
+        });
+      }
+    });
 
     this.teamPermissions = this.store.retrive('permissionteam', 'O').local;
     Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(
@@ -184,25 +187,29 @@ export class ResponderHeaderComponent implements OnInit {
         trigger: 'hover',
       };
 
-    this.Subscription = this.updateMessagesService.receiveMessage().subscribe((res) => {
+    this.Subscription = this.updateMessagesService
+      .receiveMessage()
+      .subscribe((res) => {
         if (Object.keys(res).length > 0) {
           res.forEach((msg: any) => {
-              if (this.userInfo.userId == msg.fromId) {
-                // if (this.userInfo.postType == msg.contentType) {
-                  this.unrespondedCount = this.unrespondedCount + 1;
-                // }
-              }
+            if (this.userInfo.userId == msg.fromId) {
+              // if (this.userInfo.postType == msg.contentType) {
+              this.unrespondedCount = this.unrespondedCount + 1;
+              // }
+            }
           });
         }
       });
 
-    this.Subscription = this.updateCommentsService.receiveComment().subscribe((res) => {
+    this.Subscription = this.updateCommentsService
+      .receiveComment()
+      .subscribe((res) => {
         if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
           if (Object.keys(res).length > 0) {
             res.forEach((msg: any) => {
               if (this.userInfo.userId == msg.userId) {
                 // if (this.userInfo.postType == msg.contentType) {
-                  this.unrespondedCount = this.unrespondedCount + 1;
+                this.unrespondedCount = this.unrespondedCount + 1;
                 // }
               }
             });
@@ -210,24 +217,28 @@ export class ResponderHeaderComponent implements OnInit {
         }
       });
 
-    this.Subscription = this.unrespondedCountService.getUnRespondedCount().subscribe((res) => {
+    this.Subscription = this.unrespondedCountService
+      .getUnRespondedCount()
+      .subscribe((res) => {
         if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
           if (Object.keys(res).length > 0) {
             if (this.userInfo.id == res.contentCount.profileId) {
               // if (this.userInfo.postType == res.contentCount.contentType) {
-                this.unrespondedCount = res.contentCount.unrespondedCount;
+              this.unrespondedCount = res.contentCount.unrespondedCount;
               // }
             }
           }
         }
       });
 
-      this.Subscription = this.queryStatusService.bulkReceiveQueryStatus().subscribe((res) => {
+    this.Subscription = this.queryStatusService
+      .bulkReceiveQueryStatus()
+      .subscribe((res) => {
         if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
           if (Object.keys(res).length > 0) {
-              if (this.userInfo.id == localStorage.getItem('assignedProfile')) {
-                this.unrespondedCount = 0;
-              }
+            if (this.userInfo.id == localStorage.getItem('assignedProfile')) {
+              this.unrespondedCount = 0;
+            }
           }
         }
       });
@@ -819,10 +830,16 @@ export class ResponderHeaderComponent implements OnInit {
     });
   }
 
+  completeQuery(slug: string) {
+    if (slug == 'read') {
+      this.markAllAsRead();
+    } else if (slug == 'save') {
+      this.markAsComplete();
+    }
+  }
   markAsCompleteDto = new MarkAsCompleteDto();
 
-  markAsComplete(plateForm: any, userId: any) {
-    
+  markAsComplete() {
     this.markAsCompleteDto.user = this.userInfo.userId;
     this.markAsCompleteDto.plateFrom = localStorage.getItem('parent') || '';
     this.markAsCompleteDto.userId = Number(localStorage.getItem('agentId'));
@@ -841,7 +858,6 @@ export class ResponderHeaderComponent implements OnInit {
       }
     );
   }
-
 
   showAgentsList: boolean = false;
   showMoreOptions: boolean = false;
@@ -1045,6 +1061,8 @@ export class ResponderHeaderComponent implements OnInit {
     this.commonService.MarkAllAsRead(this.commentStatusDto).subscribe(
       (res: any) => {
         this.reloadComponent('markAllAsRead');
+        // this.markAsComplete();
+
         // this.FbUnrespondedCmntCountByCustomer = 0;
         // this.WtsapUnrespondedCmntCountByCustomer = 0;
         // this.WcUnrespondedCmntCountByCustomer = 0;
@@ -1062,71 +1080,29 @@ export class ResponderHeaderComponent implements OnInit {
       },
       (error: any) => {
         this.reloadComponent('alreadyAllQueriesMarkedRead');
+        // this.markAsComplete();
       }
     );
   }
 
   itemsToBeUpdated: any[] = [];
-  spamStatus: boolean = false;
-  blockStatus: boolean = false;
 
-  Spam(id: any) {
+  InsertTagInProfile(tagName: string, type: string, profileId: any) {
+    debugger;
     var obj = {
-      channel: '',
-      flag: 'spam',
-      status: true,
-      messageId: 0,
-      profileId: id,
+      feedId: profileId,
+      tagName: tagName,
+      type: type,
+      platform: this.activeChannel,
     };
     this.itemsToBeUpdated.push(obj);
     this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
+      .InsertTagInProfile(this.itemsToBeUpdated)
       .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
-          this.itemsToBeUpdated = [];
-          this.spamStatus = true;
-          this.reloadComponent('spam');
-        }
-      });
-  }
-
-  RemoveSpam(id: any) {
-    var obj = {
-      channel: '',
-      flag: 'spam',
-      status: false,
-      messageId: 0,
-      profileId: id,
-    };
-    this.itemsToBeUpdated.push(obj);
-    this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
-      .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
-          this.itemsToBeUpdated = [];
-          this.spamStatus = false;
-          this.reloadComponent('removeSpam');
-        }
-      });
-  }
-
-  Block(id: any) {
-    var obj = {
-      channel: '',
-      flag: 'black_list',
-      status: true,
-      messageId: 0,
-      profileId: id,
-    };
-    this.itemsToBeUpdated.push(obj);
-    this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
-      .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
+        if (res.message === 'Data Added Successfully') {
           this.markAllAsRead();
           this.itemsToBeUpdated = [];
-          this.blockStatus = true;
-          this.reloadComponent('block');
+          this.reloadComponent(tagName);
           localStorage.setItem('assignedProfile', '');
           this.route.navigateByUrl('/all-inboxes/focused/all');
           this.lodeModuleService.updateModule('all-inboxes');
@@ -1134,24 +1110,110 @@ export class ResponderHeaderComponent implements OnInit {
       });
   }
 
-  Unblock(id: any) {
+  RemoveTagInProfile(tagName: string, type: string, profileId: any) {
+    debugger;
     var obj = {
-      channel: '',
-      flag: 'black_list',
-      status: false,
-      messageId: 0,
-      profileId: id,
+      feedId: profileId,
+      tagName: tagName,
+      type: type,
+      platform: this.activeChannel,
     };
     this.itemsToBeUpdated.push(obj);
     this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
+      .RemoveTagInProfile(this.itemsToBeUpdated)
       .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
+        if (res.message === 'Data Deleted Successfully') {
           this.itemsToBeUpdated = [];
-          this.blockStatus = false;
-          this.reloadComponent('unblock');
+          this.reloadComponent('undo' + tagName);
           this._route.navigateByUrl('all-inboxes/black_list/all');
         }
       });
   }
+  // spamStatus: boolean = false;
+  // blockStatus: boolean = false;
+
+  // Spam(id: any) {
+  //   var obj = {
+  //     channel: '',
+  //     flag: 'spam',
+  //     status: true,
+  //     messageId: 0,
+  //     profileId: id,
+  //   };
+  //   this.itemsToBeUpdated.push(obj);
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         this.itemsToBeUpdated = [];
+  //         this.spamStatus = true;
+  //         this.reloadComponent('spam');
+  //       }
+  //     });
+  // }
+
+  // RemoveSpam(id: any) {
+  //   var obj = {
+  //     channel: '',
+  //     flag: 'spam',
+  //     status: false,
+  //     messageId: 0,
+  //     profileId: id,
+  //   };
+  //   this.itemsToBeUpdated.push(obj);
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         this.itemsToBeUpdated = [];
+  //         this.spamStatus = false;
+  //         this.reloadComponent('removeSpam');
+  //       }
+  //     });
+  // }
+
+  // Block(id: any) {
+  //   var obj = {
+  //     channel: '',
+  //     flag: 'blacklist',
+  //     status: true,
+  //     messageId: 0,
+  //     profileId: id,
+  //   };
+  //   this.itemsToBeUpdated.push(obj);
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         this.markAllAsRead();
+  //         this.itemsToBeUpdated = [];
+  //         this.blockStatus = true;
+  //         this.reloadComponent('block');
+  //         localStorage.setItem('assignedProfile', '');
+  //         this.route.navigateByUrl('/all-inboxes/focused/all');
+  //         this.lodeModuleService.updateModule('all-inboxes');
+  //       }
+  //     });
+  // }
+
+  // Unblock(id: any) {
+  //   var obj = {
+  //     channel: '',
+  //     flag: 'blacklist',
+  //     status: false,
+  //     messageId: 0,
+  //     profileId: id,
+  //   };
+  //   this.itemsToBeUpdated.push(obj);
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         this.itemsToBeUpdated = [];
+  //         this.blockStatus = false;
+  //         this.reloadComponent('unblock');
+  //         this._route.navigateByUrl('all-inboxes/black_list/all');
+  //       }
+  //     });
+  // }
 }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './identity/AuthService/auth.guard';
 import { ModulesResolver } from './shared/resolver/modules.resolver';
+import { TagsResolver } from './shared/resolver/Tags Resolver/tags.resolver';
 
 const routes: Routes = [
   {
@@ -47,7 +48,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { preload: true },
     resolve: {
-      modeuls: ModulesResolver,
+      modeuls: ModulesResolver
     },
   },
   // { path: 'administration', loadChildren: () => import('./administration/administration.module').then(m => m.AdministrationModule) },

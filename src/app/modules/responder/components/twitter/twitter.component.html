@@ -143,25 +143,25 @@
                                                                 <div class="dropdown w-auto" *ngIf="ttr.queryStatus != 'Responded' && ttr.queryStatus != 'Completed'">
                                                                     <button class="btn coal p-0 ps-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                                         <small *ngIf="ttr.spam == true; else notSpam">Spam 
-                                                                            <i class="far fa-chevron-down ms-2" *ngIf="flag == 'focused' || flag == 'assigned-to-me'"></i>
+                                                                            <i class="far fa-chevron-down ms-2" *ngIf="flag == 'focused' || flag == 'assigned_to_me'"></i>
                                                                         </small>
                                                                         <ng-template #notSpam>{{ttr.queryStatus}}
-                                                                            <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned-to-me') && ttr.queryStatus != 'Completed'"></i>
+                                                                            <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && ttr.queryStatus != 'Completed'"></i>
                                                                         </ng-template>
                                                                     </button>
                                                                     <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1"
-                                                                        *ngIf="(flag == 'focused' || flag == 'assigned-to-me') && ttr.queryStatus != 'Completed'">
+                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && ttr.queryStatus != 'Completed'">
                                                             
                                                                         <li>
                                                                             <a class="dropdown-item" *ngIf="ttr.queryStatus != 'Responded'" (click)="commentStatus(ttr.id, 'TTR')">Read</a>
-                                                                            <a class="dropdown-item" *ngIf="ttr.starred == true; else notStarred" (click)="starMessage(ttr.id, false)">Remove Star from Message</a>
+                                                                            <!-- <a class="dropdown-item" *ngIf="ttr.starred == true; else notStarred" (click)="starMessage(ttr.id, false)">Remove Star from Message</a>
                                                                             <ng-template #notStarred>
                                                                                <a class="dropdown-item" (click)="starMessage(ttr.id, true)">Star Message</a>
                                                                             </ng-template>                                                                            
                                                                             <a class="dropdown-item" *ngIf="ttr.spam == true; else notSpamBtn" (click)="spamMessage(ttr.id, false, 'TTR')">Remove from Spam</a>
                                                                             <ng-template #notSpamBtn>
                                                                                 <a class="dropdown-item"  (click)="spamMessage(ttr.id, true, 'TTR')">Mark as Spam</a>
-                                                                            </ng-template>
+                                                                            </ng-template> -->
                                                                             
                                                                         </li>
                                                                     </ul>
@@ -194,17 +194,17 @@
                                                         <p class="card-text nignt">{{ttr.message}}</p>
                                                         <div class="tags" *ngFor="let tag of ttr.tags">
                                                             <span class="badge rounded-pill tag tag1 selected"
-                                                                (click)="removeTagFromFeed(tag.id, tag.feedId, 'TTR')">{{tag.name}}</span>
+                                                                (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name}}</span>
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                         <div class="tags" *ngIf="ttr.sentiment">
                                                             <span
-                                                                class="badge rounded-pills tag tag1 selected">{{ttr.sentiment?.text}}</span>
+                                                                class="badge rounded-pill tag tag1 selected">{{ttr.sentiment?.name}}</span>
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                     </div>
 
-                                                    <div class="message-bottom" *ngIf="flag == 'focused' || flag == 'assigned-to-me'">
+                                                    <div class="message-bottom" *ngIf="flag == 'focused' || flag == 'assigned_to_me'">
                                                         <div class="row">
                                                             <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                                 <div
@@ -239,93 +239,90 @@
                                                                             Tag
                                                                         </button>
                                                                         <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                            aria-labelledby="dropdownMenuButton2">
-                                                                            <ul class="dropdown-listing">
-                                                                                <li class="dropdown-listing-header">
-                                                                                    <div class="head-section">
-                                                                                        <div class="left">
-                                                                                            <h6>Tags
-                                                                                            </h6>
-                                                                                        </div>
+                                                                        aria-labelledby="dropdownMenuButton2">
+                                                                        <ul class="dropdown-listing">
+                                                                            <li class="dropdown-listing-header">
+                                                                                <div class="head-section">
+                                                                                    <div class="left">
+                                                                                        <h6>Tags
+                                                                                        </h6>
                                                                                     </div>
-                                                                                </li>
-                                                                                <li class="dropend">
-                                                                                    <div *ngFor="let tag of TagsList"
-                                                                                        class="list-group list-group-flush dropend">
-                                                                                        <a data-bs-toggle="dropdown"
-                                                                                            class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="dropend">
+                                                                                <div *ngFor="let tag of TagsList"
+                                                                                    class="list-group list-group-flush dropend">
+                                                                                    <a data-bs-toggle="dropdown"
+                                                                                        class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
 
-                                                                                            <div class="w-100 list-txt">
+                                                                                        <div class="w-100 list-txt">
+                                                                                            <div class="d-flex w-100 justify-content-between">
+                                                                                                <h6
+                                                                                                    class="mb-1 darkblue">
+                                                                                                    {{tag.name}}
+                                                                                                </h6>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </a>
+                                                                                    <ul class="dropdown-menu shadow">
+                                                                                        <form class="custom-searchbar">
+                                                                                            <input
+                                                                                                class="form-control rounded-pill shadow-sm"
+                                                                                                [(ngModel)]="searchText"
+                                                                                                placeholder="Search"
+                                                                                                aria-label="Search">
+                                                                                            <span
+                                                                                                class="btn searchbar-btn"
+                                                                                                type="submit">
+                                                                                                <i
+                                                                                                    class="fal fa-search silver"></i>
+                                                                                            </span>
+                                                                                        </form>
+                                                                                        <li class="list-body small-list"
+                                                                                            data-scrollbar="true"
+                                                                                            tabindex="-1"
+                                                                                            style="overflow-y: auto; outline: none;">
+                                                                                            <div class="scroll-content"
+                                                                                                style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
                                                                                                 <div
-                                                                                                    class="d-flex w-100 justify-content-between">
-                                                                                                    <h6
-                                                                                                        class="mb-1 darkblue">
-                                                                                                        {{tag.name}}
-                                                                                                    </h6>
+                                                                                                    class="list-group list-group-flush">
+                                                                                                    <a class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                                        (click)="insertTagsForFeed(ttr.id, keyword.name)"
+                                                                                                        [ngClass]="activeTag==true?'active':''"
+                                                                                                        *ngFor="let keyword of tag.subTags | filter: searchText">
+                                                                                                        <div
+                                                                                                            class="list-down-icon">
+                                                                                                            <span
+                                                                                                                class="btn iconButton iconHover medium">
+                                                                                                                <i
+                                                                                                                    class="fal fa-tag coal"></i>
+                                                                                                            </span>
+                                                                                                        </div>
+                                                                                                        <div
+                                                                                                            class="w-100 list-txt">
+                                                                                                            <div
+                                                                                                                class="d-flex w-100 justify-content-between">
+                                                                                                                <h6
+                                                                                                                    class="mb-1 darkblue">
+                                                                                                                    {{keyword.name}}
+                                                                                                                </h6>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <small
+                                                                                                            *ngIf="keyword.id == tag.id">
+                                                                                                            <i [ngClass]="checkTag==true?'fa-check-circle':''"
+                                                                                                                class="fal sky"></i>
+                                                                                                        </small>
+                                                                                                    </a>
                                                                                                 </div>
                                                                                             </div>
-
-                                                                                        </a>
-                                                                                        <ul
-                                                                                            class="dropdown-menu shadow">
-                                                                                            <form
-                                                                                                class="custom-searchbar">
-                                                                                                <input
-                                                                                                    class="form-control rounded-pill shadow-sm"
-                                                                                                    [(ngModel)]="searchText"
-                                                                                                    placeholder="Search"
-                                                                                                    aria-label="Search">
-                                                                                                <span
-                                                                                                    class="btn searchbar-btn"
-                                                                                                    type="submit">
-                                                                                                    <i
-                                                                                                        class="fal fa-search silver"></i>
-                                                                                                </span>
-                                                                                            </form>
-                                                                                            <li class="list-body small-list"
-                                                                                                data-scrollbar="true"
-                                                                                                tabindex="-1"
-                                                                                                style="overflow-y: auto; outline: none;">
-                                                                                                <div class="scroll-content"
-                                                                                                    style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
-                                                                                                    <div
-                                                                                                        class="list-group list-group-flush">
-                                                                                                        <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                            (click)="insertTagsForFeed(keyword.id, ttr.id, 'TTR')"
-                                                                                                            [ngClass]="activeTag==true?'active':''"
-                                                                                                            *ngFor="let keyword of tag.keywordList | filter: searchText">
-                                                                                                            <div
-                                                                                                                class="list-down-icon">
-                                                                                                                <span
-                                                                                                                    class="btn iconButton iconHover medium">
-                                                                                                                    <i
-                                                                                                                        class="fal fa-tag coal"></i>
-                                                                                                                </span>
-                                                                                                            </div>
-                                                                                                            <div
-                                                                                                                class="w-100 list-txt">
-                                                                                                                <div
-                                                                                                                    class="d-flex w-100 justify-content-between">
-                                                                                                                    <h6
-                                                                                                                        class="mb-1 darkblue">
-                                                                                                                        {{keyword.name}}
-                                                                                                                    </h6>
-                                                                                                                </div>
-                                                                                                            </div>
-                                                                                                            <small
-                                                                                                                *ngIf="keyword.id == tag.id">
-                                                                                                                <i [ngClass]="checkTag==true?'fa-check-circle':''"
-                                                                                                                    class="fal sky"></i>
-                                                                                                            </small>
-                                                                                                        </a>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </li>
-                                                                                        </ul>
-                                                                                    </div>
-                                                                                </li>
-                                                                            </ul>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </li>
                                                                         </ul>
+                                                                    </ul>
                                                                     </div>
                                                                     <div class="dropdown w-auto" >
                                                                         <button class="iconButton medium show"
@@ -350,31 +347,20 @@
                                                                                         <div class="list-group list-group-flush"
                                                                                             *ngFor="let sentiment of Sentiments">
                                                                                             <a class="list-group-item d-flex level1Btn "
-                                                                                                (click)="insertSentimentForFeed(ttr.id, sentiment.name, 'TTR')">
+                                                                                            (click)="insertSentimentForFeed(ttr.id, sentiment.name)">
+                                                                                            <div class="list-down-icon">
+                                                                                                <span class="btn iconButton iconHover medium" [innerHTML]="sentiment.icon"></span>
+                                                                                            </div>
+                                                                                            <div class="w-100 list-txt">
                                                                                                 <div
-                                                                                                    class="list-down-icon">
-                                                                                                    <span
-                                                                                                        class="btn iconButton iconHover medium">
-                                                                                                        <i
-                                                                                                            class={{sentiment.icon}}></i>
-                                                                                                    </span>
+                                                                                                    class="d-flex w-100 justify-content-between">
+                                                                                                    <h6
+                                                                                                        class="mb-1 darkblue">
+                                                                                                        {{sentiment.name}}
+                                                                                                    </h6>
                                                                                                 </div>
-                                                                                                <div
-                                                                                                    class="w-100 list-txt">
-                                                                                                    <div
-                                                                                                        class="d-flex w-100 justify-content-between">
-                                                                                                        <h6
-                                                                                                            class="mb-1 darkblue">
-                                                                                                            {{sentiment.name}}
-                                                                                                        </h6>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <small>
-                                                                                                    <!-- <i [class.fa-check-circle]="ttr.sentiment.text == sentiment.name" class="fal sky"></i> -->
-                                                                                                </small>
-
-                                                                                            </a>
-
+                                                                                            </div>
+                                                                                        </a>
 
                                                                                         </div>
                                                                                     </div>
@@ -388,7 +374,7 @@
                                                     </div>
                                                 </div>
                                                 <!-- <ng-container >
-                                                    <span *ngIf="flag == 'focused' || flag == 'assigned-to-me'" class="complaintBtn" (click)="toggle('ticket', ttr.id)"
+                                                    <span *ngIf="flag == 'focused' || flag == 'assigned_to_me'" class="complaintBtn" (click)="toggle('ticket', ttr.id)"
                                                     type="button">
                                                     <i class="fal fa-plus-circle sky"></i>
                                                 </span>
@@ -477,7 +463,7 @@
                                                                                 Agent Name </h6>
                                                                         </span>
                                                                         <span>Complaint Id <a class="sky"
-                                                                                href="">FP-325687</a>
+                                                                                >FP-325687</a>
                                                                         </span>
                                                                     </small>
                                                                 </div>
@@ -582,21 +568,21 @@
                                                                 aria-expanded="false">
                                                                 <small *ngIf="tm.spam == true; else notSpamMsg">Spam <i
                                                                         class="far fa-chevron-down ms-2"
-                                                                        *ngIf="flag == 'focused' || flag == 'assigned-to-me'"></i></small>
+                                                                        *ngIf="flag == 'focused' || flag == 'assigned_to_me'"></i></small>
                                                                 <ng-template #notSpamMsg>{{tm.queryStatus}}
                                                                     <i class="far fa-chevron-down ms-2"
-                                                                        *ngIf="(flag == 'focused' || flag == 'assigned-to-me') && tm.queryStatus != 'Completed'"></i>
+                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && tm.queryStatus != 'Completed'"></i>
                                                                 </ng-template>
                                                             </button>
                                                             <ul class="dropdown-menu custom-dropdown"
                                                                 aria-labelledby="dropdownMenuButton1"
-                                                                *ngIf="(flag == 'focused' || flag == 'assigned-to-me') && tm.queryStatus != 'Completed'">
+                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && tm.queryStatus != 'Completed'">
 
                                                                 <li>
                                                                     <a class="dropdown-item"
                                                                         *ngIf="tm.queryStatus != 'Responded'"
                                                                         (click)="commentStatus(tm.id, 'TM')">Read</a>
-                                                                    <a class="dropdown-item"
+                                                                    <!-- <a class="dropdown-item"
                                                                         *ngIf="tm.starred == true; else notStarredMsg"
                                                                         (click)="starMessage(tm.id, false)">Remove Star
                                                                         from Message</a>
@@ -613,7 +599,7 @@
                                                                         <a class="dropdown-item"
                                                                             (click)="spamMessage(tm.id, true, 'TM')">Mark
                                                                             as Spam</a>
-                                                                    </ng-template>
+                                                                    </ng-template> -->
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -646,18 +632,18 @@
                                                     <p class="card-text nignt">{{tm.msgText}}</p>
                                                     <div class="tags" *ngFor="let tag of tm.tags">
                                                         <span class="badge rounded-pill tag tag1 selected"
-                                                            (click)="removeTagFromFeed(tag.id, tag.feedId, 'TM')">{{tag.name}}</span>
+                                                            (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name}}</span>
 
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                     <div class="tags" *ngIf="tm.sentiment">
                                                         <span
-                                                            class="badge rounded-pill tag tag1 selected">{{tm.sentiment?.text}}</span>
+                                                            class="badge rounded-pill tag tag1 selected">{{tm.sentiment?.name}}</span>
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                 </div>
                                                 <div class="message-bottom"
-                                                    *ngIf="flag == 'focused' || flag == 'assigned-to-me'">
+                                                    *ngIf="flag == 'focused' || flag == 'assigned_to_me'">
                                                     <div class="row">
                                                         <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                             <div class="message-actionlist d-flex align-items-center">
@@ -687,40 +673,23 @@
                                                                                         <h6>Tags
                                                                                         </h6>
                                                                                     </div>
-                                                                                    <!-- <a class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
-                                                                                    (click)="closeTagListDropdown()"
-                                                                                        id="dropdownMenuButton3" data-bs-toggle="dropdown"
-                                                                                        aria-expanded="false">
-                                                                                        <i class="fal fa-times silver"></i>
-                                                                                    </a> -->
                                                                                 </div>
-                                                                                <!-- <form class="custom-searchbar">
-                                                                                    <input
-                                                                                        class="form-control rounded-pill shadow-sm"
-                                                                                        
-                                                                                        placeholder="Search"
-                                                                                        aria-label="Search">
-                                                                                    <span class="btn searchbar-btn"
-                                                                                        type="submit">
-                                                                                        <i
-                                                                                            class="fal fa-search silver"></i>
-                                                                                    </span>
-                                                                                </form> -->
                                                                             </li>
                                                                             <li class="dropend">
                                                                                 <div *ngFor="let tag of TagsList"
                                                                                     class="list-group list-group-flush dropend">
                                                                                     <a data-bs-toggle="dropdown"
                                                                                         class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
+
                                                                                         <div class="w-100 list-txt">
-                                                                                            <div
-                                                                                                class="d-flex w-100 justify-content-between">
+                                                                                            <div class="d-flex w-100 justify-content-between">
                                                                                                 <h6
                                                                                                     class="mb-1 darkblue">
                                                                                                     {{tag.name}}
                                                                                                 </h6>
                                                                                             </div>
                                                                                         </div>
+
                                                                                     </a>
                                                                                     <ul class="dropdown-menu shadow">
                                                                                         <form class="custom-searchbar">
@@ -745,9 +714,9 @@
                                                                                                 <div
                                                                                                     class="list-group list-group-flush">
                                                                                                     <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                        (click)="insertTagsForFeed(keyword.id, tm.id, 'TM')"
+                                                                                                        (click)="insertTagsForFeed(tm.id, keyword.name)"
                                                                                                         [ngClass]="activeTag==true?'active':''"
-                                                                                                        *ngFor="let keyword of tag.keywordList | filter: searchText">
+                                                                                                        *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                         <div
                                                                                                             class="list-down-icon">
                                                                                                             <span
@@ -802,29 +771,20 @@
                                                                                     <div class="list-group list-group-flush"
                                                                                         *ngFor="let sentiment of Sentiments">
                                                                                         <a class="list-group-item d-flex level1Btn "
-                                                                                            (click)="insertSentimentForFeed(tm.id, sentiment.name, 'TM')">
-                                                                                            <div class="list-down-icon">
-                                                                                                <span
-                                                                                                    class="btn iconButton iconHover medium">
-                                                                                                    <i
-                                                                                                        class={{sentiment.icon}}></i>
-                                                                                                </span>
+                                                                                        (click)="insertSentimentForFeed(tm.id, sentiment.name)">
+                                                                                        <div class="list-down-icon">
+                                                                                            <span class="btn iconButton iconHover medium" [innerHTML]="sentiment.icon"></span>
+                                                                                        </div>
+                                                                                        <div class="w-100 list-txt">
+                                                                                            <div
+                                                                                                class="d-flex w-100 justify-content-between">
+                                                                                                <h6
+                                                                                                    class="mb-1 darkblue">
+                                                                                                    {{sentiment.name}}
+                                                                                                </h6>
                                                                                             </div>
-                                                                                            <div class="w-100 list-txt">
-                                                                                                <div
-                                                                                                    class="d-flex w-100 justify-content-between">
-                                                                                                    <h6
-                                                                                                        class="mb-1 darkblue">
-                                                                                                        {{sentiment.name}}
-                                                                                                    </h6>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <!-- <small>
-                                                                                                    <i
-                                                                                                        class="fal fa-check-circle sky"></i>
-                                                                                                </small> -->
-                                                                                        </a>
-
+                                                                                        </div>
+                                                                                    </a>
 
                                                                                     </div>
                                                                                 </div>
@@ -855,7 +815,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <span *ngIf="flag == 'focused' || flag == 'assigned-to-me'" class="complaintBtn" (click)="toggle('ticket', tm.id)"
+                                            <!-- <span *ngIf="flag == 'focused' || flag == 'assigned_to_me'" class="complaintBtn" (click)="toggle('ticket', tm.id)"
                                                 type="button">
                                                 <i class="fal fa-plus-circle sky"></i>
                                             </span> -->
@@ -924,7 +884,7 @@
                                                                             Agent Name </h6>
                                                                     </span>
                                                                     <span>Complaint Id <a class="sky"
-                                                                            href="">FP-325687</a>
+                                                                            >FP-325687</a>
                                                                     </span>
                                                                 </small>
                                                             </div>
@@ -1029,21 +989,21 @@
                                                                 aria-expanded="false">
                                                                 <small *ngIf="tdm.spam == true; else notSpamMsg">Spam <i
                                                                         class="far fa-chevron-down ms-2"
-                                                                        *ngIf="flag == 'focused' || flag == 'assigned-to-me'"></i></small>
+                                                                        *ngIf="flag == 'focused' || flag == 'assigned_to_me'"></i></small>
                                                                 <ng-template #notSpamMsg>{{tdm.queryStatus}}
                                                                     <i class="far fa-chevron-down ms-2"
-                                                                        *ngIf="(flag == 'focused' || flag == 'assigned-to-me') && tdm.queryStatus != 'Completed'"></i>
+                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && tdm.queryStatus != 'Completed'"></i>
                                                                 </ng-template>
                                                             </button>
                                                             <ul class="dropdown-menu custom-dropdown"
                                                                 aria-labelledby="dropdownMenuButton1"
-                                                                *ngIf="(flag == 'focused' || flag == 'assigned-to-me') && tdm.queryStatus != 'Completed'">
+                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && tdm.queryStatus != 'Completed'">
 
                                                                 <li>
                                                                     <a class="dropdown-item"
                                                                         *ngIf="tdm.queryStatus != 'Responded'"
                                                                         (click)="commentStatus(tdm.id, 'TDM')">Read</a>
-                                                                    <a class="dropdown-item"
+                                                                    <!-- <a class="dropdown-item"
                                                                         *ngIf="tdm.starred == true; else notStarredMsg"
                                                                         (click)="starMessage(tdm.id, false)">Remove Star
                                                                         from Message</a>
@@ -1060,7 +1020,7 @@
                                                                         <a class="dropdown-item"
                                                                             (click)="spamMessage(tdm.id, true, 'TDM')">Mark
                                                                             as Spam</a>
-                                                                    </ng-template>
+                                                                    </ng-template> -->
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -1093,18 +1053,18 @@
                                                     <p class="card-text nignt">{{tdm.msgText}}</p>
                                                     <div class="tags" *ngFor="let tag of tdm.tags">
                                                         <span class="badge rounded-pill tag tag1 selected"
-                                                            (click)="removeTagFromFeed(tag.id, tag.feedId, 'TDM')">{{tag.name}}</span>
+                                                            (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name}}</span>
 
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                     <div class="tags" *ngIf="tdm.sentiment">
                                                         <span
-                                                            class="badge rounded-pill tag tag1 selected">{{tdm.sentiment?.text}}</span>
+                                                            class="badge rounded-pill tag tag1 selected">{{tdm.sentiment?.name}}</span>
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                 </div>
                                                 <div class="message-bottom"
-                                                    *ngIf="flag == 'focused' || flag == 'assigned-to-me'">
+                                                    *ngIf="flag == 'focused' || flag == 'assigned_to_me'">
                                                     <div class="row">
                                                         <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                             <div class="message-actionlist d-flex align-items-center">
@@ -1134,25 +1094,7 @@
                                                                                         <h6>Tags
                                                                                         </h6>
                                                                                     </div>
-                                                                                    <!-- <a class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
-                                                                                    (click)="closeTagListDropdown()"
-                                                                                        id="dropdownMenuButton3" data-bs-toggle="dropdown"
-                                                                                        aria-expanded="false">
-                                                                                        <i class="fal fa-times silver"></i>
-                                                                                    </a> -->
                                                                                 </div>
-                                                                                <!-- <form class="custom-searchbar">
-                                                                                    <input
-                                                                                        class="form-control rounded-pill shadow-sm"
-                                                                                        
-                                                                                        placeholder="Search"
-                                                                                        aria-label="Search">
-                                                                                    <span class="btn searchbar-btn"
-                                                                                        type="submit">
-                                                                                        <i
-                                                                                            class="fal fa-search silver"></i>
-                                                                                    </span>
-                                                                                </form> -->
                                                                             </li>
                                                                             <li class="dropend">
                                                                                 <div *ngFor="let tag of TagsList"
@@ -1161,8 +1103,7 @@
                                                                                         class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
 
                                                                                         <div class="w-100 list-txt">
-                                                                                            <div
-                                                                                                class="d-flex w-100 justify-content-between">
+                                                                                            <div class="d-flex w-100 justify-content-between">
                                                                                                 <h6
                                                                                                     class="mb-1 darkblue">
                                                                                                     {{tag.name}}
@@ -1194,9 +1135,9 @@
                                                                                                 <div
                                                                                                     class="list-group list-group-flush">
                                                                                                     <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                        (click)="insertTagsForFeed(keyword.id, tdm.id, 'TDM')"
+                                                                                                        (click)="insertTagsForFeed(tdm.id, keyword.name)"
                                                                                                         [ngClass]="activeTag==true?'active':''"
-                                                                                                        *ngFor="let keyword of tag.keywordList | filter: searchText">
+                                                                                                        *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                         <div
                                                                                                             class="list-down-icon">
                                                                                                             <span
@@ -1251,13 +1192,9 @@
                                                                                     <div class="list-group list-group-flush"
                                                                                         *ngFor="let sentiment of Sentiments">
                                                                                         <a class="list-group-item d-flex level1Btn "
-                                                                                            (click)="insertSentimentForFeed(tdm.id, sentiment.name, 'TDM')">
+                                                                                            (click)="insertSentimentForFeed(tdm.id, sentiment.name)">
                                                                                             <div class="list-down-icon">
-                                                                                                <span
-                                                                                                    class="btn iconButton iconHover medium">
-                                                                                                    <i
-                                                                                                        class={{sentiment.icon}}></i>
-                                                                                                </span>
+                                                                                                <span class="btn iconButton iconHover medium" [innerHTML]="sentiment.icon"></span>
                                                                                             </div>
                                                                                             <div class="w-100 list-txt">
                                                                                                 <div
@@ -1268,10 +1205,6 @@
                                                                                                     </h6>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <!-- <small>
-                                                                                                    <i
-                                                                                                        class="fal fa-check-circle sky"></i>
-                                                                                                </small> -->
                                                                                         </a>
 
 
@@ -1304,7 +1237,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <span *ngIf="flag == 'focused' || flag == 'assigned-to-me'" class="complaintBtn" (click)="toggle('ticket', tdm.id)"
+                                            <!-- <span *ngIf="flag == 'focused' || flag == 'assigned_to_me'" class="complaintBtn" (click)="toggle('ticket', tdm.id)"
                                                 type="button">
                                                 <i class="fal fa-plus-circle sky"></i>
                                             </span> -->
@@ -1373,7 +1306,7 @@
                                                                             Agent Name </h6>
                                                                     </span>
                                                                     <span>Complaint Id <a class="sky"
-                                                                            href="">FP-325687</a>
+                                                                            >FP-325687</a>
                                                                     </span>
                                                                 </small>
                                                             </div>
@@ -1429,7 +1362,7 @@
                 </div>
             </div>
         </div>
-<ng-container *ngIf="flag == 'focused' || flag == 'assigned-to-me'">
+<ng-container *ngIf="flag == 'focused' || flag == 'assigned_to_me'">
         <ng-container *ngIf="TTReply == true">
             <div class="msgTypingField shadow-lg">
                 <div *ngFor="let tweet of TwitterTweets">

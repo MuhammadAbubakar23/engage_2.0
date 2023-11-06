@@ -14,15 +14,15 @@
                                 <div class="iconholder">
 
                                     <input name="" class="form-control flatpickr-input" [max]="maxEndDate"
-                                        placeholder="Date"(change)="resetStartDate()" [(ngModel)]="startDate" type="date">
+                                        placeholder="Date" (change)="resetStartDate()" [(ngModel)]="startDate"
+                                        type="date">
                                 </div>
                             </li>
                             <li class="list-inline-item">
                                 <div class="iconholder">
 
                                     <input name="" class="form-control flatpickr-input" [max]="maxEndDate"
-                                        placeholder="Date" (change)="resetEndDate()" [(ngModel)]="enddate"
-                                        type="date">
+                                        placeholder="Date" (change)="resetEndDate()" [(ngModel)]="enddate" type="date">
                                 </div>
                             </li>
                             <li class="list-inline-item">
@@ -33,7 +33,7 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="columnssort">
                                         <li>
-                                            <a class="dropdown-item d-flex align-items-center" >
+                                            <a class="dropdown-item d-flex align-items-center">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" id="keprofile" checked>
                                                     <label class="form-check-label" for="keprofile">
@@ -46,21 +46,22 @@
                                 </div>
                             </li>
                             <li class="list-inline-item ms-auto">
-                                <div class="btn-group buttonfilter" role="group" aria-label="Basic radio toggle button group">
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
-                                        checked="" (click)="date_pagination(5)">
+                                <div class="btn-group buttonfilter" role="group"
+                                    aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
+                                        autocomplete="off" checked="" (click)="date_pagination(5)">
                                     <label class="btn btn-outline-secondary" for="btnradio1">5</label>
-            
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
-                                        (click)="date_pagination(10)">
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
+                                        autocomplete="off" (click)="date_pagination(10)">
                                     <label class="btn btn-outline-secondary" for="btnradio2">10</label>
-            
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off"
-                                        (click)="date_pagination(20)">
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
+                                        autocomplete="off" (click)="date_pagination(20)">
                                     <label class="btn btn-outline-secondary" for="btnradio3">20</label>
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off"
-                                        (click)="date_pagination(30)">
-                                    <label class="btn btn-outline-secondary" for="btnradio4">30</label>
+                                    <!-- <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
+                                        autocomplete="off" (click)="date_pagination(30)">
+                                    <label class="btn btn-outline-secondary" for="btnradio4">30</label> -->
                                 </div>
                             </li>
 
@@ -94,7 +95,7 @@
                                             </span>
                                             <p class="coal mb-0"> COMMENTS</p>
                                         </div>
-                                        <h2>{{totalMessagePostCommentsAndreplies}}</h2>
+                                        <h2>{{faecbookresponce?.totalPostComments}}</h2>
                                     </div>
                                 </div>
                             </div>
@@ -252,14 +253,23 @@
                             <div class="col-md-5">
                                 <div class="card dashboard-card">
                                     <div class="card-body">
-                                        <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center justify-content-between" *ngIf="publishPercentage <= 0">
                                             <div>
                                                 <span class="iconButton medium radicalBg mb-4">
                                                     <i class="fa-light fa-arrow-down"></i>
                                                 </span>
                                                 <p class="coal mb-0"> Post Decreased</p>
                                             </div>
-                                            <h3> 57.77%</h3>
+                                            <h3> {{ publishPercentage | number:'1.2-2' }}%</h3>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between" *ngIf="publishPercentage >= 0">
+                                            <div>
+                                                <span class="iconButton medium mintBg mb-4">
+                                                    <i class="fa-light fa-arrow-up"></i>
+                                                </span>
+                                                <p class="coal mb-0"> Post Increased</p>
+                                            </div>
+                                            <h3> {{ publishPercentage | number:'1.2-2' }}%</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -296,14 +306,23 @@
                                 </ul>
                                 <div class="card dashboard-card">
                                     <div class="card-body">
-                                        <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center justify-content-between" *ngIf="countPercentage >= 0">
                                             <div>
                                                 <span class="iconButton medium mintBg mb-4">
                                                     <i class="fa-light fa-arrow-up"></i>
                                                 </span>
                                                 <p class="coal mb-0"> Likes Increased</p>
                                             </div>
-                                            <h3> 57.77%</h3>
+                                            <h3> {{ countPercentage | number:'1.2-2' }}%</h3>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between" *ngIf="countPercentage <= 0">
+                                            <div>
+                                                <span class="iconButton medium radicalBg mb-4">
+                                                    <i class="fa-light fa-arrow-down"></i>
+                                                </span>
+                                                <p class="coal mb-0"> likes Decreased</p>
+                                            </div>
+                                            <h3> {{ countPercentage | number:'1.2-2' }}%</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -363,14 +382,23 @@
                                         </ul>
                                         <div class="card dashboard-card">
                                             <div class="card-body">
-                                                <div class="d-flex align-items-center justify-content-between">
+                                                <div class="d-flex align-items-center justify-content-between" *ngIf="audiencePercentage >= 0">
                                                     <div>
                                                         <span class="iconButton medium mintBg mb-4">
                                                             <i class="fa-light fa-arrow-up"></i>
                                                         </span>
                                                         <p class="coal mb-0"> Engagements Increased </p>
                                                     </div>
-                                                    <h3>220.89%</h3>
+                                                    <h3>{{ audiencePercentage | number:'1.2-2' }}%</h3>
+                                                </div>
+                                                <div class="d-flex align-items-center justify-content-between" *ngIf="audiencePercentage <= 0">
+                                                    <div>
+                                                        <span class="iconButton medium radicalBg mb-4">
+                                                            <i class="fa-light fa-arrow-down"></i>
+                                                        </span>
+                                                        <p class="coal mb-0"> Engagements Decreased</p>
+                                                    </div>
+                                                    <h3> {{ audiencePercentage | number:'1.2-2' }}%</h3>
                                                 </div>
                                             </div>
                                         </div>
@@ -421,36 +449,43 @@
                             <div class="card iceBg p-4 rounded">
                                 <div class="d-flex align-items-center mb-4">
                                     <span class="iconButton large rounded-pill">
-                                        <img src="../../../../../assets/images/ke.png" class="img-fluid rounded-pill" alt="">
+                                        <img src="../../../../../assets/images/ke.png" class="img-fluid rounded-pill"
+                                            alt="">
                                     </span>
                                     <h6 class="ms-3">K-Electric</h6>
                                 </div>
                                 <div class="row align-items-start mb-2">
                                     <div class="col">
                                         <small class="coal">Fans</small>
-                                        <p class="fw-semibold">{{totallikes}}</p>
+                                        <p class="fw-semibold">{{faecbookresponce?.pageStats?.totalFans}}</p>
                                     </div>
                                     <div class="col">
-                                        <small class="coal">Fans Increased</small>
-                                        <p class="fw-semibold">23,906.25%</p>
+                                        <span *ngIf="faecbookresponce?.pageStats?.fanPercentage >=0">
+                                            <small class="coal">Fans Increased</small>
+                                        <p class="fw-semibold">{{faecbookresponce?.pageStats?.fanPercentage}}%</p>
+                                        </span>
+                                        <span *ngIf="faecbookresponce?.pageStats?.fanPercentage <0">
+                                            <small class="coal">Fans  Dcreased</small>
+                                        <p class="fw-semibold">{{faecbookresponce?.pageStats?.fanPercentage}}%</p>
+                                        </span>
                                     </div>
                                     <div class="col">
                                         <small class="coal">Posts Sent</small>
-                                        <p class="fw-semibold">1266</p>
+                                        <p class="fw-semibold">{{faecbookresponce?.pageStats?.totalSentPosts}}</p>
                                     </div>
                                 </div>
                                 <div class="row align-items-start">
                                     <div class="col">
                                         <small class="coal">Engagements</small>
-                                        <p class="fw-semibold">{{totalengagement}}</p>
+                                        <p class="fw-semibold">{{faecbookresponce?.pageStats?.totalEngagements}}</p>
                                     </div>
                                     <div class="col">
                                         <small class="coal"> Engagements per Follower</small>
-                                        <p class="fw-semibold">122664</p>
+                                        <p class="fw-semibold">{{faecbookresponce?.pageStats?.totalEngagementsPerFollower}}</p>
                                     </div>
                                     <div class="col">
                                         <small class="coal">Link Clicks </small>
-                                        <p class="fw-semibold">{{faecbookresponce?.totalLinkClicks}}</p>
+                                        <p class="fw-semibold">{{faecbookresponce?.pageStats?.totalLinkClicks}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -490,7 +525,7 @@
                                 </div>
                                 <div class="pt-3 border-top d-flex align-items-center justify-content-between">
                                     <span class="sky">Total Completed </span>
-                                    <p class="fw-semibold night mb-0">71559</p>
+                                    <p class="fw-semibold night mb-0">{{agentMessages?.totalCompleted}}</p>
                                 </div>
                             </div>
                         </div>
@@ -553,7 +588,8 @@
                                         <td>{{recents?.strCreatedDate}} <small>{{recents?.strCreatedTime}}</small></td>
                                         <td>
                                             <span class="iconButton medium rounded-pill">
-                                                <img src="../../../../../assets/images/ke.png" class="img-fluid rounded-pill" alt="">
+                                                <img src="../../../../../assets/images/ke.png"
+                                                    class="img-fluid rounded-pill" alt="">
                                             </span>
                                         </td>
                                         <td>
@@ -601,7 +637,7 @@
                                                     </span>
                                                 </td>
                                                 <td>
-                                                    <a  class="sky fw-semibold">{{item?.name}}</a>
+                                                    <a class="sky fw-semibold">{{item?.name}}</a>
                                                 </td>
                                                 <td>{{item?.post}}</td>
                                                 <td>{{item?.comment}}</td>

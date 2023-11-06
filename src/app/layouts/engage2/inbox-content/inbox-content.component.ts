@@ -73,7 +73,7 @@ export class     InboxContentComponent implements OnInit {
       this.loadComponent('responder');
     } else {
       this.flag = this.router.url.split('/')[2];
-      if (this.flag == 'focused' || this.flag == 'archived') {
+      if (this.flag == 'focused' || this.flag == 'archived' || this.flag == 'assigned' || this.flag == 'assigned_to_me') {
         this.loadComponent('all-inboxes');
       } else if (this.flag == 'starred') {
         this.loadComponent('starred');
@@ -81,12 +81,12 @@ export class     InboxContentComponent implements OnInit {
         this.loadComponent('spam');
       } else if (this.flag == 'sent') {
         this.loadComponent('sent');
-      } else if (this.flag == 'blacklist') {
+      } else if (this.flag == 'black_list') {
         this.loadComponent('blacklist');
       } else if (this.flag == 'trash') {
         this.loadComponent('trash');
-      } else if (this.flag == 'assigned-to-me') {
-        this.loadComponent('assigned-to-me');
+      } else if (this.flag == 'assigned_to_me') {
+        this.loadComponent('assigned_to_me');
       } else if (this.flag == 'completed') {
         this.loadComponent('completed');
       }
@@ -99,7 +99,7 @@ export class     InboxContentComponent implements OnInit {
           this.loadComponent('responder');
         } else {
           this.flag = this.router.url.split('/')[2];
-          if (this.flag == 'focused' || this.flag == 'archived') {
+          if (this.flag == 'focused' || this.flag == 'archived' || this.flag == 'assigned' || this.flag == 'assigned_to_me') {
             this.loadComponent('all-inboxes');
           } else if (this.flag == 'starred') {
             this.loadComponent('starred');
@@ -107,12 +107,12 @@ export class     InboxContentComponent implements OnInit {
             this.loadComponent('spam');
           } else if (this.flag == 'sent') {
             this.loadComponent('sent');
-          } else if (this.flag == 'blacklist') {
+          } else if (this.flag == 'black_list') {
             this.loadComponent('blacklist');
           } else if (this.flag == 'trash') {
             this.loadComponent('trash');
-          } else if (this.flag == 'assigned-to-me') {
-            this.loadComponent('assigned-to-me');
+          } else if (this.flag == 'assigned_to_me') {
+            this.loadComponent('assigned_to_me');
           } else if (this.flag == 'completed') {
             this.loadComponent('completed');
           }
@@ -132,7 +132,7 @@ export class     InboxContentComponent implements OnInit {
       this.loadComponent('responder');
     } else {
       this.flag = this.router.url.split('/')[2];
-      if (this.flag == 'focused' || this.flag == 'archived') {
+      if (this.flag == 'focused' || this.flag == 'archived' || this.flag == 'assigned' || this.flag == 'assigned_to_me') {
         this.loadComponent('all-inboxes');
       } else if (this.flag == 'starred') {
         this.loadComponent('starred');
@@ -140,12 +140,12 @@ export class     InboxContentComponent implements OnInit {
         this.loadComponent('spam');
       } else if (this.flag == 'sent') {
         this.loadComponent('sent');
-      } else if (this.flag == 'blacklist') {
+      } else if (this.flag == 'black_list') {
         this.loadComponent('blacklist');
       } else if (this.flag == 'trash') {
         this.loadComponent('trash');
-      } else if (this.flag == 'assigned-to-me') {
-        this.loadComponent('assigned-to-me');
+      } else if (this.flag == 'assigned_to_me') {
+        this.loadComponent('assigned_to_me');
       } else if (this.flag == 'completed') {
         this.loadComponent('completed');
       }
@@ -158,7 +158,7 @@ export class     InboxContentComponent implements OnInit {
           this.loadComponent('responder');
         } else {
           this.flag = this.router.url.split('/')[2];
-          if (this.flag == 'focused' || this.flag == 'archived') {
+          if (this.flag == 'focused' || this.flag == 'archived' || this.flag == 'assigned' || this.flag == 'assigned_to_me') {
             this.loadComponent('all-inboxes');
           } else if (this.flag == 'starred') {
             this.loadComponent('starred');
@@ -166,12 +166,12 @@ export class     InboxContentComponent implements OnInit {
             this.loadComponent('spam');
           } else if (this.flag == 'sent') {
             this.loadComponent('sent');
-          } else if (this.flag == 'blacklist') {
+          } else if (this.flag == 'black_list') {
             this.loadComponent('blacklist');
           } else if (this.flag == 'trash') {
             this.loadComponent('trash');
-          } else if (this.flag == 'assigned-to-me') {
-            this.loadComponent('assigned-to-me');
+          } else if (this.flag == 'assigned_to_me') {
+            this.loadComponent('assigned_to_me');
           } else if (this.flag == 'completed') {
             this.loadComponent('completed');
           }
@@ -258,7 +258,7 @@ export class     InboxContentComponent implements OnInit {
         this.header?.createComponent(header);
         break;
 
-        case 'assigned-to-me':
+        case 'assigned_to_me':
         // submenu = this.resolver.resolveComponentFactory(InboxMenuComponent);
         // this.submenu?.createComponent(submenu);
 

@@ -69,6 +69,8 @@ export class CommonDataService {
   signOut = environment.links.common.signOut;
   getCustomers = environment.links.common.getCustomers;
   updateStatus = environment.links.common.updateStatus;
+  insertTagOnProfile = environment.links.common.insertTagOnProfile;
+  removeTagOnProfile = environment.links.common.removeTagOnProfile;
   hideUnhideMessage = environment.links.common.hideUnhideMessage;
   dispositionTags = environment.links.common.dispositionTags;
 
@@ -96,7 +98,9 @@ export class CommonDataService {
   facebookProfile = environment.links.common.facebookProfile;
   getAllSocialMatrics = environment.links.common.getAllSocialMatrics;
   instagramReport = environment.links.common.instagramReport;
-  instagramProfile=environment.links.common.instagramProfile;
+  instagramProfile = environment.links.common.instagramProfile;
+  getTagReport = environment.links.common.getTagReport;
+  downloadTagReport = environment.links.common.downloadTagReport;
 
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
@@ -350,7 +354,9 @@ export class CommonDataService {
   }
 
   GetAgentReport(body: any) {
-    return this.http.post(this.CommonBaseUrl + this.getAgentReport, body, { responseType: 'text' });
+    return this.http.post(this.CommonBaseUrl + this.getAgentReport, body, {
+      responseType: 'text',
+    });
   }
 
   GetAllocatedProfiles() {
@@ -546,6 +552,14 @@ export class CommonDataService {
     return this.http.post(this.CommonBaseUrl + this.updateStatus, body);
   }
 
+  InsertTagInProfile(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.insertTagOnProfile, body);
+  }
+
+  RemoveTagInProfile(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.removeTagOnProfile, body);
+  }
+
   HideUnhideMessage(queryId: number, status: boolean) {
     const url =
       this.CommonBaseUrl +
@@ -564,8 +578,8 @@ export class CommonDataService {
     return this.http.post(this.ServiceBaseUrl + this.addCSAT, body);
   }
 
-  GetDispositionTags(){
-    return this.http.get(this.CommonBaseUrl + this.dispositionTags)
+  GetDispositionTags() {
+    return this.http.get(this.CommonBaseUrl + this.dispositionTags);
   }
   GetRouteToAgentsCsv(body: any) {
     return this.http.post(this.CommonBaseUrl + this.routeToAgentsCsv, body, {
@@ -660,20 +674,29 @@ export class CommonDataService {
     return this.http.post(this.CommonBaseUrl + this.facebookProfile, body);
   }
   // Executive Dashboard
-  GetAllSocialMatrics(body:any){
-    return this.http.post(this.CommonBaseUrl + this.getAllSocialMatrics, body)
+  GetAllSocialMatrics(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.getAllSocialMatrics, body);
   }
 
-  PostInstagramReport(body:any){
-    return this.http.post(this.CommonBaseUrl + this.instagramReport, body)
+  PostInstagramReport(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.instagramReport, body);
   }
 
-  GetInstagramProfile(body:any){
-    return this.http.post(this.CommonBaseUrl+this.instagramProfile,body)
+  GetInstagramProfile(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.instagramProfile, body);
   }
 
-  GetAllTags(){
-    return this.http.get(this.consoleBaseUrl+this.getAllTags)
+  GetAllTags(): Observable<any> {
+    return this.http.get(this.consoleBaseUrl + this.getAllTags);
+  }
+
+  GetAllTagsReport(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.getTagReport, body);
+  }
+  DownloadTagsReport(body: any) {
+    return this.http.post(this.CommonBaseUrl + this.downloadTagReport, body, {
+      responseType: 'text',
+    });
   }
 }
 

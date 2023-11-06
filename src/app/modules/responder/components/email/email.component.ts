@@ -27,6 +27,7 @@ import { InsertSentimentForFeedDto } from 'src/app/shared/Models/InsertSentiment
 import { InsertTagsForFeedDto } from 'src/app/shared/Models/InsertTagsForFeedDto';
 import { ReplyDto } from 'src/app/shared/Models/ReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
   selector: 'app-email',
@@ -69,6 +70,8 @@ export class EmailComponent implements OnInit {
   public criteria!: SortCriteria;
   searchText: string = '';
   flag:string='';
+  messagesStatus:any[]=[];
+  Sentiments:any[]=[];
 
   emailReplyForm!: FormGroup;
   constructor(
@@ -84,13 +87,14 @@ export class EmailComponent implements OnInit {
     private unrespondedCountService: UnRespondedCountService,
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService: GetQueryTypeService,
-    private router : Router
+    private router : Router,
+    private stor : StorageService
   ) {
-    this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
-      this.id = null;
-      this.id = res;
-      this.getEmails();
-    });
+    // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
+    //   this.id = null;
+    //   this.id = res;
+    //   this.getEmails();
+    // });
 
     this.emailReplyForm = new FormGroup({
       text: new FormControl(''),
@@ -112,6 +116,31 @@ export class EmailComponent implements OnInit {
     this.flag = this.router.url.split('/')[2];
     this.fullName = localStorage.getItem('storeOpenedId') || '{}';
 
+    const menu = this.stor.retrive('Tags', 'O').local;
+      menu.forEach((item:any) => {
+        if(item.name == "Tags"){
+          item.subTags.forEach((singleTagObj:any) => {
+            if(!this.TagsList.includes(singleTagObj)){
+            this.TagsList.push(singleTagObj)
+            }
+          });
+        }
+        if(item.name == "Messages Status"){
+          item.subTags.forEach((messagesStatusObj:any) => {
+            if(!this.messagesStatus.includes(messagesStatusObj)){
+            this.messagesStatus.push(messagesStatusObj)
+            }
+          });
+        }
+        if(item.name == "Sentiments"){
+          item.subTags.forEach((sentimentObj:any) => {
+            if(!this.Sentiments.includes(sentimentObj)){
+            this.Sentiments.push(sentimentObj)
+            }
+          });
+        }
+      });
+
     this.criteria = {
       property: 'createdDate',
       descending: true,
@@ -119,11 +148,11 @@ export class EmailComponent implements OnInit {
     this.TodayDate = new Date();
 
     this.getEmails();
-    this.getTagList();
+    // this.getTagList();
 
     this.Subscription = this.addTagService.receiveTags().subscribe((res) => {
       this.addTags = res;
-      this.addTagDataListner();
+      this.addTagDataListener();
     });
     this.Subscription = this.removeTagService.receiveTags().subscribe((res) => {
       this.removeTags = res;
@@ -148,7 +177,7 @@ export class EmailComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
+        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
         if (
           res.contentCount.contentType == 'Mail' ||
           res.contentCount.contentType == 'OMail'
@@ -165,11 +194,11 @@ export class EmailComponent implements OnInit {
         this.updateBulkQueryStatusDataListner();
       });
 
-    this.Subscription = this.applySentimentService
-      .receiveSentiment()
-      .subscribe((res) => {
-        this.applySentimentListner(res);
-      });
+    // this.Subscription = this.applySentimentService
+    //   .receiveSentiment()
+    //   .subscribe((res) => {
+    //     this.applySentimentListner(res);
+    //   });
   }
 
   commentDto = new commentsDto();
@@ -766,11 +795,11 @@ export class EmailComponent implements OnInit {
   insertTagsForFeedDto = new InsertTagsForFeedDto();
   checkTag = false;
 
-  insertTags(id: any, comId: any, feedType: any) {
-    this.insertTagsForFeedDto.feedId = comId.toString();
-    this.insertTagsForFeedDto.tagId = id;
-    this.insertTagsForFeedDto.feedType = feedType;
-    this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
+  insertTagsForFeed(comId: number, tagName: string) {
+    this.insertTagsForFeedDto.feedId = comId;
+    this.insertTagsForFeedDto.tagName = tagName;
+    this.insertTagsForFeedDto.type = 'Tag';
+    this.insertTagsForFeedDto.platform = 'Email';
 
     this.Emails.forEach((abc: any) => {
       abc.comments.forEach((comment: any) => {
@@ -785,9 +814,9 @@ export class EmailComponent implements OnInit {
                 this.checkTag = true;
               });
           } else if (comment.tags.length > 0) {
-            const value = comment.tags.find((x: any) => x.id == id);
+            const value = comment.tags.find((x: any) => x.name == tagName);
             if (value != null || value != undefined) {
-              this.removeTag(id, comId, feedType);
+              this.removeTagFromFeed(comId, tagName);
             } else {
               this.commondata
                 .InsertTag(this.insertTagsForFeedDto)
@@ -803,30 +832,16 @@ export class EmailComponent implements OnInit {
       });
     });
   }
-  insertSentimentForFeedDto = new InsertSentimentForFeedDto();
-  appliedSentiment: string = '';
 
-  insertSentiment(feedId: any, sentimenName: any, type: any) {
-    this.insertSentimentForFeedDto.feedId = feedId.toString();
-    this.insertSentimentForFeedDto.sentiment = sentimenName;
-    this.insertSentimentForFeedDto.feedType = type;
-    this.insertSentimentForFeedDto.userId = Number(
-      localStorage.getItem('agentId')
-    );
-
-    this.commondata
-      .InsertSentiment(this.insertSentimentForFeedDto)
-      .subscribe((res: any) => {
-        this.reloadComponent('Sentiment');
-        this.appliedSentiment = sentimenName;
-      });
-  }
-
-  removeTag(id: any, comId: any, feedType: any) {
-    this.insertTagsForFeedDto.feedId = comId.toString();
-    this.insertTagsForFeedDto.tagId = id;
-    this.insertTagsForFeedDto.feedType = feedType;
-    this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
+  removeTagFromFeed(feedId: number, tagName: any) {
+    if (
+      this.flag == 'focused' ||
+      this.flag == 'assigned_to_me'
+    ) {
+        this.insertTagsForFeedDto.tagName = tagName;
+        this.insertTagsForFeedDto.feedId = feedId;
+        this.insertTagsForFeedDto.type = 'Tag';
+        this.insertTagsForFeedDto.platform = 'Email';
 
     this.commondata
       .RemoveTag(this.insertTagsForFeedDto)
@@ -837,25 +852,37 @@ export class EmailComponent implements OnInit {
         this.checkTag = false;
       });
   }
-  Sentiments = [
-    {
-      id: 1,
-      name: 'Positive',
-      icon: 'fal fa-smile',
-    },
-    {
-      id: 2,
-      name: 'Neutral',
-      icon: 'fal fa-meh-blank',
-    },
-    {
-      id: 3,
-      name: 'Negative',
-      icon: 'fal fa-frown',
-    },
-  ];
+}
+  insertSentimentForFeedDto = new InsertSentimentForFeedDto();
+  appliedSentiment: string = '';
 
-  TagsList: any;
+  // insertSentiment(feedId: any, sentimenName: any, type: any) {
+  //   this.insertSentimentForFeedDto.feedId = feedId.toString();
+  //   this.insertSentimentForFeedDto.sentiment = sentimenName;
+  //   this.insertSentimentForFeedDto.feedType = type;
+  //   this.insertSentimentForFeedDto.userId = Number(
+  //     localStorage.getItem('agentId')
+  //   );
+
+  //   this.commondata
+  //     .InsertSentiment(this.insertSentimentForFeedDto)
+  //     .subscribe((res: any) => {
+  //       this.reloadComponent('Sentiment');
+  //       this.appliedSentiment = sentimenName;
+  //     });
+  // }
+  insertSentimentForFeed(comId: number, sentimenName: any) {
+    this.insertTagsForFeedDto.feedId = comId;
+    this.insertTagsForFeedDto.tagName = sentimenName;
+    this.insertTagsForFeedDto.type = 'Sentiment';
+    this.insertTagsForFeedDto.platform = 'Email';
+
+    this.commondata.InsertSentiment(this.insertTagsForFeedDto).subscribe((res: any) => {
+        this.reloadComponent('Sentiment');
+      });
+}
+
+  TagsList: any[]=[];
   Keywords: any[] = [];
 
   getTagList() {
@@ -865,9 +892,7 @@ export class EmailComponent implements OnInit {
         xyz.keywordList.forEach((abc: any) => {
           this.Keywords.push(abc);
         });
-        // // console.log('keywords==>', this.Keywords);
       });
-      // // console.log('TagList', this.TagsList);
     });
   }
 
@@ -1331,17 +1356,18 @@ export class EmailComponent implements OnInit {
   addTags: any;
   removeTags: any;
 
-  addTagDataListner() {
+  addTagDataListener() {
     
       this.result.forEach((grp: any) => {
         grp.subjects.forEach((cmnt:any) => {
           cmnt.items.items.forEach((singleCmnt: any) => {
             if (singleCmnt.id == this.addTags.feedId) {
+              if(this.addTags.type == 'Tag'){
               if (singleCmnt.tags.length == 0) {
                 singleCmnt.tags.push(this.addTags);
               } else if (singleCmnt.tags.length > 0) {
                 const tag = singleCmnt.tags.find(
-                  (x: any) => x.id == this.addTags.feedId
+                  (x: any) => x.name == this.addTags.name
                 );
                 if (tag != null || tag != undefined) {
                   const index = singleCmnt.tags.indexOf(tag);
@@ -1355,18 +1381,9 @@ export class EmailComponent implements OnInit {
                 }
               }
             }
-          });
-        });
-        
-      });
-    this.changeDetect.detectChanges();
-  }
-  applySentimentListner(res: any) {
-      this.result.forEach((grp: any) => {
-        grp.subjects.forEach((cmnt:any) => {
-          cmnt.items.items.forEach((singleCmnt: any) => {
-            if (singleCmnt.id == res.feedId) {
-              singleCmnt.sentiment = res;
+            if(this.addTags.type == 'Sentiment'){
+              singleCmnt.sentiment = this.addTags;
+            }
             }
           });
         });
@@ -1374,13 +1391,26 @@ export class EmailComponent implements OnInit {
       });
     this.changeDetect.detectChanges();
   }
+  // applySentimentListner(res: any) {
+  //     this.result.forEach((grp: any) => {
+  //       grp.subjects.forEach((cmnt:any) => {
+  //         cmnt.items.items.forEach((singleCmnt: any) => {
+  //           if (singleCmnt.id == res.feedId) {
+  //             singleCmnt.sentiment = res;
+  //           }
+  //         });
+  //       });
+        
+  //     });
+  //   this.changeDetect.detectChanges();
+  // }
   removeTagDataListener() {
       this.result.forEach((grp: any) => {
         grp.subjects.forEach((cmnt:any) => {
           cmnt.items.items.forEach((singleCmnt: any) => {
             if (singleCmnt.id == this.removeTags.feedId) {
               var tag = singleCmnt.tags.find(
-                (x: any) => x.id == this.removeTags.tagId
+                (x: any) => x.name == this.removeTags.tagName
               );
               const index = singleCmnt.tags.indexOf(tag);
               if (index !== -1) {

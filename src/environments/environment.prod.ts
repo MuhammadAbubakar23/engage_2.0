@@ -12,11 +12,9 @@ export const environment = {
   linkdinclientSecret: '4wp2Zjzqjw3PYAdt',
   twitterclientId: '57617762-IWEThd14hGdgr3bXuVNmLdb60Lo9OLEVJ1cFUE4JF',
   twitterclientSecret: 'Ex1XpdfYMFEAtWBJn9XOrtfxyu19INzNaPV155vocLomG',
-  store: {
-    types: { local: 'LS' },
-  },
+  store: { types: { local: 'LS' }},
   title: 'abc',
-  IdentityBaseUrl: 'https://idtservice.enteract.live/api',
+  
   InstaBaseUrl: 'https://insta.360scrm.com/api/',
   FbBaseUrl: 'https://face.360scrm.com/api/',
   YoutubeBaseUrl: 'https://tube.360scrm.com/api/',
@@ -25,15 +23,42 @@ export const environment = {
   SmsBaseUrl: 'https://text.360scrm.com/api/',
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
-  CommonBaseUrl: 'https://comservices.enteract.live/api/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
-  SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
+
+  // For KE
+  // IdentityBaseUrl: 'https://idtservice.enteract.live/api',
+  // CommonBaseUrl: 'https://comservices.enteract.live/api/', 
+  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
+  
+  // For Jazz
+  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
+  // SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
+
+  // For Total Parco
+  // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api',
+  // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/', 
+  // SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
+
+  // For Morinaga
+  // IdentityBaseUrl: 'https://waidentity.enteract.live/api',
+  // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
+  
+  // For Testing
+  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  CommonBaseUrl: 'https://common-engage.enteract.app/api/', 
+  // CommonBaseUrl: 'https://5fff-203-135-1-210.ngrok-free.app/api/', 
+  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+
+
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
   ServiceBaseUrl : 'https://waservice.enteract.live/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
   // for testing purpose
-  // consoleBaseUrl: 'https://10.111.11.93:45456/api/',
+  // consoleBaseUrl: 'http://10.111.11.93:45455/api/',
   consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  //  consoleBaseUrl: '',
 
   links: {
     identity: {
@@ -109,7 +134,8 @@ export const environment = {
       getRuleById: 'Rules/GetById',
       addRules: 'Rules/Add',
       updateRules: 'Rules/Update',
-      deleteRules: 'Rules/Delete'
+      deleteRules: 'Rules/Delete',
+      defaultTags: 'Tags/GetTags'
     },
     service:{
       addSurvey:'Whatsapp/AddSurvey',
@@ -165,6 +191,8 @@ export const environment = {
       signOut: 'SignalRConnector/UserLogout',
       getCustomers: 'Customer/GetAllCustomersSocialProfile',
       updateStatus: 'Channel/UpdateMessageStatus',
+      insertTagOnProfile: 'Tags/InsertTagsProfileFeed',
+      removeTagOnProfile: 'Tags/RemoveTagProfileFeed',
       hideUnhideMessage: 'Query/HideQuery',
       dispositionTags:'Keyword/GetAllDisposition',
       //Reports
@@ -188,7 +216,11 @@ export const environment = {
       downloadSocialRawData:'Report/GetAllChannelRawDataReportCSV',
       facebookReport:'Report/GetFacebookReport',
       facebookProfile:'Report/GetFacebookProfileWiseReport',
-      getAllSocialMatrics:'Report/GetAllSocialMediaMatricsReport'
+      getAllSocialMatrics:'Report/GetAllSocialMediaMatricsReport',
+      instagramReport:'Report/GetInstagramReport',
+      instagramProfile:'Report/GetInstagramProfileWiseReport',
+      getTagReport:'Report/GetTagsReport',
+      downloadTagReport:'Report/GetAgentTagsReportCSV'
     },
     facebook: {
       comments: 'Facebook/GetFbPost',

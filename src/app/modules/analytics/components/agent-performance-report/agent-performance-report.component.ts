@@ -23,8 +23,8 @@ export class AgentPerformanceReportComponent implements OnInit {
   endDate: string = '';
   selectedTagBy: string = ''
   agent_performance_report: any
-   AllChannels: any = ''
-  singleChanenel: string='';
+  AllChannels: any = ''
+  singleChanenel: string = '';
   Agent_data: any[] = [];
   Message_data: any[] = [];
   currentDate: any;
@@ -82,8 +82,11 @@ export class AgentPerformanceReportComponent implements OnInit {
       0
     );
   }
-
+  mouseClickReset(){
+    this.searchText=''
+  }
   addAgentGraph() {
+    // debugger
     if (this.singleChanenel != '') {
       this.AllChannels = this.singleChanenel
     }
@@ -103,18 +106,18 @@ export class AgentPerformanceReportComponent implements OnInit {
     }
     else if (this.startDate != "" && this.endDate != ""
     ) {
-    //   this.startDate = this.startDate
-    //   this.endDate = this.endDate
-    // }
-    const startDateObj = new Date(this.startDate);
-    const endDateObj = new Date(this.endDate);
-    const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
-    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    if (diffDays > 30) {
-      alert('Select a date range of 30 days or less');
-      return;
+      //   this.startDate = this.startDate
+      //   this.endDate = this.endDate
+      // }
+      const startDateObj = new Date(this.startDate);
+      const endDateObj = new Date(this.endDate);
+      const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
+      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      if (diffDays > 30) {
+        alert('Select a date range of 30 days or less');
+        return;
+      }
     }
-  }
 
     if (this.AllChannels) {
 
@@ -170,7 +173,7 @@ export class AgentPerformanceReportComponent implements OnInit {
               type: 'value',
             },
             tooltip: {
-              trigger: 'axis'
+              show: true, // Show the tooltip
             },
             legend: {
               data: [this.selectedChannelLabel],
@@ -274,8 +277,8 @@ export class AgentPerformanceReportComponent implements OnInit {
   channelOptions = [
     { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
     { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
-    { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin pe-2', isSelected: false },
-    { id: '14', name: 'Facebook', icon: 'fa-brands fa-facebook facebook pe-2', isSelected: false },
+    { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+    { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
     // { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
     // { id: '16', name: 'SMS', icon: 'fa-solid fa-comment-alt pe-2', isSelected: false },
     // { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
@@ -292,7 +295,7 @@ export class AgentPerformanceReportComponent implements OnInit {
     this.toastermessage = false;
   }
   date_pagination(days: number) {
-    
+    debugger
     let currentDate = new Date();
     let prevDate = currentDate.setDate(currentDate.getDate() - days);
     this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';

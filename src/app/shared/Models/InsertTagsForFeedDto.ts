@@ -1,8 +1,12 @@
 export class InsertTagsForFeedDto{
-  feedId: string="";
-  feedType: string="";
-  tagId: number=0;
-  tagIds: string="";
-  companyId: number=0;
-  userId:number=0;
+  feedId?: number=0;
+  tagName?: string="";
+  tagNames?: string="";
+  type?:string="";
+  companyId?: number=0;
+  platform?:string="";
+
+  // feedType?: string="";
+  // tagId?: number=0;
+  // tagIds?: string="";
 }

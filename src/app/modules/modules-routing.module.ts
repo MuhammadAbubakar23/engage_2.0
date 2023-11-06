@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TagsResolver } from '../shared/resolver/Tags Resolver/tags.resolver';
 
 const routes: Routes = [
   {
@@ -15,7 +16,10 @@ const routes: Routes = [
   ,{
     path:'all-inboxes',
     loadChildren : () => import('./inboxes/inboxes.module').then(f=>f.InboxesModule),
-    data: {preload: true}
+    data: {preload: true},
+    resolve:{
+      tags: TagsResolver
+    }
   },
   {
     path:'console',

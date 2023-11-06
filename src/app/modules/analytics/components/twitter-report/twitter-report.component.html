@@ -65,7 +65,7 @@
                                 <span class="iconButton medium berryBg mb-4">
                                     <i class="fa-light fa-user-plus"></i>
                                 </span>
-                                <p class="coal mb-0"> MENTIONS RECEIVED</p>
+                                <p class="coal mb-0"> MENTIONS </p>
                             </div>
                             <h2>{{TwitterReport?.totalMentionReceived}}</h2>
                         </div>
@@ -80,7 +80,7 @@
                                 <span class="iconButton medium radicalBg mb-4">
                                     <i class="fa-light fa-retweet"></i>
                                 </span>
-                                <p class="coal mb-0"> TWEETS/RETWEETS SENT</p>
+                                <p class="coal mb-0"> TWEETS/RETWEETS </p>
                             </div>
                             <h2>0</h2>
                         </div>
@@ -95,7 +95,7 @@
                                 <span class="iconButton medium mintBg mb-4">
                                     <i class="fa-light fa-paper-plane"></i>
                                 </span>
-                                <p class="coal mb-0"> REPLIES SENT</p>
+                                <p class="coal mb-0"> REPLIES </p>
                             </div>
                             <h2>{{TwitterReport?.totalReplySent}}</h2>
                         </div>
@@ -281,7 +281,7 @@
                                     <span class="fw-semibold">{{totalTweetsSent}}</span>
                                 </li>
                                 <li>
-                                    <span class="coal"> Mark As Complete (SCRM) </span>
+                                    <span class="coal">Completed  </span>
                                     <span class="fw-semibold">{{TwitterReport?.markAsCompleted}}</span>
                                 </li>
 
@@ -347,22 +347,31 @@
         <div class="card iceBg p-4 rounded mb-5">
             <div class="row mb-4">
                 <div class="col-md-6">
-                    <h5 class="section-heading mb-0 p-0">5 Distinct Customers</h5>
+                    <h5 class="section-heading mb-0 p-0">Top 5 Customers</h5>
                 </div>
                 <div class="col-md-6">
                     <div class="d-flex justify-content-end align-items-center">
                         <div class="btn-group buttonfilter" role="group" aria-label="Basic radio toggle button group">
                             <input type="radio" class="btn-check" name="btnradio" id="btnradio10" autocomplete="off"
                                 checked>
-                            <label class="btn btn-outline-secondary" for="btnradio10">Top 5</label>
+                            <!-- <label class="btn btn-outline-secondary" for="btnradio10">Top 5  Customers</label> -->
 
                             <input type="radio" class="btn-check" name="btnradio" id="btnradio20" autocomplete="off">
-                            <label class="btn btn-outline-secondary" for="btnradio20">All Customers</label>
+                            <button class="btn btn-info" (click)="export()" > 
+                                <i class="fa-solid fa-file-export"></i>
+                            Export</button>
+                            <!-- <label class="btn btn-outline-secondary" for="btnradio20">All Customers</label> -->
 
                         </div>
-                        <div class="dropdown w-auto ms-3">
+                        <!-- <div class="dropdown w-auto ms-3">
                             <button class="btn iconButton medium" type="button" id="dropdownMenuButton1"
                                 data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="dropdown-item p-1" (click)="export()">
+                                    <button class="iconButton dropdown-iconBtn small" id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-file-export"></i>
+                                    </button>Export to CSV
+                                </a>
                                 <i class="fa-regular fa-ellipsis"></i>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -375,7 +384,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

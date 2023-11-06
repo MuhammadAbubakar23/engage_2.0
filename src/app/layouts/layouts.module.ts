@@ -64,6 +64,8 @@ import { BotContentComponent } from './engage2/bot-content/bot-content.component
 import { BotMenuComponent } from './engage2/bot-content/bot-menu/bot-menu.component';
 import { BotHeaderComponent } from './engage2/bot-content/bot-header/bot-header.component';
 import { ToasterComponent } from './engage2/toaster/toaster.component';
+import { tagsReducer } from './engage2/tags-state/tags.reducer';
+import { TagsEffects } from './engage2/tags-state/tags.effect';
 
 
 
@@ -131,8 +133,9 @@ import { ToasterComponent } from './engage2/toaster/toaster.component';
     SharedModule,
     //StoreModule.forFeature('menuPermission', { menus: menuReducer, permissions: permissionReducer  })
     StoreModule.forFeature('menus', menuReducer),
+    StoreModule.forFeature('tagss', tagsReducer),
     StoreModule.forFeature('permissions', permissionReducer),
-    EffectsModule.forFeature([MenusEffects, PermissionsEffects]),
+    EffectsModule.forFeature([MenusEffects, PermissionsEffects, TagsEffects]),
   ],
   exports:[
     MainContentComponent,

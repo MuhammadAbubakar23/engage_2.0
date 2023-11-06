@@ -61,7 +61,7 @@ export class FacebookComponent implements OnInit {
 
   FacebookData: any;
   FacebookMessages: any[] = [];
-  TagsList: any;
+  TagsList: any[]=[];
   totalUnrespondedMsgCountByCustomer: any = 0;
   pageNumber: any = 1;
   pageSize: any = 10;
@@ -163,7 +163,7 @@ export class FacebookComponent implements OnInit {
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService: GetQueryTypeService,
     private router: Router,
-    private store: StorageService,
+    private stor: StorageService,
     private userInfoService: UserInformationService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
@@ -175,10 +175,36 @@ export class FacebookComponent implements OnInit {
 
   teamPermissions: any;
   currentUrl: string = '';
-
+  messagesStatus:any[]=[];
+  Sentiments:any[]=[];
   ngOnInit(): void {
-    this.teamPermissions = this.store.retrive('permissionteam', 'O').local;
+    this.teamPermissions = this.stor.retrive('permissionteam', 'O').local;
     this.currentUrl = this.router.url;
+
+    const menu = this.stor.retrive('Tags', 'O').local;
+      menu.forEach((item:any) => {
+        if(item.name == "Tags"){
+          item.subTags.forEach((singleTagObj:any) => {
+            if(!this.TagsList.includes(singleTagObj)){
+            this.TagsList.push(singleTagObj)
+            }
+          });
+        }
+        if(item.name == "Messages Status"){
+          item.subTags.forEach((messagesStatusObj:any) => {
+            if(!this.messagesStatus.includes(messagesStatusObj)){
+            this.messagesStatus.push(messagesStatusObj)
+            }
+          });
+        }
+        if(item.name == "Sentiments"){
+          item.subTags.forEach((sentimentObj:any) => {
+            if(!this.Sentiments.includes(sentimentObj)){
+            this.Sentiments.push(sentimentObj)
+            }
+          });
+        }
+      });
 
     this.criteria = {
       property: 'createdDate',
@@ -188,13 +214,13 @@ export class FacebookComponent implements OnInit {
 
     this.getFacebookComments();
     this.getFacebookMessages();
-    this.getTagList();
+    // // this.getTagList();
     this.quickReplyList();
     this.humanAgentTags();
 
     this.Subscription = this.addTagService.receiveTags().subscribe((res) => {
       this.addTags = res;
-      this.addTagDataListner();
+      this.addTagDataListener();
     });
     this.Subscription = this.removeTagService.receiveTags().subscribe((res) => {
       this.removeTags = res;
@@ -209,7 +235,7 @@ export class FacebookComponent implements OnInit {
     this.Subscription = this.updateMessagesService
       .receiveMessage()
       .subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
+        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
           this.updatedMessages = res;
           this.updateMessagesDataListener();
         }
@@ -233,7 +259,7 @@ export class FacebookComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
+        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
           if (res.contentCount.contentType == 'FC') {
             this.totalUnrespondedCmntCountByCustomer =
               res.contentCount.unrespondedCount;
@@ -249,17 +275,17 @@ export class FacebookComponent implements OnInit {
       this.updateTicketId(res);
     });
 
-    this.Subscription = this.applySentimentService
-      .receiveSentiment()
-      .subscribe((res) => {
-        this.applySentimentListner(res);
-      });
+    // this.Subscription = this.applySentimentService
+    //   .receiveSentiment()
+    //   .subscribe((res) => {
+    //     this.applySentimentListner(res);
+    //   });
 
-    this.Subscription = this.queryStatusService
-      .receiveQueryStatus()
-      .subscribe((res) => {
-        this.updateMessageStatusDataListner(res);
-      });
+    // this.Subscription = this.queryStatusService
+    //   .receiveQueryStatus()
+    //   .subscribe((res) => {
+    //     this.updateMessageStatusDataListner(res);
+    //   });
   }
 
   totalComments: number = 0;
@@ -302,7 +328,7 @@ export class FacebookComponent implements OnInit {
 
             this.commentsArray = [];
 
-            this.FacebookData.forEach((item: any) => {
+            this.FacebookData?.forEach((item: any) => {
               this.commentsArray = [];
               item.comments.forEach((cmnt: any) => {
                 this.commentsArray.push(cmnt);
@@ -365,7 +391,7 @@ export class FacebookComponent implements OnInit {
           this.pageName = this.FacebookData[0].post.profile.page_Name;
           this.commentsArray = [];
 
-          this.FacebookData.forEach((item: any) => {
+          this.FacebookData?.forEach((item: any) => {
             this.commentsArray = [];
             item.comments.forEach((cmnt: any) => {
               this.commentsArray.push(cmnt);
@@ -433,7 +459,7 @@ export class FacebookComponent implements OnInit {
             this.pageName = this.FacebookData[0]?.post.profile.page_Name;
             this.commentsArray = [];
 
-            this.FacebookData.forEach((item: any) => {
+            this.FacebookData?.forEach((item: any) => {
               this.commentsArray = [];
               item.comments.forEach((cmnt: any) => {
                 this.commentsArray.push(cmnt);
@@ -502,7 +528,7 @@ export class FacebookComponent implements OnInit {
           sentiment: '',
           tags: [],
         };
-        this.FacebookData.forEach((item: any) => {
+        this.FacebookData?.forEach((item: any) => {
           this.commentsArray = [];
           if (item.post.postId == xyz.postId) {
             item.comments.push(this.commentDto);
@@ -594,17 +620,17 @@ export class FacebookComponent implements OnInit {
   addTags: any;
   removeTags: any;
 
-  addTagDataListner() {
-    if (this.addTags.feedType == 'FC') {
-      this.FacebookData.forEach((post: any) => {
+  addTagDataListener() {
+      this.FacebookData?.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
           cmnt.items.forEach((singleCmnt: any) => {
             if (singleCmnt.id == this.addTags.feedId) {
+              if(this.addTags.type == 'Tag'){
               if (singleCmnt.tags.length == 0) {
                 singleCmnt.tags.push(this.addTags);
               } else if (singleCmnt.tags.length > 0) {
                 const tag = singleCmnt.tags.find(
-                  (x: any) => x.id == this.addTags.feedId
+                  (x: any) => x.name == this.addTags.name
                 );
                 if (tag != null || tag != undefined) {
                   const index = singleCmnt.tags.indexOf(tag);
@@ -618,39 +644,44 @@ export class FacebookComponent implements OnInit {
                 }
               }
             }
+            if(this.addTags.type == 'Sentiment'){
+              singleCmnt.sentiment = this.addTags;
+            }
+            }
           });
         });
       });
-    }
-    if (this.addTags.feedType == 'FCP') {
       this.FacebookMessages?.forEach((msg: any) => {
         if (msg.id == this.addTags.feedId) {
-          if (msg.tags.length == 0) {
-            msg.tags.push(this.addTags);
-          } else if (msg.tags.length > 0) {
-            const tag = msg.tags.find((x: any) => x.id == this.addTags.feedId);
-            if (tag != null || tag != undefined) {
-              const index = msg.tags.indexOf(tag);
-              if (index !== -1) {
-                msg.tags.splice(index, 1);
-              }
-            } else {
+          if(this.addTags.type == 'Tag'){
+            if (msg.tags.length == 0) {
               msg.tags.push(this.addTags);
+            } else if (msg.tags.length > 0) {
+              const tag = msg.tags.find((x: any) => x.name == this.addTags.tagName);
+              if (tag != null || tag != undefined) {
+                const index = msg.tags.indexOf(tag);
+                if (index !== -1) {
+                  msg.tags.splice(index, 1);
+                }
+              } else {
+                msg.tags.push(this.addTags);
+              }
             }
+          }
+          if(this.addTags.type == 'Sentiment'){
+            msg.sentiment = this.addTags;
           }
         }
       });
-    }
     this.changeDetect.detectChanges();
   }
   removeTagDataListener() {
-    if (this.removeTags.feedType == 'FC') {
-      this.FacebookData.forEach((post: any) => {
+      this.FacebookData?.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
           cmnt.items.forEach((singleCmnt: any) => {
             if (singleCmnt.id == this.removeTags.feedId) {
               var tag = singleCmnt.tags.find(
-                (x: any) => x.id == this.removeTags.tagId
+                (x: any) => x.name == this.removeTags.tagName
               );
               const index = singleCmnt.tags.indexOf(tag);
               if (index !== -1) {
@@ -660,24 +691,21 @@ export class FacebookComponent implements OnInit {
           });
         });
       });
-    }
-    if (this.removeTags.feedType == 'FCP') {
       this.FacebookMessages?.forEach((msg: any) => {
         if (msg.id == this.removeTags.feedId) {
-          var tag = msg.tags.find((x: any) => x.id == this.removeTags.tagId);
+          var tag = msg.tags.find((x: any) => x.name == this.removeTags.tagName);
           const index = msg.tags.indexOf(tag);
           if (index !== -1) {
             msg.tags.splice(index, 1);
           }
         }
       });
-    }
     this.changeDetect.detectChanges();
   }
 
   updateQueryStatusDataListner() {
     if (this.FacebookData) {
-      this.FacebookData.forEach((post: any) => {
+      this.FacebookData?.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
           cmnt.items.forEach((singleCmnt: any) => {
             if (singleCmnt.id == this.queryStatus.queryId) {
@@ -702,7 +730,7 @@ export class FacebookComponent implements OnInit {
   updateBulkQueryStatusDataListner() {
     this.queryStatus.forEach((querry: any) => {
       if (querry.feedType == 'FC') {
-        this.FacebookData.forEach((post: any) => {
+        this.FacebookData?.forEach((post: any) => {
           post.groupedComments.forEach((cmnt: any) => {
             cmnt.items.forEach((singleCmnt: any) => {
               if (singleCmnt.id == querry.queryId) {
@@ -728,7 +756,7 @@ export class FacebookComponent implements OnInit {
 
   replyDataListner() {
     if (this.newReply.contentType == 'FC') {
-      this.FacebookData.forEach((post: any) => {
+      this.FacebookData?.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
           cmnt.items.forEach((singleCmnt: any) => {
             if (singleCmnt.id == this.newReply.commentId) {
@@ -787,7 +815,7 @@ export class FacebookComponent implements OnInit {
             if (
               !this.FacebookData ||
               this.FacebookData == undefined ||
-              this.FacebookData.length == 0
+              this.FacebookData?.length == 0
             ) {
               this.fbCmntReply = false;
               this.fbMsgReply = true;
@@ -857,7 +885,7 @@ export class FacebookComponent implements OnInit {
           if (
             !this.FacebookData ||
             this.FacebookData == undefined ||
-            this.FacebookData.length == 0
+            this.FacebookData?.length == 0
           ) {
             this.fbCmntReply = false;
             this.fbMsgReply = true;
@@ -926,7 +954,7 @@ export class FacebookComponent implements OnInit {
             if (
               !this.FacebookData ||
               this.FacebookData == undefined ||
-              this.FacebookData.length == 0
+              this.FacebookData?.length == 0
             ) {
               this.fbCmntReply = false;
               this.fbMsgReply = true;
@@ -990,7 +1018,7 @@ export class FacebookComponent implements OnInit {
   fbStats() {
     // this.shareFbResService.updateMessage(this.FacebookData);
     if (this.FacebookData != null || undefined) {
-      this.FacebookData.forEach(async (post: any): Promise<void> => {
+      this.FacebookData?.forEach(async (post: any): Promise<void> => {
         this.postIdForStats = post.post.postId;
         this.pageIdForStats = post.post?.postId.split('_')[0];
 
@@ -1014,7 +1042,7 @@ export class FacebookComponent implements OnInit {
           });
       });
     }
-    this.FacebookData.forEach((post: any) => {
+    this.FacebookData?.forEach((post: any) => {
       post.comments.forEach(async (comment: any) => {
         this.commentIdForStats = comment.commentId;
 
@@ -1067,7 +1095,7 @@ export class FacebookComponent implements OnInit {
   profilePageId: string = '';
 
   SendCommentInformation(comId: any) {
-    this.FacebookData.forEach((xyz: any) => {
+    this.FacebookData?.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
         if (comment.id == comId) {
           // show mentioned reply
@@ -1325,16 +1353,13 @@ export class FacebookComponent implements OnInit {
     });
   }
 
-  insertTagsForFeed(id: any, comId: string, type: any) {
-    if (type == 'FC') {
-      this.insertTagsForFeedDto.feedId = comId.toString();
-      this.insertTagsForFeedDto.tagId = id;
-      this.insertTagsForFeedDto.feedType = 'FC';
-      this.insertTagsForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
+  insertTagsForFeed(comId: number, tagName: string) {
+    this.insertTagsForFeedDto.feedId = comId;
+    this.insertTagsForFeedDto.tagName = tagName;
+    this.insertTagsForFeedDto.type = 'Tag';
+    this.insertTagsForFeedDto.platform = 'Facebook';
 
-      this.FacebookData.forEach((abc: any) => {
+      this.FacebookData?.forEach((abc: any) => {
         abc.comments.forEach((comment: any) => {
           if (comment.id == comId) {
             if (comment.tags.length == 0) {
@@ -1347,9 +1372,9 @@ export class FacebookComponent implements OnInit {
                   this.checkTag = true;
                 });
             } else if (comment.tags.length > 0) {
-              const value = comment.tags.find((x: any) => x.id == id);
+              const value = comment.tags.find((x: any) => x.name == tagName);
               if (value != null || value != undefined) {
-                this.removeTagFromFeed(id, comId, type);
+                this.removeTagFromFeed(comId, tagName);
               } else {
                 this.commondata
                   .InsertTag(this.insertTagsForFeedDto)
@@ -1364,14 +1389,6 @@ export class FacebookComponent implements OnInit {
           }
         });
       });
-    }
-    if (type == 'FCP') {
-      this.insertTagsForFeedDto.feedId = comId.toString();
-      this.insertTagsForFeedDto.tagId = id;
-      this.insertTagsForFeedDto.feedType = 'FCP';
-      this.insertTagsForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
 
       this.FacebookMessages?.forEach((msg: any) => {
         if (msg.id == comId) {
@@ -1385,9 +1402,9 @@ export class FacebookComponent implements OnInit {
                 this.checkTag = true;
               });
           } else if (msg.tags.length > 0) {
-            const value = msg.tags.find((x: any) => x.id == id);
+            const value = msg.tags.find((x: any) => x.name == tagName);
             if (value != null || value != undefined) {
-              this.removeTagFromFeed(id, comId, type);
+              this.removeTagFromFeed(comId, tagName);
             } else {
               this.commondata
                 .InsertTag(this.insertTagsForFeedDto)
@@ -1400,21 +1417,17 @@ export class FacebookComponent implements OnInit {
           }
         }
       });
-    }
   }
 
-  removeTagFromFeed(tagid: any, feedId: string, type: any) {
+  removeTagFromFeed(feedId: number, tagName: any) {
     if (
       this.flag == 'focused' ||
-      this.flag == 'assigned-to-me'
+      this.flag == 'assigned_to_me'
     ) {
-      if (type == 'FC') {
-        this.insertTagsForFeedDto.tagId = tagid;
-        this.insertTagsForFeedDto.feedId = feedId.toString();
-        this.insertTagsForFeedDto.feedType = 'FC';
-        this.insertTagsForFeedDto.userId = Number(
-          localStorage.getItem('agentId')
-        );
+        this.insertTagsForFeedDto.tagName = tagName;
+        this.insertTagsForFeedDto.feedId = feedId;
+        this.insertTagsForFeedDto.type = 'Tag';
+        this.insertTagsForFeedDto.platform = 'Facebook';
 
         this.commondata
           .RemoveTag(this.insertTagsForFeedDto)
@@ -1424,73 +1437,18 @@ export class FacebookComponent implements OnInit {
             this.activeTag = false;
             this.checkTag = false;
           });
-      }
-      if (type == 'FCP') {
-        this.insertTagsForFeedDto.tagId = tagid;
-        this.insertTagsForFeedDto.feedId = feedId.toString();
-        this.insertTagsForFeedDto.feedType = 'FCP';
-        this.insertTagsForFeedDto.userId = Number(
-          localStorage.getItem('agentId')
-        );
-
-        this.commondata
-          .RemoveTag(this.insertTagsForFeedDto)
-          .subscribe((res: any) => {
-            this.reloadComponent('RemoveTag');
-            this.activeTag = false;
-            this.checkTag = false;
-          });
-      }
     }
   }
 
-  Sentiments = [
-    {
-      id: 1,
-      name: 'Positive',
-      icon: 'fal fa-smile',
-    },
-    {
-      id: 2,
-      name: 'Neutral',
-      icon: 'fal fa-meh-blank',
-    },
-    {
-      id: 3,
-      name: 'Negative',
-      icon: 'fal fa-frown',
-    },
-  ];
+  insertSentimentForFeed(comId: number, sentimenName: any) {
+      this.insertTagsForFeedDto.feedId = comId;
+      this.insertTagsForFeedDto.tagName = sentimenName;
+      this.insertTagsForFeedDto.type = 'Sentiment';
+      this.insertTagsForFeedDto.platform = 'Facebook';
 
-  insertSentimentForFeed(feedId: string, sentimenName: any, type: any) {
-    if (type == 'FC') {
-      this.insertSentimentForFeedDto.feedId = feedId.toString();
-      this.insertSentimentForFeedDto.sentiment = sentimenName;
-      this.insertSentimentForFeedDto.feedType = 'FC';
-      this.insertSentimentForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
-
-      this.commondata
-        .InsertSentiment(this.insertSentimentForFeedDto)
-        .subscribe((res: any) => {
+      this.commondata.InsertSentiment(this.insertTagsForFeedDto).subscribe((res: any) => {
           this.reloadComponent('Sentiment');
         });
-    }
-    if (type == 'FCP') {
-      this.insertSentimentForFeedDto.feedId = feedId.toString();
-      this.insertSentimentForFeedDto.sentiment = sentimenName;
-      this.insertSentimentForFeedDto.feedType = 'FCP';
-      this.insertSentimentForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
-
-      this.commondata
-        .InsertSentiment(this.insertSentimentForFeedDto)
-        .subscribe((res: any) => {
-          this.reloadComponent('Sentiment');
-        });
-    }
   }
 
   commentStatus(comId: any, type: any) {
@@ -1547,7 +1505,7 @@ export class FacebookComponent implements OnInit {
   }
 
   markAsCompleteExpanded(comId: any) {
-    this.FacebookData.forEach((abc: any) => {
+    this.FacebookData?.forEach((abc: any) => {
       abc.comments.forEach((comment: any) => {
         if (comment.id == comId) {
           this.markAsComplete = !this.markAsComplete;
@@ -1756,7 +1714,7 @@ export class FacebookComponent implements OnInit {
 
   updateTicketId(res: any) {
     if (this.FacebookData) {
-      this.FacebookData.forEach((post: any) => {
+      this.FacebookData?.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
           cmnt.items.forEach((singleCmnt: any) => {
             if (singleCmnt.id == res.queryId) {
@@ -1777,27 +1735,27 @@ export class FacebookComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  applySentimentListner(res: any) {
-    if (this.FacebookData) {
-      this.FacebookData.forEach((post: any) => {
-        post.groupedComments.forEach((cmnt: any) => {
-          cmnt.items.forEach((singleCmnt: any) => {
-            if (singleCmnt.id == res.feedId) {
-              singleCmnt.sentiment = res;
-            }
-          });
-        });
-      });
-    }
-    if (this.FacebookMessages) {
-      this.FacebookMessages?.forEach((msg: any) => {
-        if (msg.id == res.feedId) {
-          msg.sentiment = res;
-        }
-      });
-    }
-    this.changeDetect.detectChanges();
-  }
+  // applySentimentListner(res: any) {
+  //   if (this.FacebookData) {
+  //     this.FacebookData?.forEach((post: any) => {
+  //       post.groupedComments.forEach((cmnt: any) => {
+  //         cmnt.items.forEach((singleCmnt: any) => {
+  //           if (singleCmnt.id == res.feedId) {
+  //             singleCmnt.sentiment = res;
+  //           }
+  //         });
+  //       });
+  //     });
+  //   }
+  //   if (this.FacebookMessages) {
+  //     this.FacebookMessages?.forEach((msg: any) => {
+  //       if (msg.id == res.feedId) {
+  //         msg.sentiment = res;
+  //       }
+  //     });
+  //   }
+  //   this.changeDetect.detectChanges();
+  // }
 
   closeQuickResponseSidebar() {
     this.quickReplySearchText = '';
@@ -1820,7 +1778,7 @@ export class FacebookComponent implements OnInit {
 
   hideMessage(queryId: number, status: boolean) {
     this.commondata.HideUnhideMessage(queryId, status).subscribe((res: any) => {
-      this.FacebookData.forEach((post: any) => {
+      this.FacebookData?.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
           cmnt.items.forEach((singleCmnt: any) => {
             if (singleCmnt.id == queryId) {
@@ -1832,92 +1790,92 @@ export class FacebookComponent implements OnInit {
       console.log(res);
     });
   }
-  itemsToBeUpdated: any[] = [];
+  // itemsToBeUpdated: any[] = [];
 
-  starMessage(msgId: number, status: boolean) {
-    this.itemsToBeUpdated = [];
-    var obj = {
-      channel: '',
-      flag: 'starred',
-      status: status,
-      messageId: msgId,
-      profileId: 0,
-    };
-    this.itemsToBeUpdated.push(obj);
-    this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
-      .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
-          if (status == true) {
-            this.reloadComponent('starred');
-          } else if (status == false) {
-            this.reloadComponent('removeStarred');
-          }
-        }
-      });
-  }
+  // starMessage(msgId: number, status: boolean) {
+  //   this.itemsToBeUpdated = [];
+  //   var obj = {
+  //     channel: '',
+  //     flag: 'starred',
+  //     status: status,
+  //     messageId: msgId,
+  //     profileId: 0,
+  //   };
+  //   this.itemsToBeUpdated.push(obj);
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         if (status == true) {
+  //           this.reloadComponent('starred');
+  //         } else if (status == false) {
+  //           this.reloadComponent('removeStarred');
+  //         }
+  //       }
+  //     });
+  // }
 
-  spam = false;
+  // spam = false;
 
-  spamMessage(msgId: number, status: boolean, type: string) {
-    this.itemsToBeUpdated = [];
-    var obj = {
-      channel: '',
-      flag: 'spam',
-      status: status,
-      messageId: msgId,
-      profileId: 0,
-    };
-    this.itemsToBeUpdated.push(obj);
-    this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
-      .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
-          if (status == true) {
-            this.spam = true;
-            this.commentStatus(msgId, type);
-            this.reloadComponent('spam');
-          } else if (status == false) {
-            this.spam = false;
-            this.reloadComponent('removeSpam');
-          }
-        }
-      });
-  }
-  updateMessageStatusDataListner(res: any) {
-    if (this.FacebookData) {
-      this.FacebookData.forEach((post: any) => {
-        post.groupedComments.forEach((cmnt: any) => {
-          cmnt.items.forEach((singleCmnt: any) => {
-            res.forEach((msgStatus: any) => {
-              if (singleCmnt.id == msgStatus.messageId) {
-                if (msgStatus.flag == 'starred') {
-                  singleCmnt.starred = msgStatus.status;
-                }
-                if (msgStatus.flag == 'spam') {
-                  singleCmnt.spam = msgStatus.status;
-                }
-              }
-            });
-          });
-        });
-      });
-    }
-    if (this.FacebookMessages) {
-      this.FacebookMessages?.forEach((msg: any) => {
-        res.forEach((msgStatus: any) => {
-          if (msg.id == msgStatus.messageId) {
-            if (msgStatus.flag == 'starred') {
-              msg.starred = msgStatus.status;
-            }
-            if (msgStatus.flag == 'spam') {
-              msg.spam = msgStatus.status;
-            }
-          }
-        });
-      });
-    }
+  // spamMessage(msgId: number, status: boolean, type: string) {
+  //   this.itemsToBeUpdated = [];
+  //   var obj = {
+  //     channel: '',
+  //     flag: 'spam',
+  //     status: status,
+  //     messageId: msgId,
+  //     profileId: 0,
+  //   };
+  //   this.itemsToBeUpdated.push(obj);
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         if (status == true) {
+  //           this.spam = true;
+  //           this.commentStatus(msgId, type);
+  //           this.reloadComponent('spam');
+  //         } else if (status == false) {
+  //           this.spam = false;
+  //           this.reloadComponent('removeSpam');
+  //         }
+  //       }
+  //     });
+  // }
+  // updateMessageStatusDataListner(res: any) {
+  //   if (this.FacebookData) {
+  //     this.FacebookData?.forEach((post: any) => {
+  //       post.groupedComments.forEach((cmnt: any) => {
+  //         cmnt.items.forEach((singleCmnt: any) => {
+  //           res.forEach((msgStatus: any) => {
+  //             if (singleCmnt.id == msgStatus.messageId) {
+  //               if (msgStatus.flag == 'starred') {
+  //                 singleCmnt.starred = msgStatus.status;
+  //               }
+  //               if (msgStatus.flag == 'spam') {
+  //                 singleCmnt.spam = msgStatus.status;
+  //               }
+  //             }
+  //           });
+  //         });
+  //       });
+  //     });
+  //   }
+  //   if (this.FacebookMessages) {
+  //     this.FacebookMessages?.forEach((msg: any) => {
+  //       res.forEach((msgStatus: any) => {
+  //         if (msg.id == msgStatus.messageId) {
+  //           if (msgStatus.flag == 'starred') {
+  //             msg.starred = msgStatus.status;
+  //           }
+  //           if (msgStatus.flag == 'spam') {
+  //             msg.spam = msgStatus.status;
+  //           }
+  //         }
+  //       });
+  //     });
+  //   }
 
-    this.changeDetect.detectChanges();
-  }
+  //   this.changeDetect.detectChanges();
+  // }
 }

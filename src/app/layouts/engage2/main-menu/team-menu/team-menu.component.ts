@@ -9,6 +9,7 @@ import { loadPermissionsLetters, updatePermissionsLetters } from '../../permissi
 import { Router } from '@angular/router';
 import { getPermissionBySlug, getPermissionsLoading } from '../../permission-state/permission.selectors';
 import { PermissionState } from '../../permission-state/permission.state';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 @Component({
   selector: 'team-menu',
   templateUrl: './team-menu.component.html',
@@ -21,8 +22,11 @@ export class TeamMenuComponent implements OnInit {
   menu$: any;
   loading$: any;
 
+  mainMenu:any[]=[];
+
   menuArray:any[]=[];
-  constructor(private MenuStore: Store<MenuState>, private PermissionStore: Store<PermissionState>, private _route: Router) {
+  constructor(private MenuStore: Store<MenuState>, private PermissionStore: Store<PermissionState>, private _route: Router,
+    private stor : StorageService) {
     // this.menu$ = this.MenuStore.select(getEmargingEqual('team_main_left_menu'));
     // this.loading$ = this.MenuStore.select(getMenusLoading);
     // this.MenuStore.dispatch(loadMenusList());
@@ -49,12 +53,18 @@ export class TeamMenuComponent implements OnInit {
         // til here
         this.menus$ = [...item];
       });
-    
-    // console.log(this.menu$);
-    // console.log("------------------------------------------");
-    // console.log(this.menus$);
-    // console.log("------------------------------------------");
-    // console.log("this.menu$");
+
+      const menu = this.stor.retrive('Tags', 'O').local;
+      menu.forEach((item:any) => {
+        if(item.name == "Engage"){
+          item.subTags.forEach((singleMenu:any) => {
+            if(!this.mainMenu.includes(singleMenu)){
+            this.mainMenu.push(singleMenu)
+            }
+          });
+        }
+      });
+      
   }
 
   assignedProfile = localStorage.getItem('assignedProfile');

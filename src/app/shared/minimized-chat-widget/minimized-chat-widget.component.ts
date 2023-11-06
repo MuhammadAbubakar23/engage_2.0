@@ -45,7 +45,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
   // platform: string = '';
   postType: string = '';
   QuickReplies: any;
-  TagsList: any;
+  TagsList: any[]=[];
   getAppliedTagsList: any;
   storeComId: any;
   AlterMsg: any = '';
@@ -90,7 +90,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
     
     this.getYoutubeData();
     this.quickReplyList();
-    this.getTagList();
+    // this.getTagList();
     this.maximizeChat();
     //this.postStats();
   }
@@ -311,18 +311,16 @@ export class MinimizedChatWidgetComponent implements OnInit {
     },
   ];
 
-  insertSentimentForFeed(feedId: any, sentimenName: any) {
-    this.insertSentimentForFeedDto.feedId = feedId.toString();
-    this.insertSentimentForFeedDto.sentiment = sentimenName;
-    this.insertSentimentForFeedDto.feedType = 'YC';
-    this.insertSentimentForFeedDto.userId = Number(localStorage.getItem('agentId'));
+  insertSentimentForFeed(comId: number, sentimenName: any) {
+    this.insertTagsForFeedDto.feedId = comId;
+    this.insertTagsForFeedDto.tagName = sentimenName;
+    this.insertTagsForFeedDto.type = 'Sentiment';
+    this.insertTagsForFeedDto.platform = '';
 
-    this.commondata
-      .InsertSentiment(this.insertSentimentForFeedDto)
-      .subscribe((res: any) => {
+    this.commondata.InsertSentiment(this.insertTagsForFeedDto).subscribe((res: any) => {
         this.reloadComponent('Sentiment');
       });
-  }
+}
 
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
@@ -360,10 +358,10 @@ export class MinimizedChatWidgetComponent implements OnInit {
   }
 
   insertTagsForFeed(id: any, comId: string) {
-    this.insertTagsForFeedDto.feedId = comId.toString();
-    this.insertTagsForFeedDto.tagId = id;
-    this.insertTagsForFeedDto.feedType = 'YC';
-    this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
+    // this.insertTagsForFeedDto.feedId = comId;
+    // // this.insertTagsForFeedDto.tagId = id;
+    // this.insertTagsForFeedDto.feedType = 'YC';
+    // this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
 
     this.YoutubeData.forEach((abc: any) => {
       abc.comments.forEach((comment: any) => {
@@ -376,7 +374,8 @@ export class MinimizedChatWidgetComponent implements OnInit {
                 }
               });
             }
-            this.commondata.InsertTag(this.insertTagsForFeedDto).subscribe(
+            this.commondata
+            .InsertTag(this.insertTagsForFeedDto).subscribe(
               (res: any) => {
                 this.reloadComponent('ApplyTag');
                 this.getYoutubeData();
@@ -390,7 +389,8 @@ export class MinimizedChatWidgetComponent implements OnInit {
               }
             );
           } else {
-            this.commondata.InsertTag(this.insertTagsForFeedDto).subscribe(
+            this.commondata
+            .InsertTag(this.insertTagsForFeedDto).subscribe(
               (res: any) => {
                 this.reloadComponent('ApplyTag');
                 this.getYoutubeData();
@@ -410,10 +410,10 @@ export class MinimizedChatWidgetComponent implements OnInit {
   }
 
   removeTagFromFeed(id: any, comId: string) {
-    this.insertTagsForFeedDto.feedId = comId.toString();
-    this.insertTagsForFeedDto.tagId = id;
-    this.insertTagsForFeedDto.feedType = 'YC';
-    this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
+    // // this.insertTagsForFeedDto.feedId = comId;
+    // // this.insertTagsForFeedDto.tagId = id;
+    // this.insertTagsForFeedDto.feedType = 'YC';
+    // this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
 
     this.commondata.RemoveTag(this.insertTagsForFeedDto).subscribe(
       (res: any) => {

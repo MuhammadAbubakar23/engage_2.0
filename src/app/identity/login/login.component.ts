@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getAllTags();
   }
 
   submit() {
@@ -56,7 +55,7 @@ export class LoginComponent implements OnInit {
         this.signalRService.startConnection();
 
         this.signalRService.removeTagDataListener();
-        this.signalRService.addTagDataListner();
+        this.signalRService.addTagDataListener();
         this.signalRService.unRespondedCountDataListener();
         this.signalRService.updateListAndDetailDataListener();
         this.signalRService.replyDataListener();
@@ -86,11 +85,5 @@ export class LoginComponent implements OnInit {
   }
   closeToaster() {
     this.toastermessage = false;
-  }
-
-  getAllTags() {
-    this.commonService.GetAllTags().subscribe((res:any)=>{
-      this.stor.store('Tags', res);
-    })
   }
 }

@@ -1,8 +1,9 @@
 export class DispositionFormDto {
-    dispositionId: number = 0;
+    disposition: number = 0;
     reasonId: number = 0;
     customerProfileId:number = 0;
     comment:string = '';
+    follow_Up_Date:any = null;
     completedData: CompletedDataDto = new CompletedDataDto();
   }
 

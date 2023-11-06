@@ -24,7 +24,7 @@
                             </li>
                             <li class="list-inline-item">
                                 <div class="dropdown w-auto">
-                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" (click)=" mouseClickReset()"
                                         aria-expanded="false" data-bs-auto-close="outside">
                                         Agents
                                     </button>
@@ -39,7 +39,7 @@
                                             </form>
                                         </li>
                                         <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
-                                            style="overflow: auto; outline: none;">
+                                            style="overflow: auto; height: 400px;">
                                             <div class="scroll-content">
                                                 <li *ngFor="let option of totalAgents | filter:searchText">
                                                     <a class="dropdown-item d-flex align-items-center">
@@ -66,8 +66,8 @@
 
                             <li class="list-inline-item">
                                 <div class="dropdown icondropdown w-auto">
-                                    <button class="btn dropdown-toggle" type="button" id="columnssort"
-                                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                    <button class="btn dropdown-toggle" type="button" id="columnssort" (click)=" mouseClickReset()"
+                                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"> 
                                         Channels
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="columnssort">
@@ -80,8 +80,8 @@
                                                 </span>
                                             </form>
                                         </li>
-                                        <div class="" data-scrollbar="true" tabindex="-1"
-                                            style="overflow: auto; outline: none;">
+                                        <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
+                                            style="overflow: auto; height: 300px;">
                                             <div class="scroll-content">
                                                 <div class="collapse-wrap mx-3" id="qr-ques1"
                                                     *ngFor="let channel of channelOptions | filter:searchText">
@@ -184,20 +184,20 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card iceBg p-4 rounded mb-5">
                                 <h5 class="section-heading mb-4 p-0">{{ selectedChannelLabel }}</h5>
                                 <div class="graphcontainer align-items-end">
-                                    <div #main style="height: 600px; width: 600px;"></div>
+                                    <div #main style="height: 600px; width: 1500px;"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card iceBg p-4 rounded mb-5">
                                 <h5 class="section-heading mb-4 p-0"> Direct Message
                                 </h5>
                                 <div class="graphcontainer align-items-end">
-                                    <div #message style="height: 600px; width: 600px;"></div>
+                                    <div #message style="height: 600px; width: 1500px;"></div>
                                 </div>
 
                             </div>

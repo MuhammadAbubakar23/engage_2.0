@@ -521,19 +521,21 @@ export class ConversationComponent implements OnInit {
           this.updateConversationList(newMsg);
         }
       });
-    
+
       const groupedItems = this.groupItemsByDate();
       this.groupByDateList = Object.keys(groupedItems).map((createdDate) => ({
         createdDate,
         items: groupedItems[createdDate],
       }));
-    
+
       this.setFromAndToValues();
       this.changeDetect.detectChanges();
     }
   }
   updateConversationList(newMsg: any) {
-    const index = this.ConversationList.findIndex((obj: any) => obj.user === newMsg.user);
+    const index = this.ConversationList.findIndex(
+      (obj: any) => obj.user === newMsg.user
+    );
     this.listingDto = newMsg;
     if (index >= 0) {
       const main = this.ConversationList[index];
@@ -550,7 +552,7 @@ export class ConversationComponent implements OnInit {
       }
     }
   }
-  
+
   groupItemsByDate() {
     return this.ConversationList.reduce((acc: any, item: any) => {
       const date = item.createdDate.split('T')[0];
@@ -559,15 +561,23 @@ export class ConversationComponent implements OnInit {
       return acc;
     }, {});
   }
-  
+
   setFromAndToValues() {
     if (this.TotalUnresponded < this.pageSize) {
       this.from = this.TotalUnresponded;
-    } else if (this.TotalUnresponded > this.pageSize && this.from < this.pageSize) {
+    } else if (
+      this.TotalUnresponded > this.pageSize &&
+      this.from < this.pageSize
+    ) {
       this.from = this.pageSize;
     }
-  
-    this.to = this.ConversationList.length === 0 ? 0 : (this.from === 0 && this.pageNumber === 1 ? 1 : 0);
+
+    this.to =
+      this.ConversationList.length === 0
+        ? 0
+        : this.from === 0 && this.pageNumber === 1
+        ? 1
+        : 0;
   }
 
   removeAssignedQueryListener(res: any) {
@@ -648,7 +658,7 @@ export class ConversationComponent implements OnInit {
             platform: platform,
             profileId: profileId,
           };
-          
+
           // this.userInfoService.shareUserInformation(userInfo);
           this.headerCountService.shareUnresponedCount(count);
           this.reloadComponent('queryallocated');
@@ -704,14 +714,14 @@ export class ConversationComponent implements OnInit {
   toastermessage = false;
 
   reloadComponent(type: any) {
-    if (type == 'unblock') {
+    if (type == 'undoblack_list') {
       this.AlterMsg = 'Profile(s) has been removed from Blacklisted items';
       this.toastermessage = true;
       setTimeout(() => {
         this.toastermessage = false;
       }, 4000);
     }
-    if (type == 'removeSpam') {
+    if (type == 'undospam') {
       this.AlterMsg = 'Profile(s) has been removed from spam items';
       this.toastermessage = true;
       setTimeout(() => {
@@ -725,42 +735,42 @@ export class ConversationComponent implements OnInit {
         this.toastermessage = false;
       }, 4000);
     }
-    if (type == 'removeSnooze') {
+    if (type == 'undosnooze') {
       this.AlterMsg = 'Profile(s) has been removed from snoozed items';
       this.toastermessage = true;
       setTimeout(() => {
         this.toastermessage = false;
       }, 4000);
     }
-    if (type == 'RemoveStarred') {
+    if (type == 'undostarred') {
       this.AlterMsg = 'Profile(s) has been removed from starred items';
       this.toastermessage = true;
       setTimeout(() => {
         this.toastermessage = false;
       }, 4000);
     }
-    if (type == 'undoDelete') {
+    if (type == 'undotrash') {
       this.AlterMsg = 'Profile(s) has been moved to all conversations';
       this.toastermessage = true;
       setTimeout(() => {
         this.toastermessage = false;
       }, 4000);
     }
-    if (type == 'delete') {
+    if (type == 'trash') {
       this.AlterMsg = 'Profile(s) moved to trash items!';
       this.toastermessage = true;
       setTimeout(() => {
         this.toastermessage = false;
       }, 4000);
     }
-    if (type == 'archive') {
+    if (type == 'archived') {
       this.AlterMsg = 'Profile(s) has been archived!';
       this.toastermessage = true;
       setTimeout(() => {
         this.toastermessage = false;
       }, 4000);
     }
-    if (type == 'unarchive') {
+    if (type == 'undoarchived') {
       this.AlterMsg = 'Profile(s) has been un-archived!';
       this.toastermessage = true;
       setTimeout(() => {
@@ -860,12 +870,16 @@ export class ConversationComponent implements OnInit {
       this.masterSelected = group.items.every((l: any) => l.isChecked == true);
       if (this.masterSelected == true) {
         group.items.forEach((d: any) => {
-          // var abc = this.Ids.find(
-          //   (x) => x.Id == d.profileId && x.Platform == d.Platform
-          // );
-          if (!this.Ids.includes(d.profileId)) {
-            this.Ids.push(d.profileId);
+          var abc = this.Ids.find(
+            (x) => x.profileId == d.profileId
+          );
+          if(abc == undefined){
+            this.Ids.push({ profileId: d.profileId, platform: d.platform });
           }
+            // if (!this.Ids.includes(item.profileId)) {
+            //   this.Ids.push({ profileId: d.profileId, platform: d.platform });
+            // }
+          
         });
         //  // // console.log(this.Ids);
         this.isChecked = true;
@@ -873,8 +887,14 @@ export class ConversationComponent implements OnInit {
       } else {
         group.items.forEach((d: any) => {
           for (var i = 0; i <= this.Ids.length; i++) {
-            var abc = this.Ids.find((x) => x.Id == d.profileId);
-            this.Ids.splice(abc, 1);
+            // var abc = this.Ids.find((x) => x.profileId == d.profileId);
+            // this.Ids.splice(abc, 1);
+            var indexOfQuery = this.Ids.findIndex(
+              (x) => x.profileId == d.profileId
+            );
+            if (indexOfQuery !== -1) {
+              this.Ids.splice(indexOfQuery, 1);
+            }
           }
         });
         //  // // console.log(this.Ids);
@@ -893,11 +913,13 @@ export class ConversationComponent implements OnInit {
   ) {
     // let id = Number(evt.target.value);
     if (index >= 0 && evt.target.checked == true) {
-      this.Ids.push(profileId);
+      this.Ids.push({ profileId: profileId, platform: platform });
     }
     if (evt.target.checked == false) {
-      var abc = this.Ids.find((x) => x.Id == profileId);
-      this.Ids.splice(abc, 1);
+      var indexOfQuery = this.Ids.findIndex((x) => x.profileId == profileId);
+      if (indexOfQuery !== -1) {
+        this.Ids.splice(indexOfQuery, 1);
+      }
     }
     this.groupByDateList.forEach((group) => {
       if (group.createdDate == date) {
@@ -993,7 +1015,7 @@ export class ConversationComponent implements OnInit {
       .subscribe((res: any) => {
         const a = document.createElement('a');
         a.href = res;
-        a.download = 'AgentReport.csv';
+        a.download = 'AgentReport'+ this.fromDate + '.csv';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -1035,244 +1057,292 @@ export class ConversationComponent implements OnInit {
 
   itemsToBeUpdated: any[] = [];
 
-  Delete() {
-    this.Ids.forEach((id: any) => {
+  InsertTagInProfile(tagName:string, type:string) {
+    this.Ids.forEach((query: any) => {
       var obj = {
-        channel: '',
-        flag: 'trash',
-        status: true,
-        messageId: 0,
-        profileId: id,
+        feedId: query.profileId,
+        tagName: tagName,
+        type: type,
+        platform: query.platform,
       };
       this.itemsToBeUpdated.push(obj);
     });
     this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
+      .InsertTagInProfile(this.itemsToBeUpdated)
       .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
+        if (res.message === 'Data Added Successfully') {
           this.itemsToBeUpdated = [];
-          this.reloadComponent('delete');
+          this.reloadComponent(tagName);
           this.Reload();
         }
       });
   }
 
-  UndoDelete() {
-    this.Ids.forEach((id: any) => {
+  RemoveTagInProfile(tagName:string, type:string) {
+    this.Ids.forEach((query: any) => {
       var obj = {
-        channel: '',
-        flag: 'trash',
-        status: false,
-        messageId: 0,
-        profileId: id,
+        feedId: query.profileId,
+        tagName: tagName,
+        type: type,
+        platform: query.platform,
       };
       this.itemsToBeUpdated.push(obj);
     });
     this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
+      .RemoveTagInProfile(this.itemsToBeUpdated)
       .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
+        if (res.message === 'Data Deleted Successfully') {
           this.itemsToBeUpdated = [];
-          this.reloadComponent('undoDelete');
+          this.reloadComponent('undo'+tagName);
           this.Reload();
         }
       });
   }
 
-  Archive() {
-    this.Ids.forEach((id: any) => {
-      var obj = {
-        channel: '',
-        flag: 'archived',
-        status: true,
-        messageId: 0,
-        profileId: id,
-      };
-      this.itemsToBeUpdated.push(obj);
-    });
-    this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
-      .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
-          this.itemsToBeUpdated = [];
-          this.reloadComponent('archive');
-          this.Reload();
-        }
-      });
-  }
-  Unarchive() {
-    this.Ids.forEach((id: any) => {
-      var obj = {
-        channel: '',
-        flag: 'archived',
-        status: false,
-        messageId: 0,
-        profileId: id,
-      };
-      this.itemsToBeUpdated.push(obj);
-    });
-    this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
-      .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
-          this.itemsToBeUpdated = [];
-          this.reloadComponent('unarchive');
-          this.Reload();
-        }
-      });
-  }
+  // Delete() {
+  //   this.Ids.forEach((id: any) => {
+  //     // var obj = {
+  //     //   channel: '',
+  //     //   flag: 'trash',
+  //     //   status: true,
+  //     //   messageId: 0,
+  //     //   profileId: id,
+  //     // };
+  //     var obj = {
+  //       feedId: id,
+  //       tagName: 'Trash',
+  //       type: 'Tag',
+  //       platform: true,
+  //     };
+  //     this.itemsToBeUpdated.push(obj);
+  //   });
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         this.itemsToBeUpdated = [];
+  //         this.reloadComponent('delete');
+  //         this.Reload();
+  //       }
+  //     });
+  // }
 
-  Snooze() {
-    this.Ids.forEach((id: any) => {
-      var obj = {
-        channel: '',
-        flag: 'snoozed',
-        status: true,
-        messageId: 0,
-        profileId: id,
-      };
-      this.itemsToBeUpdated.push(obj);
-    });
-    this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
-      .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
-          this.itemsToBeUpdated = [];
-          this.reloadComponent('snooze');
-          this.Reload();
-        }
-      });
-  }
+  // UndoDelete() {
+  //   this.Ids.forEach((id: any) => {
+  //     var obj = {
+  //       channel: '',
+  //       flag: 'trash',
+  //       status: false,
+  //       messageId: 0,
+  //       profileId: id,
+  //     };
+  //     this.itemsToBeUpdated.push(obj);
+  //   });
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         this.itemsToBeUpdated = [];
+  //         this.reloadComponent('undoDelete');
+  //         this.Reload();
+  //       }
+  //     });
+  // }
 
-  RemoveSnooze() {
-    this.Ids.forEach((id: any) => {
-      var obj = {
-        channel: '',
-        flag: 'snoozed',
-        status: false,
-        messageId: 0,
-        profileId: id,
-      };
-      this.itemsToBeUpdated.push(obj);
-    });
-    this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
-      .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
-          this.itemsToBeUpdated = [];
-          this.reloadComponent('removeSnooze');
-          this.Reload();
-        }
-      });
-  }
+  // Archive() {
+  //   this.Ids.forEach((id: any) => {
+  //     var obj = {
+  //       channel: '',
+  //       flag: 'archived',
+  //       status: true,
+  //       messageId: 0,
+  //       profileId: id,
+  //     };
+  //     this.itemsToBeUpdated.push(obj);
+  //   });
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         this.itemsToBeUpdated = [];
+  //         this.reloadComponent('archive');
+  //         this.Reload();
+  //       }
+  //     });
+  // }
+  // Unarchive() {
+  //   this.Ids.forEach((id: any) => {
+  //     var obj = {
+  //       channel: '',
+  //       flag: 'archived',
+  //       status: false,
+  //       messageId: 0,
+  //       profileId: id,
+  //     };
+  //     this.itemsToBeUpdated.push(obj);
+  //   });
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         this.itemsToBeUpdated = [];
+  //         this.reloadComponent('unarchive');
+  //         this.Reload();
+  //       }
+  //     });
+  // }
 
-  Spam() {
-    this.Ids.forEach((id: any) => {
-      var obj = {
-        channel: '',
-        flag: 'spam',
-        status: true,
-        messageId: 0,
-        profileId: id,
-      };
-      this.itemsToBeUpdated.push(obj);
-    });
-    this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
-      .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
-          this.itemsToBeUpdated = [];
-          this.reloadComponent('spam');
-          this.Reload();
-        }
-      });
-  }
+  // Snooze() {
+  //   this.Ids.forEach((id: any) => {
+  //     var obj = {
+  //       channel: '',
+  //       flag: 'snoozed',
+  //       status: true,
+  //       messageId: 0,
+  //       profileId: id,
+  //     };
+  //     this.itemsToBeUpdated.push(obj);
+  //   });
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         this.itemsToBeUpdated = [];
+  //         this.reloadComponent('snooze');
+  //         this.Reload();
+  //       }
+  //     });
+  // }
 
-  RemoveSpam() {
-    this.Ids.forEach((id: any) => {
-      var obj = {
-        channel: '',
-        flag: 'spam',
-        status: false,
-        messageId: 0,
-        profileId: id,
-      };
-      this.itemsToBeUpdated.push(obj);
-    });
-    this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
-      .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
-          this.itemsToBeUpdated = [];
-          this.reloadComponent('removeSpam');
-          this.Reload();
-        }
-      });
-  }
+  // RemoveSnooze() {
+  //   this.Ids.forEach((id: any) => {
+  //     var obj = {
+  //       channel: '',
+  //       flag: 'snoozed',
+  //       status: false,
+  //       messageId: 0,
+  //       profileId: id,
+  //     };
+  //     this.itemsToBeUpdated.push(obj);
+  //   });
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         this.itemsToBeUpdated = [];
+  //         this.reloadComponent('removeSnooze');
+  //         this.Reload();
+  //       }
+  //     });
+  // }
 
-  Starred() {
-    this.Ids.forEach((id: any) => {
-      var obj = {
-        channel: '',
-        flag: 'starred',
-        status: true,
-        messageId: 0,
-        profileId: id,
-      };
-      this.itemsToBeUpdated.push(obj);
-    });
-    this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
-      .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
-          this.itemsToBeUpdated = [];
-          this.reloadComponent('starred');
-          this.Reload();
-        }
-      });
-  }
+  // Spam() {
+  //   this.Ids.forEach((id: any) => {
+  //     var obj = {
+  //       channel: '',
+  //       flag: 'spam',
+  //       status: true,
+  //       messageId: 0,
+  //       profileId: id,
+  //     };
+  //     this.itemsToBeUpdated.push(obj);
+  //   });
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         this.itemsToBeUpdated = [];
+  //         this.reloadComponent('spam');
+  //         this.Reload();
+  //       }
+  //     });
+  // }
 
-  RemoveStarred() {
-    this.Ids.forEach((id: any) => {
-      var obj = {
-        channel: '',
-        flag: 'starred',
-        status: false,
-        messageId: 0,
-        profileId: id,
-      };
-      this.itemsToBeUpdated.push(obj);
-    });
-    this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
-      .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
-          this.itemsToBeUpdated = [];
-          this.reloadComponent('RemoveStarred');
-          this.Reload();
-        }
-      });
-  }
+  // RemoveSpam() {
+  //   this.Ids.forEach((id: any) => {
+  //     var obj = {
+  //       channel: '',
+  //       flag: 'spam',
+  //       status: false,
+  //       messageId: 0,
+  //       profileId: id,
+  //     };
+  //     this.itemsToBeUpdated.push(obj);
+  //   });
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         this.itemsToBeUpdated = [];
+  //         this.reloadComponent('removeSpam');
+  //         this.Reload();
+  //       }
+  //     });
+  // }
 
-  Unblock() {
-    this.Ids.forEach((id: any) => {
-      var obj = {
-        channel: '',
-        flag: 'black_list',
-        status: false,
-        messageId: 0,
-        profileId: id,
-      };
-      this.itemsToBeUpdated.push(obj);
-    });
-    this.commondata
-      .UpdateStatus(this.itemsToBeUpdated)
-      .subscribe((res: any) => {
-        if (res.message === 'Status Updated Successfully') {
-          this.itemsToBeUpdated = [];
-          this.reloadComponent('unblock');
-          this.Reload();
-        }
-      });
-  }
+  // Starred() {
+  //   this.Ids.forEach((id: any) => {
+  //     var obj = {
+  //       channel: '',
+  //       flag: 'starred',
+  //       status: true,
+  //       messageId: 0,
+  //       profileId: id,
+  //     };
+  //     this.itemsToBeUpdated.push(obj);
+  //   });
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         this.itemsToBeUpdated = [];
+  //         this.reloadComponent('starred');
+  //         this.Reload();
+  //       }
+  //     });
+  // }
+
+  // RemoveStarred() {
+  //   this.Ids.forEach((id: any) => {
+  //     var obj = {
+  //       channel: '',
+  //       flag: 'starred',
+  //       status: false,
+  //       messageId: 0,
+  //       profileId: id,
+  //     };
+  //     this.itemsToBeUpdated.push(obj);
+  //   });
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         this.itemsToBeUpdated = [];
+  //         this.reloadComponent('RemoveStarred');
+  //         this.Reload();
+  //       }
+  //     });
+  // }
+
+  // Unblock() {
+  //   this.Ids.forEach((id: any) => {
+  //     var obj = {
+  //       channel: '',
+  //       flag: 'blacklist',
+  //       status: false,
+  //       messageId: 0,
+  //       profileId: id,
+  //     };
+  //     this.itemsToBeUpdated.push(obj);
+  //   });
+  //   this.commondata
+  //     .UpdateStatus(this.itemsToBeUpdated)
+  //     .subscribe((res: any) => {
+  //       if (res.message === 'Status Updated Successfully') {
+  //         this.itemsToBeUpdated = [];
+  //         this.reloadComponent('unblock');
+  //         this.Reload();
+  //       }
+  //     });
+  // }
 }

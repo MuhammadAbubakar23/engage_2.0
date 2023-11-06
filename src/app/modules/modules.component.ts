@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { loadMenusList, updateMenusList } from 'src/app/layouts/engage2/menu-state/menu.actions';
@@ -18,8 +19,9 @@ export class ModulesComponent implements OnInit {
   TeamMenu$: Observable<MenuModel[]>;
   RoleMenu$: Observable<MenuModel[]>;
   Permission$: Observable<boolean>;
-  
-  constructor(private MenuStore: Store<MenuState>, private PermissionStore: Store<PermissionState>) {
+  Tags:any;
+  constructor(private MenuStore: Store<MenuState>, private PermissionStore: Store<PermissionState>,
+    private route:ActivatedRoute) {
     this.RoleMenu$ = this.MenuStore.select(getEmargingEqual("role_main_left_menu"));
     this.TeamMenu$ = this.MenuStore.select(getEmargingEqual('team_main_left_menu'));
     this.Permission$ = this.PermissionStore.select(getPermissionBySlug("_upur_"));
@@ -27,6 +29,8 @@ export class ModulesComponent implements OnInit {
   }
 
   ngOnInit() {
+    
+    this.Tags = this.route.snapshot.data['tags'];
     this.MenuStore.dispatch(loadMenusList());
     this.MenuStore.dispatch(updateMenusList());
     this.PermissionStore.dispatch(loadPermissionsLetters());

@@ -28,19 +28,19 @@
         value="Dashboard" id="analyticstab3">
         <a routerLink="/analytics/db-settings" class="d-flex"> DB Settings </a>
       </li>
-       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Executive Dashboard'?'active':''" value="Dashboard" id="analyticstab3">
-        <a routerLink="/analytics/executive-dashboard" class="d-flex">Executive Dashboard</a>
-      </li>
-      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Dashboard'?'active':''" value="Dashboard" id="analyticstab3">
+       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Dashboard'?'active':''" value="Dashboard" id="analyticstab3">
         <a routerLink="/analytics/dashboard" class="d-flex">Dashboard</a>
       </li>
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Live Monitoring'?'active':''" value="Dashboard" id="analyticstab3">
         <a routerLink="/analytics/live-monitoring" class="d-flex">Live Monitoring</a>
-      </li>
+      </li>  -->
+
+      <!-- WhatsApp Reports for Jazz Only -->
+
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'WhatsApp Report'?'active':''"
         value="Dashboard" id="analyticstab3">
         <a routerLink="/analytics/whatsapp-report" class="d-flex">
-          WhatsApp Raw Data 
+          WhatsApp Raw Data
         </a>
       </li>
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Handled by Bot'?'active':''"
@@ -60,17 +60,17 @@
         <a routerLink="/analytics/unique-customers" class="d-flex">
           Unique Interactions
         </a>
-      </li> -->
+      </li>
+      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Social Raw Data'?'active':''"
+        value="Social Raw Data" id="analyticstab1">
+        <a routerLink="/analytics/social-raw-data" class="d-flex">
+          Social Raw Data
+        </a>
+      </li>
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Inbound/OutBound Report'?'active':''"
         value="Executive Dashboard" id="analyticstab1">
         <a routerLink="/analytics/inbound-outbound-report" class="d-flex">
           Inbound/OutBound Report
-        </a>
-      </li>
-      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Twitter Report'?'active':''"
-        value="Twitter Report" id="twittertab1">
-        <a routerLink="/analytics/twitter-report" class="d-flex">
-          Twitter Report
         </a>
       </li>
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Dashboard Designer'?'active':''"
@@ -85,27 +85,35 @@
           Shift Report
         </a>
       </li>
-      <!-- <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Social Raw Data'?'active':''"
-        value="Social Raw Data" id="analyticstab1">
-        <a routerLink="/analytics/social-raw-data" class="d-flex">
-          Social Raw Data
+      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Tag Report'?'active':''"
+        value="Executive Dashboard" id="analyticstab1">
+        <a routerLink="/analytics/tag-report" class="d-flex">
+          Tag Report
         </a>
-      </li> -->
+      </li>
+      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Executive Dashboard'?'active':''"
+        value="Dashboard" id="analyticstab3">
+        <a routerLink="/analytics/executive-dashboard" class="d-flex">Executive Dashboard</a>
+      </li>
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Facebook Report'?'active':''"
-      value="Facebook Report" id="analyticstab3">
-      <a routerLink="/analytics/feacbook-report" class="d-flex">
-         Facebook Report
-      </a>
-    </li>
-    </div>
-
-
-    <div class="scrollbar-track scrollbar-track-x" style="display: none">
-      <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 293px; transform: translate3d(0px, 0px, 0px)"></div>
-    </div>
-    <div class="scrollbar-track scrollbar-track-y" style="display: none">
-      <div class="scrollbar-thumb scrollbar-thumb-y" style="height: 473px; transform: translate3d(0px, 0px, 0px)"></div>
+        value="Facebook Report" id="analyticstab3">
+        <a routerLink="/analytics/facebook-report" class="d-flex">
+          Facebook Report
+        </a>
+      </li>
+      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Twitter Report'?'active':''"
+        value="Twitter Report" id="twittertab1">
+        <a routerLink="/analytics/twitter-report" class="d-flex">
+          Twitter Report
+        </a>
+      </li>
+      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Instagram Report'?'active':''"
+        value="Instagram Report" id="instagramtab1">
+        <a routerLink="/analytics/instagram-report" class="d-flex">
+          Instagram Report
+        </a>
+      </li>
     </div>
   </ul>
 </div>
-<a href="javascript:void;" class="panelToggle"></a>
+<a class="panelToggle"></a>

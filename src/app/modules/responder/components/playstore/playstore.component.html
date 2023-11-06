@@ -74,28 +74,29 @@
                                                         </div>
                                                         <div class="dropdown w-auto"
                                                             *ngIf="playstoreReview.queryStatus != 'Responded'">
-                                                            <button class="btn coal p-0 ps-3" type="button"
-                                                                id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                                aria-expanded="false">
-                                                                <small *ngIf="playstoreReview.spam == true; else notSpamMsg">Spam <i class="far fa-chevron-down ms-2" *ngIf="flag == 'focused' || flag == 'assigned-to-me'"></i></small>
+                                                            <button class="btn coal p-0 ps-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <small *ngIf="playstoreReview.spam == true; else notSpamMsg">Spam <i class="far fa-chevron-down ms-2" *ngIf="flag == 'focused' || flag == 'assigned_to_me'"></i></small>
                                                                 <ng-template #notSpamMsg>{{playstoreReview.queryStatus}} 
-                                                                    <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned-to-me') && playstoreReview.queryStatus != 'Completed'"></i>
+                                                                    <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && playstoreReview.queryStatus != 'Completed'"></i>
                                                                 </ng-template>
                                                             </button>
-                                                            <ul class="dropdown-menu custom-dropdown"
-                                                                aria-labelledby="dropdownMenuButton1"
-                                                                *ngIf="(flag == 'focused' || flag == 'assigned-to-me') && playstoreReview.queryStatus != 'Completed'">
+                                                            <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1"
+                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && playstoreReview.queryStatus != 'Completed'">
 
                                                                 <li>
+                                                                    <!-- From Tags Api -->
+                                                                    <!-- <ng-container *ngFor="let status of messagesStatus">
+                                                                    <a class="dropdown-item" *ngIf="playstoreReview.queryStatus != 'Responded'" (click)="commentStatus(playstoreReview.id, 'PSR')">{{status.name}}</a>
+                                                                </ng-container> -->
                                                                     <a class="dropdown-item" *ngIf="playstoreReview.queryStatus != 'Responded'" (click)="commentStatus(playstoreReview.id, 'PSR')">Read</a>
-                                                                    <a class="dropdown-item" *ngIf="playstoreReview.starred == true; else notStarredMsg" (click)="starMessage(playstoreReview.id, false)">Remove Star from Message</a>
+                                                                    <!-- <a class="dropdown-item" *ngIf="playstoreReview.starred == true; else notStarredMsg" (click)="starMessage(playstoreReview.id, false)">Remove Star from Message</a>
                                                                     <ng-template #notStarredMsg>
                                                                         <a class="dropdown-item" (click)="starMessage(playstoreReview.id, true)">Star Message</a>
                                                                     </ng-template>
                                                                     <a class="dropdown-item" *ngIf="playstoreReview.spam == true; else notSpamBtn" (click)="spamMessage(playstoreReview.id, false, 'PSR')">Remove from Spam</a>
                                                                     <ng-template #notSpamBtn>
                                                                         <a class="dropdown-item" (click)="spamMessage(playstoreReview.id, true, 'PSR')">Mark as Spam</a>
-                                                                    </ng-template>
+                                                                    </ng-template> -->
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -107,17 +108,17 @@
                                                     <p class="card-text nignt">{{playstoreReview.msgText}}</p>
                                                     <div class="tags" *ngFor="let tag of playstoreReview.tags">
                                                         <span class="badge rounded-pill tag tag1 selected googleplaystore-pill"
-                                                            (click)="removeTagFromFeed(tag.id, tag.feedId, 'PSR')">{{tag.name}}</span>
+                                                            (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name}}</span>
 
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                     <div class="tags" *ngIf="playstoreReview.sentiment">
                                                         <span
-                                                            class="badge rounded-pill tag tag1 selected googleplaystore-pill">{{playstoreReview.sentiment?.text}}</span>
+                                                            class="badge rounded-pill tag tag1 selected googleplaystore-pill">{{playstoreReview.sentiment?.name}}</span>
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                 </div>
-                                                <div class="message-bottom" *ngIf="flag == 'focused' || flag == 'assigned-to-me'">
+                                                <div class="message-bottom" *ngIf="flag == 'focused' || flag == 'assigned_to_me'">
                                                     <div class="row">
                                                         <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                             <div class="message-actionlist d-flex align-items-center">
@@ -147,25 +148,7 @@
                                                                                         <h6>Tags
                                                                                         </h6>
                                                                                     </div>
-                                                                                    <!-- <a class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
-                                                                                    (click)="closeTagListDropdown()"
-                                                                                        id="dropdownMenuButton3" data-bs-toggle="dropdown"
-                                                                                        aria-expanded="false">
-                                                                                        <i class="fal fa-times silver"></i>
-                                                                                    </a> -->
                                                                                 </div>
-                                                                                <!-- <form class="custom-searchbar">
-                                                                                    <input
-                                                                                        class="form-control rounded-pill shadow-sm"
-                                                                                        
-                                                                                        placeholder="Search"
-                                                                                        aria-label="Search">
-                                                                                    <span class="btn searchbar-btn"
-                                                                                        type="submit">
-                                                                                        <i
-                                                                                            class="fal fa-search silver"></i>
-                                                                                    </span>
-                                                                                </form> -->
                                                                             </li>
                                                                             <li class="dropend">
                                                                                 <div *ngFor="let tag of TagsList"
@@ -174,8 +157,7 @@
                                                                                         class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
 
                                                                                         <div class="w-100 list-txt">
-                                                                                            <div
-                                                                                                class="d-flex w-100 justify-content-between">
+                                                                                            <div class="d-flex w-100 justify-content-between">
                                                                                                 <h6
                                                                                                     class="mb-1 darkblue">
                                                                                                     {{tag.name}}
@@ -207,9 +189,9 @@
                                                                                                 <div
                                                                                                     class="list-group list-group-flush">
                                                                                                     <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                        (click)="insertTagsForFeed(keyword.id, playstoreReview.id, 'PSR')"
+                                                                                                        (click)="insertTagsForFeed(playstoreReview.id, keyword.name)"
                                                                                                         [ngClass]="activeTag==true?'active':''"
-                                                                                                        *ngFor="let keyword of tag.keywordList | filter: searchText">
+                                                                                                        *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                         <div
                                                                                                             class="list-down-icon">
                                                                                                             <span
@@ -264,12 +246,9 @@
                                                                                     <div class="list-group list-group-flush"
                                                                                         *ngFor="let sentiment of Sentiments">
                                                                                         <a class="list-group-item d-flex level1Btn "
-                                                                                            (click)="insertSentimentForFeed(playstoreReview.id, sentiment.name, 'PSR')">
+                                                                                            (click)="insertSentimentForFeed(playstoreReview.id, sentiment.name)">
                                                                                             <div class="list-down-icon">
-                                                                                                <span
-                                                                                                    class="btn iconButton iconHover medium">
-                                                                                                    <i
-                                                                                                        class={{sentiment.icon}}></i>
+                                                                                                <span class="btn iconButton iconHover medium" [innerHTML]="sentiment.icon">
                                                                                                 </span>
                                                                                             </div>
                                                                                             <div class="w-100 list-txt">
@@ -281,12 +260,7 @@
                                                                                                     </h6>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <!-- <small>
-                                                                                                    <i
-                                                                                                        class="fal fa-check-circle sky"></i>
-                                                                                                </small> -->
                                                                                         </a>
-
 
                                                                                     </div>
                                                                                 </div>
@@ -317,7 +291,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <span *ngIf="flag == 'focused' || flag == 'assigned-to-me'" class="complaintBtn" (click)="toggle('ticket', playstoreReview.id)"
+                                            <!-- <span *ngIf="flag == 'focused' || flag == 'assigned_to_me'" class="complaintBtn" (click)="toggle('ticket', playstoreReview.id)"
                                                 type="button">
                                                 <i class="fal fa-plus-circle sky"></i>
                                             </span> -->
@@ -364,7 +338,7 @@
         </div>
     </div>
 </div>
-<ng-container *ngIf="flag == 'focused' || flag == 'assigned-to-me'">
+<ng-container *ngIf="flag == 'focused' || flag == 'assigned_to_me'">
     <div class="msgTypingField shadow-lg">
         <div *ngFor="let msg of PlayStoreReviews">
             <div *ngIf="msg.id == msgId">
@@ -390,10 +364,15 @@
                         data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                         <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></a>
                 </div>
-                <div class="form-floating textarea-field">
+                <!-- <div class="form-floating textarea-field">
                     <textarea formControlName="text" class="form-control auto" rows="1" id="text"
                         placeholder="Write a reply of review here" [(ngModel)]="text" style="height: 50px"
                         #textarea></textarea>
+                </div> -->
+                <div class="form-floating textarea-field">
+                    <textarea formControlName="text" class="form-control auto" rows="1" id="text"
+                        placeholder="Write a response here" [(ngModel)]="text"  #textarea
+                        (input)="adjustTextareaHeight(textarea)" (keydown)="handleTextareaKeyDown($event)"></textarea>
                 </div>
                 <div class="icons-list align-items-md-center d-flex ps-2">
                     <div class="dropdown w-auto">

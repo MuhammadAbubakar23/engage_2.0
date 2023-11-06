@@ -61,67 +61,57 @@ export class ShiftReportComponent implements OnInit {
     { id: 3, name: 'Iftar' },
     { id: 4, name: 'Sehr' },
   ];
-
+channelIcon:any[]=[
+  {fbicone:'fa-brands fa-facebook-f',class:'iconButton medium navyBg'},
+  {twicone:'fa-brands fa-twitter',class:'iconButton medium twltte-bg ice' },
+  {youtubeicone:'fa-brands fa-youtube',class:'iconButton medium radicalBg'},
+  {linkicone:'fa-brands fa-linkedin',class:'iconButton medium linkedinBg'},
+  {whatsappicone:'fab fa-whatsapp',class:'iconButton medium mintBg'},
+  {playicone:'fa-brands fa-google-play',class:'iconButton medium darkorangeBg'}
+]
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
+  convertedintoArray: any;
+  graphdate: any[] = [];
+  noData: boolean = false;
   constructor(
     private hs: HeaderService,
     private datePipe: DatePipe,
     private commandataService: CommonDataService,
-    private SpinnerService: NgxSpinnerService,
-    private stor: StorageService
+    private stor:StorageService,
+    private SpinnerService: NgxSpinnerService
   ) {}
   ngOnInit(): void {
-
-    const menu = this.stor.retrive('Tags', 'O').local;
-      menu.forEach((item:any) => {
-        if(item.name == "Tags"){
-          item.subTags.forEach((parentTagObj:any) => {
-            parentTagObj.subTags.forEach((singleTagObj:any) => {
-              if(!this.keywordslist.includes(singleTagObj)){
-                this.keywordslist.push(singleTagObj)
-                }
-            });
-          });
-        }
-      });
-
-
     this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split('T')[0];
     const obj = { title: 'Shift Report', url: 'analytics/shift-report' };
     this.hs.setHeader(obj);
     this.getShfitReport();
-    // this.getAlltags();
+    this.getAlltags();
     this.getAgentsTeamList();
-  this.calculateDateRange()
+  
   }
 keywordslist:any[]=[]
-  // getAlltags() {
-  //   this.commandataService.GetAllTags().subscribe((res: any) => {
-  //     debugger
-  //     console.log('All tags===>', res);
-  //     this.tagsList = res;
-  //     this.tagsList.forEach((xyz:any)=>{
-  //       xyz.subTags.forEach((abc:any)=>{
-  //         this.keywordslist.push(abc)
-  //       })
-  //     })
-  //   });
-  // }
-  convertedintoArray: any;
-  graphdate: any[] = [];
-  noData: boolean = false;
- 
-  calculateDateRange() {
-   
+  getAlltags() {
+    this.commandataService.GetAllTags().subscribe((res: any) => {
+      const menu = this.stor.retrive('Tags', 'O').local;
+      menu.forEach((item:any) => {
+        debugger
+        if(item.name == "Tags"){
+          item.subTags.forEach((parentags:any) => {
+            parentags.subTags.forEach((singleTagObj:any)=>{
+                 if(!this.keywordslist.includes(singleTagObj)){
+            this.keywordslist.push(singleTagObj)
+            }
+            })
+          });
+        }
+
+      });
+    });
   }
-  getAllTagsList(){
-    // this.commandataService.GetAllTags().subscribe((res:any)=>{
-    //   this.tagsList=res
-    // })
-  }
+
   
   getShfitReport() {
     this.allDates = [];
@@ -148,29 +138,7 @@ keywordslist:any[]=[]
       const timeDifference = endDateObj.getTime() - startDateObj.getTime();
       this.daysDifference=timeDifference / (1000 * 3600 * 24)
     }
-    // find date
-    // if (this.startDate && this.endDate) {
-    //   const start = new Date(this.startDate);
-    //   const end = new Date(this.endDate);
-    //   const currentDate = new Date();
-   
   
-    //   if (start < currentDate) {
-    //     start.setDate(currentDate.getDate() + 1);
-    //   }
-  
-    //   while (start <= end) {
-    //     const currentDateISO = start.toISOString().split('T')[0];
-    //     this.allDates.push(currentDateISO);
-    //     start.setDate(start.getDate() + 1);
-    //   }
-  
-    
-    // }
-    
-//  if(this.endDate<=this.startDate){
-//   this.allDates.push(this.startDate)
-//  }
          this.allTotalCountInsta = [];
           this.allTotalCountLink = [];
           this.allTotalCountsfb = [];
@@ -199,19 +167,20 @@ keywordslist:any[]=[]
        
         this.shiftChannelData.forEach((data: any) => {
           this._legend.push(data.platform)
-        
+
     
           data.dateWise.forEach((item: any) => {
             if (!this.allDates.includes(item.date.split('T')[0])) {
-              this.allDates.push(item.date.split('T')[0]);
-              
-              
-              if (data.platform == 'Facebook') {
+              this.allDates.push(item.date.split('T')[0]); 
+            }
+            if (data.platform == "Facebook") {
                 
-                data.dateWise.forEach((singleItem: any) => {
-                  this.allTotalCountsfb.push(singleItem.totalCount);
-                });
-              }
+              data.dateWise.forEach((singleItem: any) => {
+                  // if (!this.allDates.includes(item.date.split('T')[0])) {
+            //   this.allDates.push(item.date.split('T')[0]); 
+            // }
+                this.allTotalCountsfb.push(singleItem.totalCount);
+              });
             }
             if (data.platform == 'WhatsApp') {
               data.dateWise.forEach((item: any) => {
@@ -265,7 +234,7 @@ keywordslist:any[]=[]
 
   searchtags(event: any) {
     this.tags = event.target.value;
-    // this.getAlltags();
+    this.getAlltags();
   }
   getByShifTime(event: any) {
     this.shiftime = event.target.value;
@@ -273,7 +242,7 @@ keywordslist:any[]=[]
   }
 
   getCharts() {
-    debugger
+
     var chartDom = document.getElementById('shiftReport')
     var myChart = echarts.init(chartDom);
     var option;

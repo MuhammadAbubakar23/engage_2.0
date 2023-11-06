@@ -40,7 +40,8 @@ export class InboxMenuComponent implements OnInit {
 
     ngOnInit(): void {
       this.flag = this.router.url.split('/')[2];
-      this.Subscription = this.unrespondedCountService
+      if(this.flag == 'focused'){
+        this.Subscription = this.unrespondedCountService
         .getUnRespondedCount()
         .subscribe((res) => {
           this.UnResponded = res.totalCount;
@@ -127,6 +128,8 @@ export class InboxMenuComponent implements OnInit {
       );
 
       this.getAllChannelsUnrespondedCounts();
+      }
+      
 
     }
 

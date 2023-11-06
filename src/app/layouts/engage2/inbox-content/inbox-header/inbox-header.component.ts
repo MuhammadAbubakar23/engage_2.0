@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { FiltersDto } from 'src/app/shared/Models/FiltersDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
   selector: 'inbox-header',
@@ -12,13 +12,24 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 export class InboxHeaderComponent implements OnInit {
 
   flag:string='';
-  constructor(private sharedService: SharedService,
+  inboxHeader:any[]=[];
+  constructor(private stor: StorageService,
     private commonService: CommonDataService,
     private _route: Router) { }
 
   ngOnInit(): void {
     this.flag = this._route.url.split('/')[2];
     // this.getAllConversationCount();
+    const headerMenu = this.stor.retrive('Tags', 'O').local;
+      headerMenu.forEach((item:any) => {
+        if(item.name == "Engage Header"){
+          item.subTags.forEach((singleInboxHeaderMenu:any) => {
+            if(!this.inboxHeader.includes(singleInboxHeaderMenu)){
+            this.inboxHeader.push(singleInboxHeaderMenu)
+            }
+          });
+        }
+      });
   }
 
   filterDto = new FiltersDto();

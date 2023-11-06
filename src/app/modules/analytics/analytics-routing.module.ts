@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AnalyticsComponent } from './analytics.component';
-import { EchartsTestingComponent } from './components/echarts-testing/echarts-testing.component';
 
 
 const routes: Routes = [
@@ -106,6 +105,10 @@ const routes: Routes = [
     {
       path:'instagram-report',
       loadComponent:()=>import('./components/instagram-report/instagram-report.component').then(c=>c.InstagramReportComponent)
+    },
+    {
+      path:'tag-report',
+      loadComponent:()=>import('./components/tag-report/tag-report.component').then(c=>c.TagReportComponent)
     }
   ]
   }

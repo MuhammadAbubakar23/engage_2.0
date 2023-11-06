@@ -79,23 +79,23 @@
                                                                         <small
                                                                             *ngIf="whatsappMsg.spam == true; else notSpam">Spam
                                                                             <i class="far fa-chevron-down ms-2"
-                                                                                *ngIf="flag == 'focused' || flag == 'assigned-to-me'"></i>
+                                                                                *ngIf="flag == 'focused' || flag == 'assigned_to_me'"></i>
                                                                         </small>
                                                                         <ng-template
                                                                             #notSpam>{{whatsappMsg.queryStatus}}
                                                                             <i class="far fa-chevron-down ms-2"
-                                                                                *ngIf="(flag == 'focused' || flag == 'assigned-to-me') && whatsappMsg.queryStatus != 'Completed'"></i>
+                                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && whatsappMsg.queryStatus != 'Completed'"></i>
                                                                         </ng-template>
                                                                     </button>
                                                                     <ul class="dropdown-menu custom-dropdown"
                                                                         aria-labelledby="dropdownMenuButton1"
-                                                                        *ngIf="(flag == 'focused' || flag == 'assigned-to-me') && whatsappMsg.queryStatus != 'Completed'">
+                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me') && whatsappMsg.queryStatus != 'Completed'">
 
                                                                         <li>
                                                                             <a class="dropdown-item"
                                                                                 *ngIf="whatsappMsg.queryStatus != 'Responded'"
                                                                                 (click)="whatsappStatus(whatsappMsg.id, 'WM')">Read</a>
-                                                                            <a class="dropdown-item"
+                                                                            <!-- <a class="dropdown-item"
                                                                                 *ngIf="whatsappMsg.starred == true; else notStarred"
                                                                                 (click)="starMessage(whatsappMsg.id, false)">Remove
                                                                                 Star from Message</a>
@@ -103,7 +103,7 @@
                                                                                 <a class="dropdown-item"
                                                                                     (click)="starMessage(whatsappMsg.id, true)">Star
                                                                                     Message</a>
-                                                                            </ng-template>
+                                                                            </ng-template> -->
 
                                                                             <!-- <a class="dropdown-item"
                                                                                 *ngIf="whatsappMsg.spam == true; else notSpamBtn"
@@ -214,19 +214,19 @@
 
                                                         <p class="card-text nignt">{{whatsappMsg.message}}</p>
                                                         <div class="tags" *ngFor="let tag of whatsappMsg.tags">
-                                                            <span (click)="removeTag(tag.id, whatsappMsg.id)"
+                                                            <span (click)="removeTagFromFeed(tag.feedId, tag.name)"
                                                                 class="badge rounded-pill whatsapp tag tag1 selected">{{tag.name}}</span>
 
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                         <div class="tags" *ngIf="whatsappMsg.sentiment">
                                                             <span
-                                                                class="badge rounded-pills whatsapp tag tag1 selected">{{whatsappMsg.sentiment?.text}}</span>
+                                                                class="badge rounded-pill whatsapp tag tag1 selected">{{whatsappMsg.sentiment?.name}}</span>
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                     </div>
                                                     <div class="message-bottom"
-                                                        *ngIf="this.flag == 'focused' || this.flag == 'assigned-to-me'">
+                                                        *ngIf="this.flag == 'focused' || this.flag == 'assigned_to_me'">
                                                         <div class="row">
                                                             <div class="col-lg-12 ps-4 d-flex align-items-center">
                                                                 <div
@@ -257,25 +257,7 @@
                                                                                             <h6>Tags
                                                                                             </h6>
                                                                                         </div>
-                                                                                        <!-- <a class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
-                                                                                        (click)="closeTagListDropdown()"
-                                                                                            id="dropdownMenuButton3" data-bs-toggle="dropdown"
-                                                                                            aria-expanded="false">
-                                                                                            <i class="fal fa-times silver"></i>
-                                                                                        </a> -->
                                                                                     </div>
-                                                                                    <!-- <form class="custom-searchbar">
-                                                                                        <input
-                                                                                            class="form-control rounded-pill shadow-sm"
-                                                                                            
-                                                                                            placeholder="Search"
-                                                                                            aria-label="Search">
-                                                                                        <span class="btn searchbar-btn"
-                                                                                            type="submit">
-                                                                                            <i
-                                                                                                class="fal fa-search silver"></i>
-                                                                                        </span>
-                                                                                    </form> -->
                                                                                 </li>
                                                                                 <li class="dropend">
                                                                                     <div *ngFor="let tag of TagsList"
@@ -319,29 +301,24 @@
                                                                                                     <div
                                                                                                         class="list-group list-group-flush">
                                                                                                         <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                            (click)="insertTags(keyword.id, whatsappMsg.id)"
+                                                                                                            (click)="insertTagsForFeed(whatsappMsg.id, keyword.name)"
                                                                                                             [ngClass]="activeTag==true?'active':''"
-                                                                                                            *ngFor="let keyword of tag.keywordList | filter: searchText">
-                                                                                                            <div
-                                                                                                                class="list-down-icon">
-                                                                                                                <span
-                                                                                                                    class="btn iconButton iconHover medium">
-                                                                                                                    <i
-                                                                                                                        class="fal fa-tag coal"></i>
+                                                                                                            *ngFor="let keyword of tag.subTags | filter: searchText">
+                                                                                                            <div class="list-down-icon">
+                                                                                                                <span class="btn iconButton iconHover medium">
+                                                                                                                    <i class="fal fa-tag coal"></i>
                                                                                                                 </span>
                                                                                                             </div>
                                                                                                             <div
                                                                                                                 class="w-100 list-txt">
                                                                                                                 <div
                                                                                                                     class="d-flex w-100 justify-content-between">
-                                                                                                                    <h6
-                                                                                                                        class="mb-1 darkblue">
+                                                                                                                    <h6 class="mb-1 darkblue">
                                                                                                                         {{keyword.name}}
                                                                                                                     </h6>
                                                                                                                 </div>
                                                                                                             </div>
-                                                                                                            <small
-                                                                                                                *ngIf="keyword.id == tag.id">
+                                                                                                            <small *ngIf="keyword.id == tag.id">
                                                                                                                 <i [ngClass]="checkTag==true?'fa-check-circle':''"
                                                                                                                     class="fal sky"></i>
                                                                                                             </small>
@@ -377,15 +354,13 @@
                                                                                     <div class="scroll-content">
                                                                                         <div class="list-group list-group-flush"
                                                                                             *ngFor="let sentiment of Sentiments">
-                                                                                            <a (click)="insertSentiment(whatsappMsg.id, sentiment.name, 'WM')"
-                                                                                                class="list-group-item d-flex level1Btn ">
+                                                                                            <a class="list-group-item d-flex level1Btn "
+                                                                                                (click)="insertSentimentForFeed(whatsappMsg.id, sentiment.name)">
                                                                                                 <div
                                                                                                     class="list-down-icon">
                                                                                                     <span
-                                                                                                        class="btn iconButton iconHover medium">
-                                                                                                        <i
-                                                                                                            class={{sentiment.icon}}></i>
-                                                                                                    </span>
+                                                                                                        class="btn iconButton iconHover medium"
+                                                                                                        [innerHTML]="sentiment.icon"></span>
                                                                                                 </div>
                                                                                                 <div
                                                                                                     class="w-100 list-txt">
@@ -397,11 +372,7 @@
                                                                                                         </h6>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                                <!-- <small>
-                                                                                            <i class="fal fa-check-circle sky"></i>
-                                                                                        </small> -->
                                                                                             </a>
-
 
                                                                                         </div>
                                                                                     </div>
@@ -520,8 +491,7 @@
                                                                         <span>by: <h6 class="d-inline fw-bold charcoal">
                                                                                 Agent Name </h6>
                                                                         </span>
-                                                                        <span>Complaint Id <a class="sky"
-                                                                                href="">FP-325687</a>
+                                                                        <span>Complaint Id <a class="sky">FP-325687</a>
                                                                         </span>
                                                                     </small>
                                                                 </div>
@@ -587,7 +557,7 @@
 
 </div>
 
-<div class="msgTypingField shadow-lg" *ngIf="this.flag == 'focused' || this.flag == 'assigned-to-me'">
+<div class="msgTypingField shadow-lg" *ngIf="this.flag == 'focused' || this.flag == 'assigned_to_me'">
     <div *ngFor="let whatsapp of WhatsappData">
         <div class="attachment-block" [ngClass]="isAttachment == true?'':'d-none'">
             <div class="card-body p-3" *ngFor="let image of ImageName; let i = index" style="margin-right: 10px;">
@@ -626,7 +596,7 @@
                     <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></button>
             </div>
             <!-- only for morinaga client -->
-            <!-- <div class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
+            <div class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
                 <button class="iconButton small notification iconHover" id="surveyForms" data-bs-toggle="dropdown"
                     data-bs-auto-close="outside" data-bs-original-title="Survey Forms">
                     <span class="iconButton small btn mx-2">
@@ -662,7 +632,7 @@
                         </li>
                     </ul>
                 </ul>
-            </div> -->
+            </div>
             <div class="form-floating textarea-field">
                 <textarea formControlName="text" class="form-control auto" rows="1" id="text"
                     placeholder="Write a response here" [(ngModel)]="text" style="height: 50px" #textarea></textarea>
@@ -730,7 +700,7 @@
                 <div class="collapse-toggle-card">
                     <div class="list-group list-group-flush">
                         <!-- From DB -->
-                         <div class="collapse-wrap mx-3" id="qr-ques1"
+                        <!-- <div class="collapse-wrap mx-3" id="qr-ques1"
                             *ngFor="let qr of QuickReplies | quickReplySearchFilter: quickReplySearchText">
                              <div class="list-group list-group-flush mb-4 ms-4 ps-1">
                                 <div class="form-check list-group-item theme-check">
@@ -741,9 +711,9 @@
                                     </label>
                                 </div> 
                             </div> 
-                            </div>
+                            </div> -->
                         <!-- Hard Coded only for Morinaga-->
-                        <!-- <div class="list-group list-group-flush"
+                        <div class="list-group list-group-flush"
                             *ngFor="let qr of QuickRepliesHardCoded | quickReplySearchFilter: quickReplySearchText; let i = index">
                             <a class="list-group-item d-flex align-items-center menu_bar_collapse"
                                 (click)="openQuickReplyDropdown(i)" data-bs-toggle="collapse" role="button"
@@ -769,12 +739,12 @@
                                         *ngFor="let msg of qr.Message">
                                         <input class="form-check-input" type="radio" name="flexRadioDefault"
                                             id={{msg.id}} #radioInput>
-                                        <label class="form-check-label" (click)="sendQuickReply(msg.id)" for={{msg.id}}
-                                            [innerHTML]="msg.text"></label>
+                                        <label class="form-check-label" (click)="sendHardCodedQuickReply(msg.id)"
+                                            for={{msg.id}} [innerHTML]="msg.text"></label>
                                     </div>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </div>
             </div>

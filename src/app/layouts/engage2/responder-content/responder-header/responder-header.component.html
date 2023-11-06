@@ -23,77 +23,17 @@
                     aria-labelledby="dropdownMenuButton1" [ngClass]="showMoreOptions == true?'show':''">
                     <li>
                         <ul>
-                            <li *ngFor="let status of profileStatus">
-                                <a class="dropdown-item active" id="assignToList">
-                                    {{status.name}}
-                                </a>
-                            </li>
+                            
                             <li>
-                                <a class="dropdown-item active" (click)="showTeamList()" id="assignToList">
+                                <a class="dropdown-item" (click)="showTeamList()" id="assignToList">
                                     Assign to...
                                 </a>
                             </li>
-                            <!-- <li>
-                                <a class="dropdown-item">
-                                    Mark as unread
+                            <li class="important-option mb-0" *ngFor="let status of profileStatus">
+                                <a class="dropdown-item" id="assignToList" (click)="InsertTagInProfile('black_list', 'Tag', userInfo.id)">
+                                    {{status.name}}
                                 </a>
                             </li>
-                            <li>
-                                <a class="dropdown-item">
-                                    Print..
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item">
-                                    Create quick rules
-                                </a>
-                            </li> -->
-                            <!-- <li class="important-option mb-0" *ngIf="spamStatus == false" (click)="Spam(userInfo.id)">
-                                <a class="dropdown-item">
-                                    Mark as spam
-                                </a>
-                            </li> 
-                            <li class="important-option mb-0" *ngIf="spamStatus == true" (click)="RemoveSpam(userInfo.id)">
-                                <a class="dropdown-item">
-                                    Remove from Spam
-                                </a>
-                            </li> -->
-                            <!-- <li>
-                                <a class="dropdown-item">
-                                    Report phishing
-                                </a>
-                            </li> -->
-                            <li class="important-option mb-0" *ngIf="blockStatus == false" (click)="Block(userInfo.id)">
-                                <a class="dropdown-item">
-                                    Block sender
-                                </a>
-                            </li>
-                            <li class="important-option mb-0" *ngIf="blockStatus == true" (click)="Unblock(userInfo.id)">
-                                <a class="dropdown-item">
-                                    Unblock sender
-                                </a>
-                            </li>
-                            <!-- <li class="important-option mb-0">
-                                <a class="dropdown-item">
-                                    Copy conversation ID
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item">
-                                    Copy conversation link
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item">
-                                    View conversation details
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item">
-                                    View in external window
-                                </a>
-                            </li> -->
-
                         </ul>
                     </li>
                 </ul>
@@ -164,9 +104,9 @@
                     aria-labelledby="dropdownMenuButton1" [ngClass]="showMoreOptions == true?'show':''">
                     <li>
                         <ul>
-                            <li class="mb-0" (click)="Unblock(userInfo.id)">
-                                <a class="dropdown-item">
-                                    Unblock sender
+                            <li class="mb-0" *ngFor="let status of profileStatus">
+                                <a class="dropdown-item" id="assignToList" (click)="RemoveTagInProfile('black_list', 'Tag', userInfo.id)">
+                                    {{'Un'+status.name}}
                                 </a>
                             </li>
                         </ul>
@@ -307,19 +247,19 @@
 
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li *ngFor="let status of finalStatus">
-                    <a class="dropdown-item active" id="assignToList">
+                    <a class="dropdown-item" id="assignToList" (click)="completeQuery(status.slug)">
                         {{status.name}}
                     </a>
                 </li>
                 <!-- <li *ngIf="this.teamPermissions.priviledge.includes('__qrycndrft__')">
                     <a class="dropdown-item mark-as-draftbtn" (click)="minimizeChat()">Draft</a>
                 </li> -->
-                <li>
+                <!-- <li>
                     <a class="dropdown-item" (click)="markAllAsRead()">Read All</a>
-                </li>
+                </li> 
                 <li>
-                    <a class="dropdown-item" (click)="markAsComplete(userInfo?.platform, userInfo?.userId)">Save</a>
-                </li>
+                    <a class="dropdown-item" (click)="markAsComplete()">Save</a>
+                </li> -->
             </ul>
         </div>
     </div>

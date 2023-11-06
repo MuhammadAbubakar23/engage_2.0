@@ -239,14 +239,14 @@
                                                             </div>
                                                             <div class="tags">
                                                                 <span *ngFor="let tag of email.tags"
-                                                                    (click)="removeTag(tag.id, email.id, email.contentType)"
+                                                                    (click)="removeTagFromFeed(tag.feedId, tag.name)"
                                                                     class="badge rounded-pill email tag tag1 selected"
                                                                     style="margin-right:5px">{{tag.name}}</span>
                                                             </div>
                                                             <!-- For Sentiment Pills -->
                                                             <div class="tags" *ngIf="email.sentiment">
                                                                 <span
-                                                                    class="badge rounded-pill email tag tag1 selected">{{email.sentiment?.text}}</span>
+                                                                    class="badge rounded-pill email tag tag1 selected">{{email.sentiment?.name}}</span>
                                                             </div>
                                                             <!-- For Sentiment Pills -->
                                                             <button
@@ -339,7 +339,7 @@
                                                                                             aria-label="Search">
                                                                                         <span
                                                                                             class="btn searchbar-btn"
-                                                                                            type="submit">
+                                                                                            type="submit">insertTagsForFeed
                                                                                             <i
                                                                                                 class="fal fa-search silver"></i>
                                                                                         </span>
@@ -353,7 +353,7 @@
                                                                                             <div
                                                                                                 class="list-group list-group-flush">
                                                                                                 <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                    (click)="insertTags(keyword.id, email.id, email.contentType)"
+                                                                                                    (click)="insertTagsForFeed(email.id, keyword.name)"
                                                                                                     [ngClass]="activeTag==true?'active':''"
                                                                                                     *ngFor="let keyword of tag.keywordList | filter: searchText">
                                                                                                     <div
@@ -407,13 +407,10 @@
                                                                                 <div class="scroll-content">
                                                                                     <div class="list-group list-group-flush"
                                                                                         *ngFor="let sentiment of Sentiments">
-                                                                                        <a (click)="insertSentiment(email.id, sentiment.name, email.contentType)"
-                                                                                            class="list-group-item d-flex level1Btn ">
+                                                                                        <a class="list-group-item d-flex level1Btn "
+                                                                                            (click)="insertSentimentForFeed(email.id, sentiment.name)">
                                                                                             <div class="list-down-icon">
-                                                                                                <span
-                                                                                                    class="btn iconButton iconHover medium">
-                                                                                                    <i
-                                                                                                        class={{sentiment.icon}}></i>
+                                                                                                <span class="btn iconButton iconHover medium" [innerHTML]="sentiment.icon">
                                                                                                 </span>
                                                                                             </div>
                                                                                             <div class="w-100 list-txt">
@@ -425,11 +422,7 @@
                                                                                                     </h6>
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <!-- <small>
-                                                                                <i class="fal fa-check-circle sky"></i>
-                                                                            </small> -->
                                                                                         </a>
-
 
                                                                                     </div>
                                                                                 </div>
@@ -780,10 +773,10 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                     <li>
-                                                        <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        <a class="dropdown-item" >Dropdown link</a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        <a class="dropdown-item" >Dropdown link</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -820,10 +813,10 @@
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                     <li>
-                                                        <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        <a class="dropdown-item" >Dropdown link</a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item" href="#">Dropdown link</a>
+                                                        <a class="dropdown-item" >Dropdown link</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -837,11 +830,11 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                                 <li>
-                                                    <a class="dropdown-item" href="#">Dropdown
+                                                    <a class="dropdown-item" >Dropdown
                                                         link</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" href="#">Dropdown
+                                                    <a class="dropdown-item" >Dropdown
                                                         link</a>
                                                 </li>
                                             </ul>
@@ -868,10 +861,10 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                             <li>
-                                <a class="dropdown-item" href="#">Dropdown link</a>
+                                <a class="dropdown-item" >Dropdown link</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Dropdown link</a>
+                                <a class="dropdown-item" >Dropdown link</a>
                             </li>
                         </ul>
                     </div> -->

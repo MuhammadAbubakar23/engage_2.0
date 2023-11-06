@@ -38,6 +38,7 @@ import { ApplySentimentService } from 'src/app/services/ApplySentimentService/ap
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
 import { Router } from '@angular/router';
 import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
   selector: 'app-instagram',
@@ -86,7 +87,7 @@ export class InstagramComponent implements OnInit {
   queryStatus: any;
   searchText: string = '';
 
-  TagsList: any;
+  TagsList: any[]=[];
   Keywords: any[] = [];
   agentName = localStorage.getItem('agentName');
 
@@ -134,16 +135,44 @@ export class InstagramComponent implements OnInit {
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService: GetQueryTypeService,
     private router: Router,
-    private userInfoService: UserInformationService
+    private userInfoService: UserInformationService,
+    private stor: StorageService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
     //   this.getInstagramData();
     // });
   }
-
+  messagesStatus:any[]=[];
+  Sentiments:any[]=[];
   ngOnInit(): void {
     this.flag = this.router.url.split('/')[2];
+
+    const menu = this.stor.retrive('Tags', 'O').local;
+      menu.forEach((item:any) => {
+        if(item.name == "Tags"){
+          item.subTags.forEach((singleTagObj:any) => {
+            if(!this.TagsList.includes(singleTagObj)){
+            this.TagsList.push(singleTagObj)
+            }
+          });
+        }
+        if(item.name == "Messages Status"){
+          item.subTags.forEach((messagesStatusObj:any) => {
+            if(!this.messagesStatus.includes(messagesStatusObj)){
+            this.messagesStatus.push(messagesStatusObj)
+            }
+          });
+        }
+        if(item.name == "Sentiments"){
+          item.subTags.forEach((sentimentObj:any) => {
+            if(!this.Sentiments.includes(sentimentObj)){
+            this.Sentiments.push(sentimentObj)
+            }
+          });
+        }
+      });
+
     this.criteria = {
       property: 'createdDate',
       descending: true,
@@ -152,12 +181,12 @@ export class InstagramComponent implements OnInit {
 
     this.getInstagramData();
     this.getInstagramMessages();
-    this.getTagList();
+    // this.getTagList();
     this.quickReplyList();
 
     this.Subscription = this.addTagService.receiveTags().subscribe((res) => {
       this.addTags = res;
-      this.addTagDataListner();
+      this.addTagDataListener();
     });
     this.Subscription = this.removeTagService.receiveTags().subscribe((res) => {
       this.removeTags = res;
@@ -188,7 +217,7 @@ export class InstagramComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned-to-me') {
+        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
           // this.totalUnrespondedCmntCountByCustomer = res.contentCount.unrespondedCount;
           if (res.contentCount.contentType == 'IC') {
             this.totalUnrespondedCmntCountByCustomer =
@@ -211,11 +240,11 @@ export class InstagramComponent implements OnInit {
       this.updateTicketId(res);
     });
 
-    this.Subscription = this.applySentimentService
-      .receiveSentiment()
-      .subscribe((res) => {
-        this.applySentimentListner(res);
-      });
+    // this.Subscription = this.applySentimentService
+    //   .receiveSentiment()
+    //   .subscribe((res) => {
+    //     this.applySentimentListner(res);
+    //   });
   }
 
   commentDto = new commentsDto();
@@ -693,16 +722,13 @@ export class InstagramComponent implements OnInit {
     });
   }
 
-  insertTagsForFeed(id: any, comId: any, type: any) {
-    if (type == 'IC') {
-      this.insertTagsForFeedDto.feedId = comId.toString();
-      this.insertTagsForFeedDto.tagId = id;
-      this.insertTagsForFeedDto.feedType = type;
-      this.insertTagsForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
+  insertTagsForFeed(comId: number, tagName: string) {
+    this.insertTagsForFeedDto.feedId = comId;
+    this.insertTagsForFeedDto.tagName = tagName;
+    this.insertTagsForFeedDto.type = 'Tag';
+    this.insertTagsForFeedDto.platform = 'Instagram';
 
-      this.InstagramData.forEach((abc: any) => {
+      this.InstagramData?.forEach((abc: any) => {
         abc.comments.forEach((comment: any) => {
           if (comment.id == comId) {
             if (comment.tags.length == 0) {
@@ -710,20 +736,18 @@ export class InstagramComponent implements OnInit {
                 .InsertTag(this.insertTagsForFeedDto)
                 .subscribe((res: any) => {
                   this.reloadComponent('ApplyTag');
-
                   this.activeTag = true;
                   this.checkTag = true;
                 });
             } else if (comment.tags.length > 0) {
-              const value = comment.tags.find((x: any) => x.id == id);
+              const value = comment.tags.find((x: any) => x.name == tagName);
               if (value != null || value != undefined) {
-                this.removeTagFromFeed(id, comId, type);
+                this.removeTagFromFeed(comId, tagName);
               } else {
                 this.commondata
                   .InsertTag(this.insertTagsForFeedDto)
                   .subscribe((res: any) => {
                     this.reloadComponent('ApplyTag');
-
                     this.activeTag = true;
                     this.checkTag = true;
                   });
@@ -732,30 +756,21 @@ export class InstagramComponent implements OnInit {
           }
         });
       });
-    }
-    if (type == 'IM') {
-      this.insertTagsForFeedDto.feedId = comId.toString();
-      this.insertTagsForFeedDto.tagId = id;
-      this.insertTagsForFeedDto.feedType = type;
-      this.insertTagsForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
 
-      this.InstagramMessages.forEach((msg: any) => {
+      this.InstagramMessages?.forEach((msg: any) => {
         if (msg.id == comId) {
           if (msg.tags.length == 0) {
             this.commondata
               .InsertTag(this.insertTagsForFeedDto)
               .subscribe((res: any) => {
                 this.reloadComponent('ApplyTag');
-
                 this.activeTag = true;
                 this.checkTag = true;
               });
           } else if (msg.tags.length > 0) {
-            const value = msg.tags.find((x: any) => x.id == id);
+            const value = msg.tags.find((x: any) => x.name == tagName);
             if (value != null || value != undefined) {
-              this.removeTagFromFeed(id, comId, type);
+              this.removeTagFromFeed(comId, tagName);
             } else {
               this.commondata
                 .InsertTag(this.insertTagsForFeedDto)
@@ -768,42 +783,26 @@ export class InstagramComponent implements OnInit {
           }
         }
       });
-    }
   }
 
-  removeTagFromFeed(id: any, comId: any, type: any) {
-    if (type == 'IC') {
-      this.insertTagsForFeedDto.feedId = comId.toString();
-      this.insertTagsForFeedDto.tagId = id;
-      this.insertTagsForFeedDto.feedType = type;
-      this.insertTagsForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
+  removeTagFromFeed(feedId: number, tagName: any) {
+    if (
+      this.flag == 'focused' ||
+      this.flag == 'assigned_to_me'
+    ) {
+        this.insertTagsForFeedDto.tagName = tagName;
+        this.insertTagsForFeedDto.feedId = feedId;
+        this.insertTagsForFeedDto.type = 'Tag';
+        this.insertTagsForFeedDto.platform = 'Instagram';
 
-      this.commondata
-        .RemoveTag(this.insertTagsForFeedDto)
-        .subscribe((res: any) => {
-          this.reloadComponent('RemoveTag');
+        this.commondata
+          .RemoveTag(this.insertTagsForFeedDto)
+          .subscribe((res: any) => {
+            this.reloadComponent('RemoveTag');
 
-          this.activeTag = false;
-          this.checkTag = false;
-        });
-    }
-    if (type == 'IM') {
-      this.insertTagsForFeedDto.tagId = id;
-      this.insertTagsForFeedDto.feedId = comId.toString();
-      this.insertTagsForFeedDto.feedType = type;
-      this.insertTagsForFeedDto.userId = Number(
-        localStorage.getItem('agentId')
-      );
-
-      this.commondata
-        .RemoveTag(this.insertTagsForFeedDto)
-        .subscribe((res: any) => {
-          this.reloadComponent('RemoveTag');
-          this.activeTag = false;
-          this.checkTag = false;
-        });
+            this.activeTag = false;
+            this.checkTag = false;
+          });
     }
   }
 
@@ -825,38 +824,17 @@ export class InstagramComponent implements OnInit {
     }
   }
 
-  Sentiments = [
-    {
-      id: 1,
-      name: 'Positive',
-      icon: 'fal fa-smile',
-    },
-    {
-      id: 2,
-      name: 'Neutral',
-      icon: 'fal fa-meh-blank',
-    },
-    {
-      id: 3,
-      name: 'Negative',
-      icon: 'fal fa-frown',
-    },
-  ];
 
-  insertSentimentForFeed(feedId: any, sentimenName: any, type: any) {
-    this.insertSentimentForFeedDto.feedId = feedId.toString();
-    this.insertSentimentForFeedDto.sentiment = sentimenName;
-    this.insertSentimentForFeedDto.feedType = 'IM';
-    this.insertSentimentForFeedDto.userId = Number(
-      localStorage.getItem('agentId')
-    );
+  insertSentimentForFeed(comId: number, sentimenName: any) {
+    this.insertTagsForFeedDto.feedId = comId;
+    this.insertTagsForFeedDto.tagName = sentimenName;
+    this.insertTagsForFeedDto.type = 'Sentiment';
+    this.insertTagsForFeedDto.platform = 'Instagram';
 
-    this.commondata
-      .InsertSentiment(this.insertSentimentForFeedDto)
-      .subscribe((res: any) => {
+    this.commondata.InsertSentiment(this.insertTagsForFeedDto).subscribe((res: any) => {
         this.reloadComponent('Sentiment');
       });
-  }
+}
 
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
@@ -1035,41 +1013,44 @@ export class InstagramComponent implements OnInit {
   addTags: any;
   removeTags: any;
 
-  addTagDataListner() {
-    if (this.addTags.feedType == 'IC') {
-      this.InstagramData.forEach((post: any) => {
-        post.groupedComments.forEach((cmnt: any) => {
-          cmnt.items.forEach((singleCmnt: any) => {
-            if (singleCmnt.id == this.addTags.feedId) {
-              if (singleCmnt.tags.length == 0) {
-                singleCmnt.tags.push(this.addTags);
-              } else if (singleCmnt.tags.length > 0) {
-                const tag = singleCmnt.tags.find(
-                  (x: any) => x.id == this.addTags.feedId
-                );
-                if (tag != null || tag != undefined) {
-                  const index = singleCmnt.tags.indexOf(tag);
-                  if (index !== -1) {
-                    singleCmnt.tags.splice(index, 1);
-                  }
-                } else {
-                  if (!singleCmnt.tags.includes(this.addTags)) {
-                    singleCmnt.tags.push(this.addTags);
-                  }
+  addTagDataListener() {
+    this.InstagramData?.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == this.addTags.feedId) {
+            if(this.addTags.type == 'Tag'){
+            if (singleCmnt.tags.length == 0) {
+              singleCmnt.tags.push(this.addTags);
+            } else if (singleCmnt.tags.length > 0) {
+              const tag = singleCmnt.tags.find(
+                (x: any) => x.name == this.addTags.name
+              );
+              if (tag != null || tag != undefined) {
+                const index = singleCmnt.tags.indexOf(tag);
+                if (index !== -1) {
+                  singleCmnt.tags.splice(index, 1);
+                }
+              } else {
+                if (!singleCmnt.tags.includes(this.addTags)) {
+                  singleCmnt.tags.push(this.addTags);
                 }
               }
             }
-          });
+          }
+          if(this.addTags.type == 'Sentiment'){
+            singleCmnt.sentiment = this.addTags;
+          }
+          }
         });
       });
-    }
-    if (this.addTags.feedType == 'IM') {
-      this.InstagramMessages.forEach((msg: any) => {
-        if (msg.id == this.addTags.feedId) {
+    });
+    this.InstagramMessages?.forEach((msg: any) => {
+      if (msg.id == this.addTags.feedId) {
+        if(this.addTags.type == 'Tag'){
           if (msg.tags.length == 0) {
             msg.tags.push(this.addTags);
           } else if (msg.tags.length > 0) {
-            const tag = msg.tags.find((x: any) => x.id == this.addTags.feedId);
+            const tag = msg.tags.find((x: any) => x.name == this.addTags.tagName);
             if (tag != null || tag != undefined) {
               const index = msg.tags.indexOf(tag);
               if (index !== -1) {
@@ -1080,41 +1061,40 @@ export class InstagramComponent implements OnInit {
             }
           }
         }
-      });
-    }
-    this.changeDetect.detectChanges();
-  }
-  removeTagDataListener() {
-    if (this.removeTags.feedType == 'IC') {
-      this.InstagramData.forEach((post: any) => {
-        post.groupedComments.forEach((cmnt: any) => {
-          cmnt.items.forEach((singleCmnt: any) => {
-            if (singleCmnt.id == this.removeTags.feedId) {
-              var tag = singleCmnt.tags.find(
-                (x: any) => x.id == this.removeTags.tagId
-              );
-              const index = singleCmnt.tags.indexOf(tag);
-              if (index !== -1) {
-                singleCmnt.tags.splice(index, 1);
-              }
+        if(this.addTags.type == 'Sentiment'){
+          msg.sentiment = this.addTags;
+        }
+      }
+    });
+  this.changeDetect.detectChanges();
+}
+removeTagDataListener() {
+    this.InstagramData?.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == this.removeTags.feedId) {
+            var tag = singleCmnt.tags.find(
+              (x: any) => x.name == this.removeTags.tagName
+            );
+            const index = singleCmnt.tags.indexOf(tag);
+            if (index !== -1) {
+              singleCmnt.tags.splice(index, 1);
             }
-          });
+          }
         });
       });
-    }
-    if (this.removeTags.feedType == 'IM') {
-      this.InstagramMessages.forEach((msg: any) => {
-        if (msg.id == this.removeTags.feedId) {
-          var tag = msg.tags.find((x: any) => x.id == this.removeTags.tagId);
-          const index = msg.tags.indexOf(tag);
-          if (index !== -1) {
-            msg.tags.splice(index, 1);
-          }
+    });
+    this.InstagramMessages?.forEach((msg: any) => {
+      if (msg.id == this.removeTags.feedId) {
+        var tag = msg.tags.find((x: any) => x.name == this.removeTags.tagName);
+        const index = msg.tags.indexOf(tag);
+        if (index !== -1) {
+          msg.tags.splice(index, 1);
         }
-      });
-    }
-    this.changeDetect.detectChanges();
-  }
+      }
+    });
+  this.changeDetect.detectChanges();
+}
 
   updateQueryStatusDataListner() {
     this.InstagramData.forEach((post: any) => {
@@ -1505,23 +1485,23 @@ export class InstagramComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  applySentimentListner(res: any) {
-    this.InstagramData.forEach((post: any) => {
-      post.groupedComments.forEach((cmnt: any) => {
-        cmnt.items.forEach((singleCmnt: any) => {
-          if (singleCmnt.id == res.feedId) {
-            singleCmnt.sentiment = res;
-          }
-        });
-      });
-    });
-    this.InstagramMessages.forEach((msg: any) => {
-      if (msg.id == res.feedId) {
-        msg.sentiment = res;
-      }
-    });
-    this.changeDetect.detectChanges();
-  }
+  // applySentimentListner(res: any) {
+  //   this.InstagramData.forEach((post: any) => {
+  //     post.groupedComments.forEach((cmnt: any) => {
+  //       cmnt.items.forEach((singleCmnt: any) => {
+  //         if (singleCmnt.id == res.feedId) {
+  //           singleCmnt.sentiment = res;
+  //         }
+  //       });
+  //     });
+  //   });
+  //   this.InstagramMessages.forEach((msg: any) => {
+  //     if (msg.id == res.feedId) {
+  //       msg.sentiment = res;
+  //     }
+  //   });
+  //   this.changeDetect.detectChanges();
+  // }
 
   closeQuickResponseSidebar() {
     this.quickReplySearchText = '';

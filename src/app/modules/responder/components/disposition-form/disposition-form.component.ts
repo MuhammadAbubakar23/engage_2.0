@@ -26,10 +26,11 @@ export class DispositionFormComponent implements OnInit {
     private stor : StorageService) {
       
     this.dispositionForm = new FormGroup({
-      dispositionId: new FormControl('', Validators.required),
+      disposition: new FormControl('', Validators.required),
       reasonId: new FormControl(''),
       agentId: new FormControl(''),
       customerProfileId: new FormControl(''),
+      follow_Up_Date: new FormControl(null),
       comment: new FormControl('', Validators.required),
 
       user: new FormControl(''),
@@ -47,7 +48,7 @@ export class DispositionFormComponent implements OnInit {
   companyId = 0;
 
   ngOnInit(): void {
-    this.getDispositionTags();
+    // this.getDispositionTags();
 
     const menu = this.stor.retrive('Tags', 'O').local;
       menu.forEach((item:any) => {
@@ -71,9 +72,10 @@ export class DispositionFormComponent implements OnInit {
   submitDispositionForm(){
 
     this.dispositionFormDto = {
-      dispositionId: this.dispositionForm.value.dispositionId,
+      disposition: this.dispositionForm.value.disposition,
       reasonId: this.dispositionForm.value.reasonId,
       customerProfileId: this.customerProfileId,
+      follow_Up_Date: this.dispositionForm.value.follow_Up_Date,
       comment: this.dispositionForm.value.comment,
       completedData : 
         {

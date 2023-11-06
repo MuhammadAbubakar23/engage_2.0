@@ -86,22 +86,41 @@ export class FacebookReportComponent implements OnInit {
   totalfemaleCountK: any;
   totalmaleCount: number = 0;
   totalfemaleCount: number = 0;
+  totalPageLikes: any
+  lastTotalPageLikes: any
+  SumBehaivor: any
+  countPercentage: any
   totalmaleandfemalCount: any;
   malepersentage: any;
   femalepersentage: any;
   externalRefernalsName: any;
   totalMessagePostCommentsAndreplies: any;
   totalMessageAndrepliesCount: any;
-
+  totalEngagementMessage: any
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
+  RoundOFF: any
+  tppP: any
+  ltpPP: any
+  totalPublishSum: any
+  publishPercentage: any
+  TPL: any
+  TPC: any
+  TPS: any
+  totalSumAudienceEngagement: any
+  audiencePercentage: any
+  LTPL: any
+  LTPC: any
+  LTPS: any
+  LtotalSumAudienceEngagement: any
+  totalSumOfAudience:any
   constructor(
     private headerServices: HeaderService,
     private spinerServices: NgxSpinnerService,
     private datePipe: DatePipe,
     private commandataSerivecs: CommonDataService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const newObj = {
@@ -111,16 +130,15 @@ export class FacebookReportComponent implements OnInit {
     this.headerServices.setHeader(newObj);
     this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split('T')[0];
-    
+
     this.getAllfeacebookData();
     this.getTopFiveCustomers();
   }
-  date_pagination( days:number){
-    
-      let currentDate = new Date();
-      let prevDate = currentDate.setDate(currentDate.getDate() - days);
-      this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
-      this.enddate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
+  date_pagination(days: number) {
+    let currentDate = new Date();
+    let prevDate = currentDate.setDate(currentDate.getDate() - days);
+    this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
+    this.enddate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
     this.getAllfeacebookData()
   }
   getAllfeacebookData() {
@@ -131,6 +149,7 @@ export class FacebookReportComponent implements OnInit {
       let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 7);
       this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     } else if (this.startDate != '' && this.enddate != '') {
+      ;
       // const startDate = new Date(this.startDate);
       // const abc = startDate.setDate(startDate.getDate() - 1);
       // this.startDate = this.datePipe.transform(abc, 'YYYY-MM-dd') || '';
@@ -145,7 +164,7 @@ export class FacebookReportComponent implements OnInit {
         return;
       }
     }
-    
+
 
     let data = {
       pageId: '622038187854126',
@@ -183,6 +202,38 @@ export class FacebookReportComponent implements OnInit {
       this.spinerServices.hide();
 
       this.faecbookresponce = res;
+
+      // stats percentage count
+      this.lastTotalPageLikes = this.faecbookresponce.lastTotalPageLikes
+      this.totalPageLikes = this.faecbookresponce.totalPageLikes
+      this.SumBehaivor = this.lastTotalPageLikes + this.totalPageLikes
+      this.countPercentage = (this.totalPageLikes / this.SumBehaivor) * 100
+      this.RoundOFF = (Math.floor(this.countPercentage))
+
+      // publish percentage 
+      this.tppP = this.faecbookresponce.totalPublishedPagePosts
+      this.ltpPP = this.faecbookresponce.lastTotalPublishedPagePosts
+
+      this.totalPublishSum = this.tppP + this.ltpPP
+      this.publishPercentage = (this.tppP / this.totalPublishSum) * 100
+
+
+      // audience Engagement 
+      this.TPL = this.faecbookresponce.totalPostLikes
+      this.TPC = this.faecbookresponce.totalPostComments
+      this.TPS = this.faecbookresponce.totalPostShares
+      this.totalSumAudienceEngagement = this.TPL + this.TPC + this.TPS
+      this.LTPL = this.faecbookresponce.lastTotalPostLikes
+      this.LTPC = this.faecbookresponce.lastTotalPostComments
+      this.LTPS = this.faecbookresponce.lastTotalPostShares
+      this.LtotalSumAudienceEngagement = this.LTPL + this.LTPC + this.LTPS
+      this.totalSumOfAudience = this.LtotalSumAudienceEngagement + this.totalSumAudienceEngagement
+      this.audiencePercentage = (this.totalSumAudienceEngagement/this.totalSumOfAudience)*100
+
+
+
+      this.totalEngagementMessage = res?.agentReplies?.totalMessagesAndRepliesCount
+      console.log('total Count===>', this.totalEngagementMessage)
       //  SlA replies
       this.replieswithin = this.faecbookresponce.replyWithinTime;
       this.repliesAfter = this.faecbookresponce.replyAfterTime;
@@ -192,7 +243,7 @@ export class FacebookReportComponent implements OnInit {
       this.totalComments = res.totalPostComments;
       this.totalShares = res.totalPostShares;
 
-      this.totalengagement = this.totallikes + this.totalComments + this.totalShares + this.totalMessageAndrepliesCount;
+      this.totalengagement = this.totallikes + this.totalComments + this.totalShares + this.totalEngagementMessage;
       // net differnce of page likes and unlike
 
       this.numberofPagelikes = res.totalPageLikes;
@@ -270,9 +321,9 @@ export class FacebookReportComponent implements OnInit {
       // agentMessageData
       this.agentMessages = res.agentReplies;
       this.agentMessagesData = res.agentReplies;
-       
-        this.totalMessageAndrepliesCount = this.agentMessagesData.totalMessagesAndRepliesCount;
-        this.totalMessagePostCommentsAndreplies = this.agentMessagesData.totalPostCommentsAndReplies;
+
+      this.totalMessageAndrepliesCount = this.agentMessagesData.totalMessagesAndRepliesCount;
+      this.totalMessagePostCommentsAndreplies = this.agentMessagesData.totalPostCommentsAndReplies;
       // Publishin Behavior
       this.publishedPegePostSpan = res.publishedPagePostSpan;
       this.publishedPegePostSpan?.forEach((x: any) => {
@@ -318,7 +369,7 @@ export class FacebookReportComponent implements OnInit {
       this.malepersentage = (
         (this.totalmaleCount / this.totalmaleandfemalCount) * 100
       ).toFixed(2)
-      this.femalepersentage =(
+      this.femalepersentage = (
         (this.totalfemaleCount / this.totalmaleandfemalCount) * 100
       ).toFixed(2)
       // RecentPost
@@ -355,7 +406,7 @@ export class FacebookReportComponent implements OnInit {
     var option;
 
     option = {
-      color:['#fc1c72'],
+      color: ['#fc1c72'],
       tooltip: {
         trigger: 'axis',
       },
@@ -497,7 +548,7 @@ export class FacebookReportComponent implements OnInit {
     var option;
 
     option = {
-      
+
       tooltip: {
         trigger: 'axis',
       },
@@ -547,7 +598,7 @@ export class FacebookReportComponent implements OnInit {
     var option: EChartsOption;
 
     option = {
-      color:['#4867aa' , '#ffa800' , '#0095ff'],
+      color: ['#4867aa', '#ffa800', '#0095ff'],
       tooltip: {
         trigger: 'item',
       },
@@ -585,17 +636,12 @@ export class FacebookReportComponent implements OnInit {
     var option;
 
     option = {
-      color: ['#6441a5', '#e7edf1'],
+      color: ['#6441a5 ', '#e7edf1'],
       legend: {
-        data: ['Page Posts', 'Users Posts']
+        data: ['Page Posts', 'Users Posts'],
       },
       tooltip: {
         trigger: 'axis',
-      },
-      toolbox: {
-        feature: {
-          saveAsImage: {},
-        },
       },
       xAxis: {
         type: 'category',
@@ -610,6 +656,7 @@ export class FacebookReportComponent implements OnInit {
           data: this.publishedPegePostSpanCounts,
           type: 'bar',
           itemStyle: {
+
             borderRadius: 5,
           }
         },
@@ -635,7 +682,7 @@ export class FacebookReportComponent implements OnInit {
     var option: EChartsOption;
 
     option = {
-      color:['#6441a5','#fa0060', '#00d3a2'],
+      color: ['#b09ed1', '#ee438d', '#3ed3b3'],
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -716,7 +763,7 @@ export class FacebookReportComponent implements OnInit {
     var option: EChartsOption;
 
     option = {
-      color:['#6441a5','#fa0060' ],
+      color: ['#b09ed1', '#ee438d'],
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -792,16 +839,16 @@ export class FacebookReportComponent implements OnInit {
   closeToaster() {
     this.toastermessage = false;
   }
-  resetStartDate(){
-    this.enddate=''
+  resetStartDate() {
+    this.enddate = ''
   }
-  resetEndDate(){
-    if(this.enddate>=this.startDate){
+  resetEndDate() {
+    if (this.enddate >= this.startDate) {
       this.getAllfeacebookData()
     }
-    else{
+    else {
       alert("EndDate is greater then StartDate")
-      this.enddate=''
+      this.enddate = ''
     }
   }
 }

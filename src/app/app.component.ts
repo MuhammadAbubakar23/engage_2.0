@@ -12,18 +12,16 @@ import { CommonDataService } from './shared/services/common/common-data.service'
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-
-toasters: Toaster[] = [];
+  toasters: Toaster[] = [];
   title = 'Enteract.Engage2.0';
 
-  constructor(private signalRService: SignalRService,
+  constructor(
+    private signalRService: SignalRService,
     private router: Router,
-    private commonService : CommonDataService,
+    private commonService: CommonDataService,
     private toaster: ToasterService,
-    private spinnerService : NgxSpinnerService) {
-
-
-  }
+    private spinnerService: NgxSpinnerService
+  ) {}
 
   remove(index: number) {
     console.log(index);
@@ -31,41 +29,39 @@ toasters: Toaster[] = [];
     //this.toasts.splice(index, 1);
   }
   ngOnInit() {
-    this.toaster.toaster$
-      .subscribe(toaster => {
-        if(toaster!==null){
-          this.toasters = [toaster, ...this.toasters];
-          setTimeout(() => this.toasters.pop(), toaster.delay || 6000);
-        }
-
-      });
-      if(localStorage.getItem('signalRConnectionId')){
-        if (this.signalRService.hubconnection == undefined) {
-          this.spinnerService.show();
-          this.commonService.SignOut().subscribe(()=>{
-            localStorage.clear();
-            this.router.navigateByUrl('/login');
-            this.spinnerService.hide();
-          },
-          (error)=>{
-            localStorage.clear();
-            this.router.navigateByUrl('/login');
-            this.spinnerService.hide();
-          })
-        }
+    this.toaster.toaster$.subscribe((toaster) => {
+      if (toaster !== null) {
+        this.toasters = [toaster, ...this.toasters];
+        setTimeout(() => this.toasters.pop(), toaster.delay || 6000);
       }
-    
-    // this.signalRService.reConnect();
+    });
+    // if(localStorage.getItem('signalRConnectionId')){
+    //   if (this.signalRService.hubconnection == undefined) {
+    //     this.spinnerService.show();
+    //     this.commonService.SignOut().subscribe(()=>{
+    //       localStorage.clear();
+    //       this.router.navigateByUrl('/login');
+    //       this.spinnerService.hide();
+    //     },
+    //     (error)=>{
+    //       localStorage.clear();
+    //       this.router.navigateByUrl('/login');
+    //       this.spinnerService.hide();
+    //     })
+    //   }
+    // }
 
-    // this.signalRService.removeTagDataListener();
-    // this.signalRService.addTagDataListner();
-    // this.signalRService.unRespondedCountDataListener();
-    // this.signalRService.updateListAndDetailDataListener();
-    // this.signalRService.replyDataListener();
-    // this.signalRService.queryStatusDataListener();
-    // this.signalRService.bulkQueryStatusDataListener();
-    // this.signalRService.assignQueryResponseListner();
-    // this.signalRService.applySentimentListner();
-    // this.signalRService.updateMessageStatusDataListener();
+    this.signalRService.reConnect();
+
+    this.signalRService.removeTagDataListener();
+    this.signalRService.addTagDataListener();
+    this.signalRService.unRespondedCountDataListener();
+    this.signalRService.updateListAndDetailDataListener();
+    this.signalRService.replyDataListener();
+    this.signalRService.queryStatusDataListener();
+    this.signalRService.bulkQueryStatusDataListener();
+    this.signalRService.assignQueryResponseListner();
+    this.signalRService.applySentimentListner();
+    this.signalRService.updateMessageStatusDataListener();
   }
 }

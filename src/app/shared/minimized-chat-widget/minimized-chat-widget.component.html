@@ -131,7 +131,7 @@
                                             </div>
                                             <p class="card-text nignt">{{youtubecomment?.message}}</p>
                                             <div class="tags" *ngFor="let tag of youtubecomment?.tags">
-                                                <span (click)="removeTagFromFeed(tag.id, youtubecomment.id)"
+                                                <span (click)="removeTagFromFeed(tag.feedId, tag.name)"
                                                     class="badge rounded-pill tag youtube-pill tag1 selected">{{tag.name}}</span>
     
                                             </div>
@@ -177,7 +177,7 @@
                                                                                 <h6>Tags
                                                                                 </h6>
                                                                             </div>
-                                                                            <!-- <a href="#"
+                                                                            <!-- <a 
                                                                                 class="iconButton dropdown-iconBtn small active dropdownCrossBtn"
                                                                                 (click)="closeTagListDropdown()"
                                                                                 id="dropdownMenuButton3"
@@ -217,7 +217,7 @@
                                                                                     style="overflow: auto; outline: none;">
                                                                                     <div
                                                                                         class="list-group list-group-flush">
-                                                                                        <a (click)="insertTagsForFeed(keyword.id, youtubecomment.id)"
+                                                                                        <a (click)="insertTagsForFeed(youtubecomment.id, keyword.name)"
                                                                                             [ngClass]="activeTag==true?'active':''"
                                                                                             class="list-group-item d-flex level1Btn dropdown-item"
                                                                                             *ngFor="let keyword of tag.keywordList">
@@ -272,28 +272,22 @@
                                                                         <div class="scroll-content">
                                                                             <div class="list-group list-group-flush"
                                                                                 *ngFor="let sentiment of Sentiments">
-                                                                                <a (click)="insertSentimentForFeed(youtubecomment.id, sentiment.name)"
-                                                                                    class="list-group-item d-flex level1Btn ">
-                                                                                    <div class="list-down-icon">
-                                                                                        <span
-                                                                                            class="btn iconButton iconHover medium">
-                                                                                            <i class={{sentiment.icon}}></i>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                    <div class="w-100 list-txt">
-                                                                                        <div
-                                                                                            class="d-flex w-100 justify-content-between">
-                                                                                            <h6 class="mb-1 darkblue">
-                                                                                                {{sentiment.name}}
-                                                                                            </h6>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <!-- <small>
-                                                                                                <i
-                                                                                                    class="fal fa-check-circle sky"></i>
-                                                                                            </small> -->
-                                                                                </a>
-    
+                                                                                <a class="list-group-item d-flex level1Btn "
+                                                                                            (click)="insertSentimentForFeed(youtubecomment.id, sentiment.name)">
+                                                                                            <div class="list-down-icon">
+                                                                                                <span class="btn iconButton iconHover medium" [innerHTML]="sentiment.icon">
+                                                                                                </span>
+                                                                                            </div>
+                                                                                            <div class="w-100 list-txt">
+                                                                                                <div
+                                                                                                    class="d-flex w-100 justify-content-between">
+                                                                                                    <h6
+                                                                                                        class="mb-1 darkblue">
+                                                                                                        {{sentiment.name}}
+                                                                                                    </h6>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </a>
     
                                                                             </div>
                                                                         </div>

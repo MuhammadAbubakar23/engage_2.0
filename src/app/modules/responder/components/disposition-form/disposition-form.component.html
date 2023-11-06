@@ -16,36 +16,36 @@
                     <div class="tab-pane fade show active" id="post" role="tabpanel" aria-labelledby="post-tab"
                         data-select2-id="select2-data-post">
                         <form [formGroup]="dispositionForm" (submit)="submitDispositionForm()">
-                        <div class="form-floating mt-2" [ngClass]="{'was-validated' : dispositionForm.get('dispositionId')!.valid && dispositionForm.get('dispositionId')!.touched}">
-                            <select class="form-select" id="dispositionId" formControlName="dispositionId" aria-label="Floating label select example"
-                            [ngClass]="{'is-invalid' : (dispositionForm.get('dispositionId')!.errors && (dispositionForm.get('dispositionId')!.touched ||
-                                dispositionForm.get('dispositionId')!.dirty))}">
-                                <!-- <option selected="" disabled>Select Disposition</option> -->
+                        <div class="form-floating mt-2" [ngClass]="{'was-validated' : dispositionForm.get('disposition')!.valid && dispositionForm.get('disposition')!.touched}">
+                            <!-- <select class="form-select" id="disposition" formControlName="disposition" aria-label="Floating label select example"
+                            [ngClass]="{'is-invalid' : (dispositionForm.get('disposition')!.errors && (dispositionForm.get('disposition')!.touched ||
+                                dispositionForm.get('disposition')!.dirty))}">
+                                <option selected="" disabled>Select Disposition</option>
                                 <option *ngFor="let tag of dispositionTags" value={{tag.id}}>{{tag.name}}</option>
-                            </select>
+                            </select> -->
 
                             <!-- From DB -->
-                            <!-- <select class="form-select" id="dispositionId" formControlName="dispositionId" aria-label="Floating label select example"
-                            [ngClass]="{'is-invalid' : (dispositionForm.get('dispositionId')!.errors && (dispositionForm.get('dispositionId')!.touched ||
-                                dispositionForm.get('dispositionId')!.dirty))}">
+                            <select class="form-select" id="disposition" formControlName="disposition" aria-label="Floating label select example"
+                            [ngClass]="{'is-invalid' : (dispositionForm.get('disposition')!.errors && (dispositionForm.get('disposition')!.touched ||
+                                dispositionForm.get('disposition')!.dirty))}">
                                 <option selected="" disabled>Select Disposition</option>
-                                <option *ngFor="let tag of dispositionMenu" value={{tag.id}}>{{tag.name}}</option>
-                            </select> -->
+                                <option *ngFor="let tag of dispositionMenu" value={{tag.slug}}>{{tag.name}}</option>
+                            </select>
                             
-                            <!-- <select class="form-select" id="dispositionId" formControlName="dispositionId" aria-label="Floating label select example"
-                            [ngClass]="{'is-invalid' : (dispositionForm.get('dispositionId')!.errors && (dispositionForm.get('dispositionId')!.touched ||
-                                dispositionForm.get('dispositionId')!.dirty))}">
+                            <!-- <select class="form-select" id="disposition" formControlName="disposition" aria-label="Floating label select example"
+                            [ngClass]="{'is-invalid' : (dispositionForm.get('disposition')!.errors && (dispositionForm.get('disposition')!.touched ||
+                                dispositionForm.get('disposition')!.dirty))}">
                                 <option selected="" disabled>Select Disposition</option>
                                 <option value="1">Follow Up</option>
                                 <option value="2">Completed</option>
                                 <option value="3">Responded</option>
                             </select> -->
-                            <label for="dispositionId">Select Disposition *</label>
-                            <div class="invalid-feedback" *ngIf="(dispositionForm.get('dispositionId')!.errors && (dispositionForm.get('dispositionId')!.touched ||
-                                                                    dispositionForm.get('dispositionId')!.dirty))">
+                            <label for="disposition">Select Disposition *</label>
+                            <div class="invalid-feedback" *ngIf="(dispositionForm.get('disposition')!.errors && (dispositionForm.get('disposition')!.touched ||
+                                                                    dispositionForm.get('disposition')!.dirty))">
                             
-                                <div *ngIf="dispositionForm.get('dispositionId')!.errors?.['required']">
-                                    dispositionId is required!
+                                <div *ngIf="dispositionForm.get('disposition')!.errors?.['required']">
+                                    disposition is required!
                                 </div>
                             </div>
                         </div>
@@ -73,6 +73,7 @@
                         </div>
                         <div class="mt-4 text-end">
                             <a type="button" class="btn btn-outline-secondary px-5" (click)="routeToParentComponent()">Back</a>
+                            &nbsp;
                             <button type="submit" class="btn btn-success px-5" data-bs-toggle="modal"
                                 data-bs-target="#profileSaveModal" [disabled]="dispositionForm.invalid">Save</button>
                         </div>

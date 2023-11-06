@@ -23,6 +23,7 @@ import { InsertTagsForFeedDto } from 'src/app/shared/Models/InsertTagsForFeedDto
 import { LikeByAdminDto } from 'src/app/shared/Models/LikeByAdminDto';
 import { ReplyDto } from 'src/app/shared/Models/ReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
 
 @Component({
@@ -50,7 +51,7 @@ export class LinkedInComponent implements OnInit {
   ConverstationDetailDto = new conversationDetailDto();
 
 
-  TagsList: any;
+  TagsList: any[]=[];
   pageNumber: any = 1;
   pageSize: any = 10;
   TodayDate: any;
@@ -127,7 +128,8 @@ export class LinkedInComponent implements OnInit {
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService : GetQueryTypeService,
     private router : Router,
-    private userInfoService: UserInformationService
+    private userInfoService: UserInformationService,
+    private stor: StorageService
 
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res)=>{
@@ -135,6 +137,8 @@ export class LinkedInComponent implements OnInit {
     //   this.getLinkedInComments();
     // })
   }
+  messagesStatus:any[]=[];
+  Sentiments:any[]=[];
 
   ngOnInit(): void {
 
@@ -143,16 +147,41 @@ export class LinkedInComponent implements OnInit {
       descending: true,
     };
     
+    const menu = this.stor.retrive('Tags', 'O').local;
+      menu.forEach((item:any) => {
+        if(item.name == "Tags"){
+          item.subTags.forEach((singleTagObj:any) => {
+            if(!this.TagsList.includes(singleTagObj)){
+            this.TagsList.push(singleTagObj)
+            }
+          });
+        }
+        if(item.name == "Messages Status"){
+          item.subTags.forEach((messagesStatusObj:any) => {
+            if(!this.messagesStatus.includes(messagesStatusObj)){
+            this.messagesStatus.push(messagesStatusObj)
+            }
+          });
+        }
+        if(item.name == "Sentiments"){
+          item.subTags.forEach((sentimentObj:any) => {
+            if(!this.Sentiments.includes(sentimentObj)){
+            this.Sentiments.push(sentimentObj)
+            }
+          });
+        }
+      });
+
     this.TodayDate = new Date();
 
     this.getLinkedInComments();
-    this.getTagList();
+    // this.getTagList();
     this.quickReplyList();
     this.humanAgentTags();
 
     this.Subscription = this.addTagService.receiveTags().subscribe((res) => {
       this.addTags = res;
-      this.addTagDataListner();
+      this.addTagDataListener();
     });
     this.Subscription = this.removeTagService.receiveTags().subscribe((res) => {
       this.removeTags = res;
@@ -183,11 +212,11 @@ export class LinkedInComponent implements OnInit {
         this.updateTicketId(res)
       });
 
-      this.Subscription = this.applySentimentService
-      .receiveSentiment()
-      .subscribe((res) => {
-        this.applySentimentListner(res);
-      });
+      // this.Subscription = this.applySentimentService
+      // .receiveSentiment()
+      // .subscribe((res) => {
+      //   this.applySentimentListner(res);
+      // });
   }
 
   
@@ -664,79 +693,65 @@ detectChanges(): void {
     });
   }
 
-  insertTags(id: any, comId: string, type: any) {
-    
-    if (type == 'LIC') {
-      this.insertTagsForFeedDto.feedId = comId.toString();
-      this.insertTagsForFeedDto.tagId = id;
-      this.insertTagsForFeedDto.feedType = 'LIC';
-      this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
+  insertTagsForFeed(comId: number, tagName: string) {
+    this.insertTagsForFeedDto.feedId = comId;
+    this.insertTagsForFeedDto.tagName = tagName;
+    this.insertTagsForFeedDto.type = 'Tag';
+    this.insertTagsForFeedDto.platform = 'LinkedIn';
 
-      this.LinkedInData.forEach((abc: any) => {
+      this.LinkedInData?.forEach((abc: any) => {
         abc.comments.forEach((comment: any) => {
           if (comment.id == comId) {
-            if(comment.tags.length == 0){
-              this.commondata.InsertTag(this.insertTagsForFeedDto).subscribe((res: any) => {
-                this.reloadComponent('ApplyTag');
-
-                this.activeTag = true;
-                this.checkTag = true;
-              });
-            }
-            else if(comment.tags.length > 0){
-              const value = comment.tags.find((x:any)=>x.id == id)
-              if(value != null || value != undefined){
-                this.removeTag(id, comId, type);
-              } else {
-                this.commondata.InsertTag(this.insertTagsForFeedDto).subscribe((res: any) => {
+            if (comment.tags.length == 0) {
+              this.commondata
+                .InsertTag(this.insertTagsForFeedDto)
+                .subscribe((res: any) => {
                   this.reloadComponent('ApplyTag');
 
                   this.activeTag = true;
                   this.checkTag = true;
                 });
+            } else if (comment.tags.length > 0) {
+              const value = comment.tags.find((x: any) => x.name == tagName);
+              if (value != null || value != undefined) {
+                this.removeTagFromFeed(comId, tagName);
+              } else {
+                this.commondata
+                  .InsertTag(this.insertTagsForFeedDto)
+                  .subscribe((res: any) => {
+                    this.reloadComponent('ApplyTag');
+
+                    this.activeTag = true;
+                    this.checkTag = true;
+                  });
               }
             }
           }
         });
       });
+  }
+
+  removeTagFromFeed(feedId: number, tagName: any) {
+    if (
+      this.flag == 'focused' ||
+      this.flag == 'assigned_to_me'
+    ) {
+        this.insertTagsForFeedDto.tagName = tagName;
+        this.insertTagsForFeedDto.feedId = feedId;
+        this.insertTagsForFeedDto.type = 'Tag';
+        this.insertTagsForFeedDto.platform = 'LinkedIn';
+
+        this.commondata
+          .RemoveTag(this.insertTagsForFeedDto)
+          .subscribe((res: any) => {
+            this.reloadComponent('RemoveTag');
+
+            this.activeTag = false;
+            this.checkTag = false;
+          });
     }
   }
 
-  removeTag(tagid: any, feedId: string, type: any) {
-    if (type == 'LIC') {
-      this.insertTagsForFeedDto.tagId = tagid;
-      this.insertTagsForFeedDto.feedId = feedId.toString();
-      this.insertTagsForFeedDto.feedType = 'LIC';
-      this.insertTagsForFeedDto.userId = Number(localStorage.getItem('agentId'));
-
-      this.commondata
-        .RemoveTag(this.insertTagsForFeedDto)
-        .subscribe((res: any) => {
-          this.reloadComponent('RemoveTag');
-
-          this.activeTag = false;
-          this.checkTag = false;
-        });
-    }
-  }
-
-  Sentiments = [
-    {
-      id: 1,
-      name: 'Positive',
-      icon: 'fal fa-smile',
-    },
-    {
-      id: 2,
-      name: 'Neutral',
-      icon: 'fal fa-meh-blank',
-    },
-    {
-      id: 3,
-      name: 'Negative',
-      icon: 'fal fa-frown',
-    },
-  ];
 
   insertSentiment(feedId: string, sentimenName: any, type: any) {
     if (type == 'LIC') {
@@ -940,16 +955,17 @@ detectChanges(): void {
   addTags: any;
   removeTags: any;
 
-  addTagDataListner() {
-    this.LinkedInData.forEach((post: any) => {
+  addTagDataListener() {
+    this.LinkedInData?.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
           if (singleCmnt.id == this.addTags.feedId) {
+            if(this.addTags.type == 'Tag'){
             if (singleCmnt.tags.length == 0) {
               singleCmnt.tags.push(this.addTags);
             } else if (singleCmnt.tags.length > 0) {
               const tag = singleCmnt.tags.find(
-                (x: any) => x.id == this.addTags.feedId
+                (x: any) => x.name == this.addTags.name
               );
               if (tag != null || tag != undefined) {
                 const index = singleCmnt.tags.indexOf(tag);
@@ -957,22 +973,29 @@ detectChanges(): void {
                   singleCmnt.tags.splice(index, 1);
                 }
               } else {
-                singleCmnt.tags.push(this.addTags);
+                if (!singleCmnt.tags.includes(this.addTags)) {
+                  singleCmnt.tags.push(this.addTags);
+                }
               }
             }
+          }
+          if(this.addTags.type == 'Sentiment'){
+            singleCmnt.sentiment = this.addTags;
+          }
           }
         });
       });
     });
-    this.changeDetect.detectChanges();
-  }
-  removeTagDataListener() {
-    this.LinkedInData.forEach((post: any) => {
+
+  this.changeDetect.detectChanges();
+}
+removeTagDataListener() {
+    this.LinkedInData?.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
           if (singleCmnt.id == this.removeTags.feedId) {
             var tag = singleCmnt.tags.find(
-              (x: any) => x.id == this.removeTags.tagId
+              (x: any) => x.name == this.removeTags.tagName
             );
             const index = singleCmnt.tags.indexOf(tag);
             if (index !== -1) {
@@ -982,8 +1005,8 @@ detectChanges(): void {
         });
       });
     });
-    this.changeDetect.detectChanges();
-  }
+  this.changeDetect.detectChanges();
+}
 
   updateQueryStatusDataListner() {
     
@@ -1046,18 +1069,18 @@ detectChanges(): void {
     this.changeDetect.detectChanges();
   }
 
-  applySentimentListner(res: any) {
-    this.LinkedInData.forEach((post: any) => {
-      post.groupedComments.forEach((cmnt: any) => {
-        cmnt.items.forEach((singleCmnt: any) => {
-          if (singleCmnt.id == res.feedId) {
-            singleCmnt.sentiment = res;
-          }
-        });
-      });
-    });
-    this.changeDetect.detectChanges();
-  }
+  // applySentimentListner(res: any) {
+  //   this.LinkedInData.forEach((post: any) => {
+  //     post.groupedComments.forEach((cmnt: any) => {
+  //       cmnt.items.forEach((singleCmnt: any) => {
+  //         if (singleCmnt.id == res.feedId) {
+  //           singleCmnt.sentiment = res;
+  //         }
+  //       });
+  //     });
+  //   });
+  //   this.changeDetect.detectChanges();
+  // }
 
   closeQuickResponseSidebar(){
     this.quickReplySearchText = '';

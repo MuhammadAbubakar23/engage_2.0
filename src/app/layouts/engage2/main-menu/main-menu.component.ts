@@ -76,7 +76,7 @@ export class MainMenuComponent implements OnInit {
     private commonService: CommonDataService,
     private MenuStore: Store<MenuState>,
     private PermissionStore: Store<PermissionState>,
-    private storage: StorageService,
+    private stor: StorageService,
     private router: Router
   ) {
     // this.MenuStore.dispatch(loadMenusList());
@@ -94,7 +94,11 @@ export class MainMenuComponent implements OnInit {
   restrictedAgent: string = '';
 
   ngOnInit(): void {
-    let data = this.storage.retrive('main', 'O').local;
+    // this.commonService.GetAllTags().subscribe((res:any)=>{
+    //   this.stor.store('Tags', res);
+    // });
+    
+    let data = this.stor.retrive('main', 'O').local;
     this.restrictedAgent = data.originalUserName;
 
     if (this.restrictedAgentsString.includes(this.restrictedAgent)) {

@@ -17,21 +17,21 @@
                     </button>
                     <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1" >
                         <li>
-                            <a class="dropdown-item p-1 active logCallModalBtn" href="#">
+                            <a class="dropdown-item p-1 active logCallModalBtn" >
                                 <button class="iconButton dropdown-iconBtn small active" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fal fa-phone-alt"></i>
                                 </button>log a call
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item p-1" href="#">
+                            <a class="dropdown-item p-1" >
                                 <button class="iconButton dropdown-iconBtn small" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fal fa-envelope"></i>
                                 </button>log a Email
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item p-1" href="#">
+                            <a class="dropdown-item p-1" >
                                 <button class="iconButton dropdown-iconBtn small" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fal fa-comment-alt-lines"></i>
                                 </button>log a message
@@ -66,10 +66,10 @@
                             </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                         <li>
-                                            <a class="dropdown-item" href="#">Ascending</a>
+                                            <a class="dropdown-item" >Ascending</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Descending</a>
+                                            <a class="dropdown-item" >Descending</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -79,10 +79,10 @@
                             </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                         <li>
-                                            <a class="dropdown-item" href="#">Ascending</a>
+                                            <a class="dropdown-item" >Ascending</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">Descending</a>
+                                            <a class="dropdown-item" >Descending</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -109,8 +109,8 @@
                                         <div class="ps-5 timeline_content">
                                             <small class="silver"><span class="berry">{{history.createdDate | date:'MMM dd, YYYY'}}
                                             </span> {{history.createdDate | date:'hh:mm a'}}</small>
-                                            <div *ngFor="let tag of dispositionTags">
-                                                <h6 class="mb-1 darkblue" *ngIf="history.disposition == tag.id">{{tag.name}}</h6>
+                                            <div *ngFor="let tag of dispositionHistory">
+                                                <h6 class="mb-1 darkblue">{{tag.dispositionName}}</h6>
                                             </div>
                                             <p class="mb-1 coal">
                                                 {{history.comment}}

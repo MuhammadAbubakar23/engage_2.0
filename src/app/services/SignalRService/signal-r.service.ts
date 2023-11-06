@@ -115,7 +115,7 @@ export class SignalRService {
     });
   };
 
-  public addTagDataListner = () => {
+  public addTagDataListener = () => {
     this.hubconnection?.on('ApplyTags', (addTags) => {
       this.addTagService.sendTags(addTags);
     });
