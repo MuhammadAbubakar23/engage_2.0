@@ -820,7 +820,7 @@ export class ResponderHeaderComponent implements OnInit {
   }
 
   completeQuery(slug: string) {
-    if (slug == 'read_all') {
+    if (slug == 'read') {
       this.markAllAsRead();
     } else if (slug == 'save') {
       this.markAsComplete();

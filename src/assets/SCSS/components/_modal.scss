@@ -525,40 +525,40 @@
  justify-content: flex-end;
 }
 
-.startconvo{
-  .progress{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: $white;
-    border-radius: 0;
-    height: 2px;
-    &:after {
-      content: '';
-      display: block;
-      width: 0;
-      height: 8px;
-      background: #EB0045;
-      transition: width .5s ease-out;
-    }
-  }
-  $steps: 3;
-@mixin progress_bar($steps) {
+// .startconvo{
+//   .progress{
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     background-color: $white;
+//     border-radius: 0;
+//     height: 2px;
+//     &:after {
+//       content: '';
+//       display: block;
+//       width: 0;
+//       height: 8px;
+//       background: #EB0045;
+//       transition: width .5s ease-out;
+//     }
+//   }
+//   $steps: 3;
+// @mixin progress_bar($steps) {
 
-  $width: (100/$steps)*1%;
+//   $width: (100/$steps)*1%;
 
-  @for $i from 1 through $steps {
+//   @for $i from 1 through $steps {
 
-    [data-progress='#{$i}']:after {
-      width: $width*$i !important;
-    }
+//     [data-progress='#{$i}']:after {
+//       width: $width*$i !important;
+//     }
 
-    $steps: $steps - 1;
-  }
-}
-@include progress_bar($steps);
-}
+//     $steps: $steps - 1;
+//   }
+// }
+// @include progress_bar($steps);
+// }
 
 .modal-user-scroll{
     overflow-x: hidden;

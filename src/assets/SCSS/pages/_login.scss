@@ -776,18 +776,18 @@
 	}
 }
 
-$steps: 8;
-@mixin progress_bar($steps) {
+// $steps: 8;
+// @mixin progress_bar($steps) {
 
-  $width: (100/$steps)*1%;
+//   $width: (100/$steps)*1%;
 
-  @for $i from 1 through $steps {
+//   @for $i from 1 through $steps {
 
-    [data-progress='#{$i}']:after {
-      width: $width*$i !important;
-    }
+//     [data-progress='#{$i}']:after {
+//       width: $width*$i !important;
+//     }
 
-    $steps: $steps - 1;
-  }
-}
-@include progress_bar($steps);
+//     $steps: $steps - 1;
+//   }
+// }
+// @include progress_bar($steps);

@@ -109,9 +109,7 @@
                                         <div class="ps-5 timeline_content">
                                             <small class="silver"><span class="berry">{{history.createdDate | date:'MMM dd, YYYY'}}
                                             </span> {{history.createdDate | date:'hh:mm a'}}</small>
-                                            <div *ngFor="let tag of dispositionHistory">
-                                                <h6 class="mb-1 darkblue">{{tag.dispositionName}}</h6>
-                                            </div>
+                                                <h6 class="mb-1 darkblue">{{history.dispositionName}}</h6>
                                             <p class="mb-1 coal">
                                                 {{history.comment}}
                                                 <!-- <span class="more-text">11111Fatima Ahmed to visit ibex to submit all

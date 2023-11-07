@@ -6,10 +6,7 @@ import {
   ViewContainerRef,
   HostListener,
 } from '@angular/core';
-import {
-  NavigationEnd,
-  Router,
-} from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { InboxesComponent } from 'src/app/modules/inboxes/inboxes.component';
 import { BlacklistHeaderComponent } from 'src/app/shared/headers/blacklist-header/blacklist-header.component';

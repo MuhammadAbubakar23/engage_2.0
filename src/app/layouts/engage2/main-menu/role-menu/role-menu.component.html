@@ -24,12 +24,12 @@
         </a>
 </ng-container>
 <ng-container *ngIf="!(onlyAnalyticsTabVisible.includes(restrictedAgent))">
-<a (click)="update('all-inboxes/completed/all')"
+<a   (click)="update('all-inboxes/completed/all')"
     class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2"
     [class.active]="activeChannel=='completed'">
     <div class="list-group-text d-flex align-items-center">
         <div class="iconButton medium">
-            <i class="fal fa-paper-plane ice"></i>
+            <i class="fal fa-paper-plane ice"></i> 
         </div>
         <div class="itemLabel">
             Completed Interactions

@@ -20,7 +20,7 @@ export class ResponderHistoryComponent implements OnInit {
   constructor(private commonService : CommonDataService) { }
 
   ngOnInit(): void {
-    this.getDispositionTags();
+    // this.getDispositionTags();
     this.getDispositionHistory();
   }
 
@@ -36,11 +36,11 @@ export class ResponderHistoryComponent implements OnInit {
     })
   }
 
-  getDispositionTags(){
-    this.commonService.GetDispositionTags().subscribe((res:any)=>{
-      this.dispositionTags = res;
-    })
-  }
+  // getDispositionTags(){
+  //   this.commonService.GetDispositionTags().subscribe((res:any)=>{
+  //     this.dispositionTags = res;
+  //   })
+  // }
 
   show:any=false;
   click(val:any){
