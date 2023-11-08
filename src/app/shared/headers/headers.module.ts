@@ -34,6 +34,7 @@ import { ConsoleSignaturesTemplateHeaderComponent } from './console-signatures-t
 import { ConsoleCreateSignatureTemplatesHeaderComponent } from './console-create-signature-templates-header/console-create-signature-templates-header.component';
 import { ConsoleConnectFormHeaderComponent } from './console-connect-from-header/console-connect-form-header/console-connect-form-header.component';
 import { RightHeaderComponentsComponent } from './right-header-components/right-header-components.component';
+import { CompletedInteractionHeaderComponent } from './completed-interaction-header/completed-interaction-header.component';
 
 
 
@@ -73,7 +74,8 @@ import { RightHeaderComponentsComponent } from './right-header-components/right-
           ConsoleSignaturesTemplateHeaderComponent,
           ConsoleCreateSignatureTemplatesHeaderComponent,
           ConsoleConnectFormHeaderComponent,
-          RightHeaderComponentsComponent
+          RightHeaderComponentsComponent,
+          CompletedInteractionHeaderComponent
 
   ],
   imports: [

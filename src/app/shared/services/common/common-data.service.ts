@@ -704,6 +704,10 @@ export class CommonDataService {
     const url = `${this.CommonBaseUrl}${this.removeAssignedQuery}?ProfileId=${ProfileId}`;
     return this.http.get(url);
   }
+
+  getWordCloud(fromDate: string, toDate: string): Observable<any> {
+    return this.http.get(`https://tiktokcrawl.enteract.live/GetWordCloud?fromdate=${fromDate}&todate=${toDate}`)
+  }
 }
 
 var headers_object = new HttpHeaders({

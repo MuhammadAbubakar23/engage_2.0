@@ -125,6 +125,24 @@ export class WhatsappDetailsComponent implements OnInit {
     //   this.getWhatsappData();
     // });
   }
+  handleTextareaKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.submitWhatsappReply();
+    }
+  }
+  adjustTextareaHeight(textarea: HTMLTextAreaElement) {
+    const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight);
+    const numberOfLines = Math.floor(textarea.scrollHeight / lineHeight);
+    const newHeight = numberOfLines < 3 ? `${numberOfLines}em` : '96px';
+    textarea.style.height = newHeight;
+    textarea.style.overflow = numberOfLines > 4 ? 'auto' : 'hidden';
+    if (textarea.value.trim() === '') {
+      textarea.style.height = '40px';
+    }
+  }
+
+
   messagesStatus: any[] = [];
   Sentiments: any[] = [];
   ngOnInit(): void {

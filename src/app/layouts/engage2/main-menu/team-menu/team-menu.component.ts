@@ -36,7 +36,7 @@ export class TeamMenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger
+    
     this.activeChannel = this._route.url.split('/')[2]
 
     this.MenuStore
@@ -73,7 +73,7 @@ export class TeamMenuComponent implements OnInit {
   assignedProfile = localStorage.getItem('assignedProfile');
 
   update(menuLink: any) {
-    debugger
+    
     // this.activeChannel = this._route.url.split('/')[2];
     this.activeChannel=menuLink.split('/')[1]
 

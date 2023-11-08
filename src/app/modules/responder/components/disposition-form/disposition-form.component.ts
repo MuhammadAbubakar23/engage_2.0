@@ -20,7 +20,9 @@ export class DispositionFormComponent implements OnInit {
   dispositionTags:any;
   dispositionMenu:any[]=[];
   selectedTag: any; // This will hold the selected tag
-  isFollowUp: boolean = false
+  isFollowUp: boolean = false;
+  currentDate:any
+  currentDatetime:any
   constructor(private commonService : CommonDataService,
     private route : Router,
     private datePipe:DatePipe,
@@ -33,7 +35,7 @@ export class DispositionFormComponent implements OnInit {
         reasonId: new FormControl(''),
         agentId: new FormControl(''),
         customerProfileId: new FormControl(''),
-        follow_Up_Date: new FormControl(null),
+        follow_Up_Date: new FormControl(null,),
         comment: new FormControl('Completed', Validators.required),
   
         user: new FormControl(''),
@@ -51,6 +53,8 @@ export class DispositionFormComponent implements OnInit {
   companyId = 0;
 
   ngOnInit(): void {
+    this.currentDate = new Date();
+    this.currentDatetime = this.datePipe.transform(this.currentDate, 'yyyy-MM-ddTHH:mm');
     const menu = this.stor.retrive('Tags', 'O').local;
       menu.forEach((item:any) => {
         if(item.name == "Dispositions"){
@@ -70,7 +74,7 @@ export class DispositionFormComponent implements OnInit {
   }
   previousUrl:any;
   submitDispositionForm(){
-debugger
+
 // if(this.dispositionForm.value.follow_Up_Date!==''){
 //   this.dispositionForm.value.follow_Up_Date=this.dispositionForm.value.follow_Up_Date
 // }

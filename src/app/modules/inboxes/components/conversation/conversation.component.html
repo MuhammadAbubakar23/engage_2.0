@@ -616,13 +616,29 @@
         </div> -->
 
         <table class="table">
+          <thead>
+            <tr *ngIf="FlagForAssignToMe=='follow_up'">
+              <th></th>
+              <th></th>
+              <th>Name</th>
+              <th>Message</th>
+              <th>Message_Time</th>
+              <th>Follow_up Time</th>
+            </tr>
+            </thead>
           <tbody>
             <ng-container *ngFor="let group of groupByDateList">
               <tr>
                 <td colspan="6">
-                  <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
+             <span *ngIf="FlagForAssignToMe!=='follow_up'">
+              <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
+             </span>
+             <span *ngIf="FlagForAssignToMe=='follow_up'">
+              <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
+             </span>
                 </td>
               </tr>
+            
               <!-- [ngClass]="[alertWarning == true?'alert-warning':'', alertDanger == true?'alert-danger':'']" -->
               <tr *ngFor="let query of group.items | sort:criteria; let i = index"
                 [class.selected]="query.isChecked==true" class="alert" [ngClass]="[query.slaFlag == 'warning'?'alert-warning':'' || query.slaFlag == 'danger'?'alert-danger':'' ||
@@ -654,7 +670,7 @@
                   <i *ngIf="query.platform == 'LinkedIn'" class="fa-brands fa-linkedin-in linkedinTxt"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="LinkedIn"
                     aria-label="LinkedIn"></i>
-                    <i *ngIf="query.platform == 'PlayStore'" class="fa-brands fa-google-play darkorange"
+                  <i *ngIf="query.platform == 'PlayStore'" class="fa-brands fa-google-play darkorange"
                     data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="PlayStore"
                     aria-label="PlayStore"></i>
                 </td>
@@ -675,6 +691,11 @@
                 </td>
                 <td class="px-1">
                   <small>{{query.createdDate | date:'h:mm:ss a'}}</small>
+                </td>
+                <td class="px-1">
+                  <span *ngIf="FlagForAssignToMe=='follow_up'">
+                   <small>{{query?.follow_Up_Status | date: 'h:mm:ss a '}}</small>
+                  </span>
                 </td>
 
                 <!-- <td>

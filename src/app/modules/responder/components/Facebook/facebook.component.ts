@@ -172,6 +172,28 @@ export class FacebookComponent implements OnInit {
     //   this.getFacebookMessages();
     // });
   }
+  handleTextareaKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.submitFacebookMessageReply();
+    }
+  }
+  handleFacebookReply(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.submitFacebookReply();
+    }
+  }
+  adjustTextareaHeight(textarea: HTMLTextAreaElement) {
+    const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight);
+    const numberOfLines = Math.floor(textarea.scrollHeight / lineHeight);
+    const newHeight = numberOfLines < 3 ? `${numberOfLines}em` : '96px';
+    textarea.style.height = newHeight;
+    textarea.style.overflow = numberOfLines > 4 ? 'auto' : 'hidden';
+    if (textarea.value.trim() === '') {
+      textarea.style.height = '40px';
+    }
+  }
 
   teamPermissions: any;
   currentUrl: string = '';

@@ -145,7 +145,9 @@ export class ConversationComponent implements OnInit {
                 items: groupedItems[createdDate],
               };
             }
+          
           );
+
         },
         (error) => {
           this.SpinnerService.hide();
@@ -176,6 +178,7 @@ export class ConversationComponent implements OnInit {
       });
 
     setInterval(() => {
+      
       if (this.currentUrl.split('/')[2] == 'focused') {
         if (this.groupByDateList?.length > 0) {
           this.TodayDate = new Date();
@@ -186,8 +189,41 @@ export class ConversationComponent implements OnInit {
               const time = new Date(item.createdDate);
               const timeDifference = this.TodayDate.getTime() - time.getTime();
               if (
-                timeDifference > twentyMinutesInMs &&
+                timeDifference < twentyMinutesInMs &&
                 timeDifference < fortyMinutesInMs
+              ) {
+                this.alertWarning = true;
+                item['slaFlag'] = 'warning';
+              }
+              if (timeDifference > fortyMinutesInMs) {
+                this.alertDanger = true;
+                this.alertWarning = false;
+                item['slaFlag'] = 'danger';
+              } else if (
+                timeDifference < twentyMinutesInMs &&
+                timeDifference < fortyMinutesInMs
+              ) {
+                this.alertDanger = false;
+                this.alertWarning = false;
+                item['slaFlag'] = 'unread';
+              }
+            });
+          });
+        }
+      }
+      else if( this.currentUrl.split('/')[2]=='follow_up'){
+        if (this.groupByDateList?.length > 0) {
+          this.TodayDate = new Date();
+          this.groupByDateList?.forEach((group: any) => {
+            group.items.forEach((item: any) => {
+              
+              const twentyMinutesInMs = 20 * 60 * 1000; // 20 minute in milliseconds
+              const fortyMinutesInMs = 40 * 60 * 1000; // 40 minute in milliseconds
+              const time = new Date(item.follow_Up_Status);
+              const timeDifference =   this.TodayDate.getTime()-  time.getTime();
+              if (
+                timeDifference  > twentyMinutesInMs 
+               
               ) {
                 this.alertWarning = true;
                 item['slaFlag'] = 'warning';

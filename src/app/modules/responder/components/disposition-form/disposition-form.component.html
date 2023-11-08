@@ -34,24 +34,7 @@
                           
                           <!-- Show the popup when "follow up" is selected -->
                         
-                          <div *ngIf="isFollowUp==true">
-                            <div class="popup" class="mt-3">
-                                <div class="form-floating mt-2" [ngClass]="{'was-validated' : dispositionForm.get('follow_Up_Date')!.valid && 
-                                dispositionForm.get('follow_Up_Date')!.touched}">
-                                    <input type="datetime-local" class="form-control"  formControlName="follow_Up_Date" id="floatingTextarea3"
-                                     [ngClass]="{'is-invalid' : (dispositionForm.get('follow_Up_Date')!.errors && (dispositionForm.get('follow_Up_Date')!.touched ||
-                                    dispositionForm.get('follow_Up_Date')!.dirty))}" >
-                                    <label for="floatingTextarea3">Date/Time *</label>
-                                    <div class="invalid-feedback" *ngIf="(dispositionForm.get('follow_Up_Date')!.errors && (dispositionForm.get('follow_Up_Date')!.touched ||
-                                    dispositionForm.get('follow_Up_Date')!.dirty))">
-                           <div *ngIf="dispositionForm.get('follow_Up_Date')!.errors?.['required']">
-                                  Date_time is required!
-                          </div>
-                                 </div>
-                                </div>
-                        
-                            </div>
-                          </div>
+                         
                           
                             
                             <!-- <select class="form-select" id="disposition" formControlName="disposition" aria-label="Floating label select example"
@@ -64,13 +47,29 @@
                             </select> -->
                             <label for="disposition">Select Disposition *</label>
                             <div class="invalid-feedback" *ngIf="(dispositionForm.get('disposition')!.errors && (dispositionForm.get('disposition')!.touched ||
-                                                                    dispositionForm.get('disposition')!.dirty))">
-                            
+                                dispositionForm.get('disposition')!.dirty))">
                                 <div *ngIf="dispositionForm.get('disposition')!.errors?.['required']">
                                     disposition is required!
                                 </div>
                             </div>
                         </div>
+                        <div *ngIf="isFollowUp">
+                            <div  class="form-floating mt-2">
+                                <input  type="datetime-local"  formControlName="follow_Up_Date" class="form-control"  [attr.min]="currentDatetime">
+                                <label for="floatingTextarea3">Date/Time *</label>
+                            </div>
+                            <!-- <div class="form-floating mt-2" [ngClass]="{'was-validated': isFollowUp && dispositionForm.get('follow_Up_Date')!.valid && dispositionForm.get('follow_Up_Date')!.touched}">
+                                <input type="datetime-local" class="form-control" formControlName="follow_Up_Date" id="floatingTextarea3" [ngClass]="{'is-invalid': isFollowUp && dispositionForm.get('follow_Up_Date')!.errors && (dispositionForm.get('follow_Up_Date')!.touched || dispositionForm.get('follow_Up_Date')!.dirty)}" [attr.min]="currentDatetime">
+                                <label for="floatingTextarea3">Date/Time *</label>
+                                <div class="invalid-feedback" *ngIf="isFollowUp && dispositionForm.get('follow_Up_Date')!.errors && (dispositionForm.get('follow_Up_Date')!.touched || dispositionForm.get('follow_Up_Date')!.dirty)">
+                                    <div *ngIf="dispositionForm.get('follow_Up_Date')!.errors?.['required']">
+                                        Date/Time is required!
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                        
+                       
                         
                         <!-- <div class="form-floating mt-2">
                             <select class="form-select" id="floatingSelect" formControlName="reasonId" aria-label="Floating label select example">

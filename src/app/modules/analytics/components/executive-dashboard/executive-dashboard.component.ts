@@ -4,277 +4,285 @@ import * as echarts from 'echarts';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-import { CloudData, CloudOptions } from 'angular-tag-cloud-module';
+import { CloudData, CloudOptions ,ZoomOnHoverOptions} from 'angular-tag-cloud-module';
 import { TagCloudComponent } from 'angular-tag-cloud-module';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-executive-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule,TagCloudComponent],
+  imports: [CommonModule, FormsModule,TagCloudComponent,NgxSpinnerModule],
   templateUrl: './executive-dashboard.component.html',
   styleUrls: ['./executive-dashboard.component.scss']
 })
 export class ExecutiveDashboardComponent implements OnInit {
+  zoomOnHoverOptions: ZoomOnHoverOptions = {
+    scale: 1.3, // Elements will become 130 % of current zize on hover
+    transitionTime: 0.2, // it will take 1.2 seconds until the zoom level defined in scale property has been reached
+    delay: 0.2 // Zoom will take affect after 0.8 seconds
+  };
   options: CloudOptions = { 
-    width: 300,
+    width: 400,
     height: 400,
     overflow: false,
   };
-  data = [
-    {
-      "text": "w9-color",
-      "weight": 9,
-      "color": "#67402b",
-      "rotate": 0
-    },
-    {
-      "text": "w4",
-      "weight": 4,
-      "rotate": 0
-    },
-    {
-      "text": "w7-color",
-      "weight": 7,
-      "color": "#c90296",
-      "rotate": 0
-    },
-    {
-      "text": "w6-color",
-      "weight": 6,
-      "color": "#1041c7",
-      "rotate": 0
-    },
-    {
-      "text": "w4",
-      "weight": 4,
-      "rotate": 0
-    },
-    {
-      "text": "w8-link",
-      "weight": 8,
+  wordcloudData:any[]=[]
+  //   {
+  //     "text": "w9-color",
+  //     "weight": 9,
+  //     "color": "#67402b",
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w4",
+  //     "weight": 4,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w7-color",
+  //     "weight": 7,
+  //     "color": "#c90296",
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w6-color",
+  //     "weight": 6,
+  //     "color": "#1041c7",
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w4",
+  //     "weight": 4,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w8-link",
+  //     "weight": 8,
   
-      "rotate": 0
-    },
-    {
-      "text": "w10-link-ext",
-      "weight": 10,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w10-link-ext",
+  //     "weight": 10,
 
-      "external": true,
-      "rotate": 0
-    },
-    {
-      "text": "w7-color-link-ext",
-      "weight": 7,
-      "color": "#81f31a",
+  //     "external": true,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w7-color-link-ext",
+  //     "weight": 7,
+  //     "color": "#81f31a",
 
-      "external": true,
-      "rotate": 0
-    },
-    {
-      "text": "w1-color",
-      "weight": 1,
-      "color": "#3df06e",
-      "rotate": -13
-    },
-    {
-      "text": "w8-link",
-      "weight": 8,
+  //     "external": true,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w1-color",
+  //     "weight": 1,
+  //     "color": "#3df06e",
+  //     "rotate": -13
+  //   },
+  //   {
+  //     "text": "w8-link",
+  //     "weight": 8,
 
-      "rotate": 0
-    },
-    {
-      "text": "w5-link",
-      "weight": 5,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w5-link",
+  //     "weight": 5,
 
-      "rotate": 5
-    },
-    {
-      "text": "w6-link-ext",
-      "weight": 6,
+  //     "rotate": 5
+  //   },
+  //   {
+  //     "text": "w6-link-ext",
+  //     "weight": 6,
 
-      "external": true,
-      "rotate": 0
-    },
-    {
-      "text": "w2-link-ext",
-      "weight": 2,
+  //     "external": true,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w2-link-ext",
+  //     "weight": 2,
 
-      "external": true,
-      "rotate": 0
-    },
-    {
-      "text": "w3-color-link-ext",
-      "weight": 3,
-      "color": "#7be66",
+  //     "external": true,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w3-color-link-ext",
+  //     "weight": 3,
+  //     "color": "#7be66",
 
-      "external": true,
-      "rotate": 0
-    },
-    {
-      "text": "w10-color-link-ext",
-      "weight": 10,
-      "color": "#db41a2",
+  //     "external": true,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w10-color-link-ext",
+  //     "weight": 10,
+  //     "color": "#db41a2",
 
-      "external": true,
-      "rotate": 6
-    },
-    {
-      "text": "w4-link-ext",
-      "weight": 4,
+  //     "external": true,
+  //     "rotate": 6
+  //   },
+  //   {
+  //     "text": "w4-link-ext",
+  //     "weight": 4,
 
-      "external": true,
-      "rotate": -16
-    },
-    {
-      "text": "w5-color",
-      "weight": 5,
-      "color": "#a16978",
-      "rotate": 0
-    },
-    {
-      "text": "w5-link-ext",
-      "weight": 5,
+  //     "external": true,
+  //     "rotate": -16
+  //   },
+  //   {
+  //     "text": "w5-color",
+  //     "weight": 5,
+  //     "color": "#a16978",
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w5-link-ext",
+  //     "weight": 5,
 
-      "external": true,
-      "rotate": 0
-    },
-    {
-      "text": "w8",
-      "weight": 8,
-      "rotate": 0
-    },
-    {
-      "text": "w3",
-      "weight": 3,
-      "rotate": 0
-    },
-    {
-      "text": "w1-color",
-      "weight": 1,
-      "color": "#32a283",
-      "rotate": 13
-    },
-    {
-      "text": "w4-color-link-ext",
-      "weight": 4,
-      "color": "#ead416",
+  //     "external": true,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w8",
+  //     "weight": 8,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w3",
+  //     "weight": 3,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w1-color",
+  //     "weight": 1,
+  //     "color": "#32a283",
+  //     "rotate": 13
+  //   },
+  //   {
+  //     "text": "w4-color-link-ext",
+  //     "weight": 4,
+  //     "color": "#ead416",
 
-      "external": true,
-      "rotate": 0
-    },
-    {
-      "text": "w3-color",
-      "weight": 3,
-      "color": "#453cf",
-      "rotate": 7
-    },
-    {
-      "text": "w7-link-ext",
-      "weight": 7,
+  //     "external": true,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w3-color",
+  //     "weight": 3,
+  //     "color": "#453cf",
+  //     "rotate": 7
+  //   },
+  //   {
+  //     "text": "w7-link-ext",
+  //     "weight": 7,
 
-      "external": true,
-      "rotate": 0
-    },
-    {
-      "text": "w7-color",
-      "weight": 7,
-      "color": "#587453",
-      "rotate": 0
-    },
-    {
-      "text": "w1-color-link",
-      "weight": 1,
-      "color": "#526f88",
+  //     "external": true,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w7-color",
+  //     "weight": 7,
+  //     "color": "#587453",
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w1-color-link",
+  //     "weight": 1,
+  //     "color": "#526f88",
 
-      "rotate": 0
-    },
-    {
-      "text": "w2",
-      "weight": 2,
-      "rotate": 0
-    },
-    {
-      "text": "w10-color",
-      "weight": 10,
-      "color": "#fda4d7",
-      "rotate": -14
-    },
-    {
-      "text": "w8-link",
-      "weight": 8,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w2",
+  //     "weight": 2,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w10-color",
+  //     "weight": 10,
+  //     "color": "#fda4d7",
+  //     "rotate": -14
+  //   },
+  //   {
+  //     "text": "w8-link",
+  //     "weight": 8,
 
-      "rotate": -12
-    },
-    {
-      "text": "w2-link",
-      "weight": 2,
+  //     "rotate": -12
+  //   },
+  //   {
+  //     "text": "w2-link",
+  //     "weight": 2,
 
-      "rotate": 0
-    },
-    {
-      "text": "w2-color-link-ext",
-      "weight": 2,
-      "color": "#7f618",
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w2-color-link-ext",
+  //     "weight": 2,
+  //     "color": "#7f618",
 
-      "external": true,
-      "rotate": 17
-    },
-    {
-      "text": "w2-color-link",
-      "weight": 2,
-      "color": "#66f18c",
+  //     "external": true,
+  //     "rotate": 17
+  //   },
+  //   {
+  //     "text": "w2-color-link",
+  //     "weight": 2,
+  //     "color": "#66f18c",
 
-      "rotate": 0
-    },
-    {
-      "text": "w9-link",
-      "weight": 9,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w9-link",
+  //     "weight": 9,
 
-      "rotate": 0
-    },
-    {
-      "text": "w4",
-      "weight": 4,
-      "rotate": 0
-    },
-    {
-      "text": "w6-color",
-      "weight": 6,
-      "color": "#8bc27",
-      "rotate": 0
-    },
-    {
-      "text": "w3-link",
-      "weight": 3,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w4",
+  //     "weight": 4,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w6-color",
+  //     "weight": 6,
+  //     "color": "#8bc27",
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w3-link",
+  //     "weight": 3,
 
-      "rotate": 0
-    },
-    {
-      "text": "w8-color-link",
-      "weight": 8,
-      "color": "#b0a84a",
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w8-color-link",
+  //     "weight": 8,
+  //     "color": "#b0a84a",
 
-      "rotate": 0
-    },
-    {
-      "text": "w2-link",
-      "weight": 2,
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w2-link",
+  //     "weight": 2,
 
-      "rotate": -19
-    },
-    {
-      "text": "w4-color",
-      "weight": 4,
-      "color": "#db6279",
-      "rotate": 0
-    },
-    {
-      "text": "w4",
-      "weight": 4,
-      "rotate": -17
-    }
-  ];
-  startDate: string = ''
-  endDate: string = ''
+  //     "rotate": -19
+  //   },
+  //   {
+  //     "text": "w4-color",
+  //     "weight": 4,
+  //     "color": "#db6279",
+  //     "rotate": 0
+  //   },
+  //   {
+  //     "text": "w4",
+  //     "weight": 4,
+  //     "rotate": -17
+  //   }
+  // ];
+  data:any[]=[]
+  startDate  = ''
+  endDate = ''
   maxEndDate: any;
   social_media_report: any
   inbound_traffic: any
@@ -286,6 +294,7 @@ export class ExecutiveDashboardComponent implements OnInit {
   facebook_reaction: any
   constructor(private _hS: HeaderService,
     private commonDataService: CommonDataService,
+    private spinerService:NgxSpinnerService,
     private datePipe: DatePipe,) { }
 
   ngOnInit(): void {
@@ -296,13 +305,13 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.getEnagementChart()
     this.getRefionWiseTrafic()
     this.GetAllSocialMediaReport()
-
+   
 
 
     
   }
   GetAllSocialMediaReport() {
-    debugger
+    
     if (this.endDate == '' && this.startDate == '') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 5);
@@ -315,8 +324,8 @@ export class ExecutiveDashboardComponent implements OnInit {
     }
     const requestData = {
       pageId: "622038187854126",
-      from: "2023-09-15",
-      to: "2023-10-05",
+      from: this.startDate,
+      to: this.endDate,
     };
     this.inbound_traffic = []
     this.sentimental_analysis = []
@@ -327,9 +336,10 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.facebook_reaction = [];
 
     if (this.startDate <= this.endDate) {
+      this.spinerService.show()
       this.commonDataService.GetAllSocialMatrics(requestData).subscribe((res: any) => {
         this.social_media_report = res
-
+   this.spinerService.hide()
         const inBoundTrafficDto = this.social_media_report.inBoundTrafficDto;
         inBoundTrafficDto.forEach((data: any) => {
           const date = new Date(data.date);
@@ -345,7 +355,7 @@ export class ExecutiveDashboardComponent implements OnInit {
         // Audience Chart
 
         this.social_media_report.facebookReportResponseDto.postLikeSpan?.forEach((data: any) => {
-          debugger
+          
           this.post_likes.push(data.activityCount);
           if (!this.date_Audience.includes(data.dateValue)) {
             this.date_Audience.push(data.dateValue)
@@ -365,7 +375,7 @@ export class ExecutiveDashboardComponent implements OnInit {
         });
         // facebook Reaction 
         const pageReactionsSpan = this.social_media_report.facebookReportResponseDto.pageReactionsSpan;
-        debugger
+        
         pageReactionsSpan?.forEach((data: any) => {
           const date = (data.totalReactionsDateValue);
           this.facebook_reaction.push(data.like + data.love + data.wow + data.haha + data.sorry + data.anger + data.sad + data.tHANKFUL + data.pride + data.cARE);
@@ -374,6 +384,7 @@ export class ExecutiveDashboardComponent implements OnInit {
         this.getSentimentChart()
         this.getChartAudienceEngagement()
         this.getFacebookReaction()
+        this.getWordCloud()
       })
 
     } else {
@@ -448,7 +459,7 @@ export class ExecutiveDashboardComponent implements OnInit {
     option && myChart.setOption(option);
   }
   getChartAudienceEngagement() {
-    debugger
+    
     type EChartsOption = echarts.EChartsOption;
     var chartDom = document.getElementById('audience')!;
     var myChart = echarts.init(chartDom);
@@ -706,5 +717,58 @@ export class ExecutiveDashboardComponent implements OnInit {
   }
   resetEndDate() {
     this.endDate = "";
+  }
+  getWordCloud(){
+    
+    if (this.endDate == '' && this.startDate == '') {
+      let currentDate = new Date();
+      let prevDate = currentDate.setDate(currentDate.getDate() - 8);
+      this.startDate = this.datePipe.transform(prevDate, 'MM-dd-YYYY') || "";
+      this.endDate = this.datePipe.transform(new Date(), 'MM-dd-YYYY') || "";
+    } else if (this.startDate != '' && this.endDate != '') {
+      this.startDate = this.datePipe.transform(this.startDate, 'MM-dd-YYYY') || "";
+      this.endDate = this.datePipe.transform(this.endDate, 'MM-dd-YYYY') || "";
+    }
+    this.data=[]
+    this.spinerService.show()
+    this.commonDataService.getWordCloud(this.startDate,this.endDate).subscribe((res:any)=>{
+      this.wordcloudData=res
+      this.spinerService.hide()
+      if (this.wordcloudData.length > 0) {
+        this.data = [];
+        res.forEach((element: any) => {
+          var obj = {
+            text: element.Term,
+            weight: element.frequency 
+          };
+          this.data.push(obj);
+        });
+        
+      }
+      
+      console.log('Term: ', this.data);
+      
+    });
+  //     this.wordcloudData.forEach((x:any)=>{
+  //       this.data.push({text:x.Term, weight:x.frequency})
+  //     })
+    //     this.data= [{
+ 
+    // color:  "#c90296",
+    // text: "کے الیکٹرک",
+    // weight : 28
+
+    //  },
+    //  {
+ 
+    //   color:  "#c90296",
+    //   text: "کے الیکٹرک",
+    //   weight : 78
+  
+    //    },
+    // ]
+    //   console.log("WordCloud===>",this.data)
+    
+
   }
 }

@@ -22,6 +22,7 @@ import { MarkAsCompleteDto } from 'src/app/shared/Models/MarkAsCompleteDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'responder-header',
@@ -124,7 +125,8 @@ export class ResponderHeaderComponent implements OnInit {
     private userInfoService: UserInformationService,
     private headerCountService: HeaderCountService,
     private stor: StorageService,
-    private queryStatusService: QueryStatusService
+    private queryStatusService: QueryStatusService,
+    private location: Location
   ) {
   }
   unrespondedCount: number = 0;
@@ -139,7 +141,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.activeChannel = this._route.url.split('/')[5];
 
     this.Subscription = this.userInfoService.userInfo$.subscribe((userInfo) => {
-      debugger
+      
       if (userInfo != null) {
         this.userInfo = userInfo;
         localStorage.setItem('storeHeaderOpenedId', this.userInfo.userId);
@@ -829,12 +831,20 @@ export class ResponderHeaderComponent implements OnInit {
   markAsCompleteDto = new MarkAsCompleteDto();
   // only for KE
   removeAssignedQuery() {
-    const ProfileId = localStorage.getItem('profileId')
-    this.commondata.RemoveAssignedQuery(ProfileId).subscribe((res: any) => {
-      this.route.navigateByUrl('/all-inboxes/follow_up/all');
-      localStorage.setItem('assignedProfile', '')
-      console.log('remove Response===>', res)
-    })
+    debugger
+    const ProfileId = localStorage.getItem('assignedProfile')
+    
+    if(ProfileId==null || ProfileId == ""){
+      this.location.back();
+    }
+    else{
+      this.commondata.RemoveAssignedQuery(ProfileId).subscribe((res: any) => {
+        this.location.back();
+        localStorage.setItem('assignedProfile', '')
+        console.log('remove Response===>', res)
+      })
+    }
+   
   }
   markAsComplete() {
     this.markAsCompleteDto.user = this.userInfo.userId;
@@ -1086,7 +1096,7 @@ export class ResponderHeaderComponent implements OnInit {
   itemsToBeUpdated: any[] = [];
 
   InsertTagInProfile(tagName: string, type: string, profileId: any) {
-    debugger
+    
     var obj = {
       feedId: profileId,
       tagName: tagName,
@@ -1109,7 +1119,7 @@ export class ResponderHeaderComponent implements OnInit {
   }
 
   RemoveTagInProfile(tagName: string, type: string, profileId: any) {
-    debugger
+    
     var obj = {
       feedId: profileId,
       tagName: tagName,

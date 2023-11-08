@@ -21,3 +21,10 @@ textarea {
    max-height: 100px;
    overflow: auto;
  }
+ .form-control.auto {
+   resize: none;
+   height: 40px;
+   min-height: 40px;
+   // max-height: 144px;
+   overflow: hidden; 
+ }

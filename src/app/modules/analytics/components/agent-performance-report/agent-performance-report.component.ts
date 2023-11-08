@@ -75,12 +75,20 @@ export class AgentPerformanceReportComponent implements OnInit {
       0
     );
   }
-
   calculateTotalDirectMessages(): number {
     return this.agent_performance_report?.agentPerformance.reduce(
       (total: any, agent: { messageCount: any; }) => total + (agent.messageCount || 0),
       0
     );
+  }
+  agentCount: number = 0;
+  getTableStyle() {
+    const threshold = 10; 
+    const maxHeight = threshold * 50 + 40; 
+    const style = {
+      'max-height': this.agentCount > threshold ? `${maxHeight}px` : 'auto',
+    };
+    return style;
   }
   mouseClickReset(){
     this.searchText=''

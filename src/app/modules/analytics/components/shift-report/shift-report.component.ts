@@ -97,7 +97,7 @@ keywordslist:any[]=[]
     this.commandataService.GetAllTags().subscribe((res: any) => {
       const menu = this.stor.retrive('Tags', 'O').local;
       menu.forEach((item:any) => {
-        debugger
+        
         if(item.name == "Tags"){
           item.subTags.forEach((parentags:any) => {
             parentags.subTags.forEach((singleTagObj:any)=>{

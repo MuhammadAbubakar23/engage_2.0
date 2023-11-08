@@ -13,6 +13,7 @@ import * as echarts from 'echarts';
 import { SharedModule } from '../../../../shared/shared.module';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { FilterPipe } from 'src/app/shared/CustomPipes/filter.pipe';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
   standalone: true,
@@ -56,7 +57,8 @@ export class InboundOntboundReportComponent implements OnInit {
     private commonService: CommonDataService,
     private datePipe: DatePipe,
     private cdr: ChangeDetectorRef,
-    private SpinnerService: NgxSpinnerService
+    private SpinnerService: NgxSpinnerService,
+    private stor:StorageService
   ) { }
   ngOnInit(): void {
     this.currentDate = new Date();
@@ -464,42 +466,42 @@ export class InboundOntboundReportComponent implements OnInit {
       icon: 'fa-brands fa-facebook facebook pe-2',
       isSelected: false,
     },
-    {
-      id: '14',
-      name: 'YouTube',
-      icon: 'fa-brands fa-youtube pe-2',
-      isSelected: false,
-    },
-    {
-      id: '15',
-      name: 'SMS',
-      icon: 'fa-solid fa-comment-alt pe-2',
-      isSelected: false,
-    },
-    {
-      id: '14',
-      name: 'WhatsApp',
-      icon: 'fa-brands fa-whatsapp pe-2',
-      isSelected: false,
-    },
-    {
-      id: '15',
-      name: 'Email',
-      icon: 'fa-solid fa-envelope pe-2',
-      isSelected: false,
-    },
-    {
-      id: '14',
-      name: 'OfficeEmail',
-      icon: 'fa-solid fa-envelope pe-2',
-      isSelected: false,
-    },
-    {
-      id: '14',
-      name: 'WebChat',
-      icon: 'fa-solid fa-comment-dots pe-2',
-      isSelected: false,
-    },
+    // {
+    //   id: '14',
+    //   name: 'YouTube',
+    //   icon: 'fa-brands fa-youtube pe-2',
+    //   isSelected: false,
+    // },
+    // {
+    //   id: '15',
+    //   name: 'SMS',
+    //   icon: 'fa-solid fa-comment-alt pe-2',
+    //   isSelected: false,
+    // },
+    // {
+    //   id: '14',
+    //   name: 'WhatsApp',
+    //   icon: 'fa-brands fa-whatsapp pe-2',
+    //   isSelected: false,
+    // },
+    // {
+    //   id: '15',
+    //   name: 'Email',
+    //   icon: 'fa-solid fa-envelope pe-2',
+    //   isSelected: false,
+    // },
+    // {
+    //   id: '14',
+    //   name: 'OfficeEmail',
+    //   icon: 'fa-solid fa-envelope pe-2',
+    //   isSelected: false,
+    // },
+    // {
+    //   id: '14',
+    //   name: 'WebChat',
+    //   icon: 'fa-solid fa-comment-dots pe-2',
+    //   isSelected: false,
+    // },
   ];
   contentTypes = [
     {
@@ -544,13 +546,13 @@ export class InboundOntboundReportComponent implements OnInit {
       icon: 'fa-brands fa-instagram night pe-2',
       isSelected: false,
     },
-    {
-      id: '24',
-      name: 'Youtube Comments',
-      value: 'YC',
-      icon: 'fa-brands fa-youtube youtube pe-2',
-      isSelected: false,
-    },
+    // {
+    //   id: '24',
+    //   name: 'Youtube Comments',
+    //   value: 'YC',
+    //   icon: 'fa-brands fa-youtube youtube pe-2',
+    //   isSelected: false,
+    // },
   ];
   typeOptions = [
     { id: '123', label: 'InBound Outbound Report', isSelected: false },
@@ -564,8 +566,10 @@ export class InboundOntboundReportComponent implements OnInit {
   searchText: string = '';
   getTags(): void {
     this.commonService.GetTagsList().subscribe((res: any) => {
-      debugger
-      res.forEach((tags: any) => {
+      
+      const menu = this.stor.retrive('Tags', 'O').local;
+      menu.forEach((tags: any) => {
+        
         if (tags.name == 'Tags') {
           tags.subTags.forEach((parentTag: any) => {
             parentTag.subTags.forEach((singleTagObj: any) => {
@@ -606,7 +610,7 @@ export class InboundOntboundReportComponent implements OnInit {
 
   responseReceived: boolean = false;
   getListUser() {
-    debugger
+    
     if (!this.responseReceived) {
       this.responseReceived = true;
       this.commonService.GetUserList().subscribe(

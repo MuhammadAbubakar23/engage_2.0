@@ -304,21 +304,26 @@
                                                                                                             (click)="insertTagsForFeed(whatsappMsg.id, keyword.name)"
                                                                                                             [ngClass]="activeTag==true?'active':''"
                                                                                                             *ngFor="let keyword of tag.subTags | filter: searchText">
-                                                                                                            <div class="list-down-icon">
-                                                                                                                <span class="btn iconButton iconHover medium">
-                                                                                                                    <i class="fal fa-tag coal"></i>
+                                                                                                            <div
+                                                                                                                class="list-down-icon">
+                                                                                                                <span
+                                                                                                                    class="btn iconButton iconHover medium">
+                                                                                                                    <i
+                                                                                                                        class="fal fa-tag coal"></i>
                                                                                                                 </span>
                                                                                                             </div>
                                                                                                             <div
                                                                                                                 class="w-100 list-txt">
                                                                                                                 <div
                                                                                                                     class="d-flex w-100 justify-content-between">
-                                                                                                                    <h6 class="mb-1 darkblue">
+                                                                                                                    <h6
+                                                                                                                        class="mb-1 darkblue">
                                                                                                                         {{keyword.name}}
                                                                                                                     </h6>
                                                                                                                 </div>
                                                                                                             </div>
-                                                                                                            <small *ngIf="keyword.id == tag.id">
+                                                                                                            <small
+                                                                                                                *ngIf="keyword.id == tag.id">
                                                                                                                 <i [ngClass]="checkTag==true?'fa-check-circle':''"
                                                                                                                     class="fal sky"></i>
                                                                                                             </small>
@@ -557,7 +562,8 @@
 
 </div>
 
-<div class="msgTypingField shadow-lg" *ngIf="this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up'">
+<div class="msgTypingField shadow-lg"
+    *ngIf="this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up'">
     <div *ngFor="let whatsapp of WhatsappData">
         <div class="attachment-block" [ngClass]="isAttachment == true?'':'d-none'">
             <div class="card-body p-3" *ngFor="let image of ImageName; let i = index" style="margin-right: 10px;">
@@ -603,18 +609,30 @@
                         <i class="fa-light fa-square-list"></i>
                     </span>
                 </button>
-                <ul class="dropdown-menu custom-dropdown shadow mt-2 csatmenu"
+                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
                     aria-labelledby="dropdownMenuButton2">
                     <ul class="dropdown-listing">
                         <li class="dropdown-listing-header  p-2">
                             <div class="head-section" (click)="c_satForm()">
-                                <a class="dropdown-item">
-                                    Customer Satisfaction Form
+                                <a class="list-group-item d-flex level1Btn">
+                                    <div class="w-100 list-txt">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1 darkblue">
+                                                Customer Satisfaction Form
+                                            </h6>
+                                        </div>
+                                    </div>
                                 </a>
                             </div>
                             <div class="head-section" (click)="c_informationForm()">
-                                <a class="dropdown-item">
-                                    Customer Information Form
+                                <a class="list-group-item d-flex level1Btn">
+                                    <div class="w-100 list-txt">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1 darkblue">
+                                                Customer Information Form
+                                            </h6>
+                                        </div>
+                                    </div>
                                 </a>
                             </div>
                         </li>
@@ -623,8 +641,8 @@
             </div>
             <div class="form-floating textarea-field">
                 <textarea formControlName="text" class="form-control auto" rows="1" id="text"
-                    placeholder="Write a response here" [(ngModel)]="text" style="height: 50px" #textarea></textarea>
-
+                    placeholder="Write a response here" [(ngModel)]="text" #textarea
+                    (input)="adjustTextareaHeight(textarea)" (keydown)="handleTextareaKeyDown($event)"></textarea>
             </div>
             <div class="icons-list align-items-md-center d-flex ps-2">
                 <div class="dropdown w-auto">

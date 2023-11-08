@@ -12,7 +12,8 @@
   position: relative;
   transition: 0.3s;
   min-height: 100vh;
-   z-index: 11;
+  //  z-index: 11;
+   z-index: 10;
   padding: 0 3px;
   .leftbar-console-expanded{
     visibility: visible;

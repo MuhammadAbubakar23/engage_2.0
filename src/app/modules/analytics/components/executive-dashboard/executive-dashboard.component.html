@@ -2,6 +2,10 @@
     <div class="middle-content d-flex">
         <div class="p-4 d-grid w-100">
             <div class="analytics-dashboard" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;">
+                <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                [fullScreen]="false">
+                <p style="color: white"> Loading... </p>
+            </ngx-spinner>
                 <div class="scroll-content">
                     <div class="d-flex align-items-center">
                         <ul class="nav nav-tabs buttontabs">
@@ -231,7 +235,9 @@
                                         <h5 class="section-heading mb-3 p-0">Word Cloud</h5>
                                         <div class="graphcontainer align-items-center">
                                             <div class="worldcloud">
-                                                <angular-tag-cloud [config]="options" [data]="data"></angular-tag-cloud>
+                                                <angular-tag-cloud [config]="options" 
+                                                [zoomOnHover]="zoomOnHoverOptions" 
+                                                 [data]="data"></angular-tag-cloud>
                                                 <!-- <ul class="list-inline">
                                                     <li class="list-inline-item">
                                                         <span class="badge rounded-pill skyTransBg">Power Bills

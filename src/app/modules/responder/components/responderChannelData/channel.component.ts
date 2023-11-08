@@ -475,7 +475,7 @@ export class ChannelComponent implements OnInit {
   }
 
   getChannelCommentsOrTweets() {
-    debugger
+    
     this.flag = this.router.url.split('/')[2];
     if (this.id != null || this.id != undefined) {
       localStorage.setItem('storeOpenedId', this.id);

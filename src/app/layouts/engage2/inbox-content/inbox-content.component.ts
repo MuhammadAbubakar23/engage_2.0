@@ -6,7 +6,10 @@ import {
   ViewContainerRef,
   HostListener,
 } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import {
+  NavigationEnd,
+  Router,
+} from '@angular/router';
 import { Subscription } from 'rxjs';
 import { InboxesComponent } from 'src/app/modules/inboxes/inboxes.component';
 import { BlacklistHeaderComponent } from 'src/app/shared/headers/blacklist-header/blacklist-header.component';
@@ -20,6 +23,7 @@ import { InboxHeaderComponent } from './inbox-header/inbox-header.component';
 import { InboxMenuComponent } from './inbox-menu/inbox-menu.component';
 import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
 import { AssignToMeHeaderComponent } from 'src/app/shared/headers/assign-to-me-header/assign-to-me-header.component';
+import { CompletedInteractionHeaderComponent } from 'src/app/shared/headers/completed-interaction-header/completed-interaction-header.component';
 
 @Component({
   selector: 'inbox-content',
@@ -207,9 +211,12 @@ export class     InboxContentComponent implements OnInit {
         this.header?.createComponent(header);
         break;
         case 'completed':
-        submenu = this.resolver.resolveComponentFactory(InboxMenuComponent);
-        this.submenu?.createComponent(submenu);
-        break;
+          submenu = this.resolver.resolveComponentFactory(InboxMenuComponent);
+          this.submenu?.createComponent(submenu);
+  
+          header = this.resolver.resolveComponentFactory(CompletedInteractionHeaderComponent);
+          this.header?.createComponent(header);
+          break;
 
       case 'responder':
         submenu = this.resolver.resolveComponentFactory(ResponderMenuComponent);

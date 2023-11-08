@@ -39,9 +39,9 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
 
   // For Total Parco
-  // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api',
-  // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/', 
-  // SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
+  IdentityBaseUrl: 'https://tpplidp.360scrm.com/api',
+  CommonBaseUrl: 'https://tpplcom.360scrm.com/api/', 
+  SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
 
   // For Morinaga
   // IdentityBaseUrl: 'https://waidentity.enteract.live/api',
@@ -49,10 +49,10 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
   
   // For Testing
-  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  CommonBaseUrl: 'https://common-engage.enteract.app/api/', 
+  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  // CommonBaseUrl: 'https://common-engage.enteract.app/api/', 
   // CommonBaseUrl: 'https://5fff-203-135-1-210.ngrok-free.app/api/', 
-  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
 
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',

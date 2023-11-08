@@ -29,9 +29,11 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link h-100" [class.active]="TwitterTweets.length == 0 && TwitterMentions.length > 0" (click)="twitterMentionReply()" id="twitter-mention-tab"
-                        data-bs-toggle="tab" data-bs-target="#twitter-mention" type="button" role="tab"
-                        aria-controls="twitter-mention" aria-selected="false" tabindex="-1" *ngIf="TwitterMentions.length > 0">
+                    <button class="nav-link h-100"
+                        [class.active]="TwitterTweets.length == 0 && TwitterMentions.length > 0"
+                        (click)="twitterMentionReply()" id="twitter-mention-tab" data-bs-toggle="tab"
+                        data-bs-target="#twitter-mention" type="button" role="tab" aria-controls="twitter-mention"
+                        aria-selected="false" tabindex="-1" *ngIf="TwitterMentions.length > 0">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
                                 <i class="fab fa-facebook-messenger ice"></i>
@@ -43,9 +45,11 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link h-100" [class.active]="TwitterTweets.length == 0 && TwitterMessages.length > 0 && TwitterMentions.length == 0" (click)="twitterMessageReply()" id="twitter-message-tab"
-                        data-bs-toggle="tab" data-bs-target="#twitter-message" type="button" role="tab"
-                        aria-controls="twitter-message" aria-selected="false" tabindex="-1" *ngIf="TwitterMessages.length > 0">
+                    <button class="nav-link h-100"
+                        [class.active]="TwitterTweets.length == 0 && TwitterMessages.length > 0 && TwitterMentions.length == 0"
+                        (click)="twitterMessageReply()" id="twitter-message-tab" data-bs-toggle="tab"
+                        data-bs-target="#twitter-message" type="button" role="tab" aria-controls="twitter-message"
+                        aria-selected="false" tabindex="-1" *ngIf="TwitterMessages.length > 0">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
                                 <i class="fab fa-facebook-messenger ice"></i>
@@ -139,21 +143,30 @@
                                                                     <i class="fas fa-star sun"></i>
                                                                 </button>
                                                             </div>
-                                                            <div >
-                                                                <div class="dropdown w-auto" *ngIf="ttr.queryStatus != 'Responded' && ttr.queryStatus != 'Completed'">
-                                                                    <button class="btn coal p-0 ps-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        <small *ngIf="ttr.spam == true; else notSpam">Spam 
-                                                                            <i class="far fa-chevron-down ms-2" *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'"></i>
+                                                            <div>
+                                                                <div class="dropdown w-auto"
+                                                                    *ngIf="ttr.queryStatus != 'Responded' && ttr.queryStatus != 'Completed'">
+                                                                    <button class="btn coal p-0 ps-3" type="button"
+                                                                        id="dropdownMenuButton1"
+                                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                                        <small
+                                                                            *ngIf="ttr.spam == true; else notSpam">Spam
+                                                                            <i class="far fa-chevron-down ms-2"
+                                                                                *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'"></i>
                                                                         </small>
                                                                         <ng-template #notSpam>{{ttr.queryStatus}}
-                                                                            <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && ttr.queryStatus != 'Completed'"></i>
+                                                                            <i class="far fa-chevron-down ms-2"
+                                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && ttr.queryStatus != 'Completed'"></i>
                                                                         </ng-template>
                                                                     </button>
-                                                                    <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1"
+                                                                    <ul class="dropdown-menu custom-dropdown"
+                                                                        aria-labelledby="dropdownMenuButton1"
                                                                         *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && ttr.queryStatus != 'Completed'">
-                                                            
+
                                                                         <li>
-                                                                            <a class="dropdown-item" *ngIf="ttr.queryStatus != 'Responded'" (click)="commentStatus(ttr.id, 'TTR')">Read</a>
+                                                                            <a class="dropdown-item"
+                                                                                *ngIf="ttr.queryStatus != 'Responded'"
+                                                                                (click)="commentStatus(ttr.id, 'TTR')">Read</a>
                                                                             <!-- <a class="dropdown-item" *ngIf="ttr.starred == true; else notStarred" (click)="starMessage(ttr.id, false)">Remove Star from Message</a>
                                                                             <ng-template #notStarred>
                                                                                <a class="dropdown-item" (click)="starMessage(ttr.id, true)">Star Message</a>
@@ -162,14 +175,15 @@
                                                                             <ng-template #notSpamBtn>
                                                                                 <a class="dropdown-item"  (click)="spamMessage(ttr.id, true, 'TTR')">Mark as Spam</a>
                                                                             </ng-template> -->
-                                                                            
+
                                                                         </li>
                                                                     </ul>
                                                                 </div>
-                                                                <div class="w-auto" *ngIf="(ttr.queryStatus == 'Responded' || ttr.queryStatus == 'Completed') && ttr.spam == false"
-                                                                style="margin-left: 20px;">
-                                                                <small>{{ttr.queryStatus}} </small>
-                                                            </div>
+                                                                <div class="w-auto"
+                                                                    *ngIf="(ttr.queryStatus == 'Responded' || ttr.queryStatus == 'Completed') && ttr.spam == false"
+                                                                    style="margin-left: 20px;">
+                                                                    <small>{{ttr.queryStatus}} </small>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="post-img-wrap whatsappImgModalBtn" type="button"
@@ -204,12 +218,13 @@
                                                         <!-- For Sentiment Pills -->
                                                     </div>
 
-                                                    <div class="message-bottom" *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
+                                                    <div class="message-bottom"
+                                                        *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
                                                         <div class="row">
                                                             <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                                 <div
                                                                     class="message-actionlist d-flex align-items-center">
-                                                                    <div class="box" >
+                                                                    <div class="box">
                                                                         <a class="message-actionItem coal unlikebht btn p-0 label-reactions"
                                                                             (click)="likeByAdmin(ttr.id, ttr.isLikedByAdmin, tweet?.platform, tweet?.post?.profile.page_Id, tweet?.post?.profile.profile_Id, tweet?.user?.userId)"
                                                                             [class.active]="ttr.isLikedByAdmin == true">
@@ -221,14 +236,13 @@
                                                                         </a>
                                                                     </div>
                                                                     <a class="message-actionItem replyBtn coal"
-                                                                        (click)="SendCommentInformation(ttr.id)"
-                                                                        >
+                                                                        (click)="SendCommentInformation(ttr.id)">
                                                                         <span class="iconButton small btn">
                                                                             <i class="fal fa-reply coal"></i>
                                                                         </span>
                                                                         Reply
                                                                     </a>
-                                                                    <div class="dropdown w-auto" >
+                                                                    <div class="dropdown w-auto">
                                                                         <button class="iconButton medium"
                                                                             id="dropdownMenuButton1"
                                                                             data-bs-toggle="dropdown"
@@ -239,92 +253,95 @@
                                                                             Tag
                                                                         </button>
                                                                         <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                        aria-labelledby="dropdownMenuButton2">
-                                                                        <ul class="dropdown-listing">
-                                                                            <li class="dropdown-listing-header">
-                                                                                <div class="head-section">
-                                                                                    <div class="left">
-                                                                                        <h6>Tags
-                                                                                        </h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </li>
-                                                                            <li class="dropend">
-                                                                                <div *ngFor="let tag of TagsList"
-                                                                                    class="list-group list-group-flush dropend">
-                                                                                    <a data-bs-toggle="dropdown"
-                                                                                        class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
-
-                                                                                        <div class="w-100 list-txt">
-                                                                                            <div class="d-flex w-100 justify-content-between">
-                                                                                                <h6
-                                                                                                    class="mb-1 darkblue">
-                                                                                                    {{tag.name}}
-                                                                                                </h6>
-                                                                                            </div>
+                                                                            aria-labelledby="dropdownMenuButton2">
+                                                                            <ul class="dropdown-listing">
+                                                                                <li class="dropdown-listing-header">
+                                                                                    <div class="head-section">
+                                                                                        <div class="left">
+                                                                                            <h6>Tags
+                                                                                            </h6>
                                                                                         </div>
+                                                                                    </div>
+                                                                                </li>
+                                                                                <li class="dropend">
+                                                                                    <div *ngFor="let tag of TagsList"
+                                                                                        class="list-group list-group-flush dropend">
+                                                                                        <a data-bs-toggle="dropdown"
+                                                                                            class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
 
-                                                                                    </a>
-                                                                                    <ul class="dropdown-menu shadow">
-                                                                                        <form class="custom-searchbar">
-                                                                                            <input
-                                                                                                class="form-control rounded-pill shadow-sm"
-                                                                                                [(ngModel)]="searchText"
-                                                                                                placeholder="Search"
-                                                                                                aria-label="Search">
-                                                                                            <span
-                                                                                                class="btn searchbar-btn"
-                                                                                                type="submit">
-                                                                                                <i
-                                                                                                    class="fal fa-search silver"></i>
-                                                                                            </span>
-                                                                                        </form>
-                                                                                        <li class="list-body small-list"
-                                                                                            data-scrollbar="true"
-                                                                                            tabindex="-1"
-                                                                                            style="overflow-y: auto; outline: none;">
-                                                                                            <div class="scroll-content"
-                                                                                                style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
+                                                                                            <div class="w-100 list-txt">
                                                                                                 <div
-                                                                                                    class="list-group list-group-flush">
-                                                                                                    <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                        (click)="insertTagsForFeed(ttr.id, keyword.name)"
-                                                                                                        [ngClass]="activeTag==true?'active':''"
-                                                                                                        *ngFor="let keyword of tag.subTags | filter: searchText">
-                                                                                                        <div
-                                                                                                            class="list-down-icon">
-                                                                                                            <span
-                                                                                                                class="btn iconButton iconHover medium">
-                                                                                                                <i
-                                                                                                                    class="fal fa-tag coal"></i>
-                                                                                                            </span>
-                                                                                                        </div>
-                                                                                                        <div
-                                                                                                            class="w-100 list-txt">
-                                                                                                            <div
-                                                                                                                class="d-flex w-100 justify-content-between">
-                                                                                                                <h6
-                                                                                                                    class="mb-1 darkblue">
-                                                                                                                    {{keyword.name}}
-                                                                                                                </h6>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                        <small
-                                                                                                            *ngIf="keyword.id == tag.id">
-                                                                                                            <i [ngClass]="checkTag==true?'fa-check-circle':''"
-                                                                                                                class="fal sky"></i>
-                                                                                                        </small>
-                                                                                                    </a>
+                                                                                                    class="d-flex w-100 justify-content-between">
+                                                                                                    <h6
+                                                                                                        class="mb-1 darkblue">
+                                                                                                        {{tag.name}}
+                                                                                                    </h6>
                                                                                                 </div>
                                                                                             </div>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </li>
+
+                                                                                        </a>
+                                                                                        <ul
+                                                                                            class="dropdown-menu shadow">
+                                                                                            <form
+                                                                                                class="custom-searchbar">
+                                                                                                <input
+                                                                                                    class="form-control rounded-pill shadow-sm"
+                                                                                                    [(ngModel)]="searchText"
+                                                                                                    placeholder="Search"
+                                                                                                    aria-label="Search">
+                                                                                                <span
+                                                                                                    class="btn searchbar-btn"
+                                                                                                    type="submit">
+                                                                                                    <i
+                                                                                                        class="fal fa-search silver"></i>
+                                                                                                </span>
+                                                                                            </form>
+                                                                                            <li class="list-body small-list"
+                                                                                                data-scrollbar="true"
+                                                                                                tabindex="-1"
+                                                                                                style="overflow-y: auto; outline: none;">
+                                                                                                <div class="scroll-content"
+                                                                                                    style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
+                                                                                                    <div
+                                                                                                        class="list-group list-group-flush">
+                                                                                                        <a class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                                            (click)="insertTagsForFeed(ttr.id, keyword.name)"
+                                                                                                            [ngClass]="activeTag==true?'active':''"
+                                                                                                            *ngFor="let keyword of tag.subTags | filter: searchText">
+                                                                                                            <div
+                                                                                                                class="list-down-icon">
+                                                                                                                <span
+                                                                                                                    class="btn iconButton iconHover medium">
+                                                                                                                    <i
+                                                                                                                        class="fal fa-tag coal"></i>
+                                                                                                                </span>
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                class="w-100 list-txt">
+                                                                                                                <div
+                                                                                                                    class="d-flex w-100 justify-content-between">
+                                                                                                                    <h6
+                                                                                                                        class="mb-1 darkblue">
+                                                                                                                        {{keyword.name}}
+                                                                                                                    </h6>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <small
+                                                                                                                *ngIf="keyword.id == tag.id">
+                                                                                                                <i [ngClass]="checkTag==true?'fa-check-circle':''"
+                                                                                                                    class="fal sky"></i>
+                                                                                                            </small>
+                                                                                                        </a>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
                                                                         </ul>
-                                                                    </ul>
                                                                     </div>
-                                                                    <div class="dropdown w-auto" >
+                                                                    <div class="dropdown w-auto">
                                                                         <button class="iconButton medium show"
                                                                             id="sentimentButton"
                                                                             data-bs-toggle="dropdown"
@@ -347,20 +364,24 @@
                                                                                         <div class="list-group list-group-flush"
                                                                                             *ngFor="let sentiment of Sentiments">
                                                                                             <a class="list-group-item d-flex level1Btn "
-                                                                                            (click)="insertSentimentForFeed(ttr.id, sentiment.name)">
-                                                                                            <div class="list-down-icon">
-                                                                                                <span class="btn iconButton iconHover medium" [innerHTML]="sentiment.icon"></span>
-                                                                                            </div>
-                                                                                            <div class="w-100 list-txt">
+                                                                                                (click)="insertSentimentForFeed(ttr.id, sentiment.name)">
                                                                                                 <div
-                                                                                                    class="d-flex w-100 justify-content-between">
-                                                                                                    <h6
-                                                                                                        class="mb-1 darkblue">
-                                                                                                        {{sentiment.name}}
-                                                                                                    </h6>
+                                                                                                    class="list-down-icon">
+                                                                                                    <span
+                                                                                                        class="btn iconButton iconHover medium"
+                                                                                                        [innerHTML]="sentiment.icon"></span>
                                                                                                 </div>
-                                                                                            </div>
-                                                                                        </a>
+                                                                                                <div
+                                                                                                    class="w-100 list-txt">
+                                                                                                    <div
+                                                                                                        class="d-flex w-100 justify-content-between">
+                                                                                                        <h6
+                                                                                                            class="mb-1 darkblue">
+                                                                                                            {{sentiment.name}}
+                                                                                                        </h6>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </a>
 
                                                                                         </div>
                                                                                     </div>
@@ -462,8 +483,7 @@
                                                                         <span>by: <h6 class="d-inline fw-bold charcoal">
                                                                                 Agent Name </h6>
                                                                         </span>
-                                                                        <span>Complaint Id <a class="sky"
-                                                                                >FP-325687</a>
+                                                                        <span>Complaint Id <a class="sky">FP-325687</a>
                                                                         </span>
                                                                     </small>
                                                                 </div>
@@ -524,8 +544,8 @@
             [infiniteScrollUpDistance]="0.5" [infiniteScrollThrottle]="10" (scrolled)="onScrollMessages()">
             <div class="scroll-content">
                 <div class="tab-content m-4" id="myTabContent">
-                    <div *ngIf="TwitterMentions.length > 0" class="tab-pane fade show active" id="twitter-mention" role="tabpanel"
-                        aria-labelledby="twitter-mention-tab">
+                    <div *ngIf="TwitterMentions.length > 0" class="tab-pane fade show active" id="twitter-mention"
+                        role="tabpanel" aria-labelledby="twitter-mention-tab">
                         <div class="chat-box-wrap" *ngFor="let group of groupedMentions | sort:criteria">
 
                             <div class="date-wrap">
@@ -682,7 +702,8 @@
                                                                                         class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
 
                                                                                         <div class="w-100 list-txt">
-                                                                                            <div class="d-flex w-100 justify-content-between">
+                                                                                            <div
+                                                                                                class="d-flex w-100 justify-content-between">
                                                                                                 <h6
                                                                                                     class="mb-1 darkblue">
                                                                                                     {{tag.name}}
@@ -771,20 +792,22 @@
                                                                                     <div class="list-group list-group-flush"
                                                                                         *ngFor="let sentiment of Sentiments">
                                                                                         <a class="list-group-item d-flex level1Btn "
-                                                                                        (click)="insertSentimentForFeed(tm.id, sentiment.name)">
-                                                                                        <div class="list-down-icon">
-                                                                                            <span class="btn iconButton iconHover medium" [innerHTML]="sentiment.icon"></span>
-                                                                                        </div>
-                                                                                        <div class="w-100 list-txt">
-                                                                                            <div
-                                                                                                class="d-flex w-100 justify-content-between">
-                                                                                                <h6
-                                                                                                    class="mb-1 darkblue">
-                                                                                                    {{sentiment.name}}
-                                                                                                </h6>
+                                                                                            (click)="insertSentimentForFeed(tm.id, sentiment.name)">
+                                                                                            <div class="list-down-icon">
+                                                                                                <span
+                                                                                                    class="btn iconButton iconHover medium"
+                                                                                                    [innerHTML]="sentiment.icon"></span>
                                                                                             </div>
-                                                                                        </div>
-                                                                                    </a>
+                                                                                            <div class="w-100 list-txt">
+                                                                                                <div
+                                                                                                    class="d-flex w-100 justify-content-between">
+                                                                                                    <h6
+                                                                                                        class="mb-1 darkblue">
+                                                                                                        {{sentiment.name}}
+                                                                                                    </h6>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </a>
 
                                                                                     </div>
                                                                                 </div>
@@ -883,12 +906,12 @@
                                                                     <span>by: <h6 class="d-inline fw-bold charcoal">
                                                                             Agent Name </h6>
                                                                     </span>
-                                                                    <span>Complaint Id <a class="sky"
-                                                                            >FP-325687</a>
+                                                                    <span>Complaint Id <a class="sky">FP-325687</a>
                                                                     </span>
                                                                 </small>
                                                             </div>
-                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM dd, yyyy, h:mm a'}}</small>
+                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM
+                                                                dd, yyyy, h:mm a'}}</small>
                                                         </div>
                                                         <div class="msg-snippet show-text">
                                                             <p class="mb-1 coal" data-maxlength="240">
@@ -945,8 +968,8 @@
             [infiniteScrollUpDistance]="0.5" [infiniteScrollThrottle]="10" (scrolled)="onScrollMessages()">
             <div class="scroll-content">
                 <div class="tab-content m-4" id="myTabContent">
-                    <div *ngIf="TwitterMessages.length > 0" class="tab-pane fade show active" id="fb-msg" role="tabpanel"
-                        aria-labelledby="fb-msg-tab">
+                    <div *ngIf="TwitterMessages.length > 0" class="tab-pane fade show active" id="fb-msg"
+                        role="tabpanel" aria-labelledby="fb-msg-tab">
                         <div class="chat-box-wrap" *ngFor="let group of groupedMessages | sort:criteria">
 
                             <div class="date-wrap">
@@ -1103,7 +1126,8 @@
                                                                                         class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
 
                                                                                         <div class="w-100 list-txt">
-                                                                                            <div class="d-flex w-100 justify-content-between">
+                                                                                            <div
+                                                                                                class="d-flex w-100 justify-content-between">
                                                                                                 <h6
                                                                                                     class="mb-1 darkblue">
                                                                                                     {{tag.name}}
@@ -1194,7 +1218,9 @@
                                                                                         <a class="list-group-item d-flex level1Btn "
                                                                                             (click)="insertSentimentForFeed(tdm.id, sentiment.name)">
                                                                                             <div class="list-down-icon">
-                                                                                                <span class="btn iconButton iconHover medium" [innerHTML]="sentiment.icon"></span>
+                                                                                                <span
+                                                                                                    class="btn iconButton iconHover medium"
+                                                                                                    [innerHTML]="sentiment.icon"></span>
                                                                                             </div>
                                                                                             <div class="w-100 list-txt">
                                                                                                 <div
@@ -1305,12 +1331,12 @@
                                                                     <span>by: <h6 class="d-inline fw-bold charcoal">
                                                                             Agent Name </h6>
                                                                     </span>
-                                                                    <span>Complaint Id <a class="sky"
-                                                                            >FP-325687</a>
+                                                                    <span>Complaint Id <a class="sky">FP-325687</a>
                                                                     </span>
                                                                 </small>
                                                             </div>
-                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM dd, yyyy, h:mm a'}}</small>
+                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM
+                                                                dd, yyyy, h:mm a'}}</small>
                                                         </div>
                                                         <div class="msg-snippet show-text">
                                                             <p class="mb-1 coal" data-maxlength="240">
@@ -1362,11 +1388,101 @@
                 </div>
             </div>
         </div>
-<ng-container *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
-        <ng-container *ngIf="TTReply == true">
-            <div class="msgTypingField shadow-lg">
-                <div *ngFor="let tweet of TwitterTweets">
-                    <div *ngFor="let tt of tweet?.comments">
+        <ng-container *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
+            <ng-container *ngIf="TTReply == true">
+                <div class="msgTypingField shadow-lg">
+                    <div *ngFor="let tweet of TwitterTweets">
+                        <div *ngFor="let tt of tweet?.comments">
+                            <div class="attachment-block d-none">
+                                <div class="card-body p-3">
+                                    <span class="close-icon"><i class="fas fa-times"></i></span>
+                                    <i class="far fa-file"></i>
+                                    <h5 class="card-title coal">Backup File</h5>
+                                    <p>242 KB</p>
+                                </div>
+                                <div class="card-body p-3">
+                                    <span class="close-icon"><i class="fas fa-times"></i></span>
+                                    <i class="far fa-file"></i>
+                                    <h5 class="card-title coal">Backup File</h5>
+                                    <p>242 KB</p>
+                                </div>
+                                <div class="card-body p-3">
+                                    <span class="close-icon"><i class="fas fa-times"></i></span>
+                                    <i class="far fa-file"></i>
+                                    <h5 class="card-title coal">Backup File</h5>
+                                    <p>242 KB</p>
+                                </div>
+                            </div>
+                            <div *ngIf="tt.id == tweetId">
+                                <div [ngClass]="show == true? 'show':''" class="card hideMsg">
+                                    <div class="card-body">
+                                        <div class="card-text">
+                                            <span class="fw-bold navy">2354545</span>
+                                            {{tt.message}}
+
+                                        </div>
+                                        <button lass="iconButton small closeMsgBtn" (click)="closeMentionedReply()" c
+                                            data-bs-toggle="tooltip" data-bs-placement="top" id="searchbtn"
+                                            data-bs-original-title="Close">
+                                            <i class="fal fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form [formGroup]="TwitterRepliesForm" (submit)="submitTweetReply()">
+                        <div class="input-group input-group-lg">
+                            <div class="icons-list align-items-md-center d-flex pe-2">
+                                <button class="iconButton small notification iconHover" type="button"
+                                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                                    aria-controls="offcanvasRight" id="searchbtn">
+                                    <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></button>
+                            </div>
+                            <div class="form-floating textarea-field">
+                                <textarea formControlName="text" class="form-control auto" (keydown)="handleTextareaKeyDown($event)" rows="1" id="text"
+                                    placeholder="Write a response here"   (input)="adjustTextareaHeight(textarea)" [(ngModel)]="text" style="height: 50px"
+                                    #textarea></textarea>
+
+                            </div>
+                            <div class="icons-list align-items-md-center d-flex ps-2">
+                                <div class="dropdown w-auto">
+                                    <button class="iconButton small notification iconHover" id="emojiBox"
+                                        data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                                        data-bs-original-title="Choose an emoji">
+                                        <span class="iconButton small btn mx-2">
+                                            <i class="far fa-smile"></i>
+                                        </span>
+                                    </button>
+                                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                        aria-labelledby="dropdownMenuButton2">
+                                        <ul class="dropdown-listing">
+                                            <li class="dropdown-listing-header">
+                                                <div class="head-section">
+                                                    <div class="left" *ngFor="let emoji of Emojies">
+                                                        <span (click)="insertEmoji(emoji.emoji)"
+                                                            style="cursor: pointer; font-size: 17px;">{{emoji.emoji}}</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </ul>
+                                </div>
+
+                                <button class="iconButton small notification iconHover" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" title="" type="button" id="commentSendbtn" type="submit"
+                                    data-bs-original-title="Send">
+                                    <i class="fal fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </ng-container>
+            <ng-container *ngIf="TDMReply == true">
+                <div class="msgTypingField shadow-lg">
+                    <div *ngFor="let tdm of TwitterMessages">
                         <div class="attachment-block d-none">
                             <div class="card-body p-3">
                                 <span class="close-icon"><i class="fas fa-times"></i></span>
@@ -1387,254 +1503,164 @@
                                 <p>242 KB</p>
                             </div>
                         </div>
-                        <div *ngIf="tt.id == tweetId">
-                            <div [ngClass]="show == true? 'show':''" class="card hideMsg">
-                                <div class="card-body">
-                                    <div class="card-text">
-                                        <span class="fw-bold navy">2354545</span>
-                                        {{tt.message}}
 
+                        <div>
+                            <div *ngIf="tdm.id == twitterMsgId">
+                                <div [ngClass]="show == true? 'show':''" class="card hideMsg">
+                                    <div class="card-body">
+                                        <div class="card-text">
+                                            <span class="fw-bold navy">{{tdm.id}} </span>
+                                            <p>{{tdm.msgText}}</p>
+
+                                        </div>
+                                        <button class="iconButton small closeMsgBtn" data-bs-toggle="tooltip"
+                                            data-bs-placement="top" id="searchbtn" data-bs-original-title="Close"
+                                            (click)="closeMentionedReply()">
+                                            <i class="fal fa-times"></i>
+                                        </button>
                                     </div>
-                                    <button lass="iconButton small closeMsgBtn" (click)="closeMentionedReply()" c
-                                        data-bs-toggle="tooltip" data-bs-placement="top" id="searchbtn"
-                                        data-bs-original-title="Close">
-                                        <i class="fal fa-times"></i>
-                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <form [formGroup]="TwitterRepliesForm" (submit)="submitTweetReply()">
-                    <div class="input-group input-group-lg">
-                        <div class="icons-list align-items-md-center d-flex pe-2">
-                            <button class="iconButton small notification iconHover" type="button"
-                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-                                aria-controls="offcanvasRight" id="searchbtn">
-                                <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></button>
-                        </div>
-                        <div class="form-floating textarea-field">
-                            <textarea formControlName="text" class="form-control auto" rows="1" id="text"
-                                placeholder="Write a response here" [(ngModel)]="text" style="height: 50px"
-                                #textarea></textarea>
+                    <form [formGroup]="twitterMessageReplyForm" (submit)="submitTwitterMessageReply()">
+                        <div class="input-group input-group-lg">
+                            <div class="icons-list align-items-md-center d-flex pe-2">
+                                <a class="iconButton small notification iconHover" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                                    <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></a>
 
-                        </div>
-                        <div class="icons-list align-items-md-center d-flex ps-2">
-                            <div class="dropdown w-auto">
-                                <button class="iconButton small notification iconHover" id="emojiBox"
-                                    data-bs-toggle="dropdown" data-bs-auto-close="outside"
-                                    data-bs-original-title="Choose an emoji">
-                                    <span class="iconButton small btn mx-2">
-                                        <i class="far fa-smile"></i>
-                                    </span>
-                                </button>
-                                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                    aria-labelledby="dropdownMenuButton2">
-                                    <ul class="dropdown-listing">
-                                        <li class="dropdown-listing-header">
-                                            <div class="head-section">
-                                                <div class="left" *ngFor="let emoji of Emojies">
-                                                    <span (click)="insertEmoji(emoji.emoji)"
-                                                        style="cursor: pointer; font-size: 17px;">{{emoji.emoji}}</span>
+                            </div>
+                            <div class="form-floating textarea-field">
+                                <textarea formControlName="text" class="form-control auto" rows="1"  (keydown)="handleTwitterMessage($event)" id="text"
+                                    placeholder="Write a message here" (input)="adjustTextareaHeight(textarea)"[(ngModel)]="text" style="height: 50px"
+                                    #textarea></textarea>
+
+                            </div>
+                            <div class="icons-list align-items-md-center d-flex ps-2">
+                                <div class="dropdown w-auto">
+                                    <button class="iconButton small notification iconHover" id="emojiBox"
+                                        data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                                        data-bs-original-title="Choose an emoji">
+                                        <span class="iconButton small btn mx-2">
+                                            <i class="far fa-smile"></i>
+                                        </span>
+                                    </button>
+                                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                        aria-labelledby="dropdownMenuButton2">
+                                        <ul class="dropdown-listing">
+                                            <li class="dropdown-listing-header">
+                                                <div class="head-section">
+                                                    <div class="left" *ngFor="let emoji of Emojies">
+                                                        <span (click)="insertEmoji(emoji.emoji)"
+                                                            style="cursor: pointer; font-size: 17px;">{{emoji.emoji}}</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </li>
+                                            </li>
+                                        </ul>
                                     </ul>
-                                </ul>
+                                </div>
+                                <button class="iconButton small notification iconHover" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" title="" type="submit" data-bs-original-title="Send">
+                                    <i class="fal fa-paper-plane"></i>
+                                </button>
                             </div>
 
-                            <button class="iconButton small notification iconHover" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="" type="button" id="commentSendbtn" type="submit"
-                                data-bs-original-title="Send">
-                                <i class="fal fa-paper-plane"></i>
-                            </button>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="TMReply == true">
+                <div class="msgTypingField shadow-lg">
+                    <div *ngFor="let tm of TwitterMentions">
+                        <div class="attachment-block d-none">
+                            <div class="card-body p-3">
+                                <span class="close-icon"><i class="fas fa-times"></i></span>
+                                <i class="far fa-file"></i>
+                                <h5 class="card-title coal">Backup File</h5>
+                                <p>242 KB</p>
+                            </div>
+                            <div class="card-body p-3">
+                                <span class="close-icon"><i class="fas fa-times"></i></span>
+                                <i class="far fa-file"></i>
+                                <h5 class="card-title coal">Backup File</h5>
+                                <p>242 KB</p>
+                            </div>
+                            <div class="card-body p-3">
+                                <span class="close-icon"><i class="fas fa-times"></i></span>
+                                <i class="far fa-file"></i>
+                                <h5 class="card-title coal">Backup File</h5>
+                                <p>242 KB</p>
+                            </div>
+                        </div>
 
-            </div>
-        </ng-container>
-        <ng-container *ngIf="TDMReply == true">
-            <div class="msgTypingField shadow-lg">
-                <div *ngFor="let tdm of TwitterMessages">
-                    <div class="attachment-block d-none">
-                        <div class="card-body p-3">
-                            <span class="close-icon"><i class="fas fa-times"></i></span>
-                            <i class="far fa-file"></i>
-                            <h5 class="card-title coal">Backup File</h5>
-                            <p>242 KB</p>
-                        </div>
-                        <div class="card-body p-3">
-                            <span class="close-icon"><i class="fas fa-times"></i></span>
-                            <i class="far fa-file"></i>
-                            <h5 class="card-title coal">Backup File</h5>
-                            <p>242 KB</p>
-                        </div>
-                        <div class="card-body p-3">
-                            <span class="close-icon"><i class="fas fa-times"></i></span>
-                            <i class="far fa-file"></i>
-                            <h5 class="card-title coal">Backup File</h5>
-                            <p>242 KB</p>
-                        </div>
-                    </div>
+                        <div>
+                            <div *ngIf="tm.id == twitterMentionId">
+                                <div [ngClass]="show == true? 'show':''" class="card hideMsg">
+                                    <div class="card-body">
+                                        <div class="card-text">
+                                            <span class="fw-bold navy">{{tm.id}} </span>
+                                            <p>{{tm.msgText}}</p>
 
-                    <div>
-                        <div *ngIf="tdm.id == twitterMsgId">
-                            <div [ngClass]="show == true? 'show':''" class="card hideMsg">
-                                <div class="card-body">
-                                    <div class="card-text">
-                                        <span class="fw-bold navy">{{tdm.id}} </span>
-                                        <p>{{tdm.msgText}}</p>
-
+                                        </div>
+                                        <button class="iconButton small closeMsgBtn" data-bs-toggle="tooltip"
+                                            data-bs-placement="top" id="searchbtn" data-bs-original-title="Close"
+                                            (click)="closeMentionedReply()">
+                                            <i class="fal fa-times"></i>
+                                        </button>
                                     </div>
-                                    <button class="iconButton small closeMsgBtn" data-bs-toggle="tooltip"
-                                        data-bs-placement="top" id="searchbtn" data-bs-original-title="Close"
-                                        (click)="closeMentionedReply()">
-                                        <i class="fal fa-times"></i>
-                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <form [formGroup]="twitterMessageReplyForm" (submit)="submitTwitterMessageReply()">
-                    <div class="input-group input-group-lg">
-                        <div class="icons-list align-items-md-center d-flex pe-2">
-                            <a class="iconButton small notification iconHover" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                                <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></a>
+                    <form [formGroup]="twitterMessageReplyForm" (submit)="submitTwitterMentionReply()">
+                        <div class="input-group input-group-lg">
+                            <div class="icons-list align-items-md-center d-flex pe-2">
+                                <a class="iconButton small notification iconHover" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                                    <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></a>
 
-                        </div>
-                        <div class="form-floating textarea-field">
-                            <textarea formControlName="text" class="form-control auto" rows="1" id="text"
-                                placeholder="Write a message here" [(ngModel)]="text" style="height: 50px"
-                                #textarea></textarea>
-
-                        </div>
-                        <div class="icons-list align-items-md-center d-flex ps-2">
-                            <div class="dropdown w-auto">
-                                <button class="iconButton small notification iconHover" id="emojiBox"
-                                    data-bs-toggle="dropdown" data-bs-auto-close="outside"
-                                    data-bs-original-title="Choose an emoji">
-                                    <span class="iconButton small btn mx-2">
-                                        <i class="far fa-smile"></i>
-                                    </span>
-                                </button>
-                                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                    aria-labelledby="dropdownMenuButton2">
-                                    <ul class="dropdown-listing">
-                                        <li class="dropdown-listing-header">
-                                            <div class="head-section">
-                                                <div class="left" *ngFor="let emoji of Emojies">
-                                                    <span (click)="insertEmoji(emoji.emoji)"
-                                                        style="cursor: pointer; font-size: 17px;">{{emoji.emoji}}</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </ul>
                             </div>
-                            <button class="iconButton small notification iconHover" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="" type="submit" data-bs-original-title="Send">
-                                <i class="fal fa-paper-plane"></i>
-                            </button>
-                        </div>
+                            <div class="form-floating textarea-field">
+                                <textarea formControlName="text" class="form-control auto" rows="1" id="text" (keydown)="handleTwitterMention($event)"
+                                    placeholder="Write a message here" (input)="adjustTextareaHeight(textarea)" [(ngModel)]="text" style="height: 50px"
+                                    #textarea></textarea>
 
-                    </div>
-                </form>
-            </div>
-        </ng-container>
-        <ng-container *ngIf="TMReply == true">
-            <div class="msgTypingField shadow-lg">
-                <div *ngFor="let tm of TwitterMentions">
-                    <div class="attachment-block d-none">
-                        <div class="card-body p-3">
-                            <span class="close-icon"><i class="fas fa-times"></i></span>
-                            <i class="far fa-file"></i>
-                            <h5 class="card-title coal">Backup File</h5>
-                            <p>242 KB</p>
-                        </div>
-                        <div class="card-body p-3">
-                            <span class="close-icon"><i class="fas fa-times"></i></span>
-                            <i class="far fa-file"></i>
-                            <h5 class="card-title coal">Backup File</h5>
-                            <p>242 KB</p>
-                        </div>
-                        <div class="card-body p-3">
-                            <span class="close-icon"><i class="fas fa-times"></i></span>
-                            <i class="far fa-file"></i>
-                            <h5 class="card-title coal">Backup File</h5>
-                            <p>242 KB</p>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div *ngIf="tm.id == twitterMentionId">
-                            <div [ngClass]="show == true? 'show':''" class="card hideMsg">
-                                <div class="card-body">
-                                    <div class="card-text">
-                                        <span class="fw-bold navy">{{tm.id}} </span>
-                                        <p>{{tm.msgText}}</p>
-
-                                    </div>
-                                    <button class="iconButton small closeMsgBtn" data-bs-toggle="tooltip"
-                                        data-bs-placement="top" id="searchbtn" data-bs-original-title="Close"
-                                        (click)="closeMentionedReply()">
-                                        <i class="fal fa-times"></i>
+                            </div>
+                            <div class="icons-list align-items-md-center d-flex ps-2">
+                                <div class="dropdown w-auto">
+                                    <button class="iconButton small notification iconHover" id="emojiBox"
+                                        data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                                        data-bs-original-title="Choose an emoji">
+                                        <span class="iconButton small btn mx-2">
+                                            <i class="far fa-smile"></i>
+                                        </span>
                                     </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <form [formGroup]="twitterMessageReplyForm" (submit)="submitTwitterMentionReply()">
-                    <div class="input-group input-group-lg">
-                        <div class="icons-list align-items-md-center d-flex pe-2">
-                            <a class="iconButton small notification iconHover" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                                <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></a>
-
-                        </div>
-                        <div class="form-floating textarea-field">
-                            <textarea formControlName="text" class="form-control auto" rows="1" id="text"
-                                placeholder="Write a message here" [(ngModel)]="text" style="height: 50px"
-                                #textarea></textarea>
-
-                        </div>
-                        <div class="icons-list align-items-md-center d-flex ps-2">
-                            <div class="dropdown w-auto">
-                                <button class="iconButton small notification iconHover" id="emojiBox"
-                                    data-bs-toggle="dropdown" data-bs-auto-close="outside"
-                                    data-bs-original-title="Choose an emoji">
-                                    <span class="iconButton small btn mx-2">
-                                        <i class="far fa-smile"></i>
-                                    </span>
-                                </button>
-                                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                    aria-labelledby="dropdownMenuButton2">
-                                    <ul class="dropdown-listing">
-                                        <li class="dropdown-listing-header">
-                                            <div class="head-section">
-                                                <div class="left" *ngFor="let emoji of Emojies">
-                                                    <span (click)="insertEmoji(emoji.emoji)"
-                                                        style="cursor: pointer; font-size: 17px;">{{emoji.emoji}}</span>
+                                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                        aria-labelledby="dropdownMenuButton2">
+                                        <ul class="dropdown-listing">
+                                            <li class="dropdown-listing-header">
+                                                <div class="head-section">
+                                                    <div class="left" *ngFor="let emoji of Emojies">
+                                                        <span (click)="insertEmoji(emoji.emoji)"
+                                                            style="cursor: pointer; font-size: 17px;">{{emoji.emoji}}</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </li>
+                                            </li>
+                                        </ul>
                                     </ul>
-                                </ul>
+                                </div>
+                                <button class="iconButton small notification iconHover" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" title="" type="submit" data-bs-original-title="Send">
+                                    <i class="fal fa-paper-plane"></i>
+                                </button>
                             </div>
-                            <button class="iconButton small notification iconHover" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="" type="submit" data-bs-original-title="Send">
-                                <i class="fal fa-paper-plane"></i>
-                            </button>
-                        </div>
 
-                    </div>
-                </form>
-            </div>
+                        </div>
+                    </form>
+                </div>
+            </ng-container>
         </ng-container>
-    </ng-container>
     </div>
 
 </div>

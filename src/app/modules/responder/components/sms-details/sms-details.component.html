@@ -92,7 +92,7 @@
                                         <!-- <span class="complaintBtn" type="button"><i
                                                 class="fal fa-plus-circle sky" (click)="toggle('ticket', sms.id)"></i></span> -->
                                     </div>
-                                    <div class="message-bottom">
+                                    <div class="message-bottom" *ngIf="this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up'">
                                         <div class="row">
                                             <div class="col-lg-9 ps-4 d-flex align-items-center">
                                                 <div class="message-actionlist d-flex align-items-center">
@@ -363,7 +363,7 @@
     </div>
 </div>
 
-<div class="msgTypingField shadow-lg">
+<div class="msgTypingField shadow-lg" *ngIf="this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up'">
     <div *ngFor="let list of SmsData">
         <div class="attachment-block d-none">
             <div class="card-body p-3">

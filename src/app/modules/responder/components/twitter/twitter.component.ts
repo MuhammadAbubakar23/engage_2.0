@@ -626,7 +626,34 @@ export class TwitterComponent implements OnInit {
         });
     }
   }
-
+  handleTextareaKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.submitTweetReply();
+    }
+  }
+  handleTwitterMention(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.submitTwitterMentionReply();
+    }
+  }
+  handleTwitterMessage(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.submitTwitterMessageReply();
+    }
+  }
+  adjustTextareaHeight(textarea: HTMLTextAreaElement) {
+    const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight);
+    const numberOfLines = Math.floor(textarea.scrollHeight / lineHeight);
+    const newHeight = numberOfLines < 3 ? `${numberOfLines}em` : '96px';
+    textarea.style.height = newHeight;
+    textarea.style.overflow = numberOfLines > 4 ? 'auto' : 'hidden';
+    if (textarea.value.trim() === '') {
+      textarea.style.height = '40px';
+    }
+  }
   getTwitterDM() {
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
@@ -1198,9 +1225,7 @@ export class TwitterComponent implements OnInit {
   }
 
   removeTagFromFeed(feedId: number, tagName: any) {
-    if (
-      this.flag == 'focused' ||
-      this.flag == 'assigned_to_me'
+    if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up'
     ) {
         this.insertTagsForFeedDto.tagName = tagName;
         this.insertTagsForFeedDto.feedId = feedId;

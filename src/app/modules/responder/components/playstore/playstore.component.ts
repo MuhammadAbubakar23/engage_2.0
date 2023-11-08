@@ -768,9 +768,7 @@ export class PlaystoreComponent implements OnInit {
   }
 
   removeTagFromFeed(feedId: number, tagName: any) {
-    if (
-      this.flag == 'focused' ||
-      this.flag == 'assigned_to_me'
+    if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up'
     ) {
         this.insertTagsForFeedDto.tagName = tagName;
         this.insertTagsForFeedDto.feedId = feedId;
