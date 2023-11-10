@@ -188,7 +188,7 @@
                             <div class="card iceBg p-4 rounded mb-5">
                                 <h5 class="section-heading mb-4 p-0">{{ selectedChannelLabel }}</h5>
                                 <div class="graphcontainer align-items-end">
-                                    <div #main style="height: 600px; width: 1500px;"></div>
+                                    <div #main style="height: 350px; width: 1500px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -197,7 +197,7 @@
                                 <h5 class="section-heading mb-4 p-0"> Direct Message
                                 </h5>
                                 <div class="graphcontainer align-items-end">
-                                    <div #message style="height: 600px; width: 1500px;"></div>
+                                    <div #message style="height: 350px; width: 1500px;"></div>
                                 </div>
 
                             </div>
@@ -214,7 +214,7 @@
                         </h5>
                         <div class="table-section"  style="overflow: auto; max-height: 50vh;">
                             <table class="table" [ngStyle]="getTableStyle()">
-                                <thead>
+                                <thead class="fixed_first_row">
                                     <tr>
                                         <th>Agent</th>
                                         <th>{{ selectedChannelLabel === 'Twitter' ? 'Tweets' : 'Comments' }}</th>

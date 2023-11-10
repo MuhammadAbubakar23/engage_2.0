@@ -7,9 +7,9 @@ import { DatePipe } from '@angular/common';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
-
+import { LayoutsModule } from 'src/app/layouts/layouts.module';
 @Component({
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgxSpinnerModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgxSpinnerModule,LayoutsModule],
   standalone: true,
   selector: 'app-tag-report',
   templateUrl: './tag-report.component.html',
@@ -26,8 +26,17 @@ export class TagReportComponent implements OnInit {
   facebookComments: any[] = [];
   tagslist: any[] = [];
   tagsReportCSv: any[] = [];
+  agentName:any[]=[]
+  groupedDateUserList_other:any[]=[]
+  groupedDataArray:any[]=[];
+  groupedData=new Map()
+  groupedDateUserList:any[]=[]
+  customerDetailslist:any[]=[]
   userlist: any;
   agentId: any;
+  uniqueAgentId:any
+  uniqueAgentData: any[] = [];
+
   constructor(
     private _hs: HeaderService,
     private spinerServices: NgxSpinnerService,
@@ -67,20 +76,8 @@ export class TagReportComponent implements OnInit {
       console.log('AllTags res===>', res);
 
       this.tagsReportDetails = res;
-
-      // this.tagsReportDetails?.forEach((y:any)=>{
-      //     this.tagslist.push(y.tags)
-      //     console.log('Tagslist==>',this.tagslist)
-      // })
-      this.userlist = res.userListDtos;
-      // this.userlist.forEach((x:any)=>{
-      //     if(!this.tagslist.includes(x.tags)){
-      //
-      //         this.tagslist.push(x.tags)
-      //         console.log("This.tagslist===>",this.tagslist)
-      //     }
-
-      // })
+      console.log("this group==>", this.groupedDataArray);
+  
       this.facebookComments = res.tagsWisePercentageDtos;
       this.facebookComments.forEach((x: any) => {
         if (!this.facebookCommentsArray.includes(x.tagPercentage && x.tag)) {
@@ -91,19 +88,106 @@ export class TagReportComponent implements OnInit {
         }
       });
       this.tagChart();
+
+      this.userlist = res.userListDtos;
+debugger
+for (const user of this.userlist) {
+  const existingAgentData = this.uniqueAgentData.find(data => data.agentId === user.agentId);
+
+  if (existingAgentData) {
+    // Update existing agent data
+    existingAgentData.tags = [...new Set(existingAgentData.tags.concat(user.tags))];
+    existingAgentData.customerData.push(user);
+  } else {
+    // Add new agent data
+    this.uniqueAgentData.push({
+      agentId: user.agentId,
+      agentName: user.agentName,
+      tags: [...new Set(user.tags)],
+      customerData: [user]
+    });
+  }
+}
+this.uniqueAgentData.forEach((x:any)=>{
+  debugger
+  this.uniqueAgentId=x.agentId
+})
+console.log("Unique AgentDate===>",this.uniqueAgentId)
+return this.uniqueAgentData;
+
+
+
+      // this.userlist.forEach((item:any)=>{
+      //   const agentId =item.agentId
+      //   if(!this.groupedData.has(agentId)){
+      //     debugger
+      //     this.groupedData.set(agentId,[])
+      //   }
+      //   debugger
+      //   this.groupedData.get(agentId).push(item)
+      //   this. groupedDataArray = Array.from(this.groupedData, ([agentId, items]) => ({ agentId, items }));
+
+      //   console.log("groupDate===>",this.groupedDataArray)
+      //   this.groupedDataArray.forEach((y:any)=>{
+      //     y.items.forEach((abc:any)=>{
+      //       let obj={
+      //         'customerName':abc.customerName,
+      //         "createdDate":abc.createdDate,
+      //         'customerMessage':abc.customerMessage,
+      //         'customerProfilePic':abc.customerProfilePic,
+      //         'feedType':abc.feedType,
+      //         'tags':abc.tags,
+      //         'feedId':abc.feedId
+      //       }
+      //       const exists=this.customerDetailslist.some((item:any)=> item.feedId===obj.feedId)
+      //       if(!exists){
+      //         this.customerDetailslist.push(obj)
+            
+      //       }
+
+          
+      //       if(!this.agentName.includes(abc.agentName)){
+      //         this.agentName.push(abc.agentName)
+      //         console.log("agentName===>",this.agentName)
+      //       }
+      //     })
+      //   })      
+      // })
+   
+       
     });
   }
 
+
+
+
+
+  
   tagChart() {
     var chartDom = document.getElementById('main');
     var myChart = echarts.init(chartDom);
-    var option;
-    option = {
+    
+    const option = {
       tooltip: {
         trigger: 'item',
       },
       legend: {
-        left: 'center',
+        top: '30%',
+        orient: 'vertical',
+        right: -20,
+        textStyle: {
+          fontSize: 16, // Set the font size for the legend text
+        },
+        fontWeight: 'bold',
+        formatter: (name:any) => {
+          const dataItem = this.facebookCommentsArray.find(item => item.name === name);
+
+          if (dataItem) {
+            return `${name} :${dataItem.value}      %`;
+          }
+
+          return name;
+        },
       },
       series: [
         {
@@ -117,7 +201,7 @@ export class TagReportComponent implements OnInit {
           emphasis: {
             label: {
               show: true,
-              fontSize: 20,
+              fontSize: 15,
               fontWeight: 'bold',
               formatter: '{b} \n {c}',
             },

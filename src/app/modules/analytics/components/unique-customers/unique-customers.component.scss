@@ -21,3 +21,8 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+  .first_row_sticky{
+    position: sticky;
+    top: 0;
+    background: white;
+  }

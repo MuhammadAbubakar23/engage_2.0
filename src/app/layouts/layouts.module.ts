@@ -155,7 +155,8 @@ import { TagsEffects } from './engage2/tags-state/tags.effect';
     AnalyticsContentComponent,
     BotRightSidebarComponent,
     BotContentComponent,
-    ToasterComponent
+    ToasterComponent,
+    AvatarContentComponent
   ]
 })
 export class LayoutsModule { }

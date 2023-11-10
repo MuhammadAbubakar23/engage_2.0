@@ -4,24 +4,24 @@
             <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1"
                 style="overflow: auto; outline: none;">
                 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
-                [fullScreen]="false">
-                <p style="color: white"> Loading... </p>
-            </ngx-spinner>
+                    [fullScreen]="false">
+                    <p style="color: white"> Loading... </p>
+                </ngx-spinner>
                 <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
                     <div class="report-toolbar mb-4">
                         <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
                             <li class="list-inline-item">
                                 <div class="iconholder">
                                     <input name="" id="datepickerrange" class="form-control flatpickr-input"
-                                    (change)="resetStartDate()"
-                                        [max]="endMaxDate" [(ngModel)]="startDate" placeholder="Date" type="date">
+                                        (change)="resetStartDate()" [max]="endMaxDate" [(ngModel)]="startDate"
+                                        placeholder="Date" type="date">
                                 </div>
                             </li>
                             <li class="list-inline-item">
                                 <div class="iconholder">
                                     <input name="" id="datepickerrange" class="form-control flatpickr-input"
-                                    (change)="resetEndDate()"
-                                        [(ngModel)]="endDate" [max]="endMaxDate" placeholder="Date " type="date">
+                                        (change)="resetEndDate()" [(ngModel)]="endDate" [max]="endMaxDate"
+                                        placeholder="Date " type="date">
                                 </div>
                             </li>
                             <li class="list-inline-item">
@@ -34,9 +34,7 @@
                                         <li>
                                             <a class="dropdown-item d-flex align-items-center">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" 
-                                                   checked
-                                                    id="keprofile">
+                                                    <input class="form-check-input" type="radio" checked id="keprofile">
                                                     <label class="form-check-label" for="keprofile">
                                                         <i class="fa-brands fa-facebook facebook pe-2"></i> K-Electric
                                                     </label>
@@ -49,22 +47,17 @@
                             <li class="list-inline-item ms-auto">
                                 <div class="btn-group buttonfilter" role="group"
                                     aria-label="Basic radio toggle button group">
-                                  
+
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
-                                          (click)="getPagenationDay(15)"
-                                        autocomplete="off" checked="">
+                                        (click)="getPagenationDay(15)" autocomplete="off" checked="">
                                     <label class="btn btn-outline-secondary" for="btnradio1">15</label>
 
-                                    <input type="radio" class="btn-check" name="btnradio" 
-                                    (click)="getPagenationDay(30)"
-                                    id="btnradio2"
-                                        autocomplete="off">
+                                    <input type="radio" class="btn-check" name="btnradio" (click)="getPagenationDay(30)"
+                                        id="btnradio2" autocomplete="off">
                                     <label class="btn btn-outline-secondary" for="btnradio2">30</label>
 
-                                    <input type="radio" class="btn-check" name="btnradio"
-                                    (click)="getPagenationDay(60)"
-                                     id="btnradio3"
-                                        autocomplete="off">
+                                    <input type="radio" class="btn-check" name="btnradio" (click)="getPagenationDay(60)"
+                                        id="btnradio3" autocomplete="off">
                                     <label class="btn btn-outline-secondary" for="btnradio3">60</label>
                                     <!-- <input type="radio" class="btn-check" name="btnradio"
                                     (click)="getPagenationDay(90)"
@@ -98,6 +91,7 @@
                                         <div>
                                             <span class="iconButton medium mintBg mb-4">
                                                 <i class="fa-light fa-message"></i>
+                                        
                                             </span>
                                             <p class="coal mb-0"> Total Posts <small>(Tags Applied)</small> </p>
                                         </div>
@@ -107,108 +101,128 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card iceBg p-4 rounded mb-5">
-                        <h5 class="section-heading mb-4 p-0"><i class="fa-brands fa-facebook navy pe-2"></i> Facebook
-                            Comments</h5>
+                    <div class="card iceBg  rounded mb-5">
+                        <h5 class="section-heading mb-4 p-4"> Query Tag </h5>
                         <div class="row align-items-center">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="graphcontainer align-items-end mb-5">
                                     <div class="text-center">
-                                        <div id="main" style="height: 400px; width: 700px;"></div>
+                                        <div id="main" style="height: 400px; width: 1200px;"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <ul class="list-0 statlist list-lg m-4" *ngFor="let item of facebookComments">
-                                    <li>
-                                        <span class="coal"><span
-                                       class="circlestatus  skyTransBg me-2"></span>{{item.tag}}
-                                        </span>
-                                        <span class="fw-semibold">{{item.tagPercentage}}%</span>
-                                    </li>
+                            <!-- <div class="col-md-4"> 
+                                <ul class="list-0 statlist list-lg m-4">
+                                    <ng-container   *ngFor="let item of facebookComments">
+                                        <li>
+                                            <span class="">
+                                                <span
+                                                    class="circlestatus  skyTransBg me-2"></span> 
+                                                        {{item.tag}}
+                                            </span>
+                                            <span class="fw-semibold">{{item.tagPercentage}}%</span>
+                                        </li>
+                                    </ng-container>
+                                  
                                 </ul>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
+<!--                  
+                    <span class="iconButton medium fw-bold iceBg border">
+                    
+                                            </span> -->
                     <div class="scroll" style="overflow: auto; height: 400px;">
                         <div class="accordion tagaccordion" id="accordionExample">
-                            <ng-container *ngFor="let user of userlist ;">
-                                <div class="accordion-item mb-3">
-                                    <div class="accordion-header ps-4 d-flex align-items-center">
-                                        <div class="d-flex align-items-center me-3 userhead">
-                                            <!-- <ngx-avatars ></ngx-avatars> -->
-                                            <!-- <span class="iconButton medium fw-bold iceBg border">
-                                            </span> -->
-                                            <h6 class="ms-2 mb-0">{{user?.agentName}}</h6>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <span class="badge rounded-pill skyTransBg  me-2">{{user.tags[0]}}</span>
-                                            <span class="badge rounded-pill cherryTransBg me-2">{{user.tags[1]}}</span>
-                                            <div class="d-inline-block dropdown w-auto device-dd"
-                                                *ngIf="user.tags.length>2">
-                                                <button class="d-inline-block iconButton small iconHover" type="button"
-                                                    id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <span class="silver">+{{user.tags.length-2}}</span>
-                                                </button>
-                                                <ul class="dropdown-menu w-auto dd-scroll"
-                                                    aria-labelledby="dropdownMenu2"
-                                                    style="overflow: auto; height: auto;">
-                                                    <li *ngFor="let item of user.tags; let i=index">
-                                                        <span class="silver" *ngIf="i !==0 && i !==1 ">
-                                                            <a class="dropdown-item">
-                                                                <span class="badge rounded-pill mintTransBg ">
-                                                                    {{item}}</span>
-                                                            </a>
-                                                        </span>
-                                                    </li>
-                                                </ul>
+                            <ng-container *ngFor="let user of uniqueAgentData">
+                                    <div class="accordion-item mb-3">
+                                        <div class="accordion-header ps-4 d-flex align-items-center">
+                                            <div class="d-flex align-items-center me-3 userhead">
+                                                <h6 class="ms-2 mb-0">{{user.agentName}}</h6>
                                             </div>
+                                            <div class="d-flex align-items-center">
+                                        <span class="badge rounded-pill skyTransBg  me-2">{{user.tags[0]}}</span>
+                                        <span class="badge rounded-pill cherryTransBg me-2">{{user.tags[1]}}</span>
+                                        <div class="d-inline-block dropdown w-auto device-dd"
+                                            *ngIf="user.tags.length>2">
+                                            <button class="d-inline-block iconButton small iconHover" type="button"
+                                                id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <span class="silver">+{{user.tags.length-2}}</span>
+                                            </button>
+                                            <ul class="dropdown-menu w-auto dd-scroll"
+                                                aria-labelledby="dropdownMenu2"
+                                                style="overflow: auto; height: auto;">
+                                                <li *ngFor="let cd of user.tags; let i=index">
+                                                    <span class="silver" *ngIf="i !==0 && i !==1 ">
+                                                        <a class="dropdown-item">
+                                                            <span class="badge rounded-pill mintTransBg ">
+                                                                {{cd}}</span>
+                                                        </a>
+                                                    </span>
+                                                </li>
+                                            </ul>
                                         </div>
-                                        <button class="iconButton medium exportbtn" data-bs-toggle="tooltip"
-                                            data-bs-placement="top" data-bs-title="Export to CSV" (click)="expotCSv(user)" class="btn btn-outline-success " ><i
-                                                class="fa-light fa-file-csv"></i></button>
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                        </button>
                                     </div>
-                                    <div id="collapseOne" class="accordion-collapse collapse show"
-                                        data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <div class="py-2 border-bottom">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0">
-                                                        <span class="iconButton small lightGreyBg fw-bold"><img
-                                                                src={{user?.customerProfilePic}} class="rounded-circle" style="height: 50px; width: 50px;"></span>
-                                                    </div>
-                                                    <div class="flex-grow-1 ms-3">
-                                                        <div>
-                                                            <span>{{user.customerName}}</span>
-                                                            &nbsp;
-                                                            <small class="coal">{{user.createdDate | date:'short'}}
-                                                                <span></span>
-                                                            </small>
+                                            <button class="iconButton medium exportbtn" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" data-bs-title="Export to CSV"
+                                                (click)="expotCSv(user)" class="btn btn-outline-success "><i
+                                                    class="fa-light fa-file-csv"></i></button>
+                                            <a class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            [href]="'#detail' + user?.agentId" aria-expanded="true"
+                                                aria-controls="collapseOne">
+                                    </a>
+                                        </div>
+                                        <div  [id]="'detail'+ user?.agentId"class="accordion-collapse collapse show"
+                                            data-bs-parent="#accordionExample ">
+                                            <div class="accordion-body">
+                                                <div class="py-2 border-bottom" *ngFor="let userDetail of user.customerData">
+                                                    <div class="d-flex">
+                                                        <div class="flex-shrink-0">
+                                                            <span class="iconButton small lightGreyBg fw-bold">
+                                                                <!-- <img
+                                                                    src={{userDetail?.customerProfilePic}}
+                                                                    class="rounded-circle"
+                                                                    style="height: 50px; width: 50px;"> -->
+                                                                    <avatar-content [name]="userlist.customerName" ></avatar-content>
+                                                                </span>
                                                         </div>
-                                                        <a data-bs-toggle="collapse" [href]="'#detail' + user?.feedId"
-                                                            role="button" aria-expanded="false" aria-controls="detail1"
-                                                            class="sky">View Details</a>
+                                                        <div class="flex-grow-1 ms-3">
+                                                            <div>
+                                                                <span><b>{{userDetail.customerName}}</b>
+                                                                </span>
+                                                                &nbsp;
+                                                                <small class="coal">{{userDetail.createdDate | date:'short'}}
+                                                                    <span></span>
+                                                                </small>
+                                                            </div>
+                                                            <a data-bs-toggle="collapse"
+                                                                [href]="'#detail' + userDetail?.feedId" role="button"
+                                                                aria-expanded="false" aria-controls="detail1"
+                                                                class="sky">View Details</a>
+                                                        </div>
+                                                        <div>
+                                                            <ng-container *ngFor="let abc of userDetail.tags">
+                                                                <span
+                                                                    class="badge rounded-pill skyTransBg me-2">{{abc}}</span>
+                                                            </ng-container>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <ng-container *ngFor="let item of user.tags">
-                                                            <span class="badge rounded-pill skyTransBg me-2">{{item}}</span>
-                                                        </ng-container>
-                                                    </div>
-                                                </div>
-                                                <div class="collapse" [id]="'detail'+ user?.feedId">
-                                                    <div class="bg-light p-3 ms-5">
-                                                        <p class="m-0">{{user?.customerMessage}}</p>
-                                                        <span class="navy">{{user?.feedType}}</span>
+                                                    <div class="collapse" [id]="'detail'+ userDetail?.feedId">
+                                                        <div class="bg-light p-3 ms-5">
+                                                            <p class="m-0">{{userDetail?.customerMessage}}</p>
+                                                            <span class="navy">{{userDetail?.feedType}}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                          
+
+
+
+
+
                             </ng-container>
                         </div>
                     </div>
