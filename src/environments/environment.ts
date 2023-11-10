@@ -34,14 +34,14 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://comservices.enteract.live/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
   
   // For Jazz
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
-  // SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
+  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
+  SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
 
   // For Total Parco
-  IdentityBaseUrl: 'https://tpplidp.360scrm.com/api',
-  CommonBaseUrl: 'https://tpplcom.360scrm.com/api/', 
-  SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
+  // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api',
+  // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/', 
+  // SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
 
   // For Morinaga
   // IdentityBaseUrl: 'https://waidentity.enteract.live/api',

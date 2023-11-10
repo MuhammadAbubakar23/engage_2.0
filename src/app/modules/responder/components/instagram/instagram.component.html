@@ -538,7 +538,7 @@
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                 </div>
-                                                <div class="message-bottom">
+                                                <div class="message-bottom" *ngIf="this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up'">
                                                     <div class="row">
                                                         <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                             <div class="message-actionlist d-flex align-items-center">
@@ -912,8 +912,8 @@
                 </div>
                 <div class="form-floating textarea-field">
                     <textarea formControlName="text" class="form-control auto" rows="1" id="text"
-                        placeholder="Write a response here" (input)="adjustTextareaHeight(textarea)" (keydown)="handleInstagramCommentReply($event)" [(ngModel)]="text"
-                        style="height: 50px" #textarea></textarea>
+                        placeholder="Write a response here" style="border-radius: 20px;" (keydown)="handleInstagramCommentReply($event)" [(ngModel)]="text"
+                         #textarea></textarea>
                 </div>
                 <div class="icons-list align-items-md-center d-flex ps-2">
                     <div class="dropdown w-auto">
@@ -986,8 +986,8 @@
                         <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></a>
                 </div>
                 <div class="form-floating textarea-field">
-                    <textarea formControlName="text" class="form-control auto" rows="1" id="text" (input)="adjustTextareaHeight(textarea)" (keydown)="handleTextareaKeyDown($event)"
-                        placeholder="Write a message here" [(ngModel)]="text" style="height: 37px" #textarea></textarea>
+                    <textarea formControlName="text" class="form-control auto" rows="1" id="text" style="border-radius: 20px;" (keydown)="handleTextareaKeyDown($event)"
+                        placeholder="Write a message here" [(ngModel)]="text"  #textarea></textarea>
 
                 </div>
                 <div class="icons-list align-items-md-center d-flex ps-2">

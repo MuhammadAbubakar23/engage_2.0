@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -50,20 +50,20 @@ export class YoutubeComponent implements OnInit {
   likeCount: any = '';
   favoriteCount: any = '';
   commentCount: any = '';
-  youtubecommentId: number=0;
+  youtubecommentId: number = 0;
   youtubecommentText: any;
-  agentId: string='';
+  agentId: string = '';
   platform: string = '';
   postType: string = '';
   QuickReplies: any;
-  TagsList: any[]=[];
+  TagsList: any[] = [];
   getAppliedTagsList: any;
   storeComId: any;
   AlterMsg: any = '';
   Keywords: any[] = [];
-  queryStatus:any;
-  newReply:any;
-  totalUnrespondedCmntCountByCustomer:number=0;
+  queryStatus: any;
+  newReply: any;
+  totalUnrespondedCmntCountByCustomer: number = 0;
 
   TotalCmntQueryCount: number = 0;
 
@@ -90,8 +90,8 @@ export class YoutubeComponent implements OnInit {
   TodayDate: any;
 
   public criteria!: SortCriteria;
-  searchText: string='';
-  quickReplySearchText:string='';
+  searchText: string = '';
+  quickReplySearchText: string = '';
 
   constructor(
     private fetchId: FetchIdService,
@@ -101,16 +101,18 @@ export class YoutubeComponent implements OnInit {
     private changeDetect: ChangeDetectorRef,
     private addTagService: AddTagService,
     private removeTagService: RemoveTagService,
-    private updateCommentsService : UpdateCommentsService,
-    private queryStatusService : QueryStatusService,
-    private replyService : ReplyService,
+    private updateCommentsService: UpdateCommentsService,
+    private queryStatusService: QueryStatusService,
+    private replyService: ReplyService,
     private createTicketService: CreateTicketService,
-    private ticketResponseService : TicketResponseService,
+    private ticketResponseService: TicketResponseService,
     private applySentimentService: ApplySentimentService,
-    private getQueryTypeService : GetQueryTypeService,
+    private getQueryTypeService: GetQueryTypeService,
     private router: Router,
     private userInfoService: UserInformationService,
-    private stor: StorageService
+    private stor: StorageService,
+    private el: ElementRef,
+    private renderer: Renderer2
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -118,35 +120,42 @@ export class YoutubeComponent implements OnInit {
     // });
   }
 
-  messagesStatus:any[]=[];
-  Sentiments:any[]=[];
+  messagesStatus: any[] = [];
+  Sentiments: any[] = [];
+  @HostListener('input', ['$event.target'])
+  onInput(textarea: HTMLTextAreaElement) {
+    this.adjustTextareaHeight(textarea);
+  }
 
   ngOnInit(): void {
+    const textarea = this.el.nativeElement as HTMLTextAreaElement;
+    this.renderer.addClass(textarea, 'auto-resize');
+    this.adjustTextareaHeight(textarea);
 
     const menu = this.stor.retrive('Tags', 'O').local;
-      menu.forEach((item:any) => {
-        if(item.name == "Tags"){
-          item.subTags.forEach((singleTagObj:any) => {
-            if(!this.TagsList.includes(singleTagObj)){
+    menu.forEach((item: any) => {
+      if (item.name == "Tags") {
+        item.subTags.forEach((singleTagObj: any) => {
+          if (!this.TagsList.includes(singleTagObj)) {
             this.TagsList.push(singleTagObj)
-            }
-          });
-        }
-        if(item.name == "Messages Status"){
-          item.subTags.forEach((messagesStatusObj:any) => {
-            if(!this.messagesStatus.includes(messagesStatusObj)){
+          }
+        });
+      }
+      if (item.name == "Messages Status") {
+        item.subTags.forEach((messagesStatusObj: any) => {
+          if (!this.messagesStatus.includes(messagesStatusObj)) {
             this.messagesStatus.push(messagesStatusObj)
-            }
-          });
-        }
-        if(item.name == "Sentiments"){
-          item.subTags.forEach((sentimentObj:any) => {
-            if(!this.Sentiments.includes(sentimentObj)){
+          }
+        });
+      }
+      if (item.name == "Sentiments") {
+        item.subTags.forEach((sentimentObj: any) => {
+          if (!this.Sentiments.includes(sentimentObj)) {
             this.Sentiments.push(sentimentObj)
-            }
-          });
-        }
-      });
+          }
+        });
+      }
+    });
 
     this.criteria = {
       property: 'createdDate',
@@ -158,7 +167,7 @@ export class YoutubeComponent implements OnInit {
     this.getYoutubeData();
     this.quickReplyList();
     // this.getTagList();
-    
+
     this.Subscription = this.addTagService.receiveTags().subscribe((res) => {
       this.addTags = res;
       this.addTagDataListener();
@@ -172,7 +181,7 @@ export class YoutubeComponent implements OnInit {
       this.updateCommentsDataListener();
     });
     this.Subscription = this.queryStatusService.receiveQueryStatus().subscribe((res) => {
-      
+
       this.queryStatus = res;
       this.updateQueryStatusDataListner();
     });
@@ -183,88 +192,88 @@ export class YoutubeComponent implements OnInit {
     this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
-        
+
         this.queryStatus = res;
         this.updateBulkQueryStatusDataListner();
       });
-      this.ticketResponseService.getTicketId().subscribe(res=>{
-        this.updateTicketId(res)
-      });
+    this.ticketResponseService.getTicketId().subscribe(res => {
+      this.updateTicketId(res)
+    });
 
-      // this.Subscription = this.applySentimentService
-      // .receiveSentiment()
-      // .subscribe((res) => {
-      //   this.applySentimentListner(res);
-      // });
+    // this.Subscription = this.applySentimentService
+    // .receiveSentiment()
+    // .subscribe((res) => {
+    //   this.applySentimentListner(res);
+    // });
   }
 
   commentDto = new commentsDto();
 
-  updatedComments:any;
+  updatedComments: any;
   userProfileId = 0;
 
   updateCommentsDataListener() {
-    if(!this.id){
+    if (!this.id) {
       this.id = localStorage.getItem('storeOpenedId') || '{}'
     }
-        this.updatedComments.forEach((xyz: any) => {
-          if (this.id == xyz.userId) {
-            this.commentDto = {
-              id: xyz.id,
-              postId: xyz.postId,
-              commentId: xyz.commentId,
-              message: xyz.message,
-              contentType: xyz.contentType,
-              userName: xyz.userName || xyz.userId,
-              queryStatus: xyz.queryStatus,
-              createdDate: xyz.createdDate,
-              fromUserProfilePic: xyz.profilePic,
-              body: xyz.body,
-              to: xyz.toId,
-              cc: xyz.cc,
-              bcc: xyz.bcc,
-              attachments: xyz.mediaAttachments,
-              replies: [],
-              sentiment: '',
-              tags: [],
-            }
-            this.YoutubeData.forEach((item: any) => {
-              this.commentsArray = [];
-              if (item.post.postId == xyz.postId) {
-                item.comments.push(this.commentDto);
-                item.comments.forEach((cmnt: any) => {
-                  this.commentsArray.push(cmnt);
-                });
-
-                let groupedItems = this.commentsArray.reduce(
-                  (acc: any, item: any) => {
-                    const date = item.createdDate.split('T')[0];
-                    if (!acc[date]) {
-                      acc[date] = [];
-                    }
-                    acc[date].push(item);
-                    return acc;
-                  },
-                  {}
-                );
-
-                item['groupedComments'] = Object.keys(groupedItems).map(
-                  (createdDate) => {
-                    return {
-                      createdDate,
-                      items: groupedItems[createdDate],
-                    };
-                  }
-                );
-              }
+    this.updatedComments.forEach((xyz: any) => {
+      if (this.id == xyz.userId) {
+        this.commentDto = {
+          id: xyz.id,
+          postId: xyz.postId,
+          commentId: xyz.commentId,
+          message: xyz.message,
+          contentType: xyz.contentType,
+          userName: xyz.userName || xyz.userId,
+          queryStatus: xyz.queryStatus,
+          createdDate: xyz.createdDate,
+          fromUserProfilePic: xyz.profilePic,
+          body: xyz.body,
+          to: xyz.toId,
+          cc: xyz.cc,
+          bcc: xyz.bcc,
+          attachments: xyz.mediaAttachments,
+          replies: [],
+          sentiment: '',
+          tags: [],
+        }
+        this.YoutubeData.forEach((item: any) => {
+          this.commentsArray = [];
+          if (item.post.postId == xyz.postId) {
+            item.comments.push(this.commentDto);
+            item.comments.forEach((cmnt: any) => {
+              this.commentsArray.push(cmnt);
             });
-            this.totalUnrespondedCmntCountByCustomer =
-          this.totalUnrespondedCmntCountByCustomer + 1;
+
+            let groupedItems = this.commentsArray.reduce(
+              (acc: any, item: any) => {
+                const date = item.createdDate.split('T')[0];
+                if (!acc[date]) {
+                  acc[date] = [];
+                }
+                acc[date].push(item);
+                return acc;
+              },
+              {}
+            );
+
+            item['groupedComments'] = Object.keys(groupedItems).map(
+              (createdDate) => {
+                return {
+                  createdDate,
+                  items: groupedItems[createdDate],
+                };
+              }
+            );
           }
         });
-        this.changeDetect.detectChanges();
+        this.totalUnrespondedCmntCountByCustomer =
+          this.totalUnrespondedCmntCountByCustomer + 1;
+      }
+    });
+    this.changeDetect.detectChanges();
   };
-  flag:string='';
+  flag: string = '';
   pageName: any;
   getYoutubeData() {
     this.flag = this.router.url.split('/')[2];
@@ -280,7 +289,7 @@ export class YoutubeComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
-        text : "",
+        text: "",
         userName: '',
         notInclude: '',
         include: '',
@@ -292,6 +301,83 @@ export class YoutubeComponent implements OnInit {
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
+            this.SpinnerService.hide();
+            this.spinner1running = false;
+            this.YoutubeData = res.List;
+            this.userInfoService.shareUserInformation(res.List[0].user);
+            this.pageName = this.YoutubeData[0]?.post.profile.page_Name;
+            this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+            this.TotalCmntQueryCount = res.TotalQueryCount;
+
+            this.commentsArray = [];
+
+            this.YoutubeData.forEach((item: any) => {
+              this.commentsArray = [];
+              item.comments.forEach((cmnt: any) => {
+                this.commentsArray.push(cmnt);
+              });
+              let groupedItems = this.commentsArray.reduce(
+                (acc: any, item: any) => {
+                  const date = item.createdDate.split('T')[0];
+                  if (!acc[date]) {
+                    acc[date] = [];
+                  }
+                  acc[date].push(item);
+                  return acc;
+                },
+                {}
+              );
+
+              item['groupedComments'] = Object.keys(groupedItems).map((createdDate) => {
+                return {
+                  createdDate,
+                  items: groupedItems[createdDate],
+                };
+              });
+              // // console.log('hello', this.groupArrays);
+            });
+
+            let finalObj: any = {};
+            this.YoutubeData.forEach((item: any) => {
+              item.comments.forEach((cmnt: any) => {
+                const date = cmnt.createdDate.split('T')[0];
+                if (finalObj[date]) {
+                  finalObj[date].push(cmnt);
+                } else {
+                  finalObj[date] = [cmnt];
+                }
+                // // console.log(finalObj);
+              });
+            });
+
+            this.YoutubeData.forEach((c: any) => {
+              this.postId = c.postId;
+              // this.youtubePostStats();
+            });
+          }
+        });
+    } else if (this.slaId != null || undefined) {
+      localStorage.setItem('storeOpenedId', this.slaId);
+      this.filterDto = {
+        // fromDate: new Date(),
+        // toDate: new Date(),
+        user: this.slaId,
+        pageId: '',
+        plateForm: 'Youtube',
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize,
+        isAttachment: false,
+        queryType: this.queryType,
+        text: "",
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: this.flag,
+      };
+      this.spinner1running = true;
+      this.SpinnerService.show();
+      this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
+        if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.YoutubeData = res.List;
@@ -325,91 +411,14 @@ export class YoutubeComponent implements OnInit {
                 items: groupedItems[createdDate],
               };
             });
-            // // console.log('hello', this.groupArrays);
-          });
-
-          let finalObj: any = {};
-          this.YoutubeData.forEach((item: any) => {
-            item.comments.forEach((cmnt: any) => {
-              const date = cmnt.createdDate.split('T')[0];
-              if (finalObj[date]) {
-                finalObj[date].push(cmnt);
-              } else {
-                finalObj[date] = [cmnt];
-              }
-              // // console.log(finalObj);
-            });
           });
 
           this.YoutubeData.forEach((c: any) => {
             this.postId = c.postId;
             // this.youtubePostStats();
           });
-    }
-  });
-    } else if (this.slaId != null || undefined) {
-      localStorage.setItem('storeOpenedId', this.slaId);
-      this.filterDto = {
-        // fromDate: new Date(),
-        // toDate: new Date(),
-        user: this.slaId,
-        pageId: '',
-        plateForm: 'Youtube',
-        pageNumber: this.pageNumber,
-        pageSize: this.pageSize,
-        isAttachment: false,
-        queryType: this.queryType,
-        text : "",
-        userName: '',
-        notInclude: '',
-        include: '',
-        flag: this.flag,
-      };
-      this.spinner1running = true;
-      this.SpinnerService.show();
-      this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
-        if (Object.keys(res).length > 0) {
-        this.SpinnerService.hide();
-        this.spinner1running = false;
-        this.YoutubeData = res.List;
-        this.userInfoService.shareUserInformation(res.List[0].user);
-          this.pageName = this.YoutubeData[0]?.post.profile.page_Name;
-          this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-          this.TotalCmntQueryCount = res.TotalQueryCount;
-
-        this.commentsArray = [];
-
-        this.YoutubeData.forEach((item: any) => {
-          this.commentsArray = [];
-          item.comments.forEach((cmnt: any) => {
-            this.commentsArray.push(cmnt);
-          });
-          let groupedItems = this.commentsArray.reduce(
-            (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
-              if (!acc[date]) {
-                acc[date] = [];
-              }
-              acc[date].push(item);
-              return acc;
-            },
-            {}
-          );
-
-          item['groupedComments'] = Object.keys(groupedItems).map((createdDate) => {
-            return {
-              createdDate,
-              items: groupedItems[createdDate],
-            };
-          });
-        });
-
-        this.YoutubeData.forEach((c: any) => {
-          this.postId = c.postId;
-          // this.youtubePostStats();
-        });
-    }
-  });
+        }
+      });
     }
     else {
       this.filterDto = {
@@ -422,7 +431,7 @@ export class YoutubeComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
-        text : "",
+        text: "",
         userName: '',
         notInclude: '',
         include: '',
@@ -432,47 +441,47 @@ export class YoutubeComponent implements OnInit {
       this.SpinnerService.show();
       this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
         if (Object.keys(res).length > 0) {
-        this.SpinnerService.hide();
-        this.spinner1running = false;
-        this.YoutubeData = res.List;
-        this.userInfoService.shareUserInformation(res.List[0].user);
+          this.SpinnerService.hide();
+          this.spinner1running = false;
+          this.YoutubeData = res.List;
+          this.userInfoService.shareUserInformation(res.List[0].user);
           this.pageName = this.YoutubeData[0]?.post.profile.page_Name;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
 
-        this.commentsArray = [];
-
-        this.YoutubeData.forEach((item: any) => {
           this.commentsArray = [];
-          item.comments.forEach((cmnt: any) => {
-            this.commentsArray.push(cmnt);
-          });
-          let groupedItems = this.commentsArray.reduce(
-            (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
-              if (!acc[date]) {
-                acc[date] = [];
-              }
-              acc[date].push(item);
-              return acc;
-            },
-            {}
-          );
 
-          item['groupedComments'] = Object.keys(groupedItems).map((createdDate) => {
-            return {
-              createdDate,
-              items: groupedItems[createdDate],
-            };
-          });
-        });
+          this.YoutubeData.forEach((item: any) => {
+            this.commentsArray = [];
+            item.comments.forEach((cmnt: any) => {
+              this.commentsArray.push(cmnt);
+            });
+            let groupedItems = this.commentsArray.reduce(
+              (acc: any, item: any) => {
+                const date = item.createdDate.split('T')[0];
+                if (!acc[date]) {
+                  acc[date] = [];
+                }
+                acc[date].push(item);
+                return acc;
+              },
+              {}
+            );
 
-        this.YoutubeData.forEach((c: any) => {
-          this.postId = c.postId;
-          // this.youtubePostStats();
-        });
-    }
-  });
+            item['groupedComments'] = Object.keys(groupedItems).map((createdDate) => {
+              return {
+                createdDate,
+                items: groupedItems[createdDate],
+              };
+            });
+          });
+
+          this.YoutubeData.forEach((c: any) => {
+            this.postId = c.postId;
+            // this.youtubePostStats();
+          });
+        }
+      });
     }
   }
 
@@ -489,7 +498,7 @@ export class YoutubeComponent implements OnInit {
           .subscribe((postStats: any) => {
             post.post['postStats'] = postStats;
           });
-          // // console.log("Youtube stats", this.YoutubeData)
+        // // console.log("Youtube stats", this.YoutubeData)
       });
     }
   }
@@ -543,19 +552,19 @@ export class YoutubeComponent implements OnInit {
     });
   }
 
-  text:string="";
+  text: string = "";
 
   submitYoutubeCommentReply() {
-    if(this.youtubecommentId == 0){
+    if (this.youtubecommentId == 0) {
       this.reloadComponent('selectComment');
     } else {
       var formData = new FormData();
 
       // if (!this.youtubeCommentReplyForm.get('text')?.dirty) {
-        if(this.text !== ""){
-          this.youtubeCommentReplyForm.patchValue({
-            text: this.text
-          });
+      if (this.text !== "") {
+        this.youtubeCommentReplyForm.patchValue({
+          text: this.text
+        });
       }
       // } else {
       //   if (this.youtubeCommentReplyForm.value.text) {
@@ -564,7 +573,7 @@ export class YoutubeComponent implements OnInit {
       //     });
       //   }
       // }
-      
+
       this.youtubeCommentReplyForm.patchValue({
         commentId: this.youtubecommentId,
         teamId: this.agentId,
@@ -572,31 +581,31 @@ export class YoutubeComponent implements OnInit {
         contentType: this.postType,
         profileId: this.profileId,
         profilePageId: this.profilePageId,
-        userProfileId : this.userProfileId
+        userProfileId: this.userProfileId
       });
-  
+
       formData.append(
         'CommentReply',
         JSON.stringify(this.youtubeCommentReplyForm.value)
       );
-      if(this.youtubeCommentReplyForm.value.text !== "" && this.youtubeCommentReplyForm.value.text !== null){
-        
-    this.spinner1running = true;
-    this.SpinnerService.show();
+      if (this.youtubeCommentReplyForm.value.text !== "" && this.youtubeCommentReplyForm.value.text !== null) {
+
+        this.spinner1running = true;
+        this.SpinnerService.show();
         this.commondata.ReplyComment(formData).subscribe(
           (res: any) => {
             this.spinner1running = false;
-      this.SpinnerService.hide();
-      this.youtubeCommentReplyForm.reset();
+            this.SpinnerService.hide();
+            this.youtubeCommentReplyForm.reset();
             this.clearInputField();
             this.reloadComponent('comment');
-            if(this.radioInput != undefined){
+            if (this.radioInput != undefined) {
               this.radioInput.nativeElement.checked = false;
             }
           },
           (error) => {
-             alert(error.message);
-             this.spinner1running = false;
+            alert(error.message);
+            this.spinner1running = false;
             this.SpinnerService.hide();
           }
         );
@@ -638,9 +647,9 @@ export class YoutubeComponent implements OnInit {
     this.insertTagsForFeedDto.platform = 'Youtube';
 
     this.commondata.InsertSentiment(this.insertTagsForFeedDto).subscribe((res: any) => {
-        this.reloadComponent('Sentiment');
-      });
-}
+      this.reloadComponent('Sentiment');
+    });
+  }
 
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
@@ -678,10 +687,23 @@ export class YoutubeComponent implements OnInit {
     this.insertTagsForFeedDto.type = 'Tag';
     this.insertTagsForFeedDto.platform = 'Youtube';
 
-      this.YoutubeData?.forEach((abc: any) => {
-        abc.comments.forEach((comment: any) => {
-          if (comment.id == comId) {
-            if (comment.tags.length == 0) {
+    this.YoutubeData?.forEach((abc: any) => {
+      abc.comments.forEach((comment: any) => {
+        if (comment.id == comId) {
+          if (comment.tags.length == 0) {
+            this.commondata
+              .InsertTag(this.insertTagsForFeedDto)
+              .subscribe((res: any) => {
+                this.reloadComponent('ApplyTag');
+
+                this.activeTag = true;
+                this.checkTag = true;
+              });
+          } else if (comment.tags.length > 0) {
+            const value = comment.tags.find((x: any) => x.name == tagName);
+            if (value != null || value != undefined) {
+              this.removeTagFromFeed(comId, tagName);
+            } else {
               this.commondata
                 .InsertTag(this.insertTagsForFeedDto)
                 .subscribe((res: any) => {
@@ -690,50 +712,46 @@ export class YoutubeComponent implements OnInit {
                   this.activeTag = true;
                   this.checkTag = true;
                 });
-            } else if (comment.tags.length > 0) {
-              const value = comment.tags.find((x: any) => x.name == tagName);
-              if (value != null || value != undefined) {
-                this.removeTagFromFeed(comId, tagName);
-              } else {
-                this.commondata
-                  .InsertTag(this.insertTagsForFeedDto)
-                  .subscribe((res: any) => {
-                    this.reloadComponent('ApplyTag');
-
-                    this.activeTag = true;
-                    this.checkTag = true;
-                  });
-              }
             }
           }
-        });
+        }
       });
+    });
   }
 
   removeTagFromFeed(feedId: number, tagName: any) {
     if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up'
     ) {
-        this.insertTagsForFeedDto.tagName = tagName;
-        this.insertTagsForFeedDto.feedId = feedId;
-        this.insertTagsForFeedDto.type = 'Tag';
-        this.insertTagsForFeedDto.platform = 'Youtube';
+      this.insertTagsForFeedDto.tagName = tagName;
+      this.insertTagsForFeedDto.feedId = feedId;
+      this.insertTagsForFeedDto.type = 'Tag';
+      this.insertTagsForFeedDto.platform = 'Youtube';
 
-        this.commondata
-          .RemoveTag(this.insertTagsForFeedDto)
-          .subscribe((res: any) => {
-            this.reloadComponent('RemoveTag');
+      this.commondata
+        .RemoveTag(this.insertTagsForFeedDto)
+        .subscribe((res: any) => {
+          this.reloadComponent('RemoveTag');
 
-            this.activeTag = false;
-            this.checkTag = false;
-          });
+          this.activeTag = false;
+          this.checkTag = false;
+        });
     }
   }
-
+  handleTextareaKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.submitYoutubeCommentReply();
+    }
+  }
+  adjustTextareaHeight(textarea: HTMLTextAreaElement) {
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+  }
   commentStatus(comId: any) {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = 'YC';
     this.commentStatusDto.plateForm = 'Youtube';
-   // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
     this.commondata.CommentRespond(this.commentStatusDto).subscribe(
       (res: any) => {
@@ -748,7 +766,7 @@ export class YoutubeComponent implements OnInit {
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = 'YC';
     this.commentStatusDto.plateForm = 'Youtube';
-  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .QueryCompleted(this.commentStatusDto)
       .subscribe((res: any) => {
@@ -843,8 +861,8 @@ export class YoutubeComponent implements OnInit {
     this.platform = '';
     this.postType = '';
   }
-    
-    
+
+
 
   Emojies = [
     { id: 1, emoji: '🙁', tile: 'sad' },
@@ -860,7 +878,7 @@ export class YoutubeComponent implements OnInit {
 
   @ViewChild('textarea')
   textarea!: ElementRef;
-  
+
   insertAtCaret(text: string) {
     const textarea = this.textarea.nativeElement;
     textarea.focus();
@@ -876,7 +894,7 @@ export class YoutubeComponent implements OnInit {
     }
   }
 
-  insertEmoji(emoji:any) {
+  insertEmoji(emoji: any) {
     this.insertAtCaret(' ' + emoji + ' ');
   }
 
@@ -888,36 +906,36 @@ export class YoutubeComponent implements OnInit {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
           if (singleCmnt.id == this.addTags.feedId) {
-            if(this.addTags.type == 'Tag'){
-            if (singleCmnt.tags.length == 0) {
-              singleCmnt.tags.push(this.addTags);
-            } else if (singleCmnt.tags.length > 0) {
-              const tag = singleCmnt.tags.find(
-                (x: any) => x.name == this.addTags.name
-              );
-              if (tag != null || tag != undefined) {
-                const index = singleCmnt.tags.indexOf(tag);
-                if (index !== -1) {
-                  singleCmnt.tags.splice(index, 1);
-                }
-              } else {
-                if (!singleCmnt.tags.includes(this.addTags)) {
-                  singleCmnt.tags.push(this.addTags);
+            if (this.addTags.type == 'Tag') {
+              if (singleCmnt.tags.length == 0) {
+                singleCmnt.tags.push(this.addTags);
+              } else if (singleCmnt.tags.length > 0) {
+                const tag = singleCmnt.tags.find(
+                  (x: any) => x.name == this.addTags.name
+                );
+                if (tag != null || tag != undefined) {
+                  const index = singleCmnt.tags.indexOf(tag);
+                  if (index !== -1) {
+                    singleCmnt.tags.splice(index, 1);
+                  }
+                } else {
+                  if (!singleCmnt.tags.includes(this.addTags)) {
+                    singleCmnt.tags.push(this.addTags);
+                  }
                 }
               }
             }
-          }
-          if(this.addTags.type == 'Sentiment'){
-            singleCmnt.sentiment = this.addTags;
-          }
+            if (this.addTags.type == 'Sentiment') {
+              singleCmnt.sentiment = this.addTags;
+            }
           }
         });
       });
     });
 
-  this.changeDetect.detectChanges();
-}
-removeTagDataListener() {
+    this.changeDetect.detectChanges();
+  }
+  removeTagDataListener() {
     this.YoutubeData?.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
@@ -933,11 +951,11 @@ removeTagDataListener() {
         });
       });
     });
-  this.changeDetect.detectChanges();
-}
+    this.changeDetect.detectChanges();
+  }
 
   updateQueryStatusDataListner() {
-    
+
     this.YoutubeData.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
@@ -965,17 +983,17 @@ removeTagDataListener() {
     this.changeDetect.detectChanges();
   }
   updateBulkQueryStatusDataListner() {
-    
+
     this.YoutubeData.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
-          this.queryStatus.forEach((querry:any) => {
+          this.queryStatus.forEach((querry: any) => {
             if (singleCmnt.id == querry.queryId) {
               singleCmnt.queryStatus = querry.queryStatus;
               this.totalUnrespondedCmntCountByCustomer = 0;
             }
           });
-          
+
         });
       });
     });
@@ -984,7 +1002,7 @@ removeTagDataListener() {
   }
 
 
-  updateTicketId(res:any){
+  updateTicketId(res: any) {
     this.YoutubeData.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
@@ -1017,11 +1035,11 @@ removeTagDataListener() {
     }
   }
 
-  closeQuickResponseSidebar(){
+  closeQuickResponseSidebar() {
     this.quickReplySearchText = '';
-    if(this.radioInput != undefined){
-              this.radioInput.nativeElement.checked = false;
-            }
-    
+    if (this.radioInput != undefined) {
+      this.radioInput.nativeElement.checked = false;
+    }
+
   }
 }

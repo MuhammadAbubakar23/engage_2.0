@@ -831,7 +831,6 @@ export class ResponderHeaderComponent implements OnInit {
   markAsCompleteDto = new MarkAsCompleteDto();
   // only for KE
   removeAssignedQuery() {
-    debugger
     const ProfileId = localStorage.getItem('assignedProfile')
     
     if(ProfileId==null || ProfileId == ""){

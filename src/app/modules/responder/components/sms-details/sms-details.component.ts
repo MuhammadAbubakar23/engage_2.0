@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -109,16 +109,30 @@ export class SmsDetailsComponent implements OnInit {
     private unrespondedCountService : UnRespondedCountService,
     private replyService : ReplyService,
     private router : Router,
-    private stor: StorageService
+    private stor: StorageService,
+    private el: ElementRef,
+    private renderer: Renderer2
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
     //   this.getSmsData();
     // });
   }
+  @HostListener('input', ['$event.target'])
+  onInput(textarea: HTMLTextAreaElement) {
+    this.adjustTextareaHeight(textarea);
+  }
+  adjustTextareaHeight(textarea: HTMLTextAreaElement) {
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+  }
   messagesStatus:any[]=[];
   Sentiments:any[]=[];
   ngOnInit(): void {
+
+    const textarea = this.el.nativeElement as HTMLTextAreaElement;
+    this.renderer.addClass(textarea, 'auto-resize');
+    this.adjustTextareaHeight(textarea);
     this.flag = this.router.url.split('/')[2];
 
     const menu = this.stor.retrive('Tags', 'O').local;
@@ -948,4 +962,12 @@ removeTagFromFeed(feedId: number, tagName: any) {
     });
     this.changeDetect.detectChanges();
   }
+
+  handleTextareaKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.submitSmsReply();
+    }
+  }
+
   }

@@ -302,8 +302,8 @@ export class ExecutiveDashboardComponent implements OnInit {
     this._hS.setHeader(newObj);
     const currentDate = new Date();
     this.maxEndDate = currentDate.toISOString().split('T')[0];
-    this.getEnagementChart()
-    this.getRefionWiseTrafic()
+    // this.getEnagementChart()
+    // this.getRefionWiseTrafic()
     this.GetAllSocialMediaReport()
    
 
@@ -311,7 +311,6 @@ export class ExecutiveDashboardComponent implements OnInit {
     
   }
   GetAllSocialMediaReport() {
-    
     if (this.endDate == '' && this.startDate == '') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 5);

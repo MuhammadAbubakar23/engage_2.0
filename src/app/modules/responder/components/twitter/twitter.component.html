@@ -1441,7 +1441,7 @@
                             </div>
                             <div class="form-floating textarea-field">
                                 <textarea formControlName="text" class="form-control auto" (keydown)="handleTextareaKeyDown($event)" rows="1" id="text"
-                                    placeholder="Write a response here"   (input)="adjustTextareaHeight(textarea)" [(ngModel)]="text" style="height: 50px"
+                                    placeholder="Write a response here"    [(ngModel)]="text" style="border-radius: 20px;"
                                     #textarea></textarea>
 
                             </div>
@@ -1533,7 +1533,7 @@
                             </div>
                             <div class="form-floating textarea-field">
                                 <textarea formControlName="text" class="form-control auto" rows="1"  (keydown)="handleTwitterMessage($event)" id="text"
-                                    placeholder="Write a message here" (input)="adjustTextareaHeight(textarea)"[(ngModel)]="text" style="height: 50px"
+                                    placeholder="Write a message here" [(ngModel)]="text" style="border-radius: 20px;"
                                     #textarea></textarea>
 
                             </div>
@@ -1623,7 +1623,7 @@
                             </div>
                             <div class="form-floating textarea-field">
                                 <textarea formControlName="text" class="form-control auto" rows="1" id="text" (keydown)="handleTwitterMention($event)"
-                                    placeholder="Write a message here" (input)="adjustTextareaHeight(textarea)" [(ngModel)]="text" style="height: 50px"
+                                    placeholder="Write a message here"  [(ngModel)]="text" style="border-radius: 20px;"
                                     #textarea></textarea>
 
                             </div>

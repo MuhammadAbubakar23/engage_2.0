@@ -602,7 +602,7 @@
                     <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></button>
             </div>
             <!-- only for morinaga client -->
-            <div class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
+            <!-- <div class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
                 <button class="iconButton small notification iconHover" id="surveyForms" data-bs-toggle="dropdown"
                     data-bs-auto-close="outside" data-bs-original-title="Survey Forms">
                     <span class="iconButton small btn mx-2">
@@ -638,11 +638,11 @@
                         </li>
                     </ul>
                 </ul>
-            </div>
+            </div> -->
             <div class="form-floating textarea-field">
-                <textarea formControlName="text" class="form-control auto" rows="1" id="text"
-                    placeholder="Write a response here" [(ngModel)]="text" #textarea
-                    (input)="adjustTextareaHeight(textarea)" (keydown)="handleTextareaKeyDown($event)"></textarea>
+                <textarea formControlName="text" [(ngModel)]="text" class="form-control auto" rows="1"
+                     (keydown)="handleTextareaKeyDown($event)" id="text"
+                    placeholder="Write a comment here" style="border-radius: 20px;" #textarea></textarea>
             </div>
             <div class="icons-list align-items-md-center d-flex ps-2">
                 <div class="dropdown w-auto">
@@ -706,7 +706,7 @@
                 <div class="collapse-toggle-card">
                     <div class="list-group list-group-flush">
                         <!-- From DB -->
-                        <!-- <div class="collapse-wrap mx-3" id="qr-ques1"
+                        <div class="collapse-wrap mx-3" id="qr-ques1"
                             *ngFor="let qr of QuickReplies | quickReplySearchFilter: quickReplySearchText">
                              <div class="list-group list-group-flush mb-4 ms-4 ps-1">
                                 <div class="form-check list-group-item theme-check">
@@ -717,9 +717,9 @@
                                     </label>
                                 </div> 
                             </div> 
-                            </div> -->
+                            </div>
                         <!-- Hard Coded only for Morinaga-->
-                        <div class="list-group list-group-flush"
+                        <!-- <div class="list-group list-group-flush"
                             *ngFor="let qr of QuickRepliesHardCoded | quickReplySearchFilter: quickReplySearchText; let i = index">
                             <a class="list-group-item d-flex align-items-center menu_bar_collapse"
                                 (click)="openQuickReplyDropdown(i)" data-bs-toggle="collapse" role="button"
@@ -750,7 +750,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

@@ -2,7 +2,9 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  HostListener,
   OnInit,
+  Renderer2,
   ViewChild,
 } from '@angular/core';
 import {
@@ -49,6 +51,10 @@ export class InstagramComponent implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef;
   @ViewChild('radioInput', { static: false })
   radioInput!: ElementRef<HTMLInputElement>;
+  @HostListener('input', ['$event.target'])
+  onInput(textarea: HTMLTextAreaElement) {
+    this.adjustTextareaHeight(textarea);
+  }
   InstagramData: any;
 
   id = this.fetchId.getOption();
@@ -136,7 +142,9 @@ export class InstagramComponent implements OnInit {
     private getQueryTypeService: GetQueryTypeService,
     private router: Router,
     private userInfoService: UserInformationService,
-    private stor: StorageService
+    private stor: StorageService,
+    private el: ElementRef,
+    private renderer: Renderer2
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -156,18 +164,16 @@ export class InstagramComponent implements OnInit {
     }
   }
   adjustTextareaHeight(textarea: HTMLTextAreaElement) {
-    const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight);
-    const numberOfLines = Math.floor(textarea.scrollHeight / lineHeight);
-    const newHeight = numberOfLines < 3 ? `${numberOfLines}em` : '96px';
-    textarea.style.height = newHeight;
-    textarea.style.overflow = numberOfLines > 4 ? 'auto' : 'hidden';
-    if (textarea.value.trim() === '') {
-      textarea.style.height = '40px';
-    }
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
   }
   messagesStatus:any[]=[];
   Sentiments:any[]=[];
   ngOnInit(): void {
+    const textarea = this.el.nativeElement as HTMLTextAreaElement;
+    this.renderer.addClass(textarea, 'auto-resize');
+    this.adjustTextareaHeight(textarea);
+
     this.flag = this.router.url.split('/')[2];
 
     const menu = this.stor.retrive('Tags', 'O').local;

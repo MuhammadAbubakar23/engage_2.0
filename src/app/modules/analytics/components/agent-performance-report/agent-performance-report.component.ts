@@ -94,7 +94,6 @@ export class AgentPerformanceReportComponent implements OnInit {
     this.searchText=''
   }
   addAgentGraph() {
-    // debugger
     if (this.singleChanenel != '') {
       this.AllChannels = this.singleChanenel
     }
@@ -287,9 +286,9 @@ export class AgentPerformanceReportComponent implements OnInit {
     { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
     { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
     { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
-    // { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
+    { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
     // { id: '16', name: 'SMS', icon: 'fa-solid fa-comment-alt pe-2', isSelected: false },
-    // { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+    { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
     // { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
     // { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
     // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
@@ -303,7 +302,6 @@ export class AgentPerformanceReportComponent implements OnInit {
     this.toastermessage = false;
   }
   date_pagination(days: number) {
-    debugger
     let currentDate = new Date();
     let prevDate = currentDate.setDate(currentDate.getDate() - days);
     this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';

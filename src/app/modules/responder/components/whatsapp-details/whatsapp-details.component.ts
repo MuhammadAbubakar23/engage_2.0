@@ -2,11 +2,14 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  HostListener,
   OnInit,
+  Renderer2,
   ViewChild,
 } from '@angular/core';
 import {
   FormControl,
+  FormGroup,
   UntypedFormControl,
   UntypedFormGroup,
   Validators,
@@ -46,6 +49,11 @@ export class WhatsappDetailsComponent implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef;
   @ViewChild('radioInput', { static: false })
   radioInput!: ElementRef<HTMLInputElement>;
+  @HostListener('input', ['$event.target'])
+  onInput(textarea: HTMLTextAreaElement) {
+    this.adjustTextareaHeight(textarea);
+  }
+  
   id = this.fetchId.id;
   slaId = this.fetchId.getSlaId();
 
@@ -99,6 +107,9 @@ export class WhatsappDetailsComponent implements OnInit {
   public criteria!: SortCriteria;
 
   flag: string = '';
+  WhatsappReplyForm!: FormGroup;
+  // text: string = 'Welcome to Muawin Total Parco. This is '+localStorage.getItem('agentName')+' from Muawin. How may I help you?';
+  text: string = '';
 
   constructor(
     private fetchId: FetchIdService,
@@ -118,12 +129,25 @@ export class WhatsappDetailsComponent implements OnInit {
     private unrespondedCountService: UnRespondedCountService,
     private router: Router,
     private userInfoService: UserInformationService,
-    private stor: StorageService
+    private stor: StorageService,
+    private el: ElementRef,
+    private renderer: Renderer2
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
     //   this.getWhatsappData();
     // });
+
+    this.WhatsappReplyForm = new FormGroup({
+      text: new FormControl(this.ReplyDto.text, Validators.required),
+      // text: new FormControl('Welcome to Muawin Total Parco. This is '+localStorage.getItem('agentName')+' from Muawin. How may I help you?', Validators.required),
+      commentId: new FormControl(this.ReplyDto.commentId),
+      teamId: new FormControl(this.ReplyDto.teamId),
+      platform: new FormControl(this.ReplyDto.platform),
+      profileId: new FormControl(this.ReplyDto.profileId),
+      contentType: new FormControl(this.ReplyDto.contentType),
+      userProfileId: new FormControl(this.ReplyDto.userProfileId),
+    });
   }
   handleTextareaKeyDown(event: KeyboardEvent) {
     if (event.key === 'Enter' && !event.shiftKey) {
@@ -132,20 +156,18 @@ export class WhatsappDetailsComponent implements OnInit {
     }
   }
   adjustTextareaHeight(textarea: HTMLTextAreaElement) {
-    const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight);
-    const numberOfLines = Math.floor(textarea.scrollHeight / lineHeight);
-    const newHeight = numberOfLines < 3 ? `${numberOfLines}em` : '96px';
-    textarea.style.height = newHeight;
-    textarea.style.overflow = numberOfLines > 4 ? 'auto' : 'hidden';
-    if (textarea.value.trim() === '') {
-      textarea.style.height = '40px';
-    }
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
   }
 
 
   messagesStatus: any[] = [];
   Sentiments: any[] = [];
   ngOnInit(): void {
+    const textarea = this.el.nativeElement as HTMLTextAreaElement;
+    this.renderer.addClass(textarea, 'auto-resize');
+    this.adjustTextareaHeight(textarea);
+
     const menu = this.stor.retrive('Tags', 'O').local;
     menu.forEach((item: any) => {
       if (item.name == 'Tags') {
@@ -737,9 +759,9 @@ export class WhatsappDetailsComponent implements OnInit {
   }
 
   quickReplyList() {
-    // this.commondata.QuickReplyList().subscribe((res: any) => {
-    //   this.QuickReplies = res;
-    // });
+    this.commondata.QuickReplyList().subscribe((res: any) => {
+      this.QuickReplies = res;
+    });
   }
 
   QuickRepliesHardCoded = [
@@ -1022,17 +1044,9 @@ export class WhatsappDetailsComponent implements OnInit {
     });
   }
 
-  WhatsappReplyForm = new UntypedFormGroup({
-    text: new UntypedFormControl(this.ReplyDto.text, Validators.required),
-    commentId: new UntypedFormControl(this.ReplyDto.commentId),
-    teamId: new UntypedFormControl(this.ReplyDto.teamId),
-    platform: new UntypedFormControl(this.ReplyDto.platform),
-    profileId: new UntypedFormControl(this.ReplyDto.profileId),
-    contentType: new UntypedFormControl(this.ReplyDto.contentType),
-    userProfileId: new FormControl(this.ReplyDto.userProfileId),
-  });
+  
 
-  text: string = '';
+  
   submitWhatsappReply() {
     if (this.WhatsappMsgId == 0) {
       this.reloadComponent('selectComment');

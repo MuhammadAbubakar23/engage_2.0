@@ -25,14 +25,14 @@ export const environment = {
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
 
   // For KE
-  IdentityBaseUrl: 'https://idtservice.enteract.live/api',
-  CommonBaseUrl: 'https://comservices.enteract.live/api/', 
-  SignalRCommonBaseUrl: 'https://comservices.enteract.live/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
+  // IdentityBaseUrl: 'https://idtservice.enteract.live/api',
+  // CommonBaseUrl: 'https://comservices.enteract.live/api/', 
+  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
   
   // For Jazz
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
-  // SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
+  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
+  SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
 
   // For Total Parco
   // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api',

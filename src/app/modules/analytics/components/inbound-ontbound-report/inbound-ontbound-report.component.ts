@@ -12,7 +12,6 @@ import { HeaderService } from 'src/app/shared/services/header.service';
 import * as echarts from 'echarts';
 import { SharedModule } from '../../../../shared/shared.module';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
-import { FilterPipe } from 'src/app/shared/CustomPipes/filter.pipe';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
@@ -61,18 +60,40 @@ export class InboundOntboundReportComponent implements OnInit {
     private stor:StorageService
   ) { }
   ngOnInit(): void {
-    this.currentDate = new Date();
-    this.maxEndDate = this.currentDate.toISOString().split('T')[0];
-    this.AddGraph();
-    this.getListUser();
     const newObj = {
       title: 'Inbound/Outbound Report',
       url: '/analytics/inbound-outbound-report',
     };
     this._hS.setHeader(newObj);
-    this.getTags();
-    // this.getListUser();
-    // this.getSentiments();
+    const menu = this.stor.retrive('Tags', 'O').local;
+      menu.forEach((tags: any) => {
+        
+        if (tags.name == 'Tags') {
+          tags.subTags.forEach((parentTag: any) => {
+            if(parentTag.subTags != null){
+              parentTag?.subTags.forEach((singleTagObj: any) => {
+                if (!this.subTags.includes(singleTagObj)) {
+                  this.subTags.push(singleTagObj);
+                }
+              });
+            }
+            
+          });
+        }
+        if (tags.name == "Sentiments") {
+          tags.subTags.forEach((sentimentObj: any) => {
+            if (!this.sentimentOptions.includes(sentimentObj)) {
+              this.sentimentOptions.push(sentimentObj)
+            }
+          });
+        }
+      });
+
+    this.currentDate = new Date();
+    this.maxEndDate = this.currentDate.toISOString().split('T')[0];
+    this.AddGraph();
+    this.getListUser();
+    
   }
   mouseClickReset() {
     this.searchText = ''
@@ -466,24 +487,24 @@ export class InboundOntboundReportComponent implements OnInit {
       icon: 'fa-brands fa-facebook facebook pe-2',
       isSelected: false,
     },
-    // {
-    //   id: '14',
-    //   name: 'YouTube',
-    //   icon: 'fa-brands fa-youtube pe-2',
-    //   isSelected: false,
-    // },
+    {
+      id: '14',
+      name: 'YouTube',
+      icon: 'fa-brands fa-youtube pe-2',
+      isSelected: false,
+    },
     // {
     //   id: '15',
     //   name: 'SMS',
     //   icon: 'fa-solid fa-comment-alt pe-2',
     //   isSelected: false,
     // },
-    // {
-    //   id: '14',
-    //   name: 'WhatsApp',
-    //   icon: 'fa-brands fa-whatsapp pe-2',
-    //   isSelected: false,
-    // },
+    {
+      id: '14',
+      name: 'WhatsApp',
+      icon: 'fa-brands fa-whatsapp pe-2',
+      isSelected: false,
+    },
     // {
     //   id: '15',
     //   name: 'Email',
@@ -564,46 +585,7 @@ export class InboundOntboundReportComponent implements OnInit {
   taggedByOptions = [{ id: '', name: '', isSelected: false }];
   subTags: any[] = [];
   searchText: string = '';
-  getTags(): void {
-    this.commonService.GetTagsList().subscribe((res: any) => {
-      
-      const menu = this.stor.retrive('Tags', 'O').local;
-      menu.forEach((tags: any) => {
-        
-        if (tags.name == 'Tags') {
-          tags.subTags.forEach((parentTag: any) => {
-            parentTag.subTags.forEach((singleTagObj: any) => {
-              if (!this.subTags.includes(singleTagObj)) {
-                this.subTags.push(singleTagObj);
-              }
-            });
-          });
-        }
-        if (tags.name == "Sentiments") {
-          tags.subTags.forEach((sentimentObj: any) => {
-            if (!this.sentimentOptions.includes(sentimentObj)) {
-              this.sentimentOptions.push(sentimentObj)
-            }
-          });
-        }
-      });
 
-
-
-
-    });
-  }
-  // getSentiments(): void {
-  //   this.commonService.GetSentimentData().subscribe(
-  //     (response: any) => {
-  //       this.sentimentOptions = response;
-  //       console.log(this.sentimentOptions);
-  //     },
-  //     (error: any) => {
-  //       console.error(error);
-  //     }
-  //   );
-  // }
   closeToaster() {
     this.toastermessage = false;
   }

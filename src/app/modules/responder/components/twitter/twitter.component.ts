@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormControl, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -133,7 +133,9 @@ export class TwitterComponent implements OnInit {
     private getQueryTypeService: GetQueryTypeService,
     private router: Router,
     private stor: StorageService,
-    private userInfoService: UserInformationService
+    private userInfoService: UserInformationService,
+    private el: ElementRef,
+    private renderer: Renderer2
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -141,9 +143,17 @@ export class TwitterComponent implements OnInit {
     //   this.getTwitterDM();
     // });
   }
+  @HostListener('input', ['$event.target'])
+  onInput(textarea: HTMLTextAreaElement) {
+    this.adjustTextareaHeight(textarea);
+  }
   messagesStatus:any[]=[];
   Sentiments:any[]=[];
   ngOnInit(): void {
+    const textarea = this.el.nativeElement as HTMLTextAreaElement;
+    this.renderer.addClass(textarea, 'auto-resize');
+    this.adjustTextareaHeight(textarea)
+
     this.teamPermissions = this.stor.retrive('permissionteam', 'O').local;
 
     const menu = this.stor.retrive('Tags', 'O').local;
@@ -645,14 +655,8 @@ export class TwitterComponent implements OnInit {
     }
   }
   adjustTextareaHeight(textarea: HTMLTextAreaElement) {
-    const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight);
-    const numberOfLines = Math.floor(textarea.scrollHeight / lineHeight);
-    const newHeight = numberOfLines < 3 ? `${numberOfLines}em` : '96px';
-    textarea.style.height = newHeight;
-    textarea.style.overflow = numberOfLines > 4 ? 'auto' : 'hidden';
-    if (textarea.value.trim() === '') {
-      textarea.style.height = '40px';
-    }
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
   }
   getTwitterDM() {
     if (this.id != null || undefined) {

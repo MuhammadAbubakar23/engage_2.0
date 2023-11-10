@@ -1064,7 +1064,7 @@
                 </div>
                 <div class="form-floating textarea-field">
                     <textarea formControlName="text" [(ngModel)]="text" class="form-control auto" rows="1" id="text"
-                    (input)="adjustTextareaHeight(textarea)" (keydown)="handleFacebookReply($event)"  placeholder="Write a comment here" style="height: 50px" #textarea></textarea>
+                     (keydown)="handleFacebookReply($event)"  placeholder="Write a comment here"  style="border-radius: 20px;" #textarea></textarea>
                 </div>
                 <div class="icons-list align-items-md-center d-flex ps-2 ">
 
@@ -1151,7 +1151,7 @@
                 </div>
                 <div class="form-floating textarea-field">
                     <textarea formControlName="text" class="form-control auto" rows="1" id="text"
-                    (input)="adjustTextareaHeight(textarea)" (keydown)="handleTextareaKeyDown($event)"  placeholder="Write a message here" [(ngModel)]="text" style="height: 50px" #textarea></textarea>
+                    style="border-radius: 20px;" (keydown)="handleTextareaKeyDown($event)"  placeholder="Write a message here" [(ngModel)]="text"  #textarea></textarea>
 
                 </div>
                 <div class="icons-list align-items-md-center d-flex ps-2">

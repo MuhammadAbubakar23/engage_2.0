@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -142,15 +142,26 @@ export class PlaystoreComponent implements OnInit {
     private router: Router,
     private stor: StorageService,
     private userInfoService: UserInformationService
+    ,
+    private el: ElementRef,
+    private renderer: Renderer2
   ) { }
-
+  @HostListener('input', ['$event.target'])
+  onInput(textarea: HTMLTextAreaElement) {
+    this.adjustTextareaHeight(textarea);
+  }
   teamPermissions: any;
   currentUrl: string = '';
   messagesStatus:any[]=[];
   Sentiments:any[]=[];
-
+  adjustTextareaHeight(textarea: HTMLTextAreaElement) {
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+  }
   ngOnInit(): void {
-    
+    const textarea = this.el.nativeElement as HTMLTextAreaElement;
+    this.renderer.addClass(textarea, 'auto-resize');
+    this.adjustTextareaHeight(textarea);
     this.teamPermissions = this.stor.retrive('permissionteam', 'O').local;
     this.currentUrl = this.router.url;
 
@@ -1087,14 +1098,5 @@ export class PlaystoreComponent implements OnInit {
       this.submitPlayStoreReviewReply();
     }
   }
-  adjustTextareaHeight(textarea: HTMLTextAreaElement) {
-    const lineHeight = parseFloat(getComputedStyle(textarea).lineHeight);
-    const numberOfLines = Math.floor(textarea.scrollHeight / lineHeight);
-    const newHeight = numberOfLines < 3 ? `${numberOfLines}em` : '6em';
-    textarea.style.height = newHeight;
-    textarea.style.overflow = numberOfLines > 4 ? 'auto' : 'hidden';
-    if (textarea.value.trim() === '') {
-      textarea.style.height = '40px'; 
-    }
-  }
+
 }

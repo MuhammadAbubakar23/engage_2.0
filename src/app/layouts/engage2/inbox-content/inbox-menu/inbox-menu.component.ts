@@ -143,7 +143,7 @@ export class InboxMenuComponent implements OnInit {
 
   getAllChannelsUnrespondedCounts(){
     this.commonService.GetAllChannelsUnrespondedCount().subscribe((res:any)=>{
-      this.GetChannels();
+      // this.GetChannels();
       this.UnResponded = res.totalCount
       this.platformWiseCount = res.platformCount
       res.platformCount.forEach((platform:any) => {
