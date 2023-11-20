@@ -165,7 +165,6 @@ export class FacebookComponent implements OnInit {
     private queryStatusService: QueryStatusService,
     private createTicketService: CreateTicketService,
     private ticketResponseService: TicketResponseService,
-    private applySentimentService: ApplySentimentService,
     private getQueryTypeService: GetQueryTypeService,
     private router: Router,
     private stor: StorageService,
@@ -268,19 +267,19 @@ export class FacebookComponent implements OnInit {
       });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
       this.newReply = res;
-      this.replyDataListner();
+      this.replyDataListener();
     });
     this.Subscription = this.queryStatusService
       .receiveQueryStatus()
       .subscribe((res) => {
         this.queryStatus = res;
-        this.updateQueryStatusDataListner();
+        this.updateQueryStatusDataListener();
       });
     this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
         this.queryStatus = res;
-        this.updateBulkQueryStatusDataListner();
+        this.updateBulkQueryStatusDataListener();
       });
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
@@ -310,7 +309,7 @@ export class FacebookComponent implements OnInit {
     // this.Subscription = this.queryStatusService
     //   .receiveQueryStatus()
     //   .subscribe((res) => {
-    //     this.updateMessageStatusDataListner(res);
+    //     this.updateMessageStatusDataListener(res);
     //   });
   }
 
@@ -386,7 +385,6 @@ export class FacebookComponent implements OnInit {
             this.SpinnerService.hide();
             this.spinner1running = false;
             // this.fbStats();
-            // // console.log('Facebook data', this.FacebookData);
           }
         });
     } else if (this.slaId != null || this.slaId != undefined) {
@@ -729,7 +727,7 @@ export class FacebookComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  updateQueryStatusDataListner() {
+  updateQueryStatusDataListener() {
     if (this.FacebookData) {
       this.FacebookData?.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
@@ -753,7 +751,7 @@ export class FacebookComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  updateBulkQueryStatusDataListner() {
+  updateBulkQueryStatusDataListener() {
     this.queryStatus.forEach((querry: any) => {
       if (querry.feedType == 'FC') {
         this.FacebookData?.forEach((post: any) => {
@@ -780,7 +778,7 @@ export class FacebookComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  replyDataListner() {
+  replyDataListener() {
     if (this.newReply.contentType == 'FC') {
       this.FacebookData?.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
@@ -1013,7 +1011,6 @@ export class FacebookComponent implements OnInit {
               );
               this.SpinnerService.hide();
               this.spinner1running = false;
-              // // console.log('Messages ==>', this.groupedMessages);
             });
           }
         });
@@ -1866,7 +1863,7 @@ export class FacebookComponent implements OnInit {
   //       }
   //     });
   // }
-  // updateMessageStatusDataListner(res: any) {
+  // updateMessageStatusDataListener(res: any) {
   //   if (this.FacebookData) {
   //     this.FacebookData?.forEach((post: any) => {
   //       post.groupedComments.forEach((cmnt: any) => {

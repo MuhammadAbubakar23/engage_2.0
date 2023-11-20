@@ -14,10 +14,10 @@
                     /{{pageName}}</div>
             </div>
             <ul class="nav nav-tabs ms-3 h-100" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active h-100" (click)="instagramCommentReply()" id="insta-comment-tab"
-                        data-bs-toggle="tab" data-bs-target="#insta-comment" type="button" role="tab"
-                        aria-controls="insta-comment" aria-selected="true">
+                <li class="nav-item" role="presentation" *ngIf="InstagramData">
+                    <button (click)="instagramCommentReply()" class="nav-link active h-100" id="fb-comment-tab"
+                        data-bs-toggle="tab" data-bs-target="#fb-comment" type="button" role="tab"
+                        aria-controls="fb-comment" aria-selected="true">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
                                 <i class="fal fa-comments-alt ice"></i>
@@ -28,19 +28,21 @@
                         </div>
                     </button>
                 </li>
-                <!-- <li class="nav-item" role="presentation">
-                    <button (click)="instagramMessageReply()" class="nav-link h-100" [class.active]="InstagramData == null" id="instagram-msg-tab" data-bs-toggle="tab"
-                        data-bs-target="#instagram-msg" type="button" role="tab" aria-controls="instagram-msg" aria-selected="false">
+                <li class="nav-item" role="presentation" *ngIf="InstagramMessages?.length > 0">
+                    <button (click)="instagramMessageReply()" class="nav-link h-100"
+                        [class.active]="InstagramData == null" id="fb-msg-tab" data-bs-toggle="tab"
+                        data-bs-target="#fb-msg" type="button" role="tab" aria-controls="fb-msg" aria-selected="false">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
                                 <i class="fab fa-facebook-messenger ice"></i>
                             </span>
                             Messages
-                            <span class="badge rounded-pill bg-light text-dark ms-3" *ngIf="totalUnrespondedMsgCountByCustomer > 0">{{totalUnrespondedMsgCountByCustomer}}</span>
+                            <span class="badge rounded-pill bg-light text-dark ms-3"
+                                *ngIf="totalUnrespondedMsgCountByCustomer > 0">{{totalUnrespondedMsgCountByCustomer}}</span>
 
                         </div>
                     </button>
-                </li> -->
+                </li>
             </ul>
         </div>
         <div class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;"

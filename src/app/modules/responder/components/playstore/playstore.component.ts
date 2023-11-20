@@ -218,15 +218,15 @@ export class PlaystoreComponent implements OnInit {
       });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
       this.newReply = res;
-      this.replyDataListner();
+      this.replyDataListener();
     });
     this.Subscription = this.queryStatusService.receiveQueryStatus().subscribe((res) => {
         this.queryStatus = res;
-        this.updateQueryStatusDataListner();
+        this.updateQueryStatusDataListener();
       });
     this.Subscription = this.queryStatusService.bulkReceiveQueryStatus().subscribe((res) => {
         this.queryStatus = res;
-        this.updateBulkQueryStatusDataListner();
+        this.updateBulkQueryStatusDataListener();
       });
     this.Subscription = this.unrespondedCountService.getUnRespondedCount().subscribe((res) => {
         if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
@@ -242,7 +242,7 @@ export class PlaystoreComponent implements OnInit {
     //   });
 
     // this.Subscription = this.queryStatusService.receiveQueryStatus().subscribe((res) => {
-    //     this.updateMessageStatusDataListner(res);
+    //     this.updateMessageStatusDataListener(res);
     //   });
 
       this.ticketResponseService.getTicketId().subscribe((res) => {
@@ -356,7 +356,7 @@ export class PlaystoreComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  updateQueryStatusDataListner() {
+  updateQueryStatusDataListener() {
     if (this.PlayStoreReviews) {
       this.PlayStoreReviews?.forEach((msg: any) => {
         if (msg.id == this.queryStatus.queryId) {
@@ -368,7 +368,7 @@ export class PlaystoreComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  updateBulkQueryStatusDataListner() {
+  updateBulkQueryStatusDataListener() {
     this.queryStatus.forEach((querry: any) => {
       if (querry.feedType == 'PSR') {
         this.PlayStoreReviews?.forEach((msg: any) => {
@@ -383,7 +383,7 @@ export class PlaystoreComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  replyDataListner() {
+  replyDataListener() {
     if (this.newReply.contentType == 'PSR') {
       this.PlayStoreReviews?.forEach((msg: any) => {
         if (msg.id == this.newReply.commentId) {
@@ -1073,7 +1073,7 @@ export class PlaystoreComponent implements OnInit {
   //       }
   //     });
   // }
-  // updateMessageStatusDataListner(res: any) {
+  // updateMessageStatusDataListener(res: any) {
   //   if (this.PlayStoreReviews) {
   //     this.PlayStoreReviews?.forEach((msg: any) => {
   //       res.forEach((msgStatus: any) => {

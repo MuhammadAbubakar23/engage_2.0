@@ -29,9 +29,9 @@ export const environment = {
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
 
   // For KE
-  IdentityBaseUrl: 'https://idtservice.enteract.live/api',
-  CommonBaseUrl: 'https://comservices.enteract.live/api/', 
-  SignalRCommonBaseUrl: 'https://comservices.enteract.live/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
+  // IdentityBaseUrl: 'https://idtservice.enteract.live/api',
+  // CommonBaseUrl: 'https://comservices.enteract.live/api/', 
+  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
   
   // For Jazz
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
@@ -49,10 +49,10 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
   
   // For Testing
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  // CommonBaseUrl: 'https://common-engage.enteract.app/api/', 
+  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  CommonBaseUrl: 'https://common-engage.enteract.app/api/', 
   // CommonBaseUrl: 'https://5fff-203-135-1-210.ngrok-free.app/api/', 
-  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
 
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',

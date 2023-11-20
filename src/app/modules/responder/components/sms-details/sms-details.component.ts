@@ -189,7 +189,7 @@ export class SmsDetailsComponent implements OnInit {
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
         this.queryStatus = res;
-        this.updateBulkQueryStatusDataListner();
+        this.updateBulkQueryStatusDataListener();
       });
 
     this.ticketResponseService.getTicketId().subscribe((res) => {
@@ -217,11 +217,11 @@ export class SmsDetailsComponent implements OnInit {
       .receiveQueryStatus()
       .subscribe((res) => {
         this.queryStatus = res;
-        this.updateQueryStatusDataListner();
+        this.updateQueryStatusDataListener();
       });
 
       this.Subscription = this.replyService.receiveReply().subscribe((res) => {
-        this.replyDataListner(res);
+        this.replyDataListener(res);
       });
   }
 
@@ -887,7 +887,7 @@ removeTagFromFeed(feedId: number, tagName: any) {
     this.changeDetect.detectChanges();
   }
 
-  updateBulkQueryStatusDataListner() {
+  updateBulkQueryStatusDataListener() {
     this.groupArrays.forEach((cmnt: any) => {
       cmnt.items.forEach((singleCmnt: any) => {
         this.queryStatus.forEach((querry: any) => {
@@ -940,7 +940,7 @@ removeTagFromFeed(feedId: number, tagName: any) {
             }
     
   }
-  updateQueryStatusDataListner() {
+  updateQueryStatusDataListener() {
     this.groupArrays.forEach((cmnt: any) => {
       cmnt.items.forEach((singleCmnt: any) => {
         if (singleCmnt.id == this.queryStatus.queryId) {
@@ -951,7 +951,7 @@ removeTagFromFeed(feedId: number, tagName: any) {
     });
     this.changeDetect.detectChanges();
   }
-  replyDataListner(res:any) {
+  replyDataListener(res:any) {
     this.groupArrays.forEach((cmnt: any) => {
       cmnt.items.forEach((singleCmnt: any) => {
         if (singleCmnt.id == res.commentId) {

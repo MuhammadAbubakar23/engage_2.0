@@ -183,18 +183,18 @@ export class YoutubeComponent implements OnInit {
     this.Subscription = this.queryStatusService.receiveQueryStatus().subscribe((res) => {
 
       this.queryStatus = res;
-      this.updateQueryStatusDataListner();
+      this.updateQueryStatusDataListener();
     });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
       this.newReply = res;
-      this.replyDataListner();
+      this.replyDataListener();
     });
     this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
 
         this.queryStatus = res;
-        this.updateBulkQueryStatusDataListner();
+        this.updateBulkQueryStatusDataListener();
       });
     this.ticketResponseService.getTicketId().subscribe(res => {
       this.updateTicketId(res)
@@ -954,7 +954,7 @@ export class YoutubeComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  updateQueryStatusDataListner() {
+  updateQueryStatusDataListener() {
 
     this.YoutubeData.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
@@ -969,7 +969,7 @@ export class YoutubeComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  replyDataListner() {
+  replyDataListener() {
     this.YoutubeData.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
@@ -982,7 +982,7 @@ export class YoutubeComponent implements OnInit {
     });
     this.changeDetect.detectChanges();
   }
-  updateBulkQueryStatusDataListner() {
+  updateBulkQueryStatusDataListener() {
 
     this.YoutubeData.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {

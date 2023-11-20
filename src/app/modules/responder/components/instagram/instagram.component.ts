@@ -36,7 +36,6 @@ import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { UpdateMessagesService } from 'src/app/services/UpdateMessagesService/update-messages.service';
 import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
-import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
 import { Router } from '@angular/router';
 import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
@@ -138,7 +137,6 @@ export class InstagramComponent implements OnInit {
     private createTicketService: CreateTicketService,
     private updateMessagesService: UpdateMessagesService,
     private ticketResponseService: TicketResponseService,
-    private applySentimentService: ApplySentimentService,
     private getQueryTypeService: GetQueryTypeService,
     private router: Router,
     private userInfoService: UserInformationService,
@@ -229,6 +227,7 @@ export class InstagramComponent implements OnInit {
     this.Subscription = this.updateMessagesService
       .receiveMessage()
       .subscribe((res) => {
+        debugger
         this.updatedMessages = res;
         this.updateMessagesDataListener();
       });
@@ -236,11 +235,11 @@ export class InstagramComponent implements OnInit {
       .receiveQueryStatus()
       .subscribe((res) => {
         this.queryStatus = res;
-        this.updateQueryStatusDataListner();
+        this.updateQueryStatusDataListener();
       });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
       this.newReply = res;
-      this.replyDataListner();
+      this.replyDataListener();
     });
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
@@ -261,7 +260,7 @@ export class InstagramComponent implements OnInit {
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
         this.queryStatus = res;
-        this.updateBulkQueryStatusDataListner();
+        this.updateBulkQueryStatusDataListener();
       });
 
     this.ticketResponseService.getTicketId().subscribe((res) => {
@@ -355,7 +354,7 @@ export class InstagramComponent implements OnInit {
           contentType: xyz.contentType,
           queryStatus: xyz.queryStatus,
           createdDate: xyz.createdDate,
-          attachments: xyz.mediaAttachments,
+          attachments: xyz.attachments,
           replies: [],
           sentiment: '',
           tags: [],
@@ -366,13 +365,13 @@ export class InstagramComponent implements OnInit {
           toId: xyz.toId,
           toName: xyz.toName,
           msgText: xyz.msgText,
-          agentId: xyz.agentId,
-          customerSocailProfileId: xyz.agentId,
+          agentId: '',
+          customerSocailProfileId: 0,
           profileId: xyz.profileId,
           profilePageId: xyz.profilePageId,
         };
-        this.InstagramMessages.push(this.messageDto);
-        this.messagesArray.push(this.messageDto);
+        this.InstagramMessages.unshift(this.messageDto);
+        this.messagesArray.unshift(this.messageDto);
 
         let groupedItems = this.messagesArray.reduce((acc: any, item: any) => {
           const date = item.createdDate.split('T')[0];
@@ -383,13 +382,12 @@ export class InstagramComponent implements OnInit {
           return acc;
         }, {});
 
-        this.groupedMessages = Object.keys(groupedItems).map((date) => {
+        this.groupedMessages = Object.keys(groupedItems).map((createdDate) => {
           return {
-            date,
-            items: groupedItems[date],
+            createdDate,
+            items: groupedItems[createdDate],
           };
-        });
-        // // console.log('Messages ==>', this.groupedMessages);
+        }); 
         this.totalUnrespondedMsgCountByCustomer =
           this.totalUnrespondedMsgCountByCustomer + 1;
       }
@@ -427,6 +425,7 @@ export class InstagramComponent implements OnInit {
           if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.spinner1running = false;
+          this.instaCmntReply = true;
           this.InstagramData = res.List;
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -489,6 +488,7 @@ export class InstagramComponent implements OnInit {
         if (Object.keys(res).length > 0) {
         this.SpinnerService.hide();
         this.spinner1running = false;
+        this.instaCmntReply = true;
         this.InstagramData = res.List;
         this.userInfoService.shareUserInformation(res.List[0].user);
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -552,6 +552,7 @@ export class InstagramComponent implements OnInit {
           if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.spinner1running = false;
+          this.instaCmntReply = true;
           this.InstagramData = res.List;
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -1122,33 +1123,32 @@ removeTagDataListener() {
   this.changeDetect.detectChanges();
 }
 
-  updateQueryStatusDataListner() {
-    this.InstagramData.forEach((post: any) => {
-      post.groupedComments.forEach((cmnt: any) => {
-        cmnt.items.forEach((singleCmnt: any) => {
-          if (singleCmnt.id == this.queryStatus.queryId) {
-            singleCmnt.queryStatus = this.queryStatus.queryStatus;
-            singleCmnt.isLikedByAdmin = this.queryStatus.isLikes;
-          }
+  updateQueryStatusDataListener() {
+    if (this.InstagramData) {
+      this.InstagramData?.forEach((post: any) => {
+        post.groupedComments.forEach((cmnt: any) => {
+          cmnt.items.forEach((singleCmnt: any) => {
+            if (singleCmnt.id == this.queryStatus.queryId) {
+              singleCmnt.queryStatus = this.queryStatus.queryStatus;
+              singleCmnt.isLikedByAdmin = this.queryStatus.isLikes;
+            }
+          });
         });
       });
-    });
+    }
+    if (this.InstagramMessages) {
+      this.InstagramMessages?.forEach((msg: any) => {
+        if (msg.id == this.queryStatus.queryId) {
+          msg.queryStatus = this.queryStatus.queryStatus;
+        }
+      });
+    }
+
     this.changeDetect.detectChanges();
+    
   }
 
-  replyDataListner() {
-    // this.InstagramData.forEach((post: any) => {
-    //   post.groupedComments.forEach((cmnt: any) => {
-    //     cmnt.items.forEach((singleCmnt: any) => {
-    //       if (singleCmnt.id == this.newReply.commentId) {
-    //         singleCmnt.replies.push(this.newReply);
-    //         singleCmnt.queryStatus = this.newReply.queryStatus;
-    //       }
-    //     });
-    //   });
-    // });
-    // this.changeDetect.detectChanges();
-
+  replyDataListener() {
     if (this.newReply.contentType == 'IC') {
       this.InstagramData.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
@@ -1186,19 +1186,30 @@ removeTagDataListener() {
     }
   }
 
-  updateBulkQueryStatusDataListner() {
-    this.InstagramData.forEach((post: any) => {
-      post.groupedComments.forEach((cmnt: any) => {
-        cmnt.items.forEach((singleCmnt: any) => {
-          this.queryStatus.forEach((querry: any) => {
-            if (singleCmnt.id == querry.queryId) {
-              singleCmnt.queryStatus = querry.queryStatus;
-              this.totalUnrespondedCmntCountByCustomer = 0;
-            }
+  updateBulkQueryStatusDataListener() {
+    this.queryStatus.forEach((querry: any) => {
+      if (querry.feedType == 'IC') {
+        this.InstagramData?.forEach((post: any) => {
+          post.groupedComments.forEach((cmnt: any) => {
+            cmnt.items.forEach((singleCmnt: any) => {
+              if (singleCmnt.id == querry.queryId) {
+                singleCmnt.queryStatus = querry.queryStatus;
+                this.totalUnrespondedCmntCountByCustomer = 0;
+              }
+            });
           });
         });
-      });
+      }
+      if (querry.feedType == 'IM') {
+        this.InstagramMessages?.forEach((msg: any) => {
+          if (msg.id == querry.queryId) {
+            msg.queryStatus = querry.queryStatus;
+            this.totalUnrespondedMsgCountByCustomer = 0;
+          }
+        });
+      }
     });
+
     this.changeDetect.detectChanges();
   }
 
@@ -1253,6 +1264,15 @@ removeTagDataListener() {
           this.TotalMsgQueryCount = res.TotalQueryCount;
           this.pageName = this.InstagramMessages[0]?.toName;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+
+          if (
+            !this.InstagramData ||
+            this.InstagramData == undefined ||
+            this.InstagramData?.length == 0
+          ) {
+            this.instaCmntReply = false;
+            this.instaMsgReply = true;
+          }
 
           this.messagesArray = [];
           this.groupedMessages = [];
@@ -1312,6 +1332,14 @@ removeTagDataListener() {
         this.totalMessages = res.TotalCount;
 
         this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+        if (
+          !this.InstagramData ||
+          this.InstagramData == undefined ||
+          this.InstagramData?.length == 0
+        ) {
+          this.instaCmntReply = false;
+          this.instaMsgReply = true;
+        }
 
         this.messagesArray = [];
         this.groupedMessages = [];
@@ -1373,6 +1401,15 @@ removeTagDataListener() {
           this.TotalMsgQueryCount = res.TotalQueryCount;
 
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+
+          if (
+            !this.InstagramData ||
+            this.InstagramData == undefined ||
+            this.InstagramData?.length == 0
+          ) {
+            this.instaCmntReply = false;
+            this.instaMsgReply = true;
+          }
 
           this.messagesArray = [];
           this.groupedMessages = [];

@@ -213,18 +213,18 @@ export class LinkedInComponent implements OnInit {
     this.Subscription = this.queryStatusService.receiveQueryStatus().subscribe((res) => {
       
       this.queryStatus = res;
-      this.updateQueryStatusDataListner();
+      this.updateQueryStatusDataListener();
     });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
       this.newReply = res;
-      this.replyDataListner();
+      this.replyDataListener();
     });
     this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
         
         this.queryStatus = res;
-        this.updateBulkQueryStatusDataListner();
+        this.updateBulkQueryStatusDataListener();
       });
 
       this.ticketResponseService.getTicketId().subscribe(res=>{
@@ -1024,7 +1024,7 @@ removeTagDataListener() {
   this.changeDetect.detectChanges();
 }
 
-  updateQueryStatusDataListner() {
+  updateQueryStatusDataListener() {
     
     this.LinkedInData.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
@@ -1039,7 +1039,7 @@ removeTagDataListener() {
     this.changeDetect.detectChanges();
   }
 
-  replyDataListner() {
+  replyDataListener() {
     this.LinkedInData.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
@@ -1053,7 +1053,7 @@ removeTagDataListener() {
     this.changeDetect.detectChanges();
   }
 
-  updateBulkQueryStatusDataListner() {
+  updateBulkQueryStatusDataListener() {
     
     this.LinkedInData.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {

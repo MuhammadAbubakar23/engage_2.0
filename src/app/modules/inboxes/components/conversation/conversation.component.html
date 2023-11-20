@@ -638,8 +638,6 @@
              </span>
                 </td>
               </tr>
-            
-              <!-- [ngClass]="[alertWarning == true?'alert-warning':'', alertDanger == true?'alert-danger':'']" -->
               <tr *ngFor="let query of group.items | sort:criteria; let i = index"
                 [class.selected]="query.isChecked==true" class="alert" [ngClass]="[query.slaFlag == 'warning'?'alert-warning':'' || query.slaFlag == 'danger'?'alert-danger':'' ||
               query.slaFlag == 'unread'?'unread':'']">
@@ -694,7 +692,7 @@
                 </td>
                 <td class="px-1">
                   <span *ngIf="FlagForAssignToMe=='follow_up'">
-                   <small>{{query?.follow_Up_Status | date: 'h:mm:ss a '}}</small>
+                   <small><strong>{{query?.follow_Up_Status | date: 'EE, MMM-dd, yyyy h:mm:ss a '}}</strong></small>
                   </span>
                 </td>
 

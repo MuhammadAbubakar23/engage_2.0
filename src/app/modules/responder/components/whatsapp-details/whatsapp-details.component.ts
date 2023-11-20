@@ -221,17 +221,17 @@ export class WhatsappDetailsComponent implements OnInit {
       .receiveQueryStatus()
       .subscribe((res) => {
         this.queryStatus = res;
-        this.updateQueryStatusDataListner();
+        this.updateQueryStatusDataListener();
       });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
       this.newReply = res;
-      this.replyDataListner();
+      this.replyDataListener();
     });
     this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
         this.queryStatus = res;
-        this.updateBulkQueryStatusDataListner();
+        this.updateBulkQueryStatusDataListener();
       });
     this.ticketResponseService.getTicketId().subscribe((res) => {
       this.updateTicketId(res);
@@ -253,7 +253,7 @@ export class WhatsappDetailsComponent implements OnInit {
         }
       });
     // this.Subscription = this.queryStatusService.receiveQueryStatus().subscribe((res) => {
-    //   this.updateMessageStatusDataListner(res);
+    //   this.updateMessageStatusDataListener(res);
     // });
   }
 
@@ -1281,7 +1281,7 @@ export class WhatsappDetailsComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  updateQueryStatusDataListner() {
+  updateQueryStatusDataListener() {
     this.groupArrays.forEach((cmnt: any) => {
       cmnt.items.forEach((singleCmnt: any) => {
         if (singleCmnt.id == this.queryStatus.queryId) {
@@ -1292,7 +1292,7 @@ export class WhatsappDetailsComponent implements OnInit {
     });
     this.changeDetect.detectChanges();
   }
-  replyDataListner() {
+  replyDataListener() {
     this.groupArrays.forEach((cmnt: any) => {
       cmnt.items.forEach((singleCmnt: any) => {
         if (singleCmnt.id == this.newReply.commentId) {
@@ -1303,7 +1303,7 @@ export class WhatsappDetailsComponent implements OnInit {
     });
     this.changeDetect.detectChanges();
   }
-  updateBulkQueryStatusDataListner() {
+  updateBulkQueryStatusDataListener() {
     this.groupArrays.forEach((cmnt: any) => {
       cmnt.items.forEach((singleCmnt: any) => {
         this.queryStatus.forEach((querry: any) => {
@@ -1446,7 +1446,7 @@ export class WhatsappDetailsComponent implements OnInit {
   //       }
   //     });
   // }
-  // updateMessageStatusDataListner(res: any) {
+  // updateMessageStatusDataListener(res: any) {
   //   if (this.WhatsappData) {
   //     this.WhatsappData.forEach((post: any) => {
   //       post.comments.forEach((cmnt: any) => {

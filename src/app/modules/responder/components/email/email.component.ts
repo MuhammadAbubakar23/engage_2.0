@@ -168,11 +168,11 @@ export class EmailComponent implements OnInit {
       .receiveQueryStatus()
       .subscribe((res) => {
         this.queryStatus = res;
-        this.updateQueryStatusDataListner();
+        this.updateQueryStatusDataListener();
       });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
       this.newReply = res;
-      this.replyDataListner();
+      this.replyDataListener();
     });
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
@@ -191,7 +191,7 @@ export class EmailComponent implements OnInit {
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
         this.queryStatus = res;
-        this.updateBulkQueryStatusDataListner();
+        this.updateBulkQueryStatusDataListener();
       });
 
     // this.Subscription = this.applySentimentService
@@ -1424,7 +1424,7 @@ export class EmailComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  updateQueryStatusDataListner() {
+  updateQueryStatusDataListener() {
     
       this.result.forEach((grp: any) => {
         grp.subjects.forEach((cmnt:any) => {
@@ -1440,7 +1440,7 @@ export class EmailComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  updateBulkQueryStatusDataListner() {
+  updateBulkQueryStatusDataListener() {
       this.result.forEach((grp: any) => {
         grp.subjects.forEach((cmnt:any) => {
           cmnt.items.items.forEach((singleCmnt: any) => {
@@ -1457,7 +1457,7 @@ export class EmailComponent implements OnInit {
     this.changeDetect.detectChanges();
   }
 
-  replyDataListner() {
+  replyDataListener() {
 
       this.result.forEach((grp: any) => {
         grp.subjects.forEach((cmnt:any) => {
