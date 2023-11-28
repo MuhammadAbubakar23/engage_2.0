@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import * as echarts from 'echarts';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
-import { HeaderService } from 'src/app/services/HeaderService/header.service';
+import { HeaderService } from 'src/app/shared/services/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { ExcelService } from '../../services/excel.service';
 
@@ -24,1150 +24,25 @@ export class LinkedInReportComponent implements OnInit {
   allDates: any[] = [];
   ImpressionsGraphData: any[] = [];
   UniqueImpressionsGraphData: any[] = [];
+
+  followersGraphData:any[]=[]
   EngagementGraphData: any[] = [];
   EngagementRateGraphData: any[] = [];
   ClickThroughRateGraphData: any[] = [];
   topFiveUpdates: any[] = [];
+  linkedFollowerData:any[]=[]
+  currentDate:any
+  topFiveCustomer:any[]=[]
   impressionGraph: any;
   uniqueImpressionsGraph: any;
   engagementGraph: any;
   engagementRateGraph: any;
   clickThroughRateGraph: any;
-  LinkedInReport:any
-  // LinkedInReport = {
-  //   likes_TotalCount: 4,
-  //   comments_TotalCount: 82,
-  //   shares_TotalCount: 0,
-  //   engagement_TotalCount: 6,
-  //   impressions_TotalCount: 924,
-  //   uniqueImpressions_TotalCount: 223,
-  //   engangement_Rate_TotalPercent: 0,
-  //   click_TotalTCount: 10,
-  //   shared_Social_Activity: [
-  //     {
-  //       from: '2023-09-10T00:00:00Z',
-  //       to: '2023-09-11T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 5,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-09-11T00:00:00Z',
-  //       to: '2023-09-12T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 27,
-  //       uniqueImpressions: 2,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-09-12T00:00:00Z',
-  //       to: '2023-09-13T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 2,
-  //       uniqueImpressions: 2,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-09-13T00:00:00Z',
-  //       to: '2023-09-14T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 1,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-09-14T00:00:00Z',
-  //       to: '2023-09-15T00:00:00Z',
-  //       engagement: 2,
-  //       engagement_Rate: 100,
-  //       impressions: 2,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-09-15T00:00:00Z',
-  //       to: '2023-09-16T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 17,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-09-16T00:00:00Z',
-  //       to: '2023-09-17T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-09-17T00:00:00Z',
-  //       to: '2023-09-18T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-09-18T00:00:00Z',
-  //       to: '2023-09-19T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 58,
-  //       uniqueImpressions: 2,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-09-19T00:00:00Z',
-  //       to: '2023-09-20T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 274,
-  //       uniqueImpressions: 48,
-  //       clicks: 1,
-  //     },
-  //     {
-  //       from: '2023-09-20T00:00:00Z',
-  //       to: '2023-09-21T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 33,
-  //       uniqueImpressions: 14,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-09-21T00:00:00Z',
-  //       to: '2023-09-22T00:00:00Z',
-  //       engagement: 1,
-  //       engagement_Rate: 0,
-  //       impressions: 11,
-  //       uniqueImpressions: 9,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-09-22T00:00:00Z',
-  //       to: '2023-09-23T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 12,
-  //       uniqueImpressions: 6,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-09-23T00:00:00Z',
-  //       to: '2023-09-24T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 25,
-  //       uniqueImpressions: 7,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-09-24T00:00:00Z',
-  //       to: '2023-09-25T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 22,
-  //       uniqueImpressions: 7,
-  //       clicks: 1,
-  //     },
-  //     {
-  //       from: '2023-09-25T00:00:00Z',
-  //       to: '2023-09-26T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 2,
-  //       uniqueImpressions: 2,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-09-26T00:00:00Z',
-  //       to: '2023-09-27T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 1,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-09-27T00:00:00Z',
-  //       to: '2023-09-28T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 10,
-  //       uniqueImpressions: 3,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-09-28T00:00:00Z',
-  //       to: '2023-09-29T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 132,
-  //       uniqueImpressions: 39,
-  //       clicks: 6,
-  //     },
-  //     {
-  //       from: '2023-09-29T00:00:00Z',
-  //       to: '2023-09-30T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 25,
-  //       uniqueImpressions: 5,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-09-30T00:00:00Z',
-  //       to: '2023-10-01T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 15,
-  //       uniqueImpressions: 6,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-01T00:00:00Z',
-  //       to: '2023-10-02T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 14,
-  //       uniqueImpressions: 7,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-02T00:00:00Z',
-  //       to: '2023-10-03T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 11,
-  //       uniqueImpressions: 5,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-03T00:00:00Z',
-  //       to: '2023-10-04T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 7,
-  //       uniqueImpressions: 2,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-04T00:00:00Z',
-  //       to: '2023-10-05T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 16,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-05T00:00:00Z',
-  //       to: '2023-10-06T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 11,
-  //       uniqueImpressions: 5,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-06T00:00:00Z',
-  //       to: '2023-10-07T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 6,
-  //       uniqueImpressions: 2,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-07T00:00:00Z',
-  //       to: '2023-10-08T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 8,
-  //       uniqueImpressions: 4,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-08T00:00:00Z',
-  //       to: '2023-10-09T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 4,
-  //       uniqueImpressions: 3,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-09T00:00:00Z',
-  //       to: '2023-10-10T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 31,
-  //       uniqueImpressions: 3,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-10T00:00:00Z',
-  //       to: '2023-10-11T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 1,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-11T00:00:00Z',
-  //       to: '2023-10-12T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 6,
-  //       uniqueImpressions: 2,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-12T00:00:00Z',
-  //       to: '2023-10-13T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 2,
-  //       uniqueImpressions: 2,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-13T00:00:00Z',
-  //       to: '2023-10-14T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 24,
-  //       uniqueImpressions: 2,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-14T00:00:00Z',
-  //       to: '2023-10-15T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-15T00:00:00Z',
-  //       to: '2023-10-16T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 6,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-16T00:00:00Z',
-  //       to: '2023-10-17T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-17T00:00:00Z',
-  //       to: '2023-10-18T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-18T00:00:00Z',
-  //       to: '2023-10-19T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 5,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-19T00:00:00Z',
-  //       to: '2023-10-20T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-20T00:00:00Z',
-  //       to: '2023-10-21T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 3,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-21T00:00:00Z',
-  //       to: '2023-10-22T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 1,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-22T00:00:00Z',
-  //       to: '2023-10-23T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 9,
-  //       uniqueImpressions: 2,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-23T00:00:00Z',
-  //       to: '2023-10-24T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-24T00:00:00Z',
-  //       to: '2023-10-25T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-25T00:00:00Z',
-  //       to: '2023-10-26T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-26T00:00:00Z',
-  //       to: '2023-10-27T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-27T00:00:00Z',
-  //       to: '2023-10-28T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-28T00:00:00Z',
-  //       to: '2023-10-29T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-29T00:00:00Z',
-  //       to: '2023-10-30T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-30T00:00:00Z',
-  //       to: '2023-10-31T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-10-31T00:00:00Z',
-  //       to: '2023-11-01T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-11-01T00:00:00Z',
-  //       to: '2023-11-02T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-11-02T00:00:00Z',
-  //       to: '2023-11-03T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 41,
-  //       uniqueImpressions: 5,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-11-03T00:00:00Z',
-  //       to: '2023-11-04T00:00:00Z',
-  //       engagement: 1,
-  //       engagement_Rate: 0,
-  //       impressions: 3,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-11-04T00:00:00Z',
-  //       to: '2023-11-05T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-11-05T00:00:00Z',
-  //       to: '2023-11-06T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-11-06T00:00:00Z',
-  //       to: '2023-11-07T00:00:00Z',
-  //       engagement: 1,
-  //       engagement_Rate: 0,
-  //       impressions: 4,
-  //       uniqueImpressions: 2,
-  //       clicks: 2,
-  //     },
-  //     {
-  //       from: '2023-11-07T00:00:00Z',
-  //       to: '2023-11-08T00:00:00Z',
-  //       engagement: 1,
-  //       engagement_Rate: 0,
-  //       impressions: 2,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-11-08T00:00:00Z',
-  //       to: '2023-11-09T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 7,
-  //       uniqueImpressions: 5,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-11-09T00:00:00Z',
-  //       to: '2023-11-10T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 1,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-11-10T00:00:00Z',
-  //       to: '2023-11-11T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-11-11T00:00:00Z',
-  //       to: '2023-11-12T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-11-12T00:00:00Z',
-  //       to: '2023-11-13T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 2,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-11-13T00:00:00Z',
-  //       to: '2023-11-14T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 1,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-11-14T00:00:00Z',
-  //       to: '2023-11-15T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-11-15T00:00:00Z',
-  //       to: '2023-11-16T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 2,
-  //       uniqueImpressions: 2,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-11-16T00:00:00Z',
-  //       to: '2023-11-17T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 20,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-11-17T00:00:00Z',
-  //       to: '2023-11-18T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 0,
-  //       uniqueImpressions: 0,
-  //       clicks: 0,
-  //     },
-  //     {
-  //       from: '2023-11-18T00:00:00Z',
-  //       to: '2023-11-19T00:00:00Z',
-  //       engagement: 0,
-  //       engagement_Rate: 0,
-  //       impressions: 2,
-  //       uniqueImpressions: 1,
-  //       clicks: 0,
-  //     },
-  //   ],
-  //   updates: [
-  //     {
-  //       name: '',
-  //       date: '2023-09-10T00:00:00Z',
-  //       impressions: 5,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-11T00:00:00Z',
-  //       impressions: 27,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-12T00:00:00Z',
-  //       impressions: 2,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-13T00:00:00Z',
-  //       impressions: 1,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-14T00:00:00Z',
-  //       impressions: 2,
-  //       ctr: 0,
-  //       engagementRate: 100,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-15T00:00:00Z',
-  //       impressions: 17,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-16T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-17T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-18T00:00:00Z',
-  //       impressions: 58,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-19T00:00:00Z',
-  //       impressions: 274,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-20T00:00:00Z',
-  //       impressions: 33,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-21T00:00:00Z',
-  //       impressions: 11,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-22T00:00:00Z',
-  //       impressions: 12,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-23T00:00:00Z',
-  //       impressions: 25,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-24T00:00:00Z',
-  //       impressions: 22,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-25T00:00:00Z',
-  //       impressions: 2,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-26T00:00:00Z',
-  //       impressions: 1,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-27T00:00:00Z',
-  //       impressions: 10,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-28T00:00:00Z',
-  //       impressions: 132,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-29T00:00:00Z',
-  //       impressions: 25,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-09-30T00:00:00Z',
-  //       impressions: 15,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-01T00:00:00Z',
-  //       impressions: 14,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-02T00:00:00Z',
-  //       impressions: 11,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-03T00:00:00Z',
-  //       impressions: 7,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-04T00:00:00Z',
-  //       impressions: 16,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-05T00:00:00Z',
-  //       impressions: 11,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-06T00:00:00Z',
-  //       impressions: 6,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-07T00:00:00Z',
-  //       impressions: 8,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-08T00:00:00Z',
-  //       impressions: 4,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-09T00:00:00Z',
-  //       impressions: 31,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-10T00:00:00Z',
-  //       impressions: 1,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-11T00:00:00Z',
-  //       impressions: 6,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-12T00:00:00Z',
-  //       impressions: 2,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-13T00:00:00Z',
-  //       impressions: 24,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-14T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-15T00:00:00Z',
-  //       impressions: 6,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-16T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-17T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-18T00:00:00Z',
-  //       impressions: 5,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-19T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-20T00:00:00Z',
-  //       impressions: 3,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-21T00:00:00Z',
-  //       impressions: 1,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-22T00:00:00Z',
-  //       impressions: 9,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-23T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-24T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-25T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-26T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-27T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-28T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-29T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-30T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-10-31T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-01T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-02T00:00:00Z',
-  //       impressions: 41,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-03T00:00:00Z',
-  //       impressions: 3,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-04T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-05T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-06T00:00:00Z',
-  //       impressions: 4,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-07T00:00:00Z',
-  //       impressions: 2,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-08T00:00:00Z',
-  //       impressions: 7,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-09T00:00:00Z',
-  //       impressions: 1,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-10T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-11T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-12T00:00:00Z',
-  //       impressions: 2,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-13T00:00:00Z',
-  //       impressions: 1,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-14T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-15T00:00:00Z',
-  //       impressions: 2,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-16T00:00:00Z',
-  //       impressions: 20,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-17T00:00:00Z',
-  //       impressions: 0,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //     {
-  //       name: '',
-  //       date: '2023-11-18T00:00:00Z',
-  //       impressions: 2,
-  //       ctr: 0,
-  //       engagementRate: 0,
-  //     },
-  //   ],
-  // };
+  LinkedInReport:any;
+  followers:any;
+  linkedfollowerTotalcount:any
+
+  
 
   constructor(
     private _hS: HeaderService,
@@ -1178,50 +53,76 @@ export class LinkedInReportComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // const newObj = { title: 'LinkedIn Report', url: '/analytics/linkedin-report' };
-    // this._hS.setHeader(newObj);
+    const newObj = { title: 'LinkedIn Report', url: '/analytics/linkedin-report' };
+    this._hS.setHeader(newObj);
 
-    // const currentDate = new Date();
-    // this.maxEndDate = currentDate.toISOString().split('T')[0];
+    this. currentDate = new Date();
+    this.maxEndDate = this.currentDate.toISOString().split('T')[0];
 
     this.getLinkedInReportData();
     this.makeChartResponsive();
+    this.getAllLinkedInfollowrs()
   }
+
   date_pagination(days: number) {
+ 
     let currentDate = new Date();
     let prevDate = currentDate.setDate(currentDate.getDate() - days);
     this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
+    this.getLinkedInReportData()
+    this.getAllLinkedInfollowrs()
   }
   closeToaster() {
     this.toastermessage = false;
   }
   resetEndDate() {
-    this.toDate = '';
+  if(this.toDate<=this.fromDate){
+    this.toDate=''
+    alert("EndDate is greater_then StartDate")
+  }
+  else{
+    this.getLinkedInReportData()
+    this.getAllLinkedInfollowrs()
+  }
   }
   export() {
-    this.excelServices.exportAsExcelFile(this.topFiveUpdates, 'LinkedIn-Top-Five-Updates')
+    this.excelServices.exportAsExcelFile(this.topFiveCustomer, 'LinkedIn-Top-Five-Updates')
   }
 
   getLinkedInReportData() {
+  
+ if(this.fromDate==''&& this.toDate=='' ){
+  const today =new Date()
+  this.toDate =this.datePipe.transform(this.currentDate,'YYYY-MM-dd') || '';
+  let prevDate = this.currentDate.setDate(this.currentDate.getDate()-5);
+  this.fromDate=this.datePipe.transform(prevDate,'YYYY-MM-d') || '';
+ }
+ else if(this.fromDate!='' && this.toDate!=''){
+  this.toDate=this.toDate
+  this.fromDate=this.fromDate
+ }
+
+    var obj = {
+      pageId: '76213578',
+      from: this.fromDate,
+      to: this.toDate,
+      lastPostId: 0,
+    };
     this.allDates = [];
     this.ImpressionsGraphData = [];
     this.UniqueImpressionsGraphData = [];
     this.EngagementGraphData = [];
     this.EngagementRateGraphData = [];
     this.ClickThroughRateGraphData = [];
-    var obj = {
-      pageId: '76213578',
-      from: '2023-09-10T13:30:32.175Z',
-      to: '2023-11-21T13:30:32.175Z',
-      lastPostId: 0,
-    };
+    this.SpinnerService.show()
     this.commonDataService.GetLinkedInReportData(obj).subscribe((res:any)=>{
-      debugger
       this.LinkedInReport = res;
+      this.SpinnerService.hide()
     this.topFiveUpdates = this.LinkedInReport.updates;
+    this.topFiveCustomer=this.topFiveUpdates.slice(0,5)
     this.LinkedInReport.shared_Social_Activity.forEach((data: any) => {
-      if (!this.allDates.includes(data.from)) {
+      if (!this.allDates.includes(this.datePipe.transform(data.from,'dd MMM'))) {
         this.allDates.push(this.datePipe.transform(data.from, 'dd MMM'));
       }
 
@@ -1237,11 +138,11 @@ export class LinkedInReportComponent implements OnInit {
     this.populateEngagementGraph();
     this.populateEngagementRateGraph();
     this.populateClickThroughRateGraph();
-    },
-    (errr:any)=>{
-      debugger
-      console.log("Policy error====>",errr)
-    });
+  
+    
+ 
+    })
+  
   }
 
   populateImpressionsGraph() {
@@ -1524,7 +425,101 @@ export class LinkedInReportComponent implements OnInit {
 
     option && this.clickThroughRateGraph.setOption(option);
   }
+  getAllLinkedInfollowrs(){
+    debugger
+    if(this.fromDate==''&& this.toDate=='' ){
+      const today =new Date()
+      this.toDate =this.datePipe.transform(this.currentDate,'YYYY-MM-dd') || '';
+      let prevDate = this.currentDate.setDate(this.currentDate.getDate()-5);
+      this.fromDate=this.datePipe.transform(prevDate,'YYYY-MM-d') || '';
+     }
+     else if(this.fromDate!='' && this.toDate!=''){
+      this.toDate=this.toDate
+      this.fromDate=this.fromDate
+     }
+    
+    
+    let obj ={
+      "pageId": "76213578",
+      "from":this.fromDate,
+      "to": this.toDate,
+      "lastPostId": 0
+    }
+    this.followersGraphData=[]
+    this.allDates=[]
+    this.commonDataService.GetLinkedInReportFollwers(obj).subscribe((res:any)=>{
+      this.linkedfollowerTotalcount=res.spanFollowers_TotalCount
+      this.linkedFollowerData=res.spanFollowers
+      debugger
+      this.linkedFollowerData.forEach((abc:any)=>{
+        debugger
+        if (!this.allDates.includes(this.datePipe.transform(abc.from,'dd MMM'))) {
+          this.allDates.push(this.datePipe.transform(abc.from,'dd MMM'));
+        }
+        this.followersGraphData.push(abc.organicFollowers + abc.paidFollowers)
+      })
+   
+      this.followerChart()
+    })
+   
+  }
+followerChart(){
+  debugger
+  type EChartsOption = echarts.EChartsOption;
 
+  const dom = document.getElementById('followers');
+  this.followers = echarts.init(dom, null, {
+    renderer: 'canvas',
+    useDirtyRect: false,
+  });
+  var option: EChartsOption;
+
+  option = {
+    color: ['#90EE90'],
+    title: {
+      text: '',
+    },
+    tooltip: {
+      trigger: 'axis',
+    },
+    legend: {
+      data: ['Total Followers'],
+      icon: 'circle',
+      bottom: 0,
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '15%',
+      containLabel: true,
+    },
+    toolbox: {
+      feature: {
+        saveAsImage: {},
+      },
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: this.allDates,
+      axisLabel: {
+        rotate: 45,
+      },
+    },
+    yAxis: {
+      type: 'value',
+    },
+    series: [
+      {
+        name: 'Total Followers',
+        type: 'line',
+        data: this.followersGraphData,
+      },
+    ],
+  };
+
+  option && this.followers.setOption(option);
+}
   makeChartResponsive() {
     window.addEventListener('resize', () => {
       if (this.impressionGraph) {
@@ -1542,6 +537,12 @@ export class LinkedInReportComponent implements OnInit {
       if (this.clickThroughRateGraph) {
         this.clickThroughRateGraph.resize();
       }
+      if(this.followersGraphData){
+        this.followers.resize()
+      }
     });
+  }
+  restStartDate(){
+    this.toDate=''
   }
 }
