@@ -103,7 +103,7 @@ export class PlaystoreComponent implements OnInit {
   querryCompleted = false;
   markAsComplete = false;
   toastermessage = false;
-  userInfo:any;
+  userInformation:any;
 
   searchText: string = '';
 
@@ -422,7 +422,7 @@ export class PlaystoreComponent implements OnInit {
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
             this.PlayStoreReviews = res.List?.dm;
-            this.userInfo = res.List?.user;
+            this.userInformation = res.List?.user;
             this.userInfoService.shareUserInformation(res.List.user);
             this.appName = res.List?.profile.page_Name;
             this.totalUnrespondedReviewCountByCustomer = res.TotalCount;
@@ -482,7 +482,7 @@ export class PlaystoreComponent implements OnInit {
         if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.PlayStoreReviews = res.List?.dm;
-          this.userInfo = res.List?.user;
+          this.userInformation = res.List?.user;
           this.userInfoService.shareUserInformation(res.List.user);
           this.appName = res.List?.profile.page_Name;
           this.TotalMsgQueryCount = res.TotalQueryCount;
@@ -541,7 +541,7 @@ export class PlaystoreComponent implements OnInit {
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
             this.PlayStoreReviews = res.List?.dm;
-            this.userInfo = res.List?.user;
+            this.userInformation = res.List?.user;
             this.userInfoService.shareUserInformation(res.List.user);
             this.appName = res.List?.profile.page_Name;
             this.TotalMsgQueryCount = res.TotalQueryCount;
@@ -594,6 +594,7 @@ export class PlaystoreComponent implements OnInit {
     profileId: new UntypedFormControl(this.ReplyDto.profileId),
     // profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
+    responseByName: new FormControl(this.ReplyDto.responseByName),
   });
 
   profileId: string = '';
@@ -611,7 +612,7 @@ export class PlaystoreComponent implements OnInit {
         // this.profileId = msg.profileId;
         this.profileId = '';
         // this.profilePageId = msg.profilePageId;
-        this.userProfileId = this.userInfo.id;
+        this.userProfileId = this.userInformation.id;
       }
     });
   }
@@ -659,6 +660,7 @@ export class PlaystoreComponent implements OnInit {
         profileId: this.profileId,
         // profilePageId: this.profilePageId,
         userProfileId: this.userProfileId,
+        responseByName: this.appName,
       });
 
       formData.append(

@@ -90,7 +90,6 @@ export class TagReportComponent implements OnInit {
       this.tagChart();
 
       this.userlist = res.userListDtos;
-debugger
 for (const user of this.userlist) {
   const existingAgentData = this.uniqueAgentData.find(data => data.agentId === user.agentId);
 
@@ -109,7 +108,6 @@ for (const user of this.userlist) {
   }
 }
 this.uniqueAgentData.forEach((x:any)=>{
-  debugger
   this.uniqueAgentId=x.agentId
 })
 console.log("Unique AgentDate===>",this.uniqueAgentId)
@@ -120,10 +118,8 @@ return this.uniqueAgentData;
       // this.userlist.forEach((item:any)=>{
       //   const agentId =item.agentId
       //   if(!this.groupedData.has(agentId)){
-      //     debugger
       //     this.groupedData.set(agentId,[])
       //   }
-      //   debugger
       //   this.groupedData.get(agentId).push(item)
       //   this. groupedDataArray = Array.from(this.groupedData, ([agentId, items]) => ({ agentId, items }));
 
@@ -172,6 +168,7 @@ return this.uniqueAgentData;
         trigger: 'item',
       },
       legend: {
+        type: 'scroll',
         top: '30%',
         orient: 'vertical',
         right: -20,

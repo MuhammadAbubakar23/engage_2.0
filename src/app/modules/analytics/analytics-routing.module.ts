@@ -79,8 +79,12 @@ const routes: Routes = [
       loadComponent: () => import('./components/inbound-ontbound-report/inbound-ontbound-report.component').then(c => c.InboundOntboundReportComponent),
     },
     {
+      path:'linkedin-report',
+      loadComponent: () => import('./components/linked-in-report/linked-in-report.component').then(c => c.LinkedInReportComponent),
+    },
+    {
       path:'twitter-report',
-      loadComponent: () => import('./components//twitter-report/twitter-report.component').then(c => c.TwitterReportComponent),
+      loadComponent: () => import('./components/twitter-report/twitter-report.component').then(c => c.TwitterReportComponent),
     },
     {
       path:'performance-report',
@@ -109,6 +113,10 @@ const routes: Routes = [
     {
       path:'tag-report',
       loadComponent:()=>import('./components/tag-report/tag-report.component').then(c=>c.TagReportComponent)
+    },
+    {
+      path:'querytag-report',
+      loadComponent:()=>import('./components/queryTagReport/queryTag-report.component').then(c=>c.QueryTagReportComponent)
     }
   ]
   }

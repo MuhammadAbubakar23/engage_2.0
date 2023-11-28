@@ -150,31 +150,22 @@
                                                                         date:'h:mm:ss a'}}</small>
                                                                 </p>
                                                             </div>
-                                                            <div class="dropdown w-auto"
-                                                                *ngIf="cmnts.queryStatus != 'Responded' && cmnts.queryStatus != 'Completed'">
+                                                            <div class="dropdown w-auto">
                                                                 <button class="btn coal p-0 ps-3" type="button"
                                                                     id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                     aria-expanded="false">
-                                                                    <small>{{cmnts.queryStatus}} <i
-                                                                            class="far fa-chevron-down ms-2"></i>
-                                                                    </small>
+                                                                    {{cmnts.queryStatus}}
+                                                                    <i class="far fa-chevron-down ms-2"
+                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && cmnts.queryStatus == 'Unresponded'"></i>
                                                                 </button>
                                                                 <ul class="dropdown-menu custom-dropdown"
-                                                                    aria-labelledby="dropdownMenuButton1">
-
+                                                                    aria-labelledby="dropdownMenuButton1"
+                                                                    *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && cmnts.queryStatus == 'Unresponded'">
                                                                     <li>
                                                                         <a class="dropdown-item"
-                                                                            *ngIf="cmnts.queryStatus != 'Responded'"
                                                                             (click)="commentStatus(cmnts.id, 'LIC')">Read</a>
-                                                                        <!-- <a class="dropdown-item" *ngIf="cmnts.queryStatus == 'Responded'" (click)="queryCompleted(cmnts.id, 'LIC')">Completed</a> -->
                                                                     </li>
-
                                                                 </ul>
-                                                            </div>
-                                                            <div class="w-auto"
-                                                                *ngIf="cmnts.queryStatus == 'Responded' || cmnts.queryStatus == 'Completed'"
-                                                                style="margin-left: 20px;">
-                                                                <small>{{cmnts.queryStatus}} </small>
                                                             </div>
                                                         </div>
                                                         <div class="post-img-wrap whatsappImgModalBtn" type="button"
@@ -569,10 +560,34 @@
                             data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                             <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></a>
                     </div>
+                    <!-- only for KE client -->
+                    <div class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
+                        <button class="iconButton small notification iconHover" id="surveyForms"
+                            data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                            data-bs-original-title="Survey Forms">
+                            <span class="iconButton small btn mx-2">
+                                <i class="fa-light fa-square-list"></i>
+                            </span>
+                        </button>
+                        <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                            aria-labelledby="dropdownMenuButton2">
+                            <div class="head-section" (click)="c_satForm()">
+                                <a class="d-flex level1Btn">
+                                    <div class="w-100 list-txt">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1 darkblue">
+                                                Customer Satisfaction Form
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </ul>
+                    </div>
                     <div class="form-floating textarea-field">
                         <textarea formControlName="text" [(ngModel)]="text" class="form-control auto" rows="1"
-                             (keydown)="handleTextareaKeyDown($event)" id="text"
-                            placeholder="Write a comment here" style="border-radius: 20px;" #textarea></textarea>
+                            (keydown)="handleTextareaKeyDown($event)" id="text" placeholder="Write a comment here"
+                            style="border-radius: 20px;" #textarea></textarea>
                     </div>
                     <div class="icons-list align-items-md-center d-flex ps-2">
                         <div class="dropdown w-auto">

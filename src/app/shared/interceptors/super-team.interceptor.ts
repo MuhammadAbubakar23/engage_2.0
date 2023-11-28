@@ -31,7 +31,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
         url: request.url,
         //withCredentials: true,
         setHeaders: {
-          'X-Super-Team': JSON.stringify(team.id),
+          'X-Super-Team': JSON.stringify(650),
         },
       });
     }

@@ -15,9 +15,9 @@
             </div>
             <ul class="nav nav-tabs ms-3 h-100" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation" *ngIf="InstagramData">
-                    <button (click)="instagramCommentReply()" class="nav-link active h-100" id="fb-comment-tab"
-                        data-bs-toggle="tab" data-bs-target="#fb-comment" type="button" role="tab"
-                        aria-controls="fb-comment" aria-selected="true">
+                    <button (click)="instagramCommentReply()" class="nav-link active h-100" id="insta-comment-tab"
+                        data-bs-toggle="tab" data-bs-target="#insta-comment" type="button" role="tab"
+                        aria-controls="insta-comment" aria-selected="true">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
                                 <i class="fal fa-comments-alt ice"></i>
@@ -30,8 +30,9 @@
                 </li>
                 <li class="nav-item" role="presentation" *ngIf="InstagramMessages?.length > 0">
                     <button (click)="instagramMessageReply()" class="nav-link h-100"
-                        [class.active]="InstagramData == null" id="fb-msg-tab" data-bs-toggle="tab"
-                        data-bs-target="#fb-msg" type="button" role="tab" aria-controls="fb-msg" aria-selected="false">
+                        [class.active]="InstagramData == null" id="insta-msg-tab" data-bs-toggle="tab"
+                        data-bs-target="#insta-msg" type="button" role="tab" aria-controls="insta-msg"
+                        aria-selected="false">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
                                 <i class="fab fa-facebook-messenger ice"></i>
@@ -45,12 +46,13 @@
                 </li>
             </ul>
         </div>
-        <div class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;"
-            infinite-scroll [scrollWindow]="false" [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5"
-            [infiniteScrollThrottle]="10" (scrolled)="onScrollComments()">
+        <div *ngIf="instaCmntReply == true" class="chat-body" data-scrollbar="true" tabindex="-1"
+            style="overflow-y: auto; outline: none;" infinite-scroll [scrollWindow]="false"
+            [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5" [infiniteScrollThrottle]="10"
+            (scrolled)="onScrollComments()">
             <div class="scroll-content">
                 <div class="tab-content m-4" id="myTabContent">
-                    <div class="tab-pane fade show active" id="insta-comment" role="tabpanel"
+                    <div *ngIf="InstagramData" class="tab-pane fade show active" id="insta-comment" role="tabpanel"
                         aria-labelledby="insta-comment-tab">
                         <div class="chat-box-wrap" *ngFor="let insta of InstagramData">
                             <div class="message-wrap agent-message-wrap right">
@@ -143,30 +145,19 @@
                                                                         class="silver">{{comment.createdDate |
                                                                         date:'h:mm:ss a '}}</small></p>
                                                             </div>
-                                                            <div class="dropdown w-auto"
-                                                                *ngIf="comment.queryStatus != 'Responded' && comment.queryStatus != 'Completed'">
-                                                                <button class="btn coal p-0 ps-3" type="button"
-                                                                    id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                                    aria-expanded="false">
-                                                                    <small>{{comment.queryStatus}} <i
-                                                                            class="far fa-chevron-down ms-2"></i></small>
+                                                            <div class="dropdown w-auto">
+                                                                <button class="btn coal p-0 ps-3" type="button" id="dropdownMenuButton1"
+                                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    {{comment.queryStatus}}
+                                                                    <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && comment.queryStatus == 'Unresponded'"></i>
                                                                 </button>
-                                                                <ul class="dropdown-menu custom-dropdown"
-                                                                    aria-labelledby="dropdownMenuButton1">
+                                                                <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1"
+                                                                    *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && comment.queryStatus == 'Unresponded'">
 
                                                                     <li>
-                                                                        <a class="dropdown-item"
-                                                                            *ngIf="comment.queryStatus != 'Responded'"
-                                                                            (click)="commentStatus(comment.id, 'IC')">Read</a>
-                                                                        <!-- <a class="dropdown-item" *ngIf="comment.queryStatus == 'Responded'" (click)="queryCompleted(comment.id)">Completed</a> -->
+                                                                        <a class="dropdown-item" (click)="commentStatus(comment.id, 'IC')">Read</a>
                                                                     </li>
-
                                                                 </ul>
-                                                            </div>
-                                                            <div class="w-auto"
-                                                                *ngIf="comment.queryStatus == 'Responded' || comment.queryStatus == 'Completed'"
-                                                                style="margin-left: 20px;">
-                                                                <small> {{ comment.queryStatus}} </small>
                                                             </div>
                                                         </div>
                                                         <p class="card-text nignt">{{comment.message}}</p>
@@ -247,16 +238,12 @@
                                                                                             class="dropdown-menu shadow">
                                                                                             <form
                                                                                                 class="custom-searchbar">
-                                                                                                <input
-                                                                                                    class="form-control rounded-pill shadow-sm"
-                                                                                                    [(ngModel)]="searchText"
-                                                                                                    placeholder="Search"
-                                                                                                    aria-label="Search">
+                                                                                                <input class="form-control rounded-pill shadow-sm" [(ngModel)]="searchText"
+                                                                                                    placeholder="Search" aria-label="Search">
                                                                                                 <span
                                                                                                     class="btn searchbar-btn"
                                                                                                     type="submit">
-                                                                                                    <i
-                                                                                                        class="fal fa-search silver"></i>
+                                                                                                    <i class="fal fa-search silver"></i>
                                                                                                 </span>
                                                                                             </form>
                                                                                             <li class="list-body small-list"
@@ -275,16 +262,14 @@
                                                                                                                 class="list-down-icon">
                                                                                                                 <span
                                                                                                                     class="btn iconButton iconHover medium">
-                                                                                                                    <i
-                                                                                                                        class="fal fa-tag coal"></i>
+                                                                                                                    <i class="fal fa-tag coal"></i>
                                                                                                                 </span>
                                                                                                             </div>
                                                                                                             <div
                                                                                                                 class="w-100 list-txt">
                                                                                                                 <div
                                                                                                                     class="d-flex w-100 justify-content-between">
-                                                                                                                    <h6
-                                                                                                                        class="mb-1 darkblue">
+                                                                                                                    <h6 class="mb-1 darkblue">
                                                                                                                         {{keyword.name}}
                                                                                                                     </h6>
                                                                                                                 </div>
@@ -471,7 +456,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade show active" id="instagram-msg" role="tabpanel"
+
+                </div>
+            </div>
+        </div>
+        <div *ngIf="instaMsgReply == true" class="chat-body" data-scrollbar="true" tabindex="-1"
+            style="overflow-y: auto; outline: none;" infinite-scroll [scrollWindow]="false"
+            [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5" [infiniteScrollThrottle]="10"
+            (scrolled)="onScrollMessages()">
+            <div class="scroll-content">
+                <div class="tab-content m-4" id="myTabContent">
+                    <div *ngIf="InstagramMessages" class="tab-pane fade show active" id="instagram-msg" role="tabpanel"
                         aria-labelledby="instagram-msg-tab">
                         <div class="chat-box-wrap" *ngFor="let group of groupedMessages | sort:criteria">
 
@@ -500,30 +495,19 @@
                                                                     date:'h:mm:ss a'}}</small>
                                                             </p>
                                                         </div>
-                                                        <div class="dropdown w-auto"
-                                                            *ngIf="instaMsgs.queryStatus != 'Responded'">
-                                                            <button class="btn coal p-0 ps-3" type="button"
-                                                                id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                                aria-expanded="false">
-                                                                <small>{{instaMsgs.queryStatus}}<i
-                                                                        class="far fa-chevron-down ms-2"></i>
-                                                                </small>
+                                                        <div class="dropdown w-auto">
+                                                            <button class="btn coal p-0 ps-3" type="button" id="dropdownMenuButton1"
+                                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                                {{instaMsgs.queryStatus}}
+                                                                <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && instaMsgs.queryStatus == 'Unresponded'"></i>
                                                             </button>
-                                                            <ul class="dropdown-menu custom-dropdown"
-                                                                aria-labelledby="dropdownMenuButton1">
+                                                            <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1"
+                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && instaMsgs.queryStatus == 'Unresponded'">
 
                                                                 <li>
-                                                                    <a class="dropdown-item"
-                                                                        *ngIf="instaMsgs.queryStatus != 'Responded'"
-                                                                        (click)="commentStatus(instaMsgs.id, 'IM')">Read</a>
-                                                                    <!-- <a class="dropdown-item" *ngIf="instaMsgs.queryStatus == 'Responded'" (click)="queryCompleted(instaMsgs.id, 'IM')">Completed</a> -->
+                                                                    <a class="dropdown-item" (click)="commentStatus(instaMsgs.id, 'IM')">Read</a>
                                                                 </li>
-
                                                             </ul>
-                                                        </div>
-                                                        <div class="w-auto" *ngIf="instaMsgs.queryStatus == 'Responded'"
-                                                            style="margin-left: 20px;">
-                                                            <small>{{instaMsgs.queryStatus}} </small>
                                                         </div>
                                                     </div>
                                                     <p class="card-text nignt">{{instaMsgs.msgText}}</p>
@@ -632,7 +616,7 @@
                                                                                                     <a class="list-group-item d-flex level1Btn dropdown-item"
                                                                                                         (click)="insertTagsForFeed(instaMsgs.id, keyword.name)"
                                                                                                         [ngClass]="activeTag==true?'active':''"
-                                                                                                        *ngFor="let keyword of tag.keywordList | filter: searchText">
+                                                                                                        *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                         <div
                                                                                                             class="list-down-icon">
                                                                                                             <span
@@ -804,8 +788,7 @@
                                                                     </span>
                                                                 </small>
                                                             </div>
-                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM
-                                                                dd, yyyy, h:mm a'}}</small>
+                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM dd, yyyy, h:mm a'}}</small>
                                                         </div>
                                                         <div class="msg-snippet show-text">
                                                             <p class="mb-1 coal" data-maxlength="240">
@@ -853,18 +836,13 @@
                     </div>
                 </div>
             </div>
-            <div class="scrollbar-track scrollbar-track-x" style="display: none;">
-                <div class="scrollbar-thumb scrollbar-thumb-x"></div>
-            </div>
-            <div class="scrollbar-track scrollbar-track-y" style="display: none;">
-                <div class="scrollbar-thumb scrollbar-thumb-y"></div>
-            </div>
         </div>
     </div>
 </div>
 
 <ng-container *ngIf="instaCmntReply == true">
-    <div class="msgTypingField shadow-lg" *ngIf="this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up'">
+    <div class="msgTypingField shadow-lg"
+        *ngIf="this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up'">
         <div *ngFor="let instaComment of InstagramData">
             <div class="attachment-block d-none">
                 <div class="card-body p-3">
@@ -912,10 +890,34 @@
                         data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" id="searchbtn">
                         <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></button>
                 </div>
+                <!-- only for KE client -->
+                <div class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
+                    <button class="iconButton small notification iconHover" id="surveyForms"
+                        data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                        data-bs-original-title="Survey Forms">
+                        <span class="iconButton small btn mx-2">
+                            <i class="fa-light fa-square-list"></i>
+                        </span>
+                    </button>
+                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                        aria-labelledby="dropdownMenuButton2">
+                        <div class="head-section" (click)="c_satForm()">
+                            <a class="d-flex level1Btn">
+                                <div class="w-100 list-txt">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1 darkblue">
+                                            Customer Satisfaction Form
+                                        </h6>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </ul>
+                </div>
                 <div class="form-floating textarea-field">
                     <textarea formControlName="text" class="form-control auto" rows="1" id="text"
-                        placeholder="Write a response here" style="border-radius: 20px;" (keydown)="handleInstagramCommentReply($event)" [(ngModel)]="text"
-                         #textarea></textarea>
+                        placeholder="Write a response here" style="border-radius: 20px;"
+                        (keydown)="handleInstagramCommentReply($event)" [(ngModel)]="text" #textarea></textarea>
                 </div>
                 <div class="icons-list align-items-md-center d-flex ps-2">
                     <div class="dropdown w-auto">
@@ -987,9 +989,34 @@
                         data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                         <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></a>
                 </div>
+                <!-- only for KE client -->
+                <div class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
+                    <button class="iconButton small notification iconHover" id="surveyForms"
+                        data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                        data-bs-original-title="Survey Forms">
+                        <span class="iconButton small btn mx-2">
+                            <i class="fa-light fa-square-list"></i>
+                        </span>
+                    </button>
+                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                        aria-labelledby="dropdownMenuButton2">
+                        <div class="head-section" (click)="c_satForm()">
+                            <a class="d-flex level1Btn">
+                                <div class="w-100 list-txt">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1 darkblue">
+                                            Customer Satisfaction Form
+                                        </h6>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </ul>
+                </div>
                 <div class="form-floating textarea-field">
-                    <textarea formControlName="text" class="form-control auto" rows="1" id="text" style="border-radius: 20px;" (keydown)="handleTextareaKeyDown($event)"
-                        placeholder="Write a message here" [(ngModel)]="text"  #textarea></textarea>
+                    <textarea formControlName="text" class="form-control auto" rows="1" id="text"
+                        style="border-radius: 20px;" (keydown)="handleTextareaKeyDown($event)"
+                        placeholder="Write a message here" [(ngModel)]="text" #textarea></textarea>
 
                 </div>
                 <div class="icons-list align-items-md-center d-flex ps-2">

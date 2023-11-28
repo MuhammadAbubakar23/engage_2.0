@@ -14,6 +14,7 @@ export class CustomerSatisfactionComponent implements OnInit {
   value: any;
   toastermessage: boolean = false;
   feedbackSubmitted = false;
+  activeButtonIndex: number | null = null;
   constructor(private commanDateServices: CommonDataService,
     private spinnerService : NgxSpinnerService,
     private router: Router) {}
@@ -22,23 +23,30 @@ export class CustomerSatisfactionComponent implements OnInit {
 
   markScore(value: any) {
     this.value = value;
+    this.activeButtonIndex = value;
+    
   }
 
   save() {
-    const customerId = this.router.url.split('=')[1];
+    debugger
+    const channel = this.router.url.split(/[=&]/)[1];
+    const customerId = this.router.url.split('=')[2];
     let data = {
       customerId: customerId,
       attempts: 0,
       rating: this.value,
+      platform: channel
     };
     this.spinnerService.show();
-    this.commanDateServices.AddCSATSurvey(data).subscribe((res) => {
+    this.commanDateServices.CSATFormForKE(data).subscribe((res:any) => {
       this.spinnerService.hide();
       this.feedbackSubmitted = true;
       this.toastermessage = true;
       setTimeout(() => {
         this.toastermessage = false;
       }, 1000);
+    },
+    (error:any)=>{
     });
   }
 

@@ -18,6 +18,8 @@ export class CommonDataService {
   FacebookBaseUrl = environment.FbBaseUrl;
   InstagramBaseUrl = environment.InstaBaseUrl;
   ServiceBaseUrl = environment.ServiceBaseUrl;
+  ProfileBaseUrl = environment.ProfileBaseUrl;
+  LinkedInBaseUrl = environment.LinkedInBaseUrl;
 
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
@@ -101,6 +103,8 @@ export class CommonDataService {
   instagramReport = environment.links.common.instagramReport;
   instagramProfile = environment.links.common.instagramProfile;
   getTagReport = environment.links.common.getTagReport;
+  getLinkedInReport = environment.links.common.getLinkedInReport;
+  emailShiftReport = environment.links.common.emailShiftReport;
   downloadTagReport = environment.links.common.downloadTagReport;
 
   // for testing purpose
@@ -155,6 +159,7 @@ export class CommonDataService {
   //service
   addSurvey = environment.links.service.addSurvey;
   addCSAT = environment.links.service.addCSAT;
+  KECSAT = environment.links.profile.KECSAT;
 
   constructor(private http: HttpClient) {}
 
@@ -708,10 +713,22 @@ export class CommonDataService {
   getWordCloud(fromDate: string, toDate: string): Observable<any> {
     return this.http.get(`https://tiktokcrawl.enteract.live/GetWordCloud?fromdate=${fromDate}&todate=${toDate}`)
   }
+
+  GetLinkedInReportData(body:any){
+    
+    return this.http.post(this.LinkedInBaseUrl + this.getLinkedInReport, body);
+  }
+  EmailShiftReport(body:any){
+    return this.http.post(this.CommonBaseUrl + this.emailShiftReport, body);
+  }
+
+  CSATFormForKE(body:any) {
+    return this.http.post(this.ProfileBaseUrl + this.KECSAT, body);
+  }
 }
 
 var headers_object = new HttpHeaders({
-  'Content-Type': 'multipart/form-data',
+  'Content-Type': 'application/json',
 });
 const httpOptions = {
   headers: headers_object,
