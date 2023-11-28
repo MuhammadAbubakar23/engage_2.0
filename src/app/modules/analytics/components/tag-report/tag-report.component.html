@@ -106,7 +106,7 @@
                         <div class="row align-items-center">
                             <div class="col-md-12">
                                 <div class="graphcontainer align-items-end mb-5">
-                                    <div class="text-center">
+                                    <div >
                                         <div id="main" style="height: 400px; width: 1200px;"></div>
                                     </div>
                                 </div>
@@ -138,7 +138,11 @@
                                     <div class="accordion-item mb-3">
                                         <div class="accordion-header ps-4 d-flex align-items-center">
                                             <div class="d-flex align-items-center me-3 userhead">
-                                                <h6 class="ms-2 mb-0">{{user.agentName}}</h6>
+                                                <avatar-content [name]="user.agentName" [subname]="''" [imagename]="''"></avatar-content>
+                                                                    <!-- <span class="iconButton medium fw-bold iceBg border">
+                                                                    
+                                                                                            </span> -->
+                                                <!-- <h6 class="ms-2 mb-0">{{user.agentName}}</h6> -->
                                             </div>
                                             <div class="d-flex align-items-center">
                                         <span class="badge rounded-pill skyTransBg  me-2">{{user.tags[0]}}</span>
@@ -151,11 +155,11 @@
                                             </button>
                                             <ul class="dropdown-menu w-auto dd-scroll"
                                                 aria-labelledby="dropdownMenu2"
-                                                style="overflow: auto; height: auto;">
+                                                style="overflow: auto; height: 200px;">
                                                 <li *ngFor="let cd of user.tags; let i=index">
                                                     <span class="silver" *ngIf="i !==0 && i !==1 ">
                                                         <a class="dropdown-item">
-                                                            <span class="badge rounded-pill mintTransBg ">
+                                                            <span class="badge rounded-pill skyTransBg " >
                                                                 {{cd}}</span>
                                                         </a>
                                                     </span>
@@ -169,30 +173,24 @@
                                                     class="fa-light fa-file-csv"></i></button>
                                             <a class="accordion-button" type="button" data-bs-toggle="collapse"
                                             [href]="'#detail' + user?.agentId" aria-expanded="true"
+                                    
                                                 aria-controls="collapseOne">
                                     </a>
                                         </div>
-                                        <div  [id]="'detail'+ user?.agentId"class="accordion-collapse collapse show"
-                                            data-bs-parent="#accordionExample ">
-                                            <div class="accordion-body">
+                         
+                                        <div  [id]="'detail'+ user?.agentId"class="accordion-collapse collapse "
+                                            data-bs-parent="#accordionExample "  >
+                                            <div class="accordion-body"  style="overflow: auto; height: 300px;">
                                                 <div class="py-2 border-bottom" *ngFor="let userDetail of user.customerData">
-                                                    <div class="d-flex">
+                                                    <div class="d-flex" >
                                                         <div class="flex-shrink-0">
-                                                            <span class="iconButton small lightGreyBg fw-bold">
-                                                                <!-- <img
-                                                                    src={{userDetail?.customerProfilePic}}
-                                                                    class="rounded-circle"
-                                                                    style="height: 50px; width: 50px;"> -->
-                                                                    <avatar-content [name]="userlist.customerName" ></avatar-content>
-                                                                </span>
+        
+                                                        <avatar-content [name]="userDetail.customerName" [subname]="''" [imagename]="''"></avatar-content>
                                                         </div>
-                                                        <div class="flex-grow-1 ms-3">
+                                                        <div class="flex-grow-1 mt-5 " style="margin-left: -100px;">
                                                             <div>
-                                                                <span><b>{{userDetail.customerName}}</b>
-                                                                </span>
-                                                                &nbsp;
                                                                 <small class="coal">{{userDetail.createdDate | date:'short'}}
-                                                                    <span></span>
+
                                                                 </small>
                                                             </div>
                                                             <a data-bs-toggle="collapse"
@@ -217,12 +215,6 @@
                                             </div>
                                         </div>
                                     </div>
-                          
-
-
-
-
-
                             </ng-container>
                         </div>
                     </div>

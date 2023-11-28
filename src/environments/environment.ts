@@ -230,7 +230,8 @@ export const environment = {
       getTagReport:'Report/GetTagsReport',
       downloadTagReport:'Report/GetAgentTagsReportCSV',
       getLinkedInReport:'Activity/GetOrganizationSharedInsights',
-      emailShiftReport:'Report/EmailShiftReport'
+      emailShiftReport:'Report/EmailShiftReport',
+      getLinkedInFollowers:'Activity/GetOrganizationInsights'
     },
     facebook: {
       comments: 'Facebook/GetFbPost',

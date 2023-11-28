@@ -36,7 +36,7 @@ export class TagReportComponent implements OnInit {
   agentId: any;
   uniqueAgentId:any
   uniqueAgentData: any[] = [];
-
+ isChecked:boolean=false;
   constructor(
     private _hs: HeaderService,
     private spinerServices: NgxSpinnerService,
@@ -50,6 +50,9 @@ export class TagReportComponent implements OnInit {
     let obj = { title: 'Tag Report', url: '/analytics/tag-report' };
     this._hs.setHeader(obj);
     this.getAllTagsReport();
+  }
+  onClick(){
+    this.isChecked=true
   }
   getAllTagsReport() {
     if (this.endDate == '' && this.startDate == '') {
@@ -168,10 +171,12 @@ return this.uniqueAgentData;
         trigger: 'item',
       },
       legend: {
+        icon: 'circle',
         type: 'scroll',
-        top: '30%',
+        top: '17%',
         orient: 'vertical',
-        right: -20,
+        right: -200,
+        icone:'circle',
         textStyle: {
           fontSize: 16, // Set the font size for the legend text
         },
@@ -180,9 +185,8 @@ return this.uniqueAgentData;
           const dataItem = this.facebookCommentsArray.find(item => item.name === name);
 
           if (dataItem) {
-            return `${name} :${dataItem.value}      %`;
+            return `${name}:${dataItem.value}    %`;
           }
-
           return name;
         },
       },
@@ -195,6 +199,7 @@ return this.uniqueAgentData;
             show: false,
             position: 'center',
           },
+          icon: 'circle',
           emphasis: {
             label: {
               show: true,
@@ -219,7 +224,8 @@ return this.uniqueAgentData;
   resetEndDate() {
     if (this.endDate >= this.startDate) {
       this.getAllTagsReport();
-    } else {
+    } 
+    else {
       alert('EndDate is greater Then StartDate');
       this.endDate = '';
     }

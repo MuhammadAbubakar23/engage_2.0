@@ -104,6 +104,7 @@ export class CommonDataService {
   instagramProfile = environment.links.common.instagramProfile;
   getTagReport = environment.links.common.getTagReport;
   getLinkedInReport = environment.links.common.getLinkedInReport;
+  getLinkedInFollowers=environment.links.common.getLinkedInFollowers;
   emailShiftReport = environment.links.common.emailShiftReport;
   downloadTagReport = environment.links.common.downloadTagReport;
 
@@ -718,6 +719,11 @@ export class CommonDataService {
     
     return this.http.post(this.LinkedInBaseUrl + this.getLinkedInReport, body);
   }
+  GetLinkedInReportFollwers(body:any){
+    return this.http.post(this.LinkedInBaseUrl+this.getLinkedInFollowers,body)
+
+  }
+
   EmailShiftReport(body:any){
     return this.http.post(this.CommonBaseUrl + this.emailShiftReport, body);
   }
