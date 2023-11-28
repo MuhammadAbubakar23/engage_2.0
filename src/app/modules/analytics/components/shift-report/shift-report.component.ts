@@ -1,18 +1,20 @@
-import { Component, OnInit,ViewChild ,ElementRef} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HeaderService } from 'src/app/shared/services/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
- import { CommonModule, DatePipe } from '@angular/common'
+import { CommonModule, DatePipe } from '@angular/common';
 import * as echarts from 'echarts';
 import { FormsModule } from '@angular/forms';
-import { SharedModule } from "../../../../shared/shared.module";
+import { SharedModule } from '../../../../shared/shared.module';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
+import html2canvas from 'html2canvas';
+
 @Component({
-    standalone: true,
-    selector: 'app-shift-report',
-    templateUrl: './shift-report.component.html',
-    styleUrls: ['./shift-report.component.scss'],
-    imports: [CommonModule, FormsModule, SharedModule, NgxSpinnerModule]
+  standalone: true,
+  selector: 'app-shift-report',
+  templateUrl: './shift-report.component.html',
+  styleUrls: ['./shift-report.component.scss'],
+  imports: [CommonModule, FormsModule, SharedModule, NgxSpinnerModule],
 })
 export class ShiftReportComponent implements OnInit {
   shiftReportData: any;
@@ -22,7 +24,7 @@ export class ShiftReportComponent implements OnInit {
   dateWise: any[] = [];
   tagsList: any[] = [];
   allDates: any[] = [];
-  newAlldates:any[]=[]
+  newAlldates: any[] = [];
   totaltags: number = 0;
   slectedtagId: any[] = [];
   selectedtagName: any = '';
@@ -34,10 +36,10 @@ export class ShiftReportComponent implements OnInit {
   // currentdate:any
   startDate = '';
   endDate = '';
-  searchText:string=''
+  searchText: string = '';
   maxEndDate: any;
   currentDate: any;
-  totalinboundCounts:any
+  totalinboundCounts: any;
   tags: any;
   TagsStats: any[] = [];
   tagsStatsTotalCounts: any;
@@ -45,15 +47,15 @@ export class ShiftReportComponent implements OnInit {
   commaSeparatedValuesLink: any;
   numberArrayLink: any;
   alltotalCount: any;
-  daysDifference:number=0
+  daysDifference: number = 0;
   allTotalCountsfb: any[] = [];
   allTotalCountTw: any[] = [];
-  allTotalCountWhatsapp:any[]=[]
+  allTotalCountWhatsapp: any[] = [];
   allTotalCountLink: any[] = [];
-  allTotalCountPlayStore:any[]=[]
+  allTotalCountPlayStore: any[] = [];
   allTotalCountInsta: any[] = [];
-  ChartData:any[]=[]
-  _legend:any[]=[]
+  ChartData: any[] = [];
+  _legend: any[] = [];
   shiftType: any[] = [
     { name: 'Morning', id: 0 },
     { id: 1, name: 'Evening' },
@@ -61,25 +63,38 @@ export class ShiftReportComponent implements OnInit {
     { id: 3, name: 'Iftar' },
     { id: 4, name: 'Sehr' },
   ];
-channelIcon:any[]=[
-  {fbicone:'fa-brands fa-facebook-f',class:'iconButton medium navyBg'},
-  {twicone:'fa-brands fa-twitter',class:'iconButton medium twltte-bg ice' },
-  {youtubeicone:'fa-brands fa-youtube',class:'iconButton medium radicalBg'},
-  {linkicone:'fa-brands fa-linkedin',class:'iconButton medium linkedinBg'},
-  {whatsappicone:'fab fa-whatsapp',class:'iconButton medium mintBg'},
-  {playicone:'fa-brands fa-google-play',class:'iconButton medium darkorangeBg'}
-]
+  channelIcon: any[] = [
+    { fbicone: 'fa-brands fa-facebook-f', class: 'iconButton medium navyBg' },
+    {
+      twicone: 'fa-brands fa-twitter',
+      class: 'iconButton medium twltte-bg ice',
+    },
+    {
+      youtubeicone: 'fa-brands fa-youtube',
+      class: 'iconButton medium radicalBg',
+    },
+    {
+      linkicone: 'fa-brands fa-linkedin',
+      class: 'iconButton medium linkedinBg',
+    },
+    { whatsappicone: 'fab fa-whatsapp', class: 'iconButton medium mintBg' },
+    {
+      playicone: 'fa-brands fa-google-play',
+      class: 'iconButton medium darkorangeBg',
+    },
+  ];
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
   convertedintoArray: any;
   graphdate: any[] = [];
   noData: boolean = false;
+  shiftReportChart:any;
   constructor(
     private hs: HeaderService,
     private datePipe: DatePipe,
     private commandataService: CommonDataService,
-    private stor:StorageService,
+    private stor: StorageService,
     private SpinnerService: NgxSpinnerService
   ) {}
   ngOnInit(): void {
@@ -90,36 +105,33 @@ channelIcon:any[]=[
     this.getShfitReport();
     this.getAlltags();
     this.getAgentsTeamList();
-  
+    this.makeChartResponsive();
   }
-keywordslist:any[]=[]
+  keywordslist: any[] = [];
   getAlltags() {
     this.commandataService.GetAllTags().subscribe((res: any) => {
       const menu = this.stor.retrive('Tags', 'O').local;
-      menu.forEach((item:any) => {
-        
-        if(item.name == "Tags"){
-          item.subTags.forEach((parentags:any) => {
-            parentags.subTags.forEach((singleTagObj:any)=>{
-                 if(!this.keywordslist.includes(singleTagObj)){
-            this.keywordslist.push(singleTagObj)
-            }
-            })
+      menu.forEach((item: any) => {
+        if (item.name == 'Tags') {
+          item.subTags.forEach((parentags: any) => {
+            parentags.subTags.forEach((singleTagObj: any) => {
+              if (!this.keywordslist.includes(singleTagObj)) {
+                this.keywordslist.push(singleTagObj);
+              }
+            });
           });
         }
-
       });
     });
   }
 
-  
   getShfitReport() {
     this.allDates = [];
     if (this.startDate == '' && this.endDate == '') {
       const today = this.currentDate;
       this.endDate = this.datePipe.transform(today, 'YYYY-MM-dd') || '';
 
-      let prevDate = this.currentDate.setDate(this.currentDate.getDate()-2 );
+      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 2);
       this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     } else if (this.startDate != '' && this.endDate != '') {
       this.startDate = this.startDate;
@@ -136,86 +148,86 @@ keywordslist:any[]=[]
       const startDateObj = new Date(this.startDate);
       const endDateObj = new Date(this.endDate);
       const timeDifference = endDateObj.getTime() - startDateObj.getTime();
-      this.daysDifference=timeDifference / (1000 * 3600 * 24)
+      this.daysDifference = timeDifference / (1000 * 3600 * 24);
     }
-  
-         this.allTotalCountInsta = [];
-          this.allTotalCountLink = [];
-          this.allTotalCountsfb = [];
-          this.allTotalCountTw = [];
-          this.dateWise = [];
-         this. allTotalCountPlayStore=[]
-         this.allTotalCountWhatsapp=[]
-          this._legend=[]
-       this.SpinnerService.show()
-      this.commandataService.GetShiftReport(obj).subscribe((res: any) => {
-        this.SpinnerService.hide();
-       
-        this.shiftReportData = res;
-        this.shiftChannelData = res.channelData;
-        this.dateWiseTotalCounts = res.dateWiseTotal;
-        this.totalinboundCounts=res.totalIboundCount;
-    
-        
-        if(this.totalinboundCounts==0){
-          this.allTotalCountInsta= new Array(this.daysDifference).fill(0)
-          this.allTotalCountLink=new Array(this.daysDifference).fill(0)
-          this.allTotalCountsfb=new Array(this.daysDifference).fill(0)
-          this.allTotalCountTw=new Array(this.daysDifference).fill(0)
 
-        }
-       
-        this.shiftChannelData.forEach((data: any) => {
-          this._legend.push(data.platform)
+    this.allTotalCountInsta = [];
+    this.allTotalCountLink = [];
+    this.allTotalCountsfb = [];
+    this.allTotalCountTw = [];
+    this.dateWise = [];
+    this.allTotalCountPlayStore = [];
+    this.allTotalCountWhatsapp = [];
+    this._legend = [];
+    this.SpinnerService.show();
+    this.commandataService.GetShiftReport(obj).subscribe((res: any) => {
+      this.SpinnerService.hide();
 
-    
-          data.dateWise.forEach((item: any) => {
-            if (!this.allDates.includes(item.date.split('T')[0])) {
-              this.allDates.push(item.date.split('T')[0]); 
-            }
-            if (data.platform == "Facebook") {
-                
-              data.dateWise.forEach((singleItem: any) => {
-                  // if (!this.allDates.includes(item.date.split('T')[0])) {
-            //   this.allDates.push(item.date.split('T')[0]); 
-            // }
-                this.allTotalCountsfb.push(singleItem.totalCount);
-              });
-            }
-            if (data.platform == 'WhatsApp') {
-              data.dateWise.forEach((item: any) => {
-                this.allTotalCountWhatsapp.push(item.totalCount);
-              });
-            }  if (data.platform == 'Twitter') {
-              data.dateWise.forEach((item: any) => {
-                this.allTotalCountTw.push(item.totalCount);
-              });
-            }
+      this.shiftReportData = res;
+      this.shiftChannelData = res.channelData;
+      this.dateWiseTotalCounts = res.dateWiseTotal;
+      this.totalinboundCounts = res.totalIboundCount;
 
-            if (data.platform == 'Instagram') {
-              data.dateWise.forEach((item: any) => {
-                this.allTotalCountInsta.push(item.totalCount);
-              });
-            }
-            if (data.platform == 'LinkedIn') {
-              data.dateWise.forEach((item: any) => {
-                this.allTotalCountLink.push(item.totalCount);
-              });
-            }
-            if (data.platform == 'PlayStore') {
-              data.dateWise.forEach((item: any) => {
-                this.allTotalCountPlayStore.push(item.totalCount);
-              });
-            }
-          });
+      if (this.totalinboundCounts == 0) {
+        this.allTotalCountInsta = new Array(this.daysDifference).fill(0);
+        this.allTotalCountLink = new Array(this.daysDifference).fill(0);
+        this.allTotalCountsfb = new Array(this.daysDifference).fill(0);
+        this.allTotalCountTw = new Array(this.daysDifference).fill(0);
+      }
+
+      this.shiftChannelData.forEach((data: any) => {
+        this._legend.push(data.platform);
+
+        data.dateWise.forEach((item: any) => {
+          if (!this.allDates.includes(item.date.split('T')[0])) {
+            this.allDates.push(item.date.split('T')[0]);
+          }
+          if (data.platform == 'Facebook') {
+            data.dateWise.forEach((singleItem: any) => {
+              // if (!this.allDates.includes(item.date.split('T')[0])) {
+              //   this.allDates.push(item.date.split('T')[0]);
+              // }
+              this.allTotalCountsfb.push(singleItem.totalCount);
+            });
+          }
+          if (data.platform == 'WhatsApp') {
+            data.dateWise.forEach((item: any) => {
+              this.allTotalCountWhatsapp.push(item.totalCount);
+            });
+          }
+          if (data.platform == 'Twitter') {
+            data.dateWise.forEach((item: any) => {
+              this.allTotalCountTw.push(item.totalCount);
+            });
+          }
+
+          if (data.platform == 'Instagram') {
+            data.dateWise.forEach((item: any) => {
+              this.allTotalCountInsta.push(item.totalCount);
+            });
+          }
+          if (data.platform == 'LinkedIn') {
+            data.dateWise.forEach((item: any) => {
+              this.allTotalCountLink.push(item.totalCount);
+            });
+          }
+          if (data.platform == 'PlayStore') {
+            data.dateWise.forEach((item: any) => {
+              this.allTotalCountPlayStore.push(item.totalCount);
+            });
+          }
         });
-        this.ChartData.push({name:this._legend,type:'line',data:this.allTotalCountTw})
-        this.TagsStats = res.tagData.shiftReportTag;
-        this.tagsStatsTotalCounts = res.tagData.totalTagsCount;
-
-        this.getCharts();
       });
-    
+      this.ChartData.push({
+        name: this._legend,
+        type: 'line',
+        data: this.allTotalCountTw,
+      });
+      this.TagsStats = res.tagData.shiftReportTag;
+      this.tagsStatsTotalCounts = res.tagData.totalTagsCount;
+
+      this.getCharts();
+    });
   }
 
   selectedunselectedtag(tag: any) {
@@ -242,9 +254,8 @@ keywordslist:any[]=[]
   }
 
   getCharts() {
-
-    var chartDom = document.getElementById('shiftReport')
-    var myChart = echarts.init(chartDom);
+    var chartDom = document.getElementById('shiftReport');
+    this.shiftReportChart = echarts.init(chartDom);
     var option;
 
     option = {
@@ -255,7 +266,7 @@ keywordslist:any[]=[]
         trigger: 'axis',
       },
       _legend: {
-        data:this._legend
+        data: this._legend,
       },
       get legend() {
         return this._legend;
@@ -282,9 +293,8 @@ keywordslist:any[]=[]
       yAxis: {
         type: 'value',
       },
-      series:
-       [
-              {
+      series: [
+        {
           name: 'Facebook',
           type: 'line',
           data: this.allTotalCountsfb,
@@ -301,26 +311,24 @@ keywordslist:any[]=[]
           data: this.allTotalCountTw,
         },
         {
-          name:'PlayStore',
-          type:'line',
-          data:this.allTotalCountPlayStore
+          name: 'PlayStore',
+          type: 'line',
+          data: this.allTotalCountPlayStore,
         },
         {
-          name:'LinkedIn',
-          type:'line',
-          data:this.allTotalCountLink
+          name: 'LinkedIn',
+          type: 'line',
+          data: this.allTotalCountLink,
         },
         {
-          name:'WhatsApp',
-          type:'line',
-          data:this.allTotalCountWhatsapp
-        }
-      ]
-  
-      
+          name: 'WhatsApp',
+          type: 'line',
+          data: this.allTotalCountWhatsapp,
+        },
+      ],
     };
 
-    option && myChart.setOption(option);
+    option && this.shiftReportChart.setOption(option);
   }
   ActiveAgents: any[] = [];
   AgentsTeamList: any[] = [];
@@ -346,19 +354,57 @@ keywordslist:any[]=[]
     return dateWiseItem ? dateWiseItem.totalCount : 0;
   }
 
-  getStartDate(){
-    this.endDate=''
+  getStartDate() {
+    this.endDate = '';
   }
-  getEndDate(){
-    if(this.endDate>=this.startDate){
-      this.getShfitReport()
-    }
-    else{
-      alert("EndDate is lessthen StartDate")
-      this.endDate=''
+  getEndDate() {
+    if (this.endDate >= this.startDate) {
+      this.getShfitReport();
+    } else {
+      alert('EndDate is lessthen StartDate');
+      this.endDate = '';
     }
   }
   closeToaster() {
     this.toastermessage = false;
+  }
+
+  sendEmailReport() {
+    // Select the element that you want to capture
+    const captureElement = document.getElementById('shiftReport')!;
+
+    // Call the html2canvas function and pass the element as an argument
+    html2canvas(captureElement).then((canvas) => {
+      // Get the image data as a base64-encoded string
+      const imageData = canvas.toDataURL('image/png');
+
+      // Do something with the image data, such as saving it as a file or sending it to a server
+      // For example, you can create an anchor element and trigger a download action
+
+      // const link = document.createElement('a');
+      // link.setAttribute('download', 'screenshot.png');
+      // link.setAttribute('href', imageData);
+      // link.click();
+
+      var obj = {
+        fromDate: this.startDate,
+        toDate: this.endDate,
+        shiftId: this.shiftime,
+        tags: this.changedateintostring,
+        companyId: 0,
+        picture: imageData
+      }
+      this.commandataService.EmailShiftReport(obj).subscribe((res:any)=>{
+        console.log('res',res)
+      })
+    });
+  }
+
+  makeChartResponsive() {
+    window.addEventListener('resize', () => {
+      if (this.shiftReportChart) {
+        this.shiftReportChart.resize();
+      }
+    });
   }
 }

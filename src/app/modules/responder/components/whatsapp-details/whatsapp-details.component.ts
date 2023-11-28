@@ -96,6 +96,7 @@ export class WhatsappDetailsComponent implements OnInit {
   searchText: string = '';
   spinner1running = false;
   spinner2running = false;
+  userInformation:any;
 
   pageNumber: number = 1;
   pageSize: number = 10;
@@ -147,6 +148,7 @@ export class WhatsappDetailsComponent implements OnInit {
       profileId: new FormControl(this.ReplyDto.profileId),
       contentType: new FormControl(this.ReplyDto.contentType),
       userProfileId: new FormControl(this.ReplyDto.userProfileId),
+      responseByName: new FormControl(this.ReplyDto.responseByName),
     });
   }
   handleTextareaKeyDown(event: KeyboardEvent) {
@@ -357,6 +359,7 @@ export class WhatsappDetailsComponent implements OnInit {
             this.SpinnerService.hide();
             this.spinner1running = false;
             this.WhatsappData = res.List;
+            this.userInformation = res.List[0].user;
             this.userInfoService.shareUserInformation(res.List[0].user);
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
             this.TotalCmntQueryCount = res.TotalQueryCount;
@@ -417,6 +420,7 @@ export class WhatsappDetailsComponent implements OnInit {
         if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.WhatsappData = res.List;
+          this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
@@ -476,6 +480,7 @@ export class WhatsappDetailsComponent implements OnInit {
           if (Object.keys(res).length > 0) {
             this.SpinnerService.hide();
             this.WhatsappData = res.List;
+            this.userInformation = res.List[0].user;
             this.userInfoService.shareUserInformation(res.List[0].user);
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
             this.TotalCmntQueryCount = res.TotalQueryCount;
@@ -1038,7 +1043,7 @@ export class WhatsappDetailsComponent implements OnInit {
           this.platform = xyz.platform;
           this.profileId = Number(localStorage.getItem('profileId'));
           this.postType = comment.contentType;
-          this.userProfileId = this.WhatsappData[0].user.id;
+          this.userProfileId = this.userInformation.id;
         }
       });
     });
@@ -1078,6 +1083,7 @@ export class WhatsappDetailsComponent implements OnInit {
         contentType: this.postType,
         profileId: this.profileId,
         userProfileId: this.userProfileId,
+        responseByName: this.senderId,
       });
 
       formData.append(

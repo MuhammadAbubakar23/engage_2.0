@@ -106,6 +106,7 @@ export class LinkedInComponent implements OnInit {
   HumanAgentTags: any[] = [];
   Keywords: any[] = [];
   quickReplySearchText:string='';
+  userInformation:any;
 
   commentsArray : any[]=[];
   groupArrays : any[]=[];
@@ -338,6 +339,7 @@ export class LinkedInComponent implements OnInit {
           this.spinner1running = false;
           this.ConverstationDetailDto = res;
           this.LinkedInData = this.ConverstationDetailDto.List;
+          this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.TotalCmntQueryCount = res.TotalQueryCount;
           this.pageName = this.LinkedInData[0].post.profile.page_Name;
@@ -397,6 +399,7 @@ export class LinkedInComponent implements OnInit {
         this.pageName = this.LinkedInData[0].post.profile.page_Name;
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+          this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.TotalCmntQueryCount = res.TotalQueryCount;
           this.commentsArray = []
@@ -450,6 +453,7 @@ export class LinkedInComponent implements OnInit {
         this.pageName = this.LinkedInData[0].post.profile.page_Name;
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+          this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.TotalCmntQueryCount = res.TotalQueryCount;
           this.commentsArray = []
@@ -550,6 +554,7 @@ detectChanges(): void {
     profileId: new UntypedFormControl(this.ReplyDto.profileId),
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
+    responseByName: new FormControl(this.ReplyDto.responseByName),
   });
 
   profileId: string = '';
@@ -571,7 +576,7 @@ detectChanges(): void {
           this.postType = comment.contentType;
           this.profileId = xyz.post.profile.profile_Id;
           this.profilePageId = xyz.post.profile.page_Id;
-          this.userProfileId = this.LinkedInData[0].user.id;
+          this.userProfileId = this.userInformation.id;
         }
       });
     });
@@ -615,7 +620,8 @@ detectChanges(): void {
         contentType: this.postType,
         profileId: this.profileId,
         profilePageId: this.profilePageId,
-        userProfileId : this.userProfileId
+        userProfileId : this.userProfileId,
+        responseByName: this.pageName,
       });
   
       formData.append(
@@ -1120,5 +1126,16 @@ removeTagDataListener() {
 
   isVideo(attachment: any): boolean {
     return attachment.contentType?.toLowerCase().startsWith('video');
+  }
+
+  c_satForm() {
+    const customerId = localStorage.getItem('storeOpenedId');
+    const channel = localStorage.getItem('parent');
+    this.insertAtCaret(
+      'https://keportal.enteract.live/survey/customer_satisfaction' + '?channel=' + channel +
+        '&customerId=' +
+        customerId +
+        ' '
+    );
   }
 }

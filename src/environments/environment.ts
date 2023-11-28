@@ -27,6 +27,7 @@ export const environment = {
   SmsBaseUrl: 'https://text.360scrm.com/api/',
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
+  LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
 
   // For KE
   // IdentityBaseUrl: 'https://idtservice.enteract.live/api',
@@ -47,16 +48,18 @@ export const environment = {
   // IdentityBaseUrl: 'https://waidentity.enteract.live/api',
   // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
   // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
+  ServiceBaseUrl : 'https://waservice.enteract.live/api/',
   
   // For Testing
   IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
   CommonBaseUrl: 'https://common-engage.enteract.app/api/', 
-  // CommonBaseUrl: 'https://5fff-203-135-1-210.ngrok-free.app/api/', 
+   // CommonBaseUrl: 'http://10.111.32.52:45457/api/', 
   SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
 
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
-  ServiceBaseUrl : 'https://waservice.enteract.live/api/',
+  
+  ProfileBaseUrl:'https://profiler.enteract.app/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
   // for testing purpose
@@ -225,7 +228,9 @@ export const environment = {
       instagramReport:'Report/GetInstagramReport',
       instagramProfile:'Report/GetInstagramProfileWiseReport',
       getTagReport:'Report/GetTagsReport',
-      downloadTagReport:'Report/GetAgentTagsReportCSV'
+      downloadTagReport:'Report/GetAgentTagsReportCSV',
+      getLinkedInReport:'Activity/GetOrganizationSharedInsights',
+      emailShiftReport:'Report/EmailShiftReport'
     },
     facebook: {
       comments: 'Facebook/GetFbPost',
@@ -267,6 +272,9 @@ export const environment = {
       list: 'WebChat/GetUserList',
       messageReply: 'WebChat/SaveAgentReply',
     },
+    profile:{
+      KECSAT:'CustomerCSAT/AddCSAT',
+    }
   },
 };
 

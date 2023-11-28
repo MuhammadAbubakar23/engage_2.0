@@ -1,4 +1,4 @@
-<main class="morinaga-main m-2">
+<!-- <main class="morinaga-main m-2">
         <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
             [fullScreen]="false">
             <p style="color: white"> Loading... </p>
@@ -60,7 +60,90 @@
             </div>
         </div>
     </section>
-</main>
+</main> -->
+
+<div class="main-wrapper d-flex">
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+        <p style="color: white"> Loading... </p>
+    </ngx-spinner>
+    <div class="middle-wrapper d-flex w-100 flex-column" *ngIf="feedbackSubmitted == false">
+        <div class="content-box-wrapper d-flex w-100">
+            <div class="middle-content d-flex">
+
+                <div class="container h-100vh surveymain">
+                    <div class="Guides">
+                        <div class="Guides__container">
+                            <div class="Guides__guide"></div>
+                            <div class="Guides__guide"></div>
+                            <div class="Guides__guide"></div>
+                            <div class="Guides__guide"></div>
+                            <div class="Guides__guide"></div>
+                            <div class="Guides__guide"></div>
+                        </div>
+                    </div>
+
+                    <img src="../../../../assets/images/illustration2.svg" class="illustra" alt="">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <img src="../../../../assets/images/ibex-enteract-engage.svg" class="mainlogo mt-3 mb-5"
+                                alt="">
+                            <div class="card survey">
+                                <div class="card-body text-center p-5">
+                                    <img src="../../../../assets/images/forms.svg" class="d-block m-auto mb-4" alt="">
+
+                                    <h6>Question: 1/1</h6>
+                                    <h4>How would you rate our services?</h4>
+                                    <p class="silver">(1 for very dissatisfied - 5 for very satisfied)</p>
+                                    <p class="d-inline-flex surveybtns gap-3 my-4">
+                                        <button type="button" class="btn" [class.active]="activeButtonIndex === 1" (click)="markScore(1)">1</button>
+                                        <button type="button" class="btn" [class.active]="activeButtonIndex === 2" (click)="markScore(2)">2</button>
+                                        <button type="button" class="btn" [class.active]="activeButtonIndex === 3" (click)="markScore(3)">3</button>
+                                        <button type="button" class="btn" [class.active]="activeButtonIndex === 4" (click)="markScore(4)">4</button>
+                                        <button type="button" class="btn" [class.active]="activeButtonIndex === 5" (click)="markScore(5)">5</button>
+                                    </p>
+                                    <div>
+                                        <button class="btn submitbtn btn-primary" (click)="save()">Submit <i
+                                                class="fa-regular fa-arrow-right ms-1"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="middle-wrapper d-flex w-100 flex-column" *ngIf="feedbackSubmitted == true">
+        <div class="content-box-wrapper d-flex w-100">
+            <div class="middle-content d-flex">
+
+                <div class="container h-100vh">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <img src="../../../../assets/images/ibex-enteract-engage.svg" class="mainlogo mt-3 mb-5" alt="">
+                            <div class="card survey">
+                                <div class="card-body text-center p-5">
+                                    <img src="../../../../assets/images/thanks.svg" class="d-block m-auto mb-4" alt="">
+                                    <h2 class="mb-4">Thank You</h2>
+                                    <p class="mb-4 mx-5">For the feedback on your experience with our customer support
+                                        team. We sincerely appreciate your insights because it helps us build a better
+                                        customer experience.</p>
+
+                                    <!-- <div>
+                                        <button class="btn submitbtn btn-primary"> <i
+                                                class="fa-regular fa-arrow-right ms-1"></i> Home</button>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
         aria-live="assertive" aria-atomic="true">

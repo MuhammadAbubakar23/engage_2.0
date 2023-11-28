@@ -141,54 +141,52 @@
                                                                         class="silver">{{youtubecomment.createdDate |
                                                                         date:'h:mm:ss a'}}</small></p>
                                                             </div>
-                                                            <div class="dropdown w-auto"
-                                                                *ngIf="youtubecomment.queryStatus != 'Responded' && youtubecomment.queryStatus != 'Completed'">
+                                                            <div class="dropdown w-auto">
                                                                 <button class="btn coal p-0 ps-3" type="button"
                                                                     id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                     aria-expanded="false">
-                                                                    <small>{{youtubecomment.queryStatus}} <i
-                                                                            class="far fa-chevron-down ms-2"></i></small>
+                                                                    {{youtubecomment.queryStatus}}
+                                                                    <i class="far fa-chevron-down ms-2"
+                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && youtubecomment.queryStatus == 'Unresponded'"></i>
                                                                 </button>
                                                                 <ul class="dropdown-menu custom-dropdown"
-                                                                    aria-labelledby="dropdownMenuButton1">
-
+                                                                    aria-labelledby="dropdownMenuButton1"
+                                                                    *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && youtubecomment.queryStatus == 'Unresponded'">
                                                                     <li>
+                                                                        <!-- From Tags Api -->
+                                                                        <!-- <ng-container *ngFor="let status of messagesStatus">
+                                                                        <a class="dropdown-item" *ngIf="youtubecomment.queryStatus != 'Responded'" (click)="commentStatus(youtubecomment.id, 'PSR')">{{status.name}}</a>
+                                                                        </ng-container> -->
                                                                         <a class="dropdown-item"
-                                                                            *ngIf="youtubecomment.queryStatus != 'Responded'"
                                                                             (click)="commentStatus(youtubecomment.id)">Read</a>
-                                                                        <!-- <a class="dropdown-item" *ngIf="youtubecomment.queryStatus == 'Responded'" (click)="queryCompleted(youtubecomment.id)">Completed</a> -->
-                                                            </li>
-
+                                                                    </li>
                                                                 </ul>
                                                             </div>
-                                                            <div class="w-auto"
-                                                                *ngIf="youtubecomment.queryStatus == 'Responded' || youtubecomment.queryStatus == 'Completed'"
-                                                                style="margin-left: 20px;">
-                                                                <small>{{youtubecomment.queryStatus}} </small>
-                                                            </div>
-
                                                         </div>
                                                         <p class="card-text nignt" [innerHTML]="youtubecomment.message">
                                                         </p>
                                                         <div class="tags" *ngFor="let tag of youtubecomment.tags">
-                                                            <span class="badge rounded-pill tag youtube-pill tag1 selected" 
-                                                            (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name}}</span>
+                                                            <span
+                                                                class="badge rounded-pill tag youtube-pill tag1 selected"
+                                                                (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name}}</span>
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                         <div class="tags" *ngIf="youtubecomment.sentiment">
-                                                            <span class="badge rounded-pill tag tag1 selected">{{youtubecomment.sentiment?.name}}</span>
+                                                            <span
+                                                                class="badge rounded-pill tag tag1 selected">{{youtubecomment.sentiment?.name}}</span>
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                     </div>
-                                                    <div class="message-bottom" *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
+                                                    <div class="message-bottom"
+                                                        *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
                                                         <div class="row">
                                                             <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                                 <div
                                                                     class="message-actionlist d-flex align-items-center">
                                                                     <div class="box">
-                                                                        <a class="message-actionItem coal likebht p-0 label-reactions" (click)="likeByAdmin(youtubecomment.id, youtubecomment.isLikedByAdmin, youtubedata.platform, youtubedata.post?.profile.page_Id, youtubedata.post?.profile.profile_Id, youtubedata.user?.userId)"
-                                                                            [class.active]="youtubecomment.isLikedByAdmin == true"
-                                                                            >
+                                                                        <a class="message-actionItem coal likebht p-0 label-reactions"
+                                                                            (click)="likeByAdmin(youtubecomment.id, youtubecomment.isLikedByAdmin, youtubedata.platform, youtubedata.post?.profile.page_Id, youtubedata.post?.profile.profile_Id, youtubedata.user?.userId)"
+                                                                            [class.active]="youtubecomment.isLikedByAdmin == true">
                                                                             <span class="iconButton small btn">
                                                                                 <i class="fal fa-thumbs-up coal"></i>
                                                                                 <i class="fas fa-thumbs-up"></i>
@@ -196,8 +194,8 @@
                                                                             Like
                                                                         </a>
                                                                     </div>
-                                                                    <a class="message-actionItem replyBtn coal" (click)="sendYoutubeCommentInformation(youtubecomment.id)"
-                                                                        >
+                                                                    <a class="message-actionItem replyBtn coal"
+                                                                        (click)="sendYoutubeCommentInformation(youtubecomment.id)">
                                                                         <span class="iconButton small btn mx-2">
                                                                             <i class="fal fa-reply coal"></i>
                                                                         </span>
@@ -214,90 +212,93 @@
                                                                             Tag
                                                                         </button>
                                                                         <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                        aria-labelledby="dropdownMenuButton2">
-                                                                        <ul class="dropdown-listing">
-                                                                            <li class="dropdown-listing-header">
-                                                                                <div class="head-section">
-                                                                                    <div class="left">
-                                                                                        <h6>Tags
-                                                                                        </h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </li>
-                                                                            <li class="dropend">
-                                                                                <div *ngFor="let tag of TagsList"
-                                                                                    class="list-group list-group-flush dropend">
-                                                                                    <a data-bs-toggle="dropdown"
-                                                                                        class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
-
-                                                                                        <div class="w-100 list-txt">
-                                                                                            <div class="d-flex w-100 justify-content-between">
-                                                                                                <h6
-                                                                                                    class="mb-1 darkblue">
-                                                                                                    {{tag.name}}
-                                                                                                </h6>
-                                                                                            </div>
+                                                                            aria-labelledby="dropdownMenuButton2">
+                                                                            <ul class="dropdown-listing">
+                                                                                <li class="dropdown-listing-header">
+                                                                                    <div class="head-section">
+                                                                                        <div class="left">
+                                                                                            <h6>Tags
+                                                                                            </h6>
                                                                                         </div>
+                                                                                    </div>
+                                                                                </li>
+                                                                                <li class="dropend">
+                                                                                    <div *ngFor="let tag of TagsList"
+                                                                                        class="list-group list-group-flush dropend">
+                                                                                        <a data-bs-toggle="dropdown"
+                                                                                            class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
 
-                                                                                    </a>
-                                                                                    <ul class="dropdown-menu shadow">
-                                                                                        <form class="custom-searchbar">
-                                                                                            <input
-                                                                                                class="form-control rounded-pill shadow-sm"
-                                                                                                [(ngModel)]="searchText"
-                                                                                                placeholder="Search"
-                                                                                                aria-label="Search">
-                                                                                            <span
-                                                                                                class="btn searchbar-btn"
-                                                                                                type="submit">
-                                                                                                <i
-                                                                                                    class="fal fa-search silver"></i>
-                                                                                            </span>
-                                                                                        </form>
-                                                                                        <li class="list-body small-list"
-                                                                                            data-scrollbar="true"
-                                                                                            tabindex="-1"
-                                                                                            style="overflow-y: auto; outline: none;">
-                                                                                            <div class="scroll-content"
-                                                                                                style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
+                                                                                            <div class="w-100 list-txt">
                                                                                                 <div
-                                                                                                    class="list-group list-group-flush">
-                                                                                                    <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                        (click)="insertTagsForFeed(youtubecomment.id, keyword.name)"
-                                                                                                        [ngClass]="activeTag==true?'active':''"
-                                                                                                        *ngFor="let keyword of tag.subTags | filter: searchText">
-                                                                                                        <div
-                                                                                                            class="list-down-icon">
-                                                                                                            <span
-                                                                                                                class="btn iconButton iconHover medium">
-                                                                                                                <i
-                                                                                                                    class="fal fa-tag coal"></i>
-                                                                                                            </span>
-                                                                                                        </div>
-                                                                                                        <div
-                                                                                                            class="w-100 list-txt">
-                                                                                                            <div
-                                                                                                                class="d-flex w-100 justify-content-between">
-                                                                                                                <h6
-                                                                                                                    class="mb-1 darkblue">
-                                                                                                                    {{keyword.name}}
-                                                                                                                </h6>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                        <small
-                                                                                                            *ngIf="keyword.id == tag.id">
-                                                                                                            <i [ngClass]="checkTag==true?'fa-check-circle':''"
-                                                                                                                class="fal sky"></i>
-                                                                                                        </small>
-                                                                                                    </a>
+                                                                                                    class="d-flex w-100 justify-content-between">
+                                                                                                    <h6
+                                                                                                        class="mb-1 darkblue">
+                                                                                                        {{tag.name}}
+                                                                                                    </h6>
                                                                                                 </div>
                                                                                             </div>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </li>
+
+                                                                                        </a>
+                                                                                        <ul
+                                                                                            class="dropdown-menu shadow">
+                                                                                            <form
+                                                                                                class="custom-searchbar">
+                                                                                                <input
+                                                                                                    class="form-control rounded-pill shadow-sm"
+                                                                                                    [(ngModel)]="searchText"
+                                                                                                    placeholder="Search"
+                                                                                                    aria-label="Search">
+                                                                                                <span
+                                                                                                    class="btn searchbar-btn"
+                                                                                                    type="submit">
+                                                                                                    <i
+                                                                                                        class="fal fa-search silver"></i>
+                                                                                                </span>
+                                                                                            </form>
+                                                                                            <li class="list-body small-list"
+                                                                                                data-scrollbar="true"
+                                                                                                tabindex="-1"
+                                                                                                style="overflow-y: auto; outline: none;">
+                                                                                                <div class="scroll-content"
+                                                                                                    style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
+                                                                                                    <div
+                                                                                                        class="list-group list-group-flush">
+                                                                                                        <a class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                                            (click)="insertTagsForFeed(youtubecomment.id, keyword.name)"
+                                                                                                            [ngClass]="activeTag==true?'active':''"
+                                                                                                            *ngFor="let keyword of tag.subTags | filter: searchText">
+                                                                                                            <div
+                                                                                                                class="list-down-icon">
+                                                                                                                <span
+                                                                                                                    class="btn iconButton iconHover medium">
+                                                                                                                    <i
+                                                                                                                        class="fal fa-tag coal"></i>
+                                                                                                                </span>
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                class="w-100 list-txt">
+                                                                                                                <div
+                                                                                                                    class="d-flex w-100 justify-content-between">
+                                                                                                                    <h6
+                                                                                                                        class="mb-1 darkblue">
+                                                                                                                        {{keyword.name}}
+                                                                                                                    </h6>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <small
+                                                                                                                *ngIf="keyword.id == tag.id">
+                                                                                                                <i [ngClass]="checkTag==true?'fa-check-circle':''"
+                                                                                                                    class="fal sky"></i>
+                                                                                                            </small>
+                                                                                                        </a>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
                                                                         </ul>
-                                                                    </ul>
                                                                     </div>
                                                                     <div class="dropdown w-auto">
                                                                         <button class="iconButton medium show"
@@ -322,21 +323,25 @@
                                                                                         <div class="list-group list-group-flush"
                                                                                             *ngFor="let sentiment of Sentiments">
                                                                                             <a class="list-group-item d-flex level1Btn "
-                                                                                            (click)="insertSentimentForFeed(youtubecomment.id, sentiment.name)">
-                                                                                            <div class="list-down-icon">
-                                                                                                <span class="btn iconButton iconHover medium" [innerHTML]="sentiment.icon">
-                                                                                                </span>
-                                                                                            </div>
-                                                                                            <div class="w-100 list-txt">
+                                                                                                (click)="insertSentimentForFeed(youtubecomment.id, sentiment.name)">
                                                                                                 <div
-                                                                                                    class="d-flex w-100 justify-content-between">
-                                                                                                    <h6
-                                                                                                        class="mb-1 darkblue">
-                                                                                                        {{sentiment.name}}
-                                                                                                    </h6>
+                                                                                                    class="list-down-icon">
+                                                                                                    <span
+                                                                                                        class="btn iconButton iconHover medium"
+                                                                                                        [innerHTML]="sentiment.icon">
+                                                                                                    </span>
                                                                                                 </div>
-                                                                                            </div>
-                                                                                        </a>
+                                                                                                <div
+                                                                                                    class="w-100 list-txt">
+                                                                                                    <div
+                                                                                                        class="d-flex w-100 justify-content-between">
+                                                                                                        <h6
+                                                                                                            class="mb-1 darkblue">
+                                                                                                            {{sentiment.name}}
+                                                                                                        </h6>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </a>
 
 
                                                                                         </div>
@@ -389,8 +394,8 @@
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="youtubecomment.queryStatus == 'QueryCompleted'">
-                                        <div class="accordion email-accordion" (click)="markAsCompleteExpanded(youtubecomment.id)"
-                                             style="display:block">
+                                        <div class="accordion email-accordion"
+                                            (click)="markAsCompleteExpanded(youtubecomment.id)" style="display:block">
                                             <div class="accordion-item email-wrap marked-wrap mt-3">
                                                 <div [ngClass]="markAsComplete == true?'open':'collaps-wrap'"
                                                     class="accordion-header" id="emailwrap7">
@@ -520,7 +525,8 @@
             </div>
             <div class="form-floating textarea-field">
                 <textarea formControlName="text" class="form-control auto" rows="1" id="text"
-                 (keydown)="handleTextareaKeyDown($event)"  placeholder="Write a response here" [(ngModel)]="text" style="border-radius: 20px;" #textarea></textarea>
+                    (keydown)="handleTextareaKeyDown($event)" placeholder="Write a response here" [(ngModel)]="text"
+                    style="border-radius: 20px;" #textarea></textarea>
             </div>
             <div class="icons-list align-items-md-center d-flex ps-2">
                 <div class="dropdown w-auto">
@@ -536,7 +542,8 @@
                             <li class="dropdown-listing-header">
                                 <div class="head-section">
                                     <div class="left" *ngFor="let emoji of Emojies">
-                                        <span style="cursor: pointer; font-size: 17px;" (click)="insertEmoji(emoji.emoji)">{{emoji.emoji}}</span>
+                                        <span style="cursor: pointer; font-size: 17px;"
+                                            (click)="insertEmoji(emoji.emoji)">{{emoji.emoji}}</span>
                                     </div>
                                 </div>
                             </li>

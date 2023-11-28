@@ -139,6 +139,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.flag = this._route.url.split('/')[2];
     this.flag2 = this._route.url.split('/')[3];
     this.activeChannel = this._route.url.split('/')[5];
+    this.currentUrl=this._route.url;
 
     this.Subscription = this.userInfoService.userInfo$.subscribe((userInfo) => {
       
@@ -831,19 +832,24 @@ export class ResponderHeaderComponent implements OnInit {
   markAsCompleteDto = new MarkAsCompleteDto();
   // only for KE
   removeAssignedQuery() {
-    const ProfileId = localStorage.getItem('assignedProfile')
-    
-    if(ProfileId==null || ProfileId == ""){
+    const ProfileId = localStorage.getItem('assignedProfile');
+    if(this.currentUrl.split('/')[2] == 'assigned_to_me' || this.currentUrl.split('/')[2] == 'follow_up'){
       this.location.back();
+      localStorage.setItem('assignedProfile', '');
     }
-    else{
-      this.commondata.RemoveAssignedQuery(ProfileId).subscribe((res: any) => {
+    else {
+      if (ProfileId == null || ProfileId == "") {
         this.location.back();
-        localStorage.setItem('assignedProfile', '')
-        console.log('remove Response===>', res)
-      })
-    }
-   
+      }
+      else {
+        this.commondata.RemoveAssignedQuery(ProfileId).subscribe((res: any) => {
+          this.location.back();
+          localStorage.setItem('assignedProfile', '');
+          console.log('remove Response===>', res);
+        });
+      }
+    } 
+    
   }
   markAsComplete() {
     this.markAsCompleteDto.user = this.userInfo.userId;
@@ -1095,7 +1101,7 @@ export class ResponderHeaderComponent implements OnInit {
   itemsToBeUpdated: any[] = [];
 
   InsertTagInProfile(tagName: string, type: string, profileId: any) {
-    
+    const ProfileId = localStorage.getItem('assignedProfile');
     var obj = {
       feedId: profileId,
       tagName: tagName,
@@ -1108,6 +1114,11 @@ export class ResponderHeaderComponent implements OnInit {
       .subscribe((res: any) => {
         if (res.message === 'Data Added Successfully') {
           this.markAllAsRead();
+          if(tagName == 'black_list'){
+            this.commondata.RemoveAssignedQuery(ProfileId).subscribe(() => {
+              localStorage.setItem('assignedProfile', '');
+            });
+          }
           this.itemsToBeUpdated = [];
           this.reloadComponent(tagName);
           localStorage.setItem('assignedProfile', '');

@@ -64,6 +64,7 @@ export class YoutubeComponent implements OnInit {
   queryStatus: any;
   newReply: any;
   totalUnrespondedCmntCountByCustomer: number = 0;
+  userInformation:any;
 
   TotalCmntQueryCount: number = 0;
 
@@ -304,6 +305,7 @@ export class YoutubeComponent implements OnInit {
             this.SpinnerService.hide();
             this.spinner1running = false;
             this.YoutubeData = res.List;
+            this.userInformation = res.List[0].user;
             this.userInfoService.shareUserInformation(res.List[0].user);
             this.pageName = this.YoutubeData[0]?.post.profile.page_Name;
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -381,6 +383,7 @@ export class YoutubeComponent implements OnInit {
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.YoutubeData = res.List;
+          this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.pageName = this.YoutubeData[0]?.post.profile.page_Name;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -444,6 +447,7 @@ export class YoutubeComponent implements OnInit {
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.YoutubeData = res.List;
+          this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.pageName = this.YoutubeData[0]?.post.profile.page_Name;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -527,6 +531,7 @@ export class YoutubeComponent implements OnInit {
     profileId: new UntypedFormControl(this.ReplyDto.profileId),
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
+    responseByName: new FormControl(this.ReplyDto.responseByName),
   });
   profileId: string = '';
   profilePageId: string = '';
@@ -546,7 +551,7 @@ export class YoutubeComponent implements OnInit {
           this.postType = comment.contentType;
           this.profileId = xyz.post.profile.profile_Id;
           this.profilePageId = xyz.post.profile.page_Id;
-          this.userProfileId = this.YoutubeData[0].user.id;
+          this.userProfileId = this.userInformation.id;
         }
       });
     });
@@ -581,7 +586,8 @@ export class YoutubeComponent implements OnInit {
         contentType: this.postType,
         profileId: this.profileId,
         profilePageId: this.profilePageId,
-        userProfileId: this.userProfileId
+        userProfileId: this.userProfileId,
+        responseByName: this.pageName,
       });
 
       formData.append(

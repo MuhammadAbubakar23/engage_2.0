@@ -265,13 +265,13 @@ export class ConversationComponent implements OnInit {
   customersList: any[] = [];
 
   getConversationList() {
-    if (this.currentUrl.split('/')[2] == 'completed') {
-      this.flag = 'sent';
-      this.platform = this.currentUrl.split('/')[3];
-    } else {
+    // if (this.currentUrl.split('/')[2] == 'completed') {
+    //   this.flag = 'sent';
+    //   this.platform = this.currentUrl.split('/')[3];
+    // } else {
       this.flag = this.currentUrl.split('/')[2];
       this.platform = this.currentUrl.split('/')[3];
-    }
+    // }
 
     if (this.searchForm.value.dateWithin == '1 day') {
       this.fromDate =
@@ -341,17 +341,10 @@ export class ConversationComponent implements OnInit {
 
       this.toDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
-    } else if (
-      this.searchForm.value.fromDate != null &&
-      (this.searchForm.value.toDate == null ||
-        this.searchForm.value.toDate == undefined)
-    ) {
+    } else if ( this.searchForm.value.fromDate != null && (this.searchForm.value.toDate == null || this.searchForm.value.toDate == undefined)) {
       this.fromDate = this.searchForm.value.fromDate + 'T00:00:00.000Z';
       this.toDate = this.searchForm.value.fromDate + 'T23:59:59.999Z';
-    } else if (
-      this.searchForm.value.fromDate != null &&
-      this.searchForm.value.toDate != null
-    ) {
+    } else if ( this.searchForm.value.fromDate != null && this.searchForm.value.toDate != null) {
       this.fromDate = this.searchForm.value.fromDate + 'T00:00:00.000Z';
       this.toDate = this.searchForm.value.toDate + 'T23:59:59.999Z';
     }
@@ -547,16 +540,19 @@ export class ConversationComponent implements OnInit {
   updateListDataListener(res: any) {
     if (this.currentUrl.split('/')[2] === 'focused') {
       res.forEach((newMsg: any) => {
-        if (this.platform === newMsg.platform && !this.isAttachment) {
-          this.updateConversationList(newMsg);
-        } else if (newMsg.isAttachment && this.isAttachment) {
-          if (this.platform === newMsg.platform || this.platform === 'all') {
+        if(newMsg?.profileStatus?.length == 0){
+          if (this.platform === newMsg.platform && !this.isAttachment) {
+            this.updateConversationList(newMsg);
+          } else if (newMsg.isAttachment && this.isAttachment) {
+            if (this.platform === newMsg.platform || this.platform === 'all') {
+              this.updateConversationList(newMsg);
+            }
+          } else if (this.platform === 'all' && !this.isAttachment) {
             this.updateConversationList(newMsg);
           }
-        } else if (this.platform === 'all' && !this.isAttachment) {
-          this.updateConversationList(newMsg);
         }
-      });
+        });
+        
 
       const groupedItems = this.groupItemsByDate();
       this.groupByDateList = Object.keys(groupedItems).map((createdDate) => ({

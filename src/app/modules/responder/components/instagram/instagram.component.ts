@@ -227,7 +227,6 @@ export class InstagramComponent implements OnInit {
     this.Subscription = this.updateMessagesService
       .receiveMessage()
       .subscribe((res) => {
-        debugger
         this.updatedMessages = res;
         this.updateMessagesDataListener();
       });
@@ -425,12 +424,19 @@ export class InstagramComponent implements OnInit {
           if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.spinner1running = false;
-          this.instaCmntReply = true;
           this.InstagramData = res.List;
+          this.instagramBusinessAccountId = res.List[0]?.post.profile?.instagramBusinessAccountId;
+          this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
           this.pageName = this.InstagramData[0]?.post.profile.page_Name;
+
+          
+          if(this.InstagramData?.length != 0){
+            this.instaCmntReply = true;
+            this.instaMsgReply = false;
+          }
 
           this.commentsArray = [];
 
@@ -488,12 +494,18 @@ export class InstagramComponent implements OnInit {
         if (Object.keys(res).length > 0) {
         this.SpinnerService.hide();
         this.spinner1running = false;
-        this.instaCmntReply = true;
         this.InstagramData = res.List;
+        this.instagramBusinessAccountId = res.List[0]?.post.profile?.instagramBusinessAccountId;
+        this.userInformation = res.List[0].user;
         this.userInfoService.shareUserInformation(res.List[0].user);
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
         this.TotalCmntQueryCount = res.TotalQueryCount;
         this.pageName = this.InstagramData[0]?.post.profile.page_Name;
+
+        if(this.InstagramData?.length != 0){
+          this.instaCmntReply = true;
+          this.instaMsgReply = false;
+        }
 
         this.commentsArray = [];
 
@@ -552,12 +564,18 @@ export class InstagramComponent implements OnInit {
           if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.spinner1running = false;
-          this.instaCmntReply = true;
           this.InstagramData = res.List;
+          this.instagramBusinessAccountId = res.List[0]?.post.profile?.instagramBusinessAccountId;
+          this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
           this.pageName = this.InstagramData[0]?.post.profile.page_Name;
+
+          if(this.InstagramData?.length != 0){
+            this.instaCmntReply = true;
+            this.instaMsgReply = false;
+          }
 
           this.commentsArray = [];
 
@@ -603,6 +621,8 @@ export class InstagramComponent implements OnInit {
     profileId: new UntypedFormControl(this.ReplyDto.profileId),
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
+    responseByName: new FormControl(this.ReplyDto.responseByName),
+    instagramBusinessAccountId: new FormControl(this.ReplyDto.instagramBusinessAccountId),
   });
 
   profileId: string = '';
@@ -624,7 +644,7 @@ export class InstagramComponent implements OnInit {
           this.postType = comment.contentType;
           this.profileId = xyz.post.profile.profile_Id;
           this.profilePageId = xyz.post.profile.page_Id;
-          this.userProfileId = this.InstagramData[0].user.id;
+          this.userProfileId = this.userInformation.id;
         }
       });
     });
@@ -665,6 +685,8 @@ export class InstagramComponent implements OnInit {
         profileId: this.profileId,
         profilePageId: this.profilePageId,
         userProfileId: this.userProfileId,
+        responseByName: this.pageName,
+        instagramBusinessAccountId: this.instagramBusinessAccountId
       });
 
       formData.append(
@@ -1222,6 +1244,8 @@ removeTagDataListener() {
   totalMessages: number = 0;
   msgId: number = 0;
   msgText: any = '';
+  userInformation:any;
+  instagramBusinessAccountId:string='';
 
   instagramCommentReply() {
     this.instaCmntReply = true;
@@ -1260,6 +1284,8 @@ removeTagDataListener() {
           if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.InstagramMessages = res.List?.dm;
+          this.userInformation = res.List.user;
+          this.instagramBusinessAccountId = res.List?.profile?.instagramBusinessAccountId;
           this.userInfoService.shareUserInformation(res.List.user);
           this.TotalMsgQueryCount = res.TotalQueryCount;
           this.pageName = this.InstagramMessages[0]?.toName;
@@ -1326,6 +1352,8 @@ removeTagDataListener() {
         if (Object.keys(res).length > 0) {
         this.SpinnerService.hide();
         this.InstagramMessages = res.List?.dm;
+        this.userInformation = res.List.user;
+          this.instagramBusinessAccountId = res.List?.profile?.instagramBusinessAccountId;
         this.userInfoService.shareUserInformation(res.List.user);
         this.TotalMsgQueryCount = res.TotalQueryCount;
         this.pageName = this.InstagramMessages[0].toName;
@@ -1395,6 +1423,8 @@ removeTagDataListener() {
           if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.InstagramMessages = res.List?.dm;
+          this.userInformation = res.List.user;
+          this.instagramBusinessAccountId = res.List?.profile?.instagramBusinessAccountId;
           this.userInfoService.shareUserInformation(res.List.user);
           this.pageName = this.InstagramMessages[0].toName;
           this.totalMessages = res.TotalCount;
@@ -1454,7 +1484,7 @@ removeTagDataListener() {
         this.postType = 'IM';
         this.profileId = msg.profileId;
         this.profilePageId = msg.profilePageId;
-        this.userProfileId = this.InstagramMessages[0].user.id;
+        this.userProfileId = this.userInformation.id;
       }
     });
   }
@@ -1468,6 +1498,8 @@ removeTagDataListener() {
     profileId: new UntypedFormControl(this.ReplyDto.profileId),
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
+    responseByName: new FormControl(this.ReplyDto.responseByName),
+    instagramBusinessAccountId: new FormControl(this.ReplyDto.instagramBusinessAccountId),
   });
 
   submitInstagramMessageReply() {
@@ -1493,6 +1525,8 @@ removeTagDataListener() {
         profileId: this.profileId,
         profilePageId: this.profilePageId,
         userProfileId: this.userProfileId,
+        responseByName: this.pageName,
+        instagramBusinessAccountId: this.instagramBusinessAccountId
       });
 
       formData.append(
@@ -1571,5 +1605,16 @@ removeTagDataListener() {
     if (this.radioInput != undefined) {
       this.radioInput.nativeElement.checked = false;
     }
+  }
+
+  c_satForm() {
+    const customerId = localStorage.getItem('storeOpenedId');
+    const channel = localStorage.getItem('parent');
+    this.insertAtCaret(
+      'https://keportal.enteract.live/survey/customer_satisfaction' + '?channel=' + channel +
+        '&customerId=' +
+        customerId +
+        ' '
+    );
   }
 }

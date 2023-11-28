@@ -77,6 +77,7 @@ export class FacebookComponent implements OnInit {
   newReply: any;
   queryStatus: any;
   tagDropdown = false;
+  userInformation:any;
 
   chatText: any;
   commentId: number = 0;
@@ -347,6 +348,7 @@ export class FacebookComponent implements OnInit {
             this.fbCmntReply = true;
             this.ConverstationDetailDto = res;
             this.FacebookData = this.ConverstationDetailDto.List;
+            this.userInformation = res.List[0].user;
             this.userInfoService.shareUserInformation(res.List[0].user);
             this.TotalCmntQueryCount = res.TotalQueryCount;
             this.pageName = this.FacebookData[0]?.post.profile.page_Name;
@@ -409,6 +411,7 @@ export class FacebookComponent implements OnInit {
         if (Object.keys(res).length > 0) {
           this.fbCmntReply = true;
           this.FacebookData = res.List;
+          this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalComments = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
@@ -477,6 +480,7 @@ export class FacebookComponent implements OnInit {
             this.fbCmntReply = true;
             this.ConverstationDetailDto = res;
             this.FacebookData = this.ConverstationDetailDto.List;
+            this.userInformation = res.List[0].user;
             this.userInfoService.shareUserInformation(res.List[0].user);
             this.totalComments = res.TotalCount;
             this.TotalCmntQueryCount = res.TotalQueryCount;
@@ -831,6 +835,7 @@ export class FacebookComponent implements OnInit {
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
             this.FacebookMessages = res.List?.dm;
+            this.userInformation = res.List.user;
             this.userInfoService.shareUserInformation(res.List.user);
             this.pageName = res.List?.profile.page_Name;
             this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
@@ -900,6 +905,7 @@ export class FacebookComponent implements OnInit {
         if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.FacebookMessages = res.List?.dm;
+          this.userInformation = res.List.user;
           this.userInfoService.shareUserInformation(res.List.user);
           this.pageName = res.List?.profile.page_Name;
           this.totalMessages = res.TotalCount;
@@ -969,6 +975,7 @@ export class FacebookComponent implements OnInit {
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
             this.FacebookMessages = res.List?.dm;
+            this.userInformation = res.List.user;
             this.userInfoService.shareUserInformation(res.List.user);
             this.pageName = res.List?.profile.page_Name;
             this.totalMessages = res.TotalCount;
@@ -1101,6 +1108,7 @@ export class FacebookComponent implements OnInit {
     profileId: new UntypedFormControl(this.ReplyDto.profileId),
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
+    responseByName: new FormControl(this.ReplyDto.responseByName),
   });
 
   facebookMessageReplyForm = new UntypedFormGroup({
@@ -1112,6 +1120,7 @@ export class FacebookComponent implements OnInit {
     profileId: new UntypedFormControl(this.ReplyDto.profileId),
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
+    responseByName: new FormControl(this.ReplyDto.responseByName),
   });
 
   profileId: string = '';
@@ -1132,7 +1141,7 @@ export class FacebookComponent implements OnInit {
           this.postType = comment.contentType;
           this.profileId = xyz.post.profile.profile_Id;
           this.profilePageId = xyz.post.profile.page_Id;
-          this.userProfileId = this.FacebookData[0].user.id;
+          this.userProfileId = this.userInformation.id;
         }
       });
     });
@@ -1148,7 +1157,7 @@ export class FacebookComponent implements OnInit {
         this.postType = 'FCP';
         this.profileId = msg.profileId;
         this.profilePageId = msg.profilePageId;
-        this.userProfileId = this.FacebookData[0].user.id;
+        this.userProfileId = this.userInformation.id;
       }
     });
   }
@@ -1193,6 +1202,7 @@ export class FacebookComponent implements OnInit {
         profileId: this.profileId,
         profilePageId: this.profilePageId,
         userProfileId: this.userProfileId,
+        responseByName: this.pageName,
       });
 
       formData.append(
@@ -1277,6 +1287,7 @@ export class FacebookComponent implements OnInit {
         profileId: this.profileId,
         profilePageId: this.profilePageId,
         userProfileId: this.userProfileId,
+        responseByName: this.pageName,
       });
 
       formData.append(
@@ -1899,4 +1910,15 @@ export class FacebookComponent implements OnInit {
 
   //   this.changeDetect.detectChanges();
   // }
+
+  c_satForm() {
+    const customerId = localStorage.getItem('storeOpenedId');
+    const channel = localStorage.getItem('parent');
+    this.insertAtCaret(
+      'https://keportal.enteract.live/survey/customer_satisfaction' + '?channel=' + channel +
+        '&customerId=' +
+        customerId +
+        ' '
+    );
+  }
 }

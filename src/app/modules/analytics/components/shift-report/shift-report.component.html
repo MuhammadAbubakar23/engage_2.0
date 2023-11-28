@@ -81,10 +81,11 @@
 
                             </div>
                         </li>
-                        <!-- <li class="list-inline-item ms-auto">
-                            <button class="btn btn-outline-primary"><i class="fa-light fa-envelope"></i> Email
+                        <li class="list-inline-item ms-auto">
+                            <button class="btn btn-outline-primary" (click)="sendEmailReport()"><i
+                                    class="fa-light fa-envelope"></i> Email
                                 Report</button>
-                        </li> -->
+                        </li>
                     </ul>
                 </div>
                 <div class="row align-items-start h-auto mb-4">
@@ -157,115 +158,111 @@
                 <!-- <button (click)="exportToCSV()">Export to CSV</button> -->
 
                 <div class="card iceBg p-4 rounded mb-5">
-                    <!-- <h5 class="section-heading mb-4 p-0">Inbound Traffic - Morning Shift </h5> -->
+                    <h5 class="section-heading mb-4 p-0">Inbound Traffic - Morning Shift </h5>
                     <div class="graphcontainer align-items-end mb-5">
-                        <div class="text-center">
-                            <div id="shiftReport" style="height: 300px; width: 900px;"></div>
+                        <div id="shiftReport" style="height: 300px; width: 100%; max-width:1200px"></div>
+                    </div>
+                </div>
+                <div class="row mb-5 align-items-start">
+                    <div class="col-md-4">
+                        <div class="card iceBg p-4 rounded">
+                            <h5 class="mb-3">TAG STATS</h5>
+                            <ul class="list-group list-group-flush tagscroll" data-scrollbar="true"
+                                style="overflow: auto; height: 300px;">
+                                <li class="list-group-item d-flex align-items-center justify-content-between">
+                                    <strong>Tags</strong>
+                                    <strong>Total Inbound : {{tagsStatsTotalCounts}}</strong>
+                                </li>
+                                <span *ngFor="let tag of TagsStats">
+                                    <li class="list-group-item d-flex align-items-center justify-content-between">
+                                        <span><i class="fa-light fa-tag"></i> {{tag.name}}</span>
+                                        <strong>{{tag.totalCount}}</strong>
+                                    </li>
+                                </span>
+                            </ul>
                         </div>
                     </div>
-
-                    <div class="row mb-5 align-items-start">
-                        <div class="col-md-4">
-                            <div class="card iceBg p-4 rounded">
-                                <h5 class="mb-3">TAG STATS</h5>
-                                <ul class="list-group list-group-flush tagscroll" data-scrollbar="true"
-                                    style="overflow: auto; height: 300px;">
-                                    <li class="list-group-item d-flex align-items-center justify-content-between">
-                                        <strong>Tags</strong>
-                                        <strong>Total Inbound : {{tagsStatsTotalCounts}}</strong>
-                                    </li>
-                                    <span *ngFor="let tag of TagsStats">
-                                        <li class="list-group-item d-flex align-items-center justify-content-between">
-                                            <span><i class="fa-light fa-tag"></i> {{tag.name}}</span>
-                                            <strong>{{tag.totalCount}}</strong>
-                                        </li>
-                                    </span>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card iceBg p-4 rounded mb-4">
-                                <div class="table-section" style="overflow: auto;">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Channel</th>
-                                                <th *ngFor="let item of allDates">{{ item | date: 'dd MMM' }}</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <ng-container *ngFor="let channel of shiftChannelData">
-                                                <tr>
-                                                    <td>
-                                                        <span *ngIf="channel.platform=='Facebook'">
-                                                            <div class="d-flex align-items-center">
-                                                                <span class="iconButton medium navyBg">
-                                                                    <i class="fa-brands fa-facebook-f fa-beat-fade"></i>
-                                                                </span>
-                                                                <span class="ms-2"> {{ channel.platform }}</span>
-                                                            </div>
-                                                        </span>
-                                                        <span *ngIf="channel.platform=='Twitter'">
-                                                            <div class="d-flex align-items-center">
-                                                                <span class="iconButton medium twltte-bg ice">
-                                                                    <i class="fa-brands fa-twitter fa-beat-fade"></i>
-                                                                </span>
-                                                                <span class="ms-2"> {{ channel.platform }}</span>
-                                                            </div>
-                                                        </span>
-                                                        <span *ngIf="channel.platform=='Instagram'">
-                                                            <div class="d-flex align-items-center">
-                                                                <span class="iconButton medium twltte-bg ice insta">
-                                                                    <i class="fab fa-instagram fa-beat-fade"></i>
-                                                                </span>
-                                                                <span class="ms-2"> {{ channel.platform }}</span>
-                                                            </div>
-                                                        </span>
-                                                        <span *ngIf="channel.platform=='LinkedIn'">
-                                                            <div class="d-flex align-items-center">
-                                                                <span class="iconButton medium linkedinBg ice">
-                                                                    <i class="fa-brands fa-linkedin fa-beat-fade"></i>
-                                                                </span>
-                                                                <span class="ms-2"> {{ channel.platform }}</span>
-                                                            </div>
-                                                        </span>
-                                                        <span *ngIf="channel.platform=='PlayStore'">
-                                                            <div class="d-flex align-items-center">
-                                                                <span class="iconButton medium darkorangeBg ice">
-                                                                    <i
-                                                                        class="fa-brands fa-google-play fa-beat-fade"></i>
-                                                                </span>
-                                                                <span class="ms-2"> {{ channel.platform }}</span>
-                                                            </div>
-                                                        </span>
-                                                        <span *ngIf="channel.platform=='WhatsApp'">
-                                                            <div class="d-flex align-items-center">
-                                                                <span class="iconButton medium mintBg ice">
-                                                                    <i class="fab fa-whatsapp fa-beat-fade"></i>
-                                                                </span>
-                                                                <span class="ms-2"> {{ channel.platform }}</span>
-                                                            </div>
-                                                        </span>
-                                                    </td>
-                                                    <ng-container *ngFor="let date of allDates">
-                                                        <td>
-                                                            <span>
-                                                                {{ findTotalCount(channel, date) }}
-                                                            </span>
-                                                        </td>
-                                                    </ng-container>
-                                                </tr>
-                                            </ng-container>
+                    <div class="col-md-8">
+                        <div class="card iceBg p-4 rounded mb-4">
+                            <div class="table-section" style="overflow: auto;">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Channel</th>
+                                            <th *ngFor="let item of allDates">{{ item | date: 'dd MMM' }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let channel of shiftChannelData">
                                             <tr>
                                                 <td>
-                                                    <h6>Total Count</h6>
+                                                    <span *ngIf="channel.platform=='Facebook'">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="iconButton medium navyBg">
+                                                                <i class="fa-brands fa-facebook-f fa-beat-fade"></i>
+                                                            </span>
+                                                            <span class="ms-2"> {{ channel.platform }}</span>
+                                                        </div>
+                                                    </span>
+                                                    <span *ngIf="channel.platform=='Twitter'">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="iconButton medium twltte-bg ice">
+                                                                <i class="fa-brands fa-twitter fa-beat-fade"></i>
+                                                            </span>
+                                                            <span class="ms-2"> {{ channel.platform }}</span>
+                                                        </div>
+                                                    </span>
+                                                    <span *ngIf="channel.platform=='Instagram'">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="iconButton medium twltte-bg ice insta">
+                                                                <i class="fab fa-instagram fa-beat-fade"></i>
+                                                            </span>
+                                                            <span class="ms-2"> {{ channel.platform }}</span>
+                                                        </div>
+                                                    </span>
+                                                    <span *ngIf="channel.platform=='LinkedIn'">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="iconButton medium linkedinBg ice">
+                                                                <i class="fa-brands fa-linkedin fa-beat-fade"></i>
+                                                            </span>
+                                                            <span class="ms-2"> {{ channel.platform }}</span>
+                                                        </div>
+                                                    </span>
+                                                    <span *ngIf="channel.platform=='PlayStore'">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="iconButton medium darkorangeBg ice">
+                                                                <i class="fa-brands fa-google-play fa-beat-fade"></i>
+                                                            </span>
+                                                            <span class="ms-2"> {{ channel.platform }}</span>
+                                                        </div>
+                                                    </span>
+                                                    <span *ngIf="channel.platform=='WhatsApp'">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="iconButton medium mintBg ice">
+                                                                <i class="fab fa-whatsapp fa-beat-fade"></i>
+                                                            </span>
+                                                            <span class="ms-2"> {{ channel.platform }}</span>
+                                                        </div>
+                                                    </span>
                                                 </td>
-                                                <td *ngFor="let count of dateWiseTotalCounts">{{ count.totalCount }}
-                                                </td>
+                                                <ng-container *ngFor="let date of allDates">
+                                                    <td>
+                                                        <span>
+                                                            {{ findTotalCount(channel, date) }}
+                                                        </span>
+                                                    </td>
+                                                </ng-container>
                                             </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        </ng-container>
+                                        <tr>
+                                            <td>
+                                                <h6>Total Count</h6>
+                                            </td>
+                                            <td *ngFor="let count of dateWiseTotalCounts">{{ count.totalCount }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

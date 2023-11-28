@@ -7,6 +7,7 @@ import * as echarts from 'echarts';
 import { HeaderService } from 'src/app/shared/services/header.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { SharedModule } from "../../../../shared/shared.module";
+import { ExcelService } from '../../services/excel.service';
 @Component({
   standalone: true,
   selector: 'app-agent-performance-report',
@@ -36,11 +37,15 @@ export class AgentPerformanceReportComponent implements OnInit {
   toastermessage = false;
   AlterMsg: any = '';
 
+  commentDateWiseGraph:any;
+  messageDateWiseGraph:any;
+
   constructor(private _hS: HeaderService,
     private commonService: CommonDataService,
     private cdr: ChangeDetectorRef,
     private datePipe: DatePipe,
-    private SpinnerService: NgxSpinnerService) { }
+    private SpinnerService: NgxSpinnerService,
+    private excelServices: ExcelService) { }
 
   ngOnInit(): void {
     this.currentDate = new Date();
@@ -50,6 +55,7 @@ export class AgentPerformanceReportComponent implements OnInit {
     this.getListUser();
     const newObj = { title: 'Agent Performance Report', url: '/analytics/performance-report' };
     this._hS.setHeader(newObj);
+    this.makeChartResponsive();
   }
   getListUser(): void {
     this.commonService.GetUserList()
@@ -61,9 +67,26 @@ export class AgentPerformanceReportComponent implements OnInit {
       });
   }
   onCheckboxChange(name: string) {
-    this.singleChanenel = name
-    this.addAgentGraph();
-    this.cdr.detectChanges();
+    if (name === 'Select All Channels') {
+      this.selectAllChannels();
+    } else {
+      this.singleChanenel = name;
+      this.addAgentGraph();
+      this.cdr.detectChanges();
+    }
+  }
+  selectAllChannels() {
+    const selectAllChannelsOption = this.channelOptions.find(option => option.name === 'Select All Channels');
+    if (selectAllChannelsOption) {
+      this.channelOptions.forEach(option => {
+        if (option.name !== 'Select All Channels') {
+          option.isSelected = !selectAllChannelsOption.isSelected;
+        }
+      });
+      this.singleChanenel = '';
+      this.addAgentGraph();
+      this.cdr.detectChanges();
+    }
   }
   resetEndDate() {
     this.endDate = '';
@@ -93,7 +116,6 @@ export class AgentPerformanceReportComponent implements OnInit {
     this.searchText = ''
   }
   addAgentGraph() {
-    // debugger
     if (this.singleChanenel != '') {
       this.AllChannels = this.singleChanenel
     }
@@ -151,8 +173,9 @@ export class AgentPerformanceReportComponent implements OnInit {
             const date = new Date(data.date);
             this.Agent_data.push({ x: date, y: data.count });
           });
+          // if (this.Agent_data.length > 0) {
           const doms = this.main.nativeElement;
-          const myCharts = echarts.init(doms, null, {
+          this.commentDateWiseGraph = echarts.init(doms, null, {
             renderer: 'canvas',
             useDirtyRect: false
           });
@@ -174,6 +197,7 @@ export class AgentPerformanceReportComponent implements OnInit {
                 formatter: function (value: string) {
                   return value;
                 },
+                rotate: 45
               },
             },
             yAxis: {
@@ -205,9 +229,10 @@ export class AgentPerformanceReportComponent implements OnInit {
             ],
           };
 
-          option && myCharts.setOption(option);
-
+          option && this.commentDateWiseGraph.setOption(option);
+        // }
           // messageDateWise
+          
           const messageDateWise = this.agent_performance_report.messageDateWise;
           messageDateWise.forEach((data: any) => {
             const date = new Date(data.date);
@@ -215,7 +240,7 @@ export class AgentPerformanceReportComponent implements OnInit {
           });
 
           const myDom = this.message.nativeElement;
-          const myChart = echarts.init(myDom, null, {
+          this.messageDateWiseGraph = echarts.init(myDom, null, {
             renderer: 'canvas',
             useDirtyRect: false
           });
@@ -238,6 +263,7 @@ export class AgentPerformanceReportComponent implements OnInit {
                 formatter: function (value: string) {
                   return value;
                 },
+                rotate: 45
               },
             },
             yAxis: {
@@ -269,7 +295,7 @@ export class AgentPerformanceReportComponent implements OnInit {
             ],
           };
 
-          option && myChart.setOption(option);
+          option && this.messageDateWiseGraph.setOption(option);
         },
         (error: any) => {
           console.error('Error adding agent performance report:', error);
@@ -282,6 +308,7 @@ export class AgentPerformanceReportComponent implements OnInit {
   totalAgents = [{ id: '', name: '', isSelected: false }];
 
   channelOptions = [
+    { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
     { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
     { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
     { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
@@ -297,16 +324,29 @@ export class AgentPerformanceReportComponent implements OnInit {
     const selectedChannel = this.channelOptions.find(channel => channel.name === channelName);
     return selectedChannel ? selectedChannel.icon : '';
   }
-
   closeToaster() {
     this.toastermessage = false;
   }
   date_pagination(days: number) {
-    debugger
     let currentDate = new Date();
     let prevDate = currentDate.setDate(currentDate.getDate() - days);
     this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     this.endDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
     this.addAgentGraph()
+  }
+
+  export() {
+    this.excelServices.exportAsExcelFile(this.agent_performance_report?.agentPerformance, 'Agent-Performance-Report')
+  }
+
+  makeChartResponsive(){
+    window.addEventListener('resize', ()=>{
+      if(this.commentDateWiseGraph){
+        this.commentDateWiseGraph.resize();
+      }
+      if(this.messageDateWiseGraph){
+        this.messageDateWiseGraph.resize();
+      }
+    })
   }
 }

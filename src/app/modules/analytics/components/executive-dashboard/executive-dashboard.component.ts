@@ -4,14 +4,14 @@ import * as echarts from 'echarts';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-import { CloudData, CloudOptions ,ZoomOnHoverOptions} from 'angular-tag-cloud-module';
+import { CloudData, CloudOptions, ZoomOnHoverOptions } from 'angular-tag-cloud-module';
 import { TagCloudComponent } from 'angular-tag-cloud-module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-executive-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule,TagCloudComponent,NgxSpinnerModule],
+  imports: [CommonModule, FormsModule, TagCloudComponent, NgxSpinnerModule],
   templateUrl: './executive-dashboard.component.html',
   styleUrls: ['./executive-dashboard.component.scss']
 })
@@ -21,267 +21,14 @@ export class ExecutiveDashboardComponent implements OnInit {
     transitionTime: 0.2, // it will take 1.2 seconds until the zoom level defined in scale property has been reached
     delay: 0.2 // Zoom will take affect after 0.8 seconds
   };
-  options: CloudOptions = { 
+  options: CloudOptions = {
     width: 400,
     height: 400,
     overflow: false,
   };
-  wordcloudData:any[]=[]
-  //   {
-  //     "text": "w9-color",
-  //     "weight": 9,
-  //     "color": "#67402b",
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w4",
-  //     "weight": 4,
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w7-color",
-  //     "weight": 7,
-  //     "color": "#c90296",
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w6-color",
-  //     "weight": 6,
-  //     "color": "#1041c7",
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w4",
-  //     "weight": 4,
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w8-link",
-  //     "weight": 8,
-  
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w10-link-ext",
-  //     "weight": 10,
-
-  //     "external": true,
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w7-color-link-ext",
-  //     "weight": 7,
-  //     "color": "#81f31a",
-
-  //     "external": true,
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w1-color",
-  //     "weight": 1,
-  //     "color": "#3df06e",
-  //     "rotate": -13
-  //   },
-  //   {
-  //     "text": "w8-link",
-  //     "weight": 8,
-
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w5-link",
-  //     "weight": 5,
-
-  //     "rotate": 5
-  //   },
-  //   {
-  //     "text": "w6-link-ext",
-  //     "weight": 6,
-
-  //     "external": true,
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w2-link-ext",
-  //     "weight": 2,
-
-  //     "external": true,
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w3-color-link-ext",
-  //     "weight": 3,
-  //     "color": "#7be66",
-
-  //     "external": true,
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w10-color-link-ext",
-  //     "weight": 10,
-  //     "color": "#db41a2",
-
-  //     "external": true,
-  //     "rotate": 6
-  //   },
-  //   {
-  //     "text": "w4-link-ext",
-  //     "weight": 4,
-
-  //     "external": true,
-  //     "rotate": -16
-  //   },
-  //   {
-  //     "text": "w5-color",
-  //     "weight": 5,
-  //     "color": "#a16978",
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w5-link-ext",
-  //     "weight": 5,
-
-  //     "external": true,
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w8",
-  //     "weight": 8,
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w3",
-  //     "weight": 3,
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w1-color",
-  //     "weight": 1,
-  //     "color": "#32a283",
-  //     "rotate": 13
-  //   },
-  //   {
-  //     "text": "w4-color-link-ext",
-  //     "weight": 4,
-  //     "color": "#ead416",
-
-  //     "external": true,
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w3-color",
-  //     "weight": 3,
-  //     "color": "#453cf",
-  //     "rotate": 7
-  //   },
-  //   {
-  //     "text": "w7-link-ext",
-  //     "weight": 7,
-
-  //     "external": true,
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w7-color",
-  //     "weight": 7,
-  //     "color": "#587453",
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w1-color-link",
-  //     "weight": 1,
-  //     "color": "#526f88",
-
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w2",
-  //     "weight": 2,
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w10-color",
-  //     "weight": 10,
-  //     "color": "#fda4d7",
-  //     "rotate": -14
-  //   },
-  //   {
-  //     "text": "w8-link",
-  //     "weight": 8,
-
-  //     "rotate": -12
-  //   },
-  //   {
-  //     "text": "w2-link",
-  //     "weight": 2,
-
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w2-color-link-ext",
-  //     "weight": 2,
-  //     "color": "#7f618",
-
-  //     "external": true,
-  //     "rotate": 17
-  //   },
-  //   {
-  //     "text": "w2-color-link",
-  //     "weight": 2,
-  //     "color": "#66f18c",
-
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w9-link",
-  //     "weight": 9,
-
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w4",
-  //     "weight": 4,
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w6-color",
-  //     "weight": 6,
-  //     "color": "#8bc27",
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w3-link",
-  //     "weight": 3,
-
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w8-color-link",
-  //     "weight": 8,
-  //     "color": "#b0a84a",
-
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w2-link",
-  //     "weight": 2,
-
-  //     "rotate": -19
-  //   },
-  //   {
-  //     "text": "w4-color",
-  //     "weight": 4,
-  //     "color": "#db6279",
-  //     "rotate": 0
-  //   },
-  //   {
-  //     "text": "w4",
-  //     "weight": 4,
-  //     "rotate": -17
-  //   }
-  // ];
-  data:any[]=[]
-  startDate  = ''
+  wordcloudData: any[] = []
+  data: any[] = []
+  startDate = ''
   endDate = ''
   maxEndDate: any;
   social_media_report: any
@@ -292,35 +39,45 @@ export class ExecutiveDashboardComponent implements OnInit {
   post_comments: any
   post_share: any
   facebook_reaction: any
+  platformsArray: any[] = []
+  channelWiseEngagement: any[] = [];
+  currentDate: any;
   constructor(private _hS: HeaderService,
     private commonDataService: CommonDataService,
-    private spinerService:NgxSpinnerService,
+    private spinerService: NgxSpinnerService,
     private datePipe: DatePipe,) { }
 
   ngOnInit(): void {
     const newObj = { title: 'Executive Dashboard', url: '/analytics/executive-dashboard' };
     this._hS.setHeader(newObj);
-    const currentDate = new Date();
-    this.maxEndDate = currentDate.toISOString().split('T')[0];
+    this.currentDate = new Date();
+    this.maxEndDate = this.currentDate.toISOString().split("T")[0];
     // this.getEnagementChart()
     // this.getRefionWiseTrafic()
     this.GetAllSocialMediaReport()
-   
-
-
-    
   }
-  GetAllSocialMediaReport() {
-    if (this.endDate == '' && this.startDate == '') {
-      let currentDate = new Date();
-      let prevDate = currentDate.setDate(currentDate.getDate() - 5);
-      this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || "";
 
-      this.endDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || "";
-    } else if (this.startDate != '' && this.endDate != '') {
-      this.startDate = this.startDate;
-      this.endDate = this.endDate;
+  GetAllSocialMediaReport() {
+    if (this.startDate == "" && this.endDate == "") {
+      const today = this.currentDate;
+      this.endDate = this.datePipe.transform(today, "YYYY-MM-dd") || '';
+      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 6);
+      this.startDate = this.datePipe.transform(prevDate, "YYYY-MM-dd") || '';
     }
+    else if (this.startDate != "" && this.endDate != ""
+    ) {
+      this.startDate = this.startDate
+      this.endDate = this.endDate
+    }
+    // const startDateObj = new Date(this.startDate);
+    // const endDateObj = new Date(this.endDate);
+    // const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
+    // const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    // if (diffDays > 30) {
+    //   alert('Select a date range of 30 days or less');
+    //   return;
+    // }
+    // }
     const requestData = {
       pageId: "622038187854126",
       from: this.startDate,
@@ -333,12 +90,14 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.post_likes = []
     this.post_share = []
     this.facebook_reaction = [];
-
+    this.platformsArray = [];
     if (this.startDate <= this.endDate) {
       this.spinerService.show()
       this.commonDataService.GetAllSocialMatrics(requestData).subscribe((res: any) => {
         this.social_media_report = res
-   this.spinerService.hide()
+
+        this.spinerService.hide()
+        // inbound 
         const inBoundTrafficDto = this.social_media_report.inBoundTrafficDto;
         inBoundTrafficDto.forEach((data: any) => {
           const date = new Date(data.date);
@@ -354,7 +113,7 @@ export class ExecutiveDashboardComponent implements OnInit {
         // Audience Chart
 
         this.social_media_report.facebookReportResponseDto.postLikeSpan?.forEach((data: any) => {
-          
+
           this.post_likes.push(data.activityCount);
           if (!this.date_Audience.includes(data.dateValue)) {
             this.date_Audience.push(data.dateValue)
@@ -374,16 +133,44 @@ export class ExecutiveDashboardComponent implements OnInit {
         });
         // facebook Reaction 
         const pageReactionsSpan = this.social_media_report.facebookReportResponseDto.pageReactionsSpan;
-        
+
         pageReactionsSpan?.forEach((data: any) => {
           const date = (data.totalReactionsDateValue);
           this.facebook_reaction.push(data.like + data.love + data.wow + data.haha + data.sorry + data.anger + data.sad + data.tHANKFUL + data.pride + data.cARE);
         });
+
+        //getEnagementChart
+        const channelWiseDto = this.social_media_report.channelWiseDto;
+
+        channelWiseDto.forEach((channel: any) => {
+          if (!this.platformsArray.includes(channel.platform)) {
+            this.platformsArray.push(channel.platform);
+          }
+
+          channel.dateWise.forEach((tag: any) => {
+            const date = new Date(tag.date).toISOString();
+            const totalCount = tag.totalCount;
+            const existingNameCount = this.channelWiseEngagement.find((n) => n.name === date);
+
+            if (existingNameCount) {
+              existingNameCount.data.push(totalCount);
+            } else {
+              this.channelWiseEngagement.push({
+                type: 'bar',
+                name: date,
+                data: [totalCount],
+              });
+            }
+          });
+        });
+
+        this.getEnagementChart();
         this.getChartInbound()
         this.getSentimentChart()
         this.getChartAudienceEngagement()
         this.getFacebookReaction()
         this.getWordCloud()
+
       })
 
     } else {
@@ -458,7 +245,7 @@ export class ExecutiveDashboardComponent implements OnInit {
     option && myChart.setOption(option);
   }
   getChartAudienceEngagement() {
-    
+
     type EChartsOption = echarts.EChartsOption;
     var chartDom = document.getElementById('audience')!;
     var myChart = echarts.init(chartDom);
@@ -538,36 +325,43 @@ export class ExecutiveDashboardComponent implements OnInit {
       ]
     };
     option && myChart.setOption(option);
-
   }
   getEnagementChart() {
-    var app = {};
-
     var chartDom = document.getElementById('enagement');
     var myChart = echarts.init(chartDom);
     var option;
 
     option = {
-      legend: {},
-      tooltip: {},
-      dataset: {
-        dimensions: ['product', '2015', '2016', '2017'],
-        source: [
-          { product: 'Matcha Latte', 2015: 43.3, 2016: 85.8, 2017: 93.7 },
-          { product: 'Milk Tea', 2015: 83.1, 2016: 73.4, 2017: 55.1 },
-          { product: 'Cheese Cocoa', 2015: 86.4, 2016: 65.2, 2017: 82.5 },
-          { product: 'Walnut Brownie', 2015: 72.4, 2016: 53.9, 2017: 39.1 }
-        ]
+      legend: {
+        bottom: 0,
+        left: 'center',
       },
-      xAxis: { type: 'category' },
+      tooltip: { trigger: 'axis' },
+      dataset: {
+        source: [['product', ...this.platformsArray], ...this.channelWiseEngagement.map(data => [data.name, ...data.data])],
+      },
+      xAxis: [
+        {
+          type: 'category',
+          data: this.channelWiseEngagement.map(data => data.name),
+          axisLabel: {
+            formatter: function (value: any) {
+              return new Date(value).toISOString().split('T')[0];
+            },
+          },
+        },
+      ],
       yAxis: {},
-      // Declare several bar series, each will be mapped
-      // to a column of dataset.source by default.
-      series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }]
+      series: this.platformsArray.map(platform => ({
+        type: 'bar',
+        name: platform,
+        encode: { x: 'product', y: platform },
+      })),
     };
-
     option && myChart.setOption(option);
   }
+
+
   getSentimentChart() {
     type EChartsOption = echarts.EChartsOption;
 
@@ -717,8 +511,8 @@ export class ExecutiveDashboardComponent implements OnInit {
   resetEndDate() {
     this.endDate = "";
   }
-  getWordCloud(){
-    
+  getWordCloud() {
+
     if (this.endDate == '' && this.startDate == '') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 8);
@@ -728,46 +522,46 @@ export class ExecutiveDashboardComponent implements OnInit {
       this.startDate = this.datePipe.transform(this.startDate, 'MM-dd-YYYY') || "";
       this.endDate = this.datePipe.transform(this.endDate, 'MM-dd-YYYY') || "";
     }
-    this.data=[]
+    this.data = []
     this.spinerService.show()
-    this.commonDataService.getWordCloud(this.startDate,this.endDate).subscribe((res:any)=>{
-      this.wordcloudData=res
+    this.commonDataService.getWordCloud(this.startDate, this.endDate).subscribe((res: any) => {
+      this.wordcloudData = res
       this.spinerService.hide()
       if (this.wordcloudData.length > 0) {
         this.data = [];
         res.forEach((element: any) => {
           var obj = {
             text: element.Term,
-            weight: element.frequency 
+            weight: element.frequency
           };
           this.data.push(obj);
         });
-        
+
       }
-      
+
       console.log('Term: ', this.data);
-      
+
     });
-  //     this.wordcloudData.forEach((x:any)=>{
-  //       this.data.push({text:x.Term, weight:x.frequency})
-  //     })
+    //     this.wordcloudData.forEach((x:any)=>{
+    //       this.data.push({text:x.Term, weight:x.frequency})
+    //     })
     //     this.data= [{
- 
+
     // color:  "#c90296",
     // text: "کے الیکٹرک",
     // weight : 28
 
     //  },
     //  {
- 
+
     //   color:  "#c90296",
     //   text: "کے الیکٹرک",
     //   weight : 78
-  
+
     //    },
     // ]
     //   console.log("WordCloud===>",this.data)
-    
+
 
   }
 }

@@ -71,30 +71,26 @@
                                                                 </button>
                                                             </div>
                                                             <div>
-                                                                <div class="dropdown w-auto"
-                                                                    *ngIf="whatsappMsg.queryStatus != 'Responded'">
+                                                                <div class="dropdown w-auto" >
                                                                     <button class="btn coal p-0 ps-3" type="button"
                                                                         id="dropdownMenuButton1"
                                                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                                                        <small
-                                                                            *ngIf="whatsappMsg.spam == true; else notSpam">Spam
-                                                                            <i class="far fa-chevron-down ms-2"
-                                                                                *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'"></i>
+                                                                        <!-- <small *ngIf="whatsappMsg.spam == true; else notSpam">Spam
+                                                                            <i class="far fa-chevron-down ms-2" *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'"></i>
                                                                         </small>
-                                                                        <ng-template
-                                                                            #notSpam>{{whatsappMsg.queryStatus}}
+                                                                        <ng-template #notSpam>{{whatsappMsg.queryStatus}}
                                                                             <i class="far fa-chevron-down ms-2"
                                                                                 *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && whatsappMsg.queryStatus != 'Completed'"></i>
-                                                                        </ng-template>
+                                                                        </ng-template> -->
+                                                                        {{whatsappMsg.queryStatus}}
+                                                                        <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && whatsappMsg.queryStatus == 'Unresponded'"></i>
                                                                     </button>
                                                                     <ul class="dropdown-menu custom-dropdown"
                                                                         aria-labelledby="dropdownMenuButton1"
-                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && whatsappMsg.queryStatus != 'Completed'">
+                                                                        *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && whatsappMsg.queryStatus == 'Unresponded'">
 
                                                                         <li>
-                                                                            <a class="dropdown-item"
-                                                                                *ngIf="whatsappMsg.queryStatus != 'Responded'"
-                                                                                (click)="whatsappStatus(whatsappMsg.id, 'WM')">Read</a>
+                                                                            <a class="dropdown-item" (click)="whatsappStatus(whatsappMsg.id, 'WM')">Read</a>
                                                                             <!-- <a class="dropdown-item"
                                                                                 *ngIf="whatsappMsg.starred == true; else notStarred"
                                                                                 (click)="starMessage(whatsappMsg.id, false)">Remove

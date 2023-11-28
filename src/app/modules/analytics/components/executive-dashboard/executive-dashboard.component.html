@@ -25,12 +25,12 @@
                         <div class="iconholder ms-auto">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input type="date" class="form-control" placeholder="Start Date"
+                                    <input type="date" class="form-control" placeholder="End Date"
                                         [(ngModel)]="startDate" [max]="maxEndDate" (change)="resetEndDate()" />
                                 </div>
                                 <div class="col-sm-6">
                                     <input type="date" class="form-control" [(ngModel)]="endDate" [max]="maxEndDate"
-                                        placeholder="End Date" (change)="GetAllSocialMediaReport()" />
+                                        placeholder="Start Date" (change)="GetAllSocialMediaReport()" />
 
                                 </div>
                             </div>
@@ -47,7 +47,7 @@
                                         </span>
                                         <h4>{{social_media_report?.likesCount}}</h4>
                                         <p class="mb-0">Total likes</p>
-                                        <small class="sky">+8% from yesterday</small>
+                                        <!-- <small class="sky">+8% from yesterday</small> -->
                                     </div>
                                 </div>
                             </li>
@@ -59,7 +59,7 @@
                                         </span>
                                         <h4>{{social_media_report?.commentCount}}</h4>
                                         <p class="mb-0">Comments</p>
-                                        <small class="sky">+4% from yesterday</small>
+                                        <!-- <small class="sky">+4% from yesterday</small> -->
                                     </div>
                                 </div>
                             </li>
@@ -71,7 +71,7 @@
                                         </span>
                                         <h4>{{social_media_report?.sharesCount}}</h4>
                                         <p class="mb-0"> Share</p>
-                                        <small class="sky">+1.2% from yesterday</small>
+                                        <!-- <small class="sky">+1.2% from yesterday</small> -->
                                     </div>
                                 </div>
                             </li>
@@ -83,7 +83,7 @@
                                         </span>
                                         <h4>{{social_media_report?.tweetsCount}}</h4>
                                         <p class="mb-0"> Tweets</p>
-                                        <small class="sky">0.5% from yesterday</small>
+                                        <!-- <small class="sky">0.5% from yesterday</small> -->
                                     </div>
                                 </div>
                             </li>
@@ -95,7 +95,7 @@
                                         </span>
                                         <h4>{{social_media_report?.retweetsCount}}</h4>
                                         <p class="mb-0">Retweets</p>
-                                        <small class="sky">+8% from yesterday</small>
+                                        <!-- <small class="sky">+8% from yesterday</small> -->
                                     </div>
                                 </div>
                             </li>
@@ -107,7 +107,7 @@
                                         </span>
                                         <h4>{{social_media_report?.repliesCount}}</h4>
                                         <p class="mb-0"> Replies</p>
-                                        <small class="sky">+8% from yesterday</small>
+                                        <!-- <small class="sky">+8% from yesterday</small> -->
                                     </div>
                                 </div>
                             </li>
@@ -117,9 +117,9 @@
                                         <span class="iconButton medium linkedinBg mb-3">
                                             <i class="fa-brands fa-linkedin"></i>
                                         </span>
-                                        <h4>NA</h4>
+                                        <h4>{{social_media_report?.linkedInCount}}</h4>
                                         <p class="mb-0">Connections</p>
-                                        <small class="sky">0.5% from yesterday</small>
+                                        <!-- <small class="sky">0.5% from yesterday</small> -->
                                     </div>
                                 </div>
                             </li>
@@ -127,16 +127,16 @@
                         </ul>
                         <div class="my-4">
                             <div class="row align-items-start h-auto">
-                                <!-- <div class="col-md-8">
+                                <div class="col-md-8">
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-4 p-0">Engagement</h5>
                                         <ul class="nav nav-tabs buttontabs">
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link active" id="channel-tab">Channel Wise</button>
                                             </li>
-                                            <li class="nav-item" role="presentation">
+                                            <!-- <li class="nav-item" role="presentation">
                                                 <button class="nav-link" id="category-tab">Category wise</button>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                         <div class="graphcontainer align-items-end">
                                             <div class="tab-content">
@@ -149,11 +149,9 @@
 
                                             </div>
                                         </div>
-
-
                                     </div>
-                                </div> -->
-                                <div class="col-md-6">
+                                </div>
+                                <div class="col-md-4">
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-3 p-0">SENTIMENT ANALYSIS</h5>
                                         <div class="text-center">
@@ -186,16 +184,8 @@
                                         </ul> -->
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="card iceBg p-4 rounded">
-                                        <h5 class="section-heading mb-3 p-0">Inbound Traffic Graph </h5>
-                                        <div class="graphcontainer align-items-end">
-                                            <div class="text-center">
-                                                <div id="inbound" style="height: 440px; width: 500px;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
+                               
                             </div>
                         </div>
                         <div class="my-6">
@@ -205,11 +195,26 @@
                                         <h5 class="section-heading mb-4 p-0">Audience Engagement Graph</h5>
                                         <div class="graphcontainer align-items-end">
                                             <div class="text-center">
-                                                <div id="audience" style="height: 300px; width: 500px;"></div>
+                                                <div id="audience" style="height: 350px; width: 500px;"></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="card iceBg p-4 rounded">
+                                        <h5 class="section-heading mb-3 p-0">Inbound Traffic Graph </h5>
+                                        <div class="graphcontainer align-items-end">
+                                            <div class="text-center">
+                                                <div id="inbound" style="height: 350px; width: 500px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        </div>
+                        <div class="my-4">
+                            <div class="row align-items-start h-auto">
                                 <div class="col-md-6">
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-4 p-0">FACEBOOK REACTIONS</h5>
@@ -219,20 +224,14 @@
 
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="my-4">
-                            <div class="row align-items-start h-auto">
-                               
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-3 p-0">Word Cloud</h5>
                                         <div class="graphcontainer align-items-center">
-                                            <div class="worldcloud">
-                                                <angular-tag-cloud [config]="options" [zoomOnHover]="zoomOnHoverOptions"
+                                            <div class="worldcloud" style="height: 350px; width: 500px;">
+                                                <angular-tag-cloud [config]="options" [zoomOnHover]="zoomOnHoverOptions" 
                                                     [data]="data"></angular-tag-cloud>
                                                 <!-- <ul class="list-inline">
                                                     <li class="list-inline-item">
@@ -275,8 +274,6 @@
                                                 </ul> -->
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>

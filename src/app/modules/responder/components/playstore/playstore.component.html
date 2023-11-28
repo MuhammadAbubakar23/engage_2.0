@@ -72,38 +72,23 @@
                                                                 <i class="fas fa-star sun"></i>
                                                             </button>
                                                         </div>
-                                                        <div class="dropdown w-auto"
-                                                            *ngIf="playstoreReview.queryStatus != 'Responded'">
-                                                            <button class="btn coal p-0 ps-3" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                <small *ngIf="playstoreReview.spam == true; else notSpamMsg">Spam <i class="far fa-chevron-down ms-2" *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'"></i></small>
-                                                                <ng-template #notSpamMsg>{{playstoreReview.queryStatus}} 
-                                                                    <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && playstoreReview.queryStatus != 'Completed'"></i>
-                                                                </ng-template>
+                                                        <div class="dropdown w-auto">
+                                                            <button class="btn coal p-0 ps-3" type="button" id="dropdownMenuButton1"
+                                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                                {{playstoreReview.queryStatus}}
+                                                                <i class="far fa-chevron-down ms-2" *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && playstoreReview.queryStatus == 'Unresponded'"></i>
                                                             </button>
                                                             <ul class="dropdown-menu custom-dropdown" aria-labelledby="dropdownMenuButton1"
-                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && playstoreReview.queryStatus != 'Completed'">
-
+                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && playstoreReview.queryStatus == 'Unresponded'">
                                                                 <li>
                                                                     <!-- From Tags Api -->
                                                                     <!-- <ng-container *ngFor="let status of messagesStatus">
                                                                     <a class="dropdown-item" *ngIf="playstoreReview.queryStatus != 'Responded'" (click)="commentStatus(playstoreReview.id, 'PSR')">{{status.name}}</a>
                                                                 </ng-container> -->
-                                                                    <a class="dropdown-item" *ngIf="playstoreReview.queryStatus != 'Responded'" (click)="commentStatus(playstoreReview.id, 'PSR')">Read</a>
-                                                                    <!-- <a class="dropdown-item" *ngIf="playstoreReview.starred == true; else notStarredMsg" (click)="starMessage(playstoreReview.id, false)">Remove Star from Message</a>
-                                                                    <ng-template #notStarredMsg>
-                                                                        <a class="dropdown-item" (click)="starMessage(playstoreReview.id, true)">Star Message</a>
-                                                                    </ng-template>
-                                                                    <a class="dropdown-item" *ngIf="playstoreReview.spam == true; else notSpamBtn" (click)="spamMessage(playstoreReview.id, false, 'PSR')">Remove from Spam</a>
-                                                                    <ng-template #notSpamBtn>
-                                                                        <a class="dropdown-item" (click)="spamMessage(playstoreReview.id, true, 'PSR')">Mark as Spam</a>
-                                                                    </ng-template> -->
+                                                                    <a class="dropdown-item" (click)="commentStatus(playstoreReview.id, 'PSR')">Read</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
-                                                        <!-- <div class="w-auto" *ngIf="(playstoreReview.queryStatus == 'Responded' || playstoreReview.queryStatus == 'Completed') && playstoreReview.spam == false"
-                                                            style="margin-left: 20px;">
-                                                            <small>{{playstoreReview.queryStatus}} </small>
-                                                        </div> -->
                                                     </div>
                                                     <p class="card-text nignt">{{playstoreReview.msgText}}</p>
                                                     <div class="tags" *ngFor="let tag of playstoreReview.tags">

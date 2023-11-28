@@ -481,7 +481,6 @@ export class TwitterReportComponent implements OnInit {
     this.toDate = '';
   }
   export() {
-    
     this.excelServices.exportAsExcelFile(this.TwitterProfileWiseReport, 'Twitter-Report')
   }
 }

@@ -11,4 +11,6 @@ export class ReplyDto {
   profileId: string = '';
   profilePageId: string = '';
   userProfileId: number = 0;
+  responseByName: string = "";
+  instagramBusinessAccountId?: string = "";
 }

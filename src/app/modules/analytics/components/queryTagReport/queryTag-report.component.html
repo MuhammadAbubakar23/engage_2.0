@@ -199,176 +199,107 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="row align-items-start h-auto mb-4">
-                        <div class="col-lg-4 col-md-6">
-                            <div class="card dashboard-card">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <span class="iconButton medium radicalBg mb-4">
-                                                <!-- <i class="fa-light fa-phone-arrow-up-right"></i> -->
-                                                <img src="../../../../../assets/images/outbound.svg" alt="">
-                                            </span>
-                                            <p class="coal mb-0"> Sum of outbound Volume</p>
-                                        </div>
-                                        <h2>{{Inbound_Outbound_Report?.channelReportData?.outboundSum}}</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="card dashboard-card">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <span class="iconButton medium mintBg mb-4">
-                                                <!-- <i class="fa-light fa-phone-arrow-down-left"></i> -->
-                                                <img src="../../../../../assets/images/inbound.svg" alt="">
-                                            </span>
-                                            <p class="coal mb-0"> Sum of inbound Volume</p>
-                                        </div>
-                                        <h2>{{Inbound_Outbound_Report?.channelReportData?.inboundSum}}</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- <div class="pagination-bar">
+                        <span>{{to}}-{{from}} of {{TotalUnresponded}}</span>
+                        <span style="cursor: pointer;">
+                          <i class="fal fa-chevron-left" (click)="PreviousPage(pageNumber)"></i>
+                        </span>
+                        <span style="cursor: pointer;">
+                          <i class="fal fa-chevron-right" (click)="NextPage(pageNumber)"></i>
+                        </span>
+                      </div>
                     </div>
-                    <!-- <div class="report-toolbar mb-4">
-                        <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
-
-                            <li class="list-inline-item">
-                                <div class="dropdown w-auto">
-                                    <button class="btn dropdown-toggle" type="button" id="columnssort"
-                                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-                                        Type
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="columnssort">
-                                        <li *ngFor="let type of typeOptions">
-                                            <a class="dropdown-item d-flex align-items-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" [id]="type.id"
-                                                        [(ngModel)]="type.isSelected" (change)="onCheckboxChange()">
-                                                    <label class="form-check-label" [for]="type.id">
-                                                        {{ type.label }}
-                                                    </label>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="list-inline-item">
-                                <div class="dropdown w-auto">
-                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false" data-bs-auto-close="outside">
-                                        Report By
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="posttype">
-                                        <li *ngFor="let reportOption of reportOptions">
-                                            <a class="dropdown-item d-flex align-items-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        [id]="reportOption.id">
-                                                    <label class="form-check-label" [for]="reportOption.id">
-                                                        {{ reportOption.label }}
-                                                    </label>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
+                    <div class="query-container perfect-scrollbar" data-scrollbar="true" tabindex="-1"
+                      style="overflow-y: auto; outline: none;">
+                      <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
+                        <table class="table">
+                          <thead>
+                            <tr *ngIf="FlagForAssignToMe=='follow_up'">
+                              <th></th>
+                              <th></th>
+                              <th>Name</th>
+                              <th>Message</th>
+                              <th>Message_Time</th>
+                              <th>Follow_up Time</th>
+                            </tr>
+                            </thead>
+                          <tbody>
+                            <ng-container *ngFor="let group of groupByDateList">
+                              <tr>
+                                <td colspan="6">
+                             <span *ngIf="FlagForAssignToMe!=='follow_up'">
+                              <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
+                             </span>
+                             <span *ngIf="FlagForAssignToMe=='follow_up'">
+                              <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
+                             </span>
+                                </td>
+                              </tr>
+                              <tr *ngFor="let query of group.items | sort:criteria; let i = index"
+                                [class.selected]="query.isChecked==true" class="alert" [ngClass]="[query.slaFlag == 'warning'?'alert-warning':'' || query.slaFlag == 'danger'?'alert-danger':'' ||
+                              query.slaFlag == 'unread'?'unread':'']">
+                                <td *ngIf="flag != 'sent'" style="width: 40px;">
+                                  <input [checked]="query.isChecked" value="{{query.id}}"
+                                    (change)="isAllSelected($event, i, query.platform, query.profileId, group.createdDate)"
+                                    class="form-check-input me-1" type="checkbox" aria-label="..."
+                                    [disabled]="FlagForAssignToMe == 'assigned_to_me'">
+                                </td>
+                                <td style="width: 40px;">
+                                  <i *ngIf="query.platform == 'Facebook'" class="fab fa-facebook navytext" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom" title="" data-bs-original-title="Facebook" aria-label="Facebook"></i>
+                                  <i *ngIf="query.platform == 'Instagram'" data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
+                                    data-bs-original-title="Instagram" aria-label="Instagram" class="fab fa-instagram"></i>
+                                  <i *ngIf="query.platform == 'Email' || query.platform == 'OfficeEmail'" class="fal fa-envelope cherry"
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Email"
+                                    aria-label="Email"></i>
+                                  <i *ngIf="query.platform == 'Youtube'" class="fab fa-youtube warning" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom" title="" data-bs-original-title="Youtube" aria-label="Youtube"></i>
+                                  <i *ngIf="query.platform == 'Twitter'" class="fab fa-twitter sky" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom" title="" data-bs-original-title="Twitter" aria-label="Twitter"></i>
+                                  <i *ngIf="query.platform == 'SMS'" class="fal fa-comment-alt-lines berry" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom" data-bs-original-title="SMS" aria-label="SMS"></i>
+                                  <i *ngIf="query.platform == 'WhatsApp'" class="fab fa-whatsapp emerald" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom" data-bs-original-title="WhatsApp" aria-label="Whatsapp"></i>
+                                  <i *ngIf="query.platform == 'Webchat'" class="fal fa-messages webchat" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom" data-bs-original-title="Webchat" aria-label="Webchat"></i>
+                                  <i *ngIf="query.platform == 'LinkedIn'" class="fa-brands fa-linkedin-in linkedinTxt"
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="LinkedIn"
+                                    aria-label="LinkedIn"></i>
+                                  <i *ngIf="query.platform == 'PlayStore'" class="fa-brands fa-google-play darkorange"
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="PlayStore"
+                                    aria-label="PlayStore"></i>
+                                </td>
+                                <td style="width: 300px;">
+                                  <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
+                                    <a
+                                      (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId)">
+                                      <span>{{query.userName.split('<')[0] || query.user}} </span>
+                                          <span class="badge bg-danger rounded-pill"
+                                            *ngIf="query.unrespondedCount > 0">{{query.unrespondedCount}}</span></a>
+                                  </span>
+                
+                                </td>
+                                <td>
+                                  <div class="maintext"
+                                    (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId)">
+                                    {{query.message < 110 ? query.message: (query.message | slice:0:110) +'...'}} </div>
+                                </td>
+                                <td class="px-1">
+                                  <small>{{query.createdDate | date:'h:mm:ss a'}}</small>
+                                </td>
+                                <td class="px-1">
+                                  <span *ngIf="FlagForAssignToMe=='follow_up'">
+                                   <small><strong>{{query?.follow_Up_Status | date: 'EE, MMM-dd, yyyy h:mm:ss a '}}</strong></small>
+                                  </span>
+                                </td>
+                            </tr>
+                            </ng-container>
+                          </tbody>
+                        </table>
+                      </div>
                     </div> -->
-                    <!-- <div class="row align-items-start h-auto mb-5">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card iceBg p-4 rounded">
-                                    <h5 class="section-heading mb-4 p-0">Inbound/outbound Reports</h5>
-                                    <div class="graphcontainer align-items-end">
-                                        <div #inboundOutboundReport style="width: 100%;; height: 600px;"></div>
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                    <div class="row align-items-start h-auto mb-5">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="card iceBg p-4 rounded">
-                                    <h5 class="section-heading mb-4 p-0">Inbound/outbound Reports</h5>
-                                    <div class="graphcontainer align-items-end">
-                                        <div #inboundOutboundReport class="responsive-graph"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="card iceBg p-4 rounded">
-                                    <h5 class="section-heading mb-3 p-0">Sentiment Per Channel </h5>
-                                    <div class="graphcontainer align-items-end">
-                                        <div #senitimentalGraph class="responsive-graph"></div>
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card iceBg p-4 rounded mb-5">
-                        <h5 class="section-heading mb-4 p-0">Average Response Per Post</h5>
-                        <div class="row">
-                            <div class="col-md-7">
-                                <div class="graphcontainer align-items-end">
-                                    <div #ChannelWiseGraph class="responsive-graph"></div>
-
-                                </div>
-                            </div>
-                            <!-- <div class="col-md-5">
-                                <ul class="list-0 statlist list-lg mb-3">
-                                    <li
-                                        *ngFor="let channelwise of Inbound_Outbound_Report?.channelReportData?.channelWiseData">
-                                        <span [ngClass]="getPlatformClass(channelwise.platform)">
-                                            <i class="fa-light fa-envelope"></i> {{channelwise.platform}}
-                                        </span>
-                                        <span class="fw-semibold">Inbound {{channelwise.inboundData}} | Outbound
-                                            {{channelwise.outboundData}}</span>
-                                    </li>
-                                </ul>
-                            </div> -->
-                            <div class="col-md-5">
-                                <ul class="list-0 statlist list-lg mb-3">
-                                    <li
-                                        *ngFor="let channelwise of Inbound_Outbound_Report?.channelReportData?.channelWiseData">
-                                        <span
-                                            [ngClass]="channelwise.platform=='Facebook'?'navy':'' || channelwise.platform=='Instagram'?'night':'' || channelwise.platform=='Email'?'berry':''|| channelwise.platform=='Twitter'?'ocean':''|| channelwise.platform=='LinkedIn'?'navy':''|| channelwise.platform=='Youtube'?'radical':''|| channelwise.platform=='SMS'?'cherry':''|| channelwise.platform=='WhatsApp'?'mint':''|| channelwise.platform=='OfficeEmail'?'berry':''|| channelwise.platform=='WebChat'?'webchatcolor':''|| channelwise.platform=='PlayStore'?'googleplaycolor':''">
-                                            <i class=""
-                                                [ngClass]="channelwise.platform=='Facebook'?'fab fa-facebook navytext':'' || channelwise.platform=='Instagram'?'fa-brands fa-instagram':''|| channelwise.platform=='Email'?'fa-light fa-envelope':''  || channelwise.platform=='Twitter'?'fab fa-twitter':'' || channelwise.platform=='LinkedIn'?'fa-brands fa-linkedin-in':'' || channelwise.platform=='Youtube'?'fa-brands fa-youtube':'' || channelwise.platform=='SMS'?'fa-message-sms':'' || channelwise.platform=='WhatsApp'?'fab fa-whatsapp ':'' || channelwise.platform=='OfficeEmail'?'fa-message-sms':'' || channelwise.platform=='PlayStore'?'fa-brands fa-google-play':'' || channelwise.platform=='WebChat'?'fa-light fa-messages':''"></i>
-                                            {{channelwise.platform}}
-                                        </span>
-                                        <span class="fw-semibold">Inbound {{channelwise.inboundData}} | Outbound
-                                            {{channelwise.outboundData}}</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row align-items-start h-auto mb-5">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card iceBg p-4 rounded ">
-                                    <h5 class="section-heading mb-3 p-0">Tags Per Channel</h5>
-                                    <div class="graphcontainer align-items-end">
-                                        <div #TagsPerChannel class="responsive-graph"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    
-
-                </div>
             </div>
         </div>
     </div>

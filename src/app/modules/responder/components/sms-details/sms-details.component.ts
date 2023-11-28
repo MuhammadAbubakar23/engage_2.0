@@ -83,6 +83,7 @@ export class SmsDetailsComponent implements OnInit {
 
   pageNumber: number = 1;
   pageSize: number = 10;
+  userInformation:any;
 
   commentsArray: any[] = [];
   groupArrays: any[] = [];
@@ -309,6 +310,7 @@ export class SmsDetailsComponent implements OnInit {
           this.ConverstationDetailDto = res;
           this.TotalCmntQueryCount = res.TotalQueryCount;
           this.SmsData = this.ConverstationDetailDto.List;
+          this.userInformation = res.List[0].user;
 
           this.commentsArray = [];
 
@@ -367,6 +369,7 @@ export class SmsDetailsComponent implements OnInit {
         this.ConverstationDetailDto = res;
         this.TotalCmntQueryCount = res.TotalQueryCount;
         this.SmsData = this.ConverstationDetailDto.List;
+        this.userInformation = res.List[0].user;
 
         this.commentsArray = [];
 
@@ -424,6 +427,7 @@ export class SmsDetailsComponent implements OnInit {
         this.ConverstationDetailDto = res;
         this.TotalCmntQueryCount = res.TotalQueryCount;
         this.SmsData = this.ConverstationDetailDto.List;
+        this.userInformation = res.List[0].user;
 
         this.commentsArray = [];
 
@@ -499,9 +503,7 @@ export class SmsDetailsComponent implements OnInit {
         xyz.keywordList.forEach((abc: any) => {
           this.Keywords.push(abc);
         });
-        // // console.log('keywords==>', this.Keywords);
       });
-      // // console.log('TagList', this.TagsList);
     });
   }
 
@@ -632,7 +634,7 @@ removeTagFromFeed(feedId: number, tagName: any) {
           this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
           this.postType = comment.contentType;
-          this.userProfileId = this.SmsData[0].user.id;
+          this.userProfileId = this.userInformation.id;
         }
       });
     });
@@ -646,6 +648,7 @@ removeTagFromFeed(feedId: number, tagName: any) {
     // profileId: new UntypedFormControl(this.ReplyDto.profileId),
     contentType: new UntypedFormControl(this.ReplyDto.contentType),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
+    responseByName: new FormControl(this.ReplyDto.responseByName),
   });
   
   text:string="";
@@ -675,7 +678,8 @@ removeTagFromFeed(feedId: number, tagName: any) {
         teamId: this.agentId,
         platform: this.platform,
         contentType: this.postType,
-        userProfileId : this.userProfileId
+        userProfileId : this.userProfileId,
+        responseByName: this.To,
       });
   
       formData.append(

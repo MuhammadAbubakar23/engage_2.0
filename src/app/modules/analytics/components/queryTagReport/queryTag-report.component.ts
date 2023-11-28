@@ -16,12 +16,12 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 
 @Component({
   standalone: true,
-  selector: 'app-inbound-ontbound-report',
-  templateUrl: './inbound-ontbound-report.component.html',
-  styleUrls: ['./inbound-ontbound-report.component.scss'],
+  selector: 'app-queryTag-report',
+  templateUrl: './queryTag-report.component.html',
+  styleUrls: ['./queryTag-report.component.scss'],
   imports: [CommonModule, FormsModule, SharedModule, NgxSpinnerModule],
 })
-export class InboundOntboundReportComponent implements OnInit {
+export class QueryTagReportComponent implements OnInit {
   @ViewChild('inboundOutboundReport', { static: true })
   inboundOutboundReport!: ElementRef;
   @ViewChild('ChannelWiseGraph', { static: true })
@@ -64,8 +64,8 @@ export class InboundOntboundReportComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     const newObj = {
-      title: 'Inbound/Outbound Report',
-      url: '/analytics/inbound-outbound-report',
+      title: 'Query Tag Report',
+      url: '/analytics/querytag-report',
     };
     this._hS.setHeader(newObj);
     const menu = this.stor.retrive('Tags', 'O').local;
@@ -203,7 +203,7 @@ export class InboundOntboundReportComponent implements OnInit {
                 trigger: 'axis'
               },
               legend: {
-                data: ['Inbound', 'Outbound']
+                data: ['Inbound', 'OutBound']
               },
               grid: {
                 left: '3%',
@@ -235,7 +235,7 @@ export class InboundOntboundReportComponent implements OnInit {
                   }),
                 },
                 {
-                  name: 'Outbound',
+                  name: 'OutBound',
                   type: 'line',
                   data: this.Outbound_data.map(function (dataPoint) {
                     return dataPoint.y;
