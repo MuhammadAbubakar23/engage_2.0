@@ -230,6 +230,7 @@ export class TwitterReportComponent implements OnInit {
           'DMs Received',
           'Mentions Received',
         ],
+        icon:'circle'
       },
       grid: {
         left: '3%',

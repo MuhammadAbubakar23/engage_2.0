@@ -255,7 +255,8 @@ keywordslist:any[]=[]
         trigger: 'axis',
       },
       _legend: {
-        data:this._legend
+        data:this._legend,
+         icon:'circle'
       },
       get legend() {
         return this._legend;

@@ -202,7 +202,8 @@ export class InboundOntboundReportComponent implements OnInit {
                 trigger: 'axis'
               },
               legend: {
-                data: ['Inbound', 'OutBound']
+                data: ['Inbound', 'OutBound'],
+                icon:'circle'
               },
               grid: {
                 left: '3%',
