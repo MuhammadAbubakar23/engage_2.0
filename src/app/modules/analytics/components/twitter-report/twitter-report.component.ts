@@ -12,12 +12,13 @@ import * as echarts from 'echarts';
 import { HeaderService } from 'src/app/shared/services/header.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { ExcelService } from '../../services/excel.service';
+import { LayoutsModule } from 'src/app/layouts/layouts.module';
 @Component({
   selector: 'app-twitter-report',
   templateUrl: './twitter-report.component.html',
   styleUrls: ['./twitter-report.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxSpinnerModule],
+  imports: [CommonModule, FormsModule, NgxSpinnerModule,LayoutsModule],
 })
 export class TwitterReportComponent implements OnInit {
   @ViewChild('TwitterInboundOutboundReport', { static: true })
