@@ -135,6 +135,7 @@ export class FacebookReportComponent implements OnInit {
 
     this.getAllfeacebookData();
     this.getTopFiveCustomers();
+    // this.getDamiChart()
   }
   date_pagination(days: number) {
     let currentDate = new Date();
@@ -407,6 +408,7 @@ debugger
       this.getPageReachablityChart();
       this.getPublishinBehaviorChart();
       this.getExternalSourcesChart();
+      this.getDamiChart()
     });
   }
   getMaleProgressBarStyle() {
@@ -448,6 +450,11 @@ debugger
         type: 'category',
         boundaryGap: false,
         data: this.pageReachSpanDates,
+        axisLabel: {
+          rotate:45,
+          
+        }
+
       },
       yAxis: {
         type: 'value',
@@ -458,6 +465,7 @@ debugger
           type: 'line',
           stack: 'Total',
           data: this.pageReachSpanCounts,
+      
         },
       ],
     };
@@ -506,6 +514,10 @@ debugger
         type: 'category',
         boundaryGap: false,
         data: this.pageReactionsSpanDates,
+        axisLabel: {
+          rotate:45,
+          
+        }
       },
       yAxis: {
         type: 'value',
@@ -596,6 +608,10 @@ debugger
         type: 'category',
         boundaryGap: false,
         data: this.totalPeopleWhoViewSpanDates,
+        axisLabel: {
+          rotate:45,
+          
+        }
       },
       yAxis: {
         type: 'value',
@@ -674,9 +690,19 @@ debugger
       xAxis: {
         type: 'category',
         data: this.publishedPegePostSpanDates,
+        axisLabel: {
+          rotate:45,
+          
+        }
       },
       yAxis: {
         type: 'value',
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '8%',
+        containLabel: true,
       },
       series: [
         {
@@ -684,7 +710,6 @@ debugger
           data: this.publishedPegePostSpanCounts,
           type: 'bar',
           itemStyle: {
-
             borderRadius: 5,
           }
         },
@@ -708,81 +733,138 @@ debugger
     var chartDom = document.getElementById('engagement');
     var myChart = echarts.init(chartDom);
     var option: EChartsOption;
-
     option = {
-      color: ['#b09ed1', '#ee438d', '#3ed3b3'],
+      color: ['#7354AE', '#FA0060', '#00D3A2',],
+     
       tooltip: {
         trigger: 'axis',
         axisPointer: {
           type: 'cross',
           label: {
-            backgroundColor: '#6a7985',
-          },
-        },
+            backgroundColor: '#6a7985'
+          }
+        }
       },
       legend: {
-        data: ['Likes', 'Comments', 'Shares'],
+        data: ['Likes','Comments','Shares'],
         icon:'circle',
         bottom:0
       },
       toolbox: {
         feature: {
-          saveAsImage: {},
-        },
+          saveAsImage: {}
+        }
       },
       grid: {
         left: '3%',
         right: '4%',
-        bottom: '8%',
-        containLabel: true,
+        bottom: '13%',
+        containLabel: true
       },
       xAxis: [
         {
           type: 'category',
           boundaryGap: false,
           data: this.audienceEngagementDates,
-        },
+          axisLabel: {
+            rotate:45,
+            
+          }
+        }
       ],
       yAxis: [
         {
-          type: 'value',
-        },
+          type: 'value'
+        }
       ],
       series: [
         {
           name: 'Likes',
           type: 'line',
-
-          areaStyle: {},
-          emphasis: {
-            focus: 'series',
+       
+          smooth: true,
+          lineStyle: {
+            width: 0
           },
-          data: this.audineceEngagementTotallikes,
+          showSymbol: false,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#6E4EAC'
+              },
+              {
+                offset: 1,
+                color: '#8E75BE'
+              }
+            ])
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data: this.audineceEngagementTotallikes
         },
         {
           name: 'Comments',
           type: 'line',
-
-          areaStyle: {},
-          emphasis: {
-            focus: 'series',
+        
+          smooth: true,
+          lineStyle: {
+            width: 0
           },
-          data: this.audienceEngagementTotlaComments,
+          showSymbol: false,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#FA0060'
+              },
+              {
+                offset: 1,
+                color: '#F05396'
+              }
+            ])
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data: this.audienceEngagementTotlaComments
         },
         {
           name: 'Shares',
           type: 'line',
-
-          areaStyle: {},
-          emphasis: {
-            focus: 'series',
+       
+          smooth: true,
+          lineStyle: {
+            width: 0
           },
-          data: this.audienceEngagmentTotalShare,
+          showSymbol: false,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#00D3A2'
+              },
+              {
+                offset: 1,
+                color: '#5ECFB9'
+              }
+            ])
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data:this.audienceEngagmentTotalShare
         },
-      ],
+       
+      ]
     };
-
+    
     option && myChart.setOption(option);
+   
   }
 
   getChartAudienceGrowth() {
@@ -791,17 +873,17 @@ debugger
     var chartDom = document.getElementById('growth');
     var myChart = echarts.init(chartDom);
     var option: EChartsOption;
-
     option = {
-      color: ['#b09ed1', '#ee438d'],
+      color: ['#7354AE', '#FA0060',],
+    
       tooltip: {
         trigger: 'axis',
         axisPointer: {
           type: 'cross',
           label: {
-            backgroundColor: '#6a7985',
-          },
-        },
+            backgroundColor: '#6a7985'
+          }
+        }
       },
       legend: {
         data: ['likes', 'Unlikes'],
@@ -810,53 +892,357 @@ debugger
       },
       toolbox: {
         feature: {
-          // magicType: { show: true, type: ['line', 'bar'] },
-          saveAsImage: {},
-        },
+          saveAsImage: {}
+        }
       },
       grid: {
         left: '3%',
         right: '4%',
-        bottom: '10%',
-        containLabel: true,
+        bottom: '13%',
+        containLabel: true
       },
       xAxis: [
         {
           type: 'category',
           boundaryGap: false,
-          data: this.audiencelikesdate,
-        },
+          data:  this.audiencelikesdate,
+          axisLabel: {
+            rotate:45,
+            
+          }
+        }
       ],
       yAxis: [
         {
-          type: 'value',
-        },
+          type: 'value'
+        }
       ],
       series: [
         {
           name: 'likes',
           type: 'line',
-
-          areaStyle: {},
-          emphasis: {
-            focus: 'series',
+       
+          smooth: true,
+          lineStyle: {
+            width: 0
           },
-          data: this.audiencelikesCounts,
+          showSymbol: false,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#6E4EAC'
+              },
+              {
+                offset: 1,
+                color: '#8E75BE'
+              }
+            ])
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data:  this.audiencelikesCounts
         },
         {
           name: 'Unlikes',
           type: 'line',
-
-          areaStyle: {},
-          emphasis: {
-            focus: 'series',
+        
+          smooth: true,
+          lineStyle: {
+            width: 0
           },
-          data: this.audienceunlikesCount,
+          showSymbol: false,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#FA0060'
+              },
+              {
+                offset: 1,
+                color: '#F05396'
+              }
+            ])
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data: this.audienceunlikesCount
         },
-      ],
+      
+   
+      ]
     };
-
+    
     option && myChart.setOption(option);
+    // option = {
+    //   color: ['#b09ed1', '#ee438d'],
+    //   tooltip: {
+    //     trigger: 'axis',
+    //     axisPointer: {
+    //       type: 'cross',
+    //       label: {
+    //         backgroundColor: '#6a7985',
+    //       },
+    //     },
+    //   },
+    //   legend: {
+    //     data: ['likes', 'Unlikes'],
+    //     icon:'circle',
+    //     bottom:0
+    //   },
+    //   toolbox: {
+    //     feature: {
+    //       // magicType: { show: true, type: ['line', 'bar'] },
+    //       saveAsImage: {},
+    //     },
+    //   },
+    //   grid: {
+    //     left: '3%',
+    //     right: '4%',
+    //     bottom: '10%',
+    //     containLabel: true,
+    //   },
+    //   xAxis: [
+    //     {
+    //       type: 'category',
+    //       boundaryGap: false,
+    //       data: this.audiencelikesdate,
+    //       axisLabel: {
+    //         rotate:45,
+            
+    //       }
+    //     },
+    //   ],
+    //   yAxis: [
+    //     {
+    //       type: 'value',
+    //     },
+    //   ],
+    //   series: [
+    //     {
+    //       name: 'likes',
+    //       type: 'line',
+
+    //       areaStyle: {},
+    //       emphasis: {
+    //         focus: 'series',
+    //       },
+    //       data: this.audiencelikesCounts,
+    //     },
+    //     {
+    //       name: 'Unlikes',
+    //       type: 'line',
+
+    //       areaStyle: {},
+    //       emphasis: {
+    //         focus: 'series',
+    //       },
+    //       data: this.audienceunlikesCount,
+    //     },
+    //   ],
+    // };
+
+    // option && myChart.setOption(option);
+  }
+  getDamiChart(){
+    var chartDom = document.getElementById('main');
+var myChart = echarts.init(chartDom);
+var option;
+
+option = {
+  color: ['#7354AE', '#FA0060', '#00D3A2',],
+  title: {
+    text: 'Gradient Stacked Area Chart'
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'cross',
+      label: {
+        backgroundColor: '#6a7985'
+      }
+    }
+  },
+  legend: {
+    data: ['Likes','Comments','Shares'],
+    icon:'circle',
+    bottom:0
+  },
+  toolbox: {
+    feature: {
+      saveAsImage: {}
+    }
+  },
+  grid: {
+    left: '3%',
+    right: '4%',
+    bottom: '13%',
+    containLabel: true
+  },
+  xAxis: [
+    {
+      type: 'category',
+      boundaryGap: false,
+      data: this.audienceEngagementDates,
+      axisLabel: {
+        rotate:45,
+        
+      }
+    }
+  ],
+  yAxis: [
+    {
+      type: 'value'
+    }
+  ],
+  series: [
+    {
+      name: 'Likes',
+      type: 'line',
+   
+      smooth: true,
+      lineStyle: {
+        width: 0
+      },
+      showSymbol: false,
+      areaStyle: {
+        opacity: 0.8,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: '#6E4EAC'
+          },
+          {
+            offset: 1,
+            color: '#8E75BE'
+          }
+        ])
+      },
+      emphasis: {
+        focus: 'series'
+      },
+      data: this.audineceEngagementTotallikes
+    },
+    {
+      name: 'Comments',
+      type: 'line',
+    
+      smooth: true,
+      lineStyle: {
+        width: 0
+      },
+      showSymbol: false,
+      areaStyle: {
+        opacity: 0.8,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: '#FA0060'
+          },
+          {
+            offset: 1,
+            color: '#F05396'
+          }
+        ])
+      },
+      emphasis: {
+        focus: 'series'
+      },
+      data: this.audienceEngagementTotlaComments
+    },
+    {
+      name: 'Shares',
+      type: 'line',
+   
+      smooth: true,
+      lineStyle: {
+        width: 0
+      },
+      showSymbol: false,
+      areaStyle: {
+        opacity: 0.8,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: '#00D3A2'
+          },
+          {
+            offset: 1,
+            color: '#5ECFB9'
+          }
+        ])
+      },
+      emphasis: {
+        focus: 'series'
+      },
+      data:this.audienceEngagmentTotalShare
+    },
+    // {
+    //   name: 'Line 4',
+    //   type: 'line',
+    //   stack: 'Total',
+    //   smooth: true,
+    //   lineStyle: {
+    //     width: 0
+    //   },
+    //   showSymbol: false,
+    //   areaStyle: {
+    //     opacity: 0.8,
+    //     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+    //       {
+    //         offset: 0,
+    //         color: 'rgb(255, 0, 135)'
+    //       },
+    //       {
+    //         offset: 1,
+    //         color: 'rgb(135, 0, 157)'
+    //       }
+    //     ])
+    //   },
+    //   emphasis: {
+    //     focus: 'series'
+    //   },
+    //   data: [220, 402, 231, 134, 190, 230, 120]
+    // },
+    // {
+    //   name: 'Line 5',
+    //   type: 'line',
+    //   stack: 'Total',
+    //   smooth: true,
+    //   lineStyle: {
+    //     width: 0
+    //   },
+    //   showSymbol: false,
+    //   label: {
+    //     show: true,
+    //     position: 'top'
+    //   },
+    //   areaStyle: {
+    //     opacity: 0.8,
+    //     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+    //       {
+    //         offset: 0,
+    //         color: 'rgb(255, 191, 0)'
+    //       },
+    //       {
+    //         offset: 1,
+    //         color: 'rgb(224, 62, 76)'
+    //       }
+    //     ])
+    //   },
+    //   emphasis: {
+    //     focus: 'series'
+    //   },
+    //   data: [220, 302, 181, 234, 210, 290, 150]
+    // }
+  ]
+};
+
+option && myChart.setOption(option);
   }
   getTopFiveCustomers() {
     let obj = {
