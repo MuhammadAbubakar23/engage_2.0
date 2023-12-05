@@ -16,9 +16,10 @@ import { ExcelService } from '../../services/excel.service';
   imports: [CommonModule, RouterModule, FormsModule, NgxSpinnerModule, SharedModule]
 })
 export class AgentPerformanceReportComponent implements OnInit {
-
-  @ViewChild('main', { static: true }) main!: ElementRef
-  @ViewChild('message', { static: true }) message!: ElementRef
+  @ViewChild('radioInput', { static: false })
+  radioInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('main', { static: false  }) main!: ElementRef
+  @ViewChild('message', { static: false }) message!: ElementRef
   searchText: string = '';
   startDate: string = '';
   endDate: string = '';
@@ -36,10 +37,17 @@ export class AgentPerformanceReportComponent implements OnInit {
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
-
+  channelOptions:any[]=[]
+ selectedDays:any=''
   commentDateWiseGraph:any;
+  channelOptionsByplatform:any[]=[]
+  isShowChat:boolean=false
   messageDateWiseGraph:any;
-
+activeChannel:any
+ isChannelShow:any='';
+ paginationDate:any[]=[
+  {id:5,value:5},{id:10,value:10},{id:20,value:20},{id:30,value:30}
+ ]
   constructor(private _hS: HeaderService,
     private commonService: CommonDataService,
     private cdr: ChangeDetectorRef,
@@ -48,6 +56,11 @@ export class AgentPerformanceReportComponent implements OnInit {
     private excelServices: ExcelService) { }
 
   ngOnInit(): void {
+if(this.isChannelShow=='morinaga'){
+  this.isShowChat=true
+}
+    // https://waengage.enteract.live/
+    this.getBaseurl()
     this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split("T")[0];
 
@@ -57,9 +70,36 @@ export class AgentPerformanceReportComponent implements OnInit {
     this._hS.setHeader(newObj);
     this.makeChartResponsive();
   }
+  getBaseurl(){
+    this.activeChannel=window.location.origin
+    debugger
+    if(this.activeChannel==="https://waengage.enteract.live"){
+      this.isChannelShow='morinaga'
+      this.getChannel()
+    }
+    else if(this.activeChannel==='https://keportal.enteract.live'){
+       this.isChannelShow='KE'
+       this.getChannel()
+    }
+    else if(this.activeChannel==='https://tppl.360scrm'){
+      this.isChannelShow='ttpl';
+      this.getChannel()
+    }
+    else if(this.activeChannel==='https://engage.jazz.com.pk')
+    {
+      this.isChannelShow='jazz'
+      this.getChannel()
+    }
+    else{debugger
+      this.isChannelShow='local'
+      this.getChannel()
+    }
+
+  }
   getListUser(): void {
     this.commonService.GetUserList()
       .subscribe((response: any) => {
+        debugger
         this.totalAgents = response;
         console.log(this.totalAgents);
       }, (error: any) => {
@@ -76,9 +116,9 @@ export class AgentPerformanceReportComponent implements OnInit {
     }
   }
   selectAllChannels() {
-    const selectAllChannelsOption = this.channelOptions.find(option => option.name === 'Select All Channels');
+    const selectAllChannelsOption = this.channelOptions.find((option:any) => option.name === 'Select All Channels');
     if (selectAllChannelsOption) {
-      this.channelOptions.forEach(option => {
+      this.channelOptions.forEach((option:any) => {
         if (option.name !== 'Select All Channels') {
           option.isSelected = !selectAllChannelsOption.isSelected;
         }
@@ -90,6 +130,22 @@ export class AgentPerformanceReportComponent implements OnInit {
   }
   resetEndDate() {
     this.endDate = '';
+    // if (this.radioInput !== undefined) {
+    //   this.radioInput.nativeElement.checked = false;
+    // }
+  }
+  resetStartDate(){
+    debugger
+  if(this.endDate<=this.startDate){
+    alert('End Date is less than Start Date')
+    this.endDate=''
+  }
+  else{
+    this.addAgentGraph()
+    if (this.radioInput !== undefined) {
+      this.radioInput.nativeElement.checked = false;
+    }
+  }
   }
   calculateTotalTweets(): number {
     return this.agent_performance_report?.agentPerformance.reduce(
@@ -120,7 +176,7 @@ export class AgentPerformanceReportComponent implements OnInit {
       this.AllChannels = this.singleChanenel
     }
     else {
-      let singleChanenelArray = this.channelOptions.filter(item => item.isSelected).map(item => item.name);
+      let singleChanenelArray = this.channelOptions.filter((item:any) => item.isSelected).map((item:any) => item.name);
       this.AllChannels = singleChanenelArray.toString();
     }
     let selectedTagByArray = this.totalAgents.filter(item => item.isSelected).map(item => item.id);
@@ -160,7 +216,7 @@ export class AgentPerformanceReportComponent implements OnInit {
       agents: this.selectedTagBy,
       channels: this.AllChannels
     };
-    if (this.endDate >= this.startDate) {
+   
       this.SpinnerService.show();
       this.commonService.AddAgentPerformance(requestData).subscribe(
         (response: any) => {
@@ -174,62 +230,71 @@ export class AgentPerformanceReportComponent implements OnInit {
             this.Agent_data.push({ x: date, y: data.count });
           });
           // if (this.Agent_data.length > 0) {
-          const doms = this.main.nativeElement;
-          this.commentDateWiseGraph = echarts.init(doms, null, {
-            renderer: 'canvas',
-            useDirtyRect: false
-          });
-          var option: echarts.EChartsOption;
+            if(this.isChannelShow!=='morinaga'){
+              const doms = this.main.nativeElement;
+              this.commentDateWiseGraph = echarts.init(doms, null, {
+                renderer: 'canvas',
+                useDirtyRect: false
+              });
+              var option: echarts.EChartsOption;
 
-          function dataFormat(date: Date): string {
-            const day: number = date.getDate();
-            const monthNames: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-            const month: string = monthNames[date.getMonth()];
-            return `${day} ${month}`;
-          }
-          option = {
-            xAxis: {
-              type: 'category',
-              data: this.Agent_data.map(item => dataFormat(item.x)),
-              axisLabel: {
-                show: true,
-                interval: 0,
-                formatter: function (value: string) {
-                  return value;
+              function dataFormat(date: Date): string {
+                const day: number = date.getDate();
+                const monthNames: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                const month: string = monthNames[date.getMonth()];
+                return `${day} ${month}`;
+              }
+              option = {
+                xAxis: {
+                  type: 'category',
+                  data: this.Agent_data.map(item => dataFormat(item.x)),
+                  axisLabel: {
+                    show: true,
+                    interval: 0,
+                    formatter: function (value: string) {
+                      return value;
+                    },
+                    rotate: 45
+                  },
                 },
-                rotate: 45
-              },
-            },
-            yAxis: {
-              type: 'value',
-            },
-            tooltip: {
-              show: true, // Show the tooltip
-            },
-            legend: {
-              data: [this.selectedChannelLabel],
-            },
-            toolbox: {
-              feature: {
-                saveAsImage: {},
-              },
-            },
-            series: [
-              {
-                name: this.selectedChannelLabel,
-                data: this.Agent_data.map(item => item.y),
-                type: 'line',
-                itemStyle: {
-                  color: 'red',
+                yAxis: {
+                  type: 'value',
                 },
-                lineStyle: {
-                  width: 2,
+                tooltip: {
+                  show: true, // Show the tooltip
                 },
-              },
-            ],
-          };
-
-          option && this.commentDateWiseGraph.setOption(option);
+                legend: {
+                  data: [this.selectedChannelLabel],
+                },
+                toolbox: {
+                  feature: {
+                    saveAsImage: {},
+                  },
+                },
+                series: [
+                  {
+                    name: this.selectedChannelLabel,
+                    data: this.Agent_data.map(item => item.y),
+                    type: 'line',
+                    itemStyle: {
+                      color: 'red',
+                    },
+                    lineStyle: {
+                      width: 2,
+                    },
+                  },
+                ],
+              };
+    
+              option && this.commentDateWiseGraph.setOption(option)
+            }
+       
+        
+            
+          
+          
+       
+        
         // }
           // messageDateWise
           
@@ -300,14 +365,62 @@ export class AgentPerformanceReportComponent implements OnInit {
         (error: any) => {
           console.error('Error adding agent performance report:', error);
         });
-    } else {
-      this.SpinnerService.hide();
-      alert('End Date is less than Start Date')
-    }
+
+   
+    
   }
   totalAgents = [{ id: '', name: '', isSelected: false }];
 
-  channelOptions = [
+  // channelOptions = [
+  
+  //   { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+  //   { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+  //   { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+  //   { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+  //   { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+  //   // { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
+  //   // { id: '16', name: 'SMS', icon: 'fa-solid fa-comment-alt pe-2', isSelected: false },
+  //   { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+  //   // { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+  //   // { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+  //   // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
+  // ];
+  getChannel(){
+    debugger
+    if(this.isChannelShow=="morinaga"){
+      this.channelOptions = [
+     
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+      ];
+    }
+    if(this.isChannelShow=="jazz"){
+      this.channelOptions = [
+        { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+    { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+    { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+    { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+    { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+    { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
+    { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+      ];
+    }
+    if(this.isChannelShow=="ttpl"){
+      this.channelOptions = [
+    { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+      ];
+    }
+    if(this.isChannelShow=="kE"){
+      this.channelOptions = [
+        { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+        { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+        { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+        { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+      ];
+    }
+    if(this.isChannelShow=='local'){
+      
+ this. channelOptions = [
+  
     { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
     { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
     { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
@@ -315,21 +428,25 @@ export class AgentPerformanceReportComponent implements OnInit {
     { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
     // { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
     // { id: '16', name: 'SMS', icon: 'fa-solid fa-comment-alt pe-2', isSelected: false },
-    // { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+    { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
     // { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
     // { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
     // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
   ];
+    }
+  }
   getChannelIcon(channelName: string): string {
-    const selectedChannel = this.channelOptions.find(channel => channel.name === channelName);
+    const selectedChannel = this.channelOptions.find((channel:any) => channel.name === channelName);
     return selectedChannel ? selectedChannel.icon : '';
   }
   closeToaster() {
     this.toastermessage = false;
   }
-  date_pagination(days: number) {
+  date_pagination(event:any) {
+    debugger
+  this.selectedDays=event.target.value
     let currentDate = new Date();
-    let prevDate = currentDate.setDate(currentDate.getDate() - days);
+    let prevDate = currentDate.setDate(currentDate.getDate() - this.selectedDays);
     this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     this.endDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
     this.addAgentGraph()

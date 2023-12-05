@@ -49,14 +49,17 @@
                                 <div class="btn-group buttonfilter" role="group"
                                     aria-label="Basic radio toggle button group">
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
-                                        autocomplete="off" checked="" (click)="date_pagination(5)">
+                                    #radioInput
+                                        autocomplete="off"  (click)="date_pagination(5)">
                                     <label class="btn btn-outline-secondary" for="btnradio1">5</label>
 
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
+                                    #radioInput
                                         autocomplete="off" (click)="date_pagination(10)">
                                     <label class="btn btn-outline-secondary" for="btnradio2">10</label>
 
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
+                                    #radioInput
                                         autocomplete="off" (click)="date_pagination(20)">
                                     <label class="btn btn-outline-secondary" for="btnradio3">20</label>
                                     <!-- <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
@@ -127,31 +130,13 @@
                                         <span class="fw-semibold">{{fans?.maleFemaleCombinedCount}}</span>
                                     </li>
 
-                                    <!-- <li>
-                                        <span class="coal">18-24</span>
-                                        <span class="fw-semibold">5006236</span>
-                                    </li>
-                                    <li>
-                                        <span class="coal">25-34</span>
-                                        <span class="fw-semibold">7006237</span>
-                                    </li>
-                                    <li>
-                                        <span class="coal">35-44</span>
-                                        <span class="fw-semibold">1002230</span>
-                                    </li>
-                                    <li>
-                                        <span class="coal">45-64</span>
-                                        <span class="fw-semibold">606230</span>
-                                    </li>
-                                    <li>
-                                        <span class="coal">65+</span>
-                                        <span class="fw-semibold">56230</span>
-                                    </li> -->
-
                                 </ul>
 
                             </div>
                         </div>
+                     <!-- <h1 > total male female{{ totalmaleandfemalCount}}</h1>
+                     <p>total male{{totalmaleCount}}</p>
+                     <p>total female{{totalfemaleCount}}</p> -->
                         <div class="col-md-6">
                             <div class="card iceBg p-4 rounded">
                                 <h5 class="section-heading mb-3 p-0">Followers by Gender </h5>
@@ -171,6 +156,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                  
                                     <div class="row">
                                         <div class="col-md-6 border-end">
                                             <h3>{{totalfemaleCountK}}K</h3>

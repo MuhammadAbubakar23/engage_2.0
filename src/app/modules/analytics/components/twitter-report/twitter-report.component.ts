@@ -35,6 +35,8 @@ export class TwitterReportComponent implements OnInit {
   maxEndDate: any;
   downloading = false;
   toastermessage = false;
+  isShowConversation:boolean=false
+  isShowEngagement :boolean=false
   AlterMsg: any = '';
   TwitterReport: any;
   TwitterSLAReport: any;
@@ -55,6 +57,7 @@ export class TwitterReportComponent implements OnInit {
   MentionsReceivedGraph: any[] = [];
   TotalRepliesGraph: any[] = [];
   allDates: any[] = [];
+
   totalPlainTextPercentage: number = 0;
   totalVideoQueryPercentage: number = 0;
   totalImageQueryPercentage: number = 0;
@@ -154,6 +157,7 @@ export class TwitterReportComponent implements OnInit {
         this.TwitterReport = res;
         this.TwitterReport.dateWise.forEach((data: any) => {
           if (!this.allDates.includes(data.date)) {
+            debugger
             this.allDates.push(this.datePipe.transform(data.date, 'dd MMM'));
           }
 
@@ -188,105 +192,114 @@ export class TwitterReportComponent implements OnInit {
         }
         console.log(res);
 
-        if (this.allDates.length === 0) {
-          this.noData = true;
-        } else {
-          this.noData = false;
+        debugger
+        if(this.allDates.length==0){
+          this.isShowConversation=true
         }
-
         this.populateInboundOutboundGraph();
         this.populateTypesOfQueriesGraph();
         this.populateTweetingBehaviourGraph();
         this.populateOutboundGraph();
       });
+     
     } else {
       alert('End Date is less than Start Date');
     }
+    
+    this.GetTwitterProfileWiseReport()
   }
 
   populateInboundOutboundGraph() {
     type EChartsOption = echarts.EChartsOption;
+if(this.isShowConversation==false){
+  const dom = document.getElementById('TwitterInboundOutboundReport');
+  const myChart = echarts.init(dom, null, {
+    renderer: 'canvas',
+    useDirtyRect: false,
+  });
+  var option: EChartsOption;
 
-    const dom = document.getElementById('TwitterInboundOutboundReport');
-    const myChart = echarts.init(dom, null, {
-      renderer: 'canvas',
-      useDirtyRect: false,
-    });
-    var option: EChartsOption;
-
-    option = {
-      title: {
-        text: '',
-      },
-      tooltip: {
-        trigger: 'axis',
-      },
-      legend: {
-        data: [
-          'Tweets Sent',
-          'DMs Sent',
-          'Mentions Sent',
-          'Tweets Received',
-          'DMs Received',
-          'Mentions Received',
-        ],
-      },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true,
-      },
-      toolbox: {
-        feature: {
-          saveAsImage: {},
-        },
-      },
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: this.allDates,
-      },
-      yAxis: {
-        type: 'value',
-      },
-      series: [
-        {
-          name: 'Tweets Sent',
-          type: 'line',
-          data: this.TweetsSentGraph,
-        },
-        {
-          name: 'DMs Sent',
-          type: 'line',
-          data: this.DMSentGraph,
-        },
-        {
-          name: 'Mentions Sent',
-          type: 'line',
-          data: this.MentionsSentGraph,
-        },
-        {
-          name: 'Tweets Received',
-          type: 'line',
-          data: this.TweetsReceivedGraph,
-        },
-        {
-          name: 'DMs Received',
-          type: 'line',
-          data: this.DMReceivedGraph,
-        },
-        {
-          name: 'Mentions Received',
-          type: 'line',
-          data: this.MentionsReceivedGraph,
-        },
+  option = {
+    title: {
+      text: '',
+    },
+    tooltip: {
+      trigger: 'axis',
+    },
+    legend: {
+      data: [
+        'Tweets Sent',
+        'DMs Sent',
+        'Mentions Sent',
+        'Tweets Received',
+        'DMs Received',
+        'Mentions Received',
       ],
-    };
+      icon:'circle',
+      bottom:'bottom'
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '13%',
+      containLabel: true,
+    },
+    toolbox: {
+      feature: {
+        saveAsImage: {},
+      },
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: this.allDates,
+      axisLabel: {
+        rotate: 45,
+      },
+    },
+    yAxis: {
+      type: 'value',
+    },
+    series: [
+      {
+        name: 'Tweets Sent',
+        type: 'line',
+        data: this.TweetsSentGraph,
+      },
+      {
+        name: 'DMs Sent',
+        type: 'line',
+        data: this.DMSentGraph,
+      },
+      {
+        name: 'Mentions Sent',
+        type: 'line',
+        data: this.MentionsSentGraph,
+      },
+      {
+        name: 'Tweets Received',
+        type: 'line',
+        data: this.TweetsReceivedGraph,
+      },
+      {
+        name: 'DMs Received',
+        type: 'line',
+        data: this.DMReceivedGraph,
+      },
+      {
+        name: 'Mentions Received',
+        type: 'line',
+        data: this.MentionsReceivedGraph,
+      },
+    ],
+  };
 
-    option && myChart.setOption(option);
+  option && myChart.setOption(option);
+}
+    
   }
   populateTypesOfQueriesGraph() {
+
     type EChartsOption = echarts.EChartsOption;
 
     const dom = document.getElementById('TypesOfQueriesReport');
@@ -305,11 +318,13 @@ export class TwitterReportComponent implements OnInit {
       legend: {
         // orient: 'vertical',
         bottom: -5,
-        left: 'center'
+        left: 'center',
+        icon:'circle',
+
       },
       series: [
         {
-          name: 'Access From',
+          name: 'Your Tweets',
           type: 'pie',
           radius: ['50%', '70%'],
           label: {
@@ -357,11 +372,12 @@ export class TwitterReportComponent implements OnInit {
       legend: {
         // orient: 'vertical',
         bottom: -5,
-        left: 'center'
+        left: 'center',
+        icon:'circle',
       },
       series: [
         {
-          name: 'Access From',
+          name: 'Your Tweets',
           type: 'pie',
           radius: ['50%', '70%'],
           color: ['#5a3692', '#f41665', '#36cca2', '#fceea4'],
@@ -375,7 +391,8 @@ export class TwitterReportComponent implements OnInit {
           data: [
             { value: this.totalTweetsSentPercentage, name: 'Tweets' },
             { value: this.totalDmSentPercentage, name: 'DMs' },
-            { value: this.totalMentionSentPercentage, name: 'Mentions' }
+            { value: this.totalMentionSentPercentage, name: 'Mentions' },
+            
           ],
           emphasis: {
             itemStyle: {
@@ -390,14 +407,15 @@ export class TwitterReportComponent implements OnInit {
     option && myChart.setOption(option);
   }
   populateOutboundGraph() {
-    type EChartsOption = echarts.EChartsOption;
+    if(this.isShowConversation==false){
+      type EChartsOption = echarts.EChartsOption;
 
-    const dom = document.getElementById('OutboundReport');
-    const myChart = echarts.init(dom, null, {
-      renderer: 'canvas',
-      useDirtyRect: false,
-    });
-    var option: EChartsOption;
+      const dom = document.getElementById('OutboundReport');
+      const myChart = echarts.init(dom, null, {
+        renderer: 'canvas',
+        useDirtyRect: false,
+      });
+      var option: EChartsOption;
 
     option = {
       title: {
@@ -411,11 +429,14 @@ export class TwitterReportComponent implements OnInit {
           'Replies',
           'Tweets Sent'
         ],
+        icon:'circle',
+        bottom:'bottom',
+  
       },
       grid: {
         left: '3%',
         right: '4%',
-        bottom: '3%',
+        bottom: '13%',
         containLabel: true,
       },
       toolbox: {
@@ -427,6 +448,9 @@ export class TwitterReportComponent implements OnInit {
         type: 'category',
         boundaryGap: false,
         data: this.allDates,
+        axisLabel: {
+          rotate: 45,
+        },
       },
       yAxis: {
         type: 'value',
@@ -446,6 +470,9 @@ export class TwitterReportComponent implements OnInit {
     };
 
     option && myChart.setOption(option);
+    }
+   
+    
   }
 
   GetTwitterSLAReport() {
@@ -465,6 +492,8 @@ export class TwitterReportComponent implements OnInit {
     var body = {
       pageNumber: 0,
       pageSize: 0,
+      from:this.fromDate,
+      to:this.toDate
     };
     this.SpinnerService.show();
     this.commonDataService

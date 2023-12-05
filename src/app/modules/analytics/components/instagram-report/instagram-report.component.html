@@ -14,13 +14,16 @@
                                 <div class="iconholder">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <input type="date" class="form-control" placeholder="Start Date"
-                                                [(ngModel)]="startDate" [max]="maxEndDate"
+                                            <input type="datetime-local" class="form-control" placeholder="Start Date"
+                                                [(ngModel)]="startDate" 
+                                             [max]="maxEndDate"
                                                 (change)="resetStartDate()" />
                                         </div>
                                         <div class="col-sm-6">
-                                            <input type="date" class="form-control" [(ngModel)]="endDate"
-                                                [max]="maxEndDate" placeholder="End Date" (change)="resetEndDate()" />
+                                            <input type="datetime-local" class="form-control" [(ngModel)]="endDate"
+                                          
+                                            [max]="maxEndDate"
+                                                placeholder="End Date" (change)="resetEndDate()" />
 
                                         </div>
                                     </div>
@@ -50,16 +53,19 @@
                                 <div class="btn-group buttonfilter" role="group"
                                     aria-label="Basic radio toggle button group">
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
-                                        autocomplete="off" checked="" (click)="date_pagination(5)">
-                                    <label class="btn btn-outline-secondary" for="btnradio1">5</label>
+                                    #radioInput
+                                        autocomplete="off" (click)="date_pagination(10)">
+                                    <label class="btn btn-outline-secondary" for="btnradio1">10</label>
 
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
-                                        autocomplete="off" (click)="date_pagination(10)">
-                                    <label class="btn btn-outline-secondary" for="btnradio2">10</label>
+                                    #radioInput
+                                        autocomplete="off" (click)="date_pagination(20)">
+                                    <label class="btn btn-outline-secondary" for="btnradio2">20</label>
 
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
-                                        autocomplete="off" (click)="date_pagination(20)">
-                                    <label class="btn btn-outline-secondary" for="btnradio3">20</label>
+                                    #radioInput
+                                        autocomplete="off" (click)="date_pagination(29)">
+                                    <label class="btn btn-outline-secondary" for="btnradio3">30</label>
                                     <!-- <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
                                         autocomplete="off" (click)="date_pagination(30)">
                                     <label class="btn btn-outline-secondary" for="btnradio4">30</label> -->
@@ -104,18 +110,35 @@
 
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <ng-container *ngIf="isShowChart==false">
+                            <div class="col-md-12" >
+                                <div class="card iceBg p-4 rounded mb-5">
+                                    <h5 class="section-heading mb-4 p-0">TOTAL PEOPLE WHO VIEWED </h5>
+                                    <div class="graphcontainer align-items-end">
+                                        <div class="text-center">
+                                            <div #peopleViewed style="height: 400px; width: 700px;"></div>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+                        </ng-container>
+                    <ng-container *ngIf="isShowChart==true">
+                        <div class="col-md-12" >
                             <div class="card iceBg p-4 rounded mb-5">
                                 <h5 class="section-heading mb-4 p-0">TOTAL PEOPLE WHO VIEWED </h5>
                                 <div class="graphcontainer align-items-end">
                                     <div class="text-center">
-                                        <div #peopleViewed style="height: 400px; width: 700px;"></div>
+                                        <p>No data found</p>
+                                        <!-- <div #peopleViewed style="height: 400px; width: 700px;"></div> -->
                                     </div>
                                 </div>
 
                             </div>
                         </div>
-                        <div class="col-md-6">
+                    </ng-container>
+                    <ng-container *ngIf="isShowEngagments==false">
+                        <div class="col-md-12">
                             <div class="card iceBg p-4 rounded mb-5">
                                 <h5 class="section-heading mb-4 p-0"> PAGE REACHABILITY
                                 </h5>
@@ -128,19 +151,54 @@
 
                             </div>
                         </div>
-                    </div>
+                    </ng-container>
+                    <ng-container *ngIf="isShowEngagments==true">
+                        <div class="col-md-12">
+                            <div class="card iceBg p-4 rounded mb-5">
+                                <h5 class="section-heading mb-4 p-0"> PAGE REACHABILITY
+                                </h5>
+                                <div class="graphcontainer align-items-end">
+                                    <div class="text-center">
+                                        <p>No data found</p>
+                                        <!-- <div #pageReachabilty style="height: 400px; width: 700px;"></div> -->
 
-
-                    <div class="card iceBg p-4 rounded mb-5">
-                        <h5 class="section-heading mb-4 p-0">Audience Demographics</h5>
-                        <div class="graphcontainer align-items-end">
-                            <div class="text-center">
-                                <div #audienceGraph style="height: 400px; width: 900px;"></div>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
-
+                    </ng-container>
+                   
+                     
                     </div>
+                     
+                    <ng-container *ngIf="isShowDemographics==false">
+
+                        <div class="card iceBg p-4 rounded mb-5">
+                            <h5 class="section-heading mb-4 p-0">Audience Demographics</h5>
+                            <div class="graphcontainer align-items-end">
+                                <div class="text-center">
+                                    <div #audienceGraph style="height: 400px; width: 900px;"></div>
+    
+                                </div>
+                            </div>
+    
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="isShowDemographics==true">
+                        <div class="card iceBg p-4 rounded mb-5">
+                            <h5 class="section-heading mb-4 p-0">Audience Demographics</h5>
+                            <div class="graphcontainer align-items-end">
+                                <div class="text-center">
+                                    <p >No data found</p>
+                                    <!-- <div #audienceGraph style="height: 400px; width: 900px;"></div> -->
+    
+                                </div>
+                            </div>
+    
+                        </div>
+                    </ng-container>
+
 
 
                     <div class="row">
@@ -230,10 +288,13 @@
                                         <tbody>
                                             <tr *ngFor="let customer of  topfiveCustomer">
                                                 <td>
-                                                    <span
+                                                    <!-- <span
                                                         class="iconButton medium rounded-pill {{ customer.iconClass }} night fw-bolder">
                                                         {{ customer.initials }}
-                                                    </span>
+                                                    </span> -->
+                                                     <!-- <avatar-content [name]="customer?.name" [subname]="''" [imagename]="''"></avatar-content> -->
+                                               <app-avatar-photo [photoUrl]="" 
+                                               [name]=" customer?.name"></app-avatar-photo>
                                                 </td>
                                                 <td>
                                                     <a class="sky fw-semibold">{{ customer?.name }}</a>
