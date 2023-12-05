@@ -48,18 +48,15 @@
                             <li class="list-inline-item ms-auto">
                                 <div class="btn-group buttonfilter" role="group"
                                     aria-label="Basic radio toggle button group">
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
-                                    #radioInput
-                                        autocomplete="off"  (click)="date_pagination(5)">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" #radioInput
+                                        autocomplete="off" (click)="date_pagination(5)">
                                     <label class="btn btn-outline-secondary" for="btnradio1">5</label>
 
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
-                                    #radioInput
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" #radioInput
                                         autocomplete="off" (click)="date_pagination(10)">
                                     <label class="btn btn-outline-secondary" for="btnradio2">10</label>
 
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
-                                    #radioInput
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" #radioInput
                                         autocomplete="off" (click)="date_pagination(20)">
                                     <label class="btn btn-outline-secondary" for="btnradio3">20</label>
                                     <!-- <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
@@ -134,7 +131,7 @@
 
                             </div>
                         </div>
-                     <!-- <h1 > total male female{{ totalmaleandfemalCount}}</h1>
+                        <!-- <h1 > total male female{{ totalmaleandfemalCount}}</h1>
                      <p>total male{{totalmaleCount}}</p>
                      <p>total female{{totalfemaleCount}}</p> -->
                         <div class="col-md-6">
@@ -156,7 +153,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                  
+
                                     <div class="row">
                                         <div class="col-md-6 border-end">
                                             <h3>{{totalfemaleCountK}}K</h3>
@@ -179,10 +176,7 @@
                     <div class="card iceBg p-4 rounded mb-5">
                         <h5 class="section-heading mb-4 p-0">Publishin behavior</h5>
                         <div class="graphcontainer align-items-end mb-5">
-                            <div class="text-center">
-                                <div id="publishin" style="height: 500px; width: 900px;"></div>
-                                <!-- <div id="container" style="height: 500px; width: 900px;"></div> -->
-                            </div>
+                                <div id="publishin" style="height: 500px; width: 100%; max-width:1000px"></div>
                         </div>
 
                         <!-- <div class="row justify-content-between px-5">
@@ -239,7 +233,8 @@
                             <div class="col-md-5">
                                 <div class="card dashboard-card">
                                     <div class="card-body">
-                                        <div class="d-flex align-items-center justify-content-between" *ngIf="publishPercentage <= 0">
+                                        <div class="d-flex align-items-center justify-content-between"
+                                            *ngIf="publishPercentage <= 0">
                                             <div>
                                                 <span class="iconButton medium radicalBg mb-4">
                                                     <i class="fa-light fa-arrow-down"></i>
@@ -248,7 +243,8 @@
                                             </div>
                                             <h3> {{ publishPercentage | number:'1.2-2' }}%</h3>
                                         </div>
-                                        <div class="d-flex align-items-center justify-content-between" *ngIf="publishPercentage >= 0">
+                                        <div class="d-flex align-items-center justify-content-between"
+                                            *ngIf="publishPercentage >= 0">
                                             <div>
                                                 <span class="iconButton medium mintBg mb-4">
                                                     <i class="fa-light fa-arrow-up"></i>
@@ -270,9 +266,7 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="graphcontainer align-items-end">
-                                    <div class="text-center">
-                                        <div id="growth" style="height: 300px; width: 690px; margin-right: 20px;"></div>
-                                    </div>
+                                        <div id="growth" style="height: 300px; width: 100%; margin-right: 20px; max-width: 900px;"></div>
                                 </div>
                             </div>
                             <div class="col-md-5 px-4">
@@ -292,7 +286,8 @@
                                 </ul>
                                 <div class="card dashboard-card">
                                     <div class="card-body">
-                                        <div class="d-flex align-items-center justify-content-between" *ngIf="countPercentage >= 0">
+                                        <div class="d-flex align-items-center justify-content-between"
+                                            *ngIf="countPercentage >= 0">
                                             <div>
                                                 <span class="iconButton medium mintBg mb-4">
                                                     <i class="fa-light fa-arrow-up"></i>
@@ -301,7 +296,8 @@
                                             </div>
                                             <h3> {{ countPercentage | number:'1.2-2' }}%</h3>
                                         </div>
-                                        <div class="d-flex align-items-center justify-content-between" *ngIf="countPercentage <= 0">
+                                        <div class="d-flex align-items-center justify-content-between"
+                                            *ngIf="countPercentage <= 0">
                                             <div>
                                                 <span class="iconButton medium radicalBg mb-4">
                                                     <i class="fa-light fa-arrow-down"></i>
@@ -321,9 +317,7 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="graphcontainer align-items-end">
-                                    <div class="text-center">
-                                        <div id="engagement" style="height: 500px; width: 700px;"></div>
-                                    </div>
+                                        <div id="engagement" style="height: 500px; width: 100%; max-width: 900px"></div>
                                 </div>
                             </div>
                             <div class="col-md-5 px-4">
@@ -368,7 +362,8 @@
                                         </ul>
                                         <div class="card dashboard-card">
                                             <div class="card-body">
-                                                <div class="d-flex align-items-center justify-content-between" *ngIf="audiencePercentage >= 0">
+                                                <div class="d-flex align-items-center justify-content-between"
+                                                    *ngIf="audiencePercentage >= 0">
                                                     <div>
                                                         <span class="iconButton medium mintBg mb-4">
                                                             <i class="fa-light fa-arrow-up"></i>
@@ -377,7 +372,8 @@
                                                     </div>
                                                     <h3>{{ audiencePercentage | number:'1.2-2' }}%</h3>
                                                 </div>
-                                                <div class="d-flex align-items-center justify-content-between" *ngIf="audiencePercentage <= 0">
+                                                <div class="d-flex align-items-center justify-content-between"
+                                                    *ngIf="audiencePercentage <= 0">
                                                     <div>
                                                         <span class="iconButton medium radicalBg mb-4">
                                                             <i class="fa-light fa-arrow-down"></i>
@@ -448,11 +444,11 @@
                                     <div class="col">
                                         <span *ngIf="faecbookresponce?.pageStats?.fanPercentage >=0">
                                             <small class="coal">Fans Increased</small>
-                                        <p class="fw-semibold">{{faecbookresponce?.pageStats?.fanPercentage}}%</p>
+                                            <p class="fw-semibold">{{faecbookresponce?.pageStats?.fanPercentage}}%</p>
                                         </span>
                                         <span *ngIf="faecbookresponce?.pageStats?.fanPercentage <0">
-                                            <small class="coal">Fans  Dcreased</small>
-                                        <p class="fw-semibold">{{faecbookresponce?.pageStats?.fanPercentage}}%</p>
+                                            <small class="coal">Fans Dcreased</small>
+                                            <p class="fw-semibold">{{faecbookresponce?.pageStats?.fanPercentage}}%</p>
                                         </span>
                                     </div>
                                     <div class="col">
@@ -467,7 +463,8 @@
                                     </div>
                                     <div class="col">
                                         <small class="coal"> Engagements per Follower</small>
-                                        <p class="fw-semibold">{{faecbookresponce?.pageStats?.totalEngagementsPerFollower}}</p>
+                                        <p class="fw-semibold">
+                                            {{faecbookresponce?.pageStats?.totalEngagementsPerFollower}}</p>
                                     </div>
                                     <div class="col">
                                         <small class="coal">Link Clicks </small>
@@ -519,9 +516,7 @@
                     <div class="card iceBg p-4 rounded mb-5">
                         <h5 class="section-heading mb-4 p-0">REACTIONS GRAPH</h5>
                         <div class="graphcontainer align-items-end">
-                            <div class="text-center">
-                                <div id="reaction" style="height: 400px; width: 900px;"></div>
-                            </div>
+                                <div id="reaction" style="height: 400px; width: 100%; max-width: 1000px"></div>
                         </div>
                     </div>
                     <div class="row">
@@ -529,9 +524,7 @@
                             <div class="card iceBg p-4 rounded mb-5">
                                 <h5 class="section-heading mb-4 p-0">TOTAL PEOPLE WHO VIEWED</h5>
                                 <div class="graphcontainer align-items-end">
-                                    <div class="text-center">
-                                        <div id="totalpeople" style="height: 400px; width: 500px;"></div>
-                                    </div>
+                                        <div id="totalpeople" style="height: 400px; width: 100%;  max-width: 800px"></div>
                                 </div>
                             </div>
                         </div>
@@ -539,9 +532,7 @@
                             <div class="card iceBg p-4 rounded mb-5">
                                 <h5 class="section-heading mb-4 p-0">PAGE REACHABILITY</h5>
                                 <div class="graphcontainer align-items-end">
-                                    <div class="text-center">
-                                        <div id="pagereachablity" style="height: 400px; width: 500px;"></div>
-                                    </div>
+                                        <div id="pagereachablity" style="height: 400px; width: 100%; max-width: 800px"></div>
                                 </div>
                             </div>
                         </div>
@@ -642,15 +633,13 @@
                                 <h5 class="section-heading mb-4 p-0">Top 10 External Sources
                                 </h5>
                                 <div class="graphcontainer align-items-end">
-                                    <div class="text-center">
-                                        <div id="externalsources" style="height: 440px; width: 900px;"></div>
-                                    </div>
+                                        <div id="externalsources" style="height: 440px; width: 100%;"></div>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                      <!-- <div id="main" style="height: 400px; width: 900px"></div> -->
+                    <!-- <div id="main" style="height: 400px; width: 900px"></div> -->
 
 
 

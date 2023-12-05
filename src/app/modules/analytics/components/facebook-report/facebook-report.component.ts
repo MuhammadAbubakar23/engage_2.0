@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { HeaderService } from 'src/app/shared/services/header.service';
 import * as echarts from 'echarts';
@@ -84,45 +84,45 @@ export class FacebookReportComponent implements OnInit {
   totallikes: any;
   totalComments: any;
   totalShares: any;
-  totalmaleCountK: number=0;
-  totalfemaleCountK: number=0;
+  totalmaleCountK: number = 0;
+  totalfemaleCountK: number = 0;
   totalmaleCount: number = 0;
   totalfemaleCount: number = 0;
-  totalPageLikes: any
-  lastTotalPageLikes: any
-  SumBehaivor: any
-  countPercentage: any
-  totalmaleandfemalCount: number=0;
-  malepersentage: number=0;
-  femalepersentage:number=0;
-  externalRefernalsName: number=0;
+  totalPageLikes: any;
+  lastTotalPageLikes: any;
+  SumBehaivor: any;
+  countPercentage: any;
+  totalmaleandfemalCount: number = 0;
+  malepersentage: number = 0;
+  femalepersentage: number = 0;
+  externalRefernalsName: number = 0;
   totalMessagePostCommentsAndreplies: any;
   totalMessageAndrepliesCount: any;
-  totalEngagementMessage: any
+  totalEngagementMessage: any;
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
-  RoundOFF: any
-  tppP: any
-  ltpPP: any
-  totalPublishSum: any
-  publishPercentage: any
-  TPL: any
-  TPC: any
-  TPS: any
-  totalSumAudienceEngagement: any
-  audiencePercentage: any
-  LTPL: any
-  LTPC: any
-  LTPS: any
-  LtotalSumAudienceEngagement: any
-  totalSumOfAudience:any
+  RoundOFF: any;
+  tppP: any;
+  ltpPP: any;
+  totalPublishSum: any;
+  publishPercentage: any;
+  TPL: any;
+  TPC: any;
+  TPS: any;
+  totalSumAudienceEngagement: any;
+  audiencePercentage: any;
+  LTPL: any;
+  LTPC: any;
+  LTPS: any;
+  LtotalSumAudienceEngagement: any;
+  totalSumOfAudience: any;
   constructor(
     private headerServices: HeaderService,
     private spinerServices: NgxSpinnerService,
     private datePipe: DatePipe,
     private commandataSerivecs: CommonDataService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     const newObj = {
@@ -142,7 +142,7 @@ export class FacebookReportComponent implements OnInit {
     let prevDate = currentDate.setDate(currentDate.getDate() - days);
     this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     this.enddate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
-    this.getAllfeacebookData()
+    this.getAllfeacebookData();
   }
   getAllfeacebookData() {
     if (this.startDate == '' && this.enddate == '') {
@@ -152,7 +152,6 @@ export class FacebookReportComponent implements OnInit {
       let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 7);
       this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     } else if (this.startDate != '' && this.enddate != '') {
-      ;
       // const startDate = new Date(this.startDate);
       // const abc = startDate.setDate(startDate.getDate() - 1);
       // this.startDate = this.datePipe.transform(abc, 'YYYY-MM-dd') || '';
@@ -167,7 +166,6 @@ export class FacebookReportComponent implements OnInit {
         return;
       }
     }
-
 
     let data = {
       pageId: '622038187854126',
@@ -199,17 +197,17 @@ export class FacebookReportComponent implements OnInit {
     this.publishedPegePostSpanDates = [];
     this.publishedUserPostSpanCounts = [];
     this.publishedUserPostSpanDates = [];
-    this.audienceEngagementTotlaComments=[]
+    this.audienceEngagementTotlaComments = [];
     this.externalRefernalsData = [];
-   this.audienceEngagementTotlaComments=[]
-   this.audienceEngagmentTotalShare=[]
-    this.audienceunlikesCount=[]=[]
-    this.totalmaleCount=0
-    this.totalfemaleCount=0
-    this.femalepersentage=0
-    this.malepersentage=0
-    this.totalmaleCountK=0
-    this.totalfemaleCountK=0
+    this.audienceEngagementTotlaComments = [];
+    this.audienceEngagmentTotalShare = [];
+    this.audienceunlikesCount = [] = [];
+    this.totalmaleCount = 0;
+    this.totalfemaleCount = 0;
+    this.femalepersentage = 0;
+    this.malepersentage = 0;
+    this.totalmaleCountK = 0;
+    this.totalfemaleCountK = 0;
     this.spinerServices.show();
     this.commandataSerivecs.Getfacebookreport(data).subscribe((res: any) => {
       this.spinerServices.hide();
@@ -217,37 +215,38 @@ export class FacebookReportComponent implements OnInit {
       this.faecbookresponce = res;
 
       // stats percentage count
-      this.lastTotalPageLikes = this.faecbookresponce.lastTotalPageLikes
-      this.totalPageLikes = this.faecbookresponce.totalPageLikes
-      this.SumBehaivor = this.lastTotalPageLikes + this.totalPageLikes
-      this.countPercentage = (this.totalPageLikes / this.SumBehaivor) * 100
-      this.RoundOFF = (Math.floor(this.countPercentage))
+      this.lastTotalPageLikes = this.faecbookresponce.lastTotalPageLikes;
+      this.totalPageLikes = this.faecbookresponce.totalPageLikes;
+      this.SumBehaivor = this.lastTotalPageLikes + this.totalPageLikes;
+      this.countPercentage = (this.totalPageLikes / this.SumBehaivor) * 100;
+      this.RoundOFF = Math.floor(this.countPercentage);
 
-      // publish percentage 
-      this.tppP = this.faecbookresponce.totalPublishedPagePosts
-      this.ltpPP = this.faecbookresponce.lastTotalPublishedPagePosts
+      // publish percentage
+      this.tppP = this.faecbookresponce.totalPublishedPagePosts;
+      this.ltpPP = this.faecbookresponce.lastTotalPublishedPagePosts;
 
-      this.totalPublishSum = this.tppP + this.ltpPP
-      this.publishPercentage = (this.tppP / this.totalPublishSum) * 100
-// PagePost 
-this.pageperPost=this.faecbookresponce.totalPublishedPagePosts
-this.userPerPost=this.faecbookresponce.totalPublishedUserPosts
-this.totalNumberofpost=this.pageperPost + this.userPerPost
-      // audience Engagement 
-      this.TPL = this.faecbookresponce.totalPostLikes
-      this.TPC = this.faecbookresponce.totalPostComments
-      this.TPS = this.faecbookresponce.totalPostShares
-      this.totalSumAudienceEngagement = this.TPL + this.TPC + this.TPS
-      this.LTPL = this.faecbookresponce.lastTotalPostLikes
-      this.LTPC = this.faecbookresponce.lastTotalPostComments
-      this.LTPS = this.faecbookresponce.lastTotalPostShares
-      this.LtotalSumAudienceEngagement = this.LTPL + this.LTPC + this.LTPS
-      this.totalSumOfAudience = this.LtotalSumAudienceEngagement + this.totalSumAudienceEngagement
-      this.audiencePercentage = (this.totalSumAudienceEngagement/this.totalSumOfAudience)*100
+      this.totalPublishSum = this.tppP + this.ltpPP;
+      this.publishPercentage = (this.tppP / this.totalPublishSum) * 100;
+      // PagePost
+      this.pageperPost = this.faecbookresponce.totalPublishedPagePosts;
+      this.userPerPost = this.faecbookresponce.totalPublishedUserPosts;
+      this.totalNumberofpost = this.pageperPost + this.userPerPost;
+      // audience Engagement
+      this.TPL = this.faecbookresponce.totalPostLikes;
+      this.TPC = this.faecbookresponce.totalPostComments;
+      this.TPS = this.faecbookresponce.totalPostShares;
+      this.totalSumAudienceEngagement = this.TPL + this.TPC + this.TPS;
+      this.LTPL = this.faecbookresponce.lastTotalPostLikes;
+      this.LTPC = this.faecbookresponce.lastTotalPostComments;
+      this.LTPS = this.faecbookresponce.lastTotalPostShares;
+      this.LtotalSumAudienceEngagement = this.LTPL + this.LTPC + this.LTPS;
+      this.totalSumOfAudience =
+        this.LtotalSumAudienceEngagement + this.totalSumAudienceEngagement;
+      this.audiencePercentage =
+        (this.totalSumAudienceEngagement / this.totalSumOfAudience) * 100;
 
-
-
-      this.totalEngagementMessage = res?.agentReplies?.totalMessagesAndRepliesCount
+      this.totalEngagementMessage =
+        res?.agentReplies?.totalMessagesAndRepliesCount;
       //  SlA replies
       this.replieswithin = this.faecbookresponce.replyWithinTime;
       this.repliesAfter = this.faecbookresponce.replyAfterTime;
@@ -257,7 +256,11 @@ this.totalNumberofpost=this.pageperPost + this.userPerPost
       this.totalComments = res.totalPostComments;
       this.totalShares = res.totalPostShares;
 
-      this.totalengagement = this.totallikes + this.totalComments + this.totalShares + this.totalEngagementMessage;
+      this.totalengagement =
+        this.totallikes +
+        this.totalComments +
+        this.totalShares +
+        this.totalEngagementMessage;
       // net differnce of page likes and unlike
 
       this.numberofPagelikes = res.totalPageLikes;
@@ -336,12 +339,13 @@ this.totalNumberofpost=this.pageperPost + this.userPerPost
       this.agentMessages = res.agentReplies;
       this.agentMessagesData = res.agentReplies;
 
-      this.totalMessageAndrepliesCount = this.agentMessagesData.totalMessagesAndRepliesCount;
-      this.totalMessagePostCommentsAndreplies = this.agentMessagesData.totalPostCommentsAndReplies;
+      this.totalMessageAndrepliesCount =
+        this.agentMessagesData.totalMessagesAndRepliesCount;
+      this.totalMessagePostCommentsAndreplies =
+        this.agentMessagesData.totalPostCommentsAndReplies;
       // Publishin Behavior
       this.publishedPegePostSpan = res.publishedPagePostSpan;
       this.publishedPegePostSpan?.forEach((x: any) => {
-       
         if (
           !this.publishedPegePostSpanDates.includes(x.dateValue.split('T')[0])
         ) {
@@ -359,7 +363,7 @@ this.totalNumberofpost=this.pageperPost + this.userPerPost
         }
         this.publishedUserPostSpanCounts.push(x.activityCount);
       });
-    
+
       // Top 10 External Sources
       this.externalRefernals = res.externalReferrals;
       this.externalRefernals?.forEach((x: any) => {
@@ -378,10 +382,14 @@ this.totalNumberofpost=this.pageperPost + this.userPerPost
         this.totalfemaleCount += x.femaleCount;
         this.totalfemaleCountK = Math.floor(this.totalfemaleCount / 1000);
       });
-debugger
+      debugger;
       this.totalmaleandfemalCount = this.totalmaleCount + this.totalfemaleCount;
-      this.malepersentage = Number(( (this.totalmaleCount / this.totalmaleandfemalCount) * 100).toFixed(2))
-      this.femalepersentage = Number(((this.totalfemaleCount / this.totalmaleandfemalCount) * 100).toFixed(2))
+      this.malepersentage = Number(
+        ((this.totalmaleCount / this.totalmaleandfemalCount) * 100).toFixed(2)
+      );
+      this.femalepersentage = Number(
+        ((this.totalfemaleCount / this.totalmaleandfemalCount) * 100).toFixed(2)
+      );
       // RecentPost
 
       this.recentPosts = res.recentPosts;
@@ -408,7 +416,8 @@ debugger
       this.getPageReachablityChart();
       this.getPublishinBehaviorChart();
       this.getExternalSourcesChart();
-      this.getDamiChart()
+
+      this.makeChartResponsive();
     });
   }
   getMaleProgressBarStyle() {
@@ -420,9 +429,10 @@ debugger
     const widthPercentage = this.femalepersentage + '%';
     return { width: widthPercentage };
   }
+  pageReachabilityGraph: any;
   getPageReachablityChart() {
     var chartDom = document.getElementById('pagereachablity');
-    var myChart = echarts.init(chartDom);
+    this.pageReachabilityGraph = echarts.init(chartDom);
     var option;
 
     option = {
@@ -432,11 +442,11 @@ debugger
       },
       legend: {
         data: ['Page  Reach'],
-        bottom:'bottom',
-        icon:'circle'
+        bottom: 'bottom',
+        icon: 'circle',
       },
       grid: {
-        left: '3%',
+        left: '10%',
         right: '4%',
         bottom: '10%',
         containLabel: true,
@@ -451,13 +461,18 @@ debugger
         boundaryGap: false,
         data: this.pageReachSpanDates,
         axisLabel: {
-          rotate:45,
-          
-        }
-
+          rotate: 45,
+        },
       },
       yAxis: {
         type: 'value',
+        nameLocation: 'middle',
+        name: 'Total Number of Page Reach',
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'grey',
+          lineHeight: 80,
+        },
       },
       series: [
         {
@@ -465,22 +480,21 @@ debugger
           type: 'line',
           stack: 'Total',
           data: this.pageReachSpanCounts,
-      
         },
       ],
     };
 
-    option && myChart.setOption(option);
+    option && this.pageReachabilityGraph.setOption(option);
   }
+  reactionGraph: any;
   getReactionGraph() {
     var chartDom = document.getElementById('reaction');
-    var myChart = echarts.init(chartDom);
+    this.reactionGraph = echarts.init(chartDom);
     var option;
 
     option = {
       tooltip: {
         trigger: 'axis',
-
       },
       legend: {
         data: [
@@ -495,12 +509,12 @@ debugger
           'ThankFul',
           'Wow',
         ],
-        bottom:'bottom',
-        icon:'circle',
+        bottom: 'bottom',
+        icon: 'circle',
         type: 'scroll',
       },
       grid: {
-        left: '3%',
+        left: '10%',
         right: '4%',
         bottom: '10%',
         containLabel: true,
@@ -515,12 +529,18 @@ debugger
         boundaryGap: false,
         data: this.pageReactionsSpanDates,
         axisLabel: {
-          rotate:45,
-          
-        }
+          rotate: 45,
+        },
       },
       yAxis: {
         type: 'value',
+        nameLocation: 'middle',
+        name: 'Total Number of Reactions',
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'grey',
+          lineHeight: 80,
+        },
       },
       series: [
         {
@@ -576,25 +596,25 @@ debugger
       ],
     };
 
-    option && myChart.setOption(option);
+    option && this.reactionGraph.setOption(option);
   }
+  totalPeopleGraph: any;
   getTotalPeopleChart() {
     var chartDom = document.getElementById('totalpeople');
-    var myChart = echarts.init(chartDom);
+    this.totalPeopleGraph = echarts.init(chartDom);
     var option;
 
     option = {
-
       tooltip: {
         trigger: 'axis',
       },
       legend: {
         data: ['Total People Who Viewed'],
-        bottom:'bottom',
-        icon:'circle'
+        bottom: 'bottom',
+        icon: 'circle',
       },
       grid: {
-        left: '3%',
+        left: '10%',
         right: '4%',
         bottom: '10%',
         containLabel: true,
@@ -609,12 +629,18 @@ debugger
         boundaryGap: false,
         data: this.totalPeopleWhoViewSpanDates,
         axisLabel: {
-          rotate:45,
-          
-        }
+          rotate: 45,
+        },
       },
       yAxis: {
         type: 'value',
+        nameLocation: 'middle',
+        name: 'Total Number of People Viewed',
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'grey',
+          lineHeight: 80,
+        },
       },
       series: [
         {
@@ -629,14 +655,14 @@ debugger
       ],
     };
 
-    option && myChart.setOption(option);
+    option && this.totalPeopleGraph.setOption(option);
   }
-
+  externalResourceGraph: any;
   getExternalSourcesChart() {
     type EChartsOption = echarts.EChartsOption;
 
     var chartDom = document.getElementById('externalsources')!;
-    var myChart = echarts.init(chartDom);
+    this.externalResourceGraph = echarts.init(chartDom);
     var option: EChartsOption;
 
     option = {
@@ -657,7 +683,7 @@ debugger
           itemStyle: {
             borderRadius: 10,
             borderColor: '#fff',
-            borderWidth: 2
+            borderWidth: 2,
           },
           data: this.externalRefernalsData,
           emphasis: {
@@ -669,20 +695,20 @@ debugger
       ],
     };
 
-    option && myChart.setOption(option);
+    option && this.externalResourceGraph.setOption(option);
   }
-
+  publishinBehaviourGraph: any;
   getPublishinBehaviorChart() {
     var chartDom = document.getElementById('publishin');
-    var myChart = echarts.init(chartDom);
+    this.publishinBehaviourGraph = echarts.init(chartDom);
     var option;
 
     option = {
       color: ['#6441a5 ', '#e7edf1'],
       legend: {
         data: ['Page Posts', 'Users Posts'],
-        icon:'circle',
-        bottom:0
+        icon: 'circle',
+        bottom: 0,
       },
       tooltip: {
         trigger: 'axis',
@@ -691,15 +717,21 @@ debugger
         type: 'category',
         data: this.publishedPegePostSpanDates,
         axisLabel: {
-          rotate:45,
-          
-        }
+          rotate: 45,
+        },
       },
       yAxis: {
         type: 'value',
+        nameLocation: 'middle',
+        name: 'Total Number of Published Posts',
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'grey',
+          lineHeight: 80,
+        },
       },
       grid: {
-        left: '3%',
+        left: '10%',
         right: '4%',
         bottom: '8%',
         containLabel: true,
@@ -711,7 +743,7 @@ debugger
           type: 'bar',
           itemStyle: {
             borderRadius: 5,
-          }
+          },
         },
         {
           name: 'Users Posts',
@@ -719,47 +751,47 @@ debugger
           type: 'bar',
           itemStyle: {
             borderRadius: 5,
-          }
+          },
         },
       ],
     };
 
-    option && myChart.setOption(option);
+    option && this.publishinBehaviourGraph.setOption(option);
   }
-
+  audienceEngagementGraph: any;
   getChartAudienceEngagement() {
     type EChartsOption = echarts.EChartsOption;
 
     var chartDom = document.getElementById('engagement');
-    var myChart = echarts.init(chartDom);
+    this.audienceEngagementGraph = echarts.init(chartDom);
     var option: EChartsOption;
     option = {
-      color: ['#7354AE', '#FA0060', '#00D3A2',],
-     
+      color: ['#7354AE', '#FA0060', '#00D3A2'],
+
       tooltip: {
         trigger: 'axis',
         axisPointer: {
           type: 'cross',
           label: {
-            backgroundColor: '#6a7985'
-          }
-        }
+            backgroundColor: '#6a7985',
+          },
+        },
       },
       legend: {
-        data: ['Likes','Comments','Shares'],
-        icon:'circle',
-        bottom:0
+        data: ['Likes', 'Comments', 'Shares'],
+        icon: 'circle',
+        bottom: 0,
       },
       toolbox: {
         feature: {
-          saveAsImage: {}
-        }
+          saveAsImage: {},
+        },
       },
       grid: {
-        left: '3%',
+        left: '10%',
         right: '4%',
         bottom: '13%',
-        containLabel: true
+        containLabel: true,
       },
       xAxis: [
         {
@@ -767,24 +799,30 @@ debugger
           boundaryGap: false,
           data: this.audienceEngagementDates,
           axisLabel: {
-            rotate:45,
-            
-          }
-        }
+            rotate: 45,
+          },
+        },
       ],
       yAxis: [
         {
-          type: 'value'
-        }
+          type: 'value',
+          nameLocation: 'middle',
+          name: 'Total Number of Audience Engagement',
+          nameTextStyle: {
+            fontSize: 12,
+            color: 'grey',
+            lineHeight: 80,
+          },
+        },
       ],
       series: [
         {
           name: 'Likes',
           type: 'line',
-       
+
           smooth: true,
           lineStyle: {
-            width: 0
+            width: 0,
           },
           showSymbol: false,
           areaStyle: {
@@ -792,26 +830,26 @@ debugger
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: '#6E4EAC'
+                color: '#6E4EAC',
               },
               {
                 offset: 1,
-                color: '#8E75BE'
-              }
-            ])
+                color: '#8E75BE',
+              },
+            ]),
           },
           emphasis: {
-            focus: 'series'
+            focus: 'series',
           },
-          data: this.audineceEngagementTotallikes
+          data: this.audineceEngagementTotallikes,
         },
         {
           name: 'Comments',
           type: 'line',
-        
+
           smooth: true,
           lineStyle: {
-            width: 0
+            width: 0,
           },
           showSymbol: false,
           areaStyle: {
@@ -819,26 +857,26 @@ debugger
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: '#FA0060'
+                color: '#FA0060',
               },
               {
                 offset: 1,
-                color: '#F05396'
-              }
-            ])
+                color: '#F05396',
+              },
+            ]),
           },
           emphasis: {
-            focus: 'series'
+            focus: 'series',
           },
-          data: this.audienceEngagementTotlaComments
+          data: this.audienceEngagementTotlaComments,
         },
         {
           name: 'Shares',
           type: 'line',
-       
+
           smooth: true,
           lineStyle: {
-            width: 0
+            width: 0,
           },
           showSymbol: false,
           areaStyle: {
@@ -846,85 +884,89 @@ debugger
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: '#00D3A2'
+                color: '#00D3A2',
               },
               {
                 offset: 1,
-                color: '#5ECFB9'
-              }
-            ])
+                color: '#5ECFB9',
+              },
+            ]),
           },
           emphasis: {
-            focus: 'series'
+            focus: 'series',
           },
-          data:this.audienceEngagmentTotalShare
+          data: this.audienceEngagmentTotalShare,
         },
-       
-      ]
+      ],
     };
-    
-    option && myChart.setOption(option);
-   
-  }
 
+    option && this.audienceEngagementGraph.setOption(option);
+  }
+  audienceGrowthGraph: any;
   getChartAudienceGrowth() {
     type EChartsOption = echarts.EChartsOption;
 
     var chartDom = document.getElementById('growth');
-    var myChart = echarts.init(chartDom);
+    this.audienceGrowthGraph = echarts.init(chartDom);
     var option: EChartsOption;
     option = {
-      color: ['#7354AE', '#FA0060',],
-    
+      color: ['#7354AE', '#FA0060'],
+
       tooltip: {
         trigger: 'axis',
         axisPointer: {
           type: 'cross',
           label: {
-            backgroundColor: '#6a7985'
-          }
-        }
+            backgroundColor: '#6a7985',
+          },
+        },
       },
       legend: {
         data: ['likes', 'Unlikes'],
-        icon:'circle',
-        bottom:0
+        icon: 'circle',
+        bottom: 0,
       },
       toolbox: {
         feature: {
-          saveAsImage: {}
-        }
+          saveAsImage: {},
+        },
       },
       grid: {
-        left: '3%',
+        left: '10%',
         right: '4%',
         bottom: '13%',
-        containLabel: true
+        containLabel: true,
       },
       xAxis: [
         {
           type: 'category',
           boundaryGap: false,
-          data:  this.audiencelikesdate,
+          data: this.audiencelikesdate,
           axisLabel: {
-            rotate:45,
-            
-          }
-        }
+            rotate: 45,
+          },
+        },
       ],
       yAxis: [
         {
-          type: 'value'
-        }
+          type: 'value',
+        nameLocation: 'middle',
+        name: 'Total Number of Audience Growth',
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'grey',
+          lineHeight: 80,
+        },
+        },
       ],
       series: [
         {
           name: 'likes',
           type: 'line',
-       
+
           smooth: true,
           lineStyle: {
-            width: 0
+            width: 0,
           },
           showSymbol: false,
           areaStyle: {
@@ -932,26 +974,26 @@ debugger
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: '#6E4EAC'
+                color: '#6E4EAC',
               },
               {
                 offset: 1,
-                color: '#8E75BE'
-              }
-            ])
+                color: '#8E75BE',
+              },
+            ]),
           },
           emphasis: {
-            focus: 'series'
+            focus: 'series',
           },
-          data:  this.audiencelikesCounts
+          data: this.audiencelikesCounts,
         },
         {
           name: 'Unlikes',
           type: 'line',
-        
+
           smooth: true,
           lineStyle: {
-            width: 0
+            width: 0,
           },
           showSymbol: false,
           areaStyle: {
@@ -959,25 +1001,23 @@ debugger
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: '#FA0060'
+                color: '#FA0060',
               },
               {
                 offset: 1,
-                color: '#F05396'
-              }
-            ])
+                color: '#F05396',
+              },
+            ]),
           },
           emphasis: {
-            focus: 'series'
+            focus: 'series',
           },
-          data: this.audienceunlikesCount
+          data: this.audienceunlikesCount,
         },
-      
-   
-      ]
+      ],
     };
-    
-    option && myChart.setOption(option);
+
+    option && this.audienceGrowthGraph.setOption(option);
     // option = {
     //   color: ['#b09ed1', '#ee438d'],
     //   tooltip: {
@@ -1013,7 +1053,7 @@ debugger
     //       data: this.audiencelikesdate,
     //       axisLabel: {
     //         rotate:45,
-            
+
     //       }
     //     },
     //   ],
@@ -1048,202 +1088,6 @@ debugger
 
     // option && myChart.setOption(option);
   }
-  getDamiChart(){
-    var chartDom = document.getElementById('main');
-var myChart = echarts.init(chartDom);
-var option;
-
-option = {
-  color: ['#7354AE', '#FA0060', '#00D3A2',],
-  title: {
-    text: 'Gradient Stacked Area Chart'
-  },
-  tooltip: {
-    trigger: 'axis',
-    axisPointer: {
-      type: 'cross',
-      label: {
-        backgroundColor: '#6a7985'
-      }
-    }
-  },
-  legend: {
-    data: ['Likes','Comments','Shares'],
-    icon:'circle',
-    bottom:0
-  },
-  toolbox: {
-    feature: {
-      saveAsImage: {}
-    }
-  },
-  grid: {
-    left: '3%',
-    right: '4%',
-    bottom: '13%',
-    containLabel: true
-  },
-  xAxis: [
-    {
-      type: 'category',
-      boundaryGap: false,
-      data: this.audienceEngagementDates,
-      axisLabel: {
-        rotate:45,
-        
-      }
-    }
-  ],
-  yAxis: [
-    {
-      type: 'value'
-    }
-  ],
-  series: [
-    {
-      name: 'Likes',
-      type: 'line',
-   
-      smooth: true,
-      lineStyle: {
-        width: 0
-      },
-      showSymbol: false,
-      areaStyle: {
-        opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          {
-            offset: 0,
-            color: '#6E4EAC'
-          },
-          {
-            offset: 1,
-            color: '#8E75BE'
-          }
-        ])
-      },
-      emphasis: {
-        focus: 'series'
-      },
-      data: this.audineceEngagementTotallikes
-    },
-    {
-      name: 'Comments',
-      type: 'line',
-    
-      smooth: true,
-      lineStyle: {
-        width: 0
-      },
-      showSymbol: false,
-      areaStyle: {
-        opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          {
-            offset: 0,
-            color: '#FA0060'
-          },
-          {
-            offset: 1,
-            color: '#F05396'
-          }
-        ])
-      },
-      emphasis: {
-        focus: 'series'
-      },
-      data: this.audienceEngagementTotlaComments
-    },
-    {
-      name: 'Shares',
-      type: 'line',
-   
-      smooth: true,
-      lineStyle: {
-        width: 0
-      },
-      showSymbol: false,
-      areaStyle: {
-        opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          {
-            offset: 0,
-            color: '#00D3A2'
-          },
-          {
-            offset: 1,
-            color: '#5ECFB9'
-          }
-        ])
-      },
-      emphasis: {
-        focus: 'series'
-      },
-      data:this.audienceEngagmentTotalShare
-    },
-    // {
-    //   name: 'Line 4',
-    //   type: 'line',
-    //   stack: 'Total',
-    //   smooth: true,
-    //   lineStyle: {
-    //     width: 0
-    //   },
-    //   showSymbol: false,
-    //   areaStyle: {
-    //     opacity: 0.8,
-    //     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-    //       {
-    //         offset: 0,
-    //         color: 'rgb(255, 0, 135)'
-    //       },
-    //       {
-    //         offset: 1,
-    //         color: 'rgb(135, 0, 157)'
-    //       }
-    //     ])
-    //   },
-    //   emphasis: {
-    //     focus: 'series'
-    //   },
-    //   data: [220, 402, 231, 134, 190, 230, 120]
-    // },
-    // {
-    //   name: 'Line 5',
-    //   type: 'line',
-    //   stack: 'Total',
-    //   smooth: true,
-    //   lineStyle: {
-    //     width: 0
-    //   },
-    //   showSymbol: false,
-    //   label: {
-    //     show: true,
-    //     position: 'top'
-    //   },
-    //   areaStyle: {
-    //     opacity: 0.8,
-    //     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-    //       {
-    //         offset: 0,
-    //         color: 'rgb(255, 191, 0)'
-    //       },
-    //       {
-    //         offset: 1,
-    //         color: 'rgb(224, 62, 76)'
-    //       }
-    //     ])
-    //   },
-    //   emphasis: {
-    //     focus: 'series'
-    //   },
-    //   data: [220, 302, 181, 234, 210, 290, 150]
-    // }
-  ]
-};
-
-option && myChart.setOption(option);
-  }
   getTopFiveCustomers() {
     let obj = {
       pageNumber: 0,
@@ -1258,19 +1102,44 @@ option && myChart.setOption(option);
     this.toastermessage = false;
   }
   resetStartDate() {
-    this.enddate = ''
+    this.enddate = '';
   }
   resetEndDate() {
     if (this.enddate >= this.startDate) {
-      this.getAllfeacebookData()
-      
+      this.getAllfeacebookData();
+
       if (this.radioInput !== undefined) {
         this.radioInput.nativeElement.checked = false;
       }
+    } else {
+      alert('EndDate is greater then StartDate');
+      this.enddate = '';
     }
-    else {
-      alert("EndDate is greater then StartDate")
-      this.enddate = ''
-    }
+  }
+
+  makeChartResponsive() {
+    window.addEventListener('resize', () => {
+      if (this.reactionGraph) {
+        this.reactionGraph.resize();
+      }
+      if (this.audienceEngagementGraph) {
+        this.audienceEngagementGraph.resize();
+      }
+      if (this.audienceGrowthGraph) {
+        this.audienceGrowthGraph.resize();
+      }
+      if (this.publishinBehaviourGraph) {
+        this.publishinBehaviourGraph.resize();
+      }
+      if (this.totalPeopleGraph) {
+        this.totalPeopleGraph.resize();
+      }
+      if (this.pageReachabilityGraph) {
+        this.pageReachabilityGraph.resize();
+      }
+      if (this.externalResourceGraph) {
+        this.externalResourceGraph.resize();
+      }
+    });
   }
 }
