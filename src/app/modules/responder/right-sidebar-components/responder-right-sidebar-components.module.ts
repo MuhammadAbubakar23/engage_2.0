@@ -18,6 +18,7 @@ import { ResponderHistoryComponent } from './responder-history/responder-history
 import { ResponderProfileComponent } from './responder-profile/responder-profile.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ResponderCustomerProfilingComponent } from './responder-customer-profiling/responder-customer-profiling.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ResponderTaskComponent,
     ResponderScheduleComponent,
     ResponderHistoryComponent,
-    ResponderProfileComponent
+    ResponderProfileComponent,
+    ResponderCustomerProfilingComponent
   ],
   imports: [
     FormsModule,

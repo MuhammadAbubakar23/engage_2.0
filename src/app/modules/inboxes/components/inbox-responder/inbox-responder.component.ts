@@ -16,6 +16,7 @@ import { YoutubeComponent } from 'src/app/modules/responder/components/youtube/y
 import { ResponderComplaintTicketPanelComponent } from 'src/app/modules/responder/right-sidebar-components/responder-complaint-ticket-panel/responder-complaint-ticket-panel.component';
 import { ResponderContactsComponent } from 'src/app/modules/responder/right-sidebar-components/responder-contacts/responder-contacts.component';
 import { ResponderCreateNewComponent } from 'src/app/modules/responder/right-sidebar-components/responder-create-new/responder-create-new.component';
+import { ResponderCustomerProfilingComponent } from 'src/app/modules/responder/right-sidebar-components/responder-customer-profiling/responder-customer-profiling.component';
 import { ResponderDocumentsComponent } from 'src/app/modules/responder/right-sidebar-components/responder-documents/responder-documents.component';
 import { ResponderEngagementsComponent } from 'src/app/modules/responder/right-sidebar-components/responder-engagements/responder-engagements.component';
 import { ResponderHelpComponent } from 'src/app/modules/responder/right-sidebar-components/responder-help/responder-help.component';
@@ -385,12 +386,19 @@ export class InboxResponderComponent implements OnInit {
         );
         this.rightcontainer?.createComponent(componentFactory);
         break;
+        case 'customer-profile':
+        componentFactory = this.resolver.resolveComponentFactory(
+          ResponderCustomerProfilingComponent
+        );
+        this.rightcontainer?.createComponent(componentFactory);
+        break;
         case 'disposition-form':
         componentFactory = this.resolver.resolveComponentFactory(
           DispositionFormComponent
         );
         this.target?.createComponent(componentFactory);
         break;
+        
       default:
         componentFactory = this.resolver.resolveComponentFactory(
           FacebookComponent

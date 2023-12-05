@@ -37,7 +37,7 @@
 
       <!-- WhatsApp Reports for Jazz Only -->
 
-      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'WhatsApp Raw Data'?'active':''"
+      <!-- <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'WhatsApp Raw Data'?'active':''"
         value="WhatsApp Report" id="analyticstab3">
         <a routerLink="/analytics/whatsapp-report" class="d-flex">
           WhatsApp Raw Data
@@ -66,17 +66,18 @@
         <a routerLink="/analytics/social-raw-data" class="d-flex">
           Social Raw Data
         </a>
-      </li>
+      </li> -->
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Inbound/Outbound Report'?'active':''"
         value="Inbound/OutBound Report" id="analyticstab1">
         <a routerLink="/analytics/inbound-outbound-report" class="d-flex">
           Inbound/OutBound Report
         </a>
       </li>
-      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Agent Performance Report'?'active':''"
-        value="Agent performance Report" id="analyticstab1">
+      <li class="list-group-item list-group-item-action"
+        [ngClass]="activeMenu == 'Agent Performance Report'?'active':''" value="Agent performance Report"
+        id="analyticstab1">
         <a routerLink="/analytics/performance-report" class="d-flex">
-          Agent performance Report
+          Agent Performance Report
         </a>
       </li>
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Shift Report'?'active':''"
@@ -85,12 +86,12 @@
           Shift Report
         </a>
       </li>
-      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Query Tag Report'?'active':''"
+      <!-- <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Query Tag Report'?'active':''"
         value="Query Tag Report" id="queryTagtab">
         <a routerLink="/analytics/querytag-report" class="d-flex">
           Query Tag Report
         </a>
-      </li>
+      </li> -->
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Tag Report'?'active':''"
         value="Tag Report" id="analyticstab1">
         <a routerLink="/analytics/tag-report" class="d-flex">

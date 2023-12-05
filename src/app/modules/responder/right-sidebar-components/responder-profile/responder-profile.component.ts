@@ -84,6 +84,7 @@ export class ResponderProfileComponent implements OnInit {
   }
   GetChannels() {
     this.commonService.GetChannels().subscribe((res: any) => {
+      if (Object.keys(res).length > 0) {
       res[0].subMenu;
       console.log("this.channels", this.channels);
       res[0].subMenu.forEach((item: any) => {
@@ -119,6 +120,7 @@ export class ResponderProfileComponent implements OnInit {
             break;
         }
       });
+    }
 
     })
   }
@@ -152,7 +154,7 @@ export class ResponderProfileComponent implements OnInit {
           bloodGroup: res.customerDetail.bloodGroup,
         });
       }
-      this.profileDetails.customerSecondaryProfiles.forEach(
+      this.profileDetails?.customerSecondaryProfiles?.forEach(
         (secondaryProfile: any) => {
           if (secondaryProfile.platform == 'Facebook') {
             this.fbUniqueId = secondaryProfile.customerUniqueId;

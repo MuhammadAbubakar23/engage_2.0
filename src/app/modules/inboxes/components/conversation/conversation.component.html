@@ -486,13 +486,15 @@
         <!-- <div [hidden]="flag == 'trash'"> -->
 
         <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'archived'"
-          (click)="InsertTagInProfile('archived','Tag')" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-          data-bs-original-title="Archive" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+          (click)="InsertTagInProfile('archived','Tag')" aria-label="..." data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="" data-bs-original-title="Archive"
+          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-archive"></i>
         </li>
         <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag != 'archived'"
-          (click)="RemoveTagInProfile('archived', 'Tag')" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-          data-bs-original-title="Unarchive" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+          (click)="RemoveTagInProfile('archived', 'Tag')" aria-label="..." data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="" data-bs-original-title="Unarchive"
+          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-inbox-out"></i>
         </li>
         <!-- <li class="list-group-item border-0 after-select-fun" [hidden]="flag == 'trash' || flag == 'spam'" (click)="UpdateMessageStatus('Spam','Tag')" aria-label="..."
@@ -505,14 +507,15 @@
             data-bs-original-title="Undo Spam" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
             <i class="fal fa-rotate-exclamation"></i>
           </li> -->
-        <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun" (click)="InsertTagInProfile('trash','Tag')"
-          [hidden]="flag == 'trash'" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" title=""
-          data-bs-original-title="Delete" [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
+        <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun"
+          (click)="InsertTagInProfile('trash','Tag')" [hidden]="flag == 'trash'" aria-label="..."
+          data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete"
+          [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-trash"></i>
         </li>
         <li class="list-group-item border-top-0 border-bottom-0 border-start-0 after-select-fun"
-          [hidden]="flag != 'trash'" (click)="RemoveTagInProfile('trash', 'Tag')" aria-label="..." data-bs-toggle="tooltip"
-          data-bs-placement="bottom" title="" data-bs-original-title="Undo Delete"
+          [hidden]="flag != 'trash'" (click)="RemoveTagInProfile('trash', 'Tag')" aria-label="..."
+          data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Undo Delete"
           [ngStyle]="{'display': isChecked==true  ? 'block' : 'none'}">
           <i class="fal fa-trash-slash"></i>
         </li>
@@ -625,17 +628,17 @@
               <th>Message Time</th>
               <th>Follow up Time</th>
             </tr>
-            </thead>
+          </thead>
           <tbody>
             <ng-container *ngFor="let group of groupByDateList">
               <tr>
                 <td colspan="6">
-             <span *ngIf="FlagForAssignToMe!=='follow_up'">
-              <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
-             </span>
-             <span *ngIf="FlagForAssignToMe=='follow_up'">
-              <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
-             </span>
+                  <span *ngIf="FlagForAssignToMe!=='follow_up'">
+                    <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
+                  </span>
+                  <span *ngIf="FlagForAssignToMe=='follow_up'">
+                    <span class="email-date"></span>{{group.createdDate | date:'EEEE, MMMM dd, yyyy'}}
+                  </span>
                 </td>
               </tr>
               <tr *ngFor="let query of group.items | sort:criteria; let i = index"
@@ -676,7 +679,7 @@
                   <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
                     <a
                       (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId)">
-                      <span>{{query.userName.split('<')[0] || query.user}} </span>
+                      <span>{{query?.userName?.split('<')[0] || query.user}} </span>
                           <span class="badge bg-danger rounded-pill"
                             *ngIf="query.unrespondedCount > 0">{{query.unrespondedCount}}</span></a>
                   </span>
@@ -692,7 +695,7 @@
                 </td>
                 <td class="px-1">
                   <span *ngIf="FlagForAssignToMe=='follow_up'">
-                   <small><strong>{{query?.follow_Up_Status | date: 'EE, MMM-dd, yyyy h:mm:ss a '}}</strong></small>
+                    <small><strong>{{query?.follow_Up_Status | date: 'EE, MMM-dd, yyyy h:mm:ss a '}}</strong></small>
                   </span>
                 </td>
 

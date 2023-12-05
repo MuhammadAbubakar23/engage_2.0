@@ -190,6 +190,7 @@ export class InboxMenuComponent implements OnInit {
   GetChannels(){
 
     this.commonService.GetChannels().subscribe((res:any)=>{
+      if (Object.keys(res).length > 0) {
       this.channels = res[0].subMenu;
       console.log("this.channels", this.channels);
       const newArray = res[0].subMenu.map((item:any) => {
@@ -229,6 +230,7 @@ export class InboxMenuComponent implements OnInit {
         return newItem;
       });
       this.allChannels=newArray;
+    }
     })
   }
 

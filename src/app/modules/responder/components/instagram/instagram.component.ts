@@ -954,8 +954,8 @@ export class InstagramComponent implements OnInit {
         this.toastermessage = false;
       }, 4000);
     }
-    if (type == 'fbmessage') {
-      this.AlterMsg = 'Message Send Successfully!';
+    if (type == 'message') {
+      this.AlterMsg = 'Message Sent Successfully!';
       this.toastermessage = true;
       setTimeout(() => {
         this.toastermessage = false;
@@ -1011,6 +1011,10 @@ export class InstagramComponent implements OnInit {
     this.postType = '';
     this.msgText = '';
     this.msgId = 0;
+    this.isAttachment = false;
+    this.fileInput.nativeElement.value = '';
+    this.detectChanges();
+    
   }
   markAsComplete = false;
   markAsCompleteExpanded(comId: any) {
@@ -1480,7 +1484,7 @@ removeTagDataListener() {
         this.show = true;
         this.msgId = msg.id;
         this.agentId = localStorage.getItem('agentId') || '{}';
-        this.platform = this.fetchId.platform;
+        this.platform = localStorage.getItem('parent') || '{}';
         this.postType = 'IM';
         this.profileId = msg.profileId;
         this.profilePageId = msg.profilePageId;
@@ -1545,7 +1549,7 @@ removeTagDataListener() {
             this.spinner1running = false;
             this.SpinnerService.hide();
             this.clearInputField();
-            this.reloadComponent('comment');
+            this.reloadComponent('message');
             if (this.radioInput != undefined) {
               this.radioInput.nativeElement.checked = false;
             }
@@ -1615,6 +1619,63 @@ removeTagDataListener() {
         '&customerId=' +
         customerId +
         ' '
+    );
+  }
+  isAttachment = false;
+  onFileChanged() {
+    Array.from(this.fileInput.nativeElement.files).forEach((file:any) => {
+      if(file.size > 4 * 1024 * 1024){
+        this.reloadComponent('Attachments');
+      } else if (this.fileInput.nativeElement.files.length > 0) {
+      this.isAttachment = true;
+
+      const filesArray = Array.from(this.fileInput.nativeElement.files);
+      filesArray.forEach((attachment: any) => {
+        this.ImageArray.push(attachment);
+      });
+      const files = this.ImageArray.map((file: any) => file); // Create a new array with the remaining files
+      const newFileList = new DataTransfer();
+      files.forEach((file: any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+      this.ImageName = newFileList.files;
+    }
+    });
+  }
+  removeAttachedFile(index: any) {
+    debugger
+    const filesArray = Array.from(this.ImageName);
+    filesArray.splice(index, 1);
+    this.ImageArray.splice(index, 1);
+
+    const files = filesArray.map((file: any) => file); // Create a new array with the remaining files
+    const newFileList = new DataTransfer();
+    files.forEach((file) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+
+    this.fileInput.nativeElement.files = newFileList.files;
+    this.ImageName = newFileList.files;
+    this.detectChanges();
+
+    if (this.ImageName.length == 0) {
+      this.isAttachment = false;
+    }
+  }
+
+  isImage(attachment: any): boolean {
+    return attachment.contentType?.toLowerCase().startsWith('image');
+  }
+
+  isVideo(attachment: any): boolean {
+    return attachment.contentType?.toLowerCase().startsWith('video');
+  }
+
+  isAudio(attachment: any): boolean {
+    return attachment.contentType?.toLowerCase().startsWith('audio');
+  }
+
+  isOther(attachment: any): boolean {
+    return (
+      !this.isImage(attachment) &&
+      !this.isVideo(attachment) &&
+      !this.isAudio(attachment)
     );
   }
 }

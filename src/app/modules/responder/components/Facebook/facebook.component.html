@@ -64,6 +64,7 @@
                                                     <p class="card-text">
                                                         <small class="silver">{{facebookdata.post.createdDate |
                                                             date:'EEEE, MMMM d, y, h:mm a'}}</small>
+                                                            <a *ngIf="facebookdata.post.redirectUrl != null || facebookdata.post.redirectUrl != ''" href={{facebookdata.post.redirectUrl}} target="_blank"> <span><i class="fa-regular ms-1 coal fa-arrow-up-right-from-square"></i></span></a>
                                                     </p>
                                                 </div>
                                             </div>
@@ -478,7 +479,7 @@
                                                             <div class="card-body shadow-sm">
                                                                 <div class="d-flex align-items-center mb-2">
                                                                     <h6 class="card-title m-0">
-                                                                        {{facebookdata.post.profile.page_Name}}</h6>
+                                                                        {{reply.responseByName}}</h6>
                                                                     <p class="card-text ms-3">
                                                                         <small class="silver">{{reply.createdDate
                                                                             | date:'h:mm:ss a'}}</small>
@@ -893,7 +894,7 @@
                                                         <div class="card-body shadow-sm">
                                                             <div class="d-flex align-items-center mb-2">
                                                                 <h6 class="card-title m-0">
-                                                                    {{pageName}}</h6>
+                                                                    {{msgReply.responseByName}}</h6>
                                                                 <p class="card-text ms-3">
                                                                     <small class="silver">{{msgReply.createdDate
                                                                         | date:'h:mm:ss a'}}</small>

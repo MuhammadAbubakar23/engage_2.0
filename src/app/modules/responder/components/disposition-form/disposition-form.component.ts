@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DispositionFormDto } from 'src/app/shared/Models/DispositionFormDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
@@ -23,28 +23,14 @@ export class DispositionFormComponent implements OnInit {
   isFollowUp: boolean = false;
   currentDate:any
   currentDatetime:any
+
   constructor(private commonService : CommonDataService,
     private route : Router,
     private datePipe:DatePipe,
     private toggleService : ToggleService,
     private lodeModuleService : ModulesService,
-    private stor : StorageService) {
-      
-      this.dispositionForm = new FormGroup({
-        disposition: new FormControl('completed', Validators.required),
-        reasonId: new FormControl(''),
-        agentId: new FormControl(''),
-        customerProfileId: new FormControl(''),
-        follow_Up_Date: new FormControl(null,),
-        comment: new FormControl('Completed', Validators.required),
-  
-        user: new FormControl(''),
-        plateFrom: new FormControl(''),
-        userId: new FormControl(''),
-        companyId: new FormControl(''),
-  
-      });
-    }
+    private stor : StorageService,
+    private fb: FormBuilder) { }
 
   platform = localStorage.getItem('parent');
   agentId = Number(localStorage.getItem('agentId'))
@@ -53,6 +39,30 @@ export class DispositionFormComponent implements OnInit {
   companyId = 0;
 
   ngOnInit(): void {
+    this.dispositionForm = this.fb.group({
+      disposition: ['completed', Validators.required],
+      reasonId: [''],
+      agentId: [''],
+      customerProfileId: [''],
+      follow_Up_Date: [null],
+      comment: ['Completed', Validators.required],
+
+      user: [''],
+      plateFrom: [''],
+      userId: [''],
+      companyId: [''],
+    });
+    this.dispositionForm.get('disposition')?.valueChanges.subscribe((value:any) => {
+          const conditionalField = this.dispositionForm.get('follow_Up_Date');
+          if(value == 'follow_up') {
+            conditionalField?.setValidators(Validators.required)
+          } else {
+            conditionalField?.clearValidators();
+          }
+          conditionalField?.updateValueAndValidity();
+        }
+    );
+
     this.currentDate = new Date();
     this.currentDatetime = this.datePipe.transform(this.currentDate, 'yyyy-MM-ddTHH:mm');
     const menu = this.stor.retrive('Tags', 'O').local;
@@ -74,10 +84,6 @@ export class DispositionFormComponent implements OnInit {
   }
   previousUrl:any;
   submitDispositionForm(){
-
-// if(this.dispositionForm.value.follow_Up_Date!==''){
-//   this.dispositionForm.value.follow_Up_Date=this.dispositionForm.value.follow_Up_Date
-// }
     this.dispositionFormDto = {
       disposition: this.dispositionForm.value.disposition,
       reasonId: this.dispositionForm.value.reasonId,
@@ -93,9 +99,7 @@ export class DispositionFormComponent implements OnInit {
         }
     };
     this.commonService.SubmitDispositionForm(this.dispositionFormDto).subscribe((res:any)=>{
-      // console.log('disposition response',res)
       localStorage.setItem('assignedProfile','')
-      // this.route.navigateByUrl('/all-inboxes/focused/all');
       this.previousUrl = localStorage.getItem('previousUrl') 
       this.route.navigateByUrl(this.previousUrl);
       this.lodeModuleService.updateModule('all-inboxes');

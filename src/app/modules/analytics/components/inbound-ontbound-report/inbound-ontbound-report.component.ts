@@ -527,24 +527,24 @@ export class InboundOntboundReportComponent implements OnInit {
       icon: 'fa-brands fa-facebook facebook pe-2',
       isSelected: false,
     },
-    {
-      id: '14',
-      name: 'YouTube',
-      icon: 'fa-brands fa-youtube radical pe-2',
-      isSelected: false,
-    },
+    // {
+    //   id: '14',
+    //   name: 'YouTube',
+    //   icon: 'fa-brands fa-youtube radical pe-2',
+    //   isSelected: false,
+    // },
     // {
     //   id: '15',
     //   name: 'SMS',
     //   icon: 'fa-solid fa-comment-alt pe-2',
     //   isSelected: false,
     // },
-    {
-      id: '14',
-      name: 'WhatsApp',
-      icon: 'fa-brands fa-whatsapp mint pe-2',
-      isSelected: false,
-    },
+    // {
+    //   id: '14',
+    //   name: 'WhatsApp',
+    //   icon: 'fa-brands fa-whatsapp mint pe-2',
+    //   isSelected: false,
+    // },
     // {
     //   id: '15',
     //   name: 'Email',

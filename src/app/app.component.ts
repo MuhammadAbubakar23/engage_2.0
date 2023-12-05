@@ -45,7 +45,7 @@ export class AppComponent {
     //     },
     //     (error)=>{
     //       localStorage.clear();
-    //       this.router.navigateByUrl('/login');
+    //       this.router.navigateByUrl('/login')
     //       this.spinnerService.hide();
     //     })
     //   }

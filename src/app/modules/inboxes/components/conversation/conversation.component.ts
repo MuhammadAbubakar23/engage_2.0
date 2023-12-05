@@ -7,7 +7,6 @@ import { FiltersDto } from 'src/app/shared/Models/FiltersDto';
 import { FetchPostTypeService } from 'src/app/services/FetchPostType/fetch-post-type.service';
 import { AssignQuerryDto } from 'src/app/shared/Models/AssignQuerryDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-import { FilterService } from 'src/app/services/FilterService/filter.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { Tooltip } from 'bootstrap';
@@ -145,9 +144,7 @@ export class ConversationComponent implements OnInit {
                 items: groupedItems[createdDate],
               };
             }
-          
           );
-
         },
         (error) => {
           this.SpinnerService.hide();
@@ -178,7 +175,6 @@ export class ConversationComponent implements OnInit {
       });
 
     setInterval(() => {
-      
       if (this.currentUrl.split('/')[2] == 'focused') {
         if (this.groupByDateList?.length > 0) {
           this.TodayDate = new Date();
@@ -210,21 +206,16 @@ export class ConversationComponent implements OnInit {
             });
           });
         }
-      }
-      else if( this.currentUrl.split('/')[2]=='follow_up'){
+      } else if (this.currentUrl.split('/')[2] == 'follow_up') {
         if (this.groupByDateList?.length > 0) {
           this.TodayDate = new Date();
           this.groupByDateList?.forEach((group: any) => {
             group.items.forEach((item: any) => {
-              
               const twentyMinutesInMs = 20 * 60 * 1000; // 20 minute in milliseconds
               const fortyMinutesInMs = 40 * 60 * 1000; // 40 minute in milliseconds
               const time = new Date(item.follow_Up_Status);
-              const timeDifference =   this.TodayDate.getTime()-  time.getTime();
-              if (
-                timeDifference  > twentyMinutesInMs 
-               
-              ) {
+              const timeDifference = this.TodayDate.getTime() - time.getTime();
+              if (timeDifference > twentyMinutesInMs) {
                 this.alertWarning = true;
                 item['slaFlag'] = 'warning';
               }
@@ -269,8 +260,8 @@ export class ConversationComponent implements OnInit {
     //   this.flag = 'sent';
     //   this.platform = this.currentUrl.split('/')[3];
     // } else {
-      this.flag = this.currentUrl.split('/')[2];
-      this.platform = this.currentUrl.split('/')[3];
+    this.flag = this.currentUrl.split('/')[2];
+    this.platform = this.currentUrl.split('/')[3];
     // }
 
     if (this.searchForm.value.dateWithin == '1 day') {
@@ -341,12 +332,32 @@ export class ConversationComponent implements OnInit {
 
       this.toDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
-    } else if ( this.searchForm.value.fromDate != null && (this.searchForm.value.toDate == null || this.searchForm.value.toDate == undefined)) {
+    } else if (
+      this.searchForm.value.fromDate != null &&
+      (this.searchForm.value.toDate == null ||
+        this.searchForm.value.toDate == undefined)
+    ) {
       this.fromDate = this.searchForm.value.fromDate + 'T00:00:00.000Z';
       this.toDate = this.searchForm.value.fromDate + 'T23:59:59.999Z';
-    } else if ( this.searchForm.value.fromDate != null && this.searchForm.value.toDate != null) {
+    } else if (
+      this.searchForm.value.fromDate != null &&
+      this.searchForm.value.toDate != null
+    ) {
       this.fromDate = this.searchForm.value.fromDate + 'T00:00:00.000Z';
       this.toDate = this.searchForm.value.toDate + 'T23:59:59.999Z';
+    } else if (
+      this.searchForm.value.fromDate == undefined &&
+      this.searchForm.value.toDate == undefined &&
+      (this.flag == 'completed' || this.flag == 'sent')
+    ) {
+      let currentDate = new Date();
+      let prevDate = currentDate.setDate(currentDate.getDate() - 6);
+      const fromDate =
+        this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
+      this.fromDate = fromDate;
+
+      this.toDate =
+        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     }
 
     this.searchForm.patchValue({
@@ -374,6 +385,7 @@ export class ConversationComponent implements OnInit {
       flag: this.flag,
     };
     this.SpinnerService.show();
+    debugger;
     this.commondata.GetConversationList(this.filterDto).subscribe(
       (res: any) => {
         if (Object.keys(res).length > 0) {
@@ -540,7 +552,7 @@ export class ConversationComponent implements OnInit {
   updateListDataListener(res: any) {
     if (this.currentUrl.split('/')[2] === 'focused') {
       res.forEach((newMsg: any) => {
-        if(newMsg?.profileStatus?.length == 0){
+        if (newMsg?.profileStatus?.length == 0) {
           if (this.platform === newMsg.platform && !this.isAttachment) {
             this.updateConversationList(newMsg);
           } else if (newMsg.isAttachment && this.isAttachment) {
@@ -551,8 +563,7 @@ export class ConversationComponent implements OnInit {
             this.updateConversationList(newMsg);
           }
         }
-        });
-        
+      });
 
       const groupedItems = this.groupItemsByDate();
       this.groupByDateList = Object.keys(groupedItems).map((createdDate) => ({
@@ -670,7 +681,10 @@ export class ConversationComponent implements OnInit {
     profileId: any
   ) {
     localStorage.setItem('previousUrl', this.currentUrl);
-    if (this.currentUrl.split('/')[2] == 'focused' || this.currentUrl.split('/')[2] == 'follow_up') {
+    if (
+      this.currentUrl.split('/')[2] == 'focused' ||
+      this.currentUrl.split('/')[2] == 'follow_up'
+    ) {
       this.assignQuerryDto = {
         userId: Number(localStorage.getItem('agentId')),
         profileId: profileId,
@@ -902,16 +916,13 @@ export class ConversationComponent implements OnInit {
       this.masterSelected = group.items.every((l: any) => l.isChecked == true);
       if (this.masterSelected == true) {
         group.items.forEach((d: any) => {
-          var abc = this.Ids.find(
-            (x) => x.profileId == d.profileId
-          );
-          if(abc == undefined){
+          var abc = this.Ids.find((x) => x.profileId == d.profileId);
+          if (abc == undefined) {
             this.Ids.push({ profileId: d.profileId, platform: d.platform });
           }
-            // if (!this.Ids.includes(item.profileId)) {
-            //   this.Ids.push({ profileId: d.profileId, platform: d.platform });
-            // }
-          
+          // if (!this.Ids.includes(item.profileId)) {
+          //   this.Ids.push({ profileId: d.profileId, platform: d.platform });
+          // }
         });
         //  // // console.log(this.Ids);
         this.isChecked = true;
@@ -1047,7 +1058,7 @@ export class ConversationComponent implements OnInit {
       .subscribe((res: any) => {
         const a = document.createElement('a');
         a.href = res;
-        a.download = 'AgentReport'+ this.fromDate + '.csv';
+        a.download = 'AgentReport' + this.fromDate + '.csv';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -1089,7 +1100,7 @@ export class ConversationComponent implements OnInit {
 
   itemsToBeUpdated: any[] = [];
 
-  InsertTagInProfile(tagName:string, type:string) {
+  InsertTagInProfile(tagName: string, type: string) {
     this.Ids.forEach((query: any) => {
       var obj = {
         feedId: query.profileId,
@@ -1110,7 +1121,7 @@ export class ConversationComponent implements OnInit {
       });
   }
 
-  RemoveTagInProfile(tagName:string, type:string) {
+  RemoveTagInProfile(tagName: string, type: string) {
     this.Ids.forEach((query: any) => {
       var obj = {
         feedId: query.profileId,
@@ -1125,7 +1136,7 @@ export class ConversationComponent implements OnInit {
       .subscribe((res: any) => {
         if (res.message === 'Data Deleted Successfully') {
           this.itemsToBeUpdated = [];
-          this.reloadComponent('undo'+tagName);
+          this.reloadComponent('undo' + tagName);
           this.Reload();
         }
       });

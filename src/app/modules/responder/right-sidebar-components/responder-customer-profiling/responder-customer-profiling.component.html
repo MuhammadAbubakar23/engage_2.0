@@ -1,0 +1,189 @@
+<nav id="profile-rightbar-social" class="expended-rigth-sidebar open">
+    <div class="right-bar-wrapper">
+        <div class="bodyWrapper position-relative">
+            <div *ngIf="spinner2running">
+                <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                    [fullScreen]="false">
+                    <p style="color: white"> Loading... </p>
+                </ngx-spinner>
+            </div>
+            <header class="tab-header rightbar-tab-header">
+                <nav class="mb-0">
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="user-profile" data-bs-toggle="tab"
+                            data-bs-target="#user-profile-tab" type="button" role="tab" aria-controls="user-profile-tab"
+                            aria-selected="true">
+                            Customer Profile Information
+                        </button>
+                    </div>
+                    <div class="icons-list">
+                        <div class="searchbar-click">
+                            <form [ngClass]="show == true ? 'searchbox-open' : ''" class="searchbox">
+                                <input placeholder="What are you looking for?" name="search" class="searchbox-input"
+                                    required="" [(ngModel)]="searchProfileDetails" (ngModelChange)="getCustomerProfileDetails()">
+                                <span class="searchbox-icon medium iconButton iconHover" (click)="click(show)"><i
+                                    [ngClass]="show == false ? 'fa fa-search': 'fa fa-times'"></i></span>
+                            </form>
+
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <div class="profile">
+                <div class="tab-content" id="nav-tabContent">
+                    <div id="user-profile-tab" class="tab-pane fade active show" role="tabpanel"
+                        aria-labelledby="user-profile">
+
+                        <div class="about-profile-main">
+                            <!-- <form [formGroup]="userDetailForm" (submit)="updateUserInformation()"> -->
+                                <div class="rightbar-scroll-wrap" data-scrollbar="true" tabindex="-1"
+                                    style="overflow-y: auto; outline: none;">
+                                    <div class="scroll-content">
+                                        <div class="about-profile">
+                                            <div class="profile-form mt-5 me-3 pb-4 px-3">
+                                                <div>
+                                                    <ng-container *ngFor="let info of customerProfileInformation">
+                                                        <div class="row mb-3" *ngIf="info.name">
+                                                            <label for="inputName" class="col-sm-3 col-form-label">Full
+                                                                Name
+                                                            </label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" disabled="" id="inputName"
+                                                                    [value]="info.name">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3" *ngIf="info.meterNumber">
+                                                            <label for="inputName" class="col-sm-3 col-form-label">Meter Numnber
+                                                            </label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" disabled="" id="inputName"
+                                                                    [value]="info.meterNumber">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3" *ngIf="info.contractAccount">
+                                                            <label for="inputName" class="col-sm-3 col-form-label">Account ID
+                                                            </label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" disabled="" id="inputName"
+                                                                    [value]="info.contractAccount">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3" *ngIf="info.mobileNumber !== 'NULL'">
+                                                            <label for="inputName" class="col-sm-3 col-form-label">Mobile Number
+                                                            </label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" disabled="" id="inputName"
+                                                                    [value]="info.mobileNumber">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3" *ngIf="searchProfileDetails !=''">
+                                                            <label for="type"
+                                                                class="col-sm-3 col-form-label">Type</label>
+                                                            <div class="col-sm-9 type-dropdown">
+
+                                                                <select class="form-select" id="floatingSelect"
+                                                                    aria-label="Floating label select" [(ngModel)]="type">
+                                                                    <option disabled>Select the Type</option>
+                                                                    <option value="MeterNumber">Meter Number</option>
+                                                                    <option value="MobileNumber">Mobile Number</option>
+                                                                    <option value="ContractAccount">Account ID</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row w-100" *ngIf="searchProfileDetails !=''">
+                                                            <div class="col-md-4"></div>
+                                                            <div class="col-md-8 justify-content-end d-flex">
+                                                                <div class="buttons-wrap d-flex">
+                                                                    <button type="submit" class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal" (click)="addProfileInformation()"
+                                                                        data-bs-target="#profileSaveModal">Attach</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="customerProfileInformation.length == 0 && searchProfileDetails == ''">
+                                                        <div class="row mb-3">
+                                                            <label for="inputName" class="col-12 col-form-label"> No Data Found
+                                                            </label>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="customerProfileInformation.length == 0 && searchProfileDetails !=''">
+                                                        <div class="row mb-3">
+                                                            <label for="inputName" class="col-sm-3 col-form-label">New Entry
+                                                            </label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" id="inputName"
+                                                                [(ngModel)]="searchProfileDetails">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="type"
+                                                                class="col-sm-3 col-form-label">Type</label>
+                                                            <div class="col-sm-9 type-dropdown">
+
+                                                                <select class="form-select" id="floatingSelect"
+                                                                    aria-label="Floating label select" [(ngModel)]="type">
+                                                                    <option disabled>Select the Type</option>
+                                                                    <option value="MeterNumber">Meter Number</option>
+                                                                    <option value="MobileNumber">Mobile Number</option>
+                                                                    <option value="ContractAccount">Account ID</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row w-100">
+                                                            <div class="col-md-4"></div>
+                                                            <div class="col-md-8 justify-content-end d-flex">
+                                                                <div class="buttons-wrap d-flex">
+                                                                    <button type="submit" class="btn btn-success ms-2"
+                                                                        data-bs-toggle="modal" (click)="addProfileInformation()"
+                                                                        data-bs-target="#profileSaveModal">Save</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- <footer class="footer">
+                                    <div class="ps-3 pe-3">
+                                        <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+                                            <div class="row w-100">
+                                                <div class="col-md-4"></div>
+                                                <div class="col-md-8 justify-content-end d-flex">
+                                                    <div class="buttons-wrap d-flex">
+                                                        <button type="button" (click)="closeProfileComponent('profile')"
+                                                            class="btn btn-outline-secondary">Cancel</button>
+                                                        <button type="submit" class="btn btn-success ms-2"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#profileSaveModal">Save</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </footer> -->
+                            <!-- </form> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+            <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+            <div class="toast-btn d-flex align-items-center">
+
+                <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                    (click)="closeToaster()"><i class="fal fa-times"></i></button>
+
+            </div>
+        </div>
+    </div>
+</div>

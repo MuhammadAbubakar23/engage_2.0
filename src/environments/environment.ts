@@ -35,9 +35,9 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://comservices.enteract.live/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
   
   // For Jazz
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
-  // SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
+  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
+  SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
 
   // For Total Parco
   // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api',
@@ -51,10 +51,10 @@ export const environment = {
   ServiceBaseUrl : 'https://waservice.enteract.live/api/',
   
   // For Testing
-  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  CommonBaseUrl: 'https://common-engage.enteract.app/api/', 
-   // CommonBaseUrl: 'http://10.111.32.52:45457/api/', 
-  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  // CommonBaseUrl: 'https://common-engage.enteract.app/api/', 
+  //  // CommonBaseUrl: 'http://10.111.32.52:45457/api/', 
+  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
 
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
@@ -275,6 +275,9 @@ export const environment = {
     },
     profile:{
       KECSAT:'CustomerCSAT/AddCSAT',
+      getProfileInformationByID:'ProfileInformation/GetProfileInformationByID',
+      addProfileInformation:'ProfileInformation/AddProfileInformation',
+      searchProfileInformation:'ProfileInformation/GetCustomerInformationByID'
     }
   },
 };

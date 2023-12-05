@@ -131,7 +131,9 @@ export class SupportChannelsComponent implements OnInit {
 
   GetChannels(){
     this.commonService.GetChannels().subscribe((res:any)=>{
+      if (Object.keys(res).length > 0) {
       this.channels = res[0].subMenu;
+      }
     })
   }
 

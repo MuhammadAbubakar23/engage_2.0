@@ -49,6 +49,8 @@
                                                     <p class="card-text">
                                                         <small class="silver">{{linkedIn.post.createdDate |
                                                             date:'EEEE, MMMM d, y, h:mm a'}}</small>
+                                                            <a *ngIf="linkedIn.post.redirectUrl != null || linkedIn.post.redirectUrl != ''" href={{linkedIn.post.redirectUrl}} target="_blank"> <span><i class="fa-regular ms-1 coal fa-arrow-up-right-from-square"></i></span></a>
+
                                                     </p>
                                                 </div>
                                             </div>

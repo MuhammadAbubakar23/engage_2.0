@@ -161,6 +161,9 @@ export class CommonDataService {
   addSurvey = environment.links.service.addSurvey;
   addCSAT = environment.links.service.addCSAT;
   KECSAT = environment.links.profile.KECSAT;
+  getProfileInformationByID = environment.links.profile.getProfileInformationByID;
+  searchProfileInformation = environment.links.profile.searchProfileInformation;
+  addProfileInformation = environment.links.profile.addProfileInformation;
 
   constructor(private http: HttpClient) {}
 
@@ -730,6 +733,17 @@ export class CommonDataService {
 
   CSATFormForKE(body:any) {
     return this.http.post(this.ProfileBaseUrl + this.KECSAT, body);
+  }
+
+  GetCustomerProfileDetails(body:any) {
+    return this.http.post(this.ProfileBaseUrl + this.getProfileInformationByID, body);
+    // return this.http.post("http://10.111.32.52:45455/api/" + this.getProfileInformationByID, body);
+  }
+  SearchCustomerProfileDetails(body:any) {
+    return this.http.post(this.ProfileBaseUrl + this.searchProfileInformation, body);
+  }
+  AddProfileInformation(body:any) {
+    return this.http.post(this.ProfileBaseUrl + this.addProfileInformation, body);
   }
 }
 
