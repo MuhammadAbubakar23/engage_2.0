@@ -417,7 +417,7 @@
                 <table class="table table-sm">
                     <thead>
                         <tr>
-                            <!-- <th> </th> -->
+                            <th> </th>
                             <th> Name </th>
                             <th> Twitter Handle </th>
                             <th>Tweets</th>
@@ -432,6 +432,11 @@
                                     SZ
                                 </span>
                             </td> -->
+                            <td>
+                                <app-avatar-photo [photoUrl]="" 
+                                [name]=" cust?.fullName"></app-avatar-photo>
+                            </td>
+                          
                             <td>
                                 <a class="sky fw-semibold">{{cust.fullName}}</a>
                             </td>

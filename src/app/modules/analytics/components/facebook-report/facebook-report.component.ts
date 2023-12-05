@@ -1079,7 +1079,7 @@ export class FacebookReportComponent implements OnInit {
 
     //       areaStyle: {},
     //       emphasis: {
-    //         focus: 'series',
+    //         focus: 'series'
     //       },
     //       data: this.audienceunlikesCount,
     //     },
@@ -1092,6 +1092,8 @@ export class FacebookReportComponent implements OnInit {
     let obj = {
       pageNumber: 0,
       pageSize: 0,
+      from:this.startDate,
+      to: this.enddate
     };
     this.commandataSerivecs.GetfacebookProfile(obj).subscribe((res: any) => {
       this.cutomerdata = res;
