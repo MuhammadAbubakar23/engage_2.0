@@ -49,14 +49,17 @@
                                     aria-label="Basic radio toggle button group">
 
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
-                                        (click)="getPagenationDay(15)" autocomplete="off" checked="">
+                                    #radioInput
+                                        (click)="getPagenationDay(15)" autocomplete="off" >
                                     <label class="btn btn-outline-secondary" for="btnradio1">15</label>
 
                                     <input type="radio" class="btn-check" name="btnradio" (click)="getPagenationDay(30)"
+                                    #radioInput
                                         id="btnradio2" autocomplete="off">
                                     <label class="btn btn-outline-secondary" for="btnradio2">30</label>
 
                                     <input type="radio" class="btn-check" name="btnradio" (click)="getPagenationDay(60)"
+                                    #radioInput
                                         id="btnradio3" autocomplete="off">
                                     <label class="btn btn-outline-secondary" for="btnradio3">60</label>
                                     <!-- <input type="radio" class="btn-check" name="btnradio"
@@ -132,72 +135,75 @@
                     <span class="iconButton medium fw-bold iceBg border">
                     
                                             </span> -->
-                    <div class="scroll" style="overflow: auto; height: 400px;">
+                    <div >
                         <div class="accordion tagaccordion" id="accordionExample">
                             <ng-container *ngFor="let user of uniqueAgentData">
-                                    <div class="accordion-item mb-3">
-                                        <div class="accordion-header ps-4 d-flex align-items-center">
-                                            <div class="d-flex align-items-center me-3 userhead">
-                                                <avatar-content [name]="user.agentName" [subname]="''" [imagename]="''"></avatar-content>
-                                                                    <!-- <span class="iconButton medium fw-bold iceBg border">
+                                <div class="accordion-item mb-3">
+                                    <div class="accordion-header ps-4 d-flex align-items-center">
+                                        <div class="d-flex align-items-center me-3 userhead">
+                                            <avatar-content [name]="user.agentName" [subname]="''"
+                                                [imagename]="''"></avatar-content>
+                                            <!-- <span class="iconButton medium fw-bold iceBg border">
                                                                     
                                                                                             </span> -->
-                                                <!-- <h6 class="ms-2 mb-0">{{user.agentName}}</h6> -->
+                                            <!-- <h6 class="ms-2 mb-0">{{user.agentName}}</h6> -->
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <span class="badge rounded-pill skyTransBg  me-2">{{user.tags[0]}}</span>
+                                            <span class="badge rounded-pill cherryTransBg me-2">{{user.tags[1]}}</span>
+                                            <div class="d-inline-block dropdown w-auto device-dd"
+                                                *ngIf="user.tags.length>2">
+                                                <button class="d-inline-block iconButton small iconHover" type="button"
+                                                    id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <span class="silver">+{{user.tags.length-2}}</span>
+                                                </button>
+                                                <ul class="dropdown-menu w-auto dd-scroll"
+                                                    aria-labelledby="dropdownMenu2"
+                                                    style="overflow: auto; height: 200px;">
+                                                    <li *ngFor="let cd of user.tags; let i=index">
+                                                        <span class="silver" *ngIf="i !==0 && i !==1 ">
+                                                            <a class="dropdown-item">
+                                                                <span class="badge rounded-pill skyTransBg ">
+                                                                    {{cd}}</span>
+                                                            </a>
+                                                        </span>
+                                                    </li>
+                                                </ul>
                                             </div>
-                                            <div class="d-flex align-items-center">
-                                        <span class="badge rounded-pill skyTransBg  me-2">{{user.tags[0]}}</span>
-                                        <span class="badge rounded-pill cherryTransBg me-2">{{user.tags[1]}}</span>
-                                        <div class="d-inline-block dropdown w-auto device-dd"
-                                            *ngIf="user.tags.length>2">
-                                            <button class="d-inline-block iconButton small iconHover" type="button"
-                                                id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <span class="silver">+{{user.tags.length-2}}</span>
-                                            </button>
-                                            <ul class="dropdown-menu w-auto dd-scroll"
-                                                aria-labelledby="dropdownMenu2"
-                                                style="overflow: auto; height: 200px;">
-                                                <li *ngFor="let cd of user.tags; let i=index">
-                                                    <span class="silver" *ngIf="i !==0 && i !==1 ">
-                                                        <a class="dropdown-item">
-                                                            <span class="badge rounded-pill skyTransBg " >
-                                                                {{cd}}</span>
-                                                        </a>
-                                                    </span>
-                                                </li>
-                                            </ul>
                                         </div>
-                                    </div>
-                                            <button class="iconButton medium exportbtn" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" data-bs-title="Export to CSV"
-                                                (click)="expotCSv(user)" class="btn btn-outline-success "><i
-                                                    class="fa-light fa-file-csv"></i></button>
-                                            <a class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        <button class="iconButton medium exportbtn" data-bs-toggle="tooltip"
+                                            data-bs-placement="top" data-bs-title="Export to CSV"
+                                            (click)="expotCSv(user)"><i class="fa-light fa-file-csv"></i></button>
+                                        <a class="accordion-button" type="button" data-bs-toggle="collapse"
                                             [href]="'#detail' + user?.agentId" aria-expanded="true"
-                                    
-                                                aria-controls="collapseOne">
-                                    </a>
-                                        </div>
-                         
-                                        <div  [id]="'detail'+ user?.agentId"class="accordion-collapse collapse "
-                                            data-bs-parent="#accordionExample "  >
-                                            <div class="accordion-body"  style="overflow: auto; height: 300px;">
-                                                <div class="py-2 border-bottom" *ngFor="let userDetail of user.customerData">
-                                                    <div class="d-flex" >
-                                                        <div class="flex-shrink-0">
-        
-                                                        <avatar-content [name]="userDetail.customerName" [subname]="''" [imagename]="''"></avatar-content>
-                                                        </div>
-                                                        <div class="flex-grow-1 mt-5 " style="margin-left: -100px;">
-                                                            <div>
-                                                                <small class="coal">{{userDetail.createdDate | date:'short'}}
+                                            aria-controls="collapseOne">
+                                        </a>
+                                    </div>
 
-                                                                </small>
-                                                            </div>
-                                                            <a data-bs-toggle="collapse"
-                                                                [href]="'#detail' + userDetail?.feedId" role="button"
-                                                                aria-expanded="false" aria-controls="detail1"
-                                                                class="sky">View Details</a>
+                                    <div [id]="'detail'+ user?.agentId" class="accordion-collapse collapse "
+                                        data-bs-parent="#accordionExample ">
+                                        <div class="accordion-body" style="overflow: auto; height: 200px;">
+                                            <div class="py-2 border-bottom"
+                                                *ngFor="let userDetail of user.customerData">
+                                                <div class="d-flex">
+                                                    <div class="flex-shrink-0">
+                                                        <app-avatar-photo [photoUrl]="" 
+                                                            [name]="userDetail.customerName"></app-avatar-photo>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <div>
+                                                            <span><b>{{userDetail.customerName }}</b></span>
+                                                            &nbsp;
+                                                            <small class="coal">{{userDetail.createdDate |
+                                                                date:'short'}}</small>
                                                         </div>
+                                                        <a data-bs-toggle="collapse"
+                                                            [href]="'#detail' + userDetail?.feedId" role="button"
+                                                            aria-expanded="false" aria-controls="detail1"
+                                                            class="sky">View Details</a>
+                                                    </div>
+                                                    <div>
+                                                    </div> 
                                                         <div>
                                                             <ng-container *ngFor="let abc of userDetail.tags">
                                                                 <span
@@ -216,6 +222,8 @@
                                         </div>
                                     </div>
                             </ng-container>
+                            
+   
                         </div>
                     </div>
                 </div>

@@ -18,7 +18,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="date" class="form-control" placeholder=" Start Date"
-                                            [max]="maxEndDate" (change)="addAgentGraph()" [(ngModel)]="endDate" />
+                                            [max]="maxEndDate" (change)="resetStartDate()" [(ngModel)]="endDate" />
                                     </div>
                                 </div>
                             </li>
@@ -63,75 +63,85 @@
                                     </ul>
                                 </div>
                             </li>
-
-                            <li class="list-inline-item">
-                                <div class="dropdown icondropdown w-auto">
-                                    <button class="btn dropdown-toggle" type="button" id="columnssort"
-                                        (click)=" mouseClickReset()" data-bs-toggle="dropdown" aria-expanded="false"
-                                        data-bs-auto-close="outside">
-                                        Channels
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="columnssort">
-                                        <li class="dropdown-listing-header">
-                                            <form class="custom-searchbar my-2 mx-0">
-                                                <input class="form-control bg-light border-0 py-2" placeholder="Search"
-                                                    [(ngModel)]="searchText" aria-label="Search">
-                                                <span class="btn searchbar-btn" type="submit">
-                                                    <i class="fal fa-search silver"></i>
-                                                </span>
-                                            </form>
-                                        </li>
-                                        <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
-                                            style="overflow: auto; height: 300px;">
-                                            <div class="scroll-content">
-                                                <div class="collapse-wrap mx-3" id="qr-ques1"
-                                                    *ngFor="let channel of channelOptions | filter:searchText">
-                                                    <div class="dropdown-item d-flex align-items-center">
-                                                        <div class="form-check"
-                                                            (click)="onCheckboxChange(channel.name)">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="flexRadioDefault" id={{channel.id}} #radioInput>
-                                                            <label class="form-check-label" for={{channel.id}}>
-                                                                <i [ngClass]="channel.icon"></i>{{channel.name}}
-                                                            </label>
+                              <ng-container  >
+                                <li class="list-inline-item">
+                                    <div class="dropdown icondropdown w-auto">
+                                        <button class="btn dropdown-toggle" type="button" id="columnssort"
+                                            (click)=" mouseClickReset()" data-bs-toggle="dropdown" aria-expanded="false"
+                                            data-bs-auto-close="outside">
+                                            Channels
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="columnssort">
+                                            <li class="dropdown-listing-header">
+                                                <form class="custom-searchbar my-2 mx-0">
+                                                    <input class="form-control bg-light border-0 py-2" placeholder="Search"
+                                                        [(ngModel)]="searchText" aria-label="Search">
+                                                    <span class="btn searchbar-btn" type="submit">
+                                                        <i class="fal fa-search silver"></i>
+                                                    </span>
+                                                </form>
+                                            </li>
+                                            <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
+                                                style="overflow: auto; height: auto;">
+                                                <div class="scroll-content">
+                                                    <div class="collapse-wrap mx-3" id="qr-ques1"
+                                                        *ngFor="let channel of channelOptions | filter:searchText">
+                                                        <div class="dropdown-item d-flex align-items-center">
+                                                            <div class="form-check"
+                                                                (click)="onCheckboxChange(channel.name)">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="flexRadioDefault" id={{channel.id}} #radioInput>
+                                                                <label class="form-check-label" for={{channel.id}}>
+                                                                    <i [ngClass]="channel.icon"></i>{{channel.name}}
+                                                                </label>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <!-- <li *ngFor="let channel of channelOptions | filter:searchText">
+                                                        <a class="dropdown-item d-flex align-items-center">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio"
+                                                                    id={{channel.id}} [(ngModel)]="channel.isSelected"
+                                                                    name="flexRadioDefault">
+                                                                <label class="form-check-label" for={{channel.id}}
+                                                                    (change)="onCheckboxChange(channel.name)">
+                                                                    <i [ngClass]="channel.icon"></i> {{ channel.name }}
+                                                                </label>
+                                                            </div>
+                                                        </a>
+                                                    </li> -->
                                                 </div>
-                                                <!-- <li *ngFor="let channel of channelOptions | filter:searchText">
-                                                    <a class="dropdown-item d-flex align-items-center">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="radio"
-                                                                id={{channel.id}} [(ngModel)]="channel.isSelected"
-                                                                name="flexRadioDefault">
-                                                            <label class="form-check-label" for={{channel.id}}
-                                                                (change)="onCheckboxChange(channel.name)">
-                                                                <i [ngClass]="channel.icon"></i> {{ channel.name }}
-                                                            </label>
-                                                        </div>
-                                                    </a>
-                                                </li> -->
                                             </div>
-                                        </div>
-                                    </ul>
-                                </div>
-                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ng-container>
+                           
                             <li class="list-inline-item ms-auto">
                                 <div class="btn-group buttonfilter" role="group"
                                     aria-label="Basic radio toggle button group">
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
-                                        autocomplete="off" checked="" (click)="date_pagination(5)">
-                                    <label class="btn btn-outline-secondary" for="btnradio1">5</label>
-
+                                    <ng-container *ngFor="let date of paginationDate">
+                                        <input type="radio" class="btn-check" name="btnradio" id="{{'btnradio' + date.id}}"
+                                               [value]="date.value" 
+                                               #radioInput
+                                               autocomplete="off" (change)="date_pagination($event)">
+                                        <label class="btn btn-outline-secondary" for="{{'btnradio' + date.id}}">{{date.value}}</label>
+                                      </ng-container>
+                                      
+<!-- 
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
-                                        autocomplete="off" (click)="date_pagination(10)">
+                                    #radioInput
+                                        autocomplete="off" (click)="date_pagination(10)"    >
                                     <label class="btn btn-outline-secondary" for="btnradio2">10</label>
 
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
-                                        autocomplete="off" (click)="date_pagination(20)">
+                                    #radioInput
+                                        autocomplete="off" (click)="date_pagination(20)"   >
                                     <label class="btn btn-outline-secondary" for="btnradio3">20</label>
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
-                                        autocomplete="off" (click)="date_pagination(30)">
-                                    <label class="btn btn-outline-secondary" for="btnradio4">30</label>
+                                    #radioInput
+                                        autocomplete="off" (click)="date_pagination(30)"   >
+                                    <label class="btn btn-outline-secondary" for="btnradio4">30</label> -->
                                 </div>
                             </li>
                         </ul>
@@ -152,22 +162,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="card dashboard-card">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <span class="iconButton medium skyBg mb-4">
-                                                <i class="fa-light fa-retweet"></i>
-                                            </span>
-                                            <p class="coal mb-0"> {{ selectedChannelLabel === 'Twitter' ? 'Tweets' :
-                                                'Comments' }}</p>
+                        <ng-container *ngIf="isChannelShow!=='morinaga'">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card dashboard-card">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <span class="iconButton medium skyBg mb-4">
+                                                    <i class="fa-light fa-retweet"></i>
+                                                </span>
+                                                <p class="coal mb-0"> {{ selectedChannelLabel === 'Twitter' ? 'Tweets' :
+                                                    'Comments' }}</p>
+                                            </div>
+                                            <h2>{{agent_performance_report?.commentCount}}</h2>
                                         </div>
-                                        <h2>{{agent_performance_report?.commentCount}}</h2>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </ng-container>
+                       
                         <div class="col-lg-4 col-md-6">
                             <div class="card dashboard-card">
                                 <div class="card-body">
@@ -184,16 +197,49 @@
                             </div>
                         </div>
                     </div>
+                
                     <div class="row">
-                        <div class="col-12">
+                      
+                        <ng-container >
+                            <span  *ngIf="isChannelShow!=='morinaga'">
+                                <div class="col-12">
+                                    <div class="card iceBg p-4 rounded mb-5">
+                                        <h5 class="section-heading mb-4 p-0">{{ selectedChannelLabel }}</h5>
+                                        <div class="graphcontainer align-items-end">
+                                            <div #main style="height: 350px; width: 100%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </span>
+                       
+                        </ng-container>
+                        <!-- <div class="col-12">
+                       
                             <div class="card iceBg p-4 rounded mb-5">
                                 <h5 class="section-heading mb-4 p-0">{{ selectedChannelLabel }}</h5>
                                 <div class="graphcontainer align-items-end">
                                     <div #main style="height: 350px; width: 100%;"></div>
                                 </div>
                             </div>
-                        </div>
+                     
+                            
+                        </div> -->
+                        <!-- <ng-container *ngIf="isChannelShow=='local'";>
+                            <div class="col-12">
+                       
+                                <div class="card iceBg p-4 rounded mb-5">
+                                    <h5 class="section-heading mb-4 p-0">{{ selectedChannelLabel }}</h5>
+                                    <div class="graphcontainer align-items-end">
+                                        <div #main style="height: 350px; width: 100%;"></div>
+                                    </div>
+                                </div>
+                         
+                                
+                            </div>
+                     
+                        </ng-container> -->
                     </div>
+            
                     <div class="row">
                         <div class="col-12">
                             <div class="card iceBg p-4 rounded mb-5">
@@ -214,7 +260,7 @@
                                             <i [ngClass]="channel.icon"></i>
                                         </span>
                                     </span>
-                                    <span class="ps-3">{{ selectedChannelLabel }}</span>
+                                    <span class="ps-3" *ngIf="isChannelShow!=='morinaga'">{{ selectedChannelLabel }}</span>
                                 </h5>
                             </div>
                             <div class="col-6">
@@ -237,7 +283,8 @@
                                 <thead class="fixed_first_row">
                                     <tr>
                                         <th>Agent</th>
-                                        <th>{{ selectedChannelLabel === 'Twitter' ? 'Tweets' : 'Comments' }}</th>
+                                    
+                                        <th *ngIf="isChannelShow!=='morinaga'">{{ selectedChannelLabel === 'Twitter' ? 'Tweets' : 'Comments' }}</th>
                                         <th>Direct Messages</th>
                                         <th>First Response Time</th>
                                         <th>Avg. Reply Time</th>
@@ -248,7 +295,7 @@
                                 <tbody>
                                     <tr *ngFor="let agent of agent_performance_report?.agentPerformance">
                                         <td>{{ agent.agentName }}</td>
-                                        <td>{{ agent.commentCount }}</td>
+                                        <td  *ngIf="isChannelShow!=='morinaga'">{{ agent.commentCount }}</td>
                                         <td>{{ agent.messageCount }}</td>
                                         <td>{{ agent.firstResponseTime | date:"YYYY, MM, dd, HH:MM:ss a" }}</td>
                                         <td>{{ agent.averageTime }}</td>

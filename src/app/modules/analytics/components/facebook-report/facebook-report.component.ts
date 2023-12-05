@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { HeaderService } from 'src/app/shared/services/header.service';
 import * as echarts from 'echarts';
@@ -14,6 +14,8 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
   imports: [CommonModule, FormsModule, NgxSpinnerModule],
 })
 export class FacebookReportComponent implements OnInit {
+  @ViewChild('radioInput', { static: false })
+  radioInput!: ElementRef<HTMLInputElement>;
   totalPostLikes: any;
   totalPostShares: any;
   totalPostComments: any;
@@ -82,18 +84,18 @@ export class FacebookReportComponent implements OnInit {
   totallikes: any;
   totalComments: any;
   totalShares: any;
-  totalmaleCountK: any;
-  totalfemaleCountK: any;
+  totalmaleCountK: number=0;
+  totalfemaleCountK: number=0;
   totalmaleCount: number = 0;
   totalfemaleCount: number = 0;
   totalPageLikes: any
   lastTotalPageLikes: any
   SumBehaivor: any
   countPercentage: any
-  totalmaleandfemalCount: any;
-  malepersentage: any;
-  femalepersentage: any;
-  externalRefernalsName: any;
+  totalmaleandfemalCount: number=0;
+  malepersentage: number=0;
+  femalepersentage:number=0;
+  externalRefernalsName: number=0;
   totalMessagePostCommentsAndreplies: any;
   totalMessageAndrepliesCount: any;
   totalEngagementMessage: any
@@ -196,7 +198,17 @@ export class FacebookReportComponent implements OnInit {
     this.publishedPegePostSpanDates = [];
     this.publishedUserPostSpanCounts = [];
     this.publishedUserPostSpanDates = [];
+    this.audienceEngagementTotlaComments=[]
     this.externalRefernalsData = [];
+   this.audienceEngagementTotlaComments=[]
+   this.audienceEngagmentTotalShare=[]
+    this.audienceunlikesCount=[]=[]
+    this.totalmaleCount=0
+    this.totalfemaleCount=0
+    this.femalepersentage=0
+    this.malepersentage=0
+    this.totalmaleCountK=0
+    this.totalfemaleCountK=0
     this.spinerServices.show();
     this.commandataSerivecs.Getfacebookreport(data).subscribe((res: any) => {
       this.spinerServices.hide();
@@ -216,8 +228,10 @@ export class FacebookReportComponent implements OnInit {
 
       this.totalPublishSum = this.tppP + this.ltpPP
       this.publishPercentage = (this.tppP / this.totalPublishSum) * 100
-
-
+// PagePost 
+this.pageperPost=this.faecbookresponce.totalPublishedPagePosts
+this.userPerPost=this.faecbookresponce.totalPublishedUserPosts
+this.totalNumberofpost=this.pageperPost + this.userPerPost
       // audience Engagement 
       this.TPL = this.faecbookresponce.totalPostLikes
       this.TPC = this.faecbookresponce.totalPostComments
@@ -233,7 +247,6 @@ export class FacebookReportComponent implements OnInit {
 
 
       this.totalEngagementMessage = res?.agentReplies?.totalMessagesAndRepliesCount
-      console.log('total Count===>', this.totalEngagementMessage)
       //  SlA replies
       this.replieswithin = this.faecbookresponce.replyWithinTime;
       this.repliesAfter = this.faecbookresponce.replyAfterTime;
@@ -327,7 +340,7 @@ export class FacebookReportComponent implements OnInit {
       // Publishin Behavior
       this.publishedPegePostSpan = res.publishedPagePostSpan;
       this.publishedPegePostSpan?.forEach((x: any) => {
-        this.pageperPost += x.activityCount;
+       
         if (
           !this.publishedPegePostSpanDates.includes(x.dateValue.split('T')[0])
         ) {
@@ -345,7 +358,7 @@ export class FacebookReportComponent implements OnInit {
         }
         this.publishedUserPostSpanCounts.push(x.activityCount);
       });
-      this.totalNumberofpost = this.pageperPost + this.userPerPost;
+    
       // Top 10 External Sources
       this.externalRefernals = res.externalReferrals;
       this.externalRefernals?.forEach((x: any) => {
@@ -364,14 +377,10 @@ export class FacebookReportComponent implements OnInit {
         this.totalfemaleCount += x.femaleCount;
         this.totalfemaleCountK = Math.floor(this.totalfemaleCount / 1000);
       });
-
+debugger
       this.totalmaleandfemalCount = this.totalmaleCount + this.totalfemaleCount;
-      this.malepersentage = (
-        (this.totalmaleCount / this.totalmaleandfemalCount) * 100
-      ).toFixed(2)
-      this.femalepersentage = (
-        (this.totalfemaleCount / this.totalmaleandfemalCount) * 100
-      ).toFixed(2)
+      this.malepersentage = Number(( (this.totalmaleCount / this.totalmaleandfemalCount) * 100).toFixed(2))
+      this.femalepersentage = Number(((this.totalfemaleCount / this.totalmaleandfemalCount) * 100).toFixed(2))
       // RecentPost
 
       this.recentPosts = res.recentPosts;
@@ -400,6 +409,15 @@ export class FacebookReportComponent implements OnInit {
       this.getExternalSourcesChart();
     });
   }
+  getMaleProgressBarStyle() {
+    const widthPercentage = this.malepersentage + '%';
+    return { width: widthPercentage };
+  }
+
+  getFemaleProgressBarStyle() {
+    const widthPercentage = this.femalepersentage + '%';
+    return { width: widthPercentage };
+  }
   getPageReachablityChart() {
     var chartDom = document.getElementById('pagereachablity');
     var myChart = echarts.init(chartDom);
@@ -412,11 +430,13 @@ export class FacebookReportComponent implements OnInit {
       },
       legend: {
         data: ['Page  Reach'],
+        bottom:'bottom',
+        icon:'circle'
       },
       grid: {
         left: '3%',
         right: '4%',
-        bottom: '3%',
+        bottom: '10%',
         containLabel: true,
       },
       toolbox: {
@@ -452,6 +472,7 @@ export class FacebookReportComponent implements OnInit {
     option = {
       tooltip: {
         trigger: 'axis',
+
       },
       legend: {
         data: [
@@ -466,11 +487,14 @@ export class FacebookReportComponent implements OnInit {
           'ThankFul',
           'Wow',
         ],
+        bottom:'bottom',
+        icon:'circle',
+        type: 'scroll',
       },
       grid: {
         left: '3%',
         right: '4%',
-        bottom: '3%',
+        bottom: '10%',
         containLabel: true,
       },
       toolbox: {
@@ -554,11 +578,13 @@ export class FacebookReportComponent implements OnInit {
       },
       legend: {
         data: ['Total People Who Viewed'],
+        bottom:'bottom',
+        icon:'circle'
       },
       grid: {
         left: '3%',
         right: '4%',
-        bottom: '3%',
+        bottom: '10%',
         containLabel: true,
       },
       toolbox: {
@@ -598,7 +624,7 @@ export class FacebookReportComponent implements OnInit {
     var option: EChartsOption;
 
     option = {
-      color: ['#4867aa', '#ffa800', '#0095ff'],
+      color: ['#8063B5', '#ffa800', '#0095ff'],
       tooltip: {
         trigger: 'item',
       },
@@ -639,6 +665,8 @@ export class FacebookReportComponent implements OnInit {
       color: ['#6441a5 ', '#e7edf1'],
       legend: {
         data: ['Page Posts', 'Users Posts'],
+        icon:'circle',
+        bottom:0
       },
       tooltip: {
         trigger: 'axis',
@@ -694,6 +722,8 @@ export class FacebookReportComponent implements OnInit {
       },
       legend: {
         data: ['Likes', 'Comments', 'Shares'],
+        icon:'circle',
+        bottom:0
       },
       toolbox: {
         feature: {
@@ -703,7 +733,7 @@ export class FacebookReportComponent implements OnInit {
       grid: {
         left: '3%',
         right: '4%',
-        bottom: '3%',
+        bottom: '8%',
         containLabel: true,
       },
       xAxis: [
@@ -775,6 +805,8 @@ export class FacebookReportComponent implements OnInit {
       },
       legend: {
         data: ['likes', 'Unlikes'],
+        icon:'circle',
+        bottom:0
       },
       toolbox: {
         feature: {
@@ -785,7 +817,7 @@ export class FacebookReportComponent implements OnInit {
       grid: {
         left: '3%',
         right: '4%',
-        bottom: '3%',
+        bottom: '10%',
         containLabel: true,
       },
       xAxis: [
@@ -845,6 +877,10 @@ export class FacebookReportComponent implements OnInit {
   resetEndDate() {
     if (this.enddate >= this.startDate) {
       this.getAllfeacebookData()
+      
+      if (this.radioInput !== undefined) {
+        this.radioInput.nativeElement.checked = false;
+      }
     }
     else {
       alert("EndDate is greater then StartDate")

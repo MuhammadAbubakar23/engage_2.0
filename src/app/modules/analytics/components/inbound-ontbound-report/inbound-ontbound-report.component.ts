@@ -6,6 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { HeaderService } from 'src/app/shared/services/header.service';
@@ -13,7 +14,7 @@ import * as echarts from 'echarts';
 import { SharedModule } from '../../../../shared/shared.module';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
-
+import { Router } from '@angular/router';
 @Component({
   standalone: true,
   selector: 'app-inbound-ontbound-report',
@@ -26,7 +27,7 @@ export class InboundOntboundReportComponent implements OnInit {
   inboundOutboundReport!: ElementRef;
   @ViewChild('ChannelWiseGraph', { static: true })
   ChannelWiseGraph!: ElementRef;
-  @ViewChild('TagsPerChannel', { static: true }) TagsPerChannel!: ElementRef;
+  @ViewChild('TagsPerChannel', { static: false }) TagsPerChannel!: ElementRef;
   @ViewChild('senitimentalGraph', { static: true })
   senitimentalGraph!: ElementRef;
   selectedChannels: string = '';
@@ -44,25 +45,65 @@ export class InboundOntboundReportComponent implements OnInit {
   platformsArray: any[] = []
   currentDate: any;
   maxEndDate: any;
-
+isChannelsShow:boolean=false;
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
-
+  activeChannel:any
+  channelOptions:any[]=[]
+  existingNameCount:any[]=[]
   tagsPerChannel: any[] = [];
+  tagreportArry:any[]=[]
   private inboundOutboundChart:any;
   private sentimentChart:any;
   private tagsChart:any;
   private averageResponseChart:any;
+  isChannelShow:any=''
+  inboundoutboundDate:any[]=[]
+  inboundData:any[]=[]
+  outboundData:any[]=[]
+  isShowTagReport:boolean=false
   constructor(
     private _hS: HeaderService,
     private commonService: CommonDataService,
     private datePipe: DatePipe,
     private cdr: ChangeDetectorRef,
     private SpinnerService: NgxSpinnerService,
-    private stor: StorageService
+    private stor: StorageService,
+    private _route:Router,
+    private location:Location
   ) { }
   ngOnInit(): void {
+   debugger 
+
+this.activeChannel=window.location.origin
+debugger
+if(this.activeChannel=='https://waengage.enteract.live/')
+{
+  debugger
+  this.isChannelShow="morinaga";
+  this.getChannel()
+}
+else if(this.activeChannel=='https://keportal.enteract.live')
+{
+   this.isChannelShow='KE';
+   this.getChannel()
+}
+else if(this.activeChannel=='https://tppl.360scrm.com')
+{
+  this.isChannelShow='ttpl';
+  this.getChannel()
+}
+else if(this.activeChannel=='https://engage.jazz.com.pk')
+{
+  this.isChannelShow='jazz'
+  this.getChannel()
+}
+else{
+  this.isChannelShow='loc'
+  this.getChannel()
+}
+
     const newObj = {
       title: 'Inbound/Outbound Report',
       url: '/analytics/inbound-outbound-report',
@@ -85,6 +126,7 @@ export class InboundOntboundReportComponent implements OnInit {
         tags.subTags.forEach((sentimentObj: any) => {
           if (!this.sentimentOptions.includes(sentimentObj)) {
             this.sentimentOptions.push(sentimentObj)
+            console.log("SemtimentValue===>",this.sentimentOptions)
           }
         });
       }
@@ -99,7 +141,54 @@ export class InboundOntboundReportComponent implements OnInit {
   mouseClickReset() {
     this.searchText = ''
   }
-
+  getChannel(){
+    debugger
+    if(this.isChannelShow=="morinaga"){
+      this.channelOptions = [
+     
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+      ];
+    }
+    if(this.isChannelShow=="jazz"){
+      this.channelOptions = [
+        { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+    { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+    { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+    { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+    { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+    { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
+    { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+      ];
+    }
+     else if(this.isChannelShow=="ttpl"){
+      this.channelOptions = [
+    { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+      ];
+    }
+  else if(this.isChannelShow=="kE"){
+      this.channelOptions = [
+        { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+        { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+        { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+        { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+      ];
+    }
+     else if(this.isChannelShow=='loc'){
+ this. channelOptions = [
+    { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+    { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+    { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+    { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+    { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
+    // { id: '16', name: 'SMS', icon: 'fa-solid fa-comment-alt pe-2', isSelected: false },
+    { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+    // { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+    // { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+    // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
+  ];
+    }
+ 
+  }
   onCheckboxChange() {
     this.AddGraph();
     this.cdr.detectChanges();
@@ -117,12 +206,12 @@ export class InboundOntboundReportComponent implements OnInit {
 
     let selectedTagOptionArray = this.subTags
       .filter((item) => item.isSelected)
-      .map((item) => item.slug);
+      .map((item) => item.name);
     this.selectedTagOption = selectedTagOptionArray.toString();
 
     let selectedSentimentsArray = this.sentimentOptions
       .filter((item) => item.isSelected)
-      .map((item) => item.slug);
+      .map((item) => item.name);
     this.selectedSentiment = selectedSentimentsArray.toString();
 
     let selectedTagByArray = this.taggedByOptions
@@ -150,10 +239,14 @@ export class InboundOntboundReportComponent implements OnInit {
       const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
       if (diffDays > 30) {
         alert('Select a date range of 30 days or less');
+     this.endDate=''
         return;
       }
     }
-
+this.inboundoutboundDate=[]
+this.inboundData=[]
+this.outboundData=[]
+this.isShowTagReport=false
     const requestData = {
       fromDate: this.startDate,
       toDate: this.endDate,
@@ -172,80 +265,155 @@ export class InboundOntboundReportComponent implements OnInit {
       this.Inbound_data = [];
       this.Outbound_data = [];
       this.platformsArray = [];
+      this.tagsPerChannel=[]
       this.commonService.Addinboundoutbound(requestData).subscribe(
         (response: any) => {
           this.SpinnerService.hide();
           if (response) {
             this.Inbound_Outbound_Report = response;
-            this.Inbound_Outbound_Report.channelReportData.dateWiseData.forEach(
-              (data: any) => {
-                const date = new Date(data.createdDate);
-                this.Inbound_data.push({
-                  x: date.toLocaleDateString(),
-                  y: data.inboundData,
-                });
-                this.Outbound_data.push({
-                  x: date.toLocaleDateString(),
-                  y: data.outboundData,
-                });
+            this.tagreportArry=this.Inbound_Outbound_Report.tagReportData
+            if(this.tagreportArry.length==0){
+              this.isShowTagReport=true
+            }
+         
+            this.Inbound_Outbound_Report.channelReportData.dateWiseData.forEach((x:any)=>{
+              if(!this.inboundoutboundDate.includes(this.datePipe.transform(x.createdDate,'dd MMM '))){
+                    this.inboundoutboundDate.push(this.datePipe.transform(x.createdDate,'dd MMM'))
               }
-            );
+              this.inboundData.push(x.inboundData)
+              this.outboundData.push(x.outboundData)
+            })
+            // this.Inbound_Outbound_Report.channelReportData.dateWiseData.forEach(
+            //   (data: any) => {
+            //     const date = new Date(data.createdDate);
+            //     this.Inbound_data.push({
+            //       x: date.toLocaleDateString(),
+            //       y: data.inboundData,
+            //     });
+            //     this.Outbound_data.push({
+            //       x: date.toLocaleDateString(),
+            //       y: data.outboundData,
+            //     });
+            //   }
+            // );
             // inbound
-            const doms = this.inboundOutboundReport.nativeElement;
-            this.inboundOutboundChart = echarts.init(doms, null, {
-              renderer: 'canvas',
-              useDirtyRect: false,
-            });
-            var option: echarts.EChartsOption;
-            option = {
-              color: ['rgba(255,189,61,255)', 'rgba(96,191,235,255)'],
-              tooltip: {
-                trigger: 'axis'
-              },
-              legend: {
-                data: ['Inbound', 'OutBound'],
-                icon:'circle'
-              },
-              grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-              },
-              toolbox: {
-                feature: {
-                  saveAsImage: {}
-                }
-              },
-              xAxis: {
-                type: 'category',
-                boundaryGap: false,
-                data: this.Inbound_data.map(function (dataPoint) {
-                  return dataPoint.x;
-                }),
-              },
-              yAxis: {
-                type: 'value'
-              },
-              series: [
-                {
-                  name: 'Inbound',
-                  type: 'line',
-                  data: this.Inbound_data.map(function (dataPoint) {
-                    return dataPoint.y;
-                  }),
-                },
-                {
-                  name: 'Outbound',
-                  type: 'line',
-                  data: this.Outbound_data.map(function (dataPoint) {
-                    return dataPoint.y;
-                  }),
-                },
+            if (this.isShowTagReport == false) {
+              const doms = this.inboundOutboundReport.nativeElement;
+              this.inboundOutboundChart = echarts.init(doms, null, {
+                renderer: 'canvas',
+                useDirtyRect: false,
+              });
+              var option: echarts.EChartsOption;
 
-              ]
-            };
-            this.inboundOutboundChart.setOption(option);
+              option = {
+                color: ['rgba(255,189,61,255)', 'rgba(96,191,235,255)'],
+                tooltip: {
+
+                  trigger: 'axis',
+
+                },
+                legend: {
+                  data: ['Inbound', 'OutBound'],
+                  icon: 'circle',
+                  bottom: 'bottom'
+                },
+                grid: {
+                  left: '3%',
+                  right: '4%',
+                  bottom: '13%',
+                  containLabel: true
+                },
+                toolbox: {
+                  feature: {
+                    saveAsImage: {}
+                  }
+                },
+                xAxis: {
+                  type: 'category',
+                  boundaryGap: false,
+                  data: this.inboundoutboundDate,
+                  axisLabel: {
+                    rotate: 45,
+                  },
+                },
+                yAxis: {
+                  type: 'value'
+                },
+                series: [
+                  {
+                    name: 'Inbound',
+                    type: 'line',
+
+                    data: this.inboundData
+                  },
+                  {
+                    name: 'OutBound',
+                    type: 'line',
+
+                    data: this.outboundData
+                  },
+
+                ]
+              };
+
+              this.inboundOutboundChart.setOption(option);
+
+            }
+
+
+            // var option: echarts.EChartsOption;
+            // option = {
+            //   color: ['rgba(255,189,61,255)', 'rgba(96,191,235,255)'],
+            //   tooltip: {
+            //     trigger: 'axis'
+            //   },
+            //   legend: {
+            //     bottom:0,
+                
+            //     data: ['Inbound', 'OutBound'],
+            //     icon:'circle'
+            //   },
+            //   grid: {
+            //     left: '3%',
+            //     right: '4%',
+            //     bottom: '10%',
+            //     containLabel: true
+            //   },
+            //   toolbox: {
+            //     feature: {
+            //       saveAsImage: {}
+            //     }
+            //   },
+            //   xAxis: {
+            //     type: 'category',
+            //     boundaryGap: false,
+            //     data:
+            //     // data: this.Inbound_data.map(function (dataPoint) {
+            //     //   return dataPoint.x;
+            //     }),
+            //   },
+            //   yAxis: {
+            //     type: 'value'
+            //   },
+            //   series: [
+            //     {
+            //       name: 'Inbound',
+            //       type: 'line',
+            //       data: this.Inbound_data.map(function (dataPoint) {
+            //         return dataPoint.y;
+            //       }),
+            //     },
+            //     {
+            //       name: 'OutBound',
+            //       type: 'line',
+            //       data: this.Outbound_data.map(function (dataPoint) {
+            //         return dataPoint.y;
+            //       }),
+            //     },
+
+            //   ]
+            // };
+            // this.inboundOutboundChart.setOption(option);
             
 
             // Update the ChannelWiseGraph
@@ -285,9 +453,10 @@ export class InboundOntboundReportComponent implements OnInit {
                 }
               },
               legend: {
-                orient: 'vertical',
-                left: 'left',
+                orient: 'horizontal',
                 data: ['Unanswered', 'Answered'],
+                icon:'circle',
+                bottom:0
               },
               series: [
                 {
@@ -326,13 +495,16 @@ export class InboundOntboundReportComponent implements OnInit {
             });
 
             var option: echarts.EChartsOption;
+            debugger
             const tagReportData = this.Inbound_Outbound_Report.tagReportData;
             tagReportData.forEach((channel: any) => {
-
+            debugger
               if (!this.platformsArray.includes(channel.platform)) {
                 this.platformsArray.push(channel.platform);
               }
+             
               channel.data.forEach((tag: any) => {
+                debugger
                 const name = tag.name;
                 const count = tag.count;
                 const existingNameCount = this.tagsPerChannel.find((n) => n.name === name);
@@ -346,6 +518,7 @@ export class InboundOntboundReportComponent implements OnInit {
                     data: [count],
                   });
                 }
+          
               });
             });
             option = {
@@ -421,7 +594,10 @@ export class InboundOntboundReportComponent implements OnInit {
               });
             });
             option = {
-              legend: {},
+              legend: {
+                icon:'circle',
+                bottom:0
+              },
               tooltip: { trigger: 'axis' },
               dataset: {
                 source: sentimentDataPoints,
@@ -503,68 +679,68 @@ export class InboundOntboundReportComponent implements OnInit {
     { id: '94', label: 'Months' },
   ];
 
-  channelOptions = [
-    {
-      id: '123',
-      name: 'Twitter',
-      icon: 'fa-brands fa-twitter sky pe-2',
-      isSelected: false,
-    },
-    {
-      id: '12',
-      name: 'Instagram',
-      icon: 'fa-brands fa-instagram instabg  pe-2',
-      isSelected: false,
-    },
-    {
-      id: '14',
-      name: 'LinkedIn',
-      icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2',
-      isSelected: false,
-    },
-    {
-      id: '15',
-      name: 'Facebook',
-      icon: 'fa-brands fa-facebook facebook pe-2',
-      isSelected: false,
-    },
-    {
-      id: '14',
-      name: 'YouTube',
-      icon: 'fa-brands fa-youtube radical pe-2',
-      isSelected: false,
-    },
-    // {
-    //   id: '15',
-    //   name: 'SMS',
-    //   icon: 'fa-solid fa-comment-alt pe-2',
-    //   isSelected: false,
-    // },
-    {
-      id: '14',
-      name: 'WhatsApp',
-      icon: 'fa-brands fa-whatsapp mint pe-2',
-      isSelected: false,
-    },
-    // {
-    //   id: '15',
-    //   name: 'Email',
-    //   icon: 'fa-solid fa-envelope pe-2',
-    //   isSelected: false,
-    // },
-    // {
-    //   id: '14',
-    //   name: 'OfficeEmail',
-    //   icon: 'fa-solid fa-envelope pe-2',
-    //   isSelected: false,
-    // },
-    // {
-    //   id: '14',
-    //   name: 'WebChat',
-    //   icon: 'fa-solid fa-comment-dots pe-2',
-    //   isSelected: false,
-    // },
-  ];
+  // channelOptions = [
+  //   {
+  //     id: '123',
+  //     name: 'Twitter',
+  //     icon: 'fa-brands fa-twitter sky pe-2',
+  //     isSelected: false,
+  //   },
+  //   {
+  //     id: '12',
+  //     name: 'Instagram',
+  //     icon: 'fa-brands fa-instagram instabg  pe-2',
+  //     isSelected: false,
+  //   },
+  //   {
+  //     id: '14',
+  //     name: 'LinkedIn',
+  //     icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2',
+  //     isSelected: false,
+  //   },
+  //   {
+  //     id: '15',
+  //     name: 'Facebook',
+  //     icon: 'fa-brands fa-facebook facebook pe-2',
+  //     isSelected: false,
+  //   },
+  //   {
+  //     id: '14',
+  //     name: 'YouTube',
+  //     icon: 'fa-brands fa-youtube radical pe-2',
+  //     isSelected: false,
+  //   },
+  //   // {
+  //   //   id: '15',
+  //   //   name: 'SMS',
+  //   //   icon: 'fa-solid fa-comment-alt pe-2',
+  //   //   isSelected: false,
+  //   // },
+  //   {
+  //     id: '14',
+  //     name: 'WhatsApp',
+  //     icon: 'fa-brands fa-whatsapp mint pe-2',
+  //     isSelected: false,
+  //   },
+  //   // {
+  //   //   id: '15',
+  //   //   name: 'Email',
+  //   //   icon: 'fa-solid fa-envelope pe-2',
+  //   //   isSelected: false,
+  //   // },
+  //   // {
+  //   //   id: '14',
+  //   //   name: 'OfficeEmail',
+  //   //   icon: 'fa-solid fa-envelope pe-2',
+  //   //   isSelected: false,
+  //   // },
+  //   // {
+  //   //   id: '14',
+  //   //   name: 'WebChat',
+  //   //   icon: 'fa-solid fa-comment-dots pe-2',
+  //   //   isSelected: false,
+  //   // },
+  // ];
   contentTypes = [
     {
       id: '11',

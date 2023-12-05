@@ -189,6 +189,12 @@ export class LinkedInReportComponent implements OnInit {
       },
       yAxis: {
         type: 'value',
+        // axisLabel : {
+        //   formatter: ''
+        // },
+        name: 'Y-Axis',
+        nameLocation: 'middle',
+        nameGap: 50
       },
       series: [
         {

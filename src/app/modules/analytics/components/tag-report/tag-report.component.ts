@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as echarts from 'echarts';
 import { HeaderService } from 'src/app/shared/services/header.service';
@@ -17,6 +17,8 @@ import { LayoutsModule } from 'src/app/layouts/layouts.module';
 })
 export class TagReportComponent implements OnInit {
   startDate = '';
+  @ViewChild('radioInput', { static: false })
+  radioInput!: ElementRef<HTMLInputElement>;
   endDate = '';
   currentDate: any;
   endMaxDate: any;
@@ -175,7 +177,7 @@ return this.uniqueAgentData;
         type: 'scroll',
         top: '17%',
         orient: 'vertical',
-        right: -200,
+        right: -60,
         icone:'circle',
         textStyle: {
           fontSize: 16, // Set the font size for the legend text
@@ -185,7 +187,7 @@ return this.uniqueAgentData;
           const dataItem = this.facebookCommentsArray.find(item => item.name === name);
 
           if (dataItem) {
-            return `${name}:${dataItem.value}    %`;
+            return `${name}:${dataItem.value}   %`;
           }
           return name;
         },
@@ -199,6 +201,7 @@ return this.uniqueAgentData;
             show: false,
             position: 'center',
           },
+          left:-600,
           icon: 'circle',
           emphasis: {
             label: {
@@ -224,6 +227,10 @@ return this.uniqueAgentData;
   resetEndDate() {
     if (this.endDate >= this.startDate) {
       this.getAllTagsReport();
+
+      if (this.radioInput !== undefined) {
+        this.radioInput.nativeElement.checked = false;
+      }
     } 
     else {
       alert('EndDate is greater Then StartDate');
