@@ -22,8 +22,8 @@
                             </div>
                         </li>
                         <li class="list-inline-item">
-                            <select name="" class="form-select" >
-                           <ng-container *ngFor="let shift of shiftType" (click)="getByShifTime(shift)">
+                            <select name="" class="form-select"   (click)="getByShifTime($event)">
+                           <ng-container *ngFor="let shift of shiftType">
                             <option  [value]="shift.id" >{{shift.name}}</option>
                            </ng-container>
                      

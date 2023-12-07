@@ -132,30 +132,25 @@
                                         <h5 class="section-heading mb-4 p-0">Engagement</h5>
                                         <ul class="nav nav-tabs buttontabs">
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="channel-tab">Channel Wise</button>
+                                                <!-- <button class="nav-link active" id="channel-tab">Channel Wise</button> -->
                                             </li>
                                             <!-- <li class="nav-item" role="presentation">
                                                 <button class="nav-link" id="category-tab">Category wise</button>
                                             </li> -->
                                         </ul>
                                         <div class="graphcontainer align-items-end">
-                                            <div class="tab-content">
-                                                <div class="tab-pane active" id="channelwise" role="tabpanel"
-                                                    aria-labelledby="channelwise-tab" tabindex="0">
-                                                    <div id="enagement" style="height: 400px; width: 600px;">
-
-                                                    </div>
-                                                </div>
+                                            <div id="enagement" style="height: 400px; width: 100%;">
 
                                             </div>
+                                          
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-3 p-0">SENTIMENT ANALYSIS</h5>
-                                        <div class="text-center">
-                                            <div id="main" style="height: 440px ; width: 490px; margin-left: 0px;">
+                                        <div >
+                                            <div id="main" style="height: 440px ; width: 100%; margin-left: 0px;">
                                             </div>
                                         </div>
 
@@ -194,9 +189,9 @@
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-4 p-0">Audience Engagement Graph</h5>
                                         <div class="graphcontainer align-items-end">
-                                            <div class="text-center">
-                                                <div id="audience" style="height: 350px; width: 500px;"></div>
-                                            </div>
+                                  
+                                                <div id="audience" style="height: 350px; width: 100%;"></div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -204,9 +199,9 @@
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-3 p-0">Inbound Traffic Graph </h5>
                                         <div class="graphcontainer align-items-end">
-                                            <div class="text-center">
-                                                <div id="inbound" style="height: 350px; width: 500px;"></div>
-                                            </div>
+                                         
+                                                <div id="inbound" style="height: 350px; width: 100%;"></div>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -215,17 +210,18 @@
                         </div>
                         <div class="my-4">
                             <div class="row align-items-start h-auto">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-4 p-0">FACEBOOK REACTIONS</h5>
                                         <div class="graphcontainer align-items-end">
-                                            <div class="text-center">
-                                                <div id="facebookReaction" style="height: 300px; width: 500px;"></div>
+                                      
+                                                <div id="facebookReaction" style="height: 300px; width: 100%; max-width: 700px;"></div>
 
-                                            </div>
+                                  
                                         </div>
                                     </div>
                                 </div>
+<!--                   
                                 <div class="col-md-6">
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-3 p-0">Word Cloud</h5>
@@ -233,7 +229,7 @@
                                             <div class="worldcloud" style="height: 350px; width: 500px;">
                                                 <angular-tag-cloud [config]="options" [zoomOnHover]="zoomOnHoverOptions" 
                                                     [data]="data"></angular-tag-cloud>
-                                                <!-- <ul class="list-inline">
+                                              <ul class="list-inline">
                                                     <li class="list-inline-item">
                                                         <span class="badge rounded-pill skyTransBg">Power Bills
                                                             (1)</span>
@@ -271,11 +267,11 @@
                                                         <span class="badge rounded-pill skyTransBg">Electrocution
                                                             (1)</span>
                                                     </li>
-                                                </ul> -->
+                                                </ul> 
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <!-- <div class="printsection card my-4 p-4 iceBg">
@@ -351,7 +347,7 @@
                                 </div>
                                 <div class="col-md-8">
 
-                                    <div class="text-center">
+                                    <div >
                                      
                                     </div>
                                 </div>
@@ -360,7 +356,7 @@
                         <!-- <div class="card iceBg p-4 my-4">
                             <h5 class="section-heading mb-4 p-0"> REGIONWISE TRAFFIC</h5>
                             <div class="graphcontainer align-items-end">
-                                <div class="text-center">
+                                <div >
                                     <div id="regionWiseTrafic" style="height: 300px; width: 500px;"></div>
                                 </div>
                             </div>
@@ -399,7 +395,7 @@
                                             </li>
                                         </ul>
                                         <div class="graphcontainer align-items-end">
-                                            <div class="text-center">
+                                            <div >
                                                 <!-- <img src="../images/kgraph9.png" class="img-fluid" alt=""> -->
                                             </div>
                                         </div>
@@ -414,7 +410,7 @@
                                         <h5 class="section-heading mb-4 p-0">SENTIMENT ANALYSIS</h5>
 
                                         <div class="graphcontainer">
-                                            <div class="text-center">
+                                            <div >
                                                 <!-- <img src="../images/g03.svg" class="img-fluid" alt=""> -->
                                             </div>
                                         </div>
@@ -425,7 +421,7 @@
                                         <h5 class="section-heading mb-3 p-0">Engagement </h5>
 
                                         <div class="graphcontainer">
-                                            <div class="text-center">
+                                            <div >
 
                                             </div>
                                         </div>
@@ -439,7 +435,7 @@
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-4 p-0"> Category comparison</h5>
                                         <div class="graphcontainer">
-                                            <div class="text-center">
+                                            <div >
                                                 <!-- <img src="../images/g05.svg" class="img-fluid" alt=""> -->
                                             </div>
                                         </div>
@@ -447,7 +443,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="graphcontainer">
-                                        <div class="text-center">
+                                        <div >
                                             <!-- <img src="../images/g06.svg" class="img-fluid" alt=""> -->
                                         </div>
                                     </div>
@@ -568,19 +564,20 @@
                                 </div>
                                 <div class="col-md-8">
 
-                                    <div class="text-center">
+                                    <div >
                                         <!-- <img src="../images/kgraph6.png" class="img-fluid" alt=""> -->
                                     </div>
                                 </div>
                             </div>
                         </div>
+                     
                         <div class="card iceBg p-4">
                             <h5 class="section-heading mb-4 p-0"> REGIONWISE TRAFFIC</h5>
                             <div>
                                 <!-- <img src="../images/kgraph7.png" class="img-fluid" alt=""> -->
                             </div>
                         </div>
-
+                           
                     </div>
                 </div>
             </div>

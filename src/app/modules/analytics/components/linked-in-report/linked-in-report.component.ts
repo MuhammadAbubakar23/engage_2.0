@@ -77,14 +77,13 @@ export class LinkedInReportComponent implements OnInit {
     this.toastermessage = false;
   }
   resetEndDate() {
-  if(this.toDate<=this.fromDate){
-    this.toDate=''
-    alert("EndDate is greater_then StartDate")
-  }
-  else{
-    this.getLinkedInReportData()
-    this.getAllLinkedInfollowrs()
-  }
+    if (this.toDate >= this.fromDate) {
+      this.getLinkedInReportData();
+      this.getAllLinkedInfollowrs()
+    } else {
+      alert('EndDate is lessthen StartDate');
+      this.toDate = '';
+    }
   }
   export() {
     this.excelServices.exportAsExcelFile(this.topFiveCustomer, 'LinkedIn-Top-Five-Updates')
@@ -96,7 +95,7 @@ export class LinkedInReportComponent implements OnInit {
   const today =new Date()
   this.toDate =this.datePipe.transform(this.currentDate,'YYYY-MM-dd') || '';
   let prevDate = this.currentDate.setDate(this.currentDate.getDate()-5);
-  this.fromDate=this.datePipe.transform(prevDate,'YYYY-MM-d') || '';
+  this.fromDate=this.datePipe.transform(prevDate,'YYYY-MM-dd') || '';
  }
  else if(this.fromDate!='' && this.toDate!=''){
   this.toDate=this.toDate
@@ -437,13 +436,18 @@ export class LinkedInReportComponent implements OnInit {
       const today =new Date()
       this.toDate =this.datePipe.transform(this.currentDate,'YYYY-MM-dd') || '';
       let prevDate = this.currentDate.setDate(this.currentDate.getDate()-5);
-      this.fromDate=this.datePipe.transform(prevDate,'YYYY-MM-d') || '';
+      this.fromDate=this.datePipe.transform(prevDate,'YYYY-MM-dd') || '';
      }
      else if(this.fromDate!='' && this.toDate!=''){
       this.toDate=this.toDate
       this.fromDate=this.fromDate
      }
-    
+    // let obj= {
+    //   pageId: "76213578",
+    //   from: "2023-09-10",
+    //   to: "2023-11-21",
+    //   lastPostId: 0
+    // }
     
     let obj ={
       "pageId": "76213578",

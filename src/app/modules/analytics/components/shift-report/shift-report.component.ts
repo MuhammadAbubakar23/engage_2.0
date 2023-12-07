@@ -128,7 +128,7 @@ export class ShiftReportComponent implements OnInit {
   }
 
   getShfitReport() {
-    this.allDates = [];
+  
     if (this.startDate == '' && this.endDate == '') {
       const today = this.currentDate;
       this.endDate = this.datePipe.transform(today, 'YYYY-MM-dd') || '';
@@ -152,7 +152,7 @@ export class ShiftReportComponent implements OnInit {
       const timeDifference = endDateObj.getTime() - startDateObj.getTime();
       this.daysDifference = timeDifference / (1000 * 3600 * 24);
     }
-
+    this.allDates = [];
     this.allTotalCountInsta = [];
     this.allTotalCountLink = [];
     this.allTotalCountsfb = [];
