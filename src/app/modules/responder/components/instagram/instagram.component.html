@@ -63,7 +63,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <p class="card-text"><small class="silver">{{insta.post.createdDate
                                                             | date:'EEEE, MMMM d, y, h:mm a'}}</small></p>
-                                                    <a *ngIf="insta.post.redirectUrl != null || insta.post.redirectUrl != ''"
+                                                    <a *ngIf="insta.post.redirectUrl != null"
                                                         href={{insta.post.redirectUrl}} target="_blank"> <span><i
                                                                 class="fa-regular ms-1 coal fa-arrow-up-right-from-square"></i></span></a>
                                                 </div>
@@ -89,7 +89,7 @@
                                                 <p class="card-text nignt mb-0">
                                                     {{insta.post.caption}}</p>
                                             </div>
-                                            <div class="card-footer pb-0" *ngIf="!insta.post.postStats">
+                                            <!-- <div class="card-footer pb-0" *ngIf="!insta.post.postStats">
                                                 <p class="card-text ms-3 single-img-time">
                                                 </p>
                                                 <div class="silver">
@@ -99,9 +99,9 @@
                                                     <a class="message-actionItem coal me-3">
                                                         0 Comments
                                                     </a>
-                                                    <!-- <a class="message-actionItem coal me-3">
+                                                     <a class="message-actionItem coal me-3">
                                                             23 Shares
-                                                        </a> -->
+                                                        </a>
                                                     <a class="message-actionItem coal me-2">
                                                         0 Views
                                                     </a>
@@ -119,15 +119,15 @@
                                                     <a class="message-actionItem coal me-3">
                                                         {{insta.post?.postStats?.comments_Count}} Comments
                                                     </a>
-                                                    <!-- <a class="message-actionItem coal me-3">
+                                                     <a class="message-actionItem coal me-3">
                                                             23 Shares
-                                                        </a> -->
+                                                        </a> 
                                                     <a class="message-actionItem coal me-2">
                                                         {{insta.post?.postStats?.views_Count}} Views
                                                     </a>
                                                 </div>
                                                 <p></p>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -877,8 +877,7 @@
                                                                     </span>
                                                                 </small>
                                                             </div>
-                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM
-                                                                dd, yyyy, h:mm a'}}</small>
+                                                            <small class="silver full-date">{{ TodayDate | date:'MMMM dd, yyyy, h:mm a'}}</small>
                                                         </div>
                                                         <div class="msg-snippet show-text">
                                                             <p class="mb-1 coal" data-maxlength="240">

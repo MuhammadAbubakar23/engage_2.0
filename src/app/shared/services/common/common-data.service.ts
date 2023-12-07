@@ -107,7 +107,7 @@ export class CommonDataService {
   getLinkedInFollowers=environment.links.common.getLinkedInFollowers;
   emailShiftReport = environment.links.common.emailShiftReport;
   downloadTagReport = environment.links.common.downloadTagReport;
-
+  regionwiseReport=environment.links.common.regionwiseReport
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
   addTemplate = environment.links.console.addTemplate;
@@ -570,15 +570,10 @@ export class CommonDataService {
     return this.http.post(this.CommonBaseUrl + this.removeTagOnProfile, body);
   }
 
-  HideUnhideMessage(queryId: number, status: boolean) {
-    const url =
-      this.CommonBaseUrl +
-      this.hideUnhideMessage +
-      '?QueryId=' +
-      queryId +
-      '&Status=' +
-      status;
-    return this.http.get(url);
+  HideUnhideMessage(body:any) {
+    // const url = this.CommonBaseUrl + this.hideUnhideMessage + '?QueryId=' + queryId + '&Status=' + status;
+    // return this.http.get(url);
+    return this.http.post(this.CommonBaseUrl + this.hideUnhideMessage, body);
   }
   // Survey form
   AddSurvey(body: any) {
@@ -744,6 +739,9 @@ export class CommonDataService {
   }
   AddProfileInformation(body:any) {
     return this.http.post(this.ProfileBaseUrl + this.addProfileInformation, body);
+  }
+  GetRegionWiseReport(body:any){
+    return this.http.post(this.ProfileBaseUrl+this.regionwiseReport,body)
   }
 }
 

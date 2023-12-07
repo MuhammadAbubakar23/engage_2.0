@@ -9,59 +9,64 @@ import { ExcelService } from '../../services/excel.service';
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
 @Component({
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxSpinnerModule,LayoutsModule],
+  imports: [CommonModule, FormsModule, NgxSpinnerModule, LayoutsModule],
   selector: 'app-instagram-report',
   templateUrl: './instagram-report.component.html',
-  styleUrls: ['./instagram-report.component.scss']
+  styleUrls: ['./instagram-report.component.scss'],
 })
 export class InstagramReportComponent implements OnInit {
-  @ViewChild('peopleViewed', { static: false }) peopleViewed!: ElementRef
-  @ViewChild('pageReachabilty', { static: false }) pageReachabilty!: ElementRef
+  @ViewChild('peopleViewed', { static: false }) peopleViewed!: ElementRef;
+  @ViewChild('pageReachabilty', { static: false }) pageReachabilty!: ElementRef;
   @ViewChild('audienceGraph', { static: false }) audienceGraph!: ElementRef;
   @ViewChild('radioInput', { static: false })
   radioInput!: ElementRef<HTMLInputElement>;
-  instagramReport: any
-  startDate: string = ''
-  endDate: string = ''
+  instagramReport: any;
+  startDate: string = '';
+  endDate: string = '';
   maxEndDate: any;
-  totalLikes: any
-  totalEngagements: any
-  totalComments: any
-  agentReplies: any
+  totalLikes: any;
+  totalEngagements: any;
+  totalComments: any;
+  agentReplies: any;
   engagment_data: any;
   totalPostComment: any;
-  total_followers_data: any
-  instagra_report: any
-  topfiveCustomer: any[] = []
-  instagramRepot: any[] = []
-  totalPeopleWhoViewed: any[] = []
-  totalPeopleWhoViewedDates: any[] = []
-  totalPeopleWhoViewedCount: any[] = []
-  pagereachablity: any[] = []
-  pagereachablityCounts: any[] = []
-  totalfollowers: any[] = []
-  pagereachablityDates: any[] = []
-  totalfollowersDates: any[] = []
-  totalfollowersCounts: any[] = []
-  recentPost: any[] = []
-  InstagramStatsExport: any[] = []
-  testLastResult: boolean = false
-  InstagramStats: any
-  engagementPersentage: any
-  maxRangEndDate: any
-  totalComleted: any
-  isShowChart:boolean=false;
-  isShowDemographics:boolean=false;
-  isShowEngagments:boolean=false
-  instagra_reportArray:any[]=[]
-  constructor(private _hS: HeaderService,
+  total_followers_data: any;
+  instagra_report: any;
+  topfiveCustomer: any[] = [];
+  instagramRepot: any[] = [];
+  totalPeopleWhoViewed: any[] = [];
+  totalPeopleWhoViewedDates: any[] = [];
+  totalPeopleWhoViewedCount: any[] = [];
+  pagereachablity: any[] = [];
+  pagereachablityCounts: any[] = [];
+  totalfollowers: any[] = [];
+  pagereachablityDates: any[] = [];
+  totalfollowersDates: any[] = [];
+  totalfollowersCounts: any[] = [];
+  recentPost: any[] = [];
+  InstagramStatsExport: any[] = [];
+  testLastResult: boolean = false;
+  InstagramStats: any;
+  engagementPersentage: any;
+  maxRangEndDate: any;
+  totalComleted: any;
+  isShowChart: boolean = false;
+  isShowDemographics: boolean = false;
+  isShowEngagments: boolean = false;
+  instagra_reportArray: any[] = [];
+  constructor(
+    private _hS: HeaderService,
     private excelServices: ExcelService,
     private commonDataService: CommonDataService,
     private spinerServices: NgxSpinnerService,
-    private datePipe: DatePipe,) { }
+    private datePipe: DatePipe
+  ) {}
 
   ngOnInit(): void {
-    const newObj = { title: 'Instagram Report', url: '/analytics/inbound-outbound-report' };
+    const newObj = {
+      title: 'Instagram Report',
+      url: '/analytics/inbound-outbound-report',
+    };
     this._hS.setHeader(newObj);
     const currentDate = new Date();
     this.maxEndDate = currentDate.toISOString().split('T')[0]
@@ -78,10 +83,10 @@ export class InstagramReportComponent implements OnInit {
       this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || "";
       this.endDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || "";
     } else if (this.startDate != '' && this.endDate != '') {
-    //   this.startDate = this.startDate;
-    //   this.endDate = this.endDate;
-    // }
-    const startDateObj = new Date(this.startDate);
+      //   this.startDate = this.startDate;
+      //   this.endDate = this.endDate;
+      // }
+      const startDateObj = new Date(this.startDate);
       const endDateObj = new Date(this.endDate);
       const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
       const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
@@ -92,10 +97,10 @@ export class InstagramReportComponent implements OnInit {
     }
 
     let requestData = {
-      pageId: "17841400250284169",
+      pageId: '17841400250284169',
       from: this.startDate,
       to: this.endDate,
-      lastPostId: 0
+      lastPostId: 0,
     };
     this.totalPeopleWhoViewedCount = []
     this.totalPeopleWhoViewedDates = []
@@ -178,12 +183,12 @@ export class InstagramReportComponent implements OnInit {
     let data = {
       pageNumber: 0,
       pageSize: 0,
-      from:this.startDate,
-      to:this.endDate
-    }
+      from: this.startDate,
+      to: this.endDate,
+    };
     this.commonDataService.GetInstagramProfile(data).subscribe((res: any) => {
-      this.topfiveCustomer = res
-    })
+      this.topfiveCustomer = res;
+    });
   }
   getPeopleViewedGraph() {
     
@@ -262,20 +267,20 @@ export class InstagramReportComponent implements OnInit {
 
   }
   getPageReachGraph() {
-    if(this.isShowEngagments==false){
+    if (this.isShowEngagments == false) {
       const myDom = this.pageReachabilty.nativeElement;
       const myChart = echarts.init(myDom, null, {
         renderer: 'canvas',
-        useDirtyRect: false
+        useDirtyRect: false,
       });
       var option: echarts.EChartsOption;
-  
+
       option = {
         xAxis: {
           type: 'category',
           data: this.pagereachablityDates.reverse(),
           axisLabel: {
-            rotate:45,
+            rotate: 45,
             show: true,
             interval: 0,
             formatter: function (value: string) {
@@ -283,25 +288,25 @@ export class InstagramReportComponent implements OnInit {
             },
           },
         },
-        yAxis:  [{
-          type: "value",
-          nameLocation: "middle",
-          name: "Total Engagements",
-          nameTextStyle: {
-            fontSize: 18,
-            color:'black',
-            lineHeight:80
-            
-          }
-        }],
+        yAxis: [
+          {
+            type: 'value',
+            nameLocation: 'middle',
+            name: 'Total Number of Page Reach',
+            nameTextStyle: {
+              fontSize: 12,
+              color: 'grey',
+              lineHeight: 80,
+            },
+          },
+        ],
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
         },
         legend: {
           data: ['Total Engagments'],
-          icon:'circle',
-          bottom:'bottom',
-          
+          icon: 'circle',
+          bottom: 'bottom',
         },
         toolbox: {
           feature: {
@@ -322,25 +327,34 @@ export class InstagramReportComponent implements OnInit {
           },
         ],
       };
-  
+
       option && myChart.setOption(option);
     }
- 
-
-
-
   }
   getAudienceGraph() {
     if(this.isShowDemographics==false){
       const myDom = this.audienceGraph.nativeElement;
       const myChart = echarts.init(myDom, null, {
         renderer: 'canvas',
-        useDirtyRect: false
+        useDirtyRect: false,
       });
       var option: echarts.EChartsOption;
       function dataFormat(date: Date): string {
         const day: number = date.getDate();
-        const monthNames: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const monthNames: string[] = [
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dec',
+        ];
         const month: string = monthNames[date.getMonth()];
         return `${day} ${month}`;
       }
@@ -350,31 +364,32 @@ export class InstagramReportComponent implements OnInit {
           data: this.totalfollowersDates.reverse(),
           axisLabel: {
             show: true,
-            rotate:45,
+            rotate: 45,
             interval: 0,
             formatter: function (value: string) {
               return value;
             },
           },
         },
-        yAxis: [{
-          type: "value",
-          nameLocation: "middle",
-          name: "Total Followers",
-          nameTextStyle: {
-            fontSize: 18,
-            color:'black',
-            lineHeight:60
-            
-          }
-        }],
+        yAxis: [
+          {
+            type: 'value',
+            nameLocation: 'middle',
+            name: 'Total Number of Followers',
+            nameTextStyle: {
+              fontSize: 12,
+              color: 'grey',
+              lineHeight: 80,
+            },
+          },
+        ],
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
         },
         legend: {
           data: ['Total Followers'],
-          icon:'circle',
-          bottom:'bottom',
+          icon: 'circle',
+          bottom: 'bottom',
         },
         toolbox: {
           feature: {
@@ -385,7 +400,7 @@ export class InstagramReportComponent implements OnInit {
           {
             name: 'Total Followers',
             data: this.totalfollowersCounts,
-  
+
             type: 'line',
             itemStyle: {
               color: '#00d3a2',
@@ -396,46 +411,38 @@ export class InstagramReportComponent implements OnInit {
           },
         ],
       };
-  
+
       option && myChart.setOption(option);
     }
-
-
-
   }
   resetEndDate() {
-if(this.endDate>=this.startDate){
-  this.GetInstagramReport()
-    if (this.radioInput !== undefined) {
-      this.radioInput.nativeElement.checked = false;
+    if (this.endDate >= this.startDate) {
+      this.GetInstagramReport();
+      if (this.radioInput !== undefined) {
+        this.radioInput.nativeElement.checked = false;
+      }
+    } else {
+      this.endDate = '';
+      alert('EndDate is greaterthen StartDate');
     }
-}
-else{
-  this.endDate=''
-  alert("EndDate is greaterthen StartDate")
-}
-    
-
   }
   resetStartDate() {
-    this.endDate = ''
+    this.endDate = '';
   }
   date_paginationfive() {
-
     if (this.endDate == '' && this.startDate == '') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 5);
-      this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || "";
+      this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
 
-      this.endDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || "";
+      this.endDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
     } else if (this.startDate != '' && this.endDate != '') {
       this.startDate = this.startDate;
       this.endDate = this.endDate;
     }
-    this.GetInstagramReport()
+    this.GetInstagramReport();
   }
   date_pagination(days: number) {
-
     let currentDate = new Date();
     let prevDate = currentDate.setDate(currentDate.getDate() - days);
     this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
@@ -443,8 +450,10 @@ else{
     this.GetInstagramReport()
   }
   exportCsv() {
-
-    this.instagra_reportArray.push(this.InstagramStatsExport)
-    this.excelServices.exportAsExcelFile(this.instagra_reportArray, 'Instagram Stats')
+    this.instagra_reportArray.push(this.InstagramStatsExport);
+    this.excelServices.exportAsExcelFile(
+      this.instagra_reportArray,
+      'Instagram Stats'
+    );
   }
 }

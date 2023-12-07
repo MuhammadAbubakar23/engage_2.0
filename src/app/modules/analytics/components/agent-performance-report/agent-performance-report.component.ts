@@ -261,6 +261,13 @@ isShowCommentGraph:boolean=false
                 },
                 yAxis: {
                   type: 'value',
+            nameLocation: 'middle',
+            name: 'Total Number of Comments',
+            nameTextStyle: {
+              fontSize: 12,
+              color: 'grey',
+              lineHeight: 80,
+            },
                 },
                 tooltip: {
                   show: true, // Show the tooltip
@@ -337,6 +344,13 @@ isShowCommentGraph:boolean=false
             },
             yAxis: {
               type: 'value',
+            nameLocation: 'middle',
+            name: 'Total Number of Messages',
+            nameTextStyle: {
+              fontSize: 12,
+              color: 'grey',
+              lineHeight: 80,
+            },
             },
             tooltip: {
               trigger: 'axis'

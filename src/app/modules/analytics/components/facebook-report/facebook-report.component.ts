@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { HeaderService } from 'src/app/shared/services/header.service';
 import * as echarts from 'echarts';
@@ -90,45 +90,45 @@ isShowReachabiltyGraph:boolean=false
   totallikes: any;
   totalComments: any;
   totalShares: any;
-  totalmaleCountK: number=0;
-  totalfemaleCountK: number=0;
+  totalmaleCountK: number = 0;
+  totalfemaleCountK: number = 0;
   totalmaleCount: number = 0;
   totalfemaleCount: number = 0;
-  totalPageLikes: any
-  lastTotalPageLikes: any
-  SumBehaivor: any
-  countPercentage: any
-  totalmaleandfemalCount: number=0;
-  malepersentage: number=0;
-  femalepersentage:number=0;
-  externalRefernalsName: number=0;
+  totalPageLikes: any;
+  lastTotalPageLikes: any;
+  SumBehaivor: any;
+  countPercentage: any;
+  totalmaleandfemalCount: number = 0;
+  malepersentage: number = 0;
+  femalepersentage: number = 0;
+  externalRefernalsName: number = 0;
   totalMessagePostCommentsAndreplies: any;
   totalMessageAndrepliesCount: any;
-  totalEngagementMessage: any
+  totalEngagementMessage: any;
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
-  RoundOFF: any
-  tppP: any
-  ltpPP: any
-  totalPublishSum: any
-  publishPercentage: any
-  TPL: any
-  TPC: any
-  TPS: any
-  totalSumAudienceEngagement: any
-  audiencePercentage: any
-  LTPL: any
-  LTPC: any
-  LTPS: any
-  LtotalSumAudienceEngagement: any
-  totalSumOfAudience:any
+  RoundOFF: any;
+  tppP: any;
+  ltpPP: any;
+  totalPublishSum: any;
+  publishPercentage: any;
+  TPL: any;
+  TPC: any;
+  TPS: any;
+  totalSumAudienceEngagement: any;
+  audiencePercentage: any;
+  LTPL: any;
+  LTPC: any;
+  LTPS: any;
+  LtotalSumAudienceEngagement: any;
+  totalSumOfAudience: any;
   constructor(
     private headerServices: HeaderService,
     private spinerServices: NgxSpinnerService,
     private datePipe: DatePipe,
     private commandataSerivecs: CommonDataService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     const newObj = {
@@ -148,7 +148,7 @@ isShowReachabiltyGraph:boolean=false
     let prevDate = currentDate.setDate(currentDate.getDate() - days);
     this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     this.enddate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
-    this.getAllfeacebookData()
+    this.getAllfeacebookData();
   }
   getAllfeacebookData() {
     if (this.startDate == '' && this.enddate == '') {
@@ -158,7 +158,6 @@ isShowReachabiltyGraph:boolean=false
       let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 7);
       this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     } else if (this.startDate != '' && this.enddate != '') {
-      ;
       // const startDate = new Date(this.startDate);
       // const abc = startDate.setDate(startDate.getDate() - 1);
       // this.startDate = this.datePipe.transform(abc, 'YYYY-MM-dd') || '';
@@ -173,7 +172,6 @@ isShowReachabiltyGraph:boolean=false
         return;
       }
     }
-
 
     let data = {
       pageId: '622038187854126',
@@ -205,7 +203,7 @@ isShowReachabiltyGraph:boolean=false
     this.publishedPegePostSpanDates = [];
     this.publishedUserPostSpanCounts = [];
     this.publishedUserPostSpanDates = [];
-    this.audienceEngagementTotlaComments=[]
+    this.audienceEngagementTotlaComments = [];
     this.externalRefernalsData = [];
    this.audienceEngagementTotlaComments=[]
    this.audienceEngagmentTotalShare=[]
@@ -229,37 +227,38 @@ isShowReachabiltyGraph:boolean=false
       this.faecbookresponce = res;
 
       // stats percentage count
-      this.lastTotalPageLikes = this.faecbookresponce.lastTotalPageLikes
-      this.totalPageLikes = this.faecbookresponce.totalPageLikes
-      this.SumBehaivor = this.lastTotalPageLikes + this.totalPageLikes
-      this.countPercentage = (this.totalPageLikes / this.SumBehaivor) * 100
-      this.RoundOFF = (Math.floor(this.countPercentage))
+      this.lastTotalPageLikes = this.faecbookresponce.lastTotalPageLikes;
+      this.totalPageLikes = this.faecbookresponce.totalPageLikes;
+      this.SumBehaivor = this.lastTotalPageLikes + this.totalPageLikes;
+      this.countPercentage = (this.totalPageLikes / this.SumBehaivor) * 100;
+      this.RoundOFF = Math.floor(this.countPercentage);
 
-      // publish percentage 
-      this.tppP = this.faecbookresponce.totalPublishedPagePosts
-      this.ltpPP = this.faecbookresponce.lastTotalPublishedPagePosts
+      // publish percentage
+      this.tppP = this.faecbookresponce.totalPublishedPagePosts;
+      this.ltpPP = this.faecbookresponce.lastTotalPublishedPagePosts;
 
-      this.totalPublishSum = this.tppP + this.ltpPP
-      this.publishPercentage = (this.tppP / this.totalPublishSum) * 100
-// PagePost 
-this.pageperPost=this.faecbookresponce.totalPublishedPagePosts
-this.userPerPost=this.faecbookresponce.totalPublishedUserPosts
-this.totalNumberofpost=this.pageperPost + this.userPerPost
-      // audience Engagement 
-      this.TPL = this.faecbookresponce.totalPostLikes
-      this.TPC = this.faecbookresponce.totalPostComments
-      this.TPS = this.faecbookresponce.totalPostShares
-      this.totalSumAudienceEngagement = this.TPL + this.TPC + this.TPS
-      this.LTPL = this.faecbookresponce.lastTotalPostLikes
-      this.LTPC = this.faecbookresponce.lastTotalPostComments
-      this.LTPS = this.faecbookresponce.lastTotalPostShares
-      this.LtotalSumAudienceEngagement = this.LTPL + this.LTPC + this.LTPS
-      this.totalSumOfAudience = this.LtotalSumAudienceEngagement + this.totalSumAudienceEngagement
-      this.audiencePercentage = (this.totalSumAudienceEngagement/this.totalSumOfAudience)*100
+      this.totalPublishSum = this.tppP + this.ltpPP;
+      this.publishPercentage = (this.tppP / this.totalPublishSum) * 100;
+      // PagePost
+      this.pageperPost = this.faecbookresponce.totalPublishedPagePosts;
+      this.userPerPost = this.faecbookresponce.totalPublishedUserPosts;
+      this.totalNumberofpost = this.pageperPost + this.userPerPost;
+      // audience Engagement
+      this.TPL = this.faecbookresponce.totalPostLikes;
+      this.TPC = this.faecbookresponce.totalPostComments;
+      this.TPS = this.faecbookresponce.totalPostShares;
+      this.totalSumAudienceEngagement = this.TPL + this.TPC + this.TPS;
+      this.LTPL = this.faecbookresponce.lastTotalPostLikes;
+      this.LTPC = this.faecbookresponce.lastTotalPostComments;
+      this.LTPS = this.faecbookresponce.lastTotalPostShares;
+      this.LtotalSumAudienceEngagement = this.LTPL + this.LTPC + this.LTPS;
+      this.totalSumOfAudience =
+        this.LtotalSumAudienceEngagement + this.totalSumAudienceEngagement;
+      this.audiencePercentage =
+        (this.totalSumAudienceEngagement / this.totalSumOfAudience) * 100;
 
-
-
-      this.totalEngagementMessage = res?.agentReplies?.totalMessagesAndRepliesCount
+      this.totalEngagementMessage =
+        res?.agentReplies?.totalMessagesAndRepliesCount;
       //  SlA replies
       this.replieswithin = this.faecbookresponce.replyWithinTime;
       this.repliesAfter = this.faecbookresponce.replyAfterTime;
@@ -269,7 +268,11 @@ this.totalNumberofpost=this.pageperPost + this.userPerPost
       this.totalComments = res.totalPostComments;
       this.totalShares = res.totalPostShares;
 
-      this.totalengagement = this.totallikes + this.totalComments + this.totalShares + this.totalEngagementMessage;
+      this.totalengagement =
+        this.totallikes +
+        this.totalComments +
+        this.totalShares +
+        this.totalEngagementMessage;
       // net differnce of page likes and unlike
 
       this.numberofPagelikes = res.totalPageLikes;
@@ -361,12 +364,13 @@ this.totalNumberofpost=this.pageperPost + this.userPerPost
       this.agentMessages = res.agentReplies;
       this.agentMessagesData = res.agentReplies;
 
-      this.totalMessageAndrepliesCount = this.agentMessagesData.totalMessagesAndRepliesCount;
-      this.totalMessagePostCommentsAndreplies = this.agentMessagesData.totalPostCommentsAndReplies;
+      this.totalMessageAndrepliesCount =
+        this.agentMessagesData.totalMessagesAndRepliesCount;
+      this.totalMessagePostCommentsAndreplies =
+        this.agentMessagesData.totalPostCommentsAndReplies;
       // Publishin Behavior
       this.publishedPegePostSpan = res.publishedPagePostSpan;
       this.publishedPegePostSpan?.forEach((x: any) => {
-       
         if (
           !this.publishedPegePostSpanDates.includes(x.dateValue.split('T')[0])
         ) {
@@ -407,8 +411,12 @@ this.totalNumberofpost=this.pageperPost + this.userPerPost
       });
 
       this.totalmaleandfemalCount = this.totalmaleCount + this.totalfemaleCount;
-      this.malepersentage = Number(( (this.totalmaleCount / this.totalmaleandfemalCount) * 100).toFixed(2))
-      this.femalepersentage = Number(((this.totalfemaleCount / this.totalmaleandfemalCount) * 100).toFixed(2))
+      this.malepersentage = Number(
+        ((this.totalmaleCount / this.totalmaleandfemalCount) * 100).toFixed(2)
+      );
+      this.femalepersentage = Number(
+        ((this.totalfemaleCount / this.totalmaleandfemalCount) * 100).toFixed(2)
+      );
       // RecentPost
 
       this.recentPosts = res.recentPosts;
@@ -450,6 +458,7 @@ this.totalNumberofpost=this.pageperPost + this.userPerPost
     const widthPercentage = this.femalepersentage + '%';
     return { width: widthPercentage };
   }
+  pageReachabilityGraph: any;
   getPageReachablityChart() {
     if(this.isShowReachabiltyGraph==false){
       var chartDom = document.getElementById('pagereachablity');
@@ -505,6 +514,7 @@ this.totalNumberofpost=this.pageperPost + this.userPerPost
     }
   
   }
+  reactionGraph: any;
   getReactionGraph() {
     if(this.isShowReactionsGraph==false){
       var chartDom = document.getElementById('reaction');
@@ -614,6 +624,7 @@ this.totalNumberofpost=this.pageperPost + this.userPerPost
     }
   
   }
+  totalPeopleGraph: any;
   getTotalPeopleChart() {
     if(this.isShowHowViwedGraph==false){
       var chartDom = document.getElementById('totalpeople');
@@ -670,12 +681,12 @@ this.totalNumberofpost=this.pageperPost + this.userPerPost
     }
  
   }
-
+  externalResourceGraph: any;
   getExternalSourcesChart() {
     type EChartsOption = echarts.EChartsOption;
 
     var chartDom = document.getElementById('externalsources')!;
-    var myChart = echarts.init(chartDom);
+    this.externalResourceGraph = echarts.init(chartDom);
     var option: EChartsOption;
 
     option = {
@@ -696,7 +707,7 @@ this.totalNumberofpost=this.pageperPost + this.userPerPost
           itemStyle: {
             borderRadius: 10,
             borderColor: '#fff',
-            borderWidth: 2
+            borderWidth: 2,
           },
           data: this.externalRefernalsData,
           emphasis: {
@@ -708,9 +719,9 @@ this.totalNumberofpost=this.pageperPost + this.userPerPost
       ],
     };
 
-    option && myChart.setOption(option);
+    option && this.externalResourceGraph.setOption(option);
   }
-
+  publishinBehaviourGraph: any;
   getPublishinBehaviorChart() {
     if(this.isShowbehaviorGraph==false){
       var chartDom = document.getElementById('publishin');
@@ -768,7 +779,7 @@ this.totalNumberofpost=this.pageperPost + this.userPerPost
     }
 
   }
-
+  audienceEngagementGraph: any;
   getChartAudienceEngagement() {
     if(this.isShowAudienceEnagementGraph==false){
       type EChartsOption = echarts.EChartsOption;
@@ -911,7 +922,7 @@ this.totalNumberofpost=this.pageperPost + this.userPerPost
  
    
   }
-
+  audienceGrowthGraph: any;
   getChartAudienceGrowth() {
     if(this.isShowAudienceGraph==false){
       type EChartsOption = echarts.EChartsOption;
@@ -1061,7 +1072,7 @@ this.totalNumberofpost=this.pageperPost + this.userPerPost
     //       data: this.audiencelikesdate,
     //       axisLabel: {
     //         rotate:45,
-            
+
     //       }
     //     },
     //   ],
@@ -1113,19 +1124,44 @@ this.totalNumberofpost=this.pageperPost + this.userPerPost
     this.toastermessage = false;
   }
   resetStartDate() {
-    this.enddate = ''
+    this.enddate = '';
   }
   resetEndDate() {
     if (this.enddate >= this.startDate) {
-      this.getAllfeacebookData()
-      
+      this.getAllfeacebookData();
+
       if (this.radioInput !== undefined) {
         this.radioInput.nativeElement.checked = false;
       }
+    } else {
+      alert('EndDate is greater then StartDate');
+      this.enddate = '';
     }
-    else {
-      alert("EndDate is greater then StartDate")
-      this.enddate = ''
-    }
+  }
+
+  makeChartResponsive() {
+    window.addEventListener('resize', () => {
+      if (this.reactionGraph) {
+        this.reactionGraph.resize();
+      }
+      if (this.audienceEngagementGraph) {
+        this.audienceEngagementGraph.resize();
+      }
+      if (this.audienceGrowthGraph) {
+        this.audienceGrowthGraph.resize();
+      }
+      if (this.publishinBehaviourGraph) {
+        this.publishinBehaviourGraph.resize();
+      }
+      if (this.totalPeopleGraph) {
+        this.totalPeopleGraph.resize();
+      }
+      if (this.pageReachabilityGraph) {
+        this.pageReachabilityGraph.resize();
+      }
+      if (this.externalResourceGraph) {
+        this.externalResourceGraph.resize();
+      }
+    });
   }
 }

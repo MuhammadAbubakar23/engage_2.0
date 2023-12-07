@@ -308,6 +308,13 @@ export class ShiftReportComponent implements OnInit {
         },
         yAxis: {
           type: 'value',
+          nameLocation: 'middle',
+          name: 'Total Number of Inbounds/Outbounds',
+          nameTextStyle: {
+            fontSize: 12,
+            color: 'grey',
+            lineHeight: 80,
+          },
         },
         series: [
           {

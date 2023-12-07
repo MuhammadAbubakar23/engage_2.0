@@ -65,8 +65,8 @@ export class ConversationComponent implements OnInit {
   notInclude: string = '';
   include: string = '';
 
-  fromDate!: any;
-  toDate!: any;
+  fromDate: any;
+  toDate: any;
 
   searchCustomerForm!: FormGroup;
 
@@ -332,33 +332,17 @@ export class ConversationComponent implements OnInit {
 
       this.toDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
-    } else if (
-      this.searchForm.value.fromDate != null &&
-      (this.searchForm.value.toDate == null ||
-        this.searchForm.value.toDate == undefined)
-    ) {
+    } else if ( this.searchForm.value.fromDate != null && (this.searchForm.value.toDate == null || this.searchForm.value.toDate == undefined)) {
       this.fromDate = this.searchForm.value.fromDate + 'T00:00:00.000Z';
       this.toDate = this.searchForm.value.fromDate + 'T23:59:59.999Z';
-    } else if (
-      this.searchForm.value.fromDate != null &&
-      this.searchForm.value.toDate != null
-    ) {
+    } else if (this.searchForm.value.fromDate != null && this.searchForm.value.toDate != null) {
       this.fromDate = this.searchForm.value.fromDate + 'T00:00:00.000Z';
       this.toDate = this.searchForm.value.toDate + 'T23:59:59.999Z';
-    } else if (
-      this.searchForm.value.fromDate == undefined &&
-      this.searchForm.value.toDate == undefined &&
-      (this.flag == 'completed' || this.flag == 'sent')
-    ) {
-      let currentDate = new Date();
-      let prevDate = currentDate.setDate(currentDate.getDate() - 6);
-      const fromDate =
-        this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
-      this.fromDate = fromDate;
-
-      this.toDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
-    }
+    } 
+    // else if ((this.searchForm.value.fromDate == null && this.searchForm.value.toDate == null) && (this.fromDate == undefined && this.toDate == undefined) && (this.flag == 'completed' || this.flag == 'sent')) {
+    //   this.fromDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T00:00:00.000Z';
+    //   this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+    // }
 
     this.searchForm.patchValue({
       text: this.text,

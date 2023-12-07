@@ -326,38 +326,45 @@ this.outboundData=[]
 
               trigger: 'axis',
 
+                },
+                legend: {
+                  data: ['Inbound', 'OutBound'],
+                  icon: 'circle',
+                  bottom: 'bottom'
+                },
+                grid: {
+                  left: '3%',
+                  right: '4%',
+                  bottom: '13%',
+                  containLabel: true
+                },
+                toolbox: {
+                  feature: {
+                    saveAsImage: {}
+                  }
+                },
+                xAxis: {
+                  type: 'category',
+                  boundaryGap: false,
+                  data: this.inboundoutboundDate,
+                  axisLabel: {
+                    rotate: 45,
+                  },
+                },
+                yAxis: {
+                  type: 'value',
+            nameLocation: 'middle',
+            name: 'Total Number of Inbound/Outbound',
+            nameTextStyle: {
+              fontSize: 12,
+              color: 'grey',
+              lineHeight: 80,
             },
-            legend: {
-              data: ['Inbound', 'OutBound'],
-              icon: 'circle',
-              bottom: 'bottom'
-            },
-            grid: {
-              left: '3%',
-              right: '4%',
-              bottom: '13%',
-              containLabel: true
-            },
-            toolbox: {
-              feature: {
-                saveAsImage: {}
-              }
-            },
-            xAxis: {
-              type: 'category',
-              boundaryGap: false,
-              data: this.inboundoutboundDate,
-              axisLabel: {
-                rotate: 45,
-              },
-            },
-            yAxis: {
-              type: 'value'
-            },
-            series: [
-              {
-                name: 'Inbound',
-                type: 'line',
+                },
+                series: [
+                  {
+                    name: 'Inbound',
+                    type: 'line',
 
                 data: this.inboundData
               },
@@ -505,70 +512,75 @@ this.outboundData=[]
             };
             this.averageResponseChart.setOption(option);
             // Update TagsPerChannel
-            if(this.isShowTagReport==false){
-              const myDom = this.TagsPerChannel.nativeElement;
-              this.tagsChart = echarts.init(myDom, null, {
-                renderer: 'canvas',
-                useDirtyRect: false,
-              });
-  
-              var option: echarts.EChartsOption;
-              
-              const tagReportData = this.Inbound_Outbound_Report.tagReportData;
-              tagReportData.forEach((channel: any) => {
-              
-                if (!this.platformsArray.includes(channel.platform)) {
-                  this.platformsArray.push(channel.platform);
+            const myDom = this.TagsPerChannel.nativeElement;
+            this.tagsChart = echarts.init(myDom, null, {
+              renderer: 'canvas',
+              useDirtyRect: false,
+            });
+
+            var option: echarts.EChartsOption;
+            debugger
+            const tagReportData = this.Inbound_Outbound_Report.tagReportData;
+            tagReportData.forEach((channel: any) => {
+            debugger
+              if (!this.platformsArray.includes(channel.platform)) {
+                this.platformsArray.push(channel.platform);
+              }
+             
+              channel.data.forEach((tag: any) => {
+                debugger
+                const name = tag.name;
+                const count = tag.count;
+                const existingNameCount = this.tagsPerChannel.find((n) => n.name === name);
+                if (existingNameCount) {
+                  existingNameCount.data.push(count);
+                } else {
+                  this.tagsPerChannel.push({
+                    type: 'bar',
+                    name: name,
+                    stack: 'Ad',
+                    data: [count],
+                  });
                 }
-               
-                channel.data.forEach((tag: any) => {
-                  
-                  const name = tag.name;
-                  const count = tag.count;
-                  const existingNameCount = this.tagsPerChannel.find((n) => n.name === name);
-                  if (existingNameCount) {
-                    existingNameCount.data.push(count);
-                  } else {
-                    this.tagsPerChannel.push({
-                      type: 'bar',
-                      name: name,
-                      stack: 'Ad',
-                      data: [count],
-                    });
-                  }
-            
-                });
+          
               });
-              option = {
-                tooltip: { trigger: 'axis',
-                enterable: true,
-                extraCssText:'height: 200px !important;  overflow-y: scroll !important; pointer-events: auto !important;' },
-                legend: { type: 'scroll',icon:'circle',
-                orient: 'horizontal',
-                bottom: 0 },
-                toolbox: {
-                  feature: {
-                    saveAsImage: {}
-                  }
-                },
-                xAxis: [{ type: 'category', data: this.platformsArray }],
-                yAxis: [{ type: 'value' }],
-                series: this.tagsPerChannel.map(series => ({
-                  ...series,
-                  // label: {
-                  //   show: true,
-                  //   formatter: (params: any) => {
-                  //     const total = this.tagsPerChannel.reduce((sum, s) => sum + s.data[params.dataIndex], 0);
-                  //     const percentage = (series.data[params.dataIndex] / total * 100).toFixed(0);
-                  //     return `${percentage}%`;
-                  //   }
-                  // }
-                })),
-              };
-  
-              this.tagsChart.setOption(option);
-            }
-           
+            });
+            option = {
+              tooltip: { trigger: 'axis',
+              enterable: true,
+              extraCssText:'height: 200px !important;  overflow-y: scroll !important; pointer-events: auto !important;' },
+              legend: { type: 'scroll',
+              icon: 'circle',
+              orient: 'horizontal',
+              bottom: 0 },
+              toolbox: {
+                feature: {
+                  saveAsImage: {}
+                }
+              },
+              xAxis: [{ type: 'category', data: this.platformsArray }],
+              yAxis: [{ type: 'value',
+              nameLocation: 'middle',
+              name: 'Total Number of Tags',
+              nameTextStyle: {
+                fontSize: 12,
+                color: 'grey',
+                lineHeight: 80,
+              }, }],
+              series: this.tagsPerChannel.map(series => ({
+                ...series,
+                // label: {
+                //   show: true,
+                //   formatter: (params: any) => {
+                //     const total = this.tagsPerChannel.reduce((sum, s) => sum + s.data[params.dataIndex], 0);
+                //     const percentage = (series.data[params.dataIndex] / total * 100).toFixed(0);
+                //     return `${percentage}%`;
+                //   }
+                // }
+              })),
+            };
+
+            this.tagsChart.setOption(option);
             // option = {
             //   tooltip: { trigger: 'axis' },
             //   toolbox: {
@@ -629,7 +641,14 @@ this.outboundData=[]
                 },
               },
               xAxis: { type: 'category' },
-              yAxis: {},
+              yAxis: {type: 'value',
+              nameLocation: 'middle',
+              name: 'Total Number of Sentiments',
+              nameTextStyle: {
+                fontSize: 12,
+                color: 'grey',
+                lineHeight: 80,
+              },},
               series: [
                 {
                   type: 'bar',

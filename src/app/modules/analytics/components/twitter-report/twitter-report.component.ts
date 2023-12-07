@@ -240,7 +240,7 @@ if(this.isShowConversation==false){
       bottom:'bottom'
     },
     grid: {
-      left: '3%',
+      left: '10%',
       right: '4%',
       bottom: '13%',
       containLabel: true,
@@ -260,6 +260,13 @@ if(this.isShowConversation==false){
     },
     yAxis: {
       type: 'value',
+            nameLocation: 'middle',
+            name: 'Total Number of Inbound/Outbound',
+            nameTextStyle: {
+              fontSize: 12,
+              color: 'grey',
+              lineHeight: 80,
+            },
     },
     series: [
       {
@@ -435,7 +442,7 @@ if(this.isShowConversation==false){
   
       },
       grid: {
-        left: '3%',
+        left: '10%',
         right: '4%',
         bottom: '13%',
         containLabel: true,
@@ -455,6 +462,13 @@ if(this.isShowConversation==false){
       },
       yAxis: {
         type: 'value',
+            nameLocation: 'middle',
+            name: 'Total Number of Outbound',
+            nameTextStyle: {
+              fontSize: 12,
+              color: 'grey',
+              lineHeight: 80,
+            },
       },
       series: [
         {
