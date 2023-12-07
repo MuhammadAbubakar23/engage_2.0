@@ -570,15 +570,10 @@ export class CommonDataService {
     return this.http.post(this.CommonBaseUrl + this.removeTagOnProfile, body);
   }
 
-  HideUnhideMessage(queryId: number, status: boolean) {
-    const url =
-      this.CommonBaseUrl +
-      this.hideUnhideMessage +
-      '?QueryId=' +
-      queryId +
-      '&Status=' +
-      status;
-    return this.http.get(url);
+  HideUnhideMessage(body:any) {
+    // const url = this.CommonBaseUrl + this.hideUnhideMessage + '?QueryId=' + queryId + '&Status=' + status;
+    // return this.http.get(url);
+    return this.http.post(this.CommonBaseUrl + this.hideUnhideMessage, body);
   }
   // Survey form
   AddSurvey(body: any) {

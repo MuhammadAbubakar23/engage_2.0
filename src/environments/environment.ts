@@ -200,7 +200,7 @@ export const environment = {
       updateStatus: 'Channel/UpdateMessageStatus',
       insertTagOnProfile: 'Tags/InsertTagsProfileFeed',
       removeTagOnProfile: 'Tags/RemoveTagProfileFeed',
-      hideUnhideMessage: 'Query/HideQuery',
+      hideUnhideMessage: 'Publisher/HideQuery',
       dispositionTags:'Keyword/GetAllDisposition',
       removeAssignedQuery:'Query/RemoveAssignQuery',
       //Reports

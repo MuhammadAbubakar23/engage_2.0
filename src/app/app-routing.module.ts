@@ -23,15 +23,9 @@ const routes: Routes = [
   // For Jazz, TPPL, Morinaga
   // {
   //   path: 'analytics',
-  //   redirectTo: 'analytics/whatsapp-report',
+  //   redirectTo: 'analytics/inbound-outbound-report',
   //   pathMatch: 'full',
   // },
-  // For KE
-  {
-    path: 'analytics',
-    redirectTo: 'analytics/inbound-outbound-report',
-    pathMatch: 'full',
-  },
   {
     path: '',
     loadChildren: () =>

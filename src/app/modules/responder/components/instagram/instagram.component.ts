@@ -933,6 +933,14 @@ export class InstagramComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
+    
+    if (type == 'multipleFilesCantAttach') {
+      this.AlterMsg = "Multiple Files can't be attached at the same time";
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'empty-input-field') {
       this.AlterMsg = 'Please write something!';
       this.toastermessage = true;
@@ -1002,6 +1010,7 @@ export class InstagramComponent implements OnInit {
     this.toastermessage = false;
   }
   clearInputField() {
+    this.ImageArray = [];
     this.commentReply = '';
     this.instaCommentText = '';
     this.show = false;
@@ -1623,22 +1632,27 @@ removeTagDataListener() {
   }
   isAttachment = false;
   onFileChanged() {
-    Array.from(this.fileInput.nativeElement.files).forEach((file:any) => {
-      if(file.size > 4 * 1024 * 1024){
-        this.reloadComponent('Attachments');
-      } else if (this.fileInput.nativeElement.files.length > 0) {
-      this.isAttachment = true;
-
-      const filesArray = Array.from(this.fileInput.nativeElement.files);
-      filesArray.forEach((attachment: any) => {
-        this.ImageArray.push(attachment);
+    if(this.ImageArray.length >= 1){
+      this.reloadComponent('multipleFilesCantAttach');
+    } else {
+      Array.from(this.fileInput.nativeElement.files).forEach((file:any) => {
+        if(file.size > 4 * 1024 * 1024){
+          this.reloadComponent('Attachments');
+        } else if (this.fileInput.nativeElement.files.length > 0) {
+        this.isAttachment = true;
+  
+        const filesArray = Array.from(this.fileInput.nativeElement.files);
+        filesArray.forEach((attachment: any) => {
+          this.ImageArray.push(attachment);
+        });
+        const files = this.ImageArray.map((file: any) => file); // Create a new array with the remaining files
+        const newFileList = new DataTransfer();
+        files.forEach((file: any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+        this.ImageName = newFileList.files;
+      }
       });
-      const files = this.ImageArray.map((file: any) => file); // Create a new array with the remaining files
-      const newFileList = new DataTransfer();
-      files.forEach((file: any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
-      this.ImageName = newFileList.files;
     }
-    });
+    
   }
   removeAttachedFile(index: any) {
     debugger

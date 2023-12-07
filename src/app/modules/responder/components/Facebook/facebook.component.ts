@@ -66,7 +66,7 @@ export class FacebookComponent implements OnInit {
   }
   FacebookData: any;
   FacebookMessages: any[] = [];
-  TagsList: any[]=[];
+  TagsList: any[] = [];
   totalUnrespondedMsgCountByCustomer: any = 0;
   pageNumber: any = 1;
   pageSize: any = 10;
@@ -77,7 +77,7 @@ export class FacebookComponent implements OnInit {
   newReply: any;
   queryStatus: any;
   tagDropdown = false;
-  userInformation:any;
+  userInformation: any;
 
   chatText: any;
   commentId: number = 0;
@@ -197,8 +197,8 @@ export class FacebookComponent implements OnInit {
   }
   teamPermissions: any;
   currentUrl: string = '';
-  messagesStatus:any[]=[];
-  Sentiments:any[]=[];
+  messagesStatus: any[] = [];
+  Sentiments: any[] = [];
   ngOnInit(): void {
     const textarea = this.el.nativeElement as HTMLTextAreaElement;
     this.renderer.addClass(textarea, 'auto-resize');
@@ -208,29 +208,29 @@ export class FacebookComponent implements OnInit {
     this.currentUrl = this.router.url;
 
     const menu = this.stor.retrive('Tags', 'O').local;
-      menu.forEach((item:any) => {
-        if(item.name == "Tags"){
-          item.subTags.forEach((singleTagObj:any) => {
-            if(!this.TagsList.includes(singleTagObj)){
-            this.TagsList.push(singleTagObj)
-            }
-          });
-        }
-        if(item.name == "Messages Status"){
-          item.subTags.forEach((messagesStatusObj:any) => {
-            if(!this.messagesStatus.includes(messagesStatusObj)){
-            this.messagesStatus.push(messagesStatusObj)
-            }
-          });
-        }
-        if(item.name == "Sentiments"){
-          item.subTags.forEach((sentimentObj:any) => {
-            if(!this.Sentiments.includes(sentimentObj)){
-            this.Sentiments.push(sentimentObj)
-            }
-          });
-        }
-      });
+    menu.forEach((item: any) => {
+      if (item.name == 'Tags') {
+        item.subTags.forEach((singleTagObj: any) => {
+          if (!this.TagsList.includes(singleTagObj)) {
+            this.TagsList.push(singleTagObj);
+          }
+        });
+      }
+      if (item.name == 'Messages Status') {
+        item.subTags.forEach((messagesStatusObj: any) => {
+          if (!this.messagesStatus.includes(messagesStatusObj)) {
+            this.messagesStatus.push(messagesStatusObj);
+          }
+        });
+      }
+      if (item.name == 'Sentiments') {
+        item.subTags.forEach((sentimentObj: any) => {
+          if (!this.Sentiments.includes(sentimentObj)) {
+            this.Sentiments.push(sentimentObj);
+          }
+        });
+      }
+    });
 
     this.criteria = {
       property: 'createdDate',
@@ -261,7 +261,11 @@ export class FacebookComponent implements OnInit {
     this.Subscription = this.updateMessagesService
       .receiveMessage()
       .subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
+        if (
+          this.flag == 'focused' ||
+          this.flag == 'assigned_to_me' ||
+          this.flag == 'follow_up'
+        ) {
           this.updatedMessages = res;
           this.updateMessagesDataListener();
         }
@@ -285,7 +289,11 @@ export class FacebookComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
+        if (
+          this.flag == 'focused' ||
+          this.flag == 'assigned_to_me' ||
+          this.flag == 'follow_up'
+        ) {
           if (res.contentCount.contentType == 'FC') {
             this.totalUnrespondedCmntCountByCustomer =
               res.contentCount.unrespondedCount;
@@ -450,8 +458,7 @@ export class FacebookComponent implements OnInit {
           // this.fbStats();
         }
       });
-    }
-    else {
+    } else {
       this.filterDto = {
         // fromDate: new Date(),
         // toDate: new Date(),
@@ -649,11 +656,11 @@ export class FacebookComponent implements OnInit {
   removeTags: any;
 
   addTagDataListener() {
-      this.FacebookData?.forEach((post: any) => {
-        post.groupedComments.forEach((cmnt: any) => {
-          cmnt.items.forEach((singleCmnt: any) => {
-            if (singleCmnt.id == this.addTags.feedId) {
-              if(this.addTags.type == 'Tag'){
+    this.FacebookData?.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == this.addTags.feedId) {
+            if (this.addTags.type == 'Tag') {
               if (singleCmnt.tags.length == 0) {
                 singleCmnt.tags.push(this.addTags);
               } else if (singleCmnt.tags.length > 0) {
@@ -672,62 +679,64 @@ export class FacebookComponent implements OnInit {
                 }
               }
             }
-            if(this.addTags.type == 'Sentiment'){
+            if (this.addTags.type == 'Sentiment') {
               singleCmnt.sentiment = this.addTags;
             }
-            }
-          });
+          }
         });
       });
-      this.FacebookMessages?.forEach((msg: any) => {
-        if (msg.id == this.addTags.feedId) {
-          if(this.addTags.type == 'Tag'){
-            if (msg.tags.length == 0) {
-              msg.tags.push(this.addTags);
-            } else if (msg.tags.length > 0) {
-              const tag = msg.tags.find((x: any) => x.name == this.addTags.tagName);
-              if (tag != null || tag != undefined) {
-                const index = msg.tags.indexOf(tag);
-                if (index !== -1) {
-                  msg.tags.splice(index, 1);
-                }
-              } else {
-                msg.tags.push(this.addTags);
+    });
+    this.FacebookMessages?.forEach((msg: any) => {
+      if (msg.id == this.addTags.feedId) {
+        if (this.addTags.type == 'Tag') {
+          if (msg.tags.length == 0) {
+            msg.tags.push(this.addTags);
+          } else if (msg.tags.length > 0) {
+            const tag = msg.tags.find(
+              (x: any) => x.name == this.addTags.tagName
+            );
+            if (tag != null || tag != undefined) {
+              const index = msg.tags.indexOf(tag);
+              if (index !== -1) {
+                msg.tags.splice(index, 1);
               }
+            } else {
+              msg.tags.push(this.addTags);
             }
           }
-          if(this.addTags.type == 'Sentiment'){
-            msg.sentiment = this.addTags;
-          }
         }
-      });
+        if (this.addTags.type == 'Sentiment') {
+          msg.sentiment = this.addTags;
+        }
+      }
+    });
     this.changeDetect.detectChanges();
   }
   removeTagDataListener() {
-      this.FacebookData?.forEach((post: any) => {
-        post.groupedComments.forEach((cmnt: any) => {
-          cmnt.items.forEach((singleCmnt: any) => {
-            if (singleCmnt.id == this.removeTags.feedId) {
-              var tag = singleCmnt.tags.find(
-                (x: any) => x.name == this.removeTags.tagName
-              );
-              const index = singleCmnt.tags.indexOf(tag);
-              if (index !== -1) {
-                singleCmnt.tags.splice(index, 1);
-              }
+    this.FacebookData?.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == this.removeTags.feedId) {
+            var tag = singleCmnt.tags.find(
+              (x: any) => x.name == this.removeTags.tagName
+            );
+            const index = singleCmnt.tags.indexOf(tag);
+            if (index !== -1) {
+              singleCmnt.tags.splice(index, 1);
             }
-          });
+          }
         });
       });
-      this.FacebookMessages?.forEach((msg: any) => {
-        if (msg.id == this.removeTags.feedId) {
-          var tag = msg.tags.find((x: any) => x.name == this.removeTags.tagName);
-          const index = msg.tags.indexOf(tag);
-          if (index !== -1) {
-            msg.tags.splice(index, 1);
-          }
+    });
+    this.FacebookMessages?.forEach((msg: any) => {
+      if (msg.id == this.removeTags.feedId) {
+        var tag = msg.tags.find((x: any) => x.name == this.removeTags.tagName);
+        const index = msg.tags.indexOf(tag);
+        if (index !== -1) {
+          msg.tags.splice(index, 1);
         }
-      });
+      }
+    });
     this.changeDetect.detectChanges();
   }
 
@@ -1027,21 +1036,21 @@ export class FacebookComponent implements OnInit {
   isAttachment = false;
 
   onFileChanged() {
-    Array.from(this.fileInput.nativeElement.files).forEach((file:any) => {
-      if(file.size > 4 * 1024 * 1024){
+    Array.from(this.fileInput.nativeElement.files).forEach((file: any) => {
+      if (file.size > 4 * 1024 * 1024) {
         this.reloadComponent('Attachments');
       } else if (this.fileInput.nativeElement.files.length > 0) {
-      this.isAttachment = true;
+        this.isAttachment = true;
 
-      const filesArray = Array.from(this.fileInput.nativeElement.files);
-      filesArray.forEach((attachment: any) => {
-        this.ImageArray.push(attachment);
-      });
-      const files = this.ImageArray.map((file: any) => file); // Create a new array with the remaining files
-      const newFileList = new DataTransfer();
-      files.forEach((file: any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
-      this.ImageName = newFileList.files;
-    }
+        const filesArray = Array.from(this.fileInput.nativeElement.files);
+        filesArray.forEach((attachment: any) => {
+          this.ImageArray.push(attachment);
+        });
+        const files = this.ImageArray.map((file: any) => file); // Create a new array with the remaining files
+        const newFileList = new DataTransfer();
+        files.forEach((file: any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+        this.ImageName = newFileList.files;
+      }
     });
   }
 
@@ -1393,40 +1402,10 @@ export class FacebookComponent implements OnInit {
     this.insertTagsForFeedDto.type = 'Tag';
     this.insertTagsForFeedDto.platform = 'Facebook';
 
-      this.FacebookData?.forEach((abc: any) => {
-        abc.comments.forEach((comment: any) => {
-          if (comment.id == comId) {
-            if (comment.tags.length == 0) {
-              this.commondata
-                .InsertTag(this.insertTagsForFeedDto)
-                .subscribe((res: any) => {
-                  this.reloadComponent('ApplyTag');
-
-                  this.activeTag = true;
-                  this.checkTag = true;
-                });
-            } else if (comment.tags.length > 0) {
-              const value = comment.tags.find((x: any) => x.name == tagName);
-              if (value != null || value != undefined) {
-                this.removeTagFromFeed(comId, tagName);
-              } else {
-                this.commondata
-                  .InsertTag(this.insertTagsForFeedDto)
-                  .subscribe((res: any) => {
-                    this.reloadComponent('ApplyTag');
-
-                    this.activeTag = true;
-                    this.checkTag = true;
-                  });
-              }
-            }
-          }
-        });
-      });
-
-      this.FacebookMessages?.forEach((msg: any) => {
-        if (msg.id == comId) {
-          if (msg.tags.length == 0) {
+    this.FacebookData?.forEach((abc: any) => {
+      abc.comments.forEach((comment: any) => {
+        if (comment.id == comId) {
+          if (comment.tags.length == 0) {
             this.commondata
               .InsertTag(this.insertTagsForFeedDto)
               .subscribe((res: any) => {
@@ -1435,8 +1414,8 @@ export class FacebookComponent implements OnInit {
                 this.activeTag = true;
                 this.checkTag = true;
               });
-          } else if (msg.tags.length > 0) {
-            const value = msg.tags.find((x: any) => x.name == tagName);
+          } else if (comment.tags.length > 0) {
+            const value = comment.tags.find((x: any) => x.name == tagName);
             if (value != null || value != undefined) {
               this.removeTagFromFeed(comId, tagName);
             } else {
@@ -1444,6 +1423,7 @@ export class FacebookComponent implements OnInit {
                 .InsertTag(this.insertTagsForFeedDto)
                 .subscribe((res: any) => {
                   this.reloadComponent('ApplyTag');
+
                   this.activeTag = true;
                   this.checkTag = true;
                 });
@@ -1451,36 +1431,70 @@ export class FacebookComponent implements OnInit {
           }
         }
       });
+    });
+
+    this.FacebookMessages?.forEach((msg: any) => {
+      if (msg.id == comId) {
+        if (msg.tags.length == 0) {
+          this.commondata
+            .InsertTag(this.insertTagsForFeedDto)
+            .subscribe((res: any) => {
+              this.reloadComponent('ApplyTag');
+
+              this.activeTag = true;
+              this.checkTag = true;
+            });
+        } else if (msg.tags.length > 0) {
+          const value = msg.tags.find((x: any) => x.name == tagName);
+          if (value != null || value != undefined) {
+            this.removeTagFromFeed(comId, tagName);
+          } else {
+            this.commondata
+              .InsertTag(this.insertTagsForFeedDto)
+              .subscribe((res: any) => {
+                this.reloadComponent('ApplyTag');
+                this.activeTag = true;
+                this.checkTag = true;
+              });
+          }
+        }
+      }
+    });
   }
 
   removeTagFromFeed(feedId: number, tagName: any) {
-    if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up'
+    if (
+      this.flag == 'focused' ||
+      this.flag == 'assigned_to_me' ||
+      this.flag == 'follow_up'
     ) {
-        this.insertTagsForFeedDto.tagName = tagName;
-        this.insertTagsForFeedDto.feedId = feedId;
-        this.insertTagsForFeedDto.type = 'Tag';
-        this.insertTagsForFeedDto.platform = 'Facebook';
+      this.insertTagsForFeedDto.tagName = tagName;
+      this.insertTagsForFeedDto.feedId = feedId;
+      this.insertTagsForFeedDto.type = 'Tag';
+      this.insertTagsForFeedDto.platform = 'Facebook';
 
-        this.commondata
-          .RemoveTag(this.insertTagsForFeedDto)
-          .subscribe((res: any) => {
-            this.reloadComponent('RemoveTag');
+      this.commondata
+        .RemoveTag(this.insertTagsForFeedDto)
+        .subscribe((res: any) => {
+          this.reloadComponent('RemoveTag');
 
-            this.activeTag = false;
-            this.checkTag = false;
-          });
+          this.activeTag = false;
+          this.checkTag = false;
+        });
     }
   }
 
   insertSentimentForFeed(comId: number, sentimenName: any) {
-      this.insertTagsForFeedDto.feedId = comId;
-      this.insertTagsForFeedDto.tagName = sentimenName;
-      this.insertTagsForFeedDto.type = 'Sentiment';
-      this.insertTagsForFeedDto.platform = 'Facebook';
+    this.insertTagsForFeedDto.feedId = comId;
+    this.insertTagsForFeedDto.tagName = sentimenName;
+    this.insertTagsForFeedDto.type = 'Sentiment';
+    this.insertTagsForFeedDto.platform = 'Facebook';
 
-      this.commondata.InsertSentiment(this.insertTagsForFeedDto).subscribe((res: any) => {
-          this.reloadComponent('Sentiment');
-        });
+    this.commondata
+      .InsertSentiment(this.insertTagsForFeedDto)
+      .subscribe((res: any) => {
+        this.reloadComponent('Sentiment');
+      });
   }
 
   commentStatus(comId: any, type: any) {
@@ -1547,6 +1561,21 @@ export class FacebookComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
+    
+    if (type == 'messageUnhided') {
+      this.AlterMsg = 'Comment Unhided Sucessfully';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
+    if (type == 'messageHided') {
+      this.AlterMsg = 'Comment Hided Sucessfully';
+      this.toastermessage = true;
+      setTimeout(() => {
+        this.toastermessage = false;
+      }, 4000);
+    }
     if (type == 'Attachments') {
       this.AlterMsg = 'File size must be less than 4MB';
       this.toastermessage = true;
@@ -1809,12 +1838,23 @@ export class FacebookComponent implements OnInit {
   }
 
   hideMessage(queryId: number, status: boolean) {
-    this.commondata.HideUnhideMessage(queryId, status).subscribe((res: any) => {
+    var obj = {
+      platform: "Facebook",
+      queryId: queryId,
+      status: status,
+    };
+    this.commondata.HideUnhideMessage(obj).subscribe((res: any) => {
       this.FacebookData?.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
           cmnt.items.forEach((singleCmnt: any) => {
             if (singleCmnt.id == queryId) {
               singleCmnt.isHide = status;
+              if(status == true){
+                this.reloadComponent('messageHided');
+              } else if(status == false){
+                this.reloadComponent('messageUnhided');
+              }
+              
             }
           });
         });
@@ -1915,7 +1955,9 @@ export class FacebookComponent implements OnInit {
     const customerId = localStorage.getItem('storeOpenedId');
     const channel = localStorage.getItem('parent');
     this.insertAtCaret(
-      'https://keportal.enteract.live/survey/customer_satisfaction' + '?channel=' + channel +
+      'https://keportal.enteract.live/survey/customer_satisfaction' +
+        '?channel=' +
+        channel +
         '&customerId=' +
         customerId +
         ' '
