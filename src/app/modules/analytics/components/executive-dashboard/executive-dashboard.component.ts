@@ -30,15 +30,23 @@ export class ExecutiveDashboardComponent implements OnInit {
   data: any[] = []
   startDate = ''
   endDate = ''
+  InboundGraph:any
+AudienceEngagmentGraph:any
+EnagementGraph:any
+sentimentGraph:any
+facebookreactionGraph:any
   maxEndDate: any;
   social_media_report: any
   inbound_traffic: any
+  InboundCounts:any[]=[]
+  InboundDates:any[]=[]
   sentimental_analysis: any
-  date_Audience: any
+  date_Audience: any[]=[]
   post_likes: any
   post_comments: any
   post_share: any
-  facebook_reaction: any
+  facebook_reaction: any[]=[]
+  facebook_reactionDates:any[]=[]
   platformsArray: any[] = []
   channelWiseEngagement: any[] = [];
   currentDate: any;
@@ -55,6 +63,7 @@ export class ExecutiveDashboardComponent implements OnInit {
     // this.getEnagementChart()
     // this.getRefionWiseTrafic()
     this.GetAllSocialMediaReport()
+    this.makeChartResponsive()
   }
 
   GetAllSocialMediaReport() {
@@ -88,6 +97,8 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.date_Audience = []
     this.post_comments = []
     this.post_likes = []
+    this.InboundDates=[]
+    this.facebook_reactionDates=[]
     this.post_share = []
     this.facebook_reaction = [];
     this.platformsArray = [];
@@ -100,8 +111,10 @@ export class ExecutiveDashboardComponent implements OnInit {
         // inbound 
         const inBoundTrafficDto = this.social_media_report.inBoundTrafficDto;
         inBoundTrafficDto.forEach((data: any) => {
-          const date = new Date(data.date);
-          this.inbound_traffic.push({ x: date, y: data.totalCount });
+          if(!this.InboundDates.includes(this.datePipe.transform(data.date,'dd/MMM'))){
+            this.InboundDates.push(this.datePipe.transform(data.date,'dd/MMM'))
+          }
+          this.InboundCounts.push(data.totalCount)
         });
         // sentiments
         const sentimentsAnalysisDto = this.social_media_report.sentimentsAnalysisDto;
@@ -115,28 +128,31 @@ export class ExecutiveDashboardComponent implements OnInit {
         this.social_media_report.facebookReportResponseDto.postLikeSpan?.forEach((data: any) => {
 
           this.post_likes.push(data.activityCount);
-          if (!this.date_Audience.includes(data.dateValue)) {
-            this.date_Audience.push(data.dateValue)
+          if (!this.date_Audience.includes(this.datePipe.transform(data.dateValue,'dd/MMM'))) {
+            this.date_Audience.push(this.datePipe.transform(data.dateValue,'dd/MMM'))
           }
         });
         this.social_media_report.facebookReportResponseDto.postShareSpan?.forEach((data: any) => {
           this.post_share.push(data.activityCount);
-          if (!this.date_Audience.includes(data.dateValue)) {
-            this.date_Audience.push(data.dateValue)
+          if (!this.date_Audience.includes(this.datePipe.transform(data.dateValue,'dd/MMM'))) {
+            this.date_Audience.push(this.datePipe.transform(data.dateValue,'dd/MMM'))
           }
         });
         this.social_media_report.facebookReportResponseDto.postCommentSpan?.forEach((data: any) => {
           this.post_comments.push(data.activityCount);
-          if (!this.date_Audience.includes(data.dateValue)) {
-            this.date_Audience.push(data.dateValue)
+          if (!this.date_Audience.includes(this.datePipe.transform(data.dateValue,'dd/MMM'))) {
+            this.date_Audience.push(this.datePipe.transform(data.dateValue,'dd/MMM'))
           }
         });
         // facebook Reaction 
         const pageReactionsSpan = this.social_media_report.facebookReportResponseDto.pageReactionsSpan;
 
         pageReactionsSpan?.forEach((data: any) => {
-          const date = (data.totalReactionsDateValue);
+      
           this.facebook_reaction.push(data.like + data.love + data.wow + data.haha + data.sorry + data.anger + data.sad + data.tHANKFUL + data.pride + data.cARE);
+          if(!this.facebook_reactionDates.includes(this.datePipe.transform(data.totalReactionsDateValue,'dd/MMM'))){
+            this.facebook_reactionDates.push(this.datePipe.transform(data.totalReactionsDateValue,'dd/MMM'))
+          }
         });
 
         //getEnagementChart
@@ -169,7 +185,7 @@ export class ExecutiveDashboardComponent implements OnInit {
         this.getSentimentChart()
         this.getChartAudienceEngagement()
         this.getFacebookReaction()
-        this.getWordCloud()
+        // this.getWordCloud()
 
       })
 
@@ -182,15 +198,12 @@ export class ExecutiveDashboardComponent implements OnInit {
   getChartInbound() {
     type EChartsOption = echarts.EChartsOption;
     var chartDom = document.getElementById('inbound')!;
-    var myChart = echarts.init(chartDom);
+    this.InboundGraph = echarts.init(chartDom);
     var option: EChartsOption;
-    function dataFormat(date: Date): string {
-      const day: number = date.getDate();
-      const monthNames: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-      const month: string = monthNames[date.getMonth()];
-      return `${day} ${month}`;
-    }
+
     option = {
+      color: ['#FFA800', ],
+      
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -201,7 +214,9 @@ export class ExecutiveDashboardComponent implements OnInit {
         }
       },
       legend: {
-        data: ['Inbound']
+        data:['Inbound'],
+        bottom:0,
+        icon:'circle'
       },
       toolbox: {
         feature: {
@@ -209,50 +224,128 @@ export class ExecutiveDashboardComponent implements OnInit {
         }
       },
       grid: {
-        left: '3%',
+        left: '13%',
         right: '4%',
-        bottom: '3%',
+        bottom: '13%',
         containLabel: true
       },
       xAxis: [
         {
           type: 'category',
           boundaryGap: false,
-          data: this.inbound_traffic.map((item: any) => dataFormat(item.x)),
+          data: this.InboundDates,
+          axisLabel:{
+            rotate:45
+          }
         }
       ],
-      yAxis: [
-        {
-          type: 'value'
+      yAxis: [{
+        type: "value",
+        nameLocation: "middle",
+        name: "Numbers of Inbounds",
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'Gray',
+          lineHeight: 50
+
         }
-      ],
+      }],
       series: [
         {
-          name: 'Email',
+          name: 'Inbound',
           type: 'line',
-
-          areaStyle: {},
+   
+          smooth: true,
+          lineStyle: {
+            width: 0
+          },
+          showSymbol: false,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#FFA800'
+              },
+              {
+                offset: 1,
+                color: '#FFD178'
+              }
+            ])
+          },
           emphasis: {
             focus: 'series'
           },
-          data: this.inbound_traffic.map((item: any) => item.y),
+          data: this.InboundCounts
         },
-
-
+      
       ]
     };
+    // option = {
+    //   tooltip: {
+    //     trigger: 'axis',
+    //     axisPointer: {
+    //       type: 'cross',
+    //       label: {
+    //         backgroundColor: '#6a7985'
+    //       }
+    //     }
+    //   },
+    //   legend: {
+    //     data: ['Inbound']
+    //   },
+    //   toolbox: {
+    //     feature: {
+    //       saveAsImage: {}
+    //     }
+    //   },
+    //   grid: {
+    //     left: '3%',
+    //     right: '4%',
+    //     bottom: '3%',
+    //     containLabel: true
+    //   },
+    //   xAxis: [
+    //     {
+    //       type: 'category',
+    //       boundaryGap: false,
+    //       data: this.inbound_traffic.map((item: any) => dataFormat(item.x)),
+    //     }
+    //   ],
+    //   yAxis: [
+    //     {
+    //       type: 'value'
+    //     }
+    //   ],
+    //   series: [
+    //     {
+    //       name: 'Email',
+    //       type: 'line',
 
-    option && myChart.setOption(option);
+    //       areaStyle: {},
+    //       emphasis: {
+    //         focus: 'series'
+    //       },
+    //       data: this.inbound_traffic.map((item: any) => item.y),
+    //     },
+
+
+    //   ]
+    // };
+
+    option && this.InboundGraph.setOption(option);
   }
   getChartAudienceEngagement() {
 
     type EChartsOption = echarts.EChartsOption;
     var chartDom = document.getElementById('audience')!;
-    var myChart = echarts.init(chartDom);
+    this.AudienceEngagmentGraph = echarts.init(chartDom);
     var option: EChartsOption;
 
+   
     option = {
-
+      color: ['#0095FF', '#FF0000', '#05C283', '#FF0087', '#FFBF00'],
+    
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -263,38 +356,65 @@ export class ExecutiveDashboardComponent implements OnInit {
         }
       },
       legend: {
-        data: ['Likes', 'Comments', 'Share', 'Tweets', 'Search Engine']
+        data: ['Likes', 'Comments', 'Share'],
+        icon:'circle',
+        bottom:0
       },
       toolbox: {
         feature: {
-          // magicType: { show: true, type: ['line', 'bar'] },
           saveAsImage: {}
         }
       },
       grid: {
-        left: '3%',
+        left: '13%',
         right: '4%',
-        bottom: '3%',
+        bottom: '13%',
         containLabel: true
       },
       xAxis: [
         {
           type: 'category',
           boundaryGap: false,
-          data: this.date_Audience
+          data: this.date_Audience,
+          axisLabel: {
+            rotate: 45,
+          },
         }
       ],
-      yAxis: [
-        {
-          type: 'value'
+      yAxis: [{
+        type: "value",
+        nameLocation: "middle",
+        name: "Number of  Audience Enagements",
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'Gray',
+          lineHeight: 50
+
         }
-      ],
+      }],
       series: [
         {
           name: 'Likes',
           type: 'line',
-
-          areaStyle: {},
+        
+          smooth: true,
+          lineStyle: {
+            width: 0
+          },
+          showSymbol: false,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#0095FF'
+              },
+              {
+                offset: 1,
+                color: '#B7E5FA'
+              }
+            ])
+          },
           emphasis: {
             focus: 'series'
           },
@@ -303,8 +423,24 @@ export class ExecutiveDashboardComponent implements OnInit {
         {
           name: 'Comments',
           type: 'line',
-
-          areaStyle: {},
+          smooth: true,
+          lineStyle: {
+            width: 0
+          },
+          showSymbol: false,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#FF0000'
+              },
+              {
+                offset: 1,
+                color: '#CDA2B1'
+              }
+            ])
+          },
           emphasis: {
             focus: 'series'
           },
@@ -313,28 +449,46 @@ export class ExecutiveDashboardComponent implements OnInit {
         {
           name: 'Share',
           type: 'line',
-
-          areaStyle: {},
+    
+          smooth: true,
+          lineStyle: {
+            width: 0
+          },
+          showSymbol: false,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#05C283'
+              },
+              {
+                offset: 1,
+                color: '#10CB8D'
+              }
+            ])
+          },
           emphasis: {
             focus: 'series'
           },
-          data: this.post_share
+          data:  this.post_share
         },
-
-
+      
       ]
     };
-    option && myChart.setOption(option);
+    
+    option && this.AudienceEngagmentGraph.setOption(option);
   }
   getEnagementChart() {
     var chartDom = document.getElementById('enagement');
-    var myChart = echarts.init(chartDom);
+    this.EnagementGraph = echarts.init(chartDom);
     var option;
 
     option = {
       legend: {
         bottom: 0,
         left: 'center',
+        icon:'circle'
       },
       tooltip: { trigger: 'axis' },
       dataset: {
@@ -344,21 +498,34 @@ export class ExecutiveDashboardComponent implements OnInit {
         {
           type: 'category',
           data: this.channelWiseEngagement.map(data => data.name),
+      
           axisLabel: {
+            rotate:45,
             formatter: function (value: any) {
               return new Date(value).toISOString().split('T')[0];
             },
+            
           },
         },
       ],
-      yAxis: {},
+      yAxis: [{
+        type: "value",
+        nameLocation: "middle",
+        name: "Numbers of  Engagements ",
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'Gray',
+          lineHeight: 50
+
+        }
+      }],
       series: this.platformsArray.map(platform => ({
         type: 'bar',
         name: platform,
         encode: { x: 'product', y: platform },
       })),
     };
-    option && myChart.setOption(option);
+    option && this.EnagementGraph.setOption(option);
   }
 
 
@@ -366,7 +533,7 @@ export class ExecutiveDashboardComponent implements OnInit {
     type EChartsOption = echarts.EChartsOption;
 
     var chartDom = document.getElementById('main')!;
-    var myChart = echarts.init(chartDom);
+    this.sentimentGraph = echarts.init(chartDom);
     var option: EChartsOption;
 
     option = {
@@ -377,6 +544,8 @@ export class ExecutiveDashboardComponent implements OnInit {
       legend: {
         top: '5%',
         left: 'center',
+        bottom:0,
+        icon:'circle'
       },
       series: [
         {
@@ -391,7 +560,7 @@ export class ExecutiveDashboardComponent implements OnInit {
           emphasis: {
             label: {
               show: true,
-              fontSize: 16,
+              fontSize: 12,
               fontWeight: 'bold',
             },
           },
@@ -403,17 +572,17 @@ export class ExecutiveDashboardComponent implements OnInit {
       ],
     };
 
-    option && myChart.setOption(option);
+    option && this.sentimentGraph.setOption(option);
   }
   getFacebookReaction() {
     type EChartsOption = echarts.EChartsOption;
 
     var chartDom = document.getElementById('facebookReaction')!;
-    var myChart = echarts.init(chartDom);
+    this.facebookreactionGraph = echarts.init(chartDom);
     var option: EChartsOption;
 
     option = {
-      color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+      color: ['#189FFF',],
 
       tooltip: {
         trigger: 'axis',
@@ -425,29 +594,40 @@ export class ExecutiveDashboardComponent implements OnInit {
         }
       },
       legend: {
-        data: ['Line 1']
+        data: ['FACEBOOK REACTIONS'],
+        icon:'circle',
+        bottom:0
       },
       grid: {
         left: '3%',
         right: '4%',
-        bottom: '3%',
+        bottom: '13%',
         containLabel: true
       },
       xAxis: [
         {
           type: 'category',
           boundaryGap: false,
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data:this.facebook_reactionDates,
+          axisLabel:{
+            rotate:45
+          }
         }
       ],
-      yAxis: [
-        {
-          type: 'value'
+      yAxis: [{
+        type: "value",
+        nameLocation: "middle",
+        name: "Numbers of Facebook reactions",
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'Gray',
+          lineHeight: 50
+
         }
-      ],
+      }],
       series: [
         {
-          name: 'Line 1',
+          name: 'FACEBOOK REACTIONS',
           type: 'line',
 
           smooth: true,
@@ -460,11 +640,11 @@ export class ExecutiveDashboardComponent implements OnInit {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: 'rgb(128, 255, 165)'
+                color: '#189FFF'
               },
               {
                 offset: 1,
-                color: 'rgb(1, 191, 236)'
+                color: '#82CBFF'
               }
             ])
           },
@@ -476,7 +656,7 @@ export class ExecutiveDashboardComponent implements OnInit {
       ]
     };
 
-    option && myChart.setOption(option);
+    option && this.facebookreactionGraph.setOption(option);
   }
   getRefionWiseTrafic() {
     type EChartsOption = echarts.EChartsOption;
@@ -523,10 +703,10 @@ export class ExecutiveDashboardComponent implements OnInit {
       this.endDate = this.datePipe.transform(this.endDate, 'MM-dd-YYYY') || "";
     }
     this.data = []
-    this.spinerService.show()
+
     this.commonDataService.getWordCloud(this.startDate, this.endDate).subscribe((res: any) => {
       this.wordcloudData = res
-      this.spinerService.hide()
+
       if (this.wordcloudData.length > 0) {
         this.data = [];
         res.forEach((element: any) => {
@@ -563,5 +743,215 @@ export class ExecutiveDashboardComponent implements OnInit {
     //   console.log("WordCloud===>",this.data)
 
 
+  }
+  testGraph(){
+    var chartDom = document.getElementById('test');
+var myChart = echarts.init(chartDom);
+var option;
+
+option = {
+  color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+  title: {
+    text: 'Gradient Stacked Area Chart'
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'cross',
+      label: {
+        backgroundColor: '#6a7985'
+      }
+    }
+  },
+  legend: {
+    data: ['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']
+  },
+  toolbox: {
+    feature: {
+      saveAsImage: {}
+    }
+  },
+  grid: {
+    left: '3%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true
+  },
+  xAxis: [
+    {
+      type: 'category',
+      boundaryGap: false,
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    }
+  ],
+  yAxis: [
+    {
+      type: 'value'
+    }
+  ],
+  series: [
+    {
+      name: 'Line 1',
+      type: 'line',
+      stack: 'Total',
+      smooth: true,
+      lineStyle: {
+        width: 0
+      },
+      showSymbol: false,
+      areaStyle: {
+        opacity: 0.8,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: 'rgb(128, 255, 165)'
+          },
+          {
+            offset: 1,
+            color: 'rgb(1, 191, 236)'
+          }
+        ])
+      },
+      emphasis: {
+        focus: 'series'
+      },
+      data: [140, 232, 101, 264, 90, 340, 250]
+    },
+    {
+      name: 'Line 2',
+      type: 'line',
+      stack: 'Total',
+      smooth: true,
+      lineStyle: {
+        width: 0
+      },
+      showSymbol: false,
+      areaStyle: {
+        opacity: 0.8,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: 'rgb(0, 221, 255)'
+          },
+          {
+            offset: 1,
+            color: 'rgb(77, 119, 255)'
+          }
+        ])
+      },
+      emphasis: {
+        focus: 'series'
+      },
+      data: [120, 282, 111, 234, 220, 340, 310]
+    },
+    {
+      name: 'Line 3',
+      type: 'line',
+      stack: 'Total',
+      smooth: true,
+      lineStyle: {
+        width: 0
+      },
+      showSymbol: false,
+      areaStyle: {
+        opacity: 0.8,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: 'rgb(55, 162, 255)'
+          },
+          {
+            offset: 1,
+            color: 'rgb(116, 21, 219)'
+          }
+        ])
+      },
+      emphasis: {
+        focus: 'series'
+      },
+      data: [320, 132, 201, 334, 190, 130, 220]
+    },
+    {
+      name: 'Line 4',
+      type: 'line',
+      stack: 'Total',
+      smooth: true,
+      lineStyle: {
+        width: 0
+      },
+      showSymbol: false,
+      areaStyle: {
+        opacity: 0.8,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: 'rgb(255, 0, 135)'
+          },
+          {
+            offset: 1,
+            color: 'rgb(135, 0, 157)'
+          }
+        ])
+      },
+      emphasis: {
+        focus: 'series'
+      },
+      data: [220, 402, 231, 134, 190, 230, 120]
+    },
+    {
+      name: 'Line 5',
+      type: 'line',
+      stack: 'Total',
+      smooth: true,
+      lineStyle: {
+        width: 0
+      },
+      showSymbol: false,
+      label: {
+        show: true,
+        position: 'top'
+      },
+      areaStyle: {
+        opacity: 0.8,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: 'rgb(255, 191, 0)'
+          },
+          {
+            offset: 1,
+            color: 'rgb(224, 62, 76)'
+          }
+        ])
+      },
+      emphasis: {
+        focus: 'series'
+      },
+      data: [220, 302, 181, 234, 210, 290, 150]
+    }
+  ]
+};
+
+option && myChart.setOption(option);
+  }
+  makeChartResponsive() {
+    window.addEventListener('resize', () => {
+      if (this.InboundGraph) {
+        this.InboundGraph.resize();
+      }
+      if (this.AudienceEngagmentGraph) {
+        this.AudienceEngagmentGraph.resize();
+      }
+      if (this.EnagementGraph) {
+        this.EnagementGraph.resize();
+      }
+      if (this.sentimentGraph) {
+        this.sentimentGraph.resize();
+      }
+      if (this.facebookreactionGraph) {
+        this.facebookreactionGraph.resize();
+      }
+    
+    });
   }
 }

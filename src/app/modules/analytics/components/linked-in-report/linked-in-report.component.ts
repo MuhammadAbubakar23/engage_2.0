@@ -77,12 +77,12 @@ export class LinkedInReportComponent implements OnInit {
     this.toastermessage = false;
   }
   resetEndDate() {
-    if (this.toDate <= this.fromDate) {
-      this.toDate = '';
-      alert('EndDate is greater_then StartDate');
-    } else {
+    if (this.toDate >= this.fromDate) {
       this.getLinkedInReportData();
-      this.getAllLinkedInfollowrs();
+      this.getAllLinkedInfollowrs()
+    } else {
+      alert('EndDate is lessthen StartDate');
+      this.toDate = '';
     }
   }
   export() {
@@ -93,16 +93,17 @@ export class LinkedInReportComponent implements OnInit {
   }
 
   getLinkedInReportData() {
-    if (this.fromDate == '' && this.toDate == '') {
-      const today = new Date();
-      this.toDate =
-        this.datePipe.transform(this.currentDate, 'YYYY-MM-dd') || '';
-      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 5);
-      this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-d') || '';
-    } else if (this.fromDate != '' && this.toDate != '') {
-      this.toDate = this.toDate;
-      this.fromDate = this.fromDate;
-    }
+  
+ if(this.fromDate==''&& this.toDate=='' ){
+  const today =new Date()
+  this.toDate =this.datePipe.transform(this.currentDate,'YYYY-MM-dd') || '';
+  let prevDate = this.currentDate.setDate(this.currentDate.getDate()-5);
+  this.fromDate=this.datePipe.transform(prevDate,'YYYY-MM-dd') || '';
+ }
+ else if(this.fromDate!='' && this.toDate!=''){
+  this.toDate=this.toDate
+  this.fromDate=this.fromDate
+ }
 
     var obj = {
       pageId: '76213578',
@@ -459,112 +460,212 @@ export class LinkedInReportComponent implements OnInit {
 
     option && this.clickThroughRateGraph.setOption(option);
   }
-  getAllLinkedInfollowrs() {
-    debugger;
-    if (this.fromDate == '' && this.toDate == '') {
-      const today = new Date();
-      this.toDate =
-        this.datePipe.transform(this.currentDate, 'YYYY-MM-dd') || '';
-      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 5);
-      this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-d') || '';
-    } else if (this.fromDate != '' && this.toDate != '') {
-      this.toDate = this.toDate;
-      this.fromDate = this.fromDate;
+  // getAllLinkedInfollowrs() {
+  //   debugger;
+  //   if (this.fromDate == '' && this.toDate == '') {
+  //     const today = new Date();
+  //     this.toDate =
+  //       this.datePipe.transform(this.currentDate, 'YYYY-MM-dd') || '';
+  //     let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 5);
+  //     this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-d') || '';
+  //   } else if (this.fromDate != '' && this.toDate != '') {
+  //     this.toDate = this.toDate;
+  //     this.fromDate = this.fromDate;
+  //   }
+
+  //   let obj = {
+  //     pageId: '76213578',
+  //     from: this.fromDate,
+  //     to: this.toDate,
+  //     lastPostId: 0,
+  //   };
+  //   this.followersGraphData = [];
+  //   this.allDates = [];
+  //   this.commonDataService
+  //     .GetLinkedInReportFollwers(obj)
+  //     .subscribe((res: any) => {
+  //       this.linkedfollowerTotalcount = res.spanFollowers_TotalCount;
+  //       this.linkedFollowerData = res.spanFollowers;
+  //       debugger;
+  //       this.linkedFollowerData.forEach((abc: any) => {
+  //         debugger;
+  //         if (
+  //           !this.allDates.includes(this.datePipe.transform(abc.from, 'dd MMM'))
+  //         ) {
+  //           this.allDates.push(this.datePipe.transform(abc.from, 'dd MMM'));
+  //         }
+  //         this.followersGraphData.push(
+  //           abc.organicFollowers + abc.paidFollowers
+  //         );
+  //       });
+
+  //       this.followerChart();
+  //     });
+  // }
+  // followerChart() {
+  //   debugger;
+  //   type EChartsOption = echarts.EChartsOption;
+
+  //   const dom = document.getElementById('followers');
+  //   this.followers = echarts.init(dom, null, {
+  //     renderer: 'canvas',
+  //     useDirtyRect: false,
+  //   });
+  //   var option: EChartsOption;
+
+  //   option = {
+  //     color: ['#90EE90'],
+  //     title: {
+  //       text: '',
+  //     },
+  //     tooltip: {
+  //       trigger: 'axis',
+  //     },
+  //     legend: {
+  //       data: ['Total Followers'],
+  //       icon: 'circle',
+  //       bottom: 0,
+  //     },
+  //     grid: {
+  //       left: '3%',
+  //       right: '4%',
+  //       bottom: '15%',
+  //       containLabel: true,
+  //     },
+  //     toolbox: {
+  //       feature: {
+  //         saveAsImage: {},
+  //       },
+  //     },
+  //     xAxis: {
+  //       type: 'category',
+  //       boundaryGap: false,
+  //       data: this.allDates,
+  //       axisLabel: {
+  //         rotate: 45,
+  //       },
+  //     },
+  //     yAxis: {
+  //       type: 'value',
+  //       nameLocation: 'middle',
+  //       name: 'Total Number of Followers',
+  //       nameTextStyle: {
+  //         fontSize: 12,
+  //         color: 'grey',
+  //         lineHeight: 80,
+  //       },
+  //     },
+  //     series: [
+  //       {
+  //         name: 'Total Followers',
+  //         type: 'line',
+  //         data: this.followersGraphData,
+  //       },
+  //     ],
+  //   };
+
+  //   option && this.followers.setOption(option);
+  // }
+  getAllLinkedInfollowrs(){
+    
+    if(this.fromDate==''&& this.toDate=='' ){
+      const today =new Date()
+      this.toDate =this.datePipe.transform(this.currentDate,'YYYY-MM-dd') || '';
+      let prevDate = this.currentDate.setDate(this.currentDate.getDate()-5);
+      this.fromDate=this.datePipe.transform(prevDate,'YYYY-MM-dd') || '';
+     }
+     else if(this.fromDate!='' && this.toDate!=''){
+      this.toDate=this.toDate
+      this.fromDate=this.fromDate
+     }
+    // let obj= {
+    //   pageId: "76213578",
+    //   from: "2023-09-10",
+    //   to: "2023-11-21",
+    //   lastPostId: 0
+    // }
+    
+    let obj ={
+      "pageId": "76213578",
+      "from":this.fromDate,
+      "to": this.toDate,
+      "lastPostId": 0
     }
-
-    let obj = {
-      pageId: '76213578',
-      from: this.fromDate,
-      to: this.toDate,
-      lastPostId: 0,
-    };
-    this.followersGraphData = [];
-    this.allDates = [];
-    this.commonDataService
-      .GetLinkedInReportFollwers(obj)
-      .subscribe((res: any) => {
-        this.linkedfollowerTotalcount = res.spanFollowers_TotalCount;
-        this.linkedFollowerData = res.spanFollowers;
-        debugger;
-        this.linkedFollowerData.forEach((abc: any) => {
-          debugger;
-          if (
-            !this.allDates.includes(this.datePipe.transform(abc.from, 'dd MMM'))
-          ) {
-            this.allDates.push(this.datePipe.transform(abc.from, 'dd MMM'));
-          }
-          this.followersGraphData.push(
-            abc.organicFollowers + abc.paidFollowers
-          );
-        });
-
-        this.followerChart();
-      });
+    this.followersGraphData=[]
+    this.allDates=[]
+    this.commonDataService.GetLinkedInReportFollwers(obj).subscribe((res:any)=>{
+      this.linkedfollowerTotalcount=res.spanFollowers_TotalCount
+      this.linkedFollowerData=res.spanFollowers
+      
+      this.linkedFollowerData.forEach((abc:any)=>{
+        
+        if (!this.allDates.includes(this.datePipe.transform(abc.from,'dd MMM'))) {
+          this.allDates.push(this.datePipe.transform(abc.from,'dd MMM'));
+        }
+        this.followersGraphData.push(abc.organicFollowers + abc.paidFollowers)
+      })
+   
+      this.followerChart()
+    })
+   
   }
-  followerChart() {
-    debugger;
-    type EChartsOption = echarts.EChartsOption;
+followerChart(){
+  
+  type EChartsOption = echarts.EChartsOption;
 
-    const dom = document.getElementById('followers');
-    this.followers = echarts.init(dom, null, {
-      renderer: 'canvas',
-      useDirtyRect: false,
-    });
-    var option: EChartsOption;
+  const dom = document.getElementById('followers');
+  this.followers = echarts.init(dom, null, {
+    renderer: 'canvas',
+    useDirtyRect: false,
+  });
+  var option: EChartsOption;
 
-    option = {
-      color: ['#90EE90'],
-      title: {
-        text: '',
+  option = {
+    color: ['#90EE90'],
+    title: {
+      text: '',
+    },
+    tooltip: {
+      trigger: 'axis',
+    },
+    legend: {
+      data: ['Total Followers'],
+      icon: 'circle',
+      bottom: 0,
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '15%',
+      containLabel: true,
+    },
+    toolbox: {
+      feature: {
+        saveAsImage: {},
       },
-      tooltip: {
-        trigger: 'axis',
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: this.allDates,
+      axisLabel: {
+        rotate: 45,
       },
-      legend: {
-        data: ['Total Followers'],
-        icon: 'circle',
-        bottom: 0,
+    },
+    yAxis: {
+      type: 'value',
+    },
+    series: [
+      {
+        name: 'Total Followers',
+        type: 'line',
+        data: this.followersGraphData,
       },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '15%',
-        containLabel: true,
-      },
-      toolbox: {
-        feature: {
-          saveAsImage: {},
-        },
-      },
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: this.allDates,
-        axisLabel: {
-          rotate: 45,
-        },
-      },
-      yAxis: {
-        type: 'value',
-        nameLocation: 'middle',
-        name: 'Total Number of Followers',
-        nameTextStyle: {
-          fontSize: 12,
-          color: 'grey',
-          lineHeight: 80,
-        },
-      },
-      series: [
-        {
-          name: 'Total Followers',
-          type: 'line',
-          data: this.followersGraphData,
-        },
-      ],
-    };
+    ],
+  };
 
-    option && this.followers.setOption(option);
-  }
+  option && this.followers.setOption(option);
+}
   makeChartResponsive() {
     window.addEventListener('resize', () => {
       if (this.impressionGraph) {

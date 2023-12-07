@@ -17,6 +17,7 @@ import {
   getPermissionsLoading,
 } from '../../permission-state/permission.selectors';
 import { PermissionState } from '../../permission-state/permission.state';
+import { OpensidebarService } from 'src/app/services/openSidebarService/opensidebar.service';
 
 @Component({
   selector: 'role-menu',
@@ -33,6 +34,7 @@ export class RoleMenuComponent implements OnInit {
   //menu$ :Observable<any>;
   loading$: any;
   activeChannel:string=''
+  activeMenu:string=''
   restrictedAgentsString =
   'Farah.khalid@abacus-global.com, aniqa.waris@bpo.abacus-global.com, samoom.fatima@bpo.abacus-global.com, Mishal.Javed@abacus-global.com, ambreen.zubair@jazz.com.pk, naveeda.akhtar@jazz.com.pk, sidra.shafiq@jazz.com.pk, muhammad.mansoor@jazz.com.pk, ayesha.sajjad@jazz.com.pk, farrukh.saeed1@jazz.com.pk, hassam.naveed@jazz.com.pk, nadia.shabbir@jazz.com.pk, rizwan.malik@jazz.com.pk, abida.rasheed@jazz.com.pk, saba.riaz@jazz.com.pk, pringle.charles@jazz.com.pk';
   restrictedAgent: string = '';
@@ -43,7 +45,8 @@ export class RoleMenuComponent implements OnInit {
     private MenuStore: Store<MenuState>,
     private PermissionStore: Store<PermissionState>,
     private _route: Router,
-    private storage: StorageService
+    private storage: StorageService,
+    private sidebar:OpensidebarService
   ) {
     //  this.menu$ = this.MenuStore.select(getEmargingEqual("role_main_left_menu"));
     //  this.menus$ = this.menu$.pipe(share(), startWith(false));
@@ -77,6 +80,10 @@ export class RoleMenuComponent implements OnInit {
   }
 
   assignedProfile = localStorage.getItem('assignedProfile');
+  opensidebar(){
+    this.activeMenu=this._route.url.split('/')[1];
+    this.sidebar.sendsidebarvalue(this.activeMenu)
+  }
 
   update(menuLink: any) {
     

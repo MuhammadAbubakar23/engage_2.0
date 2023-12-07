@@ -14,13 +14,13 @@
                                 <div class="iconholder">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <input type="datetime-local" class="form-control" placeholder="Start Date"
+                                            <input type="date" class="form-control" placeholder="Start Date"
                                                 [(ngModel)]="startDate" 
                                              [max]="maxEndDate"
                                                 (change)="resetStartDate()" />
                                         </div>
                                         <div class="col-sm-6">
-                                            <input type="datetime-local" class="form-control" [(ngModel)]="endDate"
+                                            <input type="date" class="form-control" [(ngModel)]="endDate"
                                           
                                             [max]="maxEndDate"
                                                 placeholder="End Date" (change)="resetEndDate()" />

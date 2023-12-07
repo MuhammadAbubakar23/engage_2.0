@@ -22,8 +22,11 @@
                             </div>
                         </li>
                         <li class="list-inline-item">
-                            <select name="" class="form-select" (change)="getByShifTime($event)">
-                                <option *ngFor="let shift of shiftType" [value]="shift.id">{{shift.name}}</option>
+                            <select name="" class="form-select"   (click)="getByShifTime($event)">
+                           <ng-container *ngFor="let shift of shiftType">
+                            <option  [value]="shift.id" >{{shift.name}}</option>
+                           </ng-container>
+                     
                             </select>
 
                         </li>
@@ -159,10 +162,19 @@
                 <!-- <button (click)="exportToCSV()">Export to CSV</button> -->
 
                 <div class="card iceBg p-4 rounded mb-5">
-                    <h5 class="section-heading mb-4 p-0">Inbound Traffic - Morning Shift </h5>
-                    <div class="graphcontainer align-items-end mb-5">
-                        <div id="shiftReport" style="height: 300px; width: 100%; max-width:1200px"></div>
-                    </div>
+                    <h5 class="section-heading mb-4 p-0">Inbound Traffic </h5>
+                    <ng-container *ngIf="isShowGrpah==false">
+                        <div class="graphcontainer align-items-end mb-5">
+                            <div id="shiftReport" style="height: 300px; width: 100%; max-width:1200px"></div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="isShowGrpah==true">
+                        <div class="graphcontainer align-items-end mb-5">
+                            <!-- <div id="shiftReport" style="height: 300px; width: 100%; max-width:1200px"></div> -->
+                            <p>No Data found</p>
+                        </div>
+                    </ng-container>
+                 
                 </div>
                 <div class="row mb-5 align-items-start">
                     <div class="col-md-4">

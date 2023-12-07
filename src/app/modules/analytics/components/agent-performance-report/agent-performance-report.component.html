@@ -2,7 +2,7 @@
     <div class="middle-content d-flex">
         <div class="d-grid w-100">
             <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1"
-                style="overflow-y: auto; outline: none;">
+                style="overflow-y: auto; outline: none; overflow-x: hidden">
                 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
                     [fullScreen]="false">
                     <p style="color: white"> Loading... </p>
@@ -205,9 +205,18 @@
                                 <div class="col-12">
                                     <div class="card iceBg p-4 rounded mb-5">
                                         <h5 class="section-heading mb-4 p-0">{{ selectedChannelLabel }}</h5>
-                                        <div class="graphcontainer align-items-end">
-                                            <div #main style="height: 350px; width: 100%;"></div>
-                                        </div>
+                                        <ng-container *ngIf="isShowCommentGraph==false">
+                                            <div class="graphcontainer align-items-end">
+                                                <div #main style="height: 350px; width: 100%;"></div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="isShowCommentGraph==true">
+                                            <div class="graphcontainer align-items-end">
+                                                <p> No Data found</p>
+                                                <!-- <div #main style="height: 350px; width: 100%;"></div> -->
+                                            </div>
+                                        </ng-container>
+                                        
                                     </div>
                                 </div>
                             </span>

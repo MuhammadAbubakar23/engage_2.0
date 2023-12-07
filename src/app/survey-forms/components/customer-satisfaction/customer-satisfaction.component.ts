@@ -28,7 +28,7 @@ export class CustomerSatisfactionComponent implements OnInit {
   }
 
   save() {
-    debugger
+    
     const channel = this.router.url.split(/[=&]/)[1];
     const customerId = this.router.url.split('=')[2];
     let data = {

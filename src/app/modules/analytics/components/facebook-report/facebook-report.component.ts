@@ -71,7 +71,13 @@ export class FacebookReportComponent implements OnInit {
   currentDate: any;
   maxEndDate: any;
   cutomerdata: any;
-  // datePipe: any;
+  isShowbehaviorGraph:boolean=false
+  isShowAudienceGraph:boolean=false
+  isShowAudienceEnagementGraph:boolean=false
+  isShowReactionsGraph:boolean=false
+isShowHowViwedGraph:boolean=false
+isShowReachabiltyGraph:boolean=false
+
   numberofPagelikes: any;
   numberofpageUnlikes: any;
   netDeffernce: any;
@@ -199,15 +205,21 @@ export class FacebookReportComponent implements OnInit {
     this.publishedUserPostSpanDates = [];
     this.audienceEngagementTotlaComments = [];
     this.externalRefernalsData = [];
-    this.audienceEngagementTotlaComments = [];
-    this.audienceEngagmentTotalShare = [];
-    this.audienceunlikesCount = [] = [];
-    this.totalmaleCount = 0;
-    this.totalfemaleCount = 0;
-    this.femalepersentage = 0;
-    this.malepersentage = 0;
-    this.totalmaleCountK = 0;
-    this.totalfemaleCountK = 0;
+   this.audienceEngagementTotlaComments=[]
+   this.audienceEngagmentTotalShare=[]
+    this.audienceunlikesCount=[]=[]
+    this.totalmaleCount=0
+    this.totalfemaleCount=0
+    this.femalepersentage=0
+    this.malepersentage=0
+    this.totalmaleCountK=0
+    this.totalfemaleCountK=0
+  this.isShowbehaviorGraph=false
+   this. isShowAudienceGraph=false
+   this. isShowAudienceEnagementGraph=false
+    this.isShowReactionsGraph=false
+ this. isShowHowViwedGraph=false
+ this. isShowReachabiltyGraph=false
     this.spinerServices.show();
     this.commandataSerivecs.Getfacebookreport(data).subscribe((res: any) => {
       this.spinerServices.hide();
@@ -278,6 +290,7 @@ export class FacebookReportComponent implements OnInit {
         }
         this.audineceEngagementTotallikes.push(x.activityCount);
       });
+ 
       //  adudience Engagement comments
       this.audienceEngagementComments = res.postCommentSpan;
       this.audienceEngagementComments?.forEach((x: any) => {
@@ -294,6 +307,9 @@ export class FacebookReportComponent implements OnInit {
         }
         this.audienceEngagmentTotalShare.push(x.activityCount);
       });
+      if(this.audienceEngagementDates.length==0){
+        this.isShowAudienceEnagementGraph=true
+      }
       // totalPeopleWhoViewSpan
       this.totalPeopleWhoViewSpan = res.totalPeopleWhoViewedSpan;
       this.totalPeopleWhoViewSpan?.forEach((x: any) => {
@@ -304,6 +320,9 @@ export class FacebookReportComponent implements OnInit {
         }
         this.totalPeopleWhoViewSpanCounts.push(x.activityCount);
       });
+      if(this.totalPeopleWhoViewSpanDates.length==0){
+        this.isShowHowViwedGraph=true
+      }
       // pageReactionSpan
       this.pageReactionsSpan = res.pageReactionsSpan;
       this.pageReactionsSpan?.forEach((x: any) => {
@@ -327,6 +346,9 @@ export class FacebookReportComponent implements OnInit {
         this.pageReactionsSpanThankful.push(x.tHANKFUL);
         this.pageReactionsSpanWow.push(x.wow);
       });
+      if(this.pageReactionsSpanDates.length==0){
+        this.isShowReactionsGraph=true
+      }
       // pageReachability
       this.pageReachSpan = res.pageReachSpan;
       this.pageReachSpan?.forEach((x: any) => {
@@ -335,6 +357,9 @@ export class FacebookReportComponent implements OnInit {
         }
         this.pageReachSpanCounts.push(x.activityCount);
       });
+      if(this.pageReachSpanDates.length==0){
+        this.isShowReachabiltyGraph=true
+      }
       // agentMessageData
       this.agentMessages = res.agentReplies;
       this.agentMessagesData = res.agentReplies;
@@ -357,13 +382,15 @@ export class FacebookReportComponent implements OnInit {
       this.publishedUserPostSpan?.forEach((x: any) => {
         this.userPerPost += x.activityCount;
         if (
-          this.publishedUserPostSpanDates.includes(x.dateValue.split('T')[0])
+          !this.publishedPegePostSpanDates.includes(x.dateValue.split('T')[0])
         ) {
           this.publishedPegePostSpanDates.push(x.dateValue.split('T')[0]);
         }
         this.publishedUserPostSpanCounts.push(x.activityCount);
       });
-
+    if(this.publishedPegePostSpanDates.length==0){
+      this.isShowbehaviorGraph=true
+    }
       // Top 10 External Sources
       this.externalRefernals = res.externalReferrals;
       this.externalRefernals?.forEach((x: any) => {
@@ -382,7 +409,6 @@ export class FacebookReportComponent implements OnInit {
         this.totalfemaleCount += x.femaleCount;
         this.totalfemaleCountK = Math.floor(this.totalfemaleCount / 1000);
       });
-      debugger;
       this.totalmaleandfemalCount = this.totalmaleCount + this.totalfemaleCount;
       this.malepersentage = Number(
         ((this.totalmaleCount / this.totalmaleandfemalCount) * 100).toFixed(2)
@@ -409,6 +435,9 @@ export class FacebookReportComponent implements OnInit {
         }
         this.audiencelikesCounts.push(x.activityCount);
       });
+      if(this.audiencelikesdate.length==0){
+        this.isShowAudienceGraph=true
+      }
       this.getChartAudienceGrowth();
       this.getChartAudienceEngagement();
       this.getTotalPeopleChart();
@@ -431,6 +460,7 @@ export class FacebookReportComponent implements OnInit {
   }
   pageReachabilityGraph: any;
   getPageReachablityChart() {
+    if(this.isShowReachabiltyGraph==false){
     var chartDom = document.getElementById('pagereachablity');
     this.pageReachabilityGraph = echarts.init(chartDom);
     var option;
@@ -486,8 +516,11 @@ export class FacebookReportComponent implements OnInit {
 
     option && this.pageReachabilityGraph.setOption(option);
   }
+  
+  }
   reactionGraph: any;
   getReactionGraph() {
+    if(this.isShowReactionsGraph==false){
     var chartDom = document.getElementById('reaction');
     this.reactionGraph = echarts.init(chartDom);
     var option;
@@ -598,6 +631,7 @@ export class FacebookReportComponent implements OnInit {
 
     option && this.reactionGraph.setOption(option);
   }
+  }
   totalPeopleGraph: any;
   getTotalPeopleChart() {
     var chartDom = document.getElementById('totalpeople');
@@ -649,8 +683,6 @@ export class FacebookReportComponent implements OnInit {
           itemStyle: {
             color: 'purple',
           },
-
-          data: this.totalPeopleWhoViewSpanCounts,
         },
       ],
     };
@@ -699,6 +731,7 @@ export class FacebookReportComponent implements OnInit {
   }
   publishinBehaviourGraph: any;
   getPublishinBehaviorChart() {
+    if(this.isShowbehaviorGraph==false){
     var chartDom = document.getElementById('publishin');
     this.publishinBehaviourGraph = echarts.init(chartDom);
     var option;
@@ -758,6 +791,7 @@ export class FacebookReportComponent implements OnInit {
 
     option && this.publishinBehaviourGraph.setOption(option);
   }
+  }
   audienceEngagementGraph: any;
   getChartAudienceEngagement() {
     type EChartsOption = echarts.EChartsOption;
@@ -796,8 +830,7 @@ export class FacebookReportComponent implements OnInit {
       xAxis: [
         {
           type: 'category',
-          boundaryGap: false,
-          data: this.audienceEngagementDates,
+          data: this.publishedPegePostSpanDates,
           axisLabel: {
             rotate: 45,
           },
@@ -904,7 +937,8 @@ export class FacebookReportComponent implements OnInit {
   }
   audienceGrowthGraph: any;
   getChartAudienceGrowth() {
-    type EChartsOption = echarts.EChartsOption;
+    if(this.isShowAudienceGraph==false){
+      type EChartsOption = echarts.EChartsOption;
 
     var chartDom = document.getElementById('growth');
     this.audienceGrowthGraph = echarts.init(chartDom);
@@ -1088,6 +1122,7 @@ export class FacebookReportComponent implements OnInit {
 
     // option && myChart.setOption(option);
   }
+}
   getTopFiveCustomers() {
     let obj = {
       pageNumber: 0,

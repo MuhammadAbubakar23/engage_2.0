@@ -56,6 +56,7 @@ export class ShiftReportComponent implements OnInit {
   allTotalCountInsta: any[] = [];
   ChartData: any[] = [];
   _legend: any[] = [];
+  shiftName:any
   shiftType: any[] = [
     { name: 'Morning', id: 0 },
     { id: 1, name: 'Evening' },
@@ -83,6 +84,7 @@ export class ShiftReportComponent implements OnInit {
       class: 'iconButton medium darkorangeBg',
     },
   ];
+  isShowGrpah:boolean=false
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
@@ -126,7 +128,7 @@ export class ShiftReportComponent implements OnInit {
   }
 
   getShfitReport() {
-    this.allDates = [];
+  
     if (this.startDate == '' && this.endDate == '') {
       const today = this.currentDate;
       this.endDate = this.datePipe.transform(today, 'YYYY-MM-dd') || '';
@@ -150,7 +152,7 @@ export class ShiftReportComponent implements OnInit {
       const timeDifference = endDateObj.getTime() - startDateObj.getTime();
       this.daysDifference = timeDifference / (1000 * 3600 * 24);
     }
-
+    this.allDates = [];
     this.allTotalCountInsta = [];
     this.allTotalCountLink = [];
     this.allTotalCountsfb = [];
@@ -158,6 +160,7 @@ export class ShiftReportComponent implements OnInit {
     this.dateWise = [];
     this.allTotalCountPlayStore = [];
     this.allTotalCountWhatsapp = [];
+    this.isShowGrpah=false
     this._legend = [];
     this.SpinnerService.show();
     this.commandataService.GetShiftReport(obj).subscribe((res: any) => {
@@ -225,7 +228,10 @@ export class ShiftReportComponent implements OnInit {
       });
       this.TagsStats = res.tagData.shiftReportTag;
       this.tagsStatsTotalCounts = res.tagData.totalTagsCount;
-
+      if(this.allDates.length==0){
+        this.isShowGrpah=true
+      }
+  
       this.getCharts();
     });
   }
@@ -249,11 +255,16 @@ export class ShiftReportComponent implements OnInit {
     this.getAlltags();
   }
   getByShifTime(event: any) {
+    debugger
     this.shiftime = event.target.value;
+
+   
     this.getShfitReport();
   }
 
+  
   getCharts() {
+    if(this.isShowGrpah==false){
     var chartDom = document.getElementById('shiftReport');
     this.shiftReportChart = echarts.init(chartDom);
     var option;
@@ -301,42 +312,44 @@ export class ShiftReportComponent implements OnInit {
           lineHeight: 80,
         },
       },
-      series: [
-        {
-          name: 'Facebook',
-          type: 'line',
-          data: this.allTotalCountsfb,
-        },
-
-        {
-          name: 'Instagram',
-          type: 'line',
-          data: this.allTotalCountInsta,
-        },
-        {
-          name: 'Twitter',
-          type: 'line',
-          data: this.allTotalCountTw,
-        },
-        {
-          name: 'PlayStore',
-          type: 'line',
-          data: this.allTotalCountPlayStore,
-        },
-        {
-          name: 'LinkedIn',
-          type: 'line',
-          data: this.allTotalCountLink,
-        },
-        {
-          name: 'WhatsApp',
-          type: 'line',
-          data: this.allTotalCountWhatsapp,
-        },
-      ],
-    };
-
-    option && this.shiftReportChart.setOption(option);
+      
+        series: [
+          {
+            name: 'Facebook',
+            type: 'line',
+            data: this.allTotalCountsfb,
+          },
+  
+          {
+            name: 'Instagram',
+            type: 'line',
+            data: this.allTotalCountInsta,
+          },
+          {
+            name: 'Twitter',
+            type: 'line',
+            data: this.allTotalCountTw,
+          },
+          {
+            name: 'PlayStore',
+            type: 'line',
+            data: this.allTotalCountPlayStore,
+          },
+          {
+            name: 'LinkedIn',
+            type: 'line',
+            data: this.allTotalCountLink,
+          },
+          {
+            name: 'WhatsApp',
+            type: 'line',
+            data: this.allTotalCountWhatsapp,
+          },
+        ],
+      };
+    
+      option && this.shiftReportChart.setOption(option);
+    }
   }
   ActiveAgents: any[] = [];
   AgentsTeamList: any[] = [];

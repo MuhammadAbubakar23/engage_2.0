@@ -158,7 +158,7 @@ export class TwitterReportComponent implements OnInit {
         this.TwitterReport = res;
         this.TwitterReport.dateWise.forEach((data: any) => {
           if (!this.allDates.includes(data.date)) {
-            debugger
+            
             this.allDates.push(this.datePipe.transform(data.date, 'dd MMM'));
           }
 
@@ -193,7 +193,7 @@ export class TwitterReportComponent implements OnInit {
         }
         console.log(res);
 
-        debugger
+        
         if(this.allDates.length==0){
           this.isShowConversation=true
         }

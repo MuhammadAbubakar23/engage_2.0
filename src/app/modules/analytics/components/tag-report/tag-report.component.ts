@@ -38,6 +38,7 @@ export class TagReportComponent implements OnInit {
   agentId: any;
   uniqueAgentId:any
   uniqueAgentData: any[] = [];
+  tagreport:any
  isChecked:boolean=false;
   constructor(
     private _hs: HeaderService,
@@ -52,6 +53,7 @@ export class TagReportComponent implements OnInit {
     let obj = { title: 'Tag Report', url: '/analytics/tag-report' };
     this._hs.setHeader(obj);
     this.getAllTagsReport();
+    this.makeChartResponsive()
   }
   onClick(){
     this.isChecked=true
@@ -166,7 +168,7 @@ return this.uniqueAgentData;
   
   tagChart() {
     var chartDom = document.getElementById('main');
-    var myChart = echarts.init(chartDom);
+this.tagreport= echarts.init(chartDom);
     
     const option = {
       tooltip: {
@@ -177,7 +179,7 @@ return this.uniqueAgentData;
         type: 'scroll',
         top: '17%',
         orient: 'vertical',
-        right: -60,
+       
         icone:'circle',
         textStyle: {
           fontSize: 16, // Set the font size for the legend text
@@ -208,7 +210,7 @@ return this.uniqueAgentData;
               show: true,
               fontSize: 15,
               fontWeight: 'bold',
-              formatter: '{b} \n {c}',
+              formatter: '{b} \n {c}  %',
             },
           },
           labelLine: {
@@ -219,7 +221,7 @@ return this.uniqueAgentData;
       ],
     };
 
-    option && myChart.setOption(option);
+    option && this.tagreport.setOption(option);
   }
   resetStartDate() {
     this.endDate = '';
@@ -258,5 +260,13 @@ return this.uniqueAgentData;
       a.click();
       document.body.removeChild(a);
     });
+  }
+  makeChartResponsive(){
+    window.addEventListener('resize', ()=>{
+      if(this.tagreport){
+        this.tagreport.resize();
+      }
+      
+    })
   }
 }

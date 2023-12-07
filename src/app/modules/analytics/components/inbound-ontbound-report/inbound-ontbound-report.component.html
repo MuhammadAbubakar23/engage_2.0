@@ -239,83 +239,43 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="report-toolbar mb-4">
-                        <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
 
-                            <li class="list-inline-item">
-                                <div class="dropdown w-auto">
-                                    <button class="btn dropdown-toggle" type="button" id="columnssort"
-                                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-                                        Type
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="columnssort">
-                                        <li *ngFor="let type of typeOptions">
-                                            <a class="dropdown-item d-flex align-items-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" [id]="type.id"
-                                                        [(ngModel)]="type.isSelected" (change)="onCheckboxChange()">
-                                                    <label class="form-check-label" [for]="type.id">
-                                                        {{ type.label }}
-                                                    </label>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="list-inline-item">
-                                <div class="dropdown w-auto">
-                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                        aria-expanded="false" data-bs-auto-close="outside">
-                                        Report By
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="posttype">
-                                        <li *ngFor="let reportOption of reportOptions">
-                                            <a class="dropdown-item d-flex align-items-center">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        [id]="reportOption.id">
-                                                    <label class="form-check-label" [for]="reportOption.id">
-                                                        {{ reportOption.label }}
-                                                    </label>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div> -->
-                    <!-- <div class="row align-items-start h-auto mb-5">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card iceBg p-4 rounded">
-                                    <h5 class="section-heading mb-4 p-0">Inbound/outbound Reports</h5>
-                                    <div class="graphcontainer align-items-end">
-                                        <div #inboundOutboundReport style="width: 100%;; height: 600px;"></div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                     <div class="row align-items-start h-auto mb-5">
                         <div class="row">
                             <div class="col-6">
                                 <div class="card iceBg p-4 rounded">
                                     <h5 class="section-heading mb-4 p-0">Inbound/outbound Reports</h5>
-                                    <div class="graphcontainer align-items-end">
-                                        <div #inboundOutboundReport class="responsive-graph"></div>
-                                    </div>
+                                    <ng-container *ngIf="isShowInboundoutboundGraph==false">
+                                        <div class="graphcontainer align-items-end">
+                                            <div #inboundOutboundReport class="responsive-graph"></div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="isShowInboundoutboundGraph==true">
+                                        <div class="graphcontainer align-items-end">
+                                            <!-- <div #inboundOutboundReport class="responsive-graph"></div> -->
+                                            <p>No Data found</p>
+                                        </div>
+                                    </ng-container>
+                                  
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="card iceBg p-4 rounded">
-                                    <h5 class="section-heading mb-3 p-0">sentiment  </h5>
-                                    <div class="graphcontainer align-items-end">
-                                        <div #senitimentalGraph class="responsive-graph"></div>
-
-                                    </div>
+                                    <h5 class="section-heading mb-3 p-0">Sentiment  </h5>
+                                    <ng-container *ngIf="isShowSentimentGraph==false">
+                                        <div class="graphcontainer align-items-end">
+                                            <div #senitimentalGraph class="responsive-graph"></div>
+    
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="isShowSentimentGraph==true">
+                                        <div class="graphcontainer align-items-end">
+                                            <p>No Data found</p>
+                                            <!-- <div #senitimentalGraph class="responsive-graph"></div> -->
+    
+                                        </div>
+                                    </ng-container>
+                                
                                 </div>
                             </div>
                         </div>

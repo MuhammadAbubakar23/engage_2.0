@@ -176,7 +176,19 @@
                     <div class="card iceBg p-4 rounded mb-5">
                         <h5 class="section-heading mb-4 p-0">Publishin behavior</h5>
                         <div class="graphcontainer align-items-end mb-5">
-                                <div id="publishin" style="height: 500px; width: 100%; max-width:1000px"></div>
+                            <ng-container *ngIf="isShowbehaviorGraph==false">
+                                <div>
+                                    <div id="publishin" style="height: 500px; width: 100%; max-width:1000px"></div>
+                                  
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="isShowbehaviorGraph==true">
+                                <div  >
+                                    <!-- <div id="publishin" style="height: 500px; width: 900px;"></div> -->
+                                  <p>No Data Found</p>
+                                </div>
+                            </ng-container>
+                          
                         </div>
 
                         <!-- <div class="row justify-content-between px-5">
@@ -266,7 +278,17 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="graphcontainer align-items-end">
-                                        <div id="growth" style="height: 300px; width: 100%; margin-right: 20px; max-width: 900px;"></div>
+                                    <ng-container *ngIf="isShowAudienceGraph==false">
+                                        <div>
+                                            <div id="growth" style="height: 300px; width: 100%; margin-right: 20px; max-width: 900px;"></div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="isShowAudienceGraph==true">
+                                        <div>
+                                            <p>No Data Found</p>
+                                        </div>
+                                    </ng-container>
+                               
                                 </div>
                             </div>
                             <div class="col-md-5 px-4">
@@ -317,7 +339,18 @@
                         <div class="row">
                             <div class="col-md-7">
                                 <div class="graphcontainer align-items-end">
+                                   <ng-container *ngIf="isShowAudienceEnagementGraph==false">
+                                    <div>
                                         <div id="engagement" style="height: 500px; width: 100%; max-width: 900px"></div>
+                                    </div>
+                                   </ng-container>
+                                   <ng-container>
+                                    <div >
+                                        <p>No Data found</p>
+                                        <!-- <div id="engagement" style="height: 500px; width: 700px;"></div> -->
+                                    </div>
+                                   </ng-container>
+                                  
                                 </div>
                             </div>
                             <div class="col-md-5 px-4">
@@ -516,7 +549,17 @@
                     <div class="card iceBg p-4 rounded mb-5">
                         <h5 class="section-heading mb-4 p-0">REACTIONS GRAPH</h5>
                         <div class="graphcontainer align-items-end">
-                                <div id="reaction" style="height: 400px; width: 100%; max-width: 1000px"></div>
+                            <ng-container *ngIf="isShowReactionsGraph==false">
+                                <div>
+                                    <div id="reaction" style="height: 400px; width: 100%; max-width: 1000px"></div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="isShowReactionsGraph==true">
+                                <div >
+                                    <p>No Data Found</p>
+                                </div>
+                            </ng-container>
+                           
                         </div>
                     </div>
                     <div class="row">
@@ -524,7 +567,17 @@
                             <div class="card iceBg p-4 rounded mb-5">
                                 <h5 class="section-heading mb-4 p-0">TOTAL PEOPLE WHO VIEWED</h5>
                                 <div class="graphcontainer align-items-end">
-                                        <div id="totalpeople" style="height: 400px; width: 100%;  max-width: 800px"></div>
+                                    <ng-container *ngIf="isShowHowViwedGraph==false">
+                                        <div >
+                                            <div id="totalpeople" style="height: 400px; width: 100%;  max-width: 800px"></div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="isShowHowViwedGraph==true">
+                                        <div >
+                                            <p>No Data Found</p>
+                                        </div>
+                                    </ng-container>
+                                  
                                 </div>
                             </div>
                         </div>
@@ -532,7 +585,17 @@
                             <div class="card iceBg p-4 rounded mb-5">
                                 <h5 class="section-heading mb-4 p-0">PAGE REACHABILITY</h5>
                                 <div class="graphcontainer align-items-end">
-                                        <div id="pagereachablity" style="height: 400px; width: 100%; max-width: 800px"></div>
+                                    <ng-container *ngIf="isShowReachabiltyGraph==false">
+                                        <div>
+                                            <div id="pagereachablity" style="height: 400px; width: 100%; max-width: 800px"></div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="isShowReachabiltyGraph==true">
+                                        <div>
+                                            <p>No Data found</p>
+                                        </div>
+                                    </ng-container>
+                                    
                                 </div>
                             </div>
                         </div>
