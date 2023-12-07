@@ -276,7 +276,7 @@ export class ShiftReportComponent implements OnInit {
         this._legend = value;
       },
       grid: {
-        left: '3%',
+        left: '10%',
         right: '4%',
         bottom: '3%',
         containLabel: true,
@@ -293,6 +293,13 @@ export class ShiftReportComponent implements OnInit {
       },
       yAxis: {
         type: 'value',
+        nameLocation: 'middle',
+        name: 'Total Number of Inbound',
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'grey',
+          lineHeight: 80,
+        },
       },
       series: [
         {

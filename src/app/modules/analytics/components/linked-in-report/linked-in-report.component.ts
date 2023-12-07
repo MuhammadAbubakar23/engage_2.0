@@ -25,24 +25,22 @@ export class LinkedInReportComponent implements OnInit {
   ImpressionsGraphData: any[] = [];
   UniqueImpressionsGraphData: any[] = [];
 
-  followersGraphData:any[]=[]
+  followersGraphData: any[] = [];
   EngagementGraphData: any[] = [];
   EngagementRateGraphData: any[] = [];
   ClickThroughRateGraphData: any[] = [];
   topFiveUpdates: any[] = [];
-  linkedFollowerData:any[]=[]
-  currentDate:any
-  topFiveCustomer:any[]=[]
+  linkedFollowerData: any[] = [];
+  currentDate: any;
+  topFiveCustomer: any[] = [];
   impressionGraph: any;
   uniqueImpressionsGraph: any;
   engagementGraph: any;
   engagementRateGraph: any;
   clickThroughRateGraph: any;
-  LinkedInReport:any;
-  followers:any;
-  linkedfollowerTotalcount:any
-
-  
+  LinkedInReport: any;
+  followers: any;
+  linkedfollowerTotalcount: any;
 
   constructor(
     private _hS: HeaderService,
@@ -53,55 +51,58 @@ export class LinkedInReportComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const newObj = { title: 'LinkedIn Report', url: '/analytics/linkedin-report' };
+    const newObj = {
+      title: 'LinkedIn Report',
+      url: '/analytics/linkedin-report',
+    };
     this._hS.setHeader(newObj);
 
-    this. currentDate = new Date();
+    this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split('T')[0];
 
     this.getLinkedInReportData();
     this.makeChartResponsive();
-    this.getAllLinkedInfollowrs()
+    this.getAllLinkedInfollowrs();
   }
 
   date_pagination(days: number) {
- 
     let currentDate = new Date();
     let prevDate = currentDate.setDate(currentDate.getDate() - days);
     this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
-    this.getLinkedInReportData()
-    this.getAllLinkedInfollowrs()
+    this.getLinkedInReportData();
+    this.getAllLinkedInfollowrs();
   }
   closeToaster() {
     this.toastermessage = false;
   }
   resetEndDate() {
-  if(this.toDate<=this.fromDate){
-    this.toDate=''
-    alert("EndDate is greater_then StartDate")
-  }
-  else{
-    this.getLinkedInReportData()
-    this.getAllLinkedInfollowrs()
-  }
+    if (this.toDate <= this.fromDate) {
+      this.toDate = '';
+      alert('EndDate is greater_then StartDate');
+    } else {
+      this.getLinkedInReportData();
+      this.getAllLinkedInfollowrs();
+    }
   }
   export() {
-    this.excelServices.exportAsExcelFile(this.topFiveCustomer, 'LinkedIn-Top-Five-Updates')
+    this.excelServices.exportAsExcelFile(
+      this.topFiveCustomer,
+      'LinkedIn-Top-Five-Updates'
+    );
   }
 
   getLinkedInReportData() {
-  
- if(this.fromDate==''&& this.toDate=='' ){
-  const today =new Date()
-  this.toDate =this.datePipe.transform(this.currentDate,'YYYY-MM-dd') || '';
-  let prevDate = this.currentDate.setDate(this.currentDate.getDate()-5);
-  this.fromDate=this.datePipe.transform(prevDate,'YYYY-MM-d') || '';
- }
- else if(this.fromDate!='' && this.toDate!=''){
-  this.toDate=this.toDate
-  this.fromDate=this.fromDate
- }
+    if (this.fromDate == '' && this.toDate == '') {
+      const today = new Date();
+      this.toDate =
+        this.datePipe.transform(this.currentDate, 'YYYY-MM-dd') || '';
+      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 5);
+      this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-d') || '';
+    } else if (this.fromDate != '' && this.toDate != '') {
+      this.toDate = this.toDate;
+      this.fromDate = this.fromDate;
+    }
 
     var obj = {
       pageId: '76213578',
@@ -115,34 +116,32 @@ export class LinkedInReportComponent implements OnInit {
     this.EngagementGraphData = [];
     this.EngagementRateGraphData = [];
     this.ClickThroughRateGraphData = [];
-    this.SpinnerService.show()
-    this.commonDataService.GetLinkedInReportData(obj).subscribe((res:any)=>{
+    this.SpinnerService.show();
+    this.commonDataService.GetLinkedInReportData(obj).subscribe((res: any) => {
       this.LinkedInReport = res;
-      this.SpinnerService.hide()
-    this.topFiveUpdates = this.LinkedInReport.updates;
-    this.topFiveCustomer=this.topFiveUpdates.slice(0,5)
-    this.LinkedInReport.shared_Social_Activity.forEach((data: any) => {
-      if (!this.allDates.includes(this.datePipe.transform(data.from,'dd MMM'))) {
-        this.allDates.push(this.datePipe.transform(data.from, 'dd MMM'));
-      }
+      this.SpinnerService.hide();
+      this.topFiveUpdates = this.LinkedInReport.updates;
+      this.topFiveCustomer = this.topFiveUpdates.slice(0, 5);
+      this.LinkedInReport.shared_Social_Activity.forEach((data: any) => {
+        if (
+          !this.allDates.includes(this.datePipe.transform(data.from, 'dd MMM'))
+        ) {
+          this.allDates.push(this.datePipe.transform(data.from, 'dd MMM'));
+        }
 
-      this.ImpressionsGraphData.push(data.impressions);
-      this.UniqueImpressionsGraphData.push(data.uniqueImpressions);
-      this.EngagementGraphData.push(data.engagement);
-      this.EngagementRateGraphData.push(data.engagement_Rate);
-      this.ClickThroughRateGraphData.push(data.clicks);
+        this.ImpressionsGraphData.push(data.impressions);
+        this.UniqueImpressionsGraphData.push(data.uniqueImpressions);
+        this.EngagementGraphData.push(data.engagement);
+        this.EngagementRateGraphData.push(data.engagement_Rate);
+        this.ClickThroughRateGraphData.push(data.clicks);
+      });
+
+      this.populateImpressionsGraph();
+      this.populateUniqueImpressionsGraph();
+      this.populateEngagementGraph();
+      this.populateEngagementRateGraph();
+      this.populateClickThroughRateGraph();
     });
-
-    this.populateImpressionsGraph();
-    this.populateUniqueImpressionsGraph();
-    this.populateEngagementGraph();
-    this.populateEngagementRateGraph();
-    this.populateClickThroughRateGraph();
-  
-    
- 
-    })
-  
   }
 
   populateImpressionsGraph() {
@@ -169,7 +168,7 @@ export class LinkedInReportComponent implements OnInit {
         bottom: 0,
       },
       grid: {
-        left: '3%',
+        left: '10%',
         right: '4%',
         bottom: '15%',
         containLabel: true,
@@ -189,12 +188,13 @@ export class LinkedInReportComponent implements OnInit {
       },
       yAxis: {
         type: 'value',
-        // axisLabel : {
-        //   formatter: ''
-        // },
-        name: 'Y-Axis',
         nameLocation: 'middle',
-        nameGap: 50
+        name: 'Total Number of Page Impressions',
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'grey',
+          lineHeight: 80,
+        },
       },
       series: [
         {
@@ -231,7 +231,7 @@ export class LinkedInReportComponent implements OnInit {
         bottom: 0,
       },
       grid: {
-        left: '3%',
+        left: '10%',
         right: '4%',
         bottom: '15%',
         containLabel: true,
@@ -251,6 +251,13 @@ export class LinkedInReportComponent implements OnInit {
       },
       yAxis: {
         type: 'value',
+        nameLocation: 'middle',
+        name: 'Total Number of Unique Page Impressions',
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'grey',
+          lineHeight: 80,
+        },
       },
       series: [
         {
@@ -287,7 +294,7 @@ export class LinkedInReportComponent implements OnInit {
         bottom: 0,
       },
       grid: {
-        left: '3%',
+        left: '10%',
         right: '4%',
         bottom: '15%',
         containLabel: true,
@@ -307,6 +314,13 @@ export class LinkedInReportComponent implements OnInit {
       },
       yAxis: {
         type: 'value',
+        nameLocation: 'middle',
+        name: 'Total Number of Engagements',
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'grey',
+          lineHeight: 80,
+        },
       },
       series: [
         {
@@ -343,7 +357,7 @@ export class LinkedInReportComponent implements OnInit {
         bottom: 0,
       },
       grid: {
-        left: '3%',
+        left: '10%',
         right: '4%',
         bottom: '15%',
         containLabel: true,
@@ -363,6 +377,13 @@ export class LinkedInReportComponent implements OnInit {
       },
       yAxis: {
         type: 'value',
+        nameLocation: 'middle',
+        name: 'Total Number of Engagement Rate',
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'grey',
+          lineHeight: 80,
+        },
       },
       series: [
         {
@@ -399,6 +420,112 @@ export class LinkedInReportComponent implements OnInit {
         bottom: 0,
       },
       grid: {
+        left: '10%',
+        right: '4%',
+        bottom: '15%',
+        containLabel: true,
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {},
+        },
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: this.allDates,
+        axisLabel: {
+          rotate: 45,
+        },
+      },
+      yAxis: {
+        type: 'value',
+        nameLocation: 'middle',
+        name: 'Click Through Rate',
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'grey',
+          lineHeight: 80,
+        },
+      },
+      series: [
+        {
+          name: 'Link Clicks',
+          type: 'line',
+          data: this.ClickThroughRateGraphData,
+        },
+      ],
+    };
+
+    option && this.clickThroughRateGraph.setOption(option);
+  }
+  getAllLinkedInfollowrs() {
+    debugger;
+    if (this.fromDate == '' && this.toDate == '') {
+      const today = new Date();
+      this.toDate =
+        this.datePipe.transform(this.currentDate, 'YYYY-MM-dd') || '';
+      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 5);
+      this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-d') || '';
+    } else if (this.fromDate != '' && this.toDate != '') {
+      this.toDate = this.toDate;
+      this.fromDate = this.fromDate;
+    }
+
+    let obj = {
+      pageId: '76213578',
+      from: this.fromDate,
+      to: this.toDate,
+      lastPostId: 0,
+    };
+    this.followersGraphData = [];
+    this.allDates = [];
+    this.commonDataService
+      .GetLinkedInReportFollwers(obj)
+      .subscribe((res: any) => {
+        this.linkedfollowerTotalcount = res.spanFollowers_TotalCount;
+        this.linkedFollowerData = res.spanFollowers;
+        debugger;
+        this.linkedFollowerData.forEach((abc: any) => {
+          debugger;
+          if (
+            !this.allDates.includes(this.datePipe.transform(abc.from, 'dd MMM'))
+          ) {
+            this.allDates.push(this.datePipe.transform(abc.from, 'dd MMM'));
+          }
+          this.followersGraphData.push(
+            abc.organicFollowers + abc.paidFollowers
+          );
+        });
+
+        this.followerChart();
+      });
+  }
+  followerChart() {
+    debugger;
+    type EChartsOption = echarts.EChartsOption;
+
+    const dom = document.getElementById('followers');
+    this.followers = echarts.init(dom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false,
+    });
+    var option: EChartsOption;
+
+    option = {
+      color: ['#90EE90'],
+      title: {
+        text: '',
+      },
+      tooltip: {
+        trigger: 'axis',
+      },
+      legend: {
+        data: ['Total Followers'],
+        icon: 'circle',
+        bottom: 0,
+      },
+      grid: {
         left: '3%',
         right: '4%',
         bottom: '15%',
@@ -419,113 +546,25 @@ export class LinkedInReportComponent implements OnInit {
       },
       yAxis: {
         type: 'value',
+        nameLocation: 'middle',
+        name: 'Total Number of Followers',
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'grey',
+          lineHeight: 80,
+        },
       },
       series: [
         {
-          name: 'Link Clicks',
+          name: 'Total Followers',
           type: 'line',
-          data: this.ClickThroughRateGraphData,
+          data: this.followersGraphData,
         },
       ],
     };
 
-    option && this.clickThroughRateGraph.setOption(option);
+    option && this.followers.setOption(option);
   }
-  getAllLinkedInfollowrs(){
-    debugger
-    if(this.fromDate==''&& this.toDate=='' ){
-      const today =new Date()
-      this.toDate =this.datePipe.transform(this.currentDate,'YYYY-MM-dd') || '';
-      let prevDate = this.currentDate.setDate(this.currentDate.getDate()-5);
-      this.fromDate=this.datePipe.transform(prevDate,'YYYY-MM-d') || '';
-     }
-     else if(this.fromDate!='' && this.toDate!=''){
-      this.toDate=this.toDate
-      this.fromDate=this.fromDate
-     }
-    
-    
-    let obj ={
-      "pageId": "76213578",
-      "from":this.fromDate,
-      "to": this.toDate,
-      "lastPostId": 0
-    }
-    this.followersGraphData=[]
-    this.allDates=[]
-    this.commonDataService.GetLinkedInReportFollwers(obj).subscribe((res:any)=>{
-      this.linkedfollowerTotalcount=res.spanFollowers_TotalCount
-      this.linkedFollowerData=res.spanFollowers
-      debugger
-      this.linkedFollowerData.forEach((abc:any)=>{
-        debugger
-        if (!this.allDates.includes(this.datePipe.transform(abc.from,'dd MMM'))) {
-          this.allDates.push(this.datePipe.transform(abc.from,'dd MMM'));
-        }
-        this.followersGraphData.push(abc.organicFollowers + abc.paidFollowers)
-      })
-   
-      this.followerChart()
-    })
-   
-  }
-followerChart(){
-  debugger
-  type EChartsOption = echarts.EChartsOption;
-
-  const dom = document.getElementById('followers');
-  this.followers = echarts.init(dom, null, {
-    renderer: 'canvas',
-    useDirtyRect: false,
-  });
-  var option: EChartsOption;
-
-  option = {
-    color: ['#90EE90'],
-    title: {
-      text: '',
-    },
-    tooltip: {
-      trigger: 'axis',
-    },
-    legend: {
-      data: ['Total Followers'],
-      icon: 'circle',
-      bottom: 0,
-    },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '15%',
-      containLabel: true,
-    },
-    toolbox: {
-      feature: {
-        saveAsImage: {},
-      },
-    },
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      data: this.allDates,
-      axisLabel: {
-        rotate: 45,
-      },
-    },
-    yAxis: {
-      type: 'value',
-    },
-    series: [
-      {
-        name: 'Total Followers',
-        type: 'line',
-        data: this.followersGraphData,
-      },
-    ],
-  };
-
-  option && this.followers.setOption(option);
-}
   makeChartResponsive() {
     window.addEventListener('resize', () => {
       if (this.impressionGraph) {
@@ -543,12 +582,12 @@ followerChart(){
       if (this.clickThroughRateGraph) {
         this.clickThroughRateGraph.resize();
       }
-      if(this.followersGraphData){
-        this.followers.resize()
+      if (this.followersGraphData) {
+        this.followers.resize();
       }
     });
   }
-  restStartDate(){
-    this.toDate=''
+  restStartDate() {
+    this.toDate = '';
   }
 }

@@ -337,7 +337,14 @@ this.isShowTagReport=false
                   },
                 },
                 yAxis: {
-                  type: 'value'
+                  type: 'value',
+            nameLocation: 'middle',
+            name: 'Total Number of Inbound/Outbound',
+            nameTextStyle: {
+              fontSize: 12,
+              color: 'grey',
+              lineHeight: 80,
+            },
                 },
                 series: [
                   {
@@ -526,6 +533,7 @@ this.isShowTagReport=false
               enterable: true,
               extraCssText:'height: 200px !important;  overflow-y: scroll !important; pointer-events: auto !important;' },
               legend: { type: 'scroll',
+              icon: 'circle',
               orient: 'horizontal',
               bottom: 0 },
               toolbox: {
@@ -534,7 +542,14 @@ this.isShowTagReport=false
                 }
               },
               xAxis: [{ type: 'category', data: this.platformsArray }],
-              yAxis: [{ type: 'value' }],
+              yAxis: [{ type: 'value',
+              nameLocation: 'middle',
+              name: 'Total Number of Tags',
+              nameTextStyle: {
+                fontSize: 12,
+                color: 'grey',
+                lineHeight: 80,
+              }, }],
               series: this.tagsPerChannel.map(series => ({
                 ...series,
                 // label: {
@@ -608,7 +623,14 @@ this.isShowTagReport=false
                 },
               },
               xAxis: { type: 'category' },
-              yAxis: {},
+              yAxis: {type: 'value',
+              nameLocation: 'middle',
+              name: 'Total Number of Sentiments',
+              nameTextStyle: {
+                fontSize: 12,
+                color: 'grey',
+                lineHeight: 80,
+              },},
               series: [
                 {
                   type: 'bar',
