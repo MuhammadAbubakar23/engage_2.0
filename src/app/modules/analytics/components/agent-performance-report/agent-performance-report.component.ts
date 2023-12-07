@@ -41,10 +41,11 @@ export class AgentPerformanceReportComponent implements OnInit {
  selectedDays:any=''
   commentDateWiseGraph:any;
   channelOptionsByplatform:any[]=[]
-  isShowChat:boolean=false
+  isShowG:boolean=false
   messageDateWiseGraph:any;
 activeChannel:any
  isChannelShow:any='';
+isShowCommentGraph:boolean=false
  paginationDate:any[]=[
   {id:5,value:5},{id:10,value:10},{id:20,value:20},{id:30,value:30}
  ]
@@ -56,9 +57,6 @@ activeChannel:any
     private excelServices: ExcelService) { }
 
   ngOnInit(): void {
-if(this.isChannelShow=='morinaga'){
-  this.isShowChat=true
-}
     // https://waengage.enteract.live/
     this.getBaseurl()
     this.currentDate = new Date();
@@ -72,7 +70,7 @@ if(this.isChannelShow=='morinaga'){
   }
   getBaseurl(){
     this.activeChannel=window.location.origin
-    debugger
+   
     if(this.activeChannel==="https://waengage.enteract.live"){
       this.isChannelShow='morinaga'
       this.getChannel()
@@ -90,7 +88,7 @@ if(this.isChannelShow=='morinaga'){
       this.isChannelShow='jazz'
       this.getChannel()
     }
-    else{debugger
+    else{
       this.isChannelShow='local'
       this.getChannel()
     }
@@ -99,7 +97,7 @@ if(this.isChannelShow=='morinaga'){
   getListUser(): void {
     this.commonService.GetUserList()
       .subscribe((response: any) => {
-        debugger
+       
         this.totalAgents = response;
         console.log(this.totalAgents);
       }, (error: any) => {
@@ -135,8 +133,8 @@ if(this.isChannelShow=='morinaga'){
     // }
   }
   resetStartDate(){
-    debugger
-  if(this.endDate<=this.startDate){
+   
+  if(this.endDate >this.startDate){
     alert('End Date is less than Start Date')
     this.endDate=''
   }
@@ -228,7 +226,11 @@ if(this.isChannelShow=='morinaga'){
           commentDateWise.forEach((data: any) => {
             const date = new Date(data.date);
             this.Agent_data.push({ x: date, y: data.count });
+            if(this.Agent_data.length==0){
+              this.isShowCommentGraph=true
+            }
           });
+       
           // if (this.Agent_data.length > 0) {
             if(this.isChannelShow!=='morinaga'){
               const doms = this.main.nativeElement;
@@ -265,6 +267,8 @@ if(this.isChannelShow=='morinaga'){
                 },
                 legend: {
                   data: [this.selectedChannelLabel],
+                  icon:'circle',
+                  bottom:0
                 },
                 toolbox: {
                   feature: {
@@ -339,6 +343,8 @@ if(this.isChannelShow=='morinaga'){
             },
             legend: {
               data: ['Direct Message'],
+              icon:'circle',
+              bottom:0
             },
             toolbox: {
               feature: {
@@ -386,7 +392,7 @@ if(this.isChannelShow=='morinaga'){
   //   // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
   // ];
   getChannel(){
-    debugger
+   
     if(this.isChannelShow=="morinaga"){
       this.channelOptions = [
      
@@ -443,7 +449,7 @@ if(this.isChannelShow=='morinaga'){
     this.toastermessage = false;
   }
   date_pagination(event:any) {
-    debugger
+   
   this.selectedDays=event.target.value
     let currentDate = new Date();
     let prevDate = currentDate.setDate(currentDate.getDate() - this.selectedDays);

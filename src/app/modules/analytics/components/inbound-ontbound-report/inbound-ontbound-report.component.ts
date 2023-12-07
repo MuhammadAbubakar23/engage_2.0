@@ -23,12 +23,12 @@ import { Router } from '@angular/router';
   imports: [CommonModule, FormsModule, SharedModule, NgxSpinnerModule],
 })
 export class InboundOntboundReportComponent implements OnInit {
-  @ViewChild('inboundOutboundReport', { static: true })
+  @ViewChild('inboundOutboundReport', { static: false })
   inboundOutboundReport!: ElementRef;
-  @ViewChild('ChannelWiseGraph', { static: true })
+  @ViewChild('ChannelWiseGraph', { static: false })
   ChannelWiseGraph!: ElementRef;
   @ViewChild('TagsPerChannel', { static: false }) TagsPerChannel!: ElementRef;
-  @ViewChild('senitimentalGraph', { static: true })
+  @ViewChild('senitimentalGraph', { static: false })
   senitimentalGraph!: ElementRef;
   selectedChannels: string = '';
   selectedContent: string = '';
@@ -43,11 +43,14 @@ export class InboundOntboundReportComponent implements OnInit {
   Inbound_data: any[] = [];
   Outbound_data: any[] = [];
   platformsArray: any[] = []
+  Inbound_outbounArray:any[]=[]
   currentDate: any;
   maxEndDate: any;
 isChannelsShow:boolean=false;
   downloading = false;
   toastermessage = false;
+  isShowSentimentGraph:boolean=false
+  isShowInboundoutboundGraph:boolean=false
   AlterMsg: any = '';
   activeChannel:any
   channelOptions:any[]=[]
@@ -62,6 +65,7 @@ isChannelsShow:boolean=false;
   inboundoutboundDate:any[]=[]
   inboundData:any[]=[]
   outboundData:any[]=[]
+  sentimentArray:any[]=[]
   isShowTagReport:boolean=false
   constructor(
     private _hS: HeaderService,
@@ -74,13 +78,13 @@ isChannelsShow:boolean=false;
     private location:Location
   ) { }
   ngOnInit(): void {
-   debugger 
+    
 
 this.activeChannel=window.location.origin
-debugger
+
 if(this.activeChannel=='https://waengage.enteract.live/')
 {
-  debugger
+  
   this.isChannelShow="morinaga";
   this.getChannel()
 }
@@ -142,7 +146,7 @@ else{
     this.searchText = ''
   }
   getChannel(){
-    debugger
+    
     if(this.isChannelShow=="morinaga"){
       this.channelOptions = [
      
@@ -266,6 +270,9 @@ this.isShowTagReport=false
       this.Outbound_data = [];
       this.platformsArray = [];
       this.tagsPerChannel=[]
+      this.inboundoutboundDate=[]
+this.inboundData=[]
+this.outboundData=[]
       this.commonService.Addinboundoutbound(requestData).subscribe(
         (response: any) => {
           this.SpinnerService.hide();
@@ -275,7 +282,15 @@ this.isShowTagReport=false
             if(this.tagreportArry.length==0){
               this.isShowTagReport=true
             }
+            this.sentimentArray=this.Inbound_Outbound_Report.sentimentReportData
          
+         if(this.sentimentArray.length==0){
+               this.isShowSentimentGraph=true
+         }
+         this.Inbound_outbounArray=this.Inbound_Outbound_Report.channelReportData.dateWiseData
+         if(this.Inbound_outbounArray.length==0){
+          this.isShowInboundoutboundGraph=true
+         }
             this.Inbound_Outbound_Report.channelReportData.dateWiseData.forEach((x:any)=>{
               if(!this.inboundoutboundDate.includes(this.datePipe.transform(x.createdDate,'dd MMM '))){
                     this.inboundoutboundDate.push(this.datePipe.transform(x.createdDate,'dd MMM'))
@@ -297,68 +312,70 @@ this.isShowTagReport=false
             //   }
             // );
             // inbound
-            if (this.isShowTagReport == false) {
-              const doms = this.inboundOutboundReport.nativeElement;
-              this.inboundOutboundChart = echarts.init(doms, null, {
-                renderer: 'canvas',
-                useDirtyRect: false,
-              });
-              var option: echarts.EChartsOption;
+         if(this.isShowInboundoutboundGraph==false){
+          const doms = this.inboundOutboundReport.nativeElement;
+          this.inboundOutboundChart = echarts.init(doms, null, {
+            renderer: 'canvas',
+            useDirtyRect: false,
+          });
+          var option: echarts.EChartsOption;
 
-              option = {
-                color: ['rgba(255,189,61,255)', 'rgba(96,191,235,255)'],
-                tooltip: {
+          option = {
+            color: ['rgba(255,189,61,255)', 'rgba(96,191,235,255)'],
+            tooltip: {
 
-                  trigger: 'axis',
+              trigger: 'axis',
 
-                },
-                legend: {
-                  data: ['Inbound', 'OutBound'],
-                  icon: 'circle',
-                  bottom: 'bottom'
-                },
-                grid: {
-                  left: '3%',
-                  right: '4%',
-                  bottom: '13%',
-                  containLabel: true
-                },
-                toolbox: {
-                  feature: {
-                    saveAsImage: {}
-                  }
-                },
-                xAxis: {
-                  type: 'category',
-                  boundaryGap: false,
-                  data: this.inboundoutboundDate,
-                  axisLabel: {
-                    rotate: 45,
-                  },
-                },
-                yAxis: {
-                  type: 'value'
-                },
-                series: [
-                  {
-                    name: 'Inbound',
-                    type: 'line',
+            },
+            legend: {
+              data: ['Inbound', 'OutBound'],
+              icon: 'circle',
+              bottom: 'bottom'
+            },
+            grid: {
+              left: '3%',
+              right: '4%',
+              bottom: '13%',
+              containLabel: true
+            },
+            toolbox: {
+              feature: {
+                saveAsImage: {}
+              }
+            },
+            xAxis: {
+              type: 'category',
+              boundaryGap: false,
+              data: this.inboundoutboundDate,
+              axisLabel: {
+                rotate: 45,
+              },
+            },
+            yAxis: {
+              type: 'value'
+            },
+            series: [
+              {
+                name: 'Inbound',
+                type: 'line',
 
-                    data: this.inboundData
-                  },
-                  {
-                    name: 'OutBound',
-                    type: 'line',
+                data: this.inboundData
+              },
+              {
+                name: 'OutBound',
+                type: 'line',
 
-                    data: this.outboundData
-                  },
+                data: this.outboundData
+              },
 
-                ]
-              };
+            ]
+          };
 
-              this.inboundOutboundChart.setOption(option);
+          this.inboundOutboundChart.setOption(option);
+         }
+              
 
-            }
+         
 
 
             // var option: echarts.EChartsOption;
@@ -488,67 +505,70 @@ this.isShowTagReport=false
             };
             this.averageResponseChart.setOption(option);
             // Update TagsPerChannel
-            const myDom = this.TagsPerChannel.nativeElement;
-            this.tagsChart = echarts.init(myDom, null, {
-              renderer: 'canvas',
-              useDirtyRect: false,
-            });
-
-            var option: echarts.EChartsOption;
-            debugger
-            const tagReportData = this.Inbound_Outbound_Report.tagReportData;
-            tagReportData.forEach((channel: any) => {
-            debugger
-              if (!this.platformsArray.includes(channel.platform)) {
-                this.platformsArray.push(channel.platform);
-              }
-             
-              channel.data.forEach((tag: any) => {
-                debugger
-                const name = tag.name;
-                const count = tag.count;
-                const existingNameCount = this.tagsPerChannel.find((n) => n.name === name);
-                if (existingNameCount) {
-                  existingNameCount.data.push(count);
-                } else {
-                  this.tagsPerChannel.push({
-                    type: 'bar',
-                    name: name,
-                    stack: 'Ad',
-                    data: [count],
-                  });
-                }
-          
+            if(this.isShowTagReport==false){
+              const myDom = this.TagsPerChannel.nativeElement;
+              this.tagsChart = echarts.init(myDom, null, {
+                renderer: 'canvas',
+                useDirtyRect: false,
               });
-            });
-            option = {
-              tooltip: { trigger: 'axis',
-              enterable: true,
-              extraCssText:'height: 200px !important;  overflow-y: scroll !important; pointer-events: auto !important;' },
-              legend: { type: 'scroll',
-              orient: 'horizontal',
-              bottom: 0 },
-              toolbox: {
-                feature: {
-                  saveAsImage: {}
+  
+              var option: echarts.EChartsOption;
+              
+              const tagReportData = this.Inbound_Outbound_Report.tagReportData;
+              tagReportData.forEach((channel: any) => {
+              
+                if (!this.platformsArray.includes(channel.platform)) {
+                  this.platformsArray.push(channel.platform);
                 }
-              },
-              xAxis: [{ type: 'category', data: this.platformsArray }],
-              yAxis: [{ type: 'value' }],
-              series: this.tagsPerChannel.map(series => ({
-                ...series,
-                // label: {
-                //   show: true,
-                //   formatter: (params: any) => {
-                //     const total = this.tagsPerChannel.reduce((sum, s) => sum + s.data[params.dataIndex], 0);
-                //     const percentage = (series.data[params.dataIndex] / total * 100).toFixed(0);
-                //     return `${percentage}%`;
-                //   }
-                // }
-              })),
-            };
-
-            this.tagsChart.setOption(option);
+               
+                channel.data.forEach((tag: any) => {
+                  
+                  const name = tag.name;
+                  const count = tag.count;
+                  const existingNameCount = this.tagsPerChannel.find((n) => n.name === name);
+                  if (existingNameCount) {
+                    existingNameCount.data.push(count);
+                  } else {
+                    this.tagsPerChannel.push({
+                      type: 'bar',
+                      name: name,
+                      stack: 'Ad',
+                      data: [count],
+                    });
+                  }
+            
+                });
+              });
+              option = {
+                tooltip: { trigger: 'axis',
+                enterable: true,
+                extraCssText:'height: 200px !important;  overflow-y: scroll !important; pointer-events: auto !important;' },
+                legend: { type: 'scroll',icon:'circle',
+                orient: 'horizontal',
+                bottom: 0 },
+                toolbox: {
+                  feature: {
+                    saveAsImage: {}
+                  }
+                },
+                xAxis: [{ type: 'category', data: this.platformsArray }],
+                yAxis: [{ type: 'value' }],
+                series: this.tagsPerChannel.map(series => ({
+                  ...series,
+                  // label: {
+                  //   show: true,
+                  //   formatter: (params: any) => {
+                  //     const total = this.tagsPerChannel.reduce((sum, s) => sum + s.data[params.dataIndex], 0);
+                  //     const percentage = (series.data[params.dataIndex] / total * 100).toFixed(0);
+                  //     return `${percentage}%`;
+                  //   }
+                  // }
+                })),
+              };
+  
+              this.tagsChart.setOption(option);
+            }
+           
             // option = {
             //   tooltip: { trigger: 'axis' },
             //   toolbox: {
@@ -566,6 +586,7 @@ this.isShowTagReport=false
             // mychart.setOption(option);
 
             // Update senitimentalGraph
+          if(this.isShowSentimentGraph==false){
             const myDoms = this.senitimentalGraph.nativeElement;
             this.sentimentChart = echarts.init(myDoms, null, {
               renderer: 'canvas',
@@ -659,6 +680,9 @@ this.isShowTagReport=false
             };
 
             option && this.sentimentChart.setOption(option);
+          }
+           
+            
           }
         },
         (error: any) => {

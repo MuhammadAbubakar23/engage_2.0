@@ -56,6 +56,7 @@ export class ShiftReportComponent implements OnInit {
   allTotalCountInsta: any[] = [];
   ChartData: any[] = [];
   _legend: any[] = [];
+  shiftName:any
   shiftType: any[] = [
     { name: 'Morning', id: 0 },
     { id: 1, name: 'Evening' },
@@ -83,6 +84,7 @@ export class ShiftReportComponent implements OnInit {
       class: 'iconButton medium darkorangeBg',
     },
   ];
+  isShowGrpah:boolean=false
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
@@ -158,6 +160,7 @@ export class ShiftReportComponent implements OnInit {
     this.dateWise = [];
     this.allTotalCountPlayStore = [];
     this.allTotalCountWhatsapp = [];
+    this.isShowGrpah=false
     this._legend = [];
     this.SpinnerService.show();
     this.commandataService.GetShiftReport(obj).subscribe((res: any) => {
@@ -225,7 +228,10 @@ export class ShiftReportComponent implements OnInit {
       });
       this.TagsStats = res.tagData.shiftReportTag;
       this.tagsStatsTotalCounts = res.tagData.totalTagsCount;
-
+      if(this.allDates.length==0){
+        this.isShowGrpah=true
+      }
+  
       this.getCharts();
     });
   }
@@ -249,87 +255,98 @@ export class ShiftReportComponent implements OnInit {
     this.getAlltags();
   }
   getByShifTime(event: any) {
+    debugger
     this.shiftime = event.target.value;
+
+   
     this.getShfitReport();
   }
 
+  
   getCharts() {
-    var chartDom = document.getElementById('shiftReport');
-    this.shiftReportChart = echarts.init(chartDom);
-    var option;
-
-    option = {
-      // title: {
-      //   text: 'Stacked Line'
-      // },
-      tooltip: {
-        trigger: 'axis',
-      },
-      _legend: {
-        data:this._legend,
-         icon:'circle'
-      },
-      get legend() {
-        return this._legend;
-      },
-      set legend(value) {
-        this._legend = value;
-      },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true,
-      },
-      toolbox: {
-        feature: {
-          saveAsImage: {},
+    if(this.isShowGrpah==false){
+      var chartDom = document.getElementById('shiftReport');
+      this.shiftReportChart = echarts.init(chartDom);
+      var option;
+  
+      option = {
+        // title: {
+        //   text: 'Stacked Line'
+        // },
+        tooltip: {
+          trigger: 'axis',
         },
-      },
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: this.allDates,
-      },
-      yAxis: {
-        type: 'value',
-      },
-      series: [
-        {
-          name: 'Facebook',
-          type: 'line',
-          data: this.allTotalCountsfb,
+        _legend: {
+          data:this._legend,
+           icon:'circle',
+           bottom:0
         },
-
-        {
-          name: 'Instagram',
-          type: 'line',
-          data: this.allTotalCountInsta,
+        get legend() {
+          return this._legend;
         },
-        {
-          name: 'Twitter',
-          type: 'line',
-          data: this.allTotalCountTw,
+        set legend(value) {
+          this._legend = value;
         },
-        {
-          name: 'PlayStore',
-          type: 'line',
-          data: this.allTotalCountPlayStore,
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '13%',
+          containLabel: true,
         },
-        {
-          name: 'LinkedIn',
-          type: 'line',
-          data: this.allTotalCountLink,
+        toolbox: {
+          feature: {
+            saveAsImage: {},
+          },
         },
-        {
-          name: 'WhatsApp',
-          type: 'line',
-          data: this.allTotalCountWhatsapp,
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: this.allDates,
+          axisLabel: {
+            rotate: 45,
+          },
         },
-      ],
-    };
-
-    option && this.shiftReportChart.setOption(option);
+        yAxis: {
+          type: 'value',
+        },
+        series: [
+          {
+            name: 'Facebook',
+            type: 'line',
+            data: this.allTotalCountsfb,
+          },
+  
+          {
+            name: 'Instagram',
+            type: 'line',
+            data: this.allTotalCountInsta,
+          },
+          {
+            name: 'Twitter',
+            type: 'line',
+            data: this.allTotalCountTw,
+          },
+          {
+            name: 'PlayStore',
+            type: 'line',
+            data: this.allTotalCountPlayStore,
+          },
+          {
+            name: 'LinkedIn',
+            type: 'line',
+            data: this.allTotalCountLink,
+          },
+          {
+            name: 'WhatsApp',
+            type: 'line',
+            data: this.allTotalCountWhatsapp,
+          },
+        ],
+      };
+  
+      option && this.shiftReportChart.setOption(option);
+    }
+   
   }
   ActiveAgents: any[] = [];
   AgentsTeamList: any[] = [];

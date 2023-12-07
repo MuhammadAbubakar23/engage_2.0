@@ -1641,7 +1641,7 @@ removeTagDataListener() {
     });
   }
   removeAttachedFile(index: any) {
-    debugger
+    
     const filesArray = Array.from(this.ImageName);
     filesArray.splice(index, 1);
     this.ImageArray.splice(index, 1);

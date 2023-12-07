@@ -385,7 +385,7 @@ export class ConversationComponent implements OnInit {
       flag: this.flag,
     };
     this.SpinnerService.show();
-    debugger;
+    
     this.commondata.GetConversationList(this.filterDto).subscribe(
       (res: any) => {
         if (Object.keys(res).length > 0) {

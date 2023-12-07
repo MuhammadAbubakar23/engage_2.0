@@ -64,19 +64,19 @@ export class InstagramReportComponent implements OnInit {
     const newObj = { title: 'Instagram Report', url: '/analytics/inbound-outbound-report' };
     this._hS.setHeader(newObj);
     const currentDate = new Date();
-    this.maxEndDate = this.datePipe.transform(currentDate,'YYYY-MM-dd HH:mm')
+    this.maxEndDate = currentDate.toISOString().split('T')[0]
     
 
     this.GetInstagramReport()
     this.gettopfiveCutomer()
   }
   GetInstagramReport() {
-    debugger
+    
     if (this.endDate == '' && this.startDate == '') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 5);
-      this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-ddTHH:mm') || "";
-      this.endDate = this.datePipe.transform(new Date(), 'YYYY-MM-ddTHH:mm') || "";
+      this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || "";
+      this.endDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || "";
     } else if (this.startDate != '' && this.endDate != '') {
     //   this.startDate = this.startDate;
     //   this.endDate = this.endDate;
@@ -90,7 +90,7 @@ export class InstagramReportComponent implements OnInit {
         return;
       }
     }
-debugger
+
     let requestData = {
       pageId: "17841400250284169",
       from: this.startDate,
@@ -107,7 +107,7 @@ debugger
     this.isShowDemographics=false
     this.isShowEngagments=false
     this.spinerServices.show()
-    debugger
+    
     this.commonDataService.PostInstagramReport(requestData).subscribe((res: any) => {
       this.spinerServices.hide()
       // console.log("Api instagram",res)
@@ -115,11 +115,11 @@ debugger
   
       // this.endDate=this.datePipe.transform(requestData.to,'YYYY-dd-MM HH:mm:ss')||''
       this.instagramReport = res
-      console.log("This.IntragramReport===>", this.instagramReport)
+     
       //  total People Who Viewed
       this.totalPeopleWhoViewed = this.instagramReport.span_profile_views
       this.totalPeopleWhoViewed?.forEach((x: any) => {
-        if (!this.totalPeopleWhoViewedDates.includes(x.dateValue)) {
+        if (!this.totalPeopleWhoViewedDates.includes(this.datePipe.transform(x.dateValue, 'dd/MMM'))) {
           this.totalPeopleWhoViewedDates.push(this.datePipe.transform(x.dateValue, 'dd/MMM'))
          
         }
@@ -127,13 +127,13 @@ debugger
         this.totalPeopleWhoViewedCount.push(x.activityCount)
       })
       if(this.totalPeopleWhoViewedDates.length==0){
-        debugger
+        
         this.isShowChart=true
       }
       // Page Reachability
       this.pagereachablity = this.instagramReport.span_reach
       this.pagereachablity?.forEach((x: any) => {
-        if (!this.pagereachablityDates.includes(x.dateValue)) {
+        if (!this.pagereachablityDates.includes(this.datePipe.transform(x.dateValue, 'dd/MMM'))) {
           this.pagereachablityDates.push(this.datePipe.transform(x.dateValue, 'dd/MMM'))
           this.pagereachablityCounts
         }
@@ -146,7 +146,7 @@ debugger
 
       this.totalfollowers = this.instagramReport.span_follower_count
       this.totalfollowers?.forEach((x: any) => {
-        if (!this.totalfollowersDates.includes(x.dateValue)) {
+        if (!this.totalfollowersDates.includes(this.datePipe.transform(x.dateValue, 'dd/MMM'))) {
           this.totalfollowersDates.push(this.datePipe.transform(x.dateValue, 'dd/MMM'))
         }
         this.totalfollowersCounts.push(x.activityCount)
@@ -167,10 +167,7 @@ debugger
       // instagram Stats by page
       this.InstagramStats = this.instagramReport.pageStats
       this.InstagramStatsExport = this.instagramReport.pageStats
-  // if(this.totalPeopleWhoViewedDates.length==0){
-  //   this.isShowChart=true
-  //   this.getPeopleViewedGraph()
-  // }
+
      this.getPeopleViewedGraph()
       this.getPageReachGraph()
       this.getAudienceGraph()
@@ -189,79 +186,80 @@ debugger
     })
   }
   getPeopleViewedGraph() {
-if(this.isShowDemographics==false){
-
-  const myDom = this.peopleViewed.nativeElement;
-  const myChart = echarts.init(myDom, null, {
-    renderer: 'canvas',
-    useDirtyRect: false
-  });
-  var option: echarts.EChartsOption;
-  function dataFormat(date: Date): string {
-    const day: number = date.getDate();
-    const monthNames: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    const month: string = monthNames[date.getMonth()];
-    return `${day} ${month}`;
-  }
-  option = {
-    xAxis: {
-      type: 'category',
-   
-      data: this.totalPeopleWhoViewedDates.reverse(),
-      axisLabel: {
-        show: true,
-        rotate:45,
-        interval: 0,
-        formatter: function (value: string) {
-          return value;
-        },
-      },
-    },
-    yAxis: [{
-      type: "value",
-      nameLocation: "middle",
-      name: "Engagement Rate",
-      nameTextStyle: {
-        fontSize: 18,
-        color:'black',
-        lineHeight:50
-        
-      }
-    }],
-    tooltip: {
-      trigger: 'axis'
-    },
-    legend: {
-      data: ['Engagement Rate'],
-      icon:'circle',
-      bottom:'bottom',
-     
-    },
-    toolbox: {
-      feature: {
-        saveAsImage: {},
-      },
-    },
-    series: [
-      {
-        name: 'Engagement Rate',
-        data: this.totalPeopleWhoViewedCount,
-        type: 'line',
-        itemStyle: {
-          color: '#5f3d98',
-        },
-        lineStyle: {
-          width: 2,
-        },
-      },
-    ],
-  };
-  option && myChart.setOption(option);
-
-}
     
-   
-   
+    if (this.isShowChart == false) {
+      
+      const myDom = this.peopleViewed.nativeElement;
+      const myChart = echarts.init(myDom, null, {
+        renderer: 'canvas',
+        useDirtyRect: false
+      });
+      var option: echarts.EChartsOption;
+      // function dataFormat(date: Date): string {
+      //   const day: number = date.getDate();
+      //   const monthNames: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      //   const month: string = monthNames[date.getMonth()];
+      //   return `${day} ${month}`;
+      // }
+      option = {
+        xAxis: {
+          type: 'category',
+
+          data: this.totalPeopleWhoViewedDates.reverse(),
+          axisLabel: {
+            show: true,
+            rotate: 45,
+           
+            // formatter: function (value: string) {
+            //   return value;
+            // },
+          },
+        },
+        yAxis: [{
+          type: "value",
+          nameLocation: "middle",
+          name: "Engagement Rate",
+          nameTextStyle: {
+            fontSize: 18,
+            color: 'black',
+            lineHeight: 50
+
+          }
+        }],
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: ['Engagement Rate'],
+          icon: 'circle',
+          bottom: 'bottom',
+
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {},
+          },
+        },
+        series: [
+          {
+            name: 'Engagement Rate',
+            data: this.totalPeopleWhoViewedCount,
+            type: 'line',
+            itemStyle: {
+              color: '#5f3d98',
+            },
+            lineStyle: {
+              width: 2,
+            },
+          },
+        ],
+      };
+      option && myChart.setOption(option);
+
+    }
+
+
+
   }
   getPageReachGraph() {
     if(this.isShowEngagments==false){
@@ -275,7 +273,7 @@ if(this.isShowDemographics==false){
       option = {
         xAxis: {
           type: 'category',
-          data: this.pagereachablityDates,
+          data: this.pagereachablityDates.reverse(),
           axisLabel: {
             rotate:45,
             show: true,
@@ -313,7 +311,7 @@ if(this.isShowDemographics==false){
         series: [
           {
             name: 'Total Engagments',
-            data: this.pagereachablityCounts.reverse(),
+            data: this.pagereachablityCounts,
             type: 'line',
             itemStyle: {
               color: '#fa0060',
@@ -333,7 +331,7 @@ if(this.isShowDemographics==false){
 
   }
   getAudienceGraph() {
-    if(this.isShowChart==false){
+    if(this.isShowDemographics==false){
       const myDom = this.audienceGraph.nativeElement;
       const myChart = echarts.init(myDom, null, {
         renderer: 'canvas',
@@ -440,8 +438,8 @@ else{
 
     let currentDate = new Date();
     let prevDate = currentDate.setDate(currentDate.getDate() - days);
-    this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-ddTHH:mm') || '';
-    this.endDate = this.datePipe.transform(new Date(), 'YYYY-MM-ddTHH:mm') || '';
+    this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
+    this.endDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
     this.GetInstagramReport()
   }
   exportCsv() {
