@@ -8,6 +8,7 @@ import { CloudData, CloudOptions, ZoomOnHoverOptions } from 'angular-tag-cloud-m
 import { TagCloudComponent } from 'angular-tag-cloud-module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
   selector: 'app-executive-dashboard',
   standalone: true,
@@ -45,6 +46,7 @@ facebookreactionGraph:any
   post_likes: any
   post_comments: any
   post_share: any
+  regionwiseReportData:any
   facebook_reaction: any[]=[]
   facebook_reactionDates:any[]=[]
   platformsArray: any[] = []
@@ -63,9 +65,20 @@ facebookreactionGraph:any
     // this.getEnagementChart()
     // this.getRefionWiseTrafic()
     this.GetAllSocialMediaReport()
-    this.makeChartResponsive()
+    this.makeChartResponsive();
+    this.GetAllRegionWiseData()
   }
-
+GetAllRegionWiseData(){
+  let obj={
+    "toDate": "2023-12-06T13:48:40.578Z",
+    "fromDate": "2023-06-07T13:48:40.578Z",
+    "companyId": 0
+  }
+  this.commonDataService.GetRegionWiseReport(obj).subscribe((res:any)=>{
+    this.regionwiseReportData=res
+    console.log("this.regionwiseReportData==>",this.regionwiseReportData)
+  })
+}
   GetAllSocialMediaReport() {
     if (this.startDate == "" && this.endDate == "") {
       const today = this.currentDate;
@@ -185,8 +198,7 @@ facebookreactionGraph:any
         this.getSentimentChart()
         this.getChartAudienceEngagement()
         this.getFacebookReaction()
-        // this.getWordCloud()
-
+        this.getRegionWiseTrafic()
       })
 
     } else {
@@ -658,11 +670,12 @@ facebookreactionGraph:any
 
     option && this.facebookreactionGraph.setOption(option);
   }
-  getRefionWiseTrafic() {
+  regionWiseGraph:any
+  getRegionWiseTrafic() {
     type EChartsOption = echarts.EChartsOption;
 
     var chartDom = document.getElementById('regionWiseTrafic')!;
-    var myChart = echarts.init(chartDom);
+    this.regionWiseGraph = echarts.init(chartDom);
     var option: EChartsOption;
 
     option = {
@@ -676,12 +689,15 @@ facebookreactionGraph:any
       series: [
         {
           data: [120, 200, 150, 80, 70, 110, 130],
-          type: 'bar'
+          type: 'bar',
+          itemStyle: {
+            borderRadius: 5,
+          }
         }
       ]
     };
 
-    option && myChart.setOption(option);
+    option && this.regionWiseGraph.setOption(option);
 
   }
   isMediaActive: boolean = false;
@@ -950,6 +966,9 @@ option && myChart.setOption(option);
       }
       if (this.facebookreactionGraph) {
         this.facebookreactionGraph.resize();
+      }
+      if(this.regionWiseGraph){
+        this.regionWiseGraph.resize()
       }
     
     });

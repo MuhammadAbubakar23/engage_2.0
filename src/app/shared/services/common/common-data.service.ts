@@ -107,7 +107,7 @@ export class CommonDataService {
   getLinkedInFollowers=environment.links.common.getLinkedInFollowers;
   emailShiftReport = environment.links.common.emailShiftReport;
   downloadTagReport = environment.links.common.downloadTagReport;
-
+  regionwiseReport=environment.links.common.regionwiseReport
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
   addTemplate = environment.links.console.addTemplate;
@@ -739,6 +739,9 @@ export class CommonDataService {
   }
   AddProfileInformation(body:any) {
     return this.http.post(this.ProfileBaseUrl + this.addProfileInformation, body);
+  }
+  GetRegionWiseReport(body:any){
+    return this.http.post(this.ProfileBaseUrl+this.regionwiseReport,body)
   }
 }
 

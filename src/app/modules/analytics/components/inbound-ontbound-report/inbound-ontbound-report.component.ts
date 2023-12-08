@@ -512,12 +512,39 @@ this.outboundData=[]
             };
             this.averageResponseChart.setOption(option);
             // Update TagsPerChannel
-            if(this.isShowTagReport==false){
-              const myDom = this.TagsPerChannel.nativeElement;
-              this.tagsChart = echarts.init(myDom, null, {
-                renderer: 'canvas',
-                useDirtyRect: false,
+            const myDom = this.TagsPerChannel.nativeElement;
+            this.tagsChart = echarts.init(myDom, null, {
+              renderer: 'canvas',
+              useDirtyRect: false,
+            });
+
+            var option: echarts.EChartsOption;
+            debugger
+            const tagReportData = this.Inbound_Outbound_Report.tagReportData;
+            tagReportData.forEach((channel: any) => {
+            debugger
+              if (!this.platformsArray.includes(channel.platform)) {
+                this.platformsArray.push(channel.platform);
+              }
+             
+              channel.data.forEach((tag: any) => {
+                debugger
+                const name = tag.name;
+                const count = tag.count;
+                const existingNameCount = this.tagsPerChannel.find((n) => n.name === name);
+                if (existingNameCount) {
+                  existingNameCount.data.push(count);
+                } else {
+                  this.tagsPerChannel.push({
+                    type: 'bar',
+                    name: name,
+                    stack: 'Ad',
+                    data: [count],
+                  });
+                }
+          
               });
+            });
             option = {
               tooltip: { trigger: 'axis',
               enterable: true,
@@ -673,8 +700,9 @@ this.outboundData=[]
 
             option && this.sentimentChart.setOption(option);
           }
-        }
-      }
+           
+            
+          }
         },
         (error: any) => {
           console.error('HTTP Error:', error);

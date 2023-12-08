@@ -222,11 +222,10 @@ export class InstagramReportComponent implements OnInit {
           nameLocation: "middle",
           name: "Engagement Rate",
           nameTextStyle: {
-            fontSize: 18,
-            color: 'black',
-            lineHeight: 50
-
-          }
+            fontSize: 12,
+            color: 'grey',
+            lineHeight: 80,
+          },
         }],
         tooltip: {
           trigger: 'axis'
