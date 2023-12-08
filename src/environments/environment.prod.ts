@@ -24,6 +24,7 @@ export const environment = {
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
   LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
+  // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
   IdentityBaseUrl: 'https://idtservice.enteract.live/api',
@@ -46,10 +47,10 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
   ServiceBaseUrl : 'https://waservice.enteract.live/api/',
   
-  // For Testing
+  // // For Testing
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  // CommonBaseUrl: 'https://common-engage.enteract.app/api/', 
-  //  // CommonBaseUrl: 'http://10.111.32.52:45457/api/', 
+  //  CommonBaseUrl: 'https://common-engage.enteract.app/api/', 
+  //   // CommonBaseUrl: 'http://10.111.32.52:45461/api/', 
   // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
 
 
@@ -227,7 +228,8 @@ export const environment = {
       downloadTagReport:'Report/GetAgentTagsReportCSV',
       getLinkedInReport:'Activity/GetOrganizationSharedInsights',
       emailShiftReport:'Report/EmailShiftReport',
-      getLinkedInFollowers:'Activity/GetOrganizationInsights'
+      getLinkedInFollowers:'Activity/GetOrganizationInsights',
+      regionwiseReport:'Report/GetRegionWiseReport'
     },
     facebook: {
       comments: 'Facebook/GetFbPost',
