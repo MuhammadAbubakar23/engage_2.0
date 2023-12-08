@@ -82,51 +82,51 @@ export class ResponderProfileComponent implements OnInit {
     this.openedChannel = localStorage.getItem('parent') || '{}';
     this.getProfileDetails();
   }
-  GetChannels() {
-    this.commonService.GetChannels().subscribe((res: any) => {
-      if (Object.keys(res).length > 0) {
-      res[0].subMenu;
-      console.log("this.channels", this.channels);
-      res[0].subMenu.forEach((item: any) => {
-        switch (item.name) {
-          case "Email":
-            this.isEmail = true;
-            break;
-          case "WhatsApp":
-            this.isWhatsApp = true;
-            break;
-          case "SMS":
-            this.isSms = true;
-            break;
-          case "Facebook":
-            this.isFacebook = true;
-            break;
-          case "Chat":
-            this.isChat = true;
-            break;
-          case "Twitter":
-            this.isTwitter = true;
-            break;
-          case "Instagram":
-            this.isInstagram = true;
-            break;
-          case "LinkedIn":
-            this.isLinkdin = true;
-            break;
-          case "Youtube":
-            this.isYoutube = true;
-            break;
-          default:
-            break;
-        }
-      });
-    }
+  // GetChannels() {
+  //   this.commonService.GetChannels().subscribe((res: any) => {
+  //     if (Object.keys(res).length > 0) {
+  //     res[0].subMenu;
+  //     console.log("this.channels", this.channels);
+  //     res[0].subMenu.forEach((item: any) => {
+  //       switch (item.name) {
+  //         case "Email":
+  //           this.isEmail = true;
+  //           break;
+  //         case "WhatsApp":
+  //           this.isWhatsApp = true;
+  //           break;
+  //         case "SMS":
+  //           this.isSms = true;
+  //           break;
+  //         case "Facebook":
+  //           this.isFacebook = true;
+  //           break;
+  //         case "Chat":
+  //           this.isChat = true;
+  //           break;
+  //         case "Twitter":
+  //           this.isTwitter = true;
+  //           break;
+  //         case "Instagram":
+  //           this.isInstagram = true;
+  //           break;
+  //         case "LinkedIn":
+  //           this.isLinkdin = true;
+  //           break;
+  //         case "Youtube":
+  //           this.isYoutube = true;
+  //           break;
+  //         default:
+  //           break;
+  //       }
+  //     });
+  //   }
 
-    })
-  }
+  //   })
+  // }
   getProfileDetails() {
     this.commonService.GetProfileDetails(this.id).subscribe((res: any) => {
-      this.GetChannels();
+      // this.GetChannels();
       this.profileDetails = res;
       this.spinnerService.show();
       this.spinner2running = true;

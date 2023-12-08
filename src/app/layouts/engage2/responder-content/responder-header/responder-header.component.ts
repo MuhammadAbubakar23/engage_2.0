@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Tooltip } from 'bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -22,7 +28,7 @@ import { MarkAsCompleteDto } from 'src/app/shared/Models/MarkAsCompleteDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
-import { Location } from '@angular/common'
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'responder-header',
@@ -127,29 +133,32 @@ export class ResponderHeaderComponent implements OnInit {
     private stor: StorageService,
     private queryStatusService: QueryStatusService,
     private location: Location
-  ) {
-  }
+  ) {}
   unrespondedCount: number = 0;
   userInfo: any;
   activeChannel: string = '';
   finalStatus: any[] = [];
   profileStatus: any[] = [];
+  baseURL: string = '';
+  KEBaseUrl: boolean = false;
 
   ngOnInit(): void {
+    this.baseURL = window.location.origin;
+    if (this.activeChannel == 'https://keportal.enteract.live/') {
+      this.KEBaseUrl = true;
+    }
     this.flag = this._route.url.split('/')[2];
     this.flag2 = this._route.url.split('/')[3];
     this.activeChannel = this._route.url.split('/')[5];
-    this.currentUrl=this._route.url;
+    this.currentUrl = this._route.url;
 
     this.Subscription = this.userInfoService.userInfo$.subscribe((userInfo) => {
-      
       if (userInfo != null) {
         this.userInfo = userInfo;
         localStorage.setItem('storeHeaderOpenedId', this.userInfo.userId);
       }
     });
     this.Subscription = this.headerCountService.count$.subscribe((count) => {
-
       if (count != null) {
         this.unrespondedCount = count;
         // localStorage.setItem('unrespondedCount', this.userInfo.userId);
@@ -162,78 +171,94 @@ export class ResponderHeaderComponent implements OnInit {
 
     const menu = this.stor.retrive('Tags', 'O').local;
     menu.forEach((item: any) => {
-      if (item.name == "Final Status") {
+      if (item.name == 'Final Status') {
         item.subTags.forEach((finalStatusObj: any) => {
-          if (!this.finalStatus.includes(finalStatusObj)) {
-            this.finalStatus.push(finalStatusObj)
+          debugger
+          if (this.KEBaseUrl == true) {
+            if (finalStatusObj.name != 'Read') {
+              if (!this.finalStatus.includes(finalStatusObj)) {
+                this.finalStatus.push(finalStatusObj);
+              }
+            }
+          } else {
+            if (!this.finalStatus.includes(finalStatusObj)) {
+              this.finalStatus.push(finalStatusObj);
+            }
           }
         });
       }
-      if (item.name == "Profile Status") {
+      if (item.name == 'Profile Status') {
         item.subTags.forEach((profileStatusObj: any) => {
           if (!this.profileStatus.includes(profileStatusObj)) {
-            this.profileStatus.push(profileStatusObj)
+            this.profileStatus.push(profileStatusObj);
           }
         });
       }
-
     });
 
     this.teamPermissions = this.store.retrive('permissionteam', 'O').local;
     Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(
       (tooltipNode) => new Tooltip(tooltipNode)
     ),
-    {
-      trigger: 'hover',
-    };
+      {
+        trigger: 'hover',
+      };
 
-    this.Subscription = this.updateMessagesService.receiveMessage().subscribe((res) => {
-      if (Object.keys(res).length > 0) {
-        res.forEach((msg: any) => {
-          if (this.userInfo.userId == msg.fromId) {
-            // if (this.userInfo.postType == msg.contentType) {
-            this.unrespondedCount = this.unrespondedCount + 1;
-            // }
-          }
-        });
-      }
-    });
-
-    this.Subscription = this.updateCommentsService.receiveComment().subscribe((res) => {
-      if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
+    this.Subscription = this.updateMessagesService
+      .receiveMessage()
+      .subscribe((res) => {
         if (Object.keys(res).length > 0) {
           res.forEach((msg: any) => {
-            if (this.userInfo.userId == msg.userId) {
+            if (this.userInfo.userId == msg.fromId) {
               // if (this.userInfo.postType == msg.contentType) {
               this.unrespondedCount = this.unrespondedCount + 1;
               // }
             }
           });
         }
-      }
-    });
+      });
 
-    this.Subscription = this.unrespondedCountService.getUnRespondedCount().subscribe((res) => {
-      if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
-        if (Object.keys(res).length > 0) {
-          if (this.userInfo.id == res.contentCount.profileId) {
-            // if (this.userInfo.postType == res.contentCount.contentType) {
-            this.unrespondedCount = res.contentCount.unrespondedCount;
-            // }
+    this.Subscription = this.updateCommentsService
+      .receiveComment()
+      .subscribe((res) => {
+        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
+          if (Object.keys(res).length > 0) {
+            res.forEach((msg: any) => {
+              if (this.userInfo.userId == msg.userId) {
+                // if (this.userInfo.postType == msg.contentType) {
+                this.unrespondedCount = this.unrespondedCount + 1;
+                // }
+              }
+            });
           }
         }
-      }
-    });
+      });
 
-    this.Subscription = this.queryStatusService.bulkReceiveQueryStatus().subscribe((res) => {
-      if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
-        if (Object.keys(res).length > 0) {
-          if (this.userInfo.id == localStorage.getItem('assignedProfile')) {
-            this.unrespondedCount = 0;
+    this.Subscription = this.unrespondedCountService
+      .getUnRespondedCount()
+      .subscribe((res) => {
+        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
+          if (Object.keys(res).length > 0) {
+            if (this.userInfo.id == res.contentCount.profileId) {
+              // if (this.userInfo.postType == res.contentCount.contentType) {
+              this.unrespondedCount = res.contentCount.unrespondedCount;
+              // }
+            }
           }
         }
-      }
-    });
+      });
+
+    this.Subscription = this.queryStatusService
+      .bulkReceiveQueryStatus()
+      .subscribe((res) => {
+        if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
+          if (Object.keys(res).length > 0) {
+            if (this.userInfo.id == localStorage.getItem('assignedProfile')) {
+              this.unrespondedCount = 0;
+            }
+          }
+        }
+      });
   }
 
   draftDto = new DraftDto();
@@ -326,11 +351,11 @@ export class ResponderHeaderComponent implements OnInit {
           this.reloadComponent('queryallocated');
           this._route.navigateByUrl(
             '/all-inboxes/' +
-            this.flag +
-            '/' +
-            this.flag2 +
-            '/responder/' +
-            platform
+              this.flag +
+              '/' +
+              this.flag2 +
+              '/responder/' +
+              platform
           );
 
           this.fetchId.setPlatform(platform);
@@ -823,33 +848,40 @@ export class ResponderHeaderComponent implements OnInit {
   }
 
   completeQuery(slug: string) {
-    if (slug == 'read') {
-      this.markAllAsRead();
-    } else if (slug == 'save') {
-      this.markAsComplete();
+    if(this.KEBaseUrl == true){
+      if (slug == 'save') {
+        this.markAllAsRead();
+      }
+    }else {
+      if (slug == 'read') {
+        this.markAllAsRead();
+      } else if (slug == 'save') {
+        this.markAsComplete();
+      }
     }
+    
   }
   markAsCompleteDto = new MarkAsCompleteDto();
   // only for KE
   removeAssignedQuery() {
     const ProfileId = localStorage.getItem('assignedProfile');
-    if(this.currentUrl.split('/')[2] == 'assigned_to_me' || this.currentUrl.split('/')[2] == 'follow_up'){
+    if (
+      this.currentUrl.split('/')[2] == 'assigned_to_me' ||
+      this.currentUrl.split('/')[2] == 'follow_up'
+    ) {
       this.location.back();
       localStorage.setItem('assignedProfile', '');
-    }
-    else {
-      if (ProfileId == null || ProfileId == "") {
+    } else {
+      if (ProfileId == null || ProfileId == '') {
         this.location.back();
-      }
-      else {
+      } else {
         this.commondata.RemoveAssignedQuery(ProfileId).subscribe((res: any) => {
           this.location.back();
           localStorage.setItem('assignedProfile', '');
           console.log('remove Response===>', res);
         });
       }
-    } 
-    
+    }
   }
   markAsComplete() {
     this.markAsCompleteDto.user = this.userInfo.userId;
@@ -870,7 +902,6 @@ export class ResponderHeaderComponent implements OnInit {
       }
     );
   }
-
 
   showAgentsList: boolean = false;
   showMoreOptions: boolean = false;
@@ -1074,7 +1105,10 @@ export class ResponderHeaderComponent implements OnInit {
     this.commonService.MarkAllAsRead(this.commentStatusDto).subscribe(
       (res: any) => {
         this.reloadComponent('markAllAsRead');
-        // this.markAsComplete();
+        if(this.KEBaseUrl == true){
+          this.markAsComplete();
+        }
+        
 
         // this.FbUnrespondedCmntCountByCustomer = 0;
         // this.WtsapUnrespondedCmntCountByCustomer = 0;
@@ -1093,7 +1127,9 @@ export class ResponderHeaderComponent implements OnInit {
       },
       (error: any) => {
         this.reloadComponent('alreadyAllQueriesMarkedRead');
-        // this.markAsComplete();
+        if(this.KEBaseUrl == true){
+          this.markAsComplete();
+        }
       }
     );
   }
@@ -1114,7 +1150,7 @@ export class ResponderHeaderComponent implements OnInit {
       .subscribe((res: any) => {
         if (res.message === 'Data Added Successfully') {
           this.markAllAsRead();
-          if(tagName == 'black_list'){
+          if (tagName == 'black_list') {
             this.commondata.RemoveAssignedQuery(ProfileId).subscribe(() => {
               localStorage.setItem('assignedProfile', '');
             });
@@ -1129,7 +1165,6 @@ export class ResponderHeaderComponent implements OnInit {
   }
 
   RemoveTagInProfile(tagName: string, type: string, profileId: any) {
-    
     var obj = {
       feedId: profileId,
       tagName: tagName,
