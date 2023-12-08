@@ -10,10 +10,20 @@ import { StorageService } from '../services/storage/storage.service';
 
 @Injectable()
 export class SuperTeamInterceptor implements HttpInterceptor {
+  companyId:number=650;
+  baseUrl:string="";
   constructor(private storage: StorageService) {}
 
   intercept( request: HttpRequest<unknown>,
     next: HttpHandler): Observable<HttpEvent<unknown>> {
+
+      this.baseUrl=window.location.origin
+    if(this.baseUrl=='https://keportal.enteract.live/'){
+      this.companyId=651;
+    } else if (this.baseUrl=='https://engage.jazz.com.pk/') {
+    this.companyId=650;
+    } 
+
     let team = this.storage.retrive('nocompass', 'O').local;
     // console.log(team);
     if (typeof team === 'undefined' || team == null || team == '') {
@@ -29,7 +39,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
         url: request.url,
         //withCredentials: true,
         setHeaders: {
-          'X-Super-Team': JSON.stringify(651),
+          'X-Super-Team': JSON.stringify(this.companyId),
         },
       });
     }

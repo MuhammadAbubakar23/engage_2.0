@@ -9,13 +9,12 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'inbox-menu',
   templateUrl: './inbox-menu.component.html',
-  styleUrls: ['./inbox-menu.component.scss']
+  styleUrls: ['./inbox-menu.component.scss'],
 })
 export class InboxMenuComponent implements OnInit {
+  allChannels: any = [];
 
-  allChannels:any=[]
-
-  public Subscription!: Subscription
+  public Subscription!: Subscription;
   UnResponded: number = 0;
   SlaUnResponded: number = 0;
   WaUnResponded: number = 0;
@@ -30,20 +29,37 @@ export class InboxMenuComponent implements OnInit {
   PlaystoreUnResponded: number = 0;
   YoutubeUnResponded: number = 0;
 
-  flag:string='';
+  flag: string = '';
   activeChannel: string = '';
-  constructor(private filterService: FilterService,
+  baseUrl: string = '';
+  client: string = '';
+  constructor(
+    private filterService: FilterService,
     private commonService: CommonDataService,
     private unrespondedCountService: UnRespondedCountService,
     private updateListService: UpdateListService,
-    private router: Router) { }
+    private router: Router
+  ) {}
 
-    ngOnInit(): void {
-      this.activeChannel = this.router.url.split('/')[3];
+  ngOnInit(): void {
+    this.baseUrl = window.location.origin;
+    if (this.baseUrl == 'https://engage.jazz.com.pk') {
+      this.client = 'jazz';
+    } else if (this.baseUrl == 'https://keportal.enteract.live') {
+      this.client = 'ke';
+    } else if (this.baseUrl == 'https://waengage.enteract.live') {
+      this.client = 'morinaga';
+    } else if (this.baseUrl == 'https://tppl.360scrm.com') {
+      this.client = 'tppl';
+    } else if (this.baseUrl == 'http://localhost:4200') {
+      this.client = 'localhost';
+    }
 
-      this.flag = this.router.url.split('/')[2];
-      if(this.flag == 'focused'){
-        this.Subscription = this.unrespondedCountService
+    this.activeChannel = this.router.url.split('/')[3];
+
+    this.flag = this.router.url.split('/')[2];
+    if (this.flag == 'focused') {
+      this.Subscription = this.unrespondedCountService
         .getUnRespondedCount()
         .subscribe((res) => {
           this.UnResponded = res.totalCount;
@@ -130,113 +146,159 @@ export class InboxMenuComponent implements OnInit {
       );
 
       this.getAllChannelsUnrespondedCounts();
-      }
-      
-
     }
-
-
-  channels: any[]=[];
-
-
-  platformWiseCount:any[]=[];
-
-  getAllChannelsUnrespondedCounts(){
-    this.commonService.GetAllChannelsUnrespondedCount().subscribe((res:any)=>{
-      // this.GetChannels();
-      this.UnResponded = res.totalCount
-      this.platformWiseCount = res.platformCount
-      res.platformCount.forEach((platform:any) => {
-
-        if (platform.platform == 'Facebook') {
-          this.FbUnResponded = platform.count;
-        }
-        if (platform.platform == 'Instagram') {
-          this.InstaUnResponded = platform.count;
-        }
-        if (platform.platform == 'Twitter') {
-          this.TwitterUnResponded = platform.count;
-        }
-        if (platform.platform == 'LinkedIn') {
-          this.LinkedInUnResponded = platform.count;
-        }
-        if (platform.platform == 'Youtube') {
-          this.YoutubeUnResponded = platform.count;
-        }
-        if (platform.platform == 'SMS') {
-          this.SmsUnResponded = platform.count;
-        }
-        if (platform.platform == 'WhatsApp') {
-          this.WaUnResponded = platform.count;
-        }
-        if (platform.platform == 'WebChat') {
-          this.WebchatUnResponded = platform.count;
-        }
-        if (platform.platform == 'Email') {
-
-          this.EmailUnResponded = platform.count;
-        }
-        if (platform.platform == 'OfficeEmail') {
-
-          this.OfficeEmailUnResponded = platform.count;
-        }
-        if (platform.platform == 'PlayStore') {
-          this.PlaystoreUnResponded = platform.count;
-        }
-      });
-    });
   }
 
-  GetChannels(){
+  channels: any[] = [];
 
-    this.commonService.GetChannels().subscribe((res:any)=>{
-      if (Object.keys(res).length > 0) {
-      this.channels = res[0].subMenu;
-      console.log("this.channels", this.channels);
-      const newArray = res[0].subMenu.map((item:any) => {
-        let newItem = {};
-        switch (item.name) {
-          case "Email":
-            newItem = { icon: '<i class="fas fa-envelope coal"></i>', title: "Emails", subtitle: "/Gmail",color:'iconButton medium whiteBg',count:this.EmailUnResponded};
-            break;
-          case "WhatsApp":
-            newItem = { icon: '<i class="fab fa-whatsapp"></i>', title: "WhatsApp", subtitle: "",color:"iconButton medium mintBg",count:this.WaUnResponded};
-            break;
-          case "SMS":
-            newItem = { icon: '<i class="fal fa-comment-alt-lines"></i>', title: "SMS", subtitle: "",color:"iconButton medium cherryBg",count:this.SmsUnResponded};
-            break;
-          case "Facebook":
-            newItem = { icon: '<i class="fab fa-facebook-f"></i>', title: "Facebook", subtitle: "/ibex.connect",color:"iconButton medium navyBg",count:this.FbUnResponded};
-            break;
-          case "Chat":
-            newItem = { icon: '<i class="fa-light fa-messages"></i>', title: "WebChat", subtitle: "",color:"iconButton medium webchatbg",count:this.WebchatUnResponded};
-            break;
-          case "Twitter":
-            newItem = { icon: '<i class="fab fa-twitter"></i>', title: "Twitter", subtitle: "",color:"iconButton medium oceanBg",count:this.TwitterUnResponded};
-            break;
-          case "Instagram":
-            newItem = { icon: '<i class="fab fa-instagram"></i>', title: "Instagram", subtitle: "",color:"iconButton medium instabg",count:this.InstaUnResponded};
-            break;
-          case "LinkedIn":
-            newItem = { icon: '<i class="fa-brands fa-linkedin-in"></i>', title: "LinkedIn", subtitle: "",color:"iconButton medium linkedinbg",count:this.LinkedInUnResponded};
-            break;
-          case "Youtube":
-            newItem = { icon: '<i class="fab fa-youtube"></i>', title: "Youtube", subtitle: "" ,color:"iconButton medium radicalBg",count:this.YoutubeUnResponded};
-            break;
-          default:
-            // Keep newItem empty for cases not handled
-            break;
-        }
-        return newItem;
+  platformWiseCount: any[] = [];
+
+  getAllChannelsUnrespondedCounts() {
+    this.commonService
+      .GetAllChannelsUnrespondedCount()
+      .subscribe((res: any) => {
+        // this.GetChannels();
+        this.UnResponded = res.totalCount;
+        this.platformWiseCount = res.platformCount;
+        res.platformCount.forEach((platform: any) => {
+          if (platform.platform == 'Facebook') {
+            this.FbUnResponded = platform.count;
+          }
+          if (platform.platform == 'Instagram') {
+            this.InstaUnResponded = platform.count;
+          }
+          if (platform.platform == 'Twitter') {
+            this.TwitterUnResponded = platform.count;
+          }
+          if (platform.platform == 'LinkedIn') {
+            this.LinkedInUnResponded = platform.count;
+          }
+          if (platform.platform == 'Youtube') {
+            this.YoutubeUnResponded = platform.count;
+          }
+          if (platform.platform == 'SMS') {
+            this.SmsUnResponded = platform.count;
+          }
+          if (platform.platform == 'WhatsApp') {
+            this.WaUnResponded = platform.count;
+          }
+          if (platform.platform == 'WebChat') {
+            this.WebchatUnResponded = platform.count;
+          }
+          if (platform.platform == 'Email') {
+            this.EmailUnResponded = platform.count;
+          }
+          if (platform.platform == 'OfficeEmail') {
+            this.OfficeEmailUnResponded = platform.count;
+          }
+          if (platform.platform == 'PlayStore') {
+            this.PlaystoreUnResponded = platform.count;
+          }
+        });
       });
-      this.allChannels=newArray;
-    }
-    })
+  }
+
+  GetChannels() {
+    this.commonService.GetChannels().subscribe((res: any) => {
+      if (Object.keys(res).length > 0) {
+        this.channels = res[0].subMenu;
+        console.log('this.channels', this.channels);
+        const newArray = res[0].subMenu.map((item: any) => {
+          let newItem = {};
+          switch (item.name) {
+            case 'Email':
+              newItem = {
+                icon: '<i class="fas fa-envelope coal"></i>',
+                title: 'Emails',
+                subtitle: '/Gmail',
+                color: 'iconButton medium whiteBg',
+                count: this.EmailUnResponded,
+              };
+              break;
+            case 'WhatsApp':
+              newItem = {
+                icon: '<i class="fab fa-whatsapp"></i>',
+                title: 'WhatsApp',
+                subtitle: '',
+                color: 'iconButton medium mintBg',
+                count: this.WaUnResponded,
+              };
+              break;
+            case 'SMS':
+              newItem = {
+                icon: '<i class="fal fa-comment-alt-lines"></i>',
+                title: 'SMS',
+                subtitle: '',
+                color: 'iconButton medium cherryBg',
+                count: this.SmsUnResponded,
+              };
+              break;
+            case 'Facebook':
+              newItem = {
+                icon: '<i class="fab fa-facebook-f"></i>',
+                title: 'Facebook',
+                subtitle: '/ibex.connect',
+                color: 'iconButton medium navyBg',
+                count: this.FbUnResponded,
+              };
+              break;
+            case 'Chat':
+              newItem = {
+                icon: '<i class="fa-light fa-messages"></i>',
+                title: 'WebChat',
+                subtitle: '',
+                color: 'iconButton medium webchatbg',
+                count: this.WebchatUnResponded,
+              };
+              break;
+            case 'Twitter':
+              newItem = {
+                icon: '<i class="fab fa-twitter"></i>',
+                title: 'Twitter',
+                subtitle: '',
+                color: 'iconButton medium oceanBg',
+                count: this.TwitterUnResponded,
+              };
+              break;
+            case 'Instagram':
+              newItem = {
+                icon: '<i class="fab fa-instagram"></i>',
+                title: 'Instagram',
+                subtitle: '',
+                color: 'iconButton medium instabg',
+                count: this.InstaUnResponded,
+              };
+              break;
+            case 'LinkedIn':
+              newItem = {
+                icon: '<i class="fa-brands fa-linkedin-in"></i>',
+                title: 'LinkedIn',
+                subtitle: '',
+                color: 'iconButton medium linkedinbg',
+                count: this.LinkedInUnResponded,
+              };
+              break;
+            case 'Youtube':
+              newItem = {
+                icon: '<i class="fab fa-youtube"></i>',
+                title: 'Youtube',
+                subtitle: '',
+                color: 'iconButton medium radicalBg',
+                count: this.YoutubeUnResponded,
+              };
+              break;
+            default:
+              // Keep newItem empty for cases not handled
+              break;
+          }
+          return newItem;
+        });
+        this.allChannels = newArray;
+      }
+    });
   }
 
   updatevalue(string: any) {
     this.filterService.addTogglePanel(string);
   }
-
 }
-

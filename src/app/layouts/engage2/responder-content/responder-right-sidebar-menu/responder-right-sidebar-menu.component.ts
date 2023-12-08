@@ -25,6 +25,8 @@ export class ResponderRightSidebarMenuComponent implements OnInit {
   public dynamicPath: string = '';
   public dynamicChildPath: string = '';
 
+  KEbaseUrl:string="";
+  KEClient:boolean=false;
   constructor(
     private store: Store<MenuState>,
     private sharedService: SharedService,
@@ -37,6 +39,10 @@ export class ResponderRightSidebarMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.KEbaseUrl=window.location.origin
+    if(this.KEbaseUrl=='https://keportal.enteract.live'){
+      this.KEClient=true
+    }
     this.menu$ = this.store
       .select(getEmargingEqual('team_inbox_right_menu'))
       .subscribe((item: any) => {

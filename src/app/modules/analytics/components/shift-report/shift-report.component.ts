@@ -99,7 +99,15 @@ export class ShiftReportComponent implements OnInit {
     private stor: StorageService,
     private SpinnerService: NgxSpinnerService
   ) {}
+  KEbaseUrl:string="";
+  KEClient:boolean=false;
+  
   ngOnInit(): void {
+    this.KEbaseUrl=window.location.origin
+    if(this.KEbaseUrl=='https://keportal.enteract.live'){
+      this.KEClient=true
+    }
+
     this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split('T')[0];
     const obj = { title: 'Shift Report', url: 'analytics/shift-report' };

@@ -12,7 +12,7 @@
                 <i class="fal fa-user-alt"></i>
             </button>
         </div>
-        <div class="rightbar-btn-group" (click)="toggleRightBar('customer-profile')" value="customer-profile-rightbar-social">
+        <div *ngIf="KEClient == true" class="rightbar-btn-group" (click)="toggleRightBar('customer-profile')" value="customer-profile-rightbar-social">
             <button class="iconButton btn medium iconHover" data-bs-toggle="tooltip" data-bs-placement="left"
                 aria-label="Customer Profile" data-bs-original-title="Customer Profile">
                 <i class="fal fa-ticket-alt"></i>

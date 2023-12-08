@@ -165,7 +165,16 @@ export class WhatsappDetailsComponent implements OnInit {
 
   messagesStatus: any[] = [];
   Sentiments: any[] = [];
+
+  KEbaseUrl:string="";
+  KEClient:boolean=false;
+
   ngOnInit(): void {
+    this.KEbaseUrl=window.location.origin
+    if(this.KEbaseUrl=='https://keportal.enteract.live'){
+      this.KEClient=true
+    }
+    
     const textarea = this.el.nativeElement as HTMLTextAreaElement;
     this.renderer.addClass(textarea, 'auto-resize');
     this.adjustTextareaHeight(textarea);

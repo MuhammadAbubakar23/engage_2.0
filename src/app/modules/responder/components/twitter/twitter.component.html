@@ -1309,7 +1309,7 @@
                                     <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></button>
                             </div>
                             <!-- only for KE client -->
-                            <div class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
+                            <div *ngIf="KEClient == true" class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
                                 <button class="iconButton small notification iconHover" id="surveyForms"
                                     data-bs-toggle="dropdown" data-bs-auto-close="outside"
                                     data-bs-original-title="Survey Forms">
@@ -1426,7 +1426,7 @@
 
                             </div>
                             <!-- only for KE client -->
-                            <div class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
+                            <div *ngIf="KEClient == true" class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
                                 <button class="iconButton small notification iconHover" id="surveyForms"
                                     data-bs-toggle="dropdown" data-bs-auto-close="outside"
                                     data-bs-original-title="Survey Forms">
@@ -1541,7 +1541,7 @@
 
                             </div>
                             <!-- only for KE client -->
-                            <div class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
+                            <div *ngIf="KEClient == true" class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
                                 <button class="iconButton small notification iconHover" id="surveyForms"
                                     data-bs-toggle="dropdown" data-bs-auto-close="outside"
                                     data-bs-original-title="Survey Forms">

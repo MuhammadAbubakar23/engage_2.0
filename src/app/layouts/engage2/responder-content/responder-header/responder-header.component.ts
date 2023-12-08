@@ -144,7 +144,7 @@ export class ResponderHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.baseURL = window.location.origin;
-    if (this.activeChannel == 'https://keportal.enteract.live/') {
+    if (this.baseURL == 'https://keportal.enteract.live') {
       this.KEBaseUrl = true;
     }
     this.flag = this._route.url.split('/')[2];

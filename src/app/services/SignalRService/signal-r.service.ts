@@ -26,7 +26,9 @@ export class SignalRService {
   reply: any
 
   token = localStorage.getItem('token');
-  signalRStatus = localStorage.getItem('signalRStatus')
+  signalRStatus = localStorage.getItem('signalRStatus');
+  companyId:number=650;
+  baseUrl:string="";
 
   public hubconnection!: signalR.HubConnection;
   public connectionId!: string;
@@ -47,7 +49,14 @@ export class SignalRService {
     private removeAssignedQueryService: RemoveAssignedQuerryService,
     private applySentimentService: ApplySentimentService,
     private router: Router
-  ) { }
+  ) { 
+    this.baseUrl=window.location.origin
+    if(this.baseUrl=='https://keportal.enteract.live/'){
+      this.companyId=651;
+    } else if (this.baseUrl=='https://engage.jazz.com.pk/') {
+    this.companyId=650;
+    } 
+  }
 
   flag:string='';
 
@@ -59,7 +68,7 @@ export class SignalRService {
         accessTokenFactory: () => {
           return 'Bearer ' + localStorage.getItem('token');
         },
-        headers: { "X-Super-Team": JSON.stringify(651) }
+        headers: { "X-Super-Team": JSON.stringify(this.companyId) }
       };
   
       this.hubconnection = new signalR.HubConnectionBuilder()
@@ -84,7 +93,7 @@ export class SignalRService {
         accessTokenFactory: () => {
           return 'Bearer ' + localStorage.getItem('token');
         },
-        headers: { "X-Super-Team": JSON.stringify(651) }
+        headers: { "X-Super-Team": JSON.stringify(this.companyId) }
       };
 
       this.hubconnection = new signalR.HubConnectionBuilder()
