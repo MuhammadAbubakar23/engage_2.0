@@ -339,7 +339,12 @@ export class ConversationComponent implements OnInit {
       this.fromDate = this.searchForm.value.fromDate + 'T00:00:00.000Z';
       this.toDate = this.searchForm.value.toDate + 'T23:59:59.999Z';
     } 
-    // else if ((this.searchForm.value.fromDate == null && this.searchForm.value.toDate == null) && (this.fromDate == undefined && this.toDate == undefined) && (this.flag == 'completed' || this.flag == 'sent')) {
+    else if ((this.searchForm.value.fromDate == null && this.searchForm.value.toDate == null) && (this.fromDate == undefined && this.toDate == undefined) && (this.flag == 'completed' || this.flag == 'sent')) {
+      this.fromDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T00:00:00.000Z';
+      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+    }
+    // else if ((this.searchForm.value.fromDate != null && this.searchForm.value.toDate != null) && (this.fromDate != undefined && this.toDate != undefined) && (this.flag == 'completed' || this.flag == 'sent')) {
+    //   debugger
     //   this.fromDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T00:00:00.000Z';
     //   this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     // }
@@ -467,8 +472,8 @@ export class ConversationComponent implements OnInit {
 
   anyTime(value: string) {
     if (value == 'Any Time') {
-      this.toDate = null;
-      this.fromDate = null;
+      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+      this.fromDate = new Date('0001-01-01T23:59:59.999Z');
     } else if (value == 'Older then a week') {
       let currentDate = new Date();
       let olderThenAWeek = currentDate.setDate(currentDate.getDate() - 7);
