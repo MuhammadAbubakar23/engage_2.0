@@ -31,27 +31,30 @@ export class ExecutiveDashboardComponent implements OnInit {
   data: any[] = []
   startDate = ''
   endDate = ''
-  InboundGraph:any
-AudienceEngagmentGraph:any
-EnagementGraph:any
-sentimentGraph:any
-facebookreactionGraph:any
+  InboundGraph: any
+  AudienceEngagmentGraph: any
+  regionWiseGraph: any
+  EnagementGraph: any
+  sentimentGraph: any
+  facebookreactionGraph: any
   maxEndDate: any;
   social_media_report: any
   inbound_traffic: any
-  InboundCounts:any[]=[]
-  InboundDates:any[]=[]
+  InboundCounts: any[] = []
+  InboundDates: any[] = []
   sentimental_analysis: any
-  date_Audience: any[]=[]
+  date_Audience: any[] = []
   post_likes: any
   post_comments: any
   post_share: any
-  regionwiseReportData:any
-  facebook_reaction: any[]=[]
-  facebook_reactionDates:any[]=[]
+  regionwiseReportData: any
+  facebook_reaction: any[] = []
+  facebook_reactionDates: any[] = []
   platformsArray: any[] = []
   channelWiseEngagement: any[] = [];
-  currentDate: any;
+  regionwiseCount:any[]=[]
+  regionArray:any[]=[]
+    currentDate: any;
   constructor(private _hS: HeaderService,
     private commonDataService: CommonDataService,
     private spinerService: NgxSpinnerService,
@@ -62,23 +65,37 @@ facebookreactionGraph:any
     this._hS.setHeader(newObj);
     this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split("T")[0];
-    // this.getEnagementChart()
-    // this.getRefionWiseTrafic()
     this.GetAllSocialMediaReport()
     this.makeChartResponsive();
-    this.GetAllRegionWiseData()
+    // this.GetAllRegionWiseData()
   }
-GetAllRegionWiseData(){
-  let obj={
-    "toDate": "2023-12-06T13:48:40.578Z",
-    "fromDate": "2023-06-07T13:48:40.578Z",
-    "companyId": 0
+  GetAllRegionWiseData() {
+    debugger
+    // if (this.startDate == "" && this.endDate == "") {
+    //   const today = this.currentDate;
+    //   this.endDate = this.datePipe.transform(today, "YYYY-MM-dd") || '';
+    //   let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 6);
+    //   this.startDate = this.datePipe.transform(prevDate, "YYYY-MM-dd") || '';
+    // }
+    // else if (this.startDate != "" && this.endDate != ""
+    // ) {
+    //   this.startDate = this.startDate
+    //   this.endDate = this.endDate
+    // }
+    let obj = {
+      toDate: this.endDate,
+      fromDate: this.startDate,
+      companyId: 0
+    }
+    this.spinerService.show()
+    debugger
+    this.commonDataService.GetRegionWiseReport(obj).subscribe((res: any) => {
+      this.spinerService.hide()
+      this.regionwiseReportData = res
+      console.log("this.regionwiseReportData==>", this.regionwiseReportData)
+    })
+    this.getRegionWiseTrafic()
   }
-  this.commonDataService.GetRegionWiseReport(obj).subscribe((res:any)=>{
-    this.regionwiseReportData=res
-    console.log("this.regionwiseReportData==>",this.regionwiseReportData)
-  })
-}
   GetAllSocialMediaReport() {
     if (this.startDate == "" && this.endDate == "") {
       const today = this.currentDate;
@@ -110,8 +127,8 @@ GetAllRegionWiseData(){
     this.date_Audience = []
     this.post_comments = []
     this.post_likes = []
-    this.InboundDates=[]
-    this.facebook_reactionDates=[]
+    this.InboundDates = []
+    this.facebook_reactionDates = []
     this.post_share = []
     this.facebook_reaction = [];
     this.platformsArray = [];
@@ -124,8 +141,8 @@ GetAllRegionWiseData(){
         // inbound 
         const inBoundTrafficDto = this.social_media_report.inBoundTrafficDto;
         inBoundTrafficDto.forEach((data: any) => {
-          if(!this.InboundDates.includes(this.datePipe.transform(data.date,'dd/MMM'))){
-            this.InboundDates.push(this.datePipe.transform(data.date,'dd/MMM'))
+          if (!this.InboundDates.includes(this.datePipe.transform(data.date, 'dd/MMM'))) {
+            this.InboundDates.push(this.datePipe.transform(data.date, 'dd/MMM'))
           }
           this.InboundCounts.push(data.totalCount)
         });
@@ -141,30 +158,30 @@ GetAllRegionWiseData(){
         this.social_media_report.facebookReportResponseDto.postLikeSpan?.forEach((data: any) => {
 
           this.post_likes.push(data.activityCount);
-          if (!this.date_Audience.includes(this.datePipe.transform(data.dateValue,'dd/MMM'))) {
-            this.date_Audience.push(this.datePipe.transform(data.dateValue,'dd/MMM'))
+          if (!this.date_Audience.includes(this.datePipe.transform(data.dateValue, 'dd/MMM'))) {
+            this.date_Audience.push(this.datePipe.transform(data.dateValue, 'dd/MMM'))
           }
         });
         this.social_media_report.facebookReportResponseDto.postShareSpan?.forEach((data: any) => {
           this.post_share.push(data.activityCount);
-          if (!this.date_Audience.includes(this.datePipe.transform(data.dateValue,'dd/MMM'))) {
-            this.date_Audience.push(this.datePipe.transform(data.dateValue,'dd/MMM'))
+          if (!this.date_Audience.includes(this.datePipe.transform(data.dateValue, 'dd/MMM'))) {
+            this.date_Audience.push(this.datePipe.transform(data.dateValue, 'dd/MMM'))
           }
         });
         this.social_media_report.facebookReportResponseDto.postCommentSpan?.forEach((data: any) => {
           this.post_comments.push(data.activityCount);
-          if (!this.date_Audience.includes(this.datePipe.transform(data.dateValue,'dd/MMM'))) {
-            this.date_Audience.push(this.datePipe.transform(data.dateValue,'dd/MMM'))
+          if (!this.date_Audience.includes(this.datePipe.transform(data.dateValue, 'dd/MMM'))) {
+            this.date_Audience.push(this.datePipe.transform(data.dateValue, 'dd/MMM'))
           }
         });
         // facebook Reaction 
         const pageReactionsSpan = this.social_media_report.facebookReportResponseDto.pageReactionsSpan;
 
         pageReactionsSpan?.forEach((data: any) => {
-      
+
           this.facebook_reaction.push(data.like + data.love + data.wow + data.haha + data.sorry + data.anger + data.sad + data.tHANKFUL + data.pride + data.cARE);
-          if(!this.facebook_reactionDates.includes(this.datePipe.transform(data.totalReactionsDateValue,'dd/MMM'))){
-            this.facebook_reactionDates.push(this.datePipe.transform(data.totalReactionsDateValue,'dd/MMM'))
+          if (!this.facebook_reactionDates.includes(this.datePipe.transform(data.totalReactionsDateValue, 'dd/MMM'))) {
+            this.facebook_reactionDates.push(this.datePipe.transform(data.totalReactionsDateValue, 'dd/MMM'))
           }
         });
 
@@ -198,13 +215,13 @@ GetAllRegionWiseData(){
         this.getSentimentChart()
         this.getChartAudienceEngagement()
         this.getFacebookReaction()
-        this.getRegionWiseTrafic()
+  
       })
 
     } else {
       alert('select end date greater then start date')
     }
-
+this.GetAllRegionWiseData()
   }
 
   getChartInbound() {
@@ -214,8 +231,8 @@ GetAllRegionWiseData(){
     var option: EChartsOption;
 
     option = {
-      color: ['#FFA800', ],
-      
+      color: ['#FFA800',],
+
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -226,9 +243,9 @@ GetAllRegionWiseData(){
         }
       },
       legend: {
-        data:['Inbound'],
-        bottom:0,
-        icon:'circle'
+        data: ['Inbound'],
+        bottom: 0,
+        icon: 'circle'
       },
       toolbox: {
         feature: {
@@ -246,8 +263,8 @@ GetAllRegionWiseData(){
           type: 'category',
           boundaryGap: false,
           data: this.InboundDates,
-          axisLabel:{
-            rotate:45
+          axisLabel: {
+            rotate: 45
           }
         }
       ],
@@ -266,7 +283,7 @@ GetAllRegionWiseData(){
         {
           name: 'Inbound',
           type: 'line',
-   
+
           smooth: true,
           lineStyle: {
             width: 0
@@ -290,7 +307,7 @@ GetAllRegionWiseData(){
           },
           data: this.InboundCounts
         },
-      
+
       ]
     };
     // option = {
@@ -354,10 +371,10 @@ GetAllRegionWiseData(){
     this.AudienceEngagmentGraph = echarts.init(chartDom);
     var option: EChartsOption;
 
-   
+
     option = {
       color: ['#0095FF', '#FF0000', '#05C283', '#FF0087', '#FFBF00'],
-    
+
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -369,8 +386,8 @@ GetAllRegionWiseData(){
       },
       legend: {
         data: ['Likes', 'Comments', 'Share'],
-        icon:'circle',
-        bottom:0
+        icon: 'circle',
+        bottom: 0
       },
       toolbox: {
         feature: {
@@ -408,7 +425,7 @@ GetAllRegionWiseData(){
         {
           name: 'Likes',
           type: 'line',
-        
+
           smooth: true,
           lineStyle: {
             width: 0
@@ -461,7 +478,7 @@ GetAllRegionWiseData(){
         {
           name: 'Share',
           type: 'line',
-    
+
           smooth: true,
           lineStyle: {
             width: 0
@@ -483,12 +500,12 @@ GetAllRegionWiseData(){
           emphasis: {
             focus: 'series'
           },
-          data:  this.post_share
+          data: this.post_share
         },
-      
+
       ]
     };
-    
+
     option && this.AudienceEngagmentGraph.setOption(option);
   }
   getEnagementChart() {
@@ -500,7 +517,7 @@ GetAllRegionWiseData(){
       legend: {
         bottom: 0,
         left: 'center',
-        icon:'circle'
+        icon: 'circle'
       },
       tooltip: { trigger: 'axis' },
       dataset: {
@@ -510,13 +527,13 @@ GetAllRegionWiseData(){
         {
           type: 'category',
           data: this.channelWiseEngagement.map(data => data.name),
-      
+
           axisLabel: {
-            rotate:45,
+            rotate: 45,
             formatter: function (value: any) {
               return new Date(value).toISOString().split('T')[0];
             },
-            
+
           },
         },
       ],
@@ -556,8 +573,8 @@ GetAllRegionWiseData(){
       legend: {
         top: '5%',
         left: 'center',
-        bottom:0,
-        icon:'circle'
+        bottom: 0,
+        icon: 'circle'
       },
       series: [
         {
@@ -607,8 +624,8 @@ GetAllRegionWiseData(){
       },
       legend: {
         data: ['FACEBOOK REACTIONS'],
-        icon:'circle',
-        bottom:0
+        icon: 'circle',
+        bottom: 0
       },
       grid: {
         left: '3%',
@@ -620,9 +637,9 @@ GetAllRegionWiseData(){
         {
           type: 'category',
           boundaryGap: false,
-          data:this.facebook_reactionDates,
-          axisLabel:{
-            rotate:45
+          data: this.facebook_reactionDates,
+          axisLabel: {
+            rotate: 45
           }
         }
       ],
@@ -670,7 +687,7 @@ GetAllRegionWiseData(){
 
     option && this.facebookreactionGraph.setOption(option);
   }
-  regionWiseGraph:any
+
   getRegionWiseTrafic() {
     type EChartsOption = echarts.EChartsOption;
 
@@ -683,9 +700,23 @@ GetAllRegionWiseData(){
         type: 'category',
         data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
       },
-      yAxis: {
-        type: 'value'
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
       },
+      yAxis: [{
+        type: "value",
+        nameLocation: "middle",
+        name: "Numbers of Regionwise traffic counts",
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'Gray',
+          lineHeight: 50
+
+        }
+      }],
       series: [
         {
           data: [120, 200, 150, 80, 70, 110, 130],
@@ -760,195 +791,195 @@ GetAllRegionWiseData(){
 
 
   }
-  testGraph(){
+  testGraph() {
     var chartDom = document.getElementById('test');
-var myChart = echarts.init(chartDom);
-var option;
+    var myChart = echarts.init(chartDom);
+    var option;
 
-option = {
-  color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
-  title: {
-    text: 'Gradient Stacked Area Chart'
-  },
-  tooltip: {
-    trigger: 'axis',
-    axisPointer: {
-      type: 'cross',
-      label: {
-        backgroundColor: '#6a7985'
-      }
-    }
-  },
-  legend: {
-    data: ['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']
-  },
-  toolbox: {
-    feature: {
-      saveAsImage: {}
-    }
-  },
-  grid: {
-    left: '3%',
-    right: '4%',
-    bottom: '3%',
-    containLabel: true
-  },
-  xAxis: [
-    {
-      type: 'category',
-      boundaryGap: false,
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    }
-  ],
-  yAxis: [
-    {
-      type: 'value'
-    }
-  ],
-  series: [
-    {
-      name: 'Line 1',
-      type: 'line',
-      stack: 'Total',
-      smooth: true,
-      lineStyle: {
-        width: 0
+    option = {
+      color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+      title: {
+        text: 'Gradient Stacked Area Chart'
       },
-      showSymbol: false,
-      areaStyle: {
-        opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          {
-            offset: 0,
-            color: 'rgb(128, 255, 165)'
-          },
-          {
-            offset: 1,
-            color: 'rgb(1, 191, 236)'
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            backgroundColor: '#6a7985'
           }
-        ])
+        }
       },
-      emphasis: {
-        focus: 'series'
+      legend: {
+        data: ['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']
       },
-      data: [140, 232, 101, 264, 90, 340, 250]
-    },
-    {
-      name: 'Line 2',
-      type: 'line',
-      stack: 'Total',
-      smooth: true,
-      lineStyle: {
-        width: 0
+      toolbox: {
+        feature: {
+          saveAsImage: {}
+        }
       },
-      showSymbol: false,
-      areaStyle: {
-        opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          {
-            offset: 0,
-            color: 'rgb(0, 221, 255)'
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: [
+        {
+          type: 'category',
+          boundaryGap: false,
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value'
+        }
+      ],
+      series: [
+        {
+          name: 'Line 1',
+          type: 'line',
+          stack: 'Total',
+          smooth: true,
+          lineStyle: {
+            width: 0
           },
-          {
-            offset: 1,
-            color: 'rgb(77, 119, 255)'
-          }
-        ])
-      },
-      emphasis: {
-        focus: 'series'
-      },
-      data: [120, 282, 111, 234, 220, 340, 310]
-    },
-    {
-      name: 'Line 3',
-      type: 'line',
-      stack: 'Total',
-      smooth: true,
-      lineStyle: {
-        width: 0
-      },
-      showSymbol: false,
-      areaStyle: {
-        opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          {
-            offset: 0,
-            color: 'rgb(55, 162, 255)'
+          showSymbol: false,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: 'rgb(128, 255, 165)'
+              },
+              {
+                offset: 1,
+                color: 'rgb(1, 191, 236)'
+              }
+            ])
           },
-          {
-            offset: 1,
-            color: 'rgb(116, 21, 219)'
-          }
-        ])
-      },
-      emphasis: {
-        focus: 'series'
-      },
-      data: [320, 132, 201, 334, 190, 130, 220]
-    },
-    {
-      name: 'Line 4',
-      type: 'line',
-      stack: 'Total',
-      smooth: true,
-      lineStyle: {
-        width: 0
-      },
-      showSymbol: false,
-      areaStyle: {
-        opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          {
-            offset: 0,
-            color: 'rgb(255, 0, 135)'
+          emphasis: {
+            focus: 'series'
           },
-          {
-            offset: 1,
-            color: 'rgb(135, 0, 157)'
-          }
-        ])
-      },
-      emphasis: {
-        focus: 'series'
-      },
-      data: [220, 402, 231, 134, 190, 230, 120]
-    },
-    {
-      name: 'Line 5',
-      type: 'line',
-      stack: 'Total',
-      smooth: true,
-      lineStyle: {
-        width: 0
-      },
-      showSymbol: false,
-      label: {
-        show: true,
-        position: 'top'
-      },
-      areaStyle: {
-        opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          {
-            offset: 0,
-            color: 'rgb(255, 191, 0)'
+          data: [140, 232, 101, 264, 90, 340, 250]
+        },
+        {
+          name: 'Line 2',
+          type: 'line',
+          stack: 'Total',
+          smooth: true,
+          lineStyle: {
+            width: 0
           },
-          {
-            offset: 1,
-            color: 'rgb(224, 62, 76)'
-          }
-        ])
-      },
-      emphasis: {
-        focus: 'series'
-      },
-      data: [220, 302, 181, 234, 210, 290, 150]
-    }
-  ]
-};
+          showSymbol: false,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: 'rgb(0, 221, 255)'
+              },
+              {
+                offset: 1,
+                color: 'rgb(77, 119, 255)'
+              }
+            ])
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data: [120, 282, 111, 234, 220, 340, 310]
+        },
+        {
+          name: 'Line 3',
+          type: 'line',
+          stack: 'Total',
+          smooth: true,
+          lineStyle: {
+            width: 0
+          },
+          showSymbol: false,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: 'rgb(55, 162, 255)'
+              },
+              {
+                offset: 1,
+                color: 'rgb(116, 21, 219)'
+              }
+            ])
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data: [320, 132, 201, 334, 190, 130, 220]
+        },
+        {
+          name: 'Line 4',
+          type: 'line',
+          stack: 'Total',
+          smooth: true,
+          lineStyle: {
+            width: 0
+          },
+          showSymbol: false,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: 'rgb(255, 0, 135)'
+              },
+              {
+                offset: 1,
+                color: 'rgb(135, 0, 157)'
+              }
+            ])
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data: [220, 402, 231, 134, 190, 230, 120]
+        },
+        {
+          name: 'Line 5',
+          type: 'line',
+          stack: 'Total',
+          smooth: true,
+          lineStyle: {
+            width: 0
+          },
+          showSymbol: false,
+          label: {
+            show: true,
+            position: 'top'
+          },
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: 'rgb(255, 191, 0)'
+              },
+              {
+                offset: 1,
+                color: 'rgb(224, 62, 76)'
+              }
+            ])
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data: [220, 302, 181, 234, 210, 290, 150]
+        }
+      ]
+    };
 
-option && myChart.setOption(option);
+    option && myChart.setOption(option);
   }
   makeChartResponsive() {
     window.addEventListener('resize', () => {
@@ -967,10 +998,10 @@ option && myChart.setOption(option);
       if (this.facebookreactionGraph) {
         this.facebookreactionGraph.resize();
       }
-      if(this.regionWiseGraph){
+      if (this.regionWiseGraph) {
         this.regionWiseGraph.resize()
       }
-    
+
     });
   }
 }
