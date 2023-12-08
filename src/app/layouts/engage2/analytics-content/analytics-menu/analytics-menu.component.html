@@ -5,14 +5,17 @@
     </h5>
   </div>
   <ul class="list-group console-list mt-2" data-scrollbar="true" tabindex="-1" style="overflow: hidden; outline: none">
-    <div class="scroll-content">
-      <!-- <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Report Designer'?'active':''"
-        value="Live Monitoring" id="analyticstab2">
-        <a routerLink="/analytics/report-designer" class="d-flex">
-          Report Designer
-        </a>
-      </li>
-      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Reports'?'active':''"
+    <div class="scroll-content" style="overflow: auto; height: calc(100%-200px);">
+      <span *ngFor="let item of analyticeReport"> 
+        <li class="list-group-item list-group-item-action" routerLinkActive="active"
+          value="Live Monitoring" id="analyticstab2">
+          <a [routerLink]="[item.link]" class="d-flex" >
+        {{item.name}}
+          </a>
+        </li>
+      </span>
+
+      <!-- <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Reports'?'active':''"
         value="Executive Dashboard" id="analyticstab1">
         <a routerLink="/analytics/reports" class="d-flex">
           Report Listing
@@ -33,11 +36,11 @@
       </li>
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Live Monitoring'?'active':''" value="Dashboard" id="analyticstab3">
         <a routerLink="/analytics/live-monitoring" class="d-flex">Live Monitoring</a>
-      </li>  -->
+      </li> 
 
-      <!-- WhatsApp Reports for Jazz Only -->
 
-      <!-- <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'WhatsApp Raw Data'?'active':''"
+
+      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'WhatsApp Raw Data'?'active':''"
         value="WhatsApp Report" id="analyticstab3">
         <a routerLink="/analytics/whatsapp-report" class="d-flex">
           WhatsApp Raw Data
@@ -66,7 +69,7 @@
         <a routerLink="/analytics/social-raw-data" class="d-flex">
           Social Raw Data
         </a>
-      </li> -->
+      </li>
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Inbound/Outbound Report'?'active':''"
         value="Inbound/OutBound Report" id="analyticstab1">
         <a routerLink="/analytics/inbound-outbound-report" class="d-flex">
@@ -86,12 +89,12 @@
           Shift Report
         </a>
       </li>
-      <!-- <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Query Tag Report'?'active':''"
+      <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Query Tag Report'?'active':''"
         value="Query Tag Report" id="queryTagtab">
         <a routerLink="/analytics/querytag-report" class="d-flex">
           Query Tag Report
         </a>
-      </li> -->
+      </li>
       <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Tag Report'?'active':''"
         value="Tag Report" id="analyticstab1">
         <a routerLink="/analytics/tag-report" class="d-flex">
@@ -125,7 +128,7 @@
         <a routerLink="/analytics/instagram-report" class="d-flex">
           Instagram Report
         </a>
-      </li>
+      </li> -->
     </div>
   </ul>
 </div>
