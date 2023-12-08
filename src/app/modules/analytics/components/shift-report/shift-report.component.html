@@ -257,6 +257,14 @@
                                                             <span class="ms-2"> {{ channel.platform }}</span>
                                                         </div>
                                                     </span>
+                                                    <span *ngIf="channel.platform=='Youtube'">
+                                                        <div class="d-flex align-items-center">
+                                                            <span class="iconButton medium radicalBg ice">
+                                                                <i class="fab fa-youtube fa-beat-fade"></i>
+                                                            </span>
+                                                            <span class="ms-2"> {{ channel.platform }}</span>
+                                                        </div>
+                                                    </span>
                                                 </td>
                                                 <ng-container *ngFor="let date of allDates">
                                                     <td>

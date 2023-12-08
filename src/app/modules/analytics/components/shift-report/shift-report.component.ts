@@ -54,6 +54,7 @@ export class ShiftReportComponent implements OnInit {
   allTotalCountLink: any[] = [];
   allTotalCountPlayStore: any[] = [];
   allTotalCountInsta: any[] = [];
+  allTotalCountYoutube:any[]=[]
   ChartData: any[] = [];
   _legend: any[] = [];
   shiftName:any
@@ -168,6 +169,7 @@ export class ShiftReportComponent implements OnInit {
     this.dateWise = [];
     this.allTotalCountPlayStore = [];
     this.allTotalCountWhatsapp = [];
+    this.allTotalCountYoutube=[]
     this.isShowGrpah=false
     this._legend = [];
     this.SpinnerService.show();
@@ -190,8 +192,8 @@ export class ShiftReportComponent implements OnInit {
         this._legend.push(data.platform);
 
         data.dateWise.forEach((item: any) => {
-          if (!this.allDates.includes(item.date.split('T')[0])) {
-            this.allDates.push(item.date.split('T')[0]);
+          if (!this.allDates.includes(this.datePipe.transform(item.date,'dd/MMM'))) {
+            this.allDates.push(this.datePipe.transform(item.date,'dd/MMM'));
           }
           if (data.platform == 'Facebook') {
             data.dateWise.forEach((singleItem: any) => {
@@ -225,6 +227,11 @@ export class ShiftReportComponent implements OnInit {
           if (data.platform == 'PlayStore') {
             data.dateWise.forEach((item: any) => {
               this.allTotalCountPlayStore.push(item.totalCount);
+            });
+          }
+          if (data.platform == 'Youtube') {
+            data.dateWise.forEach((item: any) => {
+              this.allTotalCountYoutube.push(item.totalCount);
             });
           }
         });
@@ -286,7 +293,8 @@ export class ShiftReportComponent implements OnInit {
       },
       _legend: {
         data:this._legend,
-         icon:'circle'
+         icon:'circle',
+         bottom:0
       },
       get legend() {
         return this._legend;
@@ -297,7 +305,7 @@ export class ShiftReportComponent implements OnInit {
       grid: {
         left: '10%',
         right: '4%',
-        bottom: '3%',
+        bottom: '13%',
         containLabel: true,
       },
       toolbox: {
@@ -309,6 +317,9 @@ export class ShiftReportComponent implements OnInit {
         type: 'category',
         boundaryGap: false,
         data: this.allDates,
+        axisLabel: {
+          rotate: 45,
+        },
       },
       yAxis: {
         type: 'value',
@@ -352,6 +363,11 @@ export class ShiftReportComponent implements OnInit {
             name: 'WhatsApp',
             type: 'line',
             data: this.allTotalCountWhatsapp,
+          },
+          {
+            name: 'Youtube',
+            type: 'line',
+            data: this.allTotalCountYoutube,
           },
         ],
       };

@@ -82,7 +82,7 @@ isChannelsShow:boolean=false;
 
 this.activeChannel=window.location.origin
 
-if(this.activeChannel=='https://waengage.enteract.live/')
+if(this.activeChannel=='https://waengage.enteract.live')
 {
   
   this.isChannelShow="morinaga";
@@ -169,7 +169,7 @@ else{
     { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
       ];
     }
-  else if(this.isChannelShow=="kE"){
+  else if(this.isChannelShow=="KE"){
       this.channelOptions = [
         { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
         { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
@@ -250,7 +250,7 @@ else{
 this.inboundoutboundDate=[]
 this.inboundData=[]
 this.outboundData=[]
-this.isShowTagReport=false
+
     const requestData = {
       fromDate: this.startDate,
       toDate: this.endDate,
@@ -273,6 +273,9 @@ this.isShowTagReport=false
       this.inboundoutboundDate=[]
 this.inboundData=[]
 this.outboundData=[]
+this.isShowSentimentGraph=false
+ this. isShowInboundoutboundGraph=false
+ this.isShowTagReport=false
       this.commonService.Addinboundoutbound(requestData).subscribe(
         (response: any) => {
           this.SpinnerService.hide();
@@ -298,20 +301,7 @@ this.outboundData=[]
               this.inboundData.push(x.inboundData)
               this.outboundData.push(x.outboundData)
             })
-            // this.Inbound_Outbound_Report.channelReportData.dateWiseData.forEach(
-            //   (data: any) => {
-            //     const date = new Date(data.createdDate);
-            //     this.Inbound_data.push({
-            //       x: date.toLocaleDateString(),
-            //       y: data.inboundData,
-            //     });
-            //     this.Outbound_data.push({
-            //       x: date.toLocaleDateString(),
-            //       y: data.outboundData,
-            //     });
-            //   }
-            // );
-            // inbound
+           
          if(this.isShowInboundoutboundGraph==false){
           const doms = this.inboundOutboundReport.nativeElement;
           this.inboundOutboundChart = echarts.init(doms, null, {
@@ -333,7 +323,7 @@ this.outboundData=[]
                   bottom: 'bottom'
                 },
                 grid: {
-                  left: '3%',
+                  left: '13%',
                   right: '4%',
                   bottom: '13%',
                   containLabel: true
@@ -352,7 +342,7 @@ this.outboundData=[]
                   },
                 },
                 yAxis: {
-                  type: 'value',
+                 type: 'value',
             nameLocation: 'middle',
             name: 'Total Number of Inbound/Outbound',
             nameTextStyle: {
