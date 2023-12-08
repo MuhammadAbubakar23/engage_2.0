@@ -53,7 +53,7 @@ export class ExecutiveDashboardComponent implements OnInit {
   platformsArray: any[] = []
   channelWiseEngagement: any[] = [];
   regionwiseCount:any[]=[]
-  regionArray:any[]=[]
+  regionwiseArray:any[]=[]
     currentDate: any;
   constructor(private _hS: HeaderService,
     private commonDataService: CommonDataService,
@@ -71,30 +71,30 @@ export class ExecutiveDashboardComponent implements OnInit {
   }
   GetAllRegionWiseData() {
     debugger
-    // if (this.startDate == "" && this.endDate == "") {
-    //   const today = this.currentDate;
-    //   this.endDate = this.datePipe.transform(today, "YYYY-MM-dd") || '';
-    //   let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 6);
-    //   this.startDate = this.datePipe.transform(prevDate, "YYYY-MM-dd") || '';
-    // }
-    // else if (this.startDate != "" && this.endDate != ""
-    // ) {
-    //   this.startDate = this.startDate
-    //   this.endDate = this.endDate
-    // }
+ 
     let obj = {
       toDate: this.endDate,
       fromDate: this.startDate,
       companyId: 0
     }
-    this.spinerService.show()
+   
+    this.regionwiseArray=[]
+    this.regionwiseCount=[]
     debugger
     this.commonDataService.GetRegionWiseReport(obj).subscribe((res: any) => {
-      this.spinerService.hide()
+ 
       this.regionwiseReportData = res
+      this.regionwiseReportData.forEach((x:any)=>{
+        if(!this.regionwiseArray.includes((x.region))){
+          this.regionwiseArray.push(x.region)
+        }
+        this.regionwiseCount.push(x.totalCount)
+        this.getRegionWiseTrafic()
+      })
+
       console.log("this.regionwiseReportData==>", this.regionwiseReportData)
     })
-    this.getRegionWiseTrafic()
+
   }
   GetAllSocialMediaReport() {
     if (this.startDate == "" && this.endDate == "") {
@@ -108,36 +108,28 @@ export class ExecutiveDashboardComponent implements OnInit {
       this.startDate = this.startDate
       this.endDate = this.endDate
     }
-    // const startDateObj = new Date(this.startDate);
-    // const endDateObj = new Date(this.endDate);
-    // const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
-    // const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    // if (diffDays > 30) {
-    //   alert('Select a date range of 30 days or less');
-    //   return;
-    // }
-    // }
+
     const requestData = {
       pageId: "622038187854126",
       from: this.startDate,
       to: this.endDate,
     };
-    this.inbound_traffic = []
-    this.sentimental_analysis = []
-    this.date_Audience = []
-    this.post_comments = []
-    this.post_likes = []
-    this.InboundDates = []
-    this.facebook_reactionDates = []
-    this.post_share = []
-    this.facebook_reaction = [];
-    this.platformsArray = [];
+ 
     if (this.startDate <= this.endDate) {
+      this.inbound_traffic = []
+      this.sentimental_analysis = []
+      this.date_Audience = []
+      this.post_comments = []
+      this.post_likes = []
+      this.InboundDates = []
+      this.facebook_reactionDates = []
+      this.post_share = []
+      this.facebook_reaction = [];
+      this.platformsArray = [];
       this.spinerService.show()
       this.commonDataService.GetAllSocialMatrics(requestData).subscribe((res: any) => {
         this.social_media_report = res
 
-        this.spinerService.hide()
         // inbound 
         const inBoundTrafficDto = this.social_media_report.inBoundTrafficDto;
         inBoundTrafficDto.forEach((data: any) => {
@@ -194,7 +186,7 @@ export class ExecutiveDashboardComponent implements OnInit {
           }
 
           channel.dateWise.forEach((tag: any) => {
-            const date = new Date(tag.date).toISOString();
+            const date = new Date(tag.date).toISOString().split('T')[0];
             const totalCount = tag.totalCount;
             const existingNameCount = this.channelWiseEngagement.find((n) => n.name === date);
 
@@ -215,13 +207,16 @@ export class ExecutiveDashboardComponent implements OnInit {
         this.getSentimentChart()
         this.getChartAudienceEngagement()
         this.getFacebookReaction()
-  
+   
       })
-
+   
     } else {
       alert('select end date greater then start date')
     }
+    this.spinerService.hide()
 this.GetAllRegionWiseData()
+
+
   }
 
   getChartInbound() {
@@ -404,7 +399,7 @@ this.GetAllRegionWiseData()
         {
           type: 'category',
           boundaryGap: false,
-          data: this.date_Audience,
+          data: this.date_Audience.reverse(),
           axisLabel: {
             rotate: 45,
           },
@@ -523,6 +518,12 @@ this.GetAllRegionWiseData()
       dataset: {
         source: [['product', ...this.platformsArray], ...this.channelWiseEngagement.map(data => [data.name, ...data.data])],
       },
+      grid: {
+        left: '13%',
+        right: '4%',
+        bottom: '13%',
+        containLabel: true
+      },
       xAxis: [
         {
           type: 'category',
@@ -628,7 +629,7 @@ this.GetAllRegionWiseData()
         bottom: 0
       },
       grid: {
-        left: '3%',
+        left: '13%',
         right: '4%',
         bottom: '13%',
         containLabel: true
@@ -637,7 +638,7 @@ this.GetAllRegionWiseData()
         {
           type: 'category',
           boundaryGap: false,
-          data: this.facebook_reactionDates,
+          data: this.facebook_reactionDates.reverse(),
           axisLabel: {
             rotate: 45
           }
@@ -698,13 +699,22 @@ this.GetAllRegionWiseData()
     option = {
       xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        data: this.regionwiseArray,
+        axisLabel:{
+          rotate:45
+        }
       },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
           type: 'shadow'
         }
+      },
+      grid: {
+        left: '13%',
+        right: '4%',
+        bottom: '13%',
+        containLabel: true
       },
       yAxis: [{
         type: "value",
@@ -719,7 +729,7 @@ this.GetAllRegionWiseData()
       }],
       series: [
         {
-          data: [120, 200, 150, 80, 70, 110, 130],
+          data: this.regionwiseCount,
           type: 'bar',
           itemStyle: {
             borderRadius: 5,
