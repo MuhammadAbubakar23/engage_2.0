@@ -186,7 +186,7 @@
                                     <strong>Tags</strong>
                                     <strong>Total Inbound : {{tagsStatsTotalCounts}}</strong>
                                 </li>
-                                <span *ngFor="let tag of TagsStats">
+                                <span *ngFor="let tag of SlugTagsArray">
                                     <li class="list-group-item d-flex align-items-center justify-content-between">
                                         <span><i class="fa-light fa-tag"></i> {{tag.name}}</span>
                                         <strong>{{tag.totalCount}}</strong>

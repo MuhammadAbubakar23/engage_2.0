@@ -40,8 +40,10 @@ export class ShiftReportComponent implements OnInit {
   maxEndDate: any;
   currentDate: any;
   totalinboundCounts: any;
+  SlugTagsArray:any[]=[]
   tags: any;
   TagsStats: any[] = [];
+  str:any=''
   tagsStatsTotalCounts: any;
   dateWiseTotalCounts: any[] = [];
   commaSeparatedValuesLink: any;
@@ -171,6 +173,8 @@ export class ShiftReportComponent implements OnInit {
     this.allTotalCountWhatsapp = [];
     this.allTotalCountYoutube=[]
     this.isShowGrpah=false
+    this.SlugTagsArray=[]
+    this.str=''
     this._legend = [];
     this.SpinnerService.show();
     this.commandataService.GetShiftReport(obj).subscribe((res: any) => {
@@ -242,6 +246,12 @@ export class ShiftReportComponent implements OnInit {
         data: this.allTotalCountTw,
       });
       this.TagsStats = res.tagData.shiftReportTag;
+      this.TagsStats.forEach((x:any)=>{
+        this.str= x.name.toLowerCase().split(/[-_.\s]/).map((w:any) => `${w.charAt(0).toUpperCase()}${w.substr(1)}`).join(' ');
+        this.SlugTagsArray.push({name:this.str,totalCount:x.totalCount})
+        console.log("SlugTagArray===>",this.SlugTagsArray)
+      })
+     
       this.tagsStatsTotalCounts = res.tagData.totalTagsCount;
       if(this.allDates.length==0){
         this.isShowGrpah=true

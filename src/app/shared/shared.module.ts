@@ -14,6 +14,7 @@ import { SplitNameFromUrlPipe } from './pipes/split-name-from-url.pipe';
 import { GetFileTypeFromUrlPipe } from './pipes/get-file-type-from-url.pipe';
 import { TableResponsiveComponent } from './table-responsive/table-responsive.component';
 import {MatTableModule} from '@angular/material/table';
+import { TagSlugconversationPipe } from './CustomPipes/TagSlugconversation/tag-slugconversation.pipe';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {MatTableModule} from '@angular/material/table';
     NavigationBackDirective,
     SplitNameFromUrlPipe,
     GetFileTypeFromUrlPipe,
+    TagSlugconversationPipe,
     // TableResponsiveComponent
 
   ],
@@ -46,7 +48,8 @@ import {MatTableModule} from '@angular/material/table';
     SafePipe,
     NavigationBackDirective,
     SplitNameFromUrlPipe,
-    GetFileTypeFromUrlPipe
+    GetFileTypeFromUrlPipe,
+    TagSlugconversationPipe
   ]
 })
 export class SharedModule { }
