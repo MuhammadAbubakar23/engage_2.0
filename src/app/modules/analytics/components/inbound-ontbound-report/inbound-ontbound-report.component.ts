@@ -193,7 +193,7 @@ export class InboundOntboundReportComponent implements OnInit {
         // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
       ];
     }
-    else if (this.isChannelShow = 'stagging') {
+    else if (this.isChannelShow == 'stagging') {
       this.channelOptions = [
         { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
         { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },

@@ -149,8 +149,8 @@
                                             <!-- <h6 class="ms-2 mb-0">{{user.agentName}}</h6> -->
                                         </div>
                                         <div class="d-flex align-items-center">
-                                            <span class="badge rounded-pill skyTransBg  me-2">{{user.tags[0] |tagSlugconversation}}</span>
-                                            <span class="badge rounded-pill cherryTransBg me-2">{{user.tags[1] |tagSlugconversation}}</span>
+                                            <span class="badge rounded-pill skyTransBg  me-2">{{user.tags[0] |tagSlugConversion}}</span>
+                                            <span class="badge rounded-pill cherryTransBg me-2">{{user.tags[1] |tagSlugConversion}}</span>
                                             <div class="d-inline-block dropdown w-auto device-dd"
                                                 *ngIf="user.tags.length>2">
                                                 <button class="d-inline-block iconButton small iconHover" type="button"
@@ -164,7 +164,7 @@
                                                         <span class="silver" *ngIf="i !==0 && i !==1 ">
                                                             <a class="dropdown-item">
                                                                 <span class="badge rounded-pill skyTransBg ">
-                                                                    {{cd |tagSlugconversation}}</span>
+                                                                    {{cd |tagSlugConversion}}</span>
                                                             </a>
                                                         </span>
                                                     </li>
@@ -207,7 +207,7 @@
                                                         <div>
                                                             <ng-container *ngFor="let abc of userDetail.tags">
                                                                 <span
-                                                                    class="badge rounded-pill skyTransBg me-2">{{abc |tagSlugconversation}}</span>
+                                                                    class="badge rounded-pill skyTransBg me-2">{{abc |tagSlugConversion}}</span>
                                                             </ng-container>
                                                         </div>
                                                     </div>

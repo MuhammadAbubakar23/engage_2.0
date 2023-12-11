@@ -52,10 +52,10 @@ export const environment = {
   ServiceBaseUrl : 'https://waservice.enteract.live/api/',
   
   // // For Testing
-  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  //  CommonBaseUrl: 'https://common-engage.enteract.app/api/', 
-     CommonBaseUrl: 'http://10.111.32.52:45455/api/', 
-  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  // //  CommonBaseUrl: 'https://common-engage.enteract.app/api/', 
+  //    CommonBaseUrl: 'http://10.111.32.52:45455/api/', 
+  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
 
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',

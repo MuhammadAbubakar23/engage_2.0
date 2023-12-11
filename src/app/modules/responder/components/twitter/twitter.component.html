@@ -97,6 +97,7 @@
                                                                 <small class="silver">{{ttr.createdDate |
                                                                     date:'h:mm:ss a'}}</small>
                                                             </p>
+                                                            <a *ngIf="ttr.redirectUrl != null" href={{ttr.redirectUrl}} target="_blank"> <span><i class="fa-regular ms-1 coal fa-arrow-up-right-from-square"></i></span></a>
                                                             <button class="starbtn iconButton iconHover small btn"
                                                                 *ngIf="ttr.starred == true"
                                                                 [ngClass]="ttr.starred?'active':''">
@@ -495,6 +496,7 @@
                                                                 <small class="silver">{{tm.createdDate |
                                                                     date:'h:mm:ss a'}}</small>
                                                             </p>
+                                                            <a *ngIf="tm.redirectUrl != null" href={{tm.redirectUrl}} target="_blank"> <span><i class="fa-regular ms-1 coal fa-arrow-up-right-from-square"></i></span></a>
                                                             <button class="starbtn iconButton iconHover small btn"
                                                                 *ngIf="tm.starred == true"
                                                                 [ngClass]="tm.starred?'active':''">
@@ -893,6 +895,7 @@
                                                                 <small class="silver">{{tdm.createdDate |
                                                                     date:'h:mm:ss a'}}</small>
                                                             </p>
+                                                            <a *ngIf="tdm.redirectUrl != null" href={{tdm.redirectUrl}} target="_blank"> <span><i class="fa-regular ms-1 coal fa-arrow-up-right-from-square"></i></span></a>
                                                             <button class="starbtn iconButton iconHover small btn"
                                                                 *ngIf="tdm.starred == true"
                                                                 [ngClass]="tdm.starred?'active':''">
