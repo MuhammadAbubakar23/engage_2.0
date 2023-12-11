@@ -88,6 +88,10 @@ isShowCommentGraph:boolean=false
       this.isChannelShow='jazz'
       this.getChannel()
     }
+    else if(this.activeChannel=='https://uiengage.enteract.app'){
+  this.isChannelShow='stagging',
+  this.getChannel()
+    }
     else{
       this.isChannelShow='local'
       this.getChannel()
@@ -127,23 +131,19 @@ isShowCommentGraph:boolean=false
     }
   }
   resetEndDate() {
-    this.endDate = '';
-    // if (this.radioInput !== undefined) {
-    //   this.radioInput.nativeElement.checked = false;
-    // }
-  }
-  resetStartDate(){
-   
-  if(this.endDate >this.startDate){
-    alert('End Date is less than Start Date')
-    this.endDate=''
-  }
-  else{
-    this.addAgentGraph()
-    if (this.radioInput !== undefined) {
-      this.radioInput.nativeElement.checked = false;
+    if (this.endDate >= this.startDate) {
+      this.addAgentGraph();
+      if (this.radioInput !== undefined) {
+            this.radioInput.nativeElement.checked = false;
+          }
+    } else {
+      alert('EndDate is lessthen StartDate');
+      this.endDate = '';
     }
   }
+  resetStartDate(){
+   this.endDate=''
+
   }
   calculateTotalTweets(): number {
     return this.agent_performance_report?.agentPerformance.reduce(
@@ -415,7 +415,7 @@ isShowCommentGraph:boolean=false
     }
     if(this.isChannelShow=="jazz"){
       this.channelOptions = [
-        { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+        // { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
     { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
     { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
     { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
@@ -429,14 +429,14 @@ isShowCommentGraph:boolean=false
     { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
       ];
     }
-    if(this.isChannelShow=="kE"){
+    if(this.isChannelShow=="KE"){
       this.channelOptions = [
         { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
         { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
         { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
         { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
       ];
-    }
+    };
     if(this.isChannelShow=='local'){
       
  this. channelOptions = [
@@ -453,7 +453,24 @@ isShowCommentGraph:boolean=false
     // { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
     // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
   ];
-    }
+    };
+    if(this.isChannelShow=='stagging'){
+      
+      this. channelOptions = [
+       
+         { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+         { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+         { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+         { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+         { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+         // { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
+         // { id: '16', name: 'SMS', icon: 'fa-solid fa-comment-alt pe-2', isSelected: false },
+         { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+         // { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+         // { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+         // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
+       ];
+         }
   }
   getChannelIcon(channelName: string): string {
     const selectedChannel = this.channelOptions.find((channel:any) => channel.name === channelName);

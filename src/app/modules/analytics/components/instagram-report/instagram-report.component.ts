@@ -136,7 +136,7 @@ export class InstagramReportComponent implements OnInit {
       this.pagereachablity?.forEach((x: any) => {
         if (!this.pagereachablityDates.includes(this.datePipe.transform(x.dateValue, 'dd/MMM'))) {
           this.pagereachablityDates.push(this.datePipe.transform(x.dateValue, 'dd/MMM'))
-          this.pagereachablityCounts
+          this.pagereachablityCounts.push(x.activityCount)
         }
         // Audience Demographics
 

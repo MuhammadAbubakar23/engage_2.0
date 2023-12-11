@@ -8,8 +8,9 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LayoutsModule } from 'src/app/layouts/layouts.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 @Component({
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgxSpinnerModule,LayoutsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgxSpinnerModule,LayoutsModule,SharedModule],
   standalone: true,
   selector: 'app-tag-report',
   templateUrl: './tag-report.component.html',
@@ -36,7 +37,9 @@ export class TagReportComponent implements OnInit {
   customerDetailslist:any[]=[]
   userlist: any;
   agentId: any;
+  str:any=''
   uniqueAgentId:any
+  slugTagsArry:any[]=[]
   uniqueAgentData: any[] = [];
   tagreport:any
  isChecked:boolean=false;
@@ -101,11 +104,13 @@ for (const user of this.userlist) {
   const existingAgentData = this.uniqueAgentData.find(data => data.agentId === user.agentId);
 
   if (existingAgentData) {
+    debugger
     // Update existing agent data
     existingAgentData.tags = [...new Set(existingAgentData.tags.concat(user.tags))];
     existingAgentData.customerData.push(user);
   } else {
     // Add new agent data
+    debugger
     this.uniqueAgentData.push({
       agentId: user.agentId,
       agentName: user.agentName,
@@ -115,9 +120,17 @@ for (const user of this.userlist) {
   }
 }
 this.uniqueAgentData.forEach((x:any)=>{
-  this.uniqueAgentId=x.agentId
+x.tags.forEach((y:any)=>{
+  this.str= y.toLowerCase().split(/[-_.\s]/).map((w:any) => `${w.charAt(0).toUpperCase()}${w.substr(1)}`).join(' ');
 })
-console.log("Unique AgentDate===>",this.uniqueAgentId)
+ this.slugTagsArry.push({
+  agentId:x.agentId,
+  agentName:x.agentName,
+  customerData:x.customerData,
+  tags:this.str
+ })
+})
+console.log("Unique AgentDate===>",this.slugTagsArry)
 return this.uniqueAgentData;
 
 
@@ -179,6 +192,7 @@ this.tagreport= echarts.init(chartDom);
         type: 'scroll',
         top: '17%',
         orient: 'vertical',
+        left:500,
        
         icone:'circle',
         textStyle: {
