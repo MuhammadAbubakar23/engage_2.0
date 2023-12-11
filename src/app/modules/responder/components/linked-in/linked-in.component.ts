@@ -12,6 +12,7 @@ import { QueryStatusService } from 'src/app/services/queryStatusService/query-st
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
+import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
 import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
@@ -132,7 +133,8 @@ export class LinkedInComponent implements OnInit {
     private userInfoService: UserInformationService,
     private stor: StorageService,
     private el: ElementRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private unrespondedCountService : UnRespondedCountService
 
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res)=>{
@@ -238,6 +240,22 @@ export class LinkedInComponent implements OnInit {
 
       this.ticketResponseService.getTicketId().subscribe(res=>{
         this.updateTicketId(res)
+      });
+
+      this.Subscription = this.unrespondedCountService
+      .getUnRespondedCount()
+      .subscribe((res:any) => {
+        debugger
+        if (
+          this.flag == 'focused' ||
+          this.flag == 'assigned_to_me' ||
+          this.flag == 'follow_up'
+        ) {
+          if (res.contentCount.contentType == 'LIC') {
+            this.totalUnrespondedCmntCountByCustomer =
+              res.contentCount.unrespondedCount;
+          }
+        }
       });
 
       // this.Subscription = this.applySentimentService

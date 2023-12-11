@@ -194,7 +194,7 @@
                                                         <p class="card-text nignt">{{ttr.message}}</p>
                                                         <div class="tags" *ngFor="let tag of ttr.tags">
                                                             <span class="badge rounded-pill tag tag1 selected"
-                                                                (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name}}</span>
+                                                                (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name | tagSlugConversion}}</span>
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                         <div class="tags" *ngIf="ttr.sentiment">
@@ -288,7 +288,7 @@
                                                                                                 <div
                                                                                                     class="list-group list-group-flush">
                                                                                                     <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                        (click)="insertTagsForFeed(ttr.id, keyword.name)"
+                                                                                                        (click)="insertTagsForFeed(ttr.id, keyword.slug)"
                                                                                                         [ngClass]="activeTag==true?'active':''"
                                                                                                         *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                         <div
@@ -632,7 +632,7 @@
                                                     <p class="card-text nignt">{{tm.msgText}}</p>
                                                     <div class="tags" *ngFor="let tag of tm.tags">
                                                         <span class="badge rounded-pill tag tag1 selected"
-                                                            (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name}}</span>
+                                                            (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name | tagSlugConversion}}</span>
 
                                                     </div>
                                                     <!-- For Sentiment Pills -->
@@ -714,7 +714,7 @@
                                                                                                 <div
                                                                                                     class="list-group list-group-flush">
                                                                                                     <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                        (click)="insertTagsForFeed(tm.id, keyword.name)"
+                                                                                                        (click)="insertTagsForFeed(tm.id, keyword.slug)"
                                                                                                         [ngClass]="activeTag==true?'active':''"
                                                                                                         *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                         <div
@@ -1053,7 +1053,7 @@
                                                     <p class="card-text nignt">{{tdm.msgText}}</p>
                                                     <div class="tags" *ngFor="let tag of tdm.tags">
                                                         <span class="badge rounded-pill tag tag1 selected"
-                                                            (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name}}</span>
+                                                            (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name | tagSlugConversion}}</span>
 
                                                     </div>
                                                     <!-- For Sentiment Pills -->
@@ -1135,7 +1135,7 @@
                                                                                                 <div
                                                                                                     class="list-group list-group-flush">
                                                                                                     <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                        (click)="insertTagsForFeed(tdm.id, keyword.name)"
+                                                                                                        (click)="insertTagsForFeed(tdm.id, keyword.slug)"
                                                                                                         [ngClass]="activeTag==true?'active':''"
                                                                                                         *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                         <div

@@ -207,6 +207,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.updateMessagesService
       .receiveMessage()
       .subscribe((res) => {
+        debugger
         if (Object.keys(res).length > 0) {
           res.forEach((msg: any) => {
             if (this.userInfo.userId == msg.fromId) {
@@ -221,6 +222,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
+        debugger
         if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
           if (Object.keys(res).length > 0) {
             res.forEach((msg: any) => {
@@ -237,6 +239,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
+        debugger
         if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
           if (Object.keys(res).length > 0) {
             if (this.userInfo.id == res.contentCount.profileId) {
@@ -251,6 +254,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
+        debugger
         if (this.flag == 'focused' || this.flag == 'assigned_to_me') {
           if (Object.keys(res).length > 0) {
             if (this.userInfo.id == localStorage.getItem('assignedProfile')) {

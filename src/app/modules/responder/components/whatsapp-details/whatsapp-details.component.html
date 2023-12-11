@@ -211,7 +211,7 @@
                                                         <p class="card-text nignt">{{whatsappMsg.message}}</p>
                                                         <div class="tags" *ngFor="let tag of whatsappMsg.tags">
                                                             <span (click)="removeTagFromFeed(tag.feedId, tag.name)"
-                                                                class="badge rounded-pill whatsapp tag tag1 selected">{{tag.name}}</span>
+                                                                class="badge rounded-pill whatsapp tag tag1 selected">{{tag.name | tagSlugConversion}}</span>
 
                                                         </div>
                                                         <!-- For Sentiment Pills -->
@@ -297,7 +297,7 @@
                                                                                                     <div
                                                                                                         class="list-group list-group-flush">
                                                                                                         <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                            (click)="insertTagsForFeed(whatsappMsg.id, keyword.name)"
+                                                                                                            (click)="insertTagsForFeed(whatsappMsg.id, keyword.slug)"
                                                                                                             [ngClass]="activeTag==true?'active':''"
                                                                                                             *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                             <div

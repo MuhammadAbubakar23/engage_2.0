@@ -169,7 +169,7 @@
                                                         <div class="tags" *ngFor="let tag of youtubecomment.tags">
                                                             <span
                                                                 class="badge rounded-pill tag youtube-pill tag1 selected"
-                                                                (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name}}</span>
+                                                                (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name | tagSlugConversion}}</span>
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                         <div class="tags" *ngIf="youtubecomment.sentiment">
@@ -265,7 +265,7 @@
                                                                                                     <div
                                                                                                         class="list-group list-group-flush">
                                                                                                         <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                            (click)="insertTagsForFeed(youtubecomment.id, keyword.name)"
+                                                                                                            (click)="insertTagsForFeed(youtubecomment.id, keyword.slug)"
                                                                                                             [ngClass]="activeTag==true?'active':''"
                                                                                                             *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                             <div

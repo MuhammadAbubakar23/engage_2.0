@@ -241,7 +241,7 @@
                                                                 <span *ngFor="let tag of email.tags"
                                                                     (click)="removeTagFromFeed(tag.feedId, tag.name)"
                                                                     class="badge rounded-pill email tag tag1 selected"
-                                                                    style="margin-right:5px">{{tag.name}}</span>
+                                                                    style="margin-right:5px">{{tag.name | tagSlugConversion}}</span>
                                                             </div>
                                                             <!-- For Sentiment Pills -->
                                                             <div class="tags" *ngIf="email.sentiment">
@@ -353,7 +353,7 @@
                                                                                             <div
                                                                                                 class="list-group list-group-flush">
                                                                                                 <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                    (click)="insertTagsForFeed(email.id, keyword.name)"
+                                                                                                    (click)="insertTagsForFeed(email.id, keyword.slug)"
                                                                                                     [ngClass]="activeTag==true?'active':''"
                                                                                                     *ngFor="let keyword of tag.keywordList | filter: searchText">
                                                                                                     <div

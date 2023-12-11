@@ -132,7 +132,7 @@
                                             <p class="card-text nignt">{{youtubecomment?.message}}</p>
                                             <div class="tags" *ngFor="let tag of youtubecomment?.tags">
                                                 <span (click)="removeTagFromFeed(tag.feedId, tag.name)"
-                                                    class="badge rounded-pill tag youtube-pill tag1 selected">{{tag.name}}</span>
+                                                    class="badge rounded-pill tag youtube-pill tag1 selected">{{tag.name | tagSlugConversion}}</span>
     
                                             </div>
                                         </div>
@@ -217,7 +217,7 @@
                                                                                     style="overflow: auto; outline: none;">
                                                                                     <div
                                                                                         class="list-group list-group-flush">
-                                                                                        <a (click)="insertTagsForFeed(youtubecomment.id, keyword.name)"
+                                                                                        <a (click)="insertTagsForFeed(youtubecomment.id, keyword.slug)"
                                                                                             [ngClass]="activeTag==true?'active':''"
                                                                                             class="list-group-item d-flex level1Btn dropdown-item"
                                                                                             *ngFor="let keyword of tag.keywordList">

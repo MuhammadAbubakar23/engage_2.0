@@ -182,7 +182,7 @@
 
                                                             <span
                                                                 class="badge rounded-pill linkedinBg tag tag1 selected"
-                                                                (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name}}</span>
+                                                                (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name | tagSlugConversion}}</span>
 
                                                         </div>
                                                         <!-- For Sentiment Pills -->
@@ -279,7 +279,7 @@
                                                                                                     <div
                                                                                                         class="list-group list-group-flush">
                                                                                                         <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                            (click)="insertTagsForFeed(cmnts.id, keyword.name)"
+                                                                                                            (click)="insertTagsForFeed(cmnts.id, keyword.slug)"
                                                                                                             [ngClass]="activeTag==true?'active':''"
                                                                                                             *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                             <div

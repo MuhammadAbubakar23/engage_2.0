@@ -116,8 +116,6 @@ export class InstagramReportComponent implements OnInit {
     this.commonDataService.PostInstagramReport(requestData).subscribe((res: any) => {
       this.spinerServices.hide()
       // console.log("Api instagram",res)
-  
-  
       // this.endDate=this.datePipe.transform(requestData.to,'YYYY-dd-MM HH:mm:ss')||''
       this.instagramReport = res
      
@@ -125,10 +123,8 @@ export class InstagramReportComponent implements OnInit {
       this.totalPeopleWhoViewed = this.instagramReport.span_profile_views
       this.totalPeopleWhoViewed?.forEach((x: any) => {
         if (!this.totalPeopleWhoViewedDates.includes(this.datePipe.transform(x.dateValue, 'dd/MMM'))) {
-          this.totalPeopleWhoViewedDates.push(this.datePipe.transform(x.dateValue, 'dd/MMM'))
-         
+          this.totalPeopleWhoViewedDates.push(this.datePipe.transform(x.dateValue, 'dd/MMM'));
         }
-      
         this.totalPeopleWhoViewedCount.push(x.activityCount)
       })
       if(this.totalPeopleWhoViewedDates.length==0){

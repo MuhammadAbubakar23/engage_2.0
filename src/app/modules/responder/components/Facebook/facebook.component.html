@@ -241,7 +241,7 @@
                                                         <p class="card-text nignt">{{fbcmnts.message}}</p>
                                                         <div class="tags" *ngFor="let tag of fbcmnts.tags">
                                                             <span class="badge rounded-pill tag tag1 selected"
-                                                                (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name}}</span>
+                                                                (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name  | tagSlugConversion}}</span>
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                         <div class="tags" *ngIf="fbcmnts.sentiment">
@@ -338,7 +338,7 @@
                                                                                                     <div
                                                                                                         class="list-group list-group-flush">
                                                                                                         <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                            (click)="insertTagsForFeed(fbcmnts.id, keyword.name)"
+                                                                                                            (click)="insertTagsForFeed(fbcmnts.id, keyword.slug)"
                                                                                                             [ngClass]="activeTag==true?'active':''"
                                                                                                             *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                             <div
@@ -693,7 +693,7 @@
                                                     <p class="card-text nignt">{{fbmsgs.msgText}}</p>
                                                     <div class="tags" *ngFor="let tag of fbmsgs.tags">
                                                         <span class="badge rounded-pill tag tag1 selected"
-                                                            (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name}}</span>
+                                                            (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name | tagSlugConversion}}</span>
 
                                                     </div>
                                                     <!-- For Sentiment Pills -->
@@ -776,7 +776,7 @@
                                                                                                 <div
                                                                                                     class="list-group list-group-flush">
                                                                                                     <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                        (click)="insertTagsForFeed(fbmsgs.id, keyword.name)"
+                                                                                                        (click)="insertTagsForFeed(fbmsgs.id, keyword.slug)"
                                                                                                         [ngClass]="activeTag==true?'active':''"
                                                                                                         *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                         <div
