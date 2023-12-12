@@ -364,6 +364,7 @@ export class ResponderHeaderComponent implements OnInit {
 
           this.fetchId.setPlatform(platform);
           this.fetchId.setOption(id);
+          debugger
           localStorage.setItem('profileId', this.profileId);
         },
         (_error) => {

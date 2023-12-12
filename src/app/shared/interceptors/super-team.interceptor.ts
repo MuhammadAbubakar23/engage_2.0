@@ -18,9 +18,9 @@ export class SuperTeamInterceptor implements HttpInterceptor {
     next: HttpHandler): Observable<HttpEvent<unknown>> {
 
       this.baseUrl=window.location.origin
-    if(this.baseUrl=='https://keportal.enteract.live/'){
+    if(this.baseUrl=='https://keportal.enteract.live'){
       this.companyId=651;
-    } else if (this.baseUrl=='https://engage.jazz.com.pk/') {
+    } else if (this.baseUrl=='https://engage.jazz.com.pk') {
     this.companyId=650;
     } 
 

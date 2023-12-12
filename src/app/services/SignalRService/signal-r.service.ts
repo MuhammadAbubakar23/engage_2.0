@@ -51,10 +51,10 @@ export class SignalRService {
     private router: Router
   ) { 
     this.baseUrl=window.location.origin
-    if(this.baseUrl=='https://keportal.enteract.live/'){
+    if(this.baseUrl=='https://keportal.enteract.live'){
       this.companyId=651;
-    } else if (this.baseUrl=='https://engage.jazz.com.pk/') {
-    this.companyId=650;
+    } else if (this.baseUrl=='https://engage.jazz.com.pk') {
+    this.companyId=651;
     } 
   }
 
