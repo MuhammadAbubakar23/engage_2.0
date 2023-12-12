@@ -27,9 +27,9 @@ export const environment = {
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  IdentityBaseUrl: 'https://idtservice.enteract.live/api',
-  CommonBaseUrl: 'https://comservices.enteract.live/api/', 
-  SignalRCommonBaseUrl: 'https://comservices.enteract.live/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
+  // IdentityBaseUrl: 'https://idtservice.enteract.live/api',
+  // CommonBaseUrl: 'https://comservices.enteract.live/api/', 
+  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
   
   // For Jazz
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
@@ -48,10 +48,10 @@ export const environment = {
   ServiceBaseUrl : 'https://waservice.enteract.live/api/',
   
   // // For Testing
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  //  CommonBaseUrl: 'https://common-engage.enteract.app/api/', 
-  //   // CommonBaseUrl: 'http://10.111.32.52:45461/api/', 
-  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+   CommonBaseUrl: 'https://common-engage.enteract.app/api/', 
+    // CommonBaseUrl: 'http://10.111.32.52:45461/api/', 
+  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
 
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',

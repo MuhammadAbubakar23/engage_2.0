@@ -51,11 +51,20 @@ export class SignalRService {
     private router: Router
   ) { 
     this.baseUrl=window.location.origin
-    if(this.baseUrl=='https://keportal.enteract.live/'){
+    if(this.baseUrl=='https://keportal.enteract.live'){
       this.companyId=651;
-    } else if (this.baseUrl=='https://engage.jazz.com.pk/') {
+    } else if (this.baseUrl=='https://engage.jazz.com.pk') {
     this.companyId=650;
-    } 
+    }
+    else if(this.baseUrl=='https://uiengage.enteract.app') {
+      this.companyId=650
+    }
+    else if(this.baseUrl=='https://tppl.360scrm.com') {
+      this.companyId=652
+    }
+    else if(this.baseUrl=='https://waengage.enteract.live') {
+      this.companyId=653
+    }
   }
 
   flag:string='';

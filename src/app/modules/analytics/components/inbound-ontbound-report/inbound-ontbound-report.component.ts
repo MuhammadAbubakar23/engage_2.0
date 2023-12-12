@@ -41,6 +41,7 @@ export class InboundOntboundReportComponent implements OnInit {
   endDate: string = '';
   Inbound_Outbound_Graph: any;
   Inbound_data: any[] = [];
+  tagReportData:any[]=[]
   Outbound_data: any[] = [];
   platformsArray: any[] = []
   Inbound_outbounArray: any[] = []
@@ -54,7 +55,7 @@ export class InboundOntboundReportComponent implements OnInit {
   AlterMsg: any = '';
   activeChannel: any
   channelOptions: any[] = []
-  existingNameCount: any[] = []
+  existingNameCount: any
   tagsPerChannel: any[] = [];
   tagreportArry: any[] = []
   private inboundOutboundChart: any;
@@ -264,8 +265,9 @@ export class InboundOntboundReportComponent implements OnInit {
     }
     this.inboundoutboundDate = []
     this.inboundData = []
+    this.tagReportData=[]
     this.outboundData = []
-
+    this.tagsPerChannel = []
     const requestData = {
       fromDate: this.startDate,
       toDate: this.endDate,
@@ -288,6 +290,7 @@ export class InboundOntboundReportComponent implements OnInit {
       this.inboundoutboundDate = []
       this.inboundData = []
       this.outboundData = []
+      this.tagReportData=[]
       this.isShowSentimentGraph = false
       this.isShowInboundoutboundGraph = false
       this.str=''
@@ -317,7 +320,34 @@ export class InboundOntboundReportComponent implements OnInit {
               this.inboundData.push(x.inboundData)
               this.outboundData.push(x.outboundData)
             })
-
+            this. tagReportData = this.Inbound_Outbound_Report.tagReportData;
+            this. tagReportData.forEach((channel: any) => {
+               debugger
+               if (!this.platformsArray.includes(channel.platform)) {
+                 this.platformsArray.push(channel.platform);
+               }
+         
+               channel.data.forEach((tag: any) => {
+                 debugger
+                 this.str= tag.name.toLowerCase().split(/[-_.\s]/).map((w:any) => `${w.charAt(0).toUpperCase()}${w.substr(1)}`).join(' ');
+                debugger
+                 const name = this.str;
+                 const count = tag.count;
+            const existingNameCount = this.tagsPerChannel.find((n) => n.name === name);
+                 if (existingNameCount) {
+                   existingNameCount.data.push(count);
+                 } else {
+                   this.tagsPerChannel.push({
+                     type: 'bar',
+                     name: name,
+                     stack: 'Ad',
+                     data: [count],
+                   });
+                 }
+         
+               });
+             });
+              this.getTagperChannelReport()
             if (this.isShowInboundoutboundGraph == false) {
               const doms = this.inboundOutboundReport.nativeElement;
               this.inboundOutboundChart = echarts.init(doms, null, {
@@ -518,83 +548,7 @@ export class InboundOntboundReportComponent implements OnInit {
             };
             this.averageResponseChart.setOption(option);
             // Update TagsPerChannel
-            const myDom = this.TagsPerChannel.nativeElement;
-            this.tagsChart = echarts.init(myDom, null, {
-              renderer: 'canvas',
-              useDirtyRect: false,
-            });
-
-            var option: echarts.EChartsOption;
-            debugger
-            const tagReportData = this.Inbound_Outbound_Report.tagReportData;
-            tagReportData.forEach((channel: any) => {
-              debugger
-              if (!this.platformsArray.includes(channel.platform)) {
-                this.platformsArray.push(channel.platform);
-              }
-
-              channel.data.forEach((tag: any) => {
-                debugger
-                this.str= tag.name.toLowerCase().split(/[-_.\s]/).map((w:any) => `${w.charAt(0).toUpperCase()}${w.substr(1)}`).join(' ');
-              
-                const name = this.str;
-                const count = tag.count;
-                const existingNameCount = this.tagsPerChannel.find((n) => n.name === name);
-                if (existingNameCount) {
-                  existingNameCount.data.push(count);
-                } else {
-                  this.tagsPerChannel.push({
-                    type: 'bar',
-                    name: name,
-                    stack: 'Ad',
-                    data: [count],
-                  });
-                }
-
-              });
-            });
-            option = {
-              tooltip: {
-                trigger: 'axis',
-                enterable: true,
-                extraCssText: 'height: 200px !important;  overflow-y: scroll !important; pointer-events: auto !important;'
-              },
-              legend: {
-                type: 'scroll',
-                icon: 'circle',
-                orient: 'horizontal',
-                bottom: 0
-              },
-              toolbox: {
-                feature: {
-                  saveAsImage: {}
-                }
-              },
-              xAxis: [{ type: 'category', data: this.platformsArray }],
-              yAxis: [{
-                type: 'value',
-                nameLocation: 'middle',
-                name: 'Total Number of Tags',
-                nameTextStyle: {
-                  fontSize: 12,
-                  color: 'grey',
-                  lineHeight: 80,
-                },
-              }],
-              series: this.tagsPerChannel.map(series => ({
-                ...series,
-                // label: {
-                //   show: true,
-                //   formatter: (params: any) => {
-                //     const total = this.tagsPerChannel.reduce((sum, s) => sum + s.data[params.dataIndex], 0);
-                //     const percentage = (series.data[params.dataIndex] / total * 100).toFixed(0);
-                //     return `${percentage}%`;
-                //   }
-                // }
-              })),
-            };
-
-            this.tagsChart.setOption(option);
+            
             // option = {
             //   tooltip: { trigger: 'axis' },
             //   toolbox: {
@@ -902,5 +856,65 @@ export class InboundOntboundReportComponent implements OnInit {
         this.averageResponseChart.resize();
       }
     })
+  }
+  getTagperChannelReport(){
+    const myDom = this.TagsPerChannel.nativeElement;
+    this.tagsChart = echarts.init(myDom, null, {
+      renderer: 'canvas',
+      useDirtyRect: false,
+    });
+
+    var option: echarts.EChartsOption;
+    debugger
+ 
+    option = {
+      tooltip: {
+        trigger: 'axis',
+        enterable: true,
+        extraCssText: 'height: 200px !important;  overflow-y: scroll !important; pointer-events: auto !important;'
+      },
+      legend: {
+        type: 'scroll',
+        icon: 'circle',
+        orient: 'horizontal',
+        bottom: 0
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {}
+        }
+      },
+      xAxis: [{ type: 'category', data: this.platformsArray }],
+      yAxis: [{
+        type: 'value',
+        nameLocation: 'middle',
+        name: 'Total Number of Tags',
+        nameTextStyle: {
+          fontSize: 12,
+          color: 'grey',
+          lineHeight: 80,
+        },
+      }],
+      
+      series: this.tagsPerChannel.map(series => ({
+        ...series,
+        // label: {
+        //   show: true,
+        //   formatter: (params: any) => {
+        //     const total = this.tagsPerChannel.reduce((sum, s) => sum + s.data[params.dataIndex], 0);
+        //     const percentage = (series.data[params.dataIndex] / total * 100).toFixed(0);
+        //     return `${percentage}%`;
+        //   }
+        // }
+      })),
+    };
+
+    this.tagsChart.setOption(option);
+  }
+  ngOnDestroy(){
+  debugger
+    if(this.tagsChart){
+      this.tagsChart.dispose()
+    }
   }
 }

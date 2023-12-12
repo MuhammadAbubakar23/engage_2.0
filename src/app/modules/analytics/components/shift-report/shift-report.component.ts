@@ -51,6 +51,7 @@ export class ShiftReportComponent implements OnInit {
   alltotalCount: any;
   daysDifference: number = 0;
   allTotalCountsfb: any[] = [];
+  channelCountsArray:any[]=[]
   allTotalCountTw: any[] = [];
   allTotalCountWhatsapp: any[] = [];
   allTotalCountLink: any[] = [];
@@ -127,7 +128,8 @@ export class ShiftReportComponent implements OnInit {
       menu.forEach((item: any) => {
         if (item.name == 'Tags') {
           item.subTags.forEach((parentags: any) => {
-            parentags.subTags.forEach((singleTagObj: any) => {
+            parentags?.subTags?.forEach((singleTagObj: any) => {
+              debugger
               if (!this.keywordslist.includes(singleTagObj)) {
                 this.keywordslist.push(singleTagObj);
               }
@@ -174,12 +176,14 @@ export class ShiftReportComponent implements OnInit {
     this.allTotalCountYoutube=[]
     this.isShowGrpah=false
     this.SlugTagsArray=[]
+    this.channelCountsArray=[]
     this.str=''
     this._legend = [];
     this.SpinnerService.show();
     this.commandataService.GetShiftReport(obj).subscribe((res: any) => {
       this.SpinnerService.hide();
 
+      debugger
       this.shiftReportData = res;
       this.shiftChannelData = res.channelData;
       this.dateWiseTotalCounts = res.dateWiseTotal;
@@ -194,7 +198,7 @@ export class ShiftReportComponent implements OnInit {
 
       this.shiftChannelData.forEach((data: any) => {
         this._legend.push(data.platform);
-
+      this.channelCountsArray.push
         data.dateWise.forEach((item: any) => {
           if (!this.allDates.includes(this.datePipe.transform(item.date,'dd/MMM'))) {
             this.allDates.push(this.datePipe.transform(item.date,'dd/MMM'));
@@ -403,8 +407,9 @@ export class ShiftReportComponent implements OnInit {
   // for show 0 in totalCount if totalCount are not in date
 
   findTotalCount(channel: any, date: string): number {
+
     const dateWiseItem = channel.dateWise.find(
-      (item: any) => item.date.split('T')[0] === date
+      (item: any) => this.datePipe.transform(item.date,'dd/MMM') === date
     );
     return dateWiseItem ? dateWiseItem.totalCount : 0;
   }

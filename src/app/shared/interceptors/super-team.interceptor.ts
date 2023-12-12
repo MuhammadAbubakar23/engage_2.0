@@ -18,11 +18,20 @@ export class SuperTeamInterceptor implements HttpInterceptor {
     next: HttpHandler): Observable<HttpEvent<unknown>> {
 
       this.baseUrl=window.location.origin
-    if(this.baseUrl=='https://keportal.enteract.live/'){
-      this.companyId=651;
-    } else if (this.baseUrl=='https://engage.jazz.com.pk/') {
-    this.companyId=650;
-    } 
+      if(this.baseUrl=='https://keportal.enteract.live'){
+        this.companyId=651;
+      } else if (this.baseUrl=='https://engage.jazz.com.pk') {
+      this.companyId=650;
+      }
+      else if(this.baseUrl=='https://uiengage.enteract.app') {
+        this.companyId=650
+      }
+      else if(this.baseUrl=='https://tppl.360scrm.com') {
+        this.companyId=652
+      }
+      else if(this.baseUrl=='https://waengage.enteract.live') {
+        this.companyId=653
+      }
 
     let team = this.storage.retrive('nocompass', 'O').local;
     // console.log(team);
