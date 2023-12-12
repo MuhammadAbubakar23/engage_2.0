@@ -129,7 +129,7 @@ export class ShiftReportComponent implements OnInit {
         if (item.name == 'Tags') {
           item.subTags.forEach((parentags: any) => {
             parentags?.subTags?.forEach((singleTagObj: any) => {
-              debugger
+              
               if (!this.keywordslist.includes(singleTagObj)) {
                 this.keywordslist.push(singleTagObj);
               }
@@ -183,7 +183,7 @@ export class ShiftReportComponent implements OnInit {
     this.commandataService.GetShiftReport(obj).subscribe((res: any) => {
       this.SpinnerService.hide();
 
-      debugger
+      
       this.shiftReportData = res;
       this.shiftChannelData = res.channelData;
       this.dateWiseTotalCounts = res.dateWiseTotal;

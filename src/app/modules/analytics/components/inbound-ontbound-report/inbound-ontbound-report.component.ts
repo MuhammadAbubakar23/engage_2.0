@@ -320,17 +320,17 @@ export class InboundOntboundReportComponent implements OnInit {
               this.inboundData.push(x.inboundData)
               this.outboundData.push(x.outboundData)
             })
-            this. tagReportData = this.Inbound_Outbound_Report.tagReportData;
-            this. tagReportData.forEach((channel: any) => {
-               debugger
+            this.tagReportData = this.Inbound_Outbound_Report.tagReportData;
+            this.tagReportData.forEach((channel: any) => {
+               
                if (!this.platformsArray.includes(channel.platform)) {
                  this.platformsArray.push(channel.platform);
                }
          
                channel.data.forEach((tag: any) => {
-                 debugger
+                 
                  this.str= tag.name.toLowerCase().split(/[-_.\s]/).map((w:any) => `${w.charAt(0).toUpperCase()}${w.substr(1)}`).join(' ');
-                debugger
+                
                  const name = this.str;
                  const count = tag.count;
             const existingNameCount = this.tagsPerChannel.find((n) => n.name === name);
@@ -865,7 +865,7 @@ export class InboundOntboundReportComponent implements OnInit {
     });
 
     var option: echarts.EChartsOption;
-    debugger
+    
  
     option = {
       tooltip: {
@@ -909,12 +909,6 @@ export class InboundOntboundReportComponent implements OnInit {
       })),
     };
 
-    this.tagsChart.setOption(option);
-  }
-  ngOnDestroy(){
-  debugger
-    if(this.tagsChart){
-      this.tagsChart.dispose()
-    }
+    this.tagsChart.setOption(option, true);
   }
 }
