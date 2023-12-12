@@ -147,9 +147,6 @@ export class InboundOntboundReportComponent implements OnInit {
   mouseClickReset() {
     this.searchText = ''
   }
-  ngAfterViewInit() {
-    this.AddGraph(); // or any other method where you initialize/update charts
-  }
   
   getChannel() {
  
@@ -324,8 +321,8 @@ export class InboundOntboundReportComponent implements OnInit {
               this.inboundData.push(x.inboundData)
               this.outboundData.push(x.outboundData)
             })
-            this. tagReportData = this.Inbound_Outbound_Report.tagReportData;
-            this. tagReportData.forEach((channel: any) => {
+            this.tagReportData = this.Inbound_Outbound_Report.tagReportData;
+            this.tagReportData.forEach((channel: any) => {
                
                if (!this.platformsArray.includes(channel.platform)) {
                  this.platformsArray.push(channel.platform);
@@ -870,7 +867,6 @@ export class InboundOntboundReportComponent implements OnInit {
     });
 
     var option: echarts.EChartsOption;
-  
     
  
     option = {
@@ -917,8 +913,6 @@ export class InboundOntboundReportComponent implements OnInit {
     
     };
 
-    this.tagsChart.setOption(option,true);
-
+    this.tagsChart.setOption(option, true);
   }
- 
 }
