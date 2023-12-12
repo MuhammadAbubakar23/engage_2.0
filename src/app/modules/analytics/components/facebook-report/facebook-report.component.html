@@ -669,11 +669,13 @@
                                         <tbody>
                                             <tr *ngFor="let item of cutomerdata">
                                                 <td>
-                                                    <span
+                                                    <app-avatar-photo [photoUrl]="" 
+                                                    [name]=" item?.name"></app-avatar-photo>
+                                                    <!-- <span
                                                         class="iconButton medium rounded-pill mintTransBg night fw-bolder">
                                                         <img src={{item.profilePic}}
                                                             style="height: 40px; width: 150px; border-radius: 50%;" />
-                                                    </span>
+                                                    </span> -->
                                                 </td>
                                                 <td>
                                                     <a class="sky fw-semibold">{{item?.name}}</a>

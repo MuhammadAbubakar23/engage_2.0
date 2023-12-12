@@ -27,9 +27,9 @@ export const environment = {
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  IdentityBaseUrl: 'https://idtservice.enteract.live/api',
-  CommonBaseUrl: 'https://comservices.enteract.live/api/', 
-  SignalRCommonBaseUrl: 'https://comservices.enteract.live/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
+  // IdentityBaseUrl: 'https://idtservice.enteract.live/api',
+  // CommonBaseUrl: 'https://comservices.enteract.live/api/', 
+  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
   
   // For Jazz
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',

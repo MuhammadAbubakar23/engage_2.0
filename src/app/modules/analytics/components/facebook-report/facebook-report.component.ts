@@ -5,13 +5,13 @@ import * as echarts from 'echarts';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { FormsModule } from '@angular/forms';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
-
+import { LayoutsModule } from 'src/app/layouts/layouts.module';
 @Component({
   standalone: true,
   selector: 'app-facebook-report',
   templateUrl: './facebook-report.component.html',
   styleUrls: ['./facebook-report.component.scss'],
-  imports: [CommonModule, FormsModule, NgxSpinnerModule],
+  imports: [CommonModule, FormsModule, NgxSpinnerModule,LayoutsModule],
 })
 export class FacebookReportComponent implements OnInit {
   @ViewChild('radioInput', { static: false })
@@ -444,6 +444,7 @@ export class FacebookReportComponent implements OnInit {
 
       this.makeChartResponsive();
     });
+    this.getTopFiveCustomers()
   }
   getMaleProgressBarStyle() {
     const widthPercentage = this.malepersentage + '%';
