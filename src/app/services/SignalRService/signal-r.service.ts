@@ -52,7 +52,6 @@ export class SignalRService {
   ) { 
     this.baseUrl=window.location.origin
     if(this.baseUrl=='https://keportal.enteract.live'){
-    if(this.baseUrl=='https://keportal.enteract.live'){
       this.companyId=651;
     } else if (this.baseUrl=='https://engage.jazz.com.pk') {
     this.companyId=650;
@@ -66,7 +65,6 @@ export class SignalRService {
     else if(this.baseUrl=='https://waengage.enteract.live') {
       this.companyId=653
     }
-  }
   }
   flag:string='';
 

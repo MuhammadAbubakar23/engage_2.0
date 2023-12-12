@@ -147,9 +147,6 @@ export class InboundOntboundReportComponent implements OnInit {
   mouseClickReset() {
     this.searchText = ''
   }
-  ngAfterViewInit() {
-    this.AddGraph(); // or any other method where you initialize/update charts
-  }
   
   getChannel() {
  
