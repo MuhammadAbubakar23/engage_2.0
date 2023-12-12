@@ -147,6 +147,10 @@ export class InboundOntboundReportComponent implements OnInit {
   mouseClickReset() {
     this.searchText = ''
   }
+  ngAfterViewInit() {
+    this.AddGraph(); // or any other method where you initialize/update charts
+  }
+  
   getChannel() {
  
 
@@ -348,6 +352,7 @@ export class InboundOntboundReportComponent implements OnInit {
                });
              });
               this.getTagperChannelReport()
+            
             if (this.isShowInboundoutboundGraph == false) {
               const doms = this.inboundOutboundReport.nativeElement;
               this.inboundOutboundChart = echarts.init(doms, null, {
@@ -865,6 +870,7 @@ export class InboundOntboundReportComponent implements OnInit {
     });
 
     var option: echarts.EChartsOption;
+  
     debugger
  
     option = {
@@ -898,6 +904,7 @@ export class InboundOntboundReportComponent implements OnInit {
       
       series: this.tagsPerChannel.map(series => ({
         ...series,
+        
         // label: {
         //   show: true,
         //   formatter: (params: any) => {
@@ -907,14 +914,11 @@ export class InboundOntboundReportComponent implements OnInit {
         //   }
         // }
       })),
+    
     };
 
-    this.tagsChart.setOption(option);
+    this.tagsChart.setOption(option,true);
+
   }
-  ngOnDestroy(){
-  debugger
-    if(this.tagsChart){
-      this.tagsChart.dispose()
-    }
-  }
+ 
 }

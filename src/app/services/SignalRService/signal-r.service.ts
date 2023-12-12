@@ -67,7 +67,7 @@ export class SignalRService {
       this.companyId=653
     }
   }
-
+  }
   flag:string='';
 
   startConnection() {
@@ -93,7 +93,7 @@ export class SignalRService {
         .catch((err) => console.log('Error while starting connection: ' + err));
     // }
     
-  }
+  };
 
   reConnect() {
       // this.flag = this.router.url.split('/')[1];
