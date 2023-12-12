@@ -670,6 +670,7 @@ export class ConversationComponent implements OnInit {
     profileId: any
   ) {
     localStorage.setItem('previousUrl', this.currentUrl);
+    debugger
     if (
       this.currentUrl.split('/')[2] == 'focused' ||
       this.currentUrl.split('/')[2] == 'follow_up'
@@ -739,6 +740,7 @@ export class ConversationComponent implements OnInit {
       this.fetchId.setPlatform(platform);
       this.fetchId.setOption(id);
       this.fetchposttype.sendPostType(postType);
+      localStorage.setItem('profileId', profileId);
       this.router.navigateByUrl(this.currentUrl + '/responder/' + platform);
       this.SpinnerService.hide();
 

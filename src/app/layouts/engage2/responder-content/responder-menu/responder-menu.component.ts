@@ -202,7 +202,7 @@ export class ResponderMenuComponent implements OnInit {
         this.fetchId.setOption(fromId);
         //  this.fetchposttype.sendPostType(postType);
       }
-
+debugger
       localStorage.setItem('profileId', profileId);
 
       this.assignQuerryDto = {
