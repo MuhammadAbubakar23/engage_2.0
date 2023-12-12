@@ -344,7 +344,6 @@ export class ConversationComponent implements OnInit {
       this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     }
     // else if ((this.searchForm.value.fromDate != null && this.searchForm.value.toDate != null) && (this.fromDate != undefined && this.toDate != undefined) && (this.flag == 'completed' || this.flag == 'sent')) {
-    //   debugger
     //   this.fromDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T00:00:00.000Z';
     //   this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
     // }
@@ -670,7 +669,7 @@ export class ConversationComponent implements OnInit {
     profileId: any
   ) {
     localStorage.setItem('previousUrl', this.currentUrl);
-    debugger
+    
     if (
       this.currentUrl.split('/')[2] == 'focused' ||
       this.currentUrl.split('/')[2] == 'follow_up'

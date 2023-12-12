@@ -65,7 +65,6 @@ export class ResponderCustomerProfilingComponent implements OnInit {
     }
   }
   // searchCustomerProfileDetails() {
-  //   debugger
   //   this.customerProfileInformation = [];
   //   if(this.searchProfileDetails != ""){
   //     this.profileId = '';

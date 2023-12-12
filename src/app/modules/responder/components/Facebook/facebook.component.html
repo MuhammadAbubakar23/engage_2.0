@@ -246,7 +246,7 @@
                                                         <!-- For Sentiment Pills -->
                                                         <div class="tags" *ngIf="fbcmnts.sentiment">
                                                             <span
-                                                                class="badge rounded-pills tag tag1 selected">{{fbcmnts.sentiment?.name}}</span>
+                                                                class="badge rounded-pills tag tag1 selected">{{fbcmnts.sentiment?.name | tagSlugConversion}}</span>
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                     </div>
@@ -397,7 +397,7 @@
                                                                                         <div class="list-group list-group-flush"
                                                                                             *ngFor="let sentiment of Sentiments">
                                                                                             <a class="list-group-item d-flex level1Btn "
-                                                                                                (click)="insertSentimentForFeed(fbcmnts.id, sentiment.name)">
+                                                                                                (click)="insertSentimentForFeed(fbcmnts.id, sentiment.slug)">
                                                                                                 <div
                                                                                                     class="list-down-icon">
                                                                                                     <span
@@ -699,7 +699,7 @@
                                                     <!-- For Sentiment Pills -->
                                                     <div class="tags" *ngIf="fbmsgs.sentiment">
                                                         <span
-                                                            class="badge rounded-pill tag tag1 selected">{{fbmsgs.sentiment?.name}}</span>
+                                                            class="badge rounded-pill tag tag1 selected">{{fbmsgs.sentiment?.name | tagSlugConversion}}</span>
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                 </div>
@@ -833,7 +833,7 @@
                                                                                     <div class="list-group list-group-flush"
                                                                                         *ngFor="let sentiment of Sentiments">
                                                                                         <a class="list-group-item d-flex level1Btn "
-                                                                                            (click)="insertSentimentForFeed(fbmsgs.id, sentiment.name)">
+                                                                                            (click)="insertSentimentForFeed(fbmsgs.id, sentiment.slug)">
                                                                                             <div class="list-down-icon">
                                                                                                 <span
                                                                                                     class="btn iconButton iconHover medium"

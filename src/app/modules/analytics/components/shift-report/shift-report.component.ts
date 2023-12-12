@@ -284,7 +284,7 @@ export class ShiftReportComponent implements OnInit {
     this.getAlltags();
   }
   getByShifTime(event: any) {
-    debugger
+    
     this.shiftime = event.target.value;
 
    

@@ -70,7 +70,7 @@ export class ExecutiveDashboardComponent implements OnInit {
     // this.GetAllRegionWiseData()
   }
   GetAllRegionWiseData() {
-    debugger
+    
  
     let obj = {
       toDate: this.endDate,
@@ -80,7 +80,7 @@ export class ExecutiveDashboardComponent implements OnInit {
    
     this.regionwiseArray=[]
     this.regionwiseCount=[]
-    debugger
+    
     this.commonDataService.GetRegionWiseReport(obj).subscribe((res: any) => {
  
       this.regionwiseReportData = res

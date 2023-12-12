@@ -217,7 +217,7 @@
                                                         <!-- For Sentiment Pills -->
                                                         <div class="tags" *ngIf="whatsappMsg.sentiment">
                                                             <span
-                                                                class="badge rounded-pill whatsapp tag tag1 selected">{{whatsappMsg.sentiment?.name}}</span>
+                                                                class="badge rounded-pill whatsapp tag tag1 selected">{{whatsappMsg.sentiment?.name | tagSlugConversion}}</span>
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                     </div>
@@ -356,7 +356,7 @@
                                                                                         <div class="list-group list-group-flush"
                                                                                             *ngFor="let sentiment of Sentiments">
                                                                                             <a class="list-group-item d-flex level1Btn "
-                                                                                                (click)="insertSentimentForFeed(whatsappMsg.id, sentiment.name)">
+                                                                                                (click)="insertSentimentForFeed(whatsappMsg.id, sentiment.slug)">
                                                                                                 <div
                                                                                                     class="list-down-icon">
                                                                                                     <span

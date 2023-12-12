@@ -461,7 +461,6 @@ export class LinkedInReportComponent implements OnInit {
     option && this.clickThroughRateGraph.setOption(option);
   }
   // getAllLinkedInfollowrs() {
-  //   debugger;
   //   if (this.fromDate == '' && this.toDate == '') {
   //     const today = new Date();
   //     this.toDate =
@@ -486,9 +485,7 @@ export class LinkedInReportComponent implements OnInit {
   //     .subscribe((res: any) => {
   //       this.linkedfollowerTotalcount = res.spanFollowers_TotalCount;
   //       this.linkedFollowerData = res.spanFollowers;
-  //       debugger;
   //       this.linkedFollowerData.forEach((abc: any) => {
-  //         debugger;
   //         if (
   //           !this.allDates.includes(this.datePipe.transform(abc.from, 'dd MMM'))
   //         ) {
@@ -503,7 +500,6 @@ export class LinkedInReportComponent implements OnInit {
   //     });
   // }
   // followerChart() {
-  //   debugger;
   //   type EChartsOption = echarts.EChartsOption;
 
   //   const dom = document.getElementById('followers');
