@@ -188,7 +188,7 @@
                                                         <!-- For Sentiment Pills -->
                                                         <div class="tags" *ngIf="cmnts.sentiment">
                                                             <span
-                                                                class="badge rounded-pill tag tag1 selected">{{cmnts.sentiment?.name}}</span>
+                                                                class="badge rounded-pill tag tag1 selected">{{cmnts.sentiment?.name | tagSlugConversion}}</span>
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                     </div>

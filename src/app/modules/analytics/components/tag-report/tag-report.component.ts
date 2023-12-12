@@ -104,13 +104,13 @@ for (const user of this.userlist) {
   const existingAgentData = this.uniqueAgentData.find(data => data.agentId === user.agentId);
 
   if (existingAgentData) {
-    debugger
+    
     // Update existing agent data
     existingAgentData.tags = [...new Set(existingAgentData.tags.concat(user.tags))];
     existingAgentData.customerData.push(user);
   } else {
     // Add new agent data
-    debugger
+    
     this.uniqueAgentData.push({
       agentId: user.agentId,
       agentName: user.agentName,

@@ -408,7 +408,7 @@
                                                                                     <div class="list-group list-group-flush"
                                                                                         *ngFor="let sentiment of Sentiments">
                                                                                         <a class="list-group-item d-flex level1Btn "
-                                                                                            (click)="insertSentimentForFeed(email.id, sentiment.name)">
+                                                                                            (click)="insertSentimentForFeed(email.id, sentiment.slug)">
                                                                                             <div class="list-down-icon">
                                                                                                 <span class="btn iconButton iconHover medium" [innerHTML]="sentiment.icon">
                                                                                                 </span>

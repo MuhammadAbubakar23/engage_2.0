@@ -126,8 +126,8 @@ export class ShiftReportComponent implements OnInit {
       const menu = this.stor.retrive('Tags', 'O').local;
       menu.forEach((item: any) => {
         if (item.name == 'Tags') {
-          item.subTags.forEach((parentags: any) => {
-            parentags.subTags.forEach((singleTagObj: any) => {
+          item.subTags?.forEach((parentags: any) => {
+            parentags.subTags?.forEach((singleTagObj: any) => {
               if (!this.keywordslist.includes(singleTagObj)) {
                 this.keywordslist.push(singleTagObj);
               }
@@ -280,7 +280,7 @@ export class ShiftReportComponent implements OnInit {
     this.getAlltags();
   }
   getByShifTime(event: any) {
-    debugger
+    
     this.shiftime = event.target.value;
 
    

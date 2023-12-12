@@ -525,16 +525,16 @@ export class InboundOntboundReportComponent implements OnInit {
             });
 
             var option: echarts.EChartsOption;
-            debugger
+            
             const tagReportData = this.Inbound_Outbound_Report.tagReportData;
             tagReportData.forEach((channel: any) => {
-              debugger
+              
               if (!this.platformsArray.includes(channel.platform)) {
                 this.platformsArray.push(channel.platform);
               }
 
               channel.data.forEach((tag: any) => {
-                debugger
+                
                 this.str= tag.name.toLowerCase().split(/[-_.\s]/).map((w:any) => `${w.charAt(0).toUpperCase()}${w.substr(1)}`).join(' ');
               
                 const name = this.str;

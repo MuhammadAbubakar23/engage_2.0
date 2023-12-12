@@ -666,7 +666,7 @@ export class FacebookComponent implements OnInit {
   removeTags: any;
 
   addTagDataListener() {
-    debugger
+    
     this.FacebookData?.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {

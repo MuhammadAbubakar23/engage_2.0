@@ -91,7 +91,7 @@
                                                     <!-- For Sentiment Pills -->
                                                     <div class="tags" *ngIf="sms.sentiment">
                                                         <span
-                                                            class="badge rounded-pill tag tag1 selected">{{sms.sentiment?.name}}</span>
+                                                            class="badge rounded-pill tag tag1 selected">{{sms.sentiment?.name | tagSlugConversion}}</span>
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                 </div>
@@ -224,7 +224,7 @@
                                                                             <div class="list-group list-group-flush"
                                                                                 *ngFor="let sentiment of Sentiments">
                                                                                 <a class="list-group-item d-flex level1Btn "
-                                                                                    (click)="insertSentimentForFeed(sms.id, sentiment.name)">
+                                                                                    (click)="insertSentimentForFeed(sms.id, sentiment.slug)">
                                                                                     <div class="list-down-icon">
                                                                                         <span
                                                                                             class="btn iconButton iconHover medium"

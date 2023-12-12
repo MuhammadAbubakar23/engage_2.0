@@ -174,7 +174,7 @@
                                                         <!-- For Sentiment Pills -->
                                                         <div class="tags" *ngIf="youtubecomment.sentiment">
                                                             <span
-                                                                class="badge rounded-pill tag tag1 selected">{{youtubecomment.sentiment?.name}}</span>
+                                                                class="badge rounded-pill tag tag1 selected">{{youtubecomment.sentiment?.name | tagSlugConversion}}</span>
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                     </div>
@@ -324,7 +324,7 @@
                                                                                         <div class="list-group list-group-flush"
                                                                                             *ngFor="let sentiment of Sentiments">
                                                                                             <a class="list-group-item d-flex level1Btn "
-                                                                                                (click)="insertSentimentForFeed(youtubecomment.id, sentiment.name)">
+                                                                                                (click)="insertSentimentForFeed(youtubecomment.id, sentiment.slug)">
                                                                                                 <div
                                                                                                     class="list-down-icon">
                                                                                                     <span
