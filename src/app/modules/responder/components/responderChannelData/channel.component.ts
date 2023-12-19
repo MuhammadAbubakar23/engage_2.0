@@ -344,7 +344,7 @@ export class ChannelComponent implements OnInit {
 
             let groupedItems = this.commentsArray.reduce(
               (acc: any, item: any) => {
-                const date = item.createdDate.split('T')[0];
+                const date = item.createdDate?.split('T')[0];
                 if (!acc[date]) {
                   acc[date] = [];
                 }
@@ -400,7 +400,7 @@ export class ChannelComponent implements OnInit {
           this.messagesArray.push(this.messageDto);
           let groupedItems = this.messagesArray.reduce(
             (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
+              const date = item.createdDate?.split('T')[0];
               if (!acc[date]) {
                 acc[date] = [];
               }
@@ -450,7 +450,7 @@ export class ChannelComponent implements OnInit {
           this.mentionsArray.push(this.messageDto);
           let groupedItems = this.mentionsArray.reduce(
             (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
+              const date = item.createdDate?.split('T')[0];
               if (!acc[date]) {
                 acc[date] = [];
               }
@@ -729,7 +729,7 @@ export class ChannelComponent implements OnInit {
               this.messagesArray.push(item);
               let groupedItems = this.messagesArray.reduce(
                 (acc: any, item: any) => {
-                  const date = item.createdDate.split('T')[0];
+                  const date = item.createdDate?.split('T')[0];
                   if (!acc[date]) {
                     acc[date] = [];
                   }
@@ -796,7 +796,7 @@ export class ChannelComponent implements OnInit {
             this.messagesArray.push(item);
             let groupedItems = this.messagesArray.reduce(
               (acc: any, item: any) => {
-                const date = item.createdDate.split('T')[0];
+                const date = item.createdDate?.split('T')[0];
                 if (!acc[date]) {
                   acc[date] = [];
                 }
@@ -865,7 +865,7 @@ export class ChannelComponent implements OnInit {
               this.messagesArray.push(item);
               let groupedItems = this.messagesArray.reduce(
                 (acc: any, item: any) => {
-                  const date = item.createdDate.split('T')[0];
+                  const date = item.createdDate?.split('T')[0];
                   if (!acc[date]) {
                     acc[date] = [];
                   }
@@ -939,7 +939,7 @@ export class ChannelComponent implements OnInit {
               this.mentionsArray.push(item);
               let groupedItems = this.mentionsArray.reduce(
                 (acc: any, item: any) => {
-                  const date = item.createdDate.split('T')[0];
+                  const date = item.createdDate?.split('T')[0];
                   if (!acc[date]) {
                     acc[date] = [];
                   }
@@ -1004,7 +1004,7 @@ export class ChannelComponent implements OnInit {
             this.mentionsArray.push(item);
             let groupedItems = this.mentionsArray.reduce(
               (acc: any, item: any) => {
-                const date = item.createdDate.split('T')[0];
+                const date = item.createdDate?.split('T')[0];
                 if (!acc[date]) {
                   acc[date] = [];
                 }
@@ -1071,7 +1071,7 @@ export class ChannelComponent implements OnInit {
               this.mentionsArray.push(item);
               let groupedItems = this.mentionsArray.reduce(
                 (acc: any, item: any) => {
-                  const date = item.createdDate.split('T')[0];
+                  const date = item.createdDate?.split('T')[0];
                   if (!acc[date]) {
                     acc[date] = [];
                   }

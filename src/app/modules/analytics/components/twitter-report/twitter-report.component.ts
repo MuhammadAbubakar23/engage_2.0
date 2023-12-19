@@ -149,7 +149,8 @@ export class TwitterReportComponent implements OnInit {
     var body = {
       fromDate: this.fromDate,
       toDate: this.toDate,
-      profileId: '1682035592165740551',
+      profileId: '539038993',
+      
     };
     if (this.toDate >= this.fromDate) {
       this.SpinnerService.show();

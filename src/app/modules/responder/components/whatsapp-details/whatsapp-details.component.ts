@@ -311,7 +311,7 @@ export class WhatsappDetailsComponent implements OnInit {
 
           let groupedItems = this.commentsArray.reduce(
             (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
+              const date = item.createdDate?.split('T')[0];
               if (!acc[date]) {
                 acc[date] = [];
               }
@@ -384,7 +384,7 @@ export class WhatsappDetailsComponent implements OnInit {
               });
               let groupedItems = this.commentsArray.reduce(
                 (acc: any, item: any) => {
-                  const date = item.createdDate.split('T')[0];
+                  const date = item.createdDate?.split('T')[0];
                   if (!acc[date]) {
                     acc[date] = [];
                   }
@@ -441,7 +441,7 @@ export class WhatsappDetailsComponent implements OnInit {
             });
             let groupedItems = this.commentsArray.reduce(
               (acc: any, item: any) => {
-                const date = item.createdDate.split('T')[0];
+                const date = item.createdDate?.split('T')[0];
                 if (!acc[date]) {
                   acc[date] = [];
                 }
@@ -501,7 +501,7 @@ export class WhatsappDetailsComponent implements OnInit {
               });
               let groupedItems = this.commentsArray.reduce(
                 (acc: any, item: any) => {
-                  const date = item.createdDate.split('T')[0];
+                  const date = item.createdDate?.split('T')[0];
                   if (!acc[date]) {
                     acc[date] = [];
                   }

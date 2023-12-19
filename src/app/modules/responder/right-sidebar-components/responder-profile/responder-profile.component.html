@@ -77,7 +77,12 @@
                                                                         <div class="card-body">
                                                                             <h5
                                                                                 class="card-title mb-0 darkblue username">
-                                                                                {{profileDetails?.fromName}}</h5>
+                                                                                {{profileDetails?.fromName}}
+                                                                                <!-- <i *ngIf="profileDetails.isVerified != null"
+                                                                                    class="fa-solid fa-badge-check text-primary"></i> -->
+                                                                            </h5>
+                                                                            <!-- <span
+                                                                                class="ms-auto badge skyTransBg night rounded-pill badge-md">Followers : <strong>{{profileDetails?.followers_Count}}</strong></span> -->
                                                                             <div class="dropdown w-auto">
                                                                                 <button
                                                                                     class="btn charcoal pb-2 ps-0 pt-0"
@@ -471,8 +476,7 @@
                                                 <h6 class="silver mt-5 mb-3">Channels</h6>
 
                                                 <div>
-                                                    <div class="row mb-3"
-                                                        *ngIf="openedChannel != 'Facebook'">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'Facebook'">
 
                                                         <label for="inputFacebook"
                                                             class="col-sm-3 col-form-label">Facebook
@@ -491,8 +495,7 @@
 
 
 
-                                                    <div class="row mb-3"
-                                                        *ngIf="openedChannel != 'Instagram'">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'Instagram'">
                                                         <label for="inputInstagram"
                                                             class="col-sm-3 col-form-label">Instagram</label>
                                                         <div class="col-sm-9">
@@ -506,8 +509,7 @@
 
                                                         </div>
                                                     </div>
-                                                    <div class="row mb-3"
-                                                        *ngIf="openedChannel != 'Twitter'">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'Twitter'">
                                                         <label for="inputTwitter" class="col-sm-3 col-form-label">
                                                             Twitter
                                                         </label>
@@ -521,8 +523,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row mb-3"
-                                                        *ngIf="openedChannel != 'Youtube'">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'Youtube'">
                                                         <label for="inputYoutube" class="col-sm-3 col-form-label">
                                                             Youtube
                                                         </label>
@@ -532,8 +533,7 @@
                                                                 value={{youtubeUniqueId}}>
                                                         </div>
                                                     </div>
-                                                    <div class="row mb-3"
-                                                        *ngIf="openedChannel != 'WhatsApp'">
+                                                    <div class="row mb-3" *ngIf="openedChannel != 'WhatsApp'">
                                                         <label for="inputWhatsapp"
                                                             class="col-sm-3 col-form-label">WhatsApp
                                                         </label>

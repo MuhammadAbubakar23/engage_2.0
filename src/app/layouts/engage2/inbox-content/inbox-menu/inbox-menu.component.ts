@@ -53,8 +53,10 @@ export class InboxMenuComponent implements OnInit {
       this.client = 'tppl';
     } else if (this.baseUrl == 'http://localhost:4200') {
       this.client = 'localhost';
+    } else if (this.baseUrl == 'https://uiengage.enteract.app') {
+      this.client = 'stagging';
     }
-
+    
     this.activeChannel = this.router.url.split('/')[3];
 
     this.flag = this.router.url.split('/')[2];

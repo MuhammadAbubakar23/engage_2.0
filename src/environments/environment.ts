@@ -5,8 +5,10 @@
 export const environment = {
   production: true,
   fetchIntegrate: 'true',
-  appKey: 'eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibXVoYW1tYWQucml4dmFuLndhaGVlZEBnbWFpbC5jb20iLCJleHAiOjE2NzYyMzA4MjYsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzY5LyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjQyMDAifQ.NlSFdJSUQfDF0_hbXkfL_smZkfV8b9KFt4ToBFZDzO0',
-  googleclientId: '867983649889-mu8n73d0clq5qvan437dmop87a9ofhot.apps.googleusercontent.com',
+  appKey:
+    'eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibXVoYW1tYWQucml4dmFuLndhaGVlZEBnbWFpbC5jb20iLCJleHAiOjE2NzYyMzA4MjYsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzY5LyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjQyMDAifQ.NlSFdJSUQfDF0_hbXkfL_smZkfV8b9KFt4ToBFZDzO0',
+  googleclientId:
+    '867983649889-mu8n73d0clq5qvan437dmop87a9ofhot.apps.googleusercontent.com',
   googleclientSecret: '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',
   facebookclientId: '439165040679685',
   facebookclientSecret: 'b1ece7f6d042edefbb22c87815804c5b',
@@ -16,9 +18,9 @@ export const environment = {
   linkdinclientSecret: '4wp2Zjzqjw3PYAdt',
   twitterclientId: '57617762-IWEThd14hGdgr3bXuVNmLdb60Lo9OLEVJ1cFUE4JF',
   twitterclientSecret: 'Ex1XpdfYMFEAtWBJn9XOrtfxyu19INzNaPV155vocLomG',
-  store: { types: { local: 'LS' }},
+  store: { types: { local: 'LS' } },
   title: 'abc',
-  
+
   InstaBaseUrl: 'https://insta.360scrm.com/api/',
   FbBaseUrl: 'https://face.360scrm.com/api/',
   YoutubeBaseUrl: 'https://tube.360scrm.com/api/',
@@ -31,10 +33,11 @@ export const environment = {
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  IdentityBaseUrl: 'https://idtservice.enteract.live/api',
-  CommonBaseUrl: 'https://comservices.enteract.live/api/', 
-  SignalRCommonBaseUrl: 'https://comservices.enteract.live/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
-  
+  // IdentityBaseUrl: 'https://idtservice.enteract.live/api',
+  // CommonBaseUrl: 'https://comservices.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
+  // ProfileBaseUrl:'https://profiler.enteract.live/api/',
+
   // For Jazz
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
   // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
@@ -42,25 +45,23 @@ export const environment = {
 
   // For Total Parco
   // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api',
-  // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/', 
+  // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/',
   // SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
 
   // For Morinaga
-  // IdentityBaseUrl: 'https://waidentity.enteract.live/api',
-  // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
-  ServiceBaseUrl : 'https://waservice.enteract.live/api/',
-  
-  // // For Testing
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  //   CommonBaseUrl: 'https://common-engage.enteract.app/api/', 
-  //   //  CommonBaseUrl: 'http://10.111.32.52:45455/api/', 
-  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  IdentityBaseUrl: 'https://waidentity.enteract.live/api',
+  CommonBaseUrl: 'https://wacommon.enteract.live/api/',
+  SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
+  ServiceBaseUrl: 'https://waservice.enteract.live/api/',
 
+  // For Testing
+  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  // //  CommonBaseUrl: 'http://10.111.32.52:45455/api/',
+  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
-  
-  ProfileBaseUrl:'https://profiler.enteract.app/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
   // for testing purpose
@@ -70,37 +71,37 @@ export const environment = {
 
   links: {
     identity: {
-      login: "Authentication/Login",
+      login: 'Authentication/Login',
       //Company:"Teams/FetchAll",
-      accesses: "Teams/Accesses",
-      properties: "Teams/Properties",
-      accessteam: "Teams/Previews",
-      permissionteam: "Teams/Previews",
-      TeamsAccesses: "Teams/Fetch",
-      AllTeams: "Teams/FetchAll",// new to review
-      AddTeam: "Accesses/Teams",
-      TeamProperties: "Accesses/Properties",
-      accessrole: "Roles/Previews", //"Permissions/role",
-      permissionrole: "Roles/Previews", //"Permissions/role",
-      RolesPermissions: "Roles/Fetch",
-      permissions: "Roles/Permissions",
-      RoleProperties: "Permissions/Properties",
-      AddRole: "Permissions/Roles",
-      UserRoles: "Roles/Users",
-      UserTeams: "Teams/Users",
-      AddUser: "Identity/Add",
-      UpdateUser: "Identity/Update",
-      DeleteUser: "Identity/Delete",
-      AllUsers: "Users/GetAll",
-      GetUserById: "Users/GetById",
+      accesses: 'Teams/Accesses',
+      properties: 'Teams/Properties',
+      accessteam: 'Teams/Previews',
+      permissionteam: 'Teams/Previews',
+      TeamsAccesses: 'Teams/Fetch',
+      AllTeams: 'Teams/FetchAll', // new to review
+      AddTeam: 'Accesses/Teams',
+      TeamProperties: 'Accesses/Properties',
+      accessrole: 'Roles/Previews', //"Permissions/role",
+      permissionrole: 'Roles/Previews', //"Permissions/role",
+      RolesPermissions: 'Roles/Fetch',
+      permissions: 'Roles/Permissions',
+      RoleProperties: 'Permissions/Properties',
+      AddRole: 'Permissions/Roles',
+      UserRoles: 'Roles/Users',
+      UserTeams: 'Teams/Users',
+      AddUser: 'Identity/Add',
+      UpdateUser: 'Identity/Update',
+      DeleteUser: 'Identity/Delete',
+      AllUsers: 'Users/GetAll',
+      GetUserById: 'Users/GetById',
       // For console skill setup
-      channels: "Console/Properties/Channel/Tree/0",
-      routing: "Console/Properties/routing/Tree/0",
-      deleteRoles: "/Permissions/Delete"
+      channels: 'Console/Properties/Channel/Tree/0',
+      routing: 'Console/Properties/routing/Tree/0',
+      deleteRoles: '/Permissions/Delete',
     },
     console: {
-      AddUser: "Users/CreateUser",
-      CreateMessageTemplate: "Template/Add",
+      AddUser: 'Users/CreateUser',
+      CreateMessageTemplate: 'Template/Add',
       getAllMessages: 'Template/GetAll',
       addTemplate: 'Template/Add',
       updateTemplate: 'Template/Update',
@@ -143,17 +144,17 @@ export const environment = {
       addRules: 'Rules/Add',
       updateRules: 'Rules/Update',
       deleteRules: 'Rules/Delete',
-      defaultTags: 'Tags/GetTags'
+      defaultTags: 'Tags/GetTags',
     },
-    service:{
-      addSurvey:'Whatsapp/AddSurvey',
-      addCSAT:'Whatsapp/AddCSAT',
+    service: {
+      addSurvey: 'Whatsapp/AddSurvey',
+      addCSAT: 'Whatsapp/AddCSAT',
     },
     CCMS: {
       reason_types: 'Order/GetReasonTypes',
       reasons: 'Order/GetMainReasons/',
       GetTicketStatuses: 'Order/GetTicketStatuses',
-      subReasons: 'Order/GetSubReasons/'
+      subReasons: 'Order/GetSubReasons/',
     },
     common: {
       RemoveTags: 'Tags/RemoveTagFromFeed',
@@ -169,16 +170,16 @@ export const environment = {
       AssignQuerry: 'Query/AssignQuery',
       AgentsTeamList: 'Query/GetActiveAgent',
       AssignToAnotherAgent: 'Query/QueryAssignMultiUser',
-      SlaList: "Report/GetSLAChannelList",
-      SlaDetail: "Report/GetSLADetailList",
-      SlaDM: "Report/GetSLA_DM",
-      ConversationDetail: "Channel/GetChannelConversationDetail",
-      MessageDetail: "Channel/GetDMByPlatform",
-      ReplyComment: "Channel/ReplyChannelComment",
-      HumanAgentTags: "Tags/GetHumanAgentTag",
-      AgentDetail: "Team/GetById",
-      UpdateBreak: "SignalRConnector/UserOnBreak",
-      InstaStats: "Channel/GetInstagramPostStat",
+      SlaList: 'Report/GetSLAChannelList',
+      SlaDetail: 'Report/GetSLADetailList',
+      SlaDM: 'Report/GetSLA_DM',
+      ConversationDetail: 'Channel/GetChannelConversationDetail',
+      MessageDetail: 'Channel/GetDMByPlatform',
+      ReplyComment: 'Channel/ReplyChannelComment',
+      HumanAgentTags: 'Tags/GetHumanAgentTag',
+      AgentDetail: 'Team/GetById',
+      UpdateBreak: 'SignalRConnector/UserOnBreak',
+      InstaStats: 'Channel/GetInstagramPostStat',
       FbPostStats: 'Channel/GetFbPostStat',
       FbCommentStats: 'Channel/GetFbCommentStat',
       YoutubePostStats: 'Channel/GetYoutubePostStat',
@@ -190,7 +191,8 @@ export const environment = {
       updateProfile: 'Customer/UpdateCustomer',
       createTicket: 'Tickets/CreateTicket',
       allChannelsUnrespondedCounts: 'Channel/GetChannelUnrespondedCount',
-      getOrderByCustomerEmailAddressOrPhoneNumber: 'Order/GetOrdersByCustomerEmailAddress',
+      getOrderByCustomerEmailAddressOrPhoneNumber:
+        'Order/GetOrdersByCustomerEmailAddress',
       dispositionHistory: 'Channel/GetDispositionHistory',
       markAllAsRead: 'Channel/ReadAllUnrespondedQuries',
       getAgentReport: 'Report/GetAgentTicketReport',
@@ -202,38 +204,38 @@ export const environment = {
       insertTagOnProfile: 'Tags/InsertTagsProfileFeed',
       removeTagOnProfile: 'Tags/RemoveTagProfileFeed',
       hideUnhideMessage: 'Publisher/HideQuery',
-      dispositionTags:'Keyword/GetAllDisposition',
-      removeAssignedQuery:'Query/RemoveAssignQuery',
+      dispositionTags: 'Keyword/GetAllDisposition',
+      removeAssignedQuery: 'Query/RemoveAssignQuery',
       //Reports
-      routeToAgents:'Report/GetWhatsAppRouteToAgentReport',
-      routeToAgentsCsv:'Report/GetWhatsAppRouteAgentReportCSV',
-      addUniqueCustomer:'Report/GetWhatsAppUniqueCustomerReport',
-      uniqueExportCsv :'Report/GetWhatsAppUniqueCustomerReportCSV',
-      addHandledBot:'Report/GetWhatsAppBotHandleReport',
-      addHandledBotCSV:'Report/GetWhatsAppBotHandleReportCSV',
-      addinboundoutbound:'Report/GetInboundOutboundReport',
-      twitterReport:'Report/GetTwitterReport',
-      twitterSLAReport:'Report/GetTwitterSLAReport',
-      twitterProfileWiseReport:'Report/GetTwitterProfileWiseReport',
-      getUserList:'/Users/GetUserList',
-      getSentimentData:'Keyword/GetAllSentiments',
+      routeToAgents: 'Report/GetWhatsAppRouteToAgentReport',
+      routeToAgentsCsv: 'Report/GetWhatsAppRouteAgentReportCSV',
+      addUniqueCustomer: 'Report/GetWhatsAppUniqueCustomerReport',
+      uniqueExportCsv: 'Report/GetWhatsAppUniqueCustomerReportCSV',
+      addHandledBot: 'Report/GetWhatsAppBotHandleReport',
+      addHandledBotCSV: 'Report/GetWhatsAppBotHandleReportCSV',
+      addinboundoutbound: 'Report/GetInboundOutboundReport',
+      twitterReport: 'Report/GetTwitterReport',
+      twitterSLAReport: 'Report/GetTwitterSLAReport',
+      twitterProfileWiseReport: 'Report/GetTwitterProfileWiseReport',
+      getUserList: '/Users/GetUserList',
+      getSentimentData: 'Keyword/GetAllSentiments',
       addAgentPerformance: 'Report/GetAgentPerformanceReport',
       shiftReport: 'Report/GetShiftReport',
-      getWhatsAppRawDataReport:'Report/GetWhatsAppRawDataReport',
-      downloadWhatsAppRawDataReport:'Report/GetWhatsAppCSVData',
-      postSocialRawData:'Report/GetAllChannelRawDataReport',
-      downloadSocialRawData:'Report/GetAllChannelRawDataReportCSV',
-      facebookReport:'Report/GetFacebookReport',
-      facebookProfile:'Report/GetFacebookProfileWiseReport',
-      getAllSocialMatrics:'Report/GetAllSocialMediaMatricsReport',
-      instagramReport:'Report/GetInstagramReport',
-      instagramProfile:'Report/GetInstagramProfileWiseReport',
-      getTagReport:'Report/GetTagsReport',
-      downloadTagReport:'Report/GetAgentTagsReportCSV',
-      getLinkedInReport:'Activity/GetOrganizationSharedInsights',
-      emailShiftReport:'Report/EmailShiftReport',
-      getLinkedInFollowers:'Activity/GetOrganizationInsights',
-      regionwiseReport:'Report/GetRegionWiseReport'
+      getWhatsAppRawDataReport: 'Report/GetWhatsAppRawDataReport',
+      downloadWhatsAppRawDataReport: 'Report/GetWhatsAppCSVData',
+      postSocialRawData: 'Report/GetAllChannelRawDataReport',
+      downloadSocialRawData: 'Report/GetAllChannelRawDataReportCSV',
+      facebookReport: 'Report/GetFacebookReport',
+      facebookProfile: 'Report/GetFacebookProfileWiseReport',
+      getAllSocialMatrics: 'Report/GetAllSocialMediaMatricsReport',
+      instagramReport: 'Report/GetInstagramReport',
+      instagramProfile: 'Report/GetInstagramProfileWiseReport',
+      getTagReport: 'Report/GetTagsReport',
+      downloadTagReport: 'Report/GetAgentTagsReportCSV',
+      getLinkedInReport: 'Activity/GetOrganizationSharedInsights',
+      emailShiftReport: 'Report/EmailShiftReport',
+      getLinkedInFollowers: 'Activity/GetOrganizationInsights',
+      regionwiseReport: 'Report/GetRegionWiseReport',
     },
     facebook: {
       comments: 'Facebook/GetFbPost',
@@ -275,12 +277,12 @@ export const environment = {
       list: 'WebChat/GetUserList',
       messageReply: 'WebChat/SaveAgentReply',
     },
-    profile:{
-      KECSAT:'CustomerCSAT/AddCSAT',
-      getProfileInformationByID:'ProfileInformation/GetProfileInformationByID',
-      addProfileInformation:'ProfileInformation/AddProfileInformation',
-      searchProfileInformation:'ProfileInformation/GetCustomerInformationByID'
-    }
+    profile: {
+      KECSAT: 'CustomerCSAT/AddCSAT',
+      getProfileInformationByID: 'ProfileInformation/GetProfileInformationByID',
+      addProfileInformation: 'ProfileInformation/AddProfileInformation',
+      searchProfileInformation: 'ProfileInformation/GetCustomerInformationByID',
+    },
   },
 };
 

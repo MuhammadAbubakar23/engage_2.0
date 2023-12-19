@@ -311,7 +311,7 @@ export class TwitterComponent implements OnInit {
 
   //           let groupedItems = this.commentsArray.reduce(
   //             (acc: any, item: any) => {
-  //               const date = item.createdDate.split('T')[0];
+  //               const date = item.createdDate?.split('T')[0];
   //               if (!acc[date]) {
   //                 acc[date] = [];
   //               }
@@ -339,6 +339,7 @@ export class TwitterComponent implements OnInit {
   // }
 
   updateMessagesDataListener(res: any) {
+    debugger
     res.forEach((xyz: any) => {
       if (xyz.contentType == 'TTR') {
         if (this.id == xyz.fromId) {
@@ -367,7 +368,7 @@ export class TwitterComponent implements OnInit {
           this.commentsArray.push(this.messageDto);
           let groupedItems = this.commentsArray.reduce(
             (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
+              const date = item.createdDate?.split('T')[0];
               if (!acc[date]) {
                 acc[date] = [];
               }
@@ -387,8 +388,6 @@ export class TwitterComponent implements OnInit {
             this.totalUnrespondedCmntCountByCustomer + 1;
         }
       }
-    });
-    res.forEach((xyz: any) => {
       if (xyz.contentType == 'TDM') {
         if (this.id == xyz.fromId) {
           this.messageDto = {
@@ -416,7 +415,7 @@ export class TwitterComponent implements OnInit {
           this.messagesArray.push(this.messageDto);
           let groupedItems = this.messagesArray.reduce(
             (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
+              const date = item.createdDate?.split('T')[0];
               if (!acc[date]) {
                 acc[date] = [];
               }
@@ -436,9 +435,6 @@ export class TwitterComponent implements OnInit {
             this.totalUnrespondedMsgCountByCustomer + 1;
         }
       }
-    });
-
-    res.forEach((xyz: any) => {
       if (xyz.contentType == 'TM') {
         if (this.id == xyz.fromId) {
           this.messageDto = {
@@ -466,7 +462,7 @@ export class TwitterComponent implements OnInit {
           this.mentionsArray.push(this.messageDto);
           let groupedItems = this.mentionsArray.reduce(
             (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
+              const date = item.createdDate?.split('T')[0];
               if (!acc[date]) {
                 acc[date] = [];
               }
@@ -751,7 +747,7 @@ export class TwitterComponent implements OnInit {
               this.commentsArray.push(item);
               let groupedItems = this.commentsArray.reduce(
                 (acc: any, item: any) => {
-                  const date = item.createdDate.split('T')[0];
+                  const date = item.createdDate?.split('T')[0];
                   if (!acc[date]) {
                     acc[date] = [];
                   }
@@ -821,7 +817,7 @@ export class TwitterComponent implements OnInit {
               this.commentsArray.push(item);
               let groupedItems = this.commentsArray.reduce(
                 (acc: any, item: any) => {
-                  const date = item.createdDate.split('T')[0];
+                  const date = item.createdDate?.split('T')[0];
                   if (!acc[date]) {
                     acc[date] = [];
                   }
@@ -890,7 +886,7 @@ export class TwitterComponent implements OnInit {
               this.commentsArray.push(item);
               let groupedItems = this.commentsArray.reduce(
                 (acc: any, item: any) => {
-                  const date = item.createdDate.split('T')[0];
+                  const date = item.createdDate?.split('T')[0];
                   if (!acc[date]) {
                     acc[date] = [];
                   }
@@ -990,7 +986,7 @@ export class TwitterComponent implements OnInit {
               this.messagesArray.push(item);
               let groupedItems = this.messagesArray.reduce(
                 (acc: any, item: any) => {
-                  const date = item.createdDate.split('T')[0];
+                  const date = item.createdDate?.split('T')[0];
                   if (!acc[date]) {
                     acc[date] = [];
                   }
@@ -1054,7 +1050,7 @@ export class TwitterComponent implements OnInit {
             this.messagesArray.push(item);
             let groupedItems = this.messagesArray.reduce(
               (acc: any, item: any) => {
-                const date = item.createdDate.split('T')[0];
+                const date = item.createdDate?.split('T')[0];
                 if (!acc[date]) {
                   acc[date] = [];
                 }
@@ -1119,7 +1115,7 @@ export class TwitterComponent implements OnInit {
               this.messagesArray.push(item);
               let groupedItems = this.messagesArray.reduce(
                 (acc: any, item: any) => {
-                  const date = item.createdDate.split('T')[0];
+                  const date = item.createdDate?.split('T')[0];
                   if (!acc[date]) {
                     acc[date] = [];
                   }
@@ -1193,7 +1189,7 @@ export class TwitterComponent implements OnInit {
               this.mentionsArray.push(item);
               let groupedItems = this.mentionsArray.reduce(
                 (acc: any, item: any) => {
-                  const date = item.createdDate.split('T')[0];
+                  const date = item.createdDate?.split('T')[0];
                   if (!acc[date]) {
                     acc[date] = [];
                   }
@@ -1258,7 +1254,7 @@ export class TwitterComponent implements OnInit {
             this.mentionsArray.push(item);
             let groupedItems = this.mentionsArray.reduce(
               (acc: any, item: any) => {
-                const date = item.createdDate.split('T')[0];
+                const date = item.createdDate?.split('T')[0];
                 if (!acc[date]) {
                   acc[date] = [];
                 }
@@ -1325,7 +1321,7 @@ export class TwitterComponent implements OnInit {
               this.mentionsArray.push(item);
               let groupedItems = this.mentionsArray.reduce(
                 (acc: any, item: any) => {
-                  const date = item.createdDate.split('T')[0];
+                  const date = item.createdDate?.split('T')[0];
                   if (!acc[date]) {
                     acc[date] = [];
                   }

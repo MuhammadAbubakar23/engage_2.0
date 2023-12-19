@@ -259,7 +259,7 @@ export class SmsDetailsComponent implements OnInit {
         this.commentsArray.push(this.commentDto);
 
         let groupedItems = this.commentsArray.reduce((acc: any, item: any) => {
-          const date = item.createdDate.split('T')[0];
+          const date = item.createdDate?.split('T')[0];
           if (!acc[date]) {
             acc[date] = [];
           }
@@ -320,7 +320,7 @@ export class SmsDetailsComponent implements OnInit {
             });
             let groupedItems = this.commentsArray.reduce(
               (acc: any, item: any) => {
-                const date = item.createdDate.split('T')[0];
+                const date = item.createdDate?.split('T')[0];
                 if (!acc[date]) {
                   acc[date] = [];
                 }
@@ -379,7 +379,7 @@ export class SmsDetailsComponent implements OnInit {
           });
           let groupedItems = this.commentsArray.reduce(
             (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
+              const date = item.createdDate?.split('T')[0];
               if (!acc[date]) {
                 acc[date] = [];
               }
@@ -437,7 +437,7 @@ export class SmsDetailsComponent implements OnInit {
           });
           let groupedItems = this.commentsArray.reduce(
             (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
+              const date = item.createdDate?.split('T')[0];
               if (!acc[date]) {
                 acc[date] = [];
               }

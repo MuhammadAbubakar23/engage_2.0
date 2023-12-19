@@ -128,7 +128,7 @@ export class WebChatComponent implements OnInit {
               this.commentsArray.push(cmnt)
             });
               let groupedItems = this.commentsArray.reduce((acc:any, item:any)=>{
-                const date = item.createdDate.split('T')[0];
+                const date = item.createdDate?.split('T')[0];
                 if(!acc[date]){
                   acc[date] = [];
                 }

@@ -12,7 +12,9 @@
             <img src={{userInfo?.profilePic}} class="rounded-circle w-100">
         </div>
         <!-- <h6 class="avatar-title navy m-0 ms-2">{{userName.split('<')[0]}}</h6> -->
-        <h6 class="avatar-title navy m-0 ms-2">{{userInfo?.userName}}</h6>
+        <h6 class="avatar-title navy m-0 ms-2">{{userInfo?.userName}}
+            <i *ngIf="userInfo.isVerified != null" class="fa-solid fa-badge-check text-primary"></i>
+        </h6>
 
         <div class="dropdown w-auto">
             <button class="iconButton medium iconHover mx-2 mt-2" id="dropdownMenuButton1" data-bs-toggle="dropdown"

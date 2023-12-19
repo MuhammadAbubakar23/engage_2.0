@@ -127,7 +127,7 @@ export class ConversationComponent implements OnInit {
           this.from = this.ConversationList.length;
           let groupedItems = this.ConversationList.reduce(
             (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
+              const date = item.createdDate?.split('T')[0];
               if (!acc[date]) {
                 acc[date] = [];
               }
@@ -386,7 +386,7 @@ export class ConversationComponent implements OnInit {
 
           let groupedItems = this.ConversationList.reduce(
             (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
+              const date = item.createdDate?.split('T')[0];
               if (!acc[date]) {
                 acc[date] = [];
               }
@@ -586,7 +586,7 @@ export class ConversationComponent implements OnInit {
 
   groupItemsByDate() {
     return this.ConversationList.reduce((acc: any, item: any) => {
-      const date = item.createdDate.split('T')[0];
+      const date = item.createdDate?.split('T')[0];
       acc[date] = acc[date] || [];
       acc[date].push(item);
       return acc;

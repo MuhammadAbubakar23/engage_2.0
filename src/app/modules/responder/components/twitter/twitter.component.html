@@ -129,9 +129,9 @@
                                                     </div>
                                                     <div *ngFor="let attachment of ttr.attachments"
                                                         style="width: 375px;">
-                                                        <img class="whatsapp-single-img whatsappImgModalBtn"
-                                                            *ngIf="isImage(attachment)" src={{attachment.attachmentUrl}}
-                                                            controls style="width: -webkit-fill-available;">
+                                                        <img *ngIf="attachment.contentType == 'photo'"
+                                                    src={{attachment.attachmentUrl}}
+                                                    style="width: -webkit-fill-available;">
                                                         <img *ngIf="attachment.contentType == 'animated_image_share'"
                                                             src={{attachment.attachmentUrl}}
                                                             style="width: -webkit-fill-available;">
@@ -140,10 +140,16 @@
                                                             style="width: -webkit-fill-available;">
 
 
-                                                        <video *ngIf="isVideo(attachment)"
-                                                            src={{attachment.attachmentUrl}} controls
-                                                            style="width: -webkit-fill-available;"></video>
-
+                                                            <video *ngIf="attachment.contentType == 'video'" width="375px"
+                                                            controls>
+                                                            <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                                style="width: -webkit-fill-available;">
+                                                        </video>
+                                                        <video *ngIf="attachment.contentType == 'animated_gif'" width="375px"
+                                                        controls>
+                                                        <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                            style="width: -webkit-fill-available;">
+                                                    </video>
                                                         <!-- <audio *ngIf="isAudio(attachment)"
                                                             src={{attachment.attachmentUrl}} controls
                                                             style="width: -webkit-fill-available;"></audio> -->
@@ -528,9 +534,9 @@
                                                     </div>
                                                     <div *ngFor="let attachment of tm.attachments"
                                                         style="width: 375px;">
-                                                        <img class="whatsapp-single-img whatsappImgModalBtn"
-                                                            *ngIf="isImage(attachment)" src={{attachment.attachmentUrl}}
-                                                            controls style="width: -webkit-fill-available;">
+                                                        <img *ngIf="attachment.contentType == 'photo'"
+                                                    src={{attachment.attachmentUrl}}
+                                                    style="width: -webkit-fill-available;">
                                                         <img *ngIf="attachment.contentType == 'animated_image_share'"
                                                             src={{attachment.attachmentUrl}}
                                                             style="width: -webkit-fill-available;">
@@ -539,10 +545,16 @@
                                                             style="width: -webkit-fill-available;">
 
 
-                                                        <video *ngIf="isVideo(attachment)"
-                                                            src={{attachment.attachmentUrl}} controls
-                                                            style="width: -webkit-fill-available;"></video>
-
+                                                            <video *ngIf="attachment.contentType == 'video'" width="375px"
+                                                            controls>
+                                                            <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                                style="width: -webkit-fill-available;">
+                                                        </video>
+                                                        <video *ngIf="attachment.contentType == 'animated_gif'" width="375px"
+                                                        controls>
+                                                        <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                            style="width: -webkit-fill-available;">
+                                                    </video>
                                                         <!-- <audio *ngIf="isAudio(attachment)"
                                                             src={{attachment.attachmentUrl}} controls
                                                             style="width: -webkit-fill-available;"></audio> -->
@@ -927,9 +939,9 @@
                                                     </div>
                                                     <div *ngFor="let attachment of tdm.attachments"
                                                         style="width: 375px;">
-                                                        <img class="whatsapp-single-img whatsappImgModalBtn"
-                                                            *ngIf="isImage(attachment)" src={{attachment.attachmentUrl}}
-                                                            controls style="width: -webkit-fill-available;">
+                                                        <img *ngIf="attachment.contentType == 'photo'"
+                                                    src={{attachment.attachmentUrl}}
+                                                    style="width: -webkit-fill-available;">
                                                         <img *ngIf="attachment.contentType == 'animated_image_share'"
                                                             src={{attachment.attachmentUrl}}
                                                             style="width: -webkit-fill-available;">
@@ -938,10 +950,16 @@
                                                             style="width: -webkit-fill-available;">
 
 
-                                                        <video *ngIf="isVideo(attachment)"
-                                                            src={{attachment.attachmentUrl}} controls
-                                                            style="width: -webkit-fill-available;"></video>
-
+                                                            <video *ngIf="attachment.contentType == 'video'" width="375px"
+                                                            controls>
+                                                            <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                                style="width: -webkit-fill-available;">
+                                                        </video>
+                                                        <video *ngIf="attachment.contentType == 'animated_gif'" width="375px"
+                                                        controls>
+                                                        <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                            style="width: -webkit-fill-available;">
+                                                    </video>
                                                         <!-- <audio *ngIf="isAudio(attachment)"
                                                             src={{attachment.attachmentUrl}} controls
                                                             style="width: -webkit-fill-available;"></audio> -->

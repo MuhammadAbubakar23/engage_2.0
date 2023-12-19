@@ -324,7 +324,7 @@ export class InstagramComponent implements OnInit {
 
             let groupedItems = this.commentsArray.reduce(
               (acc: any, item: any) => {
-                const date = item.createdDate.split('T')[0];
+                const date = item.createdDate?.split('T')[0];
                 if (!acc[date]) {
                   acc[date] = [];
                 }
@@ -382,7 +382,7 @@ export class InstagramComponent implements OnInit {
         this.messagesArray.unshift(this.messageDto);
 
         let groupedItems = this.messagesArray.reduce((acc: any, item: any) => {
-          const date = item.createdDate.split('T')[0];
+          const date = item.createdDate?.split('T')[0];
           if (!acc[date]) {
             acc[date] = [];
           }
@@ -456,7 +456,7 @@ export class InstagramComponent implements OnInit {
             });
             let groupedItems = this.commentsArray.reduce(
               (acc: any, item: any) => {
-                const date = item.createdDate.split('T')[0];
+                const date = item.createdDate?.split('T')[0];
                 if (!acc[date]) {
                   acc[date] = [];
                 }
@@ -525,7 +525,7 @@ export class InstagramComponent implements OnInit {
           });
           let groupedItems = this.commentsArray.reduce(
             (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
+              const date = item.createdDate?.split('T')[0];
               if (!acc[date]) {
                 acc[date] = [];
               }
@@ -595,7 +595,7 @@ export class InstagramComponent implements OnInit {
             });
             let groupedItems = this.commentsArray.reduce(
               (acc: any, item: any) => {
-                const date = item.createdDate.split('T')[0];
+                const date = item.createdDate?.split('T')[0];
                 if (!acc[date]) {
                   acc[date] = [];
                 }
@@ -1329,7 +1329,7 @@ removeTagDataListener() {
             this.messagesArray.push(item);
             let groupedItems = this.messagesArray.reduce(
               (acc: any, item: any) => {
-                const date = item.createdDate.split('T')[0];
+                const date = item.createdDate?.split('T')[0];
                 if (!acc[date]) {
                   acc[date] = [];
                 }
@@ -1398,7 +1398,7 @@ removeTagDataListener() {
           this.messagesArray.push(item);
           let groupedItems = this.messagesArray.reduce(
             (acc: any, item: any) => {
-              const date = item.createdDate.split('T')[0];
+              const date = item.createdDate?.split('T')[0];
               if (!acc[date]) {
                 acc[date] = [];
               }
@@ -1470,7 +1470,7 @@ removeTagDataListener() {
             this.messagesArray.push(item);
             let groupedItems = this.messagesArray.reduce(
               (acc: any, item: any) => {
-                const date = item.createdDate.split('T')[0];
+                const date = item.createdDate?.split('T')[0];
                 if (!acc[date]) {
                   acc[date] = [];
                 }
