@@ -344,9 +344,9 @@ if(this.isShowConversation==false){
           },
           color: ['#5a3692', '#f41665', '#36cca2', '#fceea4'],
           data: [
-            { value: this.totalPlainTextPercentage, name: 'Plain Text' },
-            { value: this.totalVideoQueryPercentage, name: 'Videos' },
-            { value: this.totalImageQueryPercentage, name: 'Photos' }
+            { value:Number( this.totalPlainTextPercentage.toFixed(2)), name: 'Plain Text' },
+            { value: Number(this.totalVideoQueryPercentage.toFixed(2)), name: 'Videos' },
+            { value: Number(this.totalImageQueryPercentage.toFixed(2)), name: 'Photos' }
           ],
           emphasis: {
             itemStyle: {
@@ -397,9 +397,9 @@ if(this.isShowConversation==false){
             }
           },
           data: [
-            { value: this.totalTweetsSentPercentage, name: 'Tweets' },
-            { value: this.totalDmSentPercentage, name: 'DMs' },
-            { value: this.totalMentionSentPercentage, name: 'Mentions' },
+            { value:Number (this.totalTweetsSentPercentage.toFixed(2)), name: 'Tweets' },
+            { value: Number(this.totalDmSentPercentage.toFixed(2)), name: 'DMs' },
+            { value: Number(this.totalMentionSentPercentage.toFixed(2)), name: 'Mentions' },
             
           ],
           emphasis: {

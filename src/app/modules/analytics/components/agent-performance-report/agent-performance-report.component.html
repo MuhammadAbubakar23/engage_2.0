@@ -63,7 +63,7 @@
                                     </ul>
                                 </div>
                             </li>
-                              <ng-container  >
+                            <ng-container>
                                 <li class="list-inline-item">
                                     <div class="dropdown icondropdown w-auto">
                                         <button class="btn dropdown-toggle" type="button" id="columnssort"
@@ -72,15 +72,19 @@
                                             Channels
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="columnssort">
-                                            <li class="dropdown-listing-header">
-                                                <form class="custom-searchbar my-2 mx-0">
-                                                    <input class="form-control bg-light border-0 py-2" placeholder="Search"
-                                                        [(ngModel)]="searchText" aria-label="Search">
-                                                    <span class="btn searchbar-btn" type="submit">
-                                                        <i class="fal fa-search silver"></i>
-                                                    </span>
-                                                </form>
-                                            </li>
+                                            <span  *ngIf="isChannelShow!=='morinaga'  &&  isChannelShow!=='ttpl'">
+                                                <li class="dropdown-listing-header">
+                                                    <form class="custom-searchbar my-2 mx-0">
+                                                        <input class="form-control bg-light border-0 py-2"
+                                                            placeholder="Search" [(ngModel)]="searchText"
+                                                            aria-label="Search">
+                                                        <span class="btn searchbar-btn" type="submit">
+                                                            <i class="fal fa-search silver"></i>
+                                                        </span>
+                                                    </form>
+                                                </li>
+                                            </span>
+                                         
                                             <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
                                                 style="overflow: auto; height: auto;">
                                                 <div class="scroll-content">
@@ -90,7 +94,8 @@
                                                             <div class="form-check"
                                                                 (click)="onCheckboxChange(channel.name)">
                                                                 <input class="form-check-input" type="radio"
-                                                                    name="flexRadioDefault" id={{channel.id}} #radioInput>
+                                                                    name="flexRadioDefault" id={{channel.id}}
+                                                                    #radioInput>
                                                                 <label class="form-check-label" for={{channel.id}}>
                                                                     <i [ngClass]="channel.icon"></i>{{channel.name}}
                                                                 </label>
@@ -116,34 +121,25 @@
                                     </div>
                                 </li>
                             </ng-container>
-                           
-                            <li class="list-inline-item ms-auto">
-                                <div class="btn-group buttonfilter" role="group"
-                                    aria-label="Basic radio toggle button group">
-                                    <ng-container *ngFor="let date of paginationDate">
-                                        <input type="radio" class="btn-check" name="btnradio" id="{{'btnradio' + date.id}}"
-                                               [value]="date.value" 
-                                               #radioInput
-                                               autocomplete="off" (change)="date_pagination($event)">
-                                        <label class="btn btn-outline-secondary" for="{{'btnradio' + date.id}}">{{date.value}}</label>
-                                      </ng-container>
-                                      
-<!-- 
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
-                                    #radioInput
-                                        autocomplete="off" (click)="date_pagination(10)"    >
-                                    <label class="btn btn-outline-secondary" for="btnradio2">10</label>
 
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
-                                    #radioInput
-                                        autocomplete="off" (click)="date_pagination(20)"   >
-                                    <label class="btn btn-outline-secondary" for="btnradio3">20</label>
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
-                                    #radioInput
-                                        autocomplete="off" (click)="date_pagination(30)"   >
-                                    <label class="btn btn-outline-secondary" for="btnradio4">30</label> -->
+                            <li class="list-inline-item ms-auto">
+                                <div class="btn-group buttonfilter" role="group" aria-label="Basic radio toggle button group">
+                                  
+                                  <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
+                                         #radioInput10 autocomplete="off" (click)="date_pagination(10)">
+                                  <label class="btn btn-outline-secondary" for="btnradio2">10</label>
+                              
+                                  <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
+                                         #radioInput20 autocomplete="off" (click)="date_pagination(20)">
+                                  <label class="btn btn-outline-secondary" for="btnradio3">20</label>
+                              
+                                  <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
+                                         #radioInput30 autocomplete="off" (click)="date_pagination(30)">
+                                  <label class="btn btn-outline-secondary" for="btnradio4">30</label>
+                                
                                 </div>
-                            </li>
+                              </li>
+                              
                         </ul>
                     </div>
                     <div class="row align-items-start h-auto mb-4">
@@ -162,25 +158,30 @@
                                 </div>
                             </div>
                         </div>
-                        <ng-container *ngIf="isChannelShow!=='morinaga'">
-                            <div class="col-lg-4 col-md-6">
-                                <div class="card dashboard-card">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <div>
-                                                <span class="iconButton medium skyBg mb-4">
-                                                    <i class="fa-light fa-retweet"></i>
-                                                </span>
-                                                <p class="coal mb-0"> {{ selectedChannelLabel === 'Twitter' ? 'Tweets' :
-                                                    'Comments' }}</p>
+           
+                            <ng-container *ngIf="isChannelShow!=='morinaga'  &&  isChannelShow!=='ttpl' ">
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="card dashboard-card">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <span class="iconButton medium skyBg mb-4">
+                                                        <i class="fa-light fa-retweet"></i>
+                                                    </span>
+                                                    <p class="coal mb-0"> {{ selectedChannelLabel === 'Twitter' ?
+                                                        'Tweets' :
+                                                        'Comments' }}</p>
+                                                </div>
+                                                <h2>{{agent_performance_report?.commentCount}}</h2>
                                             </div>
-                                            <h2>{{agent_performance_report?.commentCount}}</h2>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </ng-container>
-                       
+                            </ng-container>
+               
+
+
+
                         <div class="col-lg-4 col-md-6">
                             <div class="card dashboard-card">
                                 <div class="card-body">
@@ -197,11 +198,11 @@
                             </div>
                         </div>
                     </div>
-                
+
                     <div class="row">
-                      
-                        <ng-container >
-                            <span  *ngIf="isChannelShow!=='morinaga'">
+
+                        <ng-container>
+                            <span *ngIf="isChannelShow!=='morinaga' && isChannelShow!=='ttpl'">
                                 <div class="col-12">
                                     <div class="card iceBg p-4 rounded mb-5">
                                         <h5 class="section-heading mb-4 p-0">{{ selectedChannelLabel }}</h5>
@@ -216,11 +217,11 @@
                                                 <!-- <div #main style="height: 350px; width: 100%;"></div> -->
                                             </div>
                                         </ng-container>
-                                        
+
                                     </div>
                                 </div>
                             </span>
-                       
+
                         </ng-container>
                         <!-- <div class="col-12">
                        
@@ -248,7 +249,7 @@
                      
                         </ng-container> -->
                     </div>
-            
+
                     <div class="row">
                         <div class="col-12">
                             <div class="card iceBg p-4 rounded mb-5">
@@ -269,7 +270,8 @@
                                             <i [ngClass]="channel.icon"></i>
                                         </span>
                                     </span>
-                                    <span class="ps-3" *ngIf="isChannelShow!=='morinaga'">{{ selectedChannelLabel }}</span>
+                                    <span class="ps-3" *ngIf="isChannelShow!=='morinaga'  &&  isChannelShow!=='ttpl'">{{ selectedChannelLabel
+                                        }}</span>
                                 </h5>
                             </div>
                             <div class="col-6">
@@ -292,8 +294,9 @@
                                 <thead class="fixed_first_row">
                                     <tr>
                                         <th>Agent</th>
-                                    
-                                        <th *ngIf="isChannelShow!=='morinaga'">{{ selectedChannelLabel === 'Twitter' ? 'Tweets' : 'Comments' }}</th>
+
+                                        <th *ngIf="isChannelShow!=='morinaga' && isChannelShow!=='ttpl'">{{ selectedChannelLabel === 'Twitter' ?
+                                            'Tweets' : 'Comments' }}</th>
                                         <th>Direct Messages</th>
                                         <th>First Response Time</th>
                                         <th>Avg. Reply Time</th>
@@ -304,7 +307,7 @@
                                 <tbody>
                                     <tr *ngFor="let agent of agent_performance_report?.agentPerformance">
                                         <td>{{ agent.agentName }}</td>
-                                        <td  *ngIf="isChannelShow!=='morinaga'">{{ agent.commentCount }}</td>
+                                        <td *ngIf="isChannelShow!=='morinaga' && isChannelShow!=='ttpl'">{{ agent.commentCount }}</td>
                                         <td>{{ agent.messageCount }}</td>
                                         <td>{{ agent.firstResponseTime | date:"YYYY, MM, dd, HH:MM:ss a" }}</td>
                                         <td>{{ agent.averageTime }}</td>
@@ -314,7 +317,7 @@
                                     </tr>
                                     <tr class="bg-light">
                                         <td><strong>Total</strong> </td>
-                                        <td><strong>{{ calculateTotalTweets() }}</strong></td>
+                                        <td  *ngIf="isChannelShow!=='morinaga' && isChannelShow!=='ttpl'"><strong >{{ calculateTotalTweets() }}</strong></td>
                                         <td><strong>{{ calculateTotalDirectMessages() }}</strong></td>
                                         <td></td>
                                         <td></td>

@@ -16,9 +16,10 @@ import { ExcelService } from '../../services/excel.service';
   imports: [CommonModule, RouterModule, FormsModule, NgxSpinnerModule, SharedModule]
 })
 export class AgentPerformanceReportComponent implements OnInit {
-  @ViewChild('radioInput', { static: false })
-  radioInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('main', { static: false  }) main!: ElementRef
+  @ViewChild('radioInput10') radioInput10!: ElementRef;
+  @ViewChild('radioInput20') radioInput20!: ElementRef;
+  @ViewChild('radioInput30') radioInput30!: ElementRef;
+  @ViewChild('main', { static: false }) main!: ElementRef
   @ViewChild('message', { static: false }) message!: ElementRef
   searchText: string = '';
   startDate: string = '';
@@ -37,18 +38,21 @@ export class AgentPerformanceReportComponent implements OnInit {
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
-  channelOptions:any[]=[]
- selectedDays:any=''
-  commentDateWiseGraph:any;
-  channelOptionsByplatform:any[]=[]
-  isShowG:boolean=false
-  messageDateWiseGraph:any;
-activeChannel:any
- isChannelShow:any='';
-isShowCommentGraph:boolean=false
- paginationDate:any[]=[
-  {id:5,value:5},{id:10,value:10},{id:20,value:20},{id:30,value:30}
- ]
+  channelOptions: any[] = []
+  selectedDays: any = ''
+  commentDateWiseGraph: any;
+  channelOptionsByplatform: any[] = []
+  isShowG: boolean = false
+  messageDateWiseGraph: any;
+  activeChannel: any;
+  isCheckedDate10: boolean = false
+  isCheckedDate20: boolean = false
+  isCheckedDate30: boolean = false
+  isChannelShow: any = '';
+  isShowCommentGraph: boolean = false
+  paginationDate: any[] = [
+    { id: 5, value: 5 }, { id: 10, value: 10 }, { id: 20, value: 20 }, { id: 30, value: 30 }
+  ]
   constructor(private _hS: HeaderService,
     private commonService: CommonDataService,
     private cdr: ChangeDetectorRef,
@@ -68,32 +72,32 @@ isShowCommentGraph:boolean=false
     this._hS.setHeader(newObj);
     this.makeChartResponsive();
   }
-  getBaseurl(){
-    this.activeChannel=window.location.origin
-   
-    if(this.activeChannel==="https://waengage.enteract.live"){
-      this.isChannelShow='morinaga'
+  getBaseurl() {
+    this.activeChannel = window.location.origin
+
+    if (this.activeChannel == "https://waengage.enteract.live") {
+      this.isChannelShow = 'morinaga'
       this.getChannel()
     }
-    else if(this.activeChannel==='https://keportal.enteract.live'){
-       this.isChannelShow='KE'
-       this.getChannel()
-    }
-    else if(this.activeChannel==='https://tppl.360scrm'){
-      this.isChannelShow='ttpl';
+    else if (this.activeChannel == 'https://keportal.enteract.live') {
+      this.isChannelShow = 'KE'
       this.getChannel()
     }
-    else if(this.activeChannel==='https://engage.jazz.com.pk')
-    {
-      this.isChannelShow='jazz'
+    else if (this.activeChannel == 'https://tppl.360scrm.com') {
+      this.isChannelShow = 'ttpl';
+
       this.getChannel()
     }
-    else if(this.activeChannel=='https://uiengage.enteract.app'){
-  this.isChannelShow='stagging',
-  this.getChannel()
+    else if (this.activeChannel === 'https://engage.jazz.com.pk') {
+      this.isChannelShow = 'jazz'
+      this.getChannel()
     }
-    else{
-      this.isChannelShow='local'
+    else if (this.activeChannel == 'https://uiengage.enteract.app') {
+      this.isChannelShow = 'stagging',
+        this.getChannel()
+    }
+    else {
+      this.isChannelShow = 'local'
       this.getChannel()
     }
 
@@ -101,7 +105,7 @@ isShowCommentGraph:boolean=false
   getListUser(): void {
     this.commonService.GetUserList()
       .subscribe((response: any) => {
-       
+
         this.totalAgents = response;
         console.log(this.totalAgents);
       }, (error: any) => {
@@ -118,9 +122,9 @@ isShowCommentGraph:boolean=false
     }
   }
   selectAllChannels() {
-    const selectAllChannelsOption = this.channelOptions.find((option:any) => option.name === 'Select All Channels');
+    const selectAllChannelsOption = this.channelOptions.find((option: any) => option.name === 'Select All Channels');
     if (selectAllChannelsOption) {
-      this.channelOptions.forEach((option:any) => {
+      this.channelOptions.forEach((option: any) => {
         if (option.name !== 'Select All Channels') {
           option.isSelected = !selectAllChannelsOption.isSelected;
         }
@@ -130,19 +134,24 @@ isShowCommentGraph:boolean=false
       this.cdr.detectChanges();
     }
   }
+
   resetEndDate() {
+
+
     if (this.endDate >= this.startDate) {
+      debugger
       this.addAgentGraph();
-      if (this.radioInput !== undefined) {
-            this.radioInput.nativeElement.checked = false;
-          }
+     
+      this.radioInput10.nativeElement.checked = false;
+      this.radioInput20.nativeElement.checked = false; 
+      this.radioInput30.nativeElement.checked = false;
     } else {
       alert('EndDate is lessthen StartDate');
       this.endDate = '';
     }
   }
-  resetStartDate(){
-   this.endDate=''
+  resetStartDate() {
+    this.endDate = ''
 
   }
   calculateTotalTweets(): number {
@@ -174,7 +183,7 @@ isShowCommentGraph:boolean=false
       this.AllChannels = this.singleChanenel
     }
     else {
-      let singleChanenelArray = this.channelOptions.filter((item:any) => item.isSelected).map((item:any) => item.name);
+      let singleChanenelArray = this.channelOptions.filter((item: any) => item.isSelected).map((item: any) => item.name);
       this.AllChannels = singleChanenelArray.toString();
     }
     let selectedTagByArray = this.totalAgents.filter(item => item.isSelected).map(item => item.id);
@@ -214,125 +223,43 @@ isShowCommentGraph:boolean=false
       agents: this.selectedTagBy,
       channels: this.AllChannels
     };
-   
-      this.SpinnerService.show();
-      this.commonService.AddAgentPerformance(requestData).subscribe(
-        (response: any) => {
-          this.SpinnerService.hide();
-          this.agent_performance_report = response;
-          this.Agent_data = [];
-          this.Message_data = []
-          const commentDateWise = this.agent_performance_report.commentDateWise;
-          commentDateWise.forEach((data: any) => {
-            const date = new Date(data.date);
-            this.Agent_data.push({ x: date, y: data.count });
-            if(this.Agent_data.length==0){
-              this.isShowCommentGraph=true
-            }
-          });
-       
-          // if (this.Agent_data.length > 0) {
-            if(this.isChannelShow!=='morinaga'){
-              const doms = this.main.nativeElement;
-              this.commentDateWiseGraph = echarts.init(doms, null, {
-                renderer: 'canvas',
-                useDirtyRect: false
-              });
-              var option: echarts.EChartsOption;
 
-              function dataFormat(date: Date): string {
-                const day: number = date.getDate();
-                const monthNames: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                const month: string = monthNames[date.getMonth()];
-                return `${day} ${month}`;
-              }
-              option = {
-                xAxis: {
-                  type: 'category',
-                  data: this.Agent_data.map(item => dataFormat(item.x)),
-                  axisLabel: {
-                    show: true,
-                    interval: 0,
-                    formatter: function (value: string) {
-                      return value;
-                    },
-                    rotate: 45
-                  },
-                },
-                yAxis: {
-                  type: 'value',
-            nameLocation: 'middle',
-            name: 'Total Number of Comments',
-            nameTextStyle: {
-              fontSize: 12,
-              color: 'grey',
-              lineHeight: 80,
-            },
-                },
-                tooltip: {
-                  show: true, // Show the tooltip
-                },
-                legend: {
-                  data: [this.selectedChannelLabel],
-                  icon:'circle',
-                  bottom:0
-                },
-                toolbox: {
-                  feature: {
-                    saveAsImage: {},
-                  },
-                },
-                series: [
-                  {
-                    name: this.selectedChannelLabel,
-                    data: this.Agent_data.map(item => item.y),
-                    type: 'line',
-                    itemStyle: {
-                      color: 'red',
-                    },
-                    lineStyle: {
-                      width: 2,
-                    },
-                  },
-                ],
-              };
-    
-              option && this.commentDateWiseGraph.setOption(option)
-            }
-       
-        
-            
-          
-          
-       
-        
-        // }
-          // messageDateWise
-          
-          const messageDateWise = this.agent_performance_report.messageDateWise;
-          messageDateWise.forEach((data: any) => {
-            const date = new Date(data.date);
-            this.Message_data.push({ x: date, y: data.count });
-          });
+    this.SpinnerService.show();
+    this.commonService.AddAgentPerformance(requestData).subscribe(
+      (response: any) => {
+        this.SpinnerService.hide();
+        this.agent_performance_report = response;
+        this.Agent_data = [];
+        this.Message_data = []
 
-          const myDom = this.message.nativeElement;
-          this.messageDateWiseGraph = echarts.init(myDom, null, {
+        const commentDateWise = this.agent_performance_report.commentDateWise;
+        commentDateWise.forEach((data: any) => {
+          const date = new Date(data.date);
+          this.Agent_data.push({ x: date, y: data.count });
+          if (this.Agent_data.length == 0) {
+            this.isShowCommentGraph = true
+          }
+        });
+
+        // if (this.Agent_data.length > 0) {
+        if (this.isChannelShow !== 'morinaga' && this.isChannelShow !== 'ttpl') {
+          const doms = this.main.nativeElement;
+          this.commentDateWiseGraph = echarts.init(doms, null, {
             renderer: 'canvas',
             useDirtyRect: false
           });
           var option: echarts.EChartsOption;
 
-          function formatDate(date: Date): string {
+          function dataFormat(date: Date): string {
             const day: number = date.getDate();
             const monthNames: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
             const month: string = monthNames[date.getMonth()];
             return `${day} ${month}`;
           }
-
           option = {
             xAxis: {
               type: 'category',
-              data: this.Message_data.map(item => formatDate(item.x)),
+              data: this.Agent_data.map(item => dataFormat(item.x)),
               axisLabel: {
                 show: true,
                 interval: 0,
@@ -344,21 +271,21 @@ isShowCommentGraph:boolean=false
             },
             yAxis: {
               type: 'value',
-            nameLocation: 'middle',
-            name: 'Total Number of Messages',
-            nameTextStyle: {
-              fontSize: 12,
-              color: 'grey',
-              lineHeight: 80,
-            },
+              nameLocation: 'middle',
+              name: 'Total Number of Comments',
+              nameTextStyle: {
+                fontSize: 12,
+                color: 'grey',
+                lineHeight: 80,
+              },
             },
             tooltip: {
-              trigger: 'axis'
+              show: true, // Show the tooltip
             },
             legend: {
-              data: ['Direct Message'],
-              icon:'circle',
-              bottom:0
+              data: [this.selectedChannelLabel],
+              icon: 'circle',
+              bottom: 0
             },
             toolbox: {
               feature: {
@@ -367,11 +294,11 @@ isShowCommentGraph:boolean=false
             },
             series: [
               {
-                name: 'Direct Message',
-                data: this.Message_data.map(item => item.y),
+                name: this.selectedChannelLabel,
+                data: this.Agent_data.map(item => item.y),
                 type: 'line',
                 itemStyle: {
-                  color: 'lightgreen',
+                  color: 'red',
                 },
                 lineStyle: {
                   width: 2,
@@ -380,19 +307,102 @@ isShowCommentGraph:boolean=false
             ],
           };
 
-          option && this.messageDateWiseGraph.setOption(option);
-        },
-        (error: any) => {
-          console.error('Error adding agent performance report:', error);
+          option && this.commentDateWiseGraph.setOption(option)
+        }
+
+
+
+
+
+
+
+        // }
+        // messageDateWise
+
+        const messageDateWise = this.agent_performance_report.messageDateWise;
+        messageDateWise.forEach((data: any) => {
+          const date = new Date(data.date);
+          this.Message_data.push({ x: date, y: data.count });
         });
 
-   
-    
+        const myDom = this.message.nativeElement;
+        this.messageDateWiseGraph = echarts.init(myDom, null, {
+          renderer: 'canvas',
+          useDirtyRect: false
+        });
+        var option: echarts.EChartsOption;
+
+        function formatDate(date: Date): string {
+          const day: number = date.getDate();
+          const monthNames: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          const month: string = monthNames[date.getMonth()];
+          return `${day} ${month}`;
+        }
+
+        option = {
+          xAxis: {
+            type: 'category',
+            data: this.Message_data.map(item => formatDate(item.x)),
+            axisLabel: {
+              show: true,
+              interval: 0,
+              formatter: function (value: string) {
+                return value;
+              },
+              rotate: 45
+            },
+          },
+          yAxis: {
+            type: 'value',
+            nameLocation: 'middle',
+            name: 'Total Number of Messages',
+            nameTextStyle: {
+              fontSize: 12,
+              color: 'grey',
+              lineHeight: 80,
+            },
+          },
+          tooltip: {
+            trigger: 'axis'
+          },
+          legend: {
+            data: ['Direct Message'],
+            icon: 'circle',
+            bottom: 0
+          },
+          toolbox: {
+            feature: {
+              saveAsImage: {},
+            },
+          },
+          series: [
+            {
+              name: 'Direct Message',
+              data: this.Message_data.map(item => item.y),
+              type: 'line',
+              itemStyle: {
+                color: 'lightgreen',
+              },
+              lineStyle: {
+                width: 2,
+              },
+            },
+          ],
+        };
+
+        option && this.messageDateWiseGraph.setOption(option);
+      },
+      (error: any) => {
+        console.error('Error adding agent performance report:', error);
+      });
+
+
+
   }
   totalAgents = [{ id: '', name: '', isSelected: false }];
 
   // channelOptions = [
-  
+
   //   { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
   //   { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
   //   { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
@@ -405,31 +415,31 @@ isShowCommentGraph:boolean=false
   //   // { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
   //   // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
   // ];
-  getChannel(){
-   
-    if(this.isChannelShow=="morinaga"){
+  getChannel() {
+
+    if (this.isChannelShow == "morinag") {
       this.channelOptions = [
-     
+
         { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
       ];
     }
-    if(this.isChannelShow=="jazz"){
+    if (this.isChannelShow == "jazz") {
       this.channelOptions = [
         // { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
-    { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
-    { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
-    { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
-    { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
-    { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
-    { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+        { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+        { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+        { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+        { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+        { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
       ];
     }
-    if(this.isChannelShow=="ttpl"){
+    if (this.isChannelShow == "ttpl") {
       this.channelOptions = [
-    { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
       ];
     }
-    if(this.isChannelShow=="KE"){
+    if (this.isChannelShow == "KE") {
       this.channelOptions = [
         { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
         { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
@@ -437,51 +447,52 @@ isShowCommentGraph:boolean=false
         { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
       ];
     };
-    if(this.isChannelShow=='local'){
-      
- this. channelOptions = [
-  
-    { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
-    { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
-    { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
-    { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
-    { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
-    // { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
-    // { id: '16', name: 'SMS', icon: 'fa-solid fa-comment-alt pe-2', isSelected: false },
-    { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
-    // { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
-    // { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
-    // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
-  ];
+    if (this.isChannelShow == 'local') {
+
+      this.channelOptions = [
+
+        { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+        { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+        { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+        { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+        { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+        // { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
+        // { id: '16', name: 'SMS', icon: 'fa-solid fa-comment-alt pe-2', isSelected: false },
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+        // { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+        // { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+        // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
+      ];
     };
-    if(this.isChannelShow=='stagging'){
-      
-      this. channelOptions = [
-       
-         { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
-         { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
-         { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
-         { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
-         { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
-         // { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
-         // { id: '16', name: 'SMS', icon: 'fa-solid fa-comment-alt pe-2', isSelected: false },
-         { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
-         // { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
-         // { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
-         // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
-       ];
-         }
+    if (this.isChannelShow == 'stagging') {
+
+      this.channelOptions = [
+
+        { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+        { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
+        { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+        { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
+        { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
+        // { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
+        // { id: '16', name: 'SMS', icon: 'fa-solid fa-comment-alt pe-2', isSelected: false },
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+        // { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+        // { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+        // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
+      ];
+    }
   }
   getChannelIcon(channelName: string): string {
-    const selectedChannel = this.channelOptions.find((channel:any) => channel.name === channelName);
+    const selectedChannel = this.channelOptions.find((channel: any) => channel.name === channelName);
     return selectedChannel ? selectedChannel.icon : '';
   }
   closeToaster() {
     this.toastermessage = false;
   }
-  date_pagination(event:any) {
-   
-  this.selectedDays=event.target.value
+  date_pagination(event: any) {
+
+    this.selectedDays = event
+
     let currentDate = new Date();
     let prevDate = currentDate.setDate(currentDate.getDate() - this.selectedDays);
     this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
@@ -493,12 +504,12 @@ isShowCommentGraph:boolean=false
     this.excelServices.exportAsExcelFile(this.agent_performance_report?.agentPerformance, 'Agent-Performance-Report')
   }
 
-  makeChartResponsive(){
-    window.addEventListener('resize', ()=>{
-      if(this.commentDateWiseGraph){
+  makeChartResponsive() {
+    window.addEventListener('resize', () => {
+      if (this.commentDateWiseGraph) {
         this.commentDateWiseGraph.resize();
       }
-      if(this.messageDateWiseGraph){
+      if (this.messageDateWiseGraph) {
         this.messageDateWiseGraph.resize();
       }
     })

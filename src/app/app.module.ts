@@ -32,6 +32,7 @@ import { LayoutsModule } from './layouts/layouts.module';
     CommonModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot(),
+
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production, autoPause: true }),
     LayoutsModule
   

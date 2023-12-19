@@ -70,7 +70,7 @@ export class AnalyticsMenuComponent implements OnInit {
         { name: 'DB Settings', link: ' /analytics/db-settings' },
         { name: 'Dashboard', link: '/analytics/dashboard' },
         { name: 'Live Monitoring', link: '/analytics/live-monitoring ' },
-        { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report ' },
+        { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
         { name: 'BOT Interactions', link: '/analytics/handled-bot' },
         { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
         { name: 'Unique Interactions', link: '/analytics/unique-customers' },

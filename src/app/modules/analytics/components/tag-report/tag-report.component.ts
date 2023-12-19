@@ -73,6 +73,15 @@ export class TagReportComponent implements OnInit {
 
       this.endDate = this.datePipe.transform(this.endDate, 'YYYY-MM-dd') || '';
     }
+    const startDateObj = new Date(this.startDate);
+    const endDateObj = new Date(this.endDate);
+    const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
+    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    if (diffDays > 30) {
+      alert('Select a date range of 30 days or less');
+      this.endDate=''
+      return;
+    }
     let obj = {
       from: this.startDate,
       to: this.endDate,

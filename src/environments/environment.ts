@@ -28,12 +28,13 @@ export const environment = {
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
   LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
+  KelisteningBaseUrl:'https://kelistening.360scrm.com/',
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  IdentityBaseUrl: 'https://idtservice.enteract.live/api',
-  CommonBaseUrl: 'https://comservices.enteract.live/api/', 
-  SignalRCommonBaseUrl: 'https://comservices.enteract.live/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
+  // IdentityBaseUrl: 'https://idtservice.enteract.live/api',
+  // CommonBaseUrl: 'https://comservices.enteract.live/api/', 
+  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
   
   // For Jazz
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
@@ -52,15 +53,16 @@ export const environment = {
   ServiceBaseUrl : 'https://waservice.enteract.live/api/',
   
   // // For Testing
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  //   CommonBaseUrl: 'https://common-engage.enteract.app/api/', 
-  //   //  CommonBaseUrl: 'http://10.111.32.52:45455/api/', 
-  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+    CommonBaseUrl: 'https://common-engage.enteract.app/api/', 
+    //  CommonBaseUrl: 'http://10.111.32.52:45455/api/', 
+  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
 
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
   
-  ProfileBaseUrl:'https://profiler.enteract.app/api/',
+   ProfileBaseUrl:'https://profiler.enteract.app/api/',
+  // ProfileBaseUrl:'http://10.111.32.52:45455/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
   // for testing purpose
@@ -233,7 +235,8 @@ export const environment = {
       getLinkedInReport:'Activity/GetOrganizationSharedInsights',
       emailShiftReport:'Report/EmailShiftReport',
       getLinkedInFollowers:'Activity/GetOrganizationInsights',
-      regionwiseReport:'Report/GetRegionWiseReport'
+      regionwiseReport:'Report/GetRegionWiseReport',
+      wordCloud:'SocialMediaService/GetDashboardCloudAndHashTags'
     },
     facebook: {
       comments: 'Facebook/GetFbPost',

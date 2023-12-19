@@ -24,7 +24,7 @@ export class LinkedInReportComponent implements OnInit {
   allDates: any[] = [];
   ImpressionsGraphData: any[] = [];
   UniqueImpressionsGraphData: any[] = [];
-
+   isRadiobuttonChecked:boolean=false
   followersGraphData: any[] = [];
   EngagementGraphData: any[] = [];
   EngagementRateGraphData: any[] = [];
@@ -51,6 +51,7 @@ export class LinkedInReportComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
     const newObj = {
       title: 'LinkedIn Report',
       url: '/analytics/linkedin-report',
@@ -78,8 +79,11 @@ export class LinkedInReportComponent implements OnInit {
   }
   resetEndDate() {
     if (this.toDate >= this.fromDate) {
+      debugger
+     
       this.getLinkedInReportData();
       this.getAllLinkedInfollowrs()
+
     } else {
       alert('EndDate is lessthen StartDate');
       this.toDate = '';
@@ -119,6 +123,7 @@ export class LinkedInReportComponent implements OnInit {
     this.ClickThroughRateGraphData = [];
     this.SpinnerService.show();
     this.commonDataService.GetLinkedInReportData(obj).subscribe((res: any) => {
+    
       this.LinkedInReport = res;
       this.SpinnerService.hide();
       this.topFiveUpdates = this.LinkedInReport.updates;
@@ -580,6 +585,15 @@ export class LinkedInReportComponent implements OnInit {
     //   to: "2023-11-21",
     //   lastPostId: 0
     // }
+    const startDateObj = new Date(this.fromDate);
+    const endDateObj = new Date(this.toDate);
+    const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
+    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    if (diffDays > 30) {
+      alert('Select a date range of 30 days or less');
+      this.toDate=''
+      return;
+    }
     
     let obj ={
       "pageId": "76213578",

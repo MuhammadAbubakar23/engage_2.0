@@ -121,6 +121,7 @@ export class FacebookReportComponent implements OnInit {
   LTPL: any;
   LTPC: any;
   LTPS: any;
+
   LtotalSumAudienceEngagement: any;
   totalSumOfAudience: any;
   constructor(
@@ -372,8 +373,12 @@ export class FacebookReportComponent implements OnInit {
         ) {
           this.publishedPegePostSpanDates.push(x.dateValue.split('T')[0]);
         }
+        // date sorting 
+   
         this.publishedPegePostSpanCounts.push(x.activityCount);
       });
+      
+
       this.publishedUserPostSpan = res.publishedUserPostSpan;
       this.publishedUserPostSpan?.forEach((x: any) => {
         this.userPerPost += x.activityCount;
@@ -486,7 +491,7 @@ export class FacebookReportComponent implements OnInit {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: this.pageReachSpanDates,
+          data: this.pageReachSpanDates.sort((a,b) =>  new Date(b).getTime() - new Date(a).getTime()).reverse(),
           axisLabel: {
             rotate: 45,
           },
@@ -557,7 +562,7 @@ export class FacebookReportComponent implements OnInit {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: this.pageReactionsSpanDates,
+          data: this.pageReactionsSpanDates.sort((a,b) =>  new Date(b).getTime() - new Date(a).getTime()).reverse(),
           axisLabel: {
             rotate: 45,
           },
@@ -658,7 +663,7 @@ export class FacebookReportComponent implements OnInit {
       xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: this.totalPeopleWhoViewSpanDates,
+        data: this.totalPeopleWhoViewSpanDates.sort((a,b) =>  new Date(b).getTime() - new Date(a).getTime()).reverse(),
         axisLabel: {
           rotate: 45,
         },
@@ -746,7 +751,7 @@ export class FacebookReportComponent implements OnInit {
         },
         xAxis: {
           type: 'category',
-          data: this.publishedPegePostSpanDates,
+          data: this.publishedPegePostSpanDates.sort((a,b) =>  new Date(b).getTime() - new Date(a).getTime()).reverse(),
           axisLabel: {
             rotate: 45,
           },
@@ -828,7 +833,7 @@ export class FacebookReportComponent implements OnInit {
       xAxis: [
         {
           type: 'category',
-          data: this.publishedPegePostSpanDates,
+          data: this.publishedPegePostSpanDates.sort((a,b) =>  new Date(b).getTime() - new Date(a).getTime()).reverse(),
           axisLabel: {
             rotate: 45,
           },
@@ -973,7 +978,7 @@ export class FacebookReportComponent implements OnInit {
           {
             type: 'category',
             boundaryGap: false,
-            data: this.audiencelikesdate,
+            data: this.audiencelikesdate.sort((a,b) =>  new Date(b).getTime() - new Date(a).getTime()).reverse(),
             axisLabel: {
               rotate: 45,
             },
@@ -1144,6 +1149,7 @@ export class FacebookReportComponent implements OnInit {
       this.getAllfeacebookData();
 
       if (this.radioInput !== undefined) {
+        debugger
         this.radioInput.nativeElement.checked = false;
       }
     } else {
