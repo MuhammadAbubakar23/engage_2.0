@@ -30,6 +30,7 @@ export const environment = {
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
   LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
+  KelisteningBaseUrl:'https://kelistening.360scrm.com/',
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE

@@ -50,18 +50,18 @@
 
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
                                     #radioInput
-                                        (click)="getPagenationDay(15)" autocomplete="off" >
-                                    <label class="btn btn-outline-secondary" for="btnradio1">15</label>
+                                        (click)="getPagenationDay(10)" autocomplete="off" >
+                                    <label class="btn btn-outline-secondary" for="btnradio1">10</label>
+
+                                    <input type="radio" class="btn-check" name="btnradio" (click)="getPagenationDay(20)"
+                                    #radioInput
+                                        id="btnradio2" autocomplete="off">
+                                    <label class="btn btn-outline-secondary" for="btnradio2">20</label>
 
                                     <input type="radio" class="btn-check" name="btnradio" (click)="getPagenationDay(30)"
                                     #radioInput
-                                        id="btnradio2" autocomplete="off">
-                                    <label class="btn btn-outline-secondary" for="btnradio2">30</label>
-
-                                    <input type="radio" class="btn-check" name="btnradio" (click)="getPagenationDay(60)"
-                                    #radioInput
                                         id="btnradio3" autocomplete="off">
-                                    <label class="btn btn-outline-secondary" for="btnradio3">60</label>
+                                    <label class="btn btn-outline-secondary" for="btnradio3">30</label>
                                     <!-- <input type="radio" class="btn-check" name="btnradio"
                                     (click)="getPagenationDay(90)"
                                      id="btnradio3"
@@ -159,7 +159,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu w-auto dd-scroll"
                                                     aria-labelledby="dropdownMenu2"
-                                                    style="overflow: auto; height: 200px;">
+                                                    style="overflow: auto; height: 100px;">
                                                     <li *ngFor="let cd of user.tags; let i=index">
                                                         <span class="silver" *ngIf="i !==0 && i !==1 ">
                                                             <a class="dropdown-item">
@@ -182,7 +182,7 @@
 
                                     <div [id]="'detail'+ user?.agentId" class="accordion-collapse collapse "
                                         data-bs-parent="#accordionExample ">
-                                        <div class="accordion-body" style="overflow: auto; height: 300px;">
+                                        <div class="accordion-body" style="overflow: auto; height: 200px;">
                                             <div class="py-2 border-bottom"
                                                 *ngFor="let userDetail of user.customerData">
                                                 <div class="d-flex">

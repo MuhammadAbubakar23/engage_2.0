@@ -85,7 +85,6 @@ export class InboundOntboundReportComponent implements OnInit {
     this.activeChannel = window.location.origin
 
     if (this.activeChannel == 'https://waengage.enteract.live') {
-
       this.isChannelShow = "morinaga";
       this.getChannel()
     }
@@ -883,8 +882,10 @@ export class InboundOntboundReportComponent implements OnInit {
       },
       toolbox: {
         feature: {
-          saveAsImage: {}
+          saveAsImage: {},
+          
         }
+        
       },
       xAxis: [{ type: 'category', data: this.platformsArray }],
       yAxis: [{

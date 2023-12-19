@@ -1,7 +1,8 @@
 <div class="content-box-wrapper d-flex w-100">
     <div class="middle-content d-flex">
         <div class="p-4 d-grid w-100">
-            <div class="analytics-dashboard" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none; overflow-x: hidden;">
+            <div class="analytics-dashboard" data-scrollbar="true" tabindex="-1"
+                style="overflow: auto; outline: none; overflow-x: hidden;">
                 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
                     [fullScreen]="false">
                     <p style="color: white"> Loading... </p>
@@ -45,7 +46,7 @@
                                         <span class="iconButton medium navyBg mb-3">
                                             <i class="fa-light fa-thumbs-up"></i>
                                         </span>
-                                        <h4>{{social_media_report?.likesCount}}</h4>
+                                        <h4>{{executiveDashborad?.totalPageLikes}}</h4>
                                         <p class="mb-0">Total likes</p>
                                         <!-- <small class="sky">+8% from yesterday</small> -->
                                     </div>
@@ -57,7 +58,7 @@
                                         <span class="iconButton medium navyBg mb-3">
                                             <i class="fa-light fa-comment"></i>
                                         </span>
-                                        <h4>{{social_media_report?.commentCount}}</h4>
+                                        <h4>{{executiveDashborad?.totalPostComments}}</h4>
                                         <p class="mb-0">Comments</p>
                                         <!-- <small class="sky">+4% from yesterday</small> -->
                                     </div>
@@ -69,7 +70,7 @@
                                         <span class="iconButton medium navyBg mb-3">
                                             <i class="fa-light fa-share"></i>
                                         </span>
-                                        <h4>{{social_media_report?.sharesCount}}</h4>
+                                        <h4>{{executiveDashborad?.totalPostShares}}</h4>
                                         <p class="mb-0"> Share</p>
                                         <!-- <small class="sky">+1.2% from yesterday</small> -->
                                     </div>
@@ -138,21 +139,43 @@
                                                 <button class="nav-link" id="category-tab">Category wise</button>
                                             </li> -->
                                         </ul>
-                                        <div class="graphcontainer align-items-end">
-                                            <div id="enagement" style="height: 400px; width: 100%;">
+                                        <ng-container *ngIf="isShowEngagementGraph==false">
+                                            <div class="graphcontainer align-items-end">
+                                                <div id="enagement" style="height: 400px; width: 100%;">
+
+                                                </div>
 
                                             </div>
-                                          
-                                        </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="isShowEngagementGraph==true">
+                                            <div class="graphcontainer align-items-end">
+                                                <!-- <div id="enagement" style="height: 400px; width: 100%;">
+    
+                                                </div> -->
+                                                <p>No Data Found</p>
+                                            </div>
+                                        </ng-container>
+
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-3 p-0">SENTIMENT ANALYSIS</h5>
-                                        <div >
-                                            <div id="main" style="height: 440px ; width: 100%; margin-left: 0px;">
+                                        <ng-container *ngIf="isShowSentimentGraph==false">
+                                            <div>
+                                                <div id="main" style="height: 440px ; width: 100%; margin-left: 0px;">
+                                                </div>
                                             </div>
-                                        </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="isShowSentimentGraph==true">
+                                            <div class="graphcontainer align-items-end">
+                                                <!-- <div id="enagement" style="height: 400px; width: 100%;">
+    
+                                                </div> -->
+                                                <p>No Data Found</p>
+                                            </div>
+                                        </ng-container>
+
 
                                         <!-- <ul class="statlist list-0">
                                             <li>
@@ -179,8 +202,8 @@
                                         </ul> -->
                                     </div>
                                 </div>
-                                
-                               
+
+
                             </div>
                         </div>
                         <div class="my-6">
@@ -188,48 +211,65 @@
                                 <div class="col-md-6">
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-4 p-0">Audience Engagement Graph</h5>
-                                        <div class="graphcontainer align-items-end">
-                                  
+                                        <ng-container *ngIf="isShowAudienceEngagementGraph==false">
+                                            <div class="graphcontainer align-items-end">
                                                 <div id="audience" style="height: 350px; width: 100%;"></div>
-                                            
-                                        </div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="isShowAudienceEngagementGraph==true">
+                                            <div class="graphcontainer align-items-end">
+                                                <p> No Data found</p>
+                                                <!-- <div id="audience" style="height: 350px; width: 100%;"></div> -->
+
+                                            </div>
+                                        </ng-container>
+
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="card iceBg p-4 rounded">
+
                                         <h5 class="section-heading mb-3 p-0">Inbound Traffic Graph </h5>
-                                        <div class="graphcontainer align-items-end">
-                                         
+                                        <ng-container *ngIf="isShowInboundGraph==false">
+                                            <div class="graphcontainer align-items-end">
                                                 <div id="inbound" style="height: 350px; width: 100%;"></div>
-                                           
-                                        </div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="isShowInboundGraph==true">
+                                            <div class="graphcontainer align-items-end">
+                                                <p>No Data found</p>
+                                            </div>
+                                        </ng-container>
                                     </div>
                                 </div>
-                            
+
                             </div>
                         </div>
                         <div class="my-4">
                             <div class="row align-items-start h-auto">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-4 p-0">FACEBOOK REACTIONS</h5>
-                                        <div class="graphcontainer align-items-end">
-                                      
-                                                <div id="facebookReaction" style="height: 300px; width: 100%; max-width: 700px;"></div>
+                                        <ng-container *ngIf="isShowfacebookreations==false">
+                                            <div class="graphcontainer align-items-end">
+                                                <div id="facebookReaction"
+                                                    style="height: 300px; width: 100%; max-width: 700px;"></div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="isShowfacebookreations==true">
+                                            <div class="graphcontainer align-items-end">
+                                                <p>No Data Found</p>
 
-                                  
-                                        </div>
+                                            </div>
+                                        </ng-container>
                                     </div>
                                 </div>
-<!--                   
                                 <div class="col-md-6">
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-3 p-0">Word Cloud</h5>
                                         <div class="graphcontainer align-items-center">
-                                            <div class="worldcloud" style="height: 350px; width: 500px;">
-                                                <angular-tag-cloud [config]="options" [zoomOnHover]="zoomOnHoverOptions" 
-                                                    [data]="data"></angular-tag-cloud>
-                                              <ul class="list-inline">
+                                            <div class="worldcloud">
+                                                <ul class="list-inline">
                                                     <li class="list-inline-item">
                                                         <span class="badge rounded-pill skyTransBg">Power Bills
                                                             (1)</span>
@@ -267,65 +307,27 @@
                                                         <span class="badge rounded-pill skyTransBg">Electrocution
                                                             (1)</span>
                                                     </li>
-                                                </ul> 
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
+
                             </div>
                         </div>
-                        <!-- <div class="printsection card my-4 p-4 iceBg">
-                            <h5 class="section-heading mb-4 p-0"> Print Feed</h5>
-                            <div class="printscroll">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <figcaption class="mb-2">The news</figcaption>
-                                          
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <figcaption class="mb-2"> Jang</figcaption>
-                                       
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <figcaption class="mb-2"> Dunya</figcaption>
-                                          
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <figcaption class="mb-2">The news</figcaption>
-                                            
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <figcaption class="mb-2"> Jang</figcaption>
-                                           
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <figcaption class="mb-2"> Dunya</figcaption>
-                                           
-                                        </figure>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
-                        <!-- <div class="heatmap card p-4 my-4">
+                        <div class="heatmap card p-4 my-4">
                             <div class="row align-items-start h-auto">
                                 <div class="col-md-4">
                                     <div class="iconholder ms-auto mb-2">
-                                        <i class="fa-light fa-calendar-plus iconleft"></i>
+                                   
                                         <input name="" id="datepickerrange" class="form-control flatpickr-input"
-                                            placeholder="Date" readonly="readonly" type="text">
+                                            placeholder="Date" type="date">
+                                    </div> <div class="iconholder ms-auto mb-2">
+                                   
+                                        <input name="" id="datepickerrange" class="form-control flatpickr-input"
+                                            placeholder="Date" type="date">
                                     </div>
+
                                     <button class="btn skyBg mb-4">Search</button>
                                     <ul class="list-0">
                                         <li class="pb-2">
@@ -345,23 +347,44 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-md-8">
 
-                                    <div >
-                                     
+                                <div class="col-md-8">
+                                    <div class="text-center">
+                                        <google-map height="400px" width="100%" [center]="center" [zoom]="zoom"
+                                            (mapClick)="moveMap($event)" (mapMousemove)="move($event)">
+
+                                            <map-polygon *ngFor="let path of pathsArray" [paths]="path"
+                                                [options]="{ strokeColor: 'black', strokeWeight: 1, fillColor: 'green' }">
+                                            </map-polygon>
+                                        </google-map>
+
+
                                     </div>
                                 </div>
                             </div>
-                        </div>-->
-                        <div class="card iceBg p-4 my-4">
-                            <h5 class="section-heading mb-4 p-0"> REGIONWISE TRAFFIC</h5>
-                            <div class="graphcontainer align-items-end">
-                            
-                                    <div id="regionWiseTrafic" style="height: 400px; width: 100%;"></div>
-                
-                            </div>
+                        </div>
 
-                        </div> 
+                        <ng-container *ngIf="isShowReginwiseGraph==false">
+                            <div class="card iceBg p-4 my-4">
+                                <h5 class="section-heading mb-4 p-0"> REGIONWISE TRAFFIC</h5>
+                                <div class="graphcontainer align-items-end">
+
+                                    <div id="regionWiseTrafic" style="height: 400px; width: 100%;"></div>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="isShowReginwiseGraph==true">
+                            <div class="card iceBg p-4 my-4">
+                                <h5 class="section-heading mb-4 p-0"> REGIONWISE TRAFFIC</h5>
+                                <div class="graphcontainer align-items-end">
+                                    <p>No Data found</p>
+                                    <!-- <div id="regionWiseTrafic" style="height: 400px; width: 100%;"></div> -->
+
+                                </div>
+
+                            </div>
+                        </ng-container>
+
                     </div>
                     <div class="mediasection" [ngClass]="{'d-none': !isMediaActive}">
                         <div class="my-4">
@@ -395,7 +418,7 @@
                                             </li>
                                         </ul>
                                         <div class="graphcontainer align-items-end">
-                                            <div >
+                                            <div>
                                                 <!-- <img src="../images/kgraph9.png" class="img-fluid" alt=""> -->
                                             </div>
                                         </div>
@@ -410,7 +433,7 @@
                                         <h5 class="section-heading mb-4 p-0">SENTIMENT ANALYSIS</h5>
 
                                         <div class="graphcontainer">
-                                            <div >
+                                            <div>
                                                 <!-- <img src="../images/g03.svg" class="img-fluid" alt=""> -->
                                             </div>
                                         </div>
@@ -421,7 +444,7 @@
                                         <h5 class="section-heading mb-3 p-0">Engagement </h5>
 
                                         <div class="graphcontainer">
-                                            <div >
+                                            <div>
 
                                             </div>
                                         </div>
@@ -435,7 +458,7 @@
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-4 p-0"> Category comparison</h5>
                                         <div class="graphcontainer">
-                                            <div >
+                                            <div>
                                                 <!-- <img src="../images/g05.svg" class="img-fluid" alt=""> -->
                                             </div>
                                         </div>
@@ -443,7 +466,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="graphcontainer">
-                                        <div >
+                                        <div>
                                             <!-- <img src="../images/g06.svg" class="img-fluid" alt=""> -->
                                         </div>
                                     </div>
@@ -564,20 +587,20 @@
                                 </div>
                                 <div class="col-md-8">
 
-                                    <div >
+                                    <div>
                                         <!-- <img src="../images/kgraph6.png" class="img-fluid" alt=""> -->
                                     </div>
                                 </div>
                             </div>
                         </div>
-                     
+
                         <div class="card iceBg p-4">
                             <h5 class="section-heading mb-4 p-0"> REGIONWISE TRAFFIC</h5>
                             <div>
                                 <!-- <img src="../images/kgraph7.png" class="img-fluid" alt=""> -->
                             </div>
                         </div>
-                           
+
                     </div>
                 </div>
             </div>

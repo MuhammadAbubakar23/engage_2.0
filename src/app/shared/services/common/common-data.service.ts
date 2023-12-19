@@ -20,7 +20,7 @@ export class CommonDataService {
   ServiceBaseUrl = environment.ServiceBaseUrl;
   ProfileBaseUrl = environment.ProfileBaseUrl;
   LinkedInBaseUrl = environment.LinkedInBaseUrl;
-
+  KelisteningBaseUrl =environment.KelisteningBaseUrl;
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
   removeTags = environment.links.common.RemoveTags;
@@ -107,7 +107,8 @@ export class CommonDataService {
   getLinkedInFollowers=environment.links.common.getLinkedInFollowers;
   emailShiftReport = environment.links.common.emailShiftReport;
   downloadTagReport = environment.links.common.downloadTagReport;
-  regionwiseReport=environment.links.common.regionwiseReport
+  regionwiseReport=environment.links.common.regionwiseReport;
+  wordCloud=environment.links.common.wordCloud
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
   addTemplate = environment.links.console.addTemplate;
@@ -743,6 +744,10 @@ export class CommonDataService {
   GetRegionWiseReport(body:any){
     return this.http.post(this.ProfileBaseUrl+this.regionwiseReport,body)
   }
+  GetwordCloud(body:any){
+    return this.http.post(this.KelisteningBaseUrl+this.wordCloud,body)
+  }
+ 
 }
 
 var headers_object = new HttpHeaders({

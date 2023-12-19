@@ -60,7 +60,8 @@ export class ShiftReportComponent implements OnInit {
   allTotalCountYoutube:any[]=[]
   ChartData: any[] = [];
   _legend: any[] = [];
-  shiftName:any
+  shiftName:any='Morning'
+  selectedName:any='Morning'
   shiftType: any[] = [
     { name: 'Morning', id: 0 },
     { id: 1, name: 'Evening' },
@@ -107,6 +108,7 @@ export class ShiftReportComponent implements OnInit {
   KEClient:boolean=false;
   
   ngOnInit(): void {
+
     this.KEbaseUrl=window.location.origin
     if(this.KEbaseUrl=='https://keportal.enteract.live'){
       this.KEClient=true
@@ -120,6 +122,7 @@ export class ShiftReportComponent implements OnInit {
     this.getAlltags();
     this.getAgentsTeamList();
     this.makeChartResponsive();
+    this.getTableStyle()
   }
   keywordslist: any[] = [];
   getAlltags() {
@@ -151,6 +154,15 @@ export class ShiftReportComponent implements OnInit {
     } else if (this.startDate != '' && this.endDate != '') {
       this.startDate = this.startDate;
       this.endDate = this.endDate;
+    }
+    const startDateObj = new Date(this.startDate);
+    const endDateObj = new Date(this.endDate);
+    const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
+    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    if (diffDays > 30) {
+      alert('Select a date range of 30 days or less');
+      this.endDate=''
+      return;
     }
     let obj = {
       fromDate: this.startDate,
@@ -283,14 +295,22 @@ export class ShiftReportComponent implements OnInit {
     this.tags = event.target.value;
     this.getAlltags();
   }
-  getByShifTime(event: any) {
-    
-    this.shiftime = event.target.value;
-
-   
+  getByShifTime() {
+    debugger
+    this.shiftName=this.selectedName.name
+    this.shiftime=this.selectedName.id
     this.getShfitReport();
   }
-
+  agentCount: number = 0;
+  getTableStyle() {
+    debugger
+    const threshold = 10;
+    const maxHeight = threshold * 50 + 40;
+    const style = {
+      'max-height': this.agentCount > threshold ? `${maxHeight}px` : 'auto',
+    };
+    return style;
+  }
   
   getCharts() {
     if(this.isShowGrpah==false){

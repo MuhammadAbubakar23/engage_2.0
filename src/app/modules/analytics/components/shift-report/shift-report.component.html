@@ -22,14 +22,26 @@
                             </div>
                         </li>
                         <li class="list-inline-item">
-                            <select name="" class="form-select"   (click)="getByShifTime($event)">
-                           <ng-container *ngFor="let shift of shiftType">
-                            <option  [value]="shift.id" >{{shift.name}}</option>
-                           </ng-container>
+                          
+                            <select name="" class="form-select" (change)="getByShifTime()"  [(ngModel)]="selectedName">
                      
+                            <option  [ngValue]="{ id: shift.id, name: shift.name}" *ngFor="let shift of shiftType;let i=index">{{shift.name}}</option>
+                           
                             </select>
 
                         </li>
+                        <!-- <li class="list-inline-item">
+                            <select name="" class="form-select" (change)="getByShifTime($event)">
+                                <option value="" disabled="" selected=""> Shift Type</option>
+                                <option value="0">Morning</option>
+                                <option value="1">Evening</option>
+                                <option value="3">Night</option>
+                                <option value="4">Iftar</option>
+                                <option value="5">Sehr</option>
+
+                            </select>
+
+                        </li> -->
                         <li class="list-inline-item">
                             <div class="dropdown icondropdown w-auto">
                                 <button class="btn dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown"
@@ -103,7 +115,7 @@
 
                                             <i class="fa-light fa-chart-line-up"></i>
                                         </span>
-                                        <p class="coal mb-0"> Total Inbound Traffic</p>
+                                        <p class="coal mb-0"> Total Inbound Traffic </p>
                                     </div>
                                     <h2>{{shiftReportData?.totalIboundCount}}</h2>
                                 </div>
@@ -162,7 +174,7 @@
                 <!-- <button (click)="exportToCSV()">Export to CSV</button> -->
 
                 <div class="card iceBg p-4 rounded mb-5">
-                    <h5 class="section-heading mb-4 p-0">Inbound Traffic </h5>
+                    <h5 class="section-heading mb-4 p-0">Inbound Traffic-{{shiftName}} Shift </h5>
                     <ng-container *ngIf="isShowGrpah==false">
                         <div class="graphcontainer align-items-end mb-5">
                             <div id="shiftReport" style="height: 300px; width: 100%; max-width:1200px"></div>
@@ -174,14 +186,14 @@
                             <p>No Data found</p>
                         </div>
                     </ng-container>
-                 
+
                 </div>
                 <div class="row mb-5 align-items-start">
                     <div class="col-md-4">
                         <div class="card iceBg p-4 rounded">
                             <h5 class="mb-3">TAG STATS</h5>
                             <ul class="list-group list-group-flush tagscroll" data-scrollbar="true"
-                                style="overflow: auto; height: 300px;">
+                                style="overflow: auto;height: 100%; max-height: 200px;">
                                 <li class="list-group-item d-flex align-items-center justify-content-between">
                                     <strong>Tags</strong>
                                     <strong>Total Inbound : {{tagsStatsTotalCounts}}</strong>
