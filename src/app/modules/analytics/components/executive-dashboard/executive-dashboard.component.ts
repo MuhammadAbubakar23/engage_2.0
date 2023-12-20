@@ -786,7 +786,7 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.maxEndDate = this.currentDate.toISOString().split("T")[0];
     this.GetAllSocialMediaReport()
     this.makeChartResponsive();
-    this.getWordCloud()
+    // this.getWordCloud()
 
     // this.GetAllRegionWiseData()
   }
@@ -1530,98 +1530,98 @@ export class ExecutiveDashboardComponent implements OnInit {
   resetEndDate() {
     this.endDate = "";
   }
-  getWordCloud() {
-debugger
-    if (this.endDate == '' && this.startDate == '') {
-      let currentDate = new Date();
-      let prevDate = currentDate.setDate(currentDate.getDate() - 8);
-      this.startDate = this.datePipe.transform(prevDate, 'MM-dd-YYYY') || "";
-      this.endDate = this.datePipe.transform(new Date(), 'MM-dd-YYYY') || "";
-    } else if (this.startDate != '' && this.endDate != '') {
-      this.startDate = this.datePipe.transform(this.startDate, 'MM-dd-YYYY') || "";
-      this.endDate = this.datePipe.transform(this.endDate, 'MM-dd-YYYY') || "";
-    }
-    this.data = []
-    let obj={
+//   getWordCloud() {
+// debugger
+//     if (this.endDate == '' && this.startDate == '') {
+//       let currentDate = new Date();
+//       let prevDate = currentDate.setDate(currentDate.getDate() - 8);
+//       this.startDate = this.datePipe.transform(prevDate, 'MM-dd-YYYY') || "";
+//       this.endDate = this.datePipe.transform(new Date(), 'MM-dd-YYYY') || "";
+//     } else if (this.startDate != '' && this.endDate != '') {
+//       this.startDate = this.datePipe.transform(this.startDate, 'MM-dd-YYYY') || "";
+//       this.endDate = this.datePipe.transform(this.endDate, 'MM-dd-YYYY') || "";
+//     }
+//     this.data = []
+//     let obj={
     
-        "searchQuery": {
-            "FromDate": "08-01-2023",
-            "ToDate": "08-10-2023",
-            "QueryTime": "",
-            "TypeId": "",
-            "KeyWords": "",
-            "CategoryIds": "",
-            "AuthorCategoryIds": "",
-            "SentimentIds": "",
-            "GenderIds": "",
-            "AgeIds": "",
-            "CityIds": "",
-            "PageIds": "",
-            "ExcPageIds": "",
-            "NetworkIds": "",
-            "IsImportantIds": "",
-            "BrandIds": "",
-            "CountryIds": "",
-            "Location": "",
-            "SearchType": "",
-            "LanguageIds": "",
-            "Networks": [],
-            "SearchTypeText": "",
-            "SentimentText": "",
-            "LanguageText": "",
-            "BrandText": "",
-            "NetworkText": "",
-            "IsImpText": "",
-            "CategoryText": "",
-            "GenderText": "",
-            "PageText": "",
-            "AuthorCategoryText": "",
-            "ExcPageText": "",
-            "IsKEKW": "0"
-        }
+//         "searchQuery": {
+//             "FromDate": "08-01-2023",
+//             "ToDate": "08-10-2023",
+//             "QueryTime": "",
+//             "TypeId": "",
+//             "KeyWords": "",
+//             "CategoryIds": "",
+//             "AuthorCategoryIds": "",
+//             "SentimentIds": "",
+//             "GenderIds": "",
+//             "AgeIds": "",
+//             "CityIds": "",
+//             "PageIds": "",
+//             "ExcPageIds": "",
+//             "NetworkIds": "",
+//             "IsImportantIds": "",
+//             "BrandIds": "",
+//             "CountryIds": "",
+//             "Location": "",
+//             "SearchType": "",
+//             "LanguageIds": "",
+//             "Networks": [],
+//             "SearchTypeText": "",
+//             "SentimentText": "",
+//             "LanguageText": "",
+//             "BrandText": "",
+//             "NetworkText": "",
+//             "IsImpText": "",
+//             "CategoryText": "",
+//             "GenderText": "",
+//             "PageText": "",
+//             "AuthorCategoryText": "",
+//             "ExcPageText": "",
+//             "IsKEKW": "0"
+//         }
     
-    }
-    this.commonDataService.GetwordCloud(obj).subscribe((res: any) => {
-      debugger
-      this.wordcloudData = res
-console.log("WordCloud===>",res)
-      if (this.wordcloudData.length > 0) {
-        this.data = [];
-        res.forEach((element: any) => {
-          var obj = {
-            text: element.Term,
-            weight: element.frequency
-          };
-          this.data.push(obj);
-        });
+//     }
+//     this.commonDataService.GetwordCloud(obj).subscribe((res: any) => {
+//       debugger
+//       this.wordcloudData = res
+// console.log("WordCloud===>",res)
+//       if (this.wordcloudData.length > 0) {
+//         this.data = [];
+//         res.forEach((element: any) => {
+//           var obj = {
+//             text: element.Term,
+//             weight: element.frequency
+//           };
+//           this.data.push(obj);
+//         });
 
-      }
+//       }
 
-      console.log('Term: ', this.data);
+//       console.log('Term: ', this.data);
 
-    });
-    //     this.wordcloudData.forEach((x:any)=>{
-    //       this.data.push({text:x.Term, weight:x.frequency})
-    //     })
-    //     this.data= [{
+//     });
+//     //     this.wordcloudData.forEach((x:any)=>{
+//     //       this.data.push({text:x.Term, weight:x.frequency})
+//     //     })
+//     //     this.data= [{
 
-    // color:  "#c90296",
-    // text: "کے الیکٹرک",
-    // weight : 28
+//     // color:  "#c90296",
+//     // text: "کے الیکٹرک",
+//     // weight : 28
 
-    //  },
-    //  {
+//     //  },
+//     //  {
 
-    //   color:  "#c90296",
-    //   text: "کے الیکٹرک",
-    //   weight : 78
+//     //   color:  "#c90296",
+//     //   text: "کے الیکٹرک",
+//     //   weight : 78
 
-    //    },
-    // ]
-    //   console.log("WordCloud===>",this.data)
+//     //    },
+//     // ]
+//     //   console.log("WordCloud===>",this.data)
 
 
-  }
+//   }
   testGraph() {
     var chartDom = document.getElementById('test');
     var myChart = echarts.init(chartDom);

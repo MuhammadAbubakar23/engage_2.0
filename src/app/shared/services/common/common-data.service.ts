@@ -108,7 +108,7 @@ export class CommonDataService {
   emailShiftReport = environment.links.common.emailShiftReport;
   downloadTagReport = environment.links.common.downloadTagReport;
   regionwiseReport=environment.links.common.regionwiseReport;
-  wordCloud=environment.links.common.wordCloud
+  // wordCloud=environment.links.common.wordCloud
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
   addTemplate = environment.links.console.addTemplate;
@@ -745,7 +745,7 @@ export class CommonDataService {
     return this.http.post(this.ProfileBaseUrl+this.regionwiseReport,body)
   }
   GetwordCloud(body:any){
-    return this.http.post(this.KelisteningBaseUrl+this.wordCloud,body)
+    // return this.http.post(this.KelisteningBaseUrl+this.wordCloud,body)
   }
  
 }

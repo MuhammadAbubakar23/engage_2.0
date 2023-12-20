@@ -26,6 +26,7 @@ export const environment = {
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
   LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
+  KelisteningBaseUrl:'https://kelistening.360scrm.com/',
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
@@ -49,6 +50,7 @@ export const environment = {
   CommonBaseUrl: 'https://wacommon.enteract.live/api/',
   SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
   ServiceBaseUrl: 'https://waservice.enteract.live/api/',
+  consoleBaseUrl: 'https://waconsole.enteract.live/api/',
 
   // For Testing
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
@@ -62,7 +64,7 @@ export const environment = {
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
   // for testing purpose
   // consoleBaseUrl: 'http://10.111.11.93:45455/api/',
-  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   //  consoleBaseUrl: '',
 
   links: {
