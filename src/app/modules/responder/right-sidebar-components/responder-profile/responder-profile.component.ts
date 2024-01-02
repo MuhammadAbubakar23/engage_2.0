@@ -127,7 +127,7 @@ export class ResponderProfileComponent implements OnInit {
   getProfileDetails() {
     this.commonService.GetProfileDetails(this.id).subscribe((res: any) => {
       // this.GetChannels();
-      debugger
+      
       this.profileDetails = res;
       this.spinnerService.show();
       this.spinner2running = true;

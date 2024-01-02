@@ -18,8 +18,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 })
 export class TagReportComponent implements OnInit {
   startDate = '';
-  @ViewChild('radioInput', { static: false })
-  radioInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('radioInput10', { static: false })
+  radioInput10!: ElementRef<HTMLInputElement>;
+  @ViewChild('radioInput20', { static: false })
+  radioInput20!: ElementRef<HTMLInputElement>; 
+   @ViewChild('radioInput30', { static: false })
+  radioInput30!: ElementRef<HTMLInputElement>;
   endDate = '';
   currentDate: any;
   endMaxDate: any;
@@ -89,6 +93,7 @@ export class TagReportComponent implements OnInit {
     };
     this.tagslist = [];
     this.facebookCommentsArray = [];
+    this.uniqueAgentData=[]
     this.spinerServices.show();
     this.commonService.GetAllTagsReport(obj).subscribe((res: any) => {
       this.spinerServices.hide();
@@ -253,8 +258,14 @@ this.tagreport= echarts.init(chartDom);
     if (this.endDate >= this.startDate) {
       this.getAllTagsReport();
 
-      if (this.radioInput !== undefined) {
-        this.radioInput.nativeElement.checked = false;
+      if (this.radioInput10!== undefined) {
+        this.radioInput10.nativeElement.checked = false;
+      }
+      if (this.radioInput20!== undefined) {
+        this.radioInput20.nativeElement.checked = false;
+      } 
+       if (this.radioInput30!== undefined) {
+        this.radioInput30.nativeElement.checked = false;
       }
     } 
     else {

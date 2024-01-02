@@ -339,7 +339,7 @@ export class TwitterComponent implements OnInit {
   // }
 
   updateMessagesDataListener(res: any) {
-    debugger
+    
     res.forEach((xyz: any) => {
       if (xyz.contentType == 'TTR') {
         if (this.id == xyz.fromId) {

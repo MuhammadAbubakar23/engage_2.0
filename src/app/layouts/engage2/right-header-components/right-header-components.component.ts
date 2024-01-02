@@ -101,7 +101,7 @@ export class RightHeaderComponentsComponent implements OnInit {
       localStorage.getItem('assignedProfile') == '' ||
       localStorage.getItem('assignedProfile') == undefined
     ) {
-      debugger
+      
       this.startBreak = true;
 
       //  this.AgentDetails.onBreak = !this.AgentDetails.onBreak;

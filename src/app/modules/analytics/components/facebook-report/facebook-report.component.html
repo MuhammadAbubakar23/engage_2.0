@@ -14,6 +14,7 @@
                                 <div class="iconholder">
 
                                     <input name="" class="form-control flatpickr-input" [max]="maxEndDate"
+                                
                                         placeholder="Date" (change)="resetStartDate()" [(ngModel)]="startDate"
                                         type="date">
                                 </div>
@@ -48,15 +49,15 @@
                             <li class="list-inline-item ms-auto">
                                 <div class="btn-group buttonfilter" role="group"
                                     aria-label="Basic radio toggle button group">
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" #radioInput
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" #radioInput5
                                         autocomplete="off" (click)="date_pagination(5)">
                                     <label class="btn btn-outline-secondary" for="btnradio1">5</label>
 
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" #radioInput
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" #radioInput10
                                         autocomplete="off" (click)="date_pagination(10)">
                                     <label class="btn btn-outline-secondary" for="btnradio2">10</label>
 
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" #radioInput
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" #radioInput20
                                         autocomplete="off" (click)="date_pagination(20)">
                                     <label class="btn btn-outline-secondary" for="btnradio3">20</label>
                                     <!-- <input type="radio" class="btn-check" name="btnradio" id="btnradio4"

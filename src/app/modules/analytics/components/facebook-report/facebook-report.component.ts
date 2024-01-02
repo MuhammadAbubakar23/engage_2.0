@@ -14,8 +14,12 @@ import { LayoutsModule } from 'src/app/layouts/layouts.module';
   imports: [CommonModule, FormsModule, NgxSpinnerModule,LayoutsModule],
 })
 export class FacebookReportComponent implements OnInit {
-  @ViewChild('radioInput', { static: false })
-  radioInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('radioInput5', { static: false })
+  radioInput5!: ElementRef<HTMLInputElement>;
+  @ViewChild('radioInput10', { static: false })
+  radioInput10!: ElementRef<HTMLInputElement>;
+  @ViewChild('radioInput20', { static: false })
+  radioInput20!: ElementRef<HTMLInputElement>;
   totalPostLikes: any;
   totalPostShares: any;
   totalPostComments: any;
@@ -1148,9 +1152,15 @@ export class FacebookReportComponent implements OnInit {
     if (this.enddate >= this.startDate) {
       this.getAllfeacebookData();
 
-      if (this.radioInput !== undefined) {
-        debugger
-        this.radioInput.nativeElement.checked = false;
+      if (this.radioInput5 !== undefined) {
+        
+        this.radioInput5.nativeElement.checked = false;
+      }
+      if(this.radioInput10!==undefined){
+        this.radioInput10.nativeElement.checked=false
+      }
+      if(this.radioInput20!==undefined){
+        this.radioInput20.nativeElement.checked=false
       }
     } else {
       alert('EndDate is greater then StartDate');

@@ -1,4 +1,5 @@
-<div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;  overflow-x: hidden">
+<div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1"
+    style="overflow: auto; outline: none;  overflow-x: hidden">
     <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
         <p style="color: white"> Loading... </p>
     </ngx-spinner>
@@ -9,48 +10,50 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <input type="date" class="form-control" placeholder="Start Date" [max]="maxEndDate"
-                                (change)="resetEndDate()" [(ngModel)]="fromDate" />
+                                (change)="resetStartDate()" [(ngModel)]="fromDate" />
                         </div>
                         <div class="col-sm-6">
                             <input type="date" class="form-control" placeholder="End Date" [max]="maxEndDate"
-                                (change)="GetTwitterReport()" [(ngModel)]="toDate" />
+                                (change)="resetEndDate()" [(ngModel)]="toDate" />
                         </div>
                     </div>
                 </li>
                 <li class="list-inline-item">
                     <div class="dropdown icondropdown w-auto mx-2">
-                      <button class="btn dropdown-toggle" type="button" id="columnssort" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" >
-                        Profile
-                      </button>
-                      <ul class="dropdown-menu" aria-labelledby="columnssort">
-                        <li>
-                          <a class="dropdown-item d-flex align-items-center">
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="flexRadioDefault" id="keprofile" checked>
-                              <label class="form-check-label" for="keprofile">
-                                <i class="fa-brands fa-twitter twitter pe-2"></i> K-Electric
-                              </label>
-                            </div>
-                          </a>
-                        </li>
-                      </ul>
+                        <button class="btn dropdown-toggle" type="button" id="columnssort" data-bs-toggle="dropdown"
+                            aria-expanded="false" data-bs-auto-close="outside">
+                            Profile
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="columnssort">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id="keprofile" checked>
+                                        <label class="form-check-label" for="keprofile">
+                                            <i class="fa-brands fa-twitter twitter pe-2"></i> K-Electric
+                                        </label>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                  </li>
+                </li>
                 <li class="list-inline-item ms-auto">
                     <div class="btn-group buttonfilter" role="group" aria-label="Basic radio toggle button group">
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
-                            checked="" (click)="date_pagination(5)">
+                            #radioInput5 (click)="date_pagination(5)">
                         <label class="btn btn-outline-secondary" for="btnradio1">5</label>
 
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
-                            (click)="date_pagination(10)">
+                            #radioInput10 (click)="date_pagination(10)">
                         <label class="btn btn-outline-secondary" for="btnradio2">10</label>
 
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off"
-                            (click)="date_pagination(20)">
+                            #radioInput20 (click)="date_pagination(20)">
                         <label class="btn btn-outline-secondary" for="btnradio3">20</label>
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off"
-                            (click)="date_pagination(30)">
+                            #radioInput30 (click)="date_pagination(30)">
                         <label class="btn btn-outline-secondary" for="btnradio4">30</label>
                     </div>
                 </li>
@@ -121,7 +124,7 @@
                     </div>
                 </div>
             </ng-container>
-          
+
             <div class="row align-items-start px-5">
                 <div class="col-md-4">
                     <ul class="nav nav-tabs flex-column linetabs mb-3" id="myTab" role="tablist">
@@ -164,19 +167,39 @@
 
 
                             </ul>
-                            <!-- <div class="card dashboard-card">
+                            <div class="card dashboard-card">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center justify-content-between">
-                                        <div>
+
+                                        <ng-container *ngIf="SumofTwettsandDMSent > SumofLastTwettsandDMSent">
+
+                                            <span class="iconButton medium mintBg mb-4">
+                                                <i class="fa-light fa-arrow-up"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Tweets &amp; DMS you sent Increased </p>
+
+                                        </ng-container>
+                                        <ng-container *ngIf="SumofTwettsandDMSent < SumofLastTwettsandDMSent">
+
                                             <span class="iconButton medium radicalBg mb-4">
                                                 <i class="fa-light fa-arrow-down"></i>
                                             </span>
                                             <p class="coal mb-0"> Tweets &amp; DMS you sent decreased </p>
-                                        </div>
-                                        <h3>93.24%</h3>
+
+                                        </ng-container>
+                                        <ng-container *ngIf="SumofLastTwettsandDMSent === 0">
+
+                                            <span class="iconButton medium mintBg mb-4">
+                                                <i class="fa-light fa-arrow-up"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Tweets &amp; DMS you sent Increased </p>
+
+                                        </ng-container>
+
+                                        <h3>{{persentageofTweetSent}}%</h3>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
 
                         </div>
                         <div class="tab-pane fade" id="MENTIONS-pane" role="tabpanel" aria-labelledby="MENTIONS"
@@ -201,19 +224,44 @@
                                 </li>
 
                             </ul>
-                            <!-- <div class="card dashboard-card">
+                            <div class="card dashboard-card">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center justify-content-between">
-                                        <div>
+                                        <span *ngIf="SumoftotalTweetsandDMrecevied < SumoflastTotalTweetsandDMRecevied">
                                             <span class="iconButton medium radicalBg mb-4">
                                                 <i class="fa-light fa-arrow-down"></i>
                                             </span>
                                             <p class="coal mb-0"> Tweets &amp; DMS you received decreased</p>
-                                        </div>
-                                        <h3> 85.21%</h3>
+                                        </span>
+                                        <span *ngIf="SumoftotalTweetsandDMrecevied > SumoflastTotalTweetsandDMRecevied">
+                                            <span class="iconButton medium mintBg mb-4">
+                                                <i class="fa-light fa-arrow-up"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Tweets &amp; DMS you received Increased</p>
+                                        </span>
+                                        <!-- <span *ngIf="SumoftotalTweetsandDMrecevied == SumoflastTotalTweetsandDMRecevied">
+                                            <span class="iconButton medium mintBg mb-4">
+                                                <i class="fa-light fa-arrow-up"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Tweets &amp; DMS you received Increased</p>
+                                        </span> -->
+                                        <span *ngIf="SumoflastTotalTweetsandDMRecevied==0 ">
+                                            <span class="iconButton medium mintBg mb-4">
+                                                <i class="fa-light fa-arrow-up"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Tweets &amp; DMS you received Increased</p>
+                                        </span>
+                                        <span *ngIf="persentageofTweetsRecevied==0 ">
+                                            <span class="iconButton medium mintBg mb-4">
+                                                <i class="fa-light fa-arrow-up"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Tweets &amp; DMS you received Increased</p>
+                                        </span>
+
+                                        <h3> {{persentageofTweetsRecevied}}%</h3>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
 
                         </div>
 
@@ -251,23 +299,23 @@
 
         <div class="card iceBg p-4 rounded mb-5">
             <h5 class="section-heading mb-4 p-0">Audience Engagement (Outbound)</h5>
-      <ng-container *ngIf="isShowConversation==false">
-        <div class="graphcontainer align-items-end mb-5">
-            <div class="text-center">
-                <div id="OutboundReport" style="height: 300px; width: 900px;"></div>
-            </div>
-        </div>
-      </ng-container>
-     <ng-container *ngIf="isShowConversation==true">
-        <div class="graphcontainer align-items-end mb-5">
-            <div class="text-center">
-                <p>No Data Found</p>
-                <!-- <div id="OutboundReport" style="height: 300px; width: 900px;"></div> -->
-            </div>
-        </div>
-     </ng-container>
-        
-            
+            <ng-container *ngIf="isShowConversation==false">
+                <div class="graphcontainer align-items-end mb-5">
+                    <div class="text-center">
+                        <div id="OutboundReport" style="height: 300px; width: 900px;"></div>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="isShowConversation==true">
+                <div class="graphcontainer align-items-end mb-5">
+                    <div class="text-center">
+                        <p>No Data Found</p>
+                        <!-- <div id="OutboundReport" style="height: 300px; width: 900px;"></div> -->
+                    </div>
+                </div>
+            </ng-container>
+
+
             <div class="row align-items-start px-5">
                 <div class="col-md-4">
                     <ul class="nav nav-tabs linetabs mb-3" id="myTab" role="tablist">
@@ -303,24 +351,45 @@
                                     <span class="fw-semibold">{{totalTweetsSent}}</span>
                                 </li>
                                 <li>
-                                    <span class="coal">Completed  </span>
+                                    <span class="coal">Completed </span>
                                     <span class="fw-semibold">{{TwitterReport?.markAsCompleted}}</span>
                                 </li>
 
                             </ul>
-                            <!-- <div class="card dashboard-card">
+                            <div class="card dashboard-card">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center justify-content-between">
-                                        <div>
+                                        <ng-container
+                                            *ngIf="sumofTotalEngagementMetrics > sumoflastTotalEngagementMetrics">
+
+                                            <span class="iconButton medium mintBg mb-4">
+                                                <i class="fa-light fa-arrow-up"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Engagements Increased </p>
+
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="sumofTotalEngagementMetrics < sumoflastTotalEngagementMetrics">
+
                                             <span class="iconButton medium radicalBg mb-4">
                                                 <i class="fa-light fa-arrow-down"></i>
                                             </span>
                                             <p class="coal mb-0"> Engagements Decreased </p>
-                                        </div>
-                                        <h3>220.89%</h3>
+
+                                        </ng-container>
+                                        <ng-container *ngIf="sumofTotalEngagementMetrics==0">
+
+                                            <span class="iconButton medium mintBg mb-4">
+                                                <i class="fa-light fa-arrow-up"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Engagements Increased </p>
+
+                                        </ng-container>
+                                  
+                                        <h3>{{EnagementMetricepersentage}}%</h3>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
 
                         </div>
                         <!-- <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
@@ -379,9 +448,9 @@
                             <!-- <label class="btn btn-outline-secondary" for="btnradio10">Top 5  Customers</label> -->
 
                             <input type="radio" class="btn-check" name="btnradio" id="btnradio20" autocomplete="off">
-                            <button class="btn btn-info" (click)="export()" > 
+                            <button class="btn btn-info" (click)="export()">
                                 <i class="fa-solid fa-file-export"></i>
-                            Export</button>
+                                Export</button>
                             <!-- <label class="btn btn-outline-secondary" for="btnradio20">All Customers</label> -->
 
                         </div>
@@ -433,10 +502,9 @@
                                 </span>
                             </td> -->
                             <td>
-                                <app-avatar-photo [photoUrl]="" 
-                                [name]=" cust?.fullName"></app-avatar-photo>
+                                <app-avatar-photo [photoUrl]="" [name]=" cust?.fullName"></app-avatar-photo>
                             </td>
-                          
+
                             <td>
                                 <a class="sky fw-semibold">{{cust.fullName}}</a>
                             </td>

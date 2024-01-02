@@ -20,7 +20,11 @@ export class InstagramReportComponent implements OnInit {
   @ViewChild('audienceGraph', { static: false }) audienceGraph!: ElementRef;
   // @ViewChild('radioInput', { static: false })
   // radioInput!: ElementRef<HTMLInputElement>;
-  @ViewChild('radioInput', { static: false }) radioInput!: ElementRef
+  @ViewChild('radioInput10', { static: false }) radioInput10!: ElementRef;
+  
+  @ViewChild('radioInput20', { static: false }) radioInput20!: ElementRef;
+  
+  @ViewChild('radioInput30', { static: false }) radioInput30!: ElementRef
   instagramReport: any;
   startDate: string = '';
   endDate: string = '';
@@ -148,7 +152,7 @@ export class InstagramReportComponent implements OnInit {
       // Audience Demographics
       this.totalfollowers = this.instagramReport.span_follower_count
       this.totalfollowers?.forEach((x: any) => {
-        debugger
+        
         if (!this.totalfollowersDates.includes(this.datePipe.transform(x.dateValue, 'dd/MMM'))) {
           this.totalfollowersDates.push(this.datePipe.transform(x.dateValue, 'dd/MMM'))
         }
@@ -266,7 +270,7 @@ export class InstagramReportComponent implements OnInit {
   }
   getPageReachGraph() {
     if (this.isShowEngagments == false) {
-      debugger
+      
       const myDom = this.pageReachabilty.nativeElement;
       const myChart = echarts.init(myDom, null, {
         renderer: 'canvas',
@@ -332,7 +336,7 @@ export class InstagramReportComponent implements OnInit {
   }
   getAudienceGraph() {
     if (this.isShowDemographics == false) {
-      debugger
+      
       const myDom = this.audienceGraph.nativeElement;
       const myChart = echarts.init(myDom, null, {
         renderer: 'canvas',
@@ -416,12 +420,18 @@ export class InstagramReportComponent implements OnInit {
     }
   }
   resetEndDate() {
-    console.log('resetEndDate function called');
+    
     if (this.endDate >= this.startDate) {
       this.GetInstagramReport();
       
-      if (this.radioInput && this.radioInput.nativeElement) {
-        this.radioInput.nativeElement.checked = false;
+      if (this.radioInput10!==undefined) {
+        this.radioInput10.nativeElement.checked = false;
+      }
+      if (this.radioInput20!==undefined) {
+        this.radioInput20.nativeElement.checked = false;
+      }
+      if (this.radioInput30!==undefined) {
+        this.radioInput30.nativeElement.checked = false;
       }
     } else {
       this.endDate = '';

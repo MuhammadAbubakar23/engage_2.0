@@ -4,12 +4,21 @@ import { Observable,Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class DataExchangeServicesService {
-private userData=new Subject<any>()
+private userData=new Subject<any>();
+private wordCloudDatetime= new Subject<any>()
   constructor() { }
 public  sendData(newValue:any):void{
     return this.userData.next(newValue)
   }
   public receivedData():Observable<any>{
    return this.userData.asObservable()
+  }
+  public sendWordCloudDateTime(dateValue:any):void{
+    
+    return this.wordCloudDatetime.next(dateValue)
+  }
+  public receivedWordCloudDateTime(){
+    
+    return this.wordCloudDatetime.asObservable()
   }
 }

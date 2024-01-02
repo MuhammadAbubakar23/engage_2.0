@@ -31,13 +31,16 @@ export const environment = {
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
   LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
-  KelisteningBaseUrl:'https://kelistening.360scrm.com/',
+  KelisteningBaseUrl:'https://listen.enteract.live/backend/api/',
+  KemediaBaseUrl:'https://kemedia.360scrm.com/api/',
+
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
   // IdentityBaseUrl: 'https://idtservice.enteract.live/api',
   // CommonBaseUrl: 'https://comservices.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/', //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
+  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
+   //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
   // ProfileBaseUrl:'https://profiler.enteract.live/api/',
 
   // For Jazz
@@ -240,6 +243,10 @@ export const environment = {
       emailShiftReport: 'Report/EmailShiftReport',
       getLinkedInFollowers: 'Activity/GetOrganizationInsights',
       regionwiseReport: 'Report/GetRegionWiseReport',
+      wordCloud:'Report/GetKeWordCloud',
+      areawiseReport:'Report/GetAreaWiseReport',
+      keMediaReport:'MediaReport/GetMediaReport',
+      PrintFeed:'Media/GetMediaPrintList'
     },
     facebook: {
       comments: 'Facebook/GetFbPost',

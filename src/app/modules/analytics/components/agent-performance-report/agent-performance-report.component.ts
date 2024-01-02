@@ -24,7 +24,8 @@ export class AgentPerformanceReportComponent implements OnInit {
   searchText: string = '';
   startDate: string = '';
   endDate: string = '';
-  selectedTagBy: string = ''
+  selectedTagBy: string = '';
+  isHidden = false;
   agent_performance_report: any
   AllChannels: any = ''
   singleChanenel: string = '';
@@ -139,7 +140,7 @@ export class AgentPerformanceReportComponent implements OnInit {
 
 
     if (this.endDate >= this.startDate) {
-      debugger
+      
       this.addAgentGraph();
      
       this.radioInput10.nativeElement.checked = false;

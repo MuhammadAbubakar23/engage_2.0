@@ -16,22 +16,22 @@
                                     Social Media
                                 </button>
                             </li>
-                            <!-- <li class="nav-item" role="presentation">
+                            <li class="nav-item" role="presentation">
                                 <button class="nav-link" [ngClass]="{'active': isMediaActive}" id="media-tab"
                                     (click)="isMediaActive = true">
                                     Media
                                 </button>
-                            </li> -->
+                            </li>
                         </ul>
                         <div class="iconholder ms-auto">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <input type="date" class="form-control" placeholder="End Date"
-                                        [(ngModel)]="startDate" [max]="maxEndDate" (change)="resetEndDate()" />
+                                        [(ngModel)]="startDate" [max]="maxEndDate" (change)="resetStartDate()" />
                                 </div>
                                 <div class="col-sm-6">
                                     <input type="date" class="form-control" [(ngModel)]="endDate" [max]="maxEndDate"
-                                        placeholder="Start Date" (change)="GetAllSocialMediaReport()" />
+                                        placeholder="Start Date" (change)="resetEndDate()" />
 
                                 </div>
                             </div>
@@ -126,6 +126,7 @@
                             </li>
 
                         </ul>
+                       
                         <div class="my-4">
                             <div class="row align-items-start h-auto">
                                 <div class="col-md-8">
@@ -269,45 +270,9 @@
                                         <h5 class="section-heading mb-3 p-0">Word Cloud</h5>
                                         <div class="graphcontainer align-items-center">
                                             <div class="worldcloud">
-                                                <ul class="list-inline">
-                                                    <li class="list-inline-item">
-                                                        <span class="badge rounded-pill skyTransBg">Power Bills
-                                                            (1)</span>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <span class="badge rounded-pill mintTransBg">Electricity
-                                                            (8)</span>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <span class="badge rounded-pill skyTransBg">Electricity Prices
-                                                            (1)</span>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <span class="badge rounded-pill skyTransBg">Load Shedding
-                                                            (1)</span>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <span class="badge rounded-pill grayfilled fs-4">K-Electric
-                                                            (87)</span>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <span class="badge rounded-pill skyTransBg">Electricity Bills
-                                                            (1)</span>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <span class="badge rounded-pill sunBg fs-6">Energy (17)</span>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <span class="badge rounded-pill skyTransBg">KE (8)</span>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <span class="badge rounded-pill skyTransBg">Oil (8)</span>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <span class="badge rounded-pill skyTransBg">Electrocution
-                                                            (1)</span>
-                                                    </li>
-                                                </ul>
+                                                <app-word-cloud [wordCloud]="dateTimeObj"></app-word-cloud>
+                                                <!-- <angular-tag-cloud [config]="options" [data]="data"  
+                                                [zoomOnHover]="zoomOnHoverOptions"></angular-tag-cloud> -->
                                             </div>
                                         </div>
                                     </div>
@@ -318,17 +283,23 @@
                         <div class="heatmap card p-4 my-4">
                             <div class="row align-items-start h-auto">
                                 <div class="col-md-4">
-                                    <div class="iconholder ms-auto mb-2">
-                                   
-                                        <input name="" id="datepickerrange" class="form-control flatpickr-input"
+                                        <div class="d-flex">
+                                            <input name="" id="datepickerrange" class="form-control flatpickr-input"
+                                            [(ngModel)]="mapstartDate"
+                                        
                                             placeholder="Date" type="date">
-                                    </div> <div class="iconholder ms-auto mb-2">
-                                   
-                                        <input name="" id="datepickerrange" class="form-control flatpickr-input"
+                      
+                                   &nbsp; &nbsp;
+                                        <input name="" id="datepickerrange"
+                                        [(ngModel)]="mapendDate" 
+                                
+                                        class="form-control flatpickr-input"
                                             placeholder="Date" type="date">
-                                    </div>
+                                        </div>  <br>              
+                                     
+                                    
 
-                                    <button class="btn skyBg mb-4">Search</button>
+                                    <button class="btn skyBg mb-4" (click)="OnClick()">Search</button>
                                     <ul class="list-0">
                                         <li class="pb-2">
                                             <span class="staticon me-2 mintBg"></span>Very low Frequency
@@ -389,38 +360,54 @@
                     <div class="mediasection" [ngClass]="{'d-none': !isMediaActive}">
                         <div class="my-4">
                             <div class="row align-items-start h-auto">
-                                <div class="col-md-8">
+                                <div class="col-md-7">
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-4 p-0">SENTIMENT ANALYSIS</h5>
                                         <ul class="nav nav-tabs buttontabs">
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="social-tab">Channel Wise</button>
+                                                <button class="nav-link " [ngClass]="{'active':!isSentimentAnalysisActive}" id="social-tab"
+                                                 (click)="isSentimentAnalysisActive=false">Channel Wise</button>
                                             </li>
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="media-tab">Category wise</button>
+                                                <button class="nav-link"  [ngClass]="{'active':isSentimentAnalysisActive}" 
+                                                 (click)="isSentimentAnalysisActive=true" id="media-tab">Category wise</button>
                                             </li>
                                         </ul>
                                         <div class="py-5 space"></div>
-                                        <div>
-                                            <!-- <img src="../images/kgraph8.png" class="img-fluid" alt=""> -->
+                                        <div  [ngClass]="{'d-none': isSentimentAnalysisActive}">
+                                            <div id="SentimentAnalysisChannelWise" style="height: 400px; width: 700px;"></div>
+                                      
+                                     
+                                        </div>
+                                        <div  [ngClass]="{'d-none': !isSentimentAnalysisActive}">
+                                            <div id="SentimentAnalysisCategoryWise" style="height: 400px; width: 700px;"></div>
+                                    
+                        
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-5">
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-3 p-0">NOISE INDEX SUMMATION </h5>
                                         <ul class="nav nav-tabs buttontabs">
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="social-tab">Channel Wise</button>
-                                            </li>
+                                                <button class="nav-link " [ngClass]="{'active':!isNoiseIndexSummationActive}"  id="social-tab"
+                                                (click)="isNoiseIndexSummationActive=false">Channel Wise</button>
+                                            </li> 
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="media-tab">Category wise</button>
+                                                <button class="nav-link" [ngClass]="{'active':isNoiseIndexSummationActive}" id="media-tab"
+                                                (click)="isNoiseIndexSummationActive=true">Category wise</button>
                                             </li>
                                         </ul>
                                         <div class="graphcontainer align-items-end">
-                                            <div>
-                                                <!-- <img src="../images/kgraph9.png" class="img-fluid" alt=""> -->
+                                            <div [ngClass]="{'d-none':isNoiseIndexSummationActive}">
+                                             <div id="NoiseIndexChannelWise" style="height: 400px; width: 400px;"></div>
+                                        
                                             </div>
+                                            <div [ngClass]="{'d-none':!isNoiseIndexSummationActive}">
+                                            <div id="NoiceIndexCategoryWise" style="height: 400px; width: 400px;" ></div>
+                                   
+                                                   </div>
                                         </div>
                                     </div>
                                 </div>
@@ -433,8 +420,8 @@
                                         <h5 class="section-heading mb-4 p-0">SENTIMENT ANALYSIS</h5>
 
                                         <div class="graphcontainer">
-                                            <div>
-                                                <!-- <img src="../images/g03.svg" class="img-fluid" alt=""> -->
+                                            <div id="sentimentAnalysisChart" style="height: 400px; width: 900px;">
+                                              
                                             </div>
                                         </div>
                                     </div>
@@ -444,7 +431,7 @@
                                         <h5 class="section-heading mb-3 p-0">Engagement </h5>
 
                                         <div class="graphcontainer">
-                                            <div>
+                                            <div id="MediaEngagement" style="height: 400px; width: 600px;">
 
                                             </div>
                                         </div>
@@ -458,106 +445,66 @@
                                     <div class="card iceBg p-4 rounded">
                                         <h5 class="section-heading mb-4 p-0"> Category comparison</h5>
                                         <div class="graphcontainer">
-                                            <div>
+                                            <div id="MediaCategorycomparison" style="height: 400px; width: 600px;">
                                                 <!-- <img src="../images/g05.svg" class="img-fluid" alt=""> -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="graphcontainer">
-                                        <div>
-                                            <!-- <img src="../images/g06.svg" class="img-fluid" alt=""> -->
+                                    <div class="card iceBg p-4 rounded">
+                                        <h5 class="section-heading mb-4 p-0"> Channel comparison</h5>
+                                        <div class="graphcontainer">
+                                            <div id="Mediacomparison" style="height: 400px; width: 600px;">
+                                                
+                                            </div>
                                         </div>
                                     </div>
+                                   
                                 </div>
                             </div>
                         </div>
-                        <div class="stats-cards-section">
+                        &nbsp;
+                        <div >
                             <div class="card iceBg p-4 rounded">
                                 <h5 class="section-heading mb-3 p-0">Word Cloud</h5>
-                                <div class="graphcontainer">
+                                <div class="graphcontainer  align-items-center">
                                     <div class="worldcloud">
-                                        <ul class="list-inline">
-                                            <li class="list-inline-item">
-                                                <span class="badge rounded-pill skyTransBg">Power Bills (1)</span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <span class="badge rounded-pill mintTransBg">Electricity (8)</span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <span class="badge rounded-pill skyTransBg">Electricity Prices
-                                                    (1)</span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <span class="badge rounded-pill skyTransBg">Load Shedding (1)</span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <span class="badge rounded-pill grayfilled fs-4">K-Electric (87)</span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <span class="badge rounded-pill skyTransBg">Electricity Bills (1)</span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <span class="badge rounded-pill sunBg fs-6">Energy (17)</span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <span class="badge rounded-pill skyTransBg">KE (8)</span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <span class="badge rounded-pill skyTransBg">Oil (8)</span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <span class="badge rounded-pill skyTransBg">Electrocution (1)</span>
-                                            </li>
-                                        </ul>
+                                        <!-- <angular-tag-cloud
+                                        [width]="options.width"
+                                        [data]="MediaData"  
+                                        [zoomOnHover]="zoomOnHoverOptions"
+                                        [overflow]="options.overflow">
+                                      </angular-tag-cloud>
+                                   -->
+                                 <!-- <app-word-cloud [wordCloud]="dateTimeObj"></app-word-cloud> -->
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        &nbsp;
                         <div class="printsection card p-4 iceBg">
                             <h5 class="section-heading mb-4 p-0"> Print Feed</h5>
                             <div class="printscroll">
                                 <div class="row">
+                                    <ng-container *ngFor="let item of printFeed">
                                     <div class="col-md-4">
-                                        <figure>
-                                            <figcaption class="mb-2">The news</figcaption>
-                                            <!-- <img src="..//images/news1.png" class="img-fluid" alt=""> -->
-                                        </figure>
+                                 
+                                            <figure>
+                                                <figcaption class="mb-2">{{item?.Channel}}</figcaption>
+                                                <div class="print_feed_cont img">
+                                                    <img class="img-responsive" src="https://kemedia.360scrm.com/Content//PrintClips//Print-293264.jpg" alt="" title="">
+                                                </div>
+                                                
+                                            </figure>
+                                   
+                                       
                                     </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <figcaption class="mb-2"> Jang</figcaption>
-                                            <!-- <img src="..//images/news2.png" class="img-fluid" alt=""> -->
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <figcaption class="mb-2"> Dunya</figcaption>
-                                            <!-- <img src="..//images/news3.png" class="img-fluid" alt=""> -->
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <figcaption class="mb-2">The news</figcaption>
-                                            <!-- <img src="..//images/news1.png" class="img-fluid" alt=""> -->
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <figcaption class="mb-2"> Jang</figcaption>
-                                            <!-- <img src="..//images/news2.png" class="img-fluid" alt=""> -->
-                                        </figure>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <figure>
-                                            <figcaption class="mb-2"> Dunya</figcaption>
-                                            <!-- <img src="..//images/news3.png" class="img-fluid" alt=""> -->
-                                        </figure>
-                                    </div>
+                                </ng-container>
                                 </div>
                             </div>
                         </div>
+                        &nbsp;
                         <div class="heatmap card p-4">
                             <div class="row align-items-start h-auto">
                                 <div class="col-md-4">
@@ -588,18 +535,40 @@
                                 <div class="col-md-8">
 
                                     <div>
-                                        <!-- <img src="../images/kgraph6.png" class="img-fluid" alt=""> -->
+                                        <google-map height="400px" width="100%" [center]="center" [zoom]="zoom"
+                                        (mapClick)="moveMap($event)" (mapMousemove)="move($event)">
+
+                                        <map-polygon *ngFor="let path of pathsArray" [paths]="path"
+                                            [options]="{ strokeColor: 'black', strokeWeight: 1, fillColor: 'green' }">
+                                        </map-polygon>
+                                    </google-map>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card iceBg p-4">
-                            <h5 class="section-heading mb-4 p-0"> REGIONWISE TRAFFIC</h5>
-                            <div>
-                                <!-- <img src="../images/kgraph7.png" class="img-fluid" alt=""> -->
-                            </div>
-                        </div>
+                       
+                            <ng-container *ngIf="isShowReginwiseGraph==false">
+                                <div class="card iceBg p-4 my-4">
+                                    <h5 class="section-heading mb-4 p-0"> REGIONWISE TRAFFIC</h5>
+                                    <div class="graphcontainer align-items-end">
+    
+                                        <div id="regionWiseTrafic" style="height: 400px; width: 100%;"></div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="isShowReginwiseGraph==true">
+                                <div class="card iceBg p-4 my-4">
+                                    <h5 class="section-heading mb-4 p-0"> REGIONWISE TRAFFIC</h5>
+                                    <div class="graphcontainer align-items-end">
+                                        <p>No Data found</p>
+                                        <!-- <div id="regionWiseTrafic" style="height: 400px; width: 100%;"></div> -->
+    
+                                    </div>
+    
+                                </div>
+                            </ng-container>
+    
 
                     </div>
                 </div>

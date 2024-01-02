@@ -18,7 +18,7 @@ import { LayoutsModule } from 'src/app/layouts/layouts.module';
   templateUrl: './twitter-report.component.html',
   styleUrls: ['./twitter-report.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxSpinnerModule,LayoutsModule],
+  imports: [CommonModule, FormsModule, NgxSpinnerModule, LayoutsModule],
 })
 export class TwitterReportComponent implements OnInit {
   @ViewChild('TwitterInboundOutboundReport', { static: true })
@@ -29,15 +29,21 @@ export class TwitterReportComponent implements OnInit {
   TweetingBehaviourReport!: ElementRef;
   @ViewChild('OutboundReport', { static: true })
   OutboundReport!: ElementRef;
-
-
+  @ViewChild(' radioInput5', { static: false })
+  radioInput5!: ElementRef;
+  @ViewChild(' radioInput10', { static: false })
+  radioInput10!: ElementRef
+  @ViewChild(' radioInput20', { static: false })
+  radioInput20!: ElementRef
+  @ViewChild(' radioInput30', { static: false })
+  radioInput30!: ElementRef
   fromDate: string = '';
   toDate: string = '';
   maxEndDate: any;
   downloading = false;
   toastermessage = false;
-  isShowConversation:boolean=false
-  isShowEngagement :boolean=false
+  isShowConversation: boolean = false
+  isShowEngagement: boolean = false
   AlterMsg: any = '';
   TwitterReport: any;
   TwitterSLAReport: any;
@@ -65,6 +71,44 @@ export class TwitterReportComponent implements OnInit {
   totalTweetsSentPercentage: number = 0;
   totalDmSentPercentage: number = 0;
   totalMentionSentPercentage: number = 0;
+  TweetsSentDto: {
+    text: string,
+    icon: string,
+    bgColor: string,
+  }[] = []
+  // slatotalMentionReceived: number = 0
+  // slalastTotalMentionReceived: number = 0
+  // slaTotalMentionPersentage: number = 0
+  // slaTotalMentionSent:number=0;
+  // slaLastTotalMentionSent:number=0;
+  // SlaTotalMentionSentPresentage:number=0
+  // slaSentIncreasedorDecreased:number=0;
+  // chageDiference: number = 0
+  // slaIncreasedordecreased: number = 0
+  slatotalMentionRecived: number = 0
+  slatotalReplysent: number = 0
+  slatotalDMsent: number = 0
+  slatotalMentionSent: number = 0
+  slatotalTweetsSent: number = 0
+  slatotalTweetsRecived: number = 0
+  slatotalDMReceived: number = 0
+  slalastTotalDMRecived: number = 0
+
+  slalastTotalMentionReceived: number = 0
+  slalastTotalReplySent: number = 0
+  slalastTotalDMSent: number = 0
+  slalastTotalMentionSent: number = 0
+  slalastTotalTweetsSent: number = 0
+  slalastTotalTweetsRecived: number = 0
+  persentageofTweetSent: number = 0
+  SumofTwettsandDMSent: number = 0
+  SumofLastTwettsandDMSent: number = 0
+  SumoftotalTweetsandDMrecevied: number = 0
+  SumoflastTotalTweetsandDMRecevied: number = 0
+  persentageofTweetsRecevied: number = 0
+  sumofTotalEngagementMetrics: number = 0
+  sumoflastTotalEngagementMetrics: number = 0
+  EnagementMetricepersentage: number = 0
   chart: any;
   tweetsInboundOutboundGraph: any;
   OutboundGraph: any;
@@ -82,7 +126,6 @@ export class TwitterReportComponent implements OnInit {
 
     const newObj = { title: 'Twitter Report', url: '/analytics/twitter-report' };
     this._hS.setHeader(newObj);
-
     const currentDate = new Date();
     this.maxEndDate = currentDate.toISOString().split('T')[0];
 
@@ -91,7 +134,7 @@ export class TwitterReportComponent implements OnInit {
     this.GetTwitterProfileWiseReport();
   }
   date_pagination(days: number) {
-    
+
     let currentDate = new Date();
     let prevDate = currentDate.setDate(currentDate.getDate() - days);
     this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
@@ -116,7 +159,6 @@ export class TwitterReportComponent implements OnInit {
     this.MentionsReceivedGraph = [];
     this.TotalRepliesGraph = [];
     this.allDates = [];
-
     this.totalPlainTextPercentage = 0;
     this.totalVideoQueryPercentage = 0;
     this.totalImageQueryPercentage = 0;
@@ -124,7 +166,13 @@ export class TwitterReportComponent implements OnInit {
     this.totalTweetsSentPercentage = 0;
     this.totalDmSentPercentage = 0;
     this.totalMentionSentPercentage = 0;
+    this.SumofTwettsandDMSent = 0
+    this.persentageofTweetSent = 0
 
+    this.SumoftotalTweetsandDMrecevied = 0
+    this.SumoflastTotalTweetsandDMRecevied = 0
+   this.sumofTotalEngagementMetrics=0
+   this.sumoflastTotalEngagementMetrics=0
     if (this.toDate == '' && this.fromDate == '') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 6);
@@ -136,30 +184,101 @@ export class TwitterReportComponent implements OnInit {
       // this.fromDate = this.fromDate.split('T')[0];
       // this.fromDate = this.fromDate;
       // this.toDate = this.toDate;
-    // }
-    const startDateObj = new Date(this.fromDate);
-    const endDateObj = new Date(this.toDate);
-    const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
-    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    if (diffDays > 30) {
-      alert('Select a date range of 30 days or less');
-      return;
+      // }
+      const startDateObj = new Date(this.fromDate);
+      const endDateObj = new Date(this.toDate);
+      const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
+      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      if (diffDays > 30) {
+        alert('Select a date range of 30 days or less');
+        return;
+      }
+      if (this.radioInput5 !== undefined) {
+        this.radioInput5.nativeElement.checked = false
+      }
     }
-  }
     var body = {
       fromDate: this.fromDate,
       toDate: this.toDate,
       profileId: '539038993',
-      
+
     };
     if (this.toDate >= this.fromDate) {
       this.SpinnerService.show();
       this.commonDataService.GetTwitterReport(body).subscribe((res) => {
         this.SpinnerService.hide();
+
         this.TwitterReport = res;
+        debugger
+        // calculate SLA for twitter Report
+        this.slatotalMentionRecived = this.TwitterReport.totalMentionReceived
+        this.slatotalReplysent = this.TwitterReport.totalReplySent
+        this.slatotalDMsent = this.TwitterReport.totalDMSent
+        this.slatotalDMReceived = this.TwitterReport.totalDMRecevied
+        this.slatotalMentionSent = this.TwitterReport.totalMentionSent
+        this.slatotalTweetsSent = this.TwitterReport.totalTweetsSend
+        this.slatotalTweetsRecived = this.TwitterReport.totalTweetsReceived
+        this.SumofTwettsandDMSent = this.slatotalDMsent + this.slatotalTweetsSent
+        this.SumoftotalTweetsandDMrecevied = this.slatotalTweetsRecived + this.slatotalDMReceived
+        this.sumofTotalEngagementMetrics = this.slatotalMentionRecived + this.slatotalDMsent + this.slatotalDMReceived + this.slatotalMentionSent + this.slatotalTweetsSent + this.slatotalTweetsRecived
+        // last total
+        debugger
+        this.slalastTotalMentionReceived = this.TwitterReport.lastTotalMentionReceived
+        this.slalastTotalReplySent = this.TwitterReport.lastTotalReplySent
+        this.slalastTotalDMSent = this.TwitterReport.lastTotalDMSent
+        this.slalastTotalDMRecived = this.TwitterReport.lastTotalDMRecevied
+        this.slalastTotalMentionSent = this.TwitterReport.lastTotalMentionSent
+        this.slalastTotalTweetsSent = this.TwitterReport.lastTotalTweetsSend
+        this.slalastTotalTweetsRecived = this.TwitterReport.lastTotalTweetsReceived
+        this.SumoflastTotalTweetsandDMRecevied = this.slalastTotalTweetsRecived + this.slalastTotalDMRecived
+        this.SumofLastTwettsandDMSent = this.slalastTotalDMSent + this.slalastTotalTweetsSent
+        this.sumoflastTotalEngagementMetrics = this.slalastTotalMentionReceived + this.slalastTotalDMRecived + this.slalastTotalMentionSent + this.slalastTotalTweetsSent + this.slalastTotalTweetsRecived + this.slalastTotalDMSent
+
+        if (this.SumoflastTotalTweetsandDMRecevied == 0) {
+          this.persentageofTweetsRecevied = 100
+        }
+        
+        else {
+          this.persentageofTweetsRecevied = Number(((this.SumoftotalTweetsandDMrecevied / this.SumoflastTotalTweetsandDMRecevied) * 100).toFixed(2))
+        }
+
+
+     
+
+        if (this.SumofLastTwettsandDMSent == 0) {
+     
+          this.persentageofTweetSent = 100
+
+        }
+        else if (this.SumofTwettsandDMSent == 0) {
+          this.persentageofTweetSent = 100
+        }
+        else if (this.SumofLastTwettsandDMSent == this.SumofTwettsandDMSent) {
+          this.persentageofTweetSent = 0
+        }
+        else {
+          this.persentageofTweetSent = Number(((this.SumofTwettsandDMSent / this.SumofLastTwettsandDMSent) * 100).toFixed(2))
+        }
+        // calculate Enagement of twitter Report
+        if (this.sumofTotalEngagementMetrics == 0) {
+          this.EnagementMetricepersentage = 100
+        }
+        else if (this.sumoflastTotalEngagementMetrics == 0) {
+          this.EnagementMetricepersentage = 100
+        }
+        else if (this.sumofTotalEngagementMetrics == this.sumoflastTotalEngagementMetrics) {
+          this.EnagementMetricepersentage = 0
+        }
+        else {
+          this.EnagementMetricepersentage = Number(((this.sumofTotalEngagementMetrics / this.sumoflastTotalEngagementMetrics) * 100).toFixed(2))
+        }
+        // sum of Recevied Tweets and DMS
+
+ 
+
         this.TwitterReport.dateWise.forEach((data: any) => {
           if (!this.allDates.includes(data.date)) {
-            
+
             this.allDates.push(this.datePipe.transform(data.date, 'dd MMM'));
           }
 
@@ -194,118 +313,118 @@ export class TwitterReportComponent implements OnInit {
         }
         console.log(res);
 
-        
-        if(this.allDates.length==0){
-          this.isShowConversation=true
+
+        if (this.allDates.length == 0) {
+          this.isShowConversation = true
         }
         this.populateInboundOutboundGraph();
         this.populateTypesOfQueriesGraph();
         this.populateTweetingBehaviourGraph();
         this.populateOutboundGraph();
       });
-     
+
     } else {
       alert('End Date is less than Start Date');
     }
-    
+
     this.GetTwitterProfileWiseReport()
   }
 
   populateInboundOutboundGraph() {
     type EChartsOption = echarts.EChartsOption;
-if(this.isShowConversation==false){
-  const dom = document.getElementById('TwitterInboundOutboundReport');
-  const myChart = echarts.init(dom, null, {
-    renderer: 'canvas',
-    useDirtyRect: false,
-  });
-  var option: EChartsOption;
+    if (this.isShowConversation == false) {
+      const dom = document.getElementById('TwitterInboundOutboundReport');
+      const myChart = echarts.init(dom, null, {
+        renderer: 'canvas',
+        useDirtyRect: false,
+      });
+      var option: EChartsOption;
 
-  option = {
-    title: {
-      text: '',
-    },
-    tooltip: {
-      trigger: 'axis',
-    },
-    legend: {
-      data: [
-        'Tweets Sent',
-        'DMs Sent',
-        'Mentions Sent',
-        'Tweets Received',
-        'DMs Received',
-        'Mentions Received',
-      ],
-      icon:'circle',
-      bottom:'bottom'
-    },
-    grid: {
-      left: '10%',
-      right: '4%',
-      bottom: '13%',
-      containLabel: true,
-    },
-    toolbox: {
-      feature: {
-        saveAsImage: {},
-      },
-    },
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      data: this.allDates,
-      axisLabel: {
-        rotate: 45,
-      },
-    },
-    yAxis: {
-      type: 'value',
-            nameLocation: 'middle',
-            name: 'Total Number of Inbound/Outbound',
-            nameTextStyle: {
-              fontSize: 12,
-              color: 'grey',
-              lineHeight: 80,
-            },
-    },
-    series: [
-      {
-        name: 'Tweets Sent',
-        type: 'line',
-        data: this.TweetsSentGraph,
-      },
-      {
-        name: 'DMs Sent',
-        type: 'line',
-        data: this.DMSentGraph,
-      },
-      {
-        name: 'Mentions Sent',
-        type: 'line',
-        data: this.MentionsSentGraph,
-      },
-      {
-        name: 'Tweets Received',
-        type: 'line',
-        data: this.TweetsReceivedGraph,
-      },
-      {
-        name: 'DMs Received',
-        type: 'line',
-        data: this.DMReceivedGraph,
-      },
-      {
-        name: 'Mentions Received',
-        type: 'line',
-        data: this.MentionsReceivedGraph,
-      },
-    ],
-  };
+      option = {
+        title: {
+          text: '',
+        },
+        tooltip: {
+          trigger: 'axis',
+        },
+        legend: {
+          data: [
+            'Tweets Sent',
+            'DMs Sent',
+            'Mentions Sent',
+            'Tweets Received',
+            'DMs Received',
+            'Mentions Received',
+          ],
+          icon: 'circle',
+          bottom: 'bottom'
+        },
+        grid: {
+          left: '10%',
+          right: '4%',
+          bottom: '13%',
+          containLabel: true,
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {},
+          },
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: this.allDates,
+          axisLabel: {
+            rotate: 45,
+          },
+        },
+        yAxis: {
+          type: 'value',
+          nameLocation: 'middle',
+          name: 'Total Number of Inbound/Outbound',
+          nameTextStyle: {
+            fontSize: 12,
+            color: 'grey',
+            lineHeight: 80,
+          },
+        },
+        series: [
+          {
+            name: 'Tweets Sent',
+            type: 'line',
+            data: this.TweetsSentGraph,
+          },
+          {
+            name: 'DMs Sent',
+            type: 'line',
+            data: this.DMSentGraph,
+          },
+          {
+            name: 'Mentions Sent',
+            type: 'line',
+            data: this.MentionsSentGraph,
+          },
+          {
+            name: 'Tweets Received',
+            type: 'line',
+            data: this.TweetsReceivedGraph,
+          },
+          {
+            name: 'DMs Received',
+            type: 'line',
+            data: this.DMReceivedGraph,
+          },
+          {
+            name: 'Mentions Received',
+            type: 'line',
+            data: this.MentionsReceivedGraph,
+          },
+        ],
+      };
 
-  option && myChart.setOption(option);
-}
-    
+      option && myChart.setOption(option);
+    }
+
   }
   populateTypesOfQueriesGraph() {
 
@@ -328,7 +447,7 @@ if(this.isShowConversation==false){
         // orient: 'vertical',
         bottom: -5,
         left: 'center',
-        icon:'circle',
+        icon: 'circle',
 
       },
       series: [
@@ -345,7 +464,7 @@ if(this.isShowConversation==false){
           },
           color: ['#5a3692', '#f41665', '#36cca2', '#fceea4'],
           data: [
-            { value:Number( this.totalPlainTextPercentage.toFixed(2)), name: 'Plain Text' },
+            { value: Number(this.totalPlainTextPercentage.toFixed(2)), name: 'Plain Text' },
             { value: Number(this.totalVideoQueryPercentage.toFixed(2)), name: 'Videos' },
             { value: Number(this.totalImageQueryPercentage.toFixed(2)), name: 'Photos' }
           ],
@@ -382,7 +501,7 @@ if(this.isShowConversation==false){
         // orient: 'vertical',
         bottom: -5,
         left: 'center',
-        icon:'circle',
+        icon: 'circle',
       },
       series: [
         {
@@ -398,10 +517,10 @@ if(this.isShowConversation==false){
             }
           },
           data: [
-            { value:Number (this.totalTweetsSentPercentage.toFixed(2)), name: 'Tweets' },
+            { value: Number(this.totalTweetsSentPercentage.toFixed(2)), name: 'Tweets' },
             { value: Number(this.totalDmSentPercentage.toFixed(2)), name: 'DMs' },
             { value: Number(this.totalMentionSentPercentage.toFixed(2)), name: 'Mentions' },
-            
+
           ],
           emphasis: {
             itemStyle: {
@@ -416,7 +535,7 @@ if(this.isShowConversation==false){
     option && myChart.setOption(option);
   }
   populateOutboundGraph() {
-    if(this.isShowConversation==false){
+    if (this.isShowConversation == false) {
       type EChartsOption = echarts.EChartsOption;
 
       const dom = document.getElementById('OutboundReport');
@@ -426,69 +545,69 @@ if(this.isShowConversation==false){
       });
       var option: EChartsOption;
 
-    option = {
-      title: {
-        text: '',
-      },
-      tooltip: {
-        trigger: 'axis',
-      },
-      legend: {
-        data: [
-          'Replies',
-          'Tweets Sent'
-        ],
-        icon:'circle',
-        bottom:'bottom',
-  
-      },
-      grid: {
-        left: '10%',
-        right: '4%',
-        bottom: '13%',
-        containLabel: true,
-      },
-      toolbox: {
-        feature: {
-          saveAsImage: {},
+      option = {
+        title: {
+          text: '',
         },
-      },
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: this.allDates,
-        axisLabel: {
-          rotate: 45,
+        tooltip: {
+          trigger: 'axis',
         },
-      },
-      yAxis: {
-        type: 'value',
-            nameLocation: 'middle',
-            name: 'Total Number of Outbound',
-            nameTextStyle: {
-              fontSize: 12,
-              color: 'grey',
-              lineHeight: 80,
-            },
-      },
-      series: [
-        {
-          name: 'Replies',
-          type: 'line',
-          data: this.TotalRepliesGraph,
-        },
-        {
-          name: 'Tweets Sent',
-          type: 'line',
-          data: this.TweetsSentGraph,
-        }
-      ],
-    };
+        legend: {
+          data: [
+            'Replies',
+            'Tweets Sent'
+          ],
+          icon: 'circle',
+          bottom: 'bottom',
 
-    option && myChart.setOption(option);
+        },
+        grid: {
+          left: '10%',
+          right: '4%',
+          bottom: '13%',
+          containLabel: true,
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {},
+          },
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: this.allDates,
+          axisLabel: {
+            rotate: 45,
+          },
+        },
+        yAxis: {
+          type: 'value',
+          nameLocation: 'middle',
+          name: 'Total Number of Outbound',
+          nameTextStyle: {
+            fontSize: 12,
+            color: 'grey',
+            lineHeight: 80,
+          },
+        },
+        series: [
+          {
+            name: 'Replies',
+            type: 'line',
+            data: this.TotalRepliesGraph,
+          },
+          {
+            name: 'Tweets Sent',
+            type: 'line',
+            data: this.TweetsSentGraph,
+          }
+        ],
+      };
+
+      option && myChart.setOption(option);
     }
-   
-    
+
+
   }
 
   GetTwitterSLAReport() {
@@ -508,8 +627,8 @@ if(this.isShowConversation==false){
     var body = {
       pageNumber: 0,
       pageSize: 0,
-      from:this.fromDate,
-      to:this.toDate
+      from: this.fromDate,
+      to: this.toDate
     };
     this.SpinnerService.show();
     this.commonDataService
@@ -522,8 +641,31 @@ if(this.isShowConversation==false){
   closeToaster() {
     this.toastermessage = false;
   }
+  resetStartDate() {
+    this.toDate = ''
+  }
   resetEndDate() {
-    this.toDate = '';
+    if (this.toDate >= this.fromDate) {
+
+      if (this.radioInput5 !== undefined) {
+        this.radioInput5.nativeElement.checked = false
+      }
+      if (this.radioInput10 !== undefined) {
+        this.radioInput10.nativeElement.checked = false
+      }
+      if (this.radioInput20 !== undefined) {
+        this.radioInput20.nativeElement.checked = false
+      }
+      if (this.radioInput30 !== undefined) {
+        this.radioInput30.nativeElement.checked = false
+      }
+      this.GetTwitterReport()
+      this.GetTwitterProfileWiseReport()
+    }
+    else {
+      alert("StartDate is greater then EndDate")
+      this.toDate = ''
+    }
   }
   export() {
     this.excelServices.exportAsExcelFile(this.TwitterProfileWiseReport, 'Twitter-Report')
