@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
     this.spinnerService.show();
     this.authService.login(this.loginForm.value).subscribe(
       (res: any) => {
+        
         this.stor.store('token', res.accessToken);
         this.stor.store('main', res);
         this.stor.store('nocompass', res.roles[0]);

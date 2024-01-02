@@ -583,6 +583,7 @@ export class InboundOntboundReportComponent implements OnInit {
                 Neutral: number;
               }[] = [];
               sentimentReportData.forEach((platformData: any) => {
+                
                 const platformName = platformData.platform;
                 const sentimentCounts: { [key: string]: number } = {};
                 platformData.data.forEach((sentiment: any) => {

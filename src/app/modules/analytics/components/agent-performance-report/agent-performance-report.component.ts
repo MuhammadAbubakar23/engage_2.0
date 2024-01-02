@@ -24,7 +24,8 @@ export class AgentPerformanceReportComponent implements OnInit {
   searchText: string = '';
   startDate: string = '';
   endDate: string = '';
-  selectedTagBy: string = ''
+  selectedTagBy: string = '';
+  isHidden = false;
   agent_performance_report: any
   AllChannels: any = ''
   singleChanenel: string = '';
@@ -139,7 +140,7 @@ export class AgentPerformanceReportComponent implements OnInit {
 
 
     if (this.endDate >= this.startDate) {
-      debugger
+      
       this.addAgentGraph();
      
       this.radioInput10.nativeElement.checked = false;
@@ -417,7 +418,7 @@ export class AgentPerformanceReportComponent implements OnInit {
   // ];
   getChannel() {
 
-    if (this.isChannelShow == "morinag") {
+    if (this.isChannelShow == "morinaga") {
       this.channelOptions = [
 
         { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },

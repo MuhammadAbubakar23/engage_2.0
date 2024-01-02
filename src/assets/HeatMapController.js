@@ -730,7 +730,7 @@ keEdApp.controller('HeatMapController', ['$scope', '$cookies', '$window', 'NgMap
 
 
         $scope.fetchAreaReport = function () {
-            debugger;
+            ;
      
             var dateFrom = moment($scope.date.startDate).add(5, "hours").toDate();
             var dateTo = moment($scope.date.endDate).add(5, "hours").toDate();
@@ -741,7 +741,8 @@ keEdApp.controller('HeatMapController', ['$scope', '$cookies', '$window', 'NgMap
                         var MaxCount = l.data[0].Total_Inbound;
                         l.data.forEach(function (i) {
                             var percentage = (i.Total_Inbound / MaxCount) * 100;
-                            var fillColor = "#0080ff";
+                            defence.set('fillColor', fillColor)
+                            defence.set('strokeColor', fillColor)
                             if (percentage > 30 && percentage <= 80) {
                                 fillColor = "#ff9000";
                             }

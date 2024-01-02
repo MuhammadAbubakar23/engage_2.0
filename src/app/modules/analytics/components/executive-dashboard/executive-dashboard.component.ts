@@ -10,17 +10,19 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ThemeService } from 'ng2-charts';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { WordCloudComponent } from '../word-cloud/word-cloud.component';
+import { wordCloud } from 'src/app/shared/Models/WordCloudDto';
 
-
+import { SharedModule } from 'src/app/shared/shared.module';
 @Component({
   selector: 'app-executive-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, TagCloudComponent, NgxSpinnerModule, GoogleMapsModule],
+  imports: [CommonModule, FormsModule, TagCloudComponent, NgxSpinnerModule, WordCloudComponent, GoogleMapsModule, SharedModule],
   templateUrl: './executive-dashboard.component.html',
   styleUrls: ['./executive-dashboard.component.scss']
 })
 export class ExecutiveDashboardComponent implements OnInit {
-  
+
   display: any;
   center: google.maps.LatLngLiteral = {
     lat: 24.8607,
@@ -239,7 +241,7 @@ export class ExecutiveDashboardComponent implements OnInit {
       { lat: 24.88921, lng: 67.020513 },
       { lat: 24.886061, lng: 67.020637 },
       { lat: 24.88338, lng: 67.021963 },
-    ], 
+    ],
     BinQasimPath: [
       { lat: 24.812808, lng: 67.287867 },
       { lat: 24.808601, lng: 67.308466 },
@@ -268,7 +270,7 @@ export class ExecutiveDashboardComponent implements OnInit {
       { lat: 24.839696, lng: 67.283557 },
       { lat: 24.813276, lng: 67.287738 }
     ],
-     BaldiaPath: [
+    BaldiaPath: [
       { "lat": 24.899967, "lng": 66.969746 },
       { "lat": 24.915935, "lng": 66.949833 },
       { "lat": 24.936572, "lng": 66.937474 },
@@ -689,13 +691,13 @@ export class ExecutiveDashboardComponent implements OnInit {
       { "lat": 24.907808, "lng": 66.978413 },
       { "lat": 24.908779, "lng": 66.977767 },
       { "lat": 24.899961, "lng": 66.96959 },
-      { "lat": 24.89524, "lng": 66.973227 },
+      { "lat": 24.89524,  "lng": 66.973227 },
       { "lat": 24.891478, "lng": 66.979122 },
       { "lat": 24.889675, "lng": 66.974516 },
       { "lat": 24.888462, "lng": 66.970025 },
       { "lat": 24.882708, "lng": 66.968816 },
       { "lat": 24.877266, "lng": 66.964689 },
-      { "lat": 24.87191, "lng": 66.974631 }
+      { "lat": 24.87191,  "lng": 66.974631 }
     ]
   };
 
@@ -725,7 +727,7 @@ export class ExecutiveDashboardComponent implements OnInit {
 
   zoomOnHoverOptions: ZoomOnHoverOptions = {
 
-    
+
     scale: 1.3, // Elements will become 130 % of current zize on hover
     transitionTime: 0.2, // it will take 1.2 seconds until the zoom level defined in scale property has been reached
     delay: 0.2 // Zoom will take affect after 0.8 seconds
@@ -735,10 +737,19 @@ export class ExecutiveDashboardComponent implements OnInit {
     height: 400,
     overflow: false,
   };
+  options1: CloudOptions = {
+    width: 700,
+    height: 700,
+    overflow: false,
+  };
+
   wordcloudData: any[] = []
   data: any[] = []
+  MediaData: any[] = []
   startDate = ''
   endDate = ''
+  mapstartDate = ''
+  mapendDate = ''
   InboundGraph: any
   AudienceEngagmentGraph: any
   regionWiseGraph: any
@@ -749,7 +760,7 @@ export class ExecutiveDashboardComponent implements OnInit {
   social_media_report: any
   inbound_traffic: any
   InboundCounts: any[] = []
-  countriesmap:any
+  countriesmap: any
   InboundDates: any[] = []
   sentimental_analysis: any
   date_Audience: any[] = []
@@ -763,16 +774,61 @@ export class ExecutiveDashboardComponent implements OnInit {
   channelWiseEngagement: any[] = [];
   regionwiseCount: any[] = []
   regionwiseArray: any[] = []
-  executiveDashborad:any
-  str:any=''
+  executiveDashborad: any
+  str: any = ''
   currentDate: any;
   isShowEngagementGraph: boolean = false
   isShowSentimentGraph: boolean = false
   isShowAudienceEngagementGraph: boolean = false
   isShowInboundGraph: boolean = false
   isShowfacebookreations: boolean = false
-  isShowReginwiseGraph: boolean = false
+  isShowReginwiseGraph: boolean = false;
 
+
+
+  isSentimentAnalysisActive: boolean = false
+  isNoiseIndexSummationActive: boolean = false
+  // for kemedia ###########################################################
+  sentimentDataPoints: {
+    platform: string;
+    Positive: number;
+    Negative: number;
+    Neutral: number;
+  }[] = [];
+  categoryWiseSentiment: {
+    platform: string;
+    Positive: number;
+    Negative: number;
+    Neutral: number;
+  }[] = [];
+  channelWiseComprasion: {
+    platform: string;
+    General: number;
+    KE: number;
+    OtherDisco: number;
+  }[] = [];
+  categoryWiseComprision: {
+    platform: string;
+    General: number;
+    KE: number;
+    OtherDisco: number;
+  }[] = []
+  NoiseIndexChannelWiseChannelName: any[] = []
+  NoiseIndexChannelWiseChannelCount: any[] = []
+  NoiseIndexCategoryWiseChannelName: any[] = []
+  NoiseIndexCategoryWiseChannelCount: any[] = []
+  sentimentAnalysisData: any[] = []
+  InboundEnagementDates: any[] = []
+  InboundEnagementCounts: any[] = []
+  channelWiseSentimentGraph: any
+  CategoryWiseSentimentGraph: any
+  ChannelWiseNoiseIndexSummationGraph: any;
+  CategoryWiseNoiseIndexSummationGraph: any;
+  MediaEngagementGraph: any;
+  CategoryComparsionGraph: any;
+  ChannelComparsionGraph: any;
+  printFeed: any[] = []
+  dateTimeObj: any
   constructor(private _hS: HeaderService,
     private commonDataService: CommonDataService,
     private spinerService: NgxSpinnerService,
@@ -787,8 +843,22 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.GetAllSocialMediaReport()
     this.makeChartResponsive();
     this.getWordCloud()
+    this.getAreaWiseReport()
+    // ke media api call
+    this.getSentimentAnalysisChannelWise()
+    this.getSentimentAnalysisCatgoryWise()
+    this.getNoiseIndexSummationChannelWise()
+    this.getNoiseIndexSummationCategoryWise()
+    this.getSentimentAnalysis()
+    this.getInboundEnagements()
+    this.getCatgoryeWiseComparison()
+    this.getChannelWiseComparison()
+    this.getAllKEPrintFeed()
 
-    // this.GetAllRegionWiseData()
+
+
+
+
   }
 
   GetAllRegionWiseData() {
@@ -811,22 +881,23 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.commonDataService.GetRegionWiseReport(obj).subscribe((res: any) => {
 
       this.regionwiseReportData = res
-  if(this.regionwiseReportData.length==0){
-    this.isShowReginwiseGraph=true
-  }
+      if (this.regionwiseReportData.length == 0) {
+        this.isShowReginwiseGraph = true
+      }
       this.regionwiseReportData.forEach((x: any) => {
         if (!this.regionwiseArray.includes((x.region))) {
           this.regionwiseArray.push(x.region)
         }
-       
+
         this.regionwiseCount.push(x.totalCount)
-        this.getRegionWiseTrafic()
+
       })
 
-      console.log("this.regionwiseReportData==>", this.regionwiseReportData)
+      this.getRegionWiseTrafic()
     })
 
   }
+
   GetAllSocialMediaReport() {
     if (this.startDate == "" && this.endDate == "") {
       const today = this.currentDate;
@@ -845,7 +916,7 @@ export class ExecutiveDashboardComponent implements OnInit {
     const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
     if (diffDays > 30) {
       alert('Select a date range of 30 days or less');
-      this.endDate=''
+      this.endDate = ''
       return;
     }
     const requestData = {
@@ -865,22 +936,28 @@ export class ExecutiveDashboardComponent implements OnInit {
       this.post_share = []
       this.facebook_reaction = [];
       this.platformsArray = [];
-      this.channelWiseEngagement=[]
+      this.channelWiseEngagement = []
       this.isShowEngagementGraph = false
       this.isShowSentimentGraph = false
       this.isShowAudienceEngagementGraph = false
       this.isShowInboundGraph = false
       this.isShowfacebookreations = false
       this.isShowReginwiseGraph = false
-   this.str=''
+      this.str = ''
       this.spinerService.show()
       this.cd.detectChanges()
+      let obj = {
+        startData: requestData.from,
+        endDate: requestData.to
+      }
+
+      this.dateTimeObj = obj
       this.commonDataService.GetAllSocialMatrics(requestData).subscribe((res: any) => {
-        
+
         this.social_media_report = res
         this.spinerService.hide()
         // for show likes comments share 
-        this.executiveDashborad=res.facebookReportResponseDto
+        this.executiveDashborad = res.facebookReportResponseDto
 
         // inbound 
         const inBoundTrafficDto = this.social_media_report.inBoundTrafficDto;
@@ -888,22 +965,22 @@ export class ExecutiveDashboardComponent implements OnInit {
           if (!this.InboundDates.includes(this.datePipe.transform(data.date, 'dd/MMM'))) {
             this.InboundDates.push(this.datePipe.transform(data.date, 'dd/MMM'))
           }
-      
+
           this.InboundCounts.push(data.totalCount)
         });
-           if(this.InboundDates.length==0){
-            this.isShowInboundGraph=true
-           }
+        if (this.InboundDates.length == 0) {
+          this.isShowInboundGraph = true
+        }
         // sentiments
         const sentimentsAnalysisDto = this.social_media_report.sentimentsAnalysisDto;
-    if(sentimentsAnalysisDto.length==0){
-     this.isShowSentimentGraph=true
-    }
+        if (sentimentsAnalysisDto.length == 0) {
+          this.isShowSentimentGraph = true
+        }
         sentimentsAnalysisDto.forEach((data: any) => {
           const sentimentName = data.sentimentName;
-          this.str= sentimentName.toLowerCase().split(/[-_.\s]/).map((w:any) => `${w.charAt(0).toUpperCase()}${w.substr(1)}`).join(' ');
+          this.str = sentimentName.toLowerCase().split(/[-_.\s]/).map((w: any) => `${w.charAt(0).toUpperCase()}${w.substr(1)}`).join(' ');
           const totalSentiments = data.totalSentiments;
-     
+
           this.sentimental_analysis.push({ name: this.str, value: totalSentiments });
         });
         // Audience Chart
@@ -927,9 +1004,9 @@ export class ExecutiveDashboardComponent implements OnInit {
             this.date_Audience.push(this.datePipe.transform(data.dateValue, 'dd/MMM'))
           }
         });
-   if(this.date_Audience.length==0){
-    this.isShowAudienceEngagementGraph=true
-   }
+        if (this.date_Audience.length == 0) {
+          this.isShowAudienceEngagementGraph = true
+        }
         // facebook Reaction 
         const pageReactionsSpan = this.social_media_report.facebookReportResponseDto.pageReactionsSpan;
 
@@ -939,13 +1016,13 @@ export class ExecutiveDashboardComponent implements OnInit {
 
           if (!this.facebook_reactionDates.includes(this.datePipe.transform(data.totalReactionsDateValue, 'dd/MMM'))) {
             this.facebook_reactionDates.push(this.datePipe.transform(data.totalReactionsDateValue, 'dd/MMM'))
-            
+
           }
         });
-     
-     if(this.facebook_reactionDates.length==0){
-    this.isShowfacebookreations=true
-     }
+
+        if (this.facebook_reactionDates.length == 0) {
+          this.isShowfacebookreations = true
+        }
         //getEnagementChart
         const channelWiseDto = this.social_media_report.channelWiseDto;
 
@@ -970,9 +1047,9 @@ export class ExecutiveDashboardComponent implements OnInit {
             }
           });
         });
-    if(this.platformsArray.length==0){
-      this.isShowEngagementGraph=true
-    }
+        if (this.platformsArray.length == 0) {
+          this.isShowEngagementGraph = true
+        }
         this.getEnagementChart();
         this.getChartInbound()
         this.getSentimentChart()
@@ -1175,7 +1252,7 @@ export class ExecutiveDashboardComponent implements OnInit {
         {
           type: 'category',
           boundaryGap: false,
-          data: this.date_Audience.sort((a,b) =>  new Date(b).getTime() - new Date(a).getTime()).reverse(),
+          data: this.date_Audience.sort((a, b) => new Date(b).getTime() - new Date(a).getTime()).reverse(),
           axisLabel: {
             rotate: 45,
           },
@@ -1373,7 +1450,7 @@ export class ExecutiveDashboardComponent implements OnInit {
           },
           data: this.sentimental_analysis,
         },
-        
+
       ],
       markPoint: {
         data: [
@@ -1419,7 +1496,7 @@ export class ExecutiveDashboardComponent implements OnInit {
         {
           type: 'category',
           boundaryGap: false,
-          data: this.facebook_reactionDates.sort((a,b) =>  new Date(b).getTime() - new Date(a).getTime()).reverse(),
+          data: this.facebook_reactionDates.sort((a, b) => new Date(b).getTime() - new Date(a).getTime()).reverse(),
           axisLabel: {
             rotate: 45
           }
@@ -1527,98 +1604,106 @@ export class ExecutiveDashboardComponent implements OnInit {
   toggleMediaTab() {
     this.isMediaActive = !this.isMediaActive;
   }
-  resetEndDate() {
+  resetStartDate() {
     this.endDate = "";
   }
+  resetEndDate() {
+    if (this.endDate >= this.startDate) {
+      this.GetAllSocialMediaReport()
+      this.getSentimentAnalysisChannelWise()
+      this.getSentimentAnalysisCatgoryWise()
+      this.getNoiseIndexSummationChannelWise()
+      this.getNoiseIndexSummationCategoryWise()
+      this.getSentimentAnalysis()
+      this.getInboundEnagements()
+      this.getCatgoryeWiseComparison()
+      this.getChannelWiseComparison()
+      this.getAllKEPrintFeed()
+
+
+    } else {
+      this.endDate = '';
+      alert('EndDate is greater than StartDate');
+    }
+  }
+  getAreaWiseReport() {
+    if (this.mapstartDate == "" && this.mapendDate == "") {
+      const today = this.currentDate;
+      this.mapendDate = this.datePipe.transform(today, "YYYY-MM-dd") || '';
+      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 6);
+      this.mapstartDate = this.datePipe.transform(prevDate, "YYYY-MM-dd") || '';
+    }
+    else if (this.mapstartDate != "" && this.mapendDate != ""
+    ) {
+      this.mapstartDate = this.mapstartDate
+      this.mapendDate = this.mapendDate
+    }
+    let obj = {
+      "fromDate": this.mapstartDate,
+      "toDate": this.mapendDate,
+      "companyId": 0
+    }
+    this.spinerService.show()
+    this.cd.detectChanges()
+    // this.commonDataService.GetAreaWiseReport(obj).subscribe((res:any)=>{
+    //   this.spinerService.hide()
+    //  const fillColor = "black";
+
+    //   // if(res.length==0){
+    //   // (Object.keys(this.paths).forEach((x:any)=>{
+    //   //   
+    //   // if(x=='DefencePath'){
+    //   //   x.set('fillColor', fillColor)
+    //   //   x.set('strokeColor', fillColor)
+    //   // }
+    //   // }))
+    //   // }
+    // })
+  }
+  OnClick() {
+    this.getAreaWiseReport()
+  }
   getWordCloud() {
-debugger
+
     if (this.endDate == '' && this.startDate == '') {
       let currentDate = new Date();
       let prevDate = currentDate.setDate(currentDate.getDate() - 8);
-      this.startDate = this.datePipe.transform(prevDate, 'MM-dd-YYYY') || "";
-      this.endDate = this.datePipe.transform(new Date(), 'MM-dd-YYYY') || "";
+      this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || "";
+      this.endDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || "";
     } else if (this.startDate != '' && this.endDate != '') {
-      this.startDate = this.datePipe.transform(this.startDate, 'MM-dd-YYYY') || "";
-      this.endDate = this.datePipe.transform(this.endDate, 'MM-dd-YYYY') || "";
+      this.startDate = this.datePipe.transform(this.startDate, 'YYYY-MM-dd') || "";
+      this.endDate = this.datePipe.transform(this.endDate, 'YYYY-MM-dd') || "";
     }
-    this.data = []
-    let obj={
-    
-        "searchQuery": {
-            "FromDate": "08-01-2023",
-            "ToDate": "08-10-2023",
-            "QueryTime": "",
-            "TypeId": "",
-            "KeyWords": "",
-            "CategoryIds": "",
-            "AuthorCategoryIds": "",
-            "SentimentIds": "",
-            "GenderIds": "",
-            "AgeIds": "",
-            "CityIds": "",
-            "PageIds": "",
-            "ExcPageIds": "",
-            "NetworkIds": "",
-            "IsImportantIds": "",
-            "BrandIds": "",
-            "CountryIds": "",
-            "Location": "",
-            "SearchType": "",
-            "LanguageIds": "",
-            "Networks": [],
-            "SearchTypeText": "",
-            "SentimentText": "",
-            "LanguageText": "",
-            "BrandText": "",
-            "NetworkText": "",
-            "IsImpText": "",
-            "CategoryText": "",
-            "GenderText": "",
-            "PageText": "",
-            "AuthorCategoryText": "",
-            "ExcPageText": "",
-            "IsKEKW": "0"
-        }
-    
+    let obj = {
+      "startDate": this.startDate,
+      "endDate": this.endDate
     }
     this.commonDataService.GetwordCloud(obj).subscribe((res: any) => {
-      debugger
-      this.wordcloudData = res
-console.log("WordCloud===>",res)
+      this.wordcloudData = res?.keywords
       if (this.wordcloudData.length > 0) {
-        this.data = [];
-        res.forEach((element: any) => {
-          var obj = {
-            text: element.Term,
-            weight: element.frequency
+        this.data = []
+        this.MediaData = []
+        this.wordcloudData.forEach((element: any) => {
+          let obj = {
+            text: element.keyword + (element.weight),
+            weight: Number(element.weight)
           };
-          this.data.push(obj);
+          if (this.data !== null && this.data !== undefined) {
+            this.data.push(obj);
+          }
+          if (this.MediaData !== null && this.MediaData !== undefined) {
+            this.MediaData.push(obj)
+          }
+
+
         });
 
       }
 
-      console.log('Term: ', this.data);
+
 
     });
-    //     this.wordcloudData.forEach((x:any)=>{
-    //       this.data.push({text:x.Term, weight:x.frequency})
-    //     })
-    //     this.data= [{
 
-    // color:  "#c90296",
-    // text: "کے الیکٹرک",
-    // weight : 28
-
-    //  },
-    //  {
-
-    //   color:  "#c90296",
-    //   text: "کے الیکٹرک",
-    //   weight : 78
-
-    //    },
-    // ]
-    //   console.log("WordCloud===>",this.data)
 
 
   }
@@ -1833,7 +1918,703 @@ console.log("WordCloud===>",res)
         this.regionWiseGraph.resize()
       }
 
+
     });
   }
- 
+  //  for media tab code started //////////////////////////////////////***************@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+  getSentimentAnalysisChannelWise() {
+    if (this.startDate == "" && this.endDate == "") {
+      const today = this.currentDate;
+      this.endDate = this.datePipe.transform(today, "YYYY-MM-dd") || '';
+      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 6);
+      this.startDate = this.datePipe.transform(prevDate, "YYYY-MM-dd") || '';
+    }
+    else if (this.startDate != "" && this.endDate != ""
+    ) {
+      this.startDate = this.startDate
+      this.endDate = this.endDate
+    }
+    let obj = {
+      "mediaTypeId": 0,
+      "newsTypeIds": "0",
+      "channelIds": "61,60,19,63,72,39,40,1,54,56,20,24,15,73,29,25,31,21,5,35,62,57,22,71,65,66,67,68,69,70,51,74,75,82,58,28,37,33,55,59,36,76,64,30,17,14,41,26,52,77,42,16,78,32,38,79,2,80,81,27,23,7",
+      "categoryIds": "0",
+      "relavanceIds": "0",
+      "fromDate": this.startDate,
+      "toDate": this.endDate,
+      "script": "",
+      "isKEActivity": false,
+      "reportType": 4,
+      "filterType": 3
+    }
+    this.sentimentDataPoints = [];
+    this.commonDataService.GetAllKemediaReport(obj).subscribe((res: any) => {
+
+      const sentimentChannelWiseres = res;
+
+
+      sentimentChannelWiseres.forEach((x: any) => {
+        const platformName = x.XAxis;
+
+        const PositivesentimentCounts: { [key: string]: number } = {};
+        const NegativesentimentCount: { [key: string]: number } = {};
+        const NeutralsentimentCount: { [key: string]: number } = {};
+
+        if (x.Value1 !== null) {
+          PositivesentimentCounts['Positive'] = x.Value1;
+        } else {
+          PositivesentimentCounts['Positive'] = 0;
+        }
+
+        if (x.Value2 !== null) {
+          NegativesentimentCount['Negative'] = x.Value2;
+        } else {
+          NegativesentimentCount['Negative'] = 0;
+        }
+
+        if (x.Value3 !== null) {
+          NeutralsentimentCount['Neutral'] = x.Value3;
+        } else {
+          NeutralsentimentCount['Neutral'] = 0;
+        }
+
+        this.sentimentDataPoints.push({
+          platform: platformName,
+          Positive: PositivesentimentCounts['Positive'],
+          Negative: NegativesentimentCount['Negative'],
+          Neutral: NeutralsentimentCount['Neutral'],
+        });
+
+      });
+
+
+
+
+      this.getSentimentAnalysisChannelWiseChart()
+    });
+  }
+  getSentimentAnalysisCatgoryWise() {
+    let obj = {
+      "mediaTypeId": 0,
+      "newsTypeIds": "0",
+      "channelIds": "61,60,19,63,72,39,40,1,54,56,20,24,15,73,29,25,31,21,5,35,62,57,22,71,65,66,67,68,69,70,51,74,75,82,58,28,37,33,55,59,36,76,64,30,17,14,41,26,52,77,42,16,78,32,38,79,2,80,81,27,23,7",
+      "categoryIds": "0",
+      "relavanceIds": "0",
+      "fromDate": this.startDate,
+      "toDate": this.endDate,
+      "script": "",
+      "isKEActivity": false,
+      "reportType": 4,
+      "filterType": 4
+    }
+    this.categoryWiseSentiment = []
+    this.commonDataService.GetAllKemediaReport(obj).subscribe((res: any) => {
+      const SentimentCatgoryWise = res
+
+      SentimentCatgoryWise.forEach((x: any) => {
+        const platformName = x.XAxis
+        const PositivesentimentCountsCatgory: { [keys: string]: number } = {}
+        const NegativesentimentCountCategoryWise: { [keys: string]: number } = {}
+        const NeutralsentimentCountCatgoryWise: { [keys: string]: number } = {}
+        if (x.Value1 !== null) {
+          PositivesentimentCountsCatgory['Positive'] = x.Value1;
+        } else {
+          PositivesentimentCountsCatgory['Positive'] = 0;
+        }
+
+        if (x.Value2 !== null) {
+          NegativesentimentCountCategoryWise['Negative'] = x.Value2;
+        } else {
+          NegativesentimentCountCategoryWise['Negative'] = 0;
+        }
+
+        if (x.Value3 !== null) {
+          NeutralsentimentCountCatgoryWise['Neutral'] = x.Value3;
+        } else {
+          NeutralsentimentCountCatgoryWise['Neutral'] = 0;
+        }
+        this.categoryWiseSentiment.push({
+          platform: platformName,
+          Positive: PositivesentimentCountsCatgory['Positive'],
+          Negative: NegativesentimentCountCategoryWise['Negative'],
+          Neutral: NeutralsentimentCountCatgoryWise['Neutral']
+        })
+
+
+      })
+      this.getSentimentAnalysisCategoryWiseChart()
+    })
+  }
+  getNoiseIndexSummationChannelWise() {
+    let obj = {
+      "mediaTypeId": 0,
+      "newsTypeIds": "0",
+      "channelIds": "0",
+      "categoryIds": "0",
+      "relavanceIds": "0",
+      "fromDate": this.startDate,
+      "toDate": this.endDate,
+      "script": "",
+      "isKEActivity": false,
+      "reportType": 2,
+      "filterType": 3
+    }
+    this.NoiseIndexChannelWiseChannelName = []
+    this.NoiseIndexChannelWiseChannelCount = []
+    this.commonDataService.GetAllKemediaReport(obj).subscribe((res: any) => {
+      const NoiseIndexChannelWise = res
+      NoiseIndexChannelWise.forEach((x: any) => {
+        this.NoiseIndexChannelWiseChannelName.push(x.XAxis)
+        this.NoiseIndexChannelWiseChannelCount.push(x.Value1)
+      })
+      this.getNoiseIndexChannelWiseChart()
+    })
+  }
+  getNoiseIndexSummationCategoryWise() {
+    let obj = {
+      "mediaTypeId": 0,
+      "newsTypeIds": "0",
+      "channelIds": "0",
+      "categoryIds": "0",
+      "relavanceIds": "0",
+      "fromDate": this.startDate,
+      "toDate": this.endDate,
+      "script": "",
+      "isKEActivity": false,
+      "reportType": 2,
+      "filterType": 1
+    }
+    this.NoiseIndexCategoryWiseChannelCount = []
+    this.NoiseIndexCategoryWiseChannelName = []
+    this.commonDataService.GetAllKemediaReport(obj).subscribe((res: any) => {
+      const NoiceIndexCategoryWise = res
+      NoiceIndexCategoryWise.forEach((x: any) => {
+        this.NoiseIndexCategoryWiseChannelName.push(x.XAxis)
+        this.NoiseIndexCategoryWiseChannelCount.push(x.Value1)
+      })
+      this.getNoiceIndexCategoryWiseChart()
+    })
+  }
+  getSentimentAnalysis() {
+    let obj = {
+      "mediaTypeId": 0,
+      "newsTypeIds": "0",
+      "channelIds": "0",
+      "categoryIds": "0",
+      "relavanceIds": "0",
+      "fromDate": this.startDate,
+      "toDate": this.endDate,
+      "script": "",
+      "isKEActivity": false,
+      "reportType": 9,
+      "filterType": 1
+    }
+    this.sentimentAnalysisData = []
+    this.commonDataService.GetAllKemediaReport(obj).subscribe((res: any) => {
+      const sentimentAnalysis = res
+      console.log("SentimentAnalysis===>", sentimentAnalysis)
+      sentimentAnalysis?.forEach((x: any) => {
+        this.sentimentAnalysisData.push({
+          value: x.Value1,
+          name: 'PRINT' + '\n' + x.XAxis
+        })
+      })
+
+      this.getsentimentAnalysisChart()
+    })
+  }
+  getInboundEnagements() {
+    let obj = {
+      "mediaTypeId": 0,
+      "newsTypeIds": "0",
+      "channelIds": "0",
+      "categoryIds": "0",
+      "relavanceIds": "0",
+      "fromDate": this.startDate,
+      "toDate": this.endDate,
+      "script": "",
+      "isKEActivity": false,
+      "reportType": 1,
+      "filterType": 7
+    }
+    this.InboundEnagementCounts = []
+    this.InboundEnagementDates = []
+    this.commonDataService.GetAllKemediaReport(obj).subscribe((res: any) => {
+      const InboundEnagement = res
+      InboundEnagement.forEach((x: any) => {
+        if (!this.InboundEnagementDates.includes(this.datePipe.transform(x.InsertionDate, 'dd/MMM'))) {
+          this.InboundEnagementDates.push(this.datePipe.transform(x.InsertionDate, 'dd/MMM'))
+        }
+        this.InboundEnagementCounts.push(x.Value1)
+
+      })
+
+      this.getMediaEngagementChart()
+    })
+  }
+  getCatgoryeWiseComparison() {
+    let obj = {
+      "mediaTypeId": 0,
+      "newsTypeIds": "0",
+      "channelIds": "0",
+      "categoryIds": "0",
+      "relavanceIds": "0",
+      "fromDate": this.startDate,
+      "toDate": this.endDate,
+      "script": "",
+      "isKEActivity": false,
+      "reportType": 5,
+      "filterType": 4
+    }
+    this.commonDataService.GetAllKemediaReport(obj).subscribe((res: any) => {
+      const categoryWiseComparison = res
+      categoryWiseComparison.forEach((x: any) => {
+        const platform = x.XAxis
+        const GeneralCategoryWise: { [key: string]: number } = {};
+        const KECategoryWise: { [key: string]: number } = {};
+        const OtherDiscoCategoryWise: { [key: string]: number } = {}
+        if (x.Value1 !== null) {
+          GeneralCategoryWise['General'] = x.Value1
+        }
+        else {
+          GeneralCategoryWise['General'] = 0
+        }
+        if (x.Value2 !== null) {
+          KECategoryWise['KE'] = x.Value2
+        }
+        else {
+          KECategoryWise['KE'] = 0
+        }
+        if (x.Value3 !== null) {
+          OtherDiscoCategoryWise['OtherDisco'] = x.Value3
+        }
+        else {
+          OtherDiscoCategoryWise['OtherDisco'] = 0
+        }
+
+        this.categoryWiseComprision.push({
+          platform: platform,
+          General: GeneralCategoryWise['General'],
+          KE: KECategoryWise['KE'],
+          OtherDisco: OtherDiscoCategoryWise['OtherDisco']
+        })
+      })
+      this.getMediaCategorycomparisonChat()
+    })
+  }
+  getChannelWiseComparison() {
+    let obj = {
+      "mediaTypeId": 0,
+      "newsTypeIds": "0",
+      "channelIds": "61,60,19,63,72,39,40,1,54,56,20,24,15,73,29,25,31,21,5,35,62,57,22,71,65,66,67,68,69,70,51,74,75,82,58,28,37,33,55,59,36,76,64,30,17,14,41,26,52,77,42,16,78,32,38,79,2,80,81,27,23,7",
+      "categoryIds": "0",
+      "relavanceIds": "0",
+      "fromDate": this.startDate,
+      "toDate": this.endDate,
+      "script": "",
+      "isKEActivity": false,
+      "reportType": 5,
+      "filterType": 3
+    }
+    this.channelWiseComprasion = []
+    this.commonDataService.GetAllKemediaReport(obj).subscribe((res: any) => {
+      const channelWiseCpmparison = res
+      channelWiseCpmparison.forEach((x: any) => {
+        const platformName = x.XAxis
+        const GeneralChannelWiseComparison: { [key: string]: number } = {};
+        const KEChannelWiseComparison: { [key: string]: number } = {};
+        const OtherDiscoChannelWiseComparison: { [key: string]: number } = {}
+        if (x.Value1 !== null) {
+          GeneralChannelWiseComparison['General'] = x.Value1
+        }
+        else {
+          GeneralChannelWiseComparison['General'] = 0
+        }
+        if (x.Value2 !== null) {
+          KEChannelWiseComparison['KE'] = x.Value2
+        }
+        else {
+          KEChannelWiseComparison['KE'] = 0
+        }
+        if (x.Value3 !== null) {
+          OtherDiscoChannelWiseComparison['OtherDisco'] = x.Value3
+        }
+        else {
+          OtherDiscoChannelWiseComparison['OtherDisco'] = x.Value3
+        }
+        this.channelWiseComprasion.push({
+          platform: platformName,
+          General: GeneralChannelWiseComparison['General'],
+          KE: KEChannelWiseComparison['KE'],
+          OtherDisco: OtherDiscoChannelWiseComparison['OtherDisco']
+        })
+      });
+      this.getMediacomparisonChannelWiseChat()
+    })
+  }
+  getAllKEPrintFeed() {
+    let obj = {
+      "userId": 8,
+      "startDate": "14/12/2023",
+      "endDate": "14/12/2023",
+      "mediaTypeIds": "3",
+      "isKERelated": "0"
+    }
+    this.commonDataService.GetAllPrintFeed(obj).subscribe((res: any) => {
+
+      this.printFeed = res?.MediaFormList
+
+    })
+  }
+
+  getMediaEngagementChart() {
+    var chartDom = document.getElementById('MediaEngagement');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    option = {
+      color: ['#FFA800',],
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            backgroundColor: '#6a7985'
+          }
+        }
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {}
+        }
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: [
+        {
+          type: 'category',
+          boundaryGap: false,
+          data: this.InboundEnagementDates,
+          axisLabel: {
+            rotate: 45,
+          },
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value'
+        }
+      ],
+      series: [
+        {
+          name: 'Engagement',
+          type: 'line',
+          smooth: true,
+          lineStyle: {
+            width: 0
+          },
+          showSymbol: false,
+          areaStyle: {
+            opacity: 0.8,
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#FFA800'
+              },
+              {
+                offset: 1,
+                color: '#FFD88B'
+              }
+            ])
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data: this.InboundEnagementCounts
+        }
+      ]
+    };
+
+    option && myChart.setOption(option);
+  }
+  getMediaCategorycomparisonChat() {
+    var app = {};
+
+    var chartDom = document.getElementById('MediaCategorycomparison');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    option = {
+      color: ['#55ACEF', '#4867AA', '#4EC125'],
+      legend: {
+        icon: 'circle',
+        bottom: 'bottom'
+      },
+      tooltip: {},
+      dataset: {
+        source: this.categoryWiseComprision
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '9%',
+        containLabel: true
+      },
+      xAxis: {
+        type: 'category',
+        axisLabel: {
+          rotate: 45,
+        },
+      },
+      yAxis: {},
+      // Declare several bar series, each will be mapped
+      // to a column of dataset.source by default.
+      series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }]
+    };
+
+    option && myChart.setOption(option);
+  }
+  getMediacomparisonChannelWiseChat() {
+    var app = {};
+
+    var chartDom = document.getElementById('Mediacomparison');
+    var myChart = echarts.init(chartDom);
+    var option;
+    option = {
+      color: ['#55ACEF', '#4867AA', '#4EC125'],
+      legend: {
+        icon: 'circle',
+        bottom: 'bottom'
+      },
+      tooltip: {},
+      dataset: {
+        source: this.channelWiseComprasion
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '9%',
+        containLabel: true
+      },
+      xAxis: {
+        type: 'category',
+        axisLabel: {
+          rotate: 45,
+        },
+      },
+      yAxis: {},
+
+      series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }]
+    };
+
+    option && myChart.setOption(option);
+  }
+  // getMediaRegionWiseChart(){
+  //   var chartDom = document.getElementById('MediaRegionWise');
+  // var myChart = echarts.init(chartDom);
+  // var option;
+
+  // option = {
+  //   xAxis: {
+  //     type: 'category',
+  //     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  //   },
+  //   yAxis: {
+  //     type: 'value'
+  //   },
+  //   series: [
+  //     {
+  //       data: [120, 200, 150, 80, 70, 110, 130],
+  //       type: 'bar'
+  //     }
+  //   ]
+  // };
+
+  // option && myChart.setOption(option);
+  // }
+  getsentimentAnalysisChart() {
+    var chartDom = document.getElementById('sentimentAnalysisChart');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    option = {
+      tooltip: {
+        trigger: 'item'
+      },
+      // legend: {
+      //   top: '5%',
+      //   left: 'center'
+      // },
+      series: [
+        {
+          name: 'SENTIMENT ANALYSIS',
+          type: 'pie',
+
+          avoidLabelOverlap: false,
+          label: {
+            show: true,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: 40,
+              fontWeight: 'bold'
+            }
+          },
+          labelLine: {
+            show: false
+          },
+          itemStyle: {
+            color: '#EA5B00',
+          },
+          data: this.sentimentAnalysisData
+        }
+      ]
+    };
+
+    option && myChart.setOption(option);
+  }
+  getSentimentAnalysisChannelWiseChart() {
+    var app = {};
+
+    var chartDom = document.getElementById('SentimentAnalysisChannelWise');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    option = {
+      color: ['#4EC125', '#D13C3C', '#FFA800'],
+      legend: {
+        icon: 'circle',
+        bottom: 'bottom'
+      },
+      grid: {
+        left: '13%',
+        right: '4%',
+        bottom: '13%',
+        containLabel: true
+      },
+      tooltip: {},
+      dataset: {
+        source: this.sentimentDataPoints
+      },
+      xAxis: {
+        type: 'category',
+        axisLabel: {
+          rotate: 45,
+        },
+      },
+      yAxis: {},
+      series: [{ type: 'bar', }, { type: 'bar', }, { type: 'bar', }]
+    };
+
+    option && myChart.setOption(option);
+  }
+  getSentimentAnalysisCategoryWiseChart() {
+    var app = {};
+
+    var chartDom = document.getElementById('SentimentAnalysisCategoryWise');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    option = {
+      color: ['#4EC125', '#D13C3C', '#FFA800'],
+      legend: {
+        icon: 'circle',
+        bottom: 'bottom'
+      },
+      grid: {
+        left: '13%',
+        right: '4%',
+        bottom: '13%',
+        containLabel: true
+      },
+      tooltip: {},
+      dataset: {
+        source: this.categoryWiseSentiment
+      },
+      xAxis: {
+        type: 'category',
+        axisLabel: {
+          rotate: 45,
+        },
+      },
+      yAxis: {},
+      // Declare several bar series, each will be mapped
+      // to a column of dataset.source by default.
+      series: [{ type: 'bar' }, { type: 'bar' }, { type: 'bar' }]
+    };
+
+    option && myChart.setOption(option);
+  }
+  getNoiseIndexChannelWiseChart() {
+    var chartDom = document.getElementById('NoiseIndexChannelWise');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    option = {
+      xAxis: {
+        type: 'category',
+        data: this.NoiseIndexChannelWiseChannelName,
+        axisLabel: {
+          rotate: 45,
+        },
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      yAxis: {
+        type: 'value',
+
+      },
+      series: [
+        {
+          data: this.NoiseIndexChannelWiseChannelCount,
+          type: 'bar'
+        }
+      ]
+    }
+    option && myChart.setOption(option);
+  }
+  getNoiceIndexCategoryWiseChart() {
+
+    var chartDom = document.getElementById('NoiceIndexCategoryWise');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    option = {
+      color: ['#53C7FC', '#564DC1'],
+      xAxis: {
+        type: 'category',
+        data: this.NoiseIndexCategoryWiseChannelName,
+        axisLabel: {
+          rotate: 45,
+        },
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: this.NoiseIndexCategoryWiseChannelCount,
+          type: 'bar'
+        }
+      ]
+    };
+
+    option && myChart.setOption(option);
+  }
 }

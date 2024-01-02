@@ -89,7 +89,7 @@ export class AnalyticsMenuComponent implements OnInit {
     }
     else if(this.channelname=='stagging'){
       this.analyticeReport = [
-        { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report ' },
+        { name: 'WhatsApp Raw Data', link:'/analytics/whatsapp-report' },
         { name: 'BOT Interactions', link: '/analytics/handled-bot' },
         { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
         { name: 'Unique Interactions', link: '/analytics/unique-customers' },
@@ -108,7 +108,7 @@ export class AnalyticsMenuComponent implements OnInit {
     }
     else if(this.channelname=='Jazz'){
       this.analyticeReport=[
-        { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report ' },
+        { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
         { name: 'BOT Interactions', link: '/analytics/handled-bot' },
         { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
         { name: 'Unique Interactions', link: '/analytics/unique-customers' },
@@ -133,7 +133,7 @@ export class AnalyticsMenuComponent implements OnInit {
     }
     else if(this.channelname=='ttpl'){
       this.analyticeReport=[
-        { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report ' },
+        { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
         { name: 'BOT Interactions', link: '/analytics/handled-bot' },
         { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
         { name: 'Unique Interactions', link: '/analytics/unique-customers' },
@@ -145,7 +145,7 @@ export class AnalyticsMenuComponent implements OnInit {
     }
     else if(this.channelname=='Morinaga'){
             this.analyticeReport=[
-        { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report ' },
+        { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
         { name: 'BOT Interactions', link: '/analytics/handled-bot' },
         { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
         { name: 'Unique Interactions', link: '/analytics/unique-customers' },

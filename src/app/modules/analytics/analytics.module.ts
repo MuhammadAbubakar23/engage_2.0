@@ -11,12 +11,14 @@ import { NgChartsModule } from 'ng2-charts';
 import { ExcelService } from './services/excel.service';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { LinkedInReportComponent } from './components/linked-in-report/linked-in-report.component';
+// import { WordCloudComponent } from './components/word-cloud/word-cloud.component';
 
 @NgModule({
   declarations: [
     AnalyticsComponent,
     ExecutiveDashboardHeaderComponent,
-    LiveMonitoringHeaderComponent
+    LiveMonitoringHeaderComponent,
+    // WordCloudComponent
   ],
   imports: [
     CommonModule,

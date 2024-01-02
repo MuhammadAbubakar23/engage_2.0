@@ -144,12 +144,12 @@ export class ShiftReportComponent implements OnInit {
   }
 
   getShfitReport() {
-  
+  debugger
     if (this.startDate == '' && this.endDate == '') {
       const today = this.currentDate;
       this.endDate = this.datePipe.transform(today, 'YYYY-MM-dd') || '';
 
-      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 2);
+      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 5);
       this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     } else if (this.startDate != '' && this.endDate != '') {
       this.startDate = this.startDate;
@@ -296,14 +296,14 @@ export class ShiftReportComponent implements OnInit {
     this.getAlltags();
   }
   getByShifTime() {
-    debugger
+    
     this.shiftName=this.selectedName.name
     this.shiftime=this.selectedName.id
     this.getShfitReport();
   }
   agentCount: number = 0;
   getTableStyle() {
-    debugger
+    
     const threshold = 10;
     const maxHeight = threshold * 50 + 40;
     const style = {

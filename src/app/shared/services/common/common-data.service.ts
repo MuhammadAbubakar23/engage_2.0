@@ -20,7 +20,8 @@ export class CommonDataService {
   ServiceBaseUrl = environment.ServiceBaseUrl;
   ProfileBaseUrl = environment.ProfileBaseUrl;
   LinkedInBaseUrl = environment.LinkedInBaseUrl;
-  KelisteningBaseUrl =environment.KelisteningBaseUrl;
+  KemediaBaseUrl=environment.KemediaBaseUrl;
+  // KelisteningBaseUrl =environment.KelisteningBaseUrl;
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
   removeTags = environment.links.common.RemoveTags;
@@ -93,8 +94,7 @@ export class CommonDataService {
   addAgentPerformance = environment.links.common.addAgentPerformance;
   shiftReport = environment.links.common.shiftReport;
   getWhatsAppRawDataReport = environment.links.common.getWhatsAppRawDataReport;
-  downloadWhatsAppRawDataReport =
-    environment.links.common.downloadWhatsAppRawDataReport;
+  downloadWhatsAppRawDataReport =environment.links.common.downloadWhatsAppRawDataReport;
   postSocialRawData = environment.links.common.postSocialRawData;
   downloadSocialRawData = environment.links.common.downloadSocialRawData;
   facebookReport = environment.links.common.facebookReport;
@@ -108,7 +108,10 @@ export class CommonDataService {
   emailShiftReport = environment.links.common.emailShiftReport;
   downloadTagReport = environment.links.common.downloadTagReport;
   regionwiseReport=environment.links.common.regionwiseReport;
-  wordCloud=environment.links.common.wordCloud
+  wordCloud=environment.links.common.wordCloud;
+  areawiseReport=environment.links.common.areawiseReport;
+  keMediaReport=environment.links.common.keMediaReport;
+  PrintFeed=environment.links.common.PrintFeed
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
   addTemplate = environment.links.console.addTemplate;
@@ -165,6 +168,7 @@ export class CommonDataService {
   getProfileInformationByID = environment.links.profile.getProfileInformationByID;
   searchProfileInformation = environment.links.profile.searchProfileInformation;
   addProfileInformation = environment.links.profile.addProfileInformation;
+  private _wordCloudDataS: any;
 
   constructor(private http: HttpClient) {}
 
@@ -745,7 +749,16 @@ export class CommonDataService {
     return this.http.post(this.ProfileBaseUrl+this.regionwiseReport,body)
   }
   GetwordCloud(body:any){
-    return this.http.post(this.KelisteningBaseUrl+this.wordCloud,body)
+    return this.http.post(this.CommonBaseUrl+this.wordCloud,body)
+  }
+  GetAreaWiseReport(body:any){
+    return this.http.post(this.ProfileBaseUrl+this.areawiseReport,body)
+  }
+  GetAllKemediaReport(body:any){
+    return this.http.post(this.KemediaBaseUrl+this.keMediaReport,body)
+  }
+  GetAllPrintFeed(body:any){
+    return this.http.post(this.KemediaBaseUrl+this.PrintFeed,body)
   }
  
 }

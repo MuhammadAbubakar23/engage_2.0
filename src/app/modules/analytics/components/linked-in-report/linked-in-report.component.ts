@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import * as echarts from 'echarts';
@@ -15,6 +15,14 @@ import { ExcelService } from '../../services/excel.service';
   imports: [CommonModule, FormsModule, NgxSpinnerModule],
 })
 export class LinkedInReportComponent implements OnInit {
+  @ViewChild('radioInput5',{static:false}) 
+  radioInput5!:ElementRef;
+  @ViewChild('radioInput10',{static:false}) 
+  radioInput10!:ElementRef;
+  @ViewChild('radioInput20',{static:false}) 
+  radioInput20!:ElementRef;
+  @ViewChild('radioInput30',{static:false}) 
+  radioInput30!:ElementRef;
   fromDate: string = '';
   toDate: string = '';
   maxEndDate: any;
@@ -79,7 +87,18 @@ export class LinkedInReportComponent implements OnInit {
   }
   resetEndDate() {
     if (this.toDate >= this.fromDate) {
-      debugger
+      if(this.radioInput5!==undefined){
+        this.radioInput5.nativeElement.checked=false
+      }
+      if(this.radioInput10!==undefined){
+        this.radioInput10.nativeElement.checked=false
+      }
+      if(this.radioInput20!==undefined){
+        this.radioInput20.nativeElement.checked=false
+      }
+      if(this.radioInput30!==undefined){
+        this.radioInput30.nativeElement.checked=false
+      }
      
       this.getLinkedInReportData();
       this.getAllLinkedInfollowrs()

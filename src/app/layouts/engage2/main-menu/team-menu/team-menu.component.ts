@@ -63,6 +63,7 @@ export class TeamMenuComponent implements OnInit {
         item.subTags.forEach((singleMenu: any) => {
           if (!this.mainMenu.includes(singleMenu)) {
             this.mainMenu.push(singleMenu)
+          console.log("mainMenu===>",this.mainMenu)
           }
         });
       }
