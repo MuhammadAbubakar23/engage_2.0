@@ -18,7 +18,8 @@ export const environment = {
   title: 'abc',
 
   InstaBaseUrl: 'https://insta.360scrm.com/api/',
-  FbBaseUrl: 'https://face.360scrm.com/api/',
+  // FbBaseUrl: 'https://face.360scrm.com/api/',
+  FbBaseUrl: 'https://nextsparklypen70.conveyor.cloud/api/',
   YoutubeBaseUrl: 'https://tube.360scrm.com/api/',
   TwitterBaseUrl: 'https://tweet.360scrm.com/api/',
   EmailBaseUrl: 'https://mail.360scrm.com/api/',
@@ -41,16 +42,17 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
 
   // For Total Parco
-  // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api',
-  // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/',
-  // SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
+  IdentityBaseUrl: 'https://tpplidp.360scrm.com/api',
+  CommonBaseUrl: 'https://tpplcom.360scrm.com/api/',
+  SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
+  consoleBaseUrl: 'https://tpplcons.360scrm.com/api/',
 
   // For Morinaga
-  IdentityBaseUrl: 'https://waidentity.enteract.live/api',
-  CommonBaseUrl: 'https://wacommon.enteract.live/api/',
-  SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
+  // IdentityBaseUrl: 'https://waidentity.enteract.live/api',
+  // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
   ServiceBaseUrl: 'https://waservice.enteract.live/api/',
-  consoleBaseUrl: 'https://waconsole.enteract.live/api/',
+  // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
 
   // For Testing
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
@@ -58,13 +60,13 @@ export const environment = {
   // //  CommonBaseUrl: 'http://10.111.32.52:45455/api/',
   // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
   ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
+  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
   // for testing purpose
   // consoleBaseUrl: 'http://10.111.11.93:45455/api/',
-  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   //  consoleBaseUrl: '',
 
   links: {

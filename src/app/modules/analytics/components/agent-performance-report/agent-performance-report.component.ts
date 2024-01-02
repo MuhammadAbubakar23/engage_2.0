@@ -417,7 +417,7 @@ export class AgentPerformanceReportComponent implements OnInit {
   // ];
   getChannel() {
 
-    if (this.isChannelShow == "morinag") {
+    if (this.isChannelShow == "morinaga") {
       this.channelOptions = [
 
         { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },

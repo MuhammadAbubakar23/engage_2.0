@@ -487,7 +487,7 @@ export class CommonDataService {
   }
   AttachFacebookPage(body: any) {
     return this.http.post(
-      this.InstagramBaseUrl + this.attachFacebookPage,
+      this.FacebookBaseUrl + this.attachFacebookPage,
       body
     );
   }
