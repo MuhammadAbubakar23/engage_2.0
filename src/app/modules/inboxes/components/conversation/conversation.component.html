@@ -680,7 +680,7 @@
                     <a
                       (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId)">
                       <span>{{query?.userName?.split('<')[0] || query.user}} 
-                        <i *ngIf="query.isVerified != null" class="fa-solid fa-badge-check text-primary"></i>
+                        <i *ngIf="query.isVerified == 'true'" class="fa-solid fa-badge-check text-primary"></i>
                       </span>
                           <span class="badge bg-danger rounded-pill"
                             *ngIf="query.unrespondedCount > 0">{{query.unrespondedCount}}</span></a>

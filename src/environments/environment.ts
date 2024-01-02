@@ -40,7 +40,7 @@ export const environment = {
   // IdentityBaseUrl: 'https://idtservice.enteract.live/api',
   // CommonBaseUrl: 'https://comservices.enteract.live/api/',
   // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
-   //https://common.jazz.com.pk:8080 //https://comservices.enteract.live
+  // //  https://common.jazz.com.pk:8080 //https://comservices.enteract.live
   // ProfileBaseUrl:'https://profiler.enteract.live/api/',
 
   // For Jazz
@@ -49,10 +49,10 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
 
   // For Total Parco
-  IdentityBaseUrl: 'https://tpplidp.360scrm.com/api',
-  CommonBaseUrl: 'https://tpplcom.360scrm.com/api/',
-  SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
-  consoleBaseUrl: 'https://tpplcons.360scrm.com/api/',
+  // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api',
+  // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/',
+  // SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
+  // consoleBaseUrl: 'https://tpplcons.360scrm.com/api/',
 
   // For Morinaga
   // IdentityBaseUrl: 'https://waidentity.enteract.live/api',
@@ -62,12 +62,12 @@ export const environment = {
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
 
   // For Testing
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  // //  CommonBaseUrl: 'http://10.111.32.52:45455/api/',
-  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  //  CommonBaseUrl: 'http://10.111.32.52:45455/api/',
+  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
   ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
-  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
