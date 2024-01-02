@@ -1706,7 +1706,7 @@ export class ExecutiveDashboardComponent implements OnInit {
 
 
 
-//   }
+  }
   testGraph() {
     var chartDom = document.getElementById('test');
     var myChart = echarts.init(chartDom);
