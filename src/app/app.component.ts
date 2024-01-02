@@ -13,8 +13,8 @@ import { CommonDataService } from './shared/services/common/common-data.service'
 })
 export class AppComponent {
   toasters: Toaster[] = [];
-  title = 'Enteract.Engage2.0'; 
-
+  title = 'Enteract.Engage2.0';
+  activeChannel: any;
   constructor(
     private signalRService: SignalRService,
     private router: Router,
@@ -29,28 +29,41 @@ export class AppComponent {
     //this.toasts.splice(index, 1);
   }
   ngOnInit() {
+    this.activeChannel = window.location.origin;
+
     this.toaster.toaster$.subscribe((toaster) => {
       if (toaster !== null) {
         this.toasters = [toaster, ...this.toasters];
         setTimeout(() => this.toasters.pop(), toaster.delay || 6000);
       }
     });
-    // if(localStorage.getItem('signalRConnectionId')){
-    //   if (this.signalRService.hubconnection == undefined) {
-    //     this.spinnerService.show();
-    //     this.commonService.SignOut().subscribe(()=>{
-    //       localStorage.clear();
-    //       this.router.navigateByUrl('/login');
-    //       this.spinnerService.hide();
-    //     },
-    //     (error)=>{
-    //       localStorage.clear();
-    //       this.router.navigateByUrl('/login')
-    //       this.spinnerService.hide();
-    //     })
-    //   }
-    // }
 
+    if (this.activeChannel == 'http://localhost:4200') {
+      this.B_Block();
+    } else {
+      this.A_Block();
+    }
+  }
+  A_Block() {
+    if (localStorage.getItem('signalRConnectionId')) {
+      if (this.signalRService.hubconnection == undefined) {
+        this.spinnerService.show();
+        this.commonService.SignOut().subscribe(
+          () => {
+            localStorage.clear();
+            this.router.navigateByUrl('/login');
+            this.spinnerService.hide();
+          },
+          (error) => {
+            localStorage.clear();
+            this.router.navigateByUrl('/login');
+            this.spinnerService.hide();
+          }
+        );
+      }
+    }
+  }
+  B_Block() {
     this.signalRService.reConnect();
 
     this.signalRService.removeTagDataListener();

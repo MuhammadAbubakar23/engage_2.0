@@ -42,7 +42,7 @@
                                         <div class="about-profile">
                                             <div class="profile-form mt-5 me-3 pb-4 px-3">
                                                 <div>
-                                                    <ng-container *ngFor="let info of customerProfileInformation">
+                                                    <ng-container *ngFor="let info of customerProfileInformation; let i = index;">
                                                         <div class="row mb-3" *ngIf="info.name">
                                                             <label for="inputName" class="col-sm-3 col-form-label">Full
                                                                 Name
@@ -90,13 +90,14 @@
                                                                 </select>
                                                             </div>
                                                         </div> -->
-                                                        <div class="row w-100" *ngIf="searchProfileDetails !=''">
+                                                        
+                                                        <div class="row w-100" >
                                                             <div class="col-md-4"></div>
                                                             <div class="col-md-8 justify-content-end d-flex">
                                                                 <div class="buttons-wrap d-flex">
                                                                     <button type="submit" class="btn btn-success ms-2"
-                                                                        data-bs-toggle="modal" (click)="addProfileInformation()"
-                                                                        data-bs-target="#profileSaveModal">Attach</button>
+                                                                        data-bs-toggle="modal" (click)="deattachProfileInformation(info.name,info.contractAccount,info.mobileNumber)"
+                                                                        data-bs-target="#profileSaveModal">Deattach</button>
                                                                 </div>
                                                             </div>
                                                         </div>

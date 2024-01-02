@@ -293,6 +293,7 @@ export const environment = {
       getProfileInformationByID: 'ProfileInformation/GetProfileInformationByID',
       addProfileInformation: 'ProfileInformation/AddProfileInformation',
       searchProfileInformation: 'ProfileInformation/GetCustomerInformationByID',
+      deattachProfileInformation:'ProfileInformation/DeAttachProfile',
     },
   },
 };

@@ -16,6 +16,8 @@ export class ResponderCustomerProfilingComponent implements OnInit {
   AlterMsg: any;
   spinner2running: any;
   newEntry: number = 0;
+  index:any
+  deattachInformation:any;
   constructor(
     private commonService: CommonDataService,
     private toggleService: ToggleService
@@ -60,6 +62,13 @@ export class ResponderCustomerProfilingComponent implements OnInit {
         .GetCustomerProfileDetails(obj)
         .subscribe((res: any) => {
           this.customerProfileInformation = res;
+          this.customerProfileInformation.forEach((x:any)=>{
+            
+            if(this.index==x){
+              this.deattachInformation=x
+            }
+            
+          })
           console.log(res);
         });
     }
@@ -85,6 +94,38 @@ export class ResponderCustomerProfilingComponent implements OnInit {
   //   });
   // }
   type: string = '';
+  deattachProfileInformation(name:string,contractAccount:number,mobileNumber:number,){
+
+    
+    // var obj = {
+    //   externalId: this.id,
+    //   platform: this.openedChannel,
+    //   companyId: 0,
+    //   contractAccount: this.deattachInformation.,
+
+    //   customerSocialProfileName: this.customerSocialProfileName,
+    //   customerEmail: this.customerEmail,
+    //   phoneNumber: this.phoneNumber,
+    // };
+    let obj ={
+      externalId: this.id,
+      platform:this.openedChannel ,
+      companyId: 0,
+      contractAccount:contractAccount,
+      customerSocialProfileName: name,
+      customerEmail:'',
+      phoneNumber: mobileNumber
+    }
+    this.commonService.DeattachProfileInformation(obj).subscribe((res:any)=>{
+      console.log("DeattachProfilerInformation===>",res)
+      this.reloadComponent('deattachprofile')
+      setTimeout(() => {
+        this.closeProfileComponent('customer-profile');
+      }, 1000);
+      this.getCustomerProfileDetails()
+     
+    })
+  }
 
   addProfileInformation() {
     var obj = {
@@ -97,6 +138,7 @@ export class ResponderCustomerProfilingComponent implements OnInit {
       customerEmail: this.customerEmail,
       phoneNumber: this.phoneNumber,
     };
+   
     this.commonService.AddProfileInformation(obj).subscribe(
       (res: any) => {
         this.reloadComponent('profileUpdated');
@@ -140,6 +182,14 @@ export class ResponderCustomerProfilingComponent implements OnInit {
       setTimeout(() => {
         this.toastermessage = false;
       }, 4000);
+    }
+    if(type=='deattachprofile'){
+      this.AlterMsg='Profile Deattach Successfully !';
+      this.toastermessage=true
+      setTimeout(()=>{
+        this.toastermessage=false
+
+      },4000)
     }
   }
 }

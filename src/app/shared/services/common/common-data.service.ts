@@ -168,6 +168,7 @@ export class CommonDataService {
   getProfileInformationByID = environment.links.profile.getProfileInformationByID;
   searchProfileInformation = environment.links.profile.searchProfileInformation;
   addProfileInformation = environment.links.profile.addProfileInformation;
+  deattachProfileInformation=environment.links.profile.deattachProfileInformation
   private _wordCloudDataS: any;
 
   constructor(private http: HttpClient) {}
@@ -744,6 +745,9 @@ export class CommonDataService {
   }
   AddProfileInformation(body:any) {
     return this.http.post(this.ProfileBaseUrl + this.addProfileInformation, body);
+  }
+  DeattachProfileInformation(body:any){
+    return this.http.post(this.ProfileBaseUrl+this.deattachProfileInformation,body)
   }
   GetRegionWiseReport(body:any){
     return this.http.post(this.ProfileBaseUrl+this.regionwiseReport,body)

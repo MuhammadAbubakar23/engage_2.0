@@ -144,7 +144,7 @@ export class ShiftReportComponent implements OnInit {
   }
 
   getShfitReport() {
-  debugger
+  
     if (this.startDate == '' && this.endDate == '') {
       const today = this.currentDate;
       this.endDate = this.datePipe.transform(today, 'YYYY-MM-dd') || '';
