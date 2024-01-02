@@ -27,7 +27,7 @@ export class SignalRService {
 
   token = localStorage.getItem('token');
   signalRStatus = localStorage.getItem('signalRStatus');
-  companyId:number=652;
+  companyId:number=651;
   baseUrl:string="";
 
   public hubconnection!: signalR.HubConnection;
@@ -52,7 +52,7 @@ export class SignalRService {
   ) { 
     this.baseUrl=window.location.origin
     if(this.baseUrl=='https://keportal.enteract.live'){
-      this.companyId=651;
+      this.companyId=652;
     } else if (this.baseUrl=='https://engage.jazz.com.pk') {
     this.companyId=650;
     }

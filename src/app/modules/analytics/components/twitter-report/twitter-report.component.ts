@@ -209,7 +209,7 @@ export class TwitterReportComponent implements OnInit {
         this.SpinnerService.hide();
 
         this.TwitterReport = res;
-        debugger
+        
         // calculate SLA for twitter Report
         this.slatotalMentionRecived = this.TwitterReport.totalMentionReceived
         this.slatotalReplysent = this.TwitterReport.totalReplySent
@@ -222,7 +222,7 @@ export class TwitterReportComponent implements OnInit {
         this.SumoftotalTweetsandDMrecevied = this.slatotalTweetsRecived + this.slatotalDMReceived
         this.sumofTotalEngagementMetrics = this.slatotalMentionRecived + this.slatotalDMsent + this.slatotalDMReceived + this.slatotalMentionSent + this.slatotalTweetsSent + this.slatotalTweetsRecived
         // last total
-        debugger
+        
         this.slalastTotalMentionReceived = this.TwitterReport.lastTotalMentionReceived
         this.slalastTotalReplySent = this.TwitterReport.lastTotalReplySent
         this.slalastTotalDMSent = this.TwitterReport.lastTotalDMSent
