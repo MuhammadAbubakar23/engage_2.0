@@ -6,15 +6,37 @@
   </div>
   <ul class="list-group console-list mt-2" data-scrollbar="true" tabindex="-1" style="overflow: hidden; outline: none">
     <div class="scroll-content" style="overflow: auto; height: calc(100%-200px);">
-      <span *ngFor="let item of analyticeReport"> 
-        <li class="list-group-item list-group-item-action" routerLinkActive="active"
-          value="Live Monitoring" id="analyticstab2">
-          <a [routerLink]="[item.link]" class="d-flex" >
-        {{item.name}}
+      <span *ngFor="let item of analyticeReport">
+        <li class="list-group-item list-group-item-action" routerLinkActive="active" value="Live Monitoring"
+          id="analyticstab2">
+          <a [routerLink]="[item.link]" class="d-flex">
+            {{item.name}}
           </a>
         </li>
       </span>
+      <li class="list-group-item list-group-item-action" type="button" data-bs-toggle="collapse"
+        data-bs-target="#sidebar2" aria-expanded="true" aria-controls="sidebar2">
+        <a class="d-flex chevron-icon align-items-center" href="#">
+          <i class="fa-light fa-chart-line-up "></i> &nbsp;
+          Archive Reports
+        </a>
 
+      </li>
+      <ul class="list-unstyled-inner collapse show" id="sidebar2">
+        <li class=" list-group-item list-group-item-action">
+          <a class="d-flex align-items-center" routerLinkActive="active"  [routerLink]="['/analytics/facebook-report-scrm']">
+            <!-- <i class="fal fa-users pe-2"></i> -->
+            Facebook Report
+          </a>
+        </li>
+        <li class="list-group-item list-group-item-action">
+          <a class="d-flex align-items-center" routerLinkActive="active" [routerLink]="['/analytics/linkedin-report-scrm']">
+            <!-- <i class="fal fa-users-class pe-2"></i> -->
+            Linkedin Report
+          </a>
+        </li>
+
+      </ul>
       <!-- <li class="list-group-item list-group-item-action" [ngClass]="activeMenu == 'Reports'?'active':''"
         value="Executive Dashboard" id="analyticstab1">
         <a routerLink="/analytics/reports" class="d-flex">

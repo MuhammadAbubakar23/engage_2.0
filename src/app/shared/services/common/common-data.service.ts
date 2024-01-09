@@ -21,6 +21,7 @@ export class CommonDataService {
   ProfileBaseUrl = environment.ProfileBaseUrl;
   LinkedInBaseUrl = environment.LinkedInBaseUrl;
   KemediaBaseUrl=environment.KemediaBaseUrl;
+  KescrmBaseUrl=environment.KescrmBaseUrl
   // KelisteningBaseUrl =environment.KelisteningBaseUrl;
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
@@ -111,7 +112,10 @@ export class CommonDataService {
   wordCloud=environment.links.common.wordCloud;
   areawiseReport=environment.links.common.areawiseReport;
   keMediaReport=environment.links.common.keMediaReport;
-  PrintFeed=environment.links.common.PrintFeed
+  PrintFeed=environment.links.common.PrintFeed;
+  // SCRM Reports
+  facebookscrmReport=environment.links.scrmReports.facebookscrmReport;
+  getfortesting=environment.links.scrmReports.getfortesting
   // for testing purpose
   getAllMessages = environment.links.console.getAllMessages;
   addTemplate = environment.links.console.addTemplate;
@@ -764,7 +768,17 @@ export class CommonDataService {
   GetAllPrintFeed(body:any){
     return this.http.post(this.KemediaBaseUrl+this.PrintFeed,body)
   }
- 
+  GetKarachiCoordinates(){
+    
+    return this.http.get("../../../../../assets/karachiHeatMaoCoordinates.json")
+  }
+//  For SCRM Report
+GetScrmFacebookReport(body:any){
+   return this.http.post(this.KescrmBaseUrl+this.facebookscrmReport,body)
+}
+GetDatafortesting(){
+  return this.http.get(this.KescrmBaseUrl+this.getfortesting)
+}
 }
 
 var headers_object = new HttpHeaders({

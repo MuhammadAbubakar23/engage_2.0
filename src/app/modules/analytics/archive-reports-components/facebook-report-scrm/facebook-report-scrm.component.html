@@ -1,0 +1,748 @@
+<div class="content-box-wrapper d-flex w-100">
+    <div class="middle-content d-flex">
+
+
+
+        <div class="d-grid w-100">
+            <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1"
+                style="overflow: auto; outline: none;">
+                <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
+                    <div class="report-toolbar mb-4">
+                        <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+                            <li class="list-inline-item">
+                                <div class="iconholder">
+                                    <input name="" id="datepickerrange" class="form-control flatpickr-input"
+                                    [(ngModel)]="startDate"
+                                    [max]="maxEndDate"
+                                        placeholder="Date" type="date">
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="iconholder">
+                                    <input name="" id="datepickerrange" class="form-control flatpickr-input"
+                                    [(ngModel)]="endDate"
+                                    [max]="maxEndDate"
+                                        placeholder="Date" type="date">
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="dropdown icondropdown w-auto mx-2">
+                                    <button class="btn dropdown-toggle" type="button" id="columnssort"
+                                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                        Profile
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="columnssort">
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="#0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" id="keprofile" checked>
+                                                    <label class="form-check-label" for="keprofile">
+                                                        <i class="fa-brands fa-facebook facebook pe-2"></i> K-Electric
+                                                    </label>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="list-inline-item ms-auto">
+                                <div class="btn-group buttonfilter" role="group"
+                                    aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
+                                        autocomplete="off" checked="">
+                                    <label class="btn btn-outline-secondary" for="btnradio1">15</label>
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-secondary" for="btnradio2">30</label>
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-secondary" for="btnradio3">60</label>
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-secondary" for="btnradio4">90</label>
+                                </div>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <div class="row align-items-start h-auto mb-4">
+
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium berryBg mb-4">
+                                                <i class="fa-light fa-thumbs-up"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Likes</p>
+                                        </div>
+                                        <h2>100286</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium radicalBg mb-4">
+                                                <i class="fa-light fa-comments"></i>
+                                            </span>
+                                            <p class="coal mb-0"> COMMENTS</p>
+                                        </div>
+                                        <h2>3026</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium mintBg mb-4">
+                                                <i class="fa-light fa-share-all"></i>
+                                            </span>
+                                            <p class="coal mb-0"> SHARES</p>
+                                        </div>
+                                        <h2>22574</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-start h-auto mb-5">
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded">
+                                <h5 class="section-heading mb-4 p-0">Followers by Age</h5>
+                                <ul class="list-0 statlist list-lg">
+                                    <li>
+                                        <span class="coal">13-17</span>
+                                        <span class="fw-semibold">1006230</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">18-24</span>
+                                        <span class="fw-semibold">5006236</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">25-34</span>
+                                        <span class="fw-semibold">7006237</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">35-44</span>
+                                        <span class="fw-semibold">1002230</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">45-64</span>
+                                        <span class="fw-semibold">606230</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">65+</span>
+                                        <span class="fw-semibold">56230</span>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded">
+                                <h5 class="section-heading mb-3 p-0">Followers by Gender </h5>
+                                <div class="pt-5 pb-4 px-4">
+                                    <div class="row mb-4">
+                                        <div class="col-md-6 border-end">
+                                            <h3>5.2K</h3>
+                                            <h6 class="fw-normal">Male Candidates</h6>
+                                        </div>
+                                        <div class="col-md-6 ps-4">
+                                            <p class="m-0 sky"><i class="fa-light fa-mars"></i> Male</p>
+                                            <div class="progress progress-sky" role="progressbar"
+                                                aria-label="Example with label" aria-valuenow="25" aria-valuemin="0"
+                                                aria-valuemax="100">
+                                                <div class="progress-bar" style="width: 55%">55%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 border-end">
+                                            <h3>2.4K</h3>
+                                            <h6 class="fw-normal">Female Candidates</h6>
+                                        </div>
+                                        <div class="col-md-6 ps-4">
+                                            <p class="m-0 cherry"><i class="fa-light fa-venus"></i> FeMale</p>
+                                            <div class="progress progress-cheery" role="progressbar"
+                                                aria-label="Example with label" aria-valuenow="25" aria-valuemin="0"
+                                                aria-valuemax="100">
+                                                <div class="progress-bar" style="width: 45%">45%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">Publishin behavior</h5>
+                        <div class="graphcontainer align-items-end mb-5">
+                           <div id="publishinBehavior" style="height: 400px; width: 900px;"></div>
+                        </div>
+
+                        <div class="row justify-content-between px-5">
+                            <div class="col-md-5">
+                                <ul class="list-0 statlist list-lg mb-3">
+                                    <li>
+                                        <span class="coal">Page Likes </span>
+                                        <span class="fw-semibold">3841</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">Page Unlikes </span>
+                                        <span class="fw-semibold">862</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">Net Difference </span>
+                                        <span class="fw-semibold">2979</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="card dashboard-card">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <span class="iconButton medium mintBg mb-4">
+                                                    <i class="fa-light fa-arrow-up"></i>
+                                                </span>
+                                                <p class="coal mb-0"> Likes Increased</p>
+                                            </div>
+                                            <h3>23,906.25%</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">Audience Growth </h5>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="graphcontainer align-items-end">
+                                   <div id="audiencegrowth" style="height: 400px;width: 900px;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 px-4">
+                                <ul class="list-0 statlist list-lg mb-3">
+                                    <li>
+                                        <span class="coal">Page Posts </span>
+                                        <span class="fw-semibold">1266</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">Users Posts </span>
+                                        <span class="fw-semibold">0</span>
+                                    </li>
+                                    <li>
+                                        <span class="coal">Total Posts </span>
+                                        <span class="fw-semibold">1266</span>
+                                    </li>
+                                </ul>
+                                <div class="card dashboard-card">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <span class="iconButton medium radicalBg mb-4">
+                                                    <i class="fa-light fa-arrow-down"></i>
+                                                </span>
+                                                <p class="coal mb-0"> Post Decreased</p>
+                                            </div>
+                                            <h3> 57.77%</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">Audience Engagements</h5>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="graphcontainer align-items-end">
+                                    <div id="audienceEngagements" style="height: 400px; width: 900px;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 px-4">
+                                <ul class="nav nav-tabs linetabs mb-3" id="myTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                            data-bs-target="#home-tab-pane" type="button" role="tab"
+                                            aria-controls="home-tab-pane" aria-selected="true">Engagements</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                            data-bs-target="#profile-tab-pane" type="button" role="tab"
+                                            aria-controls="profile-tab-pane" aria-selected="false"
+                                            tabindex="-1">SLA</button>
+                                    </li>
+
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
+                                        aria-labelledby="home-tab" tabindex="0">
+                                        <ul class="list-0 statlist list-lg mb-3">
+                                            <li>
+                                                <span class="coal"> Likes </span>
+                                                <span class="fw-semibold">100286</span>
+                                            </li>
+                                            <li>
+                                                <span class="coal"> Comments </span>
+                                                <span class="fw-semibold">862</span>
+                                            </li>
+                                            <li>
+                                                <span class="coal"> Chat Messages </span>
+                                                <span class="fw-semibold">2979</span>
+                                            </li>
+                                            <li>
+                                                <span class="coal"> Shares </span>
+                                                <span class="fw-semibold">2979</span>
+                                            </li>
+                                            <li>
+                                                <span class="coal"> Total Engagement </span>
+                                                <span class="fw-semibold">278169</span>
+                                            </li>
+                                        </ul>
+                                        <div class="card dashboard-card">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <div>
+                                                        <span class="iconButton medium mintBg mb-4">
+                                                            <i class="fa-light fa-arrow-up"></i>
+                                                        </span>
+                                                        <p class="coal mb-0"> Engagements Increased </p>
+                                                    </div>
+                                                    <h3>220.89%</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel"
+                                        aria-labelledby="profile-tab" tabindex="0">
+                                        <ul class="list-0 statlist list-lg mb-3">
+                                            <li>
+                                                <span class="coal"> Replies within 120 minutes </span>
+                                                <span class="fw-semibold">100286</span>
+                                            </li>
+                                            <li>
+                                                <span class="coal"> Replies after 120 minutes </span>
+                                                <span class="fw-semibold">862</span>
+                                            </li>
+                                            <li>
+                                                <span class="coal"> Total Catered Workload </span>
+                                                <span class="fw-semibold">2979</span>
+                                            </li>
+
+                                        </ul>
+                                        <div class="card dashboard-card">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <div>
+                                                        <span class="iconButton medium mintBg mb-4">
+                                                            <i class="fa-light fa-arrow-up"></i>
+                                                        </span>
+                                                        <p class="coal mb-0"> 120 minutes SLA</p>
+                                                    </div>
+                                                    <h3> 85.21%</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-5 align-items-start">
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded">
+                                <div class="d-flex align-items-center mb-4">
+                                    <span class="iconButton large rounded-pill">
+                                       <!-- <div id="peopleWhoviwed" style="height: 400px; width: 900px;"></div> -->
+                                    </span>
+                                    <h6 class="ms-3">K-Electric</h6>
+                                </div>
+                                <div class="row align-items-start mb-2">
+                                    <div class="col">
+                                        <small class="coal">Fans</small>
+                                        <p class="fw-semibold">3841</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="coal">Fans Increased</small>
+                                        <p class="fw-semibold">23,906.25%</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="coal">Posts Sent</small>
+                                        <p class="fw-semibold">1266</p>
+                                    </div>
+                                </div>
+                                <div class="row align-items-start">
+                                    <div class="col">
+                                        <small class="coal">Engagements</small>
+                                        <p class="fw-semibold">132680</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="coal"> Engagements per Follower</small>
+                                        <p class="fw-semibold">122664</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="coal">Link Clicks </small>
+                                        <p class="fw-semibold">44950</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <h6>Agent Replies</h6>
+                                </div>
+                                <div class="row mb-2 align-items-start">
+                                    <div class="col">
+                                        <small class="coal">Customer Posts </small>
+                                        <p class="fw-semibold">3841</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="coal"> Customer Comments </small>
+                                        <p class="fw-semibold">21703</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="coal"> Customer Messages </small>
+                                        <p class="fw-semibold">1266</p>
+                                    </div>
+                                </div>
+                                <div class="row align-items-start">
+                                    <div class="col">
+                                        <small class="coal">Agent Comments </small>
+                                        <p class="fw-semibold">132680</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="coal">Agent Messages </small>
+                                        <p class="fw-semibold">122664</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="coal"> Mark As Completed </small>
+                                        <p class="fw-semibold">44950</p>
+                                    </div>
+                                </div>
+                                <div class="pt-3 border-top d-flex align-items-center justify-content-between">
+                                    <span class="sky">Total Completed </span>
+                                    <p class="fw-semibold night mb-0">71559</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">TOTAL PEOPLE WHO VIEWED</h5>
+                        <div class="graphcontainer align-items-end">
+                      
+                             <div id="peopleWhoviwed" style="height: 400px;width: 900px;"></div>
+                       
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded mb-5">
+                                <h5 class="section-heading mb-4 p-0">REACTIONS GRAPH</h5>
+                                <div class="graphcontainer align-items-end">
+                               
+                                        <div id="reactionGraph" style="height: 400px; width: 900px;"></div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded mb-5">
+                                <h5 class="section-heading mb-4 p-0">PAGE REACHABILITY</h5>
+                                <div class="graphcontainer align-items-end">
+                                 
+                                    <div id="pagereachability" style="height: 400px; width: 900px;"></div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">Recent Posts (Top 5)</h5>
+                        <div class="table-section">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Created Date </th>
+                                        <th> </th>
+                                        <th>Post </th>
+                                        <th>Type </th>
+                                        <th>Reach </th>
+                                        <th>Post Clicks </th>
+                                        <th>Reactions </th>
+                                        <th>Comments </th>
+                                        <th>Shares </th>
+                                        <th>Engagment Rate </th>
+                                        <th>Grade </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>31/08/2023 <small> 04:55 PM</small></td>
+                                        <td>
+                                            <span class="iconButton medium rounded-pill">
+                                                <!-- <img src="../images/ke.png" class="img-fluid rounded-pill" alt=""> -->
+                                            </span>
+                                        </td>
+                                        <td>
+                                            We have prioritised strengthening the city's power supply by reinvesting all
+                                            profits since privatisation. With investment of PKR 474bn across the value
+                                            chain, we have halved our T&amp;D losses &amp; doubled our customer base.
+                                            Learn more about our Investment Plan 2030:
+                                            https://bit.ly/investment-plan-2030
+                                        </td>
+                                        <td><span class="iconButton small">
+                                                <i class="fa-light fa-pencil"></i>
+                                            </span> </td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>32</td>
+                                        <td>80</td>
+                                        <td>9</td>
+                                        <td>0%</td>
+                                        <td>C</td>
+                                    </tr>
+                                    <tr>
+                                        <td>31/08/2023 <small> 04:55 PM</small></td>
+                                        <td>
+                                            <span class="iconButton medium rounded-pill">
+                                                <!-- <img src="../images/ke.png" class="img-fluid rounded-pill" alt=""> -->
+                                            </span>
+                                        </td>
+                                        <td>
+                                            Conserve electricity to reduce your bill. Shifting to energy efficient
+                                            appliances can halve your electricity consumption per month. #FarqPartaHai
+                                        </td>
+                                        <td><span class="iconButton small">
+                                                <i class="fa-light fa-pencil"></i>
+                                            </span> </td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>32</td>
+                                        <td>80</td>
+                                        <td>9</td>
+                                        <td>0%</td>
+                                        <td>C</td>
+                                    </tr>
+                                    <tr>
+                                        <td>31/08/2023 <small> 04:55 PM</small></td>
+                                        <td>
+                                            <span class="iconButton medium rounded-pill">
+                                                <!-- <img src="../images/ke.png" class="img-fluid rounded-pill" alt=""> -->
+                                            </span>
+                                        </td>
+                                        <td>
+                                            Worried about lost bills? Missing out on payments and tired of waiting in
+                                            long queues? Pay them online. With KE's digital stamp, you can easily
+                                            maintain proof of payment
+                                        </td>
+                                        <td><span class="iconButton small">
+                                                <i class="fa-light fa-pencil"></i>
+                                            </span> </td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>32</td>
+                                        <td>80</td>
+                                        <td>9</td>
+                                        <td>0%</td>
+                                        <td>C</td>
+                                    </tr>
+                                    <tr>
+                                        <td>31/08/2023 <small> 04:55 PM</small></td>
+                                        <td>
+                                            <span class="iconButton medium rounded-pill">
+                                                <!-- <img src="../images/ke.png" class="img-fluid rounded-pill" alt=""> -->
+                                            </span>
+                                        </td>
+                                        <td>
+                                            Worried about lost bills? Missing out on payments and tired of waiting in
+                                            long queues? Pay them online. With KE's digital stamp, you can easily
+                                            maintain proof of payment
+                                        </td>
+                                        <td><span class="iconButton small">
+                                                <i class="fa-light fa-pencil"></i>
+                                            </span> </td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>32</td>
+                                        <td>80</td>
+                                        <td>9</td>
+                                        <td>0%</td>
+                                        <td>C</td>
+                                    </tr>
+                                    <tr>
+                                        <td>31/08/2023 <small> 04:55 PM</small></td>
+                                        <td>
+                                            <span class="iconButton medium rounded-pill">
+                                                <!-- <img src="../images/ke.png" class="img-fluid rounded-pill" alt=""> -->
+                                            </span>
+                                        </td>
+                                        <td>
+                                            Worried about lost bills? Missing out on payments and tired of waiting in
+                                            long queues? Pay them online. With KE's digital stamp, you can easily
+                                            maintain proof of payment
+                                        </td>
+                                        <td><span class="iconButton small">
+                                                <i class="fa-light fa-pencil"></i>
+                                            </span> </td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>32</td>
+                                        <td>80</td>
+                                        <td>9</td>
+                                        <td>0%</td>
+                                        <td>C</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row align-items-start mb-5">
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded mb-5">
+                                <h5 class="section-heading mb-5 p-0">Top 5 Customers</h5>
+                                <div class="table-section">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th> </th>
+                                                <th> Name </th>
+                                                <th> Posts </th>
+                                                <th> Comments </th>
+                                                <th> Messages</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <span
+                                                        class="iconButton medium rounded-pill mintTransBg night fw-bolder">
+                                                        SZ
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <a href="" class="sky fw-semibold">Suman Zaka</a>
+                                                </td>
+                                                <td>0</td>
+                                                <td>0</td>
+                                                <td>1833</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span
+                                                        class="iconButton medium rounded-pill roseTransBg night fw-bolder">
+                                                        KK
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <a href="" class="sky fw-semibold">Kamran Khan </a>
+                                                </td>
+                                                <td>0</td>
+                                                <td>0</td>
+                                                <td>1833</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span
+                                                        class="iconButton medium rounded-pill berryTransBg night fw-bolder">
+                                                        FS
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <a href="" class="sky fw-semibold">Farooq Shad</a>
+                                                </td>
+                                                <td>0</td>
+                                                <td>0</td>
+                                                <td>1833</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span
+                                                        class="iconButton medium rounded-pill skyTransBg night fw-bolder">
+                                                        SZ
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <a href="" class="sky fw-semibold">Suman Zaka</a>
+                                                </td>
+                                                <td>0</td>
+                                                <td>0</td>
+                                                <td>1833</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span
+                                                        class="iconButton medium rounded-pill cherryTransBg night fw-bolder">
+                                                        SZ
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <a href="" class="sky fw-semibold">Suman Zaka</a>
+                                                </td>
+                                                <td>0</td>
+                                                <td>0</td>
+                                                <td>1833</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded mb-5">
+                                <h5 class="section-heading mb-4 p-0">Top 10 External Sources
+                                </h5>
+                                <div class="graphcontainer align-items-end">
+                              
+                                        <div id="main" ></div>
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+</div>

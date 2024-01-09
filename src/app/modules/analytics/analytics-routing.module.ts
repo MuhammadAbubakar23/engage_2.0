@@ -16,7 +16,8 @@ const routes: Routes = [
   {
     path: '',
     component: AnalyticsComponent,
-    children: [{
+    children: [
+    {
       path:'echarts',
       loadComponent: () => import('./components/echarts-testing/echarts-testing.component').then(c => c.EchartsTestingComponent),
 
@@ -117,6 +118,15 @@ const routes: Routes = [
     {
       path:'querytag-report',
       loadComponent:()=>import('./components/queryTagReport/queryTag-report.component').then(c=>c.QueryTagReportComponent)
+    },
+
+    {
+     path:'linkedin-report-scrm',
+     loadComponent:()=>import('./archive-reports-components/linkedin-report-scrm/linkedin-report-scrm.component').then(c=>c.LinkedinReportScrmComponent)
+    },
+    {
+      path:'facebook-report-scrm',
+      loadComponent:()=>import('./archive-reports-components/facebook-report-scrm/facebook-report-scrm.component').then(c=>c.FacebookReportScrmComponent)
     }
   ]
   }

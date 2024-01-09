@@ -199,7 +199,7 @@ export class SignalRService {
     });
   };
 
-  getConnectionId = () => {
+    public getConnectionId = () => {
     this.hubconnection.invoke('GetConnectionId').then((data) => {
       this.connectionId = data;
       localStorage.setItem('signalRConnectionId', this.connectionId)

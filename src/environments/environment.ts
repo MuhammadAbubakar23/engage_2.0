@@ -33,13 +33,15 @@ export const environment = {
   LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
   KelisteningBaseUrl:'https://listen.enteract.live/backend/api/',
   KemediaBaseUrl:'https://kemedia.360scrm.com/api/',
+  KescrmBaseUrl:'https://kescrm.360scrm.com/',
 
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  // IdentityBaseUrl: 'https://idtservice.enteract.live/api',
-  // CommonBaseUrl: 'https://comservices.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
+  IdentityBaseUrl: 'https://idtservice.enteract.live/api',
+  CommonBaseUrl: 'https://comservices.enteract.live/api/',
+  SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
+  ProfileBaseUrl: 'https://profiler.enteract.live/api/',
   // //  https://common.jazz.com.pk:8080 //https://comservices.enteract.live
   // ProfileBaseUrl:'https://profiler.enteract.live/api/',
 
@@ -60,13 +62,15 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
   ServiceBaseUrl: 'https://waservice.enteract.live/api/',
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
+  
 
   // For Testing
-  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  //  CommonBaseUrl: 'http://10.111.32.52:45455/api/',
-  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
+  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  //  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  
+   //https://profiler.entract.live/
   consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
@@ -247,6 +251,10 @@ export const environment = {
       areawiseReport:'Report/GetAreaWiseReport',
       keMediaReport:'MediaReport/GetMediaReport',
       PrintFeed:'Media/GetMediaPrintList'
+    },
+    scrmReports:{
+      facebookscrmReport:'Facebook/FacebookGetPageReportStats',
+      getfortesting:'/feedback/GetAllCampaignsWithCSAT'
     },
     facebook: {
       comments: 'Facebook/GetFbPost',
