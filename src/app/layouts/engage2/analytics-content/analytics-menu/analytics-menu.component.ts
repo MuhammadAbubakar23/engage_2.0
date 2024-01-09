@@ -54,7 +54,10 @@ export class AnalyticsMenuComponent implements OnInit {
       this.channelname = 'Morinaga';
     } else if (this.activeChannel == 'https://uiengage.enteract.app') {
       this.channelname = 'stagging';
+    } else if (this.activeChannel == 'https://bzengage.enteract.live') {
+      this.channelname = 'Bazaar';
     }
+
     this.getmenu();
   }
   getmenu() {
@@ -89,7 +92,7 @@ export class AnalyticsMenuComponent implements OnInit {
       ];
     } else if (this.channelname == 'stagging') {
       this.analyticeReport = [
-        { name: 'WhatsApp Raw Data', link:'/analytics/whatsapp-report' },
+        { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
         { name: 'BOT Interactions', link: '/analytics/handled-bot' },
         { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
         { name: 'Unique Interactions', link: '/analytics/unique-customers' },
@@ -109,11 +112,10 @@ export class AnalyticsMenuComponent implements OnInit {
         { name: 'Facebook Report', link: '/analytics/facebook-report' },
         { name: 'Twitter Report', link: '/analytics/twitter-report' },
         { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
-        { name: 'Instagram Report', link: '/analytics/instagram-report' }
-      ]
-    }
-    else if(this.channelname=='Jazz'){
-      this.analyticeReport=[
+        { name: 'Instagram Report', link: '/analytics/instagram-report' },
+      ];
+    } else if (this.channelname == 'Jazz') {
+      this.analyticeReport = [
         { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
         { name: 'BOT Interactions', link: '/analytics/handled-bot' },
         { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
@@ -145,11 +147,10 @@ export class AnalyticsMenuComponent implements OnInit {
         { name: 'Facebook Report', link: '/analytics/facebook-report' },
         { name: 'Twitter Report', link: '/analytics/twitter-report' },
         { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
-        { name: 'Instagram Report', link: '/analytics/instagram-report' }
-      ]
-    }
-    else if(this.channelname=='ttpl'){
-      this.analyticeReport=[
+        { name: 'Instagram Report', link: '/analytics/instagram-report' },
+      ];
+    } else if (this.channelname == 'ttpl') {
+      this.analyticeReport = [
         { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
         { name: 'BOT Interactions', link: '/analytics/handled-bot' },
         { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
@@ -164,10 +165,28 @@ export class AnalyticsMenuComponent implements OnInit {
           link: '/analytics/performance-report',
         },
         { name: 'Shift Report', link: '/analytics/shift-report' },
-      ]
+      ];
+    } else if (this.channelname == 'Morinaga') {
+      this.analyticeReport = [
+        { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
+        { name: 'BOT Interactions', link: '/analytics/handled-bot' },
+        { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
+        { name: 'Unique Interactions', link: '/analytics/unique-customers' },
+        { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
+        {
+          name: 'Inbound/Outbound Report',
+          link: '/analytics/inbound-outbound-report',
+        },
+        {
+          name: 'Agent Performance Report',
+          link: '/analytics/performance-report',
+        },
+        { name: 'Shift Report', link: '/analytics/shift-report' },
+        { name: 'Tag Report', link: '/analytics/tag-report' },
+      ];
     }
-    else if(this.channelname=='Morinaga'){
-            this.analyticeReport=[
+    else if (this.channelname == 'Bazaar') {
+      this.analyticeReport = [
         { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
         { name: 'BOT Interactions', link: '/analytics/handled-bot' },
         { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },

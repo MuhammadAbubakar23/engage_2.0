@@ -38,7 +38,7 @@ export class AppComponent {
       }
     });
 
-    if (this.activeChannel == 'http://localhost:4200') {
+    if (this.activeChannel == 'http://localhost:4200' || this.activeChannel == 'https://localhost:4200') {
       this.B_Block();
     } else {
       this.A_Block();

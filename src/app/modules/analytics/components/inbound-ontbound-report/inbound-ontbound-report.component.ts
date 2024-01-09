@@ -104,6 +104,10 @@ export class InboundOntboundReportComponent implements OnInit {
       this.isChannelShow = 'stagging'
       this.getChannel()
     }
+    else if (this.activeChannel == 'https://bzengage.enteract.live') {
+      this.isChannelShow = 'Bazaar',
+        this.getChannel()
+    }
     else {
       this.isChannelShow = 'loc'
       this.getChannel()
@@ -208,6 +212,15 @@ export class InboundOntboundReportComponent implements OnInit {
         // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
       ];
     }
+    if (this.isChannelShow == 'Bazaar') {
+
+      this.channelOptions = [
+
+        { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+        { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+        { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+      ];
+    };
   }
   onCheckboxChange() {
     this.AddGraph();

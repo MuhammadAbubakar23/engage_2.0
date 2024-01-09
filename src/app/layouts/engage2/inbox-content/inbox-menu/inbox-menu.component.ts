@@ -55,6 +55,8 @@ export class InboxMenuComponent implements OnInit {
       this.client = 'localhost';
     } else if (this.baseUrl == 'https://uiengage.enteract.app') {
       this.client = 'stagging';
+    } else if (this.baseUrl == 'https://bzengage.enteract.live') {
+      this.client = 'Bazaar';
     }
     
     this.activeChannel = this.router.url.split('/')[3];

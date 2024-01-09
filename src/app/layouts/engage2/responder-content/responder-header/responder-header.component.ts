@@ -145,7 +145,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.currentUrl = this._route.url;
 
     this.Subscription = this.userInfoService.userInfo$.subscribe((userInfo) => {
-      
+      debugger
       if (userInfo != null) {
         this.userInfo = userInfo;
         localStorage.setItem('storeHeaderOpenedId', this.userInfo.userId);

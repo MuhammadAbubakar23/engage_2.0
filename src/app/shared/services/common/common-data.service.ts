@@ -171,7 +171,9 @@ export class CommonDataService {
   deattachProfileInformation=environment.links.profile.deattachProfileInformation
   private _wordCloudDataS: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+
+  }
 
   GetTagsList() {
     return this.http.get(this.CommonBaseUrl + this.tagsList);

@@ -10,7 +10,7 @@ import { StorageService } from '../services/storage/storage.service';
 
 @Injectable()
 export class SuperTeamInterceptor implements HttpInterceptor {
-  companyId:number=650;
+  companyId:number=654;
   baseUrl:string="";
   constructor(private storage: StorageService) {}
 
@@ -32,6 +32,9 @@ export class SuperTeamInterceptor implements HttpInterceptor {
       else if(this.baseUrl=='https://waengage.enteract.live') {
         this.companyId=653
       }
+      else if(this.baseUrl=='https://bzengage.enteract.live') {
+      this.companyId=654
+    }
 
     let team = this.storage.retrive('nocompass', 'O').local;
     // console.log(team);

@@ -27,7 +27,7 @@ export class SignalRService {
 
   token = localStorage.getItem('token');
   signalRStatus = localStorage.getItem('signalRStatus');
-  companyId:number=650;
+  companyId:number=654;
   baseUrl:string="";
 
   public hubconnection!: signalR.HubConnection;
@@ -64,6 +64,9 @@ export class SignalRService {
     }
     else if(this.baseUrl=='https://waengage.enteract.live') {
       this.companyId=653
+    }
+    else if(this.baseUrl=='https://bzengage.enteract.live') {
+      this.companyId=654
     }
   }
   flag:string='';

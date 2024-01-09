@@ -31,7 +31,7 @@ import { CompletedInteractionHeaderComponent } from 'src/app/shared/headers/comp
   styleUrls: ['./inbox-content.component.scss'],
   // providers: [ResponderGuardGuard]
 })
-export class     InboxContentComponent implements OnInit {
+export class InboxContentComponent implements OnInit {
   @HostListener('window:beforeunload', ['$event'])
   handleBeforeUnload(event: Event) {
     event.preventDefault();

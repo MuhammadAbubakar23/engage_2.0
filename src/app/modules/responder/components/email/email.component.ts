@@ -19,6 +19,7 @@ import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.s
 import { ReplyService } from 'src/app/services/replyService/reply.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
+import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
 import { CommentStatusDto } from 'src/app/shared/Models/CommentStatusDto';
 import { commentsDto } from 'src/app/shared/Models/concersationDetailDto';
@@ -88,7 +89,8 @@ export class EmailComponent implements OnInit {
     private applySentimentService: ApplySentimentService,
     private getQueryTypeService: GetQueryTypeService,
     private router : Router,
-    private stor : StorageService
+    private stor : StorageService,
+    private userInfoService: UserInformationService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = null;
@@ -351,7 +353,7 @@ export class EmailComponent implements OnInit {
   multipleToInReply: any[] = [];
   multipleCcInReply: any[] = [];
   multipleBccInReply: any[] = [];
-
+  userInformation: any;
   getEmails() {
     this.flag = this.router.url.split('/')[2];
     if (this.id != null || undefined) {
@@ -378,9 +380,12 @@ export class EmailComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
+          debugger
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.Emails = res.List;
+          this.userInformation = res.List[0].user;
+            this.userInfoService.shareUserInformation(res.List[0].user);
           this.fullName = this.Emails[0].user.userName.split('<')[0];
           this.senderEmailAddress =
             this.Emails[0].user.userId.split(/[<>]/)[1] ||
@@ -510,6 +515,8 @@ export class EmailComponent implements OnInit {
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.Emails = res.List;
+        this.userInformation = res.List[0].user;
+            this.userInfoService.shareUserInformation(res.List[0].user);
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
         this.senderEmailAddress =
           this.Emails[0].user.userId.split(/[<>]/)[1] ||
@@ -641,6 +648,8 @@ export class EmailComponent implements OnInit {
           
           this.SpinnerService.hide();
           this.Emails = res.List;
+          this.userInformation = res.List[0].user;
+            this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalQueryCount = res.TotalQueryCount;
           this.senderEmailAddress =
@@ -1140,7 +1149,8 @@ export class EmailComponent implements OnInit {
         this.clearInputField();
       },
       (error) => {
-        alert(error.message);
+        debugger
+        alert(error.error.message);
         this.spinner1running = false;
        this.SpinnerService.hide();
      }
