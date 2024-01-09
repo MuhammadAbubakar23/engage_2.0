@@ -270,14 +270,14 @@
                                         <h5 class="section-heading mb-3 p-0">Word Cloud</h5>
                                         <div class="graphcontainer align-items-center">
                                             <div class="worldcloud">
-                                                <app-word-cloud [wordCloud]="dateTimeObj"></app-word-cloud>
-                                                <!-- <angular-tag-cloud [config]="options" [data]="data"  
-                                                [zoomOnHover]="zoomOnHoverOptions"></angular-tag-cloud> -->
+                                                <!-- <app-word-cloud [wordCloud]="dateTimeObj"></app-word-cloud> -->
+                                                 <angular-tag-cloud [config]="options" [data]="data"  
+                                                [zoomOnHover]="zoomOnHoverOptions"></angular-tag-cloud>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
+                        
                             </div>
                         </div>
                         <div class="heatmap card p-4 my-4">
@@ -286,20 +286,20 @@
                                         <div class="d-flex">
                                             <input name="" id="datepickerrange" class="form-control flatpickr-input"
                                             [(ngModel)]="mapstartDate"
-                                        
+                                            [max]="mapmaxEndDate"
                                             placeholder="Date" type="date">
                       
                                    &nbsp; &nbsp;
                                         <input name="" id="datepickerrange"
                                         [(ngModel)]="mapendDate" 
-                                
+                                        [max]="mapmaxEndDate"
                                         class="form-control flatpickr-input"
                                             placeholder="Date" type="date">
                                         </div>  <br>              
                                      
                                     
 
-                                    <button class="btn skyBg mb-4" (click)="OnClick()">Search</button>
+                                    <button class="btn skyBg mb-4" [disabled]="!mapendDate" (click)="OnClick()">Search</button>
                                     <ul class="list-0">
                                         <li class="pb-2">
                                             <span class="staticon me-2 mintBg"></span>Very low Frequency
@@ -321,16 +321,20 @@
 
                                 <div class="col-md-8">
                                     <div class="text-center">
-                                        <google-map height="400px" width="100%" [center]="center" [zoom]="zoom"
+                                        <!-- <google-map height="400px" width="100%" [center]="center" [zoom]="zoom"
                                             (mapClick)="moveMap($event)" (mapMousemove)="move($event)">
 
-                                            <map-polygon *ngFor="let path of pathsArray" [paths]="path"
-                                                [options]="{ strokeColor: 'black', strokeWeight: 1, fillColor: 'green' }">
+                                            <map-polygon *ngFor="let path of NewPathsArray" [paths]="path.Lat" [fillColor]="paht.fillColor"
+                                             [options]="{ strokeColor: 'black', strokeWeight: 1 }"
+                                       
+                                             >
                                             </map-polygon>
-                                        </google-map>
+                                        </google-map> -->
+                                       
 
 
                                     </div>
+                                    <div #mapContainer style="height: 600px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -465,23 +469,23 @@
                             </div>
                         </div>
                         &nbsp;
-                        <div >
+                        <!-- <div >
                             <div class="card iceBg p-4 rounded">
                                 <h5 class="section-heading mb-3 p-0">Word Cloud</h5>
                                 <div class="graphcontainer  align-items-center">
                                     <div class="worldcloud">
-                                        <!-- <angular-tag-cloud
+                                        <angular-tag-cloud
                                         [width]="options.width"
                                         [data]="MediaData"  
                                         [zoomOnHover]="zoomOnHoverOptions"
                                         [overflow]="options.overflow">
                                       </angular-tag-cloud>
-                                   -->
-                                 <!-- <app-word-cloud [wordCloud]="dateTimeObj"></app-word-cloud> -->
+                               
+                              <app-word-cloud [wordCloud]="dateTimeObj"></app-word-cloud>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         &nbsp;
                         <div class="printsection card p-4 iceBg">
                             <h5 class="section-heading mb-4 p-0"> Print Feed</h5>
@@ -505,44 +509,47 @@
                             </div>
                         </div>
                         &nbsp;
-                        <div class="heatmap card p-4">
+                        <div class="heatmap card p-4 my-4">
                             <div class="row align-items-start h-auto">
                                 <div class="col-md-4">
-                                    <div class="iconholder ms-auto mb-2">
-                                        <i class="fa-light fa-calendar-plus iconleft"></i>
-                                        <input name="" id="datepickerrange" class="form-control flatpickr-input"
-                                            placeholder="Date" readonly="readonly" type="text">
-                                    </div>
-                                    <button class="btn skyBg mb-2">Search</button>
+                                        <div class="d-flex">
+                                            <input name="" id="datepickerrange" class="form-control flatpickr-input"
+                                            [(ngModel)]="mapstartDate"
+                                            [max]="mapmaxEndDate"
+                                            placeholder="Date" type="date">
+                      
+                                   &nbsp; &nbsp;
+                                        <input name="" id="datepickerrange"
+                                        [(ngModel)]="mapendDate" 
+                                        [max]="mapmaxEndDate"
+                                        class="form-control flatpickr-input"
+                                            placeholder="Date" type="date">
+                                        </div>  <br>              
+                                     
+                                    
+
+                                    <button class="btn skyBg mb-4" [disabled]="!mapendDate" (click)="OnClick()">Search</button>
                                     <ul class="list-0">
-                                        <li>
-                                            <span class="staticon mintBg"></span>Very low Frequency
+                                        <li class="pb-2">
+                                            <span class="staticon me-2 mintBg"></span>Very low Frequency
+                                        </li>
+                                        <li class="pb-2">
+                                            <span class="staticon me-2 sunBg"></span>Low frequency
+                                        </li>
+                                        <li class="pb-2">
+                                            <span class="staticon me-2 radicalBg"></span>Moderate Frequency
+                                        </li>
+                                        <li class="pb-2">
+                                            <span class="staticon me-2 cherryBg"></span>High frequency
                                         </li>
                                         <li>
-                                            <span class="staticon sunBg"></span>Low frequency
-                                        </li>
-                                        <li>
-                                            <span class="staticon radicalBg"></span>Moderate Frequency
-                                        </li>
-                                        <li>
-                                            <span class="staticon cherryBg"></span>High frequency
-                                        </li>
-                                        <li>
-                                            <span class="staticon berryBg"></span> Negative
+                                            <span class="staticon me-2 berryBg"></span> Negative
                                         </li>
                                     </ul>
                                 </div>
+
                                 <div class="col-md-8">
-
-                                    <div>
-                                        <google-map height="400px" width="100%" [center]="center" [zoom]="zoom"
-                                        (mapClick)="moveMap($event)" (mapMousemove)="move($event)">
-
-                                        <map-polygon *ngFor="let path of pathsArray" [paths]="path"
-                                            [options]="{ strokeColor: 'black', strokeWeight: 1, fillColor: 'green' }">
-                                        </map-polygon>
-                                    </google-map>
-                                    </div>
+                                    <div #mapContainer1  style="height: 600px;"></div>
                                 </div>
                             </div>
                         </div>

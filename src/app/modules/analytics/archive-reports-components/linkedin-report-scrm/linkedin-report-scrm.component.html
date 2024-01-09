@@ -1,0 +1,320 @@
+<div class="content-box-wrapper d-flex w-100">
+    <div class="middle-content d-flex">
+
+
+
+        <div class="d-grid w-100">
+            <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1"
+                style="overflow: auto; outline: none;">
+                <div class="scroll-content">
+                    <div class="report-toolbar mb-4">
+                        <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+                            <li class="list-inline-item">
+                                <div class="iconholder">
+                                    <i class="fa-light fa-calendar-plus iconleft"></i>
+                                    <input name="" id="datepickerrange" class="form-control flatpickr-input"
+                                        placeholder="Date" readonly="readonly" type="text">
+                                </div>
+                            </li>
+                            <li class="list-inline-item">
+                                <div class="dropdown icondropdown w-auto mx-2">
+                                    <button class="btn dropdown-toggle" type="button" id="columnssort"
+                                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                        Profile
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="columnssort">
+                                        <li>
+                                            <a class="dropdown-item d-flex align-items-center" href="#0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" id="keprofile">
+                                                    <label class="form-check-label" for="keprofile">
+                                                        <i class="fa-brands fa-facebook facebook pe-2"></i> K-Electric
+                                                    </label>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="list-inline-item ms-auto">
+                                <div class="btn-group buttonfilter" role="group"
+                                    aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
+                                        autocomplete="off" checked="">
+                                    <label class="btn btn-outline-secondary" for="btnradio1">15</label>
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-secondary" for="btnradio2">30</label>
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-secondary" for="btnradio3">60</label>
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-secondary" for="btnradio4">90</label>
+                                </div>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <div class="row align-items-start h-auto mb-4">
+
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium berryBg mb-4">
+                                                <i class="fa-light fa-thumbs"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Likes</p>
+                                        </div>
+                                        <h2>100328</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium radicalBg mb-4">
+                                                <i class="fa-light fa-comments"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Comments</p>
+                                        </div>
+                                        <h2>22574</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card dashboard-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <span class="iconButton medium mintBg mb-4">
+                                                <i class="fa-light fa-share"></i>
+                                            </span>
+                                            <p class="coal mb-0"> Shares </p>
+                                        </div>
+                                        <h2>10048 </h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">Engagement</h5>
+
+                        <div class="row align-items-start">
+                            <div class="col-md-6 border-end pe-5">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h6 class="section-heading p-0 coal">Engagment Rate</h6>
+                                    <h4>3.73%</h4>
+                                </div>
+
+                                <div class="graphcontainer-sm align-items-end">
+                                    <div id="engagementrate" style="height: 400px; width: 900px;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ps-5">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h6 class="section-heading p-0 coal">Total Engagements</h6>
+                                    <h4>780,258</h4>
+                                </div>
+                                <div class="graphcontainer-sm align-items-end">
+                                    <div id="engagementtotal" style="height: 400px; width: 900px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded mb-5">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h5 class="section-heading p-0">Followers</h5>
+                                    <h4>780,258</h4>
+                                </div>
+                                <div class="graphcontainer align-items-end">
+                                 <div id="followerschart" style="height: 400px; width:900px"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card iceBg p-4 rounded mb-5">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h5 class="section-heading p-0">Click through Rate</h5>
+                                    <h4>1,746</h4>
+                                </div>
+                                <div class="graphcontainer align-items-end">
+                                  <div id="clickthroughrate" style="height: 400px; width: 900px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">Page Impressions &amp; Reach</h5>
+
+                        <div class="row align-items-start">
+                            <div class="col-md-6 border-end pe-5">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h6 class="section-heading p-0 coal">Impressions </h6>
+                                    <h4>3.73%</h4>
+                                </div>
+
+                                <div class="graphcontainer-sm align-items-end">
+                                 <div id="Impressions" style="height: 400px; width: 900px;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ps-5">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h6 class="section-heading p-0 coal">Reach (Unique Impressions)</h6>
+                                    <h4>780,258</h4>
+                                </div>
+                                <div class="graphcontainer-sm align-items-end">
+                                   <div id="UniqueImpression" style="height: 400px; width: 900px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h5 class="section-heading mb-0 p-0">Top 5 Updates</h5>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="dropdown d-flex justify-content-end">
+                                    <button class="btn iconButton medium" type="button" id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-regular fa-ellipsis"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li>
+                                            <a class="dropdown-item p-1" href="#">
+                                                <button class="iconButton dropdown-iconBtn small"
+                                                    id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    <i class="fa-solid fa-file-export"></i>
+                                                </button>Export to CSV
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="table-section">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+
+                                        <th> Name </th>
+                                        <th> Date </th>
+                                        <th>Impression</th>
+                                        <th> CTR </th>
+                                        <th> Engagement Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <a href="#0">Check out our list of top 10 books on data analytics</a>
+                                        </td>
+                                        <td>
+                                            12 Aug, 2023
+                                        </td>
+                                        <td> 987</td>
+                                        <td>3.87%</td>
+                                        <td>3.14</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#0">Check out our list of top 10 books on data analytics</a>
+                                        </td>
+                                        <td>
+                                            12 Aug, 2023
+                                        </td>
+                                        <td> 987</td>
+                                        <td>3.87%</td>
+                                        <td>3.14</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#0">Check out our list of top 10 books on data analytics</a>
+                                        </td>
+                                        <td>
+                                            12 Aug, 2023
+                                        </td>
+                                        <td> 987</td>
+                                        <td>3.87%</td>
+                                        <td>3.14</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#0">Check out our list of top 10 books on data analytics</a>
+                                        </td>
+                                        <td>
+                                            12 Aug, 2023
+                                        </td>
+                                        <td> 987</td>
+                                        <td>3.87%</td>
+                                        <td>3.14</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#0">Check out our list of top 10 books on data analytics</a>
+                                        </td>
+                                        <td>
+                                            12 Aug, 2023
+                                        </td>
+                                        <td> 987</td>
+                                        <td>3.87%</td>
+                                        <td>3.14</td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <div class="py-5 space">
+
+                    </div>
+
+
+
+                </div>
+                <!-- <div class="scrollbar-track scrollbar-track-x" style="display: block;">
+                    <div class="scrollbar-thumb scrollbar-thumb-x"
+                        style="width: 1445.1px; transform: translate3d(0px, 0px, 0px);"></div>
+                </div>
+                <div class="scrollbar-track scrollbar-track-y" style="display: block;">
+                    <div class="scrollbar-thumb scrollbar-thumb-y"
+                        style="height: 180.989px; transform: translate3d(0px, 0px, 0px);"></div>
+                </div> -->
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+</div>
