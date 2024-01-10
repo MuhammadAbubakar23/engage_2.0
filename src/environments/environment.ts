@@ -65,21 +65,20 @@ export const environment = {
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
 
   // For Bazaar
-  IdentityBaseUrl: 'https://bzidentity.enteract.live/api',
-  CommonBaseUrl: 'https://wacommon.enteract.live/api/',
-  SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
-  ServiceBaseUrl: 'https://waservice.enteract.live/api/',
-  consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-  ProfileBaseUrl: '',
+  // IdentityBaseUrl: 'https://bzidentity.enteract.live/api',
+  // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
+  // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
+  // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
+  // ProfileBaseUrl: '',
 
   // For Testing
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  // //  CommonBaseUrl: 'http://10.111.32.52:45455/api/',
-  // ServiceBaseUrl: '',
-  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
-  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  ServiceBaseUrl: '',
+  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
+  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 

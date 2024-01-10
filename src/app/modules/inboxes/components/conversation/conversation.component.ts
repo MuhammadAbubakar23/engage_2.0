@@ -844,7 +844,7 @@ export class ConversationComponent implements OnInit {
       }, 4000);
     }
     if (type == 'queryallocatedtoanotheruser') {
-      this.AlterMsg = 'Profile Already Allocated to Another Aggent!';
+      this.AlterMsg = 'Profile Already Allocated to Another Agent!';
       this.toastermessage = true;
       setTimeout(() => {
         this.toastermessage = false;

@@ -215,7 +215,7 @@ export class ResponderMenuComponent implements OnInit {
 
       this.commondata.AssignQuerry(this.assignQuerryDto).subscribe(
         (res: any) => {
-          if (res?.message === 'Query Assign Successfully to Aggent') {
+          if (res?.message === 'Query Assign Successfully to Agent') {
             //   alert(res.message);
             this._route.navigateByUrl('/responder/' + platform);
           }

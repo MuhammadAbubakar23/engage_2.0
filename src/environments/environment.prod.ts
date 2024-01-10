@@ -27,8 +27,10 @@ export const environment = {
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
   LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
-  KelisteningBaseUrl: 'https://listen.enteract.live/backend/api/',
-  KemediaBaseUrl: 'https://kemedia.360scrm.com/api/',
+  KelisteningBaseUrl:'https://listen.enteract.live/backend/api/',
+  KemediaBaseUrl:'https://kemedia.360scrm.com/api/',
+  KescrmBaseUrl:'https://kescrm.360scrm.com/',
+  TwoFABaseUrl:'https://rep.enteract.app/api/',
 
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
@@ -36,8 +38,9 @@ export const environment = {
   // IdentityBaseUrl: 'https://idtservice.enteract.live/api',
   // CommonBaseUrl: 'https://comservices.enteract.live/api/',
   // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
-  // https://common.jazz.com.pk:8080 //https://comservices.enteract.live
-  // ProfileBaseUrl: //https://profiler.entract.live/,
+  // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
+  // //  https://common.jazz.com.pk:8080 //https://comservices.enteract.live
+  // ProfileBaseUrl:'https://profiler.enteract.live/api/',
 
   // For Jazz
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
@@ -46,7 +49,7 @@ export const environment = {
 
   // For Total Parco
   // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api',
-  // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/',
+  // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/',ks
   // SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
   // consoleBaseUrl: 'https://tpplcons.360scrm.com/api/',
 
@@ -58,21 +61,20 @@ export const environment = {
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
 
   // For Bazaar
-  IdentityBaseUrl: 'https://bzidentity.enteract.live/api',
-  CommonBaseUrl: 'https://wacommon.enteract.live/api/',
-  SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
-  ServiceBaseUrl: 'https://waservice.enteract.live/api/',
-  consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-  ProfileBaseUrl: '',
+  // IdentityBaseUrl: 'https://bzidentity.enteract.live/api',
+  // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
+  // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
+  // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
+  // ProfileBaseUrl: '',
 
   // For Testing
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  // //  CommonBaseUrl: 'http://10.111.32.52:45455/api/',
-  // ServiceBaseUrl: '',
-  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
-  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  ServiceBaseUrl: '',
+  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
+  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
@@ -169,6 +171,8 @@ export const environment = {
       subReasons: 'Order/GetSubReasons/',
     },
     common: {
+      
+      userlogin:'SignalRConnector/UserLogin',
       RemoveTags: 'Tags/RemoveTagFromFeed',
       InsertSentiments: 'Tags/InsertSentimentForFeed',
       InsertTags: 'Tags/InsertTagsForFeed',
@@ -300,5 +304,9 @@ export const environment = {
       searchProfileInformation: 'ProfileInformation/GetCustomerInformationByID',
       deattachProfileInformation: 'ProfileInformation/DeAttachProfile',
     },
+    scrmReports :{
+      facebookscrmReport: '',
+      getfortesting: '',
+    }
   },
 };

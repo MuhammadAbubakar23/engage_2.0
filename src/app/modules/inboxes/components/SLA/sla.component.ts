@@ -196,7 +196,7 @@ export class SlaComponent implements OnInit {
 
   reloadComponent(type: any) {
     if (type == 'queryallocatedtoanotheruser') {
-      this.AlterMsg = 'Profile Already Allocated to Another Aggent!';
+      this.AlterMsg = 'Profile Already Allocated to Another Agent!';
       this.toastermessage = true;
       setTimeout(() => {
         this.toastermessage = false;

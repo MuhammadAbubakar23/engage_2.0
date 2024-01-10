@@ -95,12 +95,12 @@
    <ng-container *ngIf="isUserLoging==true">
       <div class="main-body">
          <div class="login-form reset-password-form agentExtensionWrapper">
-            <div class="logo mb-5">
-               <img src=".../../../assets/images/ibex-enteract-engage.svg" width="300" alt="">
-            </div>
-            <h4>Verification Code</h4>
-            <h6 class="coal mb-5 text-center">
-               Please Enter You'r Verification Code 
+            <h4>Glad to see you again</h4>
+            <h6 class="coal mb-3 text-center">
+               Login with your enteract credentials
+            </h6>
+            <h6 class="coal mb-3 text-center">
+               Code Sent on your Email
             </h6>
             <div class="form w-100">
                <form [formGroup]="verificationForm"  >
@@ -115,12 +115,12 @@
                   <div class="form-floating mb-3">
                      <input type="password" class="form-control" id="floatingInputPassword" formControlName="verificationCode"
                       placeholder="Password">
-                     <label for="floatingInputPassword">Verification Code</label>
+                     <label for="floatingInputPassword">Please Enter Code</label>
                      <div id="password_msg"></div>
                   </div>
                   <div class="form-btn">
                      <button  class="w-100 btn loginbtn" id="loginBtn" tabindex="-1"
-                        role="button" (click)="Submituser()">Submit</button>
+                        role="button" (click)="Submituser()">Verify</button>
                   </div>
                   <span *ngIf="isVerificationcodeFailed==true">
                   <div class="center-section">
