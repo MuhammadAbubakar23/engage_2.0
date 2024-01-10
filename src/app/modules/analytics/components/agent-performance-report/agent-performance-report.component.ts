@@ -233,11 +233,11 @@ export class AgentPerformanceReportComponent implements OnInit {
     this.commonService.AddAgentPerformance(requestData).subscribe(
       (response: any) => {
         this.SpinnerService.hide();
-        this.agent_performance_report = response.result;
+        this.agent_performance_report = response;
         this.Agent_data = [];
         this.Message_data = []
 
-        const commentDateWise = this.agent_performance_report.commentDateWise;
+        const commentDateWise = this.agent_performance_report?.commentDateWise;
         commentDateWise ?.forEach((data: any) => {
           const date = new Date(data.date);
           this.Agent_data.push({ x: date, y: data.count });
@@ -324,7 +324,7 @@ export class AgentPerformanceReportComponent implements OnInit {
         // }
         // messageDateWise
 
-        const messageDateWise = this.agent_performance_report.messageDateWise;
+        const messageDateWise = this.agent_performance_report?.messageDateWise;
         messageDateWise ?.forEach((data: any) => {
           const date = new Date(data.date);
           this.Message_data.push({ x: date, y: data.count });

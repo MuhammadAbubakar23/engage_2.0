@@ -123,8 +123,8 @@ export class SignalRService {
 
   public updateListAndDetailDataListener = () => {
     this.hubconnection.on('SendData', (data) => {
-      if (data.conversationQueues != null) {
-        this.updateListService.sendList(data.conversationQueues)
+      if (data.conversationQueues != null) { 
+         this.updateListService.sendList(data.conversationQueues)
       }
       if (data.signalRConversiontions != null) {
         this.updateCommentsService.sendComment(data.signalRConversiontions)

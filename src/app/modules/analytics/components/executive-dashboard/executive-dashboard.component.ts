@@ -8,10 +8,10 @@ import { CloudData, CloudOptions, ZoomOnHoverOptions } from 'angular-tag-cloud-m
 import { TagCloudComponent } from 'angular-tag-cloud-module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ThemeService } from 'ng2-charts';
+
 import { GoogleMapsModule } from '@angular/google-maps';
 import { WordCloudComponent } from '../word-cloud/word-cloud.component';
-import { wordCloud } from 'src/app/shared/Models/WordCloudDto';
+
 import { SharedModule } from 'src/app/shared/shared.module';
 declare var google: any;
 
@@ -1100,7 +1100,7 @@ export class ExecutiveDashboardComponent implements OnInit {
         this.MediaData = []
         this.wordcloudData.forEach((element: any) => {
           let obj = {
-            text: element.keyword + (element.weight),
+            text: element.keyword ,
             weight: Number(element.weight)
           };
           if (this.data !== null && this.data !== undefined) {

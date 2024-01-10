@@ -166,6 +166,7 @@ export class CommonDataService {
   deleteRoles = environment.links.identity.deleteRoles;
 
   //service
+  userlogin=environment.links.common.userlogin
   addSurvey = environment.links.service.addSurvey;
   addCSAT = environment.links.service.addCSAT;
   KECSAT = environment.links.profile.KECSAT;
@@ -176,9 +177,23 @@ export class CommonDataService {
   private _wordCloudDataS: any;
 
   constructor(private http: HttpClient) {
-
+   
   }
+ UserLogin(){
+  
+ const token =localStorage.getItem('token')
+ 
+  let headers_object = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': "Bearer " + localStorage.getItem('token')
+  });
 
+  let httpOptions = {
+    headers: headers_object
+  };
+  
+  return this.http.get(this.CommonBaseUrl+this.userlogin,httpOptions)
+ }
   GetTagsList() {
     return this.http.get(this.CommonBaseUrl + this.tagsList);
   }
@@ -359,6 +374,7 @@ export class CommonDataService {
   }
 
   GetAllChannelsUnrespondedCount() {
+    
     return this.http.get(
       this.CommonBaseUrl + this.allChannelsUnrespondedCounts
     );
@@ -783,9 +799,4 @@ GetDatafortesting(){
 }
 }
 
-var headers_object = new HttpHeaders({
-  'Content-Type': 'application/json',
-});
-const httpOptions = {
-  headers: headers_object,
-};
+
