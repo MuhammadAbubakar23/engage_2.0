@@ -33,7 +33,7 @@ export const environment = {
   LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
   KelisteningBaseUrl: 'https://listen.enteract.live/backend/api/',
   KemediaBaseUrl: 'https://kemedia.360scrm.com/api/',
-
+  KescrmBaseUrl: '',
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
@@ -304,6 +304,10 @@ export const environment = {
       searchProfileInformation: 'ProfileInformation/GetCustomerInformationByID',
       deattachProfileInformation: 'ProfileInformation/DeAttachProfile',
     },
+    scrmReports :{
+      facebookscrmReport: '',
+      getfortesting: '',
+    }
   },
 };
 /*
