@@ -9,6 +9,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FacebookComponent } from '../modules/responder/components/Facebook/facebook.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { FacebookComponent } from '../modules/responder/components/Facebook/face
     IdentityRoutingModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
+    FormsModule
 
   ],
   providers:[

@@ -34,14 +34,15 @@ export const environment = {
   KelisteningBaseUrl:'https://listen.enteract.live/backend/api/',
   KemediaBaseUrl:'https://kemedia.360scrm.com/api/',
   KescrmBaseUrl:'https://kescrm.360scrm.com/',
+  TwoFABaseUrl:'https://rep.enteract.app/api/',
 
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  IdentityBaseUrl: 'https://idtservice.enteract.live/api',
-  CommonBaseUrl: 'https://comservices.enteract.live/api/',
-  SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
-  ProfileBaseUrl: 'https://profiler.enteract.live/api/',
+  // IdentityBaseUrl: 'https://idtservice.enteract.live/api',
+  // CommonBaseUrl: 'https://comservices.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
+  // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
   // //  https://common.jazz.com.pk:8080 //https://comservices.enteract.live
   // ProfileBaseUrl:'https://profiler.enteract.live/api/',
 
@@ -52,7 +53,7 @@ export const environment = {
 
   // For Total Parco
   // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api',
-  // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/',
+  // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/',ks
   // SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
   // consoleBaseUrl: 'https://tpplcons.360scrm.com/api/',
 
@@ -65,10 +66,10 @@ export const environment = {
   
 
   // For Testing
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  //  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+   CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   
    //https://profiler.entract.live/
   consoleBaseUrl: 'https://console-engage.enteract.app/api/',
@@ -168,6 +169,8 @@ export const environment = {
       subReasons: 'Order/GetSubReasons/',
     },
     common: {
+      
+      userlogin:'SignalRConnector/UserLogin',
       RemoveTags: 'Tags/RemoveTagFromFeed',
       InsertSentiments: 'Tags/InsertSentimentForFeed',
       InsertTags: 'Tags/InsertTagsForFeed',

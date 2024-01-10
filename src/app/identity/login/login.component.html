@@ -31,65 +31,119 @@
          <p></p>
       </div>
    </aside>
-   <div class="main-body">
+   <ng-container *ngIf="isUserLoging==false"> 
+      <div class="main-body">
 
-      <div class="login-form main-login-form agentExtensionWrapper">
-         <h4>Glad to see you again!</h4>
-         <h6 class="coal mb-5">
-            Login with your enteract credentials
-         </h6>
-         
-         <div class="form w-100">
-            <form [formGroup]="loginForm" (submit)="submit()">
-            <!-- <div class="dropdown loginas">
-                  <button class="btn d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                     <span><i class="fa-light fa-circle-user pe-2"></i> Login As</span>
-
-                     <i class="fa-light fa-angle-down ms-auto"></i>
-                  </button>
-                  <ul class="dropdown-menu">
-                     <li class="dropdown-item" id="superadmin">
-                        <div class="user-number fw-bold"> Admin</div>
-                        <div class="user-email coal">admin@enteract.app</div>
-                     </li>
-                     <li class="dropdown-item" id="agent">
-                        <div class="user-number fw-bold">Agent </div>
-                        <div class="user-email coal">agent@enteract.app</div>
-                     </li>
-                     <li class="dropdown-item" id="manager">
-                        <div class="user-number fw-bold">Manager</div>
-                        <div class="user-email coal">manager@enteract.app</div>
-                     </li>
-                  </ul>
-               </div> -->
-               <div class="form-floating mb-3">
-                  <input formControlName="userName" class="form-control" id="userName" placeholder="Enter your Email">
-                  <label for="userName"> Username or Email</label>
-               </div>
-               <div class="form-floating mb-3">
-                  <input formControlName="password" type="password" class="form-control" id="password"
-                     placeholder="Enter your Password">
-                  <label for="password">Password</label>
-               </div>
-               <div class="col-12 d-flex justify-content-between mb-4">
-                  <div class="form-check">
-                     <input class="form-check-input" type="checkbox" id="gridCheck">
-                     <label class="form-check-label coal" for="gridCheck">
-                        Remember me
-                     </label>
-                  </div>
-                  <!-- <div id="register-link">
-                     <a routerLink="/forgotpassword" class="forgot-password-btn">Forget Password</a>
+         <div class="login-form main-login-form agentExtensionWrapper">
+            <h4>Glad to see you again!</h4>
+            <h6 class="coal mb-5">
+               Login with your enteract credentials
+            </h6>
+            
+            <div class="form w-100">
+               <form [formGroup]="loginForm" (submit)="login()">
+               <!-- <div class="dropdown loginas">
+                     <button class="btn d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span><i class="fa-light fa-circle-user pe-2"></i> Login As</span>
+   
+                        <i class="fa-light fa-angle-down ms-auto"></i>
+                     </button>
+                     <ul class="dropdown-menu">
+                        <li class="dropdown-item" id="superadmin">
+                           <div class="user-number fw-bold"> Admin</div>
+                           <div class="user-email coal">admin@enteract.app</div>
+                        </li>
+                        <li class="dropdown-item" id="agent">
+                           <div class="user-number fw-bold">Agent </div>
+                           <div class="user-email coal">agent@enteract.app</div>
+                        </li>
+                        <li class="dropdown-item" id="manager">
+                           <div class="user-number fw-bold">Manager</div>
+                           <div class="user-email coal">manager@enteract.app</div>
+                        </li>
+                     </ul>
                   </div> -->
-               </div>
-               <div class="form-btn">
-                  <button type="submit" class="w-100 btn loginbtn" id="loginBtn" tabindex="-1"
-                     role="button">Login</button>
-               </div>
-            </form>
+                  <div class="form-floating mb-3">
+                     <input formControlName="userName" class="form-control" id="userName" placeholder="Enter your Email">
+                     <label for="userName"> Username or Email</label>
+                  </div>
+                  <div class="form-floating mb-3">
+                     <input formControlName="password" type="password" class="form-control" id="password"
+                        placeholder="Enter your Password">
+                     <label for="password">Password</label>
+                  </div>
+                  <div class="col-12 d-flex justify-content-between mb-4">
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck">
+                        <label class="form-check-label coal" for="gridCheck">
+                           Remember me
+                        </label>
+                     </div>
+                     <!-- <div id="register-link">
+                        <a routerLink="/forgotpassword" class="forgot-password-btn">Forget Password</a>
+                     </div> -->
+                  </div>
+                  <div class="form-btn">
+                     <button type="submit" class="w-100 btn loginbtn" id="loginBtn" tabindex="-1"
+                        role="button">Login</button>
+                  </div>
+               </form>
+            </div>
          </div>
       </div>
-   </div>
+   </ng-container>
+   <ng-container *ngIf="isUserLoging==true">
+      <div class="main-body">
+         <div class="login-form reset-password-form agentExtensionWrapper">
+            <div class="logo mb-5">
+               <img src=".../../../assets/images/ibex-enteract-engage.svg" width="300" alt="">
+            </div>
+            <h4>Verification Code</h4>
+            <h6 class="coal mb-5 text-center">
+               Please Enter You'r Verification Code 
+            </h6>
+            <div class="form w-100">
+               <form [formGroup]="verificationForm"  >
+                  <div class="form-floating mb-3">
+                     <input readonly class="form-control" id="floatingInputPassword"
+                     [(ngModel)]="Verificationemail"
+                     formControlName="Verificationemail"
+                      placeholder="Password">
+                     <label for="floatingInputPassword">Email</label>
+                     <div id="password_msg"></div>
+                  </div>
+                  <div class="form-floating mb-3">
+                     <input type="password" class="form-control" id="floatingInputPassword" formControlName="verificationCode"
+                      placeholder="Password">
+                     <label for="floatingInputPassword">Verification Code</label>
+                     <div id="password_msg"></div>
+                  </div>
+                  <div class="form-btn">
+                     <button  class="w-100 btn loginbtn" id="loginBtn" tabindex="-1"
+                        role="button" (click)="Submituser()">Submit</button>
+                  </div>
+                  <span *ngIf="isVerificationcodeFailed==true">
+                  <div class="center-section">
+                     <span class="line"></span>
+                     <span class="or-option">OR</span>
+                     <span class="line"></span>
+                  </div>
+
+                  <div class="form-btn">
+                     <button  class="w-100 btn loginbtn" id="loginBtn" tabindex="-1"
+                        role="button" (click)="VerificationcodeFailed()">Login Again</button>
+                  </div>
+             
+                
+                  </span>
+               
+               </form>
+              
+            </div>
+         </div>
+      </div>
+   </ng-container>
+  
 </div>
 
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">

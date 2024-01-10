@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { VerificationDto } from 'src/app/shared/Models/verificationDto';
+// import { VerificationDto } from 'src/app/shared/Models/VerificationDto';
 import { AuthService } from '../AuthService/auth.service';
 
 @Component({
@@ -10,10 +10,10 @@ import { AuthService } from '../AuthService/auth.service';
 })
 export class ForgotPasswordComponent implements OnInit {
 
-  verificationDto = new VerificationDto();
+  // verificationDto = new VerificationDto();
 
   verificationForm= new UntypedFormGroup({
-    email:new UntypedFormControl(this.verificationDto.email)
+    // email:new UntypedFormControl(this.verificationDto.email)
   });
   constructor(private authService : AuthService) { }
 
