@@ -47,8 +47,8 @@ export class CreateUserComponent implements OnInit {
 
   });
   submitted = false;
-  RolesControl = new UntypedFormControl(null, Validators.required);
-  TeamsControl = new UntypedFormControl(null, Validators.required);
+  RolesControl = new UntypedFormControl(null);
+  TeamsControl = new UntypedFormControl(null);
   // RolesControlId = new UntypedFormControl(null, Validators.required);
   // SkillsControl = new UntypedFormControl(null, Validators.required);
   Roles: Array<any> = [];
@@ -115,14 +115,14 @@ export class CreateUserComponent implements OnInit {
     console.log(formVal);
     this.userForm = this.formbuilder.group({
       id: [formVal.id],
-      firstname: [formVal.firstName, [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
-      lastname: [formVal.lastName, [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
-      phone: [formVal.phone, [Validators.required, Validators.minLength(10), Validators.maxLength(13)]],
-      email: [formVal.email, [Validators.required, Validators.email]],
-      password: [formVal.password, [Validators.required, Validators.minLength(7)]],
-      confirmpassword: [formVal.confirmPassword, [Validators.required, Validators.minLength(7)]],
-      roleId: ['', [Validators.required]],
-      teamId: ['', [Validators.required]],
+      firstname: [formVal.firstName, ],
+      lastname: [formVal.lastName, ],
+      phone: [formVal.phone, ],
+      email: [formVal.email, ],
+      password: [formVal.password, ],
+      confirmpassword: [formVal.confirmPassword,],
+      roleId: ['',],
+      teamId: ['',],
       // timezone: ['', [Validators.required]],      
       // supportchannel: ['', [Validators.required]],
     }
@@ -235,7 +235,7 @@ export class CreateUserComponent implements OnInit {
       console.log("In Add User");
       return;
     }
-
+debugger
     this.uservc.save(controllerRoute, this.userForm.value).subscribe({
       next: (res: any) => {
         console.log(res)

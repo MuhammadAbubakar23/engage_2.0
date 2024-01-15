@@ -39,17 +39,20 @@ export const environment = {
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  // IdentityBaseUrl: 'https://idtservice.enteract.live/api',
-  // CommonBaseUrl: 'https://comservices.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
-  // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
-  // //  https://common.jazz.com.pk:8080 //https://comservices.enteract.live
-  // ProfileBaseUrl:'https://profiler.enteract.live/api/',
+  IdentityBaseUrl: 'https://idtservice.enteract.live/api',
+  CommonBaseUrl: 'https://comservices.enteract.live/api/',
+  SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
+  ProfileBaseUrl: 'https://profiler.enteract.live/api/',
+  ServiceBaseUrl: '',
+  consoleBaseUrl: 'https://console.enteract.live/api/',
 
   // For Jazz
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
   // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
   // SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
+  // ServiceBaseUrl: '',
+  // ProfileBaseUrl: '',
+  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
   // For Total Parco
   // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api',
@@ -73,12 +76,12 @@ export const environment = {
   // ProfileBaseUrl: '',
 
   // For Testing
-  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  ServiceBaseUrl: '',
-  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
-  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  // ServiceBaseUrl: '',
+  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
+  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
@@ -254,6 +257,7 @@ export const environment = {
       downloadTagReport: 'Report/GetAgentTagsReportCSV',
       getLinkedInReport: 'Activity/GetOrganizationSharedInsights',
       emailShiftReport: 'Report/EmailShiftReport',
+      getFollowUpCount: 'Channel/GetFollowUpCount',
       getLinkedInFollowers: 'Activity/GetOrganizationInsights',
       regionwiseReport: 'Report/GetRegionWiseReport',
       wordCloud: 'Report/GetKeWordCloud',
@@ -309,8 +313,8 @@ export const environment = {
       deattachProfileInformation: 'ProfileInformation/DeAttachProfile',
     },
     scrmReports :{
-      facebookscrmReport: '',
-      getfortesting: '',
+      facebookscrmReport: 'Facebook/FacebookGetPageReportStats',
+      getfortesting: '/feedback/GetAllCampaignsWithCSAT',
     }
   },
 };

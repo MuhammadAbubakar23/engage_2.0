@@ -12,6 +12,7 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 export class InboxHeaderComponent implements OnInit {
 
   flag:string='';
+  followUpCount: number = 0;
   inboxHeader:any[]=[];
   constructor(private stor: StorageService,
     private commonService: CommonDataService,
@@ -31,7 +32,33 @@ export class InboxHeaderComponent implements OnInit {
           });
         }
       });
-  }
+      this.getFollowUpCount();
+    }
+  
+    getFollowUpCount(){
+      debugger
+      let obj = {
+        agentId: 0,
+        user: "",
+        postId: "",
+        profile_Page_Email: "string",
+        plateForm: "string",
+        fromDate: "2023-01-01T09:29:55.197Z",
+        toDate: "2024-01-01T09:29:55.197Z",
+        isAttachment: true,
+        queryType: "string",
+        flag: "string",
+        text: "string",
+        notInclude: "string",
+        userName: "string",
+        include: "string",
+        pageNumber: 0,
+        pageSize: 0
+      }
+      this.commonService.GetFollowUpCount(obj).subscribe((res:any)=>{
+        this.followUpCount = res
+      })
+    }
 
   filterDto = new FiltersDto();
   pageNumber:number=1;

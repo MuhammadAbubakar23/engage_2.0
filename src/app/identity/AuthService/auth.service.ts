@@ -20,8 +20,10 @@ export class AuthService {
 
 
   login (form:any) {
-     return this.http.post(this.TWoFABaseUrl+'Authentication/Login',form , {responseType: 'text'})
-    // return this.http.post(this.baseUrl + '/Authentication/Login',form)
+    return this.http.post(this.baseUrl + '/Authentication/Login',form)
+  }
+  TwoFA(form:any){
+    return this.http.post(this.TWoFABaseUrl+'Authentication/Login',form )
   }
   submitUser(body:any){
     return this.http.post(this.TWoFABaseUrl+'Authentication/LoginWithTwoFactor',body)

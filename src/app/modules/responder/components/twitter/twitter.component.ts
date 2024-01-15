@@ -1773,7 +1773,7 @@ export class TwitterComponent implements OnInit {
         this.postType = mention.contentType;
         this.profileId = mention.profileId;
         this.profilePageId = mention.profilePageId;
-        this.userProfileId = this.TwitterMentions[0].fromId;
+        this.userProfileId = this.userInformation.id;
       }
     });
   }
@@ -1859,7 +1859,7 @@ export class TwitterComponent implements OnInit {
   }
 
   submitTwitterMentionReply() {
-    
+    debugger
     if (this.twitterMentionId == 0) {
       this.reloadComponent('selectComment');
     } else {

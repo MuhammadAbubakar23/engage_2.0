@@ -107,6 +107,8 @@ export class CommonDataService {
   getLinkedInReport = environment.links.common.getLinkedInReport;
   getLinkedInFollowers=environment.links.common.getLinkedInFollowers;
   emailShiftReport = environment.links.common.emailShiftReport;
+  getFollowUpCount = environment.links.common.getFollowUpCount;
+  
   downloadTagReport = environment.links.common.downloadTagReport;
   regionwiseReport=environment.links.common.regionwiseReport;
   wordCloud=environment.links.common.wordCloud;
@@ -790,10 +792,14 @@ export class CommonDataService {
     
     return this.http.get("../../../../../assets/karachiHeatMaoCoordinates.json")
   }
+  GetFollowUpCount(body:any){
+    return this.http.post(this.CommonBaseUrl+this.getFollowUpCount,body)
+ }
 //  For SCRM Report
 GetScrmFacebookReport(body:any){
    return this.http.post(this.KescrmBaseUrl+this.facebookscrmReport,body)
 }
+
 GetDatafortesting(){
   return this.http.get(this.KescrmBaseUrl+this.getfortesting)
 }

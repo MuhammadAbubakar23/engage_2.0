@@ -56,6 +56,7 @@ export class RequestService {
       );    
   }
   post<T>(route:string, params?: any): Observable<T>{
+    debugger
     //;
     return this.http.post<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
     .pipe(
