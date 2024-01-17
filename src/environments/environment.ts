@@ -34,7 +34,9 @@ export const environment = {
   KelisteningBaseUrl:'https://listen.enteract.live/backend/api/',
   KemediaBaseUrl:'https://kemedia.360scrm.com/api/',
   KescrmBaseUrl:'https://kescrm.360scrm.com/',
-  TwoFABaseUrl:'https://rep.enteract.app/api/',
+  TwoFABaseUrl:'https://identity.jazz.com.pk:8082/api/',
+  // for testing Only
+  // TwoFABaseUrl:'http://10.111.32.52:45455/api/',
 
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
@@ -76,13 +78,15 @@ export const environment = {
   ProfileBaseUrl: '',
 
   // For Testing
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  // ServiceBaseUrl: '',
-  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
-  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  ServiceBaseUrl: '',
+  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
+  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
+
+  
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',

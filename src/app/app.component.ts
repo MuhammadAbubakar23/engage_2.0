@@ -76,5 +76,7 @@ export class AppComponent {
     this.signalRService.assignQueryResponseListner();
     this.signalRService.applySentimentListner();
     this.signalRService.updateMessageStatusDataListener();
+    // for new post
+    this.signalRService.updatePostList()
   }
 }

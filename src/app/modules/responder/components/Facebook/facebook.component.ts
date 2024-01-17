@@ -126,6 +126,7 @@ export class FacebookComponent implements OnInit {
   isOpen = false;
   active = false;
   fbCmntReply = true;
+  NewPostCmntReply=true;
   fbMsgReply = false;
   checkTag = false;
   activeTag = false;

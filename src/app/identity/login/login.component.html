@@ -39,7 +39,11 @@
             <h6 class="coal mb-5">
                Login with your enteract credentials
             </h6>
-            
+            <span *ngIf="countdownTime>0">
+               
+                  <p>Remaining Time    {{display}}  </p>
+              
+            </span>
             <div class="form w-100">
                <form [formGroup]="loginForm" (submit)="login()">
                <!-- <div class="dropdown loginas">
@@ -85,7 +89,7 @@
                   </div>
                   <div class="form-btn">
                      <button type="submit" class="w-100 btn loginbtn" id="loginBtn" tabindex="-1"
-                        role="button">Login</button>
+                        role="button" [disabled]="loginDisabled==true">Login</button>
                   </div>
                </form>
             </div>

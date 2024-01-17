@@ -17,9 +17,8 @@ export class AuthService {
     return this.http.get(this.CommanBaseUrl+'SignalRConnector/UserLogin')
     }
 
-
-
   login (form:any) {
+    debugger
     return this.http.post(this.baseUrl + '/Authentication/Login',form)
   }
   TwoFA(form:any){

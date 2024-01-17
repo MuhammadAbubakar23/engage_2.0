@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { IdentityRoutingModule } from './identity-routing.module';
 import { LoginComponent } from './login/login.component';
@@ -29,7 +29,8 @@ import { FormsModule } from '@angular/forms';
 
   ],
   providers:[
-    FacebookComponent
+    FacebookComponent,
+    DatePipe
   ]
 })
 export class IdentityModule { }
