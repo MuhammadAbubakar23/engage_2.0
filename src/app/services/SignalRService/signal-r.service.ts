@@ -14,6 +14,7 @@ import { UnRespondedCountService } from '../UnRepondedCountService/un-responded-
 import { UpdateCommentsService } from '../UpdateCommentsService/update-comments.service';
 import { UpdateListService } from '../UpdateListService/update-list.service';
 import { UpdateMessagesService } from '../UpdateMessagesService/update-messages.service';
+import { GetNewPostService } from '../GetNewPostService/get-new-post.service';
 
 @Injectable({
   providedIn: 'root',
@@ -48,6 +49,7 @@ export class SignalRService {
     private queryStatusService: QueryStatusService,
     private removeAssignedQueryService: RemoveAssignedQuerryService,
     private applySentimentService: ApplySentimentService,
+    private getnewPostService:GetNewPostService,
     private router: Router
   ) { 
     this.baseUrl=window.location.origin
@@ -72,6 +74,7 @@ export class SignalRService {
   flag:string='';
 
   startConnection() {
+    debugger
     // this.flag = this.router.url.split('/')[1];
     // if(this.flag == 'all-inboxes'){
       let team = this.storage.retrive("nocompass", "O").local;
@@ -120,8 +123,8 @@ export class SignalRService {
       // }
   }
 
-
   public updateListAndDetailDataListener = () => {
+    debugger
     this.hubconnection.on('SendData', (data) => {
       if (data.conversationQueues != null) { 
          this.updateListService.sendList(data.conversationQueues)
@@ -134,7 +137,13 @@ export class SignalRService {
       }
     });
   };
-
+  // for new post
+public updatePostList=()=>{
+  this.hubconnection?.on('PostData',(data)=>{
+    this.getnewPostService.sendnewPost(data)
+    console.log("New Post===>",data)
+  })
+}
   public addTagDataListener = () => {
     this.hubconnection?.on('ApplyTags', (addTags) => {
       this.addTagService.sendTags(addTags);

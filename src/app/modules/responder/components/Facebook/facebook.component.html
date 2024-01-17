@@ -44,8 +44,26 @@
                         </div>
                     </button>
                 </li>
+                <!-- for new Post -->
+                <!-- <li class="nav-item" role="presentation">
+                    <button class="nav-link active h-100" id="fb-Newpost-tab"
+                        data-bs-toggle="tab" data-bs-target="#fb-comment" type="button" role="tab"
+                        aria-controls="fb-comment" aria-selected="true">
+                        <div class="chat-tab-title d-flex align-items-center">
+                            <span class="iconButton medium btn">
+                                <i class="fal fa-comments-alt ice"></i>
+                            </span>
+                           New Post 
+                            <span class="badge rounded-pill bg-light text-dark ms-3"
+                               ></span>
+                        </div>
+                    </button>
+                </li> -->
             </ul>
         </div>
+        <!-- For new Post Only -->
+      
+        <!-- End new post code  -->
         <div *ngIf="fbCmntReply == true" class="chat-body" data-scrollbar="true" tabindex="-1"
             style="overflow-y: auto; outline: none;" infinite-scroll [scrollWindow]="false"
             [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5" [infiniteScrollThrottle]="10"
