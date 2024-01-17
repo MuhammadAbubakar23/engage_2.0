@@ -54,6 +54,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    debugger
     if(this.baseUrl == 'https://engage.jazz.com.pk'){
       
     let obj = {
@@ -90,8 +91,12 @@ export class LoginComponent implements OnInit {
 
         this.commonService.UserLogin().subscribe((res: any) => {
           console.log(res);
+        },
+        (error)=>{
+          debugger
+          console.log(error)
         });
-
+debugger
         this.router.navigateByUrl('all-inboxes/focused/all');
         this.spinnerService.hide();
 

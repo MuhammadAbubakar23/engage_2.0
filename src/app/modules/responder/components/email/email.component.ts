@@ -114,6 +114,8 @@ export class EmailComponent implements OnInit {
     });
   }
 
+  profileId: string = '';
+
   ngOnInit(): void {
     this.flag = this.router.url.split('/')[2];
     this.fullName = localStorage.getItem('storeOpenedId') || '{}';
@@ -935,6 +937,7 @@ export class EmailComponent implements OnInit {
           this.emailId = comment.id;
           this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
+          this.profileId = xyz.post.profile.profile_Id;
           this.postType = comment.contentType;
           this.emailTo = comment.to;
           this.userProfileId = this.Emails[0].user.id;
@@ -999,6 +1002,7 @@ export class EmailComponent implements OnInit {
           this.emailId = comment.id;
           // this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
+          this.profileId = xyz.post.profile.profile_Id;
           this.postType = comment.contentType;
           this.emailSubject = comment.message;
           this.emailFromInString = this.senderEmailAddress;
@@ -1026,6 +1030,7 @@ export class EmailComponent implements OnInit {
           this.agentId = localStorage.getItem('agentId') || '{}';
           this.platform = xyz.platform;
           this.postType = 'ForwardEmail';
+          this.profileId = xyz.post.profile.profile_Id;
           this.emailSubject = comment.message;
           this.emailFromInString = '';
           this.emailCcInString = '';
@@ -1133,6 +1138,7 @@ export class EmailComponent implements OnInit {
       contentType: this.postType,
       userProfileId: this.userProfileId,
       text: this.text,
+      profileId: this.profileId
     });
 
     formData.append('CommentReply', JSON.stringify(this.emailReplyForm.value));
