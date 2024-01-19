@@ -3,6 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+if(){
+
+},
   production: true,
   fetchIntegrate: 'true',
   appKey:
@@ -20,7 +23,6 @@ export const environment = {
   twitterclientSecret: 'Ex1XpdfYMFEAtWBJn9XOrtfxyu19INzNaPV155vocLomG',
   store: { types: { local: 'LS' } },
   title: 'abc',
-
   InstaBaseUrl: 'https://insta.360scrm.com/api/',
   // FbBaseUrl: 'https://face.360scrm.com/api/',
   FbBaseUrl: 'https://nextsparklypen70.conveyor.cloud/api/',
@@ -268,6 +270,7 @@ export const environment = {
       areawiseReport: 'Report/GetAreaWiseReport',
       keMediaReport: 'MediaReport/GetMediaReport',
       PrintFeed: 'Media/GetMediaPrintList',
+      CSATReport:'Report/GetCSATReport'
     },
     facebook: {
       comments: 'Facebook/GetFbPost',
@@ -322,6 +325,7 @@ export const environment = {
     }
   },
 };
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

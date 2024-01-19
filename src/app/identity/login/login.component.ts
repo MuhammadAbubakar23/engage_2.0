@@ -30,11 +30,11 @@ export class LoginComponent implements OnInit {
   baseUrl: string = "";
   ErrorMessage: any;
   isVerificationcodeFailed: boolean = false;
-  loginDisabled:boolean=false
-  matchTime:any;
-  BlockuserTime:any;
-  timeRemaining:any
-  countdownTime:number=0
+  loginDisabled: boolean = false
+  matchTime: any;
+  BlockuserTime: any;
+  timeRemaining: any
+  countdownTime: number = 0
   loginForm = new UntypedFormGroup({
     email: new UntypedFormControl(this.logindto.userName),
     userName: new UntypedFormControl(this.logindto.userName),
@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
     private spinnerService: NgxSpinnerService,
     private signalRService: SignalRService,
     private commonService: CommonDataService,
-    private datePipe:DatePipe
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit(): void {
@@ -66,7 +66,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    debugger
     if (this.baseUrl == 'https://engage.jazz.com.pk' || this.baseUrl == 'http://localhost:4200' || this.baseUrl == 'https://uiengage.enteract.app') {
 
       let obj = {
@@ -74,10 +73,10 @@ export class LoginComponent implements OnInit {
         password: this.loginForm.value.password,
         rememberMe: true,
       };
-       this.spinnerService.show()
+      this.spinnerService.show()
       this.authService.TwoFA(obj).subscribe(
         (res: any) => {
-          debugger
+
           if (res) { }
           this.Verificationemail = res.userName;
           this.isUserLoging = true;
@@ -85,35 +84,36 @@ export class LoginComponent implements OnInit {
           this.spinnerService.hide()
         },
         (error: any) => {
-          debugger
-          this.ErrorMessage=error.error
-          if(this.ErrorMessage?.includes("The account is locked out ")){
-          
-            const LockedtiemEndpatteren=/lockoutEndTime = (.+)$/
-            this. matchTime=this.ErrorMessage.match(LockedtiemEndpatteren)
-            if(this.matchTime && this.matchTime.length>1){
+
+          this.ErrorMessage = error.error
+          if (this.ErrorMessage?.includes("The account is locked out ")) {
+
+            const LockedtiemEndpatteren = /lockoutEndTime = (.+)$/
+            this.matchTime = this.ErrorMessage.match(LockedtiemEndpatteren)
+            if (this.matchTime && this.matchTime.length > 1) {
               const lockoutEndTimeString = this.matchTime[1];
               const lockoutEndTime = new Date(lockoutEndTimeString).toISOString();
-                this.BlockuserTime=this.datePipe.transform( new Date(lockoutEndTime),'h:mm:ss');
-                debugger
-                const endTimeMinutes= new Date( lockoutEndTime).getMinutes()
-                const NowTimeMinutes =new Date().getMinutes();
-                const endTimeSeconds=new Date(lockoutEndTime).getSeconds()
-                const NowTimeSeconds= new Date().getSeconds()
-                const sumofEndTime= endTimeMinutes + endTimeSeconds;
-                const sumofNowTime= NowTimeMinutes + NowTimeSeconds
-  
-              this.countdownTime = endTimeMinutes-NowTimeMinutes;
+              this.BlockuserTime = this.datePipe.transform(new Date(lockoutEndTime), 'h:mm:ss');
+
+              const endTimeMinutes = new Date(lockoutEndTime).getMinutes()
+              const NowTimeMinutes = new Date().getMinutes();
+              const endTimeSeconds = new Date(lockoutEndTime).getSeconds()
+              const NowTimeSeconds = new Date().getSeconds()
+
+              const sumofEndTime = endTimeMinutes + endTimeSeconds;
+              const sumofNowTime = NowTimeMinutes + NowTimeSeconds;
+
+              this.countdownTime = endTimeMinutes - NowTimeMinutes;
               this.timer(this.countdownTime)
-            
-                this.reloadComponent('userblocked');
+
+              this.reloadComponent('userblocked');
             }
-           
-            this.loginDisabled=true
+
+            this.loginDisabled = true
             this.spinnerService.hide()
             this.reloadComponent('userblocked');
           }
-          else{
+          else {
             this.spinnerService.hide();
             this.reloadComponent('loginFailed');
           }
@@ -129,7 +129,7 @@ export class LoginComponent implements OnInit {
       this.spinnerService.show();
       this.authService.login(obj).subscribe(
         (res: any) => {
-          debugger
+
           this.stor.store('token', res.accessToken);
           this.stor.store('main', res);
           this.stor.store('nocompass', res.roles[0]);
@@ -161,7 +161,7 @@ export class LoginComponent implements OnInit {
           this.signalRService.updatePostList()
         },
         (error: any) => {
-      
+
           this.spinnerService.hide();
           this.reloadComponent('loginFailed');
           this.isVerificationcodeFailed = true;
@@ -180,8 +180,8 @@ export class LoginComponent implements OnInit {
     //   }
     // );
   }
-  timer(countdownTime:any) {
-    debugger
+  timer(countdownTime: any) {
+
     // let minute = 1;
     let seconds: number = countdownTime * 60;
     let textSec: any = "0";
@@ -199,17 +199,17 @@ export class LoginComponent implements OnInit {
       } else textSec = statSec;
 
       this.display = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
-      if(this.display=="00:00"){
-        this.loginDisabled=false
-        this.countdownTime=0
+      if (this.display == "00:00") {
+        this.loginDisabled = false
+        this.countdownTime = 0
         // this.login()
-       }
+      }
       if (seconds == 0) {
         console.log("finished");
         clearInterval(timer);
       }
     }, 1000);
-  
+
   }
   Submituser() {
     let obj = {
@@ -274,13 +274,13 @@ export class LoginComponent implements OnInit {
         this.toastermessage = false;
       }, 4000);
     }
-    if(type=='userblocked'){
-      this.AlterMsg="User is Blocked till " + this.BlockuserTime
-      this.toastermessage=true
-      setTimeout(()=>{
-        this.toastermessage=false
+    if (type == 'userblocked') {
+      this.AlterMsg = "User is Blocked till " + this.BlockuserTime
+      this.toastermessage = true
+      setTimeout(() => {
+        this.toastermessage = false
 
-      },4000)
+      }, 4000)
     }
   }
   closeToaster() {

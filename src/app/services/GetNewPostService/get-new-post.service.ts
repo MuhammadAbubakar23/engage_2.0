@@ -7,7 +7,7 @@ export class GetNewPostService {
 private newPost= new Subject<any>()
   constructor() { }
   public sendnewPost(newpost:any):void{
-    debugger
+    
     this.newPost.next(newpost);
   }
   public recivedNewPost():Observable<any>{

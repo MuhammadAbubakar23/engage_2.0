@@ -83,7 +83,7 @@ export class SubRoleMenuComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    debugger
+    
     this.menus$ = [];
     let _self = this;
     console.log(_self.SubMenuPage);    

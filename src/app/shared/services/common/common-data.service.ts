@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CommonDataService {
+  
   // for testing purpose
   consoleBaseUrl = environment.consoleBaseUrl;
 
@@ -115,6 +116,7 @@ export class CommonDataService {
   areawiseReport=environment.links.common.areawiseReport;
   keMediaReport=environment.links.common.keMediaReport;
   PrintFeed=environment.links.common.PrintFeed;
+  CSATReport=environment.links.common.CSATReport;
   // SCRM Reports
   facebookscrmReport=environment.links.scrmReports.facebookscrmReport;
   getfortesting=environment.links.scrmReports.getfortesting
@@ -177,9 +179,11 @@ export class CommonDataService {
   addProfileInformation = environment.links.profile.addProfileInformation;
   deattachProfileInformation=environment.links.profile.deattachProfileInformation
   private _wordCloudDataS: any;
-
+   activeChannel:any
   constructor(private http: HttpClient) {
-   
+   this.activeChannel=window.location.origin
+
+   localStorage.setItem('activeChannel',this.activeChannel)
   }
  UserLogin(){
   
@@ -794,6 +798,9 @@ export class CommonDataService {
   }
   GetFollowUpCount(body:any){
     return this.http.post(this.CommonBaseUrl+this.getFollowUpCount,body)
+ }
+ GetCSATReport(body:any){
+  return this.http.post(this.ProfileBaseUrl+this.CSATReport,body)
  }
 //  For SCRM Report
 GetScrmFacebookReport(body:any){

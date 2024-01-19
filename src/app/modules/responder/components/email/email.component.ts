@@ -382,7 +382,7 @@ export class EmailComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
-          debugger
+          
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.Emails = res.List;
@@ -1155,7 +1155,7 @@ export class EmailComponent implements OnInit {
         this.clearInputField();
       },
       (error) => {
-        debugger
+        
         alert(error.error.message);
         this.spinner1running = false;
        this.SpinnerService.hide();

@@ -72,7 +72,7 @@
                                             Channels
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="columnssort">
-                                            <span  *ngIf="isChannelShow!=='morinaga'  &&  isChannelShow!=='ttpl'">
+                                            <span *ngIf="isChannelShow!=='morinaga'  &&  isChannelShow!=='ttpl'">
                                                 <li class="dropdown-listing-header">
                                                     <form class="custom-searchbar my-2 mx-0">
                                                         <input class="form-control bg-light border-0 py-2"
@@ -84,7 +84,7 @@
                                                     </form>
                                                 </li>
                                             </span>
-                                         
+
                                             <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
                                                 style="overflow: auto; height: auto;">
                                                 <div class="scroll-content">
@@ -123,23 +123,24 @@
                             </ng-container>
 
                             <li class="list-inline-item ms-auto">
-                                <div class="btn-group buttonfilter" role="group" aria-label="Basic radio toggle button group">
-                                  
-                                  <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
-                                         #radioInput10 autocomplete="off" (click)="date_pagination(10)">
-                                  <label class="btn btn-outline-secondary" for="btnradio2">10</label>
-                              
-                                  <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
-                                         #radioInput20 autocomplete="off" (click)="date_pagination(20)">
-                                  <label class="btn btn-outline-secondary" for="btnradio3">20</label>
-                              
-                                  <input type="radio" class="btn-check" name="btnradio" id="btnradio4"
-                                         #radioInput30 autocomplete="off" (click)="date_pagination(30)">
-                                  <label class="btn btn-outline-secondary" for="btnradio4">30</label>
-                                
+                                <div class="btn-group buttonfilter" role="group"
+                                    aria-label="Basic radio toggle button group">
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" #radioInput10
+                                        autocomplete="off" (click)="date_pagination(10)">
+                                    <label class="btn btn-outline-secondary" for="btnradio2">10</label>
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" #radioInput20
+                                        autocomplete="off" (click)="date_pagination(20)">
+                                    <label class="btn btn-outline-secondary" for="btnradio3">20</label>
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" #radioInput30
+                                        autocomplete="off" (click)="date_pagination(30)">
+                                    <label class="btn btn-outline-secondary" for="btnradio4">30</label>
+
                                 </div>
-                              </li>
-                              
+                            </li>
+
                         </ul>
                     </div>
                     <div class="row align-items-start h-auto mb-4">
@@ -158,27 +159,27 @@
                                 </div>
                             </div>
                         </div>
-           
-                            <ng-container *ngIf="isChannelShow!=='morinaga'  &&  isChannelShow!=='ttpl' ">
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="card dashboard-card">
-                                        <div class="card-body">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div>
-                                                    <span class="iconButton medium skyBg mb-4">
-                                                        <i class="fa-light fa-retweet"></i>
-                                                    </span>
-                                                    <p class="coal mb-0"> {{ selectedChannelLabel === 'Twitter' ?
-                                                        'Tweets' :
-                                                        'Comments' }}</p>
-                                                </div>
-                                                <h2>{{agent_performance_report?.commentCount}}</h2>
+
+                        <ng-container *ngIf="isChannelShow!=='morinaga'  &&  isChannelShow!=='ttpl' ">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card dashboard-card">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <span class="iconButton medium skyBg mb-4">
+                                                    <i class="fa-light fa-retweet"></i>
+                                                </span>
+                                                <p class="coal mb-0"> {{ selectedChannelLabel === 'Twitter' ?
+                                                    'Tweets' :
+                                                    'Comments' }}</p>
                                             </div>
+                                            <h2>{{agent_performance_report?.commentCount}}</h2>
                                         </div>
                                     </div>
                                 </div>
-                            </ng-container>
-               
+                            </div>
+                        </ng-container>
+
 
 
 
@@ -193,19 +194,19 @@
                                             <p class="coal mb-0"> Direct Messages</p>
                                         </div>
                                         <label title="Agent Interaction">
-                                            <h2 > {{agent_performance_report?.messageCount}}</h2>
+                                            <h2> {{agent_performance_report?.messageCount}}</h2>
                                         </label>
-                                       
-                              
-                                           
-                                        
-                         
-                                
-                              
 
-                                 
+
+
+
+
+
+
+
+
                                     </div>
-                                  
+
                                 </div>
                             </div>
                         </div>
@@ -274,6 +275,49 @@
 
                     </div>
                     <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">CUSTOMER SATISFACTION RATINGS </h5>
+
+                        <div class="row justify-content-between">
+                            <div class="col-md-6">
+                                <div class="graphcontainer align-items-end">
+                                    <div id="main" style="height: 400px; width: 100%;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card dashboard-card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <span class="iconButton medium berryBg me-2">
+                                                    <i class="fa-light fa-calendar-week"></i>
+                                                </span>
+                                                <p class="coal mb-0">Last week</p>
+                                            </div>
+                                            <h4>{{CSATobj?.lastWeekCount}}</h4>
+                                            <!-- <h4>56 <small class="text-danger fs-12"> <i class="fa-light fa-arrow-down"></i> 37.8<sup>%</sup></small></h4> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card dashboard-card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <span class="iconButton medium mintBg me-2">
+                                                    <i class="fa-light fa-calendar-week"></i>
+                                                </span>
+                                                <p class="coal mb-0">This week</p>
+                                            </div>
+                                            <h4>{{CSATobj?.currentWeekCount}}</h4>
+                                            <!-- <h4>32 <small class="text-danger fs-12"> <i class="fa-light fa-arrow-down"></i> 37.8<sup>%</sup></small></h4> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="card iceBg p-4 rounded mb-5">
                         <div class="row">
                             <div class="col-6">
                                 <h5 class="section-heading mb-3 p-0 d-flex align-items-center">
@@ -282,7 +326,8 @@
                                             <i [ngClass]="channel.icon"></i>
                                         </span>
                                     </span>
-                                    <span class="ps-3" *ngIf="isChannelShow!=='morinaga'  &&  isChannelShow!=='ttpl'">{{ selectedChannelLabel
+                                    <span class="ps-3" *ngIf="isChannelShow!=='morinaga'  &&  isChannelShow!=='ttpl'">{{
+                                        selectedChannelLabel
                                         }}</span>
                                 </h5>
                             </div>
@@ -307,7 +352,8 @@
                                     <tr>
                                         <th>Agent</th>
 
-                                        <th *ngIf="isChannelShow!=='morinaga' && isChannelShow!=='ttpl'">{{ selectedChannelLabel === 'Twitter' ?
+                                        <th *ngIf="isChannelShow!=='morinaga' && isChannelShow!=='ttpl'">{{
+                                            selectedChannelLabel === 'Twitter' ?
                                             'Tweets' : 'Comments' }}</th>
                                         <th>Direct Messages</th>
                                         <th>First Response Time</th>
@@ -319,7 +365,8 @@
                                 <tbody>
                                     <tr *ngFor="let agent of agent_performance_report?.agentPerformance">
                                         <td>{{ agent.agentName }}</td>
-                                        <td *ngIf="isChannelShow!=='morinaga' && isChannelShow!=='ttpl'">{{ agent.commentCount }}</td>
+                                        <td *ngIf="isChannelShow!=='morinaga' && isChannelShow!=='ttpl'">{{
+                                            agent.commentCount }}</td>
                                         <td>{{ agent.messageCount }}</td>
                                         <td>{{ agent.firstResponseTime | date:"YYYY, MM, dd, HH:MM:ss a" }}</td>
                                         <td>{{ agent.averageTime }}</td>
@@ -329,7 +376,8 @@
                                     </tr>
                                     <tr class="bg-light">
                                         <td><strong>Total</strong> </td>
-                                        <td  *ngIf="isChannelShow!=='morinaga' && isChannelShow!=='ttpl'"><strong >{{ calculateTotalTweets() }}</strong></td>
+                                        <td *ngIf="isChannelShow!=='morinaga' && isChannelShow!=='ttpl'"><strong>{{
+                                                calculateTotalTweets() }}</strong></td>
                                         <td><strong>{{ calculateTotalDirectMessages() }}</strong></td>
                                         <td></td>
                                         <td></td>
