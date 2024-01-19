@@ -36,7 +36,7 @@ export class InboxHeaderComponent implements OnInit {
     }
   
     getFollowUpCount(){
-      debugger
+      
       let obj = {
         agentId: 0,
         user: "",

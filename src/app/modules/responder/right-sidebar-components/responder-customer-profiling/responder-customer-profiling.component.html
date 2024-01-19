@@ -20,9 +20,10 @@
                         <div class="searchbar-click">
                             <form [ngClass]="show == true ? 'searchbox-open' : ''" class="searchbox">
                                 <input placeholder="What are you looking for?" name="search" class="searchbox-input"
-                                    required="" [(ngModel)]="searchProfileDetails" (ngModelChange)="getCustomerProfileDetails()">
+                                    required="" [(ngModel)]="searchProfileDetails"
+                                    (ngModelChange)="getCustomerProfileDetails()">
                                 <span class="searchbox-icon medium iconButton iconHover" (click)="click(show)"><i
-                                    [ngClass]="show == false ? 'fa fa-search': 'fa fa-times'"></i></span>
+                                        [ngClass]="show == false ? 'fa fa-search': 'fa fa-times'"></i></span>
                             </form>
 
                         </div>
@@ -36,47 +37,51 @@
 
                         <div class="about-profile-main">
                             <!-- <form [formGroup]="userDetailForm" (submit)="updateUserInformation()"> -->
-                                <div class="rightbar-scroll-wrap" data-scrollbar="true" tabindex="-1"
-                                    style="overflow-y: auto; outline: none;">
-                                    <div class="scroll-content">
-                                        <div class="about-profile">
-                                            <div class="profile-form mt-5 me-3 pb-4 px-3">
-                                                <div>
-                                                    <ng-container *ngFor="let info of customerProfileInformation; let i = index;">
-                                                        <div class="row mb-3" *ngIf="info.name">
-                                                            <label for="inputName" class="col-sm-3 col-form-label">Full
-                                                                Name
-                                                            </label>
-                                                            <div class="col-sm-9">
-                                                                <input class="form-control" disabled="" id="inputName"
-                                                                    [value]="info.name">
-                                                            </div>
+                            <div class="rightbar-scroll-wrap" data-scrollbar="true" tabindex="-1"
+                                style="overflow-y: auto; outline: none;">
+                                <div class="scroll-content">
+                                    <div class="about-profile">
+                                        <div class="profile-form mt-5 me-3 pb-4 px-3">
+                                            <div>
+                                                <ng-container
+                                                    *ngFor="let info of customerProfileInformation; let i = index;">
+                                                    <div class="row mb-3" *ngIf="info.name">
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Full
+                                                            Name
+                                                        </label>
+                                                        <div class="col-sm-9">
+                                                            <input class="form-control" disabled="" id="inputName"
+                                                                [value]="info.name">
                                                         </div>
-                                                        <div class="row mb-3" *ngIf="info.meterNumber">
-                                                            <label for="inputName" class="col-sm-3 col-form-label">Meter Numnber
-                                                            </label>
-                                                            <div class="col-sm-9">
-                                                                <input class="form-control" disabled="" id="inputName"
-                                                                    [value]="info.meterNumber">
-                                                            </div>
+                                                    </div>
+                                                    <div class="row mb-3" *ngIf="info.meterNumber">
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Meter
+                                                            Numnber
+                                                        </label>
+                                                        <div class="col-sm-9">
+                                                            <input class="form-control" disabled="" id="inputName"
+                                                                [value]="info.meterNumber">
                                                         </div>
-                                                        <div class="row mb-3" *ngIf="info.contractAccount">
-                                                            <label for="inputName" class="col-sm-3 col-form-label">Account ID
-                                                            </label>
-                                                            <div class="col-sm-9">
-                                                                <input class="form-control" disabled="" id="inputName"
-                                                                    [value]="info.contractAccount">
-                                                            </div>
+                                                    </div>
+                                                    <div class="row mb-3" *ngIf="info.contractAccount">
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Account
+                                                            ID
+                                                        </label>
+                                                        <div class="col-sm-9">
+                                                            <input class="form-control" disabled="" id="inputName"
+                                                                [value]="info.contractAccount">
                                                         </div>
-                                                        <div class="row mb-3" *ngIf="info.mobileNumber !== 'NULL'">
-                                                            <label for="inputName" class="col-sm-3 col-form-label">Mobile Number
-                                                            </label>
-                                                            <div class="col-sm-9">
-                                                                <input class="form-control" disabled="" id="inputName"
-                                                                    [value]="info.mobileNumber">
-                                                            </div>
+                                                    </div>
+                                                    <div class="row mb-3" *ngIf="info.mobileNumber !== 'NULL'">
+                                                        <label for="inputName" class="col-sm-3 col-form-label">Mobile
+                                                            Number
+                                                        </label>
+                                                        <div class="col-sm-9">
+                                                            <input class="form-control" disabled="" id="inputName"
+                                                                [value]="info.mobileNumber">
                                                         </div>
-                                                        <!-- <div class="row mb-3" *ngIf="searchProfileDetails !=''">
+                                                    </div>
+                                                    <!-- <div class="row mb-3" *ngIf="searchProfileDetails !=''">
                                                             <label for="type"
                                                                 class="col-sm-3 col-form-label">Type</label>
                                                             <div class="col-sm-9 type-dropdown">
@@ -90,89 +95,181 @@
                                                                 </select>
                                                             </div>
                                                         </div> -->
-                                                        
-                                                        <div class="row w-100" >
-                                                            <div class="col-md-4"></div>
-                                                            <div class="col-md-8 justify-content-end d-flex">
-                                                                <div class="buttons-wrap d-flex">
-                                                                    <button type="submit" class="btn btn-success ms-2"
-                                                                        data-bs-toggle="modal" (click)="deattachProfileInformation(info.name,info.contractAccount,info.mobileNumber)"
-                                                                        data-bs-target="#profileSaveModal">Deattach</button>
+
+                                                    <div class="row w-100">
+                                                        <div class="col-md-4"></div>
+                                                        <div class="col-md-8 justify-content-end d-flex">
+                                                            <div class="buttons-wrap d-flex">
+                                                                <button type="submit" class="btn btn-success ms-2"
+                                                                    data-bs-toggle="modal"
+                                                                    (click)="deattachProfileInformation(info.name,info.contractAccount,info.mobileNumber)"
+                                                                    data-bs-target="#profileSaveModal">Deattach</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container
+                                                    *ngIf="customerProfileInformation.length == 0 && searchProfileDetails == ''">
+                                                    <div class="row mb-3">
+                                                        <label for="inputName" class="col-12 col-form-label"> No Data
+                                                            Found
+                                                        </label>
+                                                    </div>
+                                                </ng-container>
+                                                <form [formGroup]="customerInformationForm">
+                                                    <ng-container
+                                                        *ngIf="customerProfileInformation.length == 0 && searchProfileDetails !=''">
+                                                        <div class="row mb-3">
+                                                            <label for="inputName"
+                                                                class="col-sm-3 col-form-label">Customer Social Profile
+                                                                Name
+                                                            </label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" id="inputName"
+                                                                    formControlName="customerSocialProfileName"
+                                                                    [(ngModel)]="customerSocialProfileName">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="inputName"
+                                                                class="col-sm-3 col-form-label">Account Id
+                                                            </label>
+                                                            <div class="col-sm-9">
+                                                                <input class="form-control" id="inputName"
+                                                                    formControlName="contractAccount"
+                                                                    [(ngModel)]="contractAccount">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <label for="inputName"
+                                                                class="col-sm-3 col-form-label">Mobile Number
+                                                            </label>
+                                                            <!-- <div class="col-sm-9">
+                                                                    <input class="form-control" id="inputName"
+                                                                    formControlName="phoneNumber"
+                                                                    [(ngModel)]="phoneNumber">
+                                                                </div> -->
+                                                                <div class="col-sm-9">
+                                                                    <div [ngClass]="{
+                                                                        'was-validated':
+                                                                          customerInformationForm.get('phoneNumber')!.valid &&
+                                                                          customerInformationForm.get('phoneNumber')!.touched
+                                                                      }">
+                                                                    <input [ngClass]="{
+                                                                            'is-invalid':
+                                                                              customerInformationForm.get('phoneNumber')!.errors &&
+                                                                              (customerInformationForm.get('phoneNumber')!.touched ||
+                                                                                customerInformationForm.get('phoneNumber')!.dirty)
+                                                                          }" class="form-control" id="inputName"
+                                                                        type="email"  formControlName="phoneNumber"
+                                                                        [(ngModel)]="phoneNumber">
+                                                                    <div class="invalid-feedback" *ngIf="
+                                                                    customerInformationForm.get('phoneNumber')!.errors &&
+                                                                    (customerInformationForm.get('phoneNumber')!.touched ||
+                                                                      customerInformationForm.get('phoneNumber')!.dirty)
+                                                                  ">
+                                                                        <div
+                                                                    *ngIf="customerInformationForm.get('phoneNumber')!.errors?.['maxlength'] || 
+                                                                    customerInformationForm.get('phoneNumber')!.errors?.['minlength']">
+                                                                    Mobile Number minmum length 11 and maximum 14 !
+                                                                  </div>
+    
+                                                                        <div
+                                                                            *ngIf="customerInformationForm.get('phoneNumber')!.errors?.['required']">
+                                                                       Please eneter vaid phoneNumber!  
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="valid-feedback" *ngIf="
+                                                                customerInformationForm.get('phoneNumber')!.valid &&
+                                                                customerInformationForm.get('phoneNumber')!.touched
+">
+                                                                        Looks Good!
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="customerProfileInformation.length == 0 && searchProfileDetails == ''">
-                                                        <div class="row mb-3">
-                                                            <label for="inputName" class="col-12 col-form-label"> No Data Found
-                                                            </label>
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="customerProfileInformation.length == 0 && searchProfileDetails !=''">
-                                                        <div class="row mb-3">
-                                                            <label for="inputName" class="col-sm-3 col-form-label">Customer Social Profile Name
-                                                            </label>
-                                                            <div class="col-sm-9">
-                                                                <input class="form-control" id="inputName"
-                                                                [(ngModel)]="customerSocialProfileName">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row mb-3">
-                                                            <label for="inputName" class="col-sm-3 col-form-label">Account Id
-                                                            </label>
-                                                            <div class="col-sm-9">
-                                                                <input class="form-control" id="inputName"
-                                                                [(ngModel)]="contractAccount">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row mb-3">
-                                                            <label for="inputName" class="col-sm-3 col-form-label">Mobile Number
-                                                            </label>
-                                                            <div class="col-sm-9">
-                                                                <input class="form-control" id="inputName"
-                                                                [(ngModel)]="phoneNumber">
-                                                            </div>
+                                                                </div>
+                                                                
                                                         </div>
                                                         <div class="row mb-3">
                                                             <label for="inputName" class="col-sm-3 col-form-label">Email
                                                             </label>
                                                             <div class="col-sm-9">
-                                                                <input class="form-control" id="inputName"
-                                                                [(ngModel)]="customerEmail">
+                                                                <div [ngClass]="{
+                                                                        'was-validated':
+                                                                          customerInformationForm.get('customerEmail')!.valid &&
+                                                                          customerInformationForm.get('customerEmail')!.touched
+                                                                      }">
+                                                                    <input [ngClass]="{
+                                                                            'is-invalid':
+                                                                              customerInformationForm.get('customerEmail')!.errors &&
+                                                                              (customerInformationForm.get('customerEmail')!.touched ||
+                                                                                customerInformationForm.get('customerEmail')!.dirty)
+                                                                          }" class="form-control" id="inputName"
+                                                                        type="email" formControlName="customerEmail"
+                                                                        [(ngModel)]="customerEmail">
+                                                                    <div class="invalid-feedback" *ngIf="
+                                                                    customerInformationForm.get('customerEmail')!.errors &&
+                                                                    (customerInformationForm.get('customerEmail')!.touched ||
+                                                                      customerInformationForm.get('customerEmail')!.dirty)
+                                                                  ">
+                                                                        <div
+                                                                    *ngIf="customerInformationForm.get('customerEmail')!.errors?.['email'] || 
+                                                                    customerInformationForm.get('customerEmail')!.errors?.['email']">
+                                                                  Please Enter Vaild Email 
+                                                                  </div>
+
+                                                                        <!-- <div
+                                                                            *ngIf="customerInformationForm.get('customerEmail')!.errors?.['email']">
+                                                                            Please Enter Vaild Email !
+                                                                        </div> -->
+                                                                    </div>
+                                                                    <div class="valid-feedback" *ngIf="
+                                                                customerInformationForm.get('customerEmail')!.valid &&
+                                                                customerInformationForm.get('customerEmail')!.touched
+                                                              ">
+                                                                        Looks Good!
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
+                                                            <span></span>
+
                                                         </div>
                                                         <!-- <div class="row mb-3">
-                                                            <label for="type"
-                                                                class="col-sm-3 col-form-label">Type</label>
-                                                            <div class="col-sm-9 type-dropdown">
-
-                                                                <select class="form-select" id="floatingSelect"
-                                                                    aria-label="Floating label select" [(ngModel)]="type">
-                                                                    <option disabled>Select the Type</option>
-                                                                    <option value="MeterNumber">Meter Number</option>
-                                                                    <option value="MobileNumber">Mobile Number</option>
-                                                                    <option value="ContractAccount">Account ID</option>
-                                                                </select>
-                                                            </div>
-                                                        </div> -->
+                                                                <label for="type"
+                                                                    class="col-sm-3 col-form-label">Type</label>
+                                                                <div class="col-sm-9 type-dropdown">
+    
+                                                                    <select class="form-select" id="floatingSelect"
+                                                                        aria-label="Floating label select" [(ngModel)]="type">
+                                                                        <option disabled>Select the Type</option>
+                                                                        <option value="MeterNumber">Meter Number</option>
+                                                                        <option value="MobileNumber">Mobile Number</option>
+                                                                        <option value="ContractAccount">Account ID</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div> -->
                                                         <div class="row w-100">
                                                             <div class="col-md-4"></div>
                                                             <div class="col-md-8 justify-content-end d-flex">
                                                                 <div class="buttons-wrap d-flex">
                                                                     <button type="submit" class="btn btn-success ms-2"
-                                                                        data-bs-toggle="modal" (click)="addProfileInformation()"
-                                                                        data-bs-target="#profileSaveModal">Save</button>
+                                                                        data-bs-toggle="modal"
+                                                                        (click)="addProfileInformation()"
+                                                                        data-bs-target="#profileSaveModal"
+                                                                        [disabled]="customerInformationForm.invalid">Save</button>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </ng-container>
-                                                </div>
+                                                </form>
+
                                             </div>
                                         </div>
-
                                     </div>
+
                                 </div>
-                                <!-- <footer class="footer">
+                            </div>
+                            <!-- <footer class="footer">
                                     <div class="ps-3 pe-3">
                                         <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
                                             <div class="row w-100">

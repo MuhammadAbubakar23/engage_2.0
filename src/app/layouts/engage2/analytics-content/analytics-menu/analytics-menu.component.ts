@@ -34,7 +34,7 @@ export class AnalyticsMenuComponent implements OnInit {
   //     {name:'LinkedIn Report',link:'/analytics/linkedin-report'},
   //     {name:'Instagram Report',link:'/analytics/instagram-report'}
   //       ]
-  constructor(private _hS: HeaderService) {}
+  constructor(private _hS: HeaderService) { }
 
   ngOnInit(): void {
     this._hS.getHeader().subscribe((res: any) => {

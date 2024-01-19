@@ -33,7 +33,8 @@ export const environment = {
   TwoFABaseUrl:'https://rep.enteract.app/api/',
 
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
-
+ 
+  
   // For KE
   IdentityBaseUrl: 'https://idtservice.enteract.live/api',
   CommonBaseUrl: 'https://comservices.enteract.live/api/',

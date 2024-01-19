@@ -668,7 +668,7 @@ export class ConversationComponent implements OnInit {
     platform: any,
     profileId: any
   ) {
-    debugger
+    
     localStorage.setItem('previousUrl', this.currentUrl);
     if (
       this.currentUrl.split('/')[2] == 'focused' ||
@@ -723,7 +723,7 @@ export class ConversationComponent implements OnInit {
     } else if (this.currentUrl.split('/')[2] == 'trash') {
       this.reloadComponent('removeFromTrashToOpen');
     } else if (this.currentUrl.split('/')[2] == 'assigned_to_me') {
-      debugger
+      
       this.SpinnerService.show();
       this.headerCountService.shareUnresponedCount(count);
       this.fetchId.setPlatform(platform);

@@ -108,6 +108,7 @@ export class InboxMenuComponent implements OnInit {
 
       this.Subscription.add(
         this.updateListService.receiveList().subscribe((res) => {
+          
           res.forEach((platform: any) => {
             this.UnResponded += 1;
             switch (platform.platform) {
@@ -158,6 +159,7 @@ export class InboxMenuComponent implements OnInit {
   platformWiseCount: any[] = [];
 
   getAllChannelsUnrespondedCounts() {
+    
     this.commonService
       .GetAllChannelsUnrespondedCount()
       .subscribe((res: any) => {

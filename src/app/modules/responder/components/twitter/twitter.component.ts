@@ -1859,7 +1859,7 @@ export class TwitterComponent implements OnInit {
   }
 
   submitTwitterMentionReply() {
-    debugger
+    
     if (this.twitterMentionId == 0) {
       this.reloadComponent('selectComment');
     } else {

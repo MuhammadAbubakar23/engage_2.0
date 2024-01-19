@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators ,FormControlName, AbstractControl} from '@angular/forms';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 
@@ -8,6 +9,7 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
   styleUrls: ['./responder-customer-profiling.component.scss'],
 })
 export class ResponderCustomerProfilingComponent implements OnInit {
+[x: string]: any;
   id: string = '';
   profileId: string = '';
   platform: string = '';
@@ -22,9 +24,18 @@ export class ResponderCustomerProfilingComponent implements OnInit {
     private commonService: CommonDataService,
     private toggleService: ToggleService
   ) {}
+customerInformationForm= new FormGroup({
+  customerSocialProfileName: new FormControl('',[Validators.required]),
+  contractAccount: new FormControl('',[Validators.required]),
+  phoneNumber: new FormControl('', [ Validators.minLength(11), Validators.maxLength(14)]),
+  customerEmail: new FormControl('',[Validators.email])
+
+})
 
   customerProfileInformation: any[] = [];
-
+  get f(): { [key: string]: AbstractControl } {
+    return this.customerInformationForm.controls;
+  }
   ngOnInit(): void {
     this.id = localStorage.getItem('storeOpenedId') || '';
     this.openedChannel = localStorage.getItem('parent') || '';

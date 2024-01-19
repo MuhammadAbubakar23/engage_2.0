@@ -28,7 +28,7 @@ export class SignalRService {
 
   token = localStorage.getItem('token');
   signalRStatus = localStorage.getItem('signalRStatus');
-  companyId:number=651;
+  companyId:number=650;
   baseUrl:string="";
 
   public hubconnection!: signalR.HubConnection;
@@ -55,7 +55,8 @@ export class SignalRService {
     this.baseUrl=window.location.origin
     if(this.baseUrl=='https://keportal.enteract.live'){
       this.companyId=652;
-    } else if (this.baseUrl=='https://engage.jazz.com.pk') {
+    }
+   else if (this.baseUrl=='https://engage.jazz.com.pk') {
     this.companyId=650;
     }
     else if(this.baseUrl=='https://uiengage.enteract.app') {
@@ -74,7 +75,7 @@ export class SignalRService {
   flag:string='';
 
   startConnection() {
-    debugger
+    
     // this.flag = this.router.url.split('/')[1];
     // if(this.flag == 'all-inboxes'){
       let team = this.storage.retrive("nocompass", "O").local;
@@ -124,7 +125,7 @@ export class SignalRService {
   }
 
   public updateListAndDetailDataListener = () => {
-    debugger
+    
     this.hubconnection.on('SendData', (data) => {
       if (data.conversationQueues != null) { 
          this.updateListService.sendList(data.conversationQueues)
@@ -140,6 +141,7 @@ export class SignalRService {
   // for new post
 public updatePostList=()=>{
   this.hubconnection?.on('PostData',(data)=>{
+    
     this.getnewPostService.sendnewPost(data)
     console.log("New Post===>",data)
   })

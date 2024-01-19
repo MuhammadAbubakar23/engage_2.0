@@ -235,7 +235,7 @@ export class CreateUserComponent implements OnInit {
       console.log("In Add User");
       return;
     }
-debugger
+
     this.uservc.save(controllerRoute, this.userForm.value).subscribe({
       next: (res: any) => {
         console.log(res)

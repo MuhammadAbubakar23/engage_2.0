@@ -8,6 +8,7 @@ import { HeaderService } from 'src/app/shared/services/header.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { SharedModule } from "../../../../shared/shared.module";
 import { ExcelService } from '../../services/excel.service';
+import { includes } from 'lodash';
 @Component({
   standalone: true,
   selector: 'app-agent-performance-report',
@@ -40,7 +41,10 @@ export class AgentPerformanceReportComponent implements OnInit {
   toastermessage = false;
   AlterMsg: any = '';
   channelOptions: any[] = []
-  selectedDays: any = ''
+  selectedDays: any = '';
+  csatArray: any[] = [];
+  newArray: any[] = []
+  CSATobj: any
   commentDateWiseGraph: any;
   channelOptionsByplatform: any[] = []
   isShowG: boolean = false
@@ -72,6 +76,8 @@ export class AgentPerformanceReportComponent implements OnInit {
     const newObj = { title: 'Agent Performance Report', url: '/analytics/performance-report' };
     this._hS.setHeader(newObj);
     this.makeChartResponsive();
+
+
   }
   getBaseurl() {
     this.activeChannel = window.location.origin
@@ -144,11 +150,11 @@ export class AgentPerformanceReportComponent implements OnInit {
 
 
     if (this.endDate >= this.startDate) {
-      
+
       this.addAgentGraph();
-     
+
       this.radioInput10.nativeElement.checked = false;
-      this.radioInput20.nativeElement.checked = false; 
+      this.radioInput20.nativeElement.checked = false;
       this.radioInput30.nativeElement.checked = false;
     } else {
       alert('EndDate is lessthen StartDate');
@@ -158,15 +164,15 @@ export class AgentPerformanceReportComponent implements OnInit {
   resetStartDate() {
     this.endDate = ''
 
-  } 
+  }
   calculateTotalTweets(): number {
-    return this.agent_performance_report?.agentPerformance ?.reduce(
+    return this.agent_performance_report?.agentPerformance?.reduce(
       (total: any, agent: { commentCount: any; }) => total + (agent.commentCount || 0),
       0
     );
   }
   calculateTotalDirectMessages(): number {
-    return this.agent_performance_report?.agentPerformance ?.reduce(
+    return this.agent_performance_report?.agentPerformance?.reduce(
       (total: any, agent: { messageCount: any; }) => total + (agent.messageCount || 0),
       0
     );
@@ -232,13 +238,13 @@ export class AgentPerformanceReportComponent implements OnInit {
     this.SpinnerService.show();
     this.commonService.AddAgentPerformance(requestData).subscribe(
       (response: any) => {
-        this.SpinnerService.hide();
+        // this.SpinnerService.hide();
         this.agent_performance_report = response;
         this.Agent_data = [];
         this.Message_data = []
-
+        this.getAllCSATData()
         const commentDateWise = this.agent_performance_report?.commentDateWise;
-        commentDateWise ?.forEach((data: any) => {
+        commentDateWise?.forEach((data: any) => {
           const date = new Date(data.date);
           this.Agent_data.push({ x: date, y: data.count });
           if (this.Agent_data.length == 0) {
@@ -325,7 +331,7 @@ export class AgentPerformanceReportComponent implements OnInit {
         // messageDateWise
 
         const messageDateWise = this.agent_performance_report?.messageDateWise;
-        messageDateWise ?.forEach((data: any) => {
+        messageDateWise?.forEach((data: any) => {
           const date = new Date(data.date);
           this.Message_data.push({ x: date, y: data.count });
         });
@@ -396,6 +402,8 @@ export class AgentPerformanceReportComponent implements OnInit {
         };
 
         option && this.messageDateWiseGraph.setOption(option);
+
+        this.SpinnerService.hide()
       },
       (error: any) => {
         console.error('Error adding agent performance report:', error);
@@ -526,6 +534,78 @@ export class AgentPerformanceReportComponent implements OnInit {
       if (this.messageDateWiseGraph) {
         this.messageDateWiseGraph.resize();
       }
+      if(this.CSATGraph){
+        this.CSATGraph.resize()
+      }
     })
+  }
+  getAllCSATData() {
+
+    let obj = {
+      "fromDate": this.startDate,
+      "toDate": this.endDate,
+      "plateForm": "string"
+    }
+    this.csatArray = []
+    this.SpinnerService.show()
+    this.cdr.detectChanges()
+    this.commonService.GetCSATReport(obj).subscribe((res: any) => {
+ 
+this.SpinnerService.hide()
+      this.CSATobj = res
+      if (!this.csatArray.includes({name:'Very Satisfied' && 'Unsatisfied' && 'Satisfied' && 'Not Satisfied' && 'Neutral'
+      })) {
+    
+        this.csatArray.push(
+          { value: this.CSATobj.verSatisfiedCount, name: 'Very Satisfied' },
+          { value: this.CSATobj.unsatisfiedCount, name: 'Unsatisfied' },
+          { value: this.CSATobj.satisfiedCount, name: 'Satisfied' },
+          { value: this.CSATobj.notSatisfiedCount, name: 'Not Satisfied' },
+          { value: this.CSATobj.neutralCount, name: 'Neutral' }
+        )
+      }
+
+
+      this.getCSATGraph()
+    }
+
+    )
+
+  }
+  CSATGraph:any
+  getCSATGraph() {
+    debugger
+    var chartDom = document.getElementById('main');
+   this.CSATGraph = echarts.init(chartDom);
+    var option;
+
+    option = {
+
+      tooltip: {
+        trigger: 'item'
+      },
+      legend: {
+        orient: 'horizontal',
+        bottom: 'bottom',
+        icon: 'circle'
+      },
+      series: [
+        {
+          name: 'CUSTOMER SATISFACTION',
+          type: 'pie',
+          radius: '60%',
+          data: this.csatArray,
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+
+            }
+          }
+        }
+      ]
+    };
+
+    option && this.CSATGraph.setOption(option);
   }
 }

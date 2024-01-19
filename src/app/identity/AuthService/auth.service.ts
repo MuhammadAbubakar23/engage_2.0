@@ -18,7 +18,7 @@ export class AuthService {
     }
 
   login (form:any) {
-    debugger
+    
     return this.http.post(this.baseUrl + '/Authentication/Login',form)
   }
   TwoFA(form:any){
