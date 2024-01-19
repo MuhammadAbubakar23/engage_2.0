@@ -1,0 +1,384 @@
+<div class="dialer-menu-item inbound" [class.open]="tabsArr.inbound">
+  <div class="dialer-menu-content">
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button
+          class="nav-link active"
+          id="nav-home-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-home"
+          type="button"
+          role="tab"
+          aria-controls="nav-home"
+          aria-selected="true"
+        >
+          All
+        </button>
+        <button
+          class="nav-link"
+          id="nav-profile-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-profile"
+          type="button"
+          role="tab"
+          aria-controls="nav-profile"
+          aria-selected="false"
+        >
+          Missed
+        </button>
+        <button
+          class="nav-link"
+          id="nav-contact-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-contact"
+          type="button"
+          role="tab"
+          aria-controls="nav-contact"
+          aria-selected="false"
+        >
+          Dialed
+        </button>
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <div
+        class="tab-pane fade show active"
+        id="nav-home"
+        role="tabpanel"
+        aria-labelledby="nav-home-tab"
+      >
+        <div class="dialer-calllogs-list">
+          <div class="dialer-calllog-listitem outgoing">
+            <div class="avatar">
+              <img
+                src="https://w7.pngwing.com/pngs/129/292/png-transparent-female-avatar-girl-face-woman-user-flat-classy-users-icon.png"
+              />
+            </div>
+            <div class="contact-detail">
+              <h3>Maria Azhar</h3>
+              <p>
+                <svg
+                  width="8"
+                  height="7"
+                  viewBox="0 0 8 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.25 0.59375V5.28125C7.25 5.55469 7.03516 5.75 6.78125 5.75C6.50781 5.75 6.3125 5.55469 6.3125 5.28125V1.72656L1.80078 6.23828C1.70312 6.33594 1.58594 6.375 1.46875 6.375C1.33203 6.375 1.21484 6.33594 1.13672 6.23828C0.941406 6.0625 0.941406 5.76953 1.13672 5.59375L5.64844 1.0625H2.09375C1.82031 1.0625 1.625 0.867188 1.625 0.59375C1.625 0.339844 1.82031 0.125 2.09375 0.125H6.78125C7.03516 0.125 7.25 0.339844 7.25 0.59375Z"
+                    fill="white"
+                  />
+                </svg>
+                Mobile
+              </p>
+            </div>
+            <div class="call-time">
+              <p>5 hr ago</p>
+            </div>
+          </div>
+          <div class="dialer-calllog-listitem outgoing">
+            <div class="avatar">
+              <img
+                src="https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png"
+              />
+            </div>
+            <div class="contact-detail">
+              <h3>Saif Raza</h3>
+              <p>
+                <svg
+                  width="8"
+                  height="7"
+                  viewBox="0 0 8 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.25 0.59375V5.28125C7.25 5.55469 7.03516 5.75 6.78125 5.75C6.50781 5.75 6.3125 5.55469 6.3125 5.28125V1.72656L1.80078 6.23828C1.70312 6.33594 1.58594 6.375 1.46875 6.375C1.33203 6.375 1.21484 6.33594 1.13672 6.23828C0.941406 6.0625 0.941406 5.76953 1.13672 5.59375L5.64844 1.0625H2.09375C1.82031 1.0625 1.625 0.867188 1.625 0.59375C1.625 0.339844 1.82031 0.125 2.09375 0.125H6.78125C7.03516 0.125 7.25 0.339844 7.25 0.59375Z"
+                    fill="white"
+                  />
+                </svg>
+                Mobile
+              </p>
+            </div>
+            <div class="call-time">
+              <p>7 hr ago</p>
+            </div>
+          </div>
+          <div class="dialer-calllog-listitem incoming">
+            <div class="avatar">
+              <p>WM</p>
+            </div>
+            <div class="contact-detail">
+              <h3>Wahaj Moiz</h3>
+              <p>
+                <svg
+                  width="7"
+                  height="7"
+                  viewBox="0 0 7 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.09375 0.925781L1.58203 5.4375H5.15625C5.41016 5.4375 5.625 5.65234 5.625 5.90625C5.625 6.17969 5.41016 6.375 5.15625 6.375H0.46875C0.195312 6.375 0 6.17969 0 5.90625V1.21875C0 0.964844 0.195312 0.75 0.46875 0.75C0.722656 0.75 0.9375 0.964844 0.9375 1.21875V4.79297L5.44922 0.28125C5.625 0.0859375 5.91797 0.0859375 6.09375 0.28125C6.28906 0.457031 6.28906 0.75 6.09375 0.925781Z"
+                    fill="white"
+                  />
+                </svg>
+                Mobile
+              </p>
+            </div>
+            <div class="call-time">
+              <p>7 hr ago</p>
+            </div>
+          </div>
+          <div class="dialer-calllog-listitem incoming">
+            <div class="avatar">
+              <svg
+                width="11"
+                height="13"
+                viewBox="0 0 11 13"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5.25 6.5C3.58594 6.5 2.25 5.16406 2.25 3.5C2.25 1.85938 3.58594 0.5 5.25 0.5C6.89062 0.5 8.25 1.85938 8.25 3.5C8.25 5.16406 6.89062 6.5 5.25 6.5ZM5.25 1.25C4.00781 1.25 3 2.28125 3 3.5C3 4.74219 4.00781 5.75 5.25 5.75C6.46875 5.75 7.5 4.74219 7.5 3.5C7.5 2.28125 6.46875 1.25 5.25 1.25ZM6.42188 7.625C8.67188 7.625 10.5 9.45312 10.5 11.7031C10.5 12.1484 10.125 12.5 9.67969 12.5H0.796875C0.351562 12.5 0 12.1484 0 11.7031C0 9.45312 1.80469 7.625 4.05469 7.625H6.42188ZM9.67969 11.75C9.70312 11.75 9.75 11.7266 9.75 11.7031C9.75 9.875 8.25 8.375 6.42188 8.375H4.05469C2.22656 8.375 0.75 9.875 0.75 11.7031C0.75 11.7266 0.773438 11.75 0.796875 11.75H9.67969Z"
+                  fill="white"
+                />
+              </svg>
+            </div>
+            <div class="contact-detail">
+              <h3>+92 346 8326714</h3>
+              <p>
+                <svg
+                  width="7"
+                  height="7"
+                  viewBox="0 0 7 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.09375 0.925781L1.58203 5.4375H5.15625C5.41016 5.4375 5.625 5.65234 5.625 5.90625C5.625 6.17969 5.41016 6.375 5.15625 6.375H0.46875C0.195312 6.375 0 6.17969 0 5.90625V1.21875C0 0.964844 0.195312 0.75 0.46875 0.75C0.722656 0.75 0.9375 0.964844 0.9375 1.21875V4.79297L5.44922 0.28125C5.625 0.0859375 5.91797 0.0859375 6.09375 0.28125C6.28906 0.457031 6.28906 0.75 6.09375 0.925781Z"
+                    fill="white"
+                  />
+                </svg>
+                Mobile
+              </p>
+            </div>
+            <div class="call-time">
+              <p>7 hr ago</p>
+            </div>
+          </div>
+          <div class="dialer-calllog-listitem outgoing">
+            <div class="avatar">
+              <img
+                src="https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png"
+              />
+            </div>
+            <div class="contact-detail">
+              <h3>Saif Raza</h3>
+              <p>
+                <svg
+                  width="8"
+                  height="7"
+                  viewBox="0 0 8 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.25 0.59375V5.28125C7.25 5.55469 7.03516 5.75 6.78125 5.75C6.50781 5.75 6.3125 5.55469 6.3125 5.28125V1.72656L1.80078 6.23828C1.70312 6.33594 1.58594 6.375 1.46875 6.375C1.33203 6.375 1.21484 6.33594 1.13672 6.23828C0.941406 6.0625 0.941406 5.76953 1.13672 5.59375L5.64844 1.0625H2.09375C1.82031 1.0625 1.625 0.867188 1.625 0.59375C1.625 0.339844 1.82031 0.125 2.09375 0.125H6.78125C7.03516 0.125 7.25 0.339844 7.25 0.59375Z"
+                    fill="white"
+                  />
+                </svg>
+                Mobile
+              </p>
+            </div>
+            <div class="call-time">
+              <p>9 hr ago</p>
+            </div>
+          </div>
+          <div class="dialer-calllog-listitem incoming">
+            <div class="avatar">
+              <img
+                src="https://www.shareicon.net/data/512x512/2015/09/18/103160_man_512x512.png"
+              />
+            </div>
+            <div class="contact-detail">
+              <h3>Danish Iqbal</h3>
+              <p>
+                <svg
+                  width="7"
+                  height="7"
+                  viewBox="0 0 7 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.09375 0.925781L1.58203 5.4375H5.15625C5.41016 5.4375 5.625 5.65234 5.625 5.90625C5.625 6.17969 5.41016 6.375 5.15625 6.375H0.46875C0.195312 6.375 0 6.17969 0 5.90625V1.21875C0 0.964844 0.195312 0.75 0.46875 0.75C0.722656 0.75 0.9375 0.964844 0.9375 1.21875V4.79297L5.44922 0.28125C5.625 0.0859375 5.91797 0.0859375 6.09375 0.28125C6.28906 0.457031 6.28906 0.75 6.09375 0.925781Z"
+                    fill="white"
+                  />
+                </svg>
+                Mobile
+              </p>
+            </div>
+            <div class="call-time">
+              <p>7 hr ago</p>
+            </div>
+          </div>
+          <div class="dialer-calllog-listitem missed">
+            <div class="avatar">
+              <p>SH</p>
+            </div>
+            <div class="contact-detail">
+              <h3>Sannan Hussain</h3>
+              <p>
+                <svg
+                  width="7"
+                  height="7"
+                  viewBox="0 0 7 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.09375 0.925781L1.58203 5.4375H5.15625C5.41016 5.4375 5.625 5.65234 5.625 5.90625C5.625 6.17969 5.41016 6.375 5.15625 6.375H0.46875C0.195312 6.375 0 6.17969 0 5.90625V1.21875C0 0.964844 0.195312 0.75 0.46875 0.75C0.722656 0.75 0.9375 0.964844 0.9375 1.21875V4.79297L5.44922 0.28125C5.625 0.0859375 5.91797 0.0859375 6.09375 0.28125C6.28906 0.457031 6.28906 0.75 6.09375 0.925781Z"
+                    fill="white"
+                  />
+                </svg>
+                Mobile
+              </p>
+            </div>
+            <div class="call-time">
+              <p>7 hr ago</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="nav-profile"
+        role="tabpanel"
+        aria-labelledby="nav-profile-tab"
+      >
+        <div class="dialer-calllogs-list">
+          <div class="dialer-calllog-listitem missed">
+            <div class="avatar">
+              <p>SH</p>
+            </div>
+            <div class="contact-detail">
+              <h3>Sannan Hussain</h3>
+              <p>
+                <svg
+                  width="7"
+                  height="7"
+                  viewBox="0 0 7 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.09375 0.925781L1.58203 5.4375H5.15625C5.41016 5.4375 5.625 5.65234 5.625 5.90625C5.625 6.17969 5.41016 6.375 5.15625 6.375H0.46875C0.195312 6.375 0 6.17969 0 5.90625V1.21875C0 0.964844 0.195312 0.75 0.46875 0.75C0.722656 0.75 0.9375 0.964844 0.9375 1.21875V4.79297L5.44922 0.28125C5.625 0.0859375 5.91797 0.0859375 6.09375 0.28125C6.28906 0.457031 6.28906 0.75 6.09375 0.925781Z"
+                    fill="white"
+                  />
+                </svg>
+                Mobile
+              </p>
+            </div>
+            <div class="call-time">
+              <p>7 hr ago</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="nav-contact"
+        role="tabpanel"
+        aria-labelledby="nav-contact-tab"
+      >
+        <div class="dialer-calllogs-list">
+          <div class="dialer-calllog-listitem outgoing">
+            <div class="avatar">
+              <img
+                src="https://w7.pngwing.com/pngs/129/292/png-transparent-female-avatar-girl-face-woman-user-flat-classy-users-icon.png"
+              />
+            </div>
+            <div class="contact-detail">
+              <h3>Maria Azhar</h3>
+              <p>
+                <svg
+                  width="8"
+                  height="7"
+                  viewBox="0 0 8 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.25 0.59375V5.28125C7.25 5.55469 7.03516 5.75 6.78125 5.75C6.50781 5.75 6.3125 5.55469 6.3125 5.28125V1.72656L1.80078 6.23828C1.70312 6.33594 1.58594 6.375 1.46875 6.375C1.33203 6.375 1.21484 6.33594 1.13672 6.23828C0.941406 6.0625 0.941406 5.76953 1.13672 5.59375L5.64844 1.0625H2.09375C1.82031 1.0625 1.625 0.867188 1.625 0.59375C1.625 0.339844 1.82031 0.125 2.09375 0.125H6.78125C7.03516 0.125 7.25 0.339844 7.25 0.59375Z"
+                    fill="white"
+                  />
+                </svg>
+                Mobile
+              </p>
+            </div>
+            <div class="call-time">
+              <p>5 hr ago</p>
+            </div>
+          </div>
+          <div class="dialer-calllog-listitem outgoing">
+            <div class="avatar">
+              <img
+                src="https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png"
+              />
+            </div>
+            <div class="contact-detail">
+              <h3>Saif Raza</h3>
+              <p>
+                <svg
+                  width="8"
+                  height="7"
+                  viewBox="0 0 8 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.25 0.59375V5.28125C7.25 5.55469 7.03516 5.75 6.78125 5.75C6.50781 5.75 6.3125 5.55469 6.3125 5.28125V1.72656L1.80078 6.23828C1.70312 6.33594 1.58594 6.375 1.46875 6.375C1.33203 6.375 1.21484 6.33594 1.13672 6.23828C0.941406 6.0625 0.941406 5.76953 1.13672 5.59375L5.64844 1.0625H2.09375C1.82031 1.0625 1.625 0.867188 1.625 0.59375C1.625 0.339844 1.82031 0.125 2.09375 0.125H6.78125C7.03516 0.125 7.25 0.339844 7.25 0.59375Z"
+                    fill="white"
+                  />
+                </svg>
+                Mobile
+              </p>
+            </div>
+            <div class="call-time">
+              <p>7 hr ago</p>
+            </div>
+          </div>
+          <div class="dialer-calllog-listitem outgoing">
+            <div class="avatar">
+              <img
+                src="https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png"
+              />
+            </div>
+            <div class="contact-detail">
+              <h3>Saif Raza</h3>
+              <p>
+                <svg
+                  width="8"
+                  height="7"
+                  viewBox="0 0 8 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.25 0.59375V5.28125C7.25 5.55469 7.03516 5.75 6.78125 5.75C6.50781 5.75 6.3125 5.55469 6.3125 5.28125V1.72656L1.80078 6.23828C1.70312 6.33594 1.58594 6.375 1.46875 6.375C1.33203 6.375 1.21484 6.33594 1.13672 6.23828C0.941406 6.0625 0.941406 5.76953 1.13672 5.59375L5.64844 1.0625H2.09375C1.82031 1.0625 1.625 0.867188 1.625 0.59375C1.625 0.339844 1.82031 0.125 2.09375 0.125H6.78125C7.03516 0.125 7.25 0.339844 7.25 0.59375Z"
+                    fill="white"
+                  />
+                </svg>
+                Mobile
+              </p>
+            </div>
+            <div class="call-time">
+              <p>9 hr ago</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

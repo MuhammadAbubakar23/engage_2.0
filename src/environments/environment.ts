@@ -41,12 +41,12 @@ export const environment = {
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  // IdentityBaseUrl: 'https://idtservice.enteract.live/api',
-  // CommonBaseUrl: 'https://comservices.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
-  // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
-  // ServiceBaseUrl: '',
-  // consoleBaseUrl: 'https://console.enteract.live/api/',
+  IdentityBaseUrl: 'https://idtservice.enteract.live/api',
+  CommonBaseUrl: 'https://comservices.enteract.live/api/',
+  SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
+  ProfileBaseUrl: 'https://profiler.enteract.live/api/',
+  ServiceBaseUrl: '',
+  consoleBaseUrl: 'https://console.enteract.live/api/',
 
   // For Jazz
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
@@ -70,20 +70,20 @@ export const environment = {
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
 
   // For Bazaar
-  IdentityBaseUrl: 'https://bzidentity.enteract.live/api',
-  CommonBaseUrl: 'https://wacommon.enteract.live/api/',
-  SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
-  ServiceBaseUrl: 'https://waservice.enteract.live/api/',
-  consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-  ProfileBaseUrl: '',
+  // IdentityBaseUrl: 'https://bzidentity.enteract.live/api',
+  // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
+  // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
+  // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
+  // ProfileBaseUrl: '',
 
   // For Testing
-  IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
-  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  ServiceBaseUrl: '',
-  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
-  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  // ServiceBaseUrl: '',
+  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
+  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
 
   

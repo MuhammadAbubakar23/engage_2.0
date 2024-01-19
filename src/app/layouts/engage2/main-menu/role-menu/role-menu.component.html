@@ -1,6 +1,6 @@
 <ng-container
     *ngIf="!(restrictedAgentsString.includes(restrictedAgent)) && !(onlyAnalyticsTabVisible.includes(restrictedAgent))">
-    <!-- <ng-container *ngFor="let menu of menus$ ">
+    <ng-container *ngFor="let menu of menus$ ">
         <a [routerLink]="['/'+menu.link]" routerLinkActive="active" ariaCurrentWhenActive="page"
             class="list-group-item d-flex justify-content-between align-items-center bg-transparent border-0 pt-0 pb-0 ps-2">
             <div class="list-group-text d-flex align-items-center">

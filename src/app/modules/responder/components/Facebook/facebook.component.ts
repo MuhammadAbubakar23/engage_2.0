@@ -48,6 +48,7 @@ import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-qu
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
+import { FetchPostTypeService } from 'src/app/services/FetchPostType/fetch-post-type.service';
 
 declare var toggleEmojis: any;
 @Component({
@@ -172,7 +173,8 @@ export class FacebookComponent implements OnInit {
     private stor: StorageService,
     private userInfoService: UserInformationService,
     private el: ElementRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private fetchPostType: FetchPostTypeService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -203,8 +205,17 @@ export class FacebookComponent implements OnInit {
 
   KEbaseUrl:string="";
   KEClient:boolean=false;
+  fetchedPostType:string=""
   
   ngOnInit(): void {
+    this.fetchedPostType = this.fetchPostType.postType
+    if(this.fetchedPostType == 'FCP') {
+      this.fbCmntReply = false;
+      this.fbMsgReply = true;
+    } else if (this.fetchedPostType == 'FC') {
+      this.fbCmntReply = true;
+      this.fbMsgReply = false;
+    }
 
     this.KEbaseUrl=window.location.origin
     if(this.KEbaseUrl=='https://keportal.enteract.live'){
@@ -364,7 +375,7 @@ export class FacebookComponent implements OnInit {
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
-            this.fbCmntReply = true;
+            // this.fbCmntReply = true;
             this.ConverstationDetailDto = res;
             this.FacebookData = this.ConverstationDetailDto.List;
             this.userInformation = res.List[0].user;
@@ -428,7 +439,7 @@ export class FacebookComponent implements OnInit {
       };
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         if (Object.keys(res).length > 0) {
-          this.fbCmntReply = true;
+          // this.fbCmntReply = true;
           this.FacebookData = res.List;
           this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
@@ -495,7 +506,7 @@ export class FacebookComponent implements OnInit {
           if (Object.keys(res).length > 0) {
             this.SpinnerService.hide();
             this.spinner1running = false;
-            this.fbCmntReply = true;
+            // this.fbCmntReply = true;
             this.ConverstationDetailDto = res;
             this.FacebookData = this.ConverstationDetailDto.List;
             this.userInformation = res.List[0].user;
@@ -867,8 +878,8 @@ export class FacebookComponent implements OnInit {
               this.FacebookData == undefined ||
               this.FacebookData?.length == 0
             ) {
-              this.fbCmntReply = false;
-              this.fbMsgReply = true;
+              // this.fbCmntReply = false;
+              // this.fbMsgReply = true;
             }
 
             this.messagesArray = [];
@@ -938,8 +949,8 @@ export class FacebookComponent implements OnInit {
             this.FacebookData == undefined ||
             this.FacebookData?.length == 0
           ) {
-            this.fbCmntReply = false;
-            this.fbMsgReply = true;
+            // this.fbCmntReply = false;
+            // this.fbMsgReply = true;
           }
 
           this.messagesArray = [];
@@ -1008,8 +1019,8 @@ export class FacebookComponent implements OnInit {
               this.FacebookData == undefined ||
               this.FacebookData?.length == 0
             ) {
-              this.fbCmntReply = false;
-              this.fbMsgReply = true;
+              // this.fbCmntReply = false;
+              // this.fbMsgReply = true;
             }
 
             this.messagesArray = [];

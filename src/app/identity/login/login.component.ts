@@ -9,12 +9,12 @@ import { AuthService } from 'src/app/identity/AuthService/auth.service';
 import { AgentDetailsService } from 'src/app/services/AgentDetailsService/agent-details.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import { LoginDto } from 'src/app/shared/Models/LoginDto';
-import { VerificationDto } from 'src/app/shared/Models/VerificationDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { DatePipe } from '@angular/common';
 
 import { map, timer, takeWhile } from 'rxjs';
+import { VerificationDto } from 'src/app/shared/Models/verificationDto';
 // import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 @Component({
   selector: 'app-login',
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     debugger
-    if (this.baseUrl == 'https://engage.jazz.com.pk' || this.baseUrl=='http://localhost:4200') {
+    if (this.baseUrl == 'https://engage.jazz.com.pk' || this.baseUrl == 'http://localhost:4200' || this.baseUrl == 'https://uiengage.enteract.app') {
 
       let obj = {
         userName: this.loginForm.value.userName,
@@ -117,70 +117,9 @@ export class LoginComponent implements OnInit {
             this.spinnerService.hide();
             this.reloadComponent('loginFailed');
           }
-       
-  
-  
         }
       );
-    } 
-    // else if (this.baseUrl == 'http://localhost:4200') {
-    //   let obj = {
-    //     userName: this.loginForm.value.userName,
-    //     password: this.loginForm.value.password,
-    //     rememberMe: true,
-    //   };
-    //   debugger
-    //  this.spinnerService.show()
-    //   this.authService.TwoFA(obj).subscribe((res: any) => {
-    //     debugger
-
-    //     this.Verificationemail = res.userName;
-    //     this.isUserLoging = true;
-    //     this.isVerificationcodeFailed = false;
-    //     this.spinnerService.hide()
-    //   },
-
-    //   (error: any) => {
-    //     debugger
-    //     this.ErrorMessage=error.error
-    //     if(this.ErrorMessage?.includes("The account is locked out ")){
-        
-    //       const LockedtiemEndpatteren=/lockoutEndTime = (.+)$/
-    //       this. matchTime=this.ErrorMessage.match(LockedtiemEndpatteren)
-    //       if(this.matchTime && this.matchTime.length>1){
-    //         const lockoutEndTimeString = this.matchTime[1];
-    //         const lockoutEndTime = new Date(lockoutEndTimeString).toISOString();
-    //           this.BlockuserTime=this.datePipe.transform( new Date(lockoutEndTime),'h:mm:ss');
-    //           debugger
-    //           const endTimeMinutes= new Date( lockoutEndTime).getMinutes()
-    //           const NowTimeMinutes =new Date().getMinutes();
-    //           const endTimeSeconds=new Date(lockoutEndTime).getSeconds()
-    //           const NowTimeSeconds= new Date().getSeconds()
-    //           const sumofEndTime= endTimeMinutes + endTimeSeconds;
-    //           const sumofNowTime= NowTimeMinutes + NowTimeSeconds
-
-    //         this.countdownTime = endTimeMinutes-NowTimeMinutes;
-    //         this.timer(this.countdownTime)
-          
-    //           this.reloadComponent('userblocked');
-    //       }
-         
-    //       this.loginDisabled=true
-    //       this.spinnerService.hide()
-    //       this.reloadComponent('userblocked');
-    //     }
-    //     else{
-    //       this.spinnerService.hide();
-    //       this.reloadComponent('loginFailed');
-    //     }
-     
-
-
-    //   }
-    //   )
-     
-
-    // }
+    }
     else {
       let obj = {
         userName: this.loginForm.value.userName,

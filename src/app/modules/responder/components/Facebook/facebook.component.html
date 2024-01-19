@@ -16,7 +16,7 @@
             </div>
             <ul class="nav nav-tabs ms-3 h-100" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation" *ngIf="FacebookData">
-                    <button (click)="facebookCommentReply()" class="nav-link active h-100" id="fb-comment-tab"
+                    <button (click)="facebookCommentReply()" class="nav-link h-100" [class.active]="fetchedPostType == 'FC'" id="fb-comment-tab"
                         data-bs-toggle="tab" data-bs-target="#fb-comment" type="button" role="tab"
                         aria-controls="fb-comment" aria-selected="true">
                         <div class="chat-tab-title d-flex align-items-center">
@@ -31,7 +31,7 @@
                 </li>
                 <li class="nav-item" role="presentation" *ngIf="FacebookMessages.length > 0">
                     <button (click)="facebookMessageReply()" class="nav-link h-100"
-                        [class.active]="FacebookData == null" id="fb-msg-tab" data-bs-toggle="tab"
+                        [class.active]="fetchedPostType == 'FCP'" id="fb-msg-tab" data-bs-toggle="tab"
                         data-bs-target="#fb-msg" type="button" role="tab" aria-controls="fb-msg" aria-selected="false">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">

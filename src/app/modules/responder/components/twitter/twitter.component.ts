@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
+import { FetchPostTypeService } from 'src/app/services/FetchPostType/fetch-post-type.service';
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
@@ -130,7 +131,8 @@ export class TwitterComponent implements OnInit {
     private stor: StorageService,
     private userInfoService: UserInformationService,
     private el: ElementRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private fetchPostType: FetchPostTypeService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -147,8 +149,26 @@ export class TwitterComponent implements OnInit {
 
   KEbaseUrl:string="";
   KEClient:boolean=false;
-
+  fetchedPostType:string=""
   ngOnInit(): void {
+    debugger
+    this.fetchedPostType = this.fetchPostType.postType
+    if(this.fetchedPostType == 'TTR') {
+      this.TTReply = true;
+              this.TMReply = false;
+              this.TDMReply = false;
+    } else if (this.fetchedPostType == 'TM') {
+      this.TTReply = false;
+              this.TMReply = true;
+              this.TDMReply = false;
+    }
+    else if (this.fetchedPostType == 'TDM') {
+      this.TTReply = false;
+              this.TMReply = false;
+              this.TDMReply = true;
+    }
+
+
     this.KEbaseUrl=window.location.origin
     if(this.KEbaseUrl=='https://keportal.enteract.live'){
       this.KEClient=true
@@ -730,9 +750,9 @@ export class TwitterComponent implements OnInit {
 
             
             if(this.TwitterTweets.length != 0){
-              this.TTReply = true;
-              this.TMReply = false;
-              this.TDMReply = false;
+              // this.TTReply = true;
+              // this.TMReply = false;
+              // this.TDMReply = false;
             }
             
             this.userInfoService.shareUserInformation(res.List.user);
@@ -800,9 +820,9 @@ export class TwitterComponent implements OnInit {
             this.userInformation = res.List?.user;
 
             if(this.TwitterTweets.length != 0){
-              this.TTReply = true;
-              this.TMReply = false;
-              this.TDMReply = false;
+              // this.TTReply = true;
+              // this.TMReply = false;
+              // this.TDMReply = false;
             }
             
             this.userInfoService.shareUserInformation(res.List.user);
@@ -869,9 +889,9 @@ export class TwitterComponent implements OnInit {
             this.userInformation = res.List?.user;
 
             if(this.TwitterTweets.length != 0){
-              this.TTReply = true;
-              this.TMReply = false;
-              this.TDMReply = false;
+              // this.TTReply = true;
+              // this.TMReply = false;
+              // this.TDMReply = false;
             }
             
             this.userInfoService.shareUserInformation(res.List.user);
@@ -968,15 +988,15 @@ export class TwitterComponent implements OnInit {
             this.TotalMsgQueryCount = res.TotalQueryCount;
 
             if (this.TwitterTweets.length == 0 && this.TwitterMentions.length == 0) {
-              this.TTReply = false;
-              this.TMReply = false;
-              this.TDMReply = true;
+              // this.TTReply = false;
+              // this.TMReply = false;
+              // this.TDMReply = true;
             }
 
             if (this.TwitterTweets.length == 0) {
-              this.TTReply = false;
-              this.TMReply = false;
-              this.TDMReply = true;
+              // this.TTReply = false;
+              // this.TMReply = false;
+              // this.TDMReply = true;
             }
 
             this.messagesArray = [];
@@ -1038,9 +1058,9 @@ export class TwitterComponent implements OnInit {
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
           if (this.TwitterTweets.length == 0 && this.TwitterMentions.length == 0) {
-            this.TTReply = false;
-            this.TMReply = false;
-            this.TDMReply = true;
+            // this.TTReply = false;
+            // this.TMReply = false;
+            // this.TDMReply = true;
           }
 
           this.messagesArray = [];
@@ -1103,9 +1123,9 @@ export class TwitterComponent implements OnInit {
             this.TotalMsgQueryCount = res.TotalQueryCount;
             this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
             if (this.TwitterTweets.length == 0 && this.TwitterMentions.length == 0) {
-              this.TTReply = false;
-              this.TMReply = false;
-              this.TDMReply = true;
+              // this.TTReply = false;
+              // this.TMReply = false;
+              // this.TDMReply = true;
             }
 
             this.messagesArray = [];
@@ -1177,9 +1197,9 @@ export class TwitterComponent implements OnInit {
             this.TotalMentionQueryCount = res.TotalQueryCount;
 
             if (this.TwitterTweets.length == 0) {
-              this.TTReply = false;
-              this.TMReply = true;
-              this.TDMReply = false;
+              // this.TTReply = false;
+              // this.TMReply = true;
+              // this.TDMReply = false;
             }
 
             this.mentionsArray = [];
@@ -1242,9 +1262,9 @@ export class TwitterComponent implements OnInit {
           this.pageName = res?.List?.profile?.page_Name;
 
           if (this.TwitterTweets.length == 0) {
-            this.TTReply = false;
-            this.TMReply = true;
-            this.TDMReply = false;
+            // this.TTReply = false;
+            // this.TMReply = true;
+            // this.TDMReply = false;
           }
 
           this.mentionsArray = [];
@@ -1309,9 +1329,9 @@ export class TwitterComponent implements OnInit {
             this.pageName = res?.List?.profile?.page_Name;
 
             if (this.TwitterTweets.length == 0) {
-              this.TTReply = false;
-              this.TMReply = true;
-              this.TDMReply = false;
+              // this.TTReply = false;
+              // this.TMReply = true;
+              // this.TDMReply = false;
             }
 
             this.mentionsArray = [];

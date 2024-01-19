@@ -30,17 +30,19 @@ export const environment = {
   KelisteningBaseUrl:'https://listen.enteract.live/backend/api/',
   KemediaBaseUrl:'https://kemedia.360scrm.com/api/',
   KescrmBaseUrl:'https://kescrm.360scrm.com/',
-  TwoFABaseUrl:'https://rep.enteract.app/api/',
+  TwoFABaseUrl:'https://identity.jazz.com.pk:8082/api/',
+  // for testing Only
+  // TwoFABaseUrl:'http://10.111.32.52:45455/api/',
 
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  // IdentityBaseUrl: 'https://idtservice.enteract.live/api',
-  // CommonBaseUrl: 'https://comservices.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
-  // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
-  // ServiceBaseUrl: '',
-  // consoleBaseUrl: 'https://console.enteract.live/api/',
+  IdentityBaseUrl: 'https://idtservice.enteract.live/api',
+  CommonBaseUrl: 'https://comservices.enteract.live/api/',
+  SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
+  ProfileBaseUrl: 'https://profiler.enteract.live/api/',
+  ServiceBaseUrl: '',
+  consoleBaseUrl: 'https://console.enteract.live/api/',
 
   // For Jazz
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
@@ -64,12 +66,12 @@ export const environment = {
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
 
   // For Bazaar
-  IdentityBaseUrl: 'https://bzidentity.enteract.live/api',
-  CommonBaseUrl: 'https://wacommon.enteract.live/api/',
-  SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
-  ServiceBaseUrl: 'https://waservice.enteract.live/api/',
-  consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-  ProfileBaseUrl: '',
+  // IdentityBaseUrl: 'https://bzidentity.enteract.live/api',
+  // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
+  // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
+  // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
+  // ProfileBaseUrl: '',
 
   // For Testing
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
@@ -79,6 +81,8 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
+
+  
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',

@@ -66,6 +66,7 @@ import { BotHeaderComponent } from './engage2/bot-content/bot-header/bot-header.
 import { ToasterComponent } from './engage2/toaster/toaster.component';
 import { tagsReducer } from './engage2/tags-state/tags.reducer';
 import { TagsEffects } from './engage2/tags-state/tags.effect';
+import { WebphoneDialerModule } from '../modules/webphone-dialer/webphone-dialer.module';
 
 
 
@@ -136,6 +137,7 @@ import { TagsEffects } from './engage2/tags-state/tags.effect';
     StoreModule.forFeature('tagss', tagsReducer),
     StoreModule.forFeature('permissions', permissionReducer),
     EffectsModule.forFeature([MenusEffects, PermissionsEffects, TagsEffects]),
+    WebphoneDialerModule
   ],
   exports:[
     MainContentComponent,
