@@ -21,9 +21,9 @@ export class AuthService {
     
     return this.http.post(this.IdentityBaseUrl + 'Authentication/Login',form)
   }
-  TwoFA(form:any){
-    return this.http.post(this.IdentityBaseUrl + 'Authentication/Login',form )
-  }
+  // TwoFA(form:any){
+  //   return this.http.post(this.IdentityBaseUrl + 'Authentication/Login',form )
+  // }
   submitUser(body:any){
     return this.http.post(this.IdentityBaseUrl + 'Authentication/LoginWithTwoFactor',body)
   }

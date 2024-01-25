@@ -2,8 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
-
-
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/identity/AuthService/auth.service';
 import { AgentDetailsService } from 'src/app/services/AgentDetailsService/agent-details.service';
@@ -23,9 +21,9 @@ import { VerificationDto } from 'src/app/shared/Models/verificationDto';
 })
 export class LoginComponent implements OnInit {
   Actors = [
-    { id : 1, name : 'Administrator' },
-    { id : 2, name : 'Agent' },
-    { id : 3, name : 'Manager' },
+    { id: 1, name: 'Administrator' },
+    { id: 2, name: 'Agent' },
+    { id: 3, name: 'Manager' },
   ];
   user = '1';
   token: any;
@@ -72,83 +70,30 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (
-      this.baseUrl == 'https://engage.jazz.com.pk' ||
-      // this.baseUrl == 'http://localhost:4200' ||
-      this.baseUrl == 'https://uiengage.enteract.app' 
-      // ||
-      // this.baseUrl == 'https://bzengage.enteract.live' ||
-      // this.baseUrl == 'https://waengage.enteract.live'
-    ) {
-      let obj = {
-        // actor: this.loginForm.value.actor,
-        userName: this.loginForm.value.userName,
-        password: this.loginForm.value.password,
-        rememberMe: true,
-      };
-      this.spinnerService.show();
-      this.authService.TwoFA(obj).subscribe(
-        (res: any) => {
-          if (res) {
-          }
-          this.Verificationemail = res.userName;
-          this.isUserLoging = true;
-          this.isVerificationcodeFailed = false;
-          this.spinnerService.hide();
-        },
-        (error: any) => {
-          this.ErrorMessage = error.error;
-          if (this.ErrorMessage?.includes('The account is locked out ')) {
-            const LockedtiemEndpatteren = /lockoutEndTime = (.+)$/;
-            this.matchTime = this.ErrorMessage.match(LockedtiemEndpatteren);
-            if (this.matchTime && this.matchTime.length > 1) {
-              const lockoutEndTimeString = this.matchTime[1];
-              const lockoutEndTime = new Date(
-                lockoutEndTimeString
-              ).toISOString();
-              this.BlockuserTime = this.datePipe.transform(
-                new Date(lockoutEndTime),
-                'h:mm:ss'
-              );
-
-              const endTimeMinutes = new Date(lockoutEndTime).getMinutes();
-              const NowTimeMinutes = new Date().getMinutes();
-              const endTimeSeconds = new Date(lockoutEndTime).getSeconds();
-              const NowTimeSeconds = new Date().getSeconds();
-
-              const sumofEndTime = endTimeMinutes + endTimeSeconds;
-              const sumofNowTime = NowTimeMinutes + NowTimeSeconds;
-
-              this.countdownTime = endTimeMinutes - NowTimeMinutes;
-              this.timer(this.countdownTime);
-
-              this.reloadComponent('userblocked');
-            }
-
-            this.loginDisabled = true;
-            this.spinnerService.hide();
-            this.reloadComponent('userblocked');
-          } else {
-            this.spinnerService.hide();
-            this.reloadComponent('loginFailed');
-          }
-        }
-      );
-    } else {
-      let obj = {
-        // actor: this.loginForm.value.actor,
-        userName: this.loginForm.value.userName,
-        password: this.loginForm.value.password,
-        rememberMe: true,
-      };
-      this.spinnerService.show();
-      this.authService.login(obj).subscribe(
-        (res: any) => {
-          this.stor.store('token', res.accessToken);
-          this.stor.store('main', res);
-          this.stor.store('nocompass', res.roles[0]);
-          localStorage.setItem('agentId', res.userId);
-          localStorage.setItem('agentName', res.username);
+    let obj = {
+      // actor: this.loginForm.value.actor,
+      userName: this.loginForm.value.userName,
+      password: this.loginForm.value.password,
+      rememberMe: true,
+    };
+    this.spinnerService.show();
+    this.authService.login(obj).subscribe(
+      (res: any) => {
+        if (res.isTwoFAEnabled == false) {
+          this.stor.store('token', res.loginResponse.loginResponse.accessToken);
+          this.stor.store('main', res.loginResponse.loginResponse);
+          this.stor.store(
+            'nocompass',
+            res.loginResponse.loginResponse.roles[0]
+          );
+          localStorage.setItem(
+            'agentId',
+            res.loginResponse.loginResponse.userId
+          );
+          localStorage.setItem(
+            'agentName',
+            res.loginResponse.loginResponse.username
+          );
 
           this.commonService.UserLogin().subscribe((res: any) => {
             console.log(res);
@@ -173,25 +118,50 @@ export class LoginComponent implements OnInit {
           this.signalRService.applySentimentListner();
           this.signalRService.updateMessageStatusDataListener();
           this.signalRService.updatePostList();
-        },
-        (error: any) => {
+        } else if (res.isTwoFAEnabled == true) {
+          this.Verificationemail =
+            res.loginResponse.loginTwoFAResponse.userName;
+          this.isUserLoging = true;
+          this.isVerificationcodeFailed = false;
+          this.spinnerService.hide();
+        }
+      },
+      (error: any) => {
+        this.ErrorMessage = error.error;
+        if (this.ErrorMessage?.includes('The account is locked out ')) {
+          const LockedtiemEndpatteren = /lockoutEndTime = (.+)$/;
+          this.matchTime = this.ErrorMessage.match(LockedtiemEndpatteren);
+          if (this.matchTime && this.matchTime.length > 1) {
+            const lockoutEndTimeString = this.matchTime[1];
+            const lockoutEndTime = new Date(lockoutEndTimeString).toISOString();
+            this.BlockuserTime = this.datePipe.transform(
+              new Date(lockoutEndTime),
+              'h:mm:ss'
+            );
+
+            const endTimeMinutes = new Date(lockoutEndTime).getMinutes();
+            const NowTimeMinutes = new Date().getMinutes();
+            const endTimeSeconds = new Date(lockoutEndTime).getSeconds();
+            const NowTimeSeconds = new Date().getSeconds();
+
+            const sumofEndTime = endTimeMinutes + endTimeSeconds;
+            const sumofNowTime = NowTimeMinutes + NowTimeSeconds;
+
+            this.countdownTime = endTimeMinutes - NowTimeMinutes;
+            this.timer(this.countdownTime);
+
+            this.reloadComponent('userblocked');
+          }
+
+          this.loginDisabled = true;
+          this.spinnerService.hide();
+          this.reloadComponent('userblocked');
+        } else {
           this.spinnerService.hide();
           this.reloadComponent('loginFailed');
-          this.isVerificationcodeFailed = true;
         }
-      );
-    }
-    // this.authService.login(obj).subscribe(
-    //   (res: any) => {
-
-    //     this.isUserLoging=true
-
-    //   },
-    //   (error: any) => {
-    //     this.spinnerService.hide();
-    //     this.reloadComponent('loginFailed');
-    //   }
-    // );
+      }
+    );
   }
   timer(countdownTime: any) {
     // let minute = 1;
