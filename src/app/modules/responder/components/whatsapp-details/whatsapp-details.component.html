@@ -43,6 +43,86 @@
                                 <ng-container *ngFor="let whatsappMsg of group.items | sort:criteria">
                                     <ng-container *ngIf="whatsappMsg.queryStatus != 'QueryCompleted'">
                                         <div class="message-wrap agent-message-wrap right">
+                                            <div *ngFor="let reply of whatsappMsg.replies | sort:criteria">
+                                                <!-- <div class="date-wrap">
+                                            <p class="date">{{reply.createdDate | date:'EEEE, MMMM d, y'}}</p>
+                                        </div> -->
+                                                <div class="message-wrap agent-message-wrap left">
+                                                    <div class="agent-container">
+                                                        <div class="card w-d-inline card-txt ms-auto shadow-sm">
+                                                            <div class="card-body">
+                                                                <div class="d-flex align-items-center mb-2">
+                                                                    <h6 class="card-title m-0">{{senderId}}</h6>
+                                                                    <p class="card-text ms-3"><small
+                                                                            class="silver">{{reply.createdDate |
+                                                                            date:'hh:mm:ss a'}}</small></p>
+                                                                </div>
+                                                                <div *ngFor="let attachment of reply.attachments"
+                                                                    style="width: 375px;">
+                                                                    <img class="whatsapp-single-img whatsappImgModalBtn"
+                                                                        *ngIf="isImage(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <img *ngIf="attachment.contentType == 'animated_image_share'"
+                                                                        src={{attachment.attachmentUrl}}
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <img *ngIf="attachment.contentType == 'sticker'"
+                                                                        src={{attachment.attachmentUrl}}
+                                                                        style="width: -webkit-fill-available;">
+
+                                                                    <video class="video" *ngIf="isVideo(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;"></video>
+
+                                                                    <audio class="audio" *ngIf="isAudio(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;"></audio>
+
+                                                                    <a *ngIf="isOther(attachment)"
+                                                                        [href]="attachment.attachmentUrl"
+                                                                        target="_blank">
+                                                                        <div
+                                                                            class="card-body pdf-body bg-light align-items-center row">
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'pdf'"
+                                                                                class="fas fa-file-pdf iconButton file-icon radical col-1"></i>
+                                                                            <i *ngIf="((attachment.name | getFileTypeFromUrl) == 'document') || ((attachment.name | getFileTypeFromUrl) == 'docx')"
+                                                                                class="fas fa-file-word iconButton file-icon sky  col-1"></i>
+                                                                            <i *ngIf="((attachment.name | getFileTypeFromUrl) == 'sheet') || ((attachment.name | getFileTypeFromUrl) == 'xlsx')"
+                                                                                class="fas fa-file-excel iconButton file-icon excelGreen  col-1"></i>
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'csv'"
+                                                                                class="fas fa-file-csv iconButton file-icon excelGreen  col-1"></i>
+
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) != 'csv' &&  
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'sheet' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'xlsx' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'document' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'docx' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'pdf'"
+                                                                                class="fas fa-file-lines iconButton file-icon  col-1">
+                                                                            </i>
+                                                                            <p class="card-text ms-3 col-10">{{
+                                                                                attachment.name}}</p>
+                                                                        </div>
+                                                                    </a>
+
+                                                                </div>
+                                                                <p class="card-text nignt mb-1">{{reply.message}}</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="message-bottom w-100">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 ps-4 d-flex align-items-center">
+                                                                    <div class="commentWrap">
+                                                                        Commented on by
+                                                                        <a class="fw-bold">{{reply.replyByName}}</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="application-wrap d-flex align-items-center mb-1"
                                                 *ngIf="whatsappMsg.ticketId != null">
                                                 <p class="m-0 silver me-2 ms-1">Application ID
@@ -388,88 +468,8 @@
                                                 </div>
                                                 <!-- <span class="complaintBtn" type="button"><i class="fal fa-plus-circle sky" (click)="toggle('ticket', whatsappMsg.id)"></i></span> -->
                                             </div>
-                                            <div *ngFor="let reply of whatsappMsg.replies | sort:criteria">
-                                                <!-- <div class="date-wrap">
-                                            <p class="date">{{reply.createdDate | date:'EEEE, MMMM d, y'}}</p>
-                                        </div> -->
-                                                <div class="message-wrap agent-message-wrap left">
-                                                    <div class="agent-container">
-                                                        <div class="card w-d-inline card-txt ms-auto shadow-sm">
-                                                            <div class="card-body">
-                                                                <div class="d-flex align-items-center mb-2">
-                                                                    <h6 class="card-title m-0">{{senderId}}</h6>
-                                                                    <p class="card-text ms-3"><small
-                                                                            class="silver">{{reply.createdDate |
-                                                                            date:'hh:mm:ss a'}}</small></p>
-                                                                </div>
-                                                                <div *ngFor="let attachment of reply.attachments"
-                                                                    style="width: 375px;">
-                                                                    <img class="whatsapp-single-img whatsappImgModalBtn"
-                                                                        *ngIf="isImage(attachment)"
-                                                                        src={{attachment.attachmentUrl}} controls
-                                                                        style="width: -webkit-fill-available;">
-                                                                    <img *ngIf="attachment.contentType == 'animated_image_share'"
-                                                                        src={{attachment.attachmentUrl}}
-                                                                        style="width: -webkit-fill-available;">
-                                                                    <img *ngIf="attachment.contentType == 'sticker'"
-                                                                        src={{attachment.attachmentUrl}}
-                                                                        style="width: -webkit-fill-available;">
-
-                                                                    <video class="video" *ngIf="isVideo(attachment)"
-                                                                        src={{attachment.attachmentUrl}} controls
-                                                                        style="width: -webkit-fill-available;"></video>
-
-                                                                    <audio class="audio" *ngIf="isAudio(attachment)"
-                                                                        src={{attachment.attachmentUrl}} controls
-                                                                        style="width: -webkit-fill-available;"></audio>
-
-                                                                    <a *ngIf="isOther(attachment)"
-                                                                        [href]="attachment.attachmentUrl"
-                                                                        target="_blank">
-                                                                        <div
-                                                                            class="card-body pdf-body bg-light align-items-center row">
-                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'pdf'"
-                                                                                class="fas fa-file-pdf iconButton file-icon radical col-1"></i>
-                                                                            <i *ngIf="((attachment.name | getFileTypeFromUrl) == 'document') || ((attachment.name | getFileTypeFromUrl) == 'docx')"
-                                                                                class="fas fa-file-word iconButton file-icon sky  col-1"></i>
-                                                                            <i *ngIf="((attachment.name | getFileTypeFromUrl) == 'sheet') || ((attachment.name | getFileTypeFromUrl) == 'xlsx')"
-                                                                                class="fas fa-file-excel iconButton file-icon excelGreen  col-1"></i>
-                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'csv'"
-                                                                                class="fas fa-file-csv iconButton file-icon excelGreen  col-1"></i>
-
-                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) != 'csv' &&  
-                                                                                          (attachment.name | getFileTypeFromUrl) != 'sheet' &&
-                                                                                          (attachment.name | getFileTypeFromUrl) != 'xlsx' &&
-                                                                                          (attachment.name | getFileTypeFromUrl) != 'document' &&
-                                                                                          (attachment.name | getFileTypeFromUrl) != 'docx' &&
-                                                                                          (attachment.name | getFileTypeFromUrl) != 'pdf'"
-                                                                                class="fas fa-file-lines iconButton file-icon  col-1">
-                                                                            </i>
-                                                                            <p class="card-text ms-3 col-10">{{
-                                                                                attachment.name}}</p>
-                                                                        </div>
-                                                                    </a>
-
-                                                                </div>
-                                                                <p class="card-text nignt mb-1">{{reply.message}}</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="message-bottom w-100">
-                                                            <div class="row">
-                                                                <div class="col-lg-12 ps-4 d-flex align-items-center">
-                                                                    <div class="commentWrap">
-                                                                        Commented on by
-                                                                        <a class="fw-bold">{{reply.replyByName}}</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
                                         </div>
-
                                     </ng-container>
                                     <ng-container *ngIf="whatsappMsg.queryStatus == 'QueryCompleted'">
                                         <div class="accordion email-accordion" id="accordionExample"
@@ -598,7 +598,7 @@
                     <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></button>
             </div>
             <!-- only for morinaga client -->
-            <!-- <div class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
+            <div class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
                 <button class="iconButton small notification iconHover" id="surveyForms" data-bs-toggle="dropdown"
                     data-bs-auto-close="outside" data-bs-original-title="Survey Forms">
                     <span class="iconButton small btn mx-2">
@@ -634,7 +634,7 @@
                         </li>
                     </ul>
                 </ul>
-            </div> -->
+            </div>
             <div class="form-floating textarea-field">
                 <textarea formControlName="text" [(ngModel)]="text" class="form-control auto" rows="1"
                      (keydown)="handleTextareaKeyDown($event)" id="text"

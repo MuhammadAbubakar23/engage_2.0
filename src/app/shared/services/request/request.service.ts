@@ -27,7 +27,7 @@ export class RequestService {
     //opt.params =
 
   }
-  private createCompleteRoute = (route: string, envAddress: string, routeparams:string = "") =>  (routeparams!="" || routeparams.length > 0 )?`${envAddress}/${route}/${routeparams}`:`${envAddress}/${route}`;
+  private createCompleteRoute = (route: string, envAddress: string, routeparams:string = "") =>  (routeparams!="" || routeparams.length > 0 )?`${envAddress}/${route}/${routeparams}`:`${envAddress}${route}`;
   
   get<T>(route:string, params?: any,routeparams:string=""): Observable<T> {
     console.log(params);
@@ -56,8 +56,6 @@ export class RequestService {
       );    
   }
   post<T>(route:string, params?: any): Observable<T>{
-    
-    //;
     return this.http.post<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
     .pipe(
       map((res: any) => { return res }),

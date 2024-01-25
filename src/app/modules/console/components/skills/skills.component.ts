@@ -13,7 +13,7 @@ import { DataExchangeServicesService } from 'src/app/services/dataExchangeServic
   styleUrls: ['./skills.component.scss']
 })
 export class SkillsComponent implements OnInit {
-  search:any='VW'
+  search:any=''
   fillter:any=""
   selectedIds:any[]=[]
   isChecked:boolean=false

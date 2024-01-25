@@ -8,9 +8,9 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthService {
 
-  baseUrl=environment.IdentityBaseUrl
   CommanBaseUrl=environment.CommonBaseUrl
-  TWoFABaseUrl=environment.TwoFABaseUrl
+  IdentityBaseUrl = environment.IdentityBaseUrl;
+
   constructor(private http : HttpClient) { }
   loginAgent() {
     
@@ -19,21 +19,21 @@ export class AuthService {
 
   login (form:any) {
     
-    return this.http.post(this.baseUrl + '/Authentication/Login',form)
+    return this.http.post(this.IdentityBaseUrl + 'Authentication/Login',form)
   }
   TwoFA(form:any){
-    return this.http.post(this.TWoFABaseUrl+'Authentication/Login',form )
+    return this.http.post(this.IdentityBaseUrl + 'Authentication/Login',form )
   }
   submitUser(body:any){
-    return this.http.post(this.TWoFABaseUrl+'Authentication/LoginWithTwoFactor',body)
+    return this.http.post(this.IdentityBaseUrl + 'Authentication/LoginWithTwoFactor',body)
   }
   signup (form:any) {
   
-    return this.http.post(this.baseUrl + '/Authentication/SignUp',form)
+    return this.http.post(this.IdentityBaseUrl + 'Authentication/SignUp',form)
   }
   sendVerificationCode(form: any){
   
-    return this.http.get(this.baseUrl+'/User/SendVarificationCode', form)
+    return this.http.get(this.IdentityBaseUrl+'User/SendVarificationCode', form)
   }
 
 gettoken(){  

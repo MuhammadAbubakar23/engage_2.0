@@ -183,6 +183,7 @@ export class CreateUserComponent implements OnInit {
     this.userForm.controls['teamId'].reset();
   }
   onSubmit(): void {
+    debugger
     let _self = this;
     this.userForm.controls['roleId'].reset();
     this.userForm.controls['teamId'].reset();

@@ -22,20 +22,26 @@ import { VerificationDto } from 'src/app/shared/Models/verificationDto';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  Actors = [
+    { id : 1, name : 'Administrator' },
+    { id : 2, name : 'Agent' },
+    { id : 3, name : 'Manager' },
+  ];
   user = '1';
   token: any;
   logindto = new LoginDto();
   verificationdto = new VerificationDto();
   isUserLoging: boolean = false;
-  baseUrl: string = "";
+  baseUrl: string = '';
   ErrorMessage: any;
   isVerificationcodeFailed: boolean = false;
-  loginDisabled: boolean = false
+  loginDisabled: boolean = false;
   matchTime: any;
   BlockuserTime: any;
-  timeRemaining: any
-  countdownTime: number = 0
+  timeRemaining: any;
+  countdownTime: number = 0;
   loginForm = new UntypedFormGroup({
+    // actor: new UntypedFormControl(this.logindto.actor),
     email: new UntypedFormControl(this.logindto.userName),
     userName: new UntypedFormControl(this.logindto.userName),
     password: new UntypedFormControl(this.logindto.password),
@@ -58,7 +64,7 @@ export class LoginComponent implements OnInit {
     private signalRService: SignalRService,
     private commonService: CommonDataService,
     private datePipe: DatePipe
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     // this.getAllTags();
@@ -66,62 +72,71 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (this.baseUrl == 'https://engage.jazz.com.pk' || this.baseUrl == 'http://localhost:4200' || this.baseUrl == 'https://uiengage.enteract.app') {
-
+    if (
+      this.baseUrl == 'https://engage.jazz.com.pk' ||
+      // this.baseUrl == 'http://localhost:4200' ||
+      this.baseUrl == 'https://uiengage.enteract.app' 
+      // ||
+      // this.baseUrl == 'https://bzengage.enteract.live' ||
+      // this.baseUrl == 'https://waengage.enteract.live'
+    ) {
       let obj = {
+        // actor: this.loginForm.value.actor,
         userName: this.loginForm.value.userName,
         password: this.loginForm.value.password,
         rememberMe: true,
       };
-      this.spinnerService.show()
+      this.spinnerService.show();
       this.authService.TwoFA(obj).subscribe(
         (res: any) => {
-
-          if (res) { }
+          if (res) {
+          }
           this.Verificationemail = res.userName;
           this.isUserLoging = true;
           this.isVerificationcodeFailed = false;
-          this.spinnerService.hide()
+          this.spinnerService.hide();
         },
         (error: any) => {
-
-          this.ErrorMessage = error.error
-          if (this.ErrorMessage?.includes("The account is locked out ")) {
-
-            const LockedtiemEndpatteren = /lockoutEndTime = (.+)$/
-            this.matchTime = this.ErrorMessage.match(LockedtiemEndpatteren)
+          this.ErrorMessage = error.error;
+          if (this.ErrorMessage?.includes('The account is locked out ')) {
+            const LockedtiemEndpatteren = /lockoutEndTime = (.+)$/;
+            this.matchTime = this.ErrorMessage.match(LockedtiemEndpatteren);
             if (this.matchTime && this.matchTime.length > 1) {
               const lockoutEndTimeString = this.matchTime[1];
-              const lockoutEndTime = new Date(lockoutEndTimeString).toISOString();
-              this.BlockuserTime = this.datePipe.transform(new Date(lockoutEndTime), 'h:mm:ss');
+              const lockoutEndTime = new Date(
+                lockoutEndTimeString
+              ).toISOString();
+              this.BlockuserTime = this.datePipe.transform(
+                new Date(lockoutEndTime),
+                'h:mm:ss'
+              );
 
-              const endTimeMinutes = new Date(lockoutEndTime).getMinutes()
+              const endTimeMinutes = new Date(lockoutEndTime).getMinutes();
               const NowTimeMinutes = new Date().getMinutes();
-              const endTimeSeconds = new Date(lockoutEndTime).getSeconds()
-              const NowTimeSeconds = new Date().getSeconds()
+              const endTimeSeconds = new Date(lockoutEndTime).getSeconds();
+              const NowTimeSeconds = new Date().getSeconds();
 
               const sumofEndTime = endTimeMinutes + endTimeSeconds;
               const sumofNowTime = NowTimeMinutes + NowTimeSeconds;
 
               this.countdownTime = endTimeMinutes - NowTimeMinutes;
-              this.timer(this.countdownTime)
+              this.timer(this.countdownTime);
 
               this.reloadComponent('userblocked');
             }
 
-            this.loginDisabled = true
-            this.spinnerService.hide()
+            this.loginDisabled = true;
+            this.spinnerService.hide();
             this.reloadComponent('userblocked');
-          }
-          else {
+          } else {
             this.spinnerService.hide();
             this.reloadComponent('loginFailed');
           }
         }
       );
-    }
-    else {
+    } else {
       let obj = {
+        // actor: this.loginForm.value.actor,
         userName: this.loginForm.value.userName,
         password: this.loginForm.value.password,
         rememberMe: true,
@@ -129,7 +144,6 @@ export class LoginComponent implements OnInit {
       this.spinnerService.show();
       this.authService.login(obj).subscribe(
         (res: any) => {
-
           this.stor.store('token', res.accessToken);
           this.stor.store('main', res);
           this.stor.store('nocompass', res.roles[0]);
@@ -158,10 +172,9 @@ export class LoginComponent implements OnInit {
           this.signalRService.assignQueryResponseListner();
           this.signalRService.applySentimentListner();
           this.signalRService.updateMessageStatusDataListener();
-          this.signalRService.updatePostList()
+          this.signalRService.updatePostList();
         },
         (error: any) => {
-
           this.spinnerService.hide();
           this.reloadComponent('loginFailed');
           this.isVerificationcodeFailed = true;
@@ -181,13 +194,12 @@ export class LoginComponent implements OnInit {
     // );
   }
   timer(countdownTime: any) {
-
     // let minute = 1;
     let seconds: number = countdownTime * 60;
-    let textSec: any = "0";
+    let textSec: any = '0';
     let statSec: number = 60;
 
-    const prefix = countdownTime < 10 ? "0" : "";
+    const prefix = countdownTime < 10 ? '0' : '';
 
     const timer = setInterval(() => {
       seconds--;
@@ -195,21 +207,20 @@ export class LoginComponent implements OnInit {
       else statSec = 59;
 
       if (statSec < 10) {
-        textSec = "0" + statSec;
+        textSec = '0' + statSec;
       } else textSec = statSec;
 
       this.display = `${prefix}${Math.floor(seconds / 60)}:${textSec}`;
-      if (this.display == "00:00") {
-        this.loginDisabled = false
-        this.countdownTime = 0
+      if (this.display == '00:00') {
+        this.loginDisabled = false;
+        this.countdownTime = 0;
         // this.login()
       }
       if (seconds == 0) {
-        console.log("finished");
+        console.log('finished');
         clearInterval(timer);
       }
     }, 1000);
-
   }
   Submituser() {
     let obj = {
@@ -248,7 +259,7 @@ export class LoginComponent implements OnInit {
         this.signalRService.applySentimentListner();
         this.signalRService.updateMessageStatusDataListener();
         // for new post
-        this.signalRService.updatePostList
+        this.signalRService.updatePostList;
       },
       (error: any) => {
         this.spinnerService.hide();
@@ -275,12 +286,11 @@ export class LoginComponent implements OnInit {
       }, 4000);
     }
     if (type == 'userblocked') {
-      this.AlterMsg = "User is Blocked till " + this.BlockuserTime
-      this.toastermessage = true
+      this.AlterMsg = 'User is Blocked till ' + this.BlockuserTime;
+      this.toastermessage = true;
       setTimeout(() => {
-        this.toastermessage = false
-
-      }, 4000)
+        this.toastermessage = false;
+      }, 4000);
     }
   }
   closeToaster() {

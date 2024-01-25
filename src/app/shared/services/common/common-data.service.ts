@@ -589,7 +589,7 @@ export class CommonDataService {
   }
 
   GetChannels() {
-    return this.http.get(this.IdentityBaseUrl + '/' + this.getChannels);
+    return this.http.get(this.IdentityBaseUrl + this.getChannels);
   }
 
   UpdateStatus(body: any) {

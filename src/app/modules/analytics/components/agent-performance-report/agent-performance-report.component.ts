@@ -574,7 +574,6 @@ this.SpinnerService.hide()
   }
   CSATGraph:any
   getCSATGraph() {
-    debugger
     var chartDom = document.getElementById('main');
    this.CSATGraph = echarts.init(chartDom);
     var option;

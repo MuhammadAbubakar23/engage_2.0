@@ -156,7 +156,8 @@
   <div class="dropdown custom-dropdown-list w-auto">
     <a class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown"
       aria-expanded="true">
-      <avatar-content [name]="fullName" subname="{{format(hh)}}:{{format(mm)}}:{{format(ss)}}" [imagename]="''"></avatar-content>
+      <avatar-content [name]="fullName" subname="{{format(hh)}}:{{format(mm)}}:{{format(ss)}}"
+        [imagename]="''"></avatar-content>
       <span class="online-n-offline" [ngStyle]="{'background-color': startBreak==true  ? 'red' : '#3cc480'}"></span>
     </a>
     <ul class="dropdown-menu full_dropdown p-0 text-small user-profile-dropdown shadow" aria-labelledby="dropdownUser1"
@@ -165,11 +166,12 @@
       <li class="user-dropdown-header dropdown-header">
         <ul>
           <li>
-            <a  class="link-dark text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown"
+            <a class="link-dark text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown"
               aria-expanded="false">
               <avatar-content [name]="fullName" [subname]="email" [imagename]="''"></avatar-content>
-              <span class="online-n-offline on-off-btn" [ngStyle]="{'background-color': startBreak==true  ? 'red' : '#3cc480'}"></span>
-              
+              <span class="online-n-offline on-off-btn"
+                [ngStyle]="{'background-color': startBreak==true  ? 'red' : '#3cc480'}"></span>
+
             </a>
           </li>
         </ul>
@@ -177,7 +179,7 @@
       </li>
       <li class="user-dropdown-body dropdown-body">
         <ul>
-    
+
         </ul>
       </li>
       <li class="card-footer dropdown-footer p-2">
@@ -195,16 +197,17 @@
 </div>
 
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 500">
-  <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
-          <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
-          <div class="toast-btn d-flex align-items-center">
-              
-              <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
-              (click)="closeToaster()"><i class="fal fa-times"></i></button>
+  <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+    aria-live="assertive" aria-atomic="true">
+    <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+      <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+      <div class="toast-btn d-flex align-items-center">
 
-          </div>
+        <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+          (click)="closeToaster()"><i class="fal fa-times"></i></button>
+
       </div>
+    </div>
   </div>
 </div>
 <ng-container *ngIf="break == true">
@@ -218,12 +221,12 @@
           <div class="form-floating mb-3">
             <input formControlName="password" type="password" class="pwd" id="password"
               placeholder="Enter your Password">
-              
+
           </div>
           <div class="form-btn">
-            <button type="submit" class="w-100 btn loginbtn" id="loginBtn" tabindex="-1" role="button">Stop Break</button>
+            <button type="submit" class="w-100 btn loginbtn" id="loginBtn" tabindex="-1" role="button">Stop
+              Break</button>
           </div>
-          
         </div>
       </form>
     </div>

@@ -613,6 +613,8 @@ export class FacebookComponent implements OnInit {
                 };
               }
             );
+          } else {
+            
           }
         });
         this.totalUnrespondedCmntCountByCustomer =

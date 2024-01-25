@@ -31,7 +31,7 @@
          <p></p>
       </div>
    </aside>
-   <ng-container *ngIf="isUserLoging==false"> 
+   <ng-container *ngIf="isUserLoging==false">
       <div class="main-body">
 
          <div class="login-form main-login-form agentExtensionWrapper">
@@ -40,35 +40,23 @@
                Login with your enteract credentials
             </h6>
             <span *ngIf="countdownTime>0">
-               
-                  <p>Remaining Time    {{display}}  </p>
-              
+
+               <p>Remaining Time {{display}} </p>
+
             </span>
             <div class="form w-100">
                <form [formGroup]="loginForm" (submit)="login()">
-               <!-- <div class="dropdown loginas">
-                     <button class="btn d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span><i class="fa-light fa-circle-user pe-2"></i> Login As</span>
-   
-                        <i class="fa-light fa-angle-down ms-auto"></i>
-                     </button>
-                     <ul class="dropdown-menu">
-                        <li class="dropdown-item" id="superadmin">
-                           <div class="user-number fw-bold"> Admin</div>
-                           <div class="user-email coal">admin@enteract.app</div>
-                        </li>
-                        <li class="dropdown-item" id="agent">
-                           <div class="user-number fw-bold">Agent </div>
-                           <div class="user-email coal">agent@enteract.app</div>
-                        </li>
-                        <li class="dropdown-item" id="manager">
-                           <div class="user-number fw-bold">Manager</div>
-                           <div class="user-email coal">manager@enteract.app</div>
-                        </li>
-                     </ul>
+                  <!-- <div class="dropdown loginas">
+                     <select class="form-select d-flex align-items-center mb-3" id="floatingSelect" aria-label="Floating label select"
+                        formControlName="actor">
+                        <option value="" disabled selected hidden>Login As</option>
+                        <option *ngFor="let actor of Actors" [ngValue]="actor.name">
+                           {{actor.name}}</option>
+                     </select>
                   </div> -->
                   <div class="form-floating mb-3">
-                     <input formControlName="userName" class="form-control" id="userName" placeholder="Enter your Email">
+                     <input formControlName="userName" class="form-control" id="userName"
+                        placeholder="Enter your Email">
                      <label for="userName"> Username or Email</label>
                   </div>
                   <div class="form-floating mb-3">
@@ -88,8 +76,8 @@
                      </div> -->
                   </div>
                   <div class="form-btn">
-                     <button type="submit" class="w-100 btn loginbtn" id="loginBtn" tabindex="-1"
-                        role="button" [disabled]="loginDisabled==true">Login</button>
+                     <button type="submit" class="w-100 btn loginbtn" id="loginBtn" tabindex="-1" role="button"
+                        [disabled]="loginDisabled==true">Login</button>
                   </div>
                </form>
             </div>
@@ -107,47 +95,45 @@
                Code Sent on your Email
             </h6>
             <div class="form w-100">
-               <form [formGroup]="verificationForm"  >
+               <form [formGroup]="verificationForm">
                   <div class="form-floating mb-3">
-                     <input readonly class="form-control" id="floatingInputPassword"
-                     [(ngModel)]="Verificationemail"
-                     formControlName="Verificationemail"
-                      placeholder="Password">
+                     <input readonly class="form-control" id="floatingInputPassword" [(ngModel)]="Verificationemail"
+                        formControlName="Verificationemail" placeholder="Password">
                      <label for="floatingInputPassword">Email</label>
                      <div id="password_msg"></div>
                   </div>
                   <div class="form-floating mb-3">
-                     <input type="password" class="form-control" id="floatingInputPassword" formControlName="verificationCode"
-                      placeholder="Password">
+                     <input type="password" class="form-control" id="floatingInputPassword"
+                        formControlName="verificationCode" placeholder="Password">
                      <label for="floatingInputPassword">Please Enter Code</label>
                      <div id="password_msg"></div>
                   </div>
                   <div class="form-btn">
-                     <button  class="w-100 btn loginbtn" id="loginBtn" tabindex="-1"
-                        role="button" (click)="Submituser()">Verify</button>
+                     <button class="w-100 btn loginbtn" id="loginBtn" tabindex="-1" role="button"
+                        (click)="Submituser()">Verify</button>
                   </div>
                   <span *ngIf="isVerificationcodeFailed==true">
-                  <div class="center-section">
-                     <span class="line"></span>
-                     <span class="or-option">OR</span>
-                     <span class="line"></span>
-                  </div>
+                     <div class="center-section">
+                        <span class="line"></span>
+                        <span class="or-option">OR</span>
+                        <span class="line"></span>
+                     </div>
 
-                  <div class="form-btn">
-                     <button  class="w-100 btn loginbtn" id="loginBtn" tabindex="-1"
-                        role="button" (click)="VerificationcodeFailed()">Login Again</button>
-                  </div>
-             
-                
+                     <div class="form-btn">
+                        <button class="w-100 btn loginbtn" id="loginBtn" tabindex="-1" role="button"
+                           (click)="VerificationcodeFailed()">Login Again</button>
+                     </div>
+
+
                   </span>
-               
+
                </form>
-              
+
             </div>
          </div>
       </div>
    </ng-container>
-  
+
 </div>
 
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">

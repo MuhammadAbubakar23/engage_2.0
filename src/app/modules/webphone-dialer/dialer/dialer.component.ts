@@ -99,7 +99,6 @@ export class DialerComponent implements OnInit, OnDestroy {
           this.manualDialNum = "";
           break;
         case 'incomingCall':
-          debugger;
           this.sipPhone.answerIncoming();
           break;
         case 'IB_callConnected':

@@ -3,9 +3,6 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-if(){
-
-},
   production: true,
   fetchIntegrate: 'true',
   appKey:
@@ -33,22 +30,19 @@ if(){
   WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
   LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
-  KelisteningBaseUrl:'https://listen.enteract.live/backend/api/',
-  KemediaBaseUrl:'https://kemedia.360scrm.com/api/',
-  KescrmBaseUrl:'https://kescrm.360scrm.com/',
-  TwoFABaseUrl:'https://identity.jazz.com.pk:8082/api/',
-  // for testing Only
-  // TwoFABaseUrl:'http://10.111.32.52:45455/api/',
+  KelisteningBaseUrl: 'https://listen.enteract.live/backend/api/',
+  KemediaBaseUrl: 'https://kemedia.360scrm.com/api/',
+  KescrmBaseUrl: 'https://kescrm.360scrm.com/',
 
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  IdentityBaseUrl: 'https://idtservice.enteract.live/api',
-  CommonBaseUrl: 'https://comservices.enteract.live/api/',
-  SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
-  ProfileBaseUrl: 'https://profiler.enteract.live/api/',
-  ServiceBaseUrl: '',
-  consoleBaseUrl: 'https://console.enteract.live/api/',
+  // IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
+  // CommonBaseUrl: 'https://comservices.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
+  // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
+  // ServiceBaseUrl: '',
+  // consoleBaseUrl: 'https://console.enteract.live/api/',
 
   // For Jazz
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
@@ -59,36 +53,37 @@ if(){
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
   // For Total Parco
-  // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api',
-  // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/',ks
+  // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api/',
+  // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/',
   // SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
   // consoleBaseUrl: 'https://tpplcons.360scrm.com/api/',
 
   // For Morinaga
-  // IdentityBaseUrl: 'https://waidentity.enteract.live/api',
-  // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
-  // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
-  // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-
-  // For Bazaar
-  // IdentityBaseUrl: 'https://bzidentity.enteract.live/api',
+  // IdentityBaseUrl: 'https://waidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
   // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
   // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
   // ProfileBaseUrl: '',
 
+  // For Bazaar
+  IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
+  CommonBaseUrl: 'https://wacommon.enteract.live/api/',
+  SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
+  ServiceBaseUrl: 'https://waservice.enteract.live/api/',
+  consoleBaseUrl: 'https://waconsole.enteract.live/api/',
+  ProfileBaseUrl: '',
+  TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
+
   // For Testing
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
+  // TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
   // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
   // ServiceBaseUrl: '',
   // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
-
-  
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
@@ -124,7 +119,7 @@ if(){
       // For console skill setup
       channels: 'Console/Properties/Channel/Tree/0',
       routing: 'Console/Properties/routing/Tree/0',
-      deleteRoles: '/Permissions/Delete',
+      deleteRoles: 'Permissions/Delete',
     },
     console: {
       AddUser: 'Users/CreateUser',
@@ -184,8 +179,7 @@ if(){
       subReasons: 'Order/GetSubReasons/',
     },
     common: {
-      
-      userlogin:'SignalRConnector/UserLogin',
+      userlogin: 'SignalRConnector/UserLogin',
       RemoveTags: 'Tags/RemoveTagFromFeed',
       InsertSentiments: 'Tags/InsertSentimentForFeed',
       InsertTags: 'Tags/InsertTagsForFeed',
@@ -246,7 +240,7 @@ if(){
       twitterReport: 'Report/GetTwitterReport',
       twitterSLAReport: 'Report/GetTwitterSLAReport',
       twitterProfileWiseReport: 'Report/GetTwitterProfileWiseReport',
-      getUserList: '/Users/GetUserList',
+      getUserList: 'Users/GetUserList',
       getSentimentData: 'Keyword/GetAllSentiments',
       addAgentPerformance: 'Report/GetAgentPerformanceReport',
       shiftReport: 'Report/GetShiftReport',
@@ -270,7 +264,7 @@ if(){
       areawiseReport: 'Report/GetAreaWiseReport',
       keMediaReport: 'MediaReport/GetMediaReport',
       PrintFeed: 'Media/GetMediaPrintList',
-      CSATReport:'Report/GetCSATReport'
+      CSATReport: 'Report/GetCSATReport',
     },
     facebook: {
       comments: 'Facebook/GetFbPost',
@@ -319,10 +313,10 @@ if(){
       searchProfileInformation: 'ProfileInformation/GetCustomerInformationByID',
       deattachProfileInformation: 'ProfileInformation/DeAttachProfile',
     },
-    scrmReports :{
+    scrmReports: {
       facebookscrmReport: 'Facebook/FacebookGetPageReportStats',
       getfortesting: '/feedback/GetAllCampaignsWithCSAT',
-    }
+    },
   },
 };
 
