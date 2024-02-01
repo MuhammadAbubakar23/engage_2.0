@@ -2,7 +2,7 @@ import { state } from '@angular/animations';
 import { Action, createReducer, on } from '@ngrx/store';
 import { never } from 'rxjs';
 //import { Action } from 'rxjs/internal/scheduler/Action';
-import { loadPermissionsLetters, loadPermissionsLettersFail, loadPermissionsLettersSuccess, updatePermissionsLetters, updatePermissionsLettersFail, updatePermissionsLettersSuccess } from './permission.actions';
+import { loadPermissionsLetters, loadPermissionsLettersFail, loadPermissionsLettersSuccess } from './permission.actions';
 import { initialPermissionState, PermissionState } from './permission.state';
 
 const _permissionReducer = createReducer(
@@ -37,21 +37,21 @@ const _permissionReducer = createReducer(
       error: action.error
     }
   }),
-  on(updatePermissionsLetters, (state): PermissionState => ({  ...state, loading: true })),
-  on(updatePermissionsLettersSuccess, (state, action): PermissionState => {
-    // let a = state;
-    // console.log(state);
-    // console.log(action);
-    let permis = state.permissions?.priviledge+action.permissions?.priviledge;
+  // on(updatePermissionsLetters, (state): PermissionState => ({  ...state, loading: true })),
+  // on(updatePermissionsLettersSuccess, (state, action): PermissionState => {
+  //   // let a = state;
+  //   // console.log(state);
+  //   // console.log(action);
+  //   let permis = state.permissions?.priviledge+action.permissions?.priviledge;
      
-    return {
-      ...state,
-      permissions: permis,
-      loading: true,
-      error: null,
-    };
-  }),
-  on(updatePermissionsLettersFail, (state, action): PermissionState => ({ ...state, loading: false, error: action.error }))
+  //   return {
+  //     ...state,
+  //     permissions: permis,
+  //     loading: true,
+  //     error: null,
+  //   };
+  // }),
+  // on(updatePermissionsLettersFail, (state, action): PermissionState => ({ ...state, loading: false, error: action.error }))
 );
 export function permissionReducer(state: PermissionState | undefined, action: Action) {//=initialPermissionState
   return _permissionReducer(state, action);

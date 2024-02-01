@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, mergeMap, Observable, of} from 'rxjs'; 
 import { PermissionService } from './permission.service';
-import { loadPermissionsLetters, loadPermissionsLettersFail, loadPermissionsLettersSuccess, updatePermissionsLetters, updatePermissionsLettersFail, updatePermissionsLettersSuccess } from './permission.actions';
+import { loadPermissionsLetters, loadPermissionsLettersFail, loadPermissionsLettersSuccess } from './permission.actions';
 import { PermissionModel } from './permission.state';
 
 @Injectable()
@@ -11,24 +11,24 @@ export class PermissionsEffects {
     private action$: Actions,
     private permissionService: PermissionService
   ) {}
-  loadPermissions$ : Observable<any> = createEffect(() => {
+  // updatePermissions$ : Observable<any> = createEffect(() => {
+  //   return this.action$.pipe(
+  //     ofType(loadPermissionsLetters),
+  //     mergeMap((action) => {
+  //       return this.permissionService.getTeamsLetters().pipe(
+  //         map((permissions: PermissionModel) => loadPermissionsLettersSuccess({ permissions })),
+  //         catchError((error: string ) => of(loadPermissionsLettersFail({ error })))
+  //       );
+  //     })
+  //   );
+  // });
+  loadPermissions$: Observable<any> = createEffect(() => {
     return this.action$.pipe(
       ofType(loadPermissionsLetters),
       mergeMap((action) => {
-        return this.permissionService.getTeamsLetters().pipe(
+        return this.permissionService.getRolesLetters().pipe(
           map((permissions: PermissionModel) => loadPermissionsLettersSuccess({ permissions })),
           catchError((error: string ) => of(loadPermissionsLettersFail({ error })))
-        );
-      })
-    );
-  });
-  updatePermissions$: Observable<any> = createEffect(() => {
-    return this.action$.pipe(
-      ofType(updatePermissionsLetters),
-      mergeMap((action) => {
-        return this.permissionService.getRolesLetters().pipe(
-          map((permissions: PermissionModel) => updatePermissionsLettersSuccess({ permissions })),
-          catchError((error: string ) => of(updatePermissionsLettersFail({ error })))
         );
       })
     );

@@ -29,7 +29,7 @@ export class TagsService {
         );
   }
   getRolesList(): Observable<TagsModel[]> {
-    return this.getList('accessrole');
+    return this.getList('defaultTags');
   }
   getTeamsList(): Observable<TagsModel[]> {
     return this.getList('accessteam');

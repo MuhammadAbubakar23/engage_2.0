@@ -225,6 +225,7 @@ export class WhatsappDetailsComponent implements OnInit {
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
+        
         this.updatedComments = res;
         this.updateCommentsDataListener();
       });
@@ -271,6 +272,7 @@ export class WhatsappDetailsComponent implements OnInit {
   commentDto = new commentsDto();
   updatedComments: any;
   updateCommentsDataListener() {
+    
     if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
       if (!this.id) {
         this.id = localStorage.getItem('storeOpenedId') || '{}';

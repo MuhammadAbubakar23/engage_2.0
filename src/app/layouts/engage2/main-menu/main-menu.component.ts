@@ -10,7 +10,7 @@ import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { ModulesService } from '../../../shared/services/module-service/modules.service';
-import { loadMenusList, updateMenusList } from '../menu-state/menu.actions';
+import { loadMenusList } from '../menu-state/menu.actions';
 // import { loadPermissionsList } from '../permission-state/permission.actions';
 // import { loadMenusList, updateMenusList } from '../menu-state/menu.actions';
 import { MenuModel } from '../menu-state/menu.model';
@@ -18,7 +18,7 @@ import { MenuModel } from '../menu-state/menu.model';
 import { MenuState } from '../menu-state/menu.state';
 import {
   loadPermissionsLetters,
-  updatePermissionsLetters,
+  //updatePermissionsLetters,
 } from '../permission-state/permission.actions';
 
 @Component({

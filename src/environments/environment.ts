@@ -68,8 +68,8 @@ export const environment = {
 
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
-  // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
+  // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://bzcommon.enteract.live/',
   // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
   // ProfileBaseUrl: '',
@@ -103,8 +103,8 @@ export const environment = {
       AllTeams: 'Teams/FetchAll', // new to review
       AddTeam: 'Accesses/Teams',
       TeamProperties: 'Accesses/Properties',
-      accessrole: 'Roles/Previews', //"Permissions/role",
-      permissionrole: 'Roles/Previews', //"Permissions/role",
+      accessrole: 'Roles/NewPreviews', //"Permissions/role",
+      permissionrole: 'Roles/NewPreviews', //"Permissions/role",
       RolesPermissions: 'Roles/Fetch',
       permissions: 'Roles/Permissions',
       RoleProperties: 'Permissions/Properties',
@@ -120,6 +120,8 @@ export const environment = {
       channels: 'Console/Properties/Channel/Tree/0',
       routing: 'Console/Properties/routing/Tree/0',
       deleteRoles: 'Permissions/Delete',
+      ////// Later Align in Console/////
+      defaultTags: 'Tags/GetTags',
     },
     console: {
       AddUser: 'Users/CreateUser',

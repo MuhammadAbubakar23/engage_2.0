@@ -47,7 +47,9 @@
                                                 <div class="d-flex align-items-center">
                                                     <p class="card-text"><small
                                                             class="silver">{{youtubedata.post.createdDate | date:'EEEE, MMMM d, y, h:mm a'}}</small></p>
-                                                            <a *ngIf="youtubedata.post.redirectUrl != null" href={{youtubedata.post.redirectUrl}} target="_blank"> <span><i class="fa-regular ms-1 coal fa-arrow-up-right-from-square"></i></span></a>
+                                                    <a *ngIf="youtubedata.post.redirectUrl != null"
+                                                        href={{youtubedata.post.redirectUrl}} target="_blank"> <span><i
+                                                                class="fa-regular ms-1 coal fa-arrow-up-right-from-square"></i></span></a>
                                                 </div>
                                             </div>
                                             <div class="post-img-wrap whatsappImgModalBtn" type="button">
@@ -58,8 +60,8 @@
                                             </div>
 
                                             <div class="card-body bg-light">
-                                                <p class="card-text nignt mb-0">
-                                                    {{youtubedata.post.caption}}</p>
+                                                <p class="card-text nignt mb-0"><b> {{youtubedata.post.caption}}</b> </p> <br>
+                                                <p class="card-text nignt mb-0"  *ngIf="youtubedata.post.description != ''"><b>Description: </b> {{youtubedata.post.description}}</p>
                                             </div>
                                             <!-- <div class="card-footer pb-0" *ngIf="!youtubedata.post.postStats">
                                                 <p class="card-text ms-3 single-img-time">
@@ -169,12 +171,14 @@
                                                         <div class="tags" *ngFor="let tag of youtubecomment.tags">
                                                             <span
                                                                 class="badge rounded-pill tag youtube-pill tag1 selected"
-                                                                (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name | tagSlugConversion}}</span>
+                                                                (click)="removeTagFromFeed(tag.feedId, tag.name)">{{tag.name
+                                                                | tagSlugConversion}}</span>
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                         <div class="tags" *ngIf="youtubecomment.sentiment">
                                                             <span
-                                                                class="badge rounded-pill tag tag1 selected">{{youtubecomment.sentiment?.name | tagSlugConversion}}</span>
+                                                                class="badge rounded-pill tag tag1 selected">{{youtubecomment.sentiment?.name
+                                                                | tagSlugConversion}}</span>
                                                         </div>
                                                         <!-- For Sentiment Pills -->
                                                     </div>

@@ -7,9 +7,10 @@ import { PermissionModel } from './permission.state';
 export const LOAD_PERMISSION_LETTERS = '[permission letters] load permissions';
 export const LOAD_PERMISSION_LETTERS_SUCCESS = '[permission letters] load permissions success';
 export const LOAD_PERMISSION_LETTERS_FAIL = '[permission letters] load permissions fail';
-export const UPDATE_PERMISSION_LETTERS = '[permission letters] update permissions';
-export const UPDATE_PERMISSION_LETTERS_SUCCESS = '[permission letters] update permissions success';
-export const UPDATE_PERMISSION_LETTERS_FAIL = '[permission letters] update permissions fail';
+
+// export const UPDATE_PERMISSION_LETTERS = '[permission letters] update permissions';
+// export const UPDATE_PERMISSION_LETTERS_SUCCESS = '[permission letters] update permissions success';
+// export const UPDATE_PERMISSION_LETTERS_FAIL = '[permission letters] update permissions fail';
 
 
 
@@ -17,10 +18,10 @@ export const UPDATE_PERMISSION_LETTERS_FAIL = '[permission letters] update permi
 export const loadPermissionsLetters = createAction(LOAD_PERMISSION_LETTERS);
 export const loadPermissionsLettersSuccess = createAction(LOAD_PERMISSION_LETTERS_SUCCESS, props<{ permissions: PermissionModel }>());
 export const loadPermissionsLettersFail = createAction(LOAD_PERMISSION_LETTERS_FAIL, props<{ error: string }>());
-
-export const updatePermissionsLetters = createAction(UPDATE_PERMISSION_LETTERS);
-export const updatePermissionsLettersSuccess = createAction(UPDATE_PERMISSION_LETTERS_SUCCESS, props<{ permissions: PermissionModel }>());
-export const updatePermissionsLettersFail = createAction(UPDATE_PERMISSION_LETTERS_FAIL, props<{ error: string }>());
+ 
+// export const updatePermissionsLetters = createAction(UPDATE_PERMISSION_LETTERS);
+// export const updatePermissionsLettersSuccess = createAction(UPDATE_PERMISSION_LETTERS_SUCCESS, props<{ permissions: PermissionModel }>());
+// export const updatePermissionsLettersFail = createAction(UPDATE_PERMISSION_LETTERS_FAIL, props<{ error: string }>());
 
 
 

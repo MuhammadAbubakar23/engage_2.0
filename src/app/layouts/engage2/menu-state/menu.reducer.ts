@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { never } from 'rxjs';
-import { loadMenusList, loadMenusListFail, loadMenusListSuccess, updateMenusList, updateMenusListFail, updateMenusListSuccess } from './menu.actions';
+import { loadMenusList, loadMenusListFail, loadMenusListSuccess } from './menu.actions';
 import { MenuModel } from './menu.model';
 import { initialMenuState, MenuState } from './menu.state';
 
@@ -49,23 +49,23 @@ const _menuReducer = createReducer(
   }),
 
 
-  on(updateMenusList, (state): MenuState => ({  ...state, loading: true })),
-  on(updateMenusListSuccess, (state, action): MenuState => {
+  // on(updateMenusList, (state): MenuState => ({  ...state, loading: true })),
+  // on(updateMenusListSuccess, (state, action): MenuState => {
     
-    //let AllAct$ = [...state.menus, ...action.menus];    
-    let AllAct$ = [...state.menus, ...action.menus].filter((value, index, self) =>
-      index === self.findIndex((t) => (
-        t.mainId === value.mainId && t.name === value.name
-      ))
-    )
-    return {
-      ...state,
-      menus: AllAct$, //[...state.menus, ...action.menus],
-      loading: true,
-      error: null,
-    };
-  }),
-  on(updateMenusListFail, (state, action) => ({ ...state, loading: false, error: action.error }))
+  //   //let AllAct$ = [...state.menus, ...action.menus];    
+  //   let AllAct$ = [...state.menus, ...action.menus].filter((value, index, self) =>
+  //     index === self.findIndex((t) => (
+  //       t.mainId === value.mainId && t.name === value.name
+  //     ))
+  //   )
+  //   return {
+  //     ...state,
+  //     menus: AllAct$, //[...state.menus, ...action.menus],
+  //     loading: true,
+  //     error: null,
+  //   };
+  // }),
+  // on(updateMenusListFail, (state, action) => ({ ...state, loading: false, error: action.error }))
 
 
 );

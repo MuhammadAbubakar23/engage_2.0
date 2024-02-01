@@ -4,14 +4,14 @@ import { Store } from '@ngrx/store';
 import { Observable, share, startWith } from 'rxjs';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
-import { loadMenusList, updateMenusList } from '../../menu-state/menu.actions';
+import { loadMenusList } from '../../menu-state/menu.actions';
 import { MenuModel } from '../../menu-state/menu.model';
 import {
   getEmargingEqual,
   getMenusLoading,
 } from '../../menu-state/menu.selectors';
 import { MenuState } from '../../menu-state/menu.state';
-import { updatePermissionsLetters } from '../../permission-state/permission.actions';
+//import { updatePermissionsLetters } from '../../permission-state/permission.actions';
 import {
   getPermissionBySlug,
   getPermissionsLoading,
@@ -25,7 +25,6 @@ import { OpensidebarService } from 'src/app/services/openSidebarService/openside
   styleUrls: ['./role-menu.component.scss'],
 })
 export class RoleMenuComponent implements OnInit {
-
   // MenuModel = new MenuModel();
   permissions$: any;
   permission$: any;
@@ -33,20 +32,21 @@ export class RoleMenuComponent implements OnInit {
   //menu$ :Observable<MenuModel[]>;
   //menu$ :Observable<any>;
   loading$: any;
-  activeChannel:string=''
-  activeMenu:string=''
+  activeChannel: string = '';
+  activeMenu: string = '';
   restrictedAgentsString =
-  'Farah.khalid@abacus-global.com, aniqa.waris@bpo.abacus-global.com, samoom.fatima@bpo.abacus-global.com, Mishal.Javed@abacus-global.com, ambreen.zubair@jazz.com.pk, naveeda.akhtar@jazz.com.pk, sidra.shafiq@jazz.com.pk, muhammad.mansoor@jazz.com.pk, ayesha.sajjad@jazz.com.pk, farrukh.saeed1@jazz.com.pk, hassam.naveed@jazz.com.pk, nadia.shabbir@jazz.com.pk, rizwan.malik@jazz.com.pk, abida.rasheed@jazz.com.pk, saba.riaz@jazz.com.pk, pringle.charles@jazz.com.pk';
+    'Farah.khalid@abacus-global.com, aniqa.waris@bpo.abacus-global.com, samoom.fatima@bpo.abacus-global.com, Mishal.Javed@abacus-global.com, ambreen.zubair@jazz.com.pk, naveeda.akhtar@jazz.com.pk, sidra.shafiq@jazz.com.pk, muhammad.mansoor@jazz.com.pk, ayesha.sajjad@jazz.com.pk, farrukh.saeed1@jazz.com.pk, hassam.naveed@jazz.com.pk, nadia.shabbir@jazz.com.pk, rizwan.malik@jazz.com.pk, abida.rasheed@jazz.com.pk, saba.riaz@jazz.com.pk, pringle.charles@jazz.com.pk';
   restrictedAgent: string = '';
 
-  onlyAnalyticsTabVisible = 'kashif.waheed@ibex.co, jazzlhrwfm@ibex.co, JazzLHRWFM@ibex.co'
+  onlyAnalyticsTabVisible =
+    'kashif.waheed@ibex.co, jazzlhrwfm@ibex.co, JazzLHRWFM@ibex.co';
 
   constructor(
     private MenuStore: Store<MenuState>,
     private PermissionStore: Store<PermissionState>,
     private _route: Router,
     private storage: StorageService,
-    private sidebar:OpensidebarService
+    private sidebar: OpensidebarService
   ) {
     //  this.menu$ = this.MenuStore.select(getEmargingEqual("role_main_left_menu"));
     //  this.menus$ = this.menu$.pipe(share(), startWith(false));
@@ -58,12 +58,11 @@ export class RoleMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
- this.activeChannel=this._route.url.split('/')[2]
+    this.activeChannel = this._route.url.split('/')[2];
     let data = this.storage.retrive('main', 'O').local;
     this.restrictedAgent = data.originalUserName;
-
-    this.MenuStore.select(getEmargingEqual('role_main_left_menu')).subscribe(
+    debugger;
+    this.MenuStore.select(getEmargingEqual('7_layout_lft')).subscribe(
       (item: MenuModel[]) => {
         this.menus$ = [...item];
       }
@@ -80,15 +79,14 @@ export class RoleMenuComponent implements OnInit {
   }
 
   assignedProfile = localStorage.getItem('assignedProfile');
-  opensidebar(){
-    this.activeMenu=this._route.url.split('/')[1];
-    this.sidebar.sendsidebarvalue(this.activeMenu)
+  opensidebar() {
+    this.activeMenu = this._route.url.split('/')[1];
+    this.sidebar.sendsidebarvalue(this.activeMenu);
   }
 
   update(menuLink: any) {
-    
-    this.activeChannel=menuLink.split('/')[1]
-   
+    this.activeChannel = menuLink.split('/')[1];
+
     if (
       localStorage.getItem('assignedProfile') == null ||
       localStorage.getItem('assignedProfile') == '' ||

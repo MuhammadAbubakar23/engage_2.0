@@ -15,7 +15,7 @@ export class JsonWebTokenInterceptor implements HttpInterceptor {
   constructor(private router: Router, private ls: StorageService) { }
 
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-     ;
+
     const allToken = this.ls.retrive("token");
     let token = allToken.local;// allToken.cookie
     token = (token == null)?allToken.session:token;
@@ -28,6 +28,11 @@ export class JsonWebTokenInterceptor implements HttpInterceptor {
     // console.log(httpRequest);
     if(token == null && (!httpRequest.url.includes("Login") || !httpRequest.url.includes("Register"))){
       this.router.navigate(['/identity/login']);
+    }
+    if(!httpRequest.url.includes("rep")){
+      const allToken2 = this.ls.retrive("token2");
+      token = allToken2.local;// allToken.cookie
+      
     }
     if(token && !httpRequest.url.includes("Login") && !httpRequest.url.includes("Register")){
       httpRequest = httpRequest.clone({

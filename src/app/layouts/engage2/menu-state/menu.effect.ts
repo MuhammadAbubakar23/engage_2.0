@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, map, mergeMap, Observable, of, switchMap} from 'rxjs'; 
 import { MenuService } from './menu.service';
-import { loadMenusList, loadMenusListFail, loadMenusListSuccess, updateMenusList, updateMenusListFail, updateMenusListSuccess } from './menu.actions';
+import { loadMenusList, loadMenusListFail, loadMenusListSuccess } from './menu.actions';
 import { MenuModel } from './menu.model';
 
 @Injectable()
@@ -12,31 +12,31 @@ export class MenusEffects {
     private menuService: MenuService
   ) {}
   //public readonly 
-  loadMenus$: Observable<any> = createEffect(() => {
+  // updateMenus$: Observable<any> = createEffect(() => {
+  //   return this.action$.pipe(
+  //     ofType(loadMenusList),
+  //     mergeMap((action) => {
+  //       return this.menuService.getTeamsList().pipe(
+  //         map((menus: MenuModel[]) => loadMenusListSuccess({ menus })),
+  //         catchError((error: string | null) => of(loadMenusListFail({ error })))
+  //         //  catchError(error => of(loadMenusList(),fail({ error })))
+  //         //   return this.actions$.pipe(
+  //         //     ofType(MemberActions.loadMembers),
+  //         //     mergeMap(() => this.memberService.getMembers().pipe(
+  //         //         map(members=> MemberActions.loadMembersSuccess({ members })),
+  //         //         catchError(error => of(MemberActions.loadMembers()Fail({ error })))
+  //         //  )));
+  //       );
+  //     })
+  //   );
+  // });
+  loadMenus$$: Observable<any> = createEffect(() => {
     return this.action$.pipe(
       ofType(loadMenusList),
       mergeMap((action) => {
-        return this.menuService.getTeamsList().pipe(
+        return this.menuService.getRolesList().pipe(
           map((menus: MenuModel[]) => loadMenusListSuccess({ menus })),
           catchError((error: string | null) => of(loadMenusListFail({ error })))
-          //  catchError(error => of(loadMenusList(),fail({ error })))
-          //   return this.actions$.pipe(
-          //     ofType(MemberActions.loadMembers),
-          //     mergeMap(() => this.memberService.getMembers().pipe(
-          //         map(members=> MemberActions.loadMembersSuccess({ members })),
-          //         catchError(error => of(MemberActions.loadMembers()Fail({ error })))
-          //  )));
-        );
-      })
-    );
-  });
-  updateMenus$: Observable<any> = createEffect(() => {
-    return this.action$.pipe(
-      ofType(updateMenusList),
-      mergeMap((action) => {
-        return this.menuService.getRolesList().pipe(
-          map((menus: MenuModel[]) => updateMenusListSuccess({ menus })),
-          catchError((error: string | null) => of(updateMenusListFail({ error })))
           //  catchError(error => of(loadMenusList(),fail({ error })))
           //   return this.actions$.pipe(
           //     ofType(MemberActions.loadMembers),

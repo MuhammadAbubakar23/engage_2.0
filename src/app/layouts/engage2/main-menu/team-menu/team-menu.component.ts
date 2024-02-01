@@ -5,7 +5,7 @@ import { loadMenusList } from '../../menu-state/menu.actions';
 import { MenuModel } from '../../menu-state/menu.model';
 import { getEmargingEqual, getMenusLoading } from '../../menu-state/menu.selectors';
 import { MenuState } from '../../menu-state/menu.state';
-import { loadPermissionsLetters, updatePermissionsLetters } from '../../permission-state/permission.actions';
+import { loadPermissionsLetters } from '../../permission-state/permission.actions';
 import { Router } from '@angular/router';
 import { getPermissionBySlug, getPermissionsLoading } from '../../permission-state/permission.selectors';
 import { PermissionState } from '../../permission-state/permission.state';

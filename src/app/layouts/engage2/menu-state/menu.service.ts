@@ -95,7 +95,7 @@ export class MenuService {
     if(menus != null && menus.length>=1) 
       return of(menus);
     else
-      return this.reqs.post<MenuModel[]>(type, {"Emerging":"menu", "Inline":false}).pipe(
+      return this.reqs.get<MenuModel[]>(type, {"Emerging":"menu", "Inline":false}).pipe(
         map((response: MenuModel[]) => {
           if(response.length>=1) this.storage.store(type, response);
           else this.storage.delete(type);

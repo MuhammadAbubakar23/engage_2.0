@@ -42,8 +42,8 @@ export class PermissionService {
   getRolesLetters(): Observable<PermissionModel> {
     return this.getLetters("permissionrole");
   }
-  getTeamsLetters(): Observable<PermissionModel> {
-    return this.getLetters("permissionteam");
+  // getTeamsLetters(): Observable<PermissionModel> {
+  //   return this.getLetters("permissionteam");
  
-  }
+  // }
 }
