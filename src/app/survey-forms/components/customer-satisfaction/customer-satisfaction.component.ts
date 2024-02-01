@@ -30,10 +30,13 @@ export class CustomerSatisfactionComponent implements OnInit {
   save() {
     
     const channel = this.router.url.split(/[=&]/)[1];
-    const customerId = this.router.url.split('=')[2];
+    const customerId = this.router.url.split(/[=&]/)[3];
+    const AgentId=Number(this.router.url.split(/[=&]/)[5]);
     let data = {
+
       customerId: customerId,
       attempts: 0,
+      agentId: AgentId,
       rating: this.value,
       platform: channel
     };

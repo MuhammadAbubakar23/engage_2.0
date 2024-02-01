@@ -602,43 +602,46 @@
                     <i class="fas fa-plus-circle sky" style="pointer-events: none;"></i></button>
             </div>
             <!-- only for morinaga client -->
-            <!-- <div class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
-                <button class="iconButton small notification iconHover" id="surveyForms" data-bs-toggle="dropdown"
-                    data-bs-auto-close="outside" data-bs-original-title="Survey Forms">
-                    <span class="iconButton small btn mx-2">
-                        <i class="fa-light fa-square-list"></i>
-                    </span>
-                </button>
-                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                    aria-labelledby="dropdownMenuButton2">
-                    <ul class="dropdown-listing">
-                        <li class="dropdown-listing-header  p-2">
-                            <div class="head-section" (click)="c_satForm()">
-                                <a class="list-group-item d-flex level1Btn">
-                                    <div class="w-100 list-txt">
-                                        <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-1 darkblue">
-                                                Customer Satisfaction Form
-                                            </h6>
+            <span *ngIf="activeBaseUrl=='https://waengage.enteract.live' || activeBaseUrl=='http://localhost:4200'">
+                <div class="dropdown w-auto icons-list align-items-md-center d-flex pe-2">
+                    <button class="iconButton small notification iconHover" id="surveyForms" data-bs-toggle="dropdown"
+                        data-bs-auto-close="outside" data-bs-original-title="Survey Forms">
+                        <span class="iconButton small btn mx-2">
+                            <i class="fa-light fa-square-list"></i>
+                        </span>
+                    </button>
+                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                        aria-labelledby="dropdownMenuButton2">
+                        <ul class="dropdown-listing">
+                            <li class="dropdown-listing-header  p-2">
+                                <div class="head-section" (click)="c_satForm()">
+                                    <a class="list-group-item d-flex level1Btn">
+                                        <div class="w-100 list-txt">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1 darkblue">
+                                                    Customer Satisfaction Form
+                                                </h6>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="head-section" (click)="c_informationForm()">
-                                <a class="list-group-item d-flex level1Btn">
-                                    <div class="w-100 list-txt">
-                                        <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-1 darkblue">
-                                                Customer Information Form
-                                            </h6>
+                                    </a>
+                                </div>
+                                <div class="head-section" (click)="c_informationForm()">
+                                    <a class="list-group-item d-flex level1Btn">
+                                        <div class="w-100 list-txt">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h6 class="mb-1 darkblue">
+                                                    Customer Information Form
+                                                </h6>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
                     </ul>
-                </ul>
-            </div> -->
+                </div> 
+        </span>
+    
             <div class="form-floating textarea-field">
                 <textarea formControlName="text" [(ngModel)]="text" class="form-control auto" rows="1"
                     (keydown)="handleTextareaKeyDown($event)" id="text" placeholder="Write a comment here"

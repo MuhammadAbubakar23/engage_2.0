@@ -274,49 +274,52 @@
                         </div>
 
                     </div>
-                    <div class="card iceBg p-4 rounded mb-5">
-                        <h5 class="section-heading mb-4 p-0">CUSTOMER SATISFACTION RATINGS </h5>
-
-                        <div class="row justify-content-between">
-                            <div class="col-md-6">
-                                <div class="graphcontainer align-items-end">
-                                    <div id="main" style="height: 400px; width: 100%;"></div>
+                    <span *ngIf="this.activeChannel == 'https://keportal.enteract.live'|| this.activeChannel=='http://localhost:4200'">
+                        <div class="card iceBg p-4 rounded mb-5">
+                            <h5 class="section-heading mb-4 p-0">CUSTOMER SATISFACTION RATINGS </h5>
+    
+                            <div class="row justify-content-between">
+                                <div class="col-md-6">
+                                    <div class="graphcontainer align-items-end">
+                                        <div id="main" style="height: 400px; width: 100%;"></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card dashboard-card">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-column">
-                                            <div class="d-flex align-items-center mb-3">
-                                                <span class="iconButton medium berryBg me-2">
-                                                    <i class="fa-light fa-calendar-week"></i>
-                                                </span>
-                                                <p class="coal mb-0">Last week</p>
+                                <div class="col-md-4">
+                                    <div class="card dashboard-card">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <span class="iconButton medium berryBg me-2">
+                                                        <i class="fa-light fa-calendar-week"></i>
+                                                    </span>
+                                                    <p class="coal mb-0">Last week</p>
+                                                </div>
+                                                <h4>{{CSATobj?.lastWeekCount}}</h4>
+                                                <!-- <h4>56 <small class="text-danger fs-12"> <i class="fa-light fa-arrow-down"></i> 37.8<sup>%</sup></small></h4> -->
                                             </div>
-                                            <h4>{{CSATobj?.lastWeekCount}}</h4>
-                                            <!-- <h4>56 <small class="text-danger fs-12"> <i class="fa-light fa-arrow-down"></i> 37.8<sup>%</sup></small></h4> -->
+                                        </div>
+                                    </div>
+                                    <div class="card dashboard-card">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <span class="iconButton medium mintBg me-2">
+                                                        <i class="fa-light fa-calendar-week"></i>
+                                                    </span>
+                                                    <p class="coal mb-0">This week</p>
+                                                </div>
+                                                <h4>{{CSATobj?.currentWeekCount}}</h4>
+                                                <!-- <h4>32 <small class="text-danger fs-12"> <i class="fa-light fa-arrow-down"></i> 37.8<sup>%</sup></small></h4> -->
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card dashboard-card">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-column">
-                                            <div class="d-flex align-items-center mb-3">
-                                                <span class="iconButton medium mintBg me-2">
-                                                    <i class="fa-light fa-calendar-week"></i>
-                                                </span>
-                                                <p class="coal mb-0">This week</p>
-                                            </div>
-                                            <h4>{{CSATobj?.currentWeekCount}}</h4>
-                                            <!-- <h4>32 <small class="text-danger fs-12"> <i class="fa-light fa-arrow-down"></i> 37.8<sup>%</sup></small></h4> -->
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
+    
+    
                         </div>
-
-
-                    </div>
+                    </span>
+                
                     <div class="card iceBg p-4 rounded mb-5">
                         <div class="row">
                             <div class="col-6">

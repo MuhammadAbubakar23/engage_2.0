@@ -61,7 +61,7 @@ export class ShiftReportComponent implements OnInit {
   ChartData: any[] = [];
   _legend: any[] = [];
   shiftName:any='Morning'
-  selectedName:any='Morning'
+  selectedName:any=''
   shiftType: any[] = [
     { name: 'Morning', id: 0 },
     { id: 1, name: 'Evening' },
@@ -123,6 +123,10 @@ export class ShiftReportComponent implements OnInit {
     this.getAgentsTeamList();
     this.makeChartResponsive();
     this.getTableStyle()
+    if(this.selectedName==''){
+      
+      this.selectedName="Morning"
+    }
   }
   keywordslist: any[] = [];
   getAlltags() {
@@ -164,6 +168,7 @@ export class ShiftReportComponent implements OnInit {
       this.endDate=''
       return;
     }
+   
     let obj = {
       fromDate: this.startDate,
       toDate: this.endDate,
@@ -297,6 +302,7 @@ export class ShiftReportComponent implements OnInit {
   }
   getByShifTime() {
     
+
     this.shiftName=this.selectedName.name
     this.shiftime=this.selectedName.id
     this.getShfitReport();
@@ -418,7 +424,18 @@ export class ShiftReportComponent implements OnInit {
         this.ActiveAgents = [];
         this.AgentsTeamList.forEach((user: any) => {
           if (user.userId != localStorage.getItem('agentId')) {
+            
             this.ActiveAgents.push(user);
+            if(this.ActiveAgents.length>0){
+              this.ActiveAgents.forEach((x:any)=>{
+                console.log("Active Agent ===>",x.name)
+                // const agentlength=3
+                // for(let i =x.name ;i<=agentlength; i++){
+                //   const showagentname= [i]+'<br>'
+                // }
+              })
+            }
+            
           }
         });
       }

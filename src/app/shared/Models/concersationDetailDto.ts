@@ -111,3 +111,24 @@ export class messagesDto {
   sentiment?: string = '';
   tags?: tagsDto = new tagsDto();
 }
+// for new post
+export class newpostcommentDto{
+  id?: number = 0;
+  postId?: string = '';
+  commentId?: string = '';
+  message?: string = '';
+  contentType?: string = '';
+  userName?: string = '';
+  queryStatus?: string = '';
+  createdDate?: string = '';
+  fromUserProfilePic?: string = '';
+  body?: string = '';
+  to?: string = '';
+  cc?: string = '';
+  bcc?: string = '';
+  isLikedByAdmin?: boolean = false;
+  attachments?: string = '';
+  replies?: repliesDto = [];
+  sentiment?: string = '';
+  tags?: tagsDto = [];
+}

@@ -54,6 +54,7 @@ export class AgentPerformanceReportComponent implements OnInit {
   isCheckedDate20: boolean = false
   isCheckedDate30: boolean = false
   isChannelShow: any = '';
+  AgentIds:any[]=[]
   isShowCommentGraph: boolean = false
   paginationDate: any[] = [
     { id: 5, value: 5 }, { id: 10, value: 10 }, { id: 20, value: 20 }, { id: 30, value: 30 }
@@ -118,6 +119,10 @@ export class AgentPerformanceReportComponent implements OnInit {
       .subscribe((response: any) => {
 
         this.totalAgents = response;
+        this.totalAgents.forEach((x:any)=>{
+        
+          this.AgentIds.push(x.id)
+        })
         console.log(this.totalAgents);
       }, (error: any) => {
         console.error(error);
@@ -544,6 +549,7 @@ export class AgentPerformanceReportComponent implements OnInit {
     let obj = {
       "fromDate": this.startDate,
       "toDate": this.endDate,
+      "agents":this.selectedTagBy,
       "plateForm": "string"
     }
     this.csatArray = []
@@ -574,6 +580,7 @@ this.SpinnerService.hide()
   }
   CSATGraph:any
   getCSATGraph() {
+    
     var chartDom = document.getElementById('main');
    this.CSATGraph = echarts.init(chartDom);
     var option;

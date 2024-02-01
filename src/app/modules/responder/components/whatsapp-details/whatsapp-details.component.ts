@@ -15,6 +15,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
@@ -165,15 +166,17 @@ export class WhatsappDetailsComponent implements OnInit {
 
   messagesStatus: any[] = [];
   Sentiments: any[] = [];
-
+activeBaseUrl:any
   KEbaseUrl:string="";
   KEClient:boolean=false;
 
   ngOnInit(): void {
     this.KEbaseUrl=window.location.origin
+    this.activeBaseUrl=window.location.origin
     if(this.KEbaseUrl=='https://keportal.enteract.live'){
       this.KEClient=true
     }
+
     
     const textarea = this.el.nativeElement as HTMLTextAreaElement;
     this.renderer.addClass(textarea, 'auto-resize');
@@ -1393,10 +1396,13 @@ export class WhatsappDetailsComponent implements OnInit {
 
   c_satForm() {
     const customerId = localStorage.getItem('storeOpenedId');
+    const platform = localStorage.getItem('parent');
+    const AgentId=localStorage.getItem('agentId')
     this.insertAtCaret(
-      'https://waengage.enteract.live/survey/customer_satisfaction' +
-        '?customerId=' +
+      this.activeBaseUrl+'/survey/customer_satisfaction' + '?platform=' + platform +
+        '&customerId=' +
         customerId +
+        '&agentId='+ AgentId+
         ' '
     );
   }
@@ -1404,7 +1410,7 @@ export class WhatsappDetailsComponent implements OnInit {
   c_informationForm() {
     const customerId = localStorage.getItem('storeOpenedId');
     this.insertAtCaret(
-      'https://waengage.enteract.live/survey/customer_details' +
+      this.activeBaseUrl+'/survey/customer_details' +
         '?customerId=' +
         customerId +
         ' '
