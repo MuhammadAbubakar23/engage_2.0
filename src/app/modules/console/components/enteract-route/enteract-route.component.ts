@@ -84,22 +84,22 @@ export class EnteractRouteComponent implements OnInit {
       skillId: [0],
       tagId: [0],
     });
-    this.getSkills();
+    // this.getSkills();
   }
 
   
-  getSkills() {
-    this.commonService.GetSkill().subscribe(
-      (response) => {
-        // console.log('GetSkill API response:', response);
-        this.users = response as any[]; // Assign the response to the users variable
-      },
-      (error) => {
-        console.error('GetSkill API error:', error);
-        // Handle the error as needed
-      }
-    );
-  }
+  // getSkills() {
+  //   this.commonService.GetSkill().subscribe(
+  //     (response) => {
+  //       console.log('GetSkill API response:', response);
+  //       this.users = response as any[]; // Assign the response to the users variable
+  //     },
+  //     (error) => {
+  //       console.error('GetSkill API error:', error);
+  //       Handle the error as needed
+  //     }
+  //   );
+  // }
   
   onSubmit() {
     const formData = this.messageForm.value;

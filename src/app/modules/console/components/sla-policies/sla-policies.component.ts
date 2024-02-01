@@ -63,7 +63,6 @@ export class SlaPoliciesComponent implements OnInit {
         this.messages.sort((a, b) => b.policyName.localeCompare(a.policyName));
         break;
       default:
-        // For 'All', no sorting is required
         break;
     }
   }
@@ -77,6 +76,11 @@ export class SlaPoliciesComponent implements OnInit {
       state: { message }
     });
   }
+  // Example route path: '/console/sla-policy/edit/:policyId'
+// editTemplate(message: any) {
+//   this.router.navigate(['/console/sla-policy/create', message.id]);
+// }
+
 
   deleteTemplate(message: any) {
     const confirmation = confirm('Are you sure you want to delete this template?');

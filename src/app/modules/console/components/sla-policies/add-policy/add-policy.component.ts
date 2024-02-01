@@ -43,26 +43,24 @@ export class AddPolicyComponent implements OnInit {
     return this.messageForm.get('slaTargets') as FormArray;
   }
   ngOnInit(): void {
-    this.getOperationalHours();
-    const template = history.state.template; // Get the template value from the state
+    // this.getOperationalHours();
+    const template = history.state.template; 
     if (template) {
-      this.policyId = template.policyId; // Set the policyId property
+      this.policyId = template.policyId; 
       this.getPolicyById(template.policyId);
     }
   }
   getPolicyById(policyId: string) {
+    debugger
     this.commonService.GetPolicyById(policyId).subscribe(
       (policy: any) => {
+        console.log("id===>",policy)
         this.messageForm.patchValue({
           policyName: policy.policyName,
           description: policy.description,
           timeZone: policy.timeZone,
         });
-
-        // Clear the existing SLA targets
         this.SLATargetsControls.clear();
-
-        // Patch SLA targets based on the fetched policy data
         policy.slaTargets.forEach((target: any) => {
           const slaTargetGroup = this.createSlaTargetGroup(target.priority);
           slaTargetGroup.patchValue(target);
@@ -98,15 +96,16 @@ export class AddPolicyComponent implements OnInit {
     }
   }
   onSubmit() {
+    debugger
+     console.log('Form Data:', this.messageForm.value);
     const slaTargets = this.messageForm.get('slaTargets') as FormArray;
-    // Remove form controls for unselected "slaTargets"
     for (let i = slaTargets.controls.length - 1; i >= 0; i--) {
       if (!slaTargets.controls[i].value.oprationHoursId) {
         slaTargets.removeAt(i);
       }
     }
     if (this.messageForm.valid) {
-      const template = history.state.template; // Get the template value from the state
+      const template = history.state.template; 
 
       if (template) {
         const updatedTemplate = {
@@ -139,7 +138,6 @@ export class AddPolicyComponent implements OnInit {
   }
     } else {
       console.log('Form is invalid');
-      // Form is invalid, display error messages or take appropriate action
     }
   }
   cancelForm() {

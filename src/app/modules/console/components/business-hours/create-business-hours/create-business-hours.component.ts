@@ -143,7 +143,7 @@ clearBusinessWorkingDays(): void {
   }
   onSubmit(): void {
     if (this.messageForm.valid) {
-      const template = history.state.template; // Get the template value from the state
+      const template = history.state.template; 
 
       if (template) {
         const updatedTemplate = {
@@ -160,24 +160,20 @@ clearBusinessWorkingDays(): void {
           .UpdateBusinessHours(updatedTemplate.id, updatedTemplate)
           .subscribe(
             (response: any) => {
-              // Handle the successful response after updating the template
               console.log('Template updated:', response);
               this.router.navigate(['/console/business-hours']);
             },
             (error: any) => {
-              // Handle the error if the update fails
               console.error('Error updating template:', error);
             }
           );
       } else {
         this.commonService.AddBusinessHours(this.messageForm.value).subscribe(
           (response: any) => {
-            // Handle the successful response after creating a new template
             console.log('Template created:', response);
             this.router.navigate(['/console/business-hours']);
           },
           (error: any) => {
-            // Handle the error if the template creation fails
             console.error('Error creating template:', error);
           }
         );

@@ -147,6 +147,8 @@ export class CommonDataService {
   getSkills = environment.links.console.getSkills;
   addSkill = environment.links.console.addSkill;
   deleteSkill = environment.links.console.deleteSkill;
+  getskillbyid=environment.links.console.getSkillsbyId;
+  updateSkill=environment.links.console.updateSkill;
   getAllProfile = environment.links.console.getAllProfile;
   addProfile = environment.links.console.addProfile;
   attachFacebookPage = environment.links.console.attachFacebookPage;
@@ -501,17 +503,20 @@ export class CommonDataService {
     const url = `${this.consoleBaseUrl}${this.deleteEntractRoute}?Id=${delRoute}`;
     return this.http.get(url);
   }
-  GetSkill() {
-    return this.http.get(this.consoleBaseUrl + this.getSkills);
+  GetSkill(body:any) {
+    // return this.http.get(this.consoleBaseUrl + this.getSkills);
+    return this.http.post(this.consoleBaseUrl + this.getSkills, body);
   }
   AddSkill(addSkill: any) {
     return this.http.post(this.consoleBaseUrl + this.addSkill, addSkill);
   }
-  DeleteSkill(delSkill: string): Observable<any> {
-    const url = `${this.consoleBaseUrl}${this.deleteSkill}?Id=${delSkill}`;
-    return this.http.get(url);
+  // DeleteSkill(delSkill: string): Observable<any> {
+  //   const url = `${this.consoleBaseUrl}${this.deleteSkill}?Id=${delSkill}`;
+  //   return this.http.get(url);
+  // }
+  DeleteSkill(delSkill: any): Observable<any> {
+    return this.http.post(this.consoleBaseUrl + this.deleteSkill, delSkill);
   }
-
   GetAllProfile() {
     return this.http.get(this.consoleBaseUrl + this.getAllProfile);
   }
@@ -810,6 +815,14 @@ GetScrmFacebookReport(body:any){
 GetDatafortesting(){
   return this.http.get(this.KescrmBaseUrl+this.getfortesting)
 }
+editSkill(data: any) {
+  return this.http.get(`${this.consoleBaseUrl}${this.getskillbyid}?SkillId=${data}`)
+}
+UpdateSkill(id: any, rule: any) {
+  const url = (`${this.consoleBaseUrl}${this.updateSkill}?SkillId=${id}`)
+  return this.http.post(url, rule)
+}
+
 }
 
 

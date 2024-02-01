@@ -67,22 +67,22 @@
 
                                     <div class="sla-chart-header border-bottom border-info">
                                         <div class="row">
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-3">
                                                 <h6 class="charcoal mb-1">Priority</h6>
                                             </div>
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-3">
                                                 <h6 class="charcoal mb-1">First response time</h6>
                                             </div>
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-3">
                                                 <h6 class="charcoal mb-1">Every response time</h6>
                                             </div>
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-1">
                                                 <h6 class="charcoal mb-1">Resolution time</h6>
                                             </div>
-                                            <div class="col-lg-2">
+                                            <!-- <div class="col-lg-2">
                                                 <h6 class="charcoal mb-1">Operational hours</h6>
-                                            </div>
-                                            <div class="col-lg-2">
+                                            </div> -->
+                                            <div class="col-lg-1">
                                                 <h6 class="charcoal mb-1">Escalation</h6>
                                             </div>
                                         </div>
@@ -91,7 +91,7 @@
                                         <div *ngFor="let targetGroup of SLATargetsControls.controls; let i = index">
                                             <div class="row pt-4 pb-4 border-bottom" [formGroupName]="i">
 
-                                                <div class="col-lg-2">
+                                                <div class="col-lg-3">
                                                     <div class="sla-status d-flex align-items-center h-100">
 
                                                         <ng-container [ngSwitch]="i">
@@ -106,35 +106,34 @@
                                                         </ng-container>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-2">
+                                                <div class="col-lg-3">
                                                     <input class="form-control form-control-sm border"
                                                         placeholder="4d 6h 30m" aria-label="15m "
                                                         formControlName="firstResponseTime">
                                                 </div>
-                                                <div class="col-lg-2">
+                                                <div class="col-lg-3">
                                                     <input class="form-control form-control-sm border" placeholder="Enter
                                                               time open" aria-label="Enter time open"
                                                         formControlName="everyResponseTime">
                                                 </div>
-                                                <div class="col-lg-2">
+                                                <div class="col-lg-1">
                                                     <input class="form-control form-control-sm border"
                                                         placeholder="Enter time open" aria-label="Enter time open"
                                                         formControlName="resolutionTime">
                                                 </div>
-                                                <div class="col-lg-2">
+                                                <!-- <div class="col-lg-2">
 
                                                     <select class="form-select" id="businessHoursSelect"
                                                         (change)="selectOperationalhours($any($event.target).value ,i)">
                                                         <option value="" selected disabled> Business Hours</option>
-                                                        <!-- Loop through the operationalHours array and create select options -->
                                                         <option *ngFor="let operationalHour of oprationalHours"
                                                             [value]="operationalHour.id">
                                                             {{ operationalHour.oprationalHours }}
                                                         </option>
                                                     </select>
-                                                </div>
+                                                </div> -->
 
-                                                <div class="col-lg-2 ps-4">
+                                                <div class="col-lg-1 ps-4">
                                                     <div class="form-check form-switch">
                                                         <input class="form-check-input" type="checkbox" id="flexSwitch1"
                                                             data-bs-toggle="collapse" data-bs-target="#slacheck1"

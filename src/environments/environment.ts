@@ -152,6 +152,8 @@ export const environment = {
       getSkills: 'Skill/GetAll',
       addSkill: 'Skill/Add',
       deleteSkill: 'Skill/Delete',
+      updateSkill:'Skill/Update',
+      getSkillsbyId:'Skill/GetById',
       getAllProfile: 'Profile/GetAll',
       addProfile: 'Profile/Add',
       attachFacebookPage: 'ProfileManagement/RegisterProfile',
