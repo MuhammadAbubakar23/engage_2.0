@@ -12,7 +12,7 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 import { DatePipe } from '@angular/common';
 
 import { map, timer, takeWhile } from 'rxjs';
-import { VerificationDto } from 'src/app/shared/Models/VerificationDto';
+import { VerificationDto } from 'src/app/shared/Models/verificationDto';
 
 // import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 @Component({
@@ -125,7 +125,7 @@ export class LoginComponent implements OnInit {
           this.signalRService.assignQueryResponseListner();
           this.signalRService.applySentimentListner();
           this.signalRService.updateMessageStatusDataListener();
-          this.signalRService.updatePostList();
+          // this.signalRService.updatePostList();
         } else if (res.isTwoFAEnabled == true) {
           this.Verificationemail =
             res.loginResponse.loginTwoFAResponse.userName;
@@ -237,7 +237,7 @@ export class LoginComponent implements OnInit {
         this.signalRService.applySentimentListner();
         this.signalRService.updateMessageStatusDataListener();
         // for new post
-        this.signalRService.updatePostList;
+        // this.signalRService.updatePostList;
       },
       (error: any) => {
         this.spinnerService.hide();
