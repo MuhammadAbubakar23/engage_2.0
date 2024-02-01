@@ -61,7 +61,7 @@ export class RoleMenuComponent implements OnInit {
     this.activeChannel = this._route.url.split('/')[2];
     let data = this.storage.retrive('main', 'O').local;
     this.restrictedAgent = data.originalUserName;
-    debugger;
+    ;
     this.MenuStore.select(getEmargingEqual('7_layout_lft')).subscribe(
       (item: MenuModel[]) => {
         this.menus$ = [...item];

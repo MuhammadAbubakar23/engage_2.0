@@ -178,6 +178,11 @@ const routes: Routes = [
         loadComponent: () => import('./components/sla-policies/sla-policies.component').then(c => c.SlaPoliciesComponent)
 
       },
+      
+      {
+        path:'sla-policy/create/:id',
+        component: AddPolicyComponent
+      },
       {
         path:'sla-policy/create',
         component: AddPolicyComponent
@@ -191,6 +196,10 @@ const routes: Routes = [
        path:'business-hours/create',
       component : CreateBusinessHoursComponent
      },
+     {
+      path:'business-hours/create/:id',
+     component : CreateBusinessHoursComponent
+    },
      {
       path:'automation/sentiment-analysis/bulk-upload',
       component: BulkUploadComponent

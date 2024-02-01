@@ -133,6 +133,8 @@ export class CommonDataService {
   addSlaPolicy = environment.links.console.addSlaPolicy;
   updateSlaPolicy = environment.links.console.updateSlaPolicy;
   getPolicyById = environment.links.console.getPolicyById;
+  getBusinessHoursById = environment.links.console.getBusinessHoursById;
+  
   deleteSlaPolicy = environment.links.console.deleteSlaPolicy;
   getOperationalHours = environment.links.console.getOperationalHours;
   getBusinessHours = environment.links.console.getBusinessHours;
@@ -153,6 +155,7 @@ export class CommonDataService {
   addProfile = environment.links.console.addProfile;
   attachFacebookPage = environment.links.console.attachFacebookPage;
   getTags = environment.links.console.getTags;
+  getTagsByCompanyId =environment.links.console.getTagsByCompanyId
   getTagById = environment.links.console.getTagById;
   addTags = environment.links.console.addTags;
   updateTag = environment.links.console.updateTag;
@@ -453,12 +456,16 @@ export class CommonDataService {
   AddSlaPolicy(addSla: any) {
     return this.http.post(this.consoleBaseUrl + this.addSlaPolicy, addSla);
   }
-  UpdateSlaPolicy(slaId: string, sla: any) {
-    const url = `${this.consoleBaseUrl}${this.updateSlaPolicy}?Id=${slaId}`;
+  UpdateSlaPolicy( sla: any) {
+    const url = `${this.consoleBaseUrl}${this.updateSlaPolicy}`;
     return this.http.post(url, sla);
   }
   GetPolicyById(policyid: string) {
     const url = `${this.consoleBaseUrl}${this.getPolicyById}?Id=${policyid}`;
+    return this.http.get(url);
+  }
+  GetBusinessHoursById(policyid: string) {
+    const url = `${this.consoleBaseUrl}${this.getBusinessHoursById}?Id=${policyid}`;
     return this.http.get(url);
   }
   DeleteSlaPolicy(deleteSla: string): Observable<any> {
@@ -536,6 +543,10 @@ export class CommonDataService {
 
   GetTags() {
     return this.http.get(this.consoleBaseUrl + this.getTags);
+  }
+  GetTagsByCompanyId(){
+    return this.http.get(this.consoleBaseUrl + this.getTagsByCompanyId);
+
   }
   GetTagById(body: any) {
     const url = `${this.consoleBaseUrl}${this.getTagById}`;

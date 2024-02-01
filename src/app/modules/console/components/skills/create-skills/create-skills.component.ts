@@ -210,7 +210,7 @@ export class CreateSkillsComponent implements OnInit {
 
   getParentTagsList() {
     
-    this.commondata.GetTags().subscribe((res: any) => {
+    this.commondata.GetTagsByCompanyId().subscribe((res: any) => {
       this.TagsLists = res
       console.log("this.tagsLsiting===>", this.TagsList)
     })

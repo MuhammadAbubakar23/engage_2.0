@@ -68,11 +68,11 @@ export class BusinessHoursComponent implements OnInit {
     this.headerService.updateMessage(string);
   }
   editTemplate(template: any) {
-    this.router.navigate(['/console/business-hours/create'], {
+    this.router.navigate(['/console/business-hours/create',template.id], {
       state: { template }
     });
   }
-
+  
   deleteTemplate(template: any) {
     // Confirm deletion with user if needed
 
