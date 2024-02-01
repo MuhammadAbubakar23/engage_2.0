@@ -71,15 +71,15 @@ export class SlaPoliciesComponent implements OnInit {
     this.headerService.updateMessage(string);
   }
 
-  editTemplate(message: any) {
-    this.router.navigate(['/console/sla-policy/create'], {
-      state: { message }
-    });
-  }
+  // editTemplate(message: any) {
+  //   this.router.navigate(['/console/sla-policy/create'], {
+  //     state: { message }
+  //   });
+  // }
   // Example route path: '/console/sla-policy/edit/:policyId'
-// editTemplate(message: any) {
-//   this.router.navigate(['/console/sla-policy/create', message.id]);
-// }
+editTemplate(message: any) {
+  this.router.navigate(['/console/sla-policy/create', message.id]);
+}
 
 
   deleteTemplate(message: any) {

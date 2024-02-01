@@ -29,7 +29,7 @@
                                     <div class="floating-item mb-4">
                                         <div class="floating-wrap form-floating">
                                             <input type="email" class="form-control" id="floatingInput"
-                                                placeholder="Policy Name" id="policyName" formControlName="policyName">
+                                                placeholder="Policy Name" id="policyName" formControlName="policyName" required>
                                             <label for="floatingInputValue">Name</label>
                                         </div>
                                         <div class="example-text">
@@ -109,17 +109,26 @@
                                                 <div class="col-lg-3">
                                                     <input class="form-control form-control-sm border"
                                                         placeholder="4d 6h 30m" aria-label="15m "
-                                                        formControlName="firstResponseTime">
+                                                        formControlName="firstResponseTime" required>
+                                                        <div *ngIf="SLATargetsControls.controls[i].get('firstResponseTime')!.hasError('required')">
+                                                            Please fill first response time in correct format.
+                                                        </div>
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <input class="form-control form-control-sm border" placeholder="Enter
                                                               time open" aria-label="Enter time open"
-                                                        formControlName="everyResponseTime">
+                                                        formControlName="everyResponseTime" required>
+                                                        <div *ngIf="SLATargetsControls.controls[i].get('everyResponseTime')!.hasError('required')">
+                                                            Please fill every response time in correct format.
+                                                        </div>
                                                 </div>
                                                 <div class="col-lg-1">
                                                     <input class="form-control form-control-sm border"
                                                         placeholder="Enter time open" aria-label="Enter time open"
-                                                        formControlName="resolutionTime">
+                                                        formControlName="resolutionTime" required>
+                                                        <div *ngIf="SLATargetsControls.controls[i].get('resolutionTime')!.hasError('required')">
+                                                            Please fill  resolution time in correct format.
+                                                        </div>
                                                 </div>
                                                 <!-- <div class="col-lg-2">
 
