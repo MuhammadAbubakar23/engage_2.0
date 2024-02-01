@@ -126,25 +126,30 @@ export class SignalRService {
   public updateListAndDetailDataListener = () => {
     
     this.hubconnection.on('SendData', (data) => {
-      if (data.conversationQueues != null) { 
+      if (data.conversationQueues != null && data.conversationQueues.length>0) { 
          this.updateListService.sendList(data.conversationQueues)
       }
-      if (data.signalRConversiontions != null) {
-        this.updateCommentsService.sendComment(data.signalRConversiontions)
+      if (data.signalRConversations != null) {
+        
+        this.updateCommentsService.sendComment(data.signalRConversations )
       }
       if (data.signalRDMConversations != null) {
         this.updateMessagesService.sendMessage(data.signalRDMConversations)
       }
+      if(data.signalRPostConversations!=null){
+       this.updateCommentsService.sendComment(data.signalRPostConversations
+        )
+      }
     });
   };
   // for new post
-public updatePostList=()=>{
-  this.hubconnection?.on('PostData',(data)=>{
-    
-    this.getnewPostService.sendnewPost(data)
-    console.log("New Post===>",data)
-  })
-}
+// public updatePostList=()=>{
+//   this.hubconnection?.on('PostData',(data)=>{
+//     
+//     // this.getnewPostService.sendnewPost(data)
+
+//   })
+// }
   public addTagDataListener = () => {
     this.hubconnection?.on('ApplyTags', (addTags) => {
       this.addTagService.sendTags(addTags);
@@ -164,6 +169,7 @@ public updatePostList=()=>{
   };
 
   public replyDataListener = () => {
+    
     this.hubconnection?.on('QueryReply', (reply) => {
       this.replyService.sendReply(reply);
     });

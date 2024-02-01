@@ -70,21 +70,22 @@ if(){
   // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
   // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-
+  //  ProfileBaseUrl: '',
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api',
   // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
   // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
   // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-  // ProfileBaseUrl: '',
+  //   ProfileBaseUrl: '',
 
   // For Testing
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
   // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
   // ServiceBaseUrl: '',
   // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  //  //https://profiler.entract.live/
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
 

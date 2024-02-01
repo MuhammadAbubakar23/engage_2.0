@@ -14,7 +14,8 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 import { DatePipe } from '@angular/common';
 
 import { map, timer, takeWhile } from 'rxjs';
-import { VerificationDto } from 'src/app/shared/Models/verificationDto';
+import { VerificationDto } from 'src/app/shared/Models/VerificationDto';
+
 // import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 @Component({
   selector: 'app-login',
@@ -66,7 +67,8 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (this.baseUrl == 'https://engage.jazz.com.pk' || this.baseUrl == 'http://localhost:4200' || this.baseUrl == 'https://uiengage.enteract.app') {
+    
+    if (this.baseUrl == 'https://engage.jazz.com.pk'   || this.baseUrl == 'https://uiengage.enteract.app') {
 
       let obj = {
         userName: this.loginForm.value.userName,
@@ -121,6 +123,7 @@ export class LoginComponent implements OnInit {
       );
     }
     else {
+      
       let obj = {
         userName: this.loginForm.value.userName,
         password: this.loginForm.value.password,
@@ -135,7 +138,7 @@ export class LoginComponent implements OnInit {
           this.stor.store('nocompass', res.roles[0]);
           localStorage.setItem('agentId', res.userId);
           localStorage.setItem('agentName', res.username);
-
+    
           this.commonService.UserLogin().subscribe((res: any) => {
             console.log(res);
           });
@@ -158,7 +161,7 @@ export class LoginComponent implements OnInit {
           this.signalRService.assignQueryResponseListner();
           this.signalRService.applySentimentListner();
           this.signalRService.updateMessageStatusDataListener();
-          this.signalRService.updatePostList()
+          // this.signalRService.updatePostList()
         },
         (error: any) => {
 
@@ -248,7 +251,7 @@ export class LoginComponent implements OnInit {
         this.signalRService.applySentimentListner();
         this.signalRService.updateMessageStatusDataListener();
         // for new post
-        this.signalRService.updatePostList
+        // this.signalRService.updatePostList
       },
       (error: any) => {
         this.spinnerService.hide();

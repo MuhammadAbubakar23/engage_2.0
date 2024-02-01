@@ -11,12 +11,12 @@ export class UpdateCommentsService {
   constructor() { }
 
   public sendComment(cmnt:any) : void{
-    
+
     this.updateComment.next(cmnt);
     
   }
   public receiveComment(): Observable<any>{
-    
+   
     return this.updateComment.asObservable();
 
   }

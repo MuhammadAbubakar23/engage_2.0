@@ -852,7 +852,7 @@ export class SipPhone
         }
         else
         {
-          // debugger;
+          // ;
           SipPhone._sipPhone?.dialerService.updateEvent('incomingCall', [session]);
           // this.dialerService.updateEvent('incomingCall', [session]);
             // $(document).trigger('incomingCall', [session]);

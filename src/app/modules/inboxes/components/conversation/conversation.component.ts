@@ -165,6 +165,7 @@ export class ConversationComponent implements OnInit {
     this.subscription = this.updateListService
       .receiveList()
       .subscribe((res) => {
+        
         this.updateListDataListener(res);
       });
 
@@ -538,6 +539,7 @@ export class ConversationComponent implements OnInit {
   }
 
   updateListDataListener(res: any) {
+    
     if (this.currentUrl.split('/')[2] === 'focused') {
       res.forEach((newMsg: any) => {
         if (newMsg?.profileStatus?.length == 0) {

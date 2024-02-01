@@ -23,6 +23,7 @@ import {
   conversationDetailDto,
   listDto,
   messagesDto,
+  newpostcommentDto,
   postStatsDto,
 } from 'src/app/shared/Models/concersationDetailDto';
 import { ReplyDto } from 'src/app/shared/Models/ReplyDto';
@@ -49,7 +50,8 @@ import { Router } from '@angular/router';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
 import { FetchPostTypeService } from 'src/app/services/FetchPostType/fetch-post-type.service';
-
+// import newpost Services
+import { GetNewPostService } from 'src/app/services/GetNewPostService/get-new-post.service';
 declare var toggleEmojis: any;
 @Component({
   selector: 'app-facebook',
@@ -127,7 +129,8 @@ export class FacebookComponent implements OnInit {
   isOpen = false;
   active = false;
   fbCmntReply = true;
-  NewPostCmntReply=true;
+  fbnewCmntReply = false
+  NewPostCmntReply = true;
   fbMsgReply = false;
   checkTag = false;
   activeTag = false;
@@ -174,7 +177,9 @@ export class FacebookComponent implements OnInit {
     private userInfoService: UserInformationService,
     private el: ElementRef,
     private renderer: Renderer2,
-    private fetchPostType: FetchPostTypeService
+    private fetchPostType: FetchPostTypeService,
+    // newpost Services
+    private newpostservice: GetNewPostService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -194,6 +199,12 @@ export class FacebookComponent implements OnInit {
       this.submitFacebookReply();
     }
   }
+  handleFacebookNewReply(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.submitFacebookNewReply();
+    }
+  }
   adjustTextareaHeight(textarea: HTMLTextAreaElement) {
     textarea.style.height = 'auto';
     textarea.style.height = textarea.scrollHeight + 'px';
@@ -203,23 +214,23 @@ export class FacebookComponent implements OnInit {
   messagesStatus: any[] = [];
   Sentiments: any[] = [];
 
-  KEbaseUrl:string="";
-  KEClient:boolean=false;
-  fetchedPostType:string=""
-  
+  KEbaseUrl: string = "";
+  KEClient: boolean = false;
+  fetchedPostType: string = ""
+
   ngOnInit(): void {
     this.fetchedPostType = this.fetchPostType.postType
-    if(this.fetchedPostType == 'FCP') {
+    if (this.fetchedPostType == 'FCP') {
       this.fbCmntReply = false;
       this.fbMsgReply = true;
     } else if (this.fetchedPostType == 'FC') {
       this.fbCmntReply = true;
       this.fbMsgReply = false;
-    }
+    } else if (this)
 
-    this.KEbaseUrl=window.location.origin
-    if(this.KEbaseUrl=='https://keportal.enteract.live'){
-      this.KEClient=true
+      this.KEbaseUrl = window.location.origin
+    if (this.KEbaseUrl == 'https://keportal.enteract.live') {
+      this.KEClient = true
     }
 
     const textarea = this.el.nativeElement as HTMLTextAreaElement;
@@ -277,7 +288,9 @@ export class FacebookComponent implements OnInit {
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
+        
         this.updatedComments = res;
+        this.FacebookNewpost = res
         this.updateCommentsDataListener();
       });
     this.Subscription = this.updateMessagesService
@@ -293,6 +306,7 @@ export class FacebookComponent implements OnInit {
         }
       });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
+
       this.newReply = res;
       this.replyDataListener();
     });
@@ -342,13 +356,19 @@ export class FacebookComponent implements OnInit {
     //   .subscribe((res) => {
     //     this.updateMessageStatusDataListener(res);
     //   });
+
+    // For newPost code Called Api
+
   }
+  // code stat Here for newpost &&&&&&&$$$$$***********
+  FacebookNewpost: any
 
   totalComments: number = 0;
   totalMessages: number = 0;
 
   flag: string = '';
   getFacebookComments() {
+
     this.flag = this.currentUrl.split('/')[2];
 
     if (this.id != null || this.id != undefined) {
@@ -553,72 +573,156 @@ export class FacebookComponent implements OnInit {
 
   commentDto = new commentsDto();
   messageDto = new messagesDto();
+  newpostcommentDto = new newpostcommentDto()
 
   updatedComments: any;
   updatedMessages: any;
-
+  newPostComment: any[] = []
   spinner1running = false;
   spinner2running = false;
-
+  newcomment: any
   updateCommentsDataListener() {
+
+    
     if (!this.id) {
       this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
-    this.updatedComments.forEach((xyz: any) => {
-      if (this.id == xyz.userId) {
-        this.commentDto = {
-          id: xyz.id,
-          postId: xyz.postId,
-          commentId: xyz.commentId,
-          message: xyz.message,
-          contentType: xyz.contentType,
-          userName: xyz.userName || xyz.userId,
-          queryStatus: xyz.queryStatus,
-          createdDate: xyz.createdDate,
-          fromUserProfilePic: xyz.profilePic,
-          body: xyz.body,
-          to: xyz.toId,
-          cc: xyz.cc,
-          bcc: xyz.bcc,
-          attachments: xyz.mediaAttachments,
-          replies: [],
-          sentiment: '',
-          tags: [],
-        };
-        this.FacebookData?.forEach((item: any) => {
-          this.commentsArray = [];
-          if (item.post.postId == xyz.postId) {
-            item.comments.push(this.commentDto);
-            item.comments.forEach((cmnt: any) => {
-              this.commentsArray.push(cmnt);
-            });
+    if (this.updatedComments.length > 0) {
+      this.updatedComments?.forEach((xyz: any) => {
+        xyz.comments.forEach((abc: any) => {
+          if (this.id == xyz.user.userId) {
+            this.commentDto = {
+              id: xyz.user.id,
+              postId: xyz.post.postId,
+              commentId: abc.commentId,
+              message: abc.message,
+              contentType: abc.contentType,
+              userName: abc.userName || abc.userId,
+              queryStatus: abc.queryStatus,
+              createdDate: abc.createdDate,
+              fromUserProfilePic: abc.profilePic,
+              body: abc.body,
+              to: abc.toId,
+              cc: abc.cc,
+              bcc: abc.bcc,
+              attachments: abc.mediaAttachments,
+              replies: [],
+              sentiment: '',
+              tags: [],
+            };
+            this.FacebookData?.forEach((item: any) => {
+              
+              this.commentsArray = [];
+              // this.newPostComment= [];
+              if (item.post.postId == xyz.post.postId) {
 
-            let groupedItems = this.commentsArray.reduce(
-              (acc: any, item: any) => {
-                const date = item.createdDate?.split('T')[0];
-                if (!acc[date]) {
-                  acc[date] = [];
-                }
-                acc[date].push(item);
-                return acc;
-              },
-              {}
-            );
+                item.comments.push(this.commentDto);
+                item.comments.forEach((cmnt: any) => {
+                  this.commentsArray.push(cmnt);
+                });
 
-            item['groupedComments'] = Object.keys(groupedItems).map(
-              (createdDate) => {
-                return {
-                  createdDate,
-                  items: groupedItems[createdDate],
-                };
+                let groupedItems = this.commentsArray.reduce(
+                  (acc: any, item: any) => {
+                    const date = item.createdDate?.split('T')[0];
+                    if (!acc[date]) {
+                      acc[date] = [];
+                    }
+                    acc[date].push(item);
+                    return acc;
+                  },
+                  {}
+                );
+
+                item['groupedComments'] = Object.keys(groupedItems).map(
+                  (createdDate) => {
+                    return {
+                      createdDate,
+                      items: groupedItems[createdDate],
+                    };
+                  }
+                );
               }
-            );
+              // for new post 
+              else {
+                
+                if (item.post.postId != xyz.post.postId) {
+                  
+                  this.FacebookNewpost.forEach((x: any) => {
+                    x.comments.forEach((z: any) => {
+
+                      this.newpostcommentDto = {
+                        id: z.id,
+                        postId: x.post.postId,
+                        commentId: z.commentId,
+                        message: z.message,
+                        contentType: z.contentType,
+                        userName: z.userName || z.userId,
+                        queryStatus: z.queryStatus,
+                        createdDate: z.createdDate,
+                        fromUserProfilePic: z.profilePic,
+                        body: z.body,
+                        to: z.toId,
+                        cc: z.cc,
+                        bcc: z.bcc,
+                        attachments: z.mediaAttachments,
+                        replies: [],
+                        sentiment: '',
+                        tags: z.tags,
+                      };
+                    })
+                    if (!this.newPostComment.find(comment => comment.post.postId === x.post.postId)) {
+                      this.newPostComment.push(x);
+                    }
+                    this.fbnewCmntReply = true
+                    console.log("new comment data===>", this.newPostComment)
+                    this.newPostComment.forEach((item: any) => {
+                      this.commentsArray = [];
+                      if (item.post.postId == x.post.postId) {
+                        if (!item.comments.find((cmnt: any) => cmnt.id === this.newpostcommentDto.id)) {
+                          item.comments.push(this.newpostcommentDto);
+                        }
+                        item.comments.forEach((cmnt: any) => {
+                          if (!this.commentsArray.includes(cmnt.id)) {
+                            this.commentsArray.push(cmnt);
+                          }
+                        });
+                        let groupedItems = this.commentsArray.reduce(
+                          (acc: any, item: any) => {
+                            const date = item.createdDate?.split('T')[0];
+                            if (!acc[date]) {
+                              acc[date] = [];
+                            }
+                            acc[date].push(item);
+                            return acc;
+                          },
+                          {}
+                        );
+
+                        item['groupedComments'] = Object.keys(groupedItems).map(
+                          (createdDate) => {
+                            return {
+                              createdDate,
+                              items: groupedItems[createdDate],
+                            };
+                          }
+                        );
+                      }
+                    })
+                  });
+
+                }
+
+
+              }
+            });
+            this.totalUnrespondedCmntCountByCustomer =
+              this.totalUnrespondedCmntCountByCustomer + 1;
           }
-        });
-        this.totalUnrespondedCmntCountByCustomer =
-          this.totalUnrespondedCmntCountByCustomer + 1;
-      }
-    });
+        })
+
+      });
+    }
+
     this.changeDetect.detectChanges();
   }
 
@@ -678,8 +782,39 @@ export class FacebookComponent implements OnInit {
   removeTags: any;
 
   addTagDataListener() {
-    
+
     this.FacebookData?.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == this.addTags.feedId) {
+            if (this.addTags.type == 'Tag') {
+              if (singleCmnt.tags.length == 0) {
+                singleCmnt.tags.push(this.addTags);
+              } else if (singleCmnt.tags.length > 0) {
+                const tag = singleCmnt.tags.find(
+                  (x: any) => x.name == this.addTags.name
+                );
+                if (tag != null || tag != undefined) {
+                  const index = singleCmnt.tags.indexOf(tag);
+                  if (index !== -1) {
+                    singleCmnt.tags.splice(index, 1);
+                  }
+                } else {
+                  if (!singleCmnt.tags.includes(this.addTags)) {
+                    singleCmnt.tags.push(this.addTags);
+                  }
+                }
+              }
+            }
+            if (this.addTags.type == 'Sentiment') {
+              singleCmnt.sentiment = this.addTags;
+            }
+          }
+        });
+      });
+    });
+    // for new post
+    this.newPostComment?.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
           if (singleCmnt.id == this.addTags.feedId) {
@@ -751,6 +886,22 @@ export class FacebookComponent implements OnInit {
         });
       });
     });
+    // for new comment
+    this.newPostComment?.forEach((post: any) => {
+      post.groupedComments.forEach((cmnt: any) => {
+        cmnt.items.forEach((singleCmnt: any) => {
+          if (singleCmnt.id == this.removeTags.feedId) {
+            var tag = singleCmnt.tags.find(
+              (x: any) => x.name == this.removeTags.tagName
+            );
+            const index = singleCmnt.tags.indexOf(tag);
+            if (index !== -1) {
+              singleCmnt.tags.splice(index, 1);
+            }
+          }
+        });
+      });
+    });
     this.FacebookMessages?.forEach((msg: any) => {
       if (msg.id == this.removeTags.feedId) {
         var tag = msg.tags.find((x: any) => x.name == this.removeTags.tagName);
@@ -766,6 +917,19 @@ export class FacebookComponent implements OnInit {
   updateQueryStatusDataListener() {
     if (this.FacebookData) {
       this.FacebookData?.forEach((post: any) => {
+        post.groupedComments.forEach((cmnt: any) => {
+          cmnt.items.forEach((singleCmnt: any) => {
+            if (singleCmnt.id == this.queryStatus.queryId) {
+              singleCmnt.queryStatus = this.queryStatus.queryStatus;
+              singleCmnt.isLikedByAdmin = this.queryStatus.isLikes;
+            }
+          });
+        });
+      });
+    }
+    // for new comment
+    if (this.newPostComment) {
+      this.newPostComment?.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
           cmnt.items.forEach((singleCmnt: any) => {
             if (singleCmnt.id == this.queryStatus.queryId) {
@@ -815,11 +979,28 @@ export class FacebookComponent implements OnInit {
   }
 
   replyDataListener() {
+    
     if (this.newReply.contentType == 'FC') {
       this.FacebookData?.forEach((post: any) => {
         post.groupedComments.forEach((cmnt: any) => {
           cmnt.items.forEach((singleCmnt: any) => {
             if (singleCmnt.id == this.newReply.commentId) {
+              singleCmnt.replies.push(this.newReply);
+              singleCmnt.queryStatus = this.newReply.queryStatus;
+            }
+          });
+        });
+      });
+    }
+    // for new post comment reply
+    if (this.newReply.contentType == 'FC') {
+      this.newPostComment?.forEach((post: any) => {
+        post.groupedComments.forEach((cmnt: any) => {
+          cmnt.items.forEach((singleCmnt: any) => {
+            if (singleCmnt.id == this.newReply.commentId) {
+              if(singleCmnt.replies==null){
+                singleCmnt.replies=[]
+              }
               singleCmnt.replies.push(this.newReply);
               singleCmnt.queryStatus = this.newReply.queryStatus;
             }
@@ -1142,6 +1323,18 @@ export class FacebookComponent implements OnInit {
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
     responseByName: new FormControl(this.ReplyDto.responseByName),
   });
+  // for new comment 
+  facebookNewReplyForm = new UntypedFormGroup({
+    text: new UntypedFormControl(this.ReplyDto.text, Validators.required),
+    commentId: new UntypedFormControl(this.ReplyDto.commentId),
+    // teamId: new UntypedFormControl(this.ReplyDto.teamId),
+    platform: new UntypedFormControl(this.ReplyDto.platform),
+    contentType: new UntypedFormControl(this.ReplyDto.contentType),
+    profileId: new UntypedFormControl(this.ReplyDto.profileId),
+    profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
+    userProfileId: new FormControl(this.ReplyDto.userProfileId),
+    responseByName: new FormControl(this.ReplyDto.responseByName),
+  });
 
   facebookMessageReplyForm = new UntypedFormGroup({
     text: new UntypedFormControl(this.ReplyDto.text, Validators.required),
@@ -1159,7 +1352,30 @@ export class FacebookComponent implements OnInit {
   profilePageId: string = '';
 
   SendCommentInformation(comId: any) {
+
     this.FacebookData?.forEach((xyz: any) => {
+      xyz.comments.forEach((comment: any) => {
+        if (comment.id == comId) {
+          // show mentioned reply
+          this.show = true;
+
+          // populate comment data
+
+          this.commentId = comment.id;
+          // this.agentId = localStorage.getItem('agentId');
+          this.platform = xyz.platform;
+          this.postType = comment.contentType;
+          this.profileId = xyz.post.profile.profile_Id;
+          this.profilePageId = xyz.post.profile.page_Id;
+          this.userProfileId = this.userInformation.id;
+        }
+      });
+    });
+  }
+  // For new commentInformation
+  SendnewCommentInformation(comId: any) {
+    
+    this.newPostComment?.forEach((xyz: any) => {
       xyz.comments.forEach((comment: any) => {
         if (comment.id == comId) {
           // show mentioned reply
@@ -1274,6 +1490,79 @@ export class FacebookComponent implements OnInit {
     this.quickReplySearchText = '';
   }
 
+  submitFacebookNewReply() {
+    
+    if (this.commentId == 0) {
+      this.reloadComponent('selectComment');
+    } else {
+      var formData = new FormData();
+      if (this.ImageName != null || undefined) {
+        for (let index = 0; index < this.ImageName.length; index++) {
+          formData.append('File', this.ImageName[index]);
+        }
+      }
+
+      // if () {
+      if (this.text !== '') {
+        this.facebookNewReplyForm.patchValue({
+          text: this.text,
+        });
+      }
+      // }
+      //  else {
+      //   if (this.facebookReplyForm.value.text) {
+      //     this.facebookReplyForm.patchValue({
+      //       to: this.facebookReplyForm.value.text,
+      //     });
+      //   }
+      // }
+      this.facebookNewReplyForm.patchValue({
+        commentId: this.commentId,
+        // teamId: this.agentId,
+        platform: this.platform,
+        contentType: this.postType,
+        profileId: this.profileId,
+        profilePageId: this.profilePageId,
+        userProfileId: this.userProfileId,
+        responseByName: this.pageName,
+      });
+
+      formData.append(
+        'CommentReply',
+        JSON.stringify(this.facebookNewReplyForm.value)
+      );
+      if (
+        (this.facebookNewReplyForm.value.text !== '' &&
+          this.facebookNewReplyForm.value.text !== null) ||
+        (this?.ImageName?.length > 0 && this.ImageName != undefined)
+      ) {
+        this.spinner1running = true;
+        this.SpinnerService.show();
+        this.commondata.ReplyComment(formData).subscribe(
+          (res: any) => {
+            this.spinner1running = false;
+            this.SpinnerService.hide();
+            this.clearInputField();
+            this.reloadComponent('comment');
+
+            this.facebookNewReplyForm.reset();
+
+            if (this.radioInput != undefined) {
+              this.radioInput.nativeElement.checked = false;
+            }
+          },
+          (error) => {
+            alert(error.message);
+            this.spinner1running = false;
+            this.SpinnerService.hide();
+          }
+        );
+      } else {
+        this.reloadComponent('empty-input-field');
+      }
+    }
+    this.quickReplySearchText = '';
+  }
   clearInputField() {
     this.ImageArray = [];
     this.msgText = '';
@@ -1420,6 +1709,7 @@ export class FacebookComponent implements OnInit {
   }
 
   insertTagsForFeed(comId: number, tagName: string) {
+
     this.insertTagsForFeedDto.feedId = comId;
     this.insertTagsForFeedDto.tagName = tagName;
     this.insertTagsForFeedDto.type = 'Tag';
@@ -1455,7 +1745,37 @@ export class FacebookComponent implements OnInit {
         }
       });
     });
+    // for new posttag
+    this.newPostComment?.forEach((abc: any) => {
+      abc.comments.forEach((comment: any) => {
+        if (comment.id == comId) {
+          if (comment.tags.length == 0) {
+            this.commondata
+              .InsertTag(this.insertTagsForFeedDto)
+              .subscribe((res: any) => {
+                this.reloadComponent('ApplyTag');
 
+                this.activeTag = true;
+                this.checkTag = true;
+              });
+          } else if (comment.tags.length > 0) {
+            const value = comment.tags.find((x: any) => x.name == tagName);
+            if (value != null || value != undefined) {
+              this.removeTagFromFeed(comId, tagName);
+            } else {
+              this.commondata
+                .InsertTag(this.insertTagsForFeedDto)
+                .subscribe((res: any) => {
+                  this.reloadComponent('ApplyTag');
+
+                  this.activeTag = true;
+                  this.checkTag = true;
+                });
+            }
+          }
+        }
+      });
+    });
     this.FacebookMessages?.forEach((msg: any) => {
       if (msg.id == comId) {
         if (msg.tags.length == 0) {
@@ -1521,6 +1841,7 @@ export class FacebookComponent implements OnInit {
   }
 
   commentStatus(comId: any, type: any) {
+
     this.commentStatusDto.id = comId;
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = 'Facebook';
@@ -1528,7 +1849,7 @@ export class FacebookComponent implements OnInit {
     //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .CommentRespond(this.commentStatusDto)
-      .subscribe((res: any) => {});
+      .subscribe((res: any) => { });
   }
 
   queryCompleted(comId: any, type: any) {
@@ -1584,7 +1905,7 @@ export class FacebookComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
-    
+
     if (type == 'messageUnhided') {
       this.AlterMsg = 'Comment Unhided Sucessfully';
       this.toastermessage = true;
@@ -1718,11 +2039,18 @@ export class FacebookComponent implements OnInit {
   facebookCommentReply() {
     this.fbCmntReply = true;
     this.fbMsgReply = false;
+    this.fbnewCmntReply = false
   }
 
   facebookMessageReply() {
     this.fbCmntReply = false;
     this.fbMsgReply = true;
+    this.fbnewCmntReply = false
+  }
+  facebookNewpostComentReply() {
+    this.fbCmntReply = false
+    this.fbMsgReply = false
+    this.fbnewCmntReply = true
   }
 
   removeAttachedFile(index: any) {
@@ -1872,12 +2200,12 @@ export class FacebookComponent implements OnInit {
           cmnt.items.forEach((singleCmnt: any) => {
             if (singleCmnt.id == queryId) {
               singleCmnt.isHide = status;
-              if(status == true){
+              if (status == true) {
                 this.reloadComponent('messageHided');
-              } else if(status == false){
+              } else if (status == false) {
                 this.reloadComponent('messageUnhided');
               }
-              
+
             }
           });
         });
@@ -1979,11 +2307,11 @@ export class FacebookComponent implements OnInit {
     const channel = localStorage.getItem('parent');
     this.insertAtCaret(
       'https://keportal.enteract.live/survey/customer_satisfaction' +
-        '?channel=' +
-        channel +
-        '&customerId=' +
-        customerId +
-        ' '
+      '?channel=' +
+      channel +
+      '&customerId=' +
+      customerId +
+      ' '
     );
   }
 }

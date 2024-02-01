@@ -151,7 +151,7 @@ export class TwitterComponent implements OnInit {
   KEClient:boolean=false;
   fetchedPostType:string=""
   ngOnInit(): void {
-    debugger
+    
     this.fetchedPostType = this.fetchPostType.postType
     if(this.fetchedPostType == 'TTR') {
       this.TTReply = true;
