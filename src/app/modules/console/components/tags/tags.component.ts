@@ -3,8 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
+// import { HeaderService } from 'src/app/shared/services/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { NgxSpinnerModule, } from 'ngx-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 interface Tag {
+color: any;
+  mainId: any;
   id: any;
   name: string;
   tickets: number;
@@ -13,7 +18,7 @@ interface Tag {
 @Component({
   selector: 'app-tags',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule,NgxSpinnerModule],
   templateUrl: './tags.component.html',
   styleUrls: ['./tags.component.scss']
 })
@@ -23,6 +28,7 @@ export class TagsComponent implements OnInit {
   perPage: number = 15;
   currentPage: number = 1;
   searchText: string = '';
+selectedTextColor=' #FF0000' ;
   applySearchFilter(): void {
     // Convert the search text to lowercase for case-insensitive search
     const searchTextLower = this.searchText.toLowerCase();
@@ -37,27 +43,55 @@ export class TagsComponent implements OnInit {
     this.sortTags();
   }
   refreshMessages() {
-    this.commonService.GetTags().subscribe(
-      (response: any) => {
-        this.tags = response;
-        // Apply sorting after refreshing tags
-        this.sortTags();
-      },
-      (error: any) => {
+    this.commonService.GetTags()
+      .subscribe((response: any) => {
+   const tags = response; // Assign the response to the messages array
+   tags.forEach((abc:any)=>{
+    if(abc.name=='Tags'){
+     abc.subTags.forEach((x:any)=>{
+     x.subTags.forEach((abc:any)=>{
+      this.tags.push(abc)
+      console.log("tags===>",this.tags)
+     })
+     })
+    }
+   })
+  
+      this.sortTags() 
+      }, (error: any) => {
+        this.spinnerServerice.hide()
         console.error(error);
-      }
-    );
+      });
   }
-  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
+  constructor(private headerService: HeaderService, private spinnerServerice:NgxSpinnerService,
+    private commonService: CommonDataService, private router: Router) { }
   ngOnInit(): void {
     this.getTags();
   }
   getTags(): void {
+
+    this.spinnerServerice.show()
+    this.tags=[]
     this.commonService.GetTags()
       .subscribe((response: any) => {
-        this.tags = response; // Assign the response to the messages array
+        this.spinnerServerice.hide()
+   const tags = response; // Assign the response to the messages array
+   tags.forEach((abc:any)=>{
+    if(abc.name=='Tags'){
+     abc.subTags.forEach((x:any)=>{
+     x.subTags.forEach((abc:any)=>{
+      if( !this.tags.includes(abc)){
+        this.tags.push(abc)
+      }
+
+     })
+     })
+    }
+   })
+ 
         console.log(this.tags); // Verify that the data is populated correctly
       }, (error: any) => {
+        this.spinnerServerice.hide()
         console.error(error);
       });
   }
@@ -94,23 +128,18 @@ export class TagsComponent implements OnInit {
     this.tags.sort((a, b) => a.contacts - b.contacts);
   }
   editTag(tag: Tag): void {
-    this.router.navigate(['console/tag/create/:id'], {
-      state: { tag }
-    })
+debugger
+    // this.router.navigate(['/console/tag/create/0'], {
+    //   state: { tag }
+    // })
+    this.router.navigate(['/console/tag/create/',tag.mainId])
   }
   deleteTemplate(message: any) {
-    const confirmation = confirm('Are you sure you want to delete this template?');
-    if (confirmation) {
-      this.commonService.DeleteTags(message.id).subscribe(
-        () => {
-          console.log('message deleted:', message);
-           this.tags = this.tags.filter((msg) => msg.id !== message.id);
-        },
-        (error: any) => {
-          console.error('Error deleting template:', error);
-        }
-      );
-    }
+    debugger
+    this.commonService.DeleteTags(message.mainId).subscribe((res:any)=>{
+      this.getTags()
+    })
+  
   }
   disableTag(tag: Tag): void {
     console.log('Disable tag:', tag);

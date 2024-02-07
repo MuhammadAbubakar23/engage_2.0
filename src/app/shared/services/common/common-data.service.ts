@@ -79,7 +79,9 @@ export class CommonDataService {
   hideUnhideMessage = environment.links.common.hideUnhideMessage;
   dispositionTags = environment.links.common.dispositionTags;
   removeAssignedQuery =environment.links.common.removeAssignedQuery
-
+  getAllTeams= environment.links.console.getAllTeams
+  addTeam = environment.links.console.addTeam
+  updateTeam = environment.links.console.updateTeam
   //Reports
   addUniqueCustomer = environment.links.common.addUniqueCustomer;
   uniqueExportCsv = environment.links.common.uniqueExportCsv;
@@ -157,7 +159,7 @@ export class CommonDataService {
   addTags = environment.links.console.addTags;
   updateTag = environment.links.console.updateTag;
   deleteTags = environment.links.console.deleteTags;
-  getParents = environment.links.console.getParents;
+  getTagsByComayId = environment.links.console.getTagsByComayId;
   getAllTags = environment.links.console.defaultTags;
   // rules
   deleteRules = environment.links.console.deleteRules;
@@ -557,8 +559,8 @@ export class CommonDataService {
     return this.http.post(url, delRolId);
   }
 
-  GetParents() {
-    return this.http.get(this.consoleBaseUrl + this.getParents);
+  GetTagsByCompayId() {
+    return this.http.get(this.consoleBaseUrl + this.getTagsByComayId);
   }
 
   // rules
@@ -822,7 +824,15 @@ UpdateSkill(id: any, rule: any) {
   const url = (`${this.consoleBaseUrl}${this.updateSkill}?SkillId=${id}`)
   return this.http.post(url, rule)
 }
-
+GetAllTeams(){
+  return this.http.get(this.IdentityBaseUrl + this.getAllTeams)
+  }
+  AddTeam(body:any){
+    return this.http.post(this.IdentityBaseUrl+this.addTeam,body)
+  }
+  UpdateTeam(body:any){
+    return this.http.post(this.IdentityBaseUrl+this.updateTeam,body)
+  }
 }
 
 

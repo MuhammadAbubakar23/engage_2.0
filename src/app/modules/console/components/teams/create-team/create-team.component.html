@@ -2,112 +2,143 @@
     <div class="create-team console-body-wrapper inbox-container footerheight" data-scrollbar="true" tabindex="-1"
         style="overflow-y:auto; outline: none;">
         <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
-            <!-- <div class="p-4"> -->
-            <!-- <header class="tab-header">
-                <nav>
-                    <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
-                        <button class="nav-link active" id="user-tab" data-bs-toggle="tab" data-bs-target="#team-detail"
-                            type="button" role="tab" aria-controls="team-detail" aria-selected="true">
-                            <h6>Team Information
-                            </h6>
-                        </button>
-                        <button class="nav-link" id="team-tab" data-bs-toggle="tab" data-bs-target="#team-user"
+            <div class="p-4">
+                <header class="tab-header">
+                    <nav>
+                        <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="user-tab" data-bs-toggle="tab"
+                                data-bs-target="#team-detail" type="button" role="tab" aria-controls="team-detail"
+                                aria-selected="true">
+                                <h6>Team Information
+                                </h6>
+                            </button>
+                            <!-- <button class="nav-link" id="team-tab" data-bs-toggle="tab" data-bs-target="#team-user"
                             type="button" role="tab" aria-controls="team-user" aria-selected="false">
                             <h6>Team Members
                             </h6>
-                        </button>
-                    </div>
-                </nav>
-            </header>
-            <div class="tab-body">
+                        </button> -->
+                        </div>
+                    </nav>
+                </header>
+
+                <!-- <div class="tab-body">
                 <div class="tab-content" id="nav-tabContent">
-                    <div id="team-detail" class="tab-pane fade active show" role="tabpanel" aria-labelledby="user-tab"> -->
-            <div class="wider-container">
-                <div class="team-detail-form-box mb-5">
-                    <!-- <div class="row" data-scrollbar="true" tabindex="-1"
+                    <div id="team-detail" class="tab-pane fade active show" role="tabpanel" aria-labelledby="user-tab">
+                        -->
+                <div class="wider-container">
+                    <div class="team-detail-form-box mb-5">
+                        <!-- <div class="row" data-scrollbar="true" tabindex="-1"
                                     style="overflow-y:auto; outline: none;">
                                     <div class="col-lg-6 fixed-top sticky-top "> -->
-                 
-                    <div class="floating-item mb-4">
-                        <div [ngClass]="{'was-validated' : teamForm.get('description')!.valid && teamForm.get('description')!.touched}"
-                            class="floating-wrap form-floating mb-2">
-                            <textarea [attr.disabled]="identity>0?'disabled':null" [ngClass]="{'is-invalid' : (teamForm.get('description')!.errors && (teamForm.get('description')!.touched ||
-                                            teamForm.get('description')!.dirty))}" formControlName="description"
-                                class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                                style="height: 100px"></textarea>
-                            <label for="floatingTextarea2">Description</label>
-                            <div class="invalid-feedback" *ngIf="(teamForm.get('description')!.errors && (teamForm.get('description')!.touched ||
-                                                                              teamForm.get('description')!.dirty))">
+                        <div class="floating-item mb-4">
+                            <div class="floating-wrap form-floating mb-2"
+                                [ngClass]="{'was-validated' : teamForm.get('name')!.valid && teamForm.get('name')!.touched}">
+                                <input [ngClass]="{'is-invalid' : (teamForm.get('name')!.errors && (teamForm.get('name')!.touched ||
+                                                teamForm.get('name')!.dirty))}" formControlName="name" name=" name"
+                                    type="text" class="form-control" id="name" placeholder="Sales Team">
+                                <label for="name">Team Name</label>
+                                <div class="invalid-feedback" *ngIf="(teamForm.get('name')!.errors && (teamForm.get('name')!.touched ||
+                                                                                teamForm.get('name')!.dirty))">
+                                    <div
+                                        *ngIf="teamForm.get('name')!.errors?.['maxlength'] || teamForm.get('name')!.errors?.['minlength']">
+                                        Team name must be grater than 1 character and less than 25
+                                        characters!
+                                    </div>
+                                    <div *ngIf="teamForm.get('name')!.errors?.['required']">
+                                        Skill Name is required!
+                                    </div>
+                                </div>
+                                <div class="valid-feedback"
+                                    *ngIf="teamForm.get('name')!.valid && teamForm.get('name')!.touched">
 
-                                <div *ngIf="teamForm.get('description')!.errors?.['required']">
-                                    Description is required!
+                                    Looks Good!
                                 </div>
                             </div>
-                            <div class="valid-feedback"
-                                *ngIf="teamForm.get('description')!.valid && teamForm.get('description')!.touched">
+                            <small class="example-text ms-3">e.g. Customer support Team</small>
 
-                                Looks Good!
+                        </div>
+                        <div class="floating-item mb-4">
+                            <div [ngClass]="{'was-validated' : teamForm.get('desc')!.valid && teamForm.get('desc')!.touched}"
+                                class="floating-wrap form-floating mb-2">
+                                <textarea [attr.disabled]="identity>0?'disabled':null" [ngClass]="{'is-invalid' : (teamForm.get('desc')!.errors && (teamForm.get('desc')!.touched ||
+                                            teamForm.get('desc')!.dirty))}" formControlName="desc"
+                                    class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                    style="height: 100px"></textarea>
+                                <label for="floatingTextarea2">desc</label>
+                                <div class="invalid-feedback" *ngIf="(teamForm.get('desc')!.errors && (teamForm.get('desc')!.touched ||
+                                                                              teamForm.get('desc')!.dirty))">
+
+                                    <div *ngIf="teamForm.get('desc')!.errors?.['required']">
+                                        desc is required!
+                                    </div>
+                                </div>
+                                <div class="valid-feedback"
+                                    *ngIf="teamForm.get('desc')!.valid && teamForm.get('desc')!.touched">
+
+                                    Looks Good!
+                                </div>
+                            </div>
+                            <small class="example-text ms-3">e.g. This Team belongs to Customer Support in
+                                Tokyo
+                                timezone</small>
+
+                        </div>
+                        <div class="floating-item mb-4">
+                            <div [ngClass]="{'was-validated' : teamForm.get('timeZone')!.valid && teamForm.get('timeZone')!.touched}"
+                                class="floating-wrap form-floating mb-2">
+                                <select [ngClass]="{'is-invalid' : (teamForm.get('timeZone')!.errors && (teamForm.get('timeZone')!.touched ||
+                                                teamForm.get('timeZone')!.dirty))}"
+                                    formControlName="timeZone" class="form-select" id="floatingSelect"
+                                    aria-label="Floating label select">
+                                    <option selected="" disabled>Select Time</option>
+                                    <option selected="">(GMT+09:00) Karachi</option>
+                                    <option value="1">(GMT+03:00) Lahore</option>
+                                    <option value="2">(GMT+05:00) Peshawar</option>
+                                    <option value="3">(GMT+06:00) Islamabad</option>
+                                </select>
+                                <label for="floatingSelect">TimeZone</label>
+                                <div class="invalid-feedback"
+                                    *ngIf="(teamForm.get('timeZone')!.errors && (teamForm.get('timeZone')!.touched || teamForm.get('timeZone')!.dirty))">
+                                    <div *ngIf="teamForm.get('timeZone')!.errors?.['required']">
+                                        Please select Business Hours
+                                    </div>
+
+                                </div>
+                                <div class="valid-feedback"
+                                    *ngIf="teamForm.get('timeZone')!.valid && teamForm.get('timeZone')!.touched">
+                                    Looks Good!
+                                </div>
                             </div>
                         </div>
-                        <small class="example-text ms-3">e.g. This Team belongs to Customer Support in
-                            Tokyo
-                            timezone</small>
-
-                    </div>
-                    <!-- <div class="floating-item mb-4">
-                                            <div [ngClass]="{'was-validated' : teamForm.get('businesshours')!.valid && teamForm.get('businesshours')!.touched}"
-                                                class="floating-wrap form-floating mb-2">
-                                                <select [ngClass]="{'is-invalid' : (teamForm.get('businesshours')!.errors && (teamForm.get('businesshours')!.touched ||
-                                                teamForm.get('businesshours')!.dirty))}" formControlName="businesshours"
-                                                    class="form-select" id="floatingSelect"
-                                                    aria-label="Floating label select">
-                                                    <option selected="">Tokyo Business hours</option>
-                                                    <option value="1">Option 1</option>
-                                                    <option value="2">Option 1</option>
-                                                    <option value="3">Option 1</option>
-                                                </select>
-                                                <label for="floatingSelect">Business hours</label>
-                                                <div class="invalid-feedback" *ngIf="(teamForm.get('businesshours')!.errors && (teamForm.get('businesshours')!.touched || teamForm.get('businesshours')!.dirty))">
-                                                    <div *ngIf="teamForm.get('businesshours')!.errors?.['required']">
-                                                        Please select Business Hours
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div class="valid-feedback"
-                                                    *ngIf="teamForm.get('businesshours')!.valid && teamForm.get('businesshours')!.touched">
-                                                    Looks Good!
-                                                </div>
-                                            </div>
-                                        </div> -->
-                    <!-- <div class="floating-item mb-4">
-                                            <div class="floating-wrap form-floating mb-2"
-                                                [ngClass]="{'was-validated' : teamForm.get('supportchannelhour')!.valid && teamForm.get('supportchannelhour')!.touched}">
-                                                <select [ngClass]="{'is-invalid' : (teamForm.get('supportchannelhour')!.errors && (teamForm.get('supportchannelhour')!.touched ||
+                        <!-- <div class="floating-item mb-4">
+                            <div class="floating-wrap form-floating mb-2"
+                                [ngClass]="{'was-validated' : teamForm.get('supportchannelhour')!.valid && teamForm.get('supportchannelhour')!.touched}">
+                                <select [ngClass]="{'is-invalid' : (teamForm.get('supportchannelhour')!.errors && (teamForm.get('supportchannelhour')!.touched ||
                                                 teamForm.get('supportchannelhour')!.dirty))}"
-                                                    formControlName="supportchannelhour" class="form-select"
-                                                    id="supportchannelhour" aria-label="Floating label select">
-                                                    <option selected="">1 hour</option>
-                                                    <option value="1">2 hours</option>
-                                                    <option value="2">4 hours</option>
-                                                    <option value="3">6 hours</option>
-                                                </select>
-                                                <label for="floatingSelect">If a ticket remains unassigned for more
-                                                    than</label>
-                                                <div class="invalid-feedback" *ngIf="(teamForm.get('supportchannelhour')!.errors && (teamForm.get('supportchannelhour')!.touched ||
+                                    formControlName="supportchannelhour" class="form-select" id="supportchannelhour"
+                                    aria-label="Floating label select">
+                                    <option selected="">1 hour</option>
+                                    <option value="1">2 hours</option>
+                                    <option value="2">4 hours</option>
+                                    <option value="3">6 hours</option>
+                                </select>
+                                <label for="floatingSelect">If a ticket remains unassigned for more
+                                    than</label>
+                                <div class="invalid-feedback" *ngIf="(teamForm.get('supportchannelhour')!.errors && (teamForm.get('supportchannelhour')!.touched ||
                                   teamForm.get('supportchannelhour')!.dirty))">
-                                                    <div *ngIf="teamForm.get('supportchannelhour')!.errors?.['required']">
-                                                        Please select Hours
-                                                    </div>
-                                                   
-    
-                                                </div>
-                                                <div class="valid-feedback"
-                                                    *ngIf="teamForm.get('supportchannelhour')!.valid && teamForm.get('supportchannelhour')!.touched">
-                                                    Looks Good!
-                                                </div>
-                                            </div>
-                                        </div> -->
-                    <!-- <div class="floating-item mb-4">
+                                    <div *ngIf="teamForm.get('supportchannelhour')!.errors?.['required']">
+                                        Please select Hours
+                                    </div>
+
+
+                                </div>
+                                <div class="valid-feedback"
+                                    *ngIf="teamForm.get('supportchannelhour')!.valid && teamForm.get('supportchannelhour')!.touched">
+                                    Looks Good!
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <div class="floating-item mb-4">
                                             <div class="floating-wrap form-floating mb-2"
                                             [ngClass]="{'was-validated' : teamForm.get('supportchannelteam')!.valid && teamForm.get('supportchannelteam')!.touched}">
                                                 <select [ngClass]="{'is-invalid' : (teamForm.get('supportchannelteam')!.errors && (teamForm.get('supportchannelteam')!.touched ||
@@ -132,7 +163,7 @@
                                                 </div>
                                             </div>
                                         </div> -->
-                    <!-- <div class="floating-item mb-4">
+                        <!-- <div class="floating-item mb-4">
                                             <ul class="list-group">
                                                 <li
                                                     class="list-group-item d-flex justify-content-between align-items-sm-center shadow-sm rounded border p-3 saltBg">
@@ -214,16 +245,16 @@
                                                 </div>
                                             </div>
                                         </div> -->
-                    <!-- </div>
+                        <!-- </div>
                                     <div class="col-lg-6 fixed-top sticky-top overflow-scroll" style="height: 500px;"> -->
-                    <!-- <span class="coal mb-4">
+                        <!-- <span class="coal mb-4">
                                             The Accesses of default teams cannot be edited. Create a new role to select custom
                                             accesses.
                                         </span>
                                         <div class="border mb-3"></div> -->
-                    <engage2-card-box-list [menulist]="TeamsNAccesses" [menulistselectall]="menulistselectall"
-                        (menulistchecked)="setMenuList($event)"></engage2-card-box-list>
-                    <!-- </div> -->
+                        <!-- <engage2-card-box-list [menulist]="TeamsNAccesses" [menulistselectall]="menulistselectall"
+                            (menulistchecked)="setMenuList($event)"></engage2-card-box-list> -->
+                    </div>
                     <!-- </div> -->
 
                 </div>
@@ -565,3 +596,17 @@
         </div>
     </footer>
 </form>
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+    <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+       aria-live="assertive" aria-atomic="true">
+       <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+          <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+          <div class="toast-btn d-flex align-items-center">
+ 
+             <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+                (click)="closeToaster()"><i class="fal fa-times"></i></button>
+ 
+          </div>
+       </div>
+    </div>
+ </div>

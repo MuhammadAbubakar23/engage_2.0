@@ -76,7 +76,8 @@ export const environment = {
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
 
   // For Testing
-  IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
+  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
+  IdentityBaseUrl:'https://rep.enteract.app/api/',
   TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
   CommonBaseUrl: 'https://common-engage.enteract.app/api/',
   ServiceBaseUrl: '',
@@ -157,12 +158,12 @@ export const environment = {
       getAllProfile: 'Profile/GetAll',
       addProfile: 'Profile/Add',
       attachFacebookPage: 'ProfileManagement/RegisterProfile',
-      getTags: 'Tags/GetAll',
+      getTags: 'Tags/GetTags',
       getTagById: 'Tags/GetById',
       addTags: 'Tags/Add',
       updateTag: 'Tags/Update',
       deleteTags: 'Tags/Delete',
-      getParents: 'Tags/GetParents',
+      getTagsByComayId: 'Tags/GetTagsByCompayId',
       getAllRules: 'Rules/GetAll',
       getEntitiesRule: 'Rules/GetEntities',
       getRuleEntityProperties: 'Rules/GetEntitiesProperties/',
@@ -171,6 +172,9 @@ export const environment = {
       updateRules: 'Rules/Update',
       deleteRules: 'Rules/Delete',
       defaultTags: 'Tags/GetTags',
+      getAllTeams:'Teams/GetTeamTypes',
+      addTeam : 'Teams/Add',
+      updateTeam: 'Teams/Update'
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',

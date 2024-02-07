@@ -4,11 +4,13 @@ import { Router } from '@angular/router';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-create-tags',
   standalone: true,
-  imports: [ReactiveFormsModule, MatDialogModule, CommonModule, FormsModule],
+  imports: [ReactiveFormsModule, MatDialogModule, CommonModule, FormsModule,],
   templateUrl: './create-tags.component.html',
   styleUrls: ['./create-tags.component.scss']
 })
@@ -16,18 +18,24 @@ export class CreateTagsComponent implements OnInit {
   form!: FormGroup;
   showTags = false;
   name!: string;
+  AlterMsg:string=''
+  toastermessage:boolean=false
+  selectedTextColor: string = '';
   parentTags: any[] = [];
   childTags: any[] = [];
+  nestTags:any[]=[]
   // selectedParentTag: any;
   childTag : any[] = []
   parentChildTag : any[] = []
   parentChild : any[] = []
-  constructor(private formBuilder: FormBuilder, private commonService: CommonDataService, private router: Router, private dialog: MatDialog) {
+  id:any;
+  constructor(private formBuilder: FormBuilder, private commonService: CommonDataService,private route:ActivatedRoute,
+     private router: Router, private dialog: MatDialog) {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
       desc: [''],
-      parentId: [0],
-      baseId: [0],
+      parentId: [''],
+      baseId: [3],
       firewallId: [0],
       icon: [''],
       indexNo: [0],
@@ -36,7 +44,13 @@ export class CreateTagsComponent implements OnInit {
     });
   }
   ngOnInit() {
-    const template = history.state.tag;
+    this.id=this.route.snapshot.paramMap.get('id')
+    // 
+  this.editTagbyId()
+   
+  }
+  editTagbyId(){
+     const template = history.state.tag;
     if (template) {
       this.name = template.name;
       this.form.patchValue({
@@ -48,30 +62,48 @@ export class CreateTagsComponent implements OnInit {
     }
   }
   addTag() {
-    this.commonService.GetParents().subscribe(
+    debugger
+    this.commonService.GetTagsByCompayId().subscribe(
       (response: any) => {
         this.parentTags = response;
+     this.parentTags.forEach((x:any)=>{
+     x.subTags.forEach((xyz:any)=>{
+      this.childTags.push(xyz)
+     })
+      // console.log("Child tags===>",this.childTags)
+     })
       },
+    
       (error: any) => {
-        console.error(error);
+      alert(error.error)
       }
     );
   }
   selectParentTag(parentId: any) {
-    var obj = {
-      id: 0,
-      parentId: Number(parentId.target.value),
-      baseId: 0
-    }
-    // this.selectedParentTag = parentId;
-    this.commonService.GetTagById(obj).subscribe(
-      (response: any) => {
-        this.childTags = response;
-      },
-      (error: any) => {
-        console.error(error);
+    debugger
+    const id= Number(parentId.target.value)
+    this.nestTags=[]
+    this.childTags.forEach((abc:any)=>{
+
+      if(id==abc.parentId){
+        if(!this.nestTags.includes(abc)){
+          this.nestTags.push(abc)   
+        }
+  
+    console.log("nested Tags===>",this.nestTags)    
       }
-    );
+    })
+
+
+    // this.selectedParentTag = parentId;
+    // this.commonService.GetTagById(obj).subscribe(
+    //   (response: any) => {
+    //     this.childTags = response;
+    //   },
+    //   (error: any) => {
+    //     console.error(error);
+    //   }
+    // );
   }
   selectChildTag(childId: any){
     var obj = {
@@ -122,12 +154,15 @@ export class CreateTagsComponent implements OnInit {
   showPopup: boolean = false;
   selectedColor: string = '';
   openPopup() {
-    this.showPopup = true;
+this.showPopup=!this.showPopup
   }
-  saveVisuals() {
-    const selectedVisual = this.selectedColor;
-    console.log('Selected Color:', selectedVisual);
-    this.showPopup = false;
+  onTextColorChange(event:any){
+
+    this.selectedTextColor=event.target.value
+  }
+  saveVisuals(){
+    
+    this.showPopup=false
   }
   selectTags() {
     const dialogRef = this.dialog.open(CreateTagsComponent, {
@@ -135,11 +170,31 @@ export class CreateTagsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
     });
   }
+  errormessage:any;
   onSave() {
-    if(this.form.value.parentId == 0){
-      this.form.value.parentId =  this.form.value.baseId 
-     }
-    const tagNames = [this.form.value];
+ debugger
+    // if(this.form.value.parentId == 0){
+    //   this.form.value.parentId =  this.form.value.baseId 
+    //  }
+    // const tagNames = [this.form.value];
+
+  let obj={
+
+    "id": 0,
+    "companyId": 0,
+    "name": this.form.value.name,
+    "desc": "string",
+    "parentId": this.form.value.parentId,
+    "baseId": this.form.value.baseId,
+    "firewallId": 0,
+    "icon": "string",
+    "indexNo": 0,
+    "level": 0,
+    "type": 0,
+    "color": this.selectedTextColor
+
+}
+
 
 
     const template = history.state.tag;
@@ -154,19 +209,28 @@ export class CreateTagsComponent implements OnInit {
           this.router.navigate(['console/tags']);
         },
         (error: any) => {
-          console.error('Error updating template:', error);
+          console.error('Error updating template:', error.error);
         }
       );
     } else {
-      this.commonService.AddTags(tagNames).subscribe(
-        response => {
-          console.log('Tags added successfully', response);
-          this.router.navigate(['console/tags']);
-        },
-        error => {
-          console.error('Failed to add tags', error);
-        }
-      );
+      this.commonService.AddTags(obj).subscribe((res:any)=>{
+        this.reload('addtag')
+        this.router.navigate(['console/tags']);
+        
+      },
+      error=>{
+    this.errormessage= error.error.message
+    this.reload('error')
+      })
+      // this.commonService.AddTags(obj).subscribe(
+      //   response => {
+      //     console.log('Tags added successfully', response);
+      //     
+      //   },
+      //   (error:any) => {
+      //     console.error('Failed to add tags', error.error);
+      //   }
+      // );
     }
   }
   markFormGroupTouched(formGroup: FormGroup) {
@@ -181,4 +245,23 @@ export class CreateTagsComponent implements OnInit {
   onDiscardChanges() {
     this.router.navigate(['console/tags'])
   }
+ reload(value:any){
+  if(value=='error'){
+  this.AlterMsg=this.errormessage
+  this.toastermessage=true
+  setTimeout(() => {
+    this.toastermessage=false
+  }, 2000);
+  }
+  if(value=='addtag'){
+    this.AlterMsg='Tag Add Successfully ! '
+    this.toastermessage=true
+    setTimeout(() => {
+      this.toastermessage=false
+    }, 2000);
+    }
+ }
+ closeToaster() {
+  this.toastermessage = false;
+}
 }
