@@ -25,6 +25,7 @@ import { TeamsResolver } from './resolvers/users/teams.resolver';
 import { UsersJsonResolver } from './resolvers/users/users-json.resolver';
 import { BulkUploadComponent } from './components/sentiment-analysis/bulk-upload/bulk-upload.component';
 import { CreateSentimentComponent } from './components/sentiment-analysis/create-sentiment/create-sentiment.component';
+import { SkillsResolver } from './resolvers/users/skills.resolver';
 
 const routes: Routes = [
   {
@@ -57,6 +58,7 @@ const routes: Routes = [
         resolve: {
           roles: RolesResolver,
           teams: TeamsResolver,
+          skills: SkillsResolver
         },
       }, {
         //   path:'users/bulk-user-upload',
@@ -91,22 +93,18 @@ const routes: Routes = [
         resolve: {
           teamJ: TeamsJsonResolver
         },
-      }, {
-        path: 'teams/create/:id',
+      },
+      {
+        path:'teams/create/:id',
         loadComponent: () => import('./components/teams/create-team/create-team.component').then(c => c.CreateTeamComponent),
         data: { breadcrumb: 'Teams N` Accesses > Create' },
         canMatch: [ConsoleRoutingGuard],
-        resolve: {
-          teamsnpermission: TeamsPermissionsResolver,
-          teamin: TeamResolver,
-        },
-
-      },
-      {
-        path:'teams/create',
-        loadComponent:()=>import('./components/teams/create-team/create-team.component').then(c=> c.CreateTeamComponent)
-      }, {
-        path: 'channels',
+        // resolve: {
+        //   teamsnpermission: TeamsPermissionsResolver,
+        //   teamin: TeamResolver,
+        // },
+      },{
+        path:'channels',
         loadComponent: () => import('./components/support-channels/support-channels.component').then(c => c.SupportChannelsComponent),
         canMatch: [ConsoleRoutingGuard],
         resolve: {

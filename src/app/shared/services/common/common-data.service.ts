@@ -32,6 +32,7 @@ export class CommonDataService {
   markAsComplete = environment.links.common.MarkAsComplete;
   likedByAdmin = environment.links.common.LikedByAdmin;
   quickReplyList = environment.links.common.QuickReplyList;
+  quickReplyListForBazaar = environment.links.console.quickReplyListForBazaar;  
   assignQuerry = environment.links.common.AssignQuerry;
   agentsTeamList = environment.links.common.AgentsTeamList;
   assignToAnotherAgent = environment.links.common.AssignToAnotherAgent;
@@ -79,7 +80,9 @@ export class CommonDataService {
   hideUnhideMessage = environment.links.common.hideUnhideMessage;
   dispositionTags = environment.links.common.dispositionTags;
   removeAssignedQuery =environment.links.common.removeAssignedQuery
-
+  getAllTeams= environment.links.console.getAllTeams
+  addTeam = environment.links.console.addTeam
+  updateTeam = environment.links.console.updateTeam
   //Reports
   addUniqueCustomer = environment.links.common.addUniqueCustomer;
   uniqueExportCsv = environment.links.common.uniqueExportCsv;
@@ -147,6 +150,7 @@ export class CommonDataService {
   updateEntractRoute = environment.links.console.updateEntractRoute;
   deleteEntractRoute = environment.links.console.deleteEntractRoute;
   getSkills = environment.links.console.getSkills;
+  getUserSkills = environment.links.console.getUserSkills;
   addSkill = environment.links.console.addSkill;
   deleteSkill = environment.links.console.deleteSkill;
   getskillbyid=environment.links.console.getSkillsbyId;
@@ -160,7 +164,7 @@ export class CommonDataService {
   addTags = environment.links.console.addTags;
   updateTag = environment.links.console.updateTag;
   deleteTags = environment.links.console.deleteTags;
-  getParents = environment.links.console.getParents;
+  getTagsByComayId = environment.links.console.getTagsByComayId;
   getAllTags = environment.links.console.defaultTags;
   // rules
   deleteRules = environment.links.console.deleteRules;
@@ -175,9 +179,9 @@ export class CommonDataService {
   deleteRoles = environment.links.identity.deleteRoles;
 
   // teams 
-  getAllTeams= environment.links.console.getAllTeams
-  addTeam = environment.links.console.addTeam
-  updateTeam = environment.links.console.updateTeam
+  // getAllTeams= environment.links.console.getAllTeams
+  // addTeam = environment.links.console.addTeam
+  // updateTeam = environment.links.console.updateTeam
   //service
   userlogin=environment.links.common.userlogin
   addSurvey = environment.links.service.addSurvey;
@@ -231,6 +235,10 @@ export class CommonDataService {
 
   QuickReplyList() {
     return this.http.get(this.CommonBaseUrl + this.quickReplyList);
+  }
+
+  QuickReplyListForBazaarOnly () {
+    return this.http.get(this.consoleBaseUrl + this.quickReplyListForBazaar);
   }
 
   CommentRespond(form: any) {
@@ -518,6 +526,10 @@ export class CommonDataService {
     // return this.http.get(this.consoleBaseUrl + this.getSkills);
     return this.http.post(this.consoleBaseUrl + this.getSkills, body);
   }
+  GetUserSkills() {
+    
+     return this.http.get(this.consoleBaseUrl + this.getUserSkills);
+  }
   AddSkill(addSkill: any) {
     return this.http.post(this.consoleBaseUrl + this.addSkill, addSkill);
   }
@@ -572,8 +584,8 @@ export class CommonDataService {
     return this.http.post(url, delRolId);
   }
 
-  GetParents() {
-    return this.http.get(this.consoleBaseUrl + this.getParents);
+  GetTagsByCompayId() {
+    return this.http.get(this.consoleBaseUrl + this.getTagsByComayId);
   }
 
   // rules
@@ -839,14 +851,14 @@ UpdateSkill(id: any, rule: any) {
   return this.http.post(url, rule)
 }
 GetAllTeams(){
-return this.http.get(this.IdentityBaseUrl + this.getAllTeams)
-}
-AddTeam(body:any){
-  return this.http.post(this.IdentityBaseUrl+this.addTeam,body)
-}
-UpdateTeam(body:any){
-  return this.http.put(this.IdentityBaseUrl+this.updateTeam,body)
-}
+  return this.http.get(this.IdentityBaseUrl + this.getAllTeams)
+  }
+  AddTeam(body:any){
+    return this.http.post(this.IdentityBaseUrl+this.addTeam,body)
+  }
+  UpdateTeam(body:any){
+    return this.http.post(this.IdentityBaseUrl+this.updateTeam,body)
+  }
 }
 
 

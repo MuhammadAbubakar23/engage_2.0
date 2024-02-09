@@ -48,7 +48,7 @@ export class AnalyticsMenuComponent implements OnInit {
       this.channelname = 'Jazz';
     } else if (this.activeChannel == 'https://keportal.enteract.live') {
       this.channelname = 'KE';
-    } else if (this.activeChannel == 'https://tppl.360scrm.com') {
+    } else if (this.activeChannel == 'https://tppl.enteract.live') {
       this.channelname = 'ttpl';
     } else if (this.activeChannel == 'https://waengage.enteract.live') {
       this.channelname = 'Morinaga';

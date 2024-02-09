@@ -45,13 +45,14 @@ export class WhatsappReportComponent implements OnInit {
     };
     this._hS.setHeader(newObj);
     const currentDate = new Date();
-    const oneDayBeforeCurrentDate = currentDate.setDate(
-      currentDate.getDate() - 1
-    );
+    // const oneDayBeforeCurrentDate = currentDate.setDate(
+    //   currentDate.getDate() - 1ll
+    // );
     this.maxEndDate = this.datePipe.transform(
-      oneDayBeforeCurrentDate,
+      currentDate,
       'YYYY-MM-dd'
     );
+    
 
     this.GetWhatsAppRawData();
   }

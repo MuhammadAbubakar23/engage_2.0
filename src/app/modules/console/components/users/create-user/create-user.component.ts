@@ -40,6 +40,7 @@ export class CreateUserComponent implements OnInit {
     confirmpassword: new UntypedFormControl(),
     roleId: new UntypedFormControl(),
     teamId: new UntypedFormControl(),
+    skillId: new UntypedFormControl(),
     //   teams : new UntypedFormControl(),    
     // timezone : new UntypedFormControl(),
     // supportchannel : new UntypedFormControl(),
@@ -49,12 +50,15 @@ export class CreateUserComponent implements OnInit {
   submitted = false;
   RolesControl = new UntypedFormControl(null);
   TeamsControl = new UntypedFormControl(null);
+  SkillsControl = new UntypedFormControl(null);
   // RolesControlId = new UntypedFormControl(null, Validators.required);
   // SkillsControl = new UntypedFormControl(null, Validators.required);
   Roles: Array<any> = [];
   Teams: Array<any> = [];
+  Skills: Array<any> = [];
   TeamIds: string[] = []
   RoleIds: string[] = [];
+  SkillIds: string[] = [];
   // Skills: string[] = ['English', 'Urdu'];
   constructor(private formbuilder: UntypedFormBuilder
     , private _request: RequestService
@@ -74,6 +78,7 @@ export class CreateUserComponent implements OnInit {
     // console.log(this._Activatedroute.snapshot.data["roles"]);
     this.Roles = this._Activatedroute.snapshot.data["roles"];
     this.Teams = this._Activatedroute.snapshot.data["teams"];
+    this.Skills = this._Activatedroute.snapshot.data["skills"];
     this._Activatedroute.paramMap.subscribe(paramMap => {
       this.identity = Number(paramMap.get('id'));
     });
@@ -98,6 +103,7 @@ export class CreateUserComponent implements OnInit {
         phone: "",
         roleId: [],
         teamId: [],
+        skillId: [],
         //  teams:"",
         //  userId:[],//null0000void//null0000void
 
@@ -115,14 +121,15 @@ export class CreateUserComponent implements OnInit {
     console.log(formVal);
     this.userForm = this.formbuilder.group({
       id: [formVal.id],
-      firstname: [formVal.firstName, ],
-      lastname: [formVal.lastName, ],
-      phone: [formVal.phone, ],
-      email: [formVal.email, ],
-      password: [formVal.password, ],
-      confirmpassword: [formVal.confirmPassword,],
-      roleId: ['',],
+      firstname: [formVal.firstName, Validators.required],
+      lastname: [formVal.lastName, Validators.required],
+      phone: [formVal.phone, Validators.required],
+      email: [formVal.email, Validators.required],
+      password: [formVal.password, [Validators.required, Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)]],
+      confirmpassword: [formVal.confirmPassword, [Validators.required, Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)]],
+      roleId: ['',Validators.required],
       teamId: ['',],
+      skillId: [0,Validators.required],
       // timezone: ['', [Validators.required]],      
       // supportchannel: ['', [Validators.required]],
     }
@@ -136,6 +143,7 @@ export class CreateUserComponent implements OnInit {
     // console.log("Teams --->>>",this.Teams);
     let roleForm: any = [];
     let teamForm: any = [];
+    let skillForm: any = [];
     if (formVal.roleId.length >= 1) {
       formVal.roleId.forEach((element: any) => {
         let mitem = this.Roles.filter((item: any) => item?.name == element);
@@ -149,6 +157,14 @@ export class CreateUserComponent implements OnInit {
         teamForm.push(mitem[0]);
       });
       this.TeamsControl.setValue(teamForm);
+    }
+
+    if (formVal.skillId.length >= 1) {
+      formVal.skillId.forEach((element: any) => {
+        let mitem = this.Skills.filter((item: any) => item?.name == element);
+        skillForm.push(mitem[0]);
+      });
+      this.SkillsControl.setValue(skillForm);
     }
 
   }
@@ -181,12 +197,14 @@ export class CreateUserComponent implements OnInit {
     this.userForm.reset();
     this.userForm.controls['roleId'].reset();
     this.userForm.controls['teamId'].reset();
+    this.userForm.controls['skillId'].reset();
   }
   onSubmit(): void {
     
     let _self = this;
     this.userForm.controls['roleId'].reset();
     this.userForm.controls['teamId'].reset();
+    this.userForm.controls['skillId'].reset();
     //this.userForm.controls['roleId'].setValue('');
     //this.userForm.controls['teamId'].setValue('');
     // console.log(this.userForm.value);
@@ -206,13 +224,17 @@ export class CreateUserComponent implements OnInit {
     //   this.RoleIds.push(this.RolesControl.value[i].id);
     // }
     for (let i in this.RolesControl.value) {
-      this.RoleIds.push(this.RolesControl.value[i].name.replace(/\s/g, ''));
+      this.RoleIds.push(this.RolesControl?.value[i]?.id.toString());
     }
     for (let i in this.TeamsControl.value) {
-      this.TeamIds.push(this.TeamsControl.value[i].name.replace(/\s/g, ''));
+      this.TeamIds.push(this.TeamsControl?.value[i]?.id.toString());
+    }
+    for (let i in this.SkillsControl.value) {
+      this.SkillIds.push(this.SkillsControl.value[i].skillID);
     }
     this.userForm.controls['roleId'].setValue(this.RoleIds);
     this.userForm.controls['teamId'].setValue(this.TeamIds);
+    this.userForm.controls['skillId'].setValue(this.SkillIds);
 
     console.log(this.userForm);
     console.log(this.userForm.invalid);
@@ -278,6 +300,11 @@ export class CreateUserComponent implements OnInit {
     const Roles = this.RolesControl.value as string[];
     this.removeFirst(Roles, cat);
     this.RolesControl.setValue(Roles); // To trigger change detection
+  }
+  onCatRemovedSkill(cat: string) {
+    const Skills = this.SkillsControl.value as string[];
+    this.removeFirst(Skills, cat);
+    this.SkillsControl.setValue(Skills); // To trigger change detection
   }
   private removeFirst(array: any[], toRemove: any): void {
     const index = array.indexOf(toRemove);

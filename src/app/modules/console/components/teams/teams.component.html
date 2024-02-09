@@ -1,11 +1,12 @@
 <div class="content-box-wrapper d-flex w-100">
     <div class="middle-content d-flex">
-
         <div class="team-user-wrap console-body-wrapper inbox-container" data-scrollbar="true" tabindex="-1"
             style="overflow: hidden; outline: none;">
+            <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+                <p style="color: white"> Loading... </p>
+             </ngx-spinner>
             <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
                 <div class="p-4">
-
                     <div class="filter-toolbar">
                         <div class="row">
                             <div class="col-md-8">
@@ -18,7 +19,7 @@
                                             <input placeholder="Search">
                                         </a>
                                     </li>
-                                    <li class="list-inline-item">
+                                    <!-- <li class="list-inline-item">
                                         <select class="js-example-basic-single select2-hidden-accessible"
                                             data-select2-id="select2-data-1-n4mu" tabindex="-1" aria-hidden="true">
                                             <option data-select2-id="select2-data-3-z81v">All </option>
@@ -39,12 +40,12 @@
                                                             role="presentation"></b></span></span></span><span
                                                 class="dropdown-wrapper" aria-hidden="true"></span></span>
 
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                             <div class="col-md-4 d-flex align-items-center justify-content-end">
-                                <a (click)="updatevalue('consoleCreateTeamHeader')"
-                                    [routerLink]="['/console/teams/create']" class="ms-2">
+                                <a [routerLink]="['/console/teams/create/:0']"
+                                    class="ms-2">
                                     <button type="button" class="btn btn-success">
                                         <i class="fal fa-plus me-2"></i>
                                         Create Team
@@ -60,12 +61,14 @@
 
                             <li class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle"
                                 aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                data-bs-original-title="Refresh" aria-describedby="tooltip946912">
+                                style="display: block;"
+                                data-bs-original-title="Refresh" aria-describedby="tooltip946912" (click)="reloadComponent()">
                                 <i class="fal fa-redo"></i>
                             </li>
                             <li class="list-group-item after-select-fun iconHover iconButton medium rounded-circle"
+                            [ngStyle]="{display:isChecked==true? 'block':'none'}"
                                 aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                data-bs-original-title="Delete" style="display: none;">
+                                data-bs-original-title="Delete"  >
                                 <i class="fal fa-trash"></i>
                             </li>
                         </ul>
@@ -74,7 +77,7 @@
                             <div class="dropdown">
                                 <button class="btn iconHover" type="button" id="dropdownMenuButton1"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    1-100 of 569
+                                  1-10 of 100
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li><a class="dropdown-item">Newest</a></li>
@@ -91,21 +94,25 @@
                     </div>
 
                     <div class="table-section table-scrool-y mb-3 query-container table-white">
-                        <div class="alert alert-secondary text-center email-info-alert p-2" role="alert">
-                            All <strong>100</strong> conversations on this page are selected.
-                            <a href="javascript:void(0);" class="all-conversation fw-bold sky btn">Select all
-                                569 conversations in Teams</a>
-                            <a href="javascript:void(0);" class="clear-selection" style="display: none;">Clear
-                                selection</a>
-                        </div>
+    
+                            <!-- <div class="alert alert-secondary text-center email-info-alert p-2" role="alert"     [ngStyle]="{display:isChecked==true? 'block':'none'}" >
+                                All <strong>{{Ids.length}}</strong> conversations on this page are selected.
+                            
+                                <a href="javascript:void(0);" class="clear-selection" (click)="reloadComponent()" style="color: rgb(28, 86, 192);">Clear
+                                    selection</a>
+                            </div> -->
+                
+                        
                         <table class="table align-middle">
                             <thead>
                                 <tr>
                                     <th>
                                         <div class="filter-container checkbox-reset">
                                             <ul class="list-group list-group-horizontal border-0">
-                                                <li class="list-group-item border-0 all-check-boxes">
+                                                <li class="list-group-item border-0 all-check-boxes" [class.selected]="isChecked == true">
                                                     <input class="form-check-input me-1" type="checkbox"
+                                                        (click)="checkUncheckAll($event)"
+                                                        [checked]="masterSelected"
                                                         aria-label="..." data-bs-toggle="tooltip"
                                                         data-bs-placement="bottom" data-bs-original-title="Check All">
                                                 </li>
@@ -134,9 +141,13 @@
                                         {{ row[column] }}
                                     </td>
                                 </tr> -->
-                                <tr *ngFor="let row of teams ">
+                                <tr *ngFor="let row of teams ,index as i">
                                     <td>
-                                        <input class="form-check-input me-1" type="checkbox" aria-label="...">
+                                        <input class="form-check-input me-1"
+                                        [checked]="row.isChecked"
+                                        [value]='row.id'
+                                       (click)="isAllSelected($event,i)"
+                                         type="checkbox" aria-label="...">
                                     </td>
                                     <td>
                                         {{row?.name}}
@@ -157,11 +168,11 @@
                                                 <i class="far fa-ellipsis-v"></i>
                                             </button>
                                             <ul class="dropdown-menu fade">
-                                                <li>
-                                                    <a class="dropdown-item"><i class="fal fa-edit me-2"></i>
+                                                <li  [routerLink]="['/console/teams/create/',row.id]" >
+                                                    <a class="dropdown-item"><i class="fal fa-edit me-2"> </i>
                                                         Edit</a>
                                                 </li>
-                                                <li>
+                                                <li (click)="deleteTeam(row.id)">
                                                     <a class="dropdown-item delete-dd"><i class="fal fa-trash me-2"></i>
                                                         Delete</a>
                                                 </li>
@@ -177,14 +188,7 @@
                     </div>
                 </div>
             </div>
-            <div class="scrollbar-track scrollbar-track-x" style="display: none;">
-                <div class="scrollbar-thumb scrollbar-thumb-x"
-                    style="width: 1558px; transform: translate3d(0px, 0px, 0px);"></div>
-            </div>
-            <div class="scrollbar-track scrollbar-track-y" style="display: block;">
-                <div class="scrollbar-thumb scrollbar-thumb-y"
-                    style="height: 696.656px; transform: translate3d(0px, 0px, 0px);"></div>
-            </div>
+           
         </div>
 
     </div>

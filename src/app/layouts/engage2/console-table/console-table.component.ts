@@ -143,9 +143,12 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
     //filter?.template?.toolbar=='top'
     // encodeURIComponent
     // if(this.filter?.url && !this.filter?.url)
+    
     this._request.get<T[]>(this.filter.url, this.pagingParams$, this.filter.urlparams).pipe(
       takeUntil(this.unsubscribe$)).subscribe({
+       
         next: (nxt: T[]) => {
+          
           this.data = nxt;
         },
         error: (error: any) => console.error(error),
@@ -166,6 +169,7 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
     console.log("I m func action");
 
     if (params.param.type == "rute") {
+      
       this.navigateToPage(params);
     } else if (params.param.type == "service") {//
       this.deleteFromDatabase(params);
@@ -193,7 +197,7 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
       "desc": "string",
       "type": "string"
     }
-    this._request.post<any>(params.param.actionUrl, obj).pipe(
+    this._request.delete<any>(params.param.actionUrl, params.data[this.identifire]).pipe(
       takeUntil(this.unsubscribe$)).subscribe({
         next: (nxt: any) => console.table(nxt),
         error: (error: any) => console.error(error),

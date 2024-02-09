@@ -27,13 +27,27 @@ export class RequestService {
     //opt.params =
 
   }
-  private createCompleteRoute = (route: string, envAddress: string, routeparams:string = "") =>  (routeparams!="" || routeparams.length > 0 )?`${envAddress}/${route}/${routeparams}`:`${envAddress}${route}`;
+  private createCompleteRoute = (route: string, envAddress: string, routeparams?:any) =>  (routeparams!="" || routeparams.length > 0 )?`${envAddress}${route}${routeparams}`:`${envAddress}${route}`;
   
   get<T>(route:string, params?: any,routeparams:string=""): Observable<T> {
     
     console.log(params);
     console.log(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl));
     return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, routeparams),{ params })
+    .pipe(
+      map((res: any) => { return res }),
+      tap(res => console.log(route + " Response: ", res)),
+      catchError(err => {
+        console.log('Handling error locally and rethrowing it...', err);
+        return throwError(() => new Error(err));
+      })
+      );    
+  }
+  getFromConsole<T>(route:string, params?: any,routeparams:string=""): Observable<T> {
+    
+    console.log(params);
+    console.log(this.createCompleteRoute(this.env.paths[route], this.env.consoleBaseUrl));
+    return this.http.get<T>(this.createCompleteRoute(this.env.console[route], this.env.consoleBaseUrl, routeparams),{ params })
     .pipe(
       map((res: any) => { return res }),
       tap(res => console.log(route + " Response: ", res)),
@@ -58,7 +72,7 @@ export class RequestService {
   }
   post<T>(route:string, params?: any): Observable<T>{
     
-    return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
+    return this.http.post<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
     .pipe(
       map((res: any) => { return res }),
       tap(res => console.log(route + " Response: ", res)),
@@ -85,8 +99,9 @@ export class RequestService {
       catchError( this.handleError<T>(route))
       );
   }
-  delete<T>(route:string, params?: any): Observable<T>{
-    return this.http.delete<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
+  delete<T>(route:string, routeparams:any, params?: any): Observable<T>{
+    
+    return this.http.delete<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, "?Id="+routeparams), params)
     .pipe(
       map((res: any) => { return res }),
       tap(res => console.log(route + " Response: ", res)),

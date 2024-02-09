@@ -818,7 +818,7 @@ export class ResponderHeaderComponent implements OnInit {
 
   AgentsTeamList: any;
   AgentDetails: any;
-
+  searchText: string = '';
   ActiveAgents: any[] = [];
   getAgentsTeamList() {
     this.commondata.GetAgentsTeamList().subscribe((res: any) => {
@@ -850,8 +850,14 @@ export class ResponderHeaderComponent implements OnInit {
         this.markAllAsRead();
       } else if (slug == 'save') {
         this.markAsComplete();
+      } else if (slug == 'on_hold') {
+        this.onHold();
       }
     }
+  }
+  onHold(){
+    this.location.back();
+    localStorage.setItem('assignedProfile', '');
   }
   markAsCompleteDto = new MarkAsCompleteDto();
   // only for KE
@@ -910,16 +916,17 @@ export class ResponderHeaderComponent implements OnInit {
   }
 
   customerProfileId = Number(localStorage.getItem('profileId'));
-  sendAgentId(id: string, platform: string) {
+  sendAgentId(id: number) {
+    
+    var platform = localStorage.getItem('parent') || "";
     this.assignQuerryDto = {
-      userId: Number(localStorage.getItem('agentId')),
-      // agentId: 2,
+      toUserId: id,
       profileId: this.customerProfileId,
-      agentIds: id.toString(),
       platform: platform,
     };
   }
   assignToAnotherAgent() {
+    
     this.commondata.AssignToAnotherAgent(this.assignQuerryDto).subscribe(
       (res: any) => {
         this.reloadComponent('queryallocatedtoanotheruser');

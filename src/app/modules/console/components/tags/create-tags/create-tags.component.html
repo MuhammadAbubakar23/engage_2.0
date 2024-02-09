@@ -3,107 +3,150 @@
     style="overflow-y:auto; outline: none;">
     <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
       <div class="wider-container pt-3">
-        <div class="row">
-          <div class="col-md-10">
-            <div class="floating-wrap form-floating">
-              <input type="text" class="form-control" id="tagName0" placeholder="Tag Name" formControlName="name">
-              <label for="tagName0">Tag Name</label>
-            </div>
-          </div>
-          <div class="col-md-2">
-            <button type="button" class=" btn skyBg ms-2 px-4 btn-medium saveBtn" (click)="addTag()">Add Parent</button>
-          </div>
-        </div>
+        <!-- <div class="row">
+        
+   
+        </div> -->
+     
         <div class="row" *ngIf="parentTags.length > 0">
-          <div class="col-md-10">
-            <label>Parent Tags</label>
+          <div class="col-md-12">
+          
             <div class="floating-wrap form-floating">
-              <select class="form-control" formControlName="baseId" (change)="selectParentTag($event)">
+
+               <label for="parent tags">Parent Tags</label>
+              <select class="form-control" formControlName="parentId"  (change)="selectParentTag($event)">
                 <option value="">Select an option</option>
-                <option *ngFor="let parent of parentTags" [value]="parent.id">{{ parent.name }}</option>
+                <option *ngFor="let parent of parentTags" [value]="parent.mainId">{{ parent.name }}</option>
+              
               </select>
+              <label for="parent tags">Parent Tag</label>
             </div>
           </div>
         </div>
-        <div class="row" *ngIf="childTags.length > 0">
-          <div class="col-md-10">
-            <label>Child Tags</label>
+        <!-- <div class="row" *ngIf="nestTags.length > 0">
+          <div class="col-md-12">&nbsp;
+       
             <div class="floating-wrap form-floating">
               <select class="form-control" formControlName="parentId" (change)="selectChildTag($event)">
                 <option value="">Select an option</option>
-                <option *ngFor="let child of childTags" [value]="child.id">{{ child.name }}</option>
+                <option *ngFor="let child of nestTags" [value]="child.mainId">{{ child.name }}</option>
               </select>
+              <label>Child Tags</label>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="row" *ngIf="childTag.length > 0">
-          <div class="col-md-10">
-            <label>Last Child Tags</label>
+          <div class="col-md-12">&nbsp;
+       
             <div class="floating-wrap form-floating">
               <select class="form-control" formControlName="parentId" (change)="selectParentChildTag($event)">
                 <option value="">Select an option</option>
                 <option *ngFor="let childs of childTag" [value]="childs.id">{{ childs.name }}</option>
               </select>
+              <label>Child Tags</label>
             </div>
           </div>
         </div>
         <div class="row" *ngIf="parentChildTag.length > 0">
-          <div class="col-md-10">
-            <label>Last Child Tags</label>
+          <div class="col-md-12">&nbsp;
+
             <div class="floating-wrap form-floating">
               <select class="form-control" formControlName="parentId" (change)="ParentChildTag($event)">
                 <option value="">Select an option</option>
                 <option *ngFor="let childss of parentChildTag" [value]="childss.id">{{ childss.name }}</option>
               </select>
+              <label>Child Tags</label>
             </div>
           </div>
         </div>
         <div class="row" *ngIf="parentChild.length > 0">
-          <div class="col-md-10">
-            <label>Last Child Tags</label>
+          <div class="col-md-12">&nbsp;
+       
             <div class="floating-wrap form-floating">
               <select class="form-control" formControlName="lastChildTagId">
                 <option value="">Select an option</option>
                 <option *ngFor="let chil of parentChild" [value]="chil.id">{{ chil.name }}</option>
               </select>
+              <label>Child Tags</label>
+            </div>
+          </div>
+        </div> 
+        <br>
+        <div class="col-md-12">
+          <div class="floating-wrap form-floating">
+    <!-- <input type="text" class="form-control" id="tagName0" placeholder="Tag Name" formControlName="name"> -->
+            <!-- <label for="tagName0">Tag Name</label>  -->
+            <input type="text" class="form-control" id="tagName0" placeholder="Tag Name" formControlName="name"
+         [style.color]="selectedTextColor">
+          <label for="tagName0">Child Tag Name</label>
+          </div>
+        </div>
+        <br>
+        <div class="col-md-12" >
+          <div class="card"  >
+            <div *ngIf="showPopup">
+              <div class="color-picker">
+                <input type="color" [(ngModel)]="selectedTextColor" (change)="onTextColorChange($event)" />
+                <label for="tagName0">Select  Tag Color</label>
+              </div>
+        
+              <!-- <div>Selected Color: {{ selectedTextColor }}</div> -->
+<!--         
+              <button type="button" class="btn btn-success " style="margin-left: 50px;" (click)="saveVisuals()">Save</button> -->
             </div>
           </div>
         </div>
-        <div class="list-group-section">
+      <div class="list-group-section">
           <div class="section-heading">
             <h6 class="coal text-uppercase mb-0">Style</h6>
-          </div>
+          </div><br>
+       
           <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between align-items-sm-center">
               <div class="me-auto coal">
                 <div class="fw-bold night">Color or emoji</div>
                 Create Shared inboxes for teammates to work together
               </div>
+
               <span>
                 <i class="fal fa-user sky me-3"></i>
-                <a class="text-decoration-underline" (click)="openPopup()">Select Visuals</a>
+                <a class="text-decoration-underline" (click)="openPopup()"><span *ngIf="showPopup==true">
+                  UnSelect Visuals
+                </span>
+                <span *ngIf="showPopup==false">Select Visuals</span>
+              </a>
+              </span>
+              <span>
+                
               </span>
             </li>
-
-            <div class="popup" *ngIf="showPopup">
+ 
+        <!-- <div class="col-md-2">
+          <div class="card">
+            <div *ngIf="showPopup">
               <div class="color-picker">
-                <input type="color" [(ngModel)]="selectedColor" (change)="saveVisuals()" />
+                <input type="color" [(ngModel)]="selectedTextColor" (change)="onTextColorChange($event)" />
               </div>
-
-              <div>Selected Color: {{ selectedColor }}</div>
-
-              <button (click)="saveVisuals()">Save</button>
+        
+              <div>Selected Color: {{ selectedTextColor }}</div>
+        
+              <button type="button" class="btn btn-success " style="margin-left: 50px;" (click)="saveVisuals()">Save</button>
             </div>
-            <!-- <li class="list-group-item d-flex justify-content-between align-items-sm-end">
+          </div>
+        </div> -->
+       
+                      <li class="list-group-item d-flex justify-content-between align-items-sm-end">
               <div class="me-auto coal">
                 <div class="fw-bold night">Nest tag under</div>
                 Organize this tag under an existing parent tag
               </div>
               <span>
                 <i class="fal fa-tags sky me-3"></i>
-                <a class="text-decoration-underline" (click)="selectTags()">Select Tags</a>
+                <a class="text-decoration-underline" (click)="addTag()">Select Parent Tag</a>
               </span>
-            </li> -->
+            </li>
+        
+    
           </ul>
         </div>
         <!-- <div class="list-group-section">
@@ -148,10 +191,10 @@
             <div class="row w-100">
               <div class="col-md-4">
                 <div class="f-icon-txt-wrapper d-flex align-items-center">
-                  <button class="iconButton medium iconHover" id="deleteModalBtn">
+                  <!-- <button class="iconButton medium iconHover" id="deleteModalBtn">
                     <i class="fal fa-trash radical"></i>
-                  </button>
-                  <p class="f-icon-txt radical ms-1 m-0">Delete Tag</p>
+                  </button> -->
+                  <!-- <p class="f-icon-txt radical ms-1 m-0">Delete Tag</p> -->
                 </div>
               </div>
               <div class="col-md-8 justify-content-end d-flex">
@@ -168,3 +211,17 @@
     </div>
   </div>
 </form>
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+  <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+     aria-live="assertive" aria-atomic="true">
+     <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+        <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+        <div class="toast-btn d-flex align-items-center">
+
+           <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+              (click)="closeToaster()"><i class="fal fa-times"></i></button>
+
+        </div>
+     </div>
+  </div>
+</div>

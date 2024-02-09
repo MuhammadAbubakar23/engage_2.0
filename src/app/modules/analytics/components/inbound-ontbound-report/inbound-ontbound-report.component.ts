@@ -92,7 +92,7 @@ export class InboundOntboundReportComponent implements OnInit {
       this.isChannelShow = 'KE';
       this.getChannel()
     }
-    else if (this.activeChannel == 'https://tppl.360scrm.com') {
+    else if (this.activeChannel == 'https://tppl.enteract.live') {
       this.isChannelShow = 'ttpl';
       this.getChannel()
     }

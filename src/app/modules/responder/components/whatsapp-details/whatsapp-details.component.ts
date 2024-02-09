@@ -54,7 +54,7 @@ export class WhatsappDetailsComponent implements OnInit {
   onInput(textarea: HTMLTextAreaElement) {
     this.adjustTextareaHeight(textarea);
   }
-  
+
   id = this.fetchId.id;
   slaId = this.fetchId.getSlaId();
 
@@ -81,6 +81,7 @@ export class WhatsappDetailsComponent implements OnInit {
   TagsList: any[] = [];
   getAppliedTagsList: any;
   QuickReplies: any;
+  QuickRepliesForBazaar: any;
   storeComId: any;
   WhatsappMsgId: number = 0;
   agentId: string = '';
@@ -97,7 +98,7 @@ export class WhatsappDetailsComponent implements OnInit {
   searchText: string = '';
   spinner1running = false;
   spinner2running = false;
-  userInformation:any;
+  userInformation: any;
 
   pageNumber: number = 1;
   pageSize: number = 10;
@@ -141,8 +142,13 @@ export class WhatsappDetailsComponent implements OnInit {
     // });
 
     this.WhatsappReplyForm = new FormGroup({
-      text: new FormControl(this.ReplyDto.text, Validators.required),
-      // text: new FormControl('Welcome to Muawin Total Parco. This is '+localStorage.getItem('agentName')+' from Muawin. How may I help you?', Validators.required),
+      // text: new FormControl(this.ReplyDto.text, Validators.required),
+      text: new FormControl(
+        'Welcome to Muawin Total Parco. This is ' +
+          localStorage.getItem('agentName') +
+          ' from Muawin. How may I help you?',
+        Validators.required
+      ),
       commentId: new FormControl(this.ReplyDto.commentId),
       teamId: new FormControl(this.ReplyDto.teamId),
       platform: new FormControl(this.ReplyDto.platform),
@@ -163,21 +169,19 @@ export class WhatsappDetailsComponent implements OnInit {
     textarea.style.height = textarea.scrollHeight + 'px';
   }
 
-
   messagesStatus: any[] = [];
   Sentiments: any[] = [];
-activeBaseUrl:any
-  KEbaseUrl:string="";
-  KEClient:boolean=false;
+  activeBaseUrl: any;
+  KEbaseUrl: string = '';
+  KEClient: boolean = false;
 
   ngOnInit(): void {
-    this.KEbaseUrl=window.location.origin
-    this.activeBaseUrl=window.location.origin
-    if(this.KEbaseUrl=='https://keportal.enteract.live'){
-      this.KEClient=true
+    this.KEbaseUrl = window.location.origin;
+    this.activeBaseUrl = window.location.origin;
+    if (this.KEbaseUrl == 'https://keportal.enteract.live') {
+      this.KEClient = true;
     }
 
-    
     const textarea = this.el.nativeElement as HTMLTextAreaElement;
     this.renderer.addClass(textarea, 'auto-resize');
     this.adjustTextareaHeight(textarea);
@@ -216,6 +220,7 @@ activeBaseUrl:any
     this.getWhatsappData();
     // this.getTagList();
     this.quickReplyList();
+    this.quickRepliesForBazaar();
 
     this.Subscription = this.addTagService.receiveTags().subscribe((res) => {
       this.addTags = res;
@@ -228,7 +233,6 @@ activeBaseUrl:any
     this.Subscription = this.updateCommentsService
       .receiveComment()
       .subscribe((res) => {
-        
         this.updatedComments = res;
         this.updateCommentsDataListener();
       });
@@ -260,7 +264,11 @@ activeBaseUrl:any
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
+        if (
+          this.flag == 'focused' ||
+          this.flag == 'assigned_to_me' ||
+          this.flag == 'follow_up'
+        ) {
           if (res.contentCount.contentType == 'WM') {
             this.totalUnrespondedCmntCountByCustomer =
               res.contentCount.unrespondedCount;
@@ -275,8 +283,11 @@ activeBaseUrl:any
   commentDto = new commentsDto();
   updatedComments: any;
   updateCommentsDataListener() {
-    
-    if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
+    if (
+      this.flag == 'focused' ||
+      this.flag == 'assigned_to_me' ||
+      this.flag == 'follow_up'
+    ) {
       if (!this.id) {
         this.id = localStorage.getItem('storeOpenedId') || '{}';
       }
@@ -610,7 +621,11 @@ activeBaseUrl:any
   }
 
   removeTagFromFeed(feedId: number, tagName: any) {
-    if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
+    if (
+      this.flag == 'focused' ||
+      this.flag == 'assigned_to_me' ||
+      this.flag == 'follow_up'
+    ) {
       this.insertTagsForFeedDto.tagName = tagName;
       this.insertTagsForFeedDto.feedId = feedId;
       this.insertTagsForFeedDto.type = 'Tag';
@@ -752,6 +767,17 @@ activeBaseUrl:any
     this.text = abc?.text + ' ';
     this.insertAtCaret(this.text);
   }
+  sendQuickReplyForBazaar(value: any) {
+    this.QuickRepliesForBazaar.forEach((abc: any) => {
+      abc.subReply.forEach((xyz: any) => {
+        var msg = xyz.subReply.find((res: any) => res.id == value);
+        if (msg != undefined) {
+          this.text = msg?.text + ' ';
+          this.insertAtCaret(this.text);
+        }
+      });
+    });
+  }
 
   sendHardCodedQuickReply(value: any) {
     let counter = 1;
@@ -775,6 +801,13 @@ activeBaseUrl:any
       }
     });
     this.insertAtCaret(this.text);
+  }
+
+  quickRepliesForBazaar() {
+    this.commondata.QuickReplyListForBazaarOnly().subscribe((res: any) => {
+      ;
+      this.QuickRepliesForBazaar = res;
+    });
   }
 
   quickReplyList() {
@@ -1063,9 +1096,6 @@ activeBaseUrl:any
     });
   }
 
-  
-
-  
   submitWhatsappReply() {
     if (this.WhatsappMsgId == 0) {
       this.reloadComponent('selectComment');
@@ -1397,12 +1427,16 @@ activeBaseUrl:any
   c_satForm() {
     const customerId = localStorage.getItem('storeOpenedId');
     const platform = localStorage.getItem('parent');
-    const AgentId=localStorage.getItem('agentId')
+    const AgentId = localStorage.getItem('agentId');
     this.insertAtCaret(
-      this.activeBaseUrl+'/survey/customer_satisfaction' + '?platform=' + platform +
+      this.activeBaseUrl +
+        '/survey/customer_satisfaction' +
+        '?platform=' +
+        platform +
         '&customerId=' +
         customerId +
-        '&agentId='+ AgentId+
+        '&agentId=' +
+        AgentId +
         ' '
     );
   }
@@ -1410,7 +1444,8 @@ activeBaseUrl:any
   c_informationForm() {
     const customerId = localStorage.getItem('storeOpenedId');
     this.insertAtCaret(
-      this.activeBaseUrl+'/survey/customer_details' +
+      this.activeBaseUrl +
+        '/survey/customer_details' +
         '?customerId=' +
         customerId +
         ' '
@@ -1490,5 +1525,27 @@ activeBaseUrl:any
   //   }
 
   //   this.changeDetect.detectChanges();
+  // }
+  activeOuterDropdown: number | null = null;
+  activeInnerDropdown: number | null = null;
+
+  // Function to open the outer dropdown
+  // openQuickReplyDropdown(index: number): void {
+  //   this.activeOuterDropdown = (this.activeOuterDropdown === index) ? null : index;
+  // }
+
+  // Function to open the inner dropdown
+  openInnerQuickReplyDropdown(outerIndex: number, innerIndex: number): void {
+    this.activeInnerDropdown =
+      this.activeOuterDropdown === outerIndex &&
+      this.activeInnerDropdown === innerIndex
+        ? null
+        : innerIndex;
+  }
+
+  // Function to handle clicking on radio button (you can modify it as per your requirements)
+  // sendHardCodedQuickReply(msgId: string): void {
+  //   // Add your logic here
+  //   console.log('Radio button clicked:', msgId);
   // }
 }
