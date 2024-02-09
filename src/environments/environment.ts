@@ -161,6 +161,9 @@ export const environment = {
       getSkills: 'Skill/GetAll',
       addSkill: 'Skill/Add',
       deleteSkill: 'Skill/Delete',
+    
+      // getTags: 'Tags/GetAll',
+      getTagsByCompanyId: 'Tags/GetTagsByCompayId',
       updateSkill:'Skill/Update',
       getSkillsbyId:'Skill/GetById',
       getUserSkills:'Skill/GetSkills',
