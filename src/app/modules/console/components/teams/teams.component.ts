@@ -10,6 +10,7 @@ import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { AddTeamMembersComponent } from './add-team-members/add-team-members.component';
 import { CreateTeamComponent } from './create-team/create-team.component';
+import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 // import { DataTablesModule } from "angular-datatables";
 @Component({
   selector: 'app-teams',//DataTablesModule
@@ -19,30 +20,49 @@ import { CreateTeamComponent } from './create-team/create-team.component';
   styleUrls: ['./teams.component.scss']
 })
 export class TeamsComponent implements OnInit {
-  Teams: Array<any> = [];
-  TeamsCount: number = 0;
-  identifire: string = "mainId"
-  model: MenuModel[] = [];
-  filter?: Observable<ConsoleTableParams>;
+  teams_Columns:any[]=[]
+  teams: any[] = [];
+
+  // Teams: Array<any> = [];
+  // TeamsCount: number = 0;
+  // identifire: string = "mainId"
+  // model: MenuModel[] = [];
+  // filter?: Observable<ConsoleTableParams>;
   showConsoleTable: boolean = false;
   isActive = false;
-  constructor(private headerService: HeaderService, private _Activatedroute: ActivatedRoute, private toaster: ToasterService) { }
-  async ngOnInit() {
-    this.filter = await this._Activatedroute.snapshot.data["teamJ"];
-    if (typeof this.filter !== 'undefined') {
-      this.showConsoleTable = true;
-    }
+  constructor(private headerService: HeaderService,private commonService: CommonDataService, private _Activatedroute: ActivatedRoute, private toaster: ToasterService) { }
+   ngOnInit() {
+    this.getTeamList()
+    // this.filter = await this._Activatedroute.snapshot.data["teamJ"];
+    // if (typeof this.filter !== 'undefined') {
+    //   this.showConsoleTable = true;
+    // }
     // this.Teams = await this._Activatedroute.snapshot.data["teams"];
     // this.TeamsCount =  this.Teams.length;
-    console.log(this.filter);
+    // console.log(this.filter);
     // this.Teams =  this._Activatedroute.snapshot.data["teams"];
+  }
+  getTeamList(){
+    this.commonService.GetAllTeams().subscribe((res:any)=>{
+      this.teams = res.teamTypes;
+      // this.teams_Columns=Object.keys(this.teams[0])
+      console.log("teams List====>",res)
+    })
   }
   updatevalue(string: any) {
     this.toaster.show('error', 'Check it out!', 'This is a error alert');
     return;
     //this.headerService.updateMessage(string);
   }
-  AddTeamMembers() {
-    this.isActive = !this.isActive;
+  makeTitle(slug: any) {
+    var words = slug.split('_');
+    for (var i = 0; i < words.length; i++) {
+      var word = words[i];
+      words[i] = word.charAt(0).toUpperCase() + word.slice(1);
+    }
+    return words.join(' ');
   }
+  // AddTeamMembers() {
+  //   this.isActive = !this.isActive;
+  // }
 }

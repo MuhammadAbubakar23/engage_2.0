@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   verificationdto = new VerificationDto();
   isUserLoging: boolean = false;
   baseUrl: string = '';
-  ErrorMessage: any;
+  ErrorMessage: string = "";
   isVerificationcodeFailed: boolean = false;
   loginDisabled: boolean = false;
   matchTime: any;
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
   timeRemaining: any;
   countdownTime: number = 0;
   loginForm = new UntypedFormGroup({
-    // actor: new UntypedFormControl(this.logindto.actor),
+    actor: new UntypedFormControl(this.logindto.actor),
     email: new UntypedFormControl(this.logindto.userName),
     userName: new UntypedFormControl(this.logindto.userName),
     password: new UntypedFormControl(this.logindto.password),
@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     let obj = {
-      // actor: this.loginForm.value.actor,
+      actor: this.loginForm.value.actor,
       userName: this.loginForm.value.userName,
       password: this.loginForm.value.password,
       rememberMe: true,
@@ -82,9 +82,9 @@ export class LoginComponent implements OnInit {
       (res: any) => {
         
         // only for testing purpose, remove after that
-        // res = {'loginResponse':res}
-        // res = {'loginResponse':res}
-        // res['isTwoFAEnabled'] = false;
+        res = {'loginResponse':res}
+        res = {'loginResponse':res}
+        res['isTwoFAEnabled'] = false;
         // only for testing purpose, remove after that
 
         if (res.isTwoFAEnabled == false) {

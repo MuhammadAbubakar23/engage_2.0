@@ -31,6 +31,24 @@ export class RulesComponent implements OnInit {
       }
     );
   }
+  selectedSortOption: any;
+
+  setStatus(status: string) {
+    this.selectedSortOption = status;
+    this.sortPolicies();
+  }
+  sortPolicies() {
+    switch (this.selectedSortOption) {
+      case 'Ascending':
+        this.tableData.sort((a:any, b:any) => a.name.localeCompare(b.name));
+        break;
+      case 'Descending':
+        this.tableData.sort((a:any, b:any) => b.name.localeCompare(a.name));
+        break;
+      default:
+        break;
+    }
+  }
   constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
   ngOnInit(): void {
     this.commonService.GetAllRules()
@@ -45,24 +63,28 @@ export class RulesComponent implements OnInit {
     this.headerService.updateMessage(string);
   }
   editTemplate(message: any) {
-    this.router.navigate(['/console/add-rules'], {
-      state: { message }
-    });
+    debugger
+    this.router.navigate(['/console/add-rules',message.id])
   }
+  canEditOrDelete(row: any): boolean {
+    // Add your condition here, for example:
+    return row.companyId !== 0;
+  }
+  
   deleteTemplate(message: any) {
-    // const confirmation = confirm('Are you sure you want to delete this template?');
-    // if (confirmation) {
-    //   this.commonService.DeleteRules(message.id).subscribe(
-    //     () => {
-    //       console.log('message deleted:', message);
-    //       // Remove the deleted message from the messages array
-    //       this.tableData = this.tableData.filter((msg) => msg.id !== message.id);
-    //     },
-    //     (error: any) => {
-    //       console.error('Error deleting template:', error);
-    //     }
-    //   );
-    // }
+    const confirmation = confirm('Are you sure you want to delete this template?');
+    if (confirmation) {
+      this.commonService.DeleteRules(message.id).subscribe(
+        () => {
+          console.log('message deleted:', message);
+          this.tableData = this.tableData.filter((msg: any) => msg.id !== message.id);
+
+        },
+        (error: any) => {
+          console.error('Error deleting template:', error);
+        }
+      );
+    }
   }
   disableTemplate(message: any) {
     console.log('Disabling template:', message);

@@ -174,6 +174,10 @@ export class CommonDataService {
   getChannels = environment.links.identity.channels;
   deleteRoles = environment.links.identity.deleteRoles;
 
+  // teams 
+  getAllTeams= environment.links.console.getAllTeams
+  addTeam = environment.links.console.addTeam
+  updateTeam = environment.links.console.updateTeam
   //service
   userlogin=environment.links.common.userlogin
   addSurvey = environment.links.service.addSurvey;
@@ -488,8 +492,8 @@ export class CommonDataService {
     const url = `${this.consoleBaseUrl}${this.deleteBusinessHours}?Id=${delHours}`;
     return this.http.get(url);
   }
-  UpdateBusinessHours(hoursId: string, bueiness: any) {
-    const url = `${this.consoleBaseUrl}${this.updateBusinessHours}?Id=${hoursId}`;
+  UpdateBusinessHours( bueiness: any) {
+    const url = `${this.consoleBaseUrl}${this.updateBusinessHours}`;
     return this.http.post(url, bueiness);
   }
   GetBusinessById(BusinessId: string) {
@@ -577,14 +581,15 @@ export class CommonDataService {
   GetAllRules() {
     return this.http.get(this.consoleBaseUrl + this.getAllRules);
   }
-  GetRuleById() {
-    return this.http.get(this.consoleBaseUrl + this.getRuleById);
+  GetRuleById(ruleId: string) {
+    return this.http.get(`${this.consoleBaseUrl + this.getRuleById}?id=${ruleId} `)
+    ;
   }
   AddRules(addrule: any) {
     return this.http.post(this.consoleBaseUrl + this.addRules, addrule);
   }
-  UpdateRules(ruleId: string, rule: any) {
-    const url = `${this.consoleBaseUrl}${this.updateRules}?Id=${ruleId}`;
+  UpdateRules(rule: any) {
+    const url = `${this.consoleBaseUrl}${this.updateRules}`;
     return this.http.post(url, rule);
   }
   DeleteRules(delRules: any) {
@@ -833,7 +838,15 @@ UpdateSkill(id: any, rule: any) {
   const url = (`${this.consoleBaseUrl}${this.updateSkill}?SkillId=${id}`)
   return this.http.post(url, rule)
 }
-
+GetAllTeams(){
+return this.http.get(this.IdentityBaseUrl + this.getAllTeams)
+}
+AddTeam(body:any){
+  return this.http.post(this.IdentityBaseUrl+this.addTeam,body)
+}
+UpdateTeam(body:any){
+  return this.http.put(this.IdentityBaseUrl+this.updateTeam,body)
+}
 }
 
 
