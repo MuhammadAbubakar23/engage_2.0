@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgZone, OnInit } from '@angular/core';
 import { FormsModule, FormBuilder, FormGroup, ReactiveFormsModule, FormControl } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-import {QueryBuilderClassNames, QueryBuilderConfig, QueryBuilderModule, RuleSet } from 'angular2-query-builder';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { QueryBuilderClassNames, QueryBuilderConfig, QueryBuilderModule, RuleSet } from 'angular2-query-builder';
 import { CommonDataService } from '../../../../../shared/services/common/common-data.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { EntityTypeBuilder } from 'src/app/shared/Models/EntityTypeDto';
@@ -21,7 +21,8 @@ export class AddRulesComponent implements OnInit {
 
   rulesForm = new FormGroup({
     ruleName: new FormControl(''),
-    description: new FormControl('')
+    description: new FormControl(''),
+    // rulesJson: new FormControl('')
   })
   public query: RuleSet = {
     condition: 'and',
@@ -62,8 +63,9 @@ export class AddRulesComponent implements OnInit {
   }
 
   entitySet: any = [];
+  ruleId: any;
 
-  constructor(private _fb: FormBuilder, private router: Router, private _cs: CommonDataService, private ngZone: NgZone) {
+  constructor(private _fb: FormBuilder, private router: Router, private _cs: CommonDataService, private ngZone: NgZone, private _route: ActivatedRoute) {
     this.queryCtrl = this._fb.control(this.query);
     this.queryCtrl.valueChanges.subscribe((ruleSet: any) => {
       this.processRules(ruleSet.rules);
@@ -71,6 +73,9 @@ export class AddRulesComponent implements OnInit {
     });
 
   }
+
+
+
   processRules(rules: any[]) {
     rules.forEach((rule: any) => {
       if (rule.rules) {
@@ -93,6 +98,28 @@ export class AddRulesComponent implements OnInit {
     this._cs.GetEntitiesRule().subscribe((response: any) => {
       this.entities = response;
     })
+    this.ruleId = this._route.snapshot.paramMap.get('id')
+    this.getRuleById(this.ruleId)
+
+  }
+  getRuleById(ruleId: string) {
+    this._cs.GetRuleById(ruleId).subscribe((res: any) => {
+      console.log(res)
+      this.rulesForm.patchValue({
+
+        description: res.description,
+        ruleName: res.name,
+        // rulesJson: JSON.parse(res.rulesJson), 
+        // tableName :res.tableName
+
+      });
+      this.selectedRuleSet = JSON.parse(res.rulesJson);
+      this.loadExistingRuleSet();
+    },
+      (error: any) => {
+        console.log('API error:', error);
+      })
+
   }
   selectEntity() {
 
@@ -142,17 +169,37 @@ export class AddRulesComponent implements OnInit {
 
           this.config.fields[obj.entityName] = fieldsObj;
         });
-
+        this.loadExistingRuleSet();
       } else {
         console.error("response is not an array");
       }
     })
+    this.loadExistingRuleSet();
+  }
+  loadExistingRuleSet() {
+    if (this.selectedRuleSet) {
+      this.query = this.selectedRuleSet;
+      this.queryCtrl.setValue(this.query);
+    }
   }
 
   onClick() {
-    this._cs.AddRules({ "name": this.rulesForm.value['ruleName'], "description":this.rulesForm.value['description'], 'rulesJson': JSON.stringify(this.selectedRuleSet) }).subscribe((res) => {
-      alert("SuccessFully rules Added!");
-    })
+    debugger
+    const ruleData = {
+      "name": this.rulesForm.value['ruleName'],
+      "description": this.rulesForm.value['description'],
+      'rulesJson': JSON.stringify(this.selectedRuleSet)
+    };
+    console.log("json data ===>", this.selectedRuleSet)
+    if (this.ruleId) {
+      this._cs.UpdateRules({ ...ruleData, "id": this.ruleId }).subscribe((res: any) => {
+        this.router.navigate(['console/rules']);
+      });
+    } else {
+      this._cs.AddRules(ruleData).subscribe((res) => {
+        this.router.navigate(['console/rules']);
+      });
+    }
   }
   cancelbtn() {
     this.router.navigate(['console/rules']);

@@ -38,9 +38,7 @@ export class CreateTeamComponent implements OnInit {
     this.initializeForm();
     // this.getClient()
   }
-
-
-
+  
   initializeForm() {
     this.teamForm = this.formbuilder.group({
 
@@ -96,7 +94,10 @@ export class CreateTeamComponent implements OnInit {
       }
 
       console.log("Form Data:", formData);
+      console.log("Form Data:", formData);
     } else {
+      console.log('Form is invalid:', this.teamForm);
+      // this.teamForm.markAllAsTouched(); 
       console.log('Form is invalid:', this.teamForm);
       // this.teamForm.markAllAsTouched(); 
     }

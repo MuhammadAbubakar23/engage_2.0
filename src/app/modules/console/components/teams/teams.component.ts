@@ -146,4 +146,7 @@ export class TeamsComponent implements OnInit {
       this.isCheckedAll = false;
     }
   }
+  // AddTeamMembers() {
+  //   this.isActive = !this.isActive;
+  // }
 }

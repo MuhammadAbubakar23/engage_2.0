@@ -29,18 +29,18 @@ import { SkillsResolver } from './resolvers/users/skills.resolver';
 
 const routes: Routes = [
   {
-    path:'',
-    component:ConsoleComponent,
+    path: '',
+    component: ConsoleComponent,
 
     children: [
       {
-        path:'home',
+        path: 'home',
         loadComponent: () => import('./components/home/home.component').then(c => c.HomeComponent),
         data: { breadcrumb: 'Home' },
         canMatch: [ConsoleRoutingGuard],
       },
       {
-        path:'users',
+        path: 'users',
         loadComponent: () => import('./components/users/users.component').then(c => c.UsersComponent),
         data: { breadcrumb: 'Users' },
         canMatch: [ConsoleRoutingGuard],
@@ -48,8 +48,8 @@ const routes: Routes = [
         resolve: {
           userJ: UsersJsonResolver
         },
-      },{
-        path:'users/create/:id',
+      }, {
+        path: 'users/create/:id',
         loadComponent: () => import('./components/users/create-user/create-user.component').then(c => c.CreateUserComponent),
         data: { breadcrumb: 'Users > Create' },
         //canActivate: [ConsoleRoutingGuard],
@@ -60,15 +60,15 @@ const routes: Routes = [
           teams: TeamsResolver,
           skills: SkillsResolver
         },
-      },{
-      //   path:'users/bulk-user-upload',
-      //   loadComponent: () => import('./components/users/bulk-users-add/bulk-users-add.component').then(c => c.BulkUsersAddComponent),
-      //   canMatch: [ConsoleRoutingGuard],
-      //   // resolve: {
-      //   //   submenus: UsersResolver,
-      //   // },
-      // },{
-        path:'roles-permissions',
+      }, {
+        //   path:'users/bulk-user-upload',
+        //   loadComponent: () => import('./components/users/bulk-users-add/bulk-users-add.component').then(c => c.BulkUsersAddComponent),
+        //   canMatch: [ConsoleRoutingGuard],
+        //   // resolve: {
+        //   //   submenus: UsersResolver,
+        //   // },
+        // },{
+        path: 'roles-permissions',
         loadComponent: () => import('./components/roles-and-permissions/roles-and-permissions.component').then(c => c.RolesAndPermissionsComponent),
         data: { breadcrumb: 'Roles N` Permissions' },
         canMatch: [ConsoleRoutingGuard],
@@ -76,8 +76,8 @@ const routes: Routes = [
           roles: RolesResolver,
           // teams: TeamsResolver,
         },
-      },{
-        path:'roles-permissions/create/:id',
+      }, {
+        path: 'roles-permissions/create/:id',
         loadComponent: () => import('./components/roles-and-permissions/create-roles/create-roles.component').then(c => c.CreateRolesComponent),
         data: { breadcrumb: 'Roles N` Permissions > Create' },
         canMatch: [ConsoleRoutingGuard],
@@ -85,8 +85,8 @@ const routes: Routes = [
           rolesnpermission: RolesPermissionsResolver,
           // teams: TeamsResolver,
         },
-      },{
-        path:'teams',
+      }, {
+        path: 'teams',
         loadComponent: () => import('./components/teams/teams.component').then(c => c.TeamsComponent),
         data: { breadcrumb: 'Teams N` Accesses ' },
         canMatch: [ConsoleRoutingGuard],//teams: TeamsResolver,
@@ -110,125 +110,140 @@ const routes: Routes = [
         resolve: {
           channelsnpermission: ConsoleResolver,
         },
-      },{
-        path:'tags',
+      }, {
+        path: 'tags',
         loadComponent: () => import('./components/tags/tags.component').then(c => c.TagsComponent)
 
-      },{
-        path:'rules',
+      }, {
+        path: 'rules',
         loadComponent: () => import('./components/rules/rules.component').then(c => c.RulesComponent)
 
       },
+      
       {
-        path:'add-rules',
+        path: 'add-rules/:id',
         loadComponent: () => import('./components/rules/add-rules/add-rules.component').then(c => c.AddRulesComponent)
 
-      },{
-        path:'skills',
+      },
+      {
+        path: 'add-rules',
+        loadComponent: () => import('./components/rules/add-rules/add-rules.component').then(c => c.AddRulesComponent)
+
+      }, {
+        path: 'skills',
         loadComponent: () => import('./components/skills/skills.component').then(c => c.SkillsComponent),
         canMatch: [ConsoleRoutingGuard]
-      },{
-        path:'skills/create/:id',
+      }, {
+        path: 'skills/create/:id',
         loadComponent: () => import('./components/skills/create-skills/create-skills.component').then(c => c.CreateSkillsComponent),
         canMatch: [ConsoleRoutingGuard],
-      },{
-        path:'routes',
+      }, {
+        path: 'routes',
         loadComponent: () => import('./components/enteract-route/enteract-route.component').then(c => c.EnteractRouteComponent)
 
       },
       {
-        path:'sla-policies',
+        path: 'sla-policies',
         loadComponent: () => import('./components/sla-policies/sla-policies.component').then(c => c.SlaPoliciesComponent)
 
       },
       {
-        path:'business-hours',
+        path: 'business-hours',
         loadComponent: () => import('./components/business-hours/business-hours.component').then(c => c.BusinessHoursComponent)
 
       },
       {
-        path:'templates/message',
-        component:MessagesComponent
+        path: 'templates/message',
+        component: MessagesComponent
       },
       {
-        path:'templates/signature',
-        component:SignaturesComponent
+        path: 'templates/signature',
+        component: SignaturesComponent
       },
       {
-        path:'templates/quick-response',
-        component:QuickResponseComponent
+        path: 'templates/quick-response',
+        component: QuickResponseComponent
       },
       {
-        path:'templates/messages/create',
+        path: 'templates/messages/create',
         // loadComponent: () => import('../console/components/templates/messages/create-message-templates/create-message-templates.component').then(c => c.CreateMessageTemplatesComponent)
-        component:CreateMessageTemplatesComponent
+        component: CreateMessageTemplatesComponent
 
-      } ,
+      },
       {
-        path:'templates/createSignatures',
+        path: 'templates/createSignatures',
         component: CreateSignatureTemplatesComponent
 
         // loadComponent: () => import('./components/templates/signatures/create-signature-templates/create-signature-templates.component').then(c => c.CreateSignatureTemplatesComponent)
       },
       {
-        path:'createresponse',
+        path: 'createresponse',
         component: CreateQuickResponseTemplatesComponent
 
         // loadComponent: () => import('./components/templates/signatures/create-signature-templates/create-signature-templates.component').then(c => c.CreateSignatureTemplatesComponent)
       },
       {
-        path:'sla-policies',
+        path: 'sla-policies',
         loadComponent: () => import('./components/sla-policies/sla-policies.component').then(c => c.SlaPoliciesComponent)
 
       },
+
       {
-        path:'sla-policy/create',
+        path: 'sla-policy/create/:id',
+        component: AddPolicyComponent
+      },
+      {
+        path: 'sla-policy/create',
         component: AddPolicyComponent
       }
-      ,{
-        path:'business-hours',
+      , {
+        path: 'business-hours',
         loadComponent: () => import('./components/business-hours/business-hours.component').then(c => c.BusinessHoursComponent)
       },
       { path: 'console/templates/messages/edit/:id', component: CreateMessageTemplatesComponent },
-     {
-       path:'business-hours/create',
-      component : CreateBusinessHoursComponent
-     },
-     {
-      path:'automation/sentiment-analysis/bulk-upload',
-      component: BulkUploadComponent
-     },
-     {
-      path:'automation/sentiment-analysis',
-      component: CreateSentimentComponent
-     },
-     {
-      path:'automation/chat-bot-intent',
-      component: ChatBotComponent
-     },
-     {
-      path:'automation/chat-bot-intent/bot-builder',
-      component: ChatBotBuilderComponent,
-     },
-     {
-      path:'automation/chat-bot-intent/update',
-      component:UpdateIntentsComponent
-     },
-     {
-      path: 'tags',
-      loadComponent: () => import('./components/tags/tags.component').then(c => c.TagsComponent),
-      canMatch: [ConsoleRoutingGuard]
-    }, {
-      path: 'tag/create/:id',
-      loadComponent: () => import('./components/tags/create-tags/create-tags.component').then(c => c.CreateTagsComponent),
-      canMatch: [ConsoleRoutingGuard]
-    },
+      {
+        path: 'business-hours/create',
+        component: CreateBusinessHoursComponent
+      },
+      {
+        path: 'business-hours/create/:id',
+        component: CreateBusinessHoursComponent
+      },
+      {
+        path: 'automation/sentiment-analysis/bulk-upload',
+        component: BulkUploadComponent
+      },
+      {
+        path: 'automation/sentiment-analysis',
+        component: CreateSentimentComponent
+      },
+      {
+        path: 'automation/chat-bot-intent',
+        component: ChatBotComponent
+      },
+      {
+        path: 'automation/chat-bot-intent/bot-builder',
+        component: ChatBotBuilderComponent,
+      },
+      {
+        path: 'automation/chat-bot-intent/update',
+        component: UpdateIntentsComponent
+      },
+      {
+        path: 'tags',
+        loadComponent: () => import('./components/tags/tags.component').then(c => c.TagsComponent),
+        canMatch: [ConsoleRoutingGuard]
+      }, {
+        path: 'tag/create/:id',
+        loadComponent: () => import('./components/tags/create-tags/create-tags.component').then(c => c.CreateTagsComponent),
+        canMatch: [ConsoleRoutingGuard]
+      },
     ]
-// },
-// {
-//   path:':channel',
-//   component:ConsoleComponent
-}
+    // },
+    // {
+    //   path:':channel',
+    //   component:ConsoleComponent
+  }
 ];
 
 @NgModule({

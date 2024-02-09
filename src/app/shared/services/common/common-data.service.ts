@@ -136,6 +136,8 @@ export class CommonDataService {
   addSlaPolicy = environment.links.console.addSlaPolicy;
   updateSlaPolicy = environment.links.console.updateSlaPolicy;
   getPolicyById = environment.links.console.getPolicyById;
+  getBusinessHoursById = environment.links.console.getBusinessHoursById;
+  
   deleteSlaPolicy = environment.links.console.deleteSlaPolicy;
   getOperationalHours = environment.links.console.getOperationalHours;
   getBusinessHours = environment.links.console.getBusinessHours;
@@ -157,6 +159,7 @@ export class CommonDataService {
   addProfile = environment.links.console.addProfile;
   attachFacebookPage = environment.links.console.attachFacebookPage;
   getTags = environment.links.console.getTags;
+  getTagsByCompanyId =environment.links.console.getTagsByCompanyId
   getTagById = environment.links.console.getTagById;
   addTags = environment.links.console.addTags;
   updateTag = environment.links.console.updateTag;
@@ -175,6 +178,10 @@ export class CommonDataService {
   getChannels = environment.links.identity.channels;
   deleteRoles = environment.links.identity.deleteRoles;
 
+  // teams 
+  // getAllTeams= environment.links.console.getAllTeams
+  // addTeam = environment.links.console.addTeam
+  // updateTeam = environment.links.console.updateTeam
   //service
   userlogin=environment.links.common.userlogin
   addSurvey = environment.links.service.addSurvey;
@@ -461,12 +468,16 @@ export class CommonDataService {
   AddSlaPolicy(addSla: any) {
     return this.http.post(this.consoleBaseUrl + this.addSlaPolicy, addSla);
   }
-  UpdateSlaPolicy(slaId: string, sla: any) {
-    const url = `${this.consoleBaseUrl}${this.updateSlaPolicy}?Id=${slaId}`;
+  UpdateSlaPolicy( sla: any) {
+    const url = `${this.consoleBaseUrl}${this.updateSlaPolicy}`;
     return this.http.post(url, sla);
   }
   GetPolicyById(policyid: string) {
     const url = `${this.consoleBaseUrl}${this.getPolicyById}?Id=${policyid}`;
+    return this.http.get(url);
+  }
+  GetBusinessHoursById(policyid: string) {
+    const url = `${this.consoleBaseUrl}${this.getBusinessHoursById}?Id=${policyid}`;
     return this.http.get(url);
   }
   DeleteSlaPolicy(deleteSla: string): Observable<any> {
@@ -489,8 +500,8 @@ export class CommonDataService {
     const url = `${this.consoleBaseUrl}${this.deleteBusinessHours}?Id=${delHours}`;
     return this.http.get(url);
   }
-  UpdateBusinessHours(hoursId: string, bueiness: any) {
-    const url = `${this.consoleBaseUrl}${this.updateBusinessHours}?Id=${hoursId}`;
+  UpdateBusinessHours( bueiness: any) {
+    const url = `${this.consoleBaseUrl}${this.updateBusinessHours}`;
     return this.http.post(url, bueiness);
   }
   GetBusinessById(BusinessId: string) {
@@ -549,6 +560,10 @@ export class CommonDataService {
   GetTags() {
     return this.http.get(this.consoleBaseUrl + this.getTags);
   }
+  GetTagsByCompanyId(){
+    return this.http.get(this.consoleBaseUrl + this.getTagsByCompanyId);
+
+  }
   GetTagById(body: any) {
     const url = `${this.consoleBaseUrl}${this.getTagById}`;
     return this.http.post(url, body);
@@ -578,14 +593,15 @@ export class CommonDataService {
   GetAllRules() {
     return this.http.get(this.consoleBaseUrl + this.getAllRules);
   }
-  GetRuleById() {
-    return this.http.get(this.consoleBaseUrl + this.getRuleById);
+  GetRuleById(ruleId: string) {
+    return this.http.get(`${this.consoleBaseUrl + this.getRuleById}?id=${ruleId} `)
+    ;
   }
   AddRules(addrule: any) {
     return this.http.post(this.consoleBaseUrl + this.addRules, addrule);
   }
-  UpdateRules(ruleId: string, rule: any) {
-    const url = `${this.consoleBaseUrl}${this.updateRules}?Id=${ruleId}`;
+  UpdateRules(rule: any) {
+    const url = `${this.consoleBaseUrl}${this.updateRules}`;
     return this.http.post(url, rule);
   }
   DeleteRules(delRules: any) {
@@ -835,14 +851,14 @@ UpdateSkill(id: any, rule: any) {
   return this.http.post(url, rule)
 }
 GetAllTeams(){
-  return this.http.get(this.IdentityBaseUrl + this.getAllTeams)
-  }
-  AddTeam(body:any){
-    return this.http.post(this.IdentityBaseUrl+this.addTeam,body)
-  }
-  UpdateTeam(body:any){
-    return this.http.post(this.IdentityBaseUrl+this.updateTeam,body)
-  }
+return this.http.get(this.IdentityBaseUrl + this.getAllTeams)
+}
+AddTeam(body:any){
+  return this.http.post(this.IdentityBaseUrl+this.addTeam,body)
+}
+UpdateTeam(body:any){
+  return this.http.put(this.IdentityBaseUrl+this.updateTeam,body)
+}
 }
 
 
