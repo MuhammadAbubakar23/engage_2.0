@@ -1,97 +1,196 @@
-<div class="team-user-wrap console-body-wrapper inbox-container" data-scrollbar="true" tabindex="-1"
-    style="overflow-y: auto; outline: none;">
-    <div class="scroll-content">
-        <div class="p-4">
-            <div class="filter-toolbar">
-                <div class="row">
-                    <div class="col-md-8">
-                        <ul class="list-inline m-0 d-flex align-items-center">
-                            <!-- <li class="list-inline-item">
-                                <a href="javascript:" class="search-btn">
-                                    <button class="iconButton medium">
-                                        <i class="fal fa-search silver"></i>
-                                    </button>
-                                    <input placeholder="Search">
-                                </a>
-                            </li> -->
-                            <!--<li class="list-inline-item">
-                                <select class="js-example-basic-single form-select"
-                                    data-select2-id="select2-data-1-st3r" tabindex="-1" aria-hidden="true">
-                                    <option data-select2-id="select2-data-3-1igk">All </option>
-                                    <option>Ascending </option>
-                                    <option> Descending</option>
-                                    <option>Roles</option>
-                                    <option>Teams</option>
-                                </select>
-                                 <span class="select2 select2-container select2-container--default" dir="ltr"
-                                    data-select2-id="select2-data-2-jctd" style="width: 107px;"><span
-                                        class="selection"><span class="select2-selection select2-selection--single"
-                                            role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                            aria-disabled="false" aria-labelledby="select2-1gkw-container"
-                                            aria-controls="select2-1gkw-container"><span
-                                                class="select2-selection__rendered" id="select2-1gkw-container"
-                                                role="textbox" aria-readonly="true" title="All ">All </span><span
-                                                class="select2-selection__arrow" role="presentation"><b
-                                                    role="presentation"></b></span></span></span><span
-                                        class="dropdown-wrapper" aria-hidden="true"></span></span>
+<div class="content-box-wrapper d-flex w-100">
+    <div class="middle-content d-flex">
+        <div class="team-user-wrap console-body-wrapper inbox-container" data-scrollbar="true" tabindex="-1"
+            style="overflow: hidden; outline: none;">
+            <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+                <p style="color: white"> Loading... </p>
+             </ngx-spinner>
+            <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
+                <div class="p-4">
+                    <div class="filter-toolbar">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <ul class="list-inline m-0 d-flex align-items-center">
+                                    <li class="list-inline-item">
+                                        <a class="search-btn">
+                                            <button class="iconButton medium">
+                                                <i class="fal fa-search silver"></i>
+                                            </button>
+                                            <input placeholder="Search">
+                                        </a>
+                                    </li>
+                                    <!-- <li class="list-inline-item">
+                                        <select class="js-example-basic-single select2-hidden-accessible"
+                                            data-select2-id="select2-data-1-n4mu" tabindex="-1" aria-hidden="true">
+                                            <option data-select2-id="select2-data-3-z81v">All </option>
+                                            <option>Ascending </option>
+                                            <option> Descending</option>
+                                            <option>Roles</option>
+                                            <option>Teams</option>
+                                        </select><span class="select2 select2-container select2-container--default"
+                                            dir="ltr" data-select2-id="select2-data-2-94vp" style="width: 108px;"><span
+                                                class="selection"><span
+                                                    class="select2-selection select2-selection--single" role="combobox"
+                                                    aria-haspopup="true" aria-expanded="false" tabindex="0"
+                                                    aria-disabled="false" aria-labelledby="select2-7a5h-container"
+                                                    aria-controls="select2-7a5h-container"><span
+                                                        class="select2-selection__rendered" id="select2-7a5h-container"
+                                                        role="textbox" aria-readonly="true" title="All ">All
+                                                    </span><span class="select2-selection__arrow" role="presentation"><b
+                                                            role="presentation"></b></span></span></span><span
+                                                class="dropdown-wrapper" aria-hidden="true"></span></span>
 
-                            </li> -->
-                        </ul>
+                                    </li> -->
+                                </ul>
+                            </div>
+                            <div class="col-md-4 d-flex align-items-center justify-content-end">
+                                <a [routerLink]="['/console/teams/create/:0']"
+                                    class="ms-2">
+                                    <button type="button" class="btn btn-success">
+                                        <i class="fal fa-plus me-2"></i>
+                                        Create Team
+                                    </button>
+                                </a>
+
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-4 d-flex align-items-center justify-content-end">
-                        <a (click)="updatevalue('consoleCreateTeamHeader')" [routerLink]="['/console/teams/create/0']" class="ms-2">
-                            <button type="button" class="btn btn-success">
-                                <i class="fal fa-plus me-2"></i>
-                                Create Team
-                            </button>
-                        </a>
+                    <div class="filter-container border-0">
+
+                        <ul class="list-group list-group-horizontal border-0">
+
+                            <li class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle"
+                                aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                style="display: block;"
+                                data-bs-original-title="Refresh" aria-describedby="tooltip946912" (click)="reloadComponent()">
+                                <i class="fal fa-redo"></i>
+                            </li>
+                            <li class="list-group-item after-select-fun iconHover iconButton medium rounded-circle"
+                            [ngStyle]="{display:isChecked==true? 'block':'none'}"
+                                aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                data-bs-original-title="Delete"  >
+                                <i class="fal fa-trash"></i>
+                            </li>
+                        </ul>
+
+                        <div class="pagination-bar">
+                            <div class="dropdown">
+                                <button class="btn iconHover" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                  1-10 of 100
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item">Newest</a></li>
+                                    <li><a class="dropdown-item"> Oldest</a></li>
+                                </ul>
+                            </div>
+                            <span class="iconButton medium iconHover">
+                                <i class="fal fa-chevron-left"></i>
+                            </span>
+                            <span class="iconButton medium iconHover">
+                                <i class="fal fa-chevron-right"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="table-section table-scrool-y mb-3 query-container table-white">
+    
+                            <!-- <div class="alert alert-secondary text-center email-info-alert p-2" role="alert"     [ngStyle]="{display:isChecked==true? 'block':'none'}" >
+                                All <strong>{{Ids.length}}</strong> conversations on this page are selected.
+                            
+                                <a href="javascript:void(0);" class="clear-selection" (click)="reloadComponent()" style="color: rgb(28, 86, 192);">Clear
+                                    selection</a>
+                            </div> -->
+                
+                        
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="filter-container checkbox-reset">
+                                            <ul class="list-group list-group-horizontal border-0">
+                                                <li class="list-group-item border-0 all-check-boxes" [class.selected]="isChecked == true">
+                                                    <input class="form-check-input me-1" type="checkbox"
+                                                        (click)="checkUncheckAll($event)"
+                                                        [checked]="masterSelected"
+                                                        aria-label="..." data-bs-toggle="tooltip"
+                                                        data-bs-placement="bottom" data-bs-original-title="Check All">
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </th>
+                                    <!-- <th *ngFor="let column of teams_Columns">{{column}}</th> -->
+                                    <th>
+                                        <a class="charcoal hover-icon">
+                                            Name
+                                            <!-- <i class="fas fa-long-arrow-alt-down"></i> -->
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a class="charcoal hover-icon">
+                                            Description
+                                            <i class="fas fa-long-arrow-alt-down"></i>
+                                        </a>
+                                    </th>
+                                    <th>...</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- <tr class="region-row" *ngFor="let row of teams ">
+                                    <td *ngFor="let column of teams_Columns">
+                                        {{ row[column] }}
+                                    </td>
+                                </tr> -->
+                                <tr *ngFor="let row of teams ,index as i">
+                                    <td>
+                                        <input class="form-check-input me-1"
+                                        [checked]="row.isChecked"
+                                        [value]='row.id'
+                                       (click)="isAllSelected($event,i)"
+                                         type="checkbox" aria-label="...">
+                                    </td>
+                                    <td>
+                                        {{row?.name}}
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center darkblue">
+                                            <i class="fal fa-users coal me-2"></i>
+                                            {{makeTitle(row?.desc)}}
+
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="icons-list d-flex justify-content-end dropstart">
+
+                                            <button class="btn iconButton medium iconHover btn-group" type="button"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="far fa-ellipsis-v"></i>
+                                            </button>
+                                            <ul class="dropdown-menu fade">
+                                                <li  [routerLink]="['/console/teams/create/',row.id]" >
+                                                    <a class="dropdown-item"><i class="fal fa-edit me-2"> </i>
+                                                        Edit</a>
+                                                </li>
+                                                <li (click)="deleteTeam(row.id)">
+                                                    <a class="dropdown-item delete-dd"><i class="fal fa-trash me-2"></i>
+                                                        Delete</a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
 
                     </div>
                 </div>
             </div>
-            <ng-template [ngIf]="showConsoleTable">
-                <console-table [filter]="filter" [TableModel]="model" [identifire]="identifire" ></console-table>
-            </ng-template>
-            <!-- <ng-template [ngIf]="showConsoleTable">
-                <console-table [filter]="filter" [TableModel]="model" ></console-table>
-            </ng-template> -->
-            <!-- <div class="filter-container checkbox-reset">
-                <ul class="list-group list-group-horizontal border-0">
-                    <li class="list-group-item border-0 all-check-boxes">
-                        <input class="form-check-input me-1" type="checkbox" aria-label="..."
-                            data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            data-bs-original-title="Check All">
-                    </li>
-                </ul>
-            </div> --> 
-            <!-- <li>
-                <a class="dropdown-item delete-dd" (click)="AddTeamMembers()" type="button" 
-                data-bs-toggle="offcanvas" data-bs-target="#addteammembers"
-                aria-controls="offcanvasRight">
-                <i class="fal fa-plus me-2"></i>
-                Add Team Members</a>
-            </li>
-            <li>
-                <a class="dropdown-item delete-dd" (click)="AddTeamMembers()" type="button" 
-                data-bs-toggle="offcanvas" data-bs-target="#consoleoverlayrightpanel"
-                aria-controls="offcanvasRight">
-                <i class="fal fa-plus me-2"></i>
-                Add Team Members</a>
-            </li> -->
+           
         </div>
+
     </div>
-    <!-- <div class="scrollbar-track scrollbar-track-x" style="display: none;">
-        <div class="scrollbar-thumb scrollbar-thumb-x" style="width: 1560px; transform: translate3d(0px, 0px, 0px);">
-        </div>
-    </div>
-    <div class="scrollbar-track scrollbar-track-y" style="display: block;">
-        <div class="scrollbar-thumb scrollbar-thumb-y"
-            style="height: 220.258px; transform: translate3d(0px, 0px, 0px);"></div>
-    </div> -->
+
 </div>
-<!-- <div [class.show]="isActive==true" class="offcanvas offcanvas-end" tabindex="-1" id="addteammembers"
-    aria-labelledby="offcanvasRightLabel" style="visibility: visible;" aria-hidden="true">
-   
-    <app-add-team-members></app-add-team-members>
-</div> -->
-<overlay-right-panel [header]="'Add Team Members'" [isActive]="isActive" [search]="true"></overlay-right-panel>

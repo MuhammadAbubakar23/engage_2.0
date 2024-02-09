@@ -1,5 +1,8 @@
 <div class="tags-wrap console-body-wrapper" data-scrollbar="true" tabindex="-1"
   style="overflow-y: auto; outline: none;">
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+    <p style="color: white"> Loading... </p>
+  </ngx-spinner>
   <div class="scroll-content">
     <div class="wider-container pt-3">
       <div id="nav-team">
@@ -23,12 +26,12 @@
                     <li>
                       <a class="dropdown-item" (click)="setStatus('Descending');  sortTags()">Descending</a>
                     </li>
-                    <li>
+                    <!-- <li>
                       <a class="dropdown-item" (click)="setStatus('Tickets');  sortTags()">Tickets</a>
                     </li>
                     <li>
                       <a class="dropdown-item" (click)="setStatus('Contacts');  sortTags()">Contacts</a>
-                    </li>
+                    </li> -->
                   </ul>
                 </div>
               </div>
@@ -76,7 +79,12 @@
             <tbody>
               <tr *ngFor="let tag of tags.slice((currentPage - 1) * perPage, currentPage * perPage)">
                 <th>
-                  <a class="night">{{ tag.name }}</a>
+                  <a class="night" >
+                    <p [style.color]="tag.color">
+                      {{ tag.name }}
+                    </p>
+                    </a>
+
                 </th>
                 <td>
                   <div class="d-flex align-items-center darkblue">
@@ -92,26 +100,26 @@
                 </td>
                 <td>
                   <div class="icons-list d-flex justify-content-end dropstart">
-                    <button class="btn iconButton medium iconHover" (click)="editTag(tag)">
+                    <!-- <button class="btn iconButton medium iconHover" (click)="editTag(tag)">
                       <i class="fal fa-edit"></i>
-                    </button>
+                    </button> -->
                     <button class="btn iconButton medium iconHover btn-group" type="button" data-bs-toggle="dropdown"
                       aria-expanded="false">
                       <i class="far fa-ellipsis-v dropdown-toggle"></i>
                     </button>
                     <ul class="dropdown-menu fade">
-                      <li>
+                      <!-- <li>
                         <a class="dropdown-item" (click)="editTag(tag)">Edit</a>
-                      </li>
+                      </li> -->
                       <li>
                         <a class="dropdown-item" (click)="deleteTemplate(tag)">Delete</a>
                       </li>
-                      <li>
+                      <!-- <li>
                         <a class="dropdown-item" (click)="disableTag(tag)">Disable</a>
                       </li>
                       <li>
                         <a class="dropdown-item" (click)="cloneTag(tag)">Clone</a>
-                      </li>
+                      </li> -->
                     </ul>
                   </div>
                 </td>
@@ -126,7 +134,7 @@
                         <a class="page-link">Previous</a>
                       </li>
                       <li class="page-item" *ngFor="let pageNumber of getPageNumbers()">
-                        <a class="page-link" (click)="goToPage(pageNumber)">{{ pageNumber }}</a>
+                        <a class="page-link" (click)="goToPage(pageNumber)" >{{ pageNumber }}</a>
                       </li>
                       <li class="page-item" (click)="nextPage()">
                         <a class="page-link">Next</a>

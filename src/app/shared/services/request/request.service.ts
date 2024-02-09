@@ -72,7 +72,11 @@ export class RequestService {
   }
   post<T>(route:string, params?: any): Observable<T>{
     
+<<<<<<< HEAD
     return this.http.post<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
+=======
+    return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
+>>>>>>> 5851bc40020b3a654c90cc04cd4a61602b7dae45
     .pipe(
       map((res: any) => { return res }),
       tap(res => console.log(route + " Response: ", res)),

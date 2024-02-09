@@ -93,15 +93,16 @@ const routes: Routes = [
         resolve: {
           teamJ: TeamsJsonResolver
         },
-      },{
+      },
+      {
         path:'teams/create/:id',
         loadComponent: () => import('./components/teams/create-team/create-team.component').then(c => c.CreateTeamComponent),
         data: { breadcrumb: 'Teams N` Accesses > Create' },
         canMatch: [ConsoleRoutingGuard],
-        resolve: {
-          teamsnpermission: TeamsPermissionsResolver,
-          teamin: TeamResolver,
-        },
+        // resolve: {
+        //   teamsnpermission: TeamsPermissionsResolver,
+        //   teamin: TeamResolver,
+        // },
       },{
         path:'channels',
         loadComponent: () => import('./components/support-channels/support-channels.component').then(c => c.SupportChannelsComponent),

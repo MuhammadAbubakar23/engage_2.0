@@ -46,14 +46,14 @@
             </span>
             <div class="form w-100">
                <form [formGroup]="loginForm" (submit)="login()">
-                  <!-- <div class="dropdown loginas">
+                  <div class="dropdown loginas">
                      <select class="form-select d-flex align-items-center mb-3" id="floatingSelect" aria-label="Floating label select"
                         formControlName="actor">
                         <option value="" disabled selected hidden>Login As</option>
                         <option *ngFor="let actor of Actors" [ngValue]="actor.name">
                            {{actor.name}}</option>
                      </select>
-                  </div> -->
+                  </div>
                   <div class="form-floating mb-3">
                      <input formControlName="userName" class="form-control" id="userName"
                         placeholder="Enter your Email">
