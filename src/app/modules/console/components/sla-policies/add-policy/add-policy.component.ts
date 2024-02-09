@@ -51,7 +51,7 @@ export class AddPolicyComponent implements OnInit {
     }
   }
   getPolicyById(policyId: string) {
-    debugger
+    
     this.commonService.GetPolicyById(policyId).subscribe(
       (policy: any) => {
         console.log("id===>",policy)
@@ -96,7 +96,7 @@ export class AddPolicyComponent implements OnInit {
     }
   }
   onSubmit() {
-    debugger
+    
      console.log('Form Data:', this.messageForm.value);
     const slaTargets = this.messageForm.get('slaTargets') as FormArray;
     for (let i = slaTargets.controls.length - 1; i >= 0; i--) {

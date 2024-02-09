@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   verificationdto = new VerificationDto();
   isUserLoging: boolean = false;
   baseUrl: string = '';
-  ErrorMessage: any;
+  ErrorMessage: string = "";
   isVerificationcodeFailed: boolean = false;
   loginDisabled: boolean = false;
   matchTime: any;

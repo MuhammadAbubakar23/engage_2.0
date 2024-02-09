@@ -1,16 +1,11 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-} from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { StorageService } from '../services/storage/storage.service';
 
 @Injectable()
 export class SuperTeamInterceptor implements HttpInterceptor {
-  companyId:number=650;
+  companyId:number=654;
   baseUrl:string="";
   constructor(private storage: StorageService) {}
 
@@ -26,7 +21,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
       else if(this.baseUrl=='https://uiengage.enteract.app') {
         this.companyId=650
       }
-      else if(this.baseUrl=='https://tppl.360scrm.com') {
+      else if(this.baseUrl=='https://tppl.enteract.live') {
         this.companyId=652
       }
       else if(this.baseUrl=='https://waengage.enteract.live') {

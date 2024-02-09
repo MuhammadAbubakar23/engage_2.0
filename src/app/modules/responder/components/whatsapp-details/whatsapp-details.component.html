@@ -639,9 +639,9 @@
                             </li>
                         </ul>
                     </ul>
-                </div> 
-        </span>
-    
+                </div>
+            </span>
+
             <div class="form-floating textarea-field">
                 <textarea formControlName="text" [(ngModel)]="text" class="form-control auto" rows="1"
                     (keydown)="handleTextareaKeyDown($event)" id="text" placeholder="Write a comment here"
@@ -709,7 +709,7 @@
                 <div class="collapse-toggle-card">
                     <div class="list-group list-group-flush">
                         <!-- From DB -->
-                        <div class="collapse-wrap mx-3" id="qr-ques1"
+                        <!-- <div class="collapse-wrap mx-3" id="qr-ques1"
                             *ngFor="let qr of QuickReplies | quickReplySearchFilter: quickReplySearchText">
                             <div class="list-group list-group-flush mb-4 ms-4 ps-1">
                                 <div class="form-check list-group-item theme-check">
@@ -720,7 +720,121 @@
                                     </label>
                                 </div>
                             </div>
+                        </div> -->
+
+                        <!-- Hard Coded only for Bazaar-->
+
+                        <div class="list-group list-group-flush"
+                            *ngFor="let qr of QuickRepliesForBazaar; let i = index">
+                            <a class="list-group-item d-flex align-items-center menu_bar_collapse"
+                                (click)="openQuickReplyDropdown(i)" data-bs-toggle="collapse" role="button"
+                                [attr.data-bs-target]="'#qr-ques'+qr.value+i" aria-expanded="true"
+                                [attr.aria-controls]="'qr-ques'+qr.value+i">
+                                <div class="list-down-icon">
+                                    <span class="iconButton medium medium iconHover me-3">
+                                        <i class="fal fa-chevron-right rotate-down"
+                                            [ngClass]="{'active': i === activeDropdown}"></i>
+                                    </span>
+                                </div>
+                                <div class="w-100 list-txt">
+                                    <div class="d-flex w-100 justify-content-between align-items-baseline">
+                                        <h6 class="mb-0 darkblue"> {{qr.text}} </h6>
+                                        <span class="badge rounded-pill blue-bg">{{qr.subReply.length}}</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="list-group list-group-flush collapse-wrap mx-3 collapse" [ngClass]="{'show': i === activeDropdown}" style="margin-left: 30px;"
+                                *ngFor="let sr of qr.subReply; let j = index">
+                                <!-- Inner Dropdown -->
+                                <a class="list-group-item d-flex align-items-center menu_bar_collapse"
+                                    (click)="openInnerQuickReplyDropdown(i, j)" data-bs-toggle="collapse" role="button"
+                                    [attr.data-bs-target]="'#sr-ques'+sr.value+j" aria-expanded="true"
+                                    [attr.aria-controls]="'sr-ques'+sr.value+j">
+                                    <div class="list-down-icon">
+                                        <span class="iconButton medium medium iconHover me-3">
+                                            <i class="fal fa-chevron-right rotate-down"
+                                                [ngClass]="{'active': i === activeDropdown}"></i>
+                                        </span>
+                                    </div>
+                                    <div class="w-100 list-txt">
+                                        <div class="d-flex w-100 justify-content-between align-items-baseline">
+                                            <h6 class="mb-0 darkblue"> {{sr.text}} </h6>
+                                            <span class="badge rounded-pill blue-bg">{{sr.subReply.length}}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="collapse-wrap mx-3 collapse"
+                                    [ngClass]="{'show': i === activeOuterDropdown && j === activeInnerDropdown}"
+                                    [id]="'sr-ques'+sr.value+j">
+                                    <div class="list-group list-group-flush mb-4 ms-4 ps-1">
+                                        <div class="form-check list-group-item theme-check selectedmsg"
+                                            *ngFor="let msg of sr.subReply | quickReplySearchFilter: quickReplySearchText">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                id={{msg.id}} #radioInput>
+                                            <label class="form-check-label" (click)="sendQuickReplyForBazaar(msg.id)"
+                                                for={{msg.id}} [innerHTML]="msg.text"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End of Inner Dropdown -->
+                            </div>
                         </div>
+
+                        <!-- <div class="list-group list-group-flush "
+                            *ngFor="let qr of QuickRepliesForBazaar | quickReplySearchFilter: quickReplySearchText; let i = index">
+                            <a class="list-group-item d-flex align-items-center menu_bar_collapse"
+                                (click)="openQuickReplyDropdown(i)" data-bs-toggle="collapse" role="button"
+                                [attr.data-bs-target]="'#qr-ques'+qr.value+i" aria-expanded="true"
+                                [attr.aria-controls]="'qr-ques'+qr.value+i">
+                                <div class="list-down-icon">
+                                    <span class="iconButton medium medium iconHover me-3">
+                                        <i class="fal fa-chevron-right rotate-down"
+                                            [ngClass]="{'active': i === activeDropdown}"></i>
+                                    </span>
+                                </div>
+                                <div class="w-100 list-txt">
+                                    <div class="d-flex w-100 justify-content-between align-items-baseline">
+                                        <h6 class="mb-0 darkblue"> {{qr.text}} </h6>
+                                        <span class="badge rounded-pill blue-bg">{{qr.subReply.length}}</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="list-group list-group-flush " style="margin-left: 30px;"
+                                *ngFor="let sr of qr.subReply | quickReplySearchFilter: quickReplySearchText; let i = index">
+                                <a class="list-group-item d-flex align-items-center menu_bar_collapse"
+                                    (click)="openQuickReplyDropdown(i)" data-bs-toggle="collapse" role="button"
+                                    [attr.data-bs-target]="'#sr-ques'+sr.value+i" aria-expanded="true"
+                                    [attr.aria-controls]="'sr-ques'+sr.value+i">
+                                    <div class="list-down-icon">
+                                        <span class="iconButton medium medium iconHover me-3">
+                                            <i class="fal fa-chevron-right rotate-down"
+                                                [ngClass]="{'active': i === activeDropdown}"></i>
+                                        </span>
+                                    </div>
+                                    <div class="w-100 list-txt">
+                                        <div class="d-flex w-100 justify-content-between align-items-baseline">
+                                            <h6 class="mb-0 darkblue"> {{sr.text}} </h6>
+                                            <span class="badge rounded-pill blue-bg">{{sr.subReply.length}}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="collapse-wrap mx-3 collapse" [ngClass]="{'show': i === activeDropdown}"
+                                [id]="'qr-ques'+qr.value+i">
+                                <div class="list-group list-group-flush mb-4 ms-4 ps-1">
+                                    <div class="form-check list-group-item theme-check selectedmsg"
+                                        *ngFor="let msg of sr.subReply">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                            id={{msg.id}} #radioInput>
+                                        <label class="form-check-label" (click)="sendHardCodedQuickReply(msg.id)"
+                                            for={{msg.id}} [innerHTML]="msg.text"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            
+                        </div> -->
+
+
                         <!-- Hard Coded only for Morinaga-->
                         <!-- <div class="list-group list-group-flush"
                             *ngFor="let qr of QuickRepliesHardCoded | quickReplySearchFilter: quickReplySearchText; let i = index">

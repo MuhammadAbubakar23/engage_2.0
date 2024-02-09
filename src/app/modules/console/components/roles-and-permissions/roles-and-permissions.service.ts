@@ -21,7 +21,7 @@ export class RolesAndPermissionsService {
     //     return throwError(() => new Error(err));
     //   })
     // );
-    return this.request.get<IdNameDto[]>("UserRoles",{}).pipe(
+    return this.request.get<IdNameDto[]>("UserRoles",{},"?roles=51&roles=57&roles=58").pipe(
       map((response: any) => {
         // if(response.length>=1) this.stor.store(storekey, response);
         // else this.stor.delete(storekey);

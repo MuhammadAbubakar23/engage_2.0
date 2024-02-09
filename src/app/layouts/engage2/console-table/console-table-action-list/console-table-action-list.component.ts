@@ -30,6 +30,7 @@ export class ConsoleTableActionListComponent implements OnInit {
     // console.log("Listen Action --->>>", this.listaction);
   }
   funcAction(params: any) {
+    
     console.log(params);
     let data = {
       param: params,

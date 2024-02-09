@@ -54,6 +54,13 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
   // consoleBaseUrl: 'https://tpplcons.360scrm.com/api/',
 
+  // IdentityBaseUrl: 'https://tt_identity.enteract.live/api/',
+  // CommonBaseUrl: 'https://ttcommon.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://ttcommon.enteract.live/',
+  // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
+  // ServiceBaseUrl: '',
+  // ProfileBaseUrl: '',
+
   // For Morinaga
   // IdentityBaseUrl: 'https://waidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
@@ -63,22 +70,22 @@ export const environment = {
   // ProfileBaseUrl: '',
 
   // For Bazaar
-  // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
-  // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://bzcommon.enteract.live/',
-  // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
-  // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-  // ProfileBaseUrl: '',
-  // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
+  IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
+  CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
+  SignalRCommonBaseUrl: 'https://bzcommon.enteract.live/',
+  ServiceBaseUrl: 'https://waservice.enteract.live/api/',
+  consoleBaseUrl: 'https://waconsole.enteract.live/api/',
+  ProfileBaseUrl: '',
+  TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
 
   // For Testing
-  IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
-  TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
-  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  ServiceBaseUrl: '',
-  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
-  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  // IdentityBaseUrl: 'https://rep.enteract.app/api/',
+  // TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
+  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  // ServiceBaseUrl: '',
+  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
+  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
@@ -99,14 +106,14 @@ export const environment = {
       AllTeams: 'Teams/FetchAll', // new to review
       AddTeam: 'Accesses/Teams',
       TeamProperties: 'Accesses/Properties',
-      accessrole: 'Roles/Previews', //"Permissions/role",
-      permissionrole: 'Roles/Previews', //"Permissions/role",
+      accessrole: 'Roles/NewPreviews', //"Permissions/role",
+      permissionrole: 'Roles/NewPreviews', //"Permissions/role",
       RolesPermissions: 'Roles/Fetch',
       permissions: 'Roles/Permissions',
       RoleProperties: 'Permissions/Properties',
       AddRole: 'Permissions/Roles',
-      UserRoles: 'Roles/Users',
-      UserTeams: 'Teams/Users',
+      UserRoles: 'Roles/GetActors',
+      UserTeams: 'Teams/TeamsByUser',
       AddUser: 'Identity/Add',
       UpdateUser: 'Identity/Update',
       DeleteUser: 'Identity/Delete',
@@ -116,6 +123,8 @@ export const environment = {
       channels: 'Console/Properties/Channel/Tree/0',
       routing: 'Console/Properties/routing/Tree/0',
       deleteRoles: 'Permissions/Delete',
+      ////// Later Align in Console/////
+      defaultTags: 'Tags/GetTags',
     },
     console: {
       AddUser: 'Users/CreateUser',
@@ -146,6 +155,9 @@ export const environment = {
       getSkills: 'Skill/GetAll',
       addSkill: 'Skill/Add',
       deleteSkill: 'Skill/Delete',
+      updateSkill:'Skill/Update',
+      getSkillsbyId:'Skill/GetById',
+      getUserSkills:'Skill/GetSkills',
       getAllProfile: 'Profile/GetAll',
       addProfile: 'Profile/Add',
       attachFacebookPage: 'ProfileManagement/RegisterProfile',
@@ -163,6 +175,7 @@ export const environment = {
       updateRules: 'Rules/Update',
       deleteRules: 'Rules/Delete',
       defaultTags: 'Tags/GetTags',
+      quickReplyListForBazaar:'QuickReply/GetAll'
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',

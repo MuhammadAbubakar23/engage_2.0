@@ -25,6 +25,7 @@ import { TeamsResolver } from './resolvers/users/teams.resolver';
 import { UsersJsonResolver } from './resolvers/users/users-json.resolver';
 import { BulkUploadComponent } from './components/sentiment-analysis/bulk-upload/bulk-upload.component';
 import { CreateSentimentComponent } from './components/sentiment-analysis/create-sentiment/create-sentiment.component';
+import { SkillsResolver } from './resolvers/users/skills.resolver';
 
 const routes: Routes = [
   {
@@ -57,6 +58,7 @@ const routes: Routes = [
         resolve: {
           roles: RolesResolver,
           teams: TeamsResolver,
+          skills: SkillsResolver
         },
       },{
       //   path:'users/bulk-user-upload',

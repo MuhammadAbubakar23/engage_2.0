@@ -32,6 +32,7 @@ export class CommonDataService {
   markAsComplete = environment.links.common.MarkAsComplete;
   likedByAdmin = environment.links.common.LikedByAdmin;
   quickReplyList = environment.links.common.QuickReplyList;
+  quickReplyListForBazaar = environment.links.console.quickReplyListForBazaar;  
   assignQuerry = environment.links.common.AssignQuerry;
   agentsTeamList = environment.links.common.AgentsTeamList;
   assignToAnotherAgent = environment.links.common.AssignToAnotherAgent;
@@ -145,6 +146,7 @@ export class CommonDataService {
   updateEntractRoute = environment.links.console.updateEntractRoute;
   deleteEntractRoute = environment.links.console.deleteEntractRoute;
   getSkills = environment.links.console.getSkills;
+  getUserSkills = environment.links.console.getUserSkills;
   addSkill = environment.links.console.addSkill;
   deleteSkill = environment.links.console.deleteSkill;
   getskillbyid=environment.links.console.getSkillsbyId;
@@ -224,6 +226,10 @@ export class CommonDataService {
 
   QuickReplyList() {
     return this.http.get(this.CommonBaseUrl + this.quickReplyList);
+  }
+
+  QuickReplyListForBazaarOnly () {
+    return this.http.get(this.consoleBaseUrl + this.quickReplyListForBazaar);
   }
 
   CommentRespond(form: any) {
@@ -506,6 +512,10 @@ export class CommonDataService {
   GetSkill(body:any) {
     // return this.http.get(this.consoleBaseUrl + this.getSkills);
     return this.http.post(this.consoleBaseUrl + this.getSkills, body);
+  }
+  GetUserSkills() {
+    
+     return this.http.get(this.consoleBaseUrl + this.getUserSkills);
   }
   AddSkill(addSkill: any) {
     return this.http.post(this.consoleBaseUrl + this.addSkill, addSkill);

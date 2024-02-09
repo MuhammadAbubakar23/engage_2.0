@@ -62,37 +62,43 @@
                                 </div>
                                 <form class="custom-searchbar">
                                     <input class="form-control rounded-pill shadow-sm" placeholder="Search"
-                                        aria-label="Search">
+                                        aria-label="Search" [(ngModel)]="searchText">
                                     <span class="btn searchbar-btn" type="submit">
                                         <i class="fal fa-search silver"></i>
                                     </span>
                                 </form>
                             </li>
-                            <li class="list-body small-list">
-                                <div class="list-group list-group-flush">
-                                    <a class="list-group-item d-flex level1Btn" *ngFor="let agent of ActiveAgents">
-                                        <div class="form-check w-100 p-0 theme-check">
-                                            <input class="form-check-input float-end" type="checkbox" [id]="agent.id"
-                                                (click)="sendAgentId(agent.userId, platform)">
-                                            <label class="form-check-label coal d-flex align-items-center"
-                                                [for]="agent.id">
-                                                <!-- <div class="list-down-icon">
+                            <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
+                                style="overflow: auto; height: 400px;">
+                                <div class="scroll-content">
+                                    <li class="list-body small-list">
+                                        <div class="list-group list-group-flush">
+                                            <a class="list-group-item d-flex level1Btn"
+                                                *ngFor="let agent of ActiveAgents | filter:searchText">
+                                                <div class="form-check w-100 p-0 theme-check">
+                                                    <input class="form-check-input float-end" type="radio"
+                                                        [id]="agent.userId" (click)="sendAgentId(agent.userId)">
+                                                    <label class="form-check-label coal d-flex align-items-center"
+                                                        [for]="agent.userId">
+                                                        <!-- <div class="list-down-icon">
                                                             <span class="btn iconButton iconHover medium cherryTransBg">
                                                                 AK
                                                             </span>
                                                         </div> -->
-                                                <div class="w-100 list-txt">
-                                                    <div class="d-flex w-100 justify-content-between">
-                                                        <h6 class="mb-1 darkblue">{{agent.name}}
-                                                        </h6>
-                                                    </div>
+                                                        <div class="w-100 list-txt">
+                                                            <div class="d-flex w-100 justify-content-between">
+                                                                <h6 class="mb-1 darkblue">{{agent.name}}
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    </label>
                                                 </div>
-                                            </label>
-                                        </div>
-                                    </a>
+                                            </a>
 
+                                        </div>
+                                    </li>
                                 </div>
-                            </li>
+                            </div>
                             <li class="card-footer">
                                 <div class="dropdown-item">
                                     <button type="button" class="btn btn-success"
