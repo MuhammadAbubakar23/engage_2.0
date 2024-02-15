@@ -23,7 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 @Component({
   selector: 'app-create-skills',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, AddSkillMembersComponent ,MatChipsModule, MatIconModule, MatSelectModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, AddSkillMembersComponent, MatChipsModule, MatIconModule, MatSelectModule],
   templateUrl: './create-skills.component.html',
   styleUrls: ['./create-skills.component.scss']
 })
@@ -40,6 +40,16 @@ export class CreateSkillsComponent implements OnInit {
   isSelectedTeam: any = '';
   isSelectedTeamArray: any = []
   isBusnisshours: any[] = []
+  isSelectedWing: any[] = [
+    {
+      id: 1, name: 'Select wing A'
+    }, {
+      id: 2, name: 'Select wing B'
+    }, {
+      id: 3, name: 'Select wing C'
+    }
+
+  ]
   isSlaPolicies: any[] = []
   isAllTagsSelected: boolean = false
   isCheckedAllTags: boolean = false
@@ -100,7 +110,7 @@ export class CreateSkillsComponent implements OnInit {
   subRules: any[] = []
   GetRules() {
     this.commondata.GetAllRules().subscribe((res: any) => {
-      this.subRules = res.map((rule:any) => ({ ...rule, isSelected: false }));
+      this.subRules = res.map((rule: any) => ({ ...rule, isSelected: false }));
     })
   }
   constructor(private formbuilder: FormBuilder, private router: Router,
@@ -118,9 +128,9 @@ export class CreateSkillsComponent implements OnInit {
     businesshours: new FormControl('', [Validators.required]),
     SlaPolicy: new FormControl('', [Validators.required]),
     skillRules: new FormControl('', [Validators.required]),
-    skillTags: new FormControl([]) 
+    skillTags: new FormControl([])
 
-    
+
   })
 
   ngOnInit() {
@@ -155,22 +165,22 @@ export class CreateSkillsComponent implements OnInit {
         "description": res.descreption,
         "businesshours": res.businessHoursId,
         "SlaPolicy": res.slaPolicyId,
-        "skillRules":res.skillRules,
-        "skillTags":res.skillTags,
-        
+        "skillRules": res.skillRules,
+        "skillTags": res.skillTags,
+
 
       });
     });
   }
   onSubmit() {
     let data = {
-       "id": this.id,
+      "id": this.id,
       "name": this.userForm.value.teamname,
       "descreption": this.userForm.value.description,
       "businessHourId": Number(this.userForm.value.businesshours),
       "slaPolicyId": Number(this.userForm.value.SlaPolicy),
-      "skillTags": this.isSelectedTagsId.map(item => (typeof item === 'object' ? item.tagId : item)).join(','), 
-      "skillRules": this.subRules.filter(rule => rule.isSelected).map(rule => rule.id).join(',') 
+      "skillTags": this.isSelectedTagsId.map(item => (typeof item === 'object' ? item.tagId : item)).join(','),
+      "skillRules": this.subRules.filter(rule => rule.isSelected).map(rule => rule.id).join(',')
     }
     if (this.id && this.id !== null) {
       this.commondata.UpdateSkill(this.id, data).subscribe((res: any) => {
@@ -209,7 +219,7 @@ export class CreateSkillsComponent implements OnInit {
   }
 
   getParentTagsList() {
-    
+
     this.commondata.GetTagsByCompanyId().subscribe((res: any) => {
       this.TagsLists = res
       console.log("this.tagsLsiting===>", this.TagsList)
@@ -242,12 +252,12 @@ export class CreateSkillsComponent implements OnInit {
 
 
   toggleDropdown(tagName: string) {
-    
+
     this.showDropdownState[tagName] = !this.showDropdownState[tagName];
   }
 
   toggleSelectionTags(id: any) {
-    
+
     const index = this.selectedIds.findIndex((x) => x == id)
     if (index >= 0) {
       this.isSelectedTagsId.splice(index, 1)
@@ -260,13 +270,13 @@ export class CreateSkillsComponent implements OnInit {
 
   keywordIds: any
   selectedParent(tag: any) {
-    
+
     let obj = {
       "tagId": tag.parentId
     }
-  
+
     tag.isChecked = !tag.isChecked;
-  
+
     if (tag.isChecked) {
       this.isSelectedTagsId.push(obj)
     } else {
@@ -274,7 +284,7 @@ export class CreateSkillsComponent implements OnInit {
       if (index !== -1) {
         this.isSelectedTagsId.splice(index, 1);
       }
-  
+
       tag.subTags.forEach((childTag: any) => {
         const childIndex = this.isSelectedTagsId.findIndex((item) => item.tagId === childTag.id);
         if (childIndex !== -1) {
@@ -283,7 +293,7 @@ export class CreateSkillsComponent implements OnInit {
       });
     }
   }
-  
+
 
   isSelectedTag(tagId: number): boolean {
     return this.isSelectedTagsId.includes(tagId);
@@ -296,7 +306,7 @@ export class CreateSkillsComponent implements OnInit {
       "tagId": tag.id
     }
 
-    ;
+      ;
     tag.isChecked = !tag.isChecked;
     if (tag.isChecked) {
       this.isSelectedTagsId.push(obj)
@@ -338,7 +348,7 @@ export class CreateSkillsComponent implements OnInit {
       this.selectedIds = []
     }
   }
-  
+
   Ids: any[] = []
   isCheckedAll = false;
   masterSelected = false;
@@ -346,7 +356,7 @@ export class CreateSkillsComponent implements OnInit {
   routerLink() {
     this.router.navigateByUrl('/console/skills')
   }
- 
+
 
 
 

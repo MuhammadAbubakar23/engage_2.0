@@ -23,6 +23,7 @@ export class CommonDataService {
   LinkedInBaseUrl = environment.LinkedInBaseUrl;
   KemediaBaseUrl=environment.KemediaBaseUrl;
   KescrmBaseUrl=environment.KescrmBaseUrl
+  WhatsappBaseUrl =environment.WhatsappBaseUrl
   // KelisteningBaseUrl =environment.KelisteningBaseUrl;
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
@@ -191,6 +192,8 @@ export class CommonDataService {
   searchProfileInformation = environment.links.profile.searchProfileInformation;
   addProfileInformation = environment.links.profile.addProfileInformation;
   deattachProfileInformation=environment.links.profile.deattachProfileInformation
+  // whatapp bot interaction 
+  whatsappBotInteraction = environment.links.common.whatsappBotInteraction
   private _wordCloudDataS: any;
    activeChannel:any
   constructor(private http: HttpClient) {
@@ -858,6 +861,9 @@ GetAllTeams(){
   }
   UpdateTeam(body:any){
     return this.http.post(this.IdentityBaseUrl+this.updateTeam,body)
+  }
+  WhatsappBotInteraction(body:any){
+    return this.http.post(this.WhatsappBaseUrl+this.whatsappBotInteraction,body)
   }
 }
 

@@ -19,6 +19,7 @@ import { ResponderProfileComponent } from './responder-profile/responder-profile
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ResponderCustomerProfilingComponent } from './responder-customer-profiling/responder-customer-profiling.component';
+import { ResponderBotInteractionComponent } from './responder-bot-interaction/responder-bot-interaction.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { ResponderCustomerProfilingComponent } from './responder-customer-profil
     ResponderScheduleComponent,
     ResponderHistoryComponent,
     ResponderProfileComponent,
-    ResponderCustomerProfilingComponent
+    ResponderCustomerProfilingComponent,
+    ResponderBotInteractionComponent
   ],
   imports: [
     FormsModule,

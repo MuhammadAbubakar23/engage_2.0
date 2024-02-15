@@ -391,6 +391,7 @@ export class WhatsappDetailsComponent implements OnInit {
 
             this.WhatsappData?.forEach((msg: any) => {
               this.senderId = msg.comments[0].sendTo;
+              localStorage.setItem('senderId',this.senderId)
             });
 
             this.commentsArray = [];

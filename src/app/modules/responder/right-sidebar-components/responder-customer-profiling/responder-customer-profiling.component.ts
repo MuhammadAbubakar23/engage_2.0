@@ -144,7 +144,6 @@ customerInformationForm= new FormGroup({
       platform: this.openedChannel,
       companyId: 0,
       contractAccount: this.contractAccount,
-
       customerSocialProfileName: this.customerSocialProfileName,
       customerEmail: this.customerEmail,
       phoneNumber: this.phoneNumber,
