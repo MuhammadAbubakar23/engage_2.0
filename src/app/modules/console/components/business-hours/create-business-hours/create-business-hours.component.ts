@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 
 @Component({
@@ -13,6 +13,7 @@ export class CreateBusinessHoursComponent implements OnInit {
   shiftTiming = ['8:00 am', '9:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm', '2:00 pm', '3:00 pm', '4:00 pm', '5:00 pm', '6:00 pm', '7:00 pm', '8:00 pm']
   workingDay = ""
   showWorkingDaysSection: boolean = false;
+  businessId: any
   hideWorkingDays() {
     this.showWorkingDaysSection = false;
   }
@@ -27,18 +28,28 @@ export class CreateBusinessHoursComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private commonService: CommonDataService,
-    private router: Router
+    private router: Router,
+    private _route: ActivatedRoute
   ) { }
   ngOnInit(): void {
     this.initializeForm();
-    const template = history.state.template; // Get the template value from the state
+    this.businessId = this._route.snapshot.paramMap.get('id')
+    // this.patchFormValues(this.businessId)
+    // const template = history.state.template;
 
-    if (template) {
-      this.patchFormValues(template);
+    if (this.businessId) {
+      this.patchFormValues(this.businessId);
     } else {
       this.setInitialFormValues();
     }
   }
+  isDaySelected(day: string): boolean {
+    const formArray = this.businessWorkingDays;
+    return formArray.controls.some(
+      (control) => control.get('workingDay')?.value === day
+    );
+  }
+
   initializeForm(): void {
     this.messageForm = this.formBuilder.group({
       templateName: ['', Validators.required],
@@ -58,36 +69,38 @@ export class CreateBusinessHoursComponent implements OnInit {
       customBusinessHours: true
     });
   }
-patchFormValues(template: any): void {
-  this.messageForm.patchValue({
-    templateName: template.templateName,
-    description: template.description,
-    timeZone: template.timeZone,
-    roundTheClock: template.roundTheClock,
-    customBusinessHours: template.customBusinessHours,
-  });
-
-  // Clear the existing businessWorkingDays form array before patching new values
-  this.clearBusinessWorkingDays();
-
-  // Iterate through the businessWorkingDays array and add form groups one by one
-  const businessWorkingDays = this.messageForm.get('businessWorkingDays') as FormArray;
-  template.businessWorkingDays.forEach((workingDay: any) => {
-    businessWorkingDays.push(
-      this.formBuilder.group({
-        workingDay: workingDay.workingDay,
-        shiftStart: workingDay.shiftStart,
-        shiftEnd: workingDay.shiftEnd,
+  patchFormValues(template: any): void {
+    debugger
+    this.commonService.GetBusinessById(template).subscribe(
+      (res: any) => {
+        console.log('Received template from service:', template);
+        this.messageForm.patchValue({
+          templateName: res.templateName,
+          description: res.description,
+          timeZone: res.timeZone,
+          roundTheClock: res.roundTheClock,
+          customBusinessHours: res.customBusinessHours,
+        });
+        this.clearBusinessWorkingDays();
+        const businessWorkingDays = this.messageForm.get('businessWorkingDays') as FormArray;
+        res.businessWorkingDays.forEach((workingDay: any) => {
+          businessWorkingDays.push(
+            this.formBuilder.group({
+              workingDay: workingDay.workingDay,
+              shiftStart: workingDay.shiftStart,
+              shiftEnd: workingDay.shiftEnd,
+            })
+          );
+        });
       })
-    );
-  });
-}
-clearBusinessWorkingDays(): void {
-  const businessWorkingDays = this.messageForm.get('businessWorkingDays') as FormArray;
-  while (businessWorkingDays.length !== 0) {
-    businessWorkingDays.removeAt(0);
+
   }
-}
+  clearBusinessWorkingDays(): void {
+    const businessWorkingDays = this.messageForm.get('businessWorkingDays') as FormArray;
+    while (businessWorkingDays.length !== 0) {
+      businessWorkingDays.removeAt(0);
+    }
+  }
   get businessWorkingDays(): FormArray {
     return this.messageForm.get('businessWorkingDays') as FormArray;
   }
@@ -142,12 +155,14 @@ clearBusinessWorkingDays(): void {
     this.businessWorkingDays.removeAt(index);
   }
   onSubmit(): void {
+    debugger
     if (this.messageForm.valid) {
-      const template = history.state.template; 
+      // const template = history.state.template;
 
-      if (template) {
+      if (this.businessId) {
         const updatedTemplate = {
-          ...template,
+          // ...template,
+          id: this.businessId,
           templateName: this.messageForm.value.templateName,
           description: this.messageForm.value.description,
           timeZone: this.messageForm.value.timeZone,
@@ -157,7 +172,7 @@ clearBusinessWorkingDays(): void {
         };
 
         this.commonService
-          .UpdateBusinessHours(updatedTemplate.id, updatedTemplate)
+          .UpdateBusinessHours(updatedTemplate)
           .subscribe(
             (response: any) => {
               console.log('Template updated:', response);

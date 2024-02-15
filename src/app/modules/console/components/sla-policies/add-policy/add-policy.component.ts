@@ -101,23 +101,24 @@ export class AddPolicyComponent implements OnInit {
   onSubmit() {
     console.log('Form Data:', this.messageForm.value);
     const slaTargets = this.messageForm.get('slaTargets') as FormArray;
-    for (let i = slaTargets.controls.length - 1; i >= 0; i--) {
+    // for (let i = slaTargets.controls.length - 1; i >= 0; i--) {
       // if (!slaTargets.controls[i].value.oprationHoursId) {
       //   slaTargets.removeAt(i);
       // }
-    }
+    // }
     if (this.messageForm.valid) {
-      const template = history.state.template;
+      // const template = history.state.template;
 
-      if (template) {
+      if (this.policyId) {
         const updatedTemplate = {
-          ...template,
+          // ...template,
+          id: this.policyId,
           policyName: this.messageForm.value.policyName,
           description: this.messageForm.value.description,
           timeZone: this.messageForm.value.timeZone,
           slaTargets: this.messageForm.value.slaTargets,
         };
-        this.commonService.UpdateSlaPolicy(updatedTemplate.id, updatedTemplate).subscribe(
+        this.commonService.UpdateSlaPolicy( updatedTemplate).subscribe(
           response => {
             console.log('API response:', response);
             this.router.navigate(['/console/sla-policies']);

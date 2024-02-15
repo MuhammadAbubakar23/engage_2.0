@@ -23,6 +23,7 @@ export class CommonDataService {
   LinkedInBaseUrl = environment.LinkedInBaseUrl;
   KemediaBaseUrl=environment.KemediaBaseUrl;
   KescrmBaseUrl=environment.KescrmBaseUrl
+  WhatsappBaseUrl =environment.WhatsappBaseUrl
   // KelisteningBaseUrl =environment.KelisteningBaseUrl;
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
@@ -138,6 +139,8 @@ export class CommonDataService {
   addSlaPolicy = environment.links.console.addSlaPolicy;
   updateSlaPolicy = environment.links.console.updateSlaPolicy;
   getPolicyById = environment.links.console.getPolicyById;
+  getBusinessHoursById = environment.links.console.getBusinessHoursById;
+  
   deleteSlaPolicy = environment.links.console.deleteSlaPolicy;
   getOperationalHours = environment.links.console.getOperationalHours;
   getBusinessHours = environment.links.console.getBusinessHours;
@@ -159,6 +162,7 @@ export class CommonDataService {
   addProfile = environment.links.console.addProfile;
   attachFacebookPage = environment.links.console.attachFacebookPage;
   getTags = environment.links.console.getTags;
+  getTagsByCompanyId =environment.links.console.getTagsByCompanyId
   getTagById = environment.links.console.getTagById;
   addTags = environment.links.console.addTags;
   updateTag = environment.links.console.updateTag;
@@ -177,6 +181,10 @@ export class CommonDataService {
   getChannels = environment.links.identity.channels;
   deleteRoles = environment.links.identity.deleteRoles;
 
+  // teams 
+  // getAllTeams= environment.links.console.getAllTeams
+  // addTeam = environment.links.console.addTeam
+  // updateTeam = environment.links.console.updateTeam
   //service
   userlogin=environment.links.common.userlogin
   addSurvey = environment.links.service.addSurvey;
@@ -186,6 +194,8 @@ export class CommonDataService {
   searchProfileInformation = environment.links.profile.searchProfileInformation;
   addProfileInformation = environment.links.profile.addProfileInformation;
   deattachProfileInformation=environment.links.profile.deattachProfileInformation
+  // whatapp bot interaction 
+  whatsappBotInteraction = environment.links.common.whatsappBotInteraction
   private _wordCloudDataS: any;
    activeChannel:any
   constructor(private http: HttpClient) {
@@ -463,12 +473,16 @@ export class CommonDataService {
   AddSlaPolicy(addSla: any) {
     return this.http.post(this.consoleBaseUrl + this.addSlaPolicy, addSla);
   }
-  UpdateSlaPolicy(slaId: string, sla: any) {
-    const url = `${this.consoleBaseUrl}${this.updateSlaPolicy}?Id=${slaId}`;
+  UpdateSlaPolicy( sla: any) {
+    const url = `${this.consoleBaseUrl}${this.updateSlaPolicy}`;
     return this.http.post(url, sla);
   }
   GetPolicyById(policyid: string) {
     const url = `${this.consoleBaseUrl}${this.getPolicyById}?Id=${policyid}`;
+    return this.http.get(url);
+  }
+  GetBusinessHoursById(policyid: string) {
+    const url = `${this.consoleBaseUrl}${this.getBusinessHoursById}?Id=${policyid}`;
     return this.http.get(url);
   }
   DeleteSlaPolicy(deleteSla: string): Observable<any> {
@@ -491,8 +505,8 @@ export class CommonDataService {
     const url = `${this.consoleBaseUrl}${this.deleteBusinessHours}?Id=${delHours}`;
     return this.http.get(url);
   }
-  UpdateBusinessHours(hoursId: string, bueiness: any) {
-    const url = `${this.consoleBaseUrl}${this.updateBusinessHours}?Id=${hoursId}`;
+  UpdateBusinessHours( bueiness: any) {
+    const url = `${this.consoleBaseUrl}${this.updateBusinessHours}`;
     return this.http.post(url, bueiness);
   }
   GetBusinessById(BusinessId: string) {
@@ -551,6 +565,10 @@ export class CommonDataService {
   GetTags() {
     return this.http.get(this.consoleBaseUrl + this.getTags);
   }
+  GetTagsByCompanyId(){
+    return this.http.get(this.consoleBaseUrl + this.getTagsByCompanyId);
+
+  }
   GetTagById(body: any) {
     const url = `${this.consoleBaseUrl}${this.getTagById}`;
     return this.http.post(url, body);
@@ -580,14 +598,15 @@ export class CommonDataService {
   GetAllRules() {
     return this.http.get(this.consoleBaseUrl + this.getAllRules);
   }
-  GetRuleById() {
-    return this.http.get(this.consoleBaseUrl + this.getRuleById);
+  GetRuleById(ruleId: string) {
+    return this.http.get(`${this.consoleBaseUrl + this.getRuleById}?id=${ruleId} `)
+    ;
   }
   AddRules(addrule: any) {
     return this.http.post(this.consoleBaseUrl + this.addRules, addrule);
   }
-  UpdateRules(ruleId: string, rule: any) {
-    const url = `${this.consoleBaseUrl}${this.updateRules}?Id=${ruleId}`;
+  UpdateRules(rule: any) {
+    const url = `${this.consoleBaseUrl}${this.updateRules}`;
     return this.http.post(url, rule);
   }
   DeleteRules(delRules: any) {
@@ -851,6 +870,9 @@ GetAllTeams(){
   }
   DeleteMultipleTeams(data:any){
     return this.http.delete(this.IdentityBaseUrl+this.deleteMultipleTeams,data)
+  }
+  WhatsappBotInteraction(body:any){
+    return this.http.post(this.WhatsappBaseUrl+this.whatsappBotInteraction,body)
   }
 }
 

@@ -85,13 +85,42 @@
                                             </select>
                                             <label for="floatingSelect">Business hours</label>
                                             <div class="invalid-feedback" *ngIf="(userForm.get('businesshours')!.errors && (userForm.get('businesshours')!.touched ||
-                              userForm.get('businesshours')!.dirty))">
+                                              userForm.get('businesshours')!.dirty))">
                                                 <div *ngIf="userForm.get('businesshours')!.errors?.['required']">
                                                     Please select Business Hours
                                                 </div>
                                                 <!-- <div *ngIf="userForm.get('businesshours')!.errors?.['required']">
-                              businesshours is required!
-                            </div> -->
+                                        businesshours is required!
+                                          </div> -->
+
+                                            </div>
+                                            <div class="valid-feedback"
+                                                *ngIf="userForm.get('businesshours')!.valid && userForm.get('businesshours')!.touched">
+
+                                                Looks Good!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="floating-item mb-4">
+                                        <div [ngClass]="{'was-validated' : userForm.get('businesshours')!.valid && userForm.get('businesshours')!.touched}"
+                                            class="floating-wrap form-floating mb-2">
+                                            <select [ngClass]="{'is-invalid' : (userForm.get('businesshours')!.errors && (userForm.get('businesshours')!.touched ||
+                                            userForm.get('businesshours')!.dirty))}" formControlName="businesshours"
+                                                class="form-select" id="floatingSelect"
+                                                aria-label="Floating label select">
+                                                <option selected disabled>Wing</option>
+                                                <option *ngFor="let wing of isSelectedWing" [value]="wing.id">
+                                                    {{wing.name}}</option>
+                                            </select>
+                                            <label for="floatingSelect">Wing</label>
+                                            <div class="invalid-feedback" *ngIf="(userForm.get('businesshours')!.errors && (userForm.get('businesshours')!.touched ||
+                                              userForm.get('businesshours')!.dirty))">
+                                                <div *ngIf="userForm.get('businesshours')!.errors?.['required']">
+                                                    Please select Wing 
+                                                </div>
+                                                <!-- <div *ngIf="userForm.get('businesshours')!.errors?.['required']">
+                                        businesshours is required!
+                                          </div> -->
 
                                             </div>
                                             <div class="valid-feedback"
@@ -163,8 +192,9 @@
                                                 </ul>
 
                                             </div>
-                                            <div class="list-group-item d-flex justify-content-between align-items-sm-center shadow-sm rounded border p-3 saltBg">
-                                                <div *ngFor="let rule of selectedRules" class="selected-rule" >
+                                            <div
+                                                class="list-group-item d-flex justify-content-between align-items-sm-center shadow-sm rounded border p-3 saltBg">
+                                                <div *ngFor="let rule of selectedRules" class="selected-rule">
                                                     {{ rule }}
                                                     <span style="cursor: pointer;" (click)="removeSelectedRule(rule)"
                                                         class="remove-icon">&#10006;</span>

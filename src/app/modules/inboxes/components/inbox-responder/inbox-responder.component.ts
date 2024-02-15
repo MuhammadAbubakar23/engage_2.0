@@ -13,6 +13,7 @@ import { TwitterComponent } from 'src/app/modules/responder/components/twitter/t
 import { WebChatComponent } from 'src/app/modules/responder/components/web-chat/web-chat.component';
 import { WhatsappDetailsComponent } from 'src/app/modules/responder/components/whatsapp-details/whatsapp-details.component';
 import { YoutubeComponent } from 'src/app/modules/responder/components/youtube/youtube.component';
+import { ResponderBotInteractionComponent } from 'src/app/modules/responder/right-sidebar-components/responder-bot-interaction/responder-bot-interaction.component';
 import { ResponderComplaintTicketPanelComponent } from 'src/app/modules/responder/right-sidebar-components/responder-complaint-ticket-panel/responder-complaint-ticket-panel.component';
 import { ResponderContactsComponent } from 'src/app/modules/responder/right-sidebar-components/responder-contacts/responder-contacts.component';
 import { ResponderCreateNewComponent } from 'src/app/modules/responder/right-sidebar-components/responder-create-new/responder-create-new.component';
@@ -54,11 +55,11 @@ export class InboxResponderComponent implements OnInit {
   @Output() someEvent = new EventEmitter<string>();
 
   componentName!: any;
-  oldComponent:any;
+  oldComponent: any;
   childComponentName!: any;
   public subscription!: Subscription;
   panelToggled: any;
-  showPanel=false;
+  showPanel = false;
 
   assignedProfile = localStorage.getItem('assignedProfile')
 
@@ -67,21 +68,21 @@ export class InboxResponderComponent implements OnInit {
     private route: ActivatedRoute,
     private sharedService: SharedService,
     private rightNavService: RightNavService,
-    private toggleService : ToggleService,
-    private  closePanelservices:ClosePanelService
-  ) {} 
+    private toggleService: ToggleService,
+    private closePanelservices: ClosePanelService
+  ) { }
 
   ngOnInit(): void {
-    this.subscription = this.closePanelservices.receiveRightBarToggleValue().subscribe(res=>{
+    this.subscription = this.closePanelservices.receiveRightBarToggleValue().subscribe(res => {
       this.showPanel = res;
     })
     // window.onbeforeunload = () => this.onBeforeUnload();
     window.addEventListener('beforeunload', this.onBeforeUnload);
     this.route.params.subscribe((routeParams) => {
-      
-      if(routeParams['channel'] != undefined && routeParams['channel'] != "undefined"){
+
+      if (routeParams['channel'] != undefined && routeParams['channel'] != "undefined") {
         this.componentName = (routeParams['channel']);
-      } 
+      }
       this.childComponentName = routeParams['ticket'];
       let ffff = this.componentName + this.childComponentName;
 
@@ -91,22 +92,22 @@ export class InboxResponderComponent implements OnInit {
       if (this.childComponentName != null) {
         this.childComponentName = localStorage.getItem('child');
       }
-      if(this.componentName != undefined){
+      if (this.componentName != undefined) {
         localStorage.setItem('parent', this.componentName);
       }
-      
+
       this.sharedService.updateMessage(this.componentName);
 
       this.target?.clear();
       this.rightcontainer?.clear();
       // console.log("Locaded component name is=====>",localStorage.getItem('parent'));
       // console.log("Old Component====>",this.oldComponent);
-      if(this.oldComponent!=undefined){
+      if (this.oldComponent != undefined) {
 
-        if(localStorage.getItem('parent')!=undefined && localStorage.getItem('parent')!=this.oldComponent){
-          
+        if (localStorage.getItem('parent') != undefined && localStorage.getItem('parent') != this.oldComponent) {
+
           this.loadComponent(this.componentName, '');
-          this.oldComponent=this.componentName;
+          this.oldComponent = this.componentName;
         }
       }
       if (
@@ -120,13 +121,13 @@ export class InboxResponderComponent implements OnInit {
     });
 
     this.subscription = this.toggleService.getTogglePanel().subscribe(msg3 => {
-      
-      if(msg3){
+
+      if (msg3) {
         this.rightcontainer?.clear();
         localStorage.setItem('child', msg3)
         this.showPanel = true
         this.closePanelservices.sendLeftBarToggleValue(false)
-        this.loadComponent('',msg3)
+        this.loadComponent('', msg3)
       }
       else {
         this.showPanel = false;
@@ -135,7 +136,7 @@ export class InboxResponderComponent implements OnInit {
       }
 
       // this.subscription = this.toggleService.getDispositionForm().subscribe(value=>{
-        
+
       //   if(value){
       //     this.target?.clear();
       //     this.loadComponent(value,'')
@@ -166,25 +167,25 @@ export class InboxResponderComponent implements OnInit {
       localStorage.getItem('assignedProfile') == null ||
       localStorage.getItem('assignedProfile') == '' ||
       localStorage.getItem('assignedProfile') == undefined
-    ){
+    ) {
       return false
     } else {
       return confirm('Are you sure you want to reload?');
     }
-    
+
   }
 
   ngOnDestroy(): void {
-    
+
     // window.onbeforeunload = null;
     window.removeEventListener('beforeunload', this.onBeforeUnload);
   }
 
   ngAfterViewInit() {
-    
+
     this.target?.clear();
     this.rightcontainer?.clear();
-    this.oldComponent=this.componentName;
+    this.oldComponent = this.componentName;
     this.loadComponent(this.componentName, '');
     // console.log("Old Component====>",this.oldComponent);
     if (this.childComponentName != null) {
@@ -192,22 +193,22 @@ export class InboxResponderComponent implements OnInit {
       this.closePanelservices.sendLeftBarToggleValue(false)
       this.loadComponent('', this.childComponentName);
     }
-    this.subscription = this.toggleService.getDispositionForm().subscribe(value=>{
-      
-      if(value == 'disposition-form'){
+    this.subscription = this.toggleService.getDispositionForm().subscribe(value => {
+
+      if (value == 'disposition-form') {
         this.target?.clear();
-        this.loadComponent(value,'')
-      } 
+        this.loadComponent(value, '')
+      }
       var parent = localStorage.getItem('parent') || '{}'
-      if(value == 'close-disposition-form'){
+      if (value == 'close-disposition-form') {
         this.target?.clear();
-        this.loadComponent(parent,'')
+        this.loadComponent(parent, '')
       }
     })
   }
 
   loadComponent(leftSideName: string, rightSideName: string) {
-    
+
     let componentFactory = null;
 
     switch (leftSideName || rightSideName) {
@@ -216,11 +217,11 @@ export class InboxResponderComponent implements OnInit {
         localStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(FacebookComponent);
-           this.target?.createComponent(componentFactory);
+        this.target?.createComponent(componentFactory);
 
-          // componentRef.instance.someEvent.subscribe((data:any)=>{
-          //   // console.log("event emitter",data)
-          // })
+        // componentRef.instance.someEvent.subscribe((data:any)=>{
+        //   // console.log("event emitter",data)
+        // })
         break;
 
       case 'Instagram':
@@ -229,15 +230,15 @@ export class InboxResponderComponent implements OnInit {
         componentFactory =
           this.resolver.resolveComponentFactory(InstagramComponent);
         this.target?.createComponent(componentFactory);
-        
+
         break;
-        case 'PlayStore':
+      case 'PlayStore':
         this.showPanel = false;
         localStorage.setItem('child', '')
         componentFactory =
           this.resolver.resolveComponentFactory(PlaystoreComponent);
         this.target?.createComponent(componentFactory);
-        
+
         break;
       case 'Twitter':
         this.showPanel = false;
@@ -253,7 +254,7 @@ export class InboxResponderComponent implements OnInit {
           this.resolver.resolveComponentFactory(EmailComponent);
         this.target?.createComponent(componentFactory);
         break;
-        case 'OfficeEmail':
+      case 'OfficeEmail':
         this.showPanel = false;
         localStorage.setItem('child', '')
         componentFactory =
@@ -304,7 +305,7 @@ export class InboxResponderComponent implements OnInit {
         );
         this.target?.createComponent(componentFactory);
         break;
-      
+
       case 'ticket':
         componentFactory =
           this.resolver.resolveComponentFactory(ResponderTicketsComponent);
@@ -374,31 +375,37 @@ export class InboxResponderComponent implements OnInit {
         );
         this.rightcontainer?.createComponent(componentFactory);
         break;
-        case 'history':
+      case 'history':
         componentFactory = this.resolver.resolveComponentFactory(
           ResponderHistoryComponent
         );
         this.rightcontainer?.createComponent(componentFactory);
         break;
-        case 'profile':
+      case 'profile':
         componentFactory = this.resolver.resolveComponentFactory(
           ResponderProfileComponent
         );
         this.rightcontainer?.createComponent(componentFactory);
         break;
-        case 'customer-profile':
+      case 'customer-profile':
         componentFactory = this.resolver.resolveComponentFactory(
           ResponderCustomerProfilingComponent
         );
         this.rightcontainer?.createComponent(componentFactory);
         break;
-        case 'disposition-form':
+      case 'bot-interaction':
+        componentFactory = this.resolver.resolveComponentFactory(
+          ResponderBotInteractionComponent
+        );
+        this.rightcontainer?.createComponent(componentFactory);
+        break;
+      case 'disposition-form':
         componentFactory = this.resolver.resolveComponentFactory(
           DispositionFormComponent
         );
         this.target?.createComponent(componentFactory);
         break;
-        
+
       default:
         componentFactory = this.resolver.resolveComponentFactory(
           FacebookComponent
