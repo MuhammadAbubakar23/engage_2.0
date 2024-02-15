@@ -83,9 +83,9 @@ export const environment = {
   TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
 
   // For Testing
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
-  // IdentityBaseUrl:'https://rep.enteract.app/api/',
-  // TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
+  //  IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
+  // //  IdentityBaseUrl:'https://rep.enteract.app/api/',
+  // // TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
   // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
   // ServiceBaseUrl: '',
   // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
@@ -183,7 +183,9 @@ export const environment = {
       quickReplyListForBazaar:'QuickReply/GetAll',
       getAllTeams:'Teams/GetTeamTypes',
       addTeam : 'Teams/Add',
-      updateTeam: 'Teams/Update'
+      updateTeam: 'Teams/Update',
+      deleteTeam:'Teams/Delete',
+      deleteMultipleTeams:'Teams/DeleteMultiple'
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',

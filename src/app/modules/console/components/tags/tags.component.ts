@@ -128,14 +128,14 @@ selectedTextColor=' #FF0000' ;
     this.tags.sort((a, b) => a.contacts - b.contacts);
   }
   editTag(tag: Tag): void {
-debugger
+
     // this.router.navigate(['/console/tag/create/0'], {
     //   state: { tag }
     // })
     this.router.navigate(['/console/tag/create/',tag.mainId])
   }
   deleteTemplate(message: any) {
-    debugger
+    
     this.commonService.DeleteTags(message.mainId).subscribe((res:any)=>{
       this.getTags()
     })

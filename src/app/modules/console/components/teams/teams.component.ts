@@ -117,11 +117,11 @@ export class TeamsComponent implements OnInit {
     this.isCheckedAll=false
   }
   checkUncheckAll(evt:any) {
-    debugger
+    
     this.teams.forEach((c) => { c.isChecked = evt.target.checked })
     this.masterSelected = this.teams.every((l) => l.isChecked == true);
     if (this.masterSelected == true) {
-      debugger
+      
       this.teams.forEach((d) => {
         this.Ids.push(d.id);
  

@@ -59,10 +59,7 @@ const routes: Routes = [
       path:'dashboard',
       loadComponent: () => import('./components/analytics-dashboard/analytics-dashboard.component').then(c => c.AnalyticsDashboardComponent),
     },
-    {
-      path:'executive-dashboard',
-      loadComponent: () => import('./components/executive-dashboard/executive-dashboard.component').then(c => c.ExecutiveDashboardComponent),
-    },
+   
     {
       path:'route-to-agent',
       loadComponent: () => import('./components/route-to-agent/route-to-agent.component').then(c => c.RouteToAgentComponent),

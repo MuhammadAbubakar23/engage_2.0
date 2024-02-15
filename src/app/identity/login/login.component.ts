@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
   timeRemaining: any;
   countdownTime: number = 0;
   loginForm = new UntypedFormGroup({
-    actor: new UntypedFormControl(this.logindto.actor),
+    // actor: new UntypedFormControl(this.logindto.actor),
     email: new UntypedFormControl(this.logindto.userName),
     userName: new UntypedFormControl(this.logindto.userName),
     password: new UntypedFormControl(this.logindto.password),
@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     let obj = {
-      actor: this.loginForm.value.actor,
+      // actor: this.loginForm.value.actor,
       userName: this.loginForm.value.userName,
       password: this.loginForm.value.password,
       rememberMe: true,
@@ -83,9 +83,9 @@ export class LoginComponent implements OnInit {
       (res: any) => {
         
         // only for testing purpose, remove after that
-        res = {'loginResponse':res}
-        res = {'loginResponse':res}
-        res['isTwoFAEnabled'] = false;
+        // res = {'loginResponse':res}
+        // res = {'loginResponse':res}
+        // res['isTwoFAEnabled'] = false;
         // only for testing purpose, remove after that
 
         if (res.isTwoFAEnabled == false) {
@@ -136,6 +136,8 @@ export class LoginComponent implements OnInit {
         }
       },
       (error: any) => {
+        
+        this.spinnerService.hide()
         this.ErrorMessage = error.error;
         if (this.ErrorMessage?.includes('The account is locked out ')) {
           const LockedtiemEndpatteren = /lockoutEndTime = (.+)$/;
@@ -165,7 +167,9 @@ export class LoginComponent implements OnInit {
           this.loginDisabled = true;
           this.spinnerService.hide();
           this.reloadComponent('userblocked');
-        } else {
+        } 
+        else {
+          
           this.spinnerService.hide();
           this.reloadComponent('loginFailed');
         }
@@ -196,7 +200,7 @@ export class LoginComponent implements OnInit {
         // this.login()
       }
       if (seconds == 0) {
-        console.log('finished');
+   
         clearInterval(timer);
       }
     }, 1000);
@@ -250,6 +254,7 @@ export class LoginComponent implements OnInit {
   AlterMsg: any;
   toastermessage: any;
   reloadComponent(type: any) {
+    
     if (type == 'loginFailed') {
       this.AlterMsg = 'Wrong Username or Password!';
       this.toastermessage = true;

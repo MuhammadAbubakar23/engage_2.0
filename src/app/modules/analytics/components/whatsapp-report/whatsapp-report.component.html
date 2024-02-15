@@ -11,15 +11,15 @@
                         <li class="list-inline-item">
                             <div class="iconholder">
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-6">
                                         <input type="date" class="form-control" placeholder="Start Date"
-                                            [(ngModel)]="fromDate" [max]="maxEndDate" (change)="GetWhatsAppRawData()" />
+                                            [(ngModel)]="fromDate" [max]="maxEndDate"  (change)="resetStartDate()" />
                                     </div>
-                                    <!-- <div class="col-sm-6">
-                                      <input type="date" class="form-control" [(ngModel)]="toDate" [max]="maxEndDate" placeholder="End Date" (change)="GetWhatsAppRawData()" 
+                                    <div class="col-sm-6">
+                                      <input type="date" class="form-control" [(ngModel)]="toDate" [max]="maxEndDate" placeholder="End Date" (change)="resetEndDate()" 
                                        />
                   
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                         </li>

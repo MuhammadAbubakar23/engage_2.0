@@ -83,6 +83,8 @@ export class CommonDataService {
   getAllTeams= environment.links.console.getAllTeams
   addTeam = environment.links.console.addTeam
   updateTeam = environment.links.console.updateTeam
+  deleteTeams=environment.links.console.deleteTeam
+  deleteMultipleTeams=environment.links.console.deleteMultipleTeams
   //Reports
   addUniqueCustomer = environment.links.common.addUniqueCustomer;
   uniqueExportCsv = environment.links.common.uniqueExportCsv;
@@ -253,7 +255,7 @@ export class CommonDataService {
   GetAgentsTeamList() {
     return this.http.get(this.CommonBaseUrl + this.agentsTeamList);
   }
-
+ 
   AssignToAnotherAgent(data: any) {
     return this.http.post(this.CommonBaseUrl + this.assignToAnotherAgent, data);
   }
@@ -842,6 +844,13 @@ GetAllTeams(){
   }
   UpdateTeam(body:any){
     return this.http.post(this.IdentityBaseUrl+this.updateTeam,body)
+
+  }
+  DeleteSignalTeam(id:any){
+    return this.http.delete(`${this.IdentityBaseUrl}${this.deleteTeams}?id=${id}`)
+  }
+  DeleteMultipleTeams(data:any){
+    return this.http.delete(this.IdentityBaseUrl+this.deleteMultipleTeams,data)
   }
 }
 

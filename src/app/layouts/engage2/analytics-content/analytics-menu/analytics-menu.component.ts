@@ -84,7 +84,7 @@ export class AnalyticsMenuComponent implements OnInit {
         { name: 'Shift Report', link: '/analytics/shift-report' },
         { name: 'Query Tag Report', link: '/analytics/querytag-report' },
         { name: 'Tag Report', link: '/analytics/tag-report' },
-        { name: 'Executive Dashboard', link: '/analytics/executive-dashboard' },
+
         { name: 'Facebook Report', link: '/analytics/facebook-report' },
         { name: 'Twitter Report', link: '/analytics/twitter-report' },
         { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
@@ -108,7 +108,7 @@ export class AnalyticsMenuComponent implements OnInit {
         { name: 'Shift Report', link: '/analytics/shift-report' },
         { name: 'Query Tag Report', link: '/analytics/querytag-report' },
         { name: 'Tag Report', link: '/analytics/tag-report' },
-        { name: 'Executive Dashboard', link: '/analytics/executive-dashboard' },
+
         { name: 'Facebook Report', link: '/analytics/facebook-report' },
         { name: 'Twitter Report', link: '/analytics/twitter-report' },
         { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
@@ -143,7 +143,7 @@ export class AnalyticsMenuComponent implements OnInit {
         },
         { name: 'Shift Report', link: '/analytics/shift-report' },
         { name: 'Tag Report', link: '/analytics/tag-report' },
-        { name: 'Executive Dashboard', link: '/analytics/executive-dashboard' },
+       
         { name: 'Facebook Report', link: '/analytics/facebook-report' },
         { name: 'Twitter Report', link: '/analytics/twitter-report' },
         { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },

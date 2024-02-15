@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+// import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-create-tags',
@@ -62,7 +62,7 @@ export class CreateTagsComponent implements OnInit {
     }
   }
   addTag() {
-    debugger
+    
     this.commonService.GetTagsByCompayId().subscribe(
       (response: any) => {
         this.parentTags = response;
@@ -80,7 +80,7 @@ export class CreateTagsComponent implements OnInit {
     );
   }
   selectParentTag(parentId: any) {
-    debugger
+    
     const id= Number(parentId.target.value)
     this.nestTags=[]
     this.childTags.forEach((abc:any)=>{
@@ -172,7 +172,7 @@ this.showPopup=!this.showPopup
   }
   errormessage:any;
   onSave() {
- debugger
+ 
     // if(this.form.value.parentId == 0){
     //   this.form.value.parentId =  this.form.value.baseId 
     //  }

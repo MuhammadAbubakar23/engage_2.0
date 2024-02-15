@@ -1,5 +1,5 @@
-import { Component, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectorRef, Component, HostListener,  } from '@angular/core';
+import { Router,NavigationStart  } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Toaster } from './layouts/engage2/toaster/toaster';
 import { ToasterService } from './layouts/engage2/toaster/toaster.service';
@@ -12,15 +12,34 @@ import { CommonDataService } from './shared/services/common/common-data.service'
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  
+  // @HostListener('window:beforeunload', ['$event'])
+  // beforeUnloadHandler(event: Event) {
+  //   debugger
+  //   // Check if the navigation is internal (within the Angular app)
+  //   if (!this.isInternalNavigation()) {
+  //     // Clear local storage here
+  //     localStorage.clear();
+  //     // localStorage.removeItem('token')
+  //   }
+  // }
+
+  // private isInternalNavigation(): boolean {
+    
+  //   // Check if the navigation is within the Angular app
+  //   return this.router.navigated && this.router.url.startsWith('/');
+  // }
   toasters: Toaster[] = [];
   title = 'Enteract.Engage2.0';
   activeChannel: any;
+  routeString:string='/login'
   constructor(
     private signalRService: SignalRService,
     private router: Router,
     private commonService: CommonDataService,
     private toaster: ToasterService,
-    private spinnerService: NgxSpinnerService
+    private spinnerService: NgxSpinnerService,
+  private cdr:ChangeDetectorRef
   ) {}
 
   remove(index: number) {
@@ -29,6 +48,8 @@ export class AppComponent {
     //this.toasts.splice(index, 1);
   }
   ngOnInit() {
+
+
     this.activeChannel = window.location.origin;
 
     this.toaster.toaster$.subscribe((toaster) => {
@@ -43,7 +64,13 @@ export class AppComponent {
     } else {
       this.A_Block();
     }
+
   }
+  // ngOnDestroy(): void {
+  //   
+  //   // Clear localStorage when the component is destroyed
+  //   localStorage.clear();
+  // }
   A_Block() {
     if (localStorage.getItem('signalRConnectionId')) {
       if (this.signalRService.hubconnection == undefined) {
@@ -79,4 +106,5 @@ export class AppComponent {
     // for new post
     // this.signalRService.updatePostList()
   }
+
 }

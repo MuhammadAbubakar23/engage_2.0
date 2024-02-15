@@ -3,7 +3,7 @@ import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ListingDto } from 'src/app/shared/Models/ListingDto';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
-import { FiltersDto } from 'src/app/shared/Models/FiltersDto';
+import { FiltersDto, FiltersDtolocal } from 'src/app/shared/Models/FiltersDto';
 import { FetchPostTypeService } from 'src/app/services/FetchPostType/fetch-post-type.service';
 import { AssignQuerryDto } from 'src/app/shared/Models/AssignQuerryDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
@@ -52,6 +52,7 @@ export class ConversationComponent implements OnInit {
 
   listingDto = new ListingDto();
   filterDto = new FiltersDto();
+  filterDtolocal= new FiltersDtolocal()
   assignQuerryDto = new AssignQuerryDto();
 
   public criteria!: SortCriteria;
@@ -112,13 +113,23 @@ export class ConversationComponent implements OnInit {
   FlagForAssignToMe: string = '';
 
   ngOnInit(): void {
+    
+
+      const date_fillter= localStorage.getItem('datefillter')
+      if(date_fillter){
+        this.filterDtolocal=JSON.parse(date_fillter)
+      }
+
+    
     this.currentUrl = this.router.url;
     this.FlagForAssignToMe = this.currentUrl.split('/')[2];
     this.TodayDate = new Date();
 
     if (this.currentUrl.split('/')[2] == 'assigned_to_me') {
       this.SpinnerService.show();
-      this.commondata.GetAllocatedProfiles().subscribe(
+      
+   
+ this.commondata.GetAllocatedProfiles().subscribe(
         (res: any) => {
           this.SpinnerService.hide();
           this.ConversationList = res;
@@ -157,6 +168,8 @@ export class ConversationComponent implements OnInit {
     } else {
       this.getConversationList();
     }
+      
+     
 
     Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(
       (tooltipNode) => new Tooltip(tooltipNode)
@@ -257,6 +270,7 @@ export class ConversationComponent implements OnInit {
   customersList: any[] = [];
 
   getConversationList() {
+    
     // if (this.currentUrl.split('/')[2] == 'completed') {
     //   this.flag = 'sent';
     //   this.platform = this.currentUrl.split('/')[3];
@@ -357,6 +371,10 @@ export class ConversationComponent implements OnInit {
       include: this.include,
       isAttachment: this.isAttachment,
     });
+  if(this.filterDtolocal.fromDate!=undefined ){
+ this.filterDto=this.filterDtolocal
+  }
+  else{
     this.filterDto = {
       fromDate: this.fromDate,
       toDate: this.toDate,
@@ -373,8 +391,16 @@ export class ConversationComponent implements OnInit {
       notInclude: this.searchForm.value.notInclude,
       flag: this.flag,
     };
-    this.SpinnerService.show();
+  }
     
+    
+    
+    
+    
+
+    
+    this.SpinnerService.show();
+     localStorage.setItem('datefillter',JSON.stringify(this.filterDto))
     this.commondata.GetConversationList(this.filterDto).subscribe(
       (res: any) => {
         if (Object.keys(res).length > 0) {
@@ -540,30 +566,33 @@ export class ConversationComponent implements OnInit {
 
   updateListDataListener(res: any) {
     
-    if (this.currentUrl.split('/')[2] === 'focused') {
-      res.forEach((newMsg: any) => {
-        if (newMsg?.profileStatus?.length == 0) {
-          if (this.platform === newMsg.platform && !this.isAttachment) {
-            this.updateConversationList(newMsg);
-          } else if (newMsg.isAttachment && this.isAttachment) {
-            if (this.platform === newMsg.platform || this.platform === 'all') {
+    if(this.searchUser==''){
+      if (this.currentUrl.split('/')[2] === 'focused') {
+        res.forEach((newMsg: any) => {
+          if (newMsg?.profileStatus?.length == 0) {
+            if (this.platform === newMsg.platform && !this.isAttachment) {
+              this.updateConversationList(newMsg);
+            } else if (newMsg.isAttachment && this.isAttachment) {
+              if (this.platform === newMsg.platform || this.platform === 'all') {
+                this.updateConversationList(newMsg);
+              }
+            } else if (this.platform === 'all' && !this.isAttachment) {
               this.updateConversationList(newMsg);
             }
-          } else if (this.platform === 'all' && !this.isAttachment) {
-            this.updateConversationList(newMsg);
           }
-        }
-      });
-
-      const groupedItems = this.groupItemsByDate();
-      this.groupByDateList = Object.keys(groupedItems).map((createdDate) => ({
-        createdDate,
-        items: groupedItems[createdDate],
-      }));
-
-      this.setFromAndToValues();
-      this.changeDetect.detectChanges();
+        });
+  
+        const groupedItems = this.groupItemsByDate();
+        this.groupByDateList = Object.keys(groupedItems).map((createdDate) => ({
+          createdDate,
+          items: groupedItems[createdDate],
+        }));
+  
+        this.setFromAndToValues();
+        this.changeDetect.detectChanges();
+      }
     }
+   
   }
   updateConversationList(newMsg: any) {
     const index = this.ConversationList.findIndex(
@@ -638,6 +667,10 @@ export class ConversationComponent implements OnInit {
   }
 
   Reload() {
+    
+
+
+
     if (this.FlagForAssignToMe == 'assigned_to_me') {
     }
     this.TotalUnresponded = 0;
@@ -658,6 +691,8 @@ export class ConversationComponent implements OnInit {
     this.from = 0;
     this.fromDate = null;
     this.toDate = null;
+    this.searchUser=''
+    localStorage.removeItem('datefillter')
     this.getConversationList();
   }
 
@@ -1066,6 +1101,7 @@ export class ConversationComponent implements OnInit {
   }
 
   CloseAdvanceSearch() {
+    localStorage.removeItem('datefillter')
     this.advanceSearch = false;
   }
 
@@ -1077,6 +1113,7 @@ export class ConversationComponent implements OnInit {
     this.notInclude = '';
     this.include = '';
     this.getConversationList();
+    localStorage.removeItem('datefillter')
   }
 
   anyTimeDropdown = false;
