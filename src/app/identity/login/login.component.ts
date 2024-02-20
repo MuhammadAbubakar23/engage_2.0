@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -10,9 +10,9 @@ import { LoginDto } from 'src/app/shared/Models/LoginDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { DatePipe } from '@angular/common';
-import { VerificationDto } from 'src/app/shared/Models/verificationDto';
 
 import { map, timer, takeWhile } from 'rxjs';
+import { VerificationDto } from 'src/app/shared/Models/VerificationDto';
 
 
 // import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
@@ -43,14 +43,14 @@ export class LoginComponent implements OnInit {
   loginForm = new UntypedFormGroup({
     // actor: new UntypedFormControl(this.logindto.actor),
     email: new UntypedFormControl(this.logindto.userName),
-    userName: new UntypedFormControl(this.logindto.userName),
-    password: new UntypedFormControl(this.logindto.password),
+    userName: new UntypedFormControl(this.logindto.userName,[Validators.required]),
+    password: new UntypedFormControl(this.logindto.password,[Validators.required]),
     rememberMe: new UntypedFormControl(this.logindto.rememberMe),
   });
   verificationForm = new UntypedFormGroup({
     Verificationemail: new UntypedFormControl(this.verificationdto.email),
     verificationCode: new UntypedFormControl(
-      this.verificationdto.verificationCode
+      this.verificationdto.verificationCode,[Validators.required,Validators.minLength(6),Validators.maxLength(6)]
     ),
   });
   Verificationemail: any;
@@ -72,6 +72,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    debugger
     let obj = {
       // actor: this.loginForm.value.actor,
       userName: this.loginForm.value.userName,
@@ -88,7 +89,7 @@ export class LoginComponent implements OnInit {
         // res['isTwoFAEnabled'] = false;
         // only for testing purpose, remove after that
 
-        if (res.isTwoFAEnabled == false) {
+        if (res.status == false) {
           this.stor.store('token', res.loginResponse.loginResponse.accessToken);
           this.stor.store('main', res.loginResponse.loginResponse);
           this.stor.store(
@@ -127,16 +128,15 @@ export class LoginComponent implements OnInit {
           this.signalRService.applySentimentListner();
           this.signalRService.updateMessageStatusDataListener();
           // this.signalRService.updatePostList();
-        } else if (res.isTwoFAEnabled == true) {
-          this.Verificationemail =
-            res.loginResponse.loginTwoFAResponse.userName;
+        } else if (res.status == true) {
+          this.Verificationemail =res.userName
+            // res.loginResponse.loginTwoFAResponse.userName;
           this.isUserLoging = true;
           this.isVerificationcodeFailed = false;
           this.spinnerService.hide();
         }
       },
       (error: any) => {
-        
         this.spinnerService.hide()
         this.ErrorMessage = error.error;
         if (this.ErrorMessage?.includes('The account is locked out ')) {
@@ -256,7 +256,7 @@ export class LoginComponent implements OnInit {
   reloadComponent(type: any) {
     
     if (type == 'loginFailed') {
-      this.AlterMsg = 'Wrong Username or Password!';
+      this.AlterMsg = this.ErrorMessage;
       this.toastermessage = true;
       setTimeout(() => {
         this.toastermessage = false;

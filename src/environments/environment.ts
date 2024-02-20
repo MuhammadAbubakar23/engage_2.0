@@ -27,7 +27,8 @@ export const environment = {
   TwitterBaseUrl: 'https://tweet.360scrm.com/api/',
   EmailBaseUrl: 'https://mail.360scrm.com/api/',
   SmsBaseUrl: 'https://text.360scrm.com/api/',
-  WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
+  // WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
+  WhatsappBaseUrl:'https://waservice.enteract.live/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
   LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
   KelisteningBaseUrl: 'https://listen.enteract.live/backend/api/',
@@ -45,7 +46,7 @@ export const environment = {
   // consoleBaseUrl: 'https://console.enteract.live/api/',
 
   // For Jazz
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  // IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
   // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
   // SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
   // ServiceBaseUrl: '',
@@ -63,7 +64,7 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://ttcommon.enteract.live/',
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
   // ServiceBaseUrl: '',
-  // ProfileBaseUrl: '',
+  //  ProfileBaseUrl: '',
 
   // For Morinaga
   // IdentityBaseUrl: 'https://waidentity.enteract.live/api/',
@@ -82,15 +83,31 @@ export const environment = {
   // ProfileBaseUrl: '',
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
 
-  // For Testing
-  IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
-  // IdentityBaseUrl:'https://rep.enteract.app/api/',
-  TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
-  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  // // For Testing
+  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
+  // // IdentityBaseUrl:'https://rep.enteract.app/api/',
+  // // TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
+  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  // ServiceBaseUrl: '',
+  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
+  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+
+
+
+// for statging / Internal :companyId 650
+  IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
+  CommonBaseUrl: 'https://comrox.enteract.app/api/',
   ServiceBaseUrl: '',
-  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
-  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/', 
+  consoleBaseUrl: 'https://conrox.enteract.app/api/',
+
+
+
+
+
+
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 

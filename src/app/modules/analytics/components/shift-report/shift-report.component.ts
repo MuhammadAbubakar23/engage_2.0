@@ -3,7 +3,7 @@ import { HeaderService } from 'src/app/shared/services/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import * as echarts from 'echarts';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule ,ReactiveFormsModule} from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
@@ -14,7 +14,7 @@ import html2canvas from 'html2canvas';
   selector: 'app-shift-report',
   templateUrl: './shift-report.component.html',
   styleUrls: ['./shift-report.component.scss'],
-  imports: [CommonModule, FormsModule, SharedModule, NgxSpinnerModule],
+  imports: [CommonModule, FormsModule, SharedModule, NgxSpinnerModule,ReactiveFormsModule],
 })
 export class ShiftReportComponent implements OnInit {
   shiftReportData: any;
@@ -62,6 +62,7 @@ export class ShiftReportComponent implements OnInit {
   _legend: any[] = [];
   shiftName:any='Morning'
   selectedName:any=''
+  
   shiftType: any[] = [
     { name: 'Morning', id: 0 },
     { id: 1, name: 'Evening' },
@@ -106,7 +107,9 @@ export class ShiftReportComponent implements OnInit {
   ) {}
   KEbaseUrl:string="";
   KEClient:boolean=false;
-  
+  shiftTypeform=new FormGroup({
+    actor:new FormControl('')
+  })
   ngOnInit(): void {
 
     this.KEbaseUrl=window.location.origin
@@ -300,12 +303,15 @@ export class ShiftReportComponent implements OnInit {
     this.tags = event.target.value;
     this.getAlltags();
   }
+value:any
   getByShifTime() {
+ this.value=this.shiftTypeform.value.actor
+ this.value.forEach((x:any)=>{
+  this.shiftName=x.name
+  this.shiftime=x.id
+  this.getShfitReport();
+ })
     
-
-    this.shiftName=this.selectedName.name
-    this.shiftime=this.selectedName.id
-    this.getShfitReport();
   }
   agentCount: number = 0;
   getTableStyle() {

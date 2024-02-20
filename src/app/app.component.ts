@@ -13,22 +13,17 @@ import { CommonDataService } from './shared/services/common/common-data.service'
 })
 export class AppComponent {
   
-  // @HostListener('window:beforeunload', ['$event'])
-  // beforeUnloadHandler(event: Event) {
-  //   debugger
-  //   // Check if the navigation is internal (within the Angular app)
-  //   if (!this.isInternalNavigation()) {
-  //     // Clear local storage here
-  //     localStorage.clear();
-  //     // localStorage.removeItem('token')
-  //   }
-  // }
-
-  // private isInternalNavigation(): boolean {
-    
-  //   // Check if the navigation is within the Angular app
-  //   return this.router.navigated && this.router.url.startsWith('/');
-  // }
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHandler(event: Event) {
+    if (!this.isInternalNavigation()) {
+      // Clear local storage here
+      localStorage.clear();
+       localStorage.removeItem('token')
+    }
+  }
+  private isInternalNavigation(): boolean {
+    return this.router.navigated && this.router.url.startsWith('/');
+  }
   toasters: Toaster[] = [];
   title = 'Enteract.Engage2.0';
   activeChannel: any;

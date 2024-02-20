@@ -14,7 +14,8 @@
 
                 </nav>
             </header>
-            <div class="tab-pane fade show active mt-3" id="post" role="tabpanel" aria-labelledby="post-tab">
+            <div class="tab-pane fade show active mt-3" id="post" role="tabpanel" aria-labelledby="post-tab" style="overflow: auto; height: 600px; overflow-x: hidden
+;">
                 <div class="chat-box-wrap" *ngFor="let message of messages">
                     <div class="date-wrap">
                         <p class="date">{{message?.createdDate | date:'EEEE, MMMM d' }}</p>

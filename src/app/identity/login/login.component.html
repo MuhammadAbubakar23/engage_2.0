@@ -77,7 +77,7 @@
                   </div>
                   <div class="form-btn">
                      <button type="submit" class="w-100 btn loginbtn" id="loginBtn" tabindex="-1" role="button"
-                        [disabled]="loginDisabled==true">Login</button>
+                        [disabled]="loginDisabled==true || loginForm.invalid">Login</button>
                   </div>
                </form>
             </div>
@@ -110,7 +110,7 @@
                   </div>
                   <div class="form-btn">
                      <button class="w-100 btn loginbtn" id="loginBtn" tabindex="-1" role="button"
-                        (click)="Submituser()">Verify</button>
+                        (click)="Submituser()" [disabled]="verificationForm.invalid">Verify</button>
                   </div>
                   <span *ngIf="isVerificationcodeFailed==true">
                      <div class="center-section">

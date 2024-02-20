@@ -30,6 +30,9 @@ export class SuperTeamInterceptor implements HttpInterceptor {
       else if(this.baseUrl=='https://bzengage.enteract.live') {
       this.companyId=654
     }
+    else if(this.baseUrl=='https://uiengagerox.enteract.app') {
+      this.companyId=650
+    }
 
     let team = this.storage.retrive('nocompass', 'O').local;
     // console.log(team);

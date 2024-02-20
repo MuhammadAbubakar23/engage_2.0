@@ -10,14 +10,13 @@ export class QuickReplySearchFilterPipe implements PipeTransform {
     if(!searchText) return items;
 
     searchText = searchText.toLowerCase();
-    console.log("item of fillter text====>",items)
+  
     // return items.filter((x:any)=>x.text.toLowerCase().includes(searchText));
     return items.filter((item:any) => {
-      // Check if the main text of the item includes the search text
-      const mainTextMatches = item.text.toLowerCase().includes(searchText);
 
-      // Check if any child's text includes the search text
-      const childTextMatches = item.subReply.some((subItem: any) =>
+      const mainTextMatches = item?.text.toLowerCase().includes(searchText);
+
+      const childTextMatches = item?.subReply?.some((subItem: any) =>
       subItem.text.toLowerCase().includes(searchText) || 
       (subItem.subReply && subItem.subReply.some((thirdLevelItem: any) =>
         thirdLevelItem.text.toLowerCase().includes(searchText)

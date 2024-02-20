@@ -104,6 +104,10 @@ export class AgentPerformanceReportComponent implements OnInit {
       this.isChannelShow = 'stagging',
         this.getChannel()
     }
+    else if (this.activeChannel == 'https://uiengagerox.enteract.app') {
+      this.isChannelShow = 'stagging',
+        this.getChannel()
+    }
     else if (this.activeChannel == 'https://bzengage.enteract.live') {
       this.isChannelShow = 'Bazaar',
         this.getChannel()

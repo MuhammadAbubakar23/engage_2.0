@@ -30,16 +30,17 @@
                             </select>
 
                         </li> -->
-                        <li class="list-inline-item">
-                            <select name="" class="form-select" (change)="getByShifTime()" [(ngModel)]="selectedName">
+                        <form  [formGroup]="shiftTypeform">
+                               <li class="list-inline-item">
+                            <select name="" class="form-select" (change)="getByShifTime()" formControlName="actor">
                                 <option value="" disabled [selected]="!selectedName">Shift Type</option>
-                                <option [ngValue]="{ id: 0, name: 'Morning' }">Morning</option>
-                                <option [ngValue]="{ id: 1, name: 'Evening' }">Evening</option>
-                                <option [ngValue]="{ id: 2, name: 'Night' }">Night</option>
-                                <option [ngValue]="{ id: 3, name: 'Iftar' }">Iftar</option>
-                                <option [ngValue]="{ id: 4, name: 'Sehr' }">Sehr</option>
+                                <option *ngFor=" let item of shiftType" [ngValue]="[{id:item.id,name:item.name}]">{{item.name}}</option>
+                                
                             </select>
                         </li>
+                        </form>
+                        &nbsp; &nbsp;
+                      
                         
                         <li class="list-inline-item">
                             <div class="dropdown icondropdown w-auto">
@@ -155,7 +156,7 @@
                                         </span>
                                         <p class="coal mb-0"> On Duty Agents</p>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" style="overflow: auto; height: 80px;">
                                         <ng-container *ngFor="let agent of ActiveAgents; let i = index">
                                             <div class="col-4">
                                                 <span class="badge rounded-pill night badge-auto text-truncate oceanTransBg" title="{{agent.name}}">

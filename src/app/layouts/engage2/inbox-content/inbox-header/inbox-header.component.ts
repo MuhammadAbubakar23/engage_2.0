@@ -66,7 +66,6 @@ export class InboxHeaderComponent implements OnInit {
   UnResponded:number=0;
 
   getAllConversationCount(){
-    
     this.filterDto = {
       // fromDate : new Date(),
       // toDate : new Date(),
@@ -90,7 +89,7 @@ export class InboxHeaderComponent implements OnInit {
   }
 
   update(menuLink: any) {
-    
+ 
     this.flag = this._route.url.split('/')[2];
 
     if (

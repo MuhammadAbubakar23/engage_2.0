@@ -43,7 +43,7 @@ export class AnalyticsMenuComponent implements OnInit {
     this.activeChannel = window.location.origin;
 
     if (this.activeChannel == 'http://localhost:4200') {
-      this.channelname = 'local';
+       this.channelname = 'local';
     } else if (this.activeChannel == 'https://engage.jazz.com.pk') {
       this.channelname = 'Jazz';
     } else if (this.activeChannel == 'https://keportal.enteract.live') {
@@ -57,7 +57,10 @@ export class AnalyticsMenuComponent implements OnInit {
     } else if (this.activeChannel == 'https://bzengage.enteract.live') {
       this.channelname = 'Bazaar';
     }
-
+    else if(this.activeChannel=='https://uiengagerox.enteract.app') {
+      this.channelname='stagging';
+    }
+   
     this.getmenu();
   }
   getmenu() {

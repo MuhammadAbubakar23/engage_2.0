@@ -565,10 +565,11 @@ export class ConversationComponent implements OnInit {
   }
 
   updateListDataListener(res: any) {
-    
-    if(this.searchUser==''){
+  const username=localStorage.getItem('username')
+    if(this.searchUser=='' ){
       if (this.currentUrl.split('/')[2] === 'focused') {
         res.forEach((newMsg: any) => {
+          localStorage.setItem('username',newMsg.userName)
           if (newMsg?.profileStatus?.length == 0) {
             if (this.platform === newMsg.platform && !this.isAttachment) {
               this.updateConversationList(newMsg);
@@ -692,6 +693,7 @@ export class ConversationComponent implements OnInit {
     this.fromDate = null;
     this.toDate = null;
     this.searchUser=''
+   localStorage.removeItem('username')
     localStorage.removeItem('datefillter')
     this.getConversationList();
   }
