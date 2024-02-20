@@ -123,6 +123,7 @@ export class CommonDataService {
   keMediaReport=environment.links.common.keMediaReport;
   PrintFeed=environment.links.common.PrintFeed;
   CSATReport=environment.links.common.CSATReport;
+  getInteractionReport = environment.links.common.getInteractionReport
   // SCRM Reports
   facebookscrmReport=environment.links.scrmReports.facebookscrmReport;
   getfortesting=environment.links.scrmReports.getfortesting
@@ -873,6 +874,9 @@ GetAllTeams(){
   }
   WhatsappBotInteraction(body:any){
     return this.http.post(this.WhatsappBaseUrl+this.whatsappBotInteraction,body)
+  }
+  GetInteractionReport(body:any){
+    return this.http.post(this.CommonBaseUrl+this.getInteractionReport,body)
   }
 }
 

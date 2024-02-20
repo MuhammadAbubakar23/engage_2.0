@@ -125,6 +125,11 @@ const routes: Routes = [
       path:'facebook-report-scrm',
       loadComponent:()=>import('./archive-reports-components/facebook-report-scrm/facebook-report-scrm.component').then(c=>c.FacebookReportScrmComponent)
     }
+    ,
+    {
+      path:'interaction-report',
+      loadComponent:()=>import('./components/interaction-report/interaction-report.component').then(c=>c.InteractionReportComponent)
+    }
   ]
   }
 

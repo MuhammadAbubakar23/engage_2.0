@@ -57,10 +57,17 @@ export class AnalyticsMenuComponent implements OnInit {
     } else if (this.activeChannel == 'https://bzengage.enteract.live') {
       this.channelname = 'Bazaar';
     }
+<<<<<<< HEAD
     else if(this.activeChannel=='https://uiengagerox.enteract.app') {
       this.channelname='stagging';
     }
    
+=======
+    else if(this.activeChannel='https://uiengagerox.enteract.app/'){
+      this.channelname='stagging'
+    }
+
+>>>>>>> SAha26
     this.getmenu();
   }
   getmenu() {
@@ -92,6 +99,7 @@ export class AnalyticsMenuComponent implements OnInit {
         { name: 'Twitter Report', link: '/analytics/twitter-report' },
         { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
         { name: 'Instagram Report', link: '/analytics/instagram-report' },
+        { name: 'interaction Report', link: '/analytics/interaction-report' }
       ];
     } else if (this.channelname == 'stagging') {
       this.analyticeReport = [
@@ -116,6 +124,7 @@ export class AnalyticsMenuComponent implements OnInit {
         { name: 'Twitter Report', link: '/analytics/twitter-report' },
         { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
         { name: 'Instagram Report', link: '/analytics/instagram-report' },
+        { name: 'interaction Report', link: '/analytics/interaction-report' }
       ];
     } else if (this.channelname == 'Jazz') {
       this.analyticeReport = [
@@ -133,6 +142,7 @@ export class AnalyticsMenuComponent implements OnInit {
           link: '/analytics/performance-report',
         },
         { name: 'Shift Report', link: '/analytics/shift-report' },
+     
       ];
     } else if (this.channelname == 'KE') {
       this.analyticeReport = [
@@ -146,7 +156,7 @@ export class AnalyticsMenuComponent implements OnInit {
         },
         { name: 'Shift Report', link: '/analytics/shift-report' },
         { name: 'Tag Report', link: '/analytics/tag-report' },
-       
+
         { name: 'Facebook Report', link: '/analytics/facebook-report' },
         { name: 'Twitter Report', link: '/analytics/twitter-report' },
         { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
@@ -204,6 +214,7 @@ export class AnalyticsMenuComponent implements OnInit {
           link: '/analytics/performance-report',
         },
         { name: 'Shift Report', link: '/analytics/shift-report' },
+        { name: 'interaction Report', link: '/analytics/interaction-report' }
       ];
     }
   }

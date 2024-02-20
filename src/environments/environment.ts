@@ -77,6 +77,8 @@ export const environment = {
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
+  // // CommonBaseUrl: 'https://comrox.enteract.app/api/',
+
   // SignalRCommonBaseUrl: 'https://bzcommon.enteract.live/',
   // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
@@ -100,7 +102,7 @@ export const environment = {
   CommonBaseUrl: 'https://comrox.enteract.app/api/',
   ServiceBaseUrl: '',
   SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
-  ProfileBaseUrl: 'https://profiler.enteract.app/api/', 
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   consoleBaseUrl: 'https://conrox.enteract.app/api/',
 
 
@@ -181,9 +183,9 @@ export const environment = {
 
       // getTags: 'Tags/GetAll',
       getTagsByCompanyId: 'Tags/GetTagsByCompayId',
-      updateSkill:'Skill/Update',
-      getSkillsbyId:'Skill/GetById',
-      getUserSkills:'Skill/GetSkills',
+      updateSkill: 'Skill/Update',
+      getSkillsbyId: 'Skill/GetById',
+      getUserSkills: 'Skill/GetSkills',
       getAllProfile: 'Profile/GetAll',
       addProfile: 'Profile/Add',
       attachFacebookPage: 'ProfileManagement/RegisterProfile',
@@ -201,12 +203,12 @@ export const environment = {
       updateRules: 'Rules/Update',
       deleteRules: 'Rules/Delete',
       defaultTags: 'Tags/GetTags',
-      quickReplyListForBazaar:'QuickReply/GetAll',
-      getAllTeams:'Teams/GetTeamTypes',
-      addTeam : 'Teams/Add',
+      quickReplyListForBazaar: 'QuickReply/GetAll',
+      getAllTeams: 'Teams/GetTeamTypes',
+      addTeam: 'Teams/Add',
       updateTeam: 'Teams/Update',
-      deleteTeam:'Teams/Delete',
-      deleteMultipleTeams:'Teams/DeleteMultiple'
+      deleteTeam: 'Teams/Delete',
+      deleteMultipleTeams: 'Teams/DeleteMultiple'
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',
@@ -305,8 +307,9 @@ export const environment = {
       keMediaReport: 'MediaReport/GetMediaReport',
       PrintFeed: 'Media/GetMediaPrintList',
       CSATReport: 'Report/GetCSATReport',
+      getInteractionReport: 'Report/GetAgentPerformanceDashboard',
       // whatsapp bot interaction
-      whatsappBotInteraction:'Whatsapp/GetBotInteractionHistory'
+      whatsappBotInteraction: 'Whatsapp/GetBotInteractionHistory'
     },
     facebook: {
       comments: 'Facebook/GetFbPost',
