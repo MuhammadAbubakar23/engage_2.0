@@ -439,9 +439,7 @@ export class CommonDataService {
   // }
 
   GetAllMessages(templates: any) {
-    return this.http.get(
-      this.consoleBaseUrl + this.getAllMessages + '?templateType=' + templates
-    );
+    return this.http.post(this.consoleBaseUrl + this.getAllMessages , templates);
   }
   Addtemplate(addData: any) {
     return this.http.post(this.consoleBaseUrl + this.addTemplate, addData);
@@ -454,8 +452,8 @@ export class CommonDataService {
     const url = `${this.consoleBaseUrl}${this.deleteMessages}?Id=${deleteId}`;
     return this.http.get(url);
   }
-  GetQuickReply() {
-    return this.http.get(this.consoleBaseUrl + this.getQuickReply);
+  GetQuickReply(body: any) {
+    return this.http.post(this.consoleBaseUrl + this.getQuickReply,body );
   }
   AddQuickReply(add: any) {
     return this.http.post(this.consoleBaseUrl + this.addQuickReply, add);
@@ -468,8 +466,8 @@ export class CommonDataService {
     const url = `${this.consoleBaseUrl}${this.deleteQuickReply}?Id=${deleteId}`;
     return this.http.get(url);
   }
-  GetSlaPolicy() {
-    return this.http.get(this.consoleBaseUrl + this.getSlaPolicy);
+  GetSlaPolicy(body:any) {
+    return this.http.post(this.consoleBaseUrl + this.getSlaPolicy , body);
   }
   AddSlaPolicy(addSla: any) {
     return this.http.post(this.consoleBaseUrl + this.addSlaPolicy, addSla);
@@ -493,8 +491,8 @@ export class CommonDataService {
   GetOperationalHours() {
     return this.http.get(this.consoleBaseUrl + this.getOperationalHours);
   }
-  GetBusinessHours() {
-    return this.http.get(this.consoleBaseUrl + this.getBusinessHours);
+  GetBusinessHours(body:any) {
+    return this.http.post(this.consoleBaseUrl + this.getBusinessHours , body);
   }
   AddBusinessHours(addHours: any) {
     return this.http.post(

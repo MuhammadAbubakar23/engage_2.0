@@ -57,8 +57,8 @@ export class AnalyticsMenuComponent implements OnInit {
     } else if (this.activeChannel == 'https://bzengage.enteract.live') {
       this.channelname = 'Bazaar';
     }
-    else if (this.activeChannel = 'https://uiengagerox.enteract.app') {
-      this.channelname = 'stagging'
+    else if(this.activeChannel='https://uiengagerox.enteract.app/'){
+      this.channelname='stagging'
     }
 
     this.getmenu();

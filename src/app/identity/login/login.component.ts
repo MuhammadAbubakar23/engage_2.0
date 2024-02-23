@@ -15,6 +15,7 @@ import { map, timer, takeWhile } from 'rxjs';
 import { VerificationDto } from 'src/app/shared/Models/verificationDto';
 
 
+
 // import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 @Component({
   selector: 'app-login',
@@ -72,7 +73,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    debugger
+
     let obj = {
       // actor: this.loginForm.value.actor,
       userName: this.loginForm.value.userName,
@@ -129,8 +130,8 @@ export class LoginComponent implements OnInit {
           this.signalRService.updateMessageStatusDataListener();
           // this.signalRService.updatePostList();
         } else if (res.isTwoFAEnabled == true) {
-          this.Verificationemail = res.userName
-          // res.loginResponse.loginTwoFAResponse.userName;
+          this.Verificationemail =res.userName
+            // res.loginResponse.loginTwoFAResponse.userName;
           this.isUserLoging = true;
           this.isVerificationcodeFailed = false;
           this.spinnerService.hide();
