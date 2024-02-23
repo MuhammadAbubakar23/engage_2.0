@@ -12,7 +12,8 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 import { DatePipe } from '@angular/common';
 
 import { map, timer, takeWhile } from 'rxjs';
-import { VerificationDto } from 'src/app/shared/Models/VerificationDto';
+import { VerificationDto } from 'src/app/shared/Models/verificationDto';
+
 
 
 // import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
@@ -72,7 +73,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    debugger
+    
     let obj = {
       // actor: this.loginForm.value.actor,
       userName: this.loginForm.value.userName,
@@ -89,7 +90,7 @@ export class LoginComponent implements OnInit {
         // res['isTwoFAEnabled'] = false;
         // only for testing purpose, remove after that
 
-        if (res.status == false) {
+        if (res.isTwoFAEnabled == false) {
           this.stor.store('token', res.loginResponse.loginResponse.accessToken);
           this.stor.store('main', res.loginResponse.loginResponse);
           this.stor.store(
@@ -128,7 +129,7 @@ export class LoginComponent implements OnInit {
           this.signalRService.applySentimentListner();
           this.signalRService.updateMessageStatusDataListener();
           // this.signalRService.updatePostList();
-        } else if (res.status == true) {
+        } else if (res.isTwoFAEnabled == true) {
           this.Verificationemail =res.userName
             // res.loginResponse.loginTwoFAResponse.userName;
           this.isUserLoging = true;

@@ -44,6 +44,7 @@ export class InteractionReportComponent implements OnInit {
     this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split('T')[0];
     this.GetStatsInteractionReport()
+    this.makeChartResponsive()
     // charts 
     // this.interactionByDate()
     // this.pieChart()
@@ -78,7 +79,7 @@ export class InteractionReportComponent implements OnInit {
   assignToMeCount: number = 0;
   followUpCount: number = 0;
   completedCount: number = 0;
-  totalInteractionCount: number = 0
+  totalInteractionCount: any = 0
   CSATGraph: any
   platformIconMapping: any = {
     'Facebook': 'fa-brands fa-facebook fs-4 navy',
@@ -90,7 +91,8 @@ export class InteractionReportComponent implements OnInit {
     'SMS': 'fa-message-sms fs-4 cherry ',
     'WebChat': 'fa-light fa-messages fs-4 webchatcolor',
     'WhatsApp': 'fab fa-whatsapp fs-4 mint',
-    'PlayStore': 'fa-brands fa-google-play fs-4 googleplaycolor'
+    'PlayStore': 'fa-brands fa-google-play fs-4 googleplaycolor',
+    'OfficeEmail': 'fa-light fa-envelope  fs-4 navy '
   };
   formatFirstResponseTime(timeString: string): string {
     if (!timeString) {
@@ -186,13 +188,21 @@ export class InteractionReportComponent implements OnInit {
 
     }
     console.log("data form===>", formData)
-    this.csatArray = []
-    this._legend = [];
-    this.channelCountsArray = []
-    this.channelCountsArray = []
-    this.allDates = [];
-    this.newArray = []
     this.SpinnerService.show();
+    this.interactionStats = null;
+    this.data = [];
+    this.socialMediaData = [];
+    this.inProgressCount = 0;
+    this.assignToMeCount = 0;
+    this.followUpCount = 0;
+    this.completedCount = 0;
+    this.totalInteractionCount = 0;
+    this.sentimentDataPoints = [];
+    this.csatArray = [];
+    this._legend = [];
+    this.channelCountsArray = [];
+    this.allDates = [];
+    this.newArray = [];
     this.commonData.GetInteractionReport(formData).subscribe((res: any) => {
 
       this.SpinnerService.hide();
@@ -219,20 +229,38 @@ export class InteractionReportComponent implements OnInit {
       this.LastfinalAverageMaximum = this.calculateAverageTime(this.interactionStats.previousAgentPerformance, 'maximumTime')
 
       // averageTime average for increase and decrease 
+      
       let finalAverageInSeconds = this.convertTimeToSeconds(this.finalAverage);
       let LastfinalAverageInSeconds = this.convertTimeToSeconds(this.LastfinalAverage);
-      this.avgResponseTimeSum = ((finalAverageInSeconds - LastfinalAverageInSeconds) / LastfinalAverageInSeconds) * 100;
-      if(this.avgResponseTimeSum === null || this.avgResponseTimeSum ===undefined){
-        this.avgResponseTimeSum = 0
+      if(finalAverageInSeconds>=LastfinalAverageInSeconds){
+        this.avgResponseTimeSum =Math.abs (((LastfinalAverageInSeconds-finalAverageInSeconds) / finalAverageInSeconds) * 100);
       }
+      if(finalAverageInSeconds<=LastfinalAverageInSeconds){
+        this.avgResponseTimeSum =Math.abs (((finalAverageInSeconds-LastfinalAverageInSeconds) / LastfinalAverageInSeconds) * 100);
+      }
+   
       // min cater time average percentage 
       let finalMinCater = this.convertTimeToSeconds(this.finalAverageMinimum);
       let LastfinalMinCater = this.convertTimeToSeconds(this.LastfinalAverage);
-      this.avgMinCaterTime = ((finalMinCater - LastfinalMinCater) / LastfinalMinCater) * 100;
+      if(finalMinCater >= LastfinalMinCater){
+        this.avgMinCaterTime = Math.abs((( LastfinalMinCater -finalMinCater) / finalMinCater) * 100);
+
+      }
+      if(finalMinCater <= LastfinalMinCater){
+        this.avgMinCaterTime = Math.abs(((  finalMinCater - LastfinalMinCater) / LastfinalMinCater) * 100);
+
+      }
 
       let finalMaxCater = this.convertTimeToSeconds(this.finalAverageMaximum);
       let LastfinalMaxCater = this.convertTimeToSeconds(this.LastfinalAverageMaximum);
-      this.avgMaxCaterTime = ((finalMaxCater - LastfinalMaxCater) / LastfinalMaxCater) * 100;
+      if(finalMaxCater >= LastfinalMaxCater){
+        this.avgMaxCaterTime = Math.abs((( LastfinalMaxCater -finalMaxCater) / finalMaxCater) * 100);
+
+      }
+      if(finalMaxCater <= LastfinalMaxCater){
+        this.avgMaxCaterTime = Math.abs ( ((  finalMaxCater - LastfinalMaxCater) / LastfinalMaxCater) * 100);
+
+      }
 
       console.log("everage data===>", this.avgResponseTimeSum)
 
@@ -267,7 +295,7 @@ export class InteractionReportComponent implements OnInit {
 
 
           //           this.newArray.push(interaction.count)
-          // debugger
+          // 
 
           //           this.channelCountsArray.push({
           //             name: this._legend.toString(),
@@ -337,7 +365,7 @@ export class InteractionReportComponent implements OnInit {
   }
   interactionByDate() {
     var chartDom = document.getElementById('interactions');
-    var myChart = echarts.init(chartDom);
+    this.interactionchart = echarts.init(chartDom);
     var option;
 
     option = {
@@ -374,7 +402,7 @@ export class InteractionReportComponent implements OnInit {
       series: this.sentimentDataPoints
     };
 
-    option && myChart.setOption(option);
+    option && this.interactionchart.setOption(option);
   }
 
 
@@ -413,20 +441,22 @@ export class InteractionReportComponent implements OnInit {
 
     option && this.CSATGraph.setOption(option);
   }
-
+ 
   channelOptions = [
 
     // { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
     { id: '11', name: 'Twitter', icon: 'fa-brands fa-twitter sky pe-2', isSelected: false },
-    { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2', isSelected: false },
+    { id: '12', name: 'Instagram', icon: 'fa-brands fa-instagram pe-2 berry', isSelected: false },
     { id: '13', name: 'LinkedIn', icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2', isSelected: false },
-    { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
-    // { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
-    // { id: '16', name: 'SMS', icon: 'fa-solid fa-comment-alt pe-2', isSelected: false },
-    { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
-    // { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
-    // { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
-    // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
+    { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2 radical', isSelected: false },
+    { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
+    { id: '16', name: 'SMS', icon: 'fa-solid fa-comment-alt pe-2 cherry', isSelected: false },
+    { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2 mint', isSelected: false },
+    { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+    { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
+    { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2 webchatcolor', isSelected: false },
+    { id: '21', name: 'PlayStore', icon: '  fa-brands fa-google-play  googleplaycolor pe-2', isSelected: false },
+
   ];
   isDownloading: boolean = false;
 
@@ -445,5 +475,17 @@ export class InteractionReportComponent implements OnInit {
     html2pdf().set(options).from(element).save();
     this.isDownloading = false
 
+  }
+  interactionchart:any
+  makeChartResponsive() {
+    window.addEventListener('resize', () => {
+      if (this.interactionchart) {
+        this.interactionchart.resize();
+      }
+     
+      if(this.CSATGraph){
+        this.CSATGraph.resize()
+      }
+    })
   }
 }
