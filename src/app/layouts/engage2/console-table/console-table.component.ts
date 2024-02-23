@@ -9,7 +9,7 @@ import { ConsoleTableParams } from './console-table-params';
 import { ConsoleTablePaginatedState } from './console-table-state/console-table-paginated.component-store';
 // import { provideComponentStore } from '@ngrx/component-store';
 // import { ConsoleTableComponentStore } from './console-table.component-store';
-// provideComponentStore(ConsoleTableComponentStore), 
+// provideComponentStore(ConsoleTableComponentStore),
 @Component({
   selector: 'console-table',
   templateUrl: './console-table.component.html',
@@ -18,7 +18,7 @@ import { ConsoleTablePaginatedState } from './console-table-state/console-table-
 })
 export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends this
 
-  // private readonly _componentStore = inject(ConsoleTableComponentStore<T>);  
+  // private readonly _componentStore = inject(ConsoleTableComponentStore<T>);
   // readonly vm$ = this._componentStore.vm$;
   // onPreviousPage(): void {
   // onNextPage(): void {
@@ -83,13 +83,13 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
     this.pageSearchText$ = search;
     this._fetchData();
   }
-  
+
   handleSearch(searchQuery: string) {
     if (searchQuery.length >= 3 || searchQuery.length === 0) {
       this.seracher(searchQuery);
     }
   }
-  
+
   paginator(paging: any) {
 
     if (paging != null && typeof paging === 'object') {
@@ -108,10 +108,11 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
     this._fetchData();
   }
   filterdata() {
+
     this._fetchData();//this.filter?.pageno, this.filter?.pagesize);
   }
   private _fetchData() { //}: Observable<T>{ // (page: number, pagesize: number)  {
-
+    debugger
     if (typeof this.filter?.url === 'undefined') return;
     // console.log(this.filter)
     // let pam:any = {
@@ -130,7 +131,7 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
             if (item.order != null && item.search == true && alter != "image") {
               paramextended[i] = { name: alter, order: item.order, search: item.search }
             }
-            // this.pagingParams$[alter] = { order: item.order, search : item.search }                  
+            // this.pagingParams$[alter] = { order: item.order, search : item.search }
           }
 
         this.pagingParams$.contain = JSON.stringify(paramextended);
@@ -143,12 +144,12 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
     //filter?.template?.toolbar=='top'
     // encodeURIComponent
     // if(this.filter?.url && !this.filter?.url)
-    
+
     this._request.get<T[]>(this.filter.url, this.pagingParams$, this.filter.urlparams).pipe(
       takeUntil(this.unsubscribe$)).subscribe({
-       
+
         next: (nxt: T[]) => {
-          
+
           this.data = nxt;
         },
         error: (error: any) => console.error(error),
@@ -169,7 +170,7 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
     console.log("I m func action");
 
     if (params.param.type == "rute") {
-      
+
       this.navigateToPage(params);
     } else if (params.param.type == "service") {//
       this.deleteFromDatabase(params);

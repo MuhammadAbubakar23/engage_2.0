@@ -12,7 +12,7 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 import { DatePipe } from '@angular/common';
 
 import { map, timer, takeWhile } from 'rxjs';
-import { VerificationDto } from 'src/app/shared/Models/VerificationDto';
+import { VerificationDto } from 'src/app/shared/Models/verificationDto';
 
 
 // import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
@@ -43,14 +43,14 @@ export class LoginComponent implements OnInit {
   loginForm = new UntypedFormGroup({
     // actor: new UntypedFormControl(this.logindto.actor),
     email: new UntypedFormControl(this.logindto.userName),
-    userName: new UntypedFormControl(this.logindto.userName,[Validators.required]),
-    password: new UntypedFormControl(this.logindto.password,[Validators.required]),
+    userName: new UntypedFormControl(this.logindto.userName, [Validators.required]),
+    password: new UntypedFormControl(this.logindto.password, [Validators.required]),
     rememberMe: new UntypedFormControl(this.logindto.rememberMe),
   });
   verificationForm = new UntypedFormGroup({
     Verificationemail: new UntypedFormControl(this.verificationdto.email),
     verificationCode: new UntypedFormControl(
-      this.verificationdto.verificationCode,[Validators.required,Validators.minLength(6),Validators.maxLength(6)]
+      this.verificationdto.verificationCode, [Validators.required, Validators.minLength(6), Validators.maxLength(6)]
     ),
   });
   Verificationemail: any;
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
     private signalRService: SignalRService,
     private commonService: CommonDataService,
     private datePipe: DatePipe
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // this.getAllTags();
@@ -82,14 +82,14 @@ export class LoginComponent implements OnInit {
     this.spinnerService.show();
     this.authService.login(obj).subscribe(
       (res: any) => {
-        
-        // only for testing purpose, remove after that
-        // res = {'loginResponse':res}
-        // res = {'loginResponse':res}
-        // res['isTwoFAEnabled'] = false;
-        // only for testing purpose, remove after that
 
-        if (res.status == false) {
+        //only for testing purpose, remove after that
+        // res = { 'loginResponse': res }
+        // res = { 'loginResponse': res }
+        // res['isTwoFAEnabled'] = false;
+        //only for testing purpose, remove after that
+
+        if (res.isTwoFAEnabled == false) {
           this.stor.store('token', res.loginResponse.loginResponse.accessToken);
           this.stor.store('main', res.loginResponse.loginResponse);
           this.stor.store(
@@ -128,9 +128,9 @@ export class LoginComponent implements OnInit {
           this.signalRService.applySentimentListner();
           this.signalRService.updateMessageStatusDataListener();
           // this.signalRService.updatePostList();
-        } else if (res.status == true) {
-          this.Verificationemail =res.userName
-            // res.loginResponse.loginTwoFAResponse.userName;
+        } else if (res.isTwoFAEnabled == true) {
+          this.Verificationemail = res.userName
+          // res.loginResponse.loginTwoFAResponse.userName;
           this.isUserLoging = true;
           this.isVerificationcodeFailed = false;
           this.spinnerService.hide();
@@ -167,9 +167,9 @@ export class LoginComponent implements OnInit {
           this.loginDisabled = true;
           this.spinnerService.hide();
           this.reloadComponent('userblocked');
-        } 
+        }
         else {
-          
+
           this.spinnerService.hide();
           this.reloadComponent('loginFailed');
         }
@@ -200,7 +200,7 @@ export class LoginComponent implements OnInit {
         // this.login()
       }
       if (seconds == 0) {
-   
+
         clearInterval(timer);
       }
     }, 1000);
@@ -254,7 +254,7 @@ export class LoginComponent implements OnInit {
   AlterMsg: any;
   toastermessage: any;
   reloadComponent(type: any) {
-    
+
     if (type == 'loginFailed') {
       this.AlterMsg = this.ErrorMessage;
       this.toastermessage = true;

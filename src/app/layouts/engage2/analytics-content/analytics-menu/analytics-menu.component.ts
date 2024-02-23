@@ -43,7 +43,7 @@ export class AnalyticsMenuComponent implements OnInit {
     this.activeChannel = window.location.origin;
 
     if (this.activeChannel == 'http://localhost:4200') {
-       this.channelname = 'local';
+      this.channelname = 'local';
     } else if (this.activeChannel == 'https://engage.jazz.com.pk') {
       this.channelname = 'Jazz';
     } else if (this.activeChannel == 'https://keportal.enteract.live') {
@@ -57,17 +57,10 @@ export class AnalyticsMenuComponent implements OnInit {
     } else if (this.activeChannel == 'https://bzengage.enteract.live') {
       this.channelname = 'Bazaar';
     }
-<<<<<<< HEAD
-    else if(this.activeChannel=='https://uiengagerox.enteract.app') {
-      this.channelname='stagging';
-    }
-   
-=======
-    else if(this.activeChannel='https://uiengagerox.enteract.app/'){
-      this.channelname='stagging'
+    else if (this.activeChannel = 'https://uiengagerox.enteract.app') {
+      this.channelname = 'stagging'
     }
 
->>>>>>> SAha26
     this.getmenu();
   }
   getmenu() {
@@ -142,7 +135,7 @@ export class AnalyticsMenuComponent implements OnInit {
           link: '/analytics/performance-report',
         },
         { name: 'Shift Report', link: '/analytics/shift-report' },
-     
+
       ];
     } else if (this.channelname == 'KE') {
       this.analyticeReport = [

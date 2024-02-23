@@ -28,9 +28,9 @@ export class RequestService {
 
   }
   private createCompleteRoute = (route: string, envAddress: string, routeparams?:any) =>  (routeparams!="" || routeparams.length > 0 )?`${envAddress}${route}${routeparams}`:`${envAddress}${route}`;
-  
+
   get<T>(route:string, params?: any,routeparams:string=""): Observable<T> {
-    
+    debugger
     console.log(params);
     console.log(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl));
     return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, routeparams),{ params })
@@ -41,10 +41,10 @@ export class RequestService {
         console.log('Handling error locally and rethrowing it...', err);
         return throwError(() => new Error(err));
       })
-      );    
+      );
   }
   getFromConsole<T>(route:string, params?: any,routeparams:string=""): Observable<T> {
-    
+
     console.log(params);
     console.log(this.createCompleteRoute(this.env.paths[route], this.env.consoleBaseUrl));
     return this.http.get<T>(this.createCompleteRoute(this.env.console[route], this.env.consoleBaseUrl, routeparams),{ params })
@@ -55,7 +55,7 @@ export class RequestService {
         console.log('Handling error locally and rethrowing it...', err);
         return throwError(() => new Error(err));
       })
-      );    
+      );
   }
   getBy<T>(route:string, params: string): Observable<T> {
     console.log(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl));
@@ -68,10 +68,10 @@ export class RequestService {
         console.log('Handling error locally and rethrowing it...', err);
         return throwError(() => new Error(err));
       })
-      );    
+      );
   }
   post<T>(route:string, params?: any): Observable<T>{
-    
+
     return this.http.post<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
     .pipe(
       map((res: any) => { return res }),
@@ -100,7 +100,7 @@ export class RequestService {
       );
   }
   delete<T>(route:string, routeparams:any, params?: any): Observable<T>{
-    
+
     return this.http.delete<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, "?Id="+routeparams), params)
     .pipe(
       map((res: any) => { return res }),
@@ -114,7 +114,7 @@ export class RequestService {
       map((res: any) => { return res }),
       tap(res => console.log(route + " Response: ", res)),
       catchError(this.handleError<T>(route))
-      );    
+      );
   }
   async postAsync<T>(route:string, params?: any): Promise<Observable<T>>{
     return await this.http.post<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl), params)
@@ -153,13 +153,13 @@ export class RequestService {
   // }
   public handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-  
+
       // TODO: send the error to remote logging infrastructure
       // console.error(error); // log to console instead
-  
+
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message} ` );
-      
+
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
