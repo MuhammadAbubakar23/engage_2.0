@@ -28,7 +28,7 @@ export class SignalRService {
 
   token = localStorage.getItem('token');
   signalRStatus = localStorage.getItem('signalRStatus');
-  companyId:number=650;
+  companyId:number=657;
   baseUrl:string="";
 
   public hubconnection!: signalR.HubConnection;
@@ -130,6 +130,7 @@ export class SignalRService {
     
     
     this.hubconnection.on('SendData', (data) => {
+
       if (data.conversationQueues != null && data.conversationQueues.length>0) { 
          this.updateListService.sendList(data.conversationQueues)
       }

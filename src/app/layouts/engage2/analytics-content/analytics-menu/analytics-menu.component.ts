@@ -57,17 +57,12 @@ export class AnalyticsMenuComponent implements OnInit {
     } else if (this.activeChannel == 'https://bzengage.enteract.live') {
       this.channelname = 'Bazaar';
     }
-<<<<<<< HEAD
     else if(this.activeChannel=='https://uiengagerox.enteract.app') {
       this.channelname='stagging';
     }
    
-=======
-    else if(this.activeChannel='https://uiengagerox.enteract.app/'){
-      this.channelname='stagging'
-    }
+   
 
->>>>>>> SAha26
     this.getmenu();
   }
   getmenu() {
@@ -101,9 +96,11 @@ export class AnalyticsMenuComponent implements OnInit {
         { name: 'Instagram Report', link: '/analytics/instagram-report' },
         { name: 'interaction Report', link: '/analytics/interaction-report' }
       ];
-    } else if (this.channelname == 'stagging') {
+    } 
+    else if (this.channelname == 'stagging') {
       this.analyticeReport = [
         { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
+        { name: 'Interaction Report', link: '/analytics/interaction-report' },
         { name: 'BOT Interactions', link: '/analytics/handled-bot' },
         { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
         { name: 'Unique Interactions', link: '/analytics/unique-customers' },
@@ -124,7 +121,7 @@ export class AnalyticsMenuComponent implements OnInit {
         { name: 'Twitter Report', link: '/analytics/twitter-report' },
         { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
         { name: 'Instagram Report', link: '/analytics/instagram-report' },
-        { name: 'interaction Report', link: '/analytics/interaction-report' }
+      
       ];
     } else if (this.channelname == 'Jazz') {
       this.analyticeReport = [
@@ -201,6 +198,7 @@ export class AnalyticsMenuComponent implements OnInit {
     else if (this.channelname == 'Bazaar') {
       this.analyticeReport = [
         { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
+        { name: 'Interaction Report', link: '/analytics/interaction-report' },
         { name: 'BOT Interactions', link: '/analytics/handled-bot' },
         { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
         { name: 'Unique Interactions', link: '/analytics/unique-customers' },
@@ -214,7 +212,7 @@ export class AnalyticsMenuComponent implements OnInit {
           link: '/analytics/performance-report',
         },
         { name: 'Shift Report', link: '/analytics/shift-report' },
-        { name: 'interaction Report', link: '/analytics/interaction-report' }
+
       ];
     }
   }

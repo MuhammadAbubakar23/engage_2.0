@@ -63,7 +63,7 @@ export class RulesComponent implements OnInit {
     this.headerService.updateMessage(string);
   }
   editTemplate(message: any) {
-    debugger
+    
     this.router.navigate(['/console/add-rules',message.id])
   }
   canEditOrDelete(row: any): boolean {

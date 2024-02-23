@@ -267,7 +267,7 @@ export class InteractionReportComponent implements OnInit {
 
 
           //           this.newArray.push(interaction.count)
-          // debugger
+          // 
 
           //           this.channelCountsArray.push({
           //             name: this._legend.toString(),

@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    debugger
+    
     let obj = {
       // actor: this.loginForm.value.actor,
       userName: this.loginForm.value.userName,
@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit {
         // res['isTwoFAEnabled'] = false;
         // only for testing purpose, remove after that
 
-        if (res.status == false) {
+        if (res.isTwoFAEnabled == false) {
           this.stor.store('token', res.loginResponse.loginResponse.accessToken);
           this.stor.store('main', res.loginResponse.loginResponse);
           this.stor.store(
@@ -128,7 +128,7 @@ export class LoginComponent implements OnInit {
           this.signalRService.applySentimentListner();
           this.signalRService.updateMessageStatusDataListener();
           // this.signalRService.updatePostList();
-        } else if (res.status == true) {
+        } else if (res.isTwoFAEnabled == true) {
           this.Verificationemail =res.userName
             // res.loginResponse.loginTwoFAResponse.userName;
           this.isUserLoging = true;

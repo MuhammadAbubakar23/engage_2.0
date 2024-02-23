@@ -6,6 +6,7 @@ import { Observable, Subject } from 'rxjs';
 export class ClosePanelService {
   private righttoggleValue = new Subject<any>();
   private lefttoggleValue = new Subject<any>();
+  private totalCount =new Subject<any>()
   constructor() { }
   public sendRightBarToggleValue(newValue:any) : void{
     this.righttoggleValue.next(newValue);
@@ -18,6 +19,12 @@ export class ClosePanelService {
   }
   public receiveLeftBarToggleValue(): Observable<any>{
     return this.lefttoggleValue.asObservable();
-
+  }
+  public sendtotalCount(value:any):void{
+    this.totalCount.next(value)
+  }
+  public reciveTaotalCounts():Observable<any>{
+    
+    return this.totalCount.asObservable()
   }
 }
