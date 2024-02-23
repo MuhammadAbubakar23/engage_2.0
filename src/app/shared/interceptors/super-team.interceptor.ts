@@ -1,37 +1,37 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor} from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { StorageService } from '../services/storage/storage.service';
 
 @Injectable()
 export class SuperTeamInterceptor implements HttpInterceptor {
-  companyId:number=650;
-  baseUrl:string="";
-  constructor(private storage: StorageService) {}
+  companyId: number = 650;
+  baseUrl: string = "";
+  constructor(private storage: StorageService) { }
 
-  intercept( request: HttpRequest<unknown>,
+  intercept(request: HttpRequest<unknown>,
     next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-      this.baseUrl=window.location.origin
-      if(this.baseUrl=='https://keportal.enteract.live'){
-        this.companyId=651;
-      } else if (this.baseUrl=='https://engage.jazz.com.pk') {
-      this.companyId=650;
-      }
-      else if(this.baseUrl=='https://uiengage.enteract.app') {
-        this.companyId=657
-      }
-      else if(this.baseUrl=='https://tppl.enteract.live') {
-        this.companyId=652
-      }
-      else if(this.baseUrl=='https://waengage.enteract.live') {
-        this.companyId=653
-      }
-      else if(this.baseUrl=='https://bzengage.enteract.live') {
-      this.companyId=654
+    this.baseUrl = window.location.origin
+    if (this.baseUrl == 'https://keportal.enteract.live') {
+      this.companyId = 651;
+    } else if (this.baseUrl == 'https://engage.jazz.com.pk') {
+      this.companyId = 650;
     }
-    else if(this.baseUrl=='https://uiengagerox.enteract.app') {
-      this.companyId=650
+    else if (this.baseUrl == 'https://uiengage.enteract.app') {
+      this.companyId = 657
+    }
+    else if (this.baseUrl == 'https://tppl.enteract.live') {
+      this.companyId = 652
+    }
+    else if (this.baseUrl == 'https://waengage.enteract.live') {
+      this.companyId = 653
+    }
+    else if (this.baseUrl == 'https://bzengage.enteract.live') {
+      this.companyId = 654
+    }
+    else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
+      this.companyId = 650
     }
 
     let team = this.storage.retrive('nocompass', 'O').local;

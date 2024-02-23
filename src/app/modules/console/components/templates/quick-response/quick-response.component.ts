@@ -18,19 +18,20 @@ export class QuickResponseComponent implements OnInit {
   applySearchFilter() {
     // Convert the search text to lowercase for case-insensitive search
     const searchTextLower = this.searchText.toLowerCase();
-  
+
     // Filter the messages based on the search text
     this.messages = this.messages.filter((message: { text: any; }) => {
       const templateNameLower = (message.text || '').toLowerCase();
       return templateNameLower.includes(searchTextLower);
     });
-  
+
     // Apply sorting after filtering
     this.sortMessages();
   }
-  
+
   refreshMessages() {
-    this.commonService.GetQuickReply().subscribe(
+    const data ={}
+    this.commonService.GetQuickReply(data).subscribe(
       (response: any) => {
         this.messages = response;
         // Apply sorting after refreshing messages
@@ -41,7 +42,7 @@ export class QuickResponseComponent implements OnInit {
       }
     );
   }
-  
+
   sortMessages() {
     switch (this.selectedSortOption) {
       case 'Ascending':
@@ -54,11 +55,12 @@ export class QuickResponseComponent implements OnInit {
         break;
     }
   }
-  
+
   constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
 
   ngOnInit(): void {
-    this.commonService.GetQuickReply()
+    const data ={}
+    this.commonService.GetQuickReply(data)
       .subscribe((response: any) => {
         this.messages = response; // Assign the response to the messages array
         console.log(this.messages); // Verify that the data is populated correctly

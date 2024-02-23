@@ -594,7 +594,7 @@ export class CommonDataService {
   // rules
 
   GetAllRules() {
-    return this.http.get(this.consoleBaseUrl + this.getAllRules);
+    return this.http.post(this.consoleBaseUrl + this.getAllRules,{});
   }
   GetRuleById(ruleId: string) {
     return this.http.get(`${this.consoleBaseUrl + this.getRuleById}?id=${ruleId} `)

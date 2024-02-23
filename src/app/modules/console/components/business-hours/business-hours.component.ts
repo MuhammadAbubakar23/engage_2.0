@@ -26,7 +26,8 @@ export class BusinessHoursComponent implements OnInit {
     });
   }
   refreshMessages() {
-    this.commonService.GetBusinessHours().subscribe(
+    const data ={}
+    this.commonService.GetBusinessHours(data).subscribe(
       (response: any) => {
         this.messages = response;
       },
@@ -55,10 +56,11 @@ export class BusinessHoursComponent implements OnInit {
   constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
 
   ngOnInit(): void {
-    this.commonService.GetBusinessHours()
+    const data ={}
+    this.commonService.GetBusinessHours(data)
       .subscribe((response: any) => {
-        this.messages = response; 
-        console.log(this.messages); 
+        this.messages = response;
+        console.log(this.messages);
       }, (error: any) => {
         console.error(error);
       });
@@ -72,7 +74,7 @@ export class BusinessHoursComponent implements OnInit {
       state: { template }
     });
   }
-  
+
   deleteTemplate(template: any) {
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
@@ -95,7 +97,7 @@ export class BusinessHoursComponent implements OnInit {
   }
 
   cloneTemplate(template: any) {
-    const clonedTemplate = { ...template }; 
+    const clonedTemplate = { ...template };
     clonedTemplate.name += ' (Cloned)';
     this.templates.push(clonedTemplate);
     console.log('Cloned template:', clonedTemplate);

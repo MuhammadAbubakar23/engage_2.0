@@ -1186,6 +1186,7 @@ export class FacebookComponent implements OnInit {
       this.commondata
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
+          
           if (Object.keys(res).length > 0) {
             this.FacebookMessages = res.List?.dm;
             this.userInformation = res.List.user;

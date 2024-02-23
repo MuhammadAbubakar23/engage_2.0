@@ -79,17 +79,17 @@ export class CreateSkillsComponent implements OnInit {
   id: any;
   selectedRules: string[] = [];
 
-  updateSelectedRules(id:number) {
+  updateSelectedRules(id: number) {
     debugger
-    this.subRules.forEach((item:any) => {
-      if(item.id === id){
+    this.subRules.forEach((item: any) => {
+      if (item.id === id) {
         item.isSelected = true;
       }
     })
     this.selectedRules = this.subRules
       .filter(rule => rule.isSelected)
       .map(rule => rule.name);
-      console.log(this.selectedRules)
+    console.log(this.selectedRules)
   }
   removeSelectedRule(rule: string) {
     const index = this.selectedRules.indexOf(rule);
@@ -118,7 +118,7 @@ export class CreateSkillsComponent implements OnInit {
   subRules: any[] = []
   GetRules() {
     this.commondata.GetAllRules().subscribe((res: any) => {
-      this.subRules = res.map((rule: any) => ({ ...rule, isSelected: false }));
+      this.subRules = res.Rules.map((rule: any) => ({ ...rule, isSelected: false }));
     })
     console.log("GetAllRules", this.subRules)
   }
@@ -158,7 +158,7 @@ export class CreateSkillsComponent implements OnInit {
 
   selectRuleById(id: number, rules: any[]): void {
     debugger
-    this.selectedRules=[];
+    this.selectedRules = [];
     const ruleToCheck = rules.find(rule => rule.id === id);
     if (ruleToCheck) {
       ruleToCheck.isSelected = true;
@@ -173,7 +173,7 @@ export class CreateSkillsComponent implements OnInit {
     }
   }
   checkTagById(id: number, tags: any[]): void {
-    this.checkedIds=[]
+    this.checkedIds = []
     debugger
     const tagToCheck = tags.find(tag => tag.mainId === id);
 
@@ -215,15 +215,17 @@ export class CreateSkillsComponent implements OnInit {
     this.isActive = !this.isActive;
   }// get all business Hours
   getallbusinessHours() {
-    this.commondata.GetBusinessHours().subscribe((res: any) => {
-      this.isBusnisshours = res
+    const data = {}
+    this.commondata.GetBusinessHours(data).subscribe((res: any) => {
+      this.isBusnisshours = res.BusinessHours
       console.log("All business hours===>", res)
     })
   }
   // get all Sla Policies
   getAllSlaPolicies() {
-    this.commondata.GetSlaPolicy().subscribe((res: any) => {
-      this.isSlaPolicies = res
+    const data = {}
+    this.commondata.GetSlaPolicy(data).subscribe((res: any) => {
+      this.isSlaPolicies = res.SLAPolices
       console.log("this.isSlaPolices==>", this.isSlaPolicies)
     })
   }
@@ -231,7 +233,7 @@ export class CreateSkillsComponent implements OnInit {
   getTagsList() {
     debugger
     this.commondata.GetTagsByCompanyId().subscribe((res: any) => {
-      console.log("Response",res)
+      console.log("Response", res)
       this.TagsLists = res
       console.log("this.tagsLsiting===>", this.TagsLists)
       this.TagsLists.forEach((tag: any) => {
@@ -306,7 +308,7 @@ export class CreateSkillsComponent implements OnInit {
       }
 
       if (parent.subTags) {
-        parent.subTags.forEach((child:any) => {
+        parent.subTags.forEach((child: any) => {
           if (child.isChecked) {
             checkedIds.push(child.mainId);
           }

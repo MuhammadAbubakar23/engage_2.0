@@ -1,3 +1,7 @@
+// This file can be replaced during build by using the `fileReplacements` array.
+// `ng build` replaces `environment.ts` with `environment.prod.ts`.
+// The list of file replacements can be found in `angular.json`.
+
 export const environment = {
   production: true,
   fetchIntegrate: 'true',
@@ -73,13 +77,15 @@ export const environment = {
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
+  // // CommonBaseUrl: 'https://comrox.enteract.app/api/',
+
   // SignalRCommonBaseUrl: 'https://bzcommon.enteract.live/',
   // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
   // ProfileBaseUrl: '',
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
 
-  // // For Testing
+  // // // For Testing
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
   // // IdentityBaseUrl:'https://rep.enteract.app/api/',
   // // TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
@@ -96,7 +102,7 @@ export const environment = {
   CommonBaseUrl: 'https://comrox.enteract.app/api/',
   ServiceBaseUrl: '',
   SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
-  ProfileBaseUrl: 'https://profiler.enteract.app/api/', 
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   consoleBaseUrl: 'https://conrox.enteract.app/api/',
 
 
@@ -177,9 +183,9 @@ export const environment = {
 
       // getTags: 'Tags/GetAll',
       getTagsByCompanyId: 'Tags/GetTagsByCompayId',
-      updateSkill:'Skill/Update',
-      getSkillsbyId:'Skill/GetById',
-      getUserSkills:'Skill/GetSkills',
+      updateSkill: 'Skill/Update',
+      getSkillsbyId: 'Skill/GetById',
+      getUserSkills: 'Skill/GetSkills',
       getAllProfile: 'Profile/GetAll',
       addProfile: 'Profile/Add',
       attachFacebookPage: 'ProfileManagement/RegisterProfile',
@@ -197,12 +203,12 @@ export const environment = {
       updateRules: 'Rules/Update',
       deleteRules: 'Rules/Delete',
       defaultTags: 'Tags/GetTags',
-      quickReplyListForBazaar:'QuickReply/GetAll',
-      getAllTeams:'Teams/GetTeamTypes',
-      addTeam : 'Teams/Add',
+      quickReplyListForBazaar: 'QuickReply/GetAll',
+      getAllTeams: 'Teams/GetTeamTypes',
+      addTeam: 'Teams/Add',
       updateTeam: 'Teams/Update',
-      deleteTeam:'Teams/Delete',
-      deleteMultipleTeams:'Teams/DeleteMultiple'
+      deleteTeam: 'Teams/Delete',
+      deleteMultipleTeams: 'Teams/DeleteMultiple'
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',
@@ -301,8 +307,9 @@ export const environment = {
       keMediaReport: 'MediaReport/GetMediaReport',
       PrintFeed: 'Media/GetMediaPrintList',
       CSATReport: 'Report/GetCSATReport',
+      getInteractionReport: 'Report/GetAgentPerformanceDashboard',
       // whatsapp bot interaction
-      whatsappBotInteraction:'Whatsapp/GetBotInteractionHistory'
+      whatsappBotInteraction: 'Whatsapp/GetBotInteractionHistory'
     },
     facebook: {
       comments: 'Facebook/GetFbPost',
@@ -357,3 +364,12 @@ export const environment = {
     },
   },
 };
+
+/*
+ * For easier debugging in development mode, you can import the following file
+ * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
+ *
+ * This import should be commented out in production mode because it will have a negative impact
+ * on performance if an error is thrown.
+ */
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

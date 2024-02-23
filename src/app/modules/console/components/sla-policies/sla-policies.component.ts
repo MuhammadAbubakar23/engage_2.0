@@ -19,17 +19,18 @@ export class SlaPoliciesComponent implements OnInit {
   applySearchFilter() {
     // Convert the search text to lowercase for case-insensitive search
     const searchTextLower = this.searchText.toLowerCase();
-    
+
     // Filter the messages based on the search text
     this.messages = this.messages.filter((message) => {
       const templateNameLower = (message.policyName || '').toLowerCase();
- 
+
       return templateNameLower.includes(searchTextLower)
     });
   }
-  
+
   refreshMessages() {
-    this.commonService.GetSlaPolicy().subscribe(
+    const data ={}
+    this.commonService.GetSlaPolicy(data).subscribe(
       (response: any) => {
         this.messages = response;
       },
@@ -41,7 +42,8 @@ export class SlaPoliciesComponent implements OnInit {
   constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
 
   ngOnInit(): void {
-    this.commonService.GetSlaPolicy()
+    const data ={}
+    this.commonService.GetSlaPolicy(data)
     .subscribe((response: any) => {
       this.messages = response; // Assign the response to the messages array
       console.log(this.messages); // Verify that the data is populated correctly
@@ -53,7 +55,7 @@ export class SlaPoliciesComponent implements OnInit {
     this.selectedSortOption = status;
     this.sortPolicies();
   }
-  
+
   sortPolicies() {
     switch (this.selectedSortOption) {
       case 'Ascending':
@@ -66,7 +68,7 @@ export class SlaPoliciesComponent implements OnInit {
         break;
     }
   }
-  
+
   updatevalue(string: any) {
     this.headerService.updateMessage(string);
   }

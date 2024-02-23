@@ -657,21 +657,24 @@
                                                     </p>
                                                 </div>
                                             </div>
+                                   
                                             <div class="post-img-wrap whatsappImgModalBtn" type="button"
                                                 style="width:375px;"
                                                 *ngFor="let attachment of facebookdata.post.attachments">
-                                                <img *ngIf="attachment.contentType == 'photo'"
+                                                <img *ngIf="attachment.mediaType == 'photo'"
                                                     src={{attachment.attachmentUrl}}
                                                     style="width: -webkit-fill-available;">
-                                                <video *ngIf="attachment.contentType == 'video'" width="375px" controls>
+                                                <video *ngIf="attachment.mediaType == 'video'" width="375px" controls>
                                                     <source src={{attachment.attachmentUrl}} type="video/mp4"
                                                         style="width: -webkit-fill-available;">
                                                 </video>
-                                                <video *ngIf="attachment.contentType == 'video_inline'" width="375px"
+                                                <video *ngIf="attachment.mediaType == 'video_inline'" width="375px"
                                                     controls>
                                                     <source src={{attachment.attachmentUrl}} type="video/mp4"
                                                         style="width: -webkit-fill-available;">
                                                 </video>
+                                                <img  *ngIf="attachment.mediaType == 'lead_gen'"
+                                                 src={{attachment.attachmentUrl}}   style="width: -webkit-fill-available;">
                                             </div>
                                             <div class="card-body bg-light">
 

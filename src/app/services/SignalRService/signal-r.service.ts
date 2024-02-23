@@ -51,7 +51,7 @@ export class SignalRService {
     private applySentimentService: ApplySentimentService,
     private getnewPostService:GetNewPostService,
     private router: Router
-  ) { 
+  ) {
     this.baseUrl=window.location.origin
     if(this.baseUrl=='https://keportal.enteract.live'){
       this.companyId=651;
@@ -77,7 +77,7 @@ export class SignalRService {
   flag:string='';
 
   startConnection() {
-    
+
     // this.flag = this.router.url.split('/')[1];
     // if(this.flag == 'all-inboxes'){
       let team = this.storage.retrive("nocompass", "O").local;
@@ -87,7 +87,7 @@ export class SignalRService {
         },
         headers: { "X-Super-Team": JSON.stringify(this.companyId) }
       };
-  
+
       this.hubconnection = new signalR.HubConnectionBuilder()
         .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
         .withAutomaticReconnect()
@@ -99,7 +99,7 @@ export class SignalRService {
         .then(() => this.getConnectionId())
         .catch((err) => console.log('Error while starting connection: ' + err));
     // }
-    
+
   };
 
   reConnect() {
@@ -127,14 +127,15 @@ export class SignalRService {
   }
 
   public updateListAndDetailDataListener = () => {
-    
-    
+
+
     this.hubconnection.on('SendData', (data) => {
-      if (data.conversationQueues != null && data.conversationQueues.length>0) { 
+
+      if (data.conversationQueues != null && data.conversationQueues.length>0) {
          this.updateListService.sendList(data.conversationQueues)
       }
       if (data.signalRConversations != null) {
-        
+
         this.updateCommentsService.sendComment(data.signalRConversations )
       }
       if (data.signalRDMConversations != null) {
@@ -149,7 +150,7 @@ export class SignalRService {
   // for new post
 // public updatePostList=()=>{
 //   this.hubconnection?.on('PostData',(data)=>{
-//     
+//
 //     // this.getnewPostService.sendnewPost(data)
 
 //   })
@@ -173,7 +174,7 @@ export class SignalRService {
   };
 
   public replyDataListener = () => {
-    
+
     this.hubconnection?.on('QueryReply', (reply) => {
       this.replyService.sendReply(reply);
     });

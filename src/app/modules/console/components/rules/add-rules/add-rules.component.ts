@@ -184,7 +184,7 @@ export class AddRulesComponent implements OnInit {
   }
 
   onClick() {
-    debugger
+    
     const ruleData = {
       "name": this.rulesForm.value['ruleName'],
       "description": this.rulesForm.value['description'],
