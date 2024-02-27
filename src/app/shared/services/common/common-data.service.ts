@@ -163,6 +163,7 @@ export class CommonDataService {
   addProfile = environment.links.console.addProfile;
   attachFacebookPage = environment.links.console.attachFacebookPage;
   getTags = environment.links.console.getTags;
+  getTagsAll=environment.links.console.getTagsAll
   getTagsByCompanyId =environment.links.console.getTagsByCompanyId
   getTagById = environment.links.console.getTagById;
   addTags = environment.links.console.addTags;
@@ -563,6 +564,9 @@ export class CommonDataService {
 
   GetTags() {
     return this.http.get(this.consoleBaseUrl + this.getTags);
+  }
+  GetAllTag(body:any){
+    return this.http.post(this.consoleBaseUrl+this.getTagsAll,body) 
   }
   GetTagsByCompanyId(){
     return this.http.get(this.consoleBaseUrl + this.getTagsByCompanyId);

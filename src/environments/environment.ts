@@ -183,7 +183,7 @@ export const environment = {
       addSkill: 'Skill/Add',
       deleteSkill: 'Skill/Delete',
 
-      // getTags: 'Tags/GetAll',
+       getTagsAll: 'Tags/GetAll',
       getTagsByCompanyId: 'Tags/GetTagsByCompayId',
       updateSkill: 'Skill/Update',
       getSkillsbyId: 'Skill/GetById',
@@ -210,7 +210,7 @@ export const environment = {
       addTeam: 'Teams/Add',
       updateTeam: 'Teams/Update',
       deleteTeam: 'Teams/Delete',
-      deleteMultipleTeams: 'Teams/DeleteMultiple'
+      deleteMultipleTeams: 'Teams/DeleteMultiple',
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',
