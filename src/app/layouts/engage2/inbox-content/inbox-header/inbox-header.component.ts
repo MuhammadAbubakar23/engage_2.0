@@ -4,7 +4,7 @@ import { FiltersDto } from 'src/app/shared/Models/FiltersDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
-
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'inbox-header',
   templateUrl: './inbox-header.component.html',
@@ -18,6 +18,7 @@ export class InboxHeaderComponent implements OnInit {
   constructor(private stor: StorageService,
     private commonService: CommonDataService,
     private reviceTotalCountServices:ClosePanelService,
+    private cd:ChangeDetectorRef,
     private _route: Router) { }
 
   ngOnInit(): void {
@@ -111,6 +112,7 @@ export class InboxHeaderComponent implements OnInit {
     } else {
       this.reloadComponent('querryAssigned')
     } 
+    this.cd.detectChanges()
   }
 
   AlterMsg:any;

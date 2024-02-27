@@ -396,7 +396,8 @@ export class ConversationComponent implements OnInit {
     
     
     this.SpinnerService.show();
-     localStorage.setItem('datefillter',JSON.stringify(this.filterDto))
+    this.changeDetect.detectChanges()
+      // localStorage.setItem('datefillter',JSON.stringify(this.filterDto))
     this.commondata.GetConversationList(this.filterDto).subscribe(
       (res: any) => {
         // for followTotalCounts

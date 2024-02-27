@@ -7,6 +7,7 @@ import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { NgxSpinnerModule, } from 'ngx-spinner';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxPaginationModule } from 'ngx-pagination';
 interface Tag {
 color: any;
   mainId: any;
@@ -18,115 +19,93 @@ color: any;
 @Component({
   selector: 'app-tags',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule,NgxSpinnerModule],
+  imports: [CommonModule, RouterModule, FormsModule,NgxSpinnerModule,NgxPaginationModule],
   templateUrl: './tags.component.html',
   styleUrls: ['./tags.component.scss']
 })
 export class TagsComponent implements OnInit {
   status: string = 'All';
-  tags: Tag[] = [];
-  perPage: number = 15;
   currentPage: number = 1;
+  itemsPerPage: number = 10;
+  
+  tags: Tag[] = [];
+  perPage: number = 10;
+  totoalCount:any
+  totalItems: number=100;
+  sortby:any
   searchText: string = '';
 selectedTextColor=' #FF0000' ;
   applySearchFilter(): void {
-    // Convert the search text to lowercase for case-insensitive search
-    const searchTextLower = this.searchText.toLowerCase();
-  
-    // Filter the tags based on the search text
-    this.tags = this.tags.filter((tag) => {
-      const tagNameLower = (tag.name || '').toLowerCase();
-      return tagNameLower.includes(searchTextLower);
-    });
-  
-    // Apply sorting after filtering
-    this.sortTags();
+debugger
+if(this.searchText.length>=3){
+  this.getTags()
+}
+if(this.searchText.length==0){
+  this.getTags()
+}
   }
-  refreshMessages() {
-    this.commonService.GetTags()
-      .subscribe((response: any) => {
-   const tags = response; // Assign the response to the messages array
-   tags.forEach((abc:any)=>{
-    if(abc.name=='Tags'){
-     abc.subTags.forEach((x:any)=>{
-     x.subTags.forEach((abc:any)=>{
-      this.tags.push(abc)
-      console.log("tags===>",this.tags)
-     })
-     })
-    }
-   })
-  
-      this.sortTags() 
-      }, (error: any) => {
-        this.spinnerServerice.hide()
-        console.error(error);
-      });
-  }
+
   constructor(private headerService: HeaderService, private spinnerServerice:NgxSpinnerService,
     private commonService: CommonDataService, private router: Router) { }
   ngOnInit(): void {
-    this.getTags();
+     this.getTags();
+    // this.GetAllTags()
   }
-  getTags(): void {
+  // getTags(): void {
 
-    this.spinnerServerice.show()
-    this.tags=[]
-    this.commonService.GetTags()
-      .subscribe((response: any) => {
-        this.spinnerServerice.hide()
-   const tags = response; // Assign the response to the messages array
-   tags.forEach((abc:any)=>{
-    if(abc.name=='Tags'){
-     abc.subTags.forEach((x:any)=>{
-     x.subTags.forEach((abc:any)=>{
-      if( !this.tags.includes(abc)){
-        this.tags.push(abc)
-      }
+  //   this.spinnerServerice.show()
+  //   this.tags=[]
+  //   this.commonService.GetTags()
+  //     .subscribe((response: any) => {
+  //       this.spinnerServerice.hide()
+  //  const tags = response; // Assign the response to the messages array
+  //  tags.forEach((abc:any)=>{
+  //   if(abc.name=='Tags'){
+  //    abc.subTags.forEach((x:any)=>{
+  //    x.subTags.forEach((abc:any)=>{
+  //     if( !this.tags.includes(abc)){
+  //       this.tags.push(abc)
+  //     }
 
-     })
-     })
-    }
-   })
+  //    })
+  //    })
+  //   }
+  //  })
  
-        console.log(this.tags); // Verify that the data is populated correctly
-      }, (error: any) => {
-        this.spinnerServerice.hide()
-        console.error(error);
-      });
+  //       console.log(this.tags); // Verify that the data is populated correctly
+  //     }, (error: any) => {
+  //       this.spinnerServerice.hide()
+  //       console.error(error);
+  //     });
+  // }
+  getTags(){
+  let obj={
+    "search": this.searchText,
+    "sorting":this.sortby,
+    "pageNumber": this.currentPage,
+    "pageSize": this.perPage
   }
-  sortTags(): void {
-    switch (this.status) {
-      case 'Ascending':
-        this.tags.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      case 'Descending':
-        this.tags.sort((a, b) => b.name.localeCompare(a.name));
-        break;
-      case 'Tickets':
-        this.tags.sort((a, b) => a.tickets - b.tickets);
-        break;
-      case 'Contacts':
-        this.tags.sort((a, b) => a.contacts - b.contacts);
-        break;
-      default:
-        // For 'All', no sorting is required
-        break;
-    }
+  this.spinnerServerice.show()
+  this.commonService.GetAllTag(obj).subscribe((res:any)=>{
+    this.spinnerServerice.hide()
+    console.log('All Tags===>',res)
+    this.tags=res.Tags
+    this.totoalCount=res.TotalCount
+  },error=>{
+    this.spinnerServerice.hide()
+  }
+  )
+  }
+  sortTags(item:any): void {
+    debugger
+ this.sortby=item.target.text.toLowerCase()
+ this.getTags()
   }
   
   updatevalue(string: any) {
     this.headerService.updateMessage(string);
   }
-  setStatus(status: string): void {
-    this.status = status;
-  }
-  sortByTickets(): void {
-    this.tags.sort((a, b) => a.tickets - b.tickets);
-  }
-  sortByContacts(): void {
-    this.tags.sort((a, b) => a.contacts - b.contacts);
-  }
+
   editTag(tag: Tag): void {
 
     // this.router.navigate(['/console/tag/create/0'], {
@@ -153,25 +132,41 @@ selectedTextColor=' #FF0000' ;
   setPerPage(perPage: number): void {
     this.perPage = perPage;
     this.currentPage = 1; 
+    this.getTags()
   }
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
     }
+    this.getTags()
   }
   nextPage(): void {
-    const maxPages = Math.ceil(this.tags.length / this.perPage);
+    const maxPages = Math.ceil(this.totoalCount / this.perPage);
     if (this.currentPage < maxPages) {
       this.currentPage++;
     }
+    this.getTags()
   }
   goToPage(pageNumber: number): void {
-    if (pageNumber >= 1 && pageNumber <= Math.ceil(this.tags.length / this.perPage)) {
+    debugger
+    if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totoalCount / this.perPage)) {
       this.currentPage = pageNumber;
     }
+    this.getTags()
   }
-  getPageNumbers(): number[] {
-    const maxPages = Math.ceil(this.tags.length / this.perPage);
-    return Array.from({ length: maxPages }, (_, i) => i + 1);
+
+  getVisiblePageNumbers(): number[] {
+    const maxPages = Math.ceil(this.totoalCount / this.perPage);
+    const visiblePages = 5;
+    
+    let startPage = Math.max(1, this.currentPage - Math.floor(visiblePages / 2));
+    let endPage = Math.min(startPage + visiblePages - 1, maxPages);
+  
+    if (endPage - startPage + 1 < visiblePages) {
+      startPage = Math.max(1, endPage - visiblePages + 1);
+    }
+  
+    return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }
+  
 }
