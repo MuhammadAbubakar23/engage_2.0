@@ -207,19 +207,19 @@
                     <div
                       [ngClass]="{
                         'was-validated':
-                          userForm.get('businesshours')!.valid &&
-                          userForm.get('businesshours')!.touched
+                          userForm.get('wingSlug')!.valid &&
+                          userForm.get('wingSlug')!.touched
                       }"
                       class="floating-wrap form-floating mb-2"
                     >
                       <select
                         [ngClass]="{
                           'is-invalid':
-                            userForm.get('businesshours')!.errors &&
-                            (userForm.get('businesshours')!.touched ||
-                              userForm.get('businesshours')!.dirty)
+                            userForm.get('wingSlug')!.errors &&
+                            (userForm.get('wingSlug')!.touched ||
+                              userForm.get('wingSlug')!.dirty)
                         }"
-                        formControlName="businesshours"
+                        formControlName="wingSlug"
                         class="form-select"
                         id="floatingSelect"
                         aria-label="Floating label select"
@@ -227,7 +227,7 @@
                         <option selected disabled>Wing</option>
                         <option
                           *ngFor="let wing of isSelectedWing"
-                          [value]="wing.id"
+                          [value]="wing.name"
                         >
                           {{ wing.name }}
                         </option>

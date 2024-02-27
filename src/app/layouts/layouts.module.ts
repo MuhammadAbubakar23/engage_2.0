@@ -67,6 +67,9 @@ import { ToasterComponent } from './engage2/toaster/toaster.component';
 import { tagsReducer } from './engage2/tags-state/tags.reducer';
 import { TagsEffects } from './engage2/tags-state/tags.effect';
 import { WebphoneDialerModule } from '../modules/webphone-dialer/webphone-dialer.module';
+import { BotMonitoringComponent } from './engage2/bot-monitoring/bot-monitoring.component';
+import { MonitoringHeaderComponent } from './engage2/bot-monitoring/monitoring-header/monitoring-header.component';
+import { MonitoringMenuComponent } from './engage2/bot-monitoring/monitoring-menu/monitoring-menu.component';
 
 
 
@@ -123,7 +126,10 @@ import { WebphoneDialerModule } from '../modules/webphone-dialer/webphone-dialer
     BotContentComponent,
     BotMenuComponent,
     BotHeaderComponent,
-    ToasterComponent
+    ToasterComponent,
+    BotMonitoringComponent,
+    MonitoringHeaderComponent,
+    MonitoringMenuComponent
   ],
   imports: [
     CommonModule,

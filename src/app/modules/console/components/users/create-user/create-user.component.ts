@@ -41,7 +41,7 @@ export class CreateUserComponent implements OnInit {
     roleId: new UntypedFormControl(),
     teamId: new UntypedFormControl(),
     skillId: new UntypedFormControl(),
-    //   teams : new UntypedFormControl(),    
+    //   teams : new UntypedFormControl(),
     // timezone : new UntypedFormControl(),
     // supportchannel : new UntypedFormControl(),
     // language : new UntypedFormControl(),
@@ -127,10 +127,10 @@ export class CreateUserComponent implements OnInit {
       email: [formVal.email, Validators.required],
       password: [formVal.password, [Validators.required, Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)]],
       confirmpassword: [formVal.confirmPassword, [Validators.required, Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)]],
-      roleId: ['',Validators.required],
+      roleId: ['', Validators.required],
       teamId: ['',],
-      skillId: [0,Validators.required],
-      // timezone: ['', [Validators.required]],      
+      skillId: [0, Validators.required],
+      // timezone: ['', [Validators.required]],
       // supportchannel: ['', [Validators.required]],
     }
       ,
@@ -169,8 +169,8 @@ export class CreateUserComponent implements OnInit {
 
   }
   // async getRoles():Promise<void>{
-  //   await this.roles.getMyRoles().subscribe({ 
-  //     next: (res:any) => { 
+  //   await this.roles.getMyRoles().subscribe({
+  //     next: (res:any) => {
   //       this.Roles = res;
   //       console.log(res)
   //     },
@@ -181,7 +181,7 @@ export class CreateUserComponent implements OnInit {
   //   });
   // }
   // async getTeams():Promise<void>{
-  //   await this.teams.getMyTeams().subscribe({ 
+  //   await this.teams.getMyTeams().subscribe({
   //     next: (res:any) => { this.Teams = res;
   //       console.log(res)
   //     },
@@ -200,7 +200,7 @@ export class CreateUserComponent implements OnInit {
     this.userForm.controls['skillId'].reset();
   }
   onSubmit(): void {
-    
+    debugger
     let _self = this;
     this.userForm.controls['roleId'].reset();
     this.userForm.controls['teamId'].reset();
@@ -214,8 +214,8 @@ export class CreateUserComponent implements OnInit {
     // this.userForm.controls['roleId'].setValue(this.RolesControl.value);
 
     // let _self = this;
-    // // this.RolesControl.value.forEach(function (item:any) {  
-    // //     return _self.RoleIds.push(item.id);  
+    // // this.RolesControl.value.forEach(function (item:any) {
+    // //     return _self.RoleIds.push(item.id);
     // // });
     // for(let rol of this.RolesControl.value){
     //   this.RoleIds.push(rol.id);
@@ -224,13 +224,13 @@ export class CreateUserComponent implements OnInit {
     //   this.RoleIds.push(this.RolesControl.value[i].id);
     // }
     for (let i in this.RolesControl.value) {
-      this.RoleIds.push(this.RolesControl?.value[i]?.id.toString());
+      this.RoleIds.push(this.RolesControl?.value[i]?.name);
     }
     for (let i in this.TeamsControl.value) {
-      this.TeamIds.push(this.TeamsControl?.value[i]?.id.toString());
+      this.TeamIds.push(this.TeamsControl?.value[i]?.id?.toString());
     }
     for (let i in this.SkillsControl.value) {
-      this.SkillIds.push(this.SkillsControl.value[i].skillID);
+      this.SkillIds.push(this.SkillsControl.value[i]?.skillID);
     }
     this.userForm.controls['roleId'].setValue(this.RoleIds);
     this.userForm.controls['teamId'].setValue(this.TeamIds);

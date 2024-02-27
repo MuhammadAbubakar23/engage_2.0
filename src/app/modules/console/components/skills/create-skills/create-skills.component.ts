@@ -135,6 +135,7 @@ export class CreateSkillsComponent implements OnInit {
     Validators.maxLength(25)]),
     description: new FormControl('', [Validators.required]),
     businesshours: new FormControl('', [Validators.required]),
+    wingSlug: new FormControl('', [Validators.required]),
     SlaPolicy: new FormControl('', [Validators.required]),
   })
 
@@ -202,6 +203,7 @@ export class CreateSkillsComponent implements OnInit {
           "description": res.descreption,
           "businesshours": res.businessHoursId,
           "SlaPolicy": res.slaPolicyId,
+          "wingSlug":res.wingSlug
         });
         this.checkTagsBasedOnSkillTags(res.skillTags);
         this.selectRulesBasedOnSkillTags(res.skillRules);
@@ -326,6 +328,7 @@ export class CreateSkillsComponent implements OnInit {
         "name": this.userForm.value.teamname,
         "descreption": this.userForm.value.description,
         "businessHourId": Number(this.userForm.value.businesshours),
+        "wingSlug": this.userForm.value.wingSlug,
         "slaPolicyId": Number(this.userForm.value.SlaPolicy),
         "skillTags": this.getCheckedIds(),
         "skillRules": this.subRules.filter(rule => rule.isSelected).map(rule => rule.id)
