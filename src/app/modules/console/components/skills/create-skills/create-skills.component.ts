@@ -79,13 +79,7 @@ export class CreateSkillsComponent implements OnInit {
   id: any;
   selectedRules: string[] = [];
 
-  updateSelectedRules(id: number) {
-    debugger
-    this.subRules.forEach((item: any) => {
-      if (item.id === id) {
-        item.isSelected = true;
-      }
-    })
+  updateSelectedRules() {
     this.selectedRules = this.subRules
       .filter(rule => rule.isSelected)
       .map(rule => rule.name);
@@ -117,7 +111,14 @@ export class CreateSkillsComponent implements OnInit {
   public subscription!: Subscription
   subRules: any[] = []
   GetRules() {
-    this.commondata.GetAllRules().subscribe((res: any) => {
+    const data ={
+      search: '',
+      sorting: '',
+      pageNumber: 0,
+      pageSize: 0
+    }
+
+    this.commondata.GetAllRules(data).subscribe((res: any) => {
       this.subRules = res.Rules.map((rule: any) => ({ ...rule, isSelected: false }));
     })
     console.log("GetAllRules", this.subRules)

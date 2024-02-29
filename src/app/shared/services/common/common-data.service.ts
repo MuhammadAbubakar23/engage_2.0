@@ -566,7 +566,7 @@ export class CommonDataService {
     return this.http.get(this.consoleBaseUrl + this.getTags);
   }
   GetAllTag(body:any){
-    return this.http.post(this.consoleBaseUrl+this.getTagsAll,body) 
+    return this.http.post(this.consoleBaseUrl+this.getTagsAll,body)
   }
   GetTagsByCompanyId(){
     return this.http.get(this.consoleBaseUrl + this.getTagsByCompanyId);
@@ -597,8 +597,8 @@ export class CommonDataService {
 
   // rules
 
-  GetAllRules() {
-    return this.http.post(this.consoleBaseUrl + this.getAllRules,{});
+  GetAllRules(body:any) {
+    return this.http.post(this.consoleBaseUrl + this.getAllRules,body);
   }
   GetRuleById(ruleId: string) {
     return this.http.get(`${this.consoleBaseUrl + this.getRuleById}?id=${ruleId} `)

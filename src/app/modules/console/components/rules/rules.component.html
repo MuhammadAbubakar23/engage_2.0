@@ -36,12 +36,15 @@
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 <li>
-                                                    <a class="dropdown-item" (click)="setStatus('Ascending')">Ascending</a>
+                                                  <a class="dropdown-item" (click)="setSortOption('All')">All</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item"  (click)="setStatus('Descending')">Descending</a>
+                                                  <a class="dropdown-item" (click)="setSortOption('Ascending')">Ascending</a>
                                                 </li>
-                                            </ul>
+                                                <li>
+                                                  <a class="dropdown-item" (click)="setSortOption('Descending')">Descending</a>
+                                                </li>
+                                              </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -88,29 +91,29 @@
                                         </th>
                                         <td>
                                             <div class="icons-list d-flex justify-content-end dropstart"*ngIf="canEditOrDelete(row)" >
-                                                <button class="btn iconButton medium iconHover"
+                                                <!-- <button class="btn iconButton medium iconHover"
                                                     (click)="editTemplate(row)">
                                                     <i class="fal fa-edit"></i>
-                                                </button>
+                                                </button> -->
                                                 <button class="btn iconButton medium iconHover btn-group" type="button"
                                                     data-bs-toggle="dropdown" aria-expanded="false">
                                                     <i class="far fa-ellipsis-v dropdown-toggle"></i>
                                                 </button>
                                                 <ul class="dropdown-menu fade">
                                                     <li>
-                                                        <a class="dropdown-item" (click)="editTemplate(row)">Edit</a>
+                                                        <!-- <a class="dropdown-item" (click)="editTemplate(row)">Edit</a> -->
                                                     </li>
                                                     <li>
                                                         <a class="dropdown-item"
                                                             (click)="deleteTemplate(row)">Delete</a>
                                                     </li>
-                                                    <li>
+                                                    <!-- <li>
                                                         <a class="dropdown-item"
                                                             (click)="disableTemplate(row)">Disable</a>
-                                                    </li>
-                                                    <li>
+                                                    </li> -->
+                                                    <!-- <li>
                                                         <a class="dropdown-item" (click)="cloneTemplate(row)">Clone</a>
-                                                    </li>
+                                                    </li> -->
                                                 </ul>
                                             </div>
                                         </td>

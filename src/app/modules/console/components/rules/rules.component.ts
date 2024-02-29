@@ -15,16 +15,26 @@ export class RulesComponent implements OnInit {
   tableData = [{ name: '', description: '', rulesJson: '' },];
   searchText: string = '';
   applySearchFilter() {
-    const searchTextLower = this.searchText.toLowerCase();
-    this.tableData = this.tableData.filter((message) => {
-      const templateNameLower = (message.name || '').toLowerCase();
-      return templateNameLower.includes(searchTextLower) || templateNameLower.includes(searchTextLower)
-    });
+    if(this.searchText.trim() !== ''){
+      this.refreshtableData()
+    }
+    else{
+      this.searchText = '';
+      this.refreshtableData()
+    }
   }
+
   refreshtableData() {
-    this.commonService.GetAllRules().subscribe(
+    const data ={
+      search: this.searchText,
+      sorting: this.selectedSortOption,
+      pageNumber: 0,
+      pageSize: 0
+    }
+
+    this.commonService.GetAllRules(data).subscribe(
       (response: any) => {
-        this.tableData = response;
+        this.tableData = response.Rules;
       },
       (error: any) => {
         console.error(error);
@@ -33,31 +43,14 @@ export class RulesComponent implements OnInit {
   }
   selectedSortOption: any;
 
-  setStatus(status: string) {
-    this.selectedSortOption = status;
-    this.sortPolicies();
-  }
-  sortPolicies() {
-    switch (this.selectedSortOption) {
-      case 'Ascending':
-        this.tableData.sort((a:any, b:any) => a.name.localeCompare(b.name));
-        break;
-      case 'Descending':
-        this.tableData.sort((a:any, b:any) => b.name.localeCompare(a.name));
-        break;
-      default:
-        break;
-    }
+  setSortOption(option: string) {
+    
+    this.selectedSortOption = option;
+    this.refreshtableData(); 
   }
   constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
   ngOnInit(): void {
-    this.commonService.GetAllRules()
-      .subscribe((response: any) => {
-        this.tableData = response;
-        console.log(this.tableData);
-      }, (error: any) => {
-        console.error(error);
-      });
+   this.refreshtableData()
   }
   updatevalue(string: any) {
     this.headerService.updateMessage(string);

@@ -36,36 +36,40 @@ export class AddRulesComponent implements OnInit {
     fields: {}
   };
   classNames: QueryBuilderClassNames = {
-    removeIcon: 'fa fa-minus',
-    addIcon: 'fa fa-plus',
-    arrowIcon: 'fa fa-chevron-right px-2',
-    button: 'btn',
-    buttonGroup: 'btn-group',
-    rightAlign: 'order-12 ml-auto',
-    switchRow: 'd-flex px-2',
-    switchGroup: 'd-flex align-items-center',
-    switchRadio: 'custom-control-input',
-    switchLabel: 'custom-control-label',
-    switchControl: 'custom-control custom-radio custom-control-inline',
-    row: 'row p-2 m-1',
-    rule: 'border',
-    ruleSet: 'border',
-    invalidRuleSet: 'alert alert-danger',
-    emptyWarning: 'text-danger mx-auto',
-    operatorControl: 'form-control',
-    operatorControlSize: 'col-auto pr-0',
-    fieldControl: 'form-control',
-    fieldControlSize: 'col-auto pr-0',
-    entityControl: 'form-control',
-    entityControlSize: 'col-auto pr-0',
-    inputControl: 'form-control mt-2',
-    inputControlSize: 'col-auto'
+    // removeIcon: 'fa fa-minus',
+    // addIcon: 'fa fa-plus',
+    // arrowIcon: 'fa fa-chevron-right px-2',
+    // button: 'btn',
+    // buttonGroup: 'btn-group',
+    // rightAlign: 'order-12 ml-auto',
+    // switchRow: 'd-flex px-2',
+    // switchGroup: 'd-flex align-items-center',
+    // switchRadio: 'custom-control-input',
+    // switchLabel: 'custom-control-label',
+    // switchControl: 'custom-control custom-radio custom-control-inline',
+    // row: 'row p-2 m-1',
+    // rule: 'border',
+    // ruleSet: 'border',
+    // invalidRuleSet: 'alert alert-danger',
+    // emptyWarning: 'text-danger mx-auto',
+    // operatorControl: 'form-control',
+    // operatorControlSize: 'col-auto pr-0',
+    // fieldControl: 'form-control',
+    // fieldControlSize: 'col-auto pr-0',
+    // entityControl: 'form-control',
+    // entityControlSize: 'col-auto pr-0',
+    // inputControl: 'form-control mt-2',
+    // inputControlSize: 'col-auto'
   }
 
   entitySet: any = [];
   ruleId: any;
 
-  constructor(private _fb: FormBuilder, private router: Router, private _cs: CommonDataService, private ngZone: NgZone, private _route: ActivatedRoute) {
+  constructor(private _fb: FormBuilder,
+    private router: Router,
+    private _cs: CommonDataService,
+    private ngZone: NgZone,
+    private _route: ActivatedRoute) {
     this.queryCtrl = this._fb.control(this.query);
     this.queryCtrl.valueChanges.subscribe((ruleSet: any) => {
       this.processRules(ruleSet.rules);
@@ -77,63 +81,69 @@ export class AddRulesComponent implements OnInit {
 
 
   processRules(rules: any[]) {
-    rules.forEach((rule: any) => {
-      if (rule.rules) {
-        this.processRules(rule.rules);
-      } else {
-        let val = this.entitySet.find(
-          (x: EntityTypeBuilder) => x.entityName === rule.field
-        );
-
-        rule.type = val.entitytype;
-        if (Array.isArray(rule.value)) {
-          console.log("ok");
-        } else if (rule.value !== undefined && rule.value !== null) {
-          rule.value = [rule.value];
+    rules?.forEach((rule: any) => {
+        if (rule.rules) {
+            this.processRules(rule.rules);
+        } else {
+            const fieldConfig = this.entitySet.find((entity:any) => entity.entityName === rule.field);
+            console.log("field set confiye==>", fieldConfig)
+            if (fieldConfig) {
+                rule.type = fieldConfig.entityType;
+                // rule.entity = rule.field; // Assuming entity should be the same as the field
+                if (Array.isArray(rule.value)) {
+                    console.log("ok");
+                } else if (rule.value !== undefined && rule.value !== null) {
+                    rule.value = [rule.value];
+                }
+            } else {
+                console.error(`Field config not found for field: ${rule.field}`);
+            }
         }
-      }
     });
-  }
+}
+
   ngOnInit(): void {
     this._cs.GetEntitiesRule().subscribe((response: any) => {
       this.entities = response;
     })
     this.ruleId = this._route.snapshot.paramMap.get('id')
-    this.getRuleById(this.ruleId)
+    // this.getRuleById(this.ruleId)
 
   }
-  getRuleById(ruleId: string) {
-    this._cs.GetRuleById(ruleId).subscribe((res: any) => {
-      console.log(res)
-      this.rulesForm.patchValue({
+  // getRuleById(ruleId: string) {
+  //   this._cs.GetRuleById(ruleId).subscribe((res: any) => {
+  //     console.log('getting', res)
+  //     this.rulesForm.patchValue({
 
-        description: res.description,
-        ruleName: res.name,
-        // rulesJson: JSON.parse(res.rulesJson),
-        // tableName :res.tableName
+  //       description: res.description,
+  //       ruleName: res.name,
+  //       // rulesJson: JSON.parse(res.rulesJson),
+  //       // tableName :res.tableName
 
-      });
-      this.selectedRuleSet = JSON.parse(res.rulesJson);
-      this.loadExistingRuleSet();
-    },
-      (error: any) => {
-        console.log('API error:', error);
-      })
+  //     });
+  //     this.selectedRuleSet = JSON.parse(res.rulesJson);
+  //     this.loadExistingRuleSet();
+  //   },
+  //     (error: any) => {
+  //       console.log('API error:', error);
+  //     })
 
-  }
+  // }
   selectEntity() {
 
     this._cs.GetRuleEntityProperties(this.selectedEntity).subscribe((response) => {
 
       if (Array.isArray(response)) {
-        response.forEach((item) => {
+        this.entitySet = [];
+        response?.forEach((item) => {
           let obj: EntityTypeBuilder = {
             entityName: item.entityName,
-            entityType: item.entityType
+            entityType: item.entitytype
           };
           this.entitySet.push(obj);
         })
-        response.forEach((obj: any, index) => {
+        this.config.fields = {};
+        response?.forEach((obj: any, index) => {
           let typeValue = obj.entitytype;
           let operators: string[] = [];
           switch (obj.entitytype) {
@@ -168,20 +178,21 @@ export class AddRulesComponent implements OnInit {
 
 
           this.config.fields[obj.entityName] = fieldsObj;
+          console.log('changes process ==>' ,this.config.fields)
         });
-        this.loadExistingRuleSet();
+        //this.loadExistingRuleSet();
       } else {
         console.error("response is not an array");
       }
     })
-    this.loadExistingRuleSet();
+    // this.loadExistingRuleSet();
   }
-  loadExistingRuleSet() {
-    if (this.selectedRuleSet) {
-      this.query = this.selectedRuleSet;
-      this.queryCtrl.setValue(this.query);
-    }
-  }
+  // loadExistingRuleSet() {
+  //   if (this.selectedRuleSet) {
+  //     this.query = this.selectedRuleSet;
+  //     this.queryCtrl.setValue(this.query);
+  //   }
+  // }
 
   onClick() {
 

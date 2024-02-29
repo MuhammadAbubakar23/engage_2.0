@@ -7,7 +7,7 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 
 @Component({
   selector: 'app-messages',
-  
+
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.scss']
 })
@@ -17,68 +17,59 @@ export class MessagesComponent implements OnInit {
   selectedSortOption: string = 'All';
   searchText: string = '';
   applySearchFilter() {
-    // Convert the search text to lowercase for case-insensitive search
-    const searchTextLower = this.searchText.toLowerCase();
-    
-    // Filter the messages based on the search text
-    this.messages = this.messages.filter((message) => {
-      const templateNameLower = (message.templateName || '').toLowerCase();
-      const subjectLower = (message.subject || '').toLowerCase();
-      
-      return templateNameLower.includes(searchTextLower) || subjectLower.includes(searchTextLower);
-    });
-    this.sortMessages();
+    if (this.searchText.trim() !== '') {
+      this.refreshMessages();
+    } else {
+
+      this.searchText = '';
+      this.refreshMessages();
+    }
 
   }
-  
+
+
   refreshMessages() {
-    this.commonService.GetAllMessages('Message').subscribe(
+    const formData = {
+      search: this.searchText,
+      sorting: this.selectedSortOption,
+      pageNumber: 0,
+      pageSize: 0,
+      templateType: "Message"
+    }
+    this.commonService.GetAllMessages(formData).subscribe(
       (response: any) => {
-        this.messages = response;
-        this.sortMessages();
+        this.messages = response.Templates;
       },
       (error: any) => {
         console.error(error);
       }
     );
   }
+
+
+  setSortOption(option: string) {
     
-  
-  sortMessages() {
-    switch (this.selectedSortOption) {
-      case 'Ascending':
-        this.messages.sort((a, b) => a.templateName.localeCompare(b.templateName));
-        break;
-      case 'Descending':
-        this.messages.sort((a, b) => b.templateName.localeCompare(a.templateName));
-        break;
-      default:
-        // For 'All', no sorting is required
-        break;
-    }
+    this.selectedSortOption = option;
+    this.refreshMessages(); 
   }
-  constructor(private headerService: HeaderService ,private commonService: CommonDataService , private router: Router ) { }
+  
+  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
 
   ngOnInit(): void {
-   this.commonService.GetAllMessages('Message')
-  .subscribe((response: any) => {
-    this.messages = response; 
-    // console.log(this.messages); 
-  }, (error: any) => {
-    console.error(error);
-  });
+
+    this.refreshMessages()
 
   }
-  updatevalue(string:any){
+  updatevalue(string: any) {
     this.headerService.updateMessage(string);
   }
   editTemplate(template: any) {
-   
-      this.router.navigate(['/console/templates/messages/create'], {
-        state: { template }
-      });
+
+    this.router.navigate(['/console/templates/messages/create'], {
+      state: { template }
+    });
   }
-  
+
 
 
   deleteTemplate(template: any) {
@@ -116,4 +107,4 @@ export class MessagesComponent implements OnInit {
     this.messages.push(clonedTemplate);
     // console.log('Cloned template:', clonedTemplate);
   }
-  }
+}

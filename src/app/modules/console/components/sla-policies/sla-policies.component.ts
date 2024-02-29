@@ -8,31 +8,35 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 @Component({
   selector: 'app-sla-policies',
   standalone: true,
-  imports: [CommonModule, RouterModule , FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './sla-policies.component.html',
   styleUrls: ['./sla-policies.component.scss']
 })
 export class SlaPoliciesComponent implements OnInit {
   messages: any[] = [];
   searchText: string = '';
-  selectedSortOption: any;
+  selectedSortOption: string = '';
+
   applySearchFilter() {
-    // Convert the search text to lowercase for case-insensitive search
-    const searchTextLower = this.searchText.toLowerCase();
-
-    // Filter the messages based on the search text
-    this.messages = this.messages.filter((message) => {
-      const templateNameLower = (message.policyName || '').toLowerCase();
-
-      return templateNameLower.includes(searchTextLower)
-    });
+    if(this.searchText.trim() !== ''){
+      this.refreshMessages()
+    }
+    else{
+      this.searchText = '';
+      this.refreshMessages()
+    }
   }
 
   refreshMessages() {
-    const data ={}
-    this.commonService.GetSlaPolicy(data).subscribe(
+    const formData = {
+      search: this.searchText,
+      sorting: this.selectedSortOption,
+      pageNumber: 0,
+      pageSize: 0
+    }
+    this.commonService.GetSlaPolicy(formData).subscribe(
       (response: any) => {
-        this.messages = response;
+        this.messages = response.SLAPolices;
       },
       (error: any) => {
         console.error(error);
@@ -42,32 +46,15 @@ export class SlaPoliciesComponent implements OnInit {
   constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
 
   ngOnInit(): void {
-    const data ={}
-    this.commonService.GetSlaPolicy(data)
-    .subscribe((response: any) => {
-      this.messages = response; // Assign the response to the messages array
-      console.log(this.messages); // Verify that the data is populated correctly
-    }, (error: any) => {
-      console.error(error);
-    });
+   this.refreshMessages()
   }
-  setStatus(status: string) {
-    this.selectedSortOption = status;
-    this.sortPolicies();
+  setSortOption(option: string) {
+
+    this.selectedSortOption = option;
+    this.refreshMessages();
   }
 
-  sortPolicies() {
-    switch (this.selectedSortOption) {
-      case 'Ascending':
-        this.messages.sort((a, b) => a.policyName.localeCompare(b.policyName));
-        break;
-      case 'Descending':
-        this.messages.sort((a, b) => b.policyName.localeCompare(a.policyName));
-        break;
-      default:
-        break;
-    }
-  }
+
 
   updatevalue(string: any) {
     this.headerService.updateMessage(string);
@@ -78,9 +65,9 @@ export class SlaPoliciesComponent implements OnInit {
   //     state: { message }
   //   });
   // }
-editTemplate(message: any) {
-  this.router.navigate(['/console/sla-policy/create', message.id]);
-}
+  editTemplate(message: any) {
+    this.router.navigate(['/console/sla-policy/create', message.id]);
+  }
 
 
   deleteTemplate(message: any) {

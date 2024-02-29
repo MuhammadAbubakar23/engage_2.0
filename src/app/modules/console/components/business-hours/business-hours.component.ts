@@ -19,51 +19,40 @@ export class BusinessHoursComponent implements OnInit {
   messages: any;
   searchText: string = '';
   applySearchFilter() {
-    const searchTextLower = this.searchText.toLowerCase();
-    this.messages = this.messages.filter((message: { templateName: any; }) => {
-      const templateNameLower = (message.templateName || '').toLowerCase();
-      return templateNameLower.includes(searchTextLower) || templateNameLower.includes(searchTextLower)
-    });
+    if(this.searchText.trim() !== ''){
+      this.refreshMessages()
+    }
+    else{
+      this.searchText = '';
+      this.refreshMessages()
+    }
   }
   refreshMessages() {
-    const data ={}
-    this.commonService.GetBusinessHours(data).subscribe(
+    const formData = {
+      search: this.searchText,
+      sorting: this.selectedSortOption,
+      pageNumber: 0,
+      pageSize: 0
+    }
+    this.commonService.GetBusinessHours(formData).subscribe(
       (response: any) => {
-        this.messages = response;
+        this.messages = response.BusinessHours;
       },
       (error: any) => {
         console.error(error);
       }
     );
   }
-  sortPolicies() {
-    switch (this.selectedSortOption) {
-      case 'Ascending':
-        this.messages.sort((a: { templateName: string; }, b: { templateName: any; }) => a.templateName.localeCompare(b.templateName));
-        break;
-      case 'Descending':
-        this.messages.sort((a: { templateName: any; }, b: { templateName: string; }) => b.templateName.localeCompare(a.templateName));
-        break;
-      default:
-        break;
-    }
-  }
-  setStatus(status: string): void {
-    this.selectedSortOption = status;
-    this.sortPolicies();
+  setSortOption(option: string) {
+
+    this.selectedSortOption = option;
+    this.refreshMessages();
   }
 
   constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
 
   ngOnInit(): void {
-    const data ={}
-    this.commonService.GetBusinessHours(data)
-      .subscribe((response: any) => {
-        this.messages = response;
-        console.log(this.messages);
-      }, (error: any) => {
-        console.error(error);
-      });
+   this.refreshMessages()
   }
 
   updatevalue(string: any) {
