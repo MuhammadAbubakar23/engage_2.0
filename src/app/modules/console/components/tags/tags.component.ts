@@ -36,7 +36,7 @@ export class TagsComponent implements OnInit {
   searchText: string = '';
   selectedTextColor = ' #FF0000';
   applySearchFilter(): void {
-    debugger
+
     if (this.searchText.length >= 2) {
       this.getTags()
     }
@@ -97,7 +97,7 @@ export class TagsComponent implements OnInit {
     )
   }
   sortTags(item: any): void {
-    debugger
+
     this.sortby = item.target.text.toLowerCase()
     this.getTags()
   }

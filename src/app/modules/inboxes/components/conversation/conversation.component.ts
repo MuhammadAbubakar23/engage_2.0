@@ -400,15 +400,24 @@ export class ConversationComponent implements OnInit {
       // localStorage.setItem('datefillter',JSON.stringify(this.filterDto))
     this.commondata.GetConversationList(this.filterDto).subscribe(
       (res: any) => {
+        if(Object.keys(res).length === 0){
+          this.groupByDateList=[];
+          this.to=0
+          this.TotalUnresponded=0
+          this.from=0
+          this.SpinnerService.hide()
+        }
+       
         // for followTotalCounts
-        
+      
         res.List.forEach((x:any)=>{
+      
           if(x.follow_Up_Status!==null){
             this.sendCount.sendtotalCount(res.TotalCount)
           }
         })
       
-      localStorage.setItem("tatalCount",res.TotalCount)
+     
         if (Object.keys(res).length > 0) {
           this.searchForm.reset();
           this.SpinnerService.hide();

@@ -518,7 +518,7 @@
                           </li>
                         </ng-container>
                       </ul>
-
+                 
                       <!-- <ul>
                           <li *ngFor="let item of subTags; index as j">
                             <span
@@ -569,8 +569,28 @@
                     </div>
                   </div>
                 </form>
+                <div class="d-flex">
+                  <div class="form-check">
+                    <input class="form-check-input"  [(ngModel)]="isresponderchecked"  type="checkbox" id="gridCheck">
+                    <label class="form-check-label coal" for="gridCheck">
+                      Responder
+                    </label>
+                    
+                 </div>
+                 &nbsp;
+                 &nbsp;
+                 <div class="form-check">
+                  <input class="form-check-input"[(ngModel)]="isInboxChecked" type="checkbox" id="gridCheck">
+                  <label class="form-check-label coal" for="gridCheck">
+                Inbox
+                  </label>
+                  
+               </div>
+                </div>
+               
               </div>
             </div>
+        
             <footer class="footer">
               <div class="ps-3 pe-3">
                 <div

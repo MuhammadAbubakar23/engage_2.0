@@ -28,7 +28,7 @@ export const environment = {
   EmailBaseUrl: 'https://mail.360scrm.com/api/',
   SmsBaseUrl: 'https://text.360scrm.com/api/',
   // WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
-  WhatsappBaseUrl:'https://waservice.enteract.live/api/',
+  WhatsappBaseUrl: 'https://waservice.enteract.live/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
   LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
   KelisteningBaseUrl: 'https://listen.enteract.live/backend/api/',
@@ -77,34 +77,31 @@ export const environment = {
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
-  // // CommonBaseUrl: 'https://comrox.enteract.app/api/',
-
   // SignalRCommonBaseUrl: 'https://bzcommon.enteract.live/',
   // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-  // ProfileBaseUrl: '',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
 
-  // // // For Testing
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
-  // // IdentityBaseUrl:'https://rep.enteract.app/api/',
-  // // TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
-  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  // ServiceBaseUrl: '',
-  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
-  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
-
-
-
-// for statging / Internal :companyId 650
-  IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
-  CommonBaseUrl: 'https://comrox.enteract.app/api/',
+  // // For Testing
+  IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
+  // IdentityBaseUrl:'https://rep.enteract.app/api/',
+  // TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
+  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
   ServiceBaseUrl: '',
-  SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
-  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  consoleBaseUrl: 'https://conrox.enteract.app/api/',
+  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/', 
+  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
+
+
+  // for statging / Internal :companyId 650
+  // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
+  // CommonBaseUrl: 'https://comrox.enteract.app/api/',
+  // ServiceBaseUrl: '',
+  // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  // consoleBaseUrl: 'https://conrox.enteract.app/api/',
 
 
 
@@ -136,8 +133,10 @@ export const environment = {
       permissions: 'Roles/Permissions',
       RoleProperties: 'Permissions/Properties',
       AddRole: 'Permissions/Roles',
-      UserRoles: 'Roles/GetActors',
-      UserTeams: 'Teams/TeamsByUser',
+      //UserRoles: 'Roles/GetActors',
+      UserRoles: 'Roles/GetAll',
+      //UserTeams: 'Teams/TeamsByUser',
+      UserTeams:'Teams/GetAllTeams',
       AddUser: 'Identity/Add',
       UpdateUser: 'Identity/Update',
       DeleteUser: 'Identity/Delete',
@@ -181,7 +180,7 @@ export const environment = {
       addSkill: 'Skill/Add',
       deleteSkill: 'Skill/Delete',
 
-      // getTags: 'Tags/GetAll',
+       getTagsAll: 'Tags/GetAll',
       getTagsByCompanyId: 'Tags/GetTagsByCompayId',
       updateSkill: 'Skill/Update',
       getSkillsbyId: 'Skill/GetById',
@@ -208,7 +207,7 @@ export const environment = {
       addTeam: 'Teams/Add',
       updateTeam: 'Teams/Update',
       deleteTeam: 'Teams/Delete',
-      deleteMultipleTeams: 'Teams/DeleteMultiple'
+      deleteMultipleTeams: 'Teams/DeleteMultiple',
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',

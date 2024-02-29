@@ -137,6 +137,7 @@ export class CreateSkillsComponent implements OnInit {
     businesshours: new FormControl('', [Validators.required]),
     wingSlug: new FormControl('', [Validators.required]),
     SlaPolicy: new FormControl('', [Validators.required]),
+
   })
 
   ngOnInit() {
@@ -254,7 +255,7 @@ export class CreateSkillsComponent implements OnInit {
 
   checkedIds: number[] = [];
   checkParent(parentIndex: number): void {
-    debugger
+
     const parent = this.TagsLists[parentIndex];
     parent.isChecked = !parent.isChecked;
 
@@ -301,7 +302,7 @@ export class CreateSkillsComponent implements OnInit {
     });
   }
   getCheckedIds(): number[] {
-    debugger
+
     const checkedIds: number[] = [];
 
     this.TagsLists.forEach(parent => {
@@ -320,7 +321,8 @@ export class CreateSkillsComponent implements OnInit {
 
     return checkedIds;
   }
-
+isresponderchecked:boolean=false
+isInboxChecked:boolean=false
   onSubmit() {
     if (this.userForm.valid) {
       let data = {
@@ -331,7 +333,9 @@ export class CreateSkillsComponent implements OnInit {
         "wingSlug": this.userForm.value.wingSlug,
         "slaPolicyId": Number(this.userForm.value.SlaPolicy),
         "skillTags": this.getCheckedIds(),
-        "skillRules": this.subRules.filter(rule => rule.isSelected).map(rule => rule.id)
+        "skillRules": this.subRules.filter(rule => rule.isSelected).map(rule => rule.id),
+        "responder": this.isresponderchecked,
+        "inbox":this.isInboxChecked
       }
       if (this.id && this.id !== null) {
         this.commondata.UpdateSkill(this.id, data).subscribe((res: any) => {
