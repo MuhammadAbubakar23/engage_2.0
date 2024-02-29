@@ -110,20 +110,14 @@
                             <td>{{team?.slaPolicyName}}</td>
                             <td>
                                 <div class="align-items-lg-center d-flex darkblue">
-                                    <!-- Display the name of the first skill tag -->
                                     {{ team?.skillTags[0]?.name }}
-                            
-                                    <!-- Show the count of remaining skill tags -->
                                     <div class="d-inline-block dropdown w-auto ps-1">
                                         <button class="d-inline-block dropdown w-auto btn ps-0" type="button"
                                             id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <!-- Display the count -->
                                             +{{ team?.skillTags?.length - 1 }}
                                         </button>
-                                        <!-- Dropdown menu to show all skill tags -->
                                         <ul class="dropdown-menu w-auto" aria-labelledby="dropdownMenu2"
                                             [ngClass]="{'scrollable': team?.skillTags?.length > 10}">
-                                            <!-- Loop through skill tags starting from the second one -->
                                             <li *ngFor="let tag of team?.skillTags.slice(1)">
                                                 <a class="dropdown-item">{{ tag.name }}</a>
                                             </li>
