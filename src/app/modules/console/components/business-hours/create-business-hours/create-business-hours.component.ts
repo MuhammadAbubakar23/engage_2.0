@@ -70,7 +70,7 @@ export class CreateBusinessHoursComponent implements OnInit {
     });
   }
   patchFormValues(template: any): void {
-    debugger
+    
     this.commonService.GetBusinessById(template).subscribe(
       (res: any) => {
         console.log('Received template from service:', template);
@@ -155,7 +155,7 @@ export class CreateBusinessHoursComponent implements OnInit {
     this.businessWorkingDays.removeAt(index);
   }
   onSubmit(): void {
-    debugger
+    
     if (this.messageForm.valid) {
       // const template = history.state.template;
 

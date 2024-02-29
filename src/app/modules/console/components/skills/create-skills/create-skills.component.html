@@ -1,327 +1,635 @@
-<div class="create-team console-body-wrapper inbox-container footerheight" data-scrollbar="true" tabindex="-1"
-    style="overflow-y:auto; outline: none;">
-    <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
-        <div class="p-4">
-            <header class="tab-header">
-                <nav>
-                    <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
-                        <button class="nav-link active" id="user-tab" data-bs-toggle="tab" data-bs-target="#team-detail"
-                            type="button" role="tab" aria-controls="team-detail" aria-selected="true">
-                            <h6>Skill Information
-                            </h6>
+<div
+  class="create-team console-body-wrapper inbox-container footerheight"
+  data-scrollbar="true"
+  tabindex="-1"
+  style="overflow-y: auto; outline: none"
+>
+  <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px)">
+    <div class="p-4">
+      <header class="tab-header">
+        <nav>
+          <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+            <button
+              class="nav-link active"
+              id="user-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#team-detail"
+              type="button"
+              role="tab"
+              aria-controls="team-detail"
+              aria-selected="true"
+            >
+              <h6>Skill Information</h6>
+            </button>
+          </div>
+        </nav>
+      </header>
+      <div class="tab-body">
+        <div class="tab-content" id="nav-tabContent">
+          <div
+            id="team-detail"
+            class="tab-pane fade active show"
+            role="tabpanel"
+            aria-labelledby="user-tab"
+          >
+            <div class="wider-container">
+              <div class="team-detail-form-box mb-5">
+                <form
+                  class="team-detail-form"
+                  [formGroup]="userForm"
+                  (ngSubmit)="onSubmit()"
+                >
+                  <div class="floating-item mb-4">
+                    <div
+                      class="floating-wrap form-floating mb-2"
+                      [ngClass]="{
+                        'was-validated':
+                          userForm.get('teamname')!.valid &&
+                          userForm.get('teamname')!.touched
+                      }"
+                    >
+                      <input
+                        [ngClass]="{
+                          'is-invalid':
+                            userForm.get('teamname')!.errors &&
+                            (userForm.get('teamname')!.touched ||
+                              userForm.get('teamname')!.dirty)
+                        }"
+                        formControlName="teamname"
+                        name=" teamname"
+                        type="text"
+                        class="form-control"
+                        id="teamname"
+                        placeholder="Sales Team"
+                      />
+                      <label for="teamname">Skill Name</label>
+                      <div
+                        class="invalid-feedback"
+                        *ngIf="
+                          userForm.get('teamname')!.errors &&
+                          (userForm.get('teamname')!.touched ||
+                            userForm.get('teamname')!.dirty)
+                        "
+                      >
+                        <div
+                          *ngIf="userForm.get('teamname')!.errors?.['maxlength'] || userForm.get('teamname')!.errors?.['minlength']"
+                        >
+                          Team name must be grater than 1 character and less
+                          than 25 characters!
+                        </div>
+                        <div
+                          *ngIf="userForm.get('teamname')!.errors?.['required']"
+                        >
+                          Skill Name is required!
+                        </div>
+                      </div>
+                      <div
+                        class="valid-feedback"
+                        *ngIf="
+                          userForm.get('teamname')!.valid &&
+                          userForm.get('teamname')!.touched
+                        "
+                      >
+                        Looks Good!
+                      </div>
+                    </div>
+                    <small class="example-text ms-3"
+                      >e.g. Customer support Skill</small
+                    >
+                  </div>
+                  <div class="floating-item mb-4">
+                    <div
+                      [ngClass]="{
+                        'was-validated':
+                          userForm.get('description')!.valid &&
+                          userForm.get('description')!.touched
+                      }"
+                      class="floating-wrap form-floating mb-2"
+                    >
+                      <textarea
+                        [ngClass]="{
+                          'is-invalid':
+                            userForm.get('description')!.errors &&
+                            (userForm.get('description')!.touched ||
+                              userForm.get('description')!.dirty)
+                        }"
+                        formControlName="description"
+                        class="form-control"
+                        placeholder="Leave a comment here"
+                        id="floatingTextarea2"
+                        style="height: 100px"
+                      ></textarea>
+                      <label for="floatingTextarea2">Description</label>
+                      <div
+                        class="invalid-feedback"
+                        *ngIf="
+                          userForm.get('description')!.errors &&
+                          (userForm.get('description')!.touched ||
+                            userForm.get('description')!.dirty)
+                        "
+                      >
+                        <div
+                          *ngIf="userForm.get('description')!.errors?.['required']"
+                        >
+                          Description is required!
+                        </div>
+                      </div>
+                      <div
+                        class="valid-feedback"
+                        *ngIf="
+                          userForm.get('description')!.valid &&
+                          userForm.get('description')!.touched
+                        "
+                      >
+                        Looks Good!
+                      </div>
+                    </div>
+                  </div>
+                  <div class="floating-item mb-4">
+                    <div
+                      [ngClass]="{
+                        'was-validated':
+                          userForm.get('businesshours')!.valid &&
+                          userForm.get('businesshours')!.touched
+                      }"
+                      class="floating-wrap form-floating mb-2"
+                    >
+                      <select
+                        [ngClass]="{
+                          'is-invalid':
+                            userForm.get('businesshours')!.errors &&
+                            (userForm.get('businesshours')!.touched ||
+                              userForm.get('businesshours')!.dirty)
+                        }"
+                        formControlName="businesshours"
+                        class="form-select"
+                        id="floatingSelect"
+                        aria-label="Floating label select"
+                      >
+                        <option selected disabled>Busniess Hours</option>
+                        <option
+                          *ngFor="let business of isBusnisshours"
+                          [value]="business.id"
+                        >
+                          {{ business.templateName }}
+                        </option>
+                      </select>
+                      <label for="floatingSelect">Business hours</label>
+                      <div
+                        class="invalid-feedback"
+                        *ngIf="
+                          userForm.get('businesshours')!.errors &&
+                          (userForm.get('businesshours')!.touched ||
+                            userForm.get('businesshours')!.dirty)
+                        "
+                      >
+                        <div
+                          *ngIf="userForm.get('businesshours')!.errors?.['required']"
+                        >
+                          Please select Business Hours
+                        </div>
+                        <!-- <div *ngIf="userForm.get('businesshours')!.errors?.['required']">
+                                        businesshours is required!
+                                          </div> -->
+                      </div>
+                      <div
+                        class="valid-feedback"
+                        *ngIf="
+                          userForm.get('businesshours')!.valid &&
+                          userForm.get('businesshours')!.touched
+                        "
+                      >
+                        Looks Good!
+                      </div>
+                    </div>
+                  </div>
+                  <div class="floating-item mb-4">
+                    <div
+                      [ngClass]="{
+                        'was-validated':
+                          userForm.get('wingSlug')!.valid &&
+                          userForm.get('wingSlug')!.touched
+                      }"
+                      class="floating-wrap form-floating mb-2"
+                    >
+                      <select
+                        [ngClass]="{
+                          'is-invalid':
+                            userForm.get('wingSlug')!.errors &&
+                            (userForm.get('wingSlug')!.touched ||
+                              userForm.get('wingSlug')!.dirty)
+                        }"
+                        formControlName="wingSlug"
+                        class="form-select"
+                        id="floatingSelect"
+                        aria-label="Floating label select"
+                      >
+                        <option selected disabled>Wing</option>
+                        <option
+                          *ngFor="let wing of isSelectedWing"
+                          [value]="wing.name"
+                        >
+                          {{ wing.name }}
+                        </option>
+                      </select>
+                      <label for="floatingSelect">Wing</label>
+                      <div
+                        class="invalid-feedback"
+                        *ngIf="
+                          userForm.get('businesshours')!.errors &&
+                          (userForm.get('businesshours')!.touched ||
+                            userForm.get('businesshours')!.dirty)
+                        "
+                      >
+                        <div
+                          *ngIf="userForm.get('businesshours')!.errors?.['required']"
+                        >
+                          Please select Wing
+                        </div>
+                        <!-- <div *ngIf="userForm.get('businesshours')!.errors?.['required']">
+                                        businesshours is required!
+                                          </div> -->
+                      </div>
+                      <div
+                        class="valid-feedback"
+                        *ngIf="
+                          userForm.get('businesshours')!.valid &&
+                          userForm.get('businesshours')!.touched
+                        "
+                      >
+                        Looks Good!
+                      </div>
+                    </div>
+                  </div>
+                  <div class="escalation-setting-box mb-5">
+                    <h6 class="mb-4 darkblue">Support Channels</h6>
+
+                    <div class="floating-item mb-4">
+                      <div
+                        class="floating-wrap form-floating mb-2"
+                        [ngClass]="{
+                          'was-validated':
+                            userForm.get('SlaPolicy')!.valid &&
+                            userForm.get('SlaPolicy')!.touched
+                        }"
+                      >
+                        <select
+                          [ngClass]="{
+                            'is-invalid':
+                              userForm.get('SlaPolicy')!.errors &&
+                              (userForm.get('SlaPolicy')!.touched ||
+                                userForm.get('SlaPolicy')!.dirty)
+                          }"
+                          formControlName="SlaPolicy"
+                          class="form-select"
+                          id="SlaPolicy"
+                          aria-label="Floating label select"
+                        >
+                          <option selected disabled>Sla Policies</option>
+                          <option
+                            *ngFor="let sla of isSlaPolicies"
+                            [value]="sla.id"
+                          >
+                            {{ sla.policyName }}
+                          </option>
+                        </select>
+                        <label for="floatingSelect">SLa Policies</label>
+                        <div
+                          class="invalid-feedback"
+                          *ngIf="
+                            userForm.get('SlaPolicy')!.errors &&
+                            (userForm.get('SlaPolicy')!.touched ||
+                              userForm.get('SlaPolicy')!.dirty)
+                          "
+                        >
+                          <div
+                            *ngIf="userForm.get('SlaPolicy')!.errors?.['required']"
+                          >
+                            Please select Sla Policies
+                          </div>
+                        </div>
+                        <div
+                          class="valid-feedback"
+                          *ngIf="
+                            userForm.get('SlaPolicy')!.valid &&
+                            userForm.get('SlaPolicy')!.touched
+                          "
+                        >
+                          Looks Good!
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="escalation-setting-box mb-5">
+                      <div
+                        class="list-group-item d-flex justify-content-between align-items-sm-center shadow-sm rounded border p-3 saltBg"
+                      >
+                        <button
+                          class="btn dropdown-toggle"
+                          id="dropdownMenuButton1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="true"
+                        >
+                          <div class="fw-bold darkblue">Skill Rules</div>
                         </button>
-                    </div>
-                </nav>
-            </header>
-            <div class="tab-body">
-                <div class="tab-content" id="nav-tabContent">
+                        <ul class="dropdown-menu" aria-labelledby="columnssort">
+                          <div
+                            class="dd-scroll"
+                            data-scrollbar="true"
+                            tabindex="-1"
+                            style="overflow: auto; height: 400px"
+                          >
+                            <div class="scroll-content">
+                              <li *ngFor="let tag of subRules">
+                                <a
+                                  class="dropdown-item d-flex align-items-center"
+                                >
+                                  <div class="form-check">
+                                    <input
+                                      class="form-check-input"
+                                      type="checkbox"
 
-                    <div id="team-detail" class="tab-pane fade active show" role="tabpanel" aria-labelledby="user-tab">
-                        <div class="wider-container">
-                            <div class="team-detail-form-box mb-5">
-                                <form class="team-detail-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
-
-                                    <div class="floating-item mb-4">
-                                        <div class="floating-wrap form-floating mb-2"
-                                            [ngClass]="{'was-validated' : userForm.get('teamname')!.valid && userForm.get('teamname')!.touched}">
-                                            <input [ngClass]="{'is-invalid' : (userForm.get('teamname')!.errors && (userForm.get('teamname')!.touched ||
-                                            userForm.get('teamname')!.dirty))}" formControlName="teamname"
-                                                name=" teamname" type="text" class="form-control" id="teamname"
-                                                placeholder="Sales Team">
-                                            <label for="teamname">Skill Name</label>
-                                            <div class="invalid-feedback" *ngIf="(userForm.get('teamname')!.errors && (userForm.get('teamname')!.touched ||
-                                                                            userForm.get('teamname')!.dirty))">
-                                                <div
-                                                    *ngIf="userForm.get('teamname')!.errors?.['maxlength'] || userForm.get('teamname')!.errors?.['minlength']">
-                                                    Team name must be grater than 1 character and less than 25
-                                                    characters!
-                                                </div>
-                                                <div *ngIf="userForm.get('teamname')!.errors?.['required']">
-                                                    Skill Name is required!
-                                                </div>
-                                            </div>
-                                            <div class="valid-feedback"
-                                                *ngIf="userForm.get('teamname')!.valid && userForm.get('teamname')!.touched">
-
-                                                Looks Good!
-                                            </div>
-                                        </div>
-                                        <small class="example-text ms-3">e.g. Customer support Skill</small>
-
-                                    </div>
-                                    <div class="floating-item mb-4">
-                                        <div [ngClass]="{'was-validated' : userForm.get('description')!.valid && userForm.get('description')!.touched}"
-                                            class="floating-wrap form-floating mb-2">
-                                            <textarea [ngClass]="{'is-invalid' : (userForm.get('description')!.errors && (userForm.get('description')!.touched ||
-                                            userForm.get('description')!.dirty))}" formControlName="description"
-                                                class="form-control" placeholder="Leave a comment here"
-                                                id="floatingTextarea2" style="height: 100px"></textarea>
-                                            <label for="floatingTextarea2">Description</label>
-                                            <div class="invalid-feedback" *ngIf="(userForm.get('description')!.errors && (userForm.get('description')!.touched ||
-                                                                              userForm.get('description')!.dirty))">
-
-                                                <div *ngIf="userForm.get('description')!.errors?.['required']">
-                                                    Description is required!
-                                                </div>
-                                            </div>
-                                            <div class="valid-feedback"
-                                                *ngIf="userForm.get('description')!.valid && userForm.get('description')!.touched">
-
-                                                Looks Good!
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="floating-item mb-4">
-                                        <div [ngClass]="{'was-validated' : userForm.get('businesshours')!.valid && userForm.get('businesshours')!.touched}"
-                                            class="floating-wrap form-floating mb-2">
-                                            <select [ngClass]="{'is-invalid' : (userForm.get('businesshours')!.errors && (userForm.get('businesshours')!.touched ||
-                                            userForm.get('businesshours')!.dirty))}" formControlName="businesshours"
-                                                class="form-select" id="floatingSelect"
-                                                aria-label="Floating label select">
-                                                <option selected disabled>Busniess Hours</option>
-                                                <option *ngFor="let business of isBusnisshours" [value]="business.id">
-                                                    {{business.templateName}}</option>
-                                            </select>
-                                            <label for="floatingSelect">Business hours</label>
-                                            <div class="invalid-feedback" *ngIf="(userForm.get('businesshours')!.errors && (userForm.get('businesshours')!.touched ||
-                                              userForm.get('businesshours')!.dirty))">
-                                                <div *ngIf="userForm.get('businesshours')!.errors?.['required']">
-                                                    Please select Business Hours
-                                                </div>
-                                                <!-- <div *ngIf="userForm.get('businesshours')!.errors?.['required']">
-                                        businesshours is required!
-                                          </div> -->
-
-                                            </div>
-                                            <div class="valid-feedback"
-                                                *ngIf="userForm.get('businesshours')!.valid && userForm.get('businesshours')!.touched">
-
-                                                Looks Good!
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="floating-item mb-4">
-                                        <div [ngClass]="{'was-validated' : userForm.get('businesshours')!.valid && userForm.get('businesshours')!.touched}"
-                                            class="floating-wrap form-floating mb-2">
-                                            <select [ngClass]="{'is-invalid' : (userForm.get('businesshours')!.errors && (userForm.get('businesshours')!.touched ||
-                                            userForm.get('businesshours')!.dirty))}" formControlName="businesshours"
-                                                class="form-select" id="floatingSelect"
-                                                aria-label="Floating label select">
-                                                <option selected disabled>Wing</option>
-                                                <option *ngFor="let wing of isSelectedWing" [value]="wing.id">
-                                                    {{wing.name}}</option>
-                                            </select>
-                                            <label for="floatingSelect">Wing</label>
-                                            <div class="invalid-feedback" *ngIf="(userForm.get('businesshours')!.errors && (userForm.get('businesshours')!.touched ||
-                                              userForm.get('businesshours')!.dirty))">
-                                                <div *ngIf="userForm.get('businesshours')!.errors?.['required']">
-                                                    Please select Wing 
-                                                </div>
-                                                <!-- <div *ngIf="userForm.get('businesshours')!.errors?.['required']">
-                                        businesshours is required!
-                                          </div> -->
-
-                                            </div>
-                                            <div class="valid-feedback"
-                                                *ngIf="userForm.get('businesshours')!.valid && userForm.get('businesshours')!.touched">
-
-                                                Looks Good!
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="escalation-setting-box mb-5">
-                                        <h6 class="mb-4 darkblue">Support Channels
-                                        </h6>
-
-
-                                        <div class="floating-item mb-4">
-                                            <div class="floating-wrap form-floating mb-2"
-                                                [ngClass]="{'was-validated' : userForm.get('SlaPolicy')!.valid && userForm.get('SlaPolicy')!.touched}">
-                                                <select [ngClass]="{'is-invalid' : (userForm.get('SlaPolicy')!.errors && (userForm.get('SlaPolicy')!.touched ||
-                                                    userForm.get('SlaPolicy')!.dirty))}" formControlName="SlaPolicy"
-                                                    class="form-select" id="SlaPolicy"
-                                                    aria-label="Floating label select">
-                                                    <option selected disabled>Sla Policies</option>
-                                                    <option *ngFor="let sla of isSlaPolicies" [value]="sla.id">
-                                                        {{sla.policyName}}</option>
-                                                </select>
-                                                <label for="floatingSelect">SLa Policies</label>
-                                                <div class="invalid-feedback" *ngIf="(userForm.get('SlaPolicy')!.errors && (userForm.get('SlaPolicy')!.touched ||
-                                                 userForm.get('SlaPolicy')!.dirty))">
-                                                    <div *ngIf="userForm.get('SlaPolicy')!.errors?.['required']">
-                                                        Please select Sla Policies
-                                                    </div>
-
-                                                </div>
-                                                <div class="valid-feedback"
-                                                    *ngIf="userForm.get('SlaPolicy')!.valid && userForm.get('SlaPolicy')!.touched">
-
-                                                    Looks Good!
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="escalation-setting-box mb-5">
-                                            <div
-                                                class="list-group-item d-flex justify-content-between align-items-sm-center shadow-sm rounded border p-3 saltBg">
-                                                <button class="btn dropdown-toggle " id="dropdownMenuButton1"
-                                                    data-bs-toggle="dropdown" aria-expanded="true">
-                                                    <div class="fw-bold darkblue">Skill Rules</div>
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="columnssort">
-                                                    <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
-                                                        style="overflow: auto; height: 400px;">
-                                                        <div class="scroll-content">
-                                                            <li *ngFor="let tag of subRules">
-                                                                <a class="dropdown-item d-flex align-items-center">
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input" type="checkbox"
-                                                                            formControlName="skillRules" [id]="tag.slug"
-                                                                            [(ngModel)]="tag.isSelected"
-                                                                            (change)="updateSelectedRules()">
-                                                                        <label class="form-check-label"
-                                                                            [for]="tag.slug">
-                                                                            {{ tag.name }}
-                                                                        </label>
-                                                                    </div>
-                                                                </a>
-                                                            </li>
-                                                        </div>
-                                                    </div>
-                                                </ul>
-
-                                            </div>
-                                            <div
-                                                class="list-group-item d-flex justify-content-between align-items-sm-center shadow-sm rounded border p-3 saltBg">
-                                                <div *ngFor="let rule of selectedRules" class="selected-rule">
-                                                    {{ rule }}
-                                                    <span style="cursor: pointer;" (click)="removeSelectedRule(rule)"
-                                                        class="remove-icon">&#10006;</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <ul class="list-group">
-                                            <li
-                                                class="list-group-item d-flex justify-content-between align-items-sm-center shadow-sm rounded border p-3 saltBg">
-                                                <div class="ms-2 me-auto darkblue">
-                                                    <div class="fw-bold darkblue">Tags</div>
-                                                </div>
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input collapsed" type="checkbox"
-                                                        id="flexSwitchCheckDefault" data-bs-toggle="collapse"
-                                                        data-bs-target="#togglecard2" aria-expanded="false"
-                                                        aria-controls="togglecard2">
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        <div class="collapse" id="togglecard2">
-                                            <ul>
-                                                <ng-container *ngFor="let tag of TagsLists; let i = index">
-                                                    <li style="display: block;">
-                                                        <span>
-                                                            <i class="fa" [ngClass]="{
-                                                              'fa-angle-down': !showDropdownState[tag.name],
-                                                              'fa-angle-up': showDropdownState[tag.name]
-                                                            }"></i>
-                                                        </span>
-                                                        &nbsp;
-                                                        <input class="form-check-input me-1" type="checkbox"
-                                                            aria-label="..." data-bs-toggle="tooltip"
-                                                            formControlName="skillTags" data-bs-placement="bottom"
-                                                            data-bs-original-title="Check All" [checked]="isChecked"
-                                                            (click)="toggleSelectionTags(tag.parentId)"
-                                                            (change)="selectedParent(tag)" />
-                                                        <span (click)="toggleDropdown(tag.name)"
-                                                            style="cursor: pointer;">
-                                                            {{ tag.name }}
-                                                        </span>
-
-                                                        <div *ngIf="showDropdownState[tag.name]">
-                                                            <div style="margin-left: 50px;">
-                                                                <ng-container *ngFor="let key of tag.subTags ">
-                                                    <li style="display: block;">
-                                                        <span>
-                                                            <i class="fa" [ngClass]="{
-                                                                      'fa-angle-down': showDropdownState[tag.name],
-                                                                      'fa-angle-up': !showDropdownState[tag.name]
-                                                                    }"></i>
-                                                        </span>
-                                                        &nbsp;
-                                                        <input class="form-check-input me-1" type="checkbox"
-                                                            aria-label="..." data-bs-toggle="tooltip"
-                                                            data-bs-placement="bottom"
-                                                            data-bs-original-title="Check All" [checked]="isChecked"
-                                                            [checked]="isSelectedTag(key.baseId)"
-                                                            (change)="selectedfastChild(key)" />
-                                                        <span (click)="toggleDropdown(key.name)"
-                                                            (click)="getSubChildTagbtId(key.id)"
-                                                            style="cursor: pointer;">
-                                                            {{ key.name }}
-                                                        </span>
-
-                                                        <div *ngIf="showDropdownState[key.name]">
-                                                            <div style="margin-left: 50px;">
-                                                                <ng-container *ngFor="let subkey of subChildTags">
-                                                    <li style="display: block;">
-                                                        <span>
-                                                            <i class="fa" [ngClass]="{
-                                                                              'fa-angle-down': !showDropdownState[tag.name],
-                                                                              'fa-angle-up': showDropdownState[tag.name]
-                                                                            }"></i>
-                                                        </span>
-                                                        &nbsp;
-                                                        <input class="form-check-input me-1" type="checkbox"
-                                                            aria-label="..." data-bs-toggle="tooltip"
-                                                            data-bs-placement="bottom"
-                                                            data-bs-original-title="Check All"
-                                                            [checked]="isSelectedTag(subkey.id)"
-                                                            (change)="selectedfastChild(key)" />
-                                                        <span style="cursor: pointer;">
-                                                            {{ subkey.name }}
-                                                        </span>
-                                                    </li>
-                                                </ng-container>
-                                        </div>
-                                    </div>
-                                    </li>
-                                    </ng-container>
+                                      [id]="tag.slug"
+                                      [checked]="tag.isSelected"
+                                      (change)="updateSelectedRules(tag.id)"
+                                    />
+                                    <label
+                                      class="form-check-label"
+                                      [for]="tag.slug"
+                                    >
+                                      {{ tag.name }}
+                                    </label>
+                                  </div>
+                                </a>
+                              </li>
                             </div>
-                        </div>
-                        </li>
-                        </ng-container>
+                          </div>
                         </ul>
-                    </div>
-                </div>
-
-
-                </form>
-            </div>
-        </div>
-        <footer class="footer">
-            <div class="ps-3 pe-3">
-                <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
-                    <div class="row w-100">
-                        <div class="col-md-4">
-
-
+                      </div>
+                      <div
+                        class="list-group-item d-flex justify-content-between align-items-sm-center shadow-sm rounded border p-3 saltBg"
+                      >
+                        <div
+                          *ngFor="let rule of selectedRules"
+                          class="selected-rule"
+                        >
+                          {{ rule }}
+                          <span
+                            style="cursor: pointer"
+                            (click)="removeSelectedRule(rule)"
+                            class="remove-icon"
+                            >&#10006;</span
+                          >
                         </div>
-                        <div class="col-md-8 justify-content-end d-flex">
-                            <div class="buttons-wrap d-flex">
-                                <a type="button" class="btn btn-outline-secondary btn-medium me-2 px-4"
-                                    (click)="routerLink()" data-bs-toggle="modal" data-bs-target="">Cancel </a>
-                                <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"></button>
-                                <button type="button" (click)="onSubmit()"
-                                    class="btn skyBg ms-2 px-4 btn-medium saveBtn" data-bs-toggle="modal"
-                                    data-bs-target="">Save</button>
+                      </div>
+                    </div>
+                    <ul class="list-group">
+                      <li
+                        class="list-group-item d-flex justify-content-between align-items-sm-center shadow-sm rounded border p-3 saltBg"
+                      >
+                        <div class="ms-2 me-auto darkblue">
+                          <div class="fw-bold darkblue">Tags</div>
+                        </div>
+                        <div class="form-check form-switch">
+                          <input
+                            class="form-check-input collapsed"
+                            type="checkbox"
+                            id="flexSwitchCheckDefault"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#togglecard2"
+                            aria-expanded="false"
+                            aria-controls="togglecard2"
+                          />
+                        </div>
+                      </li>
+                    </ul>
+                    <div class="collapse" id="togglecard2">
+                      <ul>
+                        <ng-container
+                          *ngFor="let tag of TagsLists; let i = index"
+                        >
+                          <li style="display: block">
+                            <span (click)="toggleDropdown(tag.name)">
+                              <i
+                                class="fa"
+                                [ngClass]="{
+                                  'fa-angle-down': !showDropdownState[tag.name],
+                                  'fa-angle-up': showDropdownState[tag.name]
+                                }"
+                              ></i>
+                            </span>
+                            &nbsp;
+                            <input
+                              class="form-check-input me-1"
+                              type="checkbox"
+                              aria-label="..."
+                              data-bs-toggle="tooltip"
+
+                              data-bs-placement="bottom"
+                              data-bs-original-title="Check All"
+                              [checked]="tag.isChecked"
+                              (change)="checkParent(i)"
+                            />
+                            <span
+                              (click)="toggleDropdown(tag.name)"
+                              style="cursor: pointer"
+                            >
+                              {{ tag.name }}
+                            </span>
+
+                            <div *ngIf="showDropdownState[tag.name]">
+                              <div style="margin-left: 50px">
+                                <ng-container *ngFor="let key of tag.subTags">
+                                  <li style="display: block">
+                                    <span (click)="toggleDropdown(key.name)">
+                                      <i
+                                        class="fa"
+                                        [ngClass]="{
+                                          'fa-angle-down':
+                                            showDropdownState[tag.name],
+                                          'fa-angle-up':
+                                            !showDropdownState[tag.name]
+                                        }"
+                                      ></i>
+                                    </span>
+                                    &nbsp;
+                                    <input
+                                      class="form-check-input me-1"
+                                      type="checkbox"
+                                      aria-label="..."
+                                      data-bs-toggle="tooltip"
+                                      data-bs-placement="bottom"
+                                      data-bs-original-title="Check All"
+                                      [checked]="key.isChecked"
+                                      (change)="checkChild(i, key)"
+                                    />
+                                    <span
+                                      (click)="toggleDropdown(key.name)"
+                                      style="cursor: pointer"
+                                    >
+                                      {{ key.name }}
+                                    </span>
+
+                                    <div *ngIf="showDropdownState[key.name]">
+                                      <div style="margin-left: 50px">
+                                        <ng-container
+                                          *ngFor="let subkey of key.subTags"
+                                        >
+                                          <li style="display: block">
+                                            <span
+                                              (click)="
+                                                toggleDropdown(subkey.name)
+                                              "
+                                            >
+                                              <i
+                                                class="fa"
+                                                [ngClass]="{
+                                                  'fa-angle-down':
+                                                    !showDropdownState[
+                                                      key.name
+                                                    ],
+                                                  'fa-angle-up':
+                                                    showDropdownState[key.name]
+                                                }"
+                                              ></i>
+                                            </span>
+                                            &nbsp;
+                                            <input
+                                              class="form-check-input me-1"
+                                              type="checkbox"
+                                              aria-label="..."
+                                              data-bs-toggle="tooltip"
+                                              data-bs-placement="bottom"
+                                              data-bs-original-title="Check All"
+                                              [checked]="subkey.isChecked"
+
+                                            />
+                                            <span style="cursor: pointer">
+                                              {{ subkey.name }}
+                                            </span>
+                                          </li>
+                                        </ng-container>
+                                      </div>
+                                    </div>
+                                  </li>
+                                </ng-container>
+                              </div>
                             </div>
-                        </div>
+                          </li>
+                        </ng-container>
+                      </ul>
+                 
+                      <!-- <ul>
+                          <li *ngFor="let item of subTags; index as j">
+                            <span
+                              class="cursor-pointer caret"
+                              [ngClass]="
+                                item.expand
+                                  ? 'fas fa-caret-down'
+                                  : 'fas fa-caret-right'
+                              "
+                              (click)="item.expand = !item.expand"
+                            ></span>
+                            <span
+                              class="mx-1"
+                              [ngClass]="
+                                item.isChecked
+                                  ? 'fas fa-check-square'
+                                  : checkMinusSquare(item)
+                                  ? 'fas fa-minus-square'
+                                  : 'far fa-square'
+                              "
+                              (click)="checkParent(j)"
+                            >
+                            </span>
+                            <span
+                              class="cursor-pointer"
+                              (click)="item.expand = !item.expand"
+                              >{{ item.name }}</span
+                            >
+                            <ul [class.d-none]="!item.expand">
+                              <li *ngFor="let child of item.childs; index as k">
+                                <span
+                                  class="mr-1"
+                                  [ngClass]="
+                                    child.isChecked
+                                      ? 'fas fa-check-square'
+                                      : 'far fa-square'
+                                  "
+                                  (click)="checkChild(j, k)"
+                                >
+                                </span>
+                                <span class="cursor-pointer">{{
+                                  child.name
+                                }}</span>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>-->
                     </div>
+                  </div>
+                </form>
+                <div class="d-flex">
+                  <div class="form-check">
+                    <input class="form-check-input"  [(ngModel)]="isresponderchecked"  type="checkbox" id="gridCheck">
+                    <label class="form-check-label coal" for="gridCheck">
+                      Responder
+                    </label>
+                    
+                 </div>
+                 &nbsp;
+                 &nbsp;
+                 <div class="form-check">
+                  <input class="form-check-input"[(ngModel)]="isInboxChecked" type="checkbox" id="gridCheck">
+                  <label class="form-check-label coal" for="gridCheck">
+                Inbox
+                  </label>
+                  
+               </div>
                 </div>
+               
+              </div>
             </div>
-        </footer>
-
+        
+            <footer class="footer">
+              <div class="ps-3 pe-3">
+                <div
+                  class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4"
+                >
+                  <div class="row w-100">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-8 justify-content-end d-flex">
+                      <div class="buttons-wrap d-flex">
+                        <a
+                          type="button"
+                          class="btn btn-outline-secondary btn-medium me-2 px-4"
+                          (click)="routerLink()"
+                          data-bs-toggle="modal"
+                          data-bs-target=""
+                          >Cancel
+                        </a>
+                        <button
+                          type="button"
+                          class="btn btn-success ms-e f-saveBtn btn-large d-none"
+                        ></button>
+                        <button
+                          type="button"
+                          (click)="onSubmit()"
+                          class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                          data-bs-toggle="modal"
+                          data-bs-target=""
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </footer>
+          </div>
+        </div>
+      </div>
     </div>
-
-
+  </div>
 </div>

@@ -16,23 +16,31 @@ export class QuickResponseComponent implements OnInit {
   messages: any;
   searchText: string = '';
   applySearchFilter() {
-    // Convert the search text to lowercase for case-insensitive search
-    const searchTextLower = this.searchText.toLowerCase();
-  
-    // Filter the messages based on the search text
-    this.messages = this.messages.filter((message: { text: any; }) => {
-      const templateNameLower = (message.text || '').toLowerCase();
-      return templateNameLower.includes(searchTextLower);
-    });
-  
-    // Apply sorting after filtering
-    this.sortMessages();
+    if (this.searchText.trim() !== '') {
+      this.refreshMessages();
+    } else {
+
+      this.searchText = '';
+      this.refreshMessages();
+    }
+
+  }
+  setSortOption(option: string) {
+    
+    this.selectedSortOption = option;
+    this.refreshMessages(); 
   }
   
   refreshMessages() {
-    this.commonService.GetQuickReply().subscribe(
+    const formData ={
+      search: this.searchText,
+      sorting: this.selectedSortOption,
+      pageNumber: 0,
+      pageSize: 0,
+    }
+    this.commonService.GetQuickReply(formData).subscribe(
       (response: any) => {
-        this.messages = response;
+        this.messages = response.QuickReply;
         // Apply sorting after refreshing messages
         this.sortMessages();
       },
@@ -58,13 +66,7 @@ export class QuickResponseComponent implements OnInit {
   constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
 
   ngOnInit(): void {
-    this.commonService.GetQuickReply()
-      .subscribe((response: any) => {
-        this.messages = response; // Assign the response to the messages array
-        console.log(this.messages); // Verify that the data is populated correctly
-      }, (error: any) => {
-        console.error(error);
-      });
+   this.refreshMessages()
   }
 
   updatevalue(string: any) {

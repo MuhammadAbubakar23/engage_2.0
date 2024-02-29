@@ -77,12 +77,10 @@ export const environment = {
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
-  // // CommonBaseUrl: 'https://comrox.enteract.app/api/',
-
   // SignalRCommonBaseUrl: 'https://bzcommon.enteract.live/',
   // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-  // ProfileBaseUrl: '',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
 
   // // For Testing

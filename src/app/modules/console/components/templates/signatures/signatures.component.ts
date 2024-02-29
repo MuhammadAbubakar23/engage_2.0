@@ -11,52 +11,45 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 export class SignaturesComponent implements OnInit {
   signatures: any[] = [];
 
-  selectedSortOption: string = 'All';
+  selectedSortOption: string = '';
   searchText: string = '';
   applySearchFilter() {
-    const searchTextLower = this.searchText.toLowerCase();
-    this.signatures = this.signatures.filter((signature) => {
-      const templateNameLower = (signature.templateName || '').toLowerCase();
-      const subjectLower = (signature.subject || '').toLowerCase();
-      return templateNameLower.includes(searchTextLower) || subjectLower.includes(searchTextLower);
-    });
-    this.sortSignatures();
+    if (this.searchText.trim() !== '') {
+      this.refreshMessages();
+    } else {
+
+      this.searchText = '';
+      this.refreshMessages();
+    }
+
   }
   refreshMessages() {
-    this.commonService.GetAllMessages('Signature').subscribe(
+    const formData = {
+      search: this.searchText,
+      sorting: this.selectedSortOption,
+      pageNumber: 0,
+      pageSize: 0,
+      templateType: "Signature"
+    }
+    this.commonService.GetAllMessages(formData).subscribe(
       (response: any) => {
-        this.signatures = response;
-        this.sortSignatures();
+        this.signatures = response.Templates;
       },
       (error: any) => {
         console.error(error);
       }
     );
   }
-  
-  sortSignatures() {
-    switch (this.selectedSortOption) {
-      case 'Ascending':
-        this.signatures.sort((a, b) => a.templateName.localeCompare(b.templateName));
-        break;
-      case 'Descending':
-        this.signatures.sort((a, b) => b.templateName.localeCompare(a.templateName));
-        break;
-      default:
-        break;
-    }
+  setSortOption(option: string) {
+    
+    this.selectedSortOption = option;
+    this.refreshMessages(); 
   }
   
   constructor(private headerService: HeaderService ,private commonService: CommonDataService , private router: Router ) { }
 
   ngOnInit(): void {
-   this.commonService.GetAllMessages('Signature')
-  .subscribe((response: any) => {
-    this.signatures = response; // Assign the response to the signatures array
-    // console.log(this.signatures); // Verify that the data is populated correctly
-  }, (error: any) => {
-    console.error(error);
-  });
+   this.refreshMessages()
 
   }
   updatevalue(string:any){

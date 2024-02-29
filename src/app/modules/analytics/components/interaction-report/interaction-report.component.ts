@@ -26,6 +26,8 @@ export class InteractionReportComponent implements OnInit {
   avgResponseTimeSum: any = 0;
   avgMinCaterTime: any = 0;
   avgMaxCaterTime: any = 0;
+  totalAgentsCount: any;
+
 
   constructor(
     private _hS: HeaderService,
@@ -56,8 +58,8 @@ export class InteractionReportComponent implements OnInit {
   finalAverageMaximum: any = 0;
   LastfinalAverageMaximum: any = 0;
   finalAverageFirstResponse: any = 0;
-  startDate: any=""
-  endDate: any=""
+  startDate: any = ""
+  endDate: any = ""
   bsValue: any;
   maxEndDate: any;
   currentDate: any;
@@ -75,10 +77,19 @@ export class InteractionReportComponent implements OnInit {
   totalLoginsAgent: any[] = []
   channelCountsArray: any[] = []
   socialMediaData: any[] = [];
+  previousSocialMediaData: any[] = []
   inProgressCount: number = 0;
   assignToMeCount: number = 0;
   followUpCount: number = 0;
   completedCount: number = 0;
+  averageResponseData: number = 0
+  previousInprogressCount: number = 0
+  previousAssigntoMeCount: number = 0
+  previousFollowUpCount: number = 0
+  previousCompletedCount: number = 0
+  averageResponseRateSum: number = 0
+  PreviousTotalInteractionCount : number=0
+  preAveragePercentage :number=0
   totalInteractionCount: any = 0
   CSATGraph: any
   platformIconMapping: any = {
@@ -146,13 +157,10 @@ export class InteractionReportComponent implements OnInit {
     this.commonData.GetAgentsTeamList().subscribe((res: any) => {
       console.log("agents data ====>", res)
       this.totalLoginsAgent = res
-      this.totalLoginsAgent.forEach((x: any) => {
-        this.userData += x.userId
-      })
-
+      this.totalAgentsCount = res.length
     });
   }
-  selectedChannel:any
+  selectedChannel: any
   toggleChannelSelection(channel: string) {
     if (this.selectedChannel === channel) {
       this.selectedChannel = null;
@@ -169,7 +177,7 @@ export class InteractionReportComponent implements OnInit {
 
       let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 6);
       this.startDate = this.datePipe.transform(prevDate, "YYYY-MM-dd") || '';
- 
+
     }
     // const startDateObj = new Date(this.startDate);
     // const endDateObj = new Date(this.endDate);
@@ -192,10 +200,20 @@ export class InteractionReportComponent implements OnInit {
     this.interactionStats = null;
     this.data = [];
     this.socialMediaData = [];
+    this.previousSocialMediaData = []
     this.inProgressCount = 0;
     this.assignToMeCount = 0;
     this.followUpCount = 0;
     this.completedCount = 0;
+    this.previousInprogressCount = 0
+    this.previousAssigntoMeCount = 0
+    this.previousFollowUpCount = 0
+    this.previousCompletedCount = 0
+    this.totalInteractionCount = 0
+    this.averageResponseData = 0
+    this.preAveragePercentage =0
+    this.PreviousTotalInteractionCount =0
+    this.averageResponseRateSum = 0
     this.totalInteractionCount = 0;
     this.sentimentDataPoints = [];
     this.csatArray = [];
@@ -218,7 +236,20 @@ export class InteractionReportComponent implements OnInit {
         this.completedCount += x.completed
       });
       this.totalInteractionCount = this.inProgressCount + this.assignToMeCount + this.followUpCount + this.completedCount
+      // avg response rate count 
+      this.averageResponseRateSum = this.inProgressCount + this.assignToMeCount + this.followUpCount
+      this.averageResponseData = Math.abs(((this.averageResponseRateSum) / this.completedCount) * 100)
 
+      this.previousSocialMediaData = res.previousPlateFormWiseInteraction
+      this.previousSocialMediaData.forEach((y: any) => {
+        this.previousInprogressCount += y.unRespondedCount
+        this.previousAssigntoMeCount += y.assignTomeCount
+        this.previousFollowUpCount += y.followUpCount
+        this.previousCompletedCount += y.completed
+      })
+      this.PreviousTotalInteractionCount = this.previousInprogressCount + this.previousAssigntoMeCount + this.previousFollowUpCount
+
+      this.preAveragePercentage = ((this.averageResponseRateSum - this.PreviousTotalInteractionCount)/this.PreviousTotalInteractionCount)*100
       // current time sum 
       this.finalAverage = this.calculateAverageTime(this.interactionStats.agentPerformance, 'averageTime')
       this.finalAverageMinimum = this.calculateAverageTime(this.interactionStats.agentPerformance, 'minimumTime');
@@ -229,36 +260,36 @@ export class InteractionReportComponent implements OnInit {
       this.LastfinalAverageMaximum = this.calculateAverageTime(this.interactionStats.previousAgentPerformance, 'maximumTime')
 
       // averageTime average for increase and decrease 
-      
+
       let finalAverageInSeconds = this.convertTimeToSeconds(this.finalAverage);
       let LastfinalAverageInSeconds = this.convertTimeToSeconds(this.LastfinalAverage);
-      if(finalAverageInSeconds>=LastfinalAverageInSeconds){
-        this.avgResponseTimeSum =Math.abs (((LastfinalAverageInSeconds-finalAverageInSeconds) / finalAverageInSeconds) * 100);
+      if (finalAverageInSeconds >= LastfinalAverageInSeconds) {
+        this.avgResponseTimeSum = Math.abs(((LastfinalAverageInSeconds - finalAverageInSeconds) / finalAverageInSeconds) * 100);
       }
-      if(finalAverageInSeconds<=LastfinalAverageInSeconds){
-        this.avgResponseTimeSum =Math.abs (((finalAverageInSeconds-LastfinalAverageInSeconds) / LastfinalAverageInSeconds) * 100);
+      if (finalAverageInSeconds <= LastfinalAverageInSeconds) {
+        this.avgResponseTimeSum = Math.abs(((finalAverageInSeconds - LastfinalAverageInSeconds) / LastfinalAverageInSeconds) * 100);
       }
-   
+
       // min cater time average percentage 
       let finalMinCater = this.convertTimeToSeconds(this.finalAverageMinimum);
       let LastfinalMinCater = this.convertTimeToSeconds(this.LastfinalAverage);
-      if(finalMinCater >= LastfinalMinCater){
-        this.avgMinCaterTime = Math.abs((( LastfinalMinCater -finalMinCater) / finalMinCater) * 100);
+      if (finalMinCater >= LastfinalMinCater) {
+        this.avgMinCaterTime = Math.abs(((LastfinalMinCater - finalMinCater) / finalMinCater) * 100);
 
       }
-      if(finalMinCater <= LastfinalMinCater){
-        this.avgMinCaterTime = Math.abs(((  finalMinCater - LastfinalMinCater) / LastfinalMinCater) * 100);
+      if (finalMinCater <= LastfinalMinCater) {
+        this.avgMinCaterTime = Math.abs(((finalMinCater - LastfinalMinCater) / LastfinalMinCater) * 100);
 
       }
 
       let finalMaxCater = this.convertTimeToSeconds(this.finalAverageMaximum);
       let LastfinalMaxCater = this.convertTimeToSeconds(this.LastfinalAverageMaximum);
-      if(finalMaxCater >= LastfinalMaxCater){
-        this.avgMaxCaterTime = Math.abs((( LastfinalMaxCater -finalMaxCater) / finalMaxCater) * 100);
+      if (finalMaxCater >= LastfinalMaxCater) {
+        this.avgMaxCaterTime = Math.abs(((LastfinalMaxCater - finalMaxCater) / finalMaxCater) * 100);
 
       }
-      if(finalMaxCater <= LastfinalMaxCater){
-        this.avgMaxCaterTime = Math.abs ( ((  finalMaxCater - LastfinalMaxCater) / LastfinalMaxCater) * 100);
+      if (finalMaxCater <= LastfinalMaxCater) {
+        this.avgMaxCaterTime = Math.abs(((finalMaxCater - LastfinalMaxCater) / LastfinalMaxCater) * 100);
 
       }
 
@@ -319,8 +350,18 @@ export class InteractionReportComponent implements OnInit {
     this.endDate = ''
 
   }
-  resetEndDate(){
-    
+  agentCount: number = 0;
+
+  getTableStyle() {
+    const threshold = 10;
+    const maxHeight = threshold * 50 + 40;
+    const style = {
+      'max-height': this.agentCount > threshold ? `${maxHeight}px` : 'auto',
+    };
+    return style;
+  }
+  resetEndDate() {
+
     if (this.endDate >= this.startDate) {
       this.GetStatsInteractionReport();
     } else {
@@ -441,7 +482,7 @@ export class InteractionReportComponent implements OnInit {
 
     option && this.CSATGraph.setOption(option);
   }
- 
+
   channelOptions = [
 
     // { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
@@ -469,21 +510,21 @@ export class InteractionReportComponent implements OnInit {
       image: { type: 'jpeg', quality: 1.0 },
       html2canvas: { scale: 3 },
       jsPDF: { unit: 'in', format: 'Tabloid', orientation: 'landscape', },
-      
+
     };
 
     html2pdf().set(options).from(element).save();
     this.isDownloading = false
 
   }
-  interactionchart:any
+  interactionchart: any
   makeChartResponsive() {
     window.addEventListener('resize', () => {
       if (this.interactionchart) {
         this.interactionchart.resize();
       }
-     
-      if(this.CSATGraph){
+
+      if (this.CSATGraph) {
         this.CSATGraph.resize()
       }
     })
