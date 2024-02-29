@@ -86,6 +86,7 @@ export class CreateUserComponent implements OnInit {
     if (this.identity > 0) {//.pipe(takeUntil(this.unsubscribe))
       this._request.getBy<userDto>("GetUserById", this.identity.toString()).subscribe(
         (next: userDto) => {//...next:T[]
+        
           this.setform(next);
         },
         (error: any) => console.log(error)
@@ -118,15 +119,15 @@ export class CreateUserComponent implements OnInit {
     // this.Roles = vr.roles;
   }
   async setform(formVal: any): Promise<void> {
-    console.log(formVal);
+debugger
     this.userForm = this.formbuilder.group({
       id: [formVal.id],
       firstname: [formVal.firstName, Validators.required],
       lastname: [formVal.lastName, Validators.required],
       phone: [formVal.phone, Validators.required],
       email: [formVal.email, Validators.required],
-      password: [formVal.password, [Validators.required, Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)]],
-      confirmpassword: [formVal.confirmPassword, [Validators.required, Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)]],
+      password: [formVal.password, [Validators.required,Validators.minLength(8)]],
+      confirmpassword: [formVal.confirmPassword, [Validators.required,Validators.minLength(8)]],
       roleId: ['', Validators.required],
       teamId: ['',],
       skillId: [0, Validators.required],
@@ -153,7 +154,7 @@ export class CreateUserComponent implements OnInit {
     }
     if (formVal.teamId.length >= 1) {
       formVal.teamId.forEach((element: any) => {
-        let mitem = this.Teams.filter((item: any) => item?.name == element);
+        let mitem = this.Teams.filter((item: any) => item?.id == element);
         teamForm.push(mitem[0]);
       });
       this.TeamsControl.setValue(teamForm);
@@ -161,7 +162,7 @@ export class CreateUserComponent implements OnInit {
 
     if (formVal.skillId.length >= 1) {
       formVal.skillId.forEach((element: any) => {
-        let mitem = this.Skills.filter((item: any) => item?.name == element);
+        let mitem = this.Skills.filter((item: any) => item?.skillID == element);
         skillForm.push(mitem[0]);
       });
       this.SkillsControl.setValue(skillForm);

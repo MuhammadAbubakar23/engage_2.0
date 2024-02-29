@@ -44,7 +44,9 @@ export class EmailComponent implements OnInit {
   @Input() linkname: string = 'javascript:;';
 
   Emails: any;
-
+  email = {
+    body: "Hey Roxstar, The plan you are asking about is a Booster which you can activate once your basic vibe incentives are used. For a booster, ya must have a basic vibe bundle purchased. Then, ya can subscribe to booster in which ya can get 10GB of data and 300 all network mins in 300 bucks. Visit our website www.rox.com.pk for more deets. Regards, Rox Team I"
+  };
   id = this.fetchId.getOption();
   slaId = this.fetchId.getSlaId();
   queryType = this.getQueryTypeService.getQueryType();
@@ -392,7 +394,7 @@ export class EmailComponent implements OnInit {
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.Emails = res.List;
-          this.userInformation = res.List[0].user;
+          this.userInformation = res?.List[0]?.user;
             this.userInfoService.shareUserInformation(res.List[0].user);
           this.fullName = this.Emails[0].user.userName?.split('<')[0];
           this.senderEmailAddress =
@@ -529,7 +531,7 @@ export class EmailComponent implements OnInit {
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.Emails = res.List;
-        this.userInformation = res.List[0].user;
+        this.userInformation = res?.List[0]?.user;
             this.userInfoService.shareUserInformation(res.List[0].user);
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
         this.senderEmailAddress =
@@ -667,7 +669,7 @@ export class EmailComponent implements OnInit {
           
           this.SpinnerService.hide();
           this.Emails = res.List;
-          this.userInformation = res.List[0].user;
+          this.userInformation = res?.List[0]?.user;
             this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalQueryCount = res.TotalQueryCount;

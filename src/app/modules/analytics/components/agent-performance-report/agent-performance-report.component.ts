@@ -550,7 +550,7 @@ export class AgentPerformanceReportComponent implements OnInit {
   }
   fillterdata:any[]=[]
   getAllCSATData() {
-debugger
+
     let obj = {
       "fromDate": this.startDate,
       "toDate": this.endDate,

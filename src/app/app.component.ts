@@ -61,11 +61,6 @@ export class AppComponent {
     }
 
   }
-  // ngOnDestroy(): void {
-  //   
-  //   // Clear localStorage when the component is destroyed
-  //   localStorage.clear();
-  // }
   A_Block() {
     if (localStorage.getItem('signalRConnectionId')) {
       if (this.signalRService.hubconnection == undefined) {

@@ -15,7 +15,7 @@ import { UpdateCommentsService } from '../UpdateCommentsService/update-comments.
 import { UpdateListService } from '../UpdateListService/update-list.service';
 import { UpdateMessagesService } from '../UpdateMessagesService/update-messages.service';
 import { GetNewPostService } from '../GetNewPostService/get-new-post.service';
-
+import { CompanyidService } from '../companyidService/companyid.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -28,7 +28,7 @@ export class SignalRService {
 
   token = localStorage.getItem('token');
   signalRStatus = localStorage.getItem('signalRStatus');
-  companyId:number=650;
+  companyId:number=657;
   baseUrl:string="";
 
   public hubconnection!: signalR.HubConnection;
@@ -50,6 +50,7 @@ export class SignalRService {
     private removeAssignedQueryService: RemoveAssignedQuerryService,
     private applySentimentService: ApplySentimentService,
     private getnewPostService:GetNewPostService,
+    private comanyidService:CompanyidService,
     private router: Router
   ) {
     this.baseUrl=window.location.origin
@@ -73,6 +74,7 @@ export class SignalRService {
     else if(this.baseUrl=='https://uiengagerox.enteract.app') {
       this.companyId=650
     }
+this.comanyidService.sendcompanyid(this.companyId)
   }
   flag:string='';
 

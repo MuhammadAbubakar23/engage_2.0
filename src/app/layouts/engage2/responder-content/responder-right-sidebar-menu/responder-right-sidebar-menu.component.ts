@@ -40,7 +40,7 @@ export class ResponderRightSidebarMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.KEbaseUrl=window.location.origin
-    if(this.KEbaseUrl=='https://keportal.enteract.live' || this.KEbaseUrl=='http://localhost:4200' || this.KEbaseUrl=='https://uiengage.enteract.app' ||this.KEbaseUrl=='https://uiengagerox.enteract.app'){
+    if(this.KEbaseUrl=='https://keportal.enteract.live' || this.KEbaseUrl=='http://localhost:4200' || this.KEbaseUrl=='https://uiengage.enteract.app'||this.KEbaseUrl=='https://bzengage.enteract.live' ||this.KEbaseUrl=='https://uiengagerox.enteract.app'){
       this.KEClient=true
     }
     this.menu$ = this.store

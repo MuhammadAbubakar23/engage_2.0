@@ -189,9 +189,7 @@
                                                             </div>
                                                             <p [innerHTML]="email.body"></p>
                                                            
-                                                            <!-- <img
-                                                                     src='https://officemail.360scrm.com/Attachments/1280px-Test-Logo.svg.png'
-                                                                     > -->
+                                                           
                                                             <div class="email-attachments">
                                                                 <div *ngFor="let attachment of email.attachments">
                                                                     <img class="whatsapp-single-img whatsappImgModalBtn"
@@ -757,7 +755,9 @@
                                     <div class="col-12">
                                         <textarea formControlName="text" id="text" [(ngModel)]="text"
                                             class="form-control" placeholder="Take notes for users in your account...."
-                                            id="floatingTextarea"></textarea>
+                                            id="floatingTextarea"></textarea> 
+                                         <!-- Rich text editer -->
+                                            
                                     </div>
                                 </div>
                                 <!-- <div class="row">

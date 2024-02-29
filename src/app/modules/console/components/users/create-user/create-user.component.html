@@ -207,12 +207,12 @@
                                   <mat-chip-list>
                                     <mat-chip *ngFor="let role of RolesControl.value" [removable]="true" (removed)="onCatRemovedRole(role)"
                                       style="background-color:#2F9DF2; color:#ffffff; border-radius: 5px!important;" selected>
-                                      {{ role.name }}
+                                      {{ role?.name }}
                                       <mat-icon class="mb-2" matChipRemove>x</mat-icon>
                                     </mat-chip>
                                   </mat-chip-list>
                                 </mat-select-trigger>
-                                <mat-option *ngFor="let role of Roles" [value]="role">{{ role.name }}</mat-option>
+                                <mat-option *ngFor="let role of Roles" [value]="role">{{ role?.name }}</mat-option>
                               </mat-select>
                               <div class="invalid-feedback" *ngIf="(RolesControl.errors && (RolesControl.touched || RolesControl.dirty))">
                                 <div>Please select atleast one Role</div>
@@ -230,13 +230,13 @@
                                   <mat-chip-list>
                                     <mat-chip *ngFor="let team of TeamsControl.value" [removable]="true" (removed)="onCatRemovedRole(team)"
                                       style="background-color:#2F9DF2; color:#ffffff; border-radius: 5px!important;" selected>
-                                      {{ team.name }}
+                                      {{ team?.name }}
                                       <mat-icon class="mb-2" matChipRemove>x</mat-icon>
 
                                     </mat-chip>
                                   </mat-chip-list>
                                 </mat-select-trigger>
-                                <mat-option *ngFor="let team of Teams" [value]="team">{{ team.name }}</mat-option>
+                                <mat-option *ngFor="let team of Teams" [value]="team">{{ team?.name }}</mat-option>
                               </mat-select>
                               <div class="invalid-feedback" *ngIf="(TeamsControl.errors && (TeamsControl.touched || TeamsControl.dirty))">
                                 <div>Please select atleast one Team</div>
@@ -255,7 +255,7 @@
                                   <mat-chip-list>
                                     <mat-chip *ngFor="let skill of SkillsControl.value" [removable]="true" (removed)="onCatRemovedRole(skill)"
                                       style="background-color:#2F9DF2; color:#ffffff; border-radius: 5px!important;" selected>
-                                      {{ skill.skillName }}
+                                      {{ skill?.skillName }}
                                       <mat-icon class="mb-2" matChipRemove>x</mat-icon>
 
                                     </mat-chip>

@@ -28,7 +28,7 @@ export class RequestService {
 
   }
   private createCompleteRoute = (route: string, envAddress: string, routeparams?: any) => {
-    debugger
+
     console.log("routeparams", routeparams)
     if (routeparams === undefined) {
       routeparams = "";
@@ -37,7 +37,7 @@ export class RequestService {
   };
 
   get<T>(route: string, params?: any, routeparams: string = ""): Observable<T> {
-    debugger
+
     console.log(params);
     console.log(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl));
     return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, routeparams), { params })
@@ -108,7 +108,7 @@ export class RequestService {
   }
   delete<T>(route: string, routeparams: any, params?: any): Observable<T> {
 
-    return this.http.delete<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, "?Id=" + routeparams), params)
+    return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, "?Id=" + routeparams), params)
       .pipe(
         map((res: any) => { return res }),
         tap(res => console.log(route + " Response: ", res)),
