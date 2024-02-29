@@ -84,24 +84,24 @@ export const environment = {
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
 
   // // For Testing
-  IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
-  // IdentityBaseUrl:'https://rep.enteract.app/api/',
-  // TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
-  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  ServiceBaseUrl: '',
-  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  ProfileBaseUrl: 'https://profiler.enteract.app/api/', 
-  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
+  // // IdentityBaseUrl:'https://rep.enteract.app/api/',
+  // // TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
+  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  // ServiceBaseUrl: '',
+  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  //zconsoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
 
 
   // for statging / Internal :companyId 650
-  // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
-  // CommonBaseUrl: 'https://comrox.enteract.app/api/',
-  // ServiceBaseUrl: '',
-  // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  // consoleBaseUrl: 'https://conrox.enteract.app/api/',
+  IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
+  CommonBaseUrl: 'https://comrox.enteract.app/api/',
+  ServiceBaseUrl: '',
+  SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  consoleBaseUrl: 'https://conrox.enteract.app/api/',
 
 
 
@@ -136,7 +136,7 @@ export const environment = {
       //UserRoles: 'Roles/GetActors',
       UserRoles: 'Roles/GetActor',
       //UserTeams: 'Teams/TeamsByUser',
-      UserTeams:'Teams/GetAllTeams',
+      UserTeams: 'Teams/GetAllTeams',
       AddUser: 'Identity/Add',
       UpdateUser: 'Identity/Update',
       DeleteUser: 'Identity/Delete',
@@ -180,7 +180,7 @@ export const environment = {
       addSkill: 'Skill/Add',
       deleteSkill: 'Skill/Delete',
 
-       getTagsAll: 'Tags/GetAll',
+      getTagsAll: 'Tags/GetAll',
       getTagsByCompanyId: 'Tags/GetTagsByCompayId',
       updateSkill: 'Skill/Update',
       getSkillsbyId: 'Skill/GetById',
