@@ -1,0 +1,7 @@
+<monitoring-content>
+  <div class="row">
+    <div *ngFor="let chatId of newChatIds" [ngClass]="{'col-12': newChatIds.length === 1, 'col-md-6': newChatIds.length === 2, 'col-md-4': newChatIds.length === 3}">
+      <app-bot-chat [chatId]="chatId"></app-bot-chat>
+    </div>
+  </div>
+</monitoring-content>

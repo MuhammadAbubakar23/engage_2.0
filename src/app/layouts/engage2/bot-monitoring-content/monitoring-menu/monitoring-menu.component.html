@@ -1,0 +1,665 @@
+<div class="multiple-screens">
+  <div id="all-inboxes-wrapper">
+    <div class="sidebar-header ps-4 pe-3 pt-3 pb-3">
+      <h6 class="fw-bold m-0">
+        Bot Conversation <span class="badge twltte-bg rounded-pill">569</span>
+      </h6>
+    </div>
+    <ul class="nav nav-tabs nav-pills nav-fill" id="myTab" role="tablist">
+      <li
+        class="nav-item"
+        role="presentation"
+        data-bs-toggle="tooltip"
+        data-bs-placement="bottom"
+        data-bs-title="All Conversation"
+      >
+        <button
+          class="nav-link active"
+          id="home-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#home-tab-pane"
+          type="button"
+          role="tab"
+          aria-controls="home-tab-pane"
+          aria-selected="true"
+        >
+          <i class="fa-light fa-message-lines"></i>
+        </button>
+      </li>
+      <li
+        class="nav-item"
+        role="presentation"
+        data-bs-toggle="tooltip"
+        data-bs-placement="bottom"
+        data-bs-title="Archieve "
+      >
+        <button
+          class="nav-link"
+          id="archieve"
+          data-bs-toggle="tab"
+          data-bs-target="#archieve-pane"
+          type="button"
+          role="tab"
+          aria-controls="archieve-pane"
+          aria-selected="false"
+          tabindex="-1"
+        >
+          <i class="fa-light fa-box-archive"></i>
+        </button>
+      </li>
+      <li
+        class="nav-item"
+        role="presentation"
+        data-bs-toggle="tooltip"
+        data-bs-placement="bottom"
+        data-bs-title="Completed "
+      >
+        <button
+          class="nav-link"
+          id="contact-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#contact-tab-pane"
+          type="button"
+          role="tab"
+          aria-controls="contact-tab-pane"
+          aria-selected="false"
+          tabindex="-1"
+        >
+          <i class="fa-light fa-message-check"></i>
+        </button>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div
+        class="tab-pane fade active show"
+        id="home-tab-pane"
+        role="tabpanel"
+        aria-labelledby="home-tab"
+        tabindex="0"
+      >
+        <div class="sidebar-search border-bottom p-2">
+          <div class="iconholder w-100">
+            <i class="fa-light fa-search iconleft"></i>
+            <input
+              type="search"
+              placeholder="Search Conversation"
+              class="form-control"
+              [(ngModel)]="searchText"
+              (input)="filterResults()"
+            />
+          </div>
+        </div>
+
+        <ul
+          class="list-group list-group-flush"
+          id="inboxes-list"
+          data-scrollbar="true"
+          tabindex="-1"
+          style="overflow: auto; outline: none"
+        >
+          <div
+            class="scroll-content"
+            style="transform: translate3d(0px, 0px, 0px)"
+          >
+            <!-- routerLink="/bot-monitoring/chats" -->
+            <ng-container *ngFor="let item of chatItems">
+              <a
+                (click)="toggleChatVisibility(item)"
+                id="active1"
+                class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+                [ngClass]="{'active': item.active}"
+              >
+                <div class="iconButton medium night berryTransBg fw-bold">
+                  {{ item.name | initialLetters }}
+                </div>
+                <div class="ms-2 flex-grow-1">
+                  <div class="d-flex align-items-center">
+                    <h6 class="dark m-0">{{ item.name }}</h6>
+                    <small class="coal ms-auto top-0">{{ item.time }}</small>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <span class="coal text-truncate last-chatmsg">
+                      {{ item.lastMessage }}
+                    </span>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <span class="bottype fw-medium"> {{item.category}} </span>
+                    <span class="badge twltte-bg rounded-pill ms-auto">{{
+                      item.count
+                    }}</span>
+                  </div>
+                </div>
+              </a>
+            </ng-container>
+          </div>
+          <div class="scrollbar-track scrollbar-track-x" style="display: none">
+            <div
+              class="scrollbar-thumb scrollbar-thumb-x"
+              style="width: 413px; transform: translate3d(0px, 0px, 0px)"
+            ></div>
+          </div>
+          <div class="scrollbar-track scrollbar-track-y" style="display: none">
+            <div
+              class="scrollbar-thumb scrollbar-thumb-y"
+              style="height: 20px; transform: translate3d(0px, 0px, 0px)"
+            ></div>
+          </div>
+        </ul>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="archieve-pane"
+        role="tabpanel"
+        aria-labelledby="archieve"
+        tabindex="0"
+      >
+        <div class="sidebar-search border-bottom p-2">
+          <div class="iconholder w-100">
+            <i class="fa-light fa-search iconleft"></i>
+            <input
+              type="search"
+              placeholder="Search Conversation"
+              class="form-control"
+              name=""
+            />
+          </div>
+        </div>
+
+        <ul
+          class="list-group list-group-flush"
+          id="inboxes-list"
+          data-scrollbar="true"
+          tabindex="-1"
+          style="overflow: auto; outline: none"
+        >
+          <div class="scroll-content">
+            <a
+              href="javascript:"
+              id="active1"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">AN</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Azhar Nadeem</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> Order Bot </span>
+                  <span class="badge twltte-bg rounded-pill ms-auto">4</span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              id="active2"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">FS</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Farooq Shad</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> FAQ Bot </span>
+                  <span class="badge twltte-bg rounded-pill ms-auto">2</span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              id="active3"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">AN</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Azhar Nadeem</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> Order Bot </span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">FS</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Farooq Shad</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> FAQ Bot </span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">AN</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Azhar Nadeem</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> Order Bot </span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">FS</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Farooq Shad</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> FAQ Bot </span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">AN</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Azhar Nadeem</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> Order Bot </span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">FS</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Farooq Shad</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> FAQ Bot </span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">AN</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Azhar Nadeem</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> Order Bot </span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">FS</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Farooq Shad</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> FAQ Bot </span>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="scrollbar-track scrollbar-track-x" style="display: none">
+            <div
+              class="scrollbar-thumb scrollbar-thumb-x"
+              style="width: 413px; transform: translate3d(0px, 0px, 0px)"
+            ></div>
+          </div>
+          <div class="scrollbar-track scrollbar-track-y" style="display: none">
+            <div
+              class="scrollbar-thumb scrollbar-thumb-y"
+              style="height: 396.577px; transform: translate3d(0px, 0px, 0px)"
+            ></div>
+          </div>
+        </ul>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="contact-tab-pane"
+        role="tabpanel"
+        aria-labelledby="contact-tab"
+        tabindex="0"
+      >
+        <div class="sidebar-search border-bottom p-2">
+          <div class="iconholder w-100">
+            <i class="fa-light fa-search iconleft"></i>
+            <input
+              type="search"
+              placeholder="Search Conversation"
+              class="form-control"
+              name=""
+            />
+          </div>
+        </div>
+
+        <ul
+          class="list-group list-group-flush"
+          id="inboxes-list"
+          data-scrollbar="true"
+          tabindex="-1"
+          style="overflow: auto; outline: none"
+        >
+          <div class="scroll-content">
+            <a
+              href="javascript:"
+              id="active1"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">AN</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Azhar Nadeem</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> Order Bot </span>
+                  <span class="badge twltte-bg rounded-pill ms-auto">4</span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              id="active2"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">FS</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Farooq Shad</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> FAQ Bot </span>
+                  <span class="badge twltte-bg rounded-pill ms-auto">2</span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              id="active3"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">AN</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Azhar Nadeem</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> Order Bot </span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">FS</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Farooq Shad</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> FAQ Bot </span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">AN</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Azhar Nadeem</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> Order Bot </span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">FS</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Farooq Shad</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> FAQ Bot </span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">AN</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Azhar Nadeem</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> Order Bot </span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">FS</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Farooq Shad</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> FAQ Bot </span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">AN</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Azhar Nadeem</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> Order Bot </span>
+                </div>
+              </div>
+            </a>
+            <a
+              href="javascript:"
+              class="all-inboxes-menu list-group-item list-group-item-action align-items-start"
+            >
+              <div class="iconButton medium night berryTransBg fw-bold">FS</div>
+              <div class="ms-2 flex-grow-1">
+                <div class="d-flex align-items-center">
+                  <h6 class="dark m-0">Farooq Shad</h6>
+                  <small class="coal ms-auto top-0">11:22 AM</small>
+                </div>
+                <div class="d-flex flex-column">
+                  <span class="coal text-truncate last-chatmsg">
+                    Hey, can I place an order for this jacket? whats the price
+                    for this ?
+                  </span>
+                </div>
+                <div class="d-flex align-items-center">
+                  <span class="bottype fw-medium"> FAQ Bot </span>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="scrollbar-track scrollbar-track-x" style="display: none">
+            <div
+              class="scrollbar-thumb scrollbar-thumb-x"
+              style="width: 413px; transform: translate3d(0px, 0px, 0px)"
+            ></div>
+          </div>
+          <div class="scrollbar-track scrollbar-track-y" style="display: none">
+            <div
+              class="scrollbar-thumb scrollbar-thumb-y"
+              style="height: 396.577px; transform: translate3d(0px, 0px, 0px)"
+            ></div>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -26,9 +26,7 @@ const routes: Routes = [
     redirectTo: 'analytics/whatsapp-report',
     pathMatch: 'full',
   },
-  {
-    path: 'bot-monitoring', loadChildren: () => import('./modules/bot-monitoring/bot-monitoring.module').then((f) => f.BotMonitoringModule)
-  },
+  
   // For KE
   // {
   //   path: 'analytics',
