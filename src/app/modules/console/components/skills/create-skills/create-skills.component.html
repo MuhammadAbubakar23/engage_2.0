@@ -348,10 +348,9 @@
                                     <input
                                       class="form-check-input"
                                       type="checkbox"
-
                                       [id]="tag.slug"
                                       [checked]="tag.isSelected"
-                                      (change)="updateSelectedRules()"
+                                      (change)="updateSelectedRules(tag.id)"
                                     />
                                     <label
                                       class="form-check-label"
@@ -424,7 +423,6 @@
                               type="checkbox"
                               aria-label="..."
                               data-bs-toggle="tooltip"
-
                               data-bs-placement="bottom"
                               data-bs-original-title="Check All"
                               [checked]="tag.isChecked"
@@ -502,7 +500,6 @@
                                               data-bs-placement="bottom"
                                               data-bs-original-title="Check All"
                                               [checked]="subkey.isChecked"
-
                                             />
                                             <span style="cursor: pointer">
                                               {{ subkey.name }}
@@ -571,23 +568,29 @@
                 </form>
                 <div class="d-flex">
                   <div class="form-check">
-                    <input class="form-check-input"  [(ngModel)]="isresponderchecked"  type="checkbox" id="gridCheck">
+                    <input
+                      class="form-check-input"
+                      [(ngModel)]="isresponderchecked"
+                      type="checkbox"
+                      id="gridCheck"
+                    />
                     <label class="form-check-label coal" for="gridCheck">
                       Responder
                     </label>
-
-                 </div>
-                 &nbsp;
-                 &nbsp;
-                 <div class="form-check">
-                  <input class="form-check-input"[(ngModel)]="isInboxChecked" type="checkbox" id="gridCheck">
-                  <label class="form-check-label coal" for="gridCheck">
-                Inbox
-                  </label>
-
-               </div>
+                  </div>
+                  &nbsp; &nbsp;
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      [(ngModel)]="isInboxChecked"
+                      type="checkbox"
+                      id="gridCheck"
+                    />
+                    <label class="form-check-label coal" for="gridCheck">
+                      Inbox
+                    </label>
+                  </div>
                 </div>
-
               </div>
             </div>
 
