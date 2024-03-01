@@ -88,7 +88,8 @@ export class InteractionReportComponent implements OnInit {
 
     this._hS.setHeader(newObj);
     this.currentDate = new Date();
-    this.maxEndDate = this.currentDate.toISOString().split('T')[0];
+    // this.maxEndDate = this.currentDate.toISOString().split('T')[0];
+    this.maxEndDate = this.currentDate.toISOString().split('T')[0] + "T23:59"; 
     this.GetStatsInteractionReport()
     this.makeChartResponsive()
     this.getListUser()
@@ -195,14 +196,17 @@ export class InteractionReportComponent implements OnInit {
     let selectedTagByArray = this.totalAgents.filter(item => item.isSelected).map(item => item.id);
     this.selectedTagBy = selectedTagByArray.toString();
     if (this.startDate == "" && this.endDate == "") {
-
-      const today = this.currentDate;
-      this.endDate = this.datePipe.transform(today, "YYYY-MM-dd") || '';
-
-      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 6);
-      this.startDate = this.datePipe.transform(prevDate, "YYYY-MM-dd") || '';
-
+      const today = new Date();
+      const endDateTime = new Date(today);
+      endDateTime.setHours(23, 59, 59); 
+      this.endDate = this.datePipe.transform(endDateTime, "yyyy-MM-ddTHH:mm:ss") || '';
+    
+      const prevDate = new Date(today);
+      prevDate.setDate(today.getDate() - 6);
+      prevDate.setHours(0, 0, 0); 
+      this.startDate = this.datePipe.transform(prevDate, "yyyy-MM-ddTHH:mm:ss") || '';
     }
+    
     // const startDateObj = new Date(this.startDate);
     // const endDateObj = new Date(this.endDate);
     // const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
