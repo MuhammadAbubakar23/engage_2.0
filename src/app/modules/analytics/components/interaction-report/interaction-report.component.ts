@@ -7,12 +7,13 @@ import * as echarts from 'echarts';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 // @ts-ignore
 import * as html2pdf from 'html2pdf.js';
+import { SharedModule } from "../../../../shared/shared.module";
 @Component({
-  standalone: true,
-  imports: [CommonModule, FormsModule, NgxSpinnerModule],
-  selector: 'app-interaction-report',
-  templateUrl: './interaction-report.component.html',
-  styleUrls: ['./interaction-report.component.scss']
+    standalone: true,
+    selector: 'app-interaction-report',
+    templateUrl: './interaction-report.component.html',
+    styleUrls: ['./interaction-report.component.scss'],
+    imports: [CommonModule, FormsModule, NgxSpinnerModule, SharedModule]
 })
 export class InteractionReportComponent implements OnInit {
   @ViewChild('dashboardContent') dashboardContent!: ElementRef;
@@ -27,30 +28,6 @@ export class InteractionReportComponent implements OnInit {
   avgMinCaterTime: any = 0;
   avgMaxCaterTime: any = 0;
   totalAgentsCount: any;
-
-
-  constructor(
-    private _hS: HeaderService,
-    private commonData: CommonDataService,
-    private SpinnerService: NgxSpinnerService,
-    private cdr: ChangeDetectorRef,
-    private datePipe: DatePipe,
-  ) {
-
-  }
-
-  ngOnInit(): void {
-    const newObj = { title: 'Interaction Report', url: '/analytics/interaction-report' };
-
-    this._hS.setHeader(newObj);
-    this.currentDate = new Date();
-    this.maxEndDate = this.currentDate.toISOString().split('T')[0];
-    this.GetStatsInteractionReport()
-    this.makeChartResponsive()
-    // charts 
-    // this.interactionByDate()
-    // this.pieChart()
-  }
   finalAverage: any = 0;
   LastfinalAverage: any = 0
   finalAverageMinimum: any = 0;
@@ -92,6 +69,34 @@ export class InteractionReportComponent implements OnInit {
   preAveragePercentage :number=0
   totalInteractionCount: any = 0
   CSATGraph: any
+  searchText: string = '';
+  totalAgents = [{ id: '', name: '', isSelected: false }];
+  AgentIds:any[]=[]
+  selectedTagBy: string = '';
+  constructor(
+    private _hS: HeaderService,
+    private commonData: CommonDataService,
+    private SpinnerService: NgxSpinnerService,
+    private cdr: ChangeDetectorRef,
+    private datePipe: DatePipe,
+  ) {
+
+  }
+
+  ngOnInit(): void {
+    const newObj = { title: 'Interaction Report', url: '/analytics/interaction-report' };
+
+    this._hS.setHeader(newObj);
+    this.currentDate = new Date();
+    this.maxEndDate = this.currentDate.toISOString().split('T')[0];
+    this.GetStatsInteractionReport()
+    this.makeChartResponsive()
+    this.getListUser()
+    // charts 
+    // this.interactionByDate()
+    // this.pieChart()
+  }
+
   platformIconMapping: any = {
     'Facebook': 'fa-brands fa-facebook fs-4 navy',
     'Twitter': 'fa-brands fa-twitter fs-4 sky',
@@ -169,7 +174,26 @@ export class InteractionReportComponent implements OnInit {
     }
     this.GetStatsInteractionReport()
   }
+  mouseClickReset() {
+    this.searchText = ''
+  }
+  getListUser(): void {
+    this.commonData.GetUserList()
+      .subscribe((response: any) => {
+
+        this.totalAgents = response;
+        this.totalAgents.forEach((x:any)=>{
+        
+          this.AgentIds.push(x.id)
+        })
+        console.log(this.totalAgents);
+      }, (error: any) => {
+        console.error(error);
+      });
+  }
   GetStatsInteractionReport() {
+    let selectedTagByArray = this.totalAgents.filter(item => item.isSelected).map(item => item.id);
+    this.selectedTagBy = selectedTagByArray.toString();
     if (this.startDate == "" && this.endDate == "") {
 
       const today = this.currentDate;
@@ -191,7 +215,7 @@ export class InteractionReportComponent implements OnInit {
     const formData = {
       fromDate: this.startDate,
       toDate: this.endDate,
-      agents: "",
+      agents: this.selectedTagBy,
       channels: this.selectedChannel || "",
 
     }
@@ -351,7 +375,20 @@ export class InteractionReportComponent implements OnInit {
 
   }
   agentCount: number = 0;
-
+  formatNumber(value: number): string {
+    if (value === null || value === undefined) {
+      return '';
+    }
+    if (value < 1000) {
+      return value.toString();
+    } else if (value < 1000000) {
+      return (value / 1000).toFixed(1) + ' K';
+    } else if (value < 1000000000) {
+      return (value / 1000000).toFixed(1) + ' M';
+    } else {
+      return (value / 1000000000).toFixed(1) + ' B';
+    }
+  }
   getTableStyle() {
     const threshold = 10;
     const maxHeight = threshold * 50 + 40;
@@ -374,7 +411,7 @@ export class InteractionReportComponent implements OnInit {
     let obj = {
       "fromDate": this.startDate,
       "toDate": this.endDate,
-      "agents": '',
+      "agents": this.selectedTagBy,
       "plateForm": "string"
     }
     this.csatArray = []

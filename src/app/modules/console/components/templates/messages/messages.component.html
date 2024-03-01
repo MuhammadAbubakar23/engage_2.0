@@ -31,10 +31,11 @@
               <button class="iconButton medium">
                 <i class="fal fa-search silver"></i>
               </button>
-              <input [(ngModel)]="searchText" placeholder="Search" class="me-1"
-                      (input)="applySearchFilter()"  >
+              <input [(ngModel)]="searchText" placeholder="Search" class="me-1" (input)="applySearchFilter()">
 
             </a>
+          
+            <div class="col-md-4 d-flex align-items-center justify-content-end">
             <a (click)="updatevalue('consoleCreateMessageTemplatesHeader')"
               [routerLink]="['/console/templates/messages/create']" class="ms-2">
               <button type="button" class="btn btn-success">
@@ -42,6 +43,7 @@
                 Add Templates
               </button>
             </a>
+          </div>
           </div>
         </div>
       </div>

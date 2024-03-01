@@ -16,7 +16,7 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 export class SkillsComponent implements OnInit {
   search: any = ''
   fillter: any = ""
-  selectedIds: any[] = [];
+  selectedIds: number[] = [];
   isChecked: boolean = false
   showIcon: boolean = false
   allSelected: boolean = false
@@ -38,6 +38,7 @@ export class SkillsComponent implements OnInit {
     private route: Router) { }
 
   ngOnInit(): void {
+    
     this.getSkillList()
     // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));
@@ -96,29 +97,21 @@ export class SkillsComponent implements OnInit {
   isSelected(id: number) {
     return this.selectedIds.indexOf(id) >= 0;
   }
-  toggleSelection(id: number) {
-    const index = this.selectedIds.findIndex((x) => x == id);
-    if (index >= 0) {
-      this.selectedIds.splice(index, 1)
-    } else {
-      this.selectedIds.push(id)
-    }
-    if (this.selectedIds.length >= 0) {
-      this.showIcon = true
-      this.allSelected = true
-      this.isChecked = false
-    }
-    else {
-      this.showIcon = false
-      this.selectedIds = [];
-      this.allSelected = false
-    }
-
-    if (this.selectedIds.length == this.itemperpage) {
-      this.isChecked = true
-      this.refresh()
-    }
+  toggleSelectAll() {
+    this.allSelected = !this.allSelected;
+    this.selectedIds = this.allSelected ? this.skills.map(team => team.id) : [];
   }
+  toggleSelection(id: number) {
+    const index = this.selectedIds.indexOf(id);
+    if (index === -1) {
+        this.selectedIds.push(id);
+    } else {
+        this.selectedIds.splice(index, 1);
+    }
+    // Check if all checkboxes are selected
+    this.allSelected = this.selectedIds.length === this.skills.length;
+}
+
 
   isSectedAll() {
     console.log("isSectedAll() called");

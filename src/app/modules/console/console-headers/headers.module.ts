@@ -32,7 +32,7 @@ import { ConsoleCreateMessageTemplatesHeaderComponent } from './console-create-m
 import { ConsoleSignaturesTemplateHeaderComponent } from './console-signatures-template-header/console-signatures-template-header.component';
 import { ConsoleCreateSignatureTemplatesHeaderComponent } from './console-create-signature-templates-header/console-create-signature-templates-header.component';
 import { ConsoleConnectFormHeaderComponent } from './console-connect-from-header/console-connect-form-header/console-connect-form-header.component';
-import { RightHeaderComponentsComponent } from '../../../shared/right-header-components/right-header-components.component';
+// import { RightHeaderComponentsComponent } from '../../../shared/right-header-components/right-header-components.component';
 import { ConsoleHomeHeaderComponent } from './console-home-header/console-home-header.component';
 
 

@@ -76,9 +76,10 @@
                     <thead>
                         <tr>
                             <th>
-                                <input class="form-check-input me-1" type="checkbox" aria-label="..."
-                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                    data-bs-original-title="Check All" [checked]="isChecked" (click)=" isSectedAll()">
+                                <input class="form-check-input"
+                                type="checkbox"
+                                [checked]="allSelected"
+                                (change)="toggleSelectAll()">
                             </th>
                             <th>Name</th>
                             <th>Description</th>
@@ -94,10 +95,11 @@
                     <tbody>
                         <tr *ngFor="let team of skills">
                             <td>
-                                <input class="form-check-input "
-                                [checked]="allSelected"
-                                (click)="toggleSelection(team.id)"
-                                type="checkbox" aria-label="...">
+                                <input class="form-check-input"
+                                type="checkbox"
+                                [checked]="isSelected(team.id)"
+                                (change)="toggleSelection(team.id)">
+                         
                             
                             </td>
                             <td>{{ team?.name }}</td>

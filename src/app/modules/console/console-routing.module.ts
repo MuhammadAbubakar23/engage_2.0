@@ -147,6 +147,11 @@ const routes: Routes = [
         loadComponent: () => import('./components/sla-policies/sla-policies.component').then(c => c.SlaPoliciesComponent)
 
       },
+        {
+        path: 'contact',
+        loadComponent: () => import('./components/contacts/contacts.component').then(c => c.ConsoleContactsComponent)
+
+      },
       {
         path: 'business-hours',
         loadComponent: () => import('./components/business-hours/business-hours.component').then(c => c.BusinessHoursComponent)

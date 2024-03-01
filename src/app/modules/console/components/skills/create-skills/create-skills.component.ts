@@ -80,7 +80,7 @@ export class CreateSkillsComponent implements OnInit {
   selectedRules: string[] = [];
 
   updateSelectedRules(id: number) {
-    debugger
+    
     this.subRules.forEach((item: any) => {
       if (item.id === id) {
         item.isSelected = true;
@@ -157,7 +157,7 @@ export class CreateSkillsComponent implements OnInit {
   }
 
   selectRulesBasedOnSkillTags(selectedRules: any): void {
-    debugger
+    
     console.log("Checking tags", this.subRules)
     for (const rule of selectedRules) {
       this.selectRuleById(rule.id, this.subRules);
@@ -166,7 +166,7 @@ export class CreateSkillsComponent implements OnInit {
   }
 
   selectRuleById(id: number, rules: any[]): void {
-    debugger
+    
     this.selectedRules = [];
     const ruleToCheck = rules.find(rule => rule.id === id);
     if (ruleToCheck) {
@@ -175,7 +175,7 @@ export class CreateSkillsComponent implements OnInit {
     }
   }
   checkTagsBasedOnSkillTags(skillTags: any): void {
-    debugger
+    
     console.log("Checking tags", this.TagsLists)
     for (const skillTag of skillTags) {
       this.checkTagById(skillTag.id, this.TagsLists);
@@ -183,7 +183,7 @@ export class CreateSkillsComponent implements OnInit {
   }
   checkTagById(id: number, tags: any[]): void {
     this.checkedIds = []
-    debugger
+    
     const tagToCheck = tags.find(tag => tag.mainId === id);
 
     if (tagToCheck) {
@@ -241,7 +241,7 @@ export class CreateSkillsComponent implements OnInit {
   }
 
   getTagsList() {
-    debugger
+    
     this.commondata.GetTagsByCompanyId().subscribe((res: any) => {
       console.log("Response", res)
       this.TagsLists = res
