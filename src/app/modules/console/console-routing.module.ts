@@ -26,6 +26,7 @@ import { UsersJsonResolver } from './resolvers/users/users-json.resolver';
 import { BulkUploadComponent } from './components/sentiment-analysis/bulk-upload/bulk-upload.component';
 import { CreateSentimentComponent } from './components/sentiment-analysis/create-sentiment/create-sentiment.component';
 import { SkillsResolver } from './resolvers/users/skills.resolver';
+import { ContactsComponent } from '../inboxes/right-sidebar-components/contacts/contacts.component';
 
 const routes: Routes = [
   {
@@ -228,6 +229,10 @@ const routes: Routes = [
       {
         path: 'automation/chat-bot-intent/update',
         component: UpdateIntentsComponent
+      },
+      {
+        path: 'contacts',
+        component: ContactsComponent
       },
       {
         path: 'tags',

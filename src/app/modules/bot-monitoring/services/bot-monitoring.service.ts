@@ -2,21 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-// const baseUrl = environment.baseUrl;
-const baseUrl = ""
+const baseUrl = environment.botBaseUrl;
 @Injectable({
   providedIn: 'root'
 })
 export class BotMonitoringService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getChats(): Observable<any> {
-    debugger
-    return this.http.get(baseUrl + "Leave/GetAllLeaves")
+  getChats(data: any): Observable<any> {
+    return this.http.post(baseUrl + "WhatsAppBot/GetWhatsAppBotlisting", data)
   }
-  getChatId(id: any): Observable<any> {
-    return this.http.get(baseUrl + `Leave/GetLeavebyId/${id}`)
+  getChatDetails(data: any): Observable<any> {
+    return this.http.post(baseUrl + `WhatsAppBot/GetBotConversationDetails`, data)
   }
 
 }

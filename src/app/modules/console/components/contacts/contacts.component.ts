@@ -13,9 +13,9 @@ export class ConsoleContactsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  updatevalue(string:any){
-    this.headerService.updateMessage(string);
-  }
+  // updatevalue(string:any){
+  //   this.headerService.updateMessage(string);
+  // }
 
 
 }
