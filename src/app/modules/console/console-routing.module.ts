@@ -95,7 +95,7 @@ const routes: Routes = [
         },
       },
       {
-        path:'teams/create/:id',
+        path: 'teams/create/:id',
         loadComponent: () => import('./components/teams/create-team/create-team.component').then(c => c.CreateTeamComponent),
         data: { breadcrumb: 'Teams N` Accesses > Create' },
         canMatch: [ConsoleRoutingGuard],
@@ -103,8 +103,8 @@ const routes: Routes = [
         //   teamsnpermission: TeamsPermissionsResolver,
         //   teamin: TeamResolver,
         // },
-      },{
-        path:'channels',
+      }, {
+        path: 'channels',
         loadComponent: () => import('./components/support-channels/support-channels.component').then(c => c.SupportChannelsComponent),
         canMatch: [ConsoleRoutingGuard],
         resolve: {
@@ -119,7 +119,7 @@ const routes: Routes = [
         loadComponent: () => import('./components/rules/rules.component').then(c => c.RulesComponent)
 
       },
-      
+
       {
         path: 'add-rules/:id',
         loadComponent: () => import('./components/rules/add-rules/add-rules.component').then(c => c.AddRulesComponent)
@@ -210,6 +210,11 @@ const routes: Routes = [
         component: CreateBusinessHoursComponent
       },
       {
+        path:'contacts',
+        loadComponent:()=>import('./components/contacts/contacts.component').then(c=>c.ConsoleContactsComponent)
+      },
+
+      {
         path: 'automation/sentiment-analysis/bulk-upload',
         component: BulkUploadComponent
       },
@@ -218,7 +223,7 @@ const routes: Routes = [
         component: CreateSentimentComponent
       },
       {
-        path: 'automation/chat-bot-intent',
+        path: 'ali.haider4@ibex.co',
         component: ChatBotComponent
       },
       {

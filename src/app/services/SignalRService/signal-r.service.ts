@@ -15,7 +15,7 @@ import { UpdateCommentsService } from '../UpdateCommentsService/update-comments.
 import { UpdateListService } from '../UpdateListService/update-list.service';
 import { UpdateMessagesService } from '../UpdateMessagesService/update-messages.service';
 import { GetNewPostService } from '../GetNewPostService/get-new-post.service';
-
+import { CompanyidService } from '../companyidService/companyid.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -28,7 +28,7 @@ export class SignalRService {
 
   token = localStorage.getItem('token');
   signalRStatus = localStorage.getItem('signalRStatus');
-  companyId:number=654;
+  companyId:number=653;
   baseUrl:string="";
 
   public hubconnection!: signalR.HubConnection;
@@ -49,109 +49,116 @@ export class SignalRService {
     private queryStatusService: QueryStatusService,
     private removeAssignedQueryService: RemoveAssignedQuerryService,
     private applySentimentService: ApplySentimentService,
-    private getnewPostService:GetNewPostService,
+    private getnewPostService: GetNewPostService,
+    private comanyidService: CompanyidService,
     private router: Router
-  ) { 
-    this.baseUrl=window.location.origin
-    if(this.baseUrl=='https://keportal.enteract.live'){
-      this.companyId=651;
-    } else if (this.baseUrl=='https://engage.jazz.com.pk') {
-    this.companyId=650;
+  ) {
+    this.baseUrl = window.location.origin
+    if (this.baseUrl == 'https://keportal.enteract.live') {
+      this.companyId = 651;
+    } else if (this.baseUrl == 'https://engage.jazz.com.pk') {
+      this.companyId = 650;
     }
-    else if(this.baseUrl=='https://uiengage.enteract.app') {
-      this.companyId=650
+    else if (this.baseUrl == 'https://uiengage.enteract.app') {
+      this.companyId = 657
     }
-    else if(this.baseUrl=='https://tppl.enteract.live') {
-      this.companyId=652
+    else if (this.baseUrl == 'https://tppl.enteract.live') {
+      this.companyId = 652
     }
-    else if(this.baseUrl=='https://waengage.enteract.live') {
-      this.companyId=653
+    else if (this.baseUrl == 'https://waengage.enteract.live') {
+      this.companyId = 653
     }
-    else if(this.baseUrl=='https://bzengage.enteract.live') {
-      this.companyId=654
+    else if (this.baseUrl == 'https://bzengage.enteract.live') {
+      this.companyId = 654
     }
+    else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
+      this.companyId = 650
+    }
+    this.comanyidService.sendcompanyid(this.companyId)
   }
-  flag:string='';
+  flag: string = '';
 
   startConnection() {
-    
+
     // this.flag = this.router.url.split('/')[1];
     // if(this.flag == 'all-inboxes'){
-      let team = this.storage.retrive("nocompass", "O").local;
-      const options: IHttpConnectionOptions = {
-        accessTokenFactory: () => {
-          return 'Bearer ' + localStorage.getItem('token');
-        },
-        headers: { "X-Super-Team": JSON.stringify(this.companyId) }
-      };
-  
-      this.hubconnection = new signalR.HubConnectionBuilder()
-        .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
-        .withAutomaticReconnect()
-        .configureLogging(signalR.LogLevel.Information)
-        .build();
-      this.hubconnection
-        .start()
-        .then(() => console.log('Connection started'))
-        .then(() => this.getConnectionId())
-        .catch((err) => console.log('Error while starting connection: ' + err));
+    let team = this.storage.retrive("nocompass", "O").local;
+    const options: IHttpConnectionOptions = {
+      accessTokenFactory: () => {
+        return 'Bearer ' + localStorage.getItem('token');
+      },
+      headers: { "X-Super-Team": JSON.stringify(this.companyId) }
+    };
+
+    this.hubconnection = new signalR.HubConnectionBuilder()
+      .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
+      .withAutomaticReconnect()
+      .configureLogging(signalR.LogLevel.Information)
+      .build();
+    this.hubconnection
+      .start()
+      .then(() => console.log('Connection started'))
+      .then(() => this.getConnectionId())
+      .catch((err) => console.log('Error while starting connection: ' + err));
     // }
-    
+
   };
 
   reConnect() {
-      // this.flag = this.router.url.split('/')[1];
-      // if(this.flag == 'all-inboxes'){
-      let team = this.storage.retrive("nocompass", "O").local;
-      const options: IHttpConnectionOptions = {
-        accessTokenFactory: () => {
-          return 'Bearer ' + localStorage.getItem('token');
-        },
-        headers: { "X-Super-Team": JSON.stringify(this.companyId) }
-      };
+    // this.flag = this.router.url.split('/')[1];
+    // if(this.flag == 'all-inboxes'){
+    let team = this.storage.retrive("nocompass", "O").local;
+    const options: IHttpConnectionOptions = {
+      accessTokenFactory: () => {
+        return 'Bearer ' + localStorage.getItem('token');
+      },
+      headers: { "X-Super-Team": JSON.stringify(this.companyId) }
+    };
 
-      this.hubconnection = new signalR.HubConnectionBuilder()
-        .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
-        .withAutomaticReconnect()
-        .configureLogging(signalR.LogLevel.Information)
-        .build();
-      this.hubconnection
-        .start()
-        .then(() => console.log('Connection started'))
-        .then(() => this.getConnectionId())
-        .catch((err) => console.log('Error while starting connection: ' + err));
-      // }
+    this.hubconnection = new signalR.HubConnectionBuilder()
+      .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
+      .withAutomaticReconnect()
+      .configureLogging(signalR.LogLevel.Information)
+      .build();
+    this.hubconnection
+      .start()
+      .then(() => console.log('Connection started'))
+      .then(() => this.getConnectionId())
+      .catch((err) => console.log('Error while starting connection: ' + err));
+    // }
   }
 
   public updateListAndDetailDataListener = () => {
-    
-    
+debugger
+
     this.hubconnection.on('SendData', (data) => {
-      if (data.conversationQueues != null && data.conversationQueues.length>0) { 
-         this.updateListService.sendList(data.conversationQueues)
+
+      if (data.conversationQueues != null && data.conversationQueues.length > 0) {
+        this.updateListService.sendList(data.conversationQueues)
       }
       if (data.signalRConversations != null) {
-        
-        this.updateCommentsService.sendComment(data.signalRConversations )
+
+        this.updateCommentsService.sendComment(data.signalRConversations)
       }
       if (data.signalRDMConversations != null) {
         this.updateMessagesService.sendMessage(data.signalRDMConversations)
       }
-      if(data.signalRPostConversations!=null){
-       this.updateCommentsService.sendComment(data.signalRPostConversations
+      if (data.signalRPostConversations != null) {
+        this.updateCommentsService.sendComment(data.signalRPostConversations
         )
       }
     });
   };
   // for new post
-// public updatePostList=()=>{
-//   this.hubconnection?.on('PostData',(data)=>{
-//     
-//     // this.getnewPostService.sendnewPost(data)
+  // public updatePostList=()=>{
+  //   this.hubconnection?.on('PostData',(data)=>{
+  //
+  //     // this.getnewPostService.sendnewPost(data)
 
-//   })
-// }
+  //   })
+  // }
   public addTagDataListener = () => {
+
     this.hubconnection?.on('ApplyTags', (addTags) => {
       this.addTagService.sendTags(addTags);
     });
@@ -170,7 +177,7 @@ export class SignalRService {
   };
 
   public replyDataListener = () => {
-    
+
     this.hubconnection?.on('QueryReply', (reply) => {
       this.replyService.sendReply(reply);
     });
@@ -219,7 +226,7 @@ export class SignalRService {
     });
   };
 
-    public getConnectionId = () => {
+  public getConnectionId = () => {
     this.hubconnection.invoke('GetConnectionId').then((data) => {
       this.connectionId = data;
       localStorage.setItem('signalRConnectionId', this.connectionId)

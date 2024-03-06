@@ -104,6 +104,10 @@ export class InboundOntboundReportComponent implements OnInit {
       this.isChannelShow = 'stagging'
       this.getChannel()
     }
+    else if (this.activeChannel == 'https://uiengagerox.enteract.app') {
+      this.isChannelShow = 'stagging'
+      this.getChannel()
+    }
     else if (this.activeChannel == 'https://bzengage.enteract.live') {
       this.isChannelShow = 'Bazaar',
         this.getChannel()
@@ -169,6 +173,8 @@ export class InboundOntboundReportComponent implements OnInit {
         { id: '14', name: 'Facebook', icon: 'fab fa-facebook navytext pe-2', isSelected: false },
         { id: '15', name: 'YouTube', icon: 'fa-brands fa-youtube pe-2', isSelected: false },
         { id: '17', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp pe-2', isSelected: false },
+        { id: '18', name: 'Playstore', icon: 'fa-brands fa-google-play pe-2', isSelected: false },
+        
       ];
     }
     else if (this.isChannelShow == "ttpl") {
@@ -196,6 +202,7 @@ export class InboundOntboundReportComponent implements OnInit {
         // { id: '18', name: 'Email', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
         // { id: '19', name: 'OfficeEmail', icon: 'fa-solid fa-envelope pe-2', isSelected: false },
         // { id: '20', name: 'WebChat', icon: 'fa-solid fa-comment-dots pe-2', isSelected: false }
+        { id: '18', name: 'Playstore', icon: 'fa-brands fa-google-play pe-2', isSelected: false },
       ];
     }
     else if (this.isChannelShow == 'stagging') {

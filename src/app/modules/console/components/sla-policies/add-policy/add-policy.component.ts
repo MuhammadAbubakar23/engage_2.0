@@ -99,7 +99,6 @@ export class AddPolicyComponent implements OnInit {
     }
   }
   onSubmit() {
-    
     console.log('Form Data:', this.messageForm.value);
     const slaTargets = this.messageForm.get('slaTargets') as FormArray;
     // for (let i = slaTargets.controls.length - 1; i >= 0; i--) {

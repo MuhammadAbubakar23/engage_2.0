@@ -40,7 +40,7 @@ import { ReplyDto } from 'src/app/shared/Models/ReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
-
+import { CompanyidService } from 'src/app/services/companyidService/companyid.service';
 @Component({
   selector: 'app-whatsapp-details',
   templateUrl: './whatsapp-details.component.html',
@@ -134,7 +134,8 @@ export class WhatsappDetailsComponent implements OnInit {
     private userInfoService: UserInformationService,
     private stor: StorageService,
     private el: ElementRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private companyidServices:CompanyidService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -391,6 +392,7 @@ export class WhatsappDetailsComponent implements OnInit {
 
             this.WhatsappData?.forEach((msg: any) => {
               this.senderId = msg.comments[0].sendTo;
+              localStorage.setItem('senderId',this.senderId)
             });
 
             this.commentsArray = [];
@@ -1423,11 +1425,16 @@ export class WhatsappDetailsComponent implements OnInit {
       !this.isAudio(attachment)
     );
   }
-
+  companyId:any
   c_satForm() {
+//     this.companyidServices.receivedcompanyid().subscribe((res:any)=>{
+// this.companyId=res
+    // })
+    this.companyId= 654
     const customerId = localStorage.getItem('storeOpenedId');
     const platform = localStorage.getItem('parent');
     const AgentId = localStorage.getItem('agentId');
+
     this.insertAtCaret(
       this.activeBaseUrl +
         '/survey/customer_satisfaction' +
@@ -1437,7 +1444,8 @@ export class WhatsappDetailsComponent implements OnInit {
         customerId +
         '&agentId=' +
         AgentId +
-        ' '
+        '&Id='+
+        this.companyId
     );
   }
 

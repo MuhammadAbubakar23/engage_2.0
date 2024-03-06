@@ -58,6 +58,9 @@ export class InboxMenuComponent implements OnInit {
     } else if (this.baseUrl == 'https://bzengage.enteract.live') {
       this.client = 'Bazaar';
     }
+    else if(this.baseUrl=='https://uiengagerox.enteract.app') {
+      this.client='stagging'
+    }
     
     this.activeChannel = this.router.url.split('/')[3];
 
@@ -159,7 +162,7 @@ export class InboxMenuComponent implements OnInit {
   platformWiseCount: any[] = [];
 
   getAllChannelsUnrespondedCounts() {
-    
+
     this.commonService
       .GetAllChannelsUnrespondedCount()
       .subscribe((res: any) => {

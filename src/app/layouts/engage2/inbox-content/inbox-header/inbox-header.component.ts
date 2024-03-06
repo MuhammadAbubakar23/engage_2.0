@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { FiltersDto } from 'src/app/shared/Models/FiltersDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
-
+import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'inbox-header',
   templateUrl: './inbox-header.component.html',
@@ -16,16 +17,25 @@ export class InboxHeaderComponent implements OnInit {
   inboxHeader:any[]=[];
   constructor(private stor: StorageService,
     private commonService: CommonDataService,
+    private reviceTotalCountServices:ClosePanelService,
+    private cd:ChangeDetectorRef,
     private _route: Router) { }
 
   ngOnInit(): void {
+
     this.flag = this._route.url.split('/')[2];
     // this.getAllConversationCount();
+  this.reviceTotalCountServices.reciveTaotalCounts().subscribe((res:any)=>{
+
+    this.followUpCount=res
+    console.log("FollowupCount===>",this.followUpCount)
+  })
     const headerMenu = this.stor.retrive('Tags', 'O').local;
       headerMenu.forEach((item:any) => {
         if(item.name == "Engage Header"){
           
           item.subTags.forEach((singleInboxHeaderMenu:any) => {
+
             if(!this.inboxHeader.includes(singleInboxHeaderMenu)){
             this.inboxHeader.push(singleInboxHeaderMenu)
             }
@@ -55,9 +65,9 @@ export class InboxHeaderComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0
       }
-      this.commonService.GetFollowUpCount(obj).subscribe((res:any)=>{
-        this.followUpCount = res
-      })
+      // this.commonService.GetFollowUpCount(obj).subscribe((res:any)=>{
+      //   this.followUpCount = res
+      // })
     }
 
   filterDto = new FiltersDto();
@@ -66,7 +76,6 @@ export class InboxHeaderComponent implements OnInit {
   UnResponded:number=0;
 
   getAllConversationCount(){
-    
     this.filterDto = {
       // fromDate : new Date(),
       // toDate : new Date(),
@@ -84,13 +93,14 @@ export class InboxHeaderComponent implements OnInit {
       flag: '',
     };
     this.commonService.GetConversationList(this.filterDto).subscribe((res:any)=>{
+      
       this.UnResponded = res.TotalCount
     });
     
   }
 
   update(menuLink: any) {
-    
+ 
     this.flag = this._route.url.split('/')[2];
 
     if (
@@ -102,6 +112,7 @@ export class InboxHeaderComponent implements OnInit {
     } else {
       this.reloadComponent('querryAssigned')
     } 
+    this.cd.detectChanges()
   }
 
   AlterMsg:any;

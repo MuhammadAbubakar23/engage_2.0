@@ -14,15 +14,15 @@
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li>
-                                        <a class="dropdown-item" (click)="setStatus('All')">All</a>
+                                      <a class="dropdown-item" (click)="setSortOption('All')">All</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" (click)="setStatus('Ascending')">Ascending</a>
+                                      <a class="dropdown-item" (click)="setSortOption('Ascending')">Ascending</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" (click)="setStatus('Descending')">Descending</a>
+                                      <a class="dropdown-item" (click)="setSortOption('Descending')">Descending</a>
                                     </li>
-                                </ul>
+                                  </ul>
                             </div>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                                 <i class="fal fa-search silver"></i>
                             </button>
                             <input [(ngModel)]="searchText" placeholder="Search" class="me-1"
-                                (ngModelChange)="searchText ? applySearchFilter() : refreshMessages()">
+                               (input)="applySearchFilter()">
 
                         </a>
                         <a (click)="updatevalue('consoleCreateQuickResponseTemplatesHeader')"

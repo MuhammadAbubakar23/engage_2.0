@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -13,6 +13,8 @@ import { DatePipe } from '@angular/common';
 
 import { map, timer, takeWhile } from 'rxjs';
 import { VerificationDto } from 'src/app/shared/Models/VerificationDto';
+
+
 
 
 // import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
@@ -41,16 +43,16 @@ export class LoginComponent implements OnInit {
   timeRemaining: any;
   countdownTime: number = 0;
   loginForm = new UntypedFormGroup({
-    actor: new UntypedFormControl(this.logindto.actor),
+    // actor: new UntypedFormControl(this.logindto.actor),
     email: new UntypedFormControl(this.logindto.userName),
-    userName: new UntypedFormControl(this.logindto.userName),
-    password: new UntypedFormControl(this.logindto.password),
+    userName: new UntypedFormControl(this.logindto.userName, [Validators.required]),
+    password: new UntypedFormControl(this.logindto.password, [Validators.required]),
     rememberMe: new UntypedFormControl(this.logindto.rememberMe),
   });
   verificationForm = new UntypedFormGroup({
     Verificationemail: new UntypedFormControl(this.verificationdto.email),
     verificationCode: new UntypedFormControl(
-      this.verificationdto.verificationCode
+      this.verificationdto.verificationCode, [Validators.required, Validators.minLength(6), Validators.maxLength(6)]
     ),
   });
   Verificationemail: any;
@@ -64,7 +66,7 @@ export class LoginComponent implements OnInit {
     private signalRService: SignalRService,
     private commonService: CommonDataService,
     private datePipe: DatePipe
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // this.getAllTags();
@@ -72,8 +74,9 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+
     let obj = {
-      actor: this.loginForm.value.actor,
+      // actor: this.loginForm.value.actor,
       userName: this.loginForm.value.userName,
       password: this.loginForm.value.password,
       rememberMe: true,
@@ -81,12 +84,12 @@ export class LoginComponent implements OnInit {
     this.spinnerService.show();
     this.authService.login(obj).subscribe(
       (res: any) => {
-        
-        // only for testing purpose, remove after that
-        res = {'loginResponse':res}
-        res = {'loginResponse':res}
-        res['isTwoFAEnabled'] = false;
-        // only for testing purpose, remove after that
+debugger
+        //only for testing purpose, remove after that
+        // res = { 'loginResponse': res }
+        // res = { 'loginResponse': res }
+        // res['isTwoFAEnabled'] = false;
+        //only for testing purpose, remove after that
 
         if (res.isTwoFAEnabled == false) {
           this.stor.store('token', res.loginResponse.loginResponse.accessToken);
@@ -128,14 +131,15 @@ export class LoginComponent implements OnInit {
           this.signalRService.updateMessageStatusDataListener();
           // this.signalRService.updatePostList();
         } else if (res.isTwoFAEnabled == true) {
-          this.Verificationemail =
-            res.loginResponse.loginTwoFAResponse.userName;
+          this.Verificationemail =res.userName
+            // res.loginResponse.loginTwoFAResponse.userName;
           this.isUserLoging = true;
           this.isVerificationcodeFailed = false;
           this.spinnerService.hide();
         }
       },
       (error: any) => {
+        this.spinnerService.hide()
         this.ErrorMessage = error.error;
         if (this.ErrorMessage?.includes('The account is locked out ')) {
           const LockedtiemEndpatteren = /lockoutEndTime = (.+)$/;
@@ -165,7 +169,9 @@ export class LoginComponent implements OnInit {
           this.loginDisabled = true;
           this.spinnerService.hide();
           this.reloadComponent('userblocked');
-        } else {
+        }
+        else {
+
           this.spinnerService.hide();
           this.reloadComponent('loginFailed');
         }
@@ -196,7 +202,7 @@ export class LoginComponent implements OnInit {
         // this.login()
       }
       if (seconds == 0) {
-        console.log('finished');
+
         clearInterval(timer);
       }
     }, 1000);
@@ -250,8 +256,9 @@ export class LoginComponent implements OnInit {
   AlterMsg: any;
   toastermessage: any;
   reloadComponent(type: any) {
+
     if (type == 'loginFailed') {
-      this.AlterMsg = 'Wrong Username or Password!';
+      this.AlterMsg = this.ErrorMessage;
       this.toastermessage = true;
       setTimeout(() => {
         this.toastermessage = false;

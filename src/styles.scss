@@ -32,7 +32,6 @@
 // // that you are using.
 // @include mat.all-component-themes($Enteract.Engage2.0-theme);
 
-
 @import "../node_modules/bootstrap/scss/functions";
 @import "./assets/SCSS/_bootstrap-variables.scss";
 @import "../node_modules/bootstrap/scss/_variables.scss";
@@ -40,29 +39,24 @@
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import "../node_modules/select2/src/scss/core.scss";
 
-
 //colors
 @import "./assets/SCSS/colors/_colors.scss";
 @import "./assets/SCSS/colors/_colors-classes.scss";
-
+//bot-monitoring
+@import "./assets/SCSS/components/bot-monitoring.scss";
 //Typography
 @import "./assets/SCSS/base/_typography.scss";
 
 //Mixins
 @import "./assets/SCSS/mixins/mixins.scss";
 
-
-
-
 //Base
 @import "./assets/SCSS/base/base.scss";
-
 
 //Layouts
 @import "assets/SCSS/layouts/header.scss";
 @import "./assets/SCSS/layouts/footer.scss";
 @import "./assets/SCSS/layouts/search-bar.scss";
-
 
 //Components
 @import "./assets/SCSS/components/avatar.scss";
@@ -96,8 +90,6 @@
 @import "./assets/SCSS/components/mark-as.scss";
 @import "./assets/SCSS/components/contact-merge.scss";
 @import "./assets/SCSS/components/score-card.scss";
-
-
 
 //Pages CSS
 @import "./assets/SCSS/pages/login.scss";
@@ -165,10 +157,7 @@
 
 .modal {
   z-index: 1050;
-} 
-
-
-
+}
 
 .icon-circle {
   min-width: 90px;
@@ -180,19 +169,16 @@
 }
 
 .modal .modal-content {
-  border-radius: 0px; 
+  border-radius: 0px;
 }
-.modal .modal-content .modal-header .h5, .modal .modal-content .modal-header h5 {
+.modal .modal-content .modal-header .h5,
+.modal .modal-content .modal-header h5 {
   font-size: 1.25rem;
 }
 .modal-title {
   margin-bottom: 0;
   line-height: 1.5;
-
 }
-
-
-
 
 // body {
 //   font-family: "Roboto", sans-serif !important;

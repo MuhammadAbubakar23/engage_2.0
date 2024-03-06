@@ -1,0 +1,542 @@
+<div class="content-box-wrapper d-flex w-100">
+
+    <div class="middle-content d-flex">
+        <div class="d-grid w-100">
+            <div class="analytics-dashboard p-4" data-scrollbar="true" tabindex="-1"
+                style="overflow: auto; outline: none;">
+                <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                    [fullScreen]="false">
+                    <p style="color: white"> Loading... </p>
+                </ngx-spinner>
+                <div id="dashboardContent">
+                    <div class="scroll-content">
+
+                        <div class="report-toolbar mb-4">
+                            <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+                                <li class="list-inline-item">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <input type="date" class="form-control" placeholder="Start Date"
+                                                [max]="maxEndDate" [(ngModel)]="startDate"
+                                                (change)="resetStartDate()" />
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="date" class="form-control" placeholder="End Date"
+                                                [max]="maxEndDate" [(ngModel)]="endDate" (change)="resetEndDate()" />
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item">
+                                    <div class="dropdown icondropdown w-auto">
+                                        <button class="btn dropdown-toggle" type="button" id="columnssort"
+                                            data-bs-toggle="dropdown" aria-expanded="false"
+                                            data-bs-auto-close="outside">
+                                            Channels
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="columnssort">
+                                            <span>
+                                                <li class="dropdown-listing-header">
+                                                    <form class="custom-searchbar my-2 mx-0">
+                                                        <input class="form-control bg-light border-0 py-2"
+                                                            placeholder="Search" aria-label="Search">
+                                                        <span class="btn searchbar-btn" type="submit">
+                                                            <i class="fal fa-search silver"></i>
+                                                        </span>
+                                                    </form>
+                                                </li>
+                                            </span>
+
+                                            <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
+                                                style="overflow: auto; height: auto;">
+                                                <div class="scroll-content">
+                                                    <div class="collapse-wrap mx-3" id="qr-ques1"
+                                                        *ngFor="let channel of channelOptions ">
+                                                        <div class="dropdown-item d-flex align-items-center">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="flexRadioDefault" id={{channel.id}}
+                                                                    #radioInput
+                                                                    [checked]="selectedChannel === channel.name"
+                                                                    (change)="toggleChannelSelection(channel.name)">
+                                                                <label class="form-check-label" for={{channel.id}}>
+                                                                    <i [ngClass]="channel.icon"></i>{{channel.name}}
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item ms-auto">
+                                    <div class="dropdown">
+                                        <button class="btn btn-primary" type="button" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            Export <i class="fa-light fa-angle-down"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <!-- <li><a class="dropdown-item" href="#"><i class="fa-light fa-file-csv"></i>
+                                        Export as CSV</a></li> -->
+                                            <li (click)="downloadPdf()"><a class="dropdown-item"><i
+                                                        class="fa-light fa-file-pdf"></i>
+                                                    Export as PDF</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+
+                            </ul>
+                        </div>
+                        <div class="row align-items-start h-auto g-3 mb-4">
+
+                            <div class="col">
+                                <div class="card dashboard-card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <span class="iconButton medium berryBg me-2">
+                                                    <i class="fa-light fa-users"></i>
+                                                </span>
+                                                <p class="coal mb-0">Active Agents</p>
+                                            </div>
+                                            <h4>{{totalAgentsCount}}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card dashboard-card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <span class="iconButton medium skyBg me-2">
+                                                    <i class="fa-light fa-percent"></i>
+                                                </span>
+                                                <p class="coal mb-0"> Avg. Response Rate</p>
+                                            </div>
+                                            <h4>{{formatNumber(averageResponseData )  |number:'1.2-2' }}% <small
+                                                    *ngIf="preAveragePercentage >= 0; else downArrow"
+                                                    class="text-success fs-12">
+                                                    <i class="fa-light fa-arrow-up"></i> {{ preAveragePercentage
+                                                    |number:'1.2-2'
+                                                    }}<sup>%</sup>
+                                                </small>
+                                                <ng-template #downArrow>
+                                                    <small class="text-danger fs-12">
+                                                        <i class="fa-light fa-arrow-down"></i> {{ preAveragePercentage
+                                                        |number:'1.2-2'
+                                                        }}<sup>%</sup>
+                                                    </small>
+                                                </ng-template>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card dashboard-card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <span class="iconButton medium mintBg me-2">
+                                                    <i class="fa-light fa-clock"></i>
+                                                </span>
+                                                <p class="coal mb-0"> Avg. Response Time</p>
+                                            </div>
+                                            <h4>{{ finalAverage }}
+                                                <small *ngIf="avgResponseTimeSum >= 0; else downArrow"
+                                                    class="text-success fs-12">
+                                                    <i class="fa-light fa-arrow-up"></i> {{ avgResponseTimeSum
+                                                    |number:'1.2-2'
+                                                    }}<sup>%</sup>
+                                                </small>
+                                                <ng-template #downArrow>
+                                                    <small class="text-danger fs-12">
+                                                        <i class="fa-light fa-arrow-down"></i> {{ avgResponseTimeSum
+                                                        |number:'1.2-2'
+                                                        }}<sup>%</sup>
+                                                    </small>
+                                                </ng-template>
+                                            </h4>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card dashboard-card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <span class="iconButton medium skyBg me-2">
+                                                    <i class="fa-light fa-clock"></i>
+                                                </span>
+                                                <p class="coal mb-0"> Min. Cater Time</p>
+                                            </div>
+                                            <h4>{{finalAverageMinimum}}
+                                                <small *ngIf="avgMinCaterTime >= 0; else downArrow"
+                                                    class="text-success fs-12">
+                                                    <i class="fa-light fa-arrow-up"></i> {{ avgMinCaterTime
+                                                    |number:'1.2-2'
+                                                    }}<sup>%</sup>
+                                                </small>
+                                                <ng-template #downArrow>
+                                                    <small class="text-danger fs-12">
+                                                        <i class="fa-light fa-arrow-down"></i> {{ avgMinCaterTime
+                                                        |number:'1.2-2'
+                                                        }}<sup>%</sup>
+                                                    </small>
+                                                </ng-template>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card dashboard-card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex align-items-center mb-3">
+                                                <span class="iconButton medium radicalBg me-2">
+                                                    <i class="fa-light fa-message"></i>
+                                                </span>
+                                                <p class="coal mb-0"> Max. Cater Time</p>
+                                            </div>
+                                            <h4>{{finalAverageMaximum}}
+                                                <small *ngIf="avgMaxCaterTime >= 0; else downArrow"
+                                                    class="text-success fs-12">
+                                                    <i class="fa-light fa-arrow-up"></i> {{ avgMaxCaterTime
+                                                    |number:'1.2-2'
+                                                    }}<sup>%</sup>
+                                                </small>
+                                                <ng-template #downArrow>
+                                                    <small class="text-danger fs-12">
+                                                        <i class="fa-light fa-arrow-down"></i> {{ avgMaxCaterTime
+                                                        |number:'1.2-2'
+                                                        }}<sup>%</sup>
+                                                    </small>
+                                                </ng-template>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3 pe-5">
+                                        <span class="iconButton large bg-dark ice">
+                                            <i class="fa-light fa-comment-lines fs-5"></i>
+                                        </span>
+                                        <h5 class="my-3">Total Interactions</h5>
+                                        <h1 class="fw-bolder">{{ formatNumber(totalInteractionCount)}}</h1>
+                                        <ul class="sociallist">
+                                            <li>
+                                                <span>
+                                                    In Progress </span><strong
+                                                    class="progressd">{{formatNumber(inProgressCount)}}</strong>
+
+                                            </li>
+                                            <li><span>
+                                                    Assign to me </span><strong
+                                                    class="assigntome">{{formatNumber(assignToMeCount)}}</strong>
+                                            </li>
+                                            <li><span>
+                                                    Follow up </span><strong
+                                                    class="folloup">{{formatNumber(followUpCount)}}</strong>
+                                            </li>
+                                            <li><span>
+                                                    Completed </span> <strong
+                                                    class="completed">{{formatNumber(completedCount)}}</strong>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="row mb-4">
+                                            <div class="row justify-content-between align-items-start">
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="card card-hover positivecard">
+                                                                <div class="card-body p-2">
+                                                                    <span style="font-size:0.7rem;"
+                                                                        class="badge rounded-pill badge-md"><i
+                                                                            class="fa-light fa-face-smile"></i>
+                                                                        Positive</span>
+                                                                    <h5 class="mt-2 mb-0 fw-bolder ice">{{ positiveCount
+                                                                        }}
+                                                                    </h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="card card-hover negativecard">
+                                                                <div class="card-body p-2">
+                                                                    <span style="font-size:0.7rem;"
+                                                                        class="badge rounded-pill badge-md"><i
+                                                                            class="fa-light fa-face-frown"></i>
+                                                                        Negative</span>
+                                                                    <h5 class="mt-2 mb-0 fw-bolder ice">{{ negativeCount
+                                                                        }}
+                                                                    </h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="card card-hover neutralcard">
+                                                                <div class="card-body p-2">
+                                                                    <span style="font-size:0.7rem;"
+                                                                        class="badge rounded-pill badge-md"><i
+                                                                            class="fa-light fa-face-meh"></i>
+                                                                        Neutral</span>
+                                                                    <h5 class="mt-2 mb-0 fw-bolder ice">{{ neutralCount
+                                                                        }}
+                                                                    </h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <!-- <div class="row">
+                                <div class="col">
+                                    <div class="card card-hover">
+                                        <div class="card-body">
+                                            <i class="fa-brands fa-facebook fs-4 navy"></i>
+                                            <ul class="sociallist">
+                                                <li>
+                                                    <span>
+                                                        In Progress </span><strong>14</strong>
+
+                                                </li>
+                                                <li><span>
+                                                        Assign to me </span><strong>14</strong>
+                                                </li>
+                                                <li><span>
+                                                        Follow up </span><strong>14</strong>
+                                                </li>
+                                                <li><span>
+                                                        Completed </span> <strong>14</strong>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card card-hover">
+                                        <div class="card-body">
+                                            <i class="fa-brands fa-twitter fs-4 sky"></i>
+                                            <ul class="sociallist">
+                                                <li>
+                                                    <span>
+                                                        In Progress </span><strong>14</strong>
+
+                                                </li>
+                                                <li><span>
+                                                        Assign to me </span><strong>14</strong>
+                                                </li>
+                                                <li><span>
+                                                        Follow up </span><strong>14</strong>
+                                                </li>
+                                                <li><span>
+                                                        Completed </span> <strong>14</strong>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card card-hover">
+                                        <div class="card-body">
+                                            <i class="fa-brands fa-instagram fs-4 berry"></i>
+                                            <ul class="sociallist">
+                                                <li>
+                                                    <span>
+                                                        In Progress </span><strong>14</strong>
+
+                                                </li>
+                                                <li><span>
+                                                        Assign to me </span><strong>14</strong>
+                                                </li>
+                                                <li><span>
+                                                        Follow up </span><strong>14</strong>
+                                                </li>
+                                                <li><span>
+                                                        Completed </span> <strong>14</strong>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card card-hover">
+                                        <div class="card-body">
+                                            <i class="fa-brands fa-linkedin fs-4 linkedinTxt"></i>
+                                            <ul class="sociallist">
+                                                <li>
+                                                    <span>
+                                                        In Progress </span><strong>14</strong>
+                                                </li>
+                                                <li><span>
+                                                        Assign to me </span><strong>14</strong>
+                                                </li>
+                                                <li><span>
+                                                        Follow up </span><strong>14</strong>
+                                                </li>
+                                                <li><span>
+                                                        Completed </span> <strong>14</strong>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div> -->
+                                        <div class="row">
+                                            <div class="col" *ngFor="let platform of socialMediaData">
+                                                <div class="card card-hover">
+                                                    <div class="card-body">
+                                                        <i [class]="platformIconMapping[platform.plateForm]"></i>
+                                                        <ul class="sociallist">
+                                                            <li><span>In Progress</span><strong>{{formatNumber(
+                                                                    platform.unRespondedCount) }}</strong></li>
+                                                            <li><span>Assign to me</span><strong>{{
+                                                                    formatNumber( platform.assignTomeCount )}}</strong>
+                                                            </li>
+                                                            <li><span>Follow up</span><strong>{{formatNumber(
+                                                                    platform.followUpCount
+                                                                    )}}</strong></li>
+                                                            <li><span>Completed</span><strong>{{ formatNumber
+                                                                    (platform.completed)
+                                                                    }}</strong></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="html2pdf__page-break"></div>
+
+                        <div class="card iceBg p-4 rounded mb-5">
+                            <h5 class="section-heading mb-4 p-0">CUSTOMER SATISFACTION RATINGS </h5>
+
+                            <div class="row justify-content-between">
+                                <div class="col-md-6">
+                                    <div class="graphcontainer align-items-end">
+
+                                        <!-- <img src="../images/g12.svg" class="img-fluid" alt="">
+                                 -->
+                                        <div id="piechart" style="height: 400px; width: 900px;"></div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card dashboard-card">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <span class="iconButton medium berryBg me-2">
+                                                        <i class="fa-light fa-calendar-week"></i>
+                                                    </span>
+                                                    <p class="coal mb-0">Last week</p>
+                                                </div>
+                                                <h4>{{CSATobj?.lastWeekCount}}</h4>
+                                                <!-- <h4>56 <small class="text-danger fs-12"> <i class="fa-light fa-arrow-down"></i> 37.8<sup>%</sup></small></h4> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card dashboard-card">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-column">
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <span class="iconButton medium mintBg me-2">
+                                                        <i class="fa-light fa-calendar-week"></i>
+                                                    </span>
+                                                    <p class="coal mb-0">This week</p>
+                                                </div>
+                                                <h4>{{CSATobj?.currentWeekCount}}</h4>
+                                                <!-- <h4>32 <small class="text-danger fs-12"> <i class="fa-light fa-arrow-down"></i> 37.8<sup>%</sup></small></h4> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="html2pdf__page-break"></div>
+
+                    <div class="card iceBg p-4 rounded mb-5">
+                        <h5 class="section-heading mb-4 p-0">INTERACTIONS BY DATE </h5>
+                        <div class="graphcontainer align-items-end mb-5">
+
+                            <!-- <img src="../images/shift.svg" class="img-fluid" alt=""> -->
+                            <div id="interactions" style="height: 400px;width: 100%;"></div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="html2pdf__page-break"></div>
+
+                    <div class="card iceBg p-4 rounded mb-4">
+                        <div class="table-section" style="overflow: auto; max-height: 50vh;">
+                            <table class="table" [ngStyle]="getTableStyle()">
+                                <thead class="fixed_first_row">
+                                    <tr>
+                                        <th>Agent</th>
+                                        <th>Comment</th>
+                                        <th>Direct Message</th>
+                                        <th>First Response Time</th>
+                                        <th>Average Response Time</th>
+                                        <th>Min Cater Time</th>
+                                        <th>Max Cater Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of data">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <!-- <span class="iconButton medium navyBg">
+                                            {{ item.agentInitials }}
+                                        </span> -->
+                                                <span class="ms-2">{{ item?.agentName }}</span>
+                                            </div>
+                                        </td>
+                                        <td>{{ item?.commentCount }}</td>
+                                        <td>{{ item?.messageCount }}</td>
+                                        <td>{{ formatFirstResponseTime(item?.firstResponseTime) }}</td>
+                                        <td>{{ item?.averageTime }}</td>
+                                        <td>{{ item?.minimumTime }}</td>
+                                        <td>{{ item?.maximumTime }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+
+                    <div class="py-5 space">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

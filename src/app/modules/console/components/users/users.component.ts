@@ -29,10 +29,10 @@ export class UsersComponent implements OnInit {
   //   , {name:"delete", type:"service" , actionUrl:"DeleteUser", icon:"fal fa-trash me-2"}
   // ];
   // filter: {} ={ search:""
-  //             , url : "AllUsers" 
+  //             , url : "AllUsers"
   //             , pageno:1
   //             , pagesize:50
-  //             //, 
+  //             //,
   //             , template: {toolbar: "top", refresh:true }
   //             , headers: [ { visible:true, index:'', name:"", type:"empty" }
   //                       // , { visible:true, index:["id"], name:"id", type:"check", order:"ASC", search:true, group:-1, actions:false }

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CommonDataService {
-  
+
   // for testing purpose
   consoleBaseUrl = environment.consoleBaseUrl;
 
@@ -23,6 +23,7 @@ export class CommonDataService {
   LinkedInBaseUrl = environment.LinkedInBaseUrl;
   KemediaBaseUrl=environment.KemediaBaseUrl;
   KescrmBaseUrl=environment.KescrmBaseUrl
+  WhatsappBaseUrl =environment.WhatsappBaseUrl
   // KelisteningBaseUrl =environment.KelisteningBaseUrl;
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
@@ -32,7 +33,7 @@ export class CommonDataService {
   markAsComplete = environment.links.common.MarkAsComplete;
   likedByAdmin = environment.links.common.LikedByAdmin;
   quickReplyList = environment.links.common.QuickReplyList;
-  quickReplyListForBazaar = environment.links.console.quickReplyListForBazaar;  
+  quickReplyListForBazaar = environment.links.console.quickReplyListForBazaar;
   assignQuerry = environment.links.common.AssignQuerry;
   agentsTeamList = environment.links.common.AgentsTeamList;
   assignToAnotherAgent = environment.links.common.AssignToAnotherAgent;
@@ -70,6 +71,7 @@ export class CommonDataService {
   markAllAsRead = environment.links.common.markAllAsRead;
   getAgentReport = environment.links.common.getAgentReport;
   getAllocatedProfiles = environment.links.common.getAllocatedProfiles;
+  sessionClose=environment.links.common.sessionClose
   // createMessageTemplate = environment.links.console.CreateMessageTemplate;
   repliesList = environment.links.common.repliesList;
   signOut = environment.links.common.signOut;
@@ -83,6 +85,8 @@ export class CommonDataService {
   getAllTeams= environment.links.console.getAllTeams
   addTeam = environment.links.console.addTeam
   updateTeam = environment.links.console.updateTeam
+  deleteTeams=environment.links.console.deleteTeam
+  deleteMultipleTeams=environment.links.console.deleteMultipleTeams
   //Reports
   addUniqueCustomer = environment.links.common.addUniqueCustomer;
   uniqueExportCsv = environment.links.common.uniqueExportCsv;
@@ -112,7 +116,7 @@ export class CommonDataService {
   getLinkedInFollowers=environment.links.common.getLinkedInFollowers;
   emailShiftReport = environment.links.common.emailShiftReport;
   getFollowUpCount = environment.links.common.getFollowUpCount;
-  
+
   downloadTagReport = environment.links.common.downloadTagReport;
   regionwiseReport=environment.links.common.regionwiseReport;
   wordCloud=environment.links.common.wordCloud;
@@ -120,6 +124,7 @@ export class CommonDataService {
   keMediaReport=environment.links.common.keMediaReport;
   PrintFeed=environment.links.common.PrintFeed;
   CSATReport=environment.links.common.CSATReport;
+  getInteractionReport = environment.links.common.getInteractionReport
   // SCRM Reports
   facebookscrmReport=environment.links.scrmReports.facebookscrmReport;
   getfortesting=environment.links.scrmReports.getfortesting
@@ -137,7 +142,7 @@ export class CommonDataService {
   updateSlaPolicy = environment.links.console.updateSlaPolicy;
   getPolicyById = environment.links.console.getPolicyById;
   getBusinessHoursById = environment.links.console.getBusinessHoursById;
-  
+
   deleteSlaPolicy = environment.links.console.deleteSlaPolicy;
   getOperationalHours = environment.links.console.getOperationalHours;
   getBusinessHours = environment.links.console.getBusinessHours;
@@ -159,6 +164,7 @@ export class CommonDataService {
   addProfile = environment.links.console.addProfile;
   attachFacebookPage = environment.links.console.attachFacebookPage;
   getTags = environment.links.console.getTags;
+  getTagsAll=environment.links.console.getTagsAll
   getTagsByCompanyId =environment.links.console.getTagsByCompanyId
   getTagById = environment.links.console.getTagById;
   addTags = environment.links.console.addTags;
@@ -178,7 +184,7 @@ export class CommonDataService {
   getChannels = environment.links.identity.channels;
   deleteRoles = environment.links.identity.deleteRoles;
 
-  // teams 
+  // teams
   // getAllTeams= environment.links.console.getAllTeams
   // addTeam = environment.links.console.addTeam
   // updateTeam = environment.links.console.updateTeam
@@ -191,6 +197,8 @@ export class CommonDataService {
   searchProfileInformation = environment.links.profile.searchProfileInformation;
   addProfileInformation = environment.links.profile.addProfileInformation;
   deattachProfileInformation=environment.links.profile.deattachProfileInformation
+  // whatapp bot interaction
+  whatsappBotInteraction = environment.links.common.whatsappBotInteraction
   private _wordCloudDataS: any;
    activeChannel:any
   constructor(private http: HttpClient) {
@@ -199,9 +207,9 @@ export class CommonDataService {
    localStorage.setItem('activeChannel',this.activeChannel)
   }
  UserLogin(){
-  
+
  const token =localStorage.getItem('token')
- 
+
   let headers_object = new HttpHeaders({
     'Content-Type': 'application/json',
     'Authorization': "Bearer " + localStorage.getItem('token')
@@ -210,7 +218,7 @@ export class CommonDataService {
   let httpOptions = {
     headers: headers_object
   };
-  
+
   return this.http.get(this.CommonBaseUrl+this.userlogin,httpOptions)
  }
   GetTagsList() {
@@ -397,7 +405,7 @@ export class CommonDataService {
   }
 
   GetAllChannelsUnrespondedCount() {
-    
+
     return this.http.get(
       this.CommonBaseUrl + this.allChannelsUnrespondedCounts
     );
@@ -433,9 +441,7 @@ export class CommonDataService {
   // }
 
   GetAllMessages(templates: any) {
-    return this.http.get(
-      this.consoleBaseUrl + this.getAllMessages + '?templateType=' + templates
-    );
+    return this.http.post(this.consoleBaseUrl + this.getAllMessages , templates);
   }
   Addtemplate(addData: any) {
     return this.http.post(this.consoleBaseUrl + this.addTemplate, addData);
@@ -448,8 +454,8 @@ export class CommonDataService {
     const url = `${this.consoleBaseUrl}${this.deleteMessages}?Id=${deleteId}`;
     return this.http.get(url);
   }
-  GetQuickReply() {
-    return this.http.get(this.consoleBaseUrl + this.getQuickReply);
+  GetQuickReply(body: any) {
+    return this.http.post(this.consoleBaseUrl + this.getQuickReply,body );
   }
   AddQuickReply(add: any) {
     return this.http.post(this.consoleBaseUrl + this.addQuickReply, add);
@@ -462,8 +468,8 @@ export class CommonDataService {
     const url = `${this.consoleBaseUrl}${this.deleteQuickReply}?Id=${deleteId}`;
     return this.http.get(url);
   }
-  GetSlaPolicy() {
-    return this.http.get(this.consoleBaseUrl + this.getSlaPolicy);
+  GetSlaPolicy(body:any) {
+    return this.http.post(this.consoleBaseUrl + this.getSlaPolicy , body);
   }
   AddSlaPolicy(addSla: any) {
     return this.http.post(this.consoleBaseUrl + this.addSlaPolicy, addSla);
@@ -487,8 +493,8 @@ export class CommonDataService {
   GetOperationalHours() {
     return this.http.get(this.consoleBaseUrl + this.getOperationalHours);
   }
-  GetBusinessHours() {
-    return this.http.get(this.consoleBaseUrl + this.getBusinessHours);
+  GetBusinessHours(body:any) {
+    return this.http.post(this.consoleBaseUrl + this.getBusinessHours , body);
   }
   AddBusinessHours(addHours: any) {
     return this.http.post(
@@ -527,7 +533,7 @@ export class CommonDataService {
     return this.http.post(this.consoleBaseUrl + this.getSkills, body);
   }
   GetUserSkills() {
-    
+
      return this.http.get(this.consoleBaseUrl + this.getUserSkills);
   }
   AddSkill(addSkill: any) {
@@ -560,9 +566,11 @@ export class CommonDataService {
   GetTags() {
     return this.http.get(this.consoleBaseUrl + this.getTags);
   }
+  GetAllTag(body:any){
+    return this.http.post(this.consoleBaseUrl+this.getTagsAll,body)
+  }
   GetTagsByCompanyId(){
     return this.http.get(this.consoleBaseUrl + this.getTagsByCompanyId);
-
   }
   GetTagById(body: any) {
     const url = `${this.consoleBaseUrl}${this.getTagById}`;
@@ -590,8 +598,8 @@ export class CommonDataService {
 
   // rules
 
-  GetAllRules() {
-    return this.http.get(this.consoleBaseUrl + this.getAllRules);
+  GetAllRules(body:any) {
+    return this.http.post(this.consoleBaseUrl + this.getAllRules,body);
   }
   GetRuleById(ruleId: string) {
     return this.http.get(`${this.consoleBaseUrl + this.getRuleById}?id=${ruleId} `)
@@ -779,9 +787,11 @@ export class CommonDataService {
   getWordCloud(fromDate: string, toDate: string): Observable<any> {
     return this.http.get(`https://tiktokcrawl.enteract.live/GetWordCloud?fromdate=${fromDate}&todate=${toDate}`)
   }
-
+getSessionId(customerNumber:any,ClientNumber:any){
+return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentifier=${customerNumber}&clientIdentifier=${ClientNumber}`)
+}
   GetLinkedInReportData(body:any){
-    
+
     return this.http.post(this.LinkedInBaseUrl + this.getLinkedInReport, body);
   }
   GetLinkedInReportFollwers(body:any){
@@ -826,7 +836,7 @@ export class CommonDataService {
     return this.http.post(this.KemediaBaseUrl+this.PrintFeed,body)
   }
   GetKarachiCoordinates(){
-    
+
     return this.http.get("../../../../../assets/karachiHeatMaoCoordinates.json")
   }
   GetFollowUpCount(body:any){
@@ -851,14 +861,27 @@ UpdateSkill(id: any, rule: any) {
   return this.http.post(url, rule)
 }
 GetAllTeams(){
-return this.http.get(this.IdentityBaseUrl + this.getAllTeams)
-}
-AddTeam(body:any){
-  return this.http.post(this.IdentityBaseUrl+this.addTeam,body)
-}
-UpdateTeam(body:any){
-  return this.http.put(this.IdentityBaseUrl+this.updateTeam,body)
-}
+  return this.http.get(this.IdentityBaseUrl + this.getAllTeams)
+  }
+  AddTeam(body:any){
+    return this.http.post(this.IdentityBaseUrl+this.addTeam,body)
+  }
+  UpdateTeam(body:any){
+    return this.http.post(this.IdentityBaseUrl+this.updateTeam,body)
+
+  }
+  DeleteSignalTeam(id:any){
+    return this.http.delete(`${this.IdentityBaseUrl}${this.deleteTeams}?id=${id}`)
+  }
+  DeleteMultipleTeams(data:any){
+    return this.http.delete(this.IdentityBaseUrl+this.deleteMultipleTeams,data)
+  }
+  WhatsappBotInteraction(body:any){
+    return this.http.post(this.WhatsappBaseUrl+this.whatsappBotInteraction,body)
+  }
+  GetInteractionReport(body:any){
+    return this.http.post(this.CommonBaseUrl+this.getInteractionReport,body)
+  }
 }
 
 

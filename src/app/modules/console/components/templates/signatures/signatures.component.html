@@ -7,7 +7,7 @@
         <div class="row">
           <div class="col-lg-4">
             <div class="d-flex align-items-lg-center">
-              <p class="coal m-0">Status:</p>
+              <p class="coal m-0">Sort:</p>
               <div class="dropdown">
                 <button class="btn dropdown-toggle coal" type="button" id="dropdownMenuButton1"
                   data-bs-toggle="dropdown" aria-expanded="false">
@@ -15,13 +15,13 @@
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   <li>
-                    <a class="dropdown-item" (click)="selectedSortOption = 'All';  sortSignatures()">All</a>
+                    <a class="dropdown-item" (click)="setSortOption('All')">All</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" (click)="selectedSortOption = 'Ascending';  sortSignatures()">Ascending</a>
+                    <a class="dropdown-item" (click)="setSortOption('Ascending')">Ascending</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" (click)="selectedSortOption = 'Descending';  sortSignatures()">Descending</a>
+                    <a class="dropdown-item" (click)="setSortOption('Descending')">Descending</a>
                   </li>
                 </ul>
               </div>
@@ -32,7 +32,7 @@
               <button class="iconButton medium">
                 <i class="fal fa-search silver"></i>
               </button>
-              <input [(ngModel)]="searchText" placeholder="Search" class="me-1" (ngModelChange)="searchText ? applySearchFilter() : refreshMessages()">
+              <input [(ngModel)]="searchText" placeholder="Search" class="me-1"  (input)="applySearchFilter()">
 
             </a>
             <a (click)="updatevalue('consoleCreateSignatureTemplatesHeader')"

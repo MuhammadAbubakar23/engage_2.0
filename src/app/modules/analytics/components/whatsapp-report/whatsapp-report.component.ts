@@ -1,6 +1,7 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { HeaderService } from 'src/app/shared/services/header.service';
@@ -48,10 +49,7 @@ export class WhatsappReportComponent implements OnInit {
     // const oneDayBeforeCurrentDate = currentDate.setDate(
     //   currentDate.getDate() - 1ll
     // );
-    this.maxEndDate = this.datePipe.transform(
-      currentDate,
-      'YYYY-MM-dd'
-    );
+ this.maxEndDate=currentDate.toISOString().split('T')[0];
     
 
     this.GetWhatsAppRawData();
@@ -59,16 +57,25 @@ export class WhatsappReportComponent implements OnInit {
 
   GetWhatsAppRawData() {
     if (this.toDate == '' && this.fromDate == '') {
-      // let currentDate = new Date();
-      // let prevDate = currentDate.setDate(currentDate.getDate() - 5);
-      // this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
+      let currentDate = new Date();
+      let prevDate = currentDate.setDate(currentDate.getDate() - 1);
+      this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
 
-      // this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
-      this.fromDate = this.maxEndDate;
-      this.toDate = this.maxEndDate;
+      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
+      // this.fromDate = this.maxEndDate;
+      // this.toDate = this.maxEndDate;
     } else if (this.fromDate != '' && this.toDate != '') {
       this.fromDate = this.fromDate;
-      this.toDate = this.fromDate;
+      this.toDate = this.toDate;
+    }
+    const startDateObj=new Date(this.fromDate)
+    const endDateobj= new Date(this.toDate)
+    const timeDiff =Math.abs (endDateobj.getTime()-startDateObj.getTime())
+    const daysdiff= Math.ceil(timeDiff/(1000*3600*24))
+    if(daysdiff>30){
+      alert('Select a date range of 30 days or less');
+      this.toDate=''
+      return;
     }
     var obj = {
       fromDate: this.fromDate,
@@ -76,9 +83,10 @@ export class WhatsappReportComponent implements OnInit {
       pageNumber: this.pageNumber,
       pageSize: this.itemperPage,
     };
-    if (this.fromDate <= this.toDate) {
+
       this.SpinnerService.show();
       this.commonService.GetWhatsAppReport(obj).subscribe((res: any) => {
+
         this.SpinnerService.hide();
         this.whatsAppRawData = res.List;
         this.totalCounts = res.TotalCount;
@@ -95,11 +103,12 @@ export class WhatsappReportComponent implements OnInit {
         } else {
           this.endingPoint = this.startingPoint + this.itemperPage - 1;
         }
-      });
-    } else {
-      this.SpinnerService.hide();
-      alert('select end date greater then start date');
-    }
+      },
+      error=>{
+        this.SpinnerService.hide()
+      }
+      );
+    
   }
 
   DownloadWhatsAppRawData() {
@@ -145,7 +154,15 @@ export class WhatsappReportComponent implements OnInit {
   }
 
   resetEndDate() {
-    this.toDate = '';
+    if (this.toDate >= this.fromDate) {
+      this.GetWhatsAppRawData();
+    } else {
+      alert('EndDate is lessthen StartDate');
+      this.toDate = '';
+    }
+  }
+  resetStartDate(){
+    this.toDate=''
   }
 
   closeToaster() {

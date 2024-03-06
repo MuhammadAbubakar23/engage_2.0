@@ -26,6 +26,7 @@ const routes: Routes = [
     redirectTo: 'analytics/whatsapp-report',
     pathMatch: 'full',
   },
+  
   // For KE
   // {
   //   path: 'analytics',
@@ -36,7 +37,7 @@ const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./identity/identity.module').then((f) => f.IdentityModule),
-  },{
+  }, {
     path: 'survey',
     loadChildren: () =>
       import('./survey-forms/survey-forms.module').then((f) => f.SurveyFormsModule),
@@ -60,4 +61,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

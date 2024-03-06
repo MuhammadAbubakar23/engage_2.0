@@ -78,24 +78,22 @@
             <!-- <label for="tagName0">Tag Name</label>  -->
             <input type="text" class="form-control" id="tagName0" placeholder="Tag Name" formControlName="name"
          [style.color]="selectedTextColor">
-          <label for="tagName0">Child Tag Name</label>
+          <label for="tagName0"> Tag Name</label>
           </div>
         </div>
         <br>
-        <div class="col-md-12" >
+        <!-- <div class="col-md-12" >
           <div class="card"  >
-            <div *ngIf="showPopup">
+            < <div *ngIf="showPopup">
               <div class="color-picker">
                 <input type="color" [(ngModel)]="selectedTextColor" (change)="onTextColorChange($event)" />
                 <label for="tagName0">Select  Tag Color</label>
               </div>
         
-              <!-- <div>Selected Color: {{ selectedTextColor }}</div> -->
-<!--         
-              <button type="button" class="btn btn-success " style="margin-left: 50px;" (click)="saveVisuals()">Save</button> -->
+              
             </div>
           </div>
-        </div>
+        </div> -->
       <div class="list-group-section">
           <div class="section-heading">
             <h6 class="coal text-uppercase mb-0">Style</h6>
@@ -104,10 +102,19 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between align-items-sm-center">
               <div class="me-auto coal">
-                <div class="fw-bold night">Color or emoji</div>
+                <div class="fw-bold night">Color</div>
                 Create Shared inboxes for teammates to work together
               </div>
-
+                 <span class="col-sm-1">
+     <div *ngIf="showPopup">
+              <div class="color-picker">
+                <input type="color" [(ngModel)]="selectedTextColor" (change)="onTextColorChange($event)" />
+        
+              </div>
+        
+              
+            </div>
+           </span>
               <span>
                 <i class="fal fa-user sky me-3"></i>
                 <a class="text-decoration-underline" (click)="openPopup()"><span *ngIf="showPopup==true">

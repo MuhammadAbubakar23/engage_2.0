@@ -27,7 +27,8 @@ export const environment = {
   TwitterBaseUrl: 'https://tweet.360scrm.com/api/',
   EmailBaseUrl: 'https://mail.360scrm.com/api/',
   SmsBaseUrl: 'https://text.360scrm.com/api/',
-  WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
+  // WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
+  WhatsappBaseUrl: 'https://waservice.enteract.live/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
   LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
   KelisteningBaseUrl: 'https://listen.enteract.live/backend/api/',
@@ -37,7 +38,7 @@ export const environment = {
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  // IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
+  //  IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
   // CommonBaseUrl: 'https://comservices.enteract.live/api/',
   // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
   // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
@@ -45,7 +46,7 @@ export const environment = {
   // consoleBaseUrl: 'https://console.enteract.live/api/',
 
   // For Jazz
-  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api',
+  // IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
   // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
   // SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
   // ServiceBaseUrl: '',
@@ -63,15 +64,15 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://ttcommon.enteract.live/',
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
   // ServiceBaseUrl: '',
-  // ProfileBaseUrl: '',
+  //  ProfileBaseUrl: '',
 
   // For Morinaga
-  // IdentityBaseUrl: 'https://waidentity.enteract.live/api/',
-  // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
-  // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
-  // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-  // ProfileBaseUrl: '',
+  IdentityBaseUrl: 'https://waidentity.enteract.live/api/',
+  CommonBaseUrl: 'https://wacommon.enteract.live/api/',
+  SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
+  ServiceBaseUrl: 'https://waservice.enteract.live/api/',
+  consoleBaseUrl: 'https://waconsole.enteract.live/api/',
+  ProfileBaseUrl: '',
 
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
@@ -79,18 +80,33 @@ export const environment = {
   // SignalRCommonBaseUrl: 'https://bzcommon.enteract.live/',
   // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-  // ProfileBaseUrl: '',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
 
-  // For Testing
+  // // For Testing
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
-  IdentityBaseUrl:'https://rep.enteract.app/api/',
-  TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
-  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  ServiceBaseUrl: '',
-  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  ProfileBaseUrl: 'https://profiler.enteract.app/api/', //https://profiler.entract.live/
-  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  // // IdentityBaseUrl:'https://rep.enteract.app/api/',
+  // // TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
+  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  // ServiceBaseUrl: '',
+  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+
+
+
+  // for statging / Internal :companyId 650
+  // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
+  // CommonBaseUrl: 'https://comrox.enteract.app/api/',
+  // ServiceBaseUrl: '',
+  // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  // consoleBaseUrl: 'https://conrox.enteract.app/api/',
+
+
+
+
+
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
@@ -117,13 +133,15 @@ export const environment = {
       permissions: 'Roles/Permissions',
       RoleProperties: 'Permissions/Properties',
       AddRole: 'Permissions/Roles',
-      UserRoles: 'Roles/GetActors',
-      UserTeams: 'Teams/TeamsByUser',
+      //UserRoles: 'Roles/GetActors',
+      UserRoles: 'Roles/GetActor',
+      //UserTeams: 'Teams/TeamsByUser',
+      UserTeams: 'Teams/GetAllTeams',
       AddUser: 'Identity/Add',
       UpdateUser: 'Identity/Update',
       DeleteUser: 'Identity/Delete',
       AllUsers: 'Users/GetAll',
-      GetUserById: 'Users/GetById',
+      GetUserById: 'Users/GetById/',
       // For console skill setup
       channels: 'Console/Properties/Channel/Tree/0',
       routing: 'Console/Properties/routing/Tree/0',
@@ -161,14 +179,16 @@ export const environment = {
       getSkills: 'Skill/GetAll',
       addSkill: 'Skill/Add',
       deleteSkill: 'Skill/Delete',
+
+      getTagsAll: 'Tags/GetAll',
+      getTagsByCompanyId: 'Tags/GetTagsByCompayId',
       updateSkill: 'Skill/Update',
       getSkillsbyId: 'Skill/GetById',
-      getUserSkills:'Skill/GetSkills',
+      getUserSkills: 'Skill/GetSkills',
       getAllProfile: 'Profile/GetAll',
       addProfile: 'Profile/Add',
       attachFacebookPage: 'ProfileManagement/RegisterProfile',
-      getTags: 'Tags/GetAll',
-      getTagsByCompanyId: 'Tags/GetTagsByCompayId',
+      getTags: 'Tags/GetTags',
       getTagById: 'Tags/GetById',
       addTags: 'Tags/Add',
       updateTag: 'Tags/Update',
@@ -182,10 +202,12 @@ export const environment = {
       updateRules: 'Rules/Update',
       deleteRules: 'Rules/Delete',
       defaultTags: 'Tags/GetTags',
-      quickReplyListForBazaar:'QuickReply/GetAll',
-      getAllTeams:'Teams/GetTeamTypes',
-      addTeam : 'Teams/Add',
-      updateTeam: 'Teams/Update'
+      quickReplyListForBazaar: 'QuickReply/GetAll',
+      getAllTeams: 'Teams/GetTeamTypes',
+      addTeam: 'Teams/Add',
+      updateTeam: 'Teams/Update',
+      deleteTeam: 'Teams/Delete',
+      deleteMultipleTeams: 'Teams/DeleteMultiple',
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',
@@ -248,6 +270,7 @@ export const environment = {
       hideUnhideMessage: 'Publisher/HideQuery',
       dispositionTags: 'Keyword/GetAllDisposition',
       removeAssignedQuery: 'Query/RemoveAssignQuery',
+      sessionClose:'Whatsapp/TerminateSupportSession',
       //Reports
       routeToAgents: 'Report/GetWhatsAppRouteToAgentReport',
       routeToAgentsCsv: 'Report/GetWhatsAppRouteAgentReportCSV',
@@ -284,6 +307,9 @@ export const environment = {
       keMediaReport: 'MediaReport/GetMediaReport',
       PrintFeed: 'Media/GetMediaPrintList',
       CSATReport: 'Report/GetCSATReport',
+      getInteractionReport: 'Report/GetAgentPerformanceDashboard',
+      // whatsapp bot interaction
+      whatsappBotInteraction: 'Whatsapp/GetBotInteractionHistory'
     },
     facebook: {
       comments: 'Facebook/GetFbPost',

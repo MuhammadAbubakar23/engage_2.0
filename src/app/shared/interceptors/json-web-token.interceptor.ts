@@ -34,10 +34,10 @@ export class JsonWebTokenInterceptor implements HttpInterceptor {
     ) {
       this.router.navigate(['/identity/login']);
     }
-    if(!httpRequest.url.includes("rep")){
-      const allToken2 = this.ls.retrive("token2");
-      token = allToken2.local;// allToken.cookie
-    }
+    // if(!httpRequest.url.includes("rep")){
+    //   const allToken2 = this.ls.retrive("token2");
+    //   token = allToken2.local;// allToken.cookie
+    // }
     if (
       token &&
       !httpRequest.url.includes('Login') &&

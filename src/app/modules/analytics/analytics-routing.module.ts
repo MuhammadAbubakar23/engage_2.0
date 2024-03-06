@@ -59,10 +59,7 @@ const routes: Routes = [
       path:'dashboard',
       loadComponent: () => import('./components/analytics-dashboard/analytics-dashboard.component').then(c => c.AnalyticsDashboardComponent),
     },
-    {
-      path:'executive-dashboard',
-      loadComponent: () => import('./components/executive-dashboard/executive-dashboard.component').then(c => c.ExecutiveDashboardComponent),
-    },
+   
     {
       path:'route-to-agent',
       loadComponent: () => import('./components/route-to-agent/route-to-agent.component').then(c => c.RouteToAgentComponent),
@@ -127,6 +124,11 @@ const routes: Routes = [
     {
       path:'facebook-report-scrm',
       loadComponent:()=>import('./archive-reports-components/facebook-report-scrm/facebook-report-scrm.component').then(c=>c.FacebookReportScrmComponent)
+    }
+    ,
+    {
+      path:'interaction-report',
+      loadComponent:()=>import('./components/interaction-report/interaction-report.component').then(c=>c.InteractionReportComponent)
     }
   ]
   }

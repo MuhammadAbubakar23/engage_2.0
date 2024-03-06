@@ -11,9 +11,9 @@ import { UsersService } from './users.service';
   providedIn: 'root'
 })
 export class UsersResolver implements Resolve<boolean> {
-  constructor(private us:UsersService){}
+  constructor(private us:UsersService){
+  }
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    
     return of(true);
   }
 }

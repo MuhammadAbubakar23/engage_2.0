@@ -106,7 +106,7 @@ export class MainMenuComponent implements OnInit {
     }
 
     if (this.onlyAnalyticsTabVisible.includes(this.restrictedAgent)) {
-      this.router.navigateByUrl('analytics/whatsapp-report');
+    this.router.navigateByUrl('analytics/whatsapp-report');
     }
 
     // this.menu$ = this.store.select(getMenuById(2)).subscribe((item) => {

@@ -67,8 +67,9 @@ import { ToasterComponent } from './engage2/toaster/toaster.component';
 import { tagsReducer } from './engage2/tags-state/tags.reducer';
 import { TagsEffects } from './engage2/tags-state/tags.effect';
 import { WebphoneDialerModule } from '../modules/webphone-dialer/webphone-dialer.module';
-
-
+import { BotMonitoringContentComponent } from './engage2/bot-monitoring-content/bot-monitoring-content.component';
+import { MonitoringHeaderComponent } from './engage2/bot-monitoring-content/monitoring-header/monitoring-header.component';
+import { MonitoringMenuComponent } from './engage2/bot-monitoring-content/monitoring-menu/monitoring-menu.component';
 
 @NgModule({
   declarations: [
@@ -123,7 +124,10 @@ import { WebphoneDialerModule } from '../modules/webphone-dialer/webphone-dialer
     BotContentComponent,
     BotMenuComponent,
     BotHeaderComponent,
-    ToasterComponent
+    ToasterComponent,
+    BotMonitoringContentComponent,
+    MonitoringHeaderComponent,
+    MonitoringMenuComponent
   ],
   imports: [
     CommonModule,
@@ -139,7 +143,7 @@ import { WebphoneDialerModule } from '../modules/webphone-dialer/webphone-dialer
     EffectsModule.forFeature([MenusEffects, PermissionsEffects, TagsEffects]),
     WebphoneDialerModule
   ],
-  exports:[
+  exports: [
     MainContentComponent,
     ResponderContentComponent,
     InboxContentComponent,
@@ -158,7 +162,9 @@ import { WebphoneDialerModule } from '../modules/webphone-dialer/webphone-dialer
     BotRightSidebarComponent,
     BotContentComponent,
     ToasterComponent,
-    AvatarContentComponent
+    AvatarContentComponent,
+    MonitoringHeaderComponent,
+    BotMonitoringContentComponent
   ]
 })
 export class LayoutsModule { }

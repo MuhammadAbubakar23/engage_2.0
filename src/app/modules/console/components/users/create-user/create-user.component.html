@@ -32,7 +32,7 @@
                                             f['firstname']!.dirty))}" class="form-control" id="firstname"
                               formControlName="firstname" placeholder="Enter First Name">
                             <label for="firstname">First Name</label>
-                            <div class="invalid-feedback" 
+                            <div class="invalid-feedback"
                               *ngIf="(f['firstname']!.errors && (f['firstname']!.touched ||
                                       f['firstname']!.dirty))">
                               <div
@@ -48,7 +48,7 @@
                               Looks Good!
                             </div>
                           </div>
-                        </div>                        
+                        </div>
                         <div class="floating-item mb-4">
                           <div
                             [ngClass]="{'was-validated' : f['lastname']!.valid && f['lastname']!.touched}"
@@ -140,14 +140,14 @@
                               Looks Good!
                             </div>
                           </div>
-                        </div>                        
+                        </div>
                         <div class="floating-item mb-4">
                           <div [ngClass]="{'was-validated' : f['confirmpassword']!.valid && f['confirmpassword']!.touched}" class="form-floating mb-2">
                             <input type="password" [ngClass]="{'is-invalid' : (f['confirmpassword']!.errors && (f['confirmpassword']!.touched ||
                               f['confirmpassword']!.dirty))}" class="form-control" id="confirmpassword"
                               formControlName="confirmpassword" placeholder="Enter Confirm Password">
                             <label for="confirmpassword">Confirm Password</label>
-                            <div class="invalid-feedback" 
+                            <div class="invalid-feedback"
                               *ngIf="(f['confirmpassword']!.errors && (f['confirmpassword']!.touched ||
                                                                                     f['confirmpassword']!.dirty))">
                               <div
@@ -201,19 +201,19 @@
                           <div class="form-floating"[ngClass]="{'was-validated' : RolesControl.valid && RolesControl.touched}">
                             <p style="margin-bottom: 0px;">Roles</p>
 
-                            <mat-select [ngClass]="{'is-invalid' : (RolesControl.errors && (RolesControl.touched || RolesControl.dirty))}" 
+                            <mat-select [ngClass]="{'is-invalid' : (RolesControl.errors && (RolesControl.touched || RolesControl.dirty))}"
                               [formControl]="RolesControl" multiple id="role" style="margin: 5px;">
                                 <mat-select-trigger>
                                   <mat-chip-list>
                                     <mat-chip *ngFor="let role of RolesControl.value" [removable]="true" (removed)="onCatRemovedRole(role)"
                                       style="background-color:#2F9DF2; color:#ffffff; border-radius: 5px!important;" selected>
-                                      {{ role.name }}
+                                      {{ role?.name }}
                                       <mat-icon class="mb-2" matChipRemove>x</mat-icon>
                                     </mat-chip>
                                   </mat-chip-list>
                                 </mat-select-trigger>
-                                <mat-option *ngFor="let role of Roles" [value]="role">{{ role.name }}</mat-option>
-                              </mat-select>                           
+                                <mat-option *ngFor="let role of Roles" [value]="role">{{ role?.name }}</mat-option>
+                              </mat-select>
                               <div class="invalid-feedback" *ngIf="(RolesControl.errors && (RolesControl.touched || RolesControl.dirty))">
                                 <div>Please select atleast one Role</div>
                               </div>
@@ -224,20 +224,20 @@
                           <div class="form-floating"[ngClass]="{'was-validated' : TeamsControl.valid && TeamsControl.touched}">
                             <p style="margin-bottom: 0px;">Teams</p>
 
-                            <mat-select [ngClass]="{'is-invalid' : (TeamsControl.errors && (TeamsControl.touched || TeamsControl.dirty))}" 
+                            <mat-select [ngClass]="{'is-invalid' : (TeamsControl.errors && (TeamsControl.touched || TeamsControl.dirty))}"
                               [formControl]="TeamsControl" multiple id="role" style="margin: 5px;">
                                 <mat-select-trigger>
                                   <mat-chip-list>
                                     <mat-chip *ngFor="let team of TeamsControl.value" [removable]="true" (removed)="onCatRemovedRole(team)"
                                       style="background-color:#2F9DF2; color:#ffffff; border-radius: 5px!important;" selected>
-                                      {{ team.name }}
+                                      {{ team?.name }}
                                       <mat-icon class="mb-2" matChipRemove>x</mat-icon>
 
                                     </mat-chip>
                                   </mat-chip-list>
                                 </mat-select-trigger>
-                                <mat-option *ngFor="let team of Teams" [value]="team">{{ team.name }}</mat-option>
-                              </mat-select>                           
+                                <mat-option *ngFor="let team of Teams" [value]="team">{{ team?.name }}</mat-option>
+                              </mat-select>
                               <div class="invalid-feedback" *ngIf="(TeamsControl.errors && (TeamsControl.touched || TeamsControl.dirty))">
                                 <div>Please select atleast one Team</div>
                               </div>
@@ -249,20 +249,20 @@
                           <div class="form-floating"[ngClass]="{'was-validated' : SkillsControl.valid && SkillsControl.touched}">
                             <p style="margin-bottom: 0px;">Skills</p>
 
-                            <mat-select [ngClass]="{'is-invalid' : (SkillsControl.errors && (SkillsControl.touched || SkillsControl.dirty))}" 
+                            <mat-select [ngClass]="{'is-invalid' : (SkillsControl.errors && (SkillsControl.touched || SkillsControl.dirty))}"
                               [formControl]="SkillsControl" multiple id="role" style="margin: 5px;">
                                 <mat-select-trigger>
                                   <mat-chip-list>
                                     <mat-chip *ngFor="let skill of SkillsControl.value" [removable]="true" (removed)="onCatRemovedRole(skill)"
                                       style="background-color:#2F9DF2; color:#ffffff; border-radius: 5px!important;" selected>
-                                      {{ skill.skillName }}
+                                      {{ skill?.skillName }}
                                       <mat-icon class="mb-2" matChipRemove>x</mat-icon>
 
                                     </mat-chip>
                                   </mat-chip-list>
                                 </mat-select-trigger>
                                 <mat-option *ngFor="let skill of Skills" [value]="skill">{{ skill.skillName }}</mat-option>
-                              </mat-select>                           
+                              </mat-select>
                               <div class="invalid-feedback" *ngIf="(SkillsControl.errors && (SkillsControl.touched || SkillsControl.dirty))">
                                 <div>Please select atleast one Skill</div>
                               </div>
@@ -516,4 +516,18 @@
     </div>
   </div>
 
+</div>
+<div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
+  <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
+     aria-live="assertive" aria-atomic="true">
+     <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+        <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+        <div class="toast-btn d-flex align-items-center">
+
+           <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+              (click)="closeToaster()"><i class="fal fa-times"></i></button>
+
+        </div>
+     </div>
+  </div>
 </div>

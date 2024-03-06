@@ -7,7 +7,7 @@ import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { ConversationComponent } from '../inboxes/components/conversation/conversation.component';
 import { ActionsComponent } from './components/actions/actions.component'
 import { AnalyticsDashboardComponent } from './components/analytics-dashboard/analytics-dashboard.component';
-import { ExecutiveDashboardComponent } from './components/executive-dashboard/executive-dashboard.component';
+
 import { LiveMonitoringComponent } from './components/live-monitoring/live-monitoring.component';
 import { ReportDbSettingsComponent } from './components/report-db-settings/report-db-settings.component';
 import { ReportlistingComponent } from './components/reportlisting/reportlisting.component';

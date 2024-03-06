@@ -57,6 +57,11 @@ export class AnalyticsMenuComponent implements OnInit {
     } else if (this.activeChannel == 'https://bzengage.enteract.live') {
       this.channelname = 'Bazaar';
     }
+    else if(this.activeChannel=='https://uiengagerox.enteract.app') {
+      this.channelname='stagging';
+    }
+
+
 
     this.getmenu();
   }
@@ -84,15 +89,18 @@ export class AnalyticsMenuComponent implements OnInit {
         { name: 'Shift Report', link: '/analytics/shift-report' },
         { name: 'Query Tag Report', link: '/analytics/querytag-report' },
         { name: 'Tag Report', link: '/analytics/tag-report' },
-        { name: 'Executive Dashboard', link: '/analytics/executive-dashboard' },
+
         { name: 'Facebook Report', link: '/analytics/facebook-report' },
         { name: 'Twitter Report', link: '/analytics/twitter-report' },
         { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
         { name: 'Instagram Report', link: '/analytics/instagram-report' },
+        { name: 'interaction Report', link: '/analytics/interaction-report' }
       ];
-    } else if (this.channelname == 'stagging') {
+    }
+    else if (this.channelname == 'stagging') {
       this.analyticeReport = [
         { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
+        { name: 'Interaction Report', link: '/analytics/interaction-report' },
         { name: 'BOT Interactions', link: '/analytics/handled-bot' },
         { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
         { name: 'Unique Interactions', link: '/analytics/unique-customers' },
@@ -108,11 +116,12 @@ export class AnalyticsMenuComponent implements OnInit {
         { name: 'Shift Report', link: '/analytics/shift-report' },
         { name: 'Query Tag Report', link: '/analytics/querytag-report' },
         { name: 'Tag Report', link: '/analytics/tag-report' },
-        { name: 'Executive Dashboard', link: '/analytics/executive-dashboard' },
+
         { name: 'Facebook Report', link: '/analytics/facebook-report' },
         { name: 'Twitter Report', link: '/analytics/twitter-report' },
         { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
         { name: 'Instagram Report', link: '/analytics/instagram-report' },
+
       ];
     } else if (this.channelname == 'Jazz') {
       this.analyticeReport = [
@@ -130,6 +139,7 @@ export class AnalyticsMenuComponent implements OnInit {
           link: '/analytics/performance-report',
         },
         { name: 'Shift Report', link: '/analytics/shift-report' },
+
       ];
     } else if (this.channelname == 'KE') {
       this.analyticeReport = [
@@ -141,13 +151,15 @@ export class AnalyticsMenuComponent implements OnInit {
           name: 'Agent Performance Report',
           link: '/analytics/performance-report',
         },
+        { name: 'Interaction Report', link: '/analytics/interaction-report' },
         { name: 'Shift Report', link: '/analytics/shift-report' },
         { name: 'Tag Report', link: '/analytics/tag-report' },
-        { name: 'Executive Dashboard', link: '/analytics/executive-dashboard' },
+
         { name: 'Facebook Report', link: '/analytics/facebook-report' },
         { name: 'Twitter Report', link: '/analytics/twitter-report' },
         { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
         { name: 'Instagram Report', link: '/analytics/instagram-report' },
+
       ];
     } else if (this.channelname == 'ttpl') {
       this.analyticeReport = [
@@ -188,6 +200,7 @@ export class AnalyticsMenuComponent implements OnInit {
     else if (this.channelname == 'Bazaar') {
       this.analyticeReport = [
         { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
+        { name: 'Interaction Report', link: '/analytics/interaction-report' },
         { name: 'BOT Interactions', link: '/analytics/handled-bot' },
         { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
         { name: 'Unique Interactions', link: '/analytics/unique-customers' },
@@ -201,6 +214,7 @@ export class AnalyticsMenuComponent implements OnInit {
           link: '/analytics/performance-report',
         },
         { name: 'Shift Report', link: '/analytics/shift-report' },
+
       ];
     }
   }

@@ -725,7 +725,7 @@
                         <!-- Hard Coded only for Bazaar-->
 
                         <div class="list-group list-group-flush"
-                            *ngFor="let qr of QuickRepliesForBazaar; let i = index">
+                            *ngFor="let qr of QuickRepliesForBazaar  | quickReplySearchFilter: quickReplySearchText; let i = index">
                             <a class="list-group-item d-flex align-items-center menu_bar_collapse"
                                 (click)="openQuickReplyDropdown(i)" data-bs-toggle="collapse" role="button"
                                 [attr.data-bs-target]="'#qr-ques'+qr.value+i" aria-expanded="true"
@@ -744,7 +744,7 @@
                                 </div>
                             </a>
                             <div class="list-group list-group-flush collapse-wrap mx-3 collapse" [ngClass]="{'show': i === activeDropdown}" style="margin-left: 30px;"
-                                *ngFor="let sr of qr.subReply; let j = index">
+                                *ngFor="let sr of qr.subReply  | quickReplySearchFilter: quickReplySearchText  let j = index">
                                 <!-- Inner Dropdown -->
                                 <a class="list-group-item d-flex align-items-center menu_bar_collapse"
                                     (click)="openInnerQuickReplyDropdown(i, j)" data-bs-toggle="collapse" role="button"
@@ -768,7 +768,7 @@
                                     [id]="'sr-ques'+sr.value+j">
                                     <div class="list-group list-group-flush mb-4 ms-4 ps-1">
                                         <div class="form-check list-group-item theme-check selectedmsg"
-                                            *ngFor="let msg of sr.subReply | quickReplySearchFilter: quickReplySearchText">
+                                            *ngFor="let msg of sr.subReply  | quickReplySearchFilter: quickReplySearchText">
                                             <input class="form-check-input" type="radio" name="flexRadioDefault"
                                                 id={{msg.id}} #radioInput>
                                             <label class="form-check-label" (click)="sendQuickReplyForBazaar(msg.id)"
