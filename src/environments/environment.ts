@@ -67,12 +67,12 @@ export const environment = {
   //  ProfileBaseUrl: '',
 
   // For Morinaga
-  IdentityBaseUrl: 'https://waidentity.enteract.live/api/',
-  CommonBaseUrl: 'https://wacommon.enteract.live/api/',
-  SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
-  ServiceBaseUrl: 'https://waservice.enteract.live/api/',
-  consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-  ProfileBaseUrl: '',
+  // IdentityBaseUrl: 'https://waidentity.enteract.live/api/',
+  // CommonBaseUrl: 'https://wacommon.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://wacommon.enteract.live/',
+  // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
+  // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
+  // ProfileBaseUrl: '',
 
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
@@ -96,12 +96,12 @@ export const environment = {
 
 
   // for statging / Internal :companyId 650
-  // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
-  // CommonBaseUrl: 'https://comrox.enteract.app/api/',
-  // ServiceBaseUrl: '',
-  // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  // consoleBaseUrl: 'https://conrox.enteract.app/api/',
+  IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
+  CommonBaseUrl: 'https://comrox.enteract.app/api/',
+  ServiceBaseUrl: '',
+  SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  consoleBaseUrl: 'https://conrox.enteract.app/api/',
 
 
 
