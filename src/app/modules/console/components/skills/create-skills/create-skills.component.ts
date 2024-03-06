@@ -201,7 +201,7 @@ export class CreateSkillsComponent implements OnInit {
 
 
   getSkillsById() {
-    debugger
+    
     this.id = Number(this.activeRoute.snapshot.paramMap.get('id'));
     if (this.id) {
       this.commondata.editSkill(this.id).subscribe((res: any) => {

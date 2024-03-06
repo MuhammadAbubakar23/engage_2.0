@@ -70,6 +70,7 @@ export class RulesComponent implements OnInit {
   }
   
   deleteTemplate(message: any) {
+    
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
       this.commonService.DeleteRules(message.id).subscribe(
@@ -108,7 +109,7 @@ export class RulesComponent implements OnInit {
     this.refreshtableData()
   }
   goToPage(pageNumber: number): void {
-    debugger
+    
     if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totalCount / this.perPage)) {
       this.currentPage = pageNumber;
     }

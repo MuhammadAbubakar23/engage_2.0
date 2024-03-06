@@ -87,7 +87,7 @@ export class TeamsComponent implements OnInit {
   //   this.isActive = !this.isActive;
   // }
   deleteTeam(value: any) {
-    debugger
+    
    
     this.commonService.DeleteSignalTeam(value).subscribe((res:any)=>{
       console.log("res",res)
@@ -192,7 +192,7 @@ export class TeamsComponent implements OnInit {
     this.getTeamList()
   }
   goToPage(pageNumber: number): void {
-    debugger
+    
     if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totalCount / this.perPage)) {
       this.currentPage = pageNumber;
     }

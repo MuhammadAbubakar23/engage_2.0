@@ -148,7 +148,7 @@ export class TagsComponent implements OnInit {
     this.getTags()
   }
   goToPage(pageNumber: number): void {
-    debugger
+    
     if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totoalCount / this.perPage)) {
       this.currentPage = pageNumber;
     }

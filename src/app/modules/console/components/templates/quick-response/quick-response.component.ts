@@ -101,7 +101,7 @@ export class QuickResponseComponent implements OnInit {
     this.refreshMessages()
   }
   goToPage(pageNumber: number): void {
-    debugger
+    
     if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totalCount / this.perPage)) {
       this.currentPage = pageNumber;
     }
