@@ -16,7 +16,9 @@ export class SlaPoliciesComponent implements OnInit {
   messages: any[] = [];
   searchText: string = '';
   selectedSortOption: string = '';
-
+  perPage: number = 15;
+  currentPage: number = 1;
+  totalCount: any;
   applySearchFilter() {
     if(this.searchText.trim() !== ''){
       this.refreshMessages()
@@ -31,12 +33,14 @@ export class SlaPoliciesComponent implements OnInit {
     const formData = {
       search: this.searchText,
       sorting: this.selectedSortOption,
-      pageNumber: 0,
-      pageSize: 0
+      pageNumber: this.currentPage,
+      pageSize: this.perPage
     }
     this.commonService.GetSlaPolicy(formData).subscribe(
       (response: any) => {
         this.messages = response.SLAPolices;
+        this.totalCount = response.TotalCount
+
       },
       (error: any) => {
         console.error(error);
@@ -102,6 +106,45 @@ export class SlaPoliciesComponent implements OnInit {
   }
   generateNewId() {
     return Math.floor(Math.random() * 100000) + 1;
+  }
+  setPerPage(perPage: number): void {
+    this.perPage = perPage;
+    this.currentPage = 1;
+    this.refreshMessages()
+  }
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+    this.refreshMessages()
+  }
+  nextPage(): void {
+    const maxPages = Math.ceil(this.totalCount / this.perPage);
+    if (this.currentPage < maxPages) {
+      this.currentPage++;
+    }
+    this.refreshMessages()
+  }
+  goToPage(pageNumber: number): void {
+    
+    if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totalCount / this.perPage)) {
+      this.currentPage = pageNumber;
+    }
+    this.refreshMessages()
+  }
+
+  getVisiblePageNumbers(): number[] {
+    const maxPages = Math.ceil(this.totalCount / this.perPage);
+    const visiblePages = 5;
+
+    let startPage = Math.max(1, this.currentPage - Math.floor(visiblePages / 2));
+    let endPage = Math.min(startPage + visiblePages - 1, maxPages);
+
+    if (endPage - startPage + 1 < visiblePages) {
+      startPage = Math.max(1, endPage - visiblePages + 1);
+    }
+
+    return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }
 
 }

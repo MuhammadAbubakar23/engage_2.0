@@ -34,7 +34,7 @@ export class CreateTagsComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
       desc: [''],
-      parentId: [''],
+      parentId: [3],
       baseId: [3],
       firewallId: [0],
       icon: [''],

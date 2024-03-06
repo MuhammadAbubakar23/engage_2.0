@@ -55,6 +55,20 @@ export class SkillsComponent implements OnInit {
 
     this.headerService.updateMessage(string);
   }
+  getReadableWingName(wingSlug: string): string {
+    // Logic to transform the wingSlug into a readable format
+    switch (wingSlug) {
+      case 'select_wing_a':
+        return 'Select wing A';
+        case 'select_wing_b':
+          return 'Select wing B';
+          case 'select_wing_c':
+            return 'Select wing C';
+      // Add more cases for other possible values if needed
+      default:
+        return wingSlug; // Return the original value if no transformation is needed
+    }
+  }
   getSkillList() {
     let obj = {
 
@@ -66,6 +80,7 @@ export class SkillsComponent implements OnInit {
     }
     this.commonData.GetSkill(obj).subscribe((res: any) => {
       this.skills = res.Skills
+      console.log("  this.skills " ,   this.skills )
       this.TotalCount = res.TotalCount;
       if (this.pageNumber == 1) {
         this.startingPoint = 1;
@@ -234,4 +249,5 @@ export class SkillsComponent implements OnInit {
     this.route.navigateByUrl(`/console/skills/create/${id}`);
     console.log('After navigation', id);
   }
+  
 }

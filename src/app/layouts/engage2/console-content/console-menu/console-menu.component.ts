@@ -51,7 +51,8 @@ export class ConsoleMenuComponent implements OnInit {
     }
   }
   
-  updatevalue(string:any){    
+  updatevalue(string:any){
+    debugger    
     this.headerService.updateMessage(string);
   }
 }

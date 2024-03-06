@@ -42,11 +42,11 @@ export class CreateSkillsComponent implements OnInit {
   isBusnisshours: any[] = []
   isSelectedWing: any[] = [
     {
-      id: 1, name: 'Select wing A'
+      id: 1, value:'select_wing_a ',name: 'Select wing A'
     }, {
-      id: 2, name: 'Select wing B'
+      id: 2, value:'select_wing_b ', name: 'Select wing B'
     }, {
-      id: 3, name: 'Select wing C'
+      id: 3, value:'select_wing_c ', name: 'Select wing C'
     }
 
   ]
@@ -80,7 +80,7 @@ export class CreateSkillsComponent implements OnInit {
   selectedRules: string[] = [];
 
   updateSelectedRules(id: number) {
-    
+
     this.subRules.forEach((item: any) => {
       if (item.id === id) {
         item.isSelected = true;
@@ -117,7 +117,7 @@ export class CreateSkillsComponent implements OnInit {
   public subscription!: Subscription
   subRules: any[] = []
   GetRules() {
-    const data ={
+    const data = {
       search: '',
       sorting: '',
       pageNumber: 0,
@@ -157,7 +157,7 @@ export class CreateSkillsComponent implements OnInit {
   }
 
   selectRulesBasedOnSkillTags(selectedRules: any): void {
-    
+
     console.log("Checking tags", this.subRules)
     for (const rule of selectedRules) {
       this.selectRuleById(rule.id, this.subRules);
@@ -166,7 +166,7 @@ export class CreateSkillsComponent implements OnInit {
   }
 
   selectRuleById(id: number, rules: any[]): void {
-    
+
     this.selectedRules = [];
     const ruleToCheck = rules.find(rule => rule.id === id);
     if (ruleToCheck) {
@@ -175,7 +175,7 @@ export class CreateSkillsComponent implements OnInit {
     }
   }
   checkTagsBasedOnSkillTags(skillTags: any): void {
-    
+
     console.log("Checking tags", this.TagsLists)
     for (const skillTag of skillTags) {
       this.checkTagById(skillTag.id, this.TagsLists);
@@ -183,7 +183,7 @@ export class CreateSkillsComponent implements OnInit {
   }
   checkTagById(id: number, tags: any[]): void {
     this.checkedIds = []
-    
+
     const tagToCheck = tags.find(tag => tag.mainId === id);
 
     if (tagToCheck) {
@@ -201,6 +201,7 @@ export class CreateSkillsComponent implements OnInit {
 
 
   getSkillsById() {
+    debugger
     this.id = Number(this.activeRoute.snapshot.paramMap.get('id'));
     if (this.id) {
       this.commondata.editSkill(this.id).subscribe((res: any) => {
@@ -211,7 +212,7 @@ export class CreateSkillsComponent implements OnInit {
           "description": res.descreption,
           "businesshours": res.businessHoursId,
           "SlaPolicy": res.slaPolicyId,
-          "wingSlug":res.wingSlug
+          "wingSlug": res.wingSlug
         });
         this.checkTagsBasedOnSkillTags(res.skillTags);
         this.selectRulesBasedOnSkillTags(res.skillRules);
@@ -241,7 +242,7 @@ export class CreateSkillsComponent implements OnInit {
   }
 
   getTagsList() {
-    
+
     this.commondata.GetTagsByCompanyId().subscribe((res: any) => {
       console.log("Response", res)
       this.TagsLists = res
@@ -328,8 +329,8 @@ export class CreateSkillsComponent implements OnInit {
 
     return checkedIds;
   }
-isresponderchecked:boolean=false
-isInboxChecked:boolean=false
+  isresponderchecked: boolean = false
+  isInboxChecked: boolean = false
   onSubmit() {
     if (this.userForm.valid) {
       let data = {
@@ -342,7 +343,7 @@ isInboxChecked:boolean=false
         "skillTags": this.getCheckedIds(),
         "skillRules": this.subRules.filter(rule => rule.isSelected).map(rule => rule.id),
         "responder": this.isresponderchecked,
-        "inbox":this.isInboxChecked
+        "inbox": this.isInboxChecked
       }
       if (this.id && this.id !== null) {
         this.commondata.UpdateSkill(this.id, data).subscribe((res: any) => {
@@ -356,9 +357,10 @@ isInboxChecked:boolean=false
         this.commondata.AddSkill(data).subscribe((res: any) => {
           console.log("addSkills===>", res)
           this.sendtoastervalue = 'skilladd'
+          this.userForm.reset()
+          this.router.navigateByUrl('/console/skills')
         })
-        this.userForm.reset()
-        this.router.navigateByUrl('/console/skills')
+
       }
     }
     else {

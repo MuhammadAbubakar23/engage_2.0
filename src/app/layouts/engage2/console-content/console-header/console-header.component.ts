@@ -35,6 +35,9 @@ import { SupportChannelsHeaderComponent } from 'src/app/modules/console/console-
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { InboxHeaderComponent } from '../../inbox-content/inbox-header/inbox-header.component';
+import { ConsoleQuickResponseHeaderComponent } from 'src/app/modules/console/console-headers/console-quick-response-header/console-quick-response-header.component';
+import { ConsoleCreateBusinessHoursHeaderComponent } from 'src/app/modules/console/console-headers/console-create-business-hours-header/console-create-business-hours-header.component';
+import { ConsoleCreateRuleHeaderComponent } from 'src/app/shared/headers/console-create-rule-header/console-create-rule-header.component';
 
 @Component({
   selector: 'console-header',
@@ -77,8 +80,6 @@ export class ConsoleHeaderComponent implements OnInit {
   }
 
   loadComponent(leftSideName: string) {
-
-
     let componentFactory = null;
     
     switch (leftSideName) {
@@ -103,8 +104,16 @@ export class ConsoleHeaderComponent implements OnInit {
         componentFactory = this.resolver.resolveComponentFactory(ConsoleRulesHeaderComponent);
         this.target.createComponent(componentFactory);
         break;
-      case ('businessHours'):
+        case ('ConsoleCreateRuleHeader'):
+        componentFactory = this.resolver.resolveComponentFactory(ConsoleCreateRuleHeaderComponent);
+        this.target.createComponent(componentFactory);
+        break;
+      case ('business-hours'):
         componentFactory = this.resolver.resolveComponentFactory(ConsoleBusinessHoursHeaderComponent);
+        this.target.createComponent(componentFactory);
+        break;
+        case ('ConsoleCreateBusinessHoursHeader'):
+        componentFactory = this.resolver.resolveComponentFactory(ConsoleCreateBusinessHoursHeaderComponent);
         this.target.createComponent(componentFactory);
         break;
       case ('tags'):
@@ -115,7 +124,7 @@ export class ConsoleHeaderComponent implements OnInit {
         componentFactory = this.resolver.resolveComponentFactory(ConsoleRolesComponent);
         this.target.createComponent(componentFactory);
         break;
-      case ('slaPolicies'):
+      case ('sla-policies'):
         componentFactory = this.resolver.resolveComponentFactory(ConsoleSlaPoliciesHeaderComponent);
         this.target.createComponent(componentFactory);
         break;
@@ -123,6 +132,7 @@ export class ConsoleHeaderComponent implements OnInit {
         componentFactory = this.resolver.resolveComponentFactory(ConsoleSkillsHeaderComponent);
         this.target.createComponent(componentFactory);
         break;
+        
       case ('console-contacts'):
         componentFactory = this.resolver.resolveComponentFactory(ConsoleContactsHeaderComponent);
         this.target.createComponent(componentFactory);
@@ -189,7 +199,7 @@ export class ConsoleHeaderComponent implements OnInit {
         this.target.createComponent(componentFactory);
         break;
 
-        case ('messages-template'):
+        case ('templates/messages'):
         componentFactory = this.resolver.resolveComponentFactory(ConsoleMessagesTemplateHeaderComponent);
         this.target.createComponent(componentFactory);
         break;
@@ -197,12 +207,16 @@ export class ConsoleHeaderComponent implements OnInit {
         componentFactory = this.resolver.resolveComponentFactory(ConsoleCreateMessageTemplatesHeaderComponent);
         this.target.createComponent(componentFactory);
         break;
-        case ('signatures-template'):
+        case ('templates/signatures'):
         componentFactory = this.resolver.resolveComponentFactory(ConsoleSignaturesTemplateHeaderComponent);
         this.target.createComponent(componentFactory);
         break;
         case ('consoleCreateSignatureTemplatesHeader'):
         componentFactory = this.resolver.resolveComponentFactory(ConsoleCreateSignatureTemplatesHeaderComponent);
+        this.target.createComponent(componentFactory);
+        break;
+        case ('templates/quickResponse'):
+        componentFactory = this.resolver.resolveComponentFactory(ConsoleQuickResponseHeaderComponent);
         this.target.createComponent(componentFactory);
         break;
         case ('consoleConnectFormHeader'):

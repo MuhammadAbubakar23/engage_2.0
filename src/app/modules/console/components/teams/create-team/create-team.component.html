@@ -45,7 +45,7 @@
                                         characters!
                                     </div>
                                     <div *ngIf="teamForm.get('name')!.errors?.['required']">
-                                        Skill Name is required!
+                                        Team Name is required!
                                     </div>
                                 </div>
                                 <div class="valid-feedback"
@@ -54,7 +54,7 @@
                                     Looks Good!
                                 </div>
                             </div>
-                            <small class="example-text ms-3">e.g. Customer support Team</small>
+                            <!-- <small class="example-text ms-3">e.g. Customer support Team</small> -->
 
                         </div>
                         <div class="floating-item mb-4">
@@ -78,9 +78,9 @@
                                     Looks Good!
                                 </div>
                             </div>
-                            <small class="example-text ms-3">e.g. This Team belongs to Customer Support in
+                            <!-- <small class="example-text ms-3">e.g. This Team belongs to Customer Support in
                                 Tokyo
-                                timezone</small>
+                                timezone</small> -->
 
                         </div>
                         <div class="floating-item mb-4">
@@ -100,7 +100,7 @@
                                 <div class="invalid-feedback"
                                     *ngIf="(teamForm.get('timeZone')!.errors && (teamForm.get('timeZone')!.touched || teamForm.get('timeZone')!.dirty))">
                                     <div *ngIf="teamForm.get('timeZone')!.errors?.['required']">
-                                        Please select Business Hours
+                                        Please select  Hours
                                     </div>
 
                                 </div>
