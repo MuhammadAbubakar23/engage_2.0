@@ -18,7 +18,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
 import { HeaderCountService } from 'src/app/services/headerCountService/header-count.service';
-
+import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
@@ -85,7 +85,8 @@ export class ConversationComponent implements OnInit {
     private removeAssignedQueryService: RemoveAssignedQuerryService,
     private datePipe: DatePipe,
     private userInfoService: UserInformationService,
-    private headerCountService: HeaderCountService
+    private headerCountService: HeaderCountService,
+    private sendCount:ClosePanelService
   ) {
     this.criteria = {
       property: 'createdDate',
@@ -394,15 +395,29 @@ export class ConversationComponent implements OnInit {
   }
     
     
-    
-    
-    
-
-    
     this.SpinnerService.show();
-     localStorage.setItem('datefillter',JSON.stringify(this.filterDto))
+    this.changeDetect.detectChanges()
+      // localStorage.setItem('datefillter',JSON.stringify(this.filterDto))
     this.commondata.GetConversationList(this.filterDto).subscribe(
       (res: any) => {
+        if(Object.keys(res).length === 0){
+          this.groupByDateList=[];
+          this.to=0
+          this.TotalUnresponded=0
+          this.from=0
+          this.SpinnerService.hide()
+        }
+       
+        // for followTotalCounts
+      
+        res.List.forEach((x:any)=>{
+      
+          if(x.follow_Up_Status!==null){
+            this.sendCount.sendtotalCount(res.TotalCount)
+          }
+        })
+      
+     
         if (Object.keys(res).length > 0) {
           this.searchForm.reset();
           this.SpinnerService.hide();

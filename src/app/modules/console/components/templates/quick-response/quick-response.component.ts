@@ -29,11 +29,11 @@ export class QuickResponseComponent implements OnInit {
 
   }
   setSortOption(option: string) {
-    
+
     this.selectedSortOption = option;
-    this.refreshMessages(); 
+    this.refreshMessages();
   }
-  
+
   refreshMessages() {
     const formData ={
       search: this.searchText,
@@ -53,7 +53,7 @@ export class QuickResponseComponent implements OnInit {
       }
     );
   }
-  
+
   sortMessages() {
     switch (this.selectedSortOption) {
       case 'Ascending':
@@ -66,7 +66,7 @@ export class QuickResponseComponent implements OnInit {
         break;
     }
   }
-  
+
   constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
 
   ngOnInit(): void {

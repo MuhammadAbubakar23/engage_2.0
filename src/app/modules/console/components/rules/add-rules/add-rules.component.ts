@@ -117,7 +117,7 @@ export class AddRulesComponent implements OnInit {
 
   //       description: res.description,
   //       ruleName: res.name,
-  //       // rulesJson: JSON.parse(res.rulesJson), 
+  //       // rulesJson: JSON.parse(res.rulesJson),
   //       // tableName :res.tableName
 
   //     });

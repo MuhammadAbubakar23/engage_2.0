@@ -53,12 +53,12 @@ export class SlaPoliciesComponent implements OnInit {
    this.refreshMessages()
   }
   setSortOption(option: string) {
-    
+
     this.selectedSortOption = option;
-    this.refreshMessages(); 
+    this.refreshMessages();
   }
 
- 
+
 
   updatevalue(string: any) {
     this.headerService.updateMessage(string);

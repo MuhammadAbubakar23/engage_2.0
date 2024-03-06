@@ -30,6 +30,7 @@ import { ReplyDto } from 'src/app/shared/Models/ReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
+// import {  Editor, Toolbar } from 'ngx-editor';
 @Component({
   selector: 'app-email',
   templateUrl: './email.component.html',
@@ -42,9 +43,19 @@ export class EmailComponent implements OnInit {
   @Input() subname: string = '';
   @Input() imagename: string = '';
   @Input() linkname: string = 'javascript:;';
+  // editor!: Editor
+  ckEditorConfig: any = { toolbar: [
+    ['Source', 'Templates', 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat'],
+    ['underline' ],
+    [ 'Undo', 'Redo' ,'Table' ],
+    [ 'Find', 'Replace', '-', 'SelectAll', '-',  ],
+    [ 'NumberedList', 'BulletedList', '-', 'Outdent', '-',
+     'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl' ],
+    // [ 'Styles', 'Format', 'Font', 'FontSize' ],
+    [ 'TextColor', 'BGColor' ],
 
+    ] };
   Emails: any;
-
   id = this.fetchId.getOption();
   slaId = this.fetchId.getSlaId();
   queryType = this.getQueryTypeService.getQueryType();
@@ -123,6 +134,7 @@ export class EmailComponent implements OnInit {
     const menu = this.stor.retrive('Tags', 'O').local;
       menu.forEach((item:any) => {
         if(item.name == "Tags"){
+        
           item.subTags.forEach((singleTagObj:any) => {
             if(!this.TagsList.includes(singleTagObj)){
             this.TagsList.push(singleTagObj)
@@ -334,14 +346,19 @@ export class EmailComponent implements OnInit {
           this.totalUnrespondedCmntCountByCustomer + 1;
 
         this.Emails?.forEach((msg: any) => {
-          this.To = msg?.comments[0]?.to[0]?.emailAddress;
+          const data= msg?.comments[0]?.to[0]?.emailAddress;
+          const changedata=JSON.parse(data)
+          changedata.forEach((x:any)=>{
+            this.To=x
+          })
+   
         });
       }
     });
     this.changeDetect.detectChanges();
   }
 
-  To: string = '';
+  To: any 
   totalUnrespondedCmntCountByCustomer: number = 0;
   TotalQueryCount: number = 0;
 
@@ -386,9 +403,9 @@ export class EmailComponent implements OnInit {
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.Emails = res.List;
-          this.userInformation = res.List[0].user;
+          this.userInformation = res?.List[0]?.user;
             this.userInfoService.shareUserInformation(res.List[0].user);
-          this.fullName = this.Emails[0].user.userName.split('<')[0];
+          this.fullName = this.Emails[0].user.userName?.split('<')[0];
           this.senderEmailAddress =
             this.Emails[0].user.userId.split(/[<>]/)[1] ||
             this.Emails[0].user.userId;
@@ -491,7 +508,13 @@ export class EmailComponent implements OnInit {
           });
 
           this.Emails?.forEach((item: any) => {
-            this.To = item?.comments[0]?.to[0]?.emailAddress;
+   
+            const data= item?.comments[0]?.to[0]?.emailAddress;
+            const changedata=JSON.parse(data)
+            changedata.forEach((x:any)=>{
+              this.To=x
+            })
+           
           });
         });
     } else if (this.slaId != null || undefined) {
@@ -517,13 +540,13 @@ export class EmailComponent implements OnInit {
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         this.SpinnerService.hide();
         this.Emails = res.List;
-        this.userInformation = res.List[0].user;
+        this.userInformation = res?.List[0]?.user;
             this.userInfoService.shareUserInformation(res.List[0].user);
         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
         this.senderEmailAddress =
           this.Emails[0].user.userId.split(/[<>]/)[1] ||
           this.Emails[0].user.userId;
-        this.fullName = this.Emails[0].user.userName.split('<')[0];
+        this.fullName = this.Emails[0].user?.userName?.split('<')[0];
         this.TotalQueryCount = res.TotalQueryCount;
 
         this.commentsArray = [];
@@ -622,7 +645,12 @@ export class EmailComponent implements OnInit {
         });
 
         this.Emails?.forEach((item: any) => {
-          this.To = item?.comments[0]?.to[0]?.emailAddress;
+          const data= item?.comments[0]?.to[0]?.emailAddress;
+          const changedata=JSON.parse(data)
+          changedata.forEach((x:any)=>{
+            this.To=x
+          })
+     
         });
       });
     } else {
@@ -650,14 +678,14 @@ export class EmailComponent implements OnInit {
           
           this.SpinnerService.hide();
           this.Emails = res.List;
-          this.userInformation = res.List[0].user;
+          this.userInformation = res?.List[0]?.user;
             this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalQueryCount = res.TotalQueryCount;
           this.senderEmailAddress =
             this.Emails[0].user.userId.split(/[<>]/)[1] ||
             this.Emails[0].user.userId;
-          this.fullName = this.Emails[0].user.userName.split('<')[0];
+          this.fullName = this.Emails[0].user?.userName?.split('<')[0];
 
           this.commentsArray = [];
           this.Emails?.forEach((item: any) => {
@@ -755,7 +783,14 @@ export class EmailComponent implements OnInit {
           });
 
           this.Emails?.forEach((item: any) => {
-            this.To = item?.comments[0]?.to[0]?.emailAddress;
+            
+           const data= item?.comments[0]?.to[0]?.emailAddress;
+          const changedata=JSON.parse(data)
+          changedata.forEach((x:any)=>{
+            this.To=x
+          })
+
+
           });
         });
     }
@@ -897,14 +932,23 @@ export class EmailComponent implements OnInit {
   Keywords: any[] = [];
 
   getTagList() {
-    this.commondata.GetTagsList().subscribe((res: any) => {
-      this.TagsList = res;
-      this.TagsList.forEach((xyz: any) => {
-        xyz.keywordList.forEach((abc: any) => {
-          this.Keywords.push(abc);
-        });
+
+    
+      const menu = this.stor.retrive('Tags', 'O').local;
+      menu.forEach((item: any) => {
+        if (item.name == 'Tags') {
+          item.subTags.forEach((parentags: any) => {
+            parentags?.subTags?.forEach((singleTagObj: any) => {
+              
+              if (!this.Keywords.includes(singleTagObj)) {
+                this.Keywords.push(singleTagObj);
+              }
+            });
+          });
+        }
       });
-    });
+     
+ ;
   }
 
   closeMentionedReply() {
@@ -1057,6 +1101,7 @@ export class EmailComponent implements OnInit {
   replyCc: any[] = [];
   replyBcc: any[] = [];
   submitEmailReply() {
+    debugger
     this.sendBtnClicked = true;
     this.showCcBtn = true;
     this.showBccBtn = true;
@@ -1564,16 +1609,38 @@ export class EmailComponent implements OnInit {
     // console.log(url);
   }
 
+  // isImage(attachment: any): boolean {
+  //   
+  //   return attachment.mediaType?.toLowerCase().startsWith('image');
+  // }
   isImage(attachment: any): boolean {
-    return attachment.contentType?.toLowerCase().startsWith('image');
-  }
 
+  
+    if (attachment && attachment.mediaType) {
+      const contentTypeMatch = attachment.mediaType.match(/image\/(\w+)/i);
+      return contentTypeMatch !== null;
+    }
+  
+    return false;
+  }
+  
+  
   isVideo(attachment: any): boolean {
-    return attachment.contentType?.toLowerCase().startsWith('video');
+    if (attachment && attachment.mediaType) {
+      const contentTypeMatch = attachment.mediaType.match(/video\/(\w+)/i);
+      return contentTypeMatch !== null;
+    }
+  
+    return false;
   }
 
   isAudio(attachment: any): boolean {
-    return attachment.contentType?.toLowerCase().startsWith('audio');
+    if (attachment && attachment.mediaType) {
+      const contentTypeMatch = attachment.mediaType.match(/audio\/(\w+)/i);
+      return contentTypeMatch !== null;
+    }
+  
+    return false;
   }
 
   isOther(attachment: any): boolean {

@@ -16,6 +16,8 @@ import { TableResponsiveComponent } from './table-responsive/table-responsive.co
 import {MatTableModule} from '@angular/material/table';
 import { TagSlugConversionPipe } from './CustomPipes/tag-slug-conversion.pipe';
 import { PairsPipe } from './CustomPipes/pairs.pipe';
+import { InitialLettersPipe } from './CustomPipes/initial-letters.pipe';
+import { BreaklinePipe } from './CustomPipes/replacelineBreaks/breakline.pipe';
 
 
 @NgModule({
@@ -31,6 +33,8 @@ import { PairsPipe } from './CustomPipes/pairs.pipe';
     GetFileTypeFromUrlPipe,
     TagSlugConversionPipe,
     PairsPipe,
+    InitialLettersPipe,
+    BreaklinePipe
     // TableResponsiveComponent
 
   ],
@@ -52,7 +56,9 @@ import { PairsPipe } from './CustomPipes/pairs.pipe';
     SplitNameFromUrlPipe,
     GetFileTypeFromUrlPipe,
     TagSlugConversionPipe,
-    PairsPipe
+    PairsPipe,
+    InitialLettersPipe,
+    BreaklinePipe
   ]
 })
 export class SharedModule { }

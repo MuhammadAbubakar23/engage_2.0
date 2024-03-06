@@ -52,7 +52,7 @@ import { CreateSentimentComponent } from './components/sentiment-analysis/create
   declarations: [
     ConsoleComponent,
     TemplatesComponent,
-    ConsoleContactsComponent,
+    // ConsoleContactsComponent,
     CaseManagementComponent,
     ConsoleDocumentsComponent,
     ConsoleKnowledgeBaseComponent,

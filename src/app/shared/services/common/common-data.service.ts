@@ -71,6 +71,7 @@ export class CommonDataService {
   markAllAsRead = environment.links.common.markAllAsRead;
   getAgentReport = environment.links.common.getAgentReport;
   getAllocatedProfiles = environment.links.common.getAllocatedProfiles;
+  sessionClose=environment.links.common.sessionClose
   // createMessageTemplate = environment.links.console.CreateMessageTemplate;
   repliesList = environment.links.common.repliesList;
   signOut = environment.links.common.signOut;
@@ -164,14 +165,14 @@ export class CommonDataService {
   addProfile = environment.links.console.addProfile;
   attachFacebookPage = environment.links.console.attachFacebookPage;
   getTags = environment.links.console.getTags;
-  getTagsByCompanyId = environment.links.console.getTagsByCompanyId
+  getTagsAll=environment.links.console.getTagsAll
+  getTagsByCompanyId =environment.links.console.getTagsByCompanyId
   getTagById = environment.links.console.getTagById;
   addTags = environment.links.console.addTags;
   updateTag = environment.links.console.updateTag;
   deleteTags = environment.links.console.deleteTags;
   getTagsByComayId = environment.links.console.getTagsByComayId;
   getAllTags = environment.links.console.defaultTags;
-  getTagsAll = environment.links.console.getTagsAll
   // rules
   deleteRules = environment.links.console.deleteRules;
   getAllRules = environment.links.console.getAllRules;
@@ -184,7 +185,7 @@ export class CommonDataService {
   getChannels = environment.links.identity.channels;
   deleteRoles = environment.links.identity.deleteRoles;
 
-  // teams 
+  // teams
   // getAllTeams= environment.links.console.getAllTeams
   // addTeam = environment.links.console.addTeam
   // updateTeam = environment.links.console.updateTeam
@@ -206,21 +207,21 @@ export class CommonDataService {
 
     localStorage.setItem('activeChannel', this.activeChannel)
   }
-  UserLogin() {
+ UserLogin(){
 
-    const token = localStorage.getItem('token')
+ const token =localStorage.getItem('token')
 
-    let headers_object = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': "Bearer " + localStorage.getItem('token')
-    });
+  let headers_object = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': "Bearer " + localStorage.getItem('token')
+  });
 
-    let httpOptions = {
-      headers: headers_object
-    };
+  let httpOptions = {
+    headers: headers_object
+  };
 
-    return this.http.get(this.CommonBaseUrl + this.userlogin, httpOptions)
-  }
+  return this.http.get(this.CommonBaseUrl+this.userlogin,httpOptions)
+ }
   GetTagsList() {
     return this.http.get(this.CommonBaseUrl + this.tagsList);
   }
@@ -534,7 +535,7 @@ export class CommonDataService {
   }
   GetUserSkills() {
 
-    return this.http.get(this.consoleBaseUrl + this.getUserSkills);
+     return this.http.get(this.consoleBaseUrl + this.getUserSkills);
   }
   AddSkill(addSkill: any) {
     return this.http.post(this.consoleBaseUrl + this.addSkill, addSkill);
@@ -568,7 +569,6 @@ export class CommonDataService {
   }
   GetTagsByCompanyId() {
     return this.http.get(this.consoleBaseUrl + this.getTagsByCompanyId);
-
   }
   GetTagById(body: any) {
     const url = `${this.consoleBaseUrl}${this.getTagById}`;
@@ -788,8 +788,10 @@ export class CommonDataService {
   getWordCloud(fromDate: string, toDate: string): Observable<any> {
     return this.http.get(`https://tiktokcrawl.enteract.live/GetWordCloud?fromdate=${fromDate}&todate=${toDate}`)
   }
-
-  GetLinkedInReportData(body: any) {
+getSessionId(customerNumber:any,ClientNumber:any){
+return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentifier=${customerNumber}&clientIdentifier=${ClientNumber}`)
+}
+  GetLinkedInReportData(body:any){
 
     return this.http.post(this.LinkedInBaseUrl + this.getLinkedInReport, body);
   }

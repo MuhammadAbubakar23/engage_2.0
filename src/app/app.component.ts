@@ -13,17 +13,17 @@ import { CommonDataService } from './shared/services/common/common-data.service'
 })
 export class AppComponent {
   
-  @HostListener('window:beforeunload', ['$event'])
-  beforeUnloadHandler(event: Event) {
-    if (!this.isInternalNavigation()) {
-      // Clear local storage here
-      localStorage.clear();
-       localStorage.removeItem('token')
-    }
-  }
-  private isInternalNavigation(): boolean {
-    return this.router.navigated && this.router.url.startsWith('/');
-  }
+  // @HostListener('window:beforeunload', ['$event'])
+  // beforeUnloadHandler(event: Event) {
+  //   if (!this.isInternalNavigation()) {
+  //     // Clear local storage here
+  //     localStorage.clear();
+  //      localStorage.removeItem('token')
+  //   }
+  // }
+  // private isInternalNavigation(): boolean {
+  //   return this.router.navigated && this.router.url.startsWith('/');
+  // }
   toasters: Toaster[] = [];
   title = 'Enteract.Engage2.0';
   activeChannel: any;
@@ -61,11 +61,6 @@ export class AppComponent {
     }
 
   }
-  // ngOnDestroy(): void {
-  //   
-  //   // Clear localStorage when the component is destroyed
-  //   localStorage.clear();
-  // }
   A_Block() {
     if (localStorage.getItem('signalRConnectionId')) {
       if (this.signalRService.hubconnection == undefined) {

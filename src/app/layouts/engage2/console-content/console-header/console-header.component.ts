@@ -83,7 +83,7 @@ export class ConsoleHeaderComponent implements OnInit {
     let componentFactory = null;
     
     switch (leftSideName) {
-     
+    
       case ('home'):
         componentFactory = this.resolver.resolveComponentFactory(ConsoleHomeHeaderComponent);
         this.target.createComponent(componentFactory);
@@ -132,8 +132,7 @@ export class ConsoleHeaderComponent implements OnInit {
         componentFactory = this.resolver.resolveComponentFactory(ConsoleSkillsHeaderComponent);
         this.target.createComponent(componentFactory);
         break;
-        
-      case ('console-contacts'):
+      case ('contacts'):
         componentFactory = this.resolver.resolveComponentFactory(ConsoleContactsHeaderComponent);
         this.target.createComponent(componentFactory);
         break;

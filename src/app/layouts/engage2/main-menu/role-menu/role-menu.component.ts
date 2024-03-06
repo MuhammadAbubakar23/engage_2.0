@@ -42,7 +42,7 @@ export class RoleMenuComponent implements OnInit {
   onlyAnalyticsTabVisible =
     'kashif.waheed@ibex.co, jazzlhrwfm@ibex.co, JazzLHRWFM@ibex.co';
 
-  totalParcoAdminUsers = 'omais.khan@bazaartech.com, faizan.saleem@bazaartech.com, muhammad.qasim@bazaartech.com, waqas.mehmood@bazaartech.com, zohaib.shafique@bazaartech.com, hassan.mustafa@bazaartech.com, waqas.younis@bazaartech.com, hassan.aziz@bazaartech.com, aashir.ahmed@bazaartech.com, shehzad.fareed@bazaartech.com, sajeel.ashraf@bazaartech.com, a.basit@bazaartech.com, danish.alvi@bazaartech.com, toqeer.rehman@bazaartech.com, babar.khan@bazaartech.com, taimoor.wajid@ibex.co, fahad.subzwari@bazaartech.com ,ali.haider4@ibex.co';
+  totalParcoAdminUsers = 'omais.khan@bazaartech.com, faizan.saleem@bazaartech.com, muhammad.qasim@bazaartech.com, waqas.mehmood@bazaartech.com, zohaib.shafique@bazaartech.com, hassan.mustafa@bazaartech.com, waqas.younis@bazaartech.com, hassan.aziz@bazaartech.com, aashir.ahmed@bazaartech.com, shehzad.fareed@bazaartech.com, sajeel.ashraf@bazaartech.com, a.basit@bazaartech.com, danish.alvi@bazaartech.com, toqeer.rehman@bazaartech.com, babar.khan@bazaartech.com, taimoor.wajid@ibex.co, fahad.subzwari@bazaartech.com ,ali.haider4@ibex.co,ali.raza202@ibex.co,ahmed.hassan6@ibex.co';
 
   constructor(
     private MenuStore: Store<MenuState>,

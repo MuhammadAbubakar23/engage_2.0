@@ -1,24 +1,24 @@
 <div class="leftbar-console-expanded">
     <div class="sidebar-header pe-3 ps-3 row">
         <h5 class="fw-bold mt-3 ms-1 col-8">
-            <a (click)="updatevalue('consoleHeader')" 
+            <a (click)="updatevalue('consoleHeader')"
                 [routerLink]="['/console/home']">Console</a>
         </h5>
-        <!-- 
+        <!--
         <div class="create-button mt-3 col-3">
-            <button id="connectFormButton" 
+            <button id="connectFormButton"
                 class="iconButton medium notification iconHover custom-fa-col show"
-                (click)="updatevalue('consoleConnectFormHeader')" 
+                (click)="updatevalue('consoleConnectFormHeader')"
                 [routerLink]="['/console/connect-form']">
                 <i class="fal fa-plus" style="color: white;"></i>
             </button>
-        </div> 
+        </div>
         -->
     </div>
     <ul class="list-group console-list mt-2" data-scrollbar="true" tabindex="-1"
         style="overflow-y: auto; outline: none;">
         <!-- <ng-select [items]="SuperTeamOptions"
-           bindLabel="name" 
+           bindLabel="name"
            bindValue="id"
            [(ngModel)]="SuperTeamSelected"
            [searchable]="false"
@@ -48,7 +48,7 @@
                 </li>
             </ng-template>
             <ng-template #showWithSubMenu>
-                <li class="list-group-item list-group-item-action collapsed" type="button" 
+                <li class="list-group-item list-group-item-action collapsed" type="button"
                     data-bs-toggle="collapse" aria-expanded="false"
                     [attr.data-bs-target]="'#'+menu.slug"  [attr.aria-controls]="menu.slug">
                     <a class="d-flex chevron-icon align-items-center">
@@ -68,7 +68,7 @@
             </ng-template>
         </div>
 
-        <!-- <li class="list-group-item list-group-item-action collapsed" type="button" 
+        <!-- <li class="list-group-item list-group-item-action collapsed" type="button"
         data-bs-toggle="collapse"
                 data-bs-target="#sidebar1" aria-expanded="false" aria-controls="sidebar1">
                 <a class="d-flex chevron-icon align-items-center">
@@ -199,13 +199,19 @@
                     Skills
                 </a>
             </li>
+            <li class="list-group-item list-group-item-action">
+              <a (click)="updatevalue('contacts')" [routerLink]="['/console/contacts']" class="d-flex align-items-center">
+                  <i class="fal fa-fish pe-2"></i>
+                  Contacts
+              </a>
+          </li>
             <!-- <li class="list-group-item list-group-item-action">
                 <a href="contacts.html" class="d-flex align-items-center">
                     <i class="fal fa-address-book pe-2"></i>
                     Contacts
                 </a>
-            </li>
-            <li class="list-group-item list-group-item-action">
+            </li> -->
+        <!---    <li class="list-group-item list-group-item-action">
                 <a  class="d-flex align-items-center">
                     <i class="fal fa-clipboard pe-2"></i>
                     Case Management
@@ -237,7 +243,7 @@
             </li> -->
         </div>
     </ul>
-    
+
     <!-- Hard Coded Menus -->
 </div>
 <a href="javascript:void;" class="panelToggle"></a>

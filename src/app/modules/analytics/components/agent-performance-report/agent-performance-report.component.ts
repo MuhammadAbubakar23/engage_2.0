@@ -548,6 +548,7 @@ export class AgentPerformanceReportComponent implements OnInit {
       }
     })
   }
+  fillterdata:any[]=[]
   getAllCSATData() {
 
     let obj = {
@@ -557,6 +558,7 @@ export class AgentPerformanceReportComponent implements OnInit {
       "plateForm": "string"
     }
     this.csatArray = []
+    this.fillterdata=[]
     this.SpinnerService.show()
     this.cdr.detectChanges()
     this.commonService.GetCSATReport(obj).subscribe((res: any) => {
@@ -575,7 +577,8 @@ this.SpinnerService.hide()
         )
       }
 
-
+this. fillterdata= this.csatArray.filter((item:any)=>item.value!==0)
+console.log('This.fillterdata==>',this.fillterdata)
       this.getCSATGraph()
     }
 
@@ -604,7 +607,7 @@ this.SpinnerService.hide()
           name: 'CUSTOMER SATISFACTION',
           type: 'pie',
           radius: '60%',
-          data: this.csatArray,
+          data: this.fillterdata,
           emphasis: {
             itemStyle: {
               shadowBlur: 10,

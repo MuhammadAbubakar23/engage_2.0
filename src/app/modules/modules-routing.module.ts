@@ -36,11 +36,14 @@ const routes: Routes = [
     data: {preload: true}
   },
   {
+    path: 'bot-monitoring', loadChildren: () => import('./bot-monitoring/bot-monitoring.module').then((f) => f.BotMonitoringModule),
+  },
+  {
     path:'analytics',
     loadChildren : () => import('./analytics/analytics.module').then(f=>f.AnalyticsModule),
     data: {preload: true}
   },
-  
+
 ];
 
 @NgModule({

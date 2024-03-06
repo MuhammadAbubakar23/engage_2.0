@@ -1,0 +1,12 @@
+<monitoring-content>
+  <div class="row">
+    <div *ngFor="let chat of chats" [ngClass]="{'col-12': chats.length === 1, 'col-md-6': chats.length === 2, 'col-md-4': chats.length === 3}">
+      <div
+  class="page-content-wrapper custom-scroll chatbot-main" [ngClass]="{'thirdactive':chats.length === 3}"
+  *ngIf="chat.length > 0"
+>
+      <app-bot-chat [chat]="chat"></app-bot-chat>
+    </div>
+    </div>
+  </div>
+</monitoring-content>

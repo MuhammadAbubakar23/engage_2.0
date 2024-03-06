@@ -12,7 +12,13 @@
             <div class="titleIcon d-flex align-items-center">
                 <i class="fal fa-envelope"></i>
                 <div class="titleLink ms-1">
-                    /{{To}}</div>
+                 
+                   /Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}}
+                    </div> 
+
+
+
+
             </div>
             <ul class="nav nav-tabs ms-3 h-100" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -119,9 +125,8 @@
                                                             </div>
                                                             <div class="card-header-content">
                                                                 <div class="card-header-top">
-                                                                    <h6 class="mb-1 darkblue">{{email.userName.split('
-                                                                        <')[0]}} </h6>
-                                                                            <!-- <small class="silver me-2 full-date">{{email.createdDate |  date:'MMMM d, y, h:mm:ss a'}}</small> -->
+                                                                    <h6 class="mb-1 darkblue">{{email?.userName}} </h6>
+                                                                            <!--.split('<')[0] <small class="silver me-2 full-date">{{email.createdDate |  date:'MMMM d, y, h:mm:ss a'}}</small> -->
                                                                 </div>
                                                                 <div class="msg-snippet show-text">
                                                                     <!-- <p class="mb-1 coal " data-maxlength="240" [innerHTML]="trimText(email.body)"></p> -->
@@ -178,15 +183,20 @@
                                                                     <!-- <span *ngFor="let to of email.to">
                                                             {{to.emailAddress}}
                                                         </span> -->
-                                                                    {{email.multipleTo}}
+                                                        Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}}
+                                                                    <!-- {{email.multipleTo}} -->
                                                                 </small>
                                                             </div>
                                                             <p [innerHTML]="email.body"></p>
+                                                           
+                                                           
                                                             <div class="email-attachments">
                                                                 <div *ngFor="let attachment of email.attachments">
                                                                     <img class="whatsapp-single-img whatsappImgModalBtn"
-                                                                        *ngIf="isImage(attachment)"
-                                                                        src={{attachment.attachmentUrl}} controls>
+                                                                    *ngIf="isImage(attachment)"
+                                                                    [src]="attachment.attachmentUrl" 
+                                                                    controls>
+                                                                
 
                                                                     <video class="video" *ngIf="isVideo(attachment)"
                                                                         src={{attachment.attachmentUrl}}
@@ -223,7 +233,8 @@
                                                                 </div>
                                                                 <div class="msg-ref-info" *ngIf="email.multipleTo">
                                                                     <strong>To:</strong>
-                                                                    {{email.multipleTo}}
+                                                                    <!-- {{email.multipleTo}} -->
+                                                                    Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}}
                                                                 </div>
                                                                 <div class="msg-ref-info" *ngIf="email.multipleCc">
                                                                     <strong>Cc:</strong>
@@ -339,7 +350,7 @@
                                                                                             aria-label="Search">
                                                                                         <span
                                                                                             class="btn searchbar-btn"
-                                                                                            type="submit">insertTagsForFeed
+                                                                                            type="submit">
                                                                                             <i
                                                                                                 class="fal fa-search silver"></i>
                                                                                         </span>
@@ -355,7 +366,7 @@
                                                                                                 <a class="list-group-item d-flex level1Btn dropdown-item"
                                                                                                     (click)="insertTagsForFeed(email.id, keyword.slug)"
                                                                                                     [ngClass]="activeTag==true?'active':''"
-                                                                                                    *ngFor="let keyword of tag.keywordList | filter: searchText">
+                                                                                                    *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                     <div
                                                                                                         class="list-down-icon">
                                                                                                         <span
@@ -458,13 +469,23 @@
                                                                             <i class="fal fa-reply"></i>
                                                                             &nbsp;Reply by:&nbsp;
                                                                         </small>
-                                                                        {{To}}
+                                                                        {{reply?.replyByName}}
+                                                                        <!-- Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}} -->
                                                                     </h6>
 
                                                                 </div>
                                                                 <div class="msg-snippet show-text">
                                                                     <p class="mb-1 coal" data-maxlength="240">
                                                                         {{reply.subject}}</p>
+                                                                </div>
+                                                                <div class="msg-snippet show-text">
+                                                                    <p class="mb-1 coal"
+                                                                    [innerHTML]="reply.message|replaceLineBreaks "
+                                                                    >
+                                                                       
+                                                                    {{ reply.message|replaceLineBreaks }}
+                                                                     
+                                                                       </p>
                                                                 </div>
                                                             </div>
                                                         </button>
@@ -482,15 +503,18 @@
                                                         data-bs-parent="#accordionExample">
                                                         <div class="accordion-body">
                                                             <div class="mail-recepients silver mb-3">
-                                                                <small>to: {{email.userName}}</small>
+                                                                <!--  -->
+                                                                <!-- <small>to: {{email.userName}}</small> -->
                                                             </div>
                                                             <p [innerHTML]="reply.message">
                                                                 {{reply.message}}
                                                             </p>
+                                                      
+                                                            <!-- attachmentUrl       -->
                                                             <div class="email-attachments">
                                                                 <div *ngFor="let attachment of reply.attachments">
                                                                     <img class="whatsapp-single-img whatsappImgModalBtn"
-                                                                        *ngIf="isImage(attachment)"
+                                                                    *ngIf="isImage(attachment)"
                                                                         src={{attachment.attachmentUrl}} controls>
 
                                                                     <video class="video" *ngIf="isVideo(attachment)"
@@ -501,12 +525,13 @@
                                                                         src={{attachment.attachmentUrl}}
                                                                         controls></audio>
 
+                                                                  
                                                                     <a *ngIf="isOther(attachment)"
                                                                         [href]="attachment.attachmentUrl"
                                                                         target="_blank">
                                                                         <button class="download-button">{{
                                                                             attachment.name }}</button>
-                                                                    </a>
+                                                                    </a> 
 
                                                                 </div>
                                                             </div>
@@ -519,7 +544,7 @@
                                                                 class="mail-reference-msg-wrap">
                                                                 <div class="msg-ref-info">
                                                                     <strong>From:</strong>
-                                                                    {{To}}
+                                                                    Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}}
                                                                 </div>
                                                                 <div class="msg-ref-info">
                                                                     <strong>Sent:</strong>
@@ -739,9 +764,17 @@
                             <div class="modal-textarea">
                                 <div class="row">
                                     <div class="col-12">
-                                        <textarea formControlName="text" id="text" [(ngModel)]="text"
+                                        <!-- <textarea formControlName="text" id="text" [(ngModel)]="text"
                                             class="form-control" placeholder="Take notes for users in your account...."
-                                            id="floatingTextarea"></textarea>
+                                            id="floatingTextarea"></textarea>  -->
+                                         <!-- Rich text editer -->
+                                         <ckeditor
+                                         name="ckeditor_text"
+                                         formControlName="text"
+                                         [(ngModel)]="text"
+                                         [config]="ckEditorConfig"
+                                     
+                                       ></ckeditor>
                                     </div>
                                 </div>
                                 <!-- <div class="row">

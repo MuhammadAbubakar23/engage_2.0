@@ -1,0 +1,417 @@
+<header class="main-header shadow-sm agent-header">
+  <div class="row justify-content-between">
+    <div class="col-sm-9">
+      <div class="dashboard-header-left d-flex align-items-center">
+        <button class="iconButton medium">
+          <i class="fa-light fa-message-bot"></i>
+        </button>
+
+        <nav>
+          <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item active">
+              <a href="monitoring.html">Active Chats</a>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <div class="col-sm-3">
+      <right-header-components></right-header-components>
+      <!-- <div class="right-header-components">
+        <form class="right-header-search d-flex"></form>
+
+        <div class="dropdown dropdown-center create-button me-3 w-auto">
+          <button
+            class="iconButton medium notification iconHover custom-fa-col"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fal fa-plus"></i>
+          </button>
+          <ul
+            class="dropdown-menu custom-dropdown"
+            aria-labelledby="dropdownMenuButton1"
+          >
+            <li>
+              <a
+                class="dropdown-item p-1 active d-flex align-items-baseline"
+                href="#"
+                id="new-ticket"
+              >
+                <button
+                  class="iconButton dropdown-iconBtn small active"
+                  id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fal fa-phone-alt"></i></button
+                >New Ticket
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item logCallModalBtn p-1 d-flex align-items-baseline"
+                href="#"
+                data-bs-toggle="modal"
+                data-bs-target="#logCallModal"
+              >
+                <button class="iconButton dropdown-iconBtn small">
+                  <i class="fal fa-phone-alt"></i>
+                </button>
+                Call
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item p-1 d-flex align-items-baseline" href="#">
+                <button
+                  class="iconButton dropdown-iconBtn small"
+                  id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fal fa-user-alt"></i></button
+                >Meeting
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item scheduleModalBtn p-1 d-flex align-items-baseline"
+                href="#"
+                data-bs-toggle="modal"
+                data-bs-target="#scheduleModal"
+              >
+                <button class="iconButton dropdown-iconBtn small">
+                  <i class="fal fa-calendar-week"></i></button
+                >Scheduled Activity
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="dropdown dropdown-center custom-dropdown-list w-auto notify me-3"
+        >
+          <a
+            href="#"
+            class="d-block"
+            id="dropdownUser1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <button class="iconButton medium notification iconHover">
+              <i class="fal fa-bell notify-count"></i>
+              <span class="badge bg-danger rounded-pill">5</span>
+            </button>
+          </a>
+          <ul
+            class="dropdown-menu full_dropdown p-0 text-small user-profile-dropdown shadow"
+            aria-labelledby="dropdownUser1"
+          >
+            <li class="notification-header dropdown-header p-0">
+              <ul class="notification-header w-100 p-2">
+                <li>
+                  <div class="name-n-info">
+                    <h6 class="night m-0">Notifications</h6>
+                  </div>
+                  <a class="pb-1 pe-2 ps-2 pt-1 rounded-pill sky" href="#"
+                    >Mark all as Read</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="notification-body dropdown-body">
+              <ul>
+                <li>Today</li>
+                <li>
+                  <a class="dropdown-item active" href="#">
+                    <span class="btn iconButton iconHover medium oceanBg me-1">
+                      <i class="fal fa-bell"></i>
+                    </span>
+                    <div class="ms-2 me-auto coal lh-1">
+                      <div class="night">
+                        Your average response time is low.
+                      </div>
+                      <small>11:30 AM</small>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <span class="btn iconButton iconHover medium oceanBg me-1">
+                      <i class="fal fa-bell"></i>
+                    </span>
+                    <div class="ms-2 me-auto coal lh-1">
+                      <div class="night">
+                        Your average response time is low.
+                      </div>
+                      <small>11:30 AM</small>
+                    </div>
+                  </a>
+                </li>
+                <li>Yesterday</li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <span class="btn iconButton iconHover medium oceanBg me-1">
+                      <i class="fal fa-bell"></i>
+                    </span>
+                    <div class="ms-2 me-auto coal lh-1">
+                      <div class="night">
+                        Your average response time is low.
+                      </div>
+                      <small>11:30 AM</small>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <span class="btn iconButton iconHover medium oceanBg me-1">
+                      <i class="fal fa-bell"></i>
+                    </span>
+                    <div class="ms-2 me-auto coal lh-1">
+                      <div class="night">
+                        Your average response time is low.
+                      </div>
+                      <small>11:30 AM</small>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <span class="btn iconButton iconHover medium oceanBg me-1">
+                      <i class="fal fa-bell"></i>
+                    </span>
+                    <div class="ms-2 me-auto coal lh-1">
+                      <div class="night">
+                        Your average response time is low.
+                      </div>
+                      <small>11:30 AM</small>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="notification-footer dropdown-footer p-0">
+              <ul class="card-footer w-100 border-0 p-0">
+                <li>
+                  <div class="w-100">
+                    <a
+                      href="#"
+                      class="btn text-center d-block sky notification-view-all-btn"
+                      >View all</a
+                    >
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="dropdown custom-dropdown-list w-auto">
+          <a
+            href="#"
+            class="d-block link-dark text-decoration-none dropdown-toggle"
+            id="dropdownUser1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              src="https://github.com/mdo.png"
+              alt="mdo"
+              width="40"
+              height="40"
+              class="rounded-circle"
+            />
+            <span class="online-n-offline"></span>
+            <div class="name-n-info">
+              <span class="name">Self Assignment</span>
+              <small>1:23:59</small>
+            </div>
+          </a>
+          <ul
+            class="dropdown-menu full_dropdown p-0 text-small user-profile-dropdown shadow"
+            aria-labelledby="dropdownUser1"
+          >
+            <li class="user-dropdown-header dropdown-header">
+              <ul>
+                <li>
+                  <a
+                    href="#"
+                    class="link-dark text-decoration-none"
+                    id="dropdownUser1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <img
+                      src="https://github.com/mdo.png"
+                      class="profile-pic rounded-circle"
+                      alt="mdo"
+                      width="50"
+                      height="50"
+                    />
+                    <span class="online-n-offline on-off-btn"></span>
+                    <div class="name-n-info lh-sm">
+                      <h6 class="night m-0">Syed Salman Khan</h6>
+                      <small>@salmankhan</small>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+
+              <button class="iconButton medium iconHover">
+                <i class="fal fa-cog"></i>
+              </button>
+            </li>
+            <li class="user-dropdown-body dropdown-body">
+              <ul>
+                <li>
+                  <a class="dropdown-item active" href="#">
+                    <div class="form-check theme-check w-100 p-0">
+                      <input
+                        class="form-check-input float-end"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexCheckDefault"
+                        checked=""
+                      />
+                      <label
+                        class="form-check-label d-flex align-items-center"
+                        for="flexCheckDefault"
+                      >
+                        <span
+                          class="btn iconButton iconHover medium oceanBg me-1 mt-2"
+                        >
+                          <i class="fal fa-hand-pointer"></i>
+                        </span>
+                        <div class="ms-2 me-auto coal lh-1">
+                          <h6 class="night mb-0">Self Assignment</h6>
+                          <small>Manage your own conversation</small>
+                        </div>
+                      </label>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <div class="form-check theme-check w-100 p-0">
+                      <input
+                        class="form-check-input float-end"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexCheckDefault1"
+                      />
+                      <label
+                        class="form-check-label d-flex align-items-center"
+                        for="flexCheckDefault1"
+                      >
+                        <span
+                          class="btn iconButton iconHover medium mintBg me-1 mt-2"
+                        >
+                          <i class="fal fa-wand-magic"></i>
+                        </span>
+                        <div class="ms-2 me-auto coal lh-1">
+                          <h6 class="night mb-0">Auto Assignment</h6>
+                          <small>System generated assignment</small>
+                        </div>
+                      </label>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <div class="form-check theme-check w-100 p-0">
+                      <input
+                        class="form-check-input float-end"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexCheckDefault2"
+                      />
+                      <label
+                        class="form-check-label d-flex align-items-center"
+                        for="flexCheckDefault2"
+                      >
+                        <span
+                          class="btn iconButton iconHover medium radicalBg me-1 mt-2"
+                        >
+                          <i class="fal fa-pizza"></i>
+                        </span>
+                        <div class="ms-2 me-auto coal lh-1">
+                          <h6 class="night mb-0">Start Break</h6>
+                          <small
+                            >Mute notifications and unassign new messages</small
+                          >
+                        </div>
+                      </label>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <div class="form-check theme-check w-100 p-0">
+                      <input
+                        class="form-check-input float-end"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexCheckDefault3"
+                      />
+                      <label
+                        class="form-check-label d-flex align-items-center"
+                        for="flexCheckDefault3"
+                      >
+                        <span
+                          class="btn iconButton iconHover medium mangoTransBg me-1 mt-1"
+                        >
+                          <i class="fal fa-moon"></i>
+                        </span>
+                        <div class="ms-2 me-auto coal lh-1">
+                          <h6 class="night mb-0">Do not disturb</h6>
+                          <small>Mute notifications</small>
+                        </div>
+                      </label>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <span
+                      class="btn iconButton iconHover medium mangoTransBg me-1 mt-2"
+                    >
+                      <i class="fal fa-clock"></i>
+                    </span>
+                    <div class="ms-2 me-auto coal lh-1">
+                      <h6 class="night mb-1">Schedule</h6>
+                      <div class="d-flex w-75">
+                        <input
+                          class="form-control form-control-sm"
+                          placeholder="6:00 PM"
+                          aria-label=".form-control-sm example"
+                        />
+                        <span class="p-1">to</span>
+                        <input
+                          class="form-control form-control-sm"
+                          placeholder="6:00 AM"
+                          aria-label=".form-control-sm example"
+                        />
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="card-footer dropdown-footer p-2">
+              <ul class="w-100">
+                <li>
+                  <div class="w-100">
+                    <a href="#" class="btn radicalBg text-center d-block"
+                      >Sign Out</a
+                    >
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</header>
