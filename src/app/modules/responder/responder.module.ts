@@ -26,7 +26,7 @@ import { PostStatsComponent } from './sharedComponents/post-stats/post-stats.com
 import { ConsoleTableWithImageComponent } from 'src/app/layouts/engage2/console-table/console-table-with-image/console-table-with-image.component';
 import { PlaystoreComponent } from './components/playstore/playstore.component';
 import { ChannelComponent } from './components/responderChannelData/channel.component';
-
+import { CKEditorModule } from 'ckeditor4-angular';
 
 @NgModule({
   declarations: [
@@ -58,6 +58,7 @@ import { ChannelComponent } from './components/responderChannelData/channel.comp
     ResponderRightSidebarComponentsModule,
     InfiniteScrollModule,
     FormsModule,
+    CKEditorModule
   ],
   exports:[
     ResponderComponent

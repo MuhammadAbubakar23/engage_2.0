@@ -30,6 +30,7 @@ import { ReplyDto } from 'src/app/shared/Models/ReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
+// import {  Editor, Toolbar } from 'ngx-editor';
 @Component({
   selector: 'app-email',
   templateUrl: './email.component.html',
@@ -42,11 +43,19 @@ export class EmailComponent implements OnInit {
   @Input() subname: string = '';
   @Input() imagename: string = '';
   @Input() linkname: string = 'javascript:;';
+  // editor!: Editor
+  ckEditorConfig: any = { toolbar: [
+    ['Source', 'Templates', 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat'],
+    ['underline' ],
+    [ 'Undo', 'Redo' ,'Table' ],
+    [ 'Find', 'Replace', '-', 'SelectAll', '-',  ],
+    [ 'NumberedList', 'BulletedList', '-', 'Outdent', '-',
+     'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl' ],
+    // [ 'Styles', 'Format', 'Font', 'FontSize' ],
+    [ 'TextColor', 'BGColor' ],
 
+    ] };
   Emails: any;
-  email = {
-    body: "Hey Roxstar, The plan you are asking about is a Booster which you can activate once your basic vibe incentives are used. For a booster, ya must have a basic vibe bundle purchased. Then, ya can subscribe to booster in which ya can get 10GB of data and 300 all network mins in 300 bucks. Visit our website www.rox.com.pk for more deets. Regards, Rox Team I"
-  };
   id = this.fetchId.getOption();
   slaId = this.fetchId.getSlaId();
   queryType = this.getQueryTypeService.getQueryType();
@@ -1092,6 +1101,7 @@ export class EmailComponent implements OnInit {
   replyCc: any[] = [];
   replyBcc: any[] = [];
   submitEmailReply() {
+    debugger
     this.sendBtnClicked = true;
     this.showCcBtn = true;
     this.showBccBtn = true;

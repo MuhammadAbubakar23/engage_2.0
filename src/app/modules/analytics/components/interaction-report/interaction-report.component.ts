@@ -123,7 +123,20 @@ export class InteractionReportComponent implements OnInit {
   padZero(num: number): string {
     return num < 10 ? '0' + num : num.toString();
   }
-
+formatNumber(value: number): string {
+    if (value === null || value === undefined) {
+      return '';
+    }
+    if (value < 1000) {
+      return value.toString();
+    } else if (value < 1000000) {
+      return (value / 1000).toFixed(1) + ' K';
+    } else if (value < 1000000000) {
+      return (value / 1000000).toFixed(1) + ' M';
+    } else {
+      return (value / 1000000000).toFixed(1) + ' B';
+    }
+  }
   calculateAverageTime(agentPerformance: any[], field: string) {
     let totalSeconds = 0;
     for (const agent of agentPerformance) {

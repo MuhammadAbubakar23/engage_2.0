@@ -151,6 +151,7 @@ export class AnalyticsMenuComponent implements OnInit {
           name: 'Agent Performance Report',
           link: '/analytics/performance-report',
         },
+        { name: 'Interaction Report', link: '/analytics/interaction-report' },
         { name: 'Shift Report', link: '/analytics/shift-report' },
         { name: 'Tag Report', link: '/analytics/tag-report' },
 
@@ -158,6 +159,7 @@ export class AnalyticsMenuComponent implements OnInit {
         { name: 'Twitter Report', link: '/analytics/twitter-report' },
         { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
         { name: 'Instagram Report', link: '/analytics/instagram-report' },
+
       ];
     } else if (this.channelname == 'ttpl') {
       this.analyticeReport = [

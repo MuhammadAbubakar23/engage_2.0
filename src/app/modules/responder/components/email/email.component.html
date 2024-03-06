@@ -469,13 +469,23 @@
                                                                             <i class="fal fa-reply"></i>
                                                                             &nbsp;Reply by:&nbsp;
                                                                         </small>
-                                                                        Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}}
+                                                                        {{reply?.replyByName}}
+                                                                        <!-- Name:{{To?.Name}},EmailAddress:{{To?.EmailAddress}} -->
                                                                     </h6>
 
                                                                 </div>
                                                                 <div class="msg-snippet show-text">
                                                                     <p class="mb-1 coal" data-maxlength="240">
                                                                         {{reply.subject}}</p>
+                                                                </div>
+                                                                <div class="msg-snippet show-text">
+                                                                    <p class="mb-1 coal"
+                                                                    [innerHTML]="reply.message|replaceLineBreaks "
+                                                                    >
+                                                                       
+                                                                    {{ reply.message|replaceLineBreaks }}
+                                                                     
+                                                                       </p>
                                                                 </div>
                                                             </div>
                                                         </button>
@@ -493,7 +503,8 @@
                                                         data-bs-parent="#accordionExample">
                                                         <div class="accordion-body">
                                                             <div class="mail-recepients silver mb-3">
-                                                                <small>to: {{email.userName}}</small>
+                                                                <!--  -->
+                                                                <!-- <small>to: {{email.userName}}</small> -->
                                                             </div>
                                                             <p [innerHTML]="reply.message">
                                                                 {{reply.message}}
@@ -753,11 +764,17 @@
                             <div class="modal-textarea">
                                 <div class="row">
                                     <div class="col-12">
-                                        <textarea formControlName="text" id="text" [(ngModel)]="text"
+                                        <!-- <textarea formControlName="text" id="text" [(ngModel)]="text"
                                             class="form-control" placeholder="Take notes for users in your account...."
-                                            id="floatingTextarea"></textarea> 
+                                            id="floatingTextarea"></textarea>  -->
                                          <!-- Rich text editer -->
-                                            
+                                         <ckeditor
+                                         name="ckeditor_text"
+                                         formControlName="text"
+                                         [(ngModel)]="text"
+                                         [config]="ckEditorConfig"
+                                     
+                                       ></ckeditor>
                                     </div>
                                 </div>
                                 <!-- <div class="row">

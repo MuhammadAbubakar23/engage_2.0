@@ -99,7 +99,7 @@
                                                 <span class="iconButton medium berryBg me-2">
                                                     <i class="fa-light fa-users"></i>
                                                 </span>
-                                                <p class="coal mb-0">Total Logins</p>
+                                                <p class="coal mb-0">Active Agents</p>
                                             </div>
                                             <h4>{{totalAgentsCount}}</h4>
                                         </div>
@@ -116,17 +116,21 @@
                                                 </span>
                                                 <p class="coal mb-0"> Avg. Response Rate</p>
                                             </div>
-                                            <h4>{{averageResponseData |number:'1.2-2'}}% <small *ngIf="preAveragePercentage >= 0; else downArrow"
-                                                class="text-success fs-12">
-                                                <i class="fa-light fa-arrow-up"></i> {{ preAveragePercentage |number:'1.2-2'
-                                                }}<sup>%</sup>
-                                            </small>
-                                            <ng-template #downArrow>
-                                                <small class="text-danger fs-12">
-                                                    <i class="fa-light fa-arrow-down"></i> {{ preAveragePercentage |number:'1.2-2'
+                                            <h4>{{formatNumber(averageResponseData )  |number:'1.2-2' }}% <small
+                                                    *ngIf="preAveragePercentage >= 0; else downArrow"
+                                                    class="text-success fs-12">
+                                                    <i class="fa-light fa-arrow-up"></i> {{ preAveragePercentage
+                                                    |number:'1.2-2'
                                                     }}<sup>%</sup>
                                                 </small>
-                                            </ng-template></h4>
+                                                <ng-template #downArrow>
+                                                    <small class="text-danger fs-12">
+                                                        <i class="fa-light fa-arrow-down"></i> {{ preAveragePercentage
+                                                        |number:'1.2-2'
+                                                        }}<sup>%</sup>
+                                                    </small>
+                                                </ng-template>
+                                            </h4>
                                         </div>
                                     </div>
                                 </div>
@@ -144,12 +148,14 @@
                                             <h4>{{ finalAverage }}
                                                 <small *ngIf="avgResponseTimeSum >= 0; else downArrow"
                                                     class="text-success fs-12">
-                                                    <i class="fa-light fa-arrow-up"></i> {{ avgResponseTimeSum |number:'1.2-2'
+                                                    <i class="fa-light fa-arrow-up"></i> {{ avgResponseTimeSum
+                                                    |number:'1.2-2'
                                                     }}<sup>%</sup>
                                                 </small>
                                                 <ng-template #downArrow>
                                                     <small class="text-danger fs-12">
-                                                        <i class="fa-light fa-arrow-down"></i> {{ avgResponseTimeSum |number:'1.2-2'
+                                                        <i class="fa-light fa-arrow-down"></i> {{ avgResponseTimeSum
+                                                        |number:'1.2-2'
                                                         }}<sup>%</sup>
                                                     </small>
                                                 </ng-template>
@@ -172,12 +178,14 @@
                                             <h4>{{finalAverageMinimum}}
                                                 <small *ngIf="avgMinCaterTime >= 0; else downArrow"
                                                     class="text-success fs-12">
-                                                    <i class="fa-light fa-arrow-up"></i> {{ avgMinCaterTime |number:'1.2-2'
+                                                    <i class="fa-light fa-arrow-up"></i> {{ avgMinCaterTime
+                                                    |number:'1.2-2'
                                                     }}<sup>%</sup>
                                                 </small>
                                                 <ng-template #downArrow>
                                                     <small class="text-danger fs-12">
-                                                        <i class="fa-light fa-arrow-down"></i> {{ avgMinCaterTime |number:'1.2-2'
+                                                        <i class="fa-light fa-arrow-down"></i> {{ avgMinCaterTime
+                                                        |number:'1.2-2'
                                                         }}<sup>%</sup>
                                                     </small>
                                                 </ng-template>
@@ -199,12 +207,14 @@
                                             <h4>{{finalAverageMaximum}}
                                                 <small *ngIf="avgMaxCaterTime >= 0; else downArrow"
                                                     class="text-success fs-12">
-                                                    <i class="fa-light fa-arrow-up"></i> {{ avgMaxCaterTime |number:'1.2-2'
+                                                    <i class="fa-light fa-arrow-up"></i> {{ avgMaxCaterTime
+                                                    |number:'1.2-2'
                                                     }}<sup>%</sup>
                                                 </small>
                                                 <ng-template #downArrow>
                                                     <small class="text-danger fs-12">
-                                                        <i class="fa-light fa-arrow-down"></i> {{ avgMaxCaterTime |number:'1.2-2'
+                                                        <i class="fa-light fa-arrow-down"></i> {{ avgMaxCaterTime
+                                                        |number:'1.2-2'
                                                         }}<sup>%</sup>
                                                     </small>
                                                 </ng-template>
@@ -225,24 +235,25 @@
                                             <i class="fa-light fa-comment-lines fs-5"></i>
                                         </span>
                                         <h5 class="my-3">Total Interactions</h5>
-                                        <h1 class="fw-bolder">{{totalInteractionCount}}</h1>
+                                        <h1 class="fw-bolder">{{ formatNumber(totalInteractionCount)}}</h1>
                                         <ul class="sociallist">
                                             <li>
                                                 <span>
                                                     In Progress </span><strong
-                                                    class="progressd">{{inProgressCount}}</strong>
+                                                    class="progressd">{{formatNumber(inProgressCount)}}</strong>
 
                                             </li>
                                             <li><span>
                                                     Assign to me </span><strong
-                                                    class="assigntome">{{assignToMeCount}}</strong>
+                                                    class="assigntome">{{formatNumber(assignToMeCount)}}</strong>
                                             </li>
                                             <li><span>
-                                                    Follow up </span><strong class="folloup">{{followUpCount}}</strong>
+                                                    Follow up </span><strong
+                                                    class="folloup">{{formatNumber(followUpCount)}}</strong>
                                             </li>
                                             <li><span>
                                                     Completed </span> <strong
-                                                    class="completed">{{completedCount}}</strong>
+                                                    class="completed">{{formatNumber(completedCount)}}</strong>
                                             </li>
                                         </ul>
                                     </div>
@@ -254,7 +265,8 @@
                                                         <div class="col">
                                                             <div class="card card-hover positivecard">
                                                                 <div class="card-body p-2">
-                                                                    <span style="font-size:0.7rem;" class="badge rounded-pill badge-md"><i
+                                                                    <span style="font-size:0.7rem;"
+                                                                        class="badge rounded-pill badge-md"><i
                                                                             class="fa-light fa-face-smile"></i>
                                                                         Positive</span>
                                                                     <h5 class="mt-2 mb-0 fw-bolder ice">{{ positiveCount
@@ -266,7 +278,8 @@
                                                         <div class="col">
                                                             <div class="card card-hover negativecard">
                                                                 <div class="card-body p-2">
-                                                                    <span style="font-size:0.7rem;" class="badge rounded-pill badge-md"><i
+                                                                    <span style="font-size:0.7rem;"
+                                                                        class="badge rounded-pill badge-md"><i
                                                                             class="fa-light fa-face-frown"></i>
                                                                         Negative</span>
                                                                     <h5 class="mt-2 mb-0 fw-bolder ice">{{ negativeCount
@@ -278,7 +291,8 @@
                                                         <div class="col">
                                                             <div class="card card-hover neutralcard">
                                                                 <div class="card-body p-2">
-                                                                    <span style="font-size:0.7rem;" class="badge rounded-pill badge-md"><i
+                                                                    <span style="font-size:0.7rem;"
+                                                                        class="badge rounded-pill badge-md"><i
                                                                             class="fa-light fa-face-meh"></i>
                                                                         Neutral</span>
                                                                     <h5 class="mt-2 mb-0 fw-bolder ice">{{ neutralCount
@@ -394,13 +408,16 @@
                                                     <div class="card-body">
                                                         <i [class]="platformIconMapping[platform.plateForm]"></i>
                                                         <ul class="sociallist">
-                                                            <li><span>In Progress</span><strong>{{
-                                                                    platform.unRespondedCount }}</strong></li>
+                                                            <li><span>In Progress</span><strong>{{formatNumber(
+                                                                    platform.unRespondedCount) }}</strong></li>
                                                             <li><span>Assign to me</span><strong>{{
-                                                                    platform.assignTomeCount }}</strong></li>
-                                                            <li><span>Follow up</span><strong>{{ platform.followUpCount
-                                                                    }}</strong></li>
-                                                            <li><span>Completed</span><strong>{{ platform.completed
+                                                                    formatNumber( platform.assignTomeCount )}}</strong>
+                                                            </li>
+                                                            <li><span>Follow up</span><strong>{{formatNumber(
+                                                                    platform.followUpCount
+                                                                    )}}</strong></li>
+                                                            <li><span>Completed</span><strong>{{ formatNumber
+                                                                    (platform.completed)
                                                                     }}</strong></li>
                                                         </ul>
                                                     </div>
@@ -411,7 +428,7 @@
                                 </div>
                             </div>
                         </div>
-                    <div class="html2pdf__page-break"></div>
+                        <div class="html2pdf__page-break"></div>
 
                         <div class="card iceBg p-4 rounded mb-5">
                             <h5 class="section-heading mb-4 p-0">CUSTOMER SATISFACTION RATINGS </h5>
@@ -466,10 +483,10 @@
                     <div class="card iceBg p-4 rounded mb-5">
                         <h5 class="section-heading mb-4 p-0">INTERACTIONS BY DATE </h5>
                         <div class="graphcontainer align-items-end mb-5">
-                            <div class="text-center">
-                                <!-- <img src="../images/shift.svg" class="img-fluid" alt=""> -->
-                                <div id="interactions" style="height: 400px;width: 1300px;"></div>
-                            </div>
+
+                            <!-- <img src="../images/shift.svg" class="img-fluid" alt=""> -->
+                            <div id="interactions" style="height: 400px;width: 100%;"></div>
+
                         </div>
 
 
@@ -478,7 +495,7 @@
 
                     <div class="card iceBg p-4 rounded mb-4">
                         <div class="table-section" style="overflow: auto; max-height: 50vh;">
-                            <table class="table" [ngStyle]="getTableStyle()"> 
+                            <table class="table" [ngStyle]="getTableStyle()">
                                 <thead class="fixed_first_row">
                                     <tr>
                                         <th>Agent</th>

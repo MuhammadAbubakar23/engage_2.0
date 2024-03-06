@@ -71,6 +71,7 @@ export class CommonDataService {
   markAllAsRead = environment.links.common.markAllAsRead;
   getAgentReport = environment.links.common.getAgentReport;
   getAllocatedProfiles = environment.links.common.getAllocatedProfiles;
+  sessionClose=environment.links.common.sessionClose
   // createMessageTemplate = environment.links.console.CreateMessageTemplate;
   repliesList = environment.links.common.repliesList;
   signOut = environment.links.common.signOut;
@@ -786,7 +787,9 @@ export class CommonDataService {
   getWordCloud(fromDate: string, toDate: string): Observable<any> {
     return this.http.get(`https://tiktokcrawl.enteract.live/GetWordCloud?fromdate=${fromDate}&todate=${toDate}`)
   }
-
+getSessionId(customerNumber:any,ClientNumber:any){
+return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentifier=${customerNumber}&clientIdentifier=${ClientNumber}`)
+}
   GetLinkedInReportData(body:any){
 
     return this.http.post(this.LinkedInBaseUrl + this.getLinkedInReport, body);

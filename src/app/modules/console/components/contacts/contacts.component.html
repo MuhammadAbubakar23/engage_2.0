@@ -1,6 +1,6 @@
 <div class="team-user-wrap console-body-wrapper" data-scrollbar="true" tabindex="-1" style="overflow-y: auto; outline: none;"><div class="scroll-content">
     <div class="wider-container pt-3">
-        <header class="tab-header">
+        <!-- <header class="tab-header">
             <nav>
                 <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
                     <button class="nav-link active" id="user-tab" data-bs-toggle="tab" data-bs-target="#nav-user" type="button" role="tab" aria-controls="nav-user" aria-selected="false">
@@ -10,7 +10,7 @@
 
                 </div>
             </nav>
-        </header>
+        </header> -->
         <div class="tab-body">
             <div class="tab-content" id="nav-tabContent">
                 <!-- User Tab Section -->
@@ -18,7 +18,7 @@
                     <div class="searchBar-wrapper mb-4">
                         <div class="row">
                             <div class="col-lg-4">
-                                <div class="d-flex align-items-lg-center">
+                                <!-- <div class="d-flex align-items-lg-center">
                                     <p class="coal m-0">Status:</p>
                                     <div class="dropdown">
                                         <button class="btn dropdown-toggle coal" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -39,72 +39,93 @@
                                             </li>
                                         </ul>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="col-lg-8 d-flex align-items-center justify-content-end">
-                                <!-- <a href="javascript:" class="search-btn">
+                                <a class="search-btn">
                                 <button class="iconButton medium">
                                     <i class="fal fa-search silver"></i>
                                 </button>
-                                <input type="text" placeholder="Search">
-                            </a> -->
-                                <a (click)="updatevalue('consoleCreateContactHeader')" [routerLink]="['/console/console-contacts:create-contact']" class="ms-2">
+                                <input type="text"  (input)="filltername()" [(ngModel)]="searchName" placeholder="Search">
+                            </a>
+                                <!-- <a (click)="updatevalue('consoleCreateContactHeader')"class="ms-2">
                                     <button type="button" class="btn btn-success">
                                         <i class="fal fa-plus me-2"></i>
                                     Create Contact
                                 </button>
-                                </a>
+                                </a> -->
 
                             </div>
                         </div>
                     </div>
                     <div class="list-group-section pt-3 pe-3">
                         <div class="list-group list-group-flush">
-                            <a (click)="updatevalue('consoleUserDetailsHeader')" [routerLink]="['/console/console-contacts:user-details']" class="list-group-item d-flex contact-user" value="Amin Khan">
-                                <div class="list-down-icon">
-                                    <div class="iconButton medium mintBg me-3">
-                                        AK
+                            <ng-container *ngFor="let item of contanctArray">
+                                <a  class="list-group-item d-flex contact-user" >
+                                   
+                                        <app-avatar-photo [photoUrl]="item.fromProfilePic"
+                                        [name]="item.fromName"></app-avatar-photo>
+                                   
+                                    <div class="w-100 list-txt d-flex">
+                                        <div class="w-100">
+                                            <h6 class="mb-1 darkblue">{{item.fromName}}
+                                            </h6>
+                                            <p class="mb-1 coal">{{item.fromId}}</p>
+                                        </div>
+    
+                                        <!-- <div class="icons-list d-flex">
+                                            <span type="button" class="iconButton iconHover medium btn rounded-circle">
+                                                <i class="fal fa-envelope"></i>
+                                            </span>
+                                            <span type="button" class="iconButton iconHover medium btn rounded-circle">
+                                                <i class="fal fa-ellipsis-v-alt"></i>
+                                            </span>
+                                        </div> -->
                                     </div>
+                                </a>
+                                
+                            </ng-container>
+                           <ng-container>
+                            <div  class="d-flex align-items-center mt-3 ">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination m-0">
+                                      <li class="page-item" (click)="previousPage()">
+                                        <a class="page-link">Previous</a>
+                                      </li>
+                                      <li class="page-item" *ngFor="let pageNumber of getVisiblePageNumbers()" [class.active]="pageNumber === currentPage">
+                                        <a class="page-link" (click)="goToPage(pageNumber)" >{{ pageNumber }}</a>
+                                      </li>
+                                      <li class="page-item" (click)="nextPage()">
+                                        <a class="page-link">Next</a>
+                                      </li>
+                                    </ul>
+                                  </nav>
+                            </div>
+                              <div class="tags-per-page d-flex align-items-center justify-content-end  coal mb-5">
+                                Per page
+                                <div class="dropdown simple-dropdown w-auto">
+                                  <button class="dropdown-toggle chevron-icon down ps-2 pe-4" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ itemsPerPage }}
+                                  </button>
+                                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li>
+                                      <a class="dropdown-item" (click)="setPerPage(10)">10</a>
+                                    </li>
+                                    <li>
+                                      <a class="dropdown-item" (click)="setPerPage(20)">20</a>
+                                    </li>
+                                    <li>
+                                      <a class="dropdown-item" (click)="setPerPage(30)">30</a>
+                                    </li>
+                                  </ul>
                                 </div>
-                                <div class="w-100 list-txt d-flex">
-                                    <div class="w-100">
-                                        <h6 class="mb-1 darkblue">Amin Khan
-                                        </h6>
-                                        <p class="mb-1 coal">amin.khan@gmail.com</p>
-                                    </div>
-
-                                    <div class="icons-list d-flex">
-                                        <span type="button" class="iconButton iconHover medium btn rounded-circle">
-                                            <i class="fal fa-envelope"></i>
-                                        </span>
-                                        <span type="button" class="iconButton iconHover medium btn rounded-circle">
-                                            <i class="fal fa-ellipsis-v-alt"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="list-group-item d-flex contact-user" value="Aniqa Khan">
-                                <div class="list-down-icon avatar medium me-3">
-                                    <img src="../../../../../assets/images/avatar-18.png" alt="...">
-                                </div>
-                                <div class="w-100 list-txt d-flex">
-                                    <div class="w-100">
-                                        <h6 class="mb-1 darkblue">Aniqa Khan
-                                        </h6>
-                                        <p class="mb-1 coal">aniqa@gmail.com</p>
-                                    </div>
-
-                                    <div class="icons-list d-flex">
-                                        <span type="button" class="iconButton iconHover medium btn rounded-circle">
-                                            <i class="fal fa-envelope"></i>
-                                        </span>
-                                        <span type="button" class="iconButton iconHover medium btn rounded-circle">
-                                            <i class="fal fa-ellipsis-v-alt"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="list-group-item d-flex contact-user" value="Bilal Ali">
+                              </div>
+                           </ng-container>
+                            
+                           
+                            
+                            <!-- <a class="list-group-item d-flex contact-user" value="Bilal Ali">
                                 <div class="list-down-icon">
                                     <div class="iconButton medium berryBg me-3">
                                         BA
@@ -279,7 +300,7 @@
                                         </span>
                                     </div>
                                 </div>
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                 </div>

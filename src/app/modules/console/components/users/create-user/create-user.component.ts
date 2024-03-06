@@ -27,6 +27,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 })
 export class CreateUserComponent implements OnInit {
   //identity:string | null | undefined = "0";
+  toastermessage:boolean=false
+  AlterMsg:any
   identity: number = 0;
   btnText: string = "Save";
   userForm: UntypedFormGroup = new UntypedFormGroup({
@@ -129,7 +131,7 @@ debugger
       password: [formVal.password, [Validators.required,Validators.minLength(8)]],
       confirmpassword: [formVal.confirmPassword, [Validators.required,Validators.minLength(8)]],
       roleId: ['', Validators.required],
-      teamId: ['',],
+      teamId: [],
       skillId: [0, Validators.required],
       // timezone: ['', [Validators.required]],
       // supportchannel: ['', [Validators.required]],
@@ -225,14 +227,25 @@ debugger
     //   this.RoleIds.push(this.RolesControl.value[i].id);
     // }
     for (let i in this.RolesControl.value) {
-      this.RoleIds.push(this.RolesControl?.value[i]?.name);
+      if(!this.RoleIds.includes(this.RolesControl.value[i]?.id.toString())){
+        this.RoleIds.push(this.RolesControl?.value[i]?.id.toString());
+      }
+   
     }
     for (let i in this.TeamsControl.value) {
-      this.TeamIds.push(this.TeamsControl?.value[i]?.id?.toString());
+      if(!this.TeamIds.includes(this.TeamsControl?.value[i]?.id.toString())){
+        this.TeamIds.push(this.TeamsControl?.value[i]?.id?.toString());
+      }
+     
     }
+    this.SkillIds=[]
     for (let i in this.SkillsControl.value) {
-      this.SkillIds.push(this.SkillsControl.value[i]?.skillID);
+      if(!this.SkillIds.includes(this.SkillsControl.value[i]?.skillID)){
+        this.SkillIds.push(this.SkillsControl.value[i]?.skillID);
+      }
+    
     }
+    
     this.userForm.controls['roleId'].setValue(this.RoleIds);
     this.userForm.controls['teamId'].setValue(this.TeamIds);
     this.userForm.controls['skillId'].setValue(this.SkillIds);
@@ -262,6 +275,7 @@ debugger
 
     this.uservc.save(controllerRoute, this.userForm.value).subscribe({
       next: (res: any) => {
+        debugger
         console.log(res)
         _self.onReset();
         this.router.navigate(['/console/users']);
@@ -312,6 +326,12 @@ debugger
     if (index !== -1) {
       array.splice(index, 1);
     }
+  }
+  reloadComponent(){
+
+  }
+  closeToaster(){
+    this.toastermessage=false
   }
   // SupportChannelsControl = new UntypedFormControl(null, Validators.required);
   // SupportChannels: string[] = ['Corporate Teams','Sales Teams', 'Add channels'];

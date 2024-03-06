@@ -210,6 +210,11 @@ const routes: Routes = [
         component: CreateBusinessHoursComponent
       },
       {
+        path:'contacts',
+        loadComponent:()=>import('./components/contacts/contacts.component').then(c=>c.ConsoleContactsComponent)
+      },
+
+      {
         path: 'automation/sentiment-analysis/bulk-upload',
         component: BulkUploadComponent
       },
