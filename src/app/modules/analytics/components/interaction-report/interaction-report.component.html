@@ -16,20 +16,23 @@
                                 <li class="list-inline-item">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <input type="date" class="form-control" placeholder="Start Date"
-                                                [max]="maxEndDate" [(ngModel)]="startDate"
+                                            <input type="datetime-local" class="form-control"
+                                                placeholder="Start Date and Time" [max]="maxEndDate" [(ngModel)]="startDate"
                                                 (change)="resetStartDate()" />
                                         </div>
                                         <div class="col-sm-6">
-                                            <input type="date" class="form-control" placeholder="End Date"
-                                                [max]="maxEndDate" [(ngModel)]="endDate" (change)="resetEndDate()" />
+                                            <input type="datetime-local" class="form-control"
+                                                placeholder="End Date and Time" [max]="maxEndDate" [(ngModel)]="endDate"
+                                                (change)="resetEndDate()" />
                                         </div>
                                     </div>
                                 </li>
+                              
+
                                 <li class="list-inline-item">
                                     <div class="dropdown icondropdown w-auto">
-                                        <button class="btn dropdown-toggle" type="button" id="columnssort"
-                                            data-bs-toggle="dropdown" aria-expanded="false"
+                                        <button (click)=" mouseClickReset()" class="btn dropdown-toggle" type="button"
+                                            id="columnssort" data-bs-toggle="dropdown" aria-expanded="false"
                                             data-bs-auto-close="outside">
                                             Channels
                                         </button>
@@ -38,7 +41,8 @@
                                                 <li class="dropdown-listing-header">
                                                     <form class="custom-searchbar my-2 mx-0">
                                                         <input class="form-control bg-light border-0 py-2"
-                                                            placeholder="Search" aria-label="Search">
+                                                            placeholder="Search" [(ngModel)]="searchText"
+                                                            aria-label="Search">
                                                         <span class="btn searchbar-btn" type="submit">
                                                             <i class="fal fa-search silver"></i>
                                                         </span>
@@ -50,7 +54,7 @@
                                                 style="overflow: auto; height: auto;">
                                                 <div class="scroll-content">
                                                     <div class="collapse-wrap mx-3" id="qr-ques1"
-                                                        *ngFor="let channel of channelOptions ">
+                                                        *ngFor="let channel of channelOptions  | filter:searchText">
                                                         <div class="dropdown-item d-flex align-items-center">
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="radio"
@@ -65,6 +69,49 @@
                                                         </div>
                                                     </div>
 
+                                                </div>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item">
+                                    <div class="dropdown w-auto">
+                                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                            (click)=" mouseClickReset()" aria-expanded="false"
+                                            data-bs-auto-close="outside">
+                                            Agents
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="posttype">
+                                            <li class="dropdown-listing-header">
+                                                <form class="custom-searchbar my-2 mx-0">
+                                                    <input class="form-control bg-light border-0 py-2"
+                                                        placeholder="Search" [(ngModel)]="searchText"
+                                                        aria-label="Search">
+                                                    <span class="btn searchbar-btn" type="submit">
+                                                        <i class="fal fa-search silver"></i>
+                                                    </span>
+                                                </form>
+                                            </li>
+                                            <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
+                                                style="overflow: auto; height: 400px;">
+                                                <div class="scroll-content">
+                                                    <li *ngFor="let option of totalAgents | filter:searchText">
+                                                        <a class="dropdown-item d-flex align-items-center">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    [id]="option.id" [(ngModel)]="option.isSelected"
+                                                                    (change)="GetStatsInteractionReport()">
+                                                                <label class="form-check-label" [for]="option.id">{{
+                                                                    option.name }}</label>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </div>
+                                                <div class="scrollbar-track scrollbar-track-x" style="display: none;">
+                                                    <div class="scrollbar-thumb scrollbar-thumb-x"></div>
+                                                </div>
+                                                <div class="scrollbar-track scrollbar-track-y" style="display: none;">
+                                                    <div class="scrollbar-thumb scrollbar-thumb-y"></div>
                                                 </div>
                                             </div>
                                         </ul>
@@ -116,7 +163,7 @@
                                                 </span>
                                                 <p class="coal mb-0"> Avg. Response Rate</p>
                                             </div>
-                                            <h4>{{formatNumber(averageResponseData )  |number:'1.2-2' }}% <small
+                                            <h4>{{ formatNumber(averageResponseData) |number:'1.2-2' }}% <small
                                                     *ngIf="preAveragePercentage >= 0; else downArrow"
                                                     class="text-success fs-12">
                                                     <i class="fa-light fa-arrow-up"></i> {{ preAveragePercentage
@@ -409,15 +456,16 @@
                                                         <i [class]="platformIconMapping[platform.plateForm]"></i>
                                                         <ul class="sociallist">
                                                             <li><span>In Progress</span><strong>{{formatNumber(
-                                                                    platform.unRespondedCount) }}</strong></li>
+                                                                    platform.unRespondedCount)
+                                                                    }}</strong></li>
                                                             <li><span>Assign to me</span><strong>{{
                                                                     formatNumber( platform.assignTomeCount )}}</strong>
                                                             </li>
-                                                            <li><span>Follow up</span><strong>{{formatNumber(
-                                                                    platform.followUpCount
-                                                                    )}}</strong></li>
-                                                            <li><span>Completed</span><strong>{{ formatNumber
-                                                                    (platform.completed)
+                                                            <li><span>Follow up</span><strong>{{
+                                                                    formatNumber(platform.followUpCount)
+                                                                    }}</strong></li>
+                                                            <li><span>Completed</span><strong>{{formatNumber(
+                                                                    platform.completed)
                                                                     }}</strong></li>
                                                         </ul>
                                                     </div>

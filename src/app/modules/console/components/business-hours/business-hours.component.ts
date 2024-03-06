@@ -18,11 +18,14 @@ export class BusinessHoursComponent implements OnInit {
   selectedSortOption: string = 'All';
   messages: any;
   searchText: string = '';
+  perPage: number = 15;
+  currentPage: number = 1;
+  totalCount: any;
   applySearchFilter() {
-    if(this.searchText.trim() !== ''){
+    if (this.searchText.trim() !== '') {
       this.refreshMessages()
     }
-    else{
+    else {
       this.searchText = '';
       this.refreshMessages()
     }
@@ -31,12 +34,14 @@ export class BusinessHoursComponent implements OnInit {
     const formData = {
       search: this.searchText,
       sorting: this.selectedSortOption,
-      pageNumber: 0,
-      pageSize: 0
+      pageNumber: this.currentPage,
+      pageSize: this.perPage,
     }
     this.commonService.GetBusinessHours(formData).subscribe(
       (response: any) => {
         this.messages = response.BusinessHours;
+        this.totalCount = response.TotalCount
+
       },
       (error: any) => {
         console.error(error);
@@ -52,14 +57,14 @@ export class BusinessHoursComponent implements OnInit {
   constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
 
   ngOnInit(): void {
-   this.refreshMessages()
+    this.refreshMessages()
   }
 
   updatevalue(string: any) {
     this.headerService.updateMessage(string);
   }
   editTemplate(template: any) {
-    this.router.navigate(['/console/business-hours/create',template.id], {
+    this.router.navigate(['/console/business-hours/create', template.id], {
       state: { template }
     });
   }
@@ -90,5 +95,44 @@ export class BusinessHoursComponent implements OnInit {
     clonedTemplate.name += ' (Cloned)';
     this.templates.push(clonedTemplate);
     console.log('Cloned template:', clonedTemplate);
+  }
+  setPerPage(perPage: number): void {
+    this.perPage = perPage;
+    this.currentPage = 1;
+    this.refreshMessages()
+  }
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+    this.refreshMessages()
+  }
+  nextPage(): void {
+    const maxPages = Math.ceil(this.totalCount / this.perPage);
+    if (this.currentPage < maxPages) {
+      this.currentPage++;
+    }
+    this.refreshMessages()
+  }
+  goToPage(pageNumber: number): void {
+    debugger
+    if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totalCount / this.perPage)) {
+      this.currentPage = pageNumber;
+    }
+    this.refreshMessages()
+  }
+
+  getVisiblePageNumbers(): number[] {
+    const maxPages = Math.ceil(this.totalCount / this.perPage);
+    const visiblePages = 5;
+
+    let startPage = Math.max(1, this.currentPage - Math.floor(visiblePages / 2));
+    let endPage = Math.min(startPage + visiblePages - 1, maxPages);
+
+    if (endPage - startPage + 1 < visiblePages) {
+      startPage = Math.max(1, endPage - visiblePages + 1);
+    }
+
+    return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }
 }

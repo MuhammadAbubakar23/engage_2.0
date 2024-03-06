@@ -16,6 +16,9 @@ export class MessagesComponent implements OnInit {
   sortOptions: string[] = ['All', 'Ascending', 'Descending'];
   selectedSortOption: string = 'All';
   searchText: string = '';
+  perPage: number = 15;
+  currentPage: number = 1;
+  totalCount: any;
   applySearchFilter() {
     if (this.searchText.trim() !== '') {
       this.refreshMessages();
@@ -32,13 +35,15 @@ export class MessagesComponent implements OnInit {
     const formData = {
       search: this.searchText,
       sorting: this.selectedSortOption,
-      pageNumber: 0,
-      pageSize: 0,
+      pageNumber: this.currentPage,
+      pageSize: this.perPage,
       templateType: "Message"
     }
     this.commonService.GetAllMessages(formData).subscribe(
       (response: any) => {
         this.messages = response.Templates;
+        this.totalCount = response.TotalCount
+
       },
       (error: any) => {
         console.error(error);
@@ -94,17 +99,51 @@ export class MessagesComponent implements OnInit {
 
 
   disableTemplate(template: any) {
-    // Logic for disabling the template
     template.disabled = true;
-    // console.log('Disable template:', template);
   }
 
   cloneTemplate(template: any) {
-    // Logic for cloning the template
-    const clonedTemplate = { ...template }; // Perform a shallow copy of the template
+    const clonedTemplate = { ...template };
     clonedTemplate.name += ' (Cloned)';
-    // You can modify other properties as well if needed
     this.messages.push(clonedTemplate);
-    // console.log('Cloned template:', clonedTemplate);
+  }
+  setPerPage(perPage: number): void {
+    this.perPage = perPage;
+    this.currentPage = 1;
+    this.refreshMessages()
+  }
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+    this.refreshMessages()
+  }
+  nextPage(): void {
+    const maxPages = Math.ceil(this.totalCount / this.perPage);
+    if (this.currentPage < maxPages) {
+      this.currentPage++;
+    }
+    this.refreshMessages()
+  }
+  goToPage(pageNumber: number): void {
+    debugger
+    if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totalCount / this.perPage)) {
+      this.currentPage = pageNumber;
+    }
+    this.refreshMessages()
+  }
+
+  getVisiblePageNumbers(): number[] {
+    const maxPages = Math.ceil(this.totalCount / this.perPage);
+    const visiblePages = 5;
+
+    let startPage = Math.max(1, this.currentPage - Math.floor(visiblePages / 2));
+    let endPage = Math.min(startPage + visiblePages - 1, maxPages);
+
+    if (endPage - startPage + 1 < visiblePages) {
+      startPage = Math.max(1, endPage - visiblePages + 1);
+    }
+
+    return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }
 }

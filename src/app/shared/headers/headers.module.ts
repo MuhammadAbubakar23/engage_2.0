@@ -33,8 +33,10 @@ import { ConsoleCreateMessageTemplatesHeaderComponent } from './console-create-m
 import { ConsoleSignaturesTemplateHeaderComponent } from './console-signatures-template-header/console-signatures-template-header.component';
 import { ConsoleCreateSignatureTemplatesHeaderComponent } from './console-create-signature-templates-header/console-create-signature-templates-header.component';
 import { ConsoleConnectFormHeaderComponent } from './console-connect-from-header/console-connect-form-header/console-connect-form-header.component';
-import { RightHeaderComponentsComponent } from './right-header-components/right-header-components.component';
+// import { RightHeaderComponentsComponent } from './right-header-components/right-header-components.component';
 import { CompletedInteractionHeaderComponent } from './completed-interaction-header/completed-interaction-header.component';
+import { ConsoleCreateSkillHeaderComponent } from './console-create-skill-header/console-create-skill-header.component';
+import { ConsoleCreateRuleHeaderComponent } from './console-create-rule-header/console-create-rule-header.component';
 
 
 
@@ -74,8 +76,10 @@ import { CompletedInteractionHeaderComponent } from './completed-interaction-hea
           ConsoleSignaturesTemplateHeaderComponent,
           ConsoleCreateSignatureTemplatesHeaderComponent,
           ConsoleConnectFormHeaderComponent,
-          RightHeaderComponentsComponent,
-          CompletedInteractionHeaderComponent
+          // RightHeaderComponentsComponent,
+          CompletedInteractionHeaderComponent,
+          ConsoleCreateSkillHeaderComponent,
+          ConsoleCreateRuleHeaderComponent
 
   ],
   imports: [

@@ -20,6 +20,10 @@ export class CreateBusinessHoursComponent implements OnInit {
   showWorkingDays() {
     this.showWorkingDaysSection = true;
   }
+  getSelectedDaysCount(): number {
+    return this.businessWorkingDays.controls.length;
+}
+
   messageForm!: FormGroup;
 
   get BusinessControls(): FormArray {

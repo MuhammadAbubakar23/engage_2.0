@@ -1,10 +1,11 @@
 <div class="content-box-wrapper d-flex w-100">
     <div class="middle-content d-flex">
         <div class="team-user-wrap console-body-wrapper inbox-container" data-scrollbar="true" tabindex="-1"
-            style="overflow: hidden; outline: none;">
-            <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+            style="overflow: auto; outline: none;">
+            <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+                [fullScreen]="false">
                 <p style="color: white"> Loading... </p>
-             </ngx-spinner>
+            </ngx-spinner>
             <div class="scroll-content" style="transform: translate3d(0px, 0px, 0px);">
                 <div class="p-4">
                     <div class="filter-toolbar">
@@ -16,7 +17,9 @@
                                             <button class="iconButton medium">
                                                 <i class="fal fa-search silver"></i>
                                             </button>
-                                            <input placeholder="Search">
+                                            <input [(ngModel)]="searchText" placeholder="Search" class="me-1"
+                                                (ngModelChange)="searchText ? applySearchFilter() : getTeamList()">
+
                                         </a>
                                     </li>
                                     <!-- <li class="list-inline-item">
@@ -44,8 +47,7 @@
                                 </ul>
                             </div>
                             <div class="col-md-4 d-flex align-items-center justify-content-end">
-                                <a [routerLink]="['/console/teams/create/:0']"
-                                    class="ms-2">
+                                <a [routerLink]="['/console/teams/create/:0']" class="ms-2">
                                     <button type="button" class="btn btn-success">
                                         <i class="fal fa-plus me-2"></i>
                                         Create Team
@@ -61,19 +63,18 @@
 
                             <li class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle"
                                 aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                style="display: block;"
-                                data-bs-original-title="Refresh" aria-describedby="tooltip946912" (click)="reloadComponent()">
+                                style="display: block;" data-bs-original-title="Refresh"
+                                aria-describedby="tooltip946912" (click)="reloadComponent()">
                                 <i class="fal fa-redo"></i>
                             </li>
                             <li class="list-group-item after-select-fun iconHover iconButton medium rounded-circle"
-                            [ngStyle]="{display:isChecked==true? 'block':'none'}"
-                                aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                data-bs-original-title="Delete"  >
+                                [ngStyle]="{display:isChecked==true? 'block':'none'}" aria-label="..."
+                                data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Delete">
                                 <i class="fal fa-trash"></i>
                             </li>
                         </ul>
 
-                        <div class="pagination-bar">
+                        <!-- <div class="pagination-bar">
                             <div class="dropdown">
                                 <button class="btn iconHover" type="button" id="dropdownMenuButton1"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -90,35 +91,35 @@
                             <span class="iconButton medium iconHover">
                                 <i class="fal fa-chevron-right"></i>
                             </span>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="table-section table-scrool-y mb-3 query-container table-white">
-    
-                            <!-- <div class="alert alert-secondary text-center email-info-alert p-2" role="alert"     [ngStyle]="{display:isChecked==true? 'block':'none'}" >
+
+                        <!-- <div class="alert alert-secondary text-center email-info-alert p-2" role="alert"     [ngStyle]="{display:isChecked==true? 'block':'none'}" >
                                 All <strong>{{Ids.length}}</strong> conversations on this page are selected.
                             
                                 <a href="javascript:void(0);" class="clear-selection" (click)="reloadComponent()" style="color: rgb(28, 86, 192);">Clear
                                     selection</a>
                             </div> -->
-                
-                        
+
+
                         <table class="table align-middle">
                             <thead>
                                 <tr>
-                                    <th>
+                                    <!-- <th>
                                         <div class="filter-container checkbox-reset">
                                             <ul class="list-group list-group-horizontal border-0">
-                                                <li class="list-group-item border-0 all-check-boxes" [class.selected]="isChecked == true">
+                                                <li class="list-group-item border-0 all-check-boxes"
+                                                    [class.selected]="isChecked == true">
                                                     <input class="form-check-input me-1" type="checkbox"
-                                                        (click)="checkUncheckAll($event)"
-                                                        [checked]="masterSelected"
+                                                        (click)="checkUncheckAll($event)" [checked]="masterSelected"
                                                         aria-label="..." data-bs-toggle="tooltip"
                                                         data-bs-placement="bottom" data-bs-original-title="Check All">
                                                 </li>
                                             </ul>
                                         </div>
-                                    </th>
+                                    </th> -->
                                     <!-- <th *ngFor="let column of teams_Columns">{{column}}</th> -->
                                     <th>
                                         <a class="charcoal hover-icon">
@@ -142,13 +143,10 @@
                                     </td>
                                 </tr> -->
                                 <tr *ngFor="let row of teams ,index as i">
-                                    <td>
-                                        <input class="form-check-input me-1"
-                                        [checked]="row.isChecked"
-                                        [value]='row.id'
-                                       (click)="isAllSelected($event,i)"
-                                         type="checkbox" aria-label="...">
-                                    </td>
+                                    <!-- <td>
+                                        <input class="form-check-input me-1" [checked]="row.isChecked" [value]='row.id'
+                                            (click)="isAllSelected($event,i)" type="checkbox" aria-label="...">
+                                    </td> -->
                                     <td>
                                         {{row?.name}}
                                     </td>
@@ -168,7 +166,7 @@
                                                 <i class="far fa-ellipsis-v"></i>
                                             </button>
                                             <ul class="dropdown-menu fade">
-                                                <li  [routerLink]="['/console/teams/create/',row.id]" >
+                                                <li [routerLink]="['/console/teams/create/',row.id]">
                                                     <a class="dropdown-item"><i class="fal fa-edit me-2"> </i>
                                                         Edit</a>
                                                 </li>
@@ -183,12 +181,59 @@
                                 </tr>
 
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>
+                                        <nav aria-label="Page navigation example"
+                                            class="d-flex align-items-center mt-3 mb-3">
+                                            <ul class="pagination m-0">
+                                                <li class="page-item" (click)="previousPage()">
+                                                    <a class="page-link">Previous</a>
+                                                </li>
+                                                <li class="page-item" *ngFor="let pageNumber of getVisiblePageNumbers()"
+                                                    [class.active]="pageNumber === currentPage">
+                                                    <a class="page-link" (click)="goToPage(pageNumber)">{{ pageNumber
+                                                        }}</a>
+                                                </li>
+                                                <li class="page-item" (click)="nextPage()">
+                                                    <a class="page-link">Next</a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </td>
+
+                                    <td>
+                                        <div
+                                            class="tags-per-page d-flex align-items-center justify-content-end mt-3 mb-3 coal">
+                                            Per page
+                                            <div class="dropdown simple-dropdown w-auto">
+                                                <button class="dropdown-toggle chevron-icon down ps-2 pe-4"
+                                                    type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    {{ perPage }}
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                    <li>
+                                                        <a class="dropdown-item" (click)="setPerPage(10)">10</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" (click)="setPerPage(20)">20</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" (click)="setPerPage(30)">30</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
 
                     </div>
                 </div>
             </div>
-           
+
         </div>
     </div>
 

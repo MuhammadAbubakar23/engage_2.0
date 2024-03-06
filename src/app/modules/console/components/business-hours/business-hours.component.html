@@ -35,7 +35,7 @@
                                (input)="applySearchFilter()">
 
                         </a>
-                        <a (click)="updatevalue('consoleCreateQuickResponseTemplatesHeader')"
+                        <a (click)="updatevalue('ConsoleCreateBusinessHoursHeader')"
                             [routerLink]="['/console/business-hours/create']" class="ms-2">
                             <button type="button" class="btn btn-success">
                                 <i class="fal fa-plus me-2"></i>
@@ -51,7 +51,7 @@
                     <thead>
                         <tr>
                             <th>
-                                Templates
+                                Business Hours
                             </th>
                             <th></th>
 
@@ -86,18 +86,60 @@
                                         <li>
                                             <a class="dropdown-item" (click)="deleteTemplate(template)">Delete</a>
                                         </li>
-                                        <li>
+                                        <!-- <li>
                                             <a class="dropdown-item" (click)="disableTemplate(template)">Disable</a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" (click)="cloneTemplate(template)">Clone</a>
-                                        </li>
+                                        </li> -->
                                     </ul>
                                 </div>
                             </td>
                         </tr>
 
                     </tbody>
+                    <tfoot>
+                        <tr>
+                          <td>
+                            <nav aria-label="Page navigation example" class="d-flex align-items-center mt-3 mb-3">
+                              <ul class="pagination m-0">
+                                <li class="page-item" (click)="previousPage()">
+                                  <a class="page-link">Previous</a>
+                                </li>
+                                <li class="page-item" *ngFor="let pageNumber of getVisiblePageNumbers()" [class.active]="pageNumber === currentPage">
+                                  <a class="page-link" (click)="goToPage(pageNumber)" >{{ pageNumber }}</a>
+                                </li>
+                                <li class="page-item" (click)="nextPage()">
+                                  <a class="page-link">Next</a>
+                                </li>
+                              </ul>
+                            </nav>
+                          </td>
+                         
+                          <td>
+                            <div class="tags-per-page d-flex align-items-center justify-content-end mt-3 mb-3 coal">
+                              Per page
+                              <div class="dropdown simple-dropdown w-auto">
+                                <button class="dropdown-toggle chevron-icon down ps-2 pe-4" type="button" id="dropdownMenuButton1"
+                                  data-bs-toggle="dropdown" aria-expanded="false">
+                                  {{ perPage }}
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                  <li>
+                                    <a class="dropdown-item" (click)="setPerPage(10)">10</a>
+                                  </li>
+                                  <li>
+                                    <a class="dropdown-item" (click)="setPerPage(20)">20</a>
+                                  </li>
+                                  <li>
+                                    <a class="dropdown-item" (click)="setPerPage(30)">30</a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tfoot>
                 </table>
             </div>
         </div>
