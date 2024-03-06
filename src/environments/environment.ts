@@ -102,6 +102,7 @@ export const environment = {
   SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
   ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   consoleBaseUrl: 'https://conrox.enteract.app/api/',
+  botBaseUrl: 'https://bot-engage.enteract.app/api/',
 
 
 

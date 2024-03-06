@@ -28,8 +28,8 @@ export class SignalRService {
 
   token = localStorage.getItem('token');
   signalRStatus = localStorage.getItem('signalRStatus');
-  companyId:number=650;
-  baseUrl:string="";
+  companyId: number = 650;
+  baseUrl: string = "";
 
   public hubconnection!: signalR.HubConnection;
   public connectionId!: string;
