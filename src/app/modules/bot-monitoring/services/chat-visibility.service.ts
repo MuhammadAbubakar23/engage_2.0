@@ -11,10 +11,14 @@ export class ChatVisibilityService {
   notifyNewChatId(chat: any) {
     this.newChatIdSubject.next(chat);
   }
-  private activeIdSubject = new BehaviorSubject<string | null>(null);
-  activeId$: Observable<string | null> = this.activeIdSubject.asObservable();
-  removeActiveId(activeId: any) {
-    this.activeIdSubject.next(activeId);
+  private activeIdSubject = new BehaviorSubject<any>(null);
+  activeId$: Observable<any> = this.activeIdSubject.asObservable();
+  removeActiveId(activeObj:any) {
+    this.activeIdSubject.next(activeObj);
   }
-
+  private thirdActiveSubject = new BehaviorSubject<string | null>(null);
+  thirdActive$: Observable<string | null> = this.thirdActiveSubject.asObservable();
+  notifythirdActive(chat: any) {
+    this.thirdActiveSubject.next(chat);
+  }
 }

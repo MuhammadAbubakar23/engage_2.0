@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription, interval } from 'rxjs';
 import { BotMonitoringService } from 'src/app/modules/bot-monitoring/services/bot-monitoring.service';
 import { ChatVisibilityService } from 'src/app/modules/bot-monitoring/services/chat-visibility.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-monitoring-menu',
@@ -15,86 +16,105 @@ export class MonitoringMenuComponent implements OnInit {
   activeConversation: any[] = [];
   completedConversation: any[] = [];
   showChats = false;
-  currentOpenActiveChats: any[] = [];
-  currentOpenCompletedChats: any[] = [];
   activeIdSubscription: Subscription | undefined;
+  private apiCallInterval1: Subscription | undefined;
+  private apiCallInterval2: Subscription | undefined;
   constructor(private chatVisibilityService: ChatVisibilityService, private _botMonitorS: BotMonitoringService) {
-    this.activeIdSubscription = this.chatVisibilityService.activeId$.subscribe((activeId) => {
-      if (activeId) {
-        const clickedItem = this.activeConversation.find(item => item.from === activeId) || this.completedConversation.find(item => item.from === activeId);
-        clickedItem.active = false;
+    this.activeIdSubscription = this.chatVisibilityService.activeId$.subscribe((active) => {
+      if (active) {
+        debugger
+        console.log("active Id ", active);
+        const clickedItem1 = this.activeConversation.find(item => item.from === active.customerPhone && item.completed === active.completed);
+        if (clickedItem1) {
+          debugger
+          clickedItem1.active = false;
+        }
+        const clickedItem2 = this.completedConversation.find(item => item.from === active.customerPhone && item.completed === active.completed);
+        if (clickedItem2) {
+          debugger
+          clickedItem2.active = false;
+        }
+
+
       }
     })
   }
   getActiveConversation() {
-    this.defaultActiveConversation = [];
-    this.activeConversation = [];
+
     const data = {
       "search": "",
       "activeConversation": true,
+      "clientIdentifier": environment.clientNumber,
       "filter": {
         "pageNumber": 0,
         "pageSize": 0
       }
     }
     this._botMonitorS.getChats(data).subscribe(chats => {
-      console.log("Chats", chats)
+
       chats.forEach((chat: any) => {
-        const existingChatIndex = this.currentOpenActiveChats.findIndex(c => c.from === chat.from);
-        if (existingChatIndex != -1) {
-          chat.active = true;
+        const existingChatIndex = this.defaultActiveConversation.findIndex(c => c.from === chat.from);
+        if (existingChatIndex == -1) {
+          chat.to = environment.clientNumber
+          chat['completed'] = false;
+          this.defaultActiveConversation.push(chat)
         }
       })
-      this.defaultActiveConversation = chats;
+      this.defaultActiveConversation.forEach((chat: any) => {
+        const existingChatIndex = chats.findIndex((c: any) => c.from === chat.from);
+        if (existingChatIndex == -1) {
+          this.defaultActiveConversation.splice(existingChatIndex, 1)
+        }
+      })
       this.activeConversation = this.defaultActiveConversation.slice();
+
     })
   }
   getCompletedConversation() {
-    this.defaultCompletedConversation = [];
-    this.completedConversation = [];
+
     const data = {
       "search": "",
       "activeConversation": false,
+      "clientIdentifier": environment.clientNumber,
       "filter": {
         "pageNumber": 0,
         "pageSize": 0
       }
     }
     this._botMonitorS.getChats(data).subscribe(chats => {
+
       chats.forEach((chat: any) => {
-        chat.to = '923112744502'
-      })
-      console.log("Chats", chats)
-      chats.forEach((chat: any) => {
-        const existingChatIndex = this.currentOpenCompletedChats.findIndex(c => c.from === chat.from);
-        if (existingChatIndex != -1) {
-          chat.active = true;
+        const existingChatIndex = this.defaultCompletedConversation.findIndex(c => c.from === chat.from);
+        if (existingChatIndex == -1) {
+          chat.to = environment.clientNumber
+          chat['completed'] = true;
+          this.defaultCompletedConversation.push(chat)
         }
       })
-      this.defaultCompletedConversation = chats;
+      this.defaultCompletedConversation.forEach((chat: any) => {
+        const existingChatIndex = chats.findIndex((c: any) => c.from === chat.from);
+        if (existingChatIndex == -1) {
+          this.defaultCompletedConversation.splice(existingChatIndex, 1)
+        }
+      })
       this.completedConversation = this.defaultCompletedConversation.slice();
     })
+
   }
 
   ngOnInit(): void {
-    const apiCallInterval1 = interval(10000);
-    const apiCallInterval2 = interval(10000);
-    apiCallInterval1.subscribe(() => {
-      const currentOpenActive = this.defaultActiveConversation.filter(conversation => conversation.active)
-      this.currentOpenActiveChats = currentOpenActive;
+    this.getActiveConversation();
+    this.apiCallInterval1 = interval(20000).subscribe(() => {
       this.getActiveConversation();
     });
-    apiCallInterval2.subscribe(() => {
-      const currentOpenCompleted = this.defaultCompletedConversation.filter(conversation => conversation.active)
-      this.currentOpenCompletedChats = currentOpenCompleted;
-      this.getCompletedConversation();
-    });
+    // this.apiCallInterval2 = interval(1000).subscribe(() => {
+    //   this.getCompletedConversation();
+    // });
 
   }
 
   toggleChatVisibility(clickedItem: any) {
-    console.log("ActiveConversation", this.activeConversation)
-    //const activeItems = this.activeConversation.filter(item => item.active);
+
     clickedItem.active = !clickedItem.active;
     this.chatVisibilityService.notifyNewChatId(clickedItem);
   }
@@ -122,5 +142,15 @@ export class MonitoringMenuComponent implements OnInit {
 
   }
 
-
+  ngOnDestroy(): void {
+    if (this.activeIdSubscription) {
+      this.activeIdSubscription.unsubscribe();
+    }
+    if (this.apiCallInterval1) {
+      this.apiCallInterval1.unsubscribe();
+    }
+    if (this.apiCallInterval2) {
+      this.apiCallInterval2.unsubscribe();
+    }
+  }
 }

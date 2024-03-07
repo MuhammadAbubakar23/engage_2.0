@@ -20,6 +20,7 @@ export const environment = {
   twitterclientSecret: 'Ex1XpdfYMFEAtWBJn9XOrtfxyu19INzNaPV155vocLomG',
   store: { types: { local: 'LS' } },
   title: 'abc',
+  clientNumber: '923112744502',
   InstaBaseUrl: 'https://insta.360scrm.com/api/',
   // FbBaseUrl: 'https://face.360scrm.com/api/',
   FbBaseUrl: 'https://nextsparklypen70.conveyor.cloud/api/',
@@ -82,7 +83,7 @@ export const environment = {
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
-
+  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
   // // For Testing
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
   // // IdentityBaseUrl:'https://rep.enteract.app/api/',
@@ -95,7 +96,7 @@ export const environment = {
 
 
 
-  // for statging / Internal :companyId 650
+  //for statging / Internal :companyId 650
   IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
   CommonBaseUrl: 'https://comrox.enteract.app/api/',
   ServiceBaseUrl: '',

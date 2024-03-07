@@ -145,3 +145,9 @@
 .chat-message-component .message-wrap.agent-message-wrap.left .card .card-body {
   border-radius: 10px 10px 0 10px;
 }
+.botleft .list-group-item {
+  height: auto !important;
+}
+.thirdactive .message-wrap.agent-message-wrap.left .card .card-body > div {
+  max-width: 220px !important;
+}

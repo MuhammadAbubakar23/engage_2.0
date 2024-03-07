@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { ChatVisibilityService } from '../../services/chat-visibility.service';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { BotMonitoringService } from '../../services/bot-monitoring.service';
+
 
 @Component({
   selector: 'app-bot-chat',
   templateUrl: './bot-chat.component.html',
   styleUrls: ['./bot-chat.component.scss'],
+
   standalone: true,
   imports: [CommonModule, SharedModule],
 })
@@ -15,23 +16,32 @@ export class BotChatComponent implements OnInit {
   @Input() chat: any = [];
   isMinimized: boolean = false;
   isRemoved: boolean = false;
+  @Output() minimizeToggle: EventEmitter<void> = new EventEmitter<void>();
   removeScreen() {
     let newChat = {
       "from": this.chat[0].customer.phone,
       "to": this.chat[0].client.phone,
+      "completed": this.chat[0].completed
     }
     this.chatVisibilityService.notifyNewChatId(newChat);
-    this.chatVisibilityService.removeActiveId(this.chat[0].customer.phone);
+    this.chatVisibilityService.removeActiveId({ 'customerPhone': this.chat[0].customer.phone, 'completed': this.chat[0].completed });
   }
-  toggleMinimized(): void {
-    this.isMinimized = !this.isMinimized;
+  toggleMinimized(clickedItem: any): void {
+    debugger
+    clickedItem[0]['isMinimized'] = !clickedItem[0].isMinimized;
+    this.minimizeToggle.emit(clickedItem)
   }
+  // toggleChatVisibility(clickedItem: any) {
+  //   console.log("ActiveConversation", this.activeConversation)
+  //   //const activeItems = this.activeConversation.filter(item => item.active);
+  //   clickedItem.active = !clickedItem.active;
+  //   this.chatVisibilityService.notifyNewChatId(clickedItem);
+  // }
   constructor(private chatVisibilityService: ChatVisibilityService, private renderer: Renderer2) { }
 
   ngOnInit(): void {
-    console.log(" chatArray", this.chat)
+    console.log("chatArray", this.chat)
 
   }
-
 
 }
