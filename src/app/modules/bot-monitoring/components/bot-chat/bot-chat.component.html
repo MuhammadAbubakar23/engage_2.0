@@ -1,4 +1,4 @@
-<main class="chatlisting row align-items-start p-3" *ngIf="chat.length > 0">
+
   <section
     class="empty col d-flex flex-column justify-content-center h-100 align-items-center gap-3 d-none"
   >
@@ -8,7 +8,7 @@
   <section
     class="chatitem col"
     id="chatitem1"
-    [ngClass]="{ minimized: isMinimized, 'mb-5': isMinimized }"
+    [ngClass]="{ minimized: chat[0].isMinimized, 'mb-5': chat[0].isMinimized }"
   >
     <header class="chat-header">
       <div class="d-flex align-items-center">
@@ -26,13 +26,13 @@
         <span
           class="iconButton medium ms-auto"
           id="minbutton"
-          (click)="toggleMinimized()"
+          (click)="toggleMinimized(chat)"
         >
           <i
             class="fa-light"
             [ngClass]="{
-              'fa-minus': !isMinimized,
-              'fa-expand': isMinimized
+              'fa-minus': !chat[0].isMinimized,
+              'fa-expand': chat[0].isMinimized
             }"
           ></i>
         </span>
@@ -161,4 +161,4 @@
         </div>
       </footer> -->
   </section>
-</main>
+

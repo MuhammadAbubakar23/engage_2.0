@@ -105,7 +105,9 @@
             style="transform: translate3d(0px, 0px, 0px)"
           >
             <!-- routerLink="/bot-monitoring/chats" -->
-            <ng-container *ngFor="let item of activeConversation">
+            <ng-container
+              *ngFor="let item of activeConversation.slice().reverse()"
+            >
               <a
                 (click)="toggleChatVisibility(item)"
                 id="active1"
@@ -127,12 +129,12 @@
                       {{ item.message }}
                     </span>
                   </div>
-                  <div class="d-flex align-items-center">
-                    <!-- <span class="bottype fw-medium"> {{item.category}} </span> -->
+                  <!-- <div class="d-flex align-items-center">
+                    <span class="bottype fw-medium"> {{item.category}} </span>
                     <span class="badge twltte-bg rounded-pill ms-auto">{{
                       item.count
                     }}</span>
-                  </div>
+                  </div> -->
                 </div>
               </a>
             </ng-container>

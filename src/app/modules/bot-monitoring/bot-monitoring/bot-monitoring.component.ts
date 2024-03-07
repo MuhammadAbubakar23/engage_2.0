@@ -11,34 +11,15 @@ import { BotMonitoringService } from '../services/bot-monitoring.service';
 export class BotMonitoringComponent implements OnInit {
   chats: any[] = [];
   currentActiveChats: any[] = [];
-  private newChatIdSubscription: Subscription;
+  private newChatIdSubscription: Subscription | undefined;
+  private apiCallIntervalSubscription: Subscription | undefined;
+
   constructor(private _chatVisibilityS: ChatVisibilityService, private _botMonitorS: BotMonitoringService) {
-    this.newChatIdSubscription = this._chatVisibilityS.newChatId$.subscribe((newChat) => {
-      if (newChat) {
-        this.getChatDetails(newChat)
-      }
-      if (this.currentActiveChats.length > 0) {
-
-        const apiCallInterval1 = interval(10000);
-        apiCallInterval1.subscribe(() => {
-          this.currentActiveChats.forEach((ch) => {
-
-            this._botMonitorS.getChatDetails(ch).subscribe((res) => {
-
-              const existingChatIndex = this.chats.findIndex(chat => chat[0].customer.phone === ch.customerIdentifier);
-              if (existingChatIndex !== -1) {
-                console.log("existingChatIndex", existingChatIndex)
-                this.chats[existingChatIndex] = res;
-              }
-            })
-          })
-        });
-
-      }
-    });
   }
-  getChatDetails(activeChat: any) {
 
+
+  getChatDetails(activeChat: any) {
+    debugger
     {
       const data = {
         "clientIdentifier": activeChat.to,
@@ -49,16 +30,47 @@ export class BotMonitoringComponent implements OnInit {
         }
       }
       if (this.chats.length > 0) {
-        const existingChatIndex = this.chats.findIndex(chat => chat[0].customer.phone === activeChat.from);
+        if (this.chats.length == 2) {
+          this._chatVisibilityS.notifythirdActive(true);
+        }
+
+        debugger
+        const existingChatIndex = this.chats.findIndex(chat => chat[0].customer?.phone === activeChat.from);
+        console.log("this.chats", this.chats)
 
         if (existingChatIndex != -1) {
-          this.chats.splice(existingChatIndex, 1);
+          const isEqual = this.chats[existingChatIndex][0]['completed'] === activeChat['completed']
+          debugger
+          if (isEqual) {
+            this.chats.splice(existingChatIndex, 1);
+            this._chatVisibilityS.notifythirdActive(false);
+          }
+          else {
+            this._botMonitorS.getChatDetails(data).subscribe((res) => {
+              debugger
+              res[0]['completed'] = activeChat['completed']
+              this.chats[existingChatIndex] = res;
+              const latObject = {
+                "clientIdentifier": res[0].client?.phone,
+                "customerIdentifier": res[0].customer.phone,
+                "filter": {
+                  "pageNumber": 0,
+                  "pageSize": 0
+                }
+              }
+              this._chatVisibilityS.removeActiveId({ 'customerPhone': activeChat.from, 'completed': !this.chats[existingChatIndex][0]['completed'] });
+              this.currentActiveChats[existingChatIndex] = latObject;
+
+            })
+          }
         }
         else if (this.chats.length < 3) {
+          debugger
           this._botMonitorS.getChatDetails(data).subscribe((res) => {
+            res[0]['completed'] = activeChat['completed']
             this.chats.push(res);
             const latObject = {
-              "clientIdentifier": res[0].client.phone,
+              "clientIdentifier": res[0].client?.phone,
               "customerIdentifier": res[0].customer.phone,
               "filter": {
                 "pageNumber": 0,
@@ -68,16 +80,18 @@ export class BotMonitoringComponent implements OnInit {
             this.currentActiveChats.push(latObject);
           })
         } else {
-
           alert("The maximum number of visible screens is limited to three.");
-          this._chatVisibilityS.removeActiveId(activeChat.from);
+          this._chatVisibilityS.removeActiveId({ 'customerPhone': activeChat.from, 'completed': activeChat['completed'] });
         }
       }
       else {
         this._botMonitorS.getChatDetails(data).subscribe((res) => {
+          debugger
+          console.log(activeChat['completed'])
+          res[0]['completed'] = activeChat['completed'];
           this.chats.push(res);
           const latObject = {
-            "clientIdentifier": res[0].client.phone,
+            "clientIdentifier": res[0].client?.phone,
             "customerIdentifier": res[0].customer.phone,
             "filter": {
               "pageNumber": 0,
@@ -90,11 +104,50 @@ export class BotMonitoringComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    this.newChatIdSubscription = this._chatVisibilityS.newChatId$.subscribe((newChat: any) => {
+      if (newChat) {
+        console.log("New chat", newChat['completed'])
+        this.getChatDetails(newChat);
+      }
+
+      this.apiCallIntervalSubscription = interval(30000).subscribe(() => {
+        if (this.currentActiveChats.length > 0) {
+          this.currentActiveChats.forEach((ch) => {
+            this._botMonitorS.getChatDetails(ch).subscribe((res) => {
+              debugger
+              const existingChatIndex = this.chats.findIndex(chat => chat[0].customer?.phone === ch.customerIdentifier);
+              const minimizeToggle = this.chats[existingChatIndex][0]['isMinimized'];
+              const completed = this.chats[existingChatIndex][0]['completed'];
+              res[0]['completed'] = completed;
+              if (minimizeToggle === true) {
+                res[0]['isMinimized'] = true;
+              }
+              else {
+                res[0]['isMinimized'] = false;
+              }
+              if (existingChatIndex !== -1) {
+                this.chats[existingChatIndex] = res;
+              }
+            });
+          });
+        }
+
+      });
+    });
 
   }
+  onMinimizeToggle(activeChat: any) {
+    debugger
+    console.log("this.chats", this.chats)
+  }
+  ngOnDestroy(): void {
+    if (this.newChatIdSubscription) {
+      this.newChatIdSubscription.unsubscribe();
+    }
+    if (this.apiCallIntervalSubscription) {
+      this.apiCallIntervalSubscription.unsubscribe();
+    }
 
-  ngOnDestroy() {
-    this.newChatIdSubscription.unsubscribe();
   }
 
 }

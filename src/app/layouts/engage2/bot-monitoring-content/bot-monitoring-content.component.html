@@ -6,8 +6,9 @@
       </div> -->
     <nav
       id="left-sidebar-expand"
-      class="conversation-list botleft all-conversation"
+      class="conversation-list botleft thirdactive all-conversation"
       [ngClass]="toggleLeftBar ? '' : 'toggled'"
+      [ngClass]="{ thirdactive: thirdActive }"
     >
       <app-monitoring-menu></app-monitoring-menu>
       <a class="panelToggle" (click)="toggleSubLeftBar()"></a>

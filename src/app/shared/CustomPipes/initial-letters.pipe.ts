@@ -13,8 +13,8 @@ export class InitialLettersPipe implements PipeTransform {
     const words = value.split(' ');
 
 
-    const initials = words.map(word => word.charAt(0)).join('');
+    const initials = words.map(word => word.charAt(0)).join('').slice(0, 2);
 
-    return initials.toUpperCase(); 
+    return initials.toUpperCase();
   }
 }
