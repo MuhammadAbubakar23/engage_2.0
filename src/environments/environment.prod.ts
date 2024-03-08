@@ -182,7 +182,7 @@ export const environment = {
       addSkill: 'Skill/Add',
       deleteSkill: 'Skill/Delete',
 
-      getTagsAll: 'Tags/GetAll',
+      // getTagsAll: 'Tags/GetAll',
       getTagsByCompanyId: 'Tags/GetTagsByCompayId',
       updateSkill: 'Skill/Update',
       getSkillsbyId: 'Skill/GetById',
@@ -203,13 +203,15 @@ export const environment = {
       addRules: 'Rules/Add',
       updateRules: 'Rules/Update',
       deleteRules: 'Rules/Delete',
+      getTagsAll: 'Tags/GetAll',
       defaultTags: 'Tags/GetTags',
       quickReplyListForBazaar: 'QuickReply/GetAll',
-      getAllTeams: 'Teams/GetTeamTypes',
+      getAllTeams: 'Teams/GetAllTeams',
       addTeam: 'Teams/Add',
       updateTeam: 'Teams/Update',
       deleteTeam: 'Teams/Delete',
-      deleteMultipleTeams: 'Teams/DeleteMultiple',
+      teamGetById:'Teams/FetchTeamById',
+      deleteMultipleTeams: 'Teams/DeleteMultiple'
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',
@@ -272,6 +274,7 @@ export const environment = {
       hideUnhideMessage: 'Publisher/HideQuery',
       dispositionTags: 'Keyword/GetAllDisposition',
       removeAssignedQuery: 'Query/RemoveAssignQuery',
+      sessionClose:'Whatsapp/TerminateSupportSession',
       //Reports
       routeToAgents: 'Report/GetWhatsAppRouteToAgentReport',
       routeToAgentsCsv: 'Report/GetWhatsAppRouteAgentReportCSV',

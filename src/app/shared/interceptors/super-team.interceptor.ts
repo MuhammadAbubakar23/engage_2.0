@@ -36,6 +36,29 @@ export class SuperTeamInterceptor implements HttpInterceptor {
 
     let team = this.storage.retrive('nocompass', 'O').local;
     // console.log(team);
+    // if (typeof team === 'undefined' || team == null || team == '') {
+    //   //   console.log(this.storage.retrive("nocompass","O"));
+    // } else if (
+    //   typeof team.id === 'undefined' ||
+    //   team.id == null ||
+    //   team.id <= 0
+    // ) {
+    // } else {
+    //   debugger
+    //   //console.log(team.id);
+    //   request = request.clone({
+      
+    //     url: request.url,
+    //     //withCredentials: true,
+    //     setHeaders: {
+    //       'X-Super-Team': JSON.stringify(this.companyId),
+    //     },
+    //   });
+    // }
+
+
+
+
     if (typeof team === 'undefined' || team == null || team == '') {
       //   console.log(this.storage.retrive("nocompass","O"));
       request = request.clone({
@@ -51,8 +74,10 @@ export class SuperTeamInterceptor implements HttpInterceptor {
       team.id <= 0
     ) {
     } else {
+      debugger
       //console.log(team.id);
       request = request.clone({
+      
         url: request.url,
         //withCredentials: true,
         setHeaders: {
@@ -60,6 +85,18 @@ export class SuperTeamInterceptor implements HttpInterceptor {
         },
       });
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     //return next.handle(httpRequest);
     return next.handle(request);
