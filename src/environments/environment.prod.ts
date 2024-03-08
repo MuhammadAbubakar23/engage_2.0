@@ -74,14 +74,16 @@ export const environment = {
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
   // ProfileBaseUrl: '',
 
-  // For Bazaar
-  // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
-  // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://bzcommon.enteract.live/',
-  // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
-  // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
+  // // For Bazaar
+  IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
+  CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
+  SignalRCommonBaseUrl: 'https://bzcommon.enteract.live/',
+  ServiceBaseUrl: 'https://waservice.enteract.live/api/',
+  consoleBaseUrl: 'https://waconsole.enteract.live/api/',
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
+   botBaseUrl: 'https://bot-engage.enteract.app/api/',
+
 
   // // For Testing
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
@@ -96,13 +98,13 @@ export const environment = {
 
 
   // for statging / Internal :companyId 650
-  IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
-  CommonBaseUrl: 'https://comrox.enteract.app/api/',
-  ServiceBaseUrl: '',
-  SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
-  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  consoleBaseUrl: 'https://conrox.enteract.app/api/',
-  botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
+  // CommonBaseUrl: 'https://comrox.enteract.app/api/',
+  // ServiceBaseUrl: '',
+  // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  // consoleBaseUrl: 'https://conrox.enteract.app/api/',
+  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
 
 
 
@@ -181,7 +183,7 @@ export const environment = {
       addSkill: 'Skill/Add',
       deleteSkill: 'Skill/Delete',
 
-      getTagsAll: 'Tags/GetAll',
+      // getTagsAll: 'Tags/GetAll',
       getTagsByCompanyId: 'Tags/GetTagsByCompayId',
       updateSkill: 'Skill/Update',
       getSkillsbyId: 'Skill/GetById',
@@ -202,13 +204,15 @@ export const environment = {
       addRules: 'Rules/Add',
       updateRules: 'Rules/Update',
       deleteRules: 'Rules/Delete',
+      getTagsAll: 'Tags/GetAll',
       defaultTags: 'Tags/GetTags',
       quickReplyListForBazaar: 'QuickReply/GetAll',
-      getAllTeams: 'Teams/GetTeamTypes',
+      getAllTeams: 'Teams/GetAllTeams',
       addTeam: 'Teams/Add',
       updateTeam: 'Teams/Update',
       deleteTeam: 'Teams/Delete',
-      deleteMultipleTeams: 'Teams/DeleteMultiple',
+      teamGetById:'Teams/FetchTeamById',
+      deleteMultipleTeams: 'Teams/DeleteMultiple'
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',
@@ -271,6 +275,7 @@ export const environment = {
       hideUnhideMessage: 'Publisher/HideQuery',
       dispositionTags: 'Keyword/GetAllDisposition',
       removeAssignedQuery: 'Query/RemoveAssignQuery',
+      sessionClose:'Whatsapp/TerminateSupportSession',
       //Reports
       routeToAgents: 'Report/GetWhatsAppRouteToAgentReport',
       routeToAgentsCsv: 'Report/GetWhatsAppRouteAgentReportCSV',

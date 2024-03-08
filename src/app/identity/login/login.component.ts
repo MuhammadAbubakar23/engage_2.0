@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
   login() {
 
     let obj = {
-      // actor: this.loginForm.value.actor,
+      // actor: this.loginForms.value.actor,
       userName: this.loginForm.value.userName,
       password: this.loginForm.value.password,
       rememberMe: true,
@@ -94,10 +94,10 @@ debugger
         if (res.isTwoFAEnabled == false) {
           this.stor.store('token', res.loginResponse.loginResponse.accessToken);
           this.stor.store('main', res.loginResponse.loginResponse);
-          this.stor.store(
-            'nocompass',
-            res.loginResponse.loginResponse.roles[0]
-          );
+          // this.stor.store(
+          //   'nocompass',
+          //   res.loginResponse.loginResponse.roles[0]
+          // );
           localStorage.setItem(
             'agentId',
             res.loginResponse.loginResponse.userId
@@ -217,7 +217,7 @@ debugger
       (res: any) => {
         this.stor.store('token', res.accessToken);
         this.stor.store('main', res);
-        this.stor.store('nocompass', res.roles[0]);
+        // this.stor.store('nocompass', res.roles[0]);
         localStorage.setItem('agentId', res.userId);
         localStorage.setItem('agentName', res.username);
 

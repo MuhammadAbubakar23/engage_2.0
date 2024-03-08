@@ -28,7 +28,7 @@ export class TeamsService {
     //     return throwError(() => new Error(err));
     //   })
     // );
-    return this.request.get<MenuModel[]>("UserTeams", {}).pipe(
+    return this.request.post<MenuModel[]>("UserTeams", {}).pipe(
       map((response: any) => {
         // if(response.length>=1) this.stor.store(storekey, response);
         // else this.stor.delete(storekey); 
