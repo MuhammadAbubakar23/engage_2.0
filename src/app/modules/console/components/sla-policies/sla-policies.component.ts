@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 
 @Component({
   selector: 'app-sla-policies',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, NgxSpinnerModule],
   templateUrl: './sla-policies.component.html',
   styleUrls: ['./sla-policies.component.scss']
 })
@@ -20,10 +21,10 @@ export class SlaPoliciesComponent implements OnInit {
   currentPage: number = 1;
   totalCount: any;
   applySearchFilter() {
-    if(this.searchText.trim() !== ''){
+    if (this.searchText.trim() !== '') {
       this.refreshMessages()
     }
-    else{
+    else {
       this.searchText = '';
       this.refreshMessages()
     }
@@ -36,21 +37,26 @@ export class SlaPoliciesComponent implements OnInit {
       pageNumber: this.currentPage,
       pageSize: this.perPage
     }
+    this.spinnerServerice.show()
     this.commonService.GetSlaPolicy(formData).subscribe(
       (response: any) => {
+        this.spinnerServerice.hide()
+
         this.messages = response.SLAPolices;
         this.totalCount = response.TotalCount
 
       },
       (error: any) => {
+        this.spinnerServerice.hide()
+
         console.error(error);
       }
     );
   }
-  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
+  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router, private spinnerServerice: NgxSpinnerService) { }
 
   ngOnInit(): void {
-   this.refreshMessages()
+    this.refreshMessages()
   }
   setSortOption(option: string) {
 
@@ -126,7 +132,7 @@ export class SlaPoliciesComponent implements OnInit {
     this.refreshMessages()
   }
   goToPage(pageNumber: number): void {
-    
+
     if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totalCount / this.perPage)) {
       this.currentPage = pageNumber;
     }

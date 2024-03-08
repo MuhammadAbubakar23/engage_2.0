@@ -64,12 +64,12 @@
                                             teamForm.get('desc')!.dirty))}" formControlName="desc"
                                     class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
                                     style="height: 100px"></textarea>
-                                <label for="floatingTextarea2">desc</label>
+                                <label for="floatingTextarea2">Description</label>
                                 <div class="invalid-feedback" *ngIf="(teamForm.get('desc')!.errors && (teamForm.get('desc')!.touched ||
                                                                               teamForm.get('desc')!.dirty))">
 
                                     <div *ngIf="teamForm.get('desc')!.errors?.['required']">
-                                        desc is required!
+                                        description is required!
                                     </div>
                                 </div>
                                 <div class="valid-feedback"
@@ -82,6 +82,19 @@
                                 Tokyo
                                 timezone</small> -->
 
+                        </div>
+                        <div class="floating-item mb-4">
+                            <div class="form-floating mb-2">
+                                <select class="form-select multi-select"
+                                    aria-label="Floating label select"
+                                    formControlName="typeId">
+                                    <option value="" selected disabled>Please Select Team Type
+                                    </option>
+                                    <option *ngFor="let client of teamType"
+                                        [value]="client.id">{{ client.name }}</option>
+                                </select>
+                                <label for="floatingSelect">Team</label>
+                            </div>
                         </div>
                         <div class="floating-item mb-4">
                             <div [ngClass]="{'was-validated' : teamForm.get('timeZone')!.valid && teamForm.get('timeZone')!.touched}"

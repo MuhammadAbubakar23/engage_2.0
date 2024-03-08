@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
     this.spinnerService.show();
     this.authService.login(obj).subscribe(
       (res: any) => {
-debugger
+
         //only for testing purpose, remove after that
         // res = { 'loginResponse': res }
         // res = { 'loginResponse': res }

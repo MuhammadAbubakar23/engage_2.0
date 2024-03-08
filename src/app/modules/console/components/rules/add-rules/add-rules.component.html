@@ -26,24 +26,21 @@
                     aria-labelledby="holiday-detail-tab">
                     <form [formGroup]="rulesForm">
                       <div class="business-detail-wrap">
-                        <div class="floating-item mb-3">
-                          <div class="form-floating">
-                            <input type="email" class="form-control" id="floatingInputValue" placeholder="Rules Name"
-                              formControlName="ruleName" />
-                            <label for="floatingInputValue">Rule Name</label>
-                          </div>
-                          <!-- <div class="example-text">e.g. xyz@domain.com</div> -->
+                        <div class="form-floating mb-3">
+                          <input type="text" class="form-control" id="ruleName" placeholder="Rule Name"
+                            formControlName="ruleName" [class.is-invalid]="ruleName?.invalid && (ruleName?.dirty || ruleName?.touched)"
+                            [class.is-valid]="ruleName?.valid && (ruleName?.dirty || ruleName?.touched)">
+                          <label for="ruleName">Rule Name</label>
+                          <div class="invalid-feedback" *ngIf="ruleName?.errors?.['required']">Rule name is required.</div>
+                          <div class="invalid-feedback" *ngIf="ruleName?.errors?.['pattern']">Only alphabets are allowed.</div>
                         </div>
-                        <div class="floating-item mb-4">
-                          <div class="form-floating">
-                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                              style="height: 100px" formControlName="description"></textarea>
-                            <label for="floatingTextarea2">Description</label>
-                          </div>
-                          <!-- <div class="example-text"> -->
-                            <!-- Optional: will appear in the From: header of emails
-                            you send. -->
-                          <!-- </div> -->
+                        <div class="form-floating mb-4">
+                          <textarea class="form-control" placeholder="Leave a comment here" id="description"
+                            style="height: 100px" formControlName="description"
+                            [class.is-invalid]="description?.invalid && (description?.dirty || description?.touched)"
+                            [class.is-valid]="description?.valid && (description?.dirty || description?.touched)"></textarea>
+                          <label for="description">Description</label>
+                          <div class="invalid-feedback" *ngIf="description?.errors?.['required']">Description is required.</div>
                         </div>
                       </div>
                     </form>
@@ -102,7 +99,7 @@
                   <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4" (click)="cancelbtn()">
                     Cancel
                   </button>
-                  <button type="button" (click)="onClick()" class="btn skyBg ms-2 px-4 btn-medium saveBtn">
+                  <button type="button" (click)="onClick()" class="btn skyBg ms-2 px-4 btn-medium saveBtn" [disabled]="rulesForm.invalid">
                     Save
                   </button>
                 </div>

@@ -85,6 +85,7 @@ export class CommonDataService {
   getAllTeams = environment.links.console.getAllTeams
   addTeam = environment.links.console.addTeam
   updateTeam = environment.links.console.updateTeam
+  getTeamType = environment.links.console.getTeamType
   deleteTeams = environment.links.console.deleteTeam
   teamGetById = environment.links.console.teamGetById
   deleteMultipleTeams = environment.links.console.deleteMultipleTeams
@@ -873,6 +874,9 @@ return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentif
   UpdateTeam(body: any) {
     return this.http.post(this.IdentityBaseUrl + this.updateTeam, body)
 
+  }
+  GetTeamType(){
+    return this.http.get(this.IdentityBaseUrl + this.getTeamType)
   }
   DeleteSignalTeam(id: any) {
     return this.http.get(`${this.IdentityBaseUrl}${this.deleteTeams}?id=${id}`)

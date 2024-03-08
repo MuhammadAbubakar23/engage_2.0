@@ -88,7 +88,7 @@ export class DispositionFormComponent implements OnInit {
   }
   previousUrl:any;
   submitDispositionForm(){
-    debugger
+    
     this.dispositionFormDto = {
       disposition: this.dispositionForm.value.disposition,
       reasonId: this.dispositionForm.value.reasonId,

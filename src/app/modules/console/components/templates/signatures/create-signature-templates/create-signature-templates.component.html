@@ -5,28 +5,28 @@
             <div class="wider-container pt-3">
                 <div class="floating-item mb-3">
                     <div class="floating-wrap form-floating">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="Template Name"
-                            [value]="templateName" formControlName="templateName">
-                        <label for="floatingInputValue" class="coal">Template Name</label>
+                      <input type="text" class="form-control" id="templateName" placeholder="Template Name"
+                        formControlName="templateName" [class.is-invalid]="messageForm.get('templateName')?.invalid && (messageForm.get('templateName')?.dirty || messageForm.get('templateName')?.touched)"
+                        [class.is-valid]="messageForm.get('templateName')?.valid && (messageForm.get('templateName')?.dirty || messageForm.get('templateName')?.touched)">
+                      <label for="templateName" class="coal">Template Name</label>
+                      <div class="invalid-feedback" *ngIf="messageForm.get('templateName')?.errors?.['required']">Template name is required.</div>
+                      <div class="invalid-feedback" *ngIf="messageForm.get('templateName')?.errors?.['pattern']">Only alphabets and spaces are allowed.</div>
                     </div>
-                </div>
-                <div class="floating-item mb-4">
+                  </div>
+                  <div class="floating-item mb-4">
                     <div class="floating-wrap form-floating mb-3">
-                        <input class="form-control" id="floatingSubject" placeholder="Subject"
-                            [value]="subject" formControlName="subject">
-                        <label for="floatingSubject" class="coal">Subject</label>
+                      <input class="form-control" id="subject" placeholder="Subject"
+                        formControlName="subject" [class.is-invalid]="messageForm.get('subject')?.invalid && (messageForm.get('subject')?.dirty || messageForm.get('subject')?.touched)"
+                        [class.is-valid]="messageForm.get('subject')?.valid && (messageForm.get('subject')?.dirty || messageForm.get('subject')?.touched)">
+                      <label for="subject" class="coal">Subject</label>
+                      <div class="invalid-feedback" *ngIf="messageForm.get('subject')?.errors?.['required']">Subject is required.</div>
                     </div>
-                    <!-- <small class="coal ms-3">Optional: will replace the subject when the message template is used in an
-                        email.</small> -->
-                </div>
+                  </div>
 
-                <div class="text-area-section pb-5">
-                    <ckeditor [(ngModel)]="editorContent" [config]="editorConfig" formControlName="message"></ckeditor>
-
-                    <!-- <small class="coal ms-3">You can use variables that will be replaced dynamically.
-                        <a href="javascript:">View FAQ</a>
-                    </small> -->
-                </div>
+                  <div class="text-area-section pb-5">
+                    <ckeditor [(ngModel)]="editorContent" formControlName="message"></ckeditor>
+                    <div class="invalid-feedback" *ngIf="messageForm.get('message')?.invalid && (messageForm.get('message')?.dirty || messageForm.get('message')?.touched)">Message is required.</div>
+                  </div>
 
             </div>
             <footer class="footer">
@@ -47,7 +47,7 @@
                                 <div class="buttons-wrap d-flex">
                                     <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4"
                                         (click)="cancelForm()">Cancel</button>
-                                    <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                                    <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn"  [disabled]="messageForm.invalid"
                                          data-bs-target="">Save</button>
                                 </div>
                             </div>

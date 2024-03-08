@@ -47,7 +47,7 @@
                                 </ul>
                             </div>
                             <div class="col-md-4 d-flex align-items-center justify-content-end">
-                                <a [routerLink]="['/console/teams/create/:0']" class="ms-2">
+                                <a (click)="updatevalue('consoleCreateTeamsHeader')" [routerLink]="['/console/teams/create/0']" class="ms-2">
                                     <button type="button" class="btn btn-success">
                                         <i class="fal fa-plus me-2"></i>
                                         Create Team
@@ -130,7 +130,7 @@
                                     <th>
                                         <a class="charcoal hover-icon">
                                             Description
-                                            <i class="fas fa-long-arrow-alt-down"></i>
+                                            <!-- <i class="fas fa-long-arrow-alt-down"></i> -->
                                         </a>
                                     </th>
                                     <th>...</th>

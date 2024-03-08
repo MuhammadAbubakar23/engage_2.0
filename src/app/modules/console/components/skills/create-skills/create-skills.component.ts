@@ -157,7 +157,7 @@ export class CreateSkillsComponent implements OnInit {
   }
 
   selectRulesBasedOnSkillTags(selectedRules: any): void {
-    debugger
+    
     this.selectedRules = [];
     console.log("Checking tags", this.subRules)
     for (const rule of selectedRules) {
@@ -201,7 +201,7 @@ export class CreateSkillsComponent implements OnInit {
 
 
   getSkillsById() {
-    debugger
+    
     this.id = Number(this.activeRoute.snapshot.paramMap.get('id'));
     if (this.id) {
       this.commondata.editSkill(this.id).subscribe((res: any) => {

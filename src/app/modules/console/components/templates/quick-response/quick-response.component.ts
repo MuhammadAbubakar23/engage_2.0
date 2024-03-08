@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { observable } from 'rxjs';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
@@ -41,14 +42,19 @@ export class QuickResponseComponent implements OnInit {
       pageNumber: this.currentPage,
       pageSize: this.perPage,
     }
+    this.spinnerServerice.show()
     this.commonService.GetQuickReply(formData).subscribe(
       (response: any) => {
+        this.spinnerServerice.hide()
+
         this.messages = response.QuickReply;
         this.totalCount = response.TotalCount
         // Apply sorting after refreshing messages
         this.sortMessages();
       },
       (error: any) => {
+        this.spinnerServerice.hide()
+
         console.error(error);
       }
     );
@@ -67,7 +73,8 @@ export class QuickResponseComponent implements OnInit {
     }
   }
 
-  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
+  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router,
+    private spinnerServerice: NgxSpinnerService) { }
 
   ngOnInit(): void {
    this.refreshMessages()
@@ -101,7 +108,7 @@ export class QuickResponseComponent implements OnInit {
     this.refreshMessages()
   }
   goToPage(pageNumber: number): void {
-    debugger
+    
     if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totalCount / this.perPage)) {
       this.currentPage = pageNumber;
     }
