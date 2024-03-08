@@ -22,7 +22,7 @@ export class CreateBusinessHoursComponent implements OnInit {
   }
   getSelectedDaysCount(): number {
     return this.businessWorkingDays.controls.length;
-}
+  }
 
   messageForm!: FormGroup;
 
@@ -56,7 +56,7 @@ export class CreateBusinessHoursComponent implements OnInit {
 
   initializeForm(): void {
     this.messageForm = this.formBuilder.group({
-      templateName: ['', Validators.required],
+      templateName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
       description: ['', Validators.required],
       timeZone: ['', Validators.required],
       roundTheClock: false,
@@ -74,7 +74,7 @@ export class CreateBusinessHoursComponent implements OnInit {
     });
   }
   patchFormValues(template: any): void {
-    
+
     this.commonService.GetBusinessById(template).subscribe(
       (res: any) => {
         console.log('Received template from service:', template);
@@ -159,7 +159,7 @@ export class CreateBusinessHoursComponent implements OnInit {
     this.businessWorkingDays.removeAt(index);
   }
   onSubmit(): void {
-    
+
     if (this.messageForm.valid) {
       // const template = history.state.template;
 

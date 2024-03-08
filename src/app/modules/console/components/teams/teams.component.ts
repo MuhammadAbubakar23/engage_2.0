@@ -18,7 +18,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-teams',//DataTablesModule
   standalone: true,
   imports: [CommonModule, RouterModule, LayoutsModule, CreateTeamComponent, NgxSpinnerModule,
-    AddTeamMembersComponent , FormsModule],
+    AddTeamMembersComponent, FormsModule],
   templateUrl: './teams.component.html',
   styleUrls: ['./teams.component.scss']
 })
@@ -44,6 +44,10 @@ export class TeamsComponent implements OnInit {
     this.getTeamList()
 
   }
+  updatevalue(string: any) {
+    this.headerService.updateMessage(string);
+  }
+
   applySearchFilter() {
     if (this.searchText.trim() !== '') {
       this.getTeamList();
@@ -54,6 +58,7 @@ export class TeamsComponent implements OnInit {
     }
 
   }
+
   getTeamList() {
     const data = {
       search: this.searchText,
@@ -87,10 +92,11 @@ export class TeamsComponent implements OnInit {
   //   this.isActive = !this.isActive;
   // }
   deleteTeam(value: any) {
-    
-   
-    this.commonService.DeleteSignalTeam(value).subscribe((res:any)=>{
-      console.log("res",res)
+
+
+    this.commonService.DeleteSignalTeam(value).subscribe((res: any) => {
+      location.reload();
+      console.log("res", res)
     })
   }
 
@@ -192,7 +198,7 @@ export class TeamsComponent implements OnInit {
     this.getTeamList()
   }
   goToPage(pageNumber: number): void {
-    
+
     if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totalCount / this.perPage)) {
       this.currentPage = pageNumber;
     }
@@ -212,5 +218,5 @@ export class TeamsComponent implements OnInit {
 
     return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }
- 
+
 }

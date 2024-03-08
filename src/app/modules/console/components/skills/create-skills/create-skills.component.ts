@@ -157,7 +157,7 @@ export class CreateSkillsComponent implements OnInit {
   }
 
   selectRulesBasedOnSkillTags(selectedRules: any): void {
-    debugger
+    
     this.selectedRules = [];
     console.log("Checking tags", this.subRules)
     for (const rule of selectedRules) {

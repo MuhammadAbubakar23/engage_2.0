@@ -23,6 +23,7 @@ export class CreateTeamComponent implements OnInit {
   identity: number = 0;
   errormessage: any
   AlterMsg: any;
+  teamType: any[] = []
   toastermessage: boolean = false
   constructor(private headerService: HeaderService, private _aRoute: ActivatedRoute, private formbuilder: UntypedFormBuilder,
     private commonService: CommonDataService, private teamservice: TeamsService, private router: Router) { }
@@ -30,28 +31,32 @@ export class CreateTeamComponent implements OnInit {
 
 
   teamForm !: FormGroup
-  currentid = 0;
+  currentid: any;
 
 
   ngOnInit() {
-
-    this._aRoute.params.subscribe((res) => {
-      console.log("Params", res)
-      this.currentid = res['id'];
-      if (this.currentid !== 0 && this.currentid !== undefined) {
-        this.commonService.TeamGetById(this.currentid).subscribe((res:any) => {
-          console.log("ResPonse", res);
-          this.teamForm.patchValue({
-            name: res.name,
-            desc: res.desc,
-            timeZone: res.timeZone,
-          })
-        })
-        
-      }
-    })
-    this.initializeForm();
     
+    this.currentid = Number(this._aRoute.snapshot.paramMap.get('id'))
+    this.commonService.TeamGetById(this.currentid).subscribe((res: any) => {
+      console.log("ResPonse", res);
+      this.teamForm.patchValue({
+        name: res.name,
+        desc: res.desc,
+        timeZone: res.timeZone,
+        typeId: res.typeId
+      })
+    })
+    // this._aRoute.params.subscribe((res) => {
+    //   
+    //   console.log("Params", res)
+    //   this.currentid = Number(res);
+    //   if (this.currentid !== 0 && this.currentid !== undefined) {
+
+
+    //   }
+    // })
+    this.initializeForm();
+    this.getTeamType();
     // this.getClient()
   }
 
@@ -63,7 +68,7 @@ export class CreateTeamComponent implements OnInit {
       timeZone: ['', Validators.required],
       norm: [''],
       slug: [''],
-      typeId: ['']
+      typeId: ['', Validators.required],
       // type: ['', Validators.required],
       // active:['1',Validators.required]
 
@@ -71,34 +76,35 @@ export class CreateTeamComponent implements OnInit {
     });
 
   }
+  getTeamType() {
+
+    this.commonService.GetTeamType().subscribe((res: any) => {
+      this.teamType = res
+      console.log("this.teamTyoe====>", this.teamType)
+    })
+  }
   closeToaster() {
     this.toastermessage = false
   }
+  formData: any
   onSubmit() {
+    
     if (this.teamForm.valid) {
-      const formData = {
-        id: this.currentid !== 0 && this.currentid !== undefined ? this.currentid : 0,
-        typeId: Number(this.teamForm.value.typeId),
-        name: this.teamForm.value.name,
-        desc: this.teamForm.value.desc,
-        timeZone: this.teamForm.value.timeZone,
-        norm: this.teamForm.value.norm,
-        slug: this.teamForm.value.slug
-      };
-  
-      if (this.currentid !== 0 && this.currentid !== undefined) {
-        this.commonService.UpdateTeam(formData).subscribe(
-          (res: any) => {
-            console.log("Update Response:", res);
-            this.router.navigate(['/console/teams']);
-          },
-          (error: any) => {
-            console.error("Update Error:", error);
-            this.handleError(error);
-          }
-        );
-      } else {
-        this.commonService.AddTeam(formData).subscribe(
+      // if(this.currentid !==0){
+
+      // }
+
+      if (this.currentid == 0) {
+        this.formData = {
+          typeId: Number(this.teamForm.value.typeId),
+          name: this.teamForm.value.name,
+          desc: this.teamForm.value.desc,
+          timeZone: this.teamForm.value.timeZone,
+          norm: this.teamForm.value.norm,
+          slug: this.teamForm.value.slug,
+          type: this.teamForm.value.type
+        }
+        this.commonService.AddTeam(this.formData).subscribe(
           (response: any) => {
             console.log("Add Team Response:", response);
             this.reloadComponent('teamAdd');
@@ -110,17 +116,41 @@ export class CreateTeamComponent implements OnInit {
           }
         );
       }
+      else {
+        this.formData = {
+          id: this.currentid,
+          typeId: Number(this.teamForm.value.typeId),
+          name: this.teamForm.value.name,
+          desc: this.teamForm.value.desc,
+          timeZone: this.teamForm.value.timeZone,
+          norm: this.teamForm.value.norm,
+          slug: this.teamForm.value.slug,
+          type: this.teamForm.value.type
+        };
+        this.commonService.UpdateTeam(this.formData).subscribe(
+          (res: any) => {
+            console.log("Update Response:", res);
+            this.router.navigate(['/console/teams']);
+          },
+          (error: any) => {
+            console.error("Update Error:", error);
+            this.handleError(error);
+          }
+        );
+      }
+
     } else {
       console.log('Form is invalid:', this.teamForm);
       // Handle invalid form data
+
     }
   }
-  
+
   private handleError(error: any) {
     this.errormessage = error.error.message;
     this.reloadComponent('error');
   }
-  
+
   cancelForm() {
     this.router.navigate(['/console/teams']);
 

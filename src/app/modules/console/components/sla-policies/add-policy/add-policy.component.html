@@ -25,40 +25,60 @@
                         <div id="permission-detail" class="tab-pane fade active show" role="tabpanel"
                             aria-labelledby="permission-detail-tab">
                             <div class="permission-detail-wrap">
-                                <div class="floating-list ps-5 pe-5">
-                                    <div class="floating-item mb-4">
-                                        <div class="floating-wrap form-floating">
-                                            <input type="email" class="form-control" id="floatingInput"
-                                                placeholder="Policy Name" id="policyName" formControlName="policyName" required>
-                                            <label for="floatingInputValue">Name</label>
+                                
+                                <div id="holiday-detail" class="tab-pane fade active show" role="tabpanel"
+                                aria-labelledby="holiday-detail-tab">
+                                <div class="business-detail-wrap">
+                                    <div class="floating-item mb-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="policyName"
+                                                placeholder="Policy Name" formControlName="policyName"
+                                                [ngClass]="{'is-valid': messageForm.get('policyName')?.valid, 'is-invalid': messageForm.get('policyName')?.invalid && (messageForm.get('policyName')?.dirty || messageForm.get('policyName')?.touched)}">
+                                            <label for="policyName"> Name</label>
+                                            <span
+                                                *ngIf="messageForm.get('policyName')?.invalid && (messageForm.get('policyName')?.dirty || messageForm.get('policyName')?.touched)"
+                                                class="invalid-feedback">Only alphabets are allowed.</span>
+                                            <span *ngIf="messageForm.get('policyName')?.valid" class="success-icon">
+                                                <!-- <i class="fa fa-check-circle"></i> -->
+                                            </span>
                                         </div>
-                                        <!-- <div class="example-text">
-                                            <small>e.g. Customer Support Team</small>
-                                        </div> -->
                                     </div>
                                     <div class="floating-item mb-4">
-                                        <div class="floating-wrap form-floating">
-                                            <textarea class="form-control" placeholder="This roles &amp;
-                                            permissions belong to agent and
-                                            team members" id="description" formControlName="description" style="height:
-                                            150px"></textarea>
-                                            <label for="floatingTextarea2">Description</label>
+                                        <div class="form-floating">
+                                            <textarea class="form-control" placeholder="Leave a comment here"
+                                                id="description" style="height: 100px" formControlName="description"
+                                                [ngClass]="{'is-valid': messageForm.get('description')?.valid, 'is-invalid': messageForm.get('description')?.invalid && (messageForm.get('description')?.dirty || messageForm.get('description')?.touched)}"></textarea>
+                                            <label for="description">Description</label>
+                                            <span
+                                                *ngIf="messageForm.get('description')?.invalid && (messageForm.get('description')?.dirty || messageForm.get('description')?.touched)"
+                                                class="invalid-feedback">Description is required.</span>
+                                            <span *ngIf="messageForm.get('description')?.valid" class="success-icon">
+                                                <!-- <i class="fa fa-check-circle"></i> -->
+                                            </span>
                                         </div>
-                                        <!-- s -->
                                     </div>
                                     <div class="floating-item mb-4">
                                         <div class="form-floating mb-2">
                                             <select class="form-select multi-select" aria-label="Floating label select"
-                                                formControlName="timeZone">
-                                                <option selected="">(GMT+09:00) Karachi</option>
-                                                <option value="1">(GMT+03:00) Lahore</option>
-                                                <option value="2">(GMT+05:00) Peshawar</option>
-                                                <option value="3">(GMT+06:00) Islamabad</option>
+                                                formControlName="timeZone"
+                                                [ngClass]="{'is-valid': messageForm.get('timeZone')?.valid, 'is-invalid': messageForm.get('timeZone')?.invalid && (messageForm.get('timeZone')?.dirty || messageForm.get('timeZone')?.touched)}">
+                                                <option disabled selected>Select Time zone</option>
+                                                <option value="(GMT+09:00) Karachi">(GMT+09:00) Karachi</option>
+                                                <option value="(GMT+03:00) Lahore">(GMT+03:00) Lahore</option>
+                                                <option value="(GMT+05:00) Peshawar">(GMT+05:00) Peshawar</option>
+                                                <option value="(GMT+06:00) Islamabad">(GMT+06:00) Islamabad</option>
                                             </select>
-                                            <label for="floatingSelect">Time zone</label>
+                                            <label for="timeZone">Time zone</label>
+                                            <span
+                                                *ngIf="messageForm.get('timeZone')?.invalid && (messageForm.get('timeZone')?.dirty || messageForm.get('timeZone')?.touched)"
+                                                class="invalid-feedback">Time zone is required.</span>
+                                            <span *ngIf="messageForm.get('timeZone')?.valid" class="success-icon">
+                                                <!-- <i class="fa fa-check-circle"></i> -->
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                                 <!-- SLA Chart Section -->
                                 <div class="sla-chart-section mt-5">
                                     <h5 class="sla-title mb-4">Set SLA target as:</h5>
@@ -108,25 +128,28 @@
                                                     <input class="form-control form-control-sm border"
                                                         placeholder="4d 6h 30m" aria-label="15m "
                                                         formControlName="firstResponseTime" required>
-                                                        <div *ngIf="SLATargetsControls.controls[i].get('firstResponseTime')!.hasError('required')">
-                                                            Please fill first response time in correct format.
-                                                        </div>
+                                                    <div class="error-message"
+                                                        *ngIf="SLATargetsControls.controls[i].get('firstResponseTime')!.hasError('required')" >
+                                                        Please fill first response time in correct format.
+                                                    </div>
                                                 </div>
                                                 <div class="col-lg-3">
                                                     <input class="form-control form-control-sm border" placeholder="Enter
                                                               time open" aria-label="Enter time open"
                                                         formControlName="everyResponseTime" required>
-                                                        <div *ngIf="SLATargetsControls.controls[i].get('everyResponseTime')!.hasError('required')">
-                                                            Please fill every response time in correct format.
-                                                        </div>
+                                                    <div class="error-message"
+                                                        *ngIf="SLATargetsControls.controls[i].get('everyResponseTime')!.hasError('required')">
+                                                        Please fill every response time in correct format.
+                                                    </div>
                                                 </div>
                                                 <div class="col-lg-1">
                                                     <input class="form-control form-control-sm border"
                                                         placeholder="Enter time open" aria-label="Enter time open"
                                                         formControlName="resolutionTime" required>
-                                                        <div *ngIf="SLATargetsControls.controls[i].get('resolutionTime')!.hasError('required')">
-                                                            Please fill  resolution time in correct format.
-                                                        </div>
+                                                    <div class="error-message"
+                                                        *ngIf="SLATargetsControls.controls[i].get('resolutionTime')!.hasError('required')">
+                                                        Please fill resolution time in correct format.
+                                                    </div>
                                                 </div>
                                                 <!-- <div class="col-lg-2">
 

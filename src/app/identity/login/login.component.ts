@@ -12,7 +12,7 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 import { DatePipe } from '@angular/common';
 
 import { map, timer, takeWhile } from 'rxjs';
-import { VerificationDto } from 'src/app/shared/Models/VerificationDto';
+import { VerificationDto } from 'src/app/shared/Models/verificationDto';
 
 
 
@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
     this.spinnerService.show();
     this.authService.login(obj).subscribe(
       (res: any) => {
-debugger
+
         //only for testing purpose, remove after that
         // res = { 'loginResponse': res }
         // res = { 'loginResponse': res }

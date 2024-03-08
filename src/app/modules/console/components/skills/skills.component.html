@@ -1,5 +1,8 @@
 <div class="team-user-wrap console-body-wrapper inbox-container" data-scrollbar="true" tabindex="-1"
     style="overflow-y: auto; outline: none;">
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+        <p style="color: white"> Loading... </p>
+      </ngx-spinner>
     <div class="scroll-content">
         <div class="p-4">
             <div class="filter-toolbar">
@@ -27,7 +30,7 @@
                         </ul>
                     </div>
                     <div class="col-md-4 d-flex align-items-center justify-content-end">
-                        <a (click)="updatevalue('consoleCreateTeamHeader')" [routerLink]="['/console/skills/create/0']"
+                        <a (click)="updatevalue('consoleCreateSkillHeader')" [routerLink]="['/console/skills/create/0']"
                             class="ms-2">
                             <button type="button" class="btn btn-success">
                                 <i class="fal fa-plus me-2"></i>

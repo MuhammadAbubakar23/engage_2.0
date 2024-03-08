@@ -22,9 +22,9 @@ export class CreateMessageTemplatesComponent implements OnInit {
 
   ngOnInit(): void {
     this.messageForm = this.formBuilder.group({
-      templateName: ['', Validators.required],
-      subject: [''],
-      message: ['', Validators.required], 
+      templateName: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
+      subject: ['', Validators.required],
+      message: ['', Validators.required],
       templateType:['']
     });
   

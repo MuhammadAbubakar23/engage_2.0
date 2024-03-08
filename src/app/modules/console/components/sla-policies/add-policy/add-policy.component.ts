@@ -20,7 +20,7 @@ export class AddPolicyComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.messageForm = this.formBuilder.group({
-      policyName: ['', Validators.required],
+      policyName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
       description: ['', Validators.required],
       timeZone: ['', Validators.required],
       slaTargets: this.formBuilder.array([

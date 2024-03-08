@@ -325,7 +325,7 @@ export class FacebookComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        debugger
+        
         if (
           this.flag == 'focused' ||
           this.flag == 'assigned_to_me' ||

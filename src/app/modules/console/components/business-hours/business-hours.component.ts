@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 
 @Component({
   selector: 'app-business-hours',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule , NgxSpinnerModule],
   templateUrl: './business-hours.component.html',
   styleUrls: ['./business-hours.component.scss']
 })
@@ -37,13 +38,19 @@ export class BusinessHoursComponent implements OnInit {
       pageNumber: this.currentPage,
       pageSize: this.perPage,
     }
+    this.spinnerServerice.show()
     this.commonService.GetBusinessHours(formData).subscribe(
+      
       (response: any) => {
+        this.spinnerServerice.hide()
+
         this.messages = response.BusinessHours;
         this.totalCount = response.TotalCount
 
       },
       (error: any) => {
+        this.spinnerServerice.hide()
+
         console.error(error);
       }
     );
@@ -54,7 +61,7 @@ export class BusinessHoursComponent implements OnInit {
     this.refreshMessages();
   }
 
-  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
+  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router , private spinnerServerice: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.refreshMessages()
