@@ -10,9 +10,8 @@ import { LoginDto } from 'src/app/shared/Models/LoginDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { DatePipe } from '@angular/common';
+import { VerificationDto } from 'src/app/shared/Models/verificationDto';
 
-import { map, timer, takeWhile } from 'rxjs';
-import { VerificationDto } from 'src/app/shared/Models/VerificationDto';
 
 
 
