@@ -38,6 +38,13 @@ export class SuperTeamInterceptor implements HttpInterceptor {
     // console.log(team);
     if (typeof team === 'undefined' || team == null || team == '') {
       //   console.log(this.storage.retrive("nocompass","O"));
+      request = request.clone({
+        url: request.url,
+        //withCredentials: true,
+        setHeaders: {
+          'X-Super-Team': JSON.stringify(this.companyId),
+        },
+      });
     } else if (
       typeof team.id === 'undefined' ||
       team.id == null ||
@@ -49,7 +56,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
         url: request.url,
         //withCredentials: true,
         setHeaders: {
-          'X-Super-Team': JSON.stringify(this.companyId),
+          'X-Super-Team': JSON.stringify(team.id),
         },
       });
     }
