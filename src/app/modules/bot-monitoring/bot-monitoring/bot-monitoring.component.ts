@@ -19,7 +19,7 @@ export class BotMonitoringComponent implements OnInit {
 
 
   getChatDetails(activeChat: any) {
-    debugger
+
     {
       const data = {
         "clientIdentifier": activeChat.to,
@@ -33,21 +33,18 @@ export class BotMonitoringComponent implements OnInit {
         if (this.chats.length == 2) {
           this._chatVisibilityS.notifythirdActive(true);
         }
-
-        debugger
         const existingChatIndex = this.chats.findIndex(chat => chat[0].customer?.phone === activeChat.from);
         console.log("this.chats", this.chats)
-
         if (existingChatIndex != -1) {
           const isEqual = this.chats[existingChatIndex][0]['completed'] === activeChat['completed']
-          debugger
+
           if (isEqual) {
             this.chats.splice(existingChatIndex, 1);
             this._chatVisibilityS.notifythirdActive(false);
           }
           else {
             this._botMonitorS.getChatDetails(data).subscribe((res) => {
-              debugger
+
               res[0]['completed'] = activeChat['completed']
               this.chats[existingChatIndex] = res;
               const latObject = {
@@ -65,7 +62,7 @@ export class BotMonitoringComponent implements OnInit {
           }
         }
         else if (this.chats.length < 3) {
-          debugger
+
           this._botMonitorS.getChatDetails(data).subscribe((res) => {
             res[0]['completed'] = activeChat['completed']
             this.chats.push(res);
@@ -86,7 +83,7 @@ export class BotMonitoringComponent implements OnInit {
       }
       else {
         this._botMonitorS.getChatDetails(data).subscribe((res) => {
-          debugger
+
           console.log(activeChat['completed'])
           res[0]['completed'] = activeChat['completed'];
           this.chats.push(res);
@@ -122,7 +119,7 @@ export class BotMonitoringComponent implements OnInit {
                   if (this.currentActiveChats.length > 0) {
                     this.currentActiveChats.forEach((ch) => {
                       this._botMonitorS.getChatDetails(ch).subscribe((res) => {
-                        debugger
+
                         const existingChatIndex = this.chats.findIndex(chat => chat[0].customer?.phone === ch.customerIdentifier);
                         const minimizeToggle = this.chats[existingChatIndex][0]['isMinimized'];
                         const completed = this.chats[existingChatIndex][0]['completed'];
@@ -154,33 +151,33 @@ export class BotMonitoringComponent implements OnInit {
   //     }
 
   //     this.apiCallIntervalSubscription = interval(30000).subscribe(() => {
-        // if (this.currentActiveChats.length > 0) {
-        //   this.currentActiveChats.forEach((ch) => {
-        //     this._botMonitorS.getChatDetails(ch).subscribe((res) => {
-        //       debugger
-        //       const existingChatIndex = this.chats.findIndex(chat => chat[0].customer?.phone === ch.customerIdentifier);
-        //       const minimizeToggle = this.chats[existingChatIndex][0]['isMinimized'];
-        //       const completed = this.chats[existingChatIndex][0]['completed'];
-        //       res[0]['completed'] = completed;
-        //       if (minimizeToggle === true) {
-        //         res[0]['isMinimized'] = true;
-        //       }
-        //       else {
-        //         res[0]['isMinimized'] = false;
-        //       }
-        //       if (existingChatIndex !== -1) {
-        //         this.chats[existingChatIndex] = res;
-        //       }
-        //     });
-        //   });
-        // }
+  // if (this.currentActiveChats.length > 0) {
+  //   this.currentActiveChats.forEach((ch) => {
+  //     this._botMonitorS.getChatDetails(ch).subscribe((res) => {
+  //
+  //       const existingChatIndex = this.chats.findIndex(chat => chat[0].customer?.phone === ch.customerIdentifier);
+  //       const minimizeToggle = this.chats[existingChatIndex][0]['isMinimized'];
+  //       const completed = this.chats[existingChatIndex][0]['completed'];
+  //       res[0]['completed'] = completed;
+  //       if (minimizeToggle === true) {
+  //         res[0]['isMinimized'] = true;
+  //       }
+  //       else {
+  //         res[0]['isMinimized'] = false;
+  //       }
+  //       if (existingChatIndex !== -1) {
+  //         this.chats[existingChatIndex] = res;
+  //       }
+  //     });
+  //   });
+  // }
 
   //     });
   //   });
 
 
   onMinimizeToggle(activeChat: any) {
-    debugger
+
     console.log("this.chats", this.chats)
   }
   ngOnDestroy(): void {
