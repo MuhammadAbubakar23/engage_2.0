@@ -766,11 +766,11 @@ export class CommonDataService {
   }
 
   GetAllTags(): Observable<any> {
-    debugger
+    
     return this.http.get(this.consoleBaseUrl + this.getAllTags);
   }
   GetAllTag(body: any) {
-    debugger
+    
     return this.http.post(this.consoleBaseUrl + this.getTagsAll, body)
   }
 

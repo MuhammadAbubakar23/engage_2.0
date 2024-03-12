@@ -410,7 +410,7 @@ export class ConversationComponent implements OnInit {
        
         // for followTotalCounts
       
-        res.List.forEach((x:any)=>{
+        res?.List?.forEach((x:any)=>{
       
           if(x.follow_Up_Status!==null){
             this.sendCount.sendtotalCount(res.TotalCount)

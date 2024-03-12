@@ -33,8 +33,7 @@ export class AppComponent {
     private router: Router,
     private commonService: CommonDataService,
     private toaster: ToasterService,
-    private spinnerService: NgxSpinnerService,
-  private cdr:ChangeDetectorRef
+    private spinnerService: NgxSpinnerService
   ) {}
 
   remove(index: number) {
