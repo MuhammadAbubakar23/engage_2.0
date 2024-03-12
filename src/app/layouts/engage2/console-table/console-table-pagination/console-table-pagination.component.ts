@@ -67,7 +67,7 @@ export class ConsoleTablePaginationComponent implements OnInit {
 
   reloadPage(){
     this.reloadPageEvent.emit();
-    window.location.reload();
+    // window.location.reload();
   }
   // serachPageText(text: string){
   //   this.paginatorStore.serachPageText(text);

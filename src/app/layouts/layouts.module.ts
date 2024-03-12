@@ -70,7 +70,7 @@ import { WebphoneDialerModule } from '../modules/webphone-dialer/webphone-dialer
 import { BotMonitoringContentComponent } from './engage2/bot-monitoring-content/bot-monitoring-content.component';
 import { MonitoringHeaderComponent } from './engage2/bot-monitoring-content/monitoring-header/monitoring-header.component';
 import { MonitoringMenuComponent } from './engage2/bot-monitoring-content/monitoring-menu/monitoring-menu.component';
-
+import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   declarations: [
     InboxContentComponent,
@@ -141,7 +141,8 @@ import { MonitoringMenuComponent } from './engage2/bot-monitoring-content/monito
     StoreModule.forFeature('tagss', tagsReducer),
     StoreModule.forFeature('permissions', permissionReducer),
     EffectsModule.forFeature([MenusEffects, PermissionsEffects, TagsEffects]),
-    WebphoneDialerModule
+    WebphoneDialerModule,
+    NgxSpinnerModule
   ],
   exports: [
     MainContentComponent,

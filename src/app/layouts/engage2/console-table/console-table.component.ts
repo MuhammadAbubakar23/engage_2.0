@@ -7,6 +7,7 @@ import { ConsoleTableVisibilityPipe } from './console-table-visibility.pipe';
 import { ConsoleTableService } from './console-table.service';
 import { ConsoleTableParams } from './console-table-params';
 import { ConsoleTablePaginatedState } from './console-table-state/console-table-paginated.component-store';
+import { NgxSpinnerService } from 'ngx-spinner';
 // import { provideComponentStore } from '@ngrx/component-store';
 // import { ConsoleTableComponentStore } from './console-table.component-store';
 // provideComponentStore(ConsoleTableComponentStore),
@@ -38,7 +39,10 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
   pagingIndex$: number = 1;
   pagingLength$: number = 100;
   pageSearchText$: string = "";
-
+  startpoint:any
+  endpoint:any
+  totalCount:any
+  totalPage:any
   data?: any;
   @Input() identifire: string = 'id';
   @Input() JsonFile: string = 'default';//[JsonFile]="'users.json'"
@@ -49,15 +53,16 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
   tableJson$: ConsoleTableParams = new ConsoleTableParams;
 
   //tableJson$:any={};
-  constructor(private _tableService: ConsoleTableService, private _request: RequestService, private _router: Router) { }
+  constructor(private _tableService: ConsoleTableService, private _request: RequestService, 
+    private spinerService:NgxSpinnerService,
+    private _router: Router) { }
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
     // this.unsubscribe$.unsubscribe();
   }
   ngOnInit(): void {
-    this.pagingParams$.pageIndex = this.pagingIndex$;
-    this.pagingParams$.pageSize = this.pagingSize$
+  
     //length: 100,
     //this.pagingSize$ = this.filter.pagesize;
     //this.pagingIndex$ = this.filter.pageno;
@@ -67,7 +72,14 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
     return (word.match(/^\s*$/) || []).length > 0;
   }
   reloader() {
-    this._fetchData();
+
+    if(this.pageSearchText$.length> 2){
+      this._fetchData();
+    }
+    if(this.pageSearchText$.length == 0){
+      this._fetchData()
+    }
+ 
   }
   // seracher(search: string) {
   //   //alert(search);
@@ -111,7 +123,7 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
 
     this._fetchData();//this.filter?.pageno, this.filter?.pagesize);
   }
-  private _fetchData() { //}: Observable<T>{ // (page: number, pagesize: number)  {
+   _fetchData() { //}: Observable<T>{ // (page: number, pagesize: number)  {
     
     if (typeof this.filter?.url === 'undefined') return;
     // console.log(this.filter)
@@ -120,6 +132,8 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
     //   , pagesize: this.filter.pagesize
     //   , search: this.filter.search
     // };
+      this.pagingParams$.pageIndex = this.pagingIndex$;
+    this.pagingParams$.pageSize = this.pagingSize$
     if (this.filter?.template?.toolbar == 'top') {
       this.pagingParams$.searchText = this.pageSearchText$;
 
@@ -140,17 +154,34 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
     else {
       this.pagingParams$ = {};
     }
-
+    // pageIndex: 1
+    // pageSize: 10
+    // searchText: 
+    // contain: [{"name":"fullName","order":"ASC","search":true},{"name":"email","order":"ASC","search":true}]
     //filter?.template?.toolbar=='top'
     // encodeURIComponent
     // if(this.filter?.url && !this.filter?.url)
-
-    this._request.get<T[]>(this.filter.url, this.pagingParams$, this.filter.urlparams).pipe(
+this.spinerService.show()
+    this._request.get<T[]>(this.filter.url, this.pagingParams$).pipe(
       takeUntil(this.unsubscribe$)).subscribe({
 
         next: (nxt: T[]) => {
-
+this.spinerService.hide()
           this.data = nxt;
+          this.totalCount=200
+          if(this.pagingIndex$==1){
+      this.startpoint =this.pagingIndex$
+          }
+          else{
+            this.startpoint= (this.pagingIndex$ -1) * this.pagingSize$ +1
+          }
+          this.totalPage = Math.ceil(this.totalCount/ this.pagingSize$)
+          if(this.totalCount <=this.startpoint +this.pagingSize$ -1){
+            this.endpoint=this.totalCount
+          }
+          else{
+            this.endpoint= this.startpoint +  this.pagingSize$ -1
+          }
         },
         error: (error: any) => console.error(error),
         complete: () => console.info('complete')
@@ -163,6 +194,24 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
     // }, (error: any) => {
     //   console.log(error);
     // });
+  }
+  perviousPage(pagingIndex:any){
+
+    if (pagingIndex >= 1) {
+      let page = pagingIndex - 1;
+      if (page > 0) {
+        this.pagingIndex$ = page;
+        this._fetchData()
+      }
+    }
+  }
+  nextPage(pagingIndex:any){
+
+let page= pagingIndex + 1
+if(page < this.totalPage + 1 ){
+  this.pagingIndex$ =page
+  this._fetchData()
+}
   }
   procedure(params: any) {
     console.log("sent val --- >>>", params.param)

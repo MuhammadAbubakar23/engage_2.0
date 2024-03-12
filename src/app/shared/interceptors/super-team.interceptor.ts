@@ -44,6 +44,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
     //   team.id <= 0
     // ) {
     // } else {
+    //   
     //   //console.log(team.id);
     //   request = request.clone({
       
