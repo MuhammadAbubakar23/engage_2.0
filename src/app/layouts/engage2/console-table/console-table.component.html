@@ -1,6 +1,10 @@
 
 <!-- <ng-container *ngIf="vm$ | async as vm"> -->
 <div class="table-section table-scrool-y mb-3 query-container h-100 table-white">
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box"
+    [fullScreen]="false">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>
     <ng-template [ngIf]="filter?.template?.toolbar=='top'">
         <!-- (onNext)="onNextPage" (onPrevious)="onPreviousPage" -->
         <!-- <console-table-toolbar  ></console-table-toolbar> -->
@@ -14,16 +18,59 @@
             
         >
         </console-table-pagination> -->
-        <console-table-pagination 
+        <!-- <console-table-pagination 
         [length]="pagingLength$"
         [pageSize]="pagingSize$"
         [pageSizeOptions]="pagingSizeOptions$"
         (page)="paginator($event)"
         (input)="handleSearch($any($event.target).value)" 
         (reloadPageEvent)="reloader()">
-      </console-table-pagination>
+      </console-table-pagination> -->
     </ng-template>
-    
+    <div class="filter-container border-0"><div class="col-md-8">
+        <ul class="list-inline m-0 d-flex align-items-center">
+          <li class="list-inline-item">
+            <a href="javascript:" class="search-btn">
+              <button class="iconButton medium">
+                <i class="fal fa-search silver"></i>
+              </button>
+              <input [(ngModel)]="pageSearchText$" (input)="reloader()" placeholder="Search">
+            </a>
+          </li>
+          <li class="list-group-item border-0 refreshicon iconHover iconButton medium rounded-circle" 
+          aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="Refresh" (click)="_fetchData()" >
+            <i class="fal fa-redo"></i>
+          </li>
+        
+        </ul>
+       
+  
+        
+       
+      </div>
+
+      
+       
+        <div class="pagination-bar">
+          <div class="dropdown">
+            {{startpoint}} - {{endpoint}} of {{totalCount}}
+<!--             
+            <button class="btn iconHover" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              1-100 of 569
+            </button> -->
+            <!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="#">Newest</a></li>
+              <li><a class="dropdown-item" href="#"> Oldest</a></li>
+            </ul> -->
+          </div>
+          <span class="iconButton medium iconHover" (click)="perviousPage(pagingIndex$)">
+            <i class="fal fa-chevron-left"></i>
+          </span>
+          <span class="iconButton medium iconHover" (click)="nextPage(pagingIndex$)">
+            <i class="fal fa-chevron-right"></i>
+          </span>
+        </div>
+      </div>
     <table class="table align-middle" width="100%">       
         <!-- <console-table-header [TblHeaders]="$any(filter).headers" ></console-table-header> -->        
         <!-- <thead console-table-header [TblHeaders]="$any(filter).headers"></thead> -->        

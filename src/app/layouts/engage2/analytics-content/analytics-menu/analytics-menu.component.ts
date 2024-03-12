@@ -126,6 +126,7 @@ export class AnalyticsMenuComponent implements OnInit {
     } else if (this.channelname == 'Jazz') {
       this.analyticeReport = [
         { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
+        { name: 'Interaction Report', link: '/analytics/interaction-report' },
         { name: 'BOT Interactions', link: '/analytics/handled-bot' },
         { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
         { name: 'Unique Interactions', link: '/analytics/unique-customers' },

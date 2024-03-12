@@ -13,17 +13,17 @@ import { CommonDataService } from './shared/services/common/common-data.service'
 })
 export class AppComponent {
   
-  // @HostListener('window:beforeunload', ['$event'])
-  // beforeUnloadHandler(event: Event) {
-  //   if (!this.isInternalNavigation()) {
-  //     // Clear local storage here
-  //     localStorage.clear();
-  //      localStorage.removeItem('token')
-  //   }
-  // }
-  // private isInternalNavigation(): boolean {
-  //   return this.router.navigated && this.router.url.startsWith('/');
-  // }
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHandler(event: Event) {
+    if (!this.isInternalNavigation()) {
+      // Clear local storage here
+      localStorage.clear();
+       localStorage.removeItem('token')
+    }
+  }
+  private isInternalNavigation(): boolean {
+    return this.router.navigated && this.router.url.startsWith('/');
+  }
   toasters: Toaster[] = [];
   title = 'Enteract.Engage2.0';
   activeChannel: any;
@@ -34,7 +34,7 @@ export class AppComponent {
     private commonService: CommonDataService,
     private toaster: ToasterService,
     private spinnerService: NgxSpinnerService,
-  private cdr:ChangeDetectorRef
+   private cdr:ChangeDetectorRef
   ) {}
 
   remove(index: number) {

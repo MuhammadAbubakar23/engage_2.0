@@ -10,7 +10,8 @@ import { LoginDto } from 'src/app/shared/Models/LoginDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { DatePipe } from '@angular/common';
-import { VerificationDto } from 'src/app/shared/Models/verificationDto';
+import { VerificationDto } from 'src/app/shared/Models/VerificationDto';
+
 
 
 
@@ -90,7 +91,7 @@ export class LoginComponent implements OnInit {
         // res['isTwoFAEnabled'] = false;
         //only for testing purpose, remove after that
 
-        if (res.isTwoFAEnabled == false) {
+        if (res.status == false || res.isTwoFAEnabled== false) {
           this.stor.store('token', res.loginResponse.loginResponse.accessToken);
           this.stor.store('main', res.loginResponse.loginResponse);
           // this.stor.store(
@@ -129,7 +130,7 @@ export class LoginComponent implements OnInit {
           this.signalRService.applySentimentListner();
           this.signalRService.updateMessageStatusDataListener();
           // this.signalRService.updatePostList();
-        } else if (res.isTwoFAEnabled == true) {
+        } else if (res.status == true || res.isTwoFAEnabled==true) {
           this.Verificationemail =res.userName
             // res.loginResponse.loginTwoFAResponse.userName;
           this.isUserLoging = true;
@@ -138,8 +139,9 @@ export class LoginComponent implements OnInit {
         }
       },
       (error: any) => {
+        
         this.spinnerService.hide()
-        this.ErrorMessage = error.error;
+        this.ErrorMessage = error.error.message;
         if (this.ErrorMessage?.includes('The account is locked out ')) {
           const LockedtiemEndpatteren = /lockoutEndTime = (.+)$/;
           this.matchTime = this.ErrorMessage.match(LockedtiemEndpatteren);
