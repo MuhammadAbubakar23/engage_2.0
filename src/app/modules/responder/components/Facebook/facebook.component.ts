@@ -81,6 +81,7 @@ export class FacebookComponent implements OnInit {
   queryStatus: any;
   tagDropdown = false;
   userInformation: any;
+  profileInformation:any;
 
   chatText: any;
   commentId: number = 0;
@@ -728,6 +729,7 @@ export class FacebookComponent implements OnInit {
   }
 
   updateMessagesDataListener() {
+    debugger
     if (!this.id) {
       this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
@@ -1050,6 +1052,7 @@ export class FacebookComponent implements OnInit {
           if (Object.keys(res).length > 0) {
             this.FacebookMessages = res.List?.dm;
             this.userInformation = res.List.user;
+            this.profileInformation = res.List.profile;
             this.userInfoService.shareUserInformation(res.List.user);
             this.pageName = res.List?.profile.page_Name;
             this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
@@ -1120,6 +1123,7 @@ export class FacebookComponent implements OnInit {
           this.SpinnerService.hide();
           this.FacebookMessages = res.List?.dm;
           this.userInformation = res.List.user;
+          this.profileInformation = res.List.profile;
           this.userInfoService.shareUserInformation(res.List.user);
           this.pageName = res.List?.profile.page_Name;
           this.totalMessages = res.TotalCount;
@@ -1191,6 +1195,7 @@ export class FacebookComponent implements OnInit {
           if (Object.keys(res).length > 0) {
             this.FacebookMessages = res.List?.dm;
             this.userInformation = res.List.user;
+            this.profileInformation = res.List.profile;
             this.userInfoService.shareUserInformation(res.List.user);
             this.pageName = res.List?.profile.page_Name;
             this.totalMessages = res.TotalCount;
@@ -1397,6 +1402,7 @@ export class FacebookComponent implements OnInit {
     });
   }
   SendMessageInformation(id: any) {
+    debugger
     this.FacebookMessages?.forEach((msg: any) => {
       if (msg.id == id) {
         // show mentioned reply
@@ -1405,8 +1411,8 @@ export class FacebookComponent implements OnInit {
         // this.agentId = localStorage.getItem('agentId');
         this.platform = this.fetchId.platform;
         this.postType = 'FCP';
-        this.profileId = msg.profileId;
-        this.profilePageId = msg.profilePageId;
+        this.profileId = this.profileInformation.profile_Id;
+        this.profilePageId = this.profileInformation.page_Id;
         this.userProfileId = this.userInformation.id;
       }
     });
@@ -2179,15 +2185,15 @@ export class FacebookComponent implements OnInit {
   }
 
   isImage(attachment: any): boolean {
-    return attachment.contentType?.toLowerCase().startsWith('image');
+    return attachment?.mediaType?.toLowerCase().startsWith('image');
   }
 
   isVideo(attachment: any): boolean {
-    return attachment.contentType?.toLowerCase().startsWith('video');
+    return attachment?.mediaType?.toLowerCase().startsWith('video');
   }
 
   isAudio(attachment: any): boolean {
-    return attachment.contentType?.toLowerCase().startsWith('audio');
+    return attachment?.mediaType?.toLowerCase().startsWith('audio');
   }
 
   hideMessage(queryId: number, status: boolean) {

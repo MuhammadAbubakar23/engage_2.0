@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Tooltip } from 'bootstrap';
 import { Subscription } from 'rxjs';
@@ -63,7 +63,7 @@ export class MainMenuComponent implements OnInit {
   // ]
 
   restrictedAgentsString =
-    'Farah.khalid@abacus-global.com, aniqa.waris@bpo.abacus-global.com, samoom.fatima@bpo.abacus-global.com, Mishal.Javed@abacus-global.com, ambreen.zubair@jazz.com.pk, naveeda.akhtar@jazz.com.pk, sidra.shafiq@jazz.com.pk, muhammad.mansoor@jazz.com.pk, ayesha.sajjad@jazz.com.pk, farrukh.saeed1@jazz.com.pk, hassam.naveed@jazz.com.pk, nadia.shabbir@jazz.com.pk, rizwan.malik@jazz.com.pk, abida.rasheed@jazz.com.pk, saba.riaz@jazz.com.pk, pringle.charles@jazz.com.pk';
+    'Farah.khalid@abacus-global.com, aniqa.waris@bpo.abacus-global.com, samoom.fatima@bpo.abacus-global.com, Mishal.Javed@abacus-global.com, ambreen.zubair@jazz.com.pk, naveeda.akhtar@jazz.com.pk, sidra.shafiq@jazz.com.pk, muhammad.mansoor@jazz.com.pk, ayesha.sajjad@jazz.com.pk, farrukh.saeed1@jazz.com.pk, hassam.naveed@jazz.com.pk, nadia.shabbir@jazz.com.pk, rizwan.malik@jazz.com.pk, abida.rasheed@jazz.com.pk, saba.riaz@jazz.com.pk, pringle.charles@jazz.com.pk, uzma.hashmat@jazz.com.pk';
   
   onlyAnalyticsTabVisible = 'kashif.waheed@ibex.co, jazzlhrwfm@ibex.co, JazzLHRWFM@ibex.co'
 
@@ -73,11 +73,9 @@ export class MainMenuComponent implements OnInit {
     private leftsidebar: LeftsidebarExpandedService,
     private maximizeChatService: MaximizeChatService,
     private moduleService: ModulesService,
-    private commonService: CommonDataService,
-    private MenuStore: Store<MenuState>,
-    private PermissionStore: Store<PermissionState>,
     private stor: StorageService,
-    private router: Router
+    private router: Router,
+    private _route: ActivatedRoute
   ) {
     // this.MenuStore.dispatch(loadMenusList());
     // this.MenuStore.dispatch(updateMenusList());
@@ -102,12 +100,16 @@ export class MainMenuComponent implements OnInit {
     this.restrictedAgent = data.originalUserName;
 
     if (this.restrictedAgentsString.includes(this.restrictedAgent)) {
-      this.router.navigateByUrl('all-inboxes/completed/all');
+      if(this.router.url.split('/')[1] == 'analytics'){
+        this.router.navigateByUrl('analytics/social-raw-data');
+      }  else {
+        this.router.navigateByUrl('all-inboxes/completed/all');
+      }
     }
 
-    if (this.onlyAnalyticsTabVisible.includes(this.restrictedAgent)) {
-    this.router.navigateByUrl('analytics/whatsapp-report');
-    }
+    // if (this.onlyAnalyticsTabVisible.includes(this.restrictedAgent)) {
+    // this.router.navigateByUrl('analytics/whatsapp-report');
+    // }
 
     // this.menu$ = this.store.select(getMenuById(2)).subscribe((item) => {
     //   this.menus$ = item;

@@ -62,7 +62,7 @@ export class SignalRService {
     else if (this.baseUrl == 'https://uiengage.enteract.app') {
       this.companyId = 657
     }
-    else if (this.baseUrl == 'https://tppl.enteract.live') {
+    else if (this.baseUrl == 'https://tpplui.enteract.live') {
       this.companyId = 652
     }
     else if (this.baseUrl == 'https://waengage.enteract.live') {
@@ -79,7 +79,7 @@ export class SignalRService {
   flag: string = '';
 
   startConnection() {
-
+debugger
     // this.flag = this.router.url.split('/')[1];
     // if(this.flag == 'all-inboxes'){
     let team = this.storage.retrive("nocompass", "O").local;
@@ -106,6 +106,7 @@ export class SignalRService {
   };
 
   reConnect() {
+    debugger
     // this.flag = this.router.url.split('/')[1];
     // if(this.flag == 'all-inboxes'){
     let team = this.storage.retrive("nocompass", "O").local;

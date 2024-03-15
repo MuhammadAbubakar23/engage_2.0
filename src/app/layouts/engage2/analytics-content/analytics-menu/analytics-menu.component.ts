@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderService } from 'src/app/shared/services/header.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
   selector: 'analytics-menu',
@@ -11,6 +12,9 @@ export class AnalyticsMenuComponent implements OnInit {
   activeChannel: any = '';
   analyticeReport: any[] = [];
   channelname: any;
+  showOnlySocialRawDataReport =
+    'saba.riaz@jazz.com.pk,ambreen.zubair@jazz.com.pk,uzma.hashmat@jazz.com.pk,mishal.javed@abacus-global.com';
+  restrictedAgent: any;
   // analyticeReport=[
   //     // {name:'Report Designer',link:'/analytics/executive-dashboard'},
   //     {name:'Report Listing',link:'/analytics/reports'},
@@ -34,9 +38,12 @@ export class AnalyticsMenuComponent implements OnInit {
   //     {name:'LinkedIn Report',link:'/analytics/linkedin-report'},
   //     {name:'Instagram Report',link:'/analytics/instagram-report'}
   //       ]
-  constructor(private _hS: HeaderService) { }
+  constructor(private _hS: HeaderService, private storage: StorageService) {}
 
   ngOnInit(): void {
+    let data = this.storage.retrive('main', 'O').local;
+    this.restrictedAgent = data.originalUserName;
+
     this._hS.getHeader().subscribe((res: any) => {
       this.activeMenu = res?.title;
     });
@@ -48,7 +55,7 @@ export class AnalyticsMenuComponent implements OnInit {
       this.channelname = 'Jazz';
     } else if (this.activeChannel == 'https://keportal.enteract.live') {
       this.channelname = 'KE';
-    } else if (this.activeChannel == 'https://tppl.enteract.live') {
+    } else if (this.activeChannel == 'https://tpplui.enteract.live') {
       this.channelname = 'ttpl';
     } else if (this.activeChannel == 'https://waengage.enteract.live') {
       this.channelname = 'Morinaga';
@@ -56,12 +63,9 @@ export class AnalyticsMenuComponent implements OnInit {
       this.channelname = 'stagging';
     } else if (this.activeChannel == 'https://bzengage.enteract.live') {
       this.channelname = 'Bazaar';
+    } else if (this.activeChannel == 'https://uiengagerox.enteract.app') {
+      this.channelname = 'stagging';
     }
-    else if(this.activeChannel=='https://uiengagerox.enteract.app') {
-      this.channelname='stagging';
-    }
-
-
 
     this.getmenu();
   }
@@ -94,10 +98,9 @@ export class AnalyticsMenuComponent implements OnInit {
         { name: 'Twitter Report', link: '/analytics/twitter-report' },
         { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
         { name: 'Instagram Report', link: '/analytics/instagram-report' },
-        { name: 'interaction Report', link: '/analytics/interaction-report' }
+        { name: 'interaction Report', link: '/analytics/interaction-report' },
       ];
-    }
-    else if (this.channelname == 'stagging') {
+    } else if (this.channelname == 'stagging') {
       this.analyticeReport = [
         { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
         { name: 'Interaction Report', link: '/analytics/interaction-report' },
@@ -121,27 +124,34 @@ export class AnalyticsMenuComponent implements OnInit {
         { name: 'Twitter Report', link: '/analytics/twitter-report' },
         { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
         { name: 'Instagram Report', link: '/analytics/instagram-report' },
-
       ];
     } else if (this.channelname == 'Jazz') {
-      this.analyticeReport = [
-        { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
-        { name: 'Interaction Report', link: '/analytics/interaction-report' },
-        { name: 'BOT Interactions', link: '/analytics/handled-bot' },
-        { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
-        { name: 'Unique Interactions', link: '/analytics/unique-customers' },
-        { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
-        {
-          name: 'Inbound/Outbound Report',
-          link: '/analytics/inbound-outbound-report',
-        },
-        {
-          name: 'Agent Performance Report',
-          link: '/analytics/performance-report',
-        },
-        { name: 'Shift Report', link: '/analytics/shift-report' },
-
-      ];
+      if (this.showOnlySocialRawDataReport.includes(this.restrictedAgent)) {
+        this.analyticeReport = [
+          { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
+        ];
+      } else {
+        this.analyticeReport = [
+          { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
+          { name: 'Interaction Report', link: '/analytics/interaction-report' },
+          { name: 'BOT Interactions', link: '/analytics/handled-bot' },
+          {
+            name: 'Live Agent Interactions',
+            link: '/analytics/route-to-agent',
+          },
+          { name: 'Unique Interactions', link: '/analytics/unique-customers' },
+          { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
+          {
+            name: 'Inbound/Outbound Report',
+            link: '/analytics/inbound-outbound-report',
+          },
+          {
+            name: 'Agent Performance Report',
+            link: '/analytics/performance-report',
+          },
+          { name: 'Shift Report', link: '/analytics/shift-report' },
+        ];
+      }
     } else if (this.channelname == 'KE') {
       this.analyticeReport = [
         {
@@ -160,7 +170,6 @@ export class AnalyticsMenuComponent implements OnInit {
         { name: 'Twitter Report', link: '/analytics/twitter-report' },
         { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
         { name: 'Instagram Report', link: '/analytics/instagram-report' },
-
       ];
     } else if (this.channelname == 'ttpl') {
       this.analyticeReport = [
@@ -197,8 +206,7 @@ export class AnalyticsMenuComponent implements OnInit {
         { name: 'Shift Report', link: '/analytics/shift-report' },
         { name: 'Tag Report', link: '/analytics/tag-report' },
       ];
-    }
-    else if (this.channelname == 'Bazaar') {
+    } else if (this.channelname == 'Bazaar') {
       this.analyticeReport = [
         { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
         { name: 'Interaction Report', link: '/analytics/interaction-report' },
@@ -215,7 +223,6 @@ export class AnalyticsMenuComponent implements OnInit {
           link: '/analytics/performance-report',
         },
         { name: 'Shift Report', link: '/analytics/shift-report' },
-
       ];
     }
   }

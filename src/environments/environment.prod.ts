@@ -52,22 +52,23 @@ export const environment = {
   CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
   SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
   ServiceBaseUrl: '',
-  ProfileBaseUrl: '',
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   botBaseUrl: 'https://bot-engage.enteract.app/api/',
 
   // For Total Parco
+  // IdentityBaseUrl: 'https://tt_identity.enteract.live/api/',
+  // CommonBaseUrl: 'https://ttcommon.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://ttcommon.enteract.live/',
+  // consoleBaseUrl: '',
+  // ServiceBaseUrl: '',
+  //  ProfileBaseUrl: '',
+
+  // old Tppl
   // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api/',
   // CommonBaseUrl: 'https://tpplcom.360scrm.com/api/',
   // SignalRCommonBaseUrl: 'https://tpplcom.360scrm.com/',
   // consoleBaseUrl: 'https://tpplcons.360scrm.com/api/',
-
-  // IdentityBaseUrl: 'https://tt_identity.enteract.live/api/',
-  // CommonBaseUrl: 'https://ttcommon.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://ttcommon.enteract.live/',
-  // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-  // ServiceBaseUrl: '',
-  //  ProfileBaseUrl: '',
 
   // For Morinaga
   // IdentityBaseUrl: 'https://waidentity.enteract.live/api/',
@@ -85,9 +86,7 @@ export const environment = {
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
-  //  botBaseUrl: 'https://bot-engage.enteract.app/api/',
-
-
+  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
 
   // // For Testing
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
@@ -100,7 +99,6 @@ export const environment = {
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
 
-
   //for statging / Internal :companyId 650
   // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
   // CommonBaseUrl: 'https://comrox.enteract.app/api/',
@@ -109,11 +107,6 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://conrox.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-
-
-
-
-
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
@@ -215,9 +208,9 @@ export const environment = {
       addTeam: 'Teams/Add',
       updateTeam: 'Teams/Update',
       deleteTeam: 'Teams/Delete',
-      teamGetById:'Teams/FetchTeamById',
-      getTeamType:'Teams/GetTypes',
-      deleteMultipleTeams: 'Teams/DeleteMultiple'
+      teamGetById: 'Teams/FetchTeamById',
+      getTeamType: 'Teams/GetTypes',
+      deleteMultipleTeams: 'Teams/DeleteMultiple',
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',
@@ -280,7 +273,7 @@ export const environment = {
       hideUnhideMessage: 'Publisher/HideQuery',
       dispositionTags: 'Keyword/GetAllDisposition',
       removeAssignedQuery: 'Query/RemoveAssignQuery',
-      sessionClose:'Whatsapp/TerminateSupportSession',
+      sessionClose: 'Whatsapp/TerminateSupportSession',
       //Reports
       routeToAgents: 'Report/GetWhatsAppRouteToAgentReport',
       routeToAgentsCsv: 'Report/GetWhatsAppRouteAgentReportCSV',
@@ -319,7 +312,7 @@ export const environment = {
       CSATReport: 'Report/GetCSATReport',
       getInteractionReport: 'Report/GetAgentPerformanceDashboard',
       // whatsapp bot interaction
-      whatsappBotInteraction: 'Whatsapp/GetBotInteractionHistory'
+      whatsappBotInteraction: 'Whatsapp/GetBotInteractionHistory',
     },
     facebook: {
       comments: 'Facebook/GetFbPost',

@@ -1,22 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/identity/AuthService/auth.service';
-import { AgentDetailsService } from 'src/app/services/AgentDetailsService/agent-details.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import { LoginDto } from 'src/app/shared/Models/LoginDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { DatePipe } from '@angular/common';
-import { VerificationDto } from 'src/app/shared/Models/VerificationDto';
-
-
-
-
-
-
+import { VerificationDto } from 'src/app/shared/Models/verificationDto';
 // import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 @Component({
   selector: 'app-login',
@@ -94,10 +86,10 @@ export class LoginComponent implements OnInit {
         if (res.status == false || res.isTwoFAEnabled== false) {
           this.stor.store('token', res.loginResponse.loginResponse.accessToken);
           this.stor.store('main', res.loginResponse.loginResponse);
-          // this.stor.store(
-          //   'nocompass',
-          //   res.loginResponse.loginResponse.roles[0]
-          // );
+          this.stor.store(
+            'nocompass',
+            res.loginResponse.loginResponse.roles[0]
+          );
           localStorage.setItem(
             'agentId',
             res.loginResponse.loginResponse.userId
@@ -218,7 +210,7 @@ export class LoginComponent implements OnInit {
       (res: any) => {
         this.stor.store('token', res.accessToken);
         this.stor.store('main', res);
-        // this.stor.store('nocompass', res.roles[0]);
+        this.stor.store('nocompass', res.roles[0]);
         localStorage.setItem('agentId', res.userId);
         localStorage.setItem('agentName', res.username);
 

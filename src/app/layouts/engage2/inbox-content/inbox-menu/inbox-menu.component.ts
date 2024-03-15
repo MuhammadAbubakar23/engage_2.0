@@ -49,7 +49,7 @@ export class InboxMenuComponent implements OnInit {
       this.client = 'ke';
     } else if (this.baseUrl == 'https://waengage.enteract.live') {
       this.client = 'morinaga';
-    } else if (this.baseUrl == 'https://tppl.enteract.live') {
+    } else if (this.baseUrl == 'https://tpplui.enteract.live') {
       this.client = 'tppl';
     } else if (this.baseUrl == 'http://localhost:4200') {
       this.client = 'localhost';

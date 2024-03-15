@@ -21,7 +21,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
     else if (this.baseUrl == 'https://uiengage.enteract.app') {
       this.companyId = 657
     }
-    else if (this.baseUrl == 'https://tppl.enteract.live') {
+    else if (this.baseUrl == 'https://tpplui.enteract.live') {
       this.companyId = 652
     }
     else if (this.baseUrl == 'https://waengage.enteract.live') {
@@ -60,6 +60,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
 
 
     if (typeof team === 'undefined' || team == null || team == '') {
+      debugger
       //   console.log(this.storage.retrive("nocompass","O"));
       request = request.clone({
         url: request.url,
