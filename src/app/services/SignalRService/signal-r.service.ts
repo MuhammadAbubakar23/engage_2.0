@@ -79,7 +79,7 @@ export class SignalRService {
   flag: string = '';
 
   startConnection() {
-debugger
+
     // this.flag = this.router.url.split('/')[1];
     // if(this.flag == 'all-inboxes'){
     let team = this.storage.retrive("nocompass", "O").local;
@@ -106,7 +106,7 @@ debugger
   };
 
   reConnect() {
-    debugger
+    
     // this.flag = this.router.url.split('/')[1];
     // if(this.flag == 'all-inboxes'){
     let team = this.storage.retrive("nocompass", "O").local;

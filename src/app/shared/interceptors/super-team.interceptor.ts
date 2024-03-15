@@ -60,7 +60,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
 
 
     if (typeof team === 'undefined' || team == null || team == '') {
-      debugger
+      
       //   console.log(this.storage.retrive("nocompass","O"));
       request = request.clone({
         url: request.url,
