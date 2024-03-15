@@ -219,6 +219,7 @@ export class FacebookComponent implements OnInit {
   fetchedPostType: string = ""
 
   ngOnInit(): void {
+
     this.fetchedPostType = this.fetchPostType.postType
     if (this.fetchedPostType == 'FCP') {
       this.fbCmntReply = false;
@@ -226,7 +227,7 @@ export class FacebookComponent implements OnInit {
     } else if (this.fetchedPostType == 'FC') {
       this.fbCmntReply = true;
       this.fbMsgReply = false;
-    } else if (this)
+    } 
 
       this.KEbaseUrl = window.location.origin
     if (this.KEbaseUrl == 'https://keportal.enteract.live') {
@@ -2177,6 +2178,33 @@ export class FacebookComponent implements OnInit {
       this.radioInput.nativeElement.checked = false;
     }
   }
+  // isImage(attachment: any): boolean {
+
+  //   if (attachment && attachment.mediaType) {
+  //     const contentTypeMatch = attachment.mediaType.match(/image\/(\w+)/i);
+  //     return contentTypeMatch !== null;
+  //   }
+  
+  //   return false;
+  // }
+  
+  // isVideo(attachment: any): boolean {
+  //   if (attachment && attachment.mediaType) {
+  //     const contentTypeMatch = attachment.mediaType.match(/video\/(\w+)/i);
+  //     return contentTypeMatch !== null;
+  //   }
+  
+  //   return false;
+  // }
+
+  // isAudio(attachment: any): boolean {
+  //   if (attachment && attachment.mediaType) {
+  //     const contentTypeMatch = attachment.mediaType.match(/audio\/(\w+)/i);
+  //     return contentTypeMatch !== null;
+  //   }
+  
+  //   return false;
+  // }
 
   isImage(attachment: any): boolean {
     return attachment.contentType?.toLowerCase().startsWith('image');

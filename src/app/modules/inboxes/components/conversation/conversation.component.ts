@@ -757,6 +757,7 @@ export class ConversationComponent implements OnInit {
           this.fetchId.setPlatform(platform);
           this.fetchId.setOption(id);
           // this.fetchId.setIds(id, userId, postType);
+          debugger
           this.fetchposttype.sendPostType(postType);
           localStorage.setItem('profileId', profileId);
           localStorage.setItem('assignedProfile', profileId);
