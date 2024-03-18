@@ -41,7 +41,7 @@
   .chat-message-component {
     background-color: $ice;
     width: 100%;
-    height: calc(100vh - 240px);
+    height: calc(100vh - 160px);
     padding: 0 15px;
   }
   &.thirdactive {
@@ -132,7 +132,7 @@
     overflow: hidden;
     height: 100%;
     &.minimized {
-      height: 70px;
+      height: 64px;
       .chatfooter {
         opacity: 0;
       }
