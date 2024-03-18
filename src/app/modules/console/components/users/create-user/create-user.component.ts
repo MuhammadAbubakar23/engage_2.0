@@ -79,7 +79,7 @@ export class CreateUserComponent implements OnInit {
     // console.log(this._Activatedroute.snapshot.data["teams"]);
     // console.log(this._Activatedroute.snapshot.data["roles"]);
     this.Roles = this._Activatedroute.snapshot.data["roles"];
-    this.Teams = this._Activatedroute.snapshot.data["teams"];
+    this.Teams = this._Activatedroute.snapshot.data["teams"].Teams;
     this.Skills = this._Activatedroute.snapshot.data["skills"];
     this._Activatedroute.paramMap.subscribe(paramMap => {
       this.identity = Number(paramMap.get('id'));
@@ -226,12 +226,14 @@ export class CreateUserComponent implements OnInit {
     // for (let i in this.RolesControl.value) {
     //   this.RoleIds.push(this.RolesControl.value[i].id);
     // }
+    this.RoleIds = []
     for (let i in this.RolesControl.value) {
       if(!this.RoleIds.includes(this.RolesControl.value[i]?.id.toString())){
         this.RoleIds.push(this.RolesControl?.value[i]?.id.toString());
       }
    
     }
+    this.TeamIds=[]
     for (let i in this.TeamsControl.value) {
       if(!this.TeamIds.includes(this.TeamsControl?.value[i]?.id.toString())){
         this.TeamIds.push(this.TeamsControl?.value[i]?.id?.toString());

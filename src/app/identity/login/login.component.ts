@@ -88,7 +88,7 @@ export class LoginComponent implements OnInit {
           this.stor.store('main', res.loginResponse.loginResponse);
           this.stor.store(
             'nocompass',
-            res.loginResponse.loginResponse.roles[0]
+            res?.loginResponse?.loginResponse?.roles[0]
           );
           localStorage.setItem(
             'agentId',
@@ -210,7 +210,7 @@ export class LoginComponent implements OnInit {
       (res: any) => {
         this.stor.store('token', res.accessToken);
         this.stor.store('main', res);
-        this.stor.store('nocompass', res.roles[0]);
+        this.stor.store('nocompass', res?.roles[0]);
         localStorage.setItem('agentId', res.userId);
         localStorage.setItem('agentName', res.username);
 

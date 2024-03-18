@@ -72,11 +72,11 @@ export class AnalyticsMenuComponent implements OnInit {
   getmenu() {
     if (this.channelname == 'local') {
       this.analyticeReport = [
-        { name: 'Report Listing', link: '/analytics/reports' },
-        { name: 'Dashboard Designer', link: '/analytics/dashbaord-designer' },
-        { name: 'DB Settings', link: ' /analytics/db-settings' },
-        { name: 'Dashboard', link: '/analytics/dashboard' },
-        { name: 'Live Monitoring', link: '/analytics/live-monitoring' },
+        // { name: 'Report Listing', link: '/analytics/reports' },
+        // { name: 'Dashboard Designer', link: '/analytics/dashbaord-designer' },
+        // { name: 'DB Settings', link: ' /analytics/db-settings' },
+        // { name: 'Dashboard', link: '/analytics/dashboard' },
+        // { name: 'Live Monitoring', link: '/analytics/live-monitoring' },
         { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
         { name: 'BOT Interactions', link: '/analytics/handled-bot' },
         { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
