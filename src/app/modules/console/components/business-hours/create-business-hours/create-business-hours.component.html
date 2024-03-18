@@ -34,40 +34,55 @@
                             <div class="business-detail-wrap">
                                 <div class="floating-item mb-3">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control" id="floatingInputValue"
-                                            placeholder="Tokyo Business hours" value="Tokyo Business hours"
-                                            formControlName="templateName">
-                                        <label for="floatingInputValue">Template Name</label>
+                                        <input type="text" class="form-control" id="businessName"
+                                            placeholder="Business Name" formControlName="templateName"
+                                            [ngClass]="{'is-valid': messageForm.get('templateName')?.valid, 'is-invalid': messageForm.get('templateName')?.invalid && (messageForm.get('templateName')?.dirty || messageForm.get('templateName')?.touched)}">
+                                        <label for="businessName">Business Name</label>
+                                        <span
+                                            *ngIf="messageForm.get('templateName')?.invalid && (messageForm.get('templateName')?.dirty || messageForm.get('templateName')?.touched)"
+                                            class="invalid-feedback">Only alphabets are allowed.</span>
+                                        <span *ngIf="messageForm.get('templateName')?.valid" class="success-icon">
+                                            <!-- <i class="fa fa-check-circle"></i> -->
+                                        </span>
                                     </div>
-                                    <!-- <div class="example-text">
-                                        e.g. xyz@domain.com
-                                    </div> -->
                                 </div>
                                 <div class="floating-item mb-4">
                                     <div class="form-floating">
                                         <textarea class="form-control" placeholder="Leave a comment here"
-                                            id="floatingTextarea2" style="height: 100px"
-                                            formControlName="description"></textarea>
-                                        <label for="floatingTextarea2">Description</label>
+                                            id="description" style="height: 100px" formControlName="description"
+                                            [ngClass]="{'is-valid': messageForm.get('description')?.valid, 'is-invalid': messageForm.get('description')?.invalid && (messageForm.get('description')?.dirty || messageForm.get('description')?.touched)}"></textarea>
+                                        <label for="description">Description</label>
+                                        <span
+                                            *ngIf="messageForm.get('description')?.invalid && (messageForm.get('description')?.dirty || messageForm.get('description')?.touched)"
+                                            class="invalid-feedback">Description is required.</span>
+                                        <span *ngIf="messageForm.get('description')?.valid" class="success-icon">
+                                            <!-- <i class="fa fa-check-circle"></i> -->
+                                        </span>
                                     </div>
-                                    <!-- <div class="example-text">Optional: will appear in the From: header of emails you
-                                        send.
-                                    </div> -->
                                 </div>
                                 <div class="floating-item mb-4">
                                     <div class="form-floating mb-2">
                                         <select class="form-select multi-select" aria-label="Floating label select"
-                                            formControlName="timeZone">
-                                            <option selected="">(GMT+09:00) Karachi</option>
-                                            <option value="1">(GMT+03:00) Lahore</option>
-                                            <option value="2">(GMT+05:00) Peshawar</option>
-                                            <option value="3">(GMT+06:00) Islamabad</option>
+                                            formControlName="timeZone"
+                                            [ngClass]="{'is-valid': messageForm.get('timeZone')?.valid, 'is-invalid': messageForm.get('timeZone')?.invalid && (messageForm.get('timeZone')?.dirty || messageForm.get('timeZone')?.touched)}">
+                                            <option disabled selected>Select Time zone</option>
+                                            <option value="(GMT+09:00) Karachi">(GMT+09:00) Karachi</option>
+                                            <option value="(GMT+03:00) Lahore">(GMT+03:00) Lahore</option>
+                                            <option value="(GMT+05:00) Peshawar">(GMT+05:00) Peshawar</option>
+                                            <option value="(GMT+06:00) Islamabad">(GMT+06:00) Islamabad</option>
                                         </select>
-                                        <label for="floatingSelect">Time zone</label>
+                                        <label for="timeZone">Time zone</label>
+                                        <span
+                                            *ngIf="messageForm.get('timeZone')?.invalid && (messageForm.get('timeZone')?.dirty || messageForm.get('timeZone')?.touched)"
+                                            class="invalid-feedback">Time zone is required.</span>
+                                        <span *ngIf="messageForm.get('timeZone')?.valid" class="success-icon">
+                                            <!-- <i class="fa fa-check-circle"></i> -->
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div id="business-hour" class="tab-pane fade" role="tabpanel"
                             aria-labelledby="business-hour-tab">
                             <div class="bussiness-hour-wrap ps-5 pe-5">
@@ -98,7 +113,8 @@
                                 <div class="rounded-tab-nav mb-4" *ngIf="showWorkingDaysSection">
                                     <h5 class="darkblue mb-4 mt-5">Select the working days</h5>
                                     <div class="rounded-tab-nav d-flex">
-                                        <div *ngFor="let day of daysOfWeek" class="border-0 nav-link p-0 pe-2 rounded-tab-btn">
+                                        <div *ngFor="let day of daysOfWeek"
+                                            class="border-0 nav-link p-0 pe-2 rounded-tab-btn">
                                             <button type="button"
                                                 class="btn btn-outline-secondary rounded-pill shadow-sm ps-3 pe-3 btn-sm"
                                                 [ngClass]="{'selected-day': isDaySelected(day)}"

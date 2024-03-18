@@ -10,9 +10,8 @@ import { LoginDto } from 'src/app/shared/Models/LoginDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { DatePipe } from '@angular/common';
+import { VerificationDto } from 'src/app/shared/Models/verificationDto';
 
-import { map, timer, takeWhile } from 'rxjs';
-import { VerificationDto } from 'src/app/shared/Models/VerificationDto';
 
 
 
@@ -76,7 +75,7 @@ export class LoginComponent implements OnInit {
   login() {
 
     let obj = {
-      // actor: this.loginForm.value.actor,
+      // actor: this.loginForms.value.actor,
       userName: this.loginForm.value.userName,
       password: this.loginForm.value.password,
       rememberMe: true,
@@ -84,7 +83,7 @@ export class LoginComponent implements OnInit {
     this.spinnerService.show();
     this.authService.login(obj).subscribe(
       (res: any) => {
-debugger
+
         //only for testing purpose, remove after that
         // res = { 'loginResponse': res }
         // res = { 'loginResponse': res }
@@ -94,10 +93,10 @@ debugger
         if (res.isTwoFAEnabled == false) {
           this.stor.store('token', res.loginResponse.loginResponse.accessToken);
           this.stor.store('main', res.loginResponse.loginResponse);
-          this.stor.store(
-            'nocompass',
-            res.loginResponse.loginResponse.roles[0]
-          );
+          // this.stor.store(
+          //   'nocompass',
+          //   res.loginResponse.loginResponse.roles[0]
+          // );
           localStorage.setItem(
             'agentId',
             res.loginResponse.loginResponse.userId
@@ -217,7 +216,7 @@ debugger
       (res: any) => {
         this.stor.store('token', res.accessToken);
         this.stor.store('main', res);
-        this.stor.store('nocompass', res.roles[0]);
+        // this.stor.store('nocompass', res.roles[0]);
         localStorage.setItem('agentId', res.userId);
         localStorage.setItem('agentName', res.username);
 

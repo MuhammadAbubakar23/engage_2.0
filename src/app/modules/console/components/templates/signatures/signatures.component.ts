@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 
@@ -34,13 +35,18 @@ export class SignaturesComponent implements OnInit {
       pageSize: this.perPage,
       templateType: "Signature"
     }
+    this.spinnerServerice.show()
     this.commonService.GetAllMessages(formData).subscribe(
       (response: any) => {
+        this.spinnerServerice.hide()
+
         this.signatures = response.Templates;
         this.totalCount = response.TotalCount
 
       },
       (error: any) => {
+        this.spinnerServerice.hide()
+
         console.error(error);
       }
     );
@@ -51,7 +57,8 @@ export class SignaturesComponent implements OnInit {
     this.refreshMessages(); 
   }
   
-  constructor(private headerService: HeaderService ,private commonService: CommonDataService , private router: Router ) { }
+  constructor(private headerService: HeaderService ,private commonService: CommonDataService , private router: Router,
+    private spinnerServerice: NgxSpinnerService ) { }
 
   ngOnInit(): void {
    this.refreshMessages()
@@ -123,7 +130,7 @@ export class SignaturesComponent implements OnInit {
     this.refreshMessages()
   }
   goToPage(pageNumber: number): void {
-    debugger
+    
     if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totalCount / this.perPage)) {
       this.currentPage = pageNumber;
     }

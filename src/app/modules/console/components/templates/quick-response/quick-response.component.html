@@ -1,5 +1,8 @@
 <div class="message-wrap d-flex-1 console-body-wrapper" data-scrollbar="true" tabindex="-1"
     style="overflow-y:auto; outline: none;">
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
+        <p style="color: white"> Loading... </p>
+      </ngx-spinner>
     <div class="scroll-content">
         <div class="wider-container pt-3">
             <div class="searchBar-wrapper mb-2 p-0">
@@ -8,19 +11,21 @@
                         <div class="d-flex align-items-lg-center">
                             <p class="coal m-0">Sort:</p>
                             <div class="dropdown">
-                                <button class="btn dropdown-toggle coal" type="button" id="dropdownMenuButton1"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ selectedSortOption }}
+                                <button class="btn dropdown-toggle coal" type="button"
+                                    id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <!-- {{ selectedSortOption === 'Ascending' ? 'Ascending ' : 'Descending ' }} -->
+                                    <span
+                                        [ngClass]="{'fa-solid fa-arrow-up': selectedSortOption === 'Ascending', 'fa fa-arrow-down': selectedSortOption === 'Descending'}"></span>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li>
-                                        <a class="dropdown-item" (click)="setSortOption('All')">All</a>
+                                        <a class="dropdown-item"
+                                            (click)="setSortOption('Ascending')">Ascending</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" (click)="setSortOption('Ascending')">Ascending</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" (click)="setSortOption('Descending')">Descending</a>
+                                        <a class="dropdown-item"
+                                            (click)="setSortOption('Descending')">Descending</a>
                                     </li>
                                 </ul>
                             </div>

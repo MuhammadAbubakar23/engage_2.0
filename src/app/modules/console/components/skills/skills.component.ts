@@ -6,10 +6,11 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DataExchangeServicesService } from 'src/app/services/dataExchangeServices/data-exchange-services.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-skills',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],//, CreateTeamComponent
+  imports: [CommonModule, RouterModule, FormsModule , NgxSpinnerModule],//, CreateTeamComponent
   templateUrl: './skills.component.html',
   styleUrls: ['./skills.component.scss']
 })
@@ -35,7 +36,8 @@ export class SkillsComponent implements OnInit {
     private dataExChange: DataExchangeServicesService,
     private activeRoute: ActivatedRoute,
     private commonData: CommonDataService,
-    private route: Router) { }
+    private route: Router,
+    private spinnerServerice: NgxSpinnerService) { }
 
   ngOnInit(): void {
     
@@ -78,7 +80,10 @@ export class SkillsComponent implements OnInit {
       pageSize: this.itemsPerPage,
 
     }
+    this.spinnerServerice.show()
     this.commonData.GetSkill(obj).subscribe((res: any) => {
+      this.spinnerServerice.hide()
+
       this.skills = res.Skills
       console.log("  this.skills " ,   this.skills )
       this.TotalCount = res.TotalCount;
@@ -95,6 +100,7 @@ export class SkillsComponent implements OnInit {
       }
       console.log(res)
     })
+    
   }
   skills: any[] = [];
 

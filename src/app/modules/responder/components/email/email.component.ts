@@ -1101,7 +1101,7 @@ export class EmailComponent implements OnInit {
   replyCc: any[] = [];
   replyBcc: any[] = [];
   submitEmailReply() {
-    debugger
+    
     this.sendBtnClicked = true;
     this.showCcBtn = true;
     this.showBccBtn = true;

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgZone, OnInit } from '@angular/core';
-import { FormsModule, FormBuilder, FormGroup, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { FormsModule, FormBuilder, FormGroup, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { QueryBuilderClassNames, QueryBuilderConfig, QueryBuilderModule, RuleSet } from 'angular2-query-builder';
 import { CommonDataService } from '../../../../../shared/services/common/common-data.service';
@@ -20,10 +20,13 @@ export class AddRulesComponent implements OnInit {
   selectedEntity = "Please Select Entity";
 
   rulesForm = new FormGroup({
-    ruleName: new FormControl(''),
-    description: new FormControl(''),
+    ruleName: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+    description: new FormControl('', Validators.required),
     // rulesJson: new FormControl('')
+    
   })
+  get ruleName() { return this.rulesForm.get('ruleName'); }
+  get description() { return this.rulesForm.get('description'); }
   public query: RuleSet = {
     condition: 'and',
     rules: []

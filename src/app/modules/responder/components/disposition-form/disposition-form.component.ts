@@ -88,7 +88,7 @@ export class DispositionFormComponent implements OnInit {
   }
   previousUrl:any;
   submitDispositionForm(){
-    debugger
+    
     this.dispositionFormDto = {
       disposition: this.dispositionForm.value.disposition,
       reasonId: this.dispositionForm.value.reasonId,
@@ -111,21 +111,21 @@ export class DispositionFormComponent implements OnInit {
       this.commonService.getSessionId(customerNumber,ClientNumber).subscribe((response:any)=>{
   
            if(response=='true'){
-            alert(response)
-            this.reloadComponent('sessionClose')
+            // alert(response)
+            // this.reloadComponent('sessionClose')
            }
        },
        error=>{
         this.responseMsg=error.error.Message
-        this.reloadComponent('error')
+        // this.reloadComponent('error')
        }
        )
-       setTimeout(()=>{
+
         localStorage.setItem('assignedProfile','')
         this.previousUrl = localStorage.getItem('previousUrl') 
         this.route.navigateByUrl(this.previousUrl);
         this.lodeModuleService.updateModule('all-inboxes');
-       },6000)
+      
     
       
     })
@@ -150,22 +150,22 @@ export class DispositionFormComponent implements OnInit {
       this.dispositionForm.get('comment')?.setValue('Completed');
     }
   };
-  reloadComponent(value:any){
-if(value=='error'){
-  this.AlterMsg=this.responseMsg
-  this.toastermessage=true
-  setTimeout(() => {
-    this.toastermessage = false;
-  }, 4000);
-}
-if(value=='sessionClose'){
-  this.AlterMsg='Session Close Successfully !'
-  this.toastermessage=true
-  setTimeout(() => {
-    this.toastermessage = false;
-  }, 4000);
-}
-  }
+//   reloadComponent(value:any){
+// if(value=='error'){
+//   this.AlterMsg=this.responseMsg
+//   this.toastermessage=true
+//   setTimeout(() => {
+//     this.toastermessage = false;
+//   }, 4000);
+// }
+// if(value=='sessionClose'){
+//   this.AlterMsg='Session Close Successfully !'
+//   this.toastermessage=true
+//   setTimeout(() => {
+//     this.toastermessage = false;
+//   }, 4000);
+// }
+//   }
   closeToaster(){
     this.toastermessage=false
   }

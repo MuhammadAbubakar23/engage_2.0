@@ -87,7 +87,8 @@ export class SignalRService {
       accessTokenFactory: () => {
         return 'Bearer ' + localStorage.getItem('token');
       },
-      headers: { "X-Super-Team": JSON.stringify(this.companyId) }
+      // headers: { "X-Super-Team": JSON.stringify(this.companyId) }
+      headers: { "X-Super-Team": JSON.stringify(team.id) }
     };
 
     this.hubconnection = new signalR.HubConnectionBuilder()
@@ -112,7 +113,8 @@ export class SignalRService {
       accessTokenFactory: () => {
         return 'Bearer ' + localStorage.getItem('token');
       },
-      headers: { "X-Super-Team": JSON.stringify(this.companyId) }
+      // headers: { "X-Super-Team": JSON.stringify(this.companyId) }
+      headers: { "X-Super-Team": JSON.stringify(team.id) }
     };
 
     this.hubconnection = new signalR.HubConnectionBuilder()
@@ -129,7 +131,7 @@ export class SignalRService {
   }
 
   public updateListAndDetailDataListener = () => {
-    debugger
+
 
     this.hubconnection.on('SendData', (data) => {
 

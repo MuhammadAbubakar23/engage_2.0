@@ -46,6 +46,7 @@ import { StepFourComponent } from './components/chat-bot-builder/step-four/step-
 import { UpdateIntentsComponent } from './components/chat-bot/update-intents/update-intents.component';
 import { BulkUploadComponent } from './components/sentiment-analysis/bulk-upload/bulk-upload.component';
 import { CreateSentimentComponent } from './components/sentiment-analysis/create-sentiment/create-sentiment.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -100,6 +101,7 @@ import { CreateSentimentComponent } from './components/sentiment-analysis/create
     NgSelectModule,
     CdkStepperModule,
     NgStepperModule,
+    NgxSpinnerModule
   ]
 })
 export class ConsoleModule { }

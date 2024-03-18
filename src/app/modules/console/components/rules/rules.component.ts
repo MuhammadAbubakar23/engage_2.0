@@ -2,12 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 @Component({
   selector: 'app-rules',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, NgxSpinnerModule],
   templateUrl: './rules.component.html',
   styleUrls: ['./rules.component.scss']
 })
@@ -18,30 +19,33 @@ export class RulesComponent implements OnInit {
   currentPage: number = 1;
   totalCount: any;
   applySearchFilter() {
-    if(this.searchText.trim() !== ''){
+    if (this.searchText.trim() !== '') {
       this.refreshtableData()
     }
-    else{
+    else {
       this.searchText = '';
       this.refreshtableData()
     }
   }
 
   refreshtableData() {
-    const data ={
+    const data = {
       search: this.searchText,
       sorting: this.selectedSortOption,
       pageNumber: this.currentPage,
       pageSize: this.perPage
     }
-
+    this.spinnerServerice.show()
     this.commonService.GetAllRules(data).subscribe(
       (response: any) => {
+        this.spinnerServerice.hide()
         this.tableData = response.Rules;
         this.totalCount = response.TotalCount
 
       },
       (error: any) => {
+        this.spinnerServerice.hide()
+
         console.error(error);
       }
     );
@@ -49,27 +53,28 @@ export class RulesComponent implements OnInit {
   selectedSortOption: any;
 
   setSortOption(option: string) {
-    
+
     this.selectedSortOption = option;
-    this.refreshtableData(); 
+    this.refreshtableData();
   }
-  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router) { }
+  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router, private spinnerServerice: NgxSpinnerService) { }
   ngOnInit(): void {
-   this.refreshtableData()
+    this.refreshtableData()
   }
   updatevalue(string: any) {
     this.headerService.updateMessage(string);
   }
   editTemplate(message: any) {
-    
-    this.router.navigate(['/console/add-rules',message.id])
+
+    this.router.navigate(['/console/add-rules', message.id])
   }
   canEditOrDelete(row: any): boolean {
     // Add your condition here, for example:
     return row.companyId !== 0;
   }
-  
+
   deleteTemplate(message: any) {
+
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
       this.commonService.DeleteRules(message.id).subscribe(
@@ -108,7 +113,7 @@ export class RulesComponent implements OnInit {
     this.refreshtableData()
   }
   goToPage(pageNumber: number): void {
-    debugger
+
     if (pageNumber >= 1 && pageNumber <= Math.ceil(this.totalCount / this.perPage)) {
       this.currentPage = pageNumber;
     }

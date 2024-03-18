@@ -121,7 +121,7 @@ export class CreateUserComponent implements OnInit {
     // this.Roles = vr.roles;
   }
   async setform(formVal: any): Promise<void> {
-debugger
+
     this.userForm = this.formbuilder.group({
       id: [formVal.id],
       firstname: [formVal.firstName, Validators.required],
@@ -203,7 +203,7 @@ debugger
     this.userForm.controls['skillId'].reset();
   }
   onSubmit(): void {
-    debugger
+    
     let _self = this;
     this.userForm.controls['roleId'].reset();
     this.userForm.controls['teamId'].reset();
@@ -275,7 +275,7 @@ debugger
 
     this.uservc.save(controllerRoute, this.userForm.value).subscribe({
       next: (res: any) => {
-        debugger
+        
         console.log(res)
         _self.onReset();
         this.router.navigate(['/console/users']);

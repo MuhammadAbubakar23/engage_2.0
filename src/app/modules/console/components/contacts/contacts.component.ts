@@ -25,7 +25,7 @@ totalCounts:any;
     this.getAllContacts()
   }
 getAllContacts(){
-  debugger
+  
   let obj={
     "fromDate": null,
     "toDate": null,
@@ -48,7 +48,7 @@ getAllContacts(){
   })
 }
 filltername(){
-  debugger
+  
   if(this.searchName.length>=2){
     this.getAllContacts()
   }
@@ -86,7 +86,7 @@ this.getAllContacts()
   }
   
   goToPage(evt:any){
-    debugger
+    
     if (evt >= 1 && evt <= Math.ceil(this.totalCounts / this.itemsPerPage)) {
       this.currentPage = evt;
     }

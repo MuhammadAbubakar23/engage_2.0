@@ -45,7 +45,7 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
   // ServiceBaseUrl: '',
   // consoleBaseUrl: 'https://console.enteract.live/api/',
-
+  // botBaseUrl:'',
   // For Jazz
   // IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
   // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
@@ -75,15 +75,15 @@ export const environment = {
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
   // ProfileBaseUrl: '',
 
-  // For Bazaar
-  //  IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
+  // // For Bazaar
+  // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
   // SignalRCommonBaseUrl: 'https://bzcommon.enteract.live/',
   // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
-  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  //  botBaseUrl: 'https://bot-engage.enteract.app/api/',
   // // For Testing
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
   // // IdentityBaseUrl:'https://rep.enteract.app/api/',
@@ -211,6 +211,7 @@ export const environment = {
       updateTeam: 'Teams/Update',
       deleteTeam: 'Teams/Delete',
       teamGetById:'Teams/FetchTeamById',
+      getTeamType:'Teams/GetTypes',
       deleteMultipleTeams: 'Teams/DeleteMultiple'
     },
     service: {

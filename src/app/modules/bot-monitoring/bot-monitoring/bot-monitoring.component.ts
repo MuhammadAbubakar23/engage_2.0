@@ -6,7 +6,7 @@ import { BotMonitoringService } from '../services/bot-monitoring.service';
 @Component({
   selector: 'app-bot-monitoring',
   templateUrl: './bot-monitoring.component.html',
-  styleUrls: ['./bot-monitoring.component.scss']
+  styleUrls: ['./bot-monitoring.component.scss'],
 })
 export class BotMonitoringComponent implements OnInit {
   chats: any[] = [];
@@ -14,21 +14,22 @@ export class BotMonitoringComponent implements OnInit {
   private newChatIdSubscription: Subscription | undefined;
   private apiCallInterval$: Subject<void> = new Subject<void>();
 
-  constructor(private _chatVisibilityS: ChatVisibilityService, private _botMonitorS: BotMonitoringService) {
-  }
 
+  constructor(
+    private _chatVisibilityS: ChatVisibilityService,
+    private _botMonitorS: BotMonitoringService
+  ) { }
 
   getChatDetails(activeChat: any) {
-
     {
       const data = {
-        "clientIdentifier": activeChat.to,
-        "customerIdentifier": activeChat.from,
-        "filter": {
-          "pageNumber": 0,
-          "pageSize": 0
-        }
-      }
+        clientIdentifier: activeChat.to,
+        customerIdentifier: activeChat.from,
+        filter: {
+          pageNumber: 0,
+          pageSize: 0,
+        },
+      };
       if (this.chats.length > 0) {
         if (this.chats.length == 2) {
           this._chatVisibilityS.notifythirdActive(true);
@@ -41,62 +42,65 @@ export class BotMonitoringComponent implements OnInit {
           if (isEqual) {
             this.chats.splice(existingChatIndex, 1);
             this._chatVisibilityS.notifythirdActive(false);
-          }
-          else {
+          } else {
             this._botMonitorS.getChatDetails(data).subscribe((res) => {
 
               res[0]['completed'] = activeChat['completed']
               this.chats[existingChatIndex] = res;
               const latObject = {
-                "clientIdentifier": res[0].client?.phone,
-                "customerIdentifier": res[0].customer.phone,
-                "filter": {
-                  "pageNumber": 0,
-                  "pageSize": 0
-                }
-              }
-              this._chatVisibilityS.removeActiveId({ 'customerPhone': activeChat.from, 'completed': !this.chats[existingChatIndex][0]['completed'] });
+                clientIdentifier: res[0].client?.phone,
+                customerIdentifier: res[0].customer.phone,
+                filter: {
+                  pageNumber: 0,
+                  pageSize: 0,
+                },
+              };
+              this._chatVisibilityS.removeActiveId({
+                customerPhone: activeChat.from,
+                completed: !this.chats[existingChatIndex][0]['completed'],
+              });
               this.currentActiveChats[existingChatIndex] = latObject;
-
-            })
+            });
           }
         }
         else if (this.chats.length < 3) {
 
           this._botMonitorS.getChatDetails(data).subscribe((res) => {
-            res[0]['completed'] = activeChat['completed']
+            res[0]['completed'] = activeChat['completed'];
             this.chats.push(res);
             const latObject = {
-              "clientIdentifier": res[0].client?.phone,
-              "customerIdentifier": res[0].customer.phone,
-              "filter": {
-                "pageNumber": 0,
-                "pageSize": 0
-              }
-            }
+              clientIdentifier: res[0].client?.phone,
+              customerIdentifier: res[0].customer.phone,
+              filter: {
+                pageNumber: 0,
+                pageSize: 0,
+              },
+            };
             this.currentActiveChats.push(latObject);
-          })
+          });
         } else {
-          alert("The maximum number of visible screens is limited to three.");
-          this._chatVisibilityS.removeActiveId({ 'customerPhone': activeChat.from, 'completed': activeChat['completed'] });
+          alert('The maximum number of visible screens is limited to three.');
+          this._chatVisibilityS.removeActiveId({
+            customerPhone: activeChat.from,
+            completed: activeChat['completed'],
+          });
         }
-      }
-      else {
+      } else {
         this._botMonitorS.getChatDetails(data).subscribe((res) => {
 
           console.log(activeChat['completed'])
           res[0]['completed'] = activeChat['completed'];
           this.chats.push(res);
           const latObject = {
-            "clientIdentifier": res[0].client?.phone,
-            "customerIdentifier": res[0].customer.phone,
-            "filter": {
-              "pageNumber": 0,
-              "pageSize": 0
-            }
-          }
+            clientIdentifier: res[0].client?.phone,
+            customerIdentifier: res[0].customer.phone,
+            filter: {
+              pageNumber: 0,
+              pageSize: 0,
+            },
+          };
           this.currentActiveChats.push(latObject);
-        })
+        });
       }
     }
   }
@@ -108,7 +112,7 @@ export class BotMonitoringComponent implements OnInit {
         this.getChatDetails(newChat);
       }
 
-      interval(30000)
+      interval(20000)
         .pipe(takeUntil(this.apiCallInterval$))
         .subscribe(() => {
           if (this.currentActiveChats.length > 0) {
@@ -177,7 +181,6 @@ export class BotMonitoringComponent implements OnInit {
 
 
   onMinimizeToggle(activeChat: any) {
-
     console.log("this.chats", this.chats)
   }
   ngOnDestroy(): void {
