@@ -2,7 +2,7 @@
     style="overflow-y:auto; outline: none;">
     <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="square-jelly-box" [fullScreen]="false">
         <p style="color: white"> Loading... </p>
-      </ngx-spinner>
+    </ngx-spinner>
     <div class="scroll-content">
         <div class="wider-container pt-3">
             <div class="searchBar-wrapper mb-2 p-0">
@@ -11,21 +11,18 @@
                         <div class="d-flex align-items-lg-center">
                             <p class="coal m-0">Sort:</p>
                             <div class="dropdown">
-                                <button class="btn dropdown-toggle coal" type="button"
-                                    id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
+                                <button class="btn dropdown-toggle coal" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <!-- {{ selectedSortOption === 'Ascending' ? 'Ascending ' : 'Descending ' }} -->
                                     <span
                                         [ngClass]="{'fa-solid fa-arrow-up': selectedSortOption === 'Ascending', 'fa fa-arrow-down': selectedSortOption === 'Descending'}"></span>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     <li>
-                                        <a class="dropdown-item"
-                                            (click)="setSortOption('Ascending')">Ascending</a>
+                                        <a class="dropdown-item" (click)="setSortOption('Ascending')">Ascending</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item"
-                                            (click)="setSortOption('Descending')">Descending</a>
+                                        <a class="dropdown-item" (click)="setSortOption('Descending')">Descending</a>
                                     </li>
                                 </ul>
                             </div>
@@ -38,7 +35,6 @@
                             </button>
                             <input [(ngModel)]="searchText" placeholder="Search" class="me-1"
                                 (ngModelChange)="searchText ? applySearchFilter() : refreshMessages()">
-
                         </a>
                         <a (click)="updatevalue('consoleCreateQuickResponseTemplatesHeader')"
                             [routerLink]="['/console/createresponse']" class="ms-2">
@@ -104,48 +100,49 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                          <td>
-                            <nav aria-label="Page navigation example" class="d-flex align-items-center mt-3 mb-3">
-                              <ul class="pagination m-0">
-                                <li class="page-item" (click)="previousPage()">
-                                  <a class="page-link">Previous</a>
-                                </li>
-                                <li class="page-item" *ngFor="let pageNumber of getVisiblePageNumbers()" [class.active]="pageNumber === currentPage">
-                                  <a class="page-link" (click)="goToPage(pageNumber)" >{{ pageNumber }}</a>
-                                </li>
-                                <li class="page-item" (click)="nextPage()">
-                                  <a class="page-link">Next</a>
-                                </li>
-                              </ul>
-                            </nav>
-                          </td>
-                         
-                          <td>
-                            <div class="tags-per-page d-flex align-items-center justify-content-end mt-3 mb-3 coal">
-                              Per page
-                              <div class="dropdown simple-dropdown w-auto">
-                                <button class="dropdown-toggle chevron-icon down ps-2 pe-4" type="button" id="dropdownMenuButton1"
-                                  data-bs-toggle="dropdown" aria-expanded="false">
-                                  {{ perPage }}
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                  <li>
-                                    <a class="dropdown-item" (click)="setPerPage(10)">10</a>
-                                  </li>
-                                  <li>
-                                    <a class="dropdown-item" (click)="setPerPage(20)">20</a>
-                                  </li>
-                                  <li>
-                                    <a class="dropdown-item" (click)="setPerPage(30)">30</a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </td>
+                            <td>
+                                <nav aria-label="Page navigation example" class="d-flex align-items-center mt-3 mb-3">
+                                    <ul class="pagination m-0">
+                                        <li class="page-item" (click)="previousPage()">
+                                            <a class="page-link">Previous</a>
+                                        </li>
+                                        <li class="page-item" *ngFor="let pageNumber of getVisiblePageNumbers()"
+                                            [class.active]="pageNumber === currentPage">
+                                            <a class="page-link" (click)="goToPage(pageNumber)">{{ pageNumber }}</a>
+                                        </li>
+                                        <li class="page-item" (click)="nextPage()">
+                                            <a class="page-link">Next</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </td>
+
+                            <td>
+                                <div class="tags-per-page d-flex align-items-center justify-content-end mt-3 mb-3 coal">
+                                    Per page
+                                    <div class="dropdown simple-dropdown w-auto">
+                                        <button class="dropdown-toggle chevron-icon down ps-2 pe-4" type="button"
+                                            id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                            {{ perPage }}
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li>
+                                                <a class="dropdown-item" (click)="setPerPage(10)">10</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" (click)="setPerPage(20)">20</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" (click)="setPerPage(30)">30</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
-                      </tfoot>
+                    </tfoot>
                 </table>
-                
+
             </div>
         </div>
     </div>

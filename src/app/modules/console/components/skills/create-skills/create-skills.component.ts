@@ -8,6 +8,8 @@ import {
   UntypedFormControl,
   UntypedFormGroup,
   Validators, FormControl, FormControlName, FormBuilder, FormGroup,
+  AbstractControl,
+  ValidationErrors,
 } from '@angular/forms';
 import { AddSkillMembersComponent } from '../add-skill-members/add-skill-members.component';
 import { Router } from '@angular/router';
@@ -40,16 +42,8 @@ export class CreateSkillsComponent implements OnInit {
   isSelectedTeam: any = '';
   isSelectedTeamArray: any = []
   isBusnisshours: any[] = []
-  isSelectedWing: any[] = [
-    {
-      id: 1, value:'select_wing_a ',name: 'Select wing A'
-    }, {
-      id: 2, value:'select_wing_b ', name: 'Select wing B'
-    }, {
-      id: 3, value:'select_wing_c ', name: 'Select wing C'
-    }
+  isSelectedWing: any[] = []
 
-  ]
   isSlaPolicies: any[] = []
   isAllTagsSelected: boolean = false
   isCheckedAllTags: boolean = false
@@ -139,13 +133,22 @@ export class CreateSkillsComponent implements OnInit {
   userForm = new FormGroup({
     teamname: new FormControl('', [Validators.required,
     Validators.minLength(2),
-    Validators.maxLength(25)]),
+    Validators.maxLength(25),
+    this.customTeamnameValidator
+  ]),
     description: new FormControl('', [Validators.required]),
     businesshours: new FormControl('', [Validators.required]),
     wingSlug: new FormControl('', [Validators.required]),
     SlaPolicy: new FormControl('', [Validators.required]),
 
   })
+  customTeamnameValidator(control: AbstractControl): ValidationErrors | null {
+    const pattern = /^[a-zA-Z ]+$/;
+    if (control.value && !pattern.test(control.value)) {
+      return { invalidTeamname: true };
+    }
+    return null;
+  }
 
   ngOnInit() {
     this.GetRules()
@@ -153,6 +156,7 @@ export class CreateSkillsComponent implements OnInit {
     this.getallbusinessHours()
     this.getAllSlaPolicies()
     this.getSkillsById()
+    this.getAllWing()
     // this.getAllkeyword()
   }
 
@@ -205,6 +209,7 @@ export class CreateSkillsComponent implements OnInit {
     this.id = Number(this.activeRoute.snapshot.paramMap.get('id'));
     if (this.id) {
       this.commondata.editSkill(this.id).subscribe((res: any) => {
+        
         console.log("the Edit Data===>", res);
 
         this.userForm.patchValue({
@@ -260,6 +265,15 @@ export class CreateSkillsComponent implements OnInit {
     console.log("this.tagsLsiting1===>", this.TagsLists)
   }
 
+  getAllWing(){
+    
+    this.commondata.GetAllWing().subscribe((res: any) => {
+      this.isSelectedWing = res;
+      // this.isSelectedWing = [...this.Wing.map(wing => ({ id: wing.id, name: wing.name, slug: wing.slug }))];
+    })
+    // console.log("GetAllWings", this.Wing);
+    console.log("isSelectedWing", this.isSelectedWing);
+  }
 
   checkedIds: number[] = [];
   checkParent(parentIndex: number): void {

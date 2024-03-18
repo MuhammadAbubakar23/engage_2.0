@@ -118,6 +118,7 @@ export class CommonDataService {
   getLinkedInFollowers = environment.links.common.getLinkedInFollowers;
   emailShiftReport = environment.links.common.emailShiftReport;
   getFollowUpCount = environment.links.common.getFollowUpCount;
+  getAllWing= environment.links.console.getAllWing
 
   downloadTagReport = environment.links.common.downloadTagReport;
   regionwiseReport = environment.links.common.regionwiseReport;
@@ -534,6 +535,9 @@ export class CommonDataService {
     // return this.http.get(this.consoleBaseUrl + this.getSkills);
     return this.http.post(this.consoleBaseUrl + this.getSkills, body);
   }
+  GetAllWing(){
+    return this.http.get(this.IdentityBaseUrl + this.getAllWing);
+  }
   GetUserSkills() {
 
      return this.http.get(this.consoleBaseUrl + this.getUserSkills);
@@ -766,11 +770,11 @@ export class CommonDataService {
   }
 
   GetAllTags(): Observable<any> {
-    debugger
+    
     return this.http.get(this.consoleBaseUrl + this.getAllTags);
   }
   GetAllTag(body: any) {
-    debugger
+    
     return this.http.post(this.consoleBaseUrl + this.getTagsAll, body)
   }
 

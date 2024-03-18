@@ -84,7 +84,7 @@ export class InteractionReportComponent implements OnInit {
     private SpinnerService: NgxSpinnerService,
     private cdr: ChangeDetectorRef,
     private datePipe: DatePipe
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const newObj = {
@@ -350,14 +350,14 @@ export class InteractionReportComponent implements OnInit {
         this.avgResponseTimeSum = Math.abs(
           ((LastfinalAverageInSeconds - finalAverageInSeconds) /
             finalAverageInSeconds) *
-            100
+          100
         );
       }
       if (finalAverageInSeconds <= LastfinalAverageInSeconds) {
         this.avgResponseTimeSum = Math.abs(
           ((finalAverageInSeconds - LastfinalAverageInSeconds) /
             LastfinalAverageInSeconds) *
-            100
+          100
         );
       }
 

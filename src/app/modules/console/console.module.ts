@@ -8,7 +8,6 @@ import { ConsoleContactsComponent } from './components/contacts/contacts.compone
 import { CaseManagementComponent } from './components/case-management/case-management.component';
 import { ConsoleDocumentsComponent } from './components/documents/documents.component';
 import { ConsoleKnowledgeBaseComponent } from './components/knowledge-base/knowledge-base.component';
-import { PreferencesComponent } from './components/preferences/preferences.component';
 import { ConsoleHelpComponent } from './components/help/help.component';
 import { RouterModule } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
@@ -57,7 +56,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CaseManagementComponent,
     ConsoleDocumentsComponent,
     ConsoleKnowledgeBaseComponent,
-    PreferencesComponent,
     ConsoleHelpComponent,
     AddPolicyComponent,
     CreateContactComponent,

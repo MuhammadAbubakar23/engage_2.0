@@ -45,6 +45,9 @@
                         <div *ngIf="userForm.get('teamname')!.errors?.['required']">
                           Skill Name is required!
                         </div>
+                        <div *ngIf="userForm.get('teamname')!.errors?.['invalidTeamname']">
+                          Team name must only contain only alphabets and spaces!
+                        </div>
                       </div>
                       <div class="valid-feedback" *ngIf="
                           userForm.get('teamname')!.valid &&
@@ -53,7 +56,10 @@
                         Looks Good!
                       </div>
                     </div>
-                    <small class="example-text ms-3">e.g. Customer support Skill</small>
+                    <!-- <small class="example-text ms-3"
+                      >e.g. Customer support Skill</small
+                    > -->
+
                   </div>
                   <div class="floating-item mb-4">
                     <div [ngClass]="{
@@ -136,10 +142,18 @@
                             userForm.get('wingSlug')!.errors &&
                             (userForm.get('wingSlug')!.touched ||
                               userForm.get('wingSlug')!.dirty)
-                        }" formControlName="wingSlug" class="form-select" id="floatingSelect"
-                        aria-label="Floating label select">
-                        <option selected disabled>Wing</option>
-                        <option *ngFor="let wing of isSelectedWing" [value]="wing.value">
+                        }"
+                        formControlName="wingSlug"
+                        class="form-select"
+                        id="floatingSelect"
+                        aria-label="Floating label select"
+                      >
+                        <!-- <option selected disabled></option> -->
+                        <option
+                          *ngFor="let wing of isSelectedWing"
+                          [value]="wing.slug"
+                        >
+
                           {{ wing.name }}
                         </option>
                       </select>

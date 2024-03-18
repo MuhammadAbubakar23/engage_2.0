@@ -39,6 +39,7 @@ import { ConsoleQuickResponseHeaderComponent } from 'src/app/modules/console/con
 import { ConsoleCreateBusinessHoursHeaderComponent } from 'src/app/modules/console/console-headers/console-create-business-hours-header/console-create-business-hours-header.component';
 import { ConsoleCreateRuleHeaderComponent } from 'src/app/shared/headers/console-create-rule-header/console-create-rule-header.component';
 import { ConsoleCreateSkillsHeaderComponent } from 'src/app/modules/console/console-headers/console-create-skills-header/console-create-skills-header.component';
+import { ConsoleCreatePreferencesHeaderComponent } from 'src/app/modules/console/console-headers/console-create-preferences-header/console-create-preferences-header.component';
 
 @Component({
   selector: 'console-header',
@@ -145,6 +146,10 @@ export class ConsoleHeaderComponent implements OnInit {
         componentFactory = this.resolver.resolveComponentFactory(ConsoleContactsHeaderComponent);
         this.target.createComponent(componentFactory);
         break;
+        case ('Preferences'):
+          componentFactory = this.resolver.resolveComponentFactory(ConsoleCreatePreferencesHeaderComponent);
+          this.target.createComponent(componentFactory);
+          break;
       case ('caseManagement'):
         componentFactory = this.resolver.resolveComponentFactory(ConsoleCaseManagementHeaderComponent);
         this.target.createComponent(componentFactory);

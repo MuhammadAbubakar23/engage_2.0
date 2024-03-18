@@ -192,7 +192,7 @@
                                                 </span>
                                                 <p class="coal mb-0"> Avg. Response Time</p>
                                             </div>
-                                            <h4>{{ finalAverage }}
+                                            <h4>{{ finalAverage !== 'NaN:NaN:NaN' ? finalAverage : '00:00:00' }}
                                                 <small *ngIf="avgResponseTimeSum >= 0; else downArrow"
                                                     class="text-success fs-12">
                                                     <i class="fa-light fa-arrow-up"></i> {{ avgResponseTimeSum
@@ -222,7 +222,7 @@
                                                 </span>
                                                 <p class="coal mb-0"> Min. Cater Time</p>
                                             </div>
-                                            <h4>{{finalAverageMinimum}}
+                                            <h4>{{finalAverageMinimum != 'NaN:NaN:NaN' ? finalAverageMinimum :'00:00:00'}}
                                                 <small *ngIf="avgMinCaterTime >= 0; else downArrow"
                                                     class="text-success fs-12">
                                                     <i class="fa-light fa-arrow-up"></i> {{ avgMinCaterTime
@@ -251,7 +251,7 @@
                                                 </span>
                                                 <p class="coal mb-0"> Max. Cater Time</p>
                                             </div>
-                                            <h4>{{finalAverageMaximum}}
+                                            <h4>{{finalAverageMaximum != 'NaN:NaN:NaN' ? finalAverageMaximum :'00:00:00'}}
                                                 <small *ngIf="avgMaxCaterTime >= 0; else downArrow"
                                                     class="text-success fs-12">
                                                     <i class="fa-light fa-arrow-up"></i> {{ avgMaxCaterTime
