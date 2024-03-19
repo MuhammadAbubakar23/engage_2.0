@@ -112,76 +112,38 @@ export class BotMonitoringComponent implements OnInit {
         this.getChatDetails(newChat);
       }
 
-      interval(20000)
+      interval(30000)
         .pipe(takeUntil(this.apiCallInterval$))
         .subscribe(() => {
-          if (this.currentActiveChats.length > 0) {
-            this.currentActiveChats.forEach((ch) => {
+          this.currentActiveChats.forEach((ch) => {
+            const existingChatIndex = this.chats.findIndex(chat => chat[0]?.customer?.phone === ch.customerIdentifier);
+            if (this.chats[existingChatIndex][0]['isMinimized'] === false || this.chats[existingChatIndex][0]['isMinimized'] === undefined) {
               this._botMonitorS.getChatDetails(ch)
                 .pipe(takeUntil(this.apiCallInterval$))
                 .subscribe((res) => {
-                  if (this.currentActiveChats.length > 0) {
-                    this.currentActiveChats.forEach((ch) => {
-                      this._botMonitorS.getChatDetails(ch).subscribe((res) => {
-
-                        const existingChatIndex = this.chats.findIndex(chat => chat[0].customer?.phone === ch.customerIdentifier);
-                        const minimizeToggle = this.chats[existingChatIndex][0]['isMinimized'];
-                        const completed = this.chats[existingChatIndex][0]['completed'];
-                        res[0]['completed'] = completed;
-                        if (minimizeToggle === true) {
-                          res[0]['isMinimized'] = true;
-                        }
-                        else {
-                          res[0]['isMinimized'] = false;
-                        }
-                        if (existingChatIndex !== -1) {
-                          this.chats[existingChatIndex] = res;
-                        }
-                      });
-                    });
+                  if (res && res.length > 0) {
+                    if (existingChatIndex !== -1) {
+                      const existingChat = this.chats[existingChatIndex][0];
+                      res[0]['completed'] = existingChat['completed'];
+                      res[0]['isMinimized'] = existingChat['isMinimized'];
+                      console.log("res", res)
+                      this.chats[existingChatIndex] = res;
+                      console.log("this.chats[existingChatIndex]", this.chats[existingChatIndex])
+                    }
                   }
                 });
-            });
-          }
+            }
+
+          });
         });
     });
   }
 
-  // ngOnInit(): void {
-  //   this.newChatIdSubscription = this._chatVisibilityS.newChatId$.subscribe((newChat: any) => {
-  //     if (newChat) {
-  //       console.log("New chat", newChat['completed'])
-  //       this.getChatDetails(newChat);
-  //     }
-
-  //     this.apiCallIntervalSubscription = interval(30000).subscribe(() => {
-  // if (this.currentActiveChats.length > 0) {
-  //   this.currentActiveChats.forEach((ch) => {
-  //     this._botMonitorS.getChatDetails(ch).subscribe((res) => {
-  //
-  //       const existingChatIndex = this.chats.findIndex(chat => chat[0].customer?.phone === ch.customerIdentifier);
-  //       const minimizeToggle = this.chats[existingChatIndex][0]['isMinimized'];
-  //       const completed = this.chats[existingChatIndex][0]['completed'];
-  //       res[0]['completed'] = completed;
-  //       if (minimizeToggle === true) {
-  //         res[0]['isMinimized'] = true;
-  //       }
-  //       else {
-  //         res[0]['isMinimized'] = false;
-  //       }
-  //       if (existingChatIndex !== -1) {
-  //         this.chats[existingChatIndex] = res;
-  //       }
-  //     });
-  //   });
-  // }
-
-  //     });
-  //   });
 
 
-  onMinimizeToggle(activeChat: any) {
-    console.log("this.chats", this.chats)
+  onMinimizeToggle(minimizeItem: any) {
+    debugger
+    console.log("minimize toggle", minimizeItem, this.chats);
   }
   ngOnDestroy(): void {
     this.apiCallInterval$.next();
