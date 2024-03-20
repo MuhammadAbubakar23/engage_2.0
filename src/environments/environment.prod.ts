@@ -39,7 +39,8 @@ export const environment = {
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  //  IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
+  //   IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
+  // //  IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
   // CommonBaseUrl: 'https://comservices.enteract.live/api/',
   // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
   // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
@@ -47,14 +48,16 @@ export const environment = {
   // consoleBaseUrl: 'https://console.enteract.live/api/',
   // botBaseUrl:'',
 
+
   // For Jazz
-  IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
-  CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
-  SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
-  ServiceBaseUrl: '',
-  ProfileBaseUrl: '',
-  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
-  botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  // IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
+  // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
+  // SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
+  // ServiceBaseUrl: '',
+  // ProfileBaseUrl: '',
+  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
+
 
   // For Total Parco
   // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api/',
@@ -77,15 +80,16 @@ export const environment = {
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
   // ProfileBaseUrl: '',
 
-  // // For Bazaar
-  // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
-  // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://bzcommon.enteract.live/',
-  // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
-  // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
-  //  botBaseUrl: 'https://bot-engage.enteract.app/api/',
+
+  // For Bazaar
+  IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
+  CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
+  SignalRCommonBaseUrl: 'https://bzcommon.enteract.live/',
+  ServiceBaseUrl: 'https://waservice.enteract.live/api/',
+  consoleBaseUrl: 'https://waconsole.enteract.live/api/',
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
+   botBaseUrl: 'https://bot-engage.enteract.app/api/',
 
 
 
@@ -102,7 +106,8 @@ export const environment = {
 
 
   //for statging / Internal :companyId 650
-  // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
+  //  IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
+  // // IdentityBaseUrl:'http://10.111.11.57:45455/api/',
   // CommonBaseUrl: 'https://comrox.enteract.app/api/',
   // ServiceBaseUrl: '',
   // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',

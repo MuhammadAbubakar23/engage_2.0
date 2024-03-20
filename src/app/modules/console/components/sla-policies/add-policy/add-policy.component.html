@@ -47,7 +47,8 @@
                                         <div class="form-floating">
                                             <textarea class="form-control" placeholder="Leave a comment here"
                                                 id="description" style="height: 100px" formControlName="description"
-                                                [ngClass]="{'is-valid': messageForm.get('description')?.valid, 'is-invalid': messageForm.get('description')?.invalid && (messageForm.get('description')?.dirty || messageForm.get('description')?.touched)}"></textarea>
+                                                [ngClass]="{'is-valid': messageForm.get('description')?.valid, 'is-invalid': messageForm.get('description')?.invalid && 
+                                                (messageForm.get('description')?.dirty || messageForm.get('description')?.touched)}"></textarea>
                                             <label for="description">Description</label>
                                             <span
                                                 *ngIf="messageForm.get('description')?.invalid && (messageForm.get('description')?.dirty || messageForm.get('description')?.touched)"

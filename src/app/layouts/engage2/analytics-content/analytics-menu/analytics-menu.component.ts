@@ -152,8 +152,12 @@ export class AnalyticsMenuComponent implements OnInit {
           name: 'Agent Performance Report',
           link: '/analytics/performance-report',
         },
-        { name: 'Interaction Report', link: '/analytics/interaction-report' },
-        { name: 'Shift Report', link: '/analytics/shift-report' },
+        { name: 'Interaction Report',
+          link: '/analytics/interaction-report' 
+        },
+        { name: 'Shift Report', 
+          link: '/analytics/shift-report'
+       },
         { name: 'Tag Report', link: '/analytics/tag-report' },
 
         { name: 'Facebook Report', link: '/analytics/facebook-report' },

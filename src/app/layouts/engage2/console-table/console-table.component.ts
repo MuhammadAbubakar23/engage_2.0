@@ -8,6 +8,7 @@ import { ConsoleTableService } from './console-table.service';
 import { ConsoleTableParams } from './console-table-params';
 import { ConsoleTablePaginatedState } from './console-table-state/console-table-paginated.component-store';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { UserPaginationService } from 'src/app/services/userpaginationServices/user-pagination.service';
 // import { provideComponentStore } from '@ngrx/component-store';
 // import { ConsoleTableComponentStore } from './console-table.component-store';
 // provideComponentStore(ConsoleTableComponentStore),
@@ -55,6 +56,7 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
   //tableJson$:any={};
   constructor(private _tableService: ConsoleTableService, private _request: RequestService, 
     private spinerService:NgxSpinnerService,
+    private userpaginationS:UserPaginationService,
     private _router: Router) { }
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -62,7 +64,12 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
     // this.unsubscribe$.unsubscribe();
   }
   ngOnInit(): void {
-  
+    
+    this.userpaginationS.receivedpaginationObj().subscribe((res:any)=>{
+      
+      this.totalCount=res.totalItems
+
+    })
     //length: 100,
     //this.pagingSize$ = this.filter.pagesize;
     //this.pagingIndex$ = this.filter.pageno;
@@ -168,7 +175,12 @@ this.spinerService.show()
         next: (nxt: T[]) => {
 this.spinerService.hide()
           this.data = nxt;
-          this.totalCount=200
+        if(this.data.length==0 || this.data==null){
+       
+          this.endpoint=0
+          this.totalCount=0
+        }
+       
           if(this.pagingIndex$==1){
       this.startpoint =this.pagingIndex$
           }

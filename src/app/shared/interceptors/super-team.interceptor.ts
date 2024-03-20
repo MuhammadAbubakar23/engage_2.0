@@ -5,7 +5,7 @@ import { StorageService } from '../services/storage/storage.service';
 
 @Injectable()
 export class SuperTeamInterceptor implements HttpInterceptor {
-  companyId: number = 650;
+  companyId: number = 654;
   baseUrl: string = "";
   constructor(private storage: StorageService) { }
 
@@ -60,6 +60,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
 
 
     if (typeof team === 'undefined' || team == null || team == '') {
+      debugger
       //   console.log(this.storage.retrive("nocompass","O"));
       request = request.clone({
         url: request.url,
