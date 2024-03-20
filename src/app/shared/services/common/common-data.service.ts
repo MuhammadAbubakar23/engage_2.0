@@ -157,7 +157,7 @@ export class CommonDataService {
   updateEntractRoute = environment.links.console.updateEntractRoute;
   deleteEntractRoute = environment.links.console.deleteEntractRoute;
   getSkills = environment.links.console.getSkills;
-  getUserSkills = environment.links.console.getUserSkills;
+  getAllSkills = environment.links.console.getAllSkills;
   addSkill = environment.links.console.addSkill;
   deleteSkill = environment.links.console.deleteSkill;
   getskillbyid = environment.links.console.getSkillsbyId;
@@ -534,9 +534,9 @@ export class CommonDataService {
     // return this.http.get(this.consoleBaseUrl + this.getSkills);
     return this.http.post(this.consoleBaseUrl + this.getSkills, body);
   }
-  GetUserSkills() {
+  GetAllSkills() {
 
-     return this.http.get(this.consoleBaseUrl + this.getUserSkills);
+     return this.http.get(this.consoleBaseUrl + this.getAllSkills);
   }
   AddSkill(addSkill: any) {
     return this.http.post(this.consoleBaseUrl + this.addSkill, addSkill);
@@ -896,6 +896,9 @@ return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentif
   }
   GetInteractionReport(body: any) {
     return this.http.post(this.CommonBaseUrl + this.getInteractionReport, body)
+  }
+  GetSkills(body:any){
+    return this.http.post(this.consoleBaseUrl+this.getSkills, body)
   }
 }
 

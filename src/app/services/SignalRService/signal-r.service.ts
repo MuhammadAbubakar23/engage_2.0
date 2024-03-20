@@ -16,6 +16,7 @@ import { UpdateListService } from '../UpdateListService/update-list.service';
 import { UpdateMessagesService } from '../UpdateMessagesService/update-messages.service';
 import { GetNewPostService } from '../GetNewPostService/get-new-post.service';
 import { CompanyidService } from '../companyidService/companyid.service';
+import { JoinGroupService } from '../JoinGroup/join-group.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -51,7 +52,8 @@ export class SignalRService {
     private applySentimentService: ApplySentimentService,
     private getnewPostService: GetNewPostService,
     private comanyidService: CompanyidService,
-    private router: Router
+    private router: Router,
+    private joinGroupService : JoinGroupService
   ) {
     this.baseUrl = window.location.origin
     if (this.baseUrl == 'https://keportal.enteract.live') {
@@ -104,31 +106,37 @@ export class SignalRService {
     // }
 
   };
+  joinGroup(groupName: string): void {
+    debugger
+    if (this.hubconnection) {
+      this.hubconnection.invoke('JoinGroup', groupName).catch(err=>console.error(err));
+    }
+  }
 
   reConnect() {
     
-    // this.flag = this.router.url.split('/')[1];
-    // if(this.flag == 'all-inboxes'){
-    let team = this.storage.retrive("nocompass", "O").local;
-    const options: IHttpConnectionOptions = {
-      accessTokenFactory: () => {
-        return 'Bearer ' + localStorage.getItem('token');
-      },
-      headers: { "X-Super-Team": JSON.stringify(this.companyId) }
-      // headers: { "X-Super-Team": JSON.stringify(team.id) }
-    };
+  //   // this.flag = this.router.url.split('/')[1];
+  //   // if(this.flag == 'all-inboxes'){
+  //   let team = this.storage.retrive("nocompass", "O").local;
+  //   const options: IHttpConnectionOptions = {
+  //     accessTokenFactory: () => {
+  //       return 'Bearer ' + localStorage.getItem('token');
+  //     },
+  //     headers: { "X-Super-Team": JSON.stringify(this.companyId) }
+  //     // headers: { "X-Super-Team": JSON.stringify(team.id) }
+  //   };
 
-    this.hubconnection = new signalR.HubConnectionBuilder()
-      .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
-      .withAutomaticReconnect()
-      .configureLogging(signalR.LogLevel.Information)
-      .build();
-    this.hubconnection
-      .start()
-      .then(() => console.log('Connection started'))
-      .then(() => this.getConnectionId())
-      .catch((err) => console.log('Error while starting connection: ' + err));
-    // }
+  //   this.hubconnection = new signalR.HubConnectionBuilder()
+  //     .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
+  //     .withAutomaticReconnect()
+  //     .configureLogging(signalR.LogLevel.Information)
+  //     .build();
+  //   this.hubconnection
+  //     .start()
+  //     .then(() => console.log('Connection started'))
+  //     .then(() => this.getConnectionId())
+  //     .catch((err) => console.log('Error while starting connection: ' + err));
+  //   // }
   }
 
   public updateListAndDetailDataListener = () => {
@@ -235,4 +243,7 @@ export class SignalRService {
       localStorage.setItem('signalRConnectionId', this.connectionId)
     });
   };
+
+  
+ 
 }

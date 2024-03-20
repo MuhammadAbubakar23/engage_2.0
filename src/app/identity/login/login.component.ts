@@ -9,6 +9,7 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { DatePipe } from '@angular/common';
 import { VerificationDto } from 'src/app/shared/Models/verificationDto';
+import { JoinGroupService } from 'src/app/services/JoinGroup/join-group.service';
 // import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 @Component({
   selector: 'app-login',
@@ -57,7 +58,8 @@ export class LoginComponent implements OnInit {
     private spinnerService: NgxSpinnerService,
     private signalRService: SignalRService,
     private commonService: CommonDataService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private joinGroupService : JoinGroupService
   ) { }
 
   ngOnInit(): void {
@@ -83,25 +85,29 @@ export class LoginComponent implements OnInit {
         // res['isTwoFAEnabled'] = false;
         //only for testing purpose, remove after that
 
+
         if (res.status == false || res.isTwoFAEnabled== false) {
           this.stor.store('token', res.loginResponse.loginResponse.accessToken);
           this.stor.store('main', res.loginResponse.loginResponse);
-          this.stor.store(
-            'nocompass',
-            res?.loginResponse?.loginResponse?.roles[0]
-          );
-          localStorage.setItem(
-            'agentId',
-            res.loginResponse.loginResponse.userId
-          );
-          localStorage.setItem(
-            'agentName',
-            res.loginResponse.loginResponse.username
-          );
+          this.stor.store('nocompass', res?.loginResponse?.loginResponse?.roles[0]);
+          localStorage.setItem('agentId', res.loginResponse.loginResponse.userId);
+          localStorage.setItem('agentName', res.loginResponse.loginResponse.username);
 
-          this.commonService.UserLogin().subscribe((res: any) => {
-            console.log(res);
-          });
+          this.commonService.UserLogin( ).subscribe(() => { });
+
+          this.commonService.GetSkills(res.loginResponse?.loginResponse?.skills).subscribe((skillNames:any)=>{
+            res?.loginResponse?.loginResponse?.roles.forEach((role:any) => {
+              var companyId = role.id;
+              skillNames.forEach((skill:any) => {
+                var groupName = skill.skillName+'_'+companyId;
+                this.signalRService.joinGroup(groupName)
+              });
+              
+            });
+          },
+          (error)=>{
+            console.log("error", error)
+          }) 
 
           this.router.navigateByUrl('all-inboxes/focused/all');
           this.spinnerService.hide();

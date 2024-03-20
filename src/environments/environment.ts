@@ -177,7 +177,7 @@ export const environment = {
       addEntractRoute: 'EnteractRoute/Add',
       updateEntractRoute: 'EnteractRoute/Update',
       deleteEntractRoute: 'EnteractRoute/Delete',
-      getSkills: 'Skill/GetAll',
+      getAllSkills: 'Skill/GetAll',
       addSkill: 'Skill/Add',
       deleteSkill: 'Skill/Delete',
 
@@ -185,7 +185,7 @@ export const environment = {
       getTagsByCompanyId: 'Tags/GetTagsByCompayId',
       updateSkill: 'Skill/Update',
       getSkillsbyId: 'Skill/GetById',
-      getUserSkills: 'Skill/GetSkills',
+      getSkills: 'Skill/GetSkills',
       getAllProfile: 'Profile/GetAll',
       addProfile: 'Profile/Add',
       attachFacebookPage: 'ProfileManagement/RegisterProfile',
