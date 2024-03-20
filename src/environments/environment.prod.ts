@@ -37,12 +37,15 @@ export const environment = {
   // For KE
   //   IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
   // //  IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
+  //   IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
+  // //  IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
   // CommonBaseUrl: 'https://comservices.enteract.live/api/',
   // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
   // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
   // ServiceBaseUrl: '',
   // consoleBaseUrl: 'https://console.enteract.live/api/',
   // botBaseUrl:'',
+
 
 
   // For Jazz
@@ -97,7 +100,8 @@ export const environment = {
   botBaseUrl: 'https://bot-engage.enteract.app/api/',
 
   //for statging / Internal :companyId 650
-  // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
+  //  IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
+  // // IdentityBaseUrl:'http://10.111.11.57:45455/api/',
   // CommonBaseUrl: 'https://comrox.enteract.app/api/',
   // ServiceBaseUrl: '',
   // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',

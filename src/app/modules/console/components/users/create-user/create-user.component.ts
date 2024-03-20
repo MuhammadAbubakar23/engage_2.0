@@ -76,6 +76,7 @@ export class CreateUserComponent implements OnInit {
     return this.userForm.controls;
   }
   ngOnInit(): void {
+    
     // console.log(this._Activatedroute.snapshot.data["teams"]);
     // console.log(this._Activatedroute.snapshot.data["roles"]);
     this.Roles = this._Activatedroute.snapshot.data["roles"];
@@ -226,14 +227,14 @@ export class CreateUserComponent implements OnInit {
     // for (let i in this.RolesControl.value) {
     //   this.RoleIds.push(this.RolesControl.value[i].id);
     // }
-    this.RoleIds = []
+    this.RoleIds=[]
     for (let i in this.RolesControl.value) {
       if(!this.RoleIds.includes(this.RolesControl.value[i]?.id.toString())){
         this.RoleIds.push(this.RolesControl?.value[i]?.id.toString());
       }
    
     }
-    this.TeamIds=[]
+  this.TeamIds=[]
     for (let i in this.TeamsControl.value) {
       if(!this.TeamIds.includes(this.TeamsControl?.value[i]?.id.toString())){
         this.TeamIds.push(this.TeamsControl?.value[i]?.id?.toString());

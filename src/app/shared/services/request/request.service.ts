@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, of, throwError, map, tap } from 'rxjs';
 import { EnvService } from '../env/env.service';
 import { MessagingService } from '../messaging/messaging.service';
-
+import { UserPaginationService } from 'src/app/services/userpaginationServices/user-pagination.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +11,9 @@ export class RequestService {
   params: HttpParams = new HttpParams();
   headers: HttpHeaders = new HttpHeaders();
 
-  constructor(private http: HttpClient, private env: EnvService, private messagingService: MessagingService) { }
+  constructor(private http: HttpClient, private env: EnvService,
+    private paginationS:UserPaginationService,
+     private messagingService: MessagingService) { }
 
   private requestHeaderOptions(options?: any) {
 
@@ -40,15 +42,23 @@ export class RequestService {
 
     console.log(params);
     console.log(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl));
-    return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, routeparams), { params })
-      .pipe(
-        map((res: any) => { return res }),
-        tap(res => console.log(route + " Response: ", res)),
-        catchError(err => {
-          console.log('Handling error locally and rethrowing it...', err);
-          return throwError(() => new Error(err));
-        })
-      );
+    return this.http.get<T>(this.createCompleteRoute(this.env.paths[route], this.env.baseUrl, routeparams), { params ,observe: 'response'}).pipe( 
+      map ((res:any)=>{
+        const headers: HttpHeaders = res.headers;
+      const Pagination = JSON.parse(JSON.stringify(headers.get('X-Pagination')));
+      this.paginationS.sendpaginationobj(JSON.parse(Pagination))
+      console.log("Response for header ====>",JSON.parse(Pagination))
+        return res.body
+      })
+    )
+      // .pipe(
+      //   map((res: any) => { return res }),
+      //   tap(res => console.log(route + " Response: ", res)),
+      //   catchError(err => {
+      //     console.log('Handling error locally and rethrowing it...', err);
+      //     return throwError(() => new Error(err));
+      //   })
+      // );
   }
   getFromConsole<T>(route: string, params?: any, routeparams: string = ""): Observable<T> {
 
