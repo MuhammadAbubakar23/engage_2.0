@@ -82,6 +82,7 @@ export class ConsoleHeaderComponent implements OnInit {
   }
 
   loadComponent(leftSideName: string) {
+    
     let componentFactory = null;
     
     switch (leftSideName) {
@@ -134,7 +135,7 @@ export class ConsoleHeaderComponent implements OnInit {
         componentFactory = this.resolver.resolveComponentFactory(ConsoleSlaPoliciesHeaderComponent);
         this.target.createComponent(componentFactory);
         break;
-      case ('Skills'):
+      case ('skill-data'):
         componentFactory = this.resolver.resolveComponentFactory(ConsoleSkillsHeaderComponent);
         this.target.createComponent(componentFactory);
         break;
