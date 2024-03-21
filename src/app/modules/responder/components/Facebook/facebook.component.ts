@@ -1051,7 +1051,7 @@ export class FacebookComponent implements OnInit {
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
-            this.FacebookMessages = res.List?.dm;
+            this.FacebookMessages = this.groupAndModifyData(res.List?.dm);
             this.userInformation = res.List.user;
             this.profileInformation = res.List.profile;
             this.userInfoService.shareUserInformation(res.List.user);
@@ -1095,7 +1095,7 @@ export class FacebookComponent implements OnInit {
               );
               this.SpinnerService.hide();
               this.spinner1running = false;
-              // // console.log('Messages ==>', this.groupedMessages);
+              // console.log('Messages ==>', this.groupedMessages);
             });
           }
         });
@@ -1122,7 +1122,7 @@ export class FacebookComponent implements OnInit {
       this.commondata.GetSlaDM(this.filterDto).subscribe((res: any) => {
         if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
-          this.FacebookMessages = res.List?.dm;
+          this.FacebookMessages = this.groupAndModifyData(res.List?.dm);
           this.userInformation = res.List.user;
           this.profileInformation = res.List.profile;
           this.userInfoService.shareUserInformation(res.List.user);
@@ -1194,7 +1194,7 @@ export class FacebookComponent implements OnInit {
         .subscribe((res: any) => {
           
           if (Object.keys(res).length > 0) {
-            this.FacebookMessages = res.List?.dm;
+            this.FacebookMessages = this.groupAndModifyData(res.List?.dm);
             this.userInformation = res.List.user;
             this.profileInformation = res.List.profile;
             this.userInfoService.shareUserInformation(res.List.user);
@@ -1245,6 +1245,43 @@ export class FacebookComponent implements OnInit {
     }
   }
 
+  groupAndModifyData(data: any[]) {
+    // Step 1: Group the data based on disposition.createdDate
+    const groupedData: { [key: string]: any[] } = {};
+    data.forEach(item => {
+      const createdDate = item.dispositions.createdDate;
+      if (!groupedData[createdDate]) {
+        groupedData[createdDate] = [];
+      }
+      groupedData[createdDate].push(item);
+    });
+  
+    // Step 2 and 3: Remove disposition object from all records except the one with the max insertionDate
+    for (const key in groupedData) {
+      if (groupedData.hasOwnProperty(key)) {
+        const group = groupedData[key];
+        const maxInsertionDateItem = group.reduce((prev, current) => {
+          return (new Date(prev.insertionDate) > new Date(current.insertionDate)) ? prev : current;
+        });
+  
+        group.forEach(item => {
+          if (item !== maxInsertionDateItem) {
+            item.dispositions  = null;
+          }
+        });
+      }
+    }
+  
+    // Step 4: Restore the original state of the data
+    const restoredData = [];
+    for (const key in groupedData) {
+      if (groupedData.hasOwnProperty(key)) {
+        restoredData.push(...groupedData[key]);
+      }
+    }
+  
+    return restoredData;
+  }
   isAttachment = false;
 
   onFileChanged() {

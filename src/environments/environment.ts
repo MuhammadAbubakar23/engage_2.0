@@ -50,13 +50,13 @@ export const environment = {
 
 
   // For Jazz
-  // IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
-  // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
-  // SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
-  // ServiceBaseUrl: '',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
-  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
+  CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
+  SignalRCommonBaseUrl: 'https://common.jazz.com.pk:8080/',
+  ServiceBaseUrl: '',
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  botBaseUrl: 'https://bot-engage.enteract.app/api/',
 
   // For Total Parco
   // IdentityBaseUrl: 'https://tt_identity.enteract.live/api/',
@@ -101,13 +101,13 @@ export const environment = {
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
 
   //for statging / Internal :companyId 650
-  IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
-  CommonBaseUrl: 'https://comrox.enteract.app/api/',
-  ServiceBaseUrl: '',
-  SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
-  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  consoleBaseUrl: 'https://conrox.enteract.app/api/',
-  botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
+  // CommonBaseUrl: 'https://comrox.enteract.app/api/',
+  // ServiceBaseUrl: '',
+  // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  // consoleBaseUrl: 'https://conrox.enteract.app/api/',
+  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
