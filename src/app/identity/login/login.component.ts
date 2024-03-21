@@ -8,8 +8,8 @@ import { LoginDto } from 'src/app/shared/Models/LoginDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { DatePipe } from '@angular/common';
-import { VerificationDto } from 'src/app/shared/Models/verificationDto';
 import { JoinGroupService } from 'src/app/services/JoinGroup/join-group.service';
+import { VerificationDto } from 'src/app/shared/Models/VerificationDto';
 // import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 @Component({
   selector: 'app-login',
@@ -95,19 +95,19 @@ export class LoginComponent implements OnInit {
 
           this.commonService.UserLogin( ).subscribe(() => { });
 
-          this.commonService.GetSkills(res.loginResponse?.loginResponse?.skills).subscribe((skillNames:any)=>{
-            res?.loginResponse?.loginResponse?.roles.forEach((role:any) => {
-              var companyId = role.id;
-              skillNames.forEach((skill:any) => {
-                var groupName = skill.skillName+'_'+companyId;
-                this.signalRService.joinGroup(groupName)
-              });
+          // this.commonService.GetSkills(res.loginResponse?.loginResponse?.skills).subscribe((skillNames:any)=>{
+          //   res?.loginResponse?.loginResponse?.roles.forEach((role:any) => {
+          //     var companyId = role.id;
+          //     skillNames.forEach((skill:any) => {
+          //       var groupName = skill.skillName+'_'+companyId;
+          //       this.signalRService.joinGroup(groupName)
+          //     });
               
-            });
-          },
-          (error)=>{
-            console.log("error", error)
-          }) 
+          //   });
+          // },
+          // (error)=>{
+          //   console.log("error", error)
+          // }) 
 
           this.router.navigateByUrl('all-inboxes/focused/all');
           this.spinnerService.hide();
