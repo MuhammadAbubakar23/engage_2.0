@@ -13,6 +13,7 @@ export class FiltersDto{
   notInclude:String="";
   include:String="";
   flag:String="";
+  wings?:String="";
   }
 
   export class FiltersDtolocal{

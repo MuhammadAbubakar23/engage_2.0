@@ -530,13 +530,11 @@ export class CommonDataService {
     const url = `${this.consoleBaseUrl}${this.deleteEntractRoute}?Id=${delRoute}`;
     return this.http.get(url);
   }
-  GetSkill(body: any) {
-    // return this.http.get(this.consoleBaseUrl + this.getSkills);
-    return this.http.post(this.consoleBaseUrl + this.getSkills, body);
+  GetAllSkills(body:any) {
+     return this.http.post(this.consoleBaseUrl + this.getAllSkills, body);
   }
-  GetAllSkills() {
-
-     return this.http.get(this.consoleBaseUrl + this.getAllSkills);
+  GetSkills(body:any){
+    return this.http.post(this.consoleBaseUrl+this.getSkills, body)
   }
   AddSkill(addSkill: any) {
     return this.http.post(this.consoleBaseUrl + this.addSkill, addSkill);
@@ -897,9 +895,7 @@ return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentif
   GetInteractionReport(body: any) {
     return this.http.post(this.CommonBaseUrl + this.getInteractionReport, body)
   }
-  GetSkills(body:any){
-    return this.http.post(this.consoleBaseUrl+this.getSkills, body)
-  }
+ 
 }
 
 

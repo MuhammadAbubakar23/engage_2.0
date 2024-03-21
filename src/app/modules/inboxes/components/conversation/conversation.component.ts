@@ -391,6 +391,7 @@ export class ConversationComponent implements OnInit {
       userName: this.searchForm.value.userName,
       notInclude: this.searchForm.value.notInclude,
       flag: this.flag,
+      wings: 'rox_Facebook'
     };
   }
     
