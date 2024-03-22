@@ -22,7 +22,7 @@ export class CommonDataService {
   ProfileBaseUrl = environment.ProfileBaseUrl;
   LinkedInBaseUrl = environment.LinkedInBaseUrl;
   KemediaBaseUrl = environment.KemediaBaseUrl;
-  KescrmBaseUrl = environment.KescrmBaseUrl
+  KescrmBaseUrl = environment.KescrmBaseUrl;
   WhatsappBaseUrl = environment.WhatsappBaseUrl
   // KelisteningBaseUrl =environment.KelisteningBaseUrl;
   tagsList = environment.links.common.TagsList;

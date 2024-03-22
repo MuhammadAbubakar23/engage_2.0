@@ -371,7 +371,7 @@ export class FacebookComponent implements OnInit {
 
   flag: string = '';
   getFacebookComments() {
-
+debugger
     this.flag = this.currentUrl.split('/')[2];
 
     if (this.id != null || this.id != undefined) {
@@ -401,6 +401,8 @@ export class FacebookComponent implements OnInit {
             // this.fbCmntReply = true;
             this.ConverstationDetailDto = res;
             this.FacebookData = this.ConverstationDetailDto.List;
+            
+            console.log('Facebook Data===.?',this.FacebookData)
             this.userInformation = res.List[0].user;
             this.userInfoService.shareUserInformation(res.List[0].user);
             this.TotalCmntQueryCount = res.TotalQueryCount;
@@ -433,6 +435,12 @@ export class FacebookComponent implements OnInit {
                     };
                   }
                 );
+               
+                item['groupedComments'].forEach((x:any)=>{
+                  debugger
+                  const groupdispostion= x.items
+                  this.groupAndModifyData(groupdispostion)
+                })
               });
             });
 
@@ -487,7 +495,7 @@ export class FacebookComponent implements OnInit {
                 },
                 {}
               );
-
+debugger
               item['groupedComments'] = Object.keys(groupedItems).map(
                 (createdDate) => {
                   return {
@@ -495,7 +503,15 @@ export class FacebookComponent implements OnInit {
                     items: groupedItems[createdDate],
                   };
                 }
+                
               );
+
+              console.log('groupedComments ====>' , item['groupedComments'])
+              item['groupedComments'].forEach((x:any)=>{
+                
+                const groupdispostion= x.items
+                this.groupAndModifyData(groupdispostion)
+              })
             });
           });
 
@@ -564,6 +580,11 @@ export class FacebookComponent implements OnInit {
                     };
                   }
                 );
+                item['groupedComments'].forEach((x:any)=>{
+                  debugger
+                  const groupdispostion= x.items
+                  this.groupAndModifyData(groupdispostion)
+                })
               });
             });
 
@@ -1051,7 +1072,8 @@ export class FacebookComponent implements OnInit {
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
-            this.FacebookMessages = this.groupAndModifyData(res.List?.dm);
+             this.FacebookMessages = this.groupAndModifyData(res.List?.dm);
+            // this.FacebookMessages=res.List.dm
             this.userInformation = res.List.user;
             this.profileInformation = res.List.profile;
             this.userInfoService.shareUserInformation(res.List.user);
@@ -1122,7 +1144,8 @@ export class FacebookComponent implements OnInit {
       this.commondata.GetSlaDM(this.filterDto).subscribe((res: any) => {
         if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
-          this.FacebookMessages = this.groupAndModifyData(res.List?.dm);
+           this.FacebookMessages = this.groupAndModifyData(res.List?.dm);
+          // this.FacebookMessages=res.List.dm
           this.userInformation = res.List.user;
           this.profileInformation = res.List.profile;
           this.userInfoService.shareUserInformation(res.List.user);
@@ -1195,6 +1218,7 @@ export class FacebookComponent implements OnInit {
           
           if (Object.keys(res).length > 0) {
             this.FacebookMessages = this.groupAndModifyData(res.List?.dm);
+            // this.FacebookMessages=res.List.dm
             this.userInformation = res.List.user;
             this.profileInformation = res.List.profile;
             this.userInfoService.shareUserInformation(res.List.user);
@@ -1246,10 +1270,12 @@ export class FacebookComponent implements OnInit {
   }
 
   groupAndModifyData(data: any[]) {
+    console.log('dispostion data ==>',data)
+    debugger
     // Step 1: Group the data based on disposition.createdDate
     const groupedData: { [key: string]: any[] } = {};
     data.forEach(item => {
-      const createdDate = item.dispositions.createdDate;
+      const createdDate = item?.dispositions?.createdDate;
       if (!groupedData[createdDate]) {
         groupedData[createdDate] = [];
       }

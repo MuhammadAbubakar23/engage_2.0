@@ -36,14 +36,14 @@ export const environment = {
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  // IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
-  // CommonBaseUrl: 'https://comservices.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
-  // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
-  // ServiceBaseUrl: '',
-  // consoleBaseUrl: 'https://console.enteract.live/api/',
-  // LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
-  // botBaseUrl:'',
+  IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
+  CommonBaseUrl: 'https://comservices.enteract.live/api/',
+  SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
+  ProfileBaseUrl: 'https://profiler.enteract.live/api/',
+  ServiceBaseUrl: '',
+  consoleBaseUrl: 'https://console.enteract.live/api/',
+  LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
+  botBaseUrl:'',
 
 
   // For Jazz
@@ -54,7 +54,8 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-
+  // LinkedInBaseUrl:'',
+  
   // For Total Parco
   // IdentityBaseUrl: 'https://tt_identity.enteract.live/api/',
   // CommonBaseUrl: 'https://ttcommon.enteract.live/api/',
@@ -89,14 +90,14 @@ export const environment = {
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
 
   // For Jazz Rox
-  IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
-  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  ServiceBaseUrl: '',
-  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
-  botBaseUrl: 'https://bot-engage.enteract.app/api/',
-   LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
+  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
+  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  // ServiceBaseUrl: '',
+  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  //  LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
 
   //for statging / Internal :companyId 650
   // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',

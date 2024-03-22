@@ -758,7 +758,80 @@
                                 <div class="date-wrap">
                                     <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}}</p>
                                 </div>
+                          
                                 <ng-container *ngFor="let fbcmnts of group.items | sort:criteria">
+                                    <!-- for dispositions  -->
+                                    <ng-container *ngIf="fbcmnts.dispositions != null">
+                                        <div class="accordion email-accordion" id="accordionExample"
+                                             style="display:block">
+                                            <div class="accordion-item email-wrap marked-wrap mt-3">
+                                                <div [ngClass]="markAsComplete == true?'open':'collaps-wrap'"
+                                                    class="accordion-header" id="emailwrap7">
+                                                    <button [ngClass]="markAsComplete == true?'':'collapsed'"
+                                                        class="accordion-button" type="button">
+                                                        <div class="avatar large coal">
+                                                            <i class="fal fa-check-double"></i>
+                                                        </div>
+                                                        <div class="card-header-content p-0">
+                                                            <div class="card-header-top">
+                                                                <div class="d-block">
+                                                                    <h6 class="mb-1 night">
+                                                                        Marked as {{fbcmnts.dispositions.dispositionName | uppercase}}
+                                                                    </h6>
+                                                                    <small class="night">
+                                                                        <span>by: <h6 class="d-inline fw-bold charcoal">
+                                                                                {{fbcmnts.dispositions.userId}} </h6>
+                                                                        </span>
+                                                                        <!-- <span>Complaint Id <a class="sky">FP-325687</a>
+                                                                        </span> -->
+                                                                    </small>
+                                                                </div>
+                                                                <small class="silver full-date">{{ fbcmnts.dispositions.createdDate | date:'MMMM dd, yyyy, h:mm a'}}</small>
+                                                            </div>
+                                                            <div class="msg-snippet show-text">
+                                                                <!-- <p class="mb-1 coal" data-maxlength="240">
+                                                                    {{fbcmnts.msgText.length < 80 ? fbcmnts.msgText:
+                                                                        (fbcmnts.msgText | slice:0:80) +'...'}} </p> -->
+                                                                        <p class="mb-1 coal">
+                                                                            {{fbcmnts.dispositions.description}} </p>
+                                                            </div>
+                                                            <!-- <div class="marked-info">
+                                                                <p class="card-text mb-0 coal">
+                                                                    <small>First Response: <span class="night"> July
+                                                                            7, 2021, 2:30 PM (4
+                                                                            days
+                                                                            ago)</span></small>
+                                                                </p>
+                                                                <p class="card-text mb-0 coal">
+                                                                    <small>Last Response: <span class="night"> July
+                                                                            14, 2021, 9:30 AM (6
+                                                                            days
+                                                                            ago)</span></small>
+                                                                </p>
+                                                            </div> -->
+                                                        </div>
+                                                    </button>
+                                                    <!-- <div class="top-right">
+                                                        <div class="expanded-card-header-actions icons-list">
+                                                            <small class="silver ms-2 me-2">{{ TodayDate
+                                                                | date:'MMMM dd, yyyy, h:mm a'}}</small>
+    
+                                                        </div>
+                                                    </div> -->
+                                                </div>
+    
+                                                <!-- <div class="accordion-collapse collapse"
+                                                    [ngClass]="markAsComplete == true?'show':''">
+                                                    <div class="accordion-body">
+                                                        <p>
+                                                            {{fbcmnts.msgText}}
+                                                        </p>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <!-- for dispositions -->
                                     <ng-container *ngIf="fbcmnts.queryStatus != 'QueryCompleted'">
                                         <div class="message-wrap agent-message-wrap right"
                                             *ngIf="facebookdata.post.postId == fbcmnts.postId">
@@ -1127,7 +1200,9 @@
                                         </div>
 
                                     </ng-container>
+                                    
                                 </ng-container>
+                                <hr>
                             </div>
 
                         </div>

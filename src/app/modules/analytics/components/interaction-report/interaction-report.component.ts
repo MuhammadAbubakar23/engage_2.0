@@ -150,20 +150,25 @@ export class InteractionReportComponent implements OnInit {
     }
   }
   calculateAverageTime(agentPerformance: any[], field: string) {
+    debugger
     let totalSeconds = 0;
     for (const agent of agentPerformance) {
       totalSeconds += this.timeToSeconds(agent[field]);
+
     }
+    //  return this.secondsToTime(totalSeconds)
     const averageSeconds = totalSeconds / agentPerformance.length;
     return this.secondsToTime(averageSeconds);
   }
-
+  
   timeToSeconds(timeStr: string): number {
+    debugger
     const [hours, minutes, seconds] = timeStr.split(':').map(Number);
     return hours * 3600 + minutes * 60 + seconds;
   }
 
   secondsToTime(seconds: number): string {
+    debugger
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = Math.floor(seconds % 60);
@@ -176,6 +181,7 @@ export class InteractionReportComponent implements OnInit {
     return num < 10 ? '0' + num : num.toString();
   }
   convertTimeToSeconds(timeString: any) {
+    debugger
     let [hours, minutes, seconds] = timeString.split(':').map(Number);
     return hours * 3600 + minutes * 60 + seconds;
   }
