@@ -43,7 +43,7 @@ export class CreateSkillsComponent implements OnInit {
   isSelectedTeamArray: any = []
   isBusnisshours: any[] = []
   isSelectedWing: any[] = []
-
+  selectedTextColor: string = '';
   isSlaPolicies: any[] = []
   isAllTagsSelected: boolean = false
   isCheckedAllTags: boolean = false
@@ -72,7 +72,7 @@ export class CreateSkillsComponent implements OnInit {
   loacSelectedId: any
   id: any;
   selectedRules: string[] = [];
-
+  showPopup: boolean = false;
   updateSelectedRules(id: number) {
 
     this.subRules.forEach((item: any) => {
@@ -96,6 +96,13 @@ export class CreateSkillsComponent implements OnInit {
     if (selectedRule) {
       selectedRule.isSelected = false;
     }
+  }
+  onTextColorChange(event: any) {
+
+    this.selectedTextColor = event.target.value
+  }
+  openPopup() {
+    this.showPopup = !this.showPopup
   }
   // userForm : UntypedFormGroup = new UntypedFormGroup({
   // teamname : new UntypedFormControl(),
@@ -135,12 +142,12 @@ export class CreateSkillsComponent implements OnInit {
     Validators.minLength(2),
     Validators.maxLength(25),
     this.customTeamnameValidator
-  ]),
+    ]),
     description: new FormControl('', [Validators.required]),
     businesshours: new FormControl('', [Validators.required]),
     wingSlug: new FormControl('', [Validators.required]),
     SlaPolicy: new FormControl('', [Validators.required]),
-
+    icon:new FormControl('',[])
   })
   customTeamnameValidator(control: AbstractControl): ValidationErrors | null {
     const pattern = /^[a-zA-Z ]+$/;
@@ -161,7 +168,7 @@ export class CreateSkillsComponent implements OnInit {
   }
 
   selectRulesBasedOnSkillTags(selectedRules: any): void {
-    
+
     this.selectedRules = [];
     console.log("Checking tags", this.subRules)
     for (const rule of selectedRules) {
@@ -205,11 +212,11 @@ export class CreateSkillsComponent implements OnInit {
 
 
   getSkillsById() {
-    
+
     this.id = Number(this.activeRoute.snapshot.paramMap.get('id'));
     if (this.id) {
       this.commondata.editSkill(this.id).subscribe((res: any) => {
-        
+
         console.log("the Edit Data===>", res);
 
         this.userForm.patchValue({
@@ -265,8 +272,8 @@ export class CreateSkillsComponent implements OnInit {
     console.log("this.tagsLsiting1===>", this.TagsLists)
   }
 
-  getAllWing(){
-    
+  getAllWing() {
+
     this.commondata.GetAllWing().subscribe((res: any) => {
       this.isSelectedWing = res;
       // this.isSelectedWing = [...this.Wing.map(wing => ({ id: wing.id, name: wing.name, slug: wing.slug }))];
@@ -357,7 +364,10 @@ export class CreateSkillsComponent implements OnInit {
         "skillTags": this.getCheckedIds(),
         "skillRules": this.subRules.filter(rule => rule.isSelected).map(rule => rule.id),
         "responder": this.isresponderchecked,
-        "inbox": this.isInboxChecked
+        "inbox": this.isInboxChecked,
+        "color": this.selectedTextColor,
+        "icon": this.userForm.value.icon,
+
       }
       if (this.id && this.id !== null) {
         this.commondata.UpdateSkill(this.id, data).subscribe((res: any) => {

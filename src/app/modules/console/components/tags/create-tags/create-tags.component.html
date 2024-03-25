@@ -7,17 +7,17 @@
         
    
         </div> -->
-     
+
         <div class="row" *ngIf="parentTags.length > 0">
           <div class="col-md-12">
-          
+
             <div class="floating-wrap form-floating">
 
-               <label for="parent tags">Parent Tags</label>
-              <select class="form-control" formControlName="parentId"  (change)="selectParentTag($event)">
+              <label for="parent tags">Parent Tags</label>
+              <select class="form-control" formControlName="parentId" (change)="selectParentTag($event)">
                 <option value="">Select an option</option>
                 <option *ngFor="let parent of parentTags" [value]="parent.mainId">{{ parent.name }}</option>
-              
+
               </select>
               <label for="parent tags">Parent Tag</label>
             </div>
@@ -37,7 +37,7 @@
         </div> -->
         <div class="row" *ngIf="childTag.length > 0">
           <div class="col-md-12">&nbsp;
-       
+
             <div class="floating-wrap form-floating">
               <select class="form-control" formControlName="parentId" (change)="selectParentChildTag($event)">
                 <option value="">Select an option</option>
@@ -61,7 +61,7 @@
         </div>
         <div class="row" *ngIf="parentChild.length > 0">
           <div class="col-md-12">&nbsp;
-       
+
             <div class="floating-wrap form-floating">
               <select class="form-control" formControlName="lastChildTagId">
                 <option value="">Select an option</option>
@@ -70,15 +70,15 @@
               <label>Child Tags</label>
             </div>
           </div>
-        </div> 
+        </div>
         <br>
         <div class="col-md-12">
           <div class="floating-wrap form-floating">
-    <!-- <input type="text" class="form-control" id="tagName0" placeholder="Tag Name" formControlName="name"> -->
+            <!-- <input type="text" class="form-control" id="tagName0" placeholder="Tag Name" formControlName="name"> -->
             <!-- <label for="tagName0">Tag Name</label>  -->
             <input type="text" class="form-control" id="tagName0" placeholder="Tag Name" formControlName="name"
-         [style.color]="selectedTextColor">
-          <label for="tagName0"> Tag Name</label>
+              [style.color]="selectedTextColor">
+            <label for="tagName0"> Tag Name</label>
           </div>
         </div>
         <br>
@@ -94,41 +94,46 @@
             </div>
           </div>
         </div> -->
-      <div class="list-group-section">
+        <div class="list-group-section">
           <div class="section-heading">
             <h6 class="coal text-uppercase mb-0">Style</h6>
           </div><br>
-       
+
           <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between align-items-sm-center">
               <div class="me-auto coal">
                 <div class="fw-bold night">Color</div>
                 Create Shared inboxes for teammates to work together
               </div>
-                 <span class="col-sm-1">
-     <div *ngIf="showPopup">
-              <div class="color-picker">
-                <input type="color" [(ngModel)]="selectedTextColor" (change)="onTextColorChange($event)" />
-        
-              </div>
-        
-              
-            </div>
-           </span>
+              <span class="col-sm-1">
+                <div *ngIf="showPopup">
+                  <div class="color-picker">
+                    <input type="color" [(ngModel)]="selectedTextColor" (change)="onTextColorChange($event)" />
+
+                  </div>
+
+
+                </div>
+              </span>
               <span>
                 <i class="fal fa-user sky me-3"></i>
                 <a class="text-decoration-underline" (click)="openPopup()"><span *ngIf="showPopup==true">
-                  UnSelect Visuals
-                </span>
-                <span *ngIf="showPopup==false">Select Visuals</span>
-              </a>
+                    UnSelect Visuals
+                  </span>
+                  <span *ngIf="showPopup==false">Select Visuals</span>
+                </a>
               </span>
               <span>
-                
+
               </span>
             </li>
- 
-        <!-- <div class="col-md-2">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="icon" placeholder="Icon" formControlName="icon">
+              <label for="icon">Icon</label>
+              
+            </div>
+
+            <!-- <div class="col-md-2">
           <div class="card">
             <div *ngIf="showPopup">
               <div class="color-picker">
@@ -141,8 +146,8 @@
             </div>
           </div>
         </div> -->
-       
-                      <li class="list-group-item d-flex justify-content-between align-items-sm-end">
+
+            <li class="list-group-item d-flex justify-content-between align-items-sm-end">
               <div class="me-auto coal">
                 <div class="fw-bold night">Nest tag under</div>
                 Organize this tag under an existing parent tag
@@ -152,8 +157,8 @@
                 <a class="text-decoration-underline" (click)="addTag()">Select Parent Tag</a>
               </span>
             </li>
-        
-    
+
+
           </ul>
         </div>
         <!-- <div class="list-group-section">
@@ -220,15 +225,15 @@
 </form>
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
   <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
-     aria-live="assertive" aria-atomic="true">
-     <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
-        <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
-        <div class="toast-btn d-flex align-items-center">
+    aria-live="assertive" aria-atomic="true">
+    <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
+      <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
+      <div class="toast-btn d-flex align-items-center">
 
-           <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
-              (click)="closeToaster()"><i class="fal fa-times"></i></button>
+        <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
+          (click)="closeToaster()"><i class="fal fa-times"></i></button>
 
-        </div>
-     </div>
+      </div>
+    </div>
   </div>
 </div>

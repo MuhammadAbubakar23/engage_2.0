@@ -108,6 +108,8 @@ export class WebChatComponent implements OnInit {
         pageSize: 0,
         isAttachment: false,
         queryType: this.queryType,
+        hasBlueTick:false,
+
         text : "",
         userName: '',
         notInclude: '',
@@ -161,6 +163,8 @@ export class WebChatComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: this.queryType,
         text : "",
         userName: '',

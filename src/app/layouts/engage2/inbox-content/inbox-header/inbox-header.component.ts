@@ -84,6 +84,7 @@ export class InboxHeaderComponent implements OnInit {
       plateForm: '',
       pageNumber: this.pageNumber,
       pageSize: this.pageSize,
+      hasBlueTick:false,
       isAttachment: false,
       queryType: '',
       text: '',

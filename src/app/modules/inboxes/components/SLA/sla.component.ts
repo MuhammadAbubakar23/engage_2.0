@@ -99,6 +99,8 @@ export class SlaComponent implements OnInit {
       pageId: '',
       plateForm: this.platform,
       pageNumber: this.pageNumber,
+      hasBlueTick:false,
+
       pageSize: this.pageSize,
       isAttachment: false,
       queryType: '',

@@ -292,6 +292,8 @@ export class SmsDetailsComponent implements OnInit {
         plateForm: 'SMS',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
+        hasBlueTick:false,
+
         isAttachment: false,
         queryType: this.queryType,
         text : "",
@@ -350,6 +352,8 @@ export class SmsDetailsComponent implements OnInit {
         // fromDate: new Date(),
         // toDate: new Date(),
         user: this.slaId,
+        hasBlueTick:false,
+
         pageId: '',
         plateForm: 'SMS',
         pageNumber: 0,
@@ -414,6 +418,8 @@ export class SmsDetailsComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        hasBlueTick:false,
+
         text : "",
         userName: '',
         notInclude: '',
