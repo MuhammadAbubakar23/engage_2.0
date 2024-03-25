@@ -180,6 +180,8 @@ export const environment = {
       getAllSkills: 'Skill/GetAll',
       addSkill: 'Skill/Add',
       deleteSkill: 'Skill/Delete',
+      getAllWing: 'Teams/GetAllWing',
+
 
       // getTagsAll: 'Tags/GetAll',
       getTagsByCompanyId: 'Tags/GetTagsByCompayId',

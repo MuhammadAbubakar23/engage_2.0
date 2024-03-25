@@ -28,11 +28,14 @@
                       <div class="business-detail-wrap">
                         <div class="form-floating mb-3">
                           <input type="text" class="form-control" id="ruleName" placeholder="Rule Name"
-                            formControlName="ruleName" [class.is-invalid]="ruleName?.invalid && (ruleName?.dirty || ruleName?.touched)"
+                            formControlName="ruleName"
+                            [class.is-invalid]="ruleName?.invalid && (ruleName?.dirty || ruleName?.touched)"
                             [class.is-valid]="ruleName?.valid && (ruleName?.dirty || ruleName?.touched)">
                           <label for="ruleName">Rule Name</label>
-                          <div class="invalid-feedback" *ngIf="ruleName?.errors?.['required']">Rule name is required.</div>
-                          <div class="invalid-feedback" *ngIf="ruleName?.errors?.['pattern']">Only alphabets are allowed.</div>
+                          <div class="invalid-feedback" *ngIf="ruleName?.errors?.['required']">Rule name is required.
+                          </div>
+                          <div class="invalid-feedback" *ngIf="ruleName?.errors?.['pattern']">Only alphabets are
+                            allowed.</div>
                         </div>
                         <div class="form-floating mb-4">
                           <textarea class="form-control" placeholder="Leave a comment here" id="description"
@@ -40,14 +43,15 @@
                             [class.is-invalid]="description?.invalid && (description?.dirty || description?.touched)"
                             [class.is-valid]="description?.valid && (description?.dirty || description?.touched)"></textarea>
                           <label for="description">Description</label>
-                          <div class="invalid-feedback" *ngIf="description?.errors?.['required']">Description is required.</div>
+                          <div class="invalid-feedback" *ngIf="description?.errors?.['required']">Description is
+                            required.</div>
                         </div>
                       </div>
                     </form>
                   </div>
 
                   <div id="business-hour" class="tab-pane fade" role="tabpanel" aria-labelledby="business-hour-tab">
-                    
+
                     <div class="bussiness-hour-wrap ps-5 pe-5">
                       <div class="choose-assignment-section mb-5">
                         <h5 class="darkblue mb-4 mt-5">Create Query Rules</h5>
@@ -58,7 +62,8 @@
                             </ng-select>
                           </div>
                           <div class="col-sm-6 query-builder-wrapper">
-                            <query-builder [formControl]="queryCtrl" [config]="config" [classNames]='classNames'>
+                            <query-builder [formControl]="queryCtrl" [config]="config" [classNames]='classNames'
+                              [allowRuleset]="count<1?true:false" >
                             </query-builder>
                             <br />
                             <div>
@@ -99,7 +104,8 @@
                   <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4" (click)="cancelbtn()">
                     Cancel
                   </button>
-                  <button type="button" (click)="onClick()" class="btn skyBg ms-2 px-4 btn-medium saveBtn" [disabled]="rulesForm.invalid">
+                  <button type="button" (click)="onClick()" class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                    [disabled]="rulesForm.invalid">
                     Save
                   </button>
                 </div>

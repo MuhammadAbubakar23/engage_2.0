@@ -386,6 +386,7 @@ export class FacebookComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        hasBlueTick:false,
         text: '',
         flag: this.flag,
         userName: '',
@@ -453,6 +454,8 @@ export class FacebookComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: this.queryType,
         text: '',
         flag: this.flag,
@@ -513,6 +516,8 @@ export class FacebookComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: this.queryType,
         text: '',
         flag: this.flag,
@@ -1036,6 +1041,8 @@ export class FacebookComponent implements OnInit {
         plateForm: 'Facebook',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
+        hasBlueTick:false,
+
         isAttachment: false,
         queryType: this.queryType,
         text: '',
@@ -1110,6 +1117,8 @@ export class FacebookComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: this.queryType,
         text: '',
         flag: this.flag,
@@ -1179,6 +1188,8 @@ export class FacebookComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: this.queryType,
         text: '',
         flag: this.flag,

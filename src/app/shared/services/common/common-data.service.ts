@@ -118,6 +118,7 @@ export class CommonDataService {
   getLinkedInFollowers = environment.links.common.getLinkedInFollowers;
   emailShiftReport = environment.links.common.emailShiftReport;
   getFollowUpCount = environment.links.common.getFollowUpCount;
+  getAllWing= environment.links.console.getAllWing
 
   downloadTagReport = environment.links.common.downloadTagReport;
   regionwiseReport = environment.links.common.regionwiseReport;

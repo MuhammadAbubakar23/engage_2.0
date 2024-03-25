@@ -491,6 +491,8 @@ export class ChannelComponent implements OnInit {
         queryType: 'TTR',
         text: '',
         flag: this.flag,
+        hasBlueTick:false,
+
         userName: '',
         notInclude: '',
         include: '',
@@ -553,6 +555,8 @@ export class ChannelComponent implements OnInit {
         plateForm: 'Twitter',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
+        hasBlueTick:false,
+
         isAttachment: false,
         queryType: 'TTR',
         text: '',
@@ -611,6 +615,8 @@ export class ChannelComponent implements OnInit {
         plateForm: localStorage.getItem('parent') || '{}',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
+        hasBlueTick:false,
+
         isAttachment: false,
         queryType: 'TTR',
         text: '',
@@ -684,6 +690,8 @@ export class ChannelComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: 'TDM',
+        hasBlueTick:false,
+
         text: '',
         flag: this.flag,
         userName: '',
@@ -762,6 +770,8 @@ export class ChannelComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: 'TDM',
+        hasBlueTick:false,
+
         text: '',
         flag: this.flag,
         userName: '',
@@ -826,6 +836,8 @@ export class ChannelComponent implements OnInit {
         plateForm: localStorage.getItem('parent') || '{}',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
+        hasBlueTick:false,
+
         isAttachment: false,
         queryType: 'TDM',
         text: '',
@@ -903,6 +915,8 @@ export class ChannelComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: 'TM',
         text: '',
         userName: '',
@@ -971,6 +985,8 @@ export class ChannelComponent implements OnInit {
         plateForm: 'Twitter',
         pageNumber: 0,
         pageSize: 0,
+        hasBlueTick:false,
+
         isAttachment: false,
         queryType: 'TM',
         text: '',
@@ -1036,6 +1052,8 @@ export class ChannelComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: 'TM',
         text: '',
         userName: '',

@@ -47,7 +47,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
     //   
     //   //console.log(team.id);
     //   request = request.clone({
-      
+
     //     url: request.url,
     //     //withCredentials: true,
     //     setHeaders: {
@@ -78,7 +78,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
       
       //console.log(team.id);
       request = request.clone({
-      
+
         url: request.url,
         //withCredentials: true,
         setHeaders: {

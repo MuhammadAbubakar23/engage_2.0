@@ -84,7 +84,7 @@ export class InteractionReportComponent implements OnInit {
     private SpinnerService: NgxSpinnerService,
     private cdr: ChangeDetectorRef,
     private datePipe: DatePipe
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const newObj = {
@@ -150,6 +150,7 @@ export class InteractionReportComponent implements OnInit {
     }
   }
   calculateAverageTime(agentPerformance: any[], field: string) {
+
     let totalSeconds = 0;
     for (const agent of agentPerformance) {
       totalSeconds += this.timeToSeconds(agent[field]);
@@ -159,11 +160,13 @@ export class InteractionReportComponent implements OnInit {
   }
 
   timeToSeconds(timeStr: string): number {
+
     const [hours, minutes, seconds] = timeStr.split(':').map(Number);
     return hours * 3600 + minutes * 60 + seconds;
   }
 
   secondsToTime(seconds: number): string {
+
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = Math.floor(seconds % 60);
@@ -264,6 +267,12 @@ export class InteractionReportComponent implements OnInit {
     this.averageResponseData = 0;
     this.preAveragePercentage = 0;
     this.PreviousTotalInteractionCount = 0;
+    this.finalAverage = 0
+    this.finalAverageMinimum = 0
+    this.finalAverageMaximum = 0
+    this.avgMinCaterTime = 0
+    this.avgMaxCaterTime = 0
+    this.avgResponseTimeSum = 0
     this.averageResponseRateSum = 0;
     this.totalInteractionCount = 0;
     this.sentimentDataPoints = [];
@@ -314,6 +323,7 @@ export class InteractionReportComponent implements OnInit {
           this.PreviousTotalInteractionCount) *
         100;
       // current time sum
+
       this.finalAverage = this.calculateAverageTime(
         this.interactionStats.agentPerformance,
         'averageTime'
@@ -350,14 +360,14 @@ export class InteractionReportComponent implements OnInit {
         this.avgResponseTimeSum = Math.abs(
           ((LastfinalAverageInSeconds - finalAverageInSeconds) /
             finalAverageInSeconds) *
-            100
+          100
         );
       }
       if (finalAverageInSeconds <= LastfinalAverageInSeconds) {
         this.avgResponseTimeSum = Math.abs(
           ((finalAverageInSeconds - LastfinalAverageInSeconds) /
             LastfinalAverageInSeconds) *
-            100
+          100
         );
       }
 
@@ -446,6 +456,7 @@ export class InteractionReportComponent implements OnInit {
   resetStartDate() {
     this.endDate = '';
   }
+
   agentCount: number = 0;
   // formatNumber(value: number): string {
   //   if (value === null || value === undefined) {

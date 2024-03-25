@@ -347,6 +347,8 @@ export class LinkedInComponent implements OnInit {
         plateForm: 'LinkedIn',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
+        hasBlueTick:false,
+
         isAttachment: false,
         queryType: this.queryType,
         text : "",
@@ -414,6 +416,8 @@ export class LinkedInComponent implements OnInit {
         pageSize: 0,
         isAttachment: false,
         queryType: this.queryType,
+        hasBlueTick:false,
+
         text : "",
         userName: "",
         notInclude: "",
@@ -470,6 +474,8 @@ export class LinkedInComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        hasBlueTick:false,
+
         text : "",
         userName: "",
         notInclude: "",
