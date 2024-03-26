@@ -356,7 +356,6 @@ export class LinkedInComponent implements OnInit {
         notInclude: "",
         include: "",
         flag: this.flag,
-        wings:'Rox'
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -423,7 +422,6 @@ export class LinkedInComponent implements OnInit {
         notInclude: "",
         include: "",
         flag: this.flag,
-        wings:'Rox'
       };
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         if (Object.keys(res).length > 0) {
@@ -481,7 +479,6 @@ export class LinkedInComponent implements OnInit {
         notInclude: "",
         include: "",
         flag: this.flag,
-        wings:'Rox'
       };
       this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
         this.LinkedInData = res.List;

@@ -100,10 +100,8 @@ export class SlaComponent implements OnInit {
       plateForm: this.platform,
       pageNumber: this.pageNumber,
       hasBlueTick:false,
-
       pageSize: this.pageSize,
       isAttachment: false,
-      hasBlueTick: false,
       queryType: '',
       text: '',
       userName: '',

@@ -86,7 +86,6 @@ export class InboxHeaderComponent implements OnInit {
       pageSize: this.pageSize,
       hasBlueTick:false,
       isAttachment: false,
-      hasBlueTick: false,
       queryType: '',
       text: '',
       userName: '',
