@@ -103,6 +103,7 @@ export class ConversationComponent implements OnInit {
       isAttachment: new FormControl(this.isAttachment),
       text: new FormControl(''),
       dateWithin: new FormControl(''),
+      hasBlueTick: new FormControl(''),
     });
 
     this.searchCustomerForm = new FormGroup({
@@ -371,6 +372,7 @@ export class ConversationComponent implements OnInit {
       notInclude: this.notInclude,
       include: this.include,
       isAttachment: this.isAttachment,
+      hasBlueTick: this.blueTick,
     });
   if(this.filterDtolocal.fromDate!=undefined ){
  this.filterDto=this.filterDtolocal
@@ -385,6 +387,7 @@ export class ConversationComponent implements OnInit {
       pageNumber: this.pageNumber,
       pageSize: this.pageSize,
       isAttachment: this.searchForm.value.isAttachment,
+      hasBlueTick: this.searchForm.value.hasBlueTick,
       queryType: '',
       text: this.searchForm.value.text,
       include: this.searchForm.value.include,
@@ -493,6 +496,7 @@ export class ConversationComponent implements OnInit {
       pageNumber: 1,
       pageSize: 30,
       isAttachment: false,
+      hasBlueTick: false,
       queryType: '',
       text: '',
       include: '',
@@ -573,6 +577,11 @@ export class ConversationComponent implements OnInit {
   }
   hasAttachment(value: boolean) {
     this.isAttachment = value;
+    this.getConversationList();
+  }
+
+  hasBlueTick(value: boolean) {
+    this.blueTick = value;
     this.getConversationList();
   }
 
@@ -682,6 +691,8 @@ export class ConversationComponent implements OnInit {
       });
     }
   }
+
+  blueTick: boolean = false;
 
   Reload() {
     

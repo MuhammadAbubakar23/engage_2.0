@@ -103,7 +103,7 @@
                                                                 <button type="submit" class="btn btn-success ms-2"
                                                                     data-bs-toggle="modal"
                                                                     (click)="deattachProfileInformation(info.name,info.contractAccount,info.mobileNumber)"
-                                                                    data-bs-target="#profileSaveModal">Deattach</button>
+                                                                    data-bs-target="#profileSaveModal">Detach</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -161,7 +161,7 @@
                                                                               (customerInformationForm.get('phoneNumber')!.touched ||
                                                                                 customerInformationForm.get('phoneNumber')!.dirty)
                                                                           }" class="form-control" id="inputName"
-                                                                        type="email"  formControlName="phoneNumber"
+                                                                        type="text"  formControlName="phoneNumber"
                                                                         [(ngModel)]="phoneNumber">
                                                                     <div class="invalid-feedback" *ngIf="
                                                                     customerInformationForm.get('phoneNumber')!.errors &&
@@ -181,8 +181,7 @@
                                                                     </div>
                                                                     <div class="valid-feedback" *ngIf="
                                                                 customerInformationForm.get('phoneNumber')!.valid &&
-                                                                customerInformationForm.get('phoneNumber')!.touched
-">
+                                                                customerInformationForm.get('phoneNumber')!.touched">
                                                                         Looks Good!
                                                                     </div>
                                                                 </div>

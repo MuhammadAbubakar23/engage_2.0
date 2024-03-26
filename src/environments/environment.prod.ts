@@ -88,7 +88,7 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-
+  //   LinkedInBaseUrl:'',
   // For Jazz Rox
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
   // CommonBaseUrl: 'https://common-engage.enteract.app/api/',

@@ -149,14 +149,25 @@ export class InteractionReportComponent implements OnInit {
       return (value / 1000000000).toFixed(1) + ' B';
     }
   }
+  averageArray:any[]=[]
   calculateAverageTime(agentPerformance: any[], field: string) {
     debugger
     let totalSeconds = 0;
     for (const agent of agentPerformance) {
-      totalSeconds += this.timeToSeconds(agent[field]);
+      debugger
+      if(agent.averageTime !=="00:00:00" && agent.maximumTime !=="00:00:00"){
+        totalSeconds += this.timeToSeconds(agent[field]);
+       
+      }
 
+      agentPerformance =agentPerformance.filter((item:any)=>{
+       
+          return item.averageTime !=="00:00:00" && item.maximumTime !=="00:00:00"
+        
+      })
     }
-    //  return this.secondsToTime(totalSeconds)
+
+    debugger
     const averageSeconds = totalSeconds / agentPerformance.length;
     return this.secondsToTime(averageSeconds);
   }
@@ -284,7 +295,9 @@ export class InteractionReportComponent implements OnInit {
 
       this.interactionStats = res;
       this.data = res.agentPerformance;
+      debugger
       this.socialMediaData = res.plateFormWiseInteraction;
+      
       this.socialMediaData.forEach((x: any) => {
         this.inProgressCount += x.unRespondedCount;
         this.assignToMeCount += x.assignTomeCount;

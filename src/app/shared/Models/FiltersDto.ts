@@ -7,6 +7,7 @@ export class FiltersDto{
   pageNumber : number=0;
   pageSize : number=0;
   isAttachment : boolean = false;
+  hasBlueTick : boolean = false;
   queryType : string = "";
   text:string="";
   userName:string="";
@@ -14,6 +15,7 @@ export class FiltersDto{
   include:String="";
   flag:String="";
   wings?:String="";
+  
   }
 
   export class FiltersDtolocal{
@@ -25,6 +27,7 @@ export class FiltersDto{
     pageNumber : number=0;
     pageSize : number=0;
     isAttachment : boolean = false;
+    hasBlueTick : boolean = false;
     queryType : string = "";
     text:string="";
     userName:string="";

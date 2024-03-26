@@ -534,6 +534,7 @@ export class CommonDataService {
      return this.http.post(this.consoleBaseUrl + this.getAllSkills, body);
   }
   GetSkills(body:any){
+    debugger
     return this.http.post(this.consoleBaseUrl+this.getSkills, body)
   }
   AddSkill(addSkill: any) {
