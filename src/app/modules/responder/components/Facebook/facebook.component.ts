@@ -462,7 +462,8 @@ debugger
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        hasBlueTick: false,
+        hasBlueTick:false,
+
         queryType: this.queryType,
         text: '',
         flag: this.flag,
@@ -497,7 +498,6 @@ debugger
                 },
                 {}
               );
-debugger
               item['groupedComments'] = Object.keys(groupedItems).map(
                 (createdDate) => {
                   return {
@@ -531,7 +531,7 @@ debugger
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        hasBlueTick: false,
+        hasBlueTick:false,
         queryType: this.queryType,
         text: '',
         flag: this.flag,
@@ -1060,8 +1060,8 @@ debugger
         plateForm: 'Facebook',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
+        hasBlueTick:false,
         isAttachment: false,
-        hasBlueTick: false,
         queryType: this.queryType,
         text: '',
         flag: this.flag,
@@ -1136,6 +1136,8 @@ debugger
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: this.queryType,
         text: '',
         flag: this.flag,
@@ -1206,6 +1208,8 @@ debugger
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: this.queryType,
         text: '',
         flag: this.flag,

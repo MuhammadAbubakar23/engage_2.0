@@ -49,7 +49,7 @@ export class ConversationComponent implements OnInit {
   updatedList: any;
 
   isAttachment: boolean = false;
-
+  blueTick:boolean=false
   listingDto = new ListingDto();
   filterDto = new FiltersDto();
   filterDtolocal= new FiltersDtolocal()
@@ -372,7 +372,7 @@ export class ConversationComponent implements OnInit {
       notInclude: this.notInclude,
       include: this.include,
       isAttachment: this.isAttachment,
-      hasBlueTick: this.blueTick,
+      hasBlueTick:this.blueTick
     });
   if(this.filterDtolocal.fromDate!=undefined ){
  this.filterDto=this.filterDtolocal
@@ -393,6 +393,7 @@ export class ConversationComponent implements OnInit {
       include: this.searchForm.value.include,
       userName: this.searchForm.value.userName,
       notInclude: this.searchForm.value.notInclude,
+      
       flag: this.flag,
       wings: 'rox_Facebook'
     };
@@ -496,7 +497,7 @@ export class ConversationComponent implements OnInit {
       pageNumber: 1,
       pageSize: 30,
       isAttachment: false,
-      hasBlueTick: false,
+      hasBlueTick:false,
       queryType: '',
       text: '',
       include: '',
@@ -579,12 +580,10 @@ export class ConversationComponent implements OnInit {
     this.isAttachment = value;
     this.getConversationList();
   }
-
   hasBlueTick(value: boolean) {
     this.blueTick = value;
-    this.getConversationList();
+    this.getConversationList(); 
   }
-
   isAttachmentChecked() {
     this.isAttachment = !this.isAttachment;
   }
@@ -691,8 +690,6 @@ export class ConversationComponent implements OnInit {
       });
     }
   }
-
-  blueTick: boolean = false;
 
   Reload() {
     

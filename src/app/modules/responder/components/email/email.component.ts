@@ -386,6 +386,8 @@ export class EmailComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: this.queryType,
         text : "",
         userName: "",
@@ -529,6 +531,8 @@ export class EmailComponent implements OnInit {
         pageSize: 0,
         isAttachment: false,
         queryType: this.queryType,
+        hasBlueTick:false,
+
         text : "",
         userName: "",
         notInclude: "",
@@ -663,6 +667,8 @@ export class EmailComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: this.queryType,
         text : "",
         userName: "",

@@ -17,7 +17,6 @@ import { EntityTypeBuilder } from 'src/app/shared/Models/EntityTypeDto';
 export class AddRulesComponent implements OnInit {
 
   entities = [];
-  selectedEntity = "Please Select Entity";
 
   rulesForm = new FormGroup({
     ruleName: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
@@ -67,7 +66,7 @@ export class AddRulesComponent implements OnInit {
 
   entitySet: any = [];
   ruleId: any;
-
+count=0;
   constructor(private _fb: FormBuilder,
     private router: Router,
     private _cs: CommonDataService,
@@ -75,13 +74,16 @@ export class AddRulesComponent implements OnInit {
     private _route: ActivatedRoute) {
     this.queryCtrl = this._fb.control(this.query);
     this.queryCtrl.valueChanges.subscribe((ruleSet: any) => {
+      this.count=ruleSet.rules.length
       this.processRules(ruleSet.rules);
       this.selectedRuleSet = ruleSet;
     });
 
   }
 
-
+test(){
+  console.log("testting")
+}
 
   processRules(rules: any[]) {
     rules?.forEach((rule: any) => {
@@ -104,15 +106,16 @@ export class AddRulesComponent implements OnInit {
         }
     });
 }
-
-  ngOnInit(): void {
-    this._cs.GetEntitiesRule().subscribe((response: any) => {
-      this.entities = response;
-    })
-    this.ruleId = this._route.snapshot.paramMap.get('id')
-    // this.getRuleById(this.ruleId)
-
-  }
+selectedEntity: string = "DataOfChannels";
+ngOnInit(): void {
+  this._cs.GetEntitiesRule().subscribe((response: any) => {
+    this.entities = response;
+    this.selectedEntity = "DataOfChannels";
+    this.selectEntity();
+    this.entities = this.entities.filter(entity => entity === "DataOfChannels");
+  });
+  this.ruleId = this._route.snapshot.paramMap.get('id');
+}
   // getRuleById(ruleId: string) {
   //   this._cs.GetRuleById(ruleId).subscribe((res: any) => {
   //     console.log('getting', res)
@@ -198,11 +201,12 @@ export class AddRulesComponent implements OnInit {
   // }
 
   onClick() {
-
+    console.log("this.selectedRuleSet",this.selectedRuleSet)
     const ruleData = {
       "name": this.rulesForm.value['ruleName'],
       "description": this.rulesForm.value['description'],
-      'rulesJson': JSON.stringify(this.selectedRuleSet)
+      'rulesJson': JSON.stringify(this.selectedRuleSet),
+      'tableName': this.selectedEntity
     };
     console.log("json data ===>", this.selectedRuleSet)
     if (this.ruleId) {

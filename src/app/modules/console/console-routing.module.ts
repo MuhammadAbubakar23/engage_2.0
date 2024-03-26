@@ -219,7 +219,10 @@ const routes: Routes = [
         path:'contacts',
         loadComponent:()=>import('./components/contacts/contacts.component').then(c=>c.ConsoleContactsComponent)
       },
-
+      {
+        path:'preferenences',
+        loadComponent:()=>import('./components/preferences/preferences.component').then(c=>c.PreferencesComponent)
+      },
       {
         path: 'automation/sentiment-analysis/bulk-upload',
         component: BulkUploadComponent

@@ -77,7 +77,7 @@ export class TeamsComponent implements OnInit {
     },
       error => {
         this.spinnerService.hide()
-        alert(error.error)
+        // alert(error.error)
       })
   }
   makeTitle(slug: any) {

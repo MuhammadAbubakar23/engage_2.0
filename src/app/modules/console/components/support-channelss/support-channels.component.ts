@@ -45,27 +45,27 @@ export class SupportChannelsComponent implements OnInit {
         // console.log("Error==>", error)
       })
     }
-     if (authorizationCode && socialtype == 'google') {
+    if (authorizationCode && socialtype == 'google') {
       this.socialService.getGoogleData(authorizationCode).subscribe((response: any) => {
         // console.log("Profile===>", response);
       }, (error: any) => {
         // console.log("Error==>", error)
       })
     }
-     if (authorizationCode && socialtype == 'linkdin') {
-       this.socialService.getLinkdinData(authorizationCode).subscribe((response: any) => {
-         // console.log("Profile===>", response);
-       }, (error: any) => {
-         // console.log("Error==>", error)
-       })
-     }
-     if (authorizationCode && socialtype == 'utube') {
-       this.socialService.getUtubeData(authorizationCode).subscribe((response: any) => {
-         // console.log("Profile===>", response);
-       }, (error: any) => {
-         // console.log("Error==>", error)
-       })
-     }
+    if (authorizationCode && socialtype == 'linkdin') {
+      this.socialService.getLinkdinData(authorizationCode).subscribe((response: any) => {
+        // console.log("Profile===>", response);
+      }, (error: any) => {
+        // console.log("Error==>", error)
+      })
+    }
+    if (authorizationCode && socialtype == 'utube') {
+      this.socialService.getUtubeData(authorizationCode).subscribe((response: any) => {
+        // console.log("Profile===>", response);
+      }, (error: any) => {
+        // console.log("Error==>", error)
+      })
+    }
   }
 
   connectFacebook(): void {

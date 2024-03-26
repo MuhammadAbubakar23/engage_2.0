@@ -416,6 +416,8 @@ export class InstagramComponent implements OnInit {
         pageId: '',
         plateForm: 'Instagram',
         pageNumber: this.pageNumber,
+        hasBlueTick:false,
+
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
@@ -491,6 +493,8 @@ export class InstagramComponent implements OnInit {
         pageSize: 0,
         isAttachment: false,
         queryType: this.queryType,
+        hasBlueTick:false,
+
         text: '',
         userName: '',
         notInclude: '',
@@ -559,6 +563,8 @@ export class InstagramComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        hasBlueTick:false,
+
         text: '',
         userName: '',
         notInclude: '',
@@ -1291,6 +1297,8 @@ removeTagDataListener() {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: this.queryType,
         text: '',
         userName: '',
@@ -1363,6 +1371,8 @@ removeTagDataListener() {
         isAttachment: false,
         queryType: this.queryType,
         text: '',
+        hasBlueTick:false,
+
         userName: '',
         notInclude: '',
         include: '',
@@ -1431,6 +1441,8 @@ removeTagDataListener() {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        hasBlueTick:false,
+
         text: '',
         userName: '',
         notInclude: '',

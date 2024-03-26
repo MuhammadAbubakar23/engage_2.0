@@ -77,7 +77,7 @@ export class RulesComponent implements OnInit {
 
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
-      this.commonService.DeleteRules(message.id).subscribe(
+      this.commonService.DeleteRules(message.groupId).subscribe(
         () => {
           console.log('message deleted:', message);
           this.tableData = this.tableData.filter((msg: any) => msg.id !== message.id);

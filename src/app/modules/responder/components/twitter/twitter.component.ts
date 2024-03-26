@@ -729,6 +729,8 @@ export class TwitterComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: 'TTR',
         text: '',
         flag: this.flag,
@@ -799,6 +801,8 @@ export class TwitterComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: 'TTR',
         text: '',
         flag: this.flag,
@@ -868,6 +872,8 @@ export class TwitterComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: 'TTR',
         text: '',
         flag: this.flag,
@@ -962,6 +968,8 @@ export class TwitterComponent implements OnInit {
         plateForm: 'Twitter',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
+        hasBlueTick:false,
+
         isAttachment: false,
         queryType: 'TDM',
         text: '',
@@ -1038,6 +1046,8 @@ export class TwitterComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: 'TDM',
         text: '',
         flag: this.flag,
@@ -1101,6 +1111,8 @@ export class TwitterComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: 'TDM',
         text: '',
         flag: this.flag,
@@ -1173,6 +1185,8 @@ export class TwitterComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: 'TM',
         text: '',
         userName: '',
@@ -1242,6 +1256,8 @@ export class TwitterComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: 'TM',
         text: '',
         userName: '',
@@ -1307,6 +1323,8 @@ export class TwitterComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: 'TM',
+        hasBlueTick:false,
+
         text: '',
         userName: '',
         notInclude: '',

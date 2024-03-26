@@ -290,6 +290,8 @@ export class YoutubeComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        hasBlueTick:false,
+
         text: "",
         userName: '',
         notInclude: '',
@@ -370,6 +372,8 @@ export class YoutubeComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        hasBlueTick:false,
+
         text: "",
         userName: '',
         notInclude: '',
@@ -432,6 +436,8 @@ export class YoutubeComponent implements OnInit {
         plateForm: localStorage.getItem('parent') || '{}',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
+        hasBlueTick:false,
+
         isAttachment: false,
         queryType: this.queryType,
         text: "",

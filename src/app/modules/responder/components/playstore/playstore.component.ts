@@ -410,6 +410,8 @@ export class PlaystoreComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
+        hasBlueTick:false,
+
         text: '',
         flag: this.flag,
         userName: '',
@@ -467,6 +469,8 @@ export class PlaystoreComponent implements OnInit {
         pageId: '',
         plateForm: 'PlayStore',
         pageNumber: this.pageNumber,
+        hasBlueTick:false,
+
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
@@ -526,6 +530,8 @@ export class PlaystoreComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
+        hasBlueTick:false,
+
         queryType: this.queryType,
         text: '',
         flag: this.flag,

@@ -36,6 +36,7 @@ import { ConsoleConnectFormHeaderComponent } from './console-connect-from-header
 import { ConsoleHomeHeaderComponent } from './console-home-header/console-home-header.component';
 import { ConsoleCreateBusinessHoursHeaderComponent } from './console-create-business-hours-header/console-create-business-hours-header.component';
 import { ConsoleCreateSkillsHeaderComponent } from './console-create-skills-header/console-create-skills-header.component';
+import { ConsoleCreatePreferencesHeaderComponent } from './console-create-preferences-header/console-create-preferences-header.component';
 
 
 
@@ -77,7 +78,8 @@ import { ConsoleCreateSkillsHeaderComponent } from './console-create-skills-head
           ConsoleConnectFormHeaderComponent,
           ConsoleHomeHeaderComponent,
           ConsoleCreateBusinessHoursHeaderComponent,
-          ConsoleCreateSkillsHeaderComponent
+          ConsoleCreateSkillsHeaderComponent,
+          ConsoleCreatePreferencesHeaderComponent
       //    RightHeaderComponentsComponent
 
   ],
