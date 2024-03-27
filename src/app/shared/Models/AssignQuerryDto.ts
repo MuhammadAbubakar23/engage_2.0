@@ -4,4 +4,5 @@ export class AssignQuerryDto {
   profileId: number = 0;
   agentIds?: string = "";
   platform: string = "";
+  wings: string = "";
 }

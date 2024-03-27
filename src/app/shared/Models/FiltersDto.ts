@@ -14,6 +14,7 @@ export class FiltersDto {
   include:String="";
   flag:String="";
   wings?:String="";
+  hasBlueTick:boolean=false;
   }
 
 export class FiltersDtolocal {

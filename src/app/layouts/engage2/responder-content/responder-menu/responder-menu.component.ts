@@ -211,6 +211,7 @@ export class ResponderMenuComponent implements OnInit {
         profileId: profileId,
         agentIds: 'string',
         platform: platform,
+        wings: ''
       };
 
       this.commondata.AssignQuerry(this.assignQuerryDto).subscribe(

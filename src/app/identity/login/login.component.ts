@@ -9,7 +9,8 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { DatePipe } from '@angular/common';
 import { VerificationDto } from 'src/app/shared/Models/verificationDto';
-import { JoinGroupService } from 'src/app/services/JoinGroup/join-group.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
+import { SkillsService } from 'src/app/services/Skills/skills.service';
 // import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 @Component({
   selector: 'app-login',
@@ -59,14 +60,15 @@ export class LoginComponent implements OnInit {
     private signalRService: SignalRService,
     private commonService: CommonDataService,
     private datePipe: DatePipe,
-    private joinGroupService : JoinGroupService
+    private sendWings: GetWingsService,
+    private sendSkills:SkillsService
   ) { }
 
   ngOnInit(): void {
     // this.getAllTags();
     this.baseUrl = window.location.origin;
   }
-
+  uniqueWings:any[]=[];
   login() {
 
     let obj = {
@@ -93,16 +95,25 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('agentId', res.loginResponse.loginResponse.userId);
           localStorage.setItem('agentName', res.loginResponse.loginResponse.username);
 
-          this.commonService.UserLogin( ).subscribe(() => { });
+          this.commonService.UserLogin().subscribe(() => { });
 
-          this.commonService.GetSkills(res.loginResponse?.loginResponse?.skills).subscribe((skillNames:any)=>{
+          this.commonService.GetSkills([1,2,3,4,5,6,7,8,9]).subscribe((skillNames:any)=>{
+            this.sendSkills.sendSkills(skillNames);
             res?.loginResponse?.loginResponse?.roles.forEach((role:any) => {
               var companyId = role.id;
               skillNames.forEach((skill:any) => {
                 var groupName = skill.skillName+'_'+companyId;
-                this.signalRService.joinGroup(groupName)
+                this.signalRService.joinGroup(groupName);
+
+                var wingName = skill.wing+'_'+skill.skillName
+                if(!this.uniqueWings.includes(wingName)) {
+                  
+                  this.uniqueWings.push(wingName)
+                }
+                
               });
-              
+              this.sendWings.sendWings(this.uniqueWings.toString())
+              localStorage.setItem('defaultSkills', this.uniqueWings.toString())
             });
           },
           (error)=>{

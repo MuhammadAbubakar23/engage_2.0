@@ -21,6 +21,7 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { ModulesService } from 'src/app/shared/services/module-service/modules.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { Location } from '@angular/common';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 
 @Component({
   selector: 'responder-header',
@@ -124,7 +125,8 @@ export class ResponderHeaderComponent implements OnInit {
     private headerCountService: HeaderCountService,
     private stor: StorageService,
     private queryStatusService: QueryStatusService,
-    private location: Location
+    private location: Location,
+    private getWing: GetWingsService
   ) {}
   unrespondedCount: number = 0;
   userInfo: any;
@@ -133,6 +135,8 @@ export class ResponderHeaderComponent implements OnInit {
   profileStatus: any[] = [];
   baseURL: string = '';
   KEBaseUrl: boolean = false;
+
+  wings = this.getWing.wings 
 
   ngOnInit(): void {
     this.baseURL = window.location.origin;
@@ -335,6 +339,7 @@ export class ResponderHeaderComponent implements OnInit {
       profileId: this.profileId,
       agentIds: 'string',
       platform: platform,
+      wings: this.wings
     };
 
     if (this.assignQuerryDto != null) {
@@ -923,6 +928,7 @@ export class ResponderHeaderComponent implements OnInit {
       toUserId: id,
       profileId: this.customerProfileId,
       platform: platform,
+      wings: this.wings
     };
   }
   assignToAnotherAgent() {
@@ -1096,7 +1102,7 @@ export class ResponderHeaderComponent implements OnInit {
     this.commentStatusDto.type = type;
     this.commentStatusDto.plateForm = localStorage.getItem('parent') || '{}';
     this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-    // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    this.commentStatusDto.wings = this.wings
 
     this.commonService.MarkAllAsRead(this.commentStatusDto).subscribe(
       (res: any) => {

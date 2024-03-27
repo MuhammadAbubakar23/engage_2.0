@@ -5,6 +5,8 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateListService } from 'src/app/services/UpdateListService/update-list.service';
 import { Router } from '@angular/router';
+import { SkillsService } from 'src/app/services/Skills/skills.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 
 @Component({
   selector: 'inbox-menu',
@@ -33,15 +35,20 @@ export class InboxMenuComponent implements OnInit {
   activeChannel: string = '';
   baseUrl: string = '';
   client: string = '';
+  allSkills:any[]=[];
   constructor(
     private filterService: FilterService,
     private commonService: CommonDataService,
     private unrespondedCountService: UnRespondedCountService,
     private updateListService: UpdateListService,
-    private router: Router
+    private router: Router,
+    private getSkills: SkillsService,
+    private sendWing: GetWingsService
   ) {}
 
   ngOnInit(): void {
+    
+    this.allSkills = this.getSkills.skills
     this.baseUrl = window.location.origin;
     if (this.baseUrl == 'https://engage.jazz.com.pk') {
       this.client = 'jazz';
@@ -309,5 +316,13 @@ export class InboxMenuComponent implements OnInit {
 
   updatevalue(string: any) {
     this.filterService.addTogglePanel(string);
+  }
+  updateWing(string:any){
+    
+    if(string == 'defaultSkills'){
+      this.sendWing.sendWings(localStorage.getItem('defaultSkills')|| '')
+    } else {
+      this.sendWing.sendWings(string);
+    }
   }
 }

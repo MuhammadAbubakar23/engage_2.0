@@ -686,7 +686,7 @@
                 <td style="width: 300px;">
                   <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
                     <a
-                      (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId)">
+                      (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings)">
                       <span>{{query?.userName?.split('<')[0] || query.user}} 
                         <i *ngIf="query.isVerified == 'true'" class="fa-solid fa-badge-check text-primary"></i>
                       </span>
@@ -697,7 +697,7 @@
                 </td>
                 <td>
                   <div class="maintext"
-                    (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId)">
+                    (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings)">
                     {{query.message < 110 ? query.message: (query.message | slice:0:110) +'...'}} </div>
                 </td>
                 <td class="px-1">

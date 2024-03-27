@@ -175,7 +175,8 @@ export class SlaComponent implements OnInit {
     userId: Number(localStorage.getItem('agentId')),
      profileId: profileId,
      agentIds: 'string',
-     platform: platform
+     platform: platform,
+     wings: ''
    };
 
    this.commondata.AssignQuerry(this.assignQuerryDto).subscribe((res:any) =>{

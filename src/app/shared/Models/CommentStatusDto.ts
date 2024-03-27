@@ -5,4 +5,5 @@ export class CommentStatusDto {
 //  userId: number=0;
   companyId: number=0;
   profileId:number=0;
+  wings:string="";
 }

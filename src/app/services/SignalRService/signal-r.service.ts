@@ -16,7 +16,6 @@ import { UpdateListService } from '../UpdateListService/update-list.service';
 import { UpdateMessagesService } from '../UpdateMessagesService/update-messages.service';
 import { GetNewPostService } from '../GetNewPostService/get-new-post.service';
 import { CompanyidService } from '../companyidService/companyid.service';
-import { JoinGroupService } from '../JoinGroup/join-group.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -25,14 +24,14 @@ export class SignalRService {
   addTags: any;
   removeTags: any;
   UnrespondedCount: any;
-  reply: any
+  reply: any;
 
   token = localStorage.getItem('token');
   signalRStatus = localStorage.getItem('signalRStatus');
   companyId: number = 658;
-  baseUrl: string = "";
+  baseUrl: string = '';
 
-  public hubconnection!: signalR.HubConnection;         
+  public hubconnection!: signalR.HubConnection;
   public connectionId!: string;
   public broadcastedData!: any[];
 
@@ -50,46 +49,37 @@ export class SignalRService {
     private queryStatusService: QueryStatusService,
     private removeAssignedQueryService: RemoveAssignedQuerryService,
     private applySentimentService: ApplySentimentService,
-    private getnewPostService: GetNewPostService,
     private comanyidService: CompanyidService,
-    private router: Router,
-    private joinGroupService : JoinGroupService
   ) {
-    this.baseUrl = window.location.origin
+    this.baseUrl = window.location.origin;
     if (this.baseUrl == 'https://keportal.enteract.live') {
       this.companyId = 651;
     } else if (this.baseUrl == 'https://engage.jazz.com.pk') {
       this.companyId = 650;
+    } else if (this.baseUrl == 'https://uiengage.enteract.app') {
+      this.companyId = 657;
+    } else if (this.baseUrl == 'https://tpplui.enteract.live') {
+      this.companyId = 652;
+    } else if (this.baseUrl == 'https://waengage.enteract.live') {
+      this.companyId = 653;
+    } else if (this.baseUrl == 'https://bzengage.enteract.live') {
+      this.companyId = 654;
+    } else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
+      this.companyId = 650;
     }
-    else if (this.baseUrl == 'https://uiengage.enteract.app') {
-      this.companyId = 657
-    }
-    else if (this.baseUrl == 'https://tpplui.enteract.live') {
-      this.companyId = 652
-    }
-    else if (this.baseUrl == 'https://waengage.enteract.live') {
-      this.companyId = 653
-    }
-    else if (this.baseUrl == 'https://bzengage.enteract.live') {
-      this.companyId = 654
-    }
-    else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
-      this.companyId = 650
-    }
-    this.comanyidService.sendcompanyid(this.companyId)
+    this.comanyidService.sendcompanyid(this.companyId);
   }
   flag: string = '';
 
   startConnection() {
-
     // this.flag = this.router.url.split('/')[1];
     // if(this.flag == 'all-inboxes'){
-    let team = this.storage.retrive("nocompass", "O").local;
+    let team = this.storage.retrive('nocompass', 'O').local;
     const options: IHttpConnectionOptions = {
       accessTokenFactory: () => {
         return 'Bearer ' + localStorage.getItem('token');
       },
-      headers: { "X-Super-Team": JSON.stringify(this.companyId) }
+      headers: { 'X-Super-Team': JSON.stringify(this.companyId) },
       // headers: { "X-Super-Team": JSON.stringify(team.id) }
     };
 
@@ -104,59 +94,56 @@ export class SignalRService {
       .then(() => this.getConnectionId())
       .catch((err) => console.log('Error while starting connection: ' + err));
     // }
-
-  };
+  }
   joinGroup(groupName: string): void {
-    debugger
+    ;
     if (this.hubconnection) {
-      this.hubconnection.invoke('JoinGroup', groupName).catch(err=>console.error(err));
+      this.hubconnection
+        .invoke('JoinGroup', groupName)
+        .catch((err) => console.error(err));
     }
   }
 
   reConnect() {
-    
-  //   // this.flag = this.router.url.split('/')[1];
-  //   // if(this.flag == 'all-inboxes'){
-  //   let team = this.storage.retrive("nocompass", "O").local;
-  //   const options: IHttpConnectionOptions = {
-  //     accessTokenFactory: () => {
-  //       return 'Bearer ' + localStorage.getItem('token');
-  //     },
-  //     headers: { "X-Super-Team": JSON.stringify(this.companyId) }
-  //     // headers: { "X-Super-Team": JSON.stringify(team.id) }
-  //   };
-
-  //   this.hubconnection = new signalR.HubConnectionBuilder()
-  //     .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
-  //     .withAutomaticReconnect()
-  //     .configureLogging(signalR.LogLevel.Information)
-  //     .build();
-  //   this.hubconnection
-  //     .start()
-  //     .then(() => console.log('Connection started'))
-  //     .then(() => this.getConnectionId())
-  //     .catch((err) => console.log('Error while starting connection: ' + err));
-  //   // }
+    //   // this.flag = this.router.url.split('/')[1];
+    //   // if(this.flag == 'all-inboxes'){
+    //   let team = this.storage.retrive("nocompass", "O").local;
+    //   const options: IHttpConnectionOptions = {
+    //     accessTokenFactory: () => {
+    //       return 'Bearer ' + localStorage.getItem('token');
+    //     },
+    //     headers: { "X-Super-Team": JSON.stringify(this.companyId) }
+    //     // headers: { "X-Super-Team": JSON.stringify(team.id) }
+    //   };
+    //   this.hubconnection = new signalR.HubConnectionBuilder()
+    //     .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
+    //     .withAutomaticReconnect()
+    //     .configureLogging(signalR.LogLevel.Information)
+    //     .build();
+    //   this.hubconnection
+    //     .start()
+    //     .then(() => console.log('Connection started'))
+    //     .then(() => this.getConnectionId())
+    //     .catch((err) => console.log('Error while starting connection: ' + err));
+    //   // }
   }
 
   public updateListAndDetailDataListener = () => {
-
-
     this.hubconnection.on('SendData', (data) => {
-
-      if (data.conversationQueues != null && data.conversationQueues.length > 0) {
-        this.updateListService.sendList(data.conversationQueues)
+      if (
+        data.conversationQueues != null &&
+        data.conversationQueues.length > 0
+      ) {
+        this.updateListService.sendList(data.conversationQueues);
       }
       if (data.signalRConversations != null) {
-
-        this.updateCommentsService.sendComment(data.signalRConversations)
+        this.updateCommentsService.sendComment(data.signalRConversations);
       }
       if (data.signalRDMConversations != null) {
-        this.updateMessagesService.sendMessage(data.signalRDMConversations)
+        this.updateMessagesService.sendMessage(data.signalRDMConversations);
       }
       if (data.signalRPostConversations != null) {
-        this.updateCommentsService.sendComment(data.signalRPostConversations
-        )
+        this.updateCommentsService.sendComment(data.signalRPostConversations);
       }
     });
   };
@@ -169,7 +156,6 @@ export class SignalRService {
   //   })
   // }
   public addTagDataListener = () => {
-
     this.hubconnection?.on('ApplyTags', (addTags) => {
       this.addTagService.sendTags(addTags);
     });
@@ -188,7 +174,6 @@ export class SignalRService {
   };
 
   public replyDataListener = () => {
-
     this.hubconnection?.on('QueryReply', (reply) => {
       this.replyService.sendReply(reply);
     });
@@ -226,8 +211,7 @@ export class SignalRService {
 
   public checkConnectionStatusListener = () => {
     this.hubconnection?.on('GetMessage', (status) => {
-      this.hubconnection.invoke('SetConnection').then((data) => {
-      });
+      this.hubconnection.invoke('SetConnection').then((data) => {});
     });
   };
 
@@ -240,10 +224,7 @@ export class SignalRService {
   public getConnectionId = () => {
     this.hubconnection.invoke('GetConnectionId').then((data) => {
       this.connectionId = data;
-      localStorage.setItem('signalRConnectionId', this.connectionId)
+      localStorage.setItem('signalRConnectionId', this.connectionId);
     });
   };
-
-  
- 
 }

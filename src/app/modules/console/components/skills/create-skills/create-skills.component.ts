@@ -256,6 +256,7 @@ export class CreateSkillsComponent implements OnInit {
   getTagsList() {
 
     this.commondata.GetTagsByCompanyId().subscribe((res: any) => {
+      
       console.log("Response", res)
       this.TagsLists = res
       console.log("this.tagsLsiting===>", this.TagsLists)

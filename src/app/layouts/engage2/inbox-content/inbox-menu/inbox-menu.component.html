@@ -7,7 +7,7 @@
     <ul class="list-group list-group-flush" id="inboxes-list" data-scrollbar="true" tabindex="-1"
       style="overflow-y: auto; outline: none;">
       <div class="scroll-content">
-        <a [routerLink]="['/all-inboxes/'+flag+'/all']" class="all-inboxes-menu list-group-item list-group-item-action"
+        <a [routerLink]="['/all-inboxes/'+flag+'/all']" (click)="updateWing('defaultSkills')" class="all-inboxes-menu list-group-item list-group-item-action"
           [class.active]="activeChannel == 'all'" value="all-conversation">
           <div class="iconButton medium skyBg">
             <i class="far fa-inbox"></i>
@@ -17,6 +17,23 @@
           </div>
           <span class="badge twltte-bg rounded-pill" *ngIf="UnResponded > 0">{{UnResponded}}</span>
         </a>
+
+
+        <a *ngFor="let channel of allSkills" (click)="updateWing(channel.wing+'_'+channel.skillName)" [routerLink]="['/all-inboxes/'+flag+'/'+channel.skillName]"
+            class="all-inboxes-menu list-group-item list-group-item-action">
+            <div [ngClass]="channel.color" [innerHTML]="channel.icon">
+            </div>
+            <div class="ms-2 me-auto">
+              <div class="black-text">{{channel.skillName}}</div>
+              <small class="coal">{{channel.wing}}</small>
+            </div>
+            <!-- <span class="badge twltte-bg rounded-pill">{{channel.count}}</span> -->
+          </a>
+
+
+
+
+
         <!-- <a (click)="updatevalue('allInboxesHeader')" [routerLink]="['/all-inboxes/'+flag+'/sla']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="all-slas">
             <div class="iconButton medium radicalBg">
@@ -47,7 +64,7 @@
 <br>
 <br>
 <br> -->
-        <ng-container *ngIf="client == 'localhost'">
+        <!-- <ng-container *ngIf="client == 'localhost'">
           <a [routerLink]="['/all-inboxes/'+flag+'/Email']"
             class="all-inboxes-menu list-group-item list-group-item-action" value="email">
             <div class="iconButton medium whiteBg">
@@ -111,7 +128,7 @@
             </div>
             <div class="ms-2 me-auto">
               <div>Facebook</div>
-              <!-- <small class="coal">/Ibex socialcrm</small> -->
+              <small class="coal">/Ibex socialcrm</small>
             </div>
             <span class="badge twltte-bg rounded-pill" *ngIf="FbUnResponded > 0">{{FbUnResponded}}</span>
           </a>
@@ -454,7 +471,7 @@
             </div>
             <span class="badge twltte-bg rounded-pill" *ngIf="WaUnResponded > 0">{{WaUnResponded}}</span>
           </a>
-        </ng-container>
+        </ng-container> -->
         <!-- <ul class="list-group-followup list-group-flush ms-1 p-0">
             <a (click)="updatevalue('allInboxesHeader')" [routerLink]="['/all-inboxes'saItProcurement']"
               class="list-group-item list-group-item-action d-flex align-items-center" value="itProcurement">

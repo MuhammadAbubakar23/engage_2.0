@@ -432,7 +432,7 @@ export class CommonDataService {
   }
 
   GetAllocatedProfiles() {
-    return this.http.get(this.CommonBaseUrl + this.getAllocatedProfiles);
+    return this.http.get(this.CommonBaseUrl + this.getAllocatedProfiles + '?Wings=ibex_scrm_facebook');
   }
 
   // CreateMessageTemplate(body: any) {
@@ -896,7 +896,9 @@ return this.http.get(`${this.ServiceBaseUrl}${this.sessionClose}?customerIdentif
   GetInteractionReport(body: any) {
     return this.http.post(this.CommonBaseUrl + this.getInteractionReport, body)
   }
- 
+  GetAllWing(){
+    return this.http.get(this.IdentityBaseUrl + this.getAllWing);
+  }
 }
 
 

@@ -52,6 +52,7 @@ import { UserInformationService } from 'src/app/services/userInformationService/
 import { FetchPostTypeService } from 'src/app/services/FetchPostType/fetch-post-type.service';
 // import newpost Services
 import { GetNewPostService } from 'src/app/services/GetNewPostService/get-new-post.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 declare var toggleEmojis: any;
 @Component({
   selector: 'app-facebook',
@@ -180,7 +181,8 @@ export class FacebookComponent implements OnInit {
     private renderer: Renderer2,
     private fetchPostType: FetchPostTypeService,
     // newpost Services
-    private newpostservice: GetNewPostService
+    private newpostservice: GetNewPostService,
+    private getWing: GetWingsService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -392,12 +394,14 @@ export class FacebookComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings
       };
       this.spinner1running = true;
       this.SpinnerService.show();
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
+          debugger
           if (Object.keys(res).length > 0) {
             // this.fbCmntReply = true;
             this.ConverstationDetailDto = res;
@@ -455,13 +459,13 @@ export class FacebookComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: this.queryType,
         text: '',
         flag: this.flag,
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings
       };
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         if (Object.keys(res).length > 0) {
@@ -517,13 +521,13 @@ export class FacebookComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: this.queryType,
         text: '',
         flag: this.flag,
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings
       };
 
       this.spinner1running = true;
@@ -1042,7 +1046,6 @@ export class FacebookComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         hasBlueTick:false,
-
         isAttachment: false,
         queryType: this.queryType,
         text: '',
@@ -1050,6 +1053,7 @@ export class FacebookComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings
       };
 
       this.spinner1running = true;
@@ -1118,13 +1122,13 @@ export class FacebookComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: this.queryType,
         text: '',
         flag: this.flag,
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings
       };
 
       this.SpinnerService.show();
@@ -1189,13 +1193,13 @@ export class FacebookComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: this.queryType,
         text: '',
         flag: this.flag,
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings
       };
 
       this.spinner1running = true;
@@ -1260,7 +1264,7 @@ export class FacebookComponent implements OnInit {
     // Step 1: Group the data based on disposition.createdDate
     const groupedData: { [key: string]: any[] } = {};
     data.forEach(item => {
-      const createdDate = item.dispositions.createdDate;
+      const createdDate = item?.dispositions?.createdDate;
       if (!groupedData[createdDate]) {
         groupedData[createdDate] = [];
       }
