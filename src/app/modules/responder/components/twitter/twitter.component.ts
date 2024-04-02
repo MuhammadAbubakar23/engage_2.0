@@ -8,9 +8,11 @@ import { CreateTicketService } from 'src/app/services/CreateTicketService/create
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { FetchPostTypeService } from 'src/app/services/FetchPostType/fetch-post-type.service';
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateMessagesService } from 'src/app/services/UpdateMessagesService/update-messages.service';
@@ -132,7 +134,9 @@ export class TwitterComponent implements OnInit {
     private userInfoService: UserInformationService,
     private el: ElementRef,
     private renderer: Renderer2,
-    private fetchPostType: FetchPostTypeService
+    private fetchPostType: FetchPostTypeService,
+    private getWing: GetWingsService,
+    private getRulesGroupIdsService : RulesGroupIdsService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -730,13 +734,14 @@ export class TwitterComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: 'TTR',
         text: '',
         flag: this.flag,
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.spinner1running = true;
@@ -802,13 +807,14 @@ export class TwitterComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: 'TTR',
         text: '',
         flag: this.flag,
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.spinner1running = true;
@@ -873,13 +879,14 @@ export class TwitterComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: 'TTR',
         text: '',
         flag: this.flag,
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.spinner1running = true;
@@ -969,7 +976,6 @@ export class TwitterComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         hasBlueTick:false,
-
         isAttachment: false,
         queryType: 'TDM',
         text: '',
@@ -977,6 +983,8 @@ export class TwitterComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.spinner1running = true;
@@ -1047,13 +1055,14 @@ export class TwitterComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: 'TDM',
         text: '',
         flag: this.flag,
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.SpinnerService.show();
@@ -1112,13 +1121,14 @@ export class TwitterComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: 'TDM',
         text: '',
         flag: this.flag,
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.spinner1running = true;
@@ -1186,13 +1196,14 @@ export class TwitterComponent implements OnInit {
         pageSize: 0,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: 'TM',
         text: '',
         userName: '',
         notInclude: '',
         include: '',
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -1257,13 +1268,14 @@ export class TwitterComponent implements OnInit {
         pageSize: 0,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: 'TM',
         text: '',
         userName: '',
         notInclude: '',
         include: '',
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.SpinnerService.show();
@@ -1324,12 +1336,13 @@ export class TwitterComponent implements OnInit {
         isAttachment: false,
         queryType: 'TM',
         hasBlueTick:false,
-
         text: '',
         userName: '',
         notInclude: '',
         include: '',
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.SpinnerService.show();

@@ -20,6 +20,7 @@ import { UserInformationService } from 'src/app/services/userInformationService/
 import { HeaderCountService } from 'src/app/services/headerCountService/header-count.service';
 import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
@@ -88,7 +89,8 @@ export class ConversationComponent implements OnInit {
     private userInfoService: UserInformationService,
     private headerCountService: HeaderCountService,
     private sendCount: ClosePanelService,
-    private getWing: GetWingsService
+    private getWing: GetWingsService,
+    private getRulesGroupIdsService : RulesGroupIdsService
   ) {
     this.criteria = {
       property: 'createdDate',
@@ -407,6 +409,7 @@ export class ConversationComponent implements OnInit {
         hasBlueTick: this.searchForm.value.hasBlueTick,
         flag: this.flag,
         wings: this.wings,
+        groupId:this.getRulesGroupIdsService.rulesGroupIds
       };
     }
 
@@ -489,6 +492,9 @@ export class ConversationComponent implements OnInit {
           localStorage.clear();
           this.router.navigateByUrl('/login');
           this.SpinnerService.hide();
+        } else {
+           this.SpinnerService.hide();
+           alert(error.error.message)
         }
       }
     );
@@ -513,6 +519,8 @@ export class ConversationComponent implements OnInit {
       userName: this.searchUser,
       notInclude: '',
       flag: '',
+      wings:'',
+      groupId:[]
     };
     this.commondata.GetCustomers(this.filterDto).subscribe((res: any) => {
       this.customersList = res;
@@ -599,6 +607,7 @@ export class ConversationComponent implements OnInit {
   }
 
   updateListDataListener(res: any) {
+    debugger
     const username = localStorage.getItem('username');
     if (this.searchUser == '') {
       if (this.currentUrl.split('/')[2] === 'focused') {

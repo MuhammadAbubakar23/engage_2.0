@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { GetDispositionHistoryDto } from 'src/app/shared/Models/GetDispositionHistoryDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 
@@ -17,7 +18,8 @@ export class ResponderHistoryComponent implements OnInit {
 
   customerProfileId = Number(localStorage.getItem('profileId'))
 
-  constructor(private commonService : CommonDataService) { }
+  constructor(private commonService : CommonDataService,
+    private getWing: GetWingsService) { }
 
   ngOnInit(): void {
     // this.getDispositionTags();
@@ -28,7 +30,8 @@ export class ResponderHistoryComponent implements OnInit {
     this.getDispositionHistoryDto = {
       customerProfileId : this.customerProfileId,
       pageNumber : 1,
-      pageSize : 50
+      pageSize : 50,
+      wings: this.getWing.wings
     }
     this.commonService.GetDispositionHistory(this.getDispositionHistoryDto).subscribe((res:any)=>{
       

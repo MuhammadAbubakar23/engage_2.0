@@ -782,9 +782,10 @@ export class CommonDataService {
     });
   }
 
-  RemoveAssignedQuery(ProfileId: any) {
-    const url = `${this.CommonBaseUrl}${this.removeAssignedQuery}?ProfileId=${ProfileId}`;
-    return this.http.get(url);
+  RemoveAssignedQuery(body: any) {
+    // const url = `${this.CommonBaseUrl}${this.removeAssignedQuery}?ProfileId=${ProfileId}`;
+    // return this.http.get(url);
+    return this.http.post(this.CommonBaseUrl + this.removeAssignedQuery, body);
   }
 
   getWordCloud(fromDate: string, toDate: string): Observable<any> {

@@ -95,40 +95,47 @@ export class SignalRService {
       .catch((err) => console.log('Error while starting connection: ' + err));
     // }
   }
-  joinGroup(groupName: string): void {
-    ;
+  joinGroup(groupArray: any) {
+    debugger
     if (this.hubconnection) {
-      this.hubconnection
+      groupArray.forEach((groupName:any) => {
+        this.hubconnection
         .invoke('JoinGroup', groupName)
-        .catch((err) => console.error(err));
+        .then(() => console.log(`Joined group ${groupName}`))
+        .catch(err => console.error(`Error while joining group ${groupName}: ${err}`));
+      });
+      
+    } else {
+      console.error('SignalR connection not established.');
     }
   }
 
   reConnect() {
-    //   // this.flag = this.router.url.split('/')[1];
-    //   // if(this.flag == 'all-inboxes'){
-    //   let team = this.storage.retrive("nocompass", "O").local;
-    //   const options: IHttpConnectionOptions = {
-    //     accessTokenFactory: () => {
-    //       return 'Bearer ' + localStorage.getItem('token');
-    //     },
-    //     headers: { "X-Super-Team": JSON.stringify(this.companyId) }
-    //     // headers: { "X-Super-Team": JSON.stringify(team.id) }
-    //   };
-    //   this.hubconnection = new signalR.HubConnectionBuilder()
-    //     .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
-    //     .withAutomaticReconnect()
-    //     .configureLogging(signalR.LogLevel.Information)
-    //     .build();
-    //   this.hubconnection
-    //     .start()
-    //     .then(() => console.log('Connection started'))
-    //     .then(() => this.getConnectionId())
-    //     .catch((err) => console.log('Error while starting connection: ' + err));
-    //   // }
+      // // this.flag = this.router.url.split('/')[1];
+      // // if(this.flag == 'all-inboxes'){
+      // let team = this.storage.retrive("nocompass", "O").local;
+      // const options: IHttpConnectionOptions = {
+      //   accessTokenFactory: () => {
+      //     return 'Bearer ' + localStorage.getItem('token');
+      //   },
+      //   headers: { "X-Super-Team": JSON.stringify(this.companyId) }
+      //   // headers: { "X-Super-Team": JSON.stringify(team.id) }
+      // };
+      // this.hubconnection = new signalR.HubConnectionBuilder()
+      //   .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
+      //   .withAutomaticReconnect()
+      //   .configureLogging(signalR.LogLevel.Information)
+      //   .build();
+      // this.hubconnection
+      //   .start()
+      //   .then(() => console.log('Connection started'))
+      //   .then(() => this.getConnectionId())
+      //   .catch((err) => console.log('Error while starting connection: ' + err));
+      // // }
   }
 
   public updateListAndDetailDataListener = () => {
+    debugger
     this.hubconnection.on('SendData', (data) => {
       if (
         data.conversationQueues != null &&

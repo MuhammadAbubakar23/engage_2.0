@@ -18,9 +18,11 @@ import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
@@ -193,7 +195,9 @@ export class ChannelComponent implements OnInit {
     private getQueryTypeService: GetQueryTypeService,
     private router: Router,
     private stor: StorageService,
-    private userInfoService: UserInformationService
+    private userInfoService: UserInformationService,
+    private getWing: GetWingsService,
+    private getRulesGroupIdsService : RulesGroupIdsService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -492,10 +496,11 @@ export class ChannelComponent implements OnInit {
         text: '',
         flag: this.flag,
         hasBlueTick:false,
-
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -556,7 +561,6 @@ export class ChannelComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         hasBlueTick:false,
-
         isAttachment: false,
         queryType: 'TTR',
         text: '',
@@ -564,6 +568,8 @@ export class ChannelComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         if (Object.keys(res).length > 0) {
@@ -624,6 +630,8 @@ export class ChannelComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.spinner1running = true;
@@ -691,12 +699,13 @@ export class ChannelComponent implements OnInit {
         isAttachment: false,
         queryType: 'TDM',
         hasBlueTick:false,
-
         text: '',
         flag: this.flag,
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.spinner1running = true;
@@ -771,12 +780,13 @@ export class ChannelComponent implements OnInit {
         isAttachment: false,
         queryType: 'TDM',
         hasBlueTick:false,
-
         text: '',
         flag: this.flag,
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.SpinnerService.show();
@@ -837,7 +847,6 @@ export class ChannelComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         hasBlueTick:false,
-
         isAttachment: false,
         queryType: 'TDM',
         text: '',
@@ -845,6 +854,8 @@ export class ChannelComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.spinner1running = true;
@@ -916,13 +927,14 @@ export class ChannelComponent implements OnInit {
         pageSize: 0,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: 'TM',
         text: '',
         userName: '',
         notInclude: '',
         include: '',
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -986,7 +998,6 @@ export class ChannelComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         hasBlueTick:false,
-
         isAttachment: false,
         queryType: 'TM',
         text: '',
@@ -994,6 +1005,8 @@ export class ChannelComponent implements OnInit {
         notInclude: '',
         include: '',
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.SpinnerService.show();
@@ -1053,13 +1066,14 @@ export class ChannelComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: 'TM',
         text: '',
         userName: '',
         notInclude: '',
         include: '',
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.SpinnerService.show();

@@ -21,6 +21,10 @@ import { ScheduleComponent } from './right-sidebar-components/schedule/schedule.
 import { TaskComponent } from './right-sidebar-components/task/task.component';
 import { TicketsComponent } from './right-sidebar-components/tickets/tickets.component';
 import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
+import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
+import { SkillsService } from 'src/app/services/Skills/skills.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
+import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 
 @Component({
   selector: 'app-inboxes',
@@ -44,10 +48,47 @@ export class InboxesComponent implements OnInit {
     private sharedService: SharedService,
     private rightNavService: RightNavService,
     private closePanelService: ClosePanelService,
-    private toggleService : ToggleService
-  ) {}
+    private toggleService : ToggleService,
+    private commonService : CommonDataService,
+    private sendSkills : SkillsService,
+    private sendWings : GetWingsService,
+    private signalRService : SignalRService
 
+  ) {}
+groupArray:any[]=[];
+uniqueWings:any[]=[];
   ngOnInit(): void {
+    // this.commonService.GetSkills([1,2,3,4,5,6,7,8,9]).subscribe((skillNames:any)=>{
+    //   this.sendSkills.sendSkills(skillNames);
+    //   // res?.loginResponse?.loginResponse?.roles.forEach((role:any) => {
+    //     // var companyId = role.id;
+    //     var companyId = 658;
+    //     skillNames.forEach((skill:any) => {
+    //       var groupName = skill.skillName+'_'+companyId;
+    //       // this.signalRService.joinGroup(groupName);
+    //       if(!this.groupArray.includes(groupName)) {
+            
+    //         this.groupArray.push(groupName)
+    //       }
+    //       var wingName = skill.wing+'_'+skill.skillName
+    //       if(!this.uniqueWings.includes(wingName)) {
+            
+    //         this.uniqueWings.push(wingName)
+    //       }
+          
+    //     });
+    //     this.sendWings.sendWings(this.uniqueWings.toString())
+    //     localStorage.setItem('defaultSkills', this.uniqueWings.toString())
+    //   // });
+    //   debugger
+    //   // resolve(this.groupArray);
+    //   this.signalRService.joinGroup(this.groupArray)
+    // },
+    // (error)=>{
+    // debugger
+    //   // reject(error);
+    // })
+
     this.route.params.subscribe((routeParams) => {
       if(routeParams['flag'] != undefined && routeParams['flag'] != "undefined"){
         this.componentName = routeParams['flag'];

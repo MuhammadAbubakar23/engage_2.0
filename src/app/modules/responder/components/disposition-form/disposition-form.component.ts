@@ -8,6 +8,7 @@ import { ModulesService } from 'src/app/shared/services/module-service/modules.s
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { DatePipe } from '@angular/common';
 import { constant } from 'lodash';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 
 
 @Component({
@@ -34,7 +35,8 @@ export class DispositionFormComponent implements OnInit {
     private toggleService : ToggleService,
     private lodeModuleService : ModulesService,
     private stor : StorageService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private getWing: GetWingsService) { }
 
   platform = localStorage.getItem('parent');
   agentId = Number(localStorage.getItem('agentId'))
@@ -50,7 +52,7 @@ export class DispositionFormComponent implements OnInit {
       customerProfileId: [''],
       follow_Up_Date: [null],
       comment: ['Completed', Validators.required],
-
+      wings:[this.getWing.wings],
       user: [''],
       plateFrom: [''],
       userId: [''],
@@ -95,6 +97,7 @@ export class DispositionFormComponent implements OnInit {
       customerProfileId: this.customerProfileId,
       follow_Up_Date: this.dispositionForm.value.follow_Up_Date,
       comment: this.dispositionForm.value.comment,
+      wings:this.getWing.wings,
       completedData : 
         {
           user: this.userId ||'{}',

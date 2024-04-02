@@ -17,6 +17,8 @@ import { SharedService } from 'src/app/services/SharedService/shared.service'
 import { LikeByAdminDto } from '../Models/LikeByAdminDto';
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 
 @Component({
   selector: 'app-minimized-chat-widget',
@@ -79,7 +81,9 @@ export class MinimizedChatWidgetComponent implements OnInit {
     private leftsidebar : LeftsidebarExpandedService,
     private sharedService  : SharedService,
     private createTicketService: CreateTicketService,
-    private getQueryTypeService : GetQueryTypeService
+    private getQueryTypeService : GetQueryTypeService,
+    private getWing: GetWingsService,
+    private getRulesGroupIdsService : RulesGroupIdsService
     
   ) {}
 
@@ -111,13 +115,14 @@ export class MinimizedChatWidgetComponent implements OnInit {
       pageSize: 0,
       isAttachment: false,
       hasBlueTick:false,
-
       queryType: this.queryType,
       text: '',
       userName: '',
       notInclude: '',
       include: '',
       flag: '',
+      wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
     };
     this.SpinnerService.show();
     this.commondata
@@ -152,6 +157,8 @@ export class MinimizedChatWidgetComponent implements OnInit {
         notInclude: '',
         include: '',
         flag: '',
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
       this.SpinnerService.show();
       this.commondata

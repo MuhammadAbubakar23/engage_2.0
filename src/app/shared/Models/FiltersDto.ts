@@ -13,8 +13,9 @@ export class FiltersDto {
   notInclude:String="";
   include:String="";
   flag:String="";
-  wings?:String="";
+  wings:String="";
   hasBlueTick:boolean=false;
+  groupId:any;
   }
 
 export class FiltersDtolocal {
@@ -33,4 +34,6 @@ export class FiltersDtolocal {
   notInclude: String = "";
   include: String = "";
   flag: String = "";
+  wings: String = "";
+  groupId:any;
 }

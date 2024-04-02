@@ -4,6 +4,7 @@ export class DispositionFormDto {
     customerProfileId:number = 0;
     comment:string = '';
     follow_Up_Date:any = null;
+    wings:string='';
     completedData: CompletedDataDto = new CompletedDataDto();
   }
 

@@ -40,6 +40,8 @@ import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-qu
 import { Router } from '@angular/router';
 import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 
 @Component({
   selector: 'app-instagram',
@@ -142,7 +144,9 @@ export class InstagramComponent implements OnInit {
     private userInfoService: UserInformationService,
     private stor: StorageService,
     private el: ElementRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private getWing: GetWingsService,
+    private getRulesGroupIdsService : RulesGroupIdsService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -426,6 +430,8 @@ export class InstagramComponent implements OnInit {
         notInclude: '',
         include: '',
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -494,12 +500,13 @@ export class InstagramComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         hasBlueTick:false,
-
         text: '',
         userName: '',
         notInclude: '',
         include: '',
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -564,12 +571,13 @@ export class InstagramComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         hasBlueTick:false,
-
         text: '',
         userName: '',
         notInclude: '',
         include: '',
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -1298,13 +1306,14 @@ removeTagDataListener() {
         pageSize: this.pageSize,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: this.queryType,
         text: '',
         userName: '',
         notInclude: '',
         include: '',
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.SpinnerService.show();
@@ -1372,11 +1381,12 @@ removeTagDataListener() {
         queryType: this.queryType,
         text: '',
         hasBlueTick:false,
-
         userName: '',
         notInclude: '',
         include: '',
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.SpinnerService.show();
@@ -1442,12 +1452,13 @@ removeTagDataListener() {
         isAttachment: false,
         queryType: this.queryType,
         hasBlueTick:false,
-
         text: '',
         userName: '',
         notInclude: '',
         include: '',
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.SpinnerService.show();

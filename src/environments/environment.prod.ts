@@ -1,3 +1,7 @@
+// This file can be replaced during build by using the `fileReplacements` array.
+// `ng build` replaces `environment.ts` with `environment.prod.ts`.
+// The list of file replacements can be found in `angular.json`.
+
 export const environment = {
   production: true,
   fetchIntegrate: 'true',
@@ -37,15 +41,12 @@ export const environment = {
   // For KE
   //   IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
   // //  IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
-  //   IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
-  // //  IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
   // CommonBaseUrl: 'https://comservices.enteract.live/api/',
   // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
   // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
   // ServiceBaseUrl: '',
   // consoleBaseUrl: 'https://console.enteract.live/api/',
   // botBaseUrl:'',
-
 
 
   // For Jazz
@@ -91,23 +92,22 @@ export const environment = {
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
 
   // For Testing
-  IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
-  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
-  ServiceBaseUrl: '',
-  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
-  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
-  botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
+  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  // ServiceBaseUrl: '',
+  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
 
   //for statging / Internal :companyId 650
-  //  IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
-  // // IdentityBaseUrl:'http://10.111.11.57:45455/api/',
-  // CommonBaseUrl: 'https://comrox.enteract.app/api/',
-  // ServiceBaseUrl: '',
-  // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  // consoleBaseUrl: 'https://conrox.enteract.app/api/',
-  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
+  CommonBaseUrl: 'https://comrox.enteract.app/api/',
+  ServiceBaseUrl: '',
+  SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  consoleBaseUrl: 'https://conrox.enteract.app/api/',
+  botBaseUrl: 'https://bot-engage.enteract.app/api/',
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
@@ -177,17 +177,15 @@ export const environment = {
       addEntractRoute: 'EnteractRoute/Add',
       updateEntractRoute: 'EnteractRoute/Update',
       deleteEntractRoute: 'EnteractRoute/Delete',
-      getSkills: 'Skill/GetAll',
+      getAllSkills: 'Skill/GetAll',
       addSkill: 'Skill/Add',
       deleteSkill: 'Skill/Delete',
-      getAllWing: 'Teams/GetAllWing',
-
 
       // getTagsAll: 'Tags/GetAll',
       getTagsByCompanyId: 'Tags/GetTagsByCompayId',
       updateSkill: 'Skill/Update',
       getSkillsbyId: 'Skill/GetById',
-      getUserSkills: 'Skill/GetSkills',
+      getSkills: 'Skill/GetSkills',
       getAllProfile: 'Profile/GetAll',
       addProfile: 'Profile/Add',
       attachFacebookPage: 'ProfileManagement/RegisterProfile',
@@ -214,6 +212,7 @@ export const environment = {
       teamGetById: 'Teams/FetchTeamById',
       getTeamType: 'Teams/GetTypes',
       deleteMultipleTeams: 'Teams/DeleteMultiple',
+      getAllWing: 'Teams/GetAllWing',
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',
@@ -370,3 +369,12 @@ export const environment = {
     },
   },
 };
+
+/*
+ * For easier debugging in development mode, you can import the following file
+ * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
+ *
+ * This import should be commented out in production mode because it will have a negative impact
+ * on performance if an error is thrown.
+ */
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

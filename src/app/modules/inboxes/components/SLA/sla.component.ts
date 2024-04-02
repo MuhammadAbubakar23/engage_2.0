@@ -109,6 +109,8 @@ export class SlaComponent implements OnInit {
       notInclude: '',
       include: '',
       flag: '',
+      wings:'',
+      groupId:[]
     };
     this.SpinnerService.show();
     this.commondata

@@ -5,6 +5,8 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 @Component({
   selector: 'inbox-header',
   templateUrl: './inbox-header.component.html',
@@ -19,7 +21,9 @@ export class InboxHeaderComponent implements OnInit {
     private commonService: CommonDataService,
     private reviceTotalCountServices:ClosePanelService,
     private cd:ChangeDetectorRef,
-    private _route: Router) { }
+    private _route: Router,
+    private getWing: GetWingsService,
+    private getRulesGroupIdsService : RulesGroupIdsService) { }
 
   ngOnInit(): void {
 
@@ -63,11 +67,13 @@ export class InboxHeaderComponent implements OnInit {
         userName: "string",
         include: "string",
         pageNumber: 0,
-        pageSize: 0
+        pageSize: 0,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       }
-      // this.commonService.GetFollowUpCount(obj).subscribe((res:any)=>{
-      //   this.followUpCount = res
-      // })
+      this.commonService.GetFollowUpCount(obj).subscribe((res:any)=>{
+        this.followUpCount = res
+      })
     }
 
   filterDto = new FiltersDto();
@@ -92,6 +98,8 @@ export class InboxHeaderComponent implements OnInit {
       notInclude: '',
       include: '',
       flag: '',
+      wings:'',
+      groupId:[]
     };
     this.commonService.GetConversationList(this.filterDto).subscribe((res:any)=>{
       

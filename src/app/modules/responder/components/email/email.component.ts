@@ -14,9 +14,11 @@ import { AddTagService } from 'src/app/services/AddTagService/add-tag.service';
 import { ApplySentimentService } from 'src/app/services/ApplySentimentService/apply-sentiment.service';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
 import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
@@ -101,7 +103,9 @@ export class EmailComponent implements OnInit {
     private getQueryTypeService: GetQueryTypeService,
     private router : Router,
     private stor : StorageService,
-    private userInfoService: UserInformationService
+    private userInfoService: UserInformationService,
+    private getWing: GetWingsService,
+    private getRulesGroupIdsService : RulesGroupIdsService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = null;
@@ -394,6 +398,8 @@ export class EmailComponent implements OnInit {
         notInclude: "",
         include: "",
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.SpinnerService.show();
@@ -532,12 +538,13 @@ export class EmailComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         hasBlueTick:false,
-
         text : "",
         userName: "",
         notInclude: "",
         include: "",
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.SpinnerService.show();
@@ -668,13 +675,14 @@ export class EmailComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: this.queryType,
         text : "",
         userName: "",
         notInclude: "",
         include: "",
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.SpinnerService.show();

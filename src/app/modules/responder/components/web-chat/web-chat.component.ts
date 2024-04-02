@@ -5,6 +5,8 @@ import { Tooltip } from 'bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
@@ -49,7 +51,9 @@ export class WebChatComponent implements OnInit {
     private ticketResponseService : TicketResponseService,
     private getQueryTypeService : GetQueryTypeService,
     private router: Router,
-    private stor: StorageService
+    private stor: StorageService,
+    private getWing: GetWingsService,
+    private getRulesGroupIdsService : RulesGroupIdsService
     ) {
       // this.criteria={
       //   property: 'createdDate',
@@ -109,12 +113,13 @@ export class WebChatComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         hasBlueTick:false,
-
         text : "",
         userName: '',
         notInclude: '',
         include: '',
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
       this.SpinnerService.show();
       this.commondata
@@ -164,13 +169,14 @@ export class WebChatComponent implements OnInit {
         pageSize: 0,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: this.queryType,
         text : "",
         userName: '',
         notInclude: '',
         include: '',
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
       this.SpinnerService.show();
       this.commondata

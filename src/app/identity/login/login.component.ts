@@ -80,14 +80,6 @@ export class LoginComponent implements OnInit {
     this.spinnerService.show();
     this.authService.login(obj).subscribe(
       (res: any) => {
-
-        //only for testing purpose, remove after that
-        // res = { 'loginResponse': res }
-        // res = { 'loginResponse': res }
-        // res['isTwoFAEnabled'] = false;
-        //only for testing purpose, remove after that
-
-
         if (res.status == false || res.isTwoFAEnabled== false) {
           this.stor.store('token', res.loginResponse.loginResponse.accessToken);
           this.stor.store('main', res.loginResponse.loginResponse);
@@ -97,28 +89,7 @@ export class LoginComponent implements OnInit {
 
           this.commonService.UserLogin().subscribe(() => { });
 
-          this.commonService.GetSkills([1,2,3,4,5,6,7,8,9]).subscribe((skillNames:any)=>{
-            this.sendSkills.sendSkills(skillNames);
-            res?.loginResponse?.loginResponse?.roles.forEach((role:any) => {
-              var companyId = role.id;
-              skillNames.forEach((skill:any) => {
-                var groupName = skill.skillName+'_'+companyId;
-                this.signalRService.joinGroup(groupName);
-
-                var wingName = skill.wing+'_'+skill.skillName
-                if(!this.uniqueWings.includes(wingName)) {
-                  
-                  this.uniqueWings.push(wingName)
-                }
-                
-              });
-              this.sendWings.sendWings(this.uniqueWings.toString())
-              localStorage.setItem('defaultSkills', this.uniqueWings.toString())
-            });
-          },
-          (error)=>{
-            console.log("error", error)
-          }) 
+          
 
           this.router.navigateByUrl('all-inboxes/focused/all');
           this.spinnerService.hide();

@@ -8,9 +8,11 @@ import { ApplySentimentService } from 'src/app/services/ApplySentimentService/ap
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateMessagesService } from 'src/app/services/UpdateMessagesService/update-messages.service';
@@ -141,10 +143,11 @@ export class PlaystoreComponent implements OnInit {
     private getQueryTypeService: GetQueryTypeService,
     private router: Router,
     private stor: StorageService,
-    private userInfoService: UserInformationService
-    ,
+    private userInfoService: UserInformationService,
     private el: ElementRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private getWing: GetWingsService,
+    private getRulesGroupIdsService : RulesGroupIdsService
   ) { }
   @HostListener('input', ['$event.target'])
   onInput(textarea: HTMLTextAreaElement) {
@@ -411,12 +414,13 @@ export class PlaystoreComponent implements OnInit {
         isAttachment: false,
         queryType: this.queryType,
         hasBlueTick:false,
-
         text: '',
         flag: this.flag,
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -470,7 +474,6 @@ export class PlaystoreComponent implements OnInit {
         plateForm: 'PlayStore',
         pageNumber: this.pageNumber,
         hasBlueTick:false,
-
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
@@ -479,6 +482,8 @@ export class PlaystoreComponent implements OnInit {
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.SpinnerService.show();
@@ -531,13 +536,14 @@ export class PlaystoreComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         hasBlueTick:false,
-
         queryType: this.queryType,
         text: '',
         flag: this.flag,
         userName: '',
         notInclude: '',
         include: '',
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
 
       this.spinner1running = true;

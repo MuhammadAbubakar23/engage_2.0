@@ -41,6 +41,8 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
 import { CompanyidService } from 'src/app/services/companyidService/companyid.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 @Component({
   selector: 'app-whatsapp-details',
   templateUrl: './whatsapp-details.component.html',
@@ -135,7 +137,9 @@ export class WhatsappDetailsComponent implements OnInit {
     private stor: StorageService,
     private el: ElementRef,
     private renderer: Renderer2,
-    private companyidServices:CompanyidService
+    private companyidServices:CompanyidService,
+    private getWing: GetWingsService,
+    private getRulesGroupIdsService : RulesGroupIdsService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -376,6 +380,8 @@ export class WhatsappDetailsComponent implements OnInit {
         notInclude: '',
         include: '',
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
       this.spinner1running = true;
       this.SpinnerService.show();
@@ -443,6 +449,8 @@ export class WhatsappDetailsComponent implements OnInit {
         notInclude: '',
         include: '',
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
       this.SpinnerService.show();
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
@@ -502,6 +510,8 @@ export class WhatsappDetailsComponent implements OnInit {
         notInclude: '',
         include: '',
         flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       };
       this.SpinnerService.show();
       this.commondata
