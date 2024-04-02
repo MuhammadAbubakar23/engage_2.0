@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
+import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
@@ -54,15 +55,17 @@ export class ResponderMenuComponent implements OnInit {
     private commondata: CommonDataService,
     private unrespondedCountService: UnRespondedCountService,
     private updateCommentsService: UpdateCommentsService,
-    private queryStatusService: QueryStatusService
+    private queryStatusService: QueryStatusService,
+    private getWing: GetWingsService,
   ) {
     // this.criteria = {
     //   property: 'createdDate',
     //   descending: true,
     // };
   }
-
+  wings:string='';
   ngOnInit(): void {
+    this.wings = this.getWing.wings;
     this.TodayDate = new Date();
 
     this.getAllocatedProfiles();
@@ -144,7 +147,7 @@ export class ResponderMenuComponent implements OnInit {
   userSpecificAllocatedProfiles: any[] = [];
   getAllocatedProfiles() {
     this.SpinnerService.show();
-    this.commondata.GetAllocatedProfiles().subscribe((res: any) => {
+    this.commondata.GetAllocatedProfiles(this.wings).subscribe((res: any) => {
       this.SpinnerService.hide();
       this.AllocatedProfiles = res;
 
@@ -211,7 +214,7 @@ export class ResponderMenuComponent implements OnInit {
         profileId: profileId,
         agentIds: 'string',
         platform: platform,
-        wings: ''
+        wings: this.getWing.wings,
       };
 
       this.commondata.AssignQuerry(this.assignQuerryDto).subscribe(

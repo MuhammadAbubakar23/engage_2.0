@@ -161,6 +161,7 @@ export class WhatsappDetailsComponent implements OnInit {
       contentType: new FormControl(this.ReplyDto.contentType),
       userProfileId: new FormControl(this.ReplyDto.userProfileId),
       responseByName: new FormControl(this.ReplyDto.responseByName),
+      groupId: new FormControl(this.ReplyDto.groupId),
     });
   }
   handleTextareaKeyDown(event: KeyboardEvent) {
@@ -1067,28 +1068,35 @@ export class WhatsappDetailsComponent implements OnInit {
   }
 
   whatsappStatus(comId: any, type: string) {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = type;
-    this.commentStatusDto.plateForm = 'WhatsApp';
-    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-    // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    this.commentStatusDto = {
+      id: comId,
+      type: type,
+      plateForm: 'WhatsApp',
+      profileId: Number(localStorage.getItem('profileId')),
+      wings: this.getWing.wings,
+      groupId: this.getRulesGroupIdsService.rulesGroupIds,
+    };
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {
         this.querryCompleted = true;
       });
   }
-  queryCompleted(comId: any) {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = 'WM';
-    this.commentStatusDto.plateForm = 'WhatsApp';
-    // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
-    this.commondata
-      .QueryCompleted(this.commentStatusDto)
-      .subscribe((res: any) => {
-        this.querryCompleted = true;
-      });
-  }
+  // queryCompleted(comId: any) {
+  //   this.commentStatusDto = {
+  //     id: comId,
+  //     type: 'WM',
+  //     plateForm: 'WhatsApp',
+  //     profileId: Number(localStorage.getItem('profileId')),
+  //     wings: this.getWing.wings,
+  //     groupId: this.getRulesGroupIdsService.rulesGroupIds,
+  //   };
+  //   this.commondata
+  //     .QueryCompleted(this.commentStatusDto)
+  //     .subscribe((res: any) => {
+  //       this.querryCompleted = true;
+  //     });
+  // }
   userProfileId = 0;
 
   SendWhatsappInformation(comId: any) {
@@ -1143,6 +1151,7 @@ export class WhatsappDetailsComponent implements OnInit {
         profileId: this.profileId,
         userProfileId: this.userProfileId,
         responseByName: this.senderId,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       });
 
       formData.append(

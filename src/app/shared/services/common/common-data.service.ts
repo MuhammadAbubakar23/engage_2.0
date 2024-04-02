@@ -431,8 +431,8 @@ export class CommonDataService {
     });
   }
 
-  GetAllocatedProfiles() {
-    return this.http.get(this.CommonBaseUrl + this.getAllocatedProfiles + '?Wings=ibex_scrm_facebook');
+  GetAllocatedProfiles(params:string) {
+    return this.http.get(this.CommonBaseUrl + this.getAllocatedProfiles + '?Wings='+params);
   }
 
   // CreateMessageTemplate(body: any) {

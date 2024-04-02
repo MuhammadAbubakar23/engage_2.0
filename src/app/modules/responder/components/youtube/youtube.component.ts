@@ -545,6 +545,7 @@ export class YoutubeComponent implements OnInit {
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
     responseByName: new FormControl(this.ReplyDto.responseByName),
+    groupId: new FormControl(this.ReplyDto.groupId),
   });
   profileId: string = '';
   profilePageId: string = '';
@@ -601,6 +602,7 @@ export class YoutubeComponent implements OnInit {
         profilePageId: this.profilePageId,
         userProfileId: this.userProfileId,
         responseByName: this.pageName,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       });
 
       formData.append(
@@ -767,11 +769,14 @@ export class YoutubeComponent implements OnInit {
     textarea.style.height = textarea.scrollHeight + 'px';
   }
   commentStatus(comId: any) {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = 'YC';
-    this.commentStatusDto.plateForm = 'Youtube';
-    // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
-    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
+    this.commentStatusDto = {
+      id: comId,
+      type: 'YC',
+      plateForm: 'Facebook',
+      profileId: Number(localStorage.getItem('profileId')),
+      wings: this.getWing.wings,
+      groupId: this.getRulesGroupIdsService.rulesGroupIds,
+    };
     this.commondata.CommentRespond(this.commentStatusDto).subscribe(
       (res: any) => {
       },
@@ -781,17 +786,21 @@ export class YoutubeComponent implements OnInit {
     );
   }
 
-  queryCompleted(comId: any) {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = 'YC';
-    this.commentStatusDto.plateForm = 'Youtube';
-    //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
-    this.commondata
-      .QueryCompleted(this.commentStatusDto)
-      .subscribe((res: any) => {
-        this.querryCompleted = true;
-      });
-  }
+  // queryCompleted(comId: any) {
+  //   this.commentStatusDto = {
+  //     id: comId,
+  //     type: 'YC',
+  //     plateForm: 'Facebook',
+  //     profileId: Number(localStorage.getItem('profileId')),
+  //     wings: this.getWing.wings,
+  //     groupId: this.getRulesGroupIdsService.rulesGroupIds,
+  //   };
+  //   this.commondata
+  //     .QueryCompleted(this.commentStatusDto)
+  //     .subscribe((res: any) => {
+  //       this.querryCompleted = true;
+  //     });
+  // }
 
   markAsCompleteExpanded(comId: any) {
     this.YoutubeData.forEach((abc: any) => {

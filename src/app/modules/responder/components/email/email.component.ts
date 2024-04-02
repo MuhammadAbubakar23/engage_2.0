@@ -126,6 +126,7 @@ export class EmailComponent implements OnInit {
       profileId: new FormControl(''),
       profilePageId: new FormControl(''),
       userProfileId: new FormControl(0),
+      groupId: new FormControl([]),
     });
   }
 
@@ -1197,7 +1198,8 @@ export class EmailComponent implements OnInit {
       contentType: this.postType,
       userProfileId: this.userProfileId,
       text: this.text,
-      profileId: this.profileId
+      profileId: this.profileId,
+      groupId: this.getRulesGroupIdsService.rulesGroupIds,
     });
 
     formData.append('CommentReply', JSON.stringify(this.emailReplyForm.value));
@@ -1393,29 +1395,35 @@ export class EmailComponent implements OnInit {
   }
 
   commentStatus(comId: any, type: any) {
+    this.commentStatusDto = {
+      id: comId,
+      type: type,
+      plateForm: localStorage.getItem('parent') || '{}',
+      profileId: Number(localStorage.getItem('profileId')),
+      wings: this.getWing.wings,
+      groupId: this.getRulesGroupIdsService.rulesGroupIds,
+    };
     
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = type;
-    // this.commentStatusDto.plateForm = this.parentPlatform;
-    this.commentStatusDto.plateForm = localStorage.getItem('parent') || '{}';
-    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {});
   }
 
-  queryCompleted(comId: any, type: any) {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = type;
-    this.commentStatusDto.plateForm = this.parentPlatform;
-  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
-    this.commondata
-      .QueryCompleted(this.commentStatusDto)
-      .subscribe((res: any) => {
-        this.querryCompleted = true;
-      });
-  }
+  // queryCompleted(comId: any, type: any) {
+  //   this.commentStatusDto = {
+  //     id: comId,
+  //     type: type,
+  //     plateForm: localStorage.getItem('parent') || '{}',
+  //     profileId: Number(localStorage.getItem('profileId')),
+  //     wings: this.getWing.wings,
+  //     groupId: this.getRulesGroupIdsService.rulesGroupIds,
+  //   };
+  //   this.commondata
+  //     .QueryCompleted(this.commentStatusDto)
+  //     .subscribe((res: any) => {
+  //       this.querryCompleted = true;
+  //     });
+  // }
   markAsComplete = false;
 
   markAsCompleteExpanded(comId: any) {

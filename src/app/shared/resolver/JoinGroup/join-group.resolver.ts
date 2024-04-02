@@ -7,6 +7,7 @@ import {
 import { Observable, of } from 'rxjs';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
+import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
 import { SkillsService } from 'src/app/services/Skills/skills.service';
 import { CommonDataService } from '../../services/common/common-data.service';
@@ -20,12 +21,13 @@ export class JoinGroupResolver implements Resolve<any> {
   rulesGroupIds:any[]=[];
   constructor(private commonService: CommonDataService, private sendSkills: SkillsService, private sendWings: GetWingsService,
     private signalRService: SignalRService,
-    private sendRulesGroupIdsService: RulesGroupIdsService){}
+    private sendRulesGroupIdsService: RulesGroupIdsService,
+    private getSkillIdsService: SkillIdsService){}
   resolve(): Promise<any> {
     
     return new Promise((resolve, reject)=>{
 
-      this.commonService.GetSkills([1,2,3]).subscribe((skillNames:any)=>{
+      this.commonService.GetSkills(this.getSkillIdsService.skillIds).subscribe((skillNames:any)=>{
         this.sendSkills.sendSkills(skillNames);
         // res?.loginResponse?.loginResponse?.roles.forEach((role:any) => {
           // var companyId = role.id;
@@ -36,7 +38,7 @@ export class JoinGroupResolver implements Resolve<any> {
             if(!this.groupArray.includes(groupName)) {
               this.groupArray.push(groupName)
             }
-            var wingName = skill.wing+'_'+skill.skillName
+            var wingName = skill.wing
             if(!this.uniqueWings.includes(wingName)) {
               this.uniqueWings.push(wingName)
             }

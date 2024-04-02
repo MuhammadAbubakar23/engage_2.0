@@ -421,7 +421,6 @@ export class InstagramComponent implements OnInit {
         plateForm: 'Instagram',
         pageNumber: this.pageNumber,
         hasBlueTick:false,
-
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
@@ -646,6 +645,7 @@ export class InstagramComponent implements OnInit {
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
     responseByName: new FormControl(this.ReplyDto.responseByName),
     instagramBusinessAccountId: new FormControl(this.ReplyDto.instagramBusinessAccountId),
+    groupId: new FormControl(this.ReplyDto.groupId),
   });
 
   profileId: string = '';
@@ -709,7 +709,8 @@ export class InstagramComponent implements OnInit {
         profilePageId: this.profilePageId,
         userProfileId: this.userProfileId,
         responseByName: this.pageName,
-        instagramBusinessAccountId: this.instagramBusinessAccountId
+        instagramBusinessAccountId: this.instagramBusinessAccountId,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds
       });
 
       formData.append(
@@ -748,26 +749,34 @@ export class InstagramComponent implements OnInit {
   }
 
   commentStatus(comId: number = 0, type: string = '') {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = type;
-    this.commentStatusDto.plateForm = 'Instagram';
-    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-    //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    this.commentStatusDto = {
+      id : comId,
+      type : type,
+      plateForm : 'Instagram',
+      profileId : Number(localStorage.getItem('profileId')),
+      wings: this.getWing.wings,
+      groupId: this.getRulesGroupIdsService.rulesGroupIds,
+    }
+    
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {});
   }
-  queryCompleted(comId: any, type: any) {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = type;
-    this.commentStatusDto.plateForm = 'Instagram';
-    //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
-    this.commondata
-      .QueryCompleted(this.commentStatusDto)
-      .subscribe((res: any) => {
-        this.querryCompleted = true;
-      });
-  }
+  // queryCompleted(comId: any, type: any) {
+  //   this.commentStatusDto = {
+  //     id : comId,
+  //     type : type,
+  //     plateForm : 'Instagram',
+  //     profileId : Number(localStorage.getItem('profileId')),
+  //     wings: this.getWing.wings,
+  //     groupId: this.getRulesGroupIdsService.rulesGroupIds,
+  //   }
+  //   this.commondata
+  //     .QueryCompleted(this.commentStatusDto)
+  //     .subscribe((res: any) => {
+  //       this.querryCompleted = true;
+  //     });
+  // }
   closeMentionedReply() {
     this.show = false;
     this.clearInputField();
@@ -1545,6 +1554,7 @@ removeTagDataListener() {
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
     responseByName: new FormControl(this.ReplyDto.responseByName),
     instagramBusinessAccountId: new FormControl(this.ReplyDto.instagramBusinessAccountId),
+    groupId: new FormControl(this.ReplyDto.groupId),
   });
 
   submitInstagramMessageReply() {
@@ -1571,7 +1581,8 @@ removeTagDataListener() {
         profilePageId: this.profilePageId,
         userProfileId: this.userProfileId,
         responseByName: this.pageName,
-        instagramBusinessAccountId: this.instagramBusinessAccountId
+        instagramBusinessAccountId: this.instagramBusinessAccountId,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       });
 
       formData.append(

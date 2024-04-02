@@ -440,11 +440,14 @@ export class MinimizedChatWidgetComponent implements OnInit {
   }
 
   commentStatus(comId: any) {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = 'YC';
-    this.commentStatusDto.plateForm = 'Youtube';
-    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    this.commentStatusDto = {
+      id: comId,
+      type: '',
+      plateForm: 'Facebook',
+      profileId: Number(localStorage.getItem('profileId')),
+      wings: this.getWing.wings,
+      groupId: this.getRulesGroupIdsService.rulesGroupIds,
+    };
     this.commondata.CommentRespond(this.commentStatusDto).subscribe(
       (res: any) => {
         this.getYoutubeData();

@@ -119,6 +119,7 @@ export class ConversationComponent implements OnInit {
   FlagForAssignToMe: string = '';
 
   ngOnInit(): void {
+    this.wings = this.getWing.wings;
     const date_fillter = localStorage.getItem('datefillter');
     if (date_fillter) {
       this.filterDtolocal = JSON.parse(date_fillter);
@@ -131,7 +132,7 @@ export class ConversationComponent implements OnInit {
     if (this.currentUrl.split('/')[2] == 'assigned_to_me') {
       this.SpinnerService.show();
 
-      this.commondata.GetAllocatedProfiles().subscribe(
+      this.commondata.GetAllocatedProfiles(this.wings).subscribe(
         (res: any) => {
           this.SpinnerService.hide();
           this.ConversationList = res;
@@ -276,7 +277,7 @@ export class ConversationComponent implements OnInit {
     //   this.platform = this.currentUrl.split('/')[3];
     // } else {
     
-    this.wings = this.getWing.wings;
+    
     this.flag = this.currentUrl.split('/')[2];
     this.platform = this.currentUrl.split('/')[3];
     // }

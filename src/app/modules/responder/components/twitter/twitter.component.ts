@@ -1448,10 +1448,14 @@ export class TwitterComponent implements OnInit {
   // }
 
   commentStatus(comId: any, type: any) {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = type;
-    this.commentStatusDto.plateForm = 'Twitter';
-    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
+    this.commentStatusDto = {
+      id: comId,
+      type: type,
+      plateForm: 'Twitter',
+      profileId: Number(localStorage.getItem('profileId')),
+      wings: this.getWing.wings,
+      groupId: this.getRulesGroupIdsService.rulesGroupIds,
+    };
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {});
@@ -1686,6 +1690,7 @@ export class TwitterComponent implements OnInit {
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
     responseByName: new FormControl(this.ReplyDto.responseByName),
+    groupId: new FormControl(this.ReplyDto.groupId),
   });
 
   text: string = '';
@@ -1723,6 +1728,7 @@ export class TwitterComponent implements OnInit {
         profilePageId: this.profilePageId,
         userProfileId: this.userProfileId,
         responseByName: this.pageName,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       });
 
       formData.append(
@@ -1838,6 +1844,7 @@ export class TwitterComponent implements OnInit {
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
     responseByName: new FormControl(this.ReplyDto.responseByName),
+    groupId: new FormControl(this.ReplyDto.groupId),
   });
   submitTwitterMessageReply() {
     if (this.twitterMsgId == 0) {
@@ -1872,6 +1879,7 @@ export class TwitterComponent implements OnInit {
         profilePageId: this.profilePageId,
         userProfileId: this.userProfileId,
         responseByName: this.pageName,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       });
 
       formData.append(
@@ -1943,6 +1951,7 @@ export class TwitterComponent implements OnInit {
         profilePageId: this.profilePageId,
         userProfileId: this.userProfileId,
         responseByName: this.pageName,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       });
 
       formData.append(
@@ -2128,17 +2137,21 @@ export class TwitterComponent implements OnInit {
     this.TDMReply = false;
   }
 
-  queryCompleted(comId: any, type: any) {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = type;
-    this.commentStatusDto.plateForm = 'Twitter';
-    // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
-    this.commondata
-      .QueryCompleted(this.commentStatusDto)
-      .subscribe((res: any) => {
-        this.querryCompleted = true;
-      });
-  }
+  // queryCompleted(comId: any, type: any) {
+  //   this.commentStatusDto = {
+  //     id: comId,
+  //     type: type,
+  //     plateForm: 'Twitter',
+  //     profileId: Number(localStorage.getItem('profileId')),
+  //     wings: this.getWing.wings,
+  //     groupId: this.getRulesGroupIdsService.rulesGroupIds,
+  //   };
+  //   this.commondata
+  //     .QueryCompleted(this.commentStatusDto)
+  //     .subscribe((res: any) => {
+  //       this.querryCompleted = true;
+  //     });
+  // }
 
   markAsComplete = false;
 

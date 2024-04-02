@@ -181,7 +181,6 @@ export class FacebookComponent implements OnInit {
     private el: ElementRef,
     private renderer: Renderer2,
     private fetchPostType: FetchPostTypeService,
-    // newpost Services
     private newpostservice: GetNewPostService,
     private getWing: GetWingsService,
     private getRulesGroupIdsService: RulesGroupIdsService
@@ -433,8 +432,7 @@ export class FacebookComponent implements OnInit {
                       createdDate,
                       items: groupedItems[createdDate],
                     };
-                  }
-                );
+                  });
               });
             });
 
@@ -1379,6 +1377,7 @@ export class FacebookComponent implements OnInit {
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
     responseByName: new FormControl(this.ReplyDto.responseByName),
+    groupId: new FormControl(this.ReplyDto.groupId),
   });
   // for new comment
   facebookNewReplyForm = new UntypedFormGroup({
@@ -1391,6 +1390,7 @@ export class FacebookComponent implements OnInit {
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
     responseByName: new FormControl(this.ReplyDto.responseByName),
+    groupId: new FormControl(this.ReplyDto.groupId),
   });
 
   facebookMessageReplyForm = new UntypedFormGroup({
@@ -1403,6 +1403,7 @@ export class FacebookComponent implements OnInit {
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
     responseByName: new FormControl(this.ReplyDto.responseByName),
+    groupId: new FormControl(this.ReplyDto.groupId),
   });
 
   profileId: string = '';
@@ -1506,6 +1507,7 @@ export class FacebookComponent implements OnInit {
         profilePageId: this.profilePageId,
         userProfileId: this.userProfileId,
         responseByName: this.pageName,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       });
 
       formData.append(
@@ -1579,6 +1581,7 @@ export class FacebookComponent implements OnInit {
         profilePageId: this.profilePageId,
         userProfileId: this.userProfileId,
         responseByName: this.pageName,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       });
 
       formData.append(
@@ -1663,6 +1666,7 @@ export class FacebookComponent implements OnInit {
         profilePageId: this.profilePageId,
         userProfileId: this.userProfileId,
         responseByName: this.pageName,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       });
 
       formData.append(
@@ -1909,27 +1913,29 @@ export class FacebookComponent implements OnInit {
       plateForm: 'Facebook',
       profileId: Number(localStorage.getItem('profileId')),
       wings: this.getWing.wings,
+      groupId: this.getRulesGroupIdsService.rulesGroupIds,
     };
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {});
   }
 
-  queryCompleted(comId: any, type: any) {
-    this.commentStatusDto = {
-      id: comId,
-      type: type,
-      plateForm: 'Facebook',
-      profileId: 0,
-      wings: this.getWing.wings,
-    };
+  // queryCompleted(comId: any, type: any) {
+  //   this.commentStatusDto = {
+  //     id: comId,
+  //     type: type,
+  //     plateForm: 'Facebook',
+  //     profileId: 0,
+  //     wings: this.getWing.wings,
+  //     groupId: this.getRulesGroupIdsService.rulesGroupIds,
+  //   };
 
-    this.commondata
-      .QueryCompleted(this.commentStatusDto)
-      .subscribe((res: any) => {
-        this.querryCompleted = true;
-      });
-  }
+  //   this.commondata
+  //     .QueryCompleted(this.commentStatusDto)
+  //     .subscribe((res: any) => {
+  //       this.querryCompleted = true;
+  //     });
+  // }
 
   likeByAdminDto = new LikeByAdminDto();
 

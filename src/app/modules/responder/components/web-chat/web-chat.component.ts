@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormControl, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Tooltip } from 'bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -230,7 +230,8 @@ export class WebChatComponent implements OnInit {
     mediaType: new UntypedFormControl(this.webChatReplyDto.mediaType),
     loggedInUserId: new UntypedFormControl(this.webChatReplyDto.loggedInUserId),
     replyMessage: new UntypedFormControl(this.webChatReplyDto.replyMessage),
-    loggedInUserName: new UntypedFormControl(this.webChatReplyDto.loggedInUserName)
+    loggedInUserName: new UntypedFormControl(this.webChatReplyDto.loggedInUserName),
+    // groupId: new FormControl(this.ReplyDto.groupId),
   });
 
   submitWebChatReply(){
@@ -238,7 +239,8 @@ export class WebChatComponent implements OnInit {
     this.WebChatReplyForm.patchValue({
       wcVisitorId: this.WebChat.Visitor.id,
       wcVisitorSessionId: this.WebChat.Session.id,
-      fromName:this.WebChat.VisitorMessages[0].fromName
+      fromName:this.WebChat.VisitorMessages[0].fromName,
+      groupId: this.getRulesGroupIdsService.rulesGroupIds,
     });
     if(this.radioInput != undefined){
               this.radioInput.nativeElement.checked = false;

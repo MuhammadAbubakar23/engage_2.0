@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import { VerificationDto } from 'src/app/shared/Models/verificationDto';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { SkillsService } from 'src/app/services/Skills/skills.service';
+import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
 // import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 @Component({
   selector: 'app-login',
@@ -61,7 +62,8 @@ export class LoginComponent implements OnInit {
     private commonService: CommonDataService,
     private datePipe: DatePipe,
     private sendWings: GetWingsService,
-    private sendSkills:SkillsService
+    private sendSkills:SkillsService,
+    private sendSkillIdsService : SkillIdsService
   ) { }
 
   ngOnInit(): void {
@@ -89,7 +91,7 @@ export class LoginComponent implements OnInit {
 
           this.commonService.UserLogin().subscribe(() => { });
 
-          
+          this.sendSkillIdsService.sendSkillIds(res?.loginResponse?.loginResponse?.skills)
 
           this.router.navigateByUrl('all-inboxes/focused/all');
           this.spinnerService.hide();

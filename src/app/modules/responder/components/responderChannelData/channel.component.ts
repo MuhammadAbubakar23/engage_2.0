@@ -1165,10 +1165,14 @@ export class ChannelComponent implements OnInit {
   }
 
   commentStatus(comId: any, type: any) {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = type;
-    this.commentStatusDto.plateForm = 'Twitter';
-    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
+    this.commentStatusDto = {
+      id: comId,
+      type: type,
+      plateForm: 'Twitter',
+      profileId: Number(localStorage.getItem('profileId')),
+      wings: this.getWing.wings,
+      groupId: this.getRulesGroupIdsService.rulesGroupIds,
+    };
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {});
@@ -1766,17 +1770,21 @@ export class ChannelComponent implements OnInit {
     this.TDMReply = false;
   }
 
-  queryCompleted(comId: any, type: any) {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = type;
-    this.commentStatusDto.plateForm = 'Twitter';
-    // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
-    this.commondata
-      .QueryCompleted(this.commentStatusDto)
-      .subscribe((res: any) => {
-        this.querryCompleted = true;
-      });
-  }
+  // queryCompleted(comId: any, type: any) {
+  //   this.commentStatusDto = {
+  //     id: comId,
+  //     type: type,
+  //     plateForm: 'Twitter',
+  //     profileId: Number(localStorage.getItem('profileId')),
+  //     wings: this.getWing.wings,
+  //     groupId: this.getRulesGroupIdsService.rulesGroupIds,
+  //   };
+  //   this.commondata
+  //     .QueryCompleted(this.commentStatusDto)
+  //     .subscribe((res: any) => {
+  //       this.querryCompleted = true;
+  //     });
+  // }
 
   markAsCompleteExpanded(comId: any) {
     this.ChannelCommentsOrTweets.forEach((abc: any) => {

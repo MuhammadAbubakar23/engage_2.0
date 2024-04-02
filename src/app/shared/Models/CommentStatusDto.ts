@@ -6,4 +6,5 @@ export class CommentStatusDto {
   companyId?: number=0;
   profileId:number=0;
   wings:string="";
+  groupId:any[]=[];
 }

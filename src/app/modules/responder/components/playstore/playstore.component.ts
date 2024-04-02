@@ -607,6 +607,7 @@ export class PlaystoreComponent implements OnInit {
     // profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
     responseByName: new FormControl(this.ReplyDto.responseByName),
+    groupId: new FormControl(this.ReplyDto.groupId),
   });
 
   profileId: string = '';
@@ -673,6 +674,7 @@ export class PlaystoreComponent implements OnInit {
         // profilePageId: this.profilePageId,
         userProfileId: this.userProfileId,
         responseByName: this.appName,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       });
 
       formData.append(
@@ -824,27 +826,34 @@ export class PlaystoreComponent implements OnInit {
 }
 
   commentStatus(comId: any, type: any) {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = type;
-    this.commentStatusDto.plateForm = 'PlayStore';
-    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-    //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    this.commentStatusDto = {
+      id: comId,
+      type: type,
+      plateForm: 'PlayStore',
+      profileId: Number(localStorage.getItem('profileId')),
+      wings: this.getWing.wings,
+      groupId: this.getRulesGroupIdsService.rulesGroupIds,
+    };
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {});
   }
 
-  queryCompleted(comId: any, type: any) {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = type;
-    this.commentStatusDto.plateForm = 'PlayStore';
-    //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
-    this.commondata
-      .QueryCompleted(this.commentStatusDto)
-      .subscribe((res: any) => {
-        this.querryCompleted = true;
-      });
-  }
+  // queryCompleted(comId: any, type: any) {
+  //   this.commentStatusDto = {
+  //     id: comId,
+  //     type: type,
+  //     plateForm: 'PlayStore',
+  //     profileId: Number(localStorage.getItem('profileId')),
+  //     wings: this.getWing.wings,
+  //     groupId: this.getRulesGroupIdsService.rulesGroupIds,
+  //   };
+  //   this.commondata
+  //     .QueryCompleted(this.commentStatusDto)
+  //     .subscribe((res: any) => {
+  //       this.querryCompleted = true;
+  //     });
+  // }
 
 
   reloadComponent(type: any) {

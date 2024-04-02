@@ -22,6 +22,7 @@ import { ModulesService } from 'src/app/shared/services/module-service/modules.s
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { Location } from '@angular/common';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 
 @Component({
   selector: 'responder-header',
@@ -126,7 +127,8 @@ export class ResponderHeaderComponent implements OnInit {
     private stor: StorageService,
     private queryStatusService: QueryStatusService,
     private location: Location,
-    private getWing: GetWingsService
+    private getWing: GetWingsService,
+    private getRulesGroupIdsService : RulesGroupIdsService
   ) {}
   unrespondedCount: number = 0;
   userInfo: any;
@@ -887,10 +889,14 @@ export class ResponderHeaderComponent implements OnInit {
     }
   }
   markAsComplete() {
-    this.markAsCompleteDto.user = this.userInfo.userId;
-    this.markAsCompleteDto.plateFrom = localStorage.getItem('parent') || '';
-    this.markAsCompleteDto.userId = Number(localStorage.getItem('agentId'));
-    this.markAsCompleteDto.wings = this.getWing.wings;
+    this.markAsCompleteDto = {
+      user : this.userInfo.userId,
+      companyId : 0,
+      plateFrom : localStorage.getItem('parent') || '',
+      userId : Number(localStorage.getItem('agentId')),
+      wings : this.getWing.wings,
+    }
+    
 
     this.commondata.MarkAsComplete(this.markAsCompleteDto).subscribe(
       (res: any) => {
@@ -1100,11 +1106,15 @@ export class ResponderHeaderComponent implements OnInit {
   }
   commentStatusDto = new CommentStatusDto();
   markAllAsRead(comId: number = 0, type: string = '') {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = type;
-    this.commentStatusDto.plateForm = localStorage.getItem('parent') || '{}';
-    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-    this.commentStatusDto.wings = this.wings;
+    this.commentStatusDto = {
+      id : comId,
+      type : type,
+      plateForm : localStorage.getItem('parent') || '{}',
+      profileId : Number(localStorage.getItem('profileId')),
+      wings : this.wings,
+      groupId: this.getRulesGroupIdsService.rulesGroupIds,
+    }
+    
 
     this.commonService.MarkAllAsRead(this.commentStatusDto).subscribe(
       (res: any) => {

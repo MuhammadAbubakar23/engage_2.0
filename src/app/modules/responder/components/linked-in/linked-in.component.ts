@@ -594,6 +594,7 @@ detectChanges(): void {
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
     responseByName: new FormControl(this.ReplyDto.responseByName),
+    groupId: new FormControl(this.ReplyDto.groupId),
   });
 
   profileId: string = '';
@@ -661,6 +662,7 @@ detectChanges(): void {
         profilePageId: this.profilePageId,
         userProfileId : this.userProfileId,
         responseByName: this.pageName,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       });
   
       formData.append(
@@ -830,12 +832,14 @@ detectChanges(): void {
   }
 
   commentStatus(comId: any, type:any) {
-    
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = type;
-    this.commentStatusDto.plateForm = 'LinkedIn';
-    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-   // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    this.commentStatusDto = {
+      id: comId,
+      type: type,
+      plateForm: 'LinkedIn',
+      profileId: Number(localStorage.getItem('profileId')),
+      wings: this.getWing.wings,
+      groupId: this.getRulesGroupIdsService.rulesGroupIds,
+    };
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {
@@ -843,18 +847,22 @@ detectChanges(): void {
         this.storeComId = comId;
       });
   }
-  queryCompleted(comId:any, type:any){
+  // queryCompleted(comId:any, type:any){
     
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = type;
-    this.commentStatusDto.plateForm = 'LinkedIn';
-  //  this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
-    this.commondata
-      .QueryCompleted(this.commentStatusDto)
-      .subscribe((res: any) => {
-        this.querryCompleted = true;
-      });
-  }
+  //   this.commentStatusDto = {
+  //     id: comId,
+  //     type: type,
+  //     plateForm: 'LinkedIn',
+  //     profileId: Number(localStorage.getItem('profileId')),
+  //     wings: this.getWing.wings,
+  //     groupId: this.getRulesGroupIdsService.rulesGroupIds,
+  //   };
+  //   this.commondata
+  //     .QueryCompleted(this.commentStatusDto)
+  //     .subscribe((res: any) => {
+  //       this.querryCompleted = true;
+  //     });
+  // }
 
   likeByAdminDto = new LikeByAdminDto();
 

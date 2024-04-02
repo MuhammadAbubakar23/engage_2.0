@@ -603,11 +603,14 @@ removeTagFromFeed(feedId: number, tagName: any) {
   }
 
   smsStatus(comId: any) {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = 'SMS';
-    this.commentStatusDto.plateForm = 'SMS';
-    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
-   // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    this.commentStatusDto = {
+      id: comId,
+      type: '',
+      plateForm: 'SMS',
+      profileId: Number(localStorage.getItem('profileId')),
+      wings: this.getWing.wings,
+      groupId: this.getRulesGroupIdsService.rulesGroupIds,
+    };
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {
@@ -617,20 +620,24 @@ removeTagFromFeed(feedId: number, tagName: any) {
         // this.getSmsData();
       });
   }
-  queryCompleted(comId: any) {
-    this.commentStatusDto.id = comId;
-    this.commentStatusDto.type = 'SMS';
-    this.commentStatusDto.plateForm = 'SMS';
-   // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
-    this.commondata
-      .QueryCompleted(this.commentStatusDto)
-      .subscribe((res: any) => {
-        this.querryCompleted = true;
-        // this.storeComId = comId;
-        // alert(res.message);
-        // this.getSmsData();
-      });
-  }
+  // queryCompleted(comId: any) {
+  //   this.commentStatusDto = {
+  //     id: comId,
+  //     type: '',
+  //     plateForm: 'SMS',
+  //     profileId: Number(localStorage.getItem('profileId')),
+  //     wings: this.getWing.wings,
+  //     groupId: this.getRulesGroupIdsService.rulesGroupIds,
+  //   };
+  //   this.commondata
+  //     .QueryCompleted(this.commentStatusDto)
+  //     .subscribe((res: any) => {
+  //       this.querryCompleted = true;
+  //       // this.storeComId = comId;
+  //       // alert(res.message);
+  //       // this.getSmsData();
+  //     });
+  // }
   userProfileId = 0;
 
   SendSmsInformation(comId: any) {
@@ -662,6 +669,7 @@ removeTagFromFeed(feedId: number, tagName: any) {
     contentType: new UntypedFormControl(this.ReplyDto.contentType),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
     responseByName: new FormControl(this.ReplyDto.responseByName),
+    groupId: new FormControl(this.ReplyDto.groupId),
   });
   
   text:string="";
@@ -693,6 +701,7 @@ removeTagFromFeed(feedId: number, tagName: any) {
         contentType: this.postType,
         userProfileId : this.userProfileId,
         responseByName: this.To,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       });
   
       formData.append(

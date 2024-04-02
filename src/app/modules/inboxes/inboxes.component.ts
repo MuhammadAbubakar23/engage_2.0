@@ -70,7 +70,7 @@ uniqueWings:any[]=[];
             
     //         this.groupArray.push(groupName)
     //       }
-    //       var wingName = skill.wing+'_'+skill.skillName
+    //       var wingName = skill.wing
     //       if(!this.uniqueWings.includes(wingName)) {
             
     //         this.uniqueWings.push(wingName)
