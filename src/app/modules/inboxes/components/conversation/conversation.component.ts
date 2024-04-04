@@ -398,7 +398,7 @@ export class ConversationComponent implements OnInit {
         toDate: this.toDate,
         user: this.searchForm.value.user,
         pageId: '',
-        plateForm: this.platform,
+        plateForm: 'Facebook',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: this.searchForm.value.isAttachment,

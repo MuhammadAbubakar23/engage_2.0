@@ -7,6 +7,7 @@ import { UpdateListService } from 'src/app/services/UpdateListService/update-lis
 import { Router } from '@angular/router';
 import { SkillsService } from 'src/app/services/Skills/skills.service';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 
 @Component({
   selector: 'inbox-menu',
@@ -43,11 +44,12 @@ export class InboxMenuComponent implements OnInit {
     private updateListService: UpdateListService,
     private router: Router,
     private getSkills: SkillsService,
-    private sendWing: GetWingsService
+    private sendWing: GetWingsService,
+    private sendRulesGroupIdsService: RulesGroupIdsService
   ) {}
 
   ngOnInit(): void {
-    
+    debugger
     this.allSkills = this.getSkills.skills
     this.baseUrl = window.location.origin;
     if (this.baseUrl == 'https://engage.jazz.com.pk') {
@@ -317,12 +319,20 @@ export class InboxMenuComponent implements OnInit {
   updatevalue(string: any) {
     this.filterService.addTogglePanel(string);
   }
-  updateWing(string:any){
-    
-    if(string == 'defaultSkills'){
-      this.sendWing.sendWings(localStorage.getItem('defaultSkills')|| '')
-    } else {
-      this.sendWing.sendWings(string);
-    }
+  rulesGroupIds:any[]=[];
+  updateWing(rule:any){
+    debugger
+    // if(string == 'defaultSkills'){
+    //   this.sendWing.sendWings(localStorage.getItem('defaultSkills')|| '')
+    // } else {
+    //   this.sendWing.sendWings(string);
+    // }
+    rule.forEach((x:any) => {
+              if(!this.rulesGroupIds.includes(x.groupId)) {
+                this.rulesGroupIds.push(x.groupId)
+              }
+            });
+            
+          this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds)
   }
 }

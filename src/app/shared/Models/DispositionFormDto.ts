@@ -6,6 +6,7 @@ export class DispositionFormDto {
     follow_Up_Date:any = null;
     wings:string='';
     completedData: CompletedDataDto = new CompletedDataDto();
+    groupId:any[]=[];
   }
 
   export class CompletedDataDto {

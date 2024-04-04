@@ -4,5 +4,5 @@ export class MarkAsCompleteDto {
     userId: number=0;
     companyId: number=0;
     wings:string='';
-    // groupId:any[]=[];
+    groupId:any[]=[];
   }

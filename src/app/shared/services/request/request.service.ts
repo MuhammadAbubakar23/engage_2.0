@@ -34,6 +34,10 @@ export class RequestService {
     console.log("routeparams", routeparams)
     if (routeparams === undefined) {
       routeparams = "";
+
+    }
+    if(route ===undefined){
+      route ='Skill/GetSkills'
     }
     return (routeparams != "" || routeparams.length > 0) ? `${envAddress}${route}${routeparams}` : `${envAddress}${route}`
   };

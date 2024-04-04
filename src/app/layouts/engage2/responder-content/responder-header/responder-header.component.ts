@@ -895,6 +895,7 @@ export class ResponderHeaderComponent implements OnInit {
       plateFrom : localStorage.getItem('parent') || '',
       userId : Number(localStorage.getItem('agentId')),
       wings : this.getWing.wings,
+      groupId : this.getRulesGroupIdsService.rulesGroupIds
     }
     
 

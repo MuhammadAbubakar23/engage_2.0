@@ -31,7 +31,7 @@ export class SuperTeamInterceptor implements HttpInterceptor {
       this.companyId = 654
     }
     else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
-      this.companyId = 650
+      this.companyId = 658
     }
 
     let team = this.storage.retrive('nocompass', 'O').local;

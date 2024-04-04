@@ -19,7 +19,7 @@
         </a>
 
 
-        <a *ngFor="let channel of allSkills" (click)="updateWing(channel.wing)" [routerLink]="['/all-inboxes/'+flag+'/'+channel.skillName]"
+        <a *ngFor="let channel of allSkills" (click)="updateWing(channel.rules)" [routerLink]="['/all-inboxes/'+flag+'/'+channel.skillName]"
             class="all-inboxes-menu list-group-item list-group-item-action">
             <div [ngClass]="channel.color" [innerHTML]="channel.icon">
             </div>
