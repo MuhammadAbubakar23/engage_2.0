@@ -608,7 +608,6 @@ export class ConversationComponent implements OnInit {
   }
 
   updateListDataListener(res: any) {
-    debugger
     const username = localStorage.getItem('username');
     if (this.searchUser == '') {
       if (this.currentUrl.split('/')[2] === 'focused') {

@@ -232,11 +232,14 @@ export class PlaystoreComponent implements OnInit {
         this.updateBulkQueryStatusDataListener();
       });
     this.Subscription = this.unrespondedCountService.getUnRespondedCount().subscribe((res) => {
+      var assignedProfileId = Number(localStorage.getItem('assignedProfile'))
         if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
+          if(res.contentCount.profileId == assignedProfileId){
           if (res.contentCount.contentType == 'PSR') {
             this.totalUnrespondedCmntCountByCustomer =
               res.contentCount.unrespondedCount;
           }
+        }
         }
       });
 

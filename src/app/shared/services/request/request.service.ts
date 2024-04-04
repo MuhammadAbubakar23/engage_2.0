@@ -31,7 +31,6 @@ export class RequestService {
   }
   private createCompleteRoute = (route: string, envAddress: string, routeparams?: any) => {
 
-    console.log("routeparams", routeparams)
     if (routeparams === undefined) {
       routeparams = "";
 
@@ -39,7 +38,15 @@ export class RequestService {
     if(route ===undefined){
       route ='Skill/GetSkills'
     }
-    return (routeparams != "" || routeparams.length > 0) ? `${envAddress}${route}${routeparams}` : `${envAddress}${route}`
+    debugger
+    if(route===undefined){
+
+      route='Skill/GetSkills'
+    }
+
+      return (routeparams != "" || routeparams.length > 0) ? `${envAddress}${route}${routeparams}` : `${envAddress}${route}`
+   
+ 
   };
 
   get<T>(route: string, params?: any, routeparams: string = ""): Observable<T> {
@@ -65,7 +72,7 @@ export class RequestService {
       // );
   }
   getFromConsole<T>(route: string, params?: any, routeparams: string = ""): Observable<T> {
-
+debugger
     console.log(params);
     console.log(this.createCompleteRoute(this.env.paths[route], this.env.consoleBaseUrl));
     return this.http.get<T>(this.createCompleteRoute(this.env.console[route], this.env.consoleBaseUrl, routeparams), { params })

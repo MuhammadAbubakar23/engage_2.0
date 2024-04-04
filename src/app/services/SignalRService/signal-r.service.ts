@@ -135,7 +135,6 @@ export class SignalRService {
   }
 
   public updateListAndDetailDataListener = () => {
-    debugger
     this.hubconnection.on('SendData', (data) => {
       if (
         data.conversationQueues != null &&

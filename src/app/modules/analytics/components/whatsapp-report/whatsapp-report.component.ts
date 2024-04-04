@@ -90,6 +90,10 @@ export class WhatsappReportComponent implements OnInit {
         this.SpinnerService.hide();
         this.whatsAppRawData = res.List;
         this.totalCounts = res.TotalCount;
+        if(this.totalCounts==0){
+          this.startingPoint=0
+          this.endingPoint=0
+        }
         console.log('the res==>', res);
         this.whatsAppColumns = Object.keys(this.whatsAppRawData[0]);
         if (this.pageNumber == 1) {

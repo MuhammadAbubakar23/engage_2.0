@@ -198,7 +198,9 @@ export class EmailComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
+        var assignedProfileId = Number(localStorage.getItem('assignedProfile'))
         if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
+          if(res.contentCount.profileId == assignedProfileId){
         if (
           res.contentCount.contentType == 'Mail' ||
           res.contentCount.contentType == 'OMail'
@@ -206,6 +208,7 @@ export class EmailComponent implements OnInit {
           this.totalUnrespondedCmntCountByCustomer =
             res.contentCount.unrespondedCount;
         }
+      }
       }
       });
     this.Subscription = this.queryStatusService

@@ -487,8 +487,7 @@
                                 <div class="col-md-6">
                                     <div class="graphcontainer align-items-end">
 
-                                        <!-- <img src="../images/g12.svg" class="img-fluid" alt="">
-                                 -->
+                                 
                                         <div id="piechart" style="height: 400px; width: 900px;"></div>
 
                                     </div>
@@ -555,6 +554,7 @@
                                         <th>Average Response Time</th>
                                         <th>Min Cater Time</th>
                                         <th>Max Cater Time</th>
+                                        <th> Total Closed Queries</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -573,6 +573,7 @@
                                         <td>{{ item?.averageTime }}</td>
                                         <td>{{ item?.minimumTime }}</td>
                                         <td>{{ item?.maximumTime }}</td>
+                                        <td>{{item?.completedCount}}</td>
                                     </tr>
                                 </tbody>
                             </table>

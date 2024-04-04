@@ -270,15 +270,18 @@ export class WhatsappDetailsComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
+        var assignedProfileId = Number(localStorage.getItem('assignedProfile'))
         if (
           this.flag == 'focused' ||
           this.flag == 'assigned_to_me' ||
           this.flag == 'follow_up'
         ) {
+          if(res.contentCount.profileId == assignedProfileId){
           if (res.contentCount.contentType == 'WM') {
             this.totalUnrespondedCmntCountByCustomer =
               res.contentCount.unrespondedCount;
           }
+        }
         }
       });
     // this.Subscription = this.queryStatusService.receiveQueryStatus().subscribe((res) => {
@@ -349,7 +352,7 @@ export class WhatsappDetailsComponent implements OnInit {
               items: groupedItems[createdDate],
             };
           });
-          // // console.log('hello', this.groupArrays);
+          debugger          // // console.log('hello', this.groupArrays);
           this.totalUnrespondedCmntCountByCustomer =
             this.totalUnrespondedCmntCountByCustomer + 1;
         }
@@ -395,6 +398,7 @@ export class WhatsappDetailsComponent implements OnInit {
             this.WhatsappData = res.List;
             this.userInformation = res.List[0].user;
             this.userInfoService.shareUserInformation(res.List[0].user);
+            debugger
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
             this.TotalCmntQueryCount = res.TotalQueryCount;
 
@@ -460,6 +464,7 @@ export class WhatsappDetailsComponent implements OnInit {
           this.WhatsappData = res.List;
           this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
+          debugger
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
 
@@ -523,6 +528,7 @@ export class WhatsappDetailsComponent implements OnInit {
             this.WhatsappData = res.List;
             this.userInformation = res.List[0].user;
             this.userInfoService.shareUserInformation(res.List[0].user);
+            debugger
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
             this.TotalCmntQueryCount = res.TotalQueryCount;
 

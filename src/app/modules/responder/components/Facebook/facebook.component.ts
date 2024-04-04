@@ -327,19 +327,23 @@ export class FacebookComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
+        var assignedProfileId = Number(localStorage.getItem('assignedProfile'))
         if (
           this.flag == 'focused' ||
           this.flag == 'assigned_to_me' ||
           this.flag == 'follow_up'
         ) {
-          if (res.contentCount.contentType == 'FC') {
-            this.totalUnrespondedCmntCountByCustomer =
-              res.contentCount.unrespondedCount;
+          if(res.contentCount.profileId == assignedProfileId){
+            if (res.contentCount.contentType == 'FC') {
+              this.totalUnrespondedCmntCountByCustomer =
+                res.contentCount.unrespondedCount;
+            }
+            if (res.contentCount.contentType == 'FCP') {
+              this.totalUnrespondedMsgCountByCustomer =
+                res.contentCount.unrespondedCount;
+            }
           }
-          if (res.contentCount.contentType == 'FCP') {
-            this.totalUnrespondedMsgCountByCustomer =
-              res.contentCount.unrespondedCount;
-          }
+          
         }
       });
 
@@ -382,8 +386,8 @@ export class FacebookComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        queryType: this.queryType,
         hasBlueTick: false,
+        queryType: this.queryType,
         text: '',
         flag: this.flag,
         userName: '',
@@ -402,6 +406,8 @@ export class FacebookComponent implements OnInit {
             // this.fbCmntReply = true;
             this.ConverstationDetailDto = res;
             this.FacebookData = this.ConverstationDetailDto.List;
+            
+            console.log('Facebook Data===.?',this.FacebookData)
             this.userInformation = res.List[0].user;
             this.userInfoService.shareUserInformation(res.List[0].user);
             this.TotalCmntQueryCount = res.TotalQueryCount;
@@ -432,7 +438,14 @@ export class FacebookComponent implements OnInit {
                       createdDate,
                       items: groupedItems[createdDate],
                     };
-                  });
+                  }
+                );
+               
+                item['groupedComments'].forEach((x:any)=>{
+                  
+                  const groupdispostion= x.items
+                  this.groupAndModifyData(groupdispostion)
+                })
               });
             });
 
@@ -490,7 +503,6 @@ export class FacebookComponent implements OnInit {
                 },
                 {}
               );
-
               item['groupedComments'] = Object.keys(groupedItems).map(
                 (createdDate) => {
                   return {
@@ -498,7 +510,15 @@ export class FacebookComponent implements OnInit {
                     items: groupedItems[createdDate],
                   };
                 }
+                
               );
+
+              // console.log('groupedComments ====>' , item['groupedComments'])
+              item['groupedComments'].forEach((x:any)=>{
+                
+                const groupdispostion= x.items
+                this.groupAndModifyData(groupdispostion)
+              })
             });
           });
 
@@ -516,7 +536,7 @@ export class FacebookComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        hasBlueTick: false,
+        hasBlueTick:false,
         queryType: this.queryType,
         text: '',
         flag: this.flag,
@@ -570,6 +590,11 @@ export class FacebookComponent implements OnInit {
                     };
                   }
                 );
+                item['groupedComments'].forEach((x:any)=>{
+                  
+                  const groupdispostion= x.items
+                  this.groupAndModifyData(groupdispostion)
+                })
               });
             });
 
@@ -586,7 +611,8 @@ export class FacebookComponent implements OnInit {
 
   updatedComments: any;
   updatedMessages: any;
-  newPostComment: any[] = [];
+  newPostComment: any[] = []
+  postIdArray:any[]=[]
   spinner1running = false;
   spinner2running = false;
   newcomment: any;
@@ -618,9 +644,12 @@ export class FacebookComponent implements OnInit {
               tags: [],
             };
             this.FacebookData?.forEach((item: any) => {
+              this.postIdArray.push(item.post.postId)
               this.commentsArray = [];
               // this.newPostComment= [];
-              if (item.post.postId == xyz.post.postId) {
+              
+              if (this.postIdArray.includes(xyz.post.postId)) {
+
                 item.comments.push(this.commentDto);
                 item.comments.forEach((cmnt: any) => {
                   this.commentsArray.push(cmnt);
@@ -649,76 +678,74 @@ export class FacebookComponent implements OnInit {
               }
               // for new post
               else {
-                if (item.post.postId != xyz.post.postId) {
+                
+                if ( !this.postIdArray.includes(xyz.post.postId)) {
+                  
                   this.FacebookNewpost.forEach((x: any) => {
-                    x.comments.forEach((z: any) => {
-                      this.newpostcommentDto = {
-                        id: z.id,
-                        postId: x.post.postId,
-                        commentId: z.commentId,
-                        message: z.message,
-                        contentType: z.contentType,
-                        userName: z.userName || z.userId,
-                        queryStatus: z.queryStatus,
-                        createdDate: z.createdDate,
-                        fromUserProfilePic: z.profilePic,
-                        body: z.body,
-                        to: z.toId,
-                        cc: z.cc,
-                        bcc: z.bcc,
-                        attachments: z.mediaAttachments,
-                        replies: [],
-                        sentiment: '',
-                        tags: z.tags,
-                      };
-                    });
-                    if (
-                      !this.newPostComment.find(
-                        (comment) => comment.post.postId === x.post.postId
-                      )
-                    ) {
-                      this.newPostComment.push(x);
-                    }
-                    this.fbnewCmntReply = true;
-                    console.log('new comment data===>', this.newPostComment);
-                    this.newPostComment.forEach((item: any) => {
-                      this.commentsArray = [];
-                      if (item.post.postId == x.post.postId) {
-                        if (
-                          !item.comments.find(
-                            (cmnt: any) => cmnt.id === this.newpostcommentDto.id
-                          )
-                        ) {
-                          item.comments.push(this.newpostcommentDto);
-                        }
-                        item.comments.forEach((cmnt: any) => {
-                          if (!this.commentsArray.includes(cmnt.id)) {
-                            this.commentsArray.push(cmnt);
-                          }
-                        });
-                        let groupedItems = this.commentsArray.reduce(
-                          (acc: any, item: any) => {
-                            const date = item.createdDate?.split('T')[0];
-                            if (!acc[date]) {
-                              acc[date] = [];
-                            }
-                            acc[date].push(item);
-                            return acc;
-                          },
-                          {}
-                        );
+       
+                      x.comments.forEach((z: any) => {
 
-                        item['groupedComments'] = Object.keys(groupedItems).map(
-                          (createdDate) => {
-                            return {
-                              createdDate,
-                              items: groupedItems[createdDate],
-                            };
-                          }
-                        );
+                        this.newpostcommentDto = {
+                          id: z.id,
+                          postId: x.post.postId,
+                          commentId: z.commentId,
+                          message: z.message,
+                          contentType: z.contentType,
+                          userName: z.userName || z.userId,
+                          queryStatus: z.queryStatus,
+                          createdDate: z.createdDate,
+                          fromUserProfilePic: z.profilePic,
+                          body: z.body,
+                          to: z.toId,
+                          cc: z.cc,
+                          bcc: z.bcc,
+                          attachments: z.mediaAttachments,
+                          replies: [],
+                          sentiment: '',
+                          tags: z.tags,
+                        };
+                      })
+                      if (!this.newPostComment.find(comment => comment.post.postId === x.post.postId)) {
+                        this.newPostComment.push(x);
                       }
-                    });
-                  });
+                      this.fbnewCmntReply = true
+                      this.newPostComment.forEach((item: any) => {
+                        this.commentsArray = [];
+                        if (item.post.postId == x.post.postId) {
+                          if (!item.comments.find((cmnt: any) => cmnt.id === this.newpostcommentDto.id)) {
+                            item.comments.push(this.newpostcommentDto);
+                          }
+                          item.comments.forEach((cmnt: any) => {
+                            if (!this.commentsArray.includes(cmnt.id)) {
+                              this.commentsArray.push(cmnt);
+                            }
+                          });
+                          let groupedItems = this.commentsArray.reduce(
+                            (acc: any, item: any) => {
+                              const date = item.createdDate?.split('T')[0];
+                              if (!acc[date]) {
+                                acc[date] = [];
+                              }
+                              acc[date].push(item);
+                              return acc;
+                            },
+                            {}
+                          );
+  
+                          item['groupedComments'] = Object.keys(groupedItems).map(
+                            (createdDate) => {
+                              return {
+                                createdDate,
+                                items: groupedItems[createdDate],
+                              };
+                            }
+                          );
+                        }
+                      })
+                 
+                    }
+                  );
+
                 }
               }
             });
@@ -957,6 +984,7 @@ export class FacebookComponent implements OnInit {
   }
 
   updateBulkQueryStatusDataListener() {
+    
     this.queryStatus.forEach((querry: any) => {
       if (querry.feedType == 'FC') {
         this.FacebookData?.forEach((post: any) => {
@@ -1036,7 +1064,7 @@ export class FacebookComponent implements OnInit {
         plateForm: 'Facebook',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
-        hasBlueTick: false,
+        hasBlueTick:false,
         isAttachment: false,
         queryType: this.queryType,
         text: '',
@@ -1054,7 +1082,8 @@ export class FacebookComponent implements OnInit {
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
-            this.FacebookMessages = this.groupAndModifyData(res.List?.dm);
+             this.FacebookMessages = this.groupAndModifyData(res.List?.dm);
+            // this.FacebookMessages=res.List.dm
             this.userInformation = res.List.user;
             this.profileInformation = res.List.profile;
             this.userInfoService.shareUserInformation(res.List.user);
@@ -1128,7 +1157,8 @@ export class FacebookComponent implements OnInit {
       this.commondata.GetSlaDM(this.filterDto).subscribe((res: any) => {
         if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
-          this.FacebookMessages = this.groupAndModifyData(res.List?.dm);
+           this.FacebookMessages = this.groupAndModifyData(res.List?.dm);
+          // this.FacebookMessages=res.List.dm
           this.userInformation = res.List.user;
           this.profileInformation = res.List.profile;
           this.userInfoService.shareUserInformation(res.List.user);
@@ -1203,6 +1233,7 @@ export class FacebookComponent implements OnInit {
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
             this.FacebookMessages = this.groupAndModifyData(res.List?.dm);
+            // this.FacebookMessages=res.List.dm
             this.userInformation = res.List.user;
             this.profileInformation = res.List.profile;
             this.userInfoService.shareUserInformation(res.List.user);
@@ -1254,9 +1285,11 @@ export class FacebookComponent implements OnInit {
   }
 
   groupAndModifyData(data: any[]) {
+    // console.log('dispostion data ==>',data)
+    
     // Step 1: Group the data based on disposition.createdDate
     const groupedData: { [key: string]: any[] } = {};
-    data.forEach((item) => {
+    data.forEach(item => {
       const createdDate = item?.dispositions?.createdDate;
       if (!groupedData[createdDate]) {
         groupedData[createdDate] = [];
@@ -2308,7 +2341,7 @@ export class FacebookComponent implements OnInit {
           });
         });
       });
-      console.log(res);
+      // console.log(res);
     });
   }
   // itemsToBeUpdated: any[] = [];
@@ -2403,13 +2436,18 @@ export class FacebookComponent implements OnInit {
   c_satForm() {
     const customerId = localStorage.getItem('storeOpenedId');
     const channel = localStorage.getItem('parent');
+    let data = this.stor.retrive('main', 'O').local;
+      const email =data.originalUserName
     this.insertAtCaret(
       'https://keportal.enteract.live/survey/customer_satisfaction' +
-        '?channel=' +
-        channel +
-        '&customerId=' +
-        customerId +
-        ' '
+      '?channel=' +
+      channel +
+      '&customerId=' +
+      customerId+
+      '&email='+
+      email
+
+
     );
   }
 }

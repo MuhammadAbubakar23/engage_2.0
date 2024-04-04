@@ -67,7 +67,7 @@ export class ConsoleTableComponent<T> implements OnInit, OnDestroy { // extends 
     
     this.userpaginationS.receivedpaginationObj().subscribe((res:any)=>{
       
-      this.totalCount=res.totalItems
+      this.totalCount=res?.totalItems
 
     })
     //length: 100,
