@@ -36,13 +36,16 @@ export const environment = {
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  //  IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
-  // CommonBaseUrl: 'https://comservices.enteract.live/api/',
-  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
-  // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
-  // ServiceBaseUrl: '',
-  // consoleBaseUrl: 'https://console.enteract.live/api/',
-  // botBaseUrl:'',
+  IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
+  CommonBaseUrl: 'https://comservices.enteract.live/api/',
+  SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
+  ProfileBaseUrl: 'https://profiler.enteract.live/api/',
+  ServiceBaseUrl: '',
+  consoleBaseUrl: 'https://console.enteract.live/api/',
+  LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
+  botBaseUrl:'',
+
+
   // For Jazz
   // IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
   // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
@@ -75,7 +78,8 @@ export const environment = {
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
   // ProfileBaseUrl: '',
 
-  // // For Bazaar
+
+  // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
   // SignalRCommonBaseUrl: 'https://bzcommon.enteract.live/',
@@ -83,8 +87,10 @@ export const environment = {
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
-  //  botBaseUrl: 'https://bot-engage.enteract.app/api/',
-  // // For Testing
+  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  //   LinkedInBaseUrl:'',
+
+  // For Jazz Rox
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
   // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
   // ServiceBaseUrl: '',
@@ -102,7 +108,8 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://conrox.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-
+  // LinkedInBaseUrl:'',
+  
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
@@ -205,9 +212,9 @@ export const environment = {
       addTeam: 'Teams/Add',
       updateTeam: 'Teams/Update',
       deleteTeam: 'Teams/Delete',
-      teamGetById:'Teams/FetchTeamById',
-      getTeamType:'Teams/GetTypes',
-      deleteMultipleTeams: 'Teams/DeleteMultiple'
+      teamGetById: 'Teams/FetchTeamById',
+      getTeamType: 'Teams/GetTypes',
+      deleteMultipleTeams: 'Teams/DeleteMultiple',
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',

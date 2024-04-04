@@ -252,8 +252,9 @@ export class InstagramComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
+        var assignedProfileId = Number(localStorage.getItem('assignedProfile'))
         if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
-          // this.totalUnrespondedCmntCountByCustomer = res.contentCount.unrespondedCount;
+          if(res.contentCount.profileId == assignedProfileId){
           if (res.contentCount.contentType == 'IC') {
             this.totalUnrespondedCmntCountByCustomer =
               res.contentCount.unrespondedCount;
@@ -262,6 +263,7 @@ export class InstagramComponent implements OnInit {
             this.totalUnrespondedMsgCountByCustomer =
               res.contentCount.unrespondedCount;
           }
+        }
         }
       });
     this.Subscription = this.queryStatusService

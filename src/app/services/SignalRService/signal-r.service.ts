@@ -29,7 +29,7 @@ export class SignalRService {
 
   token = localStorage.getItem('token');
   signalRStatus = localStorage.getItem('signalRStatus');
-  companyId: number = 651;
+  companyId: number = 650;
   baseUrl: string = "";
 
   public hubconnection!: signalR.HubConnection;         
@@ -89,7 +89,7 @@ export class SignalRService {
       accessTokenFactory: () => {
         return 'Bearer ' + localStorage.getItem('token');
       },
-      headers: { "X-Super-Team": JSON.stringify(this.companyId) }
+      headers: { "-Team": JSON.stringify(this.companyId) }
       // headers: { "X-Super-Team": JSON.stringify(team.id) }
     };
 
@@ -115,35 +115,35 @@ export class SignalRService {
 
   reConnect() {
     
-  //   // this.flag = this.router.url.split('/')[1];
-  //   // if(this.flag == 'all-inboxes'){
-  //   let team = this.storage.retrive("nocompass", "O").local;
-  //   const options: IHttpConnectionOptions = {
-  //     accessTokenFactory: () => {
-  //       return 'Bearer ' + localStorage.getItem('token');
-  //     },
-  //     headers: { "X-Super-Team": JSON.stringify(this.companyId) }
-  //     // headers: { "X-Super-Team": JSON.stringify(team.id) }
-  //   };
+    // this.flag = this.router.url.split('/')[1];
+    // if(this.flag == 'all-inboxes'){
+    let team = this.storage.retrive("nocompass", "O").local;
+    const options: IHttpConnectionOptions = {
+      accessTokenFactory: () => {
+        return 'Bearer ' + localStorage.getItem('token');
+      },
+      headers: { "X-Super-Team": JSON.stringify(this.companyId) }
+      // headers: { "X-Super-Team": JSON.stringify(team.id) }
+    };
 
-  //   this.hubconnection = new signalR.HubConnectionBuilder()
-  //     .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
-  //     .withAutomaticReconnect()
-  //     .configureLogging(signalR.LogLevel.Information)
-  //     .build();
-  //   this.hubconnection
-  //     .start()
-  //     .then(() => console.log('Connection started'))
-  //     .then(() => this.getConnectionId())
-  //     .catch((err) => console.log('Error while starting connection: ' + err));
-  //   // }
+    this.hubconnection = new signalR.HubConnectionBuilder()
+      .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
+      .withAutomaticReconnect()
+      .configureLogging(signalR.LogLevel.Information)
+      .build();
+    this.hubconnection
+      .start()
+      .then(() => console.log('Connection started'))
+      .then(() => this.getConnectionId())
+      .catch((err) => console.log('Error while starting connection: ' + err));
+    // }
   }
 
   public updateListAndDetailDataListener = () => {
 
 
     this.hubconnection.on('SendData', (data) => {
-
+debugger
       if (data.conversationQueues != null && data.conversationQueues.length > 0) {
         this.updateListService.sendList(data.conversationQueues)
       }

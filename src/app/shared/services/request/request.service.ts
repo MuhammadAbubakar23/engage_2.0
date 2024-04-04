@@ -31,11 +31,18 @@ export class RequestService {
   }
   private createCompleteRoute = (route: string, envAddress: string, routeparams?: any) => {
 
-    console.log("routeparams", routeparams)
     if (routeparams === undefined) {
       routeparams = "";
     }
-    return (routeparams != "" || routeparams.length > 0) ? `${envAddress}${route}${routeparams}` : `${envAddress}${route}`
+    debugger
+    if(route===undefined){
+
+      route='Skill/GetSkills'
+    }
+
+      return (routeparams != "" || routeparams.length > 0) ? `${envAddress}${route}${routeparams}` : `${envAddress}${route}`
+   
+ 
   };
 
   get<T>(route: string, params?: any, routeparams: string = ""): Observable<T> {

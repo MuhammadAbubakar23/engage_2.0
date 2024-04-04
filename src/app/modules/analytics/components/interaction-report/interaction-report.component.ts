@@ -14,6 +14,7 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 // @ts-ignore
 import * as html2pdf from 'html2pdf.js';
 import { SharedModule } from '../../../../shared/shared.module';
+
 @Component({
   standalone: true,
   selector: 'app-interaction-report',
@@ -74,8 +75,10 @@ export class InteractionReportComponent implements OnInit {
   preAveragePercentage: number = 0;
   totalInteractionCount: any = 0;
   CSATGraph: any;
+  baseUrl:any;
   searchText: string = '';
   totalAgents = [{ id: '', name: '', isSelected: false }];
+  totalAgentsEmail=[{ email: '', name: '', isSelected: false }];
   AgentIds: any[] = [];
   selectedTagBy: string = '';
   constructor(
@@ -87,6 +90,9 @@ export class InteractionReportComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.baseUrl=window.location.pathname.split('/')
+    console.log(this.baseUrl)
+
     const newObj = {
       title: 'Interaction Report',
       url: '/analytics/interaction-report',
@@ -153,7 +159,7 @@ export class InteractionReportComponent implements OnInit {
   calculateAverageTime(agentPerformance: any[], field: string) {
     let totalSeconds = 0;
     for (const agent of agentPerformance) {
-      debugger
+      
       if(agent.averageTime !=="00:00:00" && agent.maximumTime !=="00:00:00"){
         totalSeconds += this.timeToSeconds(agent[field]);
        
@@ -175,7 +181,7 @@ export class InteractionReportComponent implements OnInit {
   }
 
   secondsToTime(seconds: number): string {
-    debugger
+    
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = Math.floor(seconds % 60);
@@ -188,7 +194,7 @@ export class InteractionReportComponent implements OnInit {
     return num < 10 ? '0' + num : num.toString();
   }
   convertTimeToSeconds(timeString: any) {
-    debugger
+    
     let [hours, minutes, seconds] = timeString.split(':').map(Number);
     return hours * 3600 + minutes * 60 + seconds;
   }
@@ -214,7 +220,9 @@ export class InteractionReportComponent implements OnInit {
   getListUser(): void {
     this.commonData.GetUserList().subscribe(
       (response: any) => {
+        debugger
         this.totalAgents = response;
+        this.totalAgentsEmail=response
         this.totalAgents.forEach((x: any) => {
           this.AgentIds.push(x.id);
         });
@@ -225,6 +233,7 @@ export class InteractionReportComponent implements OnInit {
       }
     );
   }
+
   GetStatsInteractionReport() {
     let selectedTagByArray = this.totalAgents
       .filter((item) => item.isSelected)
@@ -291,13 +300,17 @@ export class InteractionReportComponent implements OnInit {
     this.channelCountsArray = [];
     this.allDates = [];
     this.newArray = [];
+    
     this.commonData.GetInteractionReport(formData).subscribe((res: any) => {
+      
       this.SpinnerService.hide();
       this.getAllCSATData();
 
       this.interactionStats = res;
       this.data = res.agentPerformance;
-      debugger
+
+      
+      
       this.socialMediaData = res.plateFormWiseInteraction;
       
       this.socialMediaData.forEach((x: any) => {
@@ -315,7 +328,7 @@ export class InteractionReportComponent implements OnInit {
       this.averageResponseRateSum =
         this.inProgressCount + this.assignToMeCount + this.followUpCount;
       this.averageResponseData = Math.abs(
-        (this.averageResponseRateSum / this.completedCount) * 100
+        (this.completedCount / this.totalInteractionCount) * 100
       );
 
       this.previousSocialMediaData = res.previousPlateFormWiseInteraction;
@@ -420,12 +433,13 @@ export class InteractionReportComponent implements OnInit {
       this.interactionData.forEach((platform: any) => {
         this._legend.push(platform.plateForm);
         const platformName = platform.plateForm;
+        this.newArray=[]
         platform.dateWiseInteraction.forEach((interaction: any) => {
           const date = this.datePipe.transform(interaction.date, 'dd/MMM');
           if (!this.allDates.includes(date)) {
             this.allDates.push(date);
           }
-
+debugger
           let sentimentCounts: { [key: string]: number } = {};
           sentimentCounts = interaction.count;
           this.newArray.push(sentimentCounts);
@@ -500,11 +514,16 @@ export class InteractionReportComponent implements OnInit {
       this.endDate = '';
     }
   }
+  selectedTagByEmail:any
   getAllCSATData() {
+    let selectedTagByArray = this.totalAgentsEmail
+    .filter((item) => item.isSelected)
+    .map((item) => item.email);
+  this.selectedTagByEmail = selectedTagByArray.toString();
     let obj = {
       fromDate: this.startDate,
       toDate: this.endDate,
-      agents: this.selectedTagBy,
+      agents: this.selectedTagByEmail,
       plateForm: 'string',
     };
     this.csatArray = [];
@@ -533,7 +552,12 @@ export class InteractionReportComponent implements OnInit {
       }
 
       this.getCSATGraph();
-    });
+    },
+    
+    error=>{
+      this.SpinnerService.hide()
+    }
+    );
   }
   interactionByDate() {
     var chartDom = document.getElementById('interactions');
@@ -597,12 +621,20 @@ export class InteractionReportComponent implements OnInit {
           type: 'pie',
           radius: '60%',
           data: this.csatArray,
-          emphasis: {
-            itemStyle: {
-              shadowBlur: 10,
-              shadowOffsetX: 0,
-            },
-          },
+          label: {
+            show: true,
+            fontSize: 14,
+            position: 'top', // Display label on top of each point
+            formatter: function(params:any) {
+              return params.name + ': ' + params.value; // Display both name and value
+            }
+          }
+          // emphasis: {
+          //   itemStyle: {
+          //     shadowBlur: 10,
+          //     shadowOffsetX: 0,
+          //   },
+          // },
         },
       ],
     };

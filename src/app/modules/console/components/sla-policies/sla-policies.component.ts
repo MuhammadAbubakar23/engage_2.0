@@ -53,7 +53,10 @@ export class SlaPoliciesComponent implements OnInit {
       }
     );
   }
-  constructor(private headerService: HeaderService, private commonService: CommonDataService, private router: Router, private spinnerServerice: NgxSpinnerService) { }
+  constructor(private headerService: HeaderService, 
+    private commonService: CommonDataService, 
+    private router: Router, 
+    private spinnerServerice: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.refreshMessages()

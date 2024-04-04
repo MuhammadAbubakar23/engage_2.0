@@ -272,7 +272,7 @@ export class ConversationComponent implements OnInit {
   customersList: any[] = [];
 
   getConversationList() {
-    
+    debugger
     // if (this.currentUrl.split('/')[2] == 'completed') {
     //   this.flag = 'sent';
     //   this.platform = this.currentUrl.split('/')[3];
@@ -587,6 +587,7 @@ export class ConversationComponent implements OnInit {
   }
 
   updateListDataListener(res: any) {
+    debugger
   const username=localStorage.getItem('username')
     if(this.searchUser=='' ){
       if (this.currentUrl.split('/')[2] === 'focused') {

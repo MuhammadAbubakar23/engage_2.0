@@ -12,11 +12,11 @@ export class AnalyticsMenuComponent implements OnInit {
   activeChannel: any = '';
   analyticeReport: any[] = [];
   channelname: any;
-  showOnlySocialRawDataReport =
-    'saba.riaz@jazz.com.pk ,ambreen.zubair@jazz.com.pk,uzma.hashmat@jazz.com.pk,mishal.javed@abacus-global.com , dua.siddique@abacus-global.com, laiba.fayyaz@abacus-global.com ';
+  // showOnlySocialRawDataReport = 'saba.riaz@jazz.com.pk ,ambreen.zubair@jazz.com.pk,uzma.hashmat@jazz.com.pk,mishal.javed@abacus-global.com , dua.siddique@abacus-global.com, laiba.fayyaz@abacus-global.com ';
+  showOnlySocialRawDataReport = 'saba.riaz@jazz.com.pk ,ambreen.zubair@jazz.com.pk,uzma.hashmat@jazz.com.pk,mishal.javed@abacus-global.com , dua.siddique@abacus-global.com, laiba.fayyaz@abacus-global.com';
   restrictedAgent: any;
-  showOnlyRawDataReport=
-  'zia.rehman3@ibex.co,waqas.munir@jazz.com.pk,muhammad.asad3@ibex.co,syeda.asghar@ibex.co,Rizwan.Ali22@ibex.co,hafiz.zeeshan@ibex.co,ahmed.hassan6@ibex.co,zain.aziz11@ibex.co ,ali.haider4@ibex.co';
+  // showOnlyRawDataReport= 'zia.rehman3@ibex.co,waqas.munir@jazz.com.pk,muhammad.asad3@ibex.co,syeda.asghar@ibex.co,rizwan.ali22@ibex.co,hafiz.zeeshan@ibex.co,ahmed.hassan6@ibex.co,zain.aziz11@ibex.co ,ali.haider4@ibex.co';
+  showOnlyRawDataReport= 'zia.rehman3@ibex.co,waqas.munir@jazz.com.pk,muhammad.asad3@ibex.co,syeda.asghar@ibex.co,rizwan.ali22@ibex.co,hafiz.zeeshan@ibex.co,ahmed.hassan6@ibex.co,zain.aziz11@ibex.co ,ali.haider4@ibex.co';
 
   
   // analyticeReport=[
@@ -46,7 +46,7 @@ export class AnalyticsMenuComponent implements OnInit {
 
   ngOnInit(): void {
     let data = this.storage.retrive('main', 'O').local;
-    this.restrictedAgent = data.originalUserName;
+    this.restrictedAgent = data.originalUserName.toLowerCase();
 
     this._hS.getHeader().subscribe((res: any) => {
       this.activeMenu = res?.title;
