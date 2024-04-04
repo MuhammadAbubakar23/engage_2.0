@@ -433,7 +433,7 @@ export class InteractionReportComponent implements OnInit {
       this.interactionData.forEach((platform: any) => {
         this._legend.push(platform.plateForm);
         const platformName = platform.plateForm;
-        this.newArray=[]
+        this.newArray = []; // Reset newArray for each platform
         platform.dateWiseInteraction.forEach((interaction: any) => {
           const date = this.datePipe.transform(interaction.date, 'dd/MMM');
           if (!this.allDates.includes(date)) {
@@ -443,26 +443,49 @@ debugger
           let sentimentCounts: { [key: string]: number } = {};
           sentimentCounts = interaction.count;
           this.newArray.push(sentimentCounts);
-          if (
-            !this.sentimentDataPoints.find((x: any) => x.name == platformName)
-          ) {
-            this.sentimentDataPoints.push({
-              name: platformName,
-              type: 'line',
-              data: this.newArray,
-            });
-          }
-
-          //           this.newArray.push(interaction.count)
-          //
-
-          //           this.channelCountsArray.push({
-          //             name: this._legend.toString(),
-          //             type: 'line',
-          //             data: this.newArray
-          //           });
+        });
+        // After collecting data for each platform, push it to sentimentDataPoints
+        this.sentimentDataPoints.push({
+          name: platformName,
+          type: 'line',
+          data: this.newArray, // Use newArray for each platform
         });
       });
+
+      // this.interactionData = res.dateWiseInteraction;
+      // this.interactionData.forEach((platform: any) => {
+      //   this._legend.push(platform.plateForm);
+      //   const platformName = platform.plateForm;
+      //   this.newArray = []; 
+      //   platform.dateWiseInteraction.forEach((interaction: any) => {
+      //     const date = this.datePipe.transform(interaction.date, 'dd/MMM');
+      //     if (!this.allDates.includes(date)) {
+      //       this.allDates.push(date);
+      //     }
+
+      //     let sentimentCounts: { [key: string]: number } = {};
+      //     sentimentCounts = interaction.count;
+      //     this.newArray.push(sentimentCounts);
+      //     if (
+      //       !this.sentimentDataPoints.find((x: any) => x.name == platformName)
+      //     ) {
+      //       this.sentimentDataPoints.push({
+      //         name: platformName,
+      //         type: 'line',
+      //         data: this.newArray,
+      //       });
+      //     }
+
+      //     //           this.newArray.push(interaction.count)
+      //     //
+
+      //     //           this.channelCountsArray.push({
+      //     //             name: this._legend.toString(),
+      //     //             type: 'line',
+      //     //             data: this.newArray
+      //     //           });
+      //   });
+      // });
       this.positiveCount =
         this.interactionStats.sentimentData.find(
           (data: any) => data.name === 'positive'

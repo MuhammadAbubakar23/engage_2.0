@@ -150,6 +150,7 @@ export const environment = {
       GetUserById: 'Users/GetById/',
       // For console skill setup
       channels: 'Console/Properties/Channel/Tree/0',
+      consoleChannls:'Channels/GetChannelsTree',
       routing: 'Console/Properties/routing/Tree/0',
       deleteRoles: 'Permissions/Delete',
       ////// Later Align in Console/////

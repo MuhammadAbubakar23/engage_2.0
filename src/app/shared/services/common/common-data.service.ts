@@ -185,6 +185,7 @@ export class CommonDataService {
   getRuleEntityProperties = environment.links.console.getRuleEntityProperties;
 
   getChannels = environment.links.identity.channels;
+  consoleChannel= environment.links.identity.consoleChannls
   deleteRoles = environment.links.identity.deleteRoles;
 
   // teams
@@ -629,6 +630,9 @@ export class CommonDataService {
 
   GetChannels() {
     return this.http.get(this.IdentityBaseUrl + this.getChannels);
+  }
+  GetConsoleChannels(){
+    return this.http.get(this.consoleBaseUrl+this.consoleChannel)
   }
 
   UpdateStatus(body: any) {

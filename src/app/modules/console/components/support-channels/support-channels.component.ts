@@ -19,7 +19,7 @@ export class SupportChannelsComponent implements OnInit {
   users!: any[];
   pagePicFile: any;
   instaProfile: any;
-  
+
   isProfileEnabled: boolean = false;
 
   attachFacebookPageForm!: FormGroup;
@@ -37,7 +37,8 @@ export class SupportChannelsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   this.GetChannels();
+
+    this.GetChannels();
   }
 
   attachFacebookPage(): void {
@@ -62,7 +63,7 @@ export class SupportChannelsComponent implements OnInit {
       this.fb.init(initParams);
 
       const options: LoginOptions = {
-        scope:'public_profile,email,read_insights,ads_management,instagram_basic,pages_manage_engagement,pages_manage_posts,pages_messaging,pages_read_user_content,pages_manage_metadata,pages_manage_ads,instagram_manage_comments,instagram_manage_insights,pages_read_engagement',
+        scope: 'public_profile,email,read_insights,ads_management,instagram_basic,pages_manage_engagement,pages_manage_posts,pages_messaging,pages_read_user_content,pages_manage_metadata,pages_manage_ads,instagram_manage_comments,instagram_manage_insights,pages_read_engagement',
         return_scopes: true,
         enable_profile_selector: true,
       };
@@ -80,11 +81,11 @@ export class SupportChannelsComponent implements OnInit {
               // pageProfilePic : this.attachFacebookPageForm.value.pageProfilePic,
               authResponse: response.authResponse,
             }
-            this.commonService.AttachFacebookPage(obj).subscribe((res:any)=>{
+            this.commonService.AttachFacebookPage(obj).subscribe((res: any) => {
               console.log(res);
               this.attachFacebookPageForm.reset();
             })
-            
+
           }
         })
         .catch((error: any) => console.error(error));
@@ -112,7 +113,7 @@ export class SupportChannelsComponent implements OnInit {
   //       if(index != -1){
   //         this.scopes.slice(index);
   //       }
-        
+
   //     } else {
   //       this.scopes.push(event.target.id);
   //     }
@@ -127,13 +128,16 @@ export class SupportChannelsComponent implements OnInit {
     window.open(loginUrl, '_blank');
   }
 
-  channels: any[]=[];
+  channels: any[] = [];
 
-  GetChannels(){
-    this.commonService.GetChannels().subscribe((res:any)=>{
-      if (Object.keys(res).length > 0) {
-      this.channels = res[0].subMenu;
-      }
+  GetChannels() {
+
+    this.commonService.GetConsoleChannels().subscribe((res: any) => {
+      this.channels = res
+      console.log("channels====>", this.channels)
+      // if (Object.keys(res).length > 0) {
+      // this.channels = res[0].subMenu;
+      // }
     })
   }
 

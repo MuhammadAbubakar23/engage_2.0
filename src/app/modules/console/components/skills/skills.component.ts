@@ -10,7 +10,7 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-skills',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule , NgxSpinnerModule],//, CreateTeamComponent
+  imports: [CommonModule, RouterModule, FormsModule, NgxSpinnerModule],//, CreateTeamComponent
   templateUrl: './skills.component.html',
   styleUrls: ['./skills.component.scss']
 })
@@ -40,7 +40,7 @@ export class SkillsComponent implements OnInit {
     private spinnerServerice: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    
+
     this.getSkillList()
     // Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     // .forEach(tooltipNode => new Tooltip(tooltipNode));
@@ -62,10 +62,10 @@ export class SkillsComponent implements OnInit {
     switch (wingSlug) {
       case 'select_wing_a':
         return 'Select wing A';
-        case 'select_wing_b':
-          return 'Select wing B';
-          case 'select_wing_c':
-            return 'Select wing C';
+      case 'select_wing_b':
+        return 'Select wing B';
+      case 'select_wing_c':
+        return 'Select wing C';
       // Add more cases for other possible values if needed
       default:
         return wingSlug; // Return the original value if no transformation is needed
@@ -85,7 +85,7 @@ export class SkillsComponent implements OnInit {
       this.spinnerServerice.hide()
 
       this.skills = res.Skills
-      console.log("  this.skills " ,   this.skills )
+      console.log("  this.skills ", this.skills)
       this.TotalCount = res.TotalCount;
       if (this.pageNumber == 1) {
         this.startingPoint = 1;
@@ -100,7 +100,7 @@ export class SkillsComponent implements OnInit {
       }
       console.log(res)
     })
-    
+
   }
   skills: any[] = [];
 
@@ -125,13 +125,13 @@ export class SkillsComponent implements OnInit {
   toggleSelection(id: number) {
     const index = this.selectedIds.indexOf(id);
     if (index === -1) {
-        this.selectedIds.push(id);
+      this.selectedIds.push(id);
     } else {
-        this.selectedIds.splice(index, 1);
+      this.selectedIds.splice(index, 1);
     }
     // Check if all checkboxes are selected
     this.allSelected = this.selectedIds.length === this.skills.length;
-}
+  }
 
 
   isSectedAll() {
@@ -180,7 +180,7 @@ export class SkillsComponent implements OnInit {
     })
   }
   deleted(id: number) {
-    
+
     this.selectedIds.push(id)
 
     this.commonData.DeleteSkill(this.selectedIds).subscribe(
@@ -255,5 +255,5 @@ export class SkillsComponent implements OnInit {
     this.route.navigateByUrl(`/console/skills/create/${id}`);
     console.log('After navigation', id);
   }
-  
+
 }

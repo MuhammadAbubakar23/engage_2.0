@@ -117,7 +117,7 @@
                             <li class="mb-0" *ngFor="let status of profileStatus">
                                 <a class="dropdown-item" id="assignToList"
                                     (click)="RemoveTagInProfile('black_list', 'Tag', userInfo.id)">
-                                    {{'Un'+status.name}}
+                                    {{'Un'+ status.name.toLowerCase() }}
                                 </a>
                             </li>
                         </ul>
