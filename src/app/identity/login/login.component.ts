@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/identity/AuthService/auth.service';
@@ -12,6 +16,7 @@ import { VerificationDto } from 'src/app/shared/Models/verificationDto';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { SkillsService } from 'src/app/services/Skills/skills.service';
 import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
+import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 // import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 @Component({
   selector: 'app-login',
@@ -30,7 +35,7 @@ export class LoginComponent implements OnInit {
   verificationdto = new VerificationDto();
   isUserLoging: boolean = false;
   baseUrl: string = '';
-  ErrorMessage: string = "";
+  ErrorMessage: string = '';
   isVerificationcodeFailed: boolean = false;
   loginDisabled: boolean = false;
   matchTime: any;
@@ -40,14 +45,19 @@ export class LoginComponent implements OnInit {
   loginForm = new UntypedFormGroup({
     // actor: new UntypedFormControl(this.logindto.actor),
     email: new UntypedFormControl(this.logindto.userName),
-    userName: new UntypedFormControl(this.logindto.userName, [Validators.required]),
-    password: new UntypedFormControl(this.logindto.password, [Validators.required]),
+    userName: new UntypedFormControl(this.logindto.userName, [
+      Validators.required,
+    ]),
+    password: new UntypedFormControl(this.logindto.password, [
+      Validators.required,
+    ]),
     rememberMe: new UntypedFormControl(this.logindto.rememberMe),
   });
   verificationForm = new UntypedFormGroup({
     Verificationemail: new UntypedFormControl(this.verificationdto.email),
     verificationCode: new UntypedFormControl(
-      this.verificationdto.verificationCode, [Validators.required, Validators.minLength(6), Validators.maxLength(6)]
+      this.verificationdto.verificationCode,
+      [Validators.required, Validators.minLength(6), Validators.maxLength(6)]
     ),
   });
   Verificationemail: any;
@@ -62,17 +72,18 @@ export class LoginComponent implements OnInit {
     private commonService: CommonDataService,
     private datePipe: DatePipe,
     private sendWings: GetWingsService,
-    private sendSkills:SkillsService,
-    private sendSkillIdsService : SkillIdsService
-  ) { }
+    private sendSkills: SkillsService,
+    private sendSkillIdsService: SkillIdsService,
+    private sendRulesGroupIdsService: RulesGroupIdsService
+  ) {}
 
   ngOnInit(): void {
     // this.getAllTags();
     this.baseUrl = window.location.origin;
   }
-  uniqueWings:any[]=[];
+  uniqueWings: any[] = [];
+  rulesGroupIds: any[] = [];
   login() {
-
     let obj = {
       // actor: this.loginForms.value.actor,
       userName: this.loginForm.value.userName,
@@ -82,16 +93,27 @@ export class LoginComponent implements OnInit {
     this.spinnerService.show();
     this.authService.login(obj).subscribe(
       (res: any) => {
-        if (res.status == false || res.isTwoFAEnabled== false) {
+        if (res.status == false || res.isTwoFAEnabled == false) {
           this.stor.store('token', res.loginResponse.loginResponse.accessToken);
           this.stor.store('main', res.loginResponse.loginResponse);
-          this.stor.store('nocompass', res?.loginResponse?.loginResponse?.roles[0]);
-          localStorage.setItem('agentId', res.loginResponse.loginResponse.userId);
-          localStorage.setItem('agentName', res.loginResponse.loginResponse.username);
+          this.stor.store(
+            'nocompass',
+            res?.loginResponse?.loginResponse?.roles[0]
+          );
+          localStorage.setItem(
+            'agentId',
+            res.loginResponse.loginResponse.userId
+          );
+          localStorage.setItem(
+            'agentName',
+            res.loginResponse.loginResponse.username
+          );
 
-          this.commonService.UserLogin().subscribe(() => { });
+          this.commonService.UserLogin().subscribe(() => {});
 
-          this.sendSkillIdsService.sendSkillIds(res?.loginResponse?.loginResponse?.skills)
+          this.sendSkillIdsService.sendSkillIds(
+            res?.loginResponse?.loginResponse?.skills
+          );
 
           this.router.navigateByUrl('all-inboxes/focused/all');
           this.spinnerService.hide();
@@ -112,17 +134,53 @@ export class LoginComponent implements OnInit {
           this.signalRService.applySentimentListner();
           this.signalRService.updateMessageStatusDataListener();
           // this.signalRService.updatePostList();
-        } else if (res.status == true || res.isTwoFAEnabled==true) {
-          this.Verificationemail =res.userName
-            // res.loginResponse.loginTwoFAResponse.userName;
+        } else if (res.status == true || res.isTwoFAEnabled == true) {
+          this.Verificationemail = res.userName;
+          // res.loginResponse.loginTwoFAResponse.userName;
           this.isUserLoging = true;
           this.isVerificationcodeFailed = false;
           this.spinnerService.hide();
         }
+
+        this.commonService
+          .GetSkills(res?.loginResponse?.loginResponse?.skills)
+          .subscribe((skillNames: any) => {
+            this.sendSkills.sendSkills(skillNames);
+            res?.loginResponse?.loginResponse?.roles.forEach((role:any) => {
+            var companyId = role.id;
+            // var companyId = 658;
+            skillNames.forEach((skill: any) => {
+              var groupName = skill.skillName + '_' + companyId;
+
+              this.signalRService
+                .getConnectionState()
+                .subscribe((connected) => {
+                  if (connected) {
+                    this.signalRService.joinGroup(groupName);
+                  }
+                });
+              var wingName = skill.wing;
+              if (!this.uniqueWings.includes(wingName)) {
+                this.uniqueWings.push(wingName);
+              }
+              skill.rules.forEach((rule: any) => {
+                if (!this.rulesGroupIds.includes(rule.groupId)) {
+                  this.rulesGroupIds.push(rule.groupId);
+                }
+              });
+            });
+            this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds);
+            localStorage.setItem(
+              'defaultRuleIds',
+              this.rulesGroupIds.toString()
+            );
+            this.sendWings.sendWings(this.uniqueWings.toString());
+            localStorage.setItem('defaultSkills', this.uniqueWings.toString());
+            });
+          });
       },
       (error: any) => {
-        
-        this.spinnerService.hide()
+        this.spinnerService.hide();
         this.ErrorMessage = error.error.message;
         if (this.ErrorMessage?.includes('The account is locked out ')) {
           const LockedtiemEndpatteren = /lockoutEndTime = (.+)$/;
@@ -152,9 +210,7 @@ export class LoginComponent implements OnInit {
           this.loginDisabled = true;
           this.spinnerService.hide();
           this.reloadComponent('userblocked');
-        }
-        else {
-
+        } else {
           this.spinnerService.hide();
           this.reloadComponent('loginFailed');
         }
@@ -185,7 +241,6 @@ export class LoginComponent implements OnInit {
         // this.login()
       }
       if (seconds == 0) {
-
         clearInterval(timer);
       }
     }, 1000);
@@ -239,7 +294,6 @@ export class LoginComponent implements OnInit {
   AlterMsg: any;
   toastermessage: any;
   reloadComponent(type: any) {
-
     if (type == 'loginFailed') {
       this.AlterMsg = this.ErrorMessage;
       this.toastermessage = true;

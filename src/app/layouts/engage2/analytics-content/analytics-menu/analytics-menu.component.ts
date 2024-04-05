@@ -75,7 +75,6 @@ export class AnalyticsMenuComponent implements OnInit {
   }
   getmenu() {
     if (this.channelname == 'local') {
-      debugger
   
       
         //  this.analyticeReport = [

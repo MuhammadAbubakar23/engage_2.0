@@ -137,9 +137,9 @@ export class WhatsappDetailsComponent implements OnInit {
     private stor: StorageService,
     private el: ElementRef,
     private renderer: Renderer2,
-    private companyidServices:CompanyidService,
+    private companyidServices: CompanyidService,
     private getWing: GetWingsService,
-    private getRulesGroupIdsService : RulesGroupIdsService
+    private getRulesGroupIdsService: RulesGroupIdsService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -270,18 +270,18 @@ export class WhatsappDetailsComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        var assignedProfileId = Number(localStorage.getItem('assignedProfile'))
+        var assignedProfileId = Number(localStorage.getItem('assignedProfile'));
         if (
           this.flag == 'focused' ||
           this.flag == 'assigned_to_me' ||
           this.flag == 'follow_up'
         ) {
-          if(res.contentCount.profileId == assignedProfileId){
-          if (res.contentCount.contentType == 'WM') {
-            this.totalUnrespondedCmntCountByCustomer =
-              res.contentCount.unrespondedCount;
+          if (res.contentCount.profileId == assignedProfileId) {
+            if (res.contentCount.contentType == 'WM') {
+              this.totalUnrespondedCmntCountByCustomer =
+                res.contentCount.unrespondedCount;
+            }
           }
-        }
         }
       });
     // this.Subscription = this.queryStatusService.receiveQueryStatus().subscribe((res) => {
@@ -352,7 +352,7 @@ export class WhatsappDetailsComponent implements OnInit {
               items: groupedItems[createdDate],
             };
           });
-          debugger          // // console.log('hello', this.groupArrays);
+          // // console.log('hello', this.groupArrays);
           this.totalUnrespondedCmntCountByCustomer =
             this.totalUnrespondedCmntCountByCustomer + 1;
         }
@@ -378,7 +378,7 @@ export class WhatsappDetailsComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
-        hasBlueTick:false,
+        hasBlueTick: false,
         text: '',
         userName: '',
         notInclude: '',
@@ -398,13 +398,12 @@ export class WhatsappDetailsComponent implements OnInit {
             this.WhatsappData = res.List;
             this.userInformation = res.List[0].user;
             this.userInfoService.shareUserInformation(res.List[0].user);
-            debugger
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
             this.TotalCmntQueryCount = res.TotalQueryCount;
 
             this.WhatsappData?.forEach((msg: any) => {
               this.senderId = msg.comments[0].sendTo;
-              localStorage.setItem('senderId',this.senderId)
+              localStorage.setItem('senderId', this.senderId);
             });
 
             this.commentsArray = [];
@@ -447,7 +446,7 @@ export class WhatsappDetailsComponent implements OnInit {
         pageNumber: 0,
         pageSize: 0,
         isAttachment: false,
-        hasBlueTick:false,
+        hasBlueTick: false,
         queryType: this.queryType,
         text: '',
         userName: '',
@@ -464,7 +463,6 @@ export class WhatsappDetailsComponent implements OnInit {
           this.WhatsappData = res.List;
           this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
-          debugger
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
 
@@ -510,7 +508,7 @@ export class WhatsappDetailsComponent implements OnInit {
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
-        hasBlueTick:false,
+        hasBlueTick: false,
         text: '',
         userName: '',
         notInclude: '',
@@ -528,7 +526,6 @@ export class WhatsappDetailsComponent implements OnInit {
             this.WhatsappData = res.List;
             this.userInformation = res.List[0].user;
             this.userInfoService.shareUserInformation(res.List[0].user);
-            debugger
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
             this.TotalCmntQueryCount = res.TotalQueryCount;
 
@@ -827,7 +824,6 @@ export class WhatsappDetailsComponent implements OnInit {
 
   quickRepliesForBazaar() {
     this.commondata.QuickReplyListForBazaarOnly().subscribe((res: any) => {
-      ;
       this.QuickRepliesForBazaar = res;
     });
   }
@@ -1453,12 +1449,12 @@ export class WhatsappDetailsComponent implements OnInit {
       !this.isAudio(attachment)
     );
   }
-  companyId:any
+  companyId: any;
   c_satForm() {
-//     this.companyidServices.receivedcompanyid().subscribe((res:any)=>{
-// this.companyId=res
+    //     this.companyidServices.receivedcompanyid().subscribe((res:any)=>{
+    // this.companyId=res
     // })
-    this.companyId= 654
+    this.companyId = 654;
     const customerId = localStorage.getItem('storeOpenedId');
     const platform = localStorage.getItem('parent');
     const AgentId = localStorage.getItem('agentId');
@@ -1472,7 +1468,7 @@ export class WhatsappDetailsComponent implements OnInit {
         customerId +
         '&agentId=' +
         AgentId +
-        '&Id='+
+        '&Id=' +
         this.companyId
     );
   }

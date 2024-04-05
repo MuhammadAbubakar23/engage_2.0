@@ -401,7 +401,6 @@ export class FacebookComponent implements OnInit {
       this.commondata
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
-          debugger;
           if (Object.keys(res).length > 0) {
             // this.fbCmntReply = true;
             this.ConverstationDetailDto = res;

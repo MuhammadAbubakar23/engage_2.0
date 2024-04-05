@@ -80,12 +80,10 @@ uniqueWings:any[]=[];
     //     this.sendWings.sendWings(this.uniqueWings.toString())
     //     localStorage.setItem('defaultSkills', this.uniqueWings.toString())
     //   // });
-    //   debugger
     //   // resolve(this.groupArray);
     //   this.signalRService.joinGroup(this.groupArray)
     // },
     // (error)=>{
-    // debugger
     //   // reject(error);
     // })
 

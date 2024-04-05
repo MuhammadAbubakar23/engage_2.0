@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InboxContentComponent } from 'src/app/layouts/engage2/inbox-content/inbox-content.component';
 import { ResponderGuardGuard } from 'src/app/shared/Guards/responder-guard.guard';
-import { JoinGroupResolver } from 'src/app/shared/resolver/JoinGroup/join-group.resolver';
 import { InboxResponderComponent } from './components/inbox-responder/inbox-responder.component';
 import { InboxesComponent } from './inboxes.component';
 
@@ -11,7 +10,7 @@ const routes: Routes = [
     path: ':flag/:flag2',
     component: InboxContentComponent,
     canDeactivate: [ResponderGuardGuard],
-    resolve:{ group : JoinGroupResolver},
+    // resolve:{ group : JoinGroupResolver},
     children: [
       {
         path: 'responder/:channel',

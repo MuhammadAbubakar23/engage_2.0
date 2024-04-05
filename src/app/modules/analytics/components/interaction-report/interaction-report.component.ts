@@ -220,7 +220,6 @@ export class InteractionReportComponent implements OnInit {
   getListUser(): void {
     this.commonData.GetUserList().subscribe(
       (response: any) => {
-        debugger
         this.totalAgents = response;
         this.totalAgentsEmail=response
         this.totalAgents.forEach((x: any) => {
@@ -439,7 +438,6 @@ export class InteractionReportComponent implements OnInit {
           if (!this.allDates.includes(date)) {
             this.allDates.push(date);
           }
-debugger
           let sentimentCounts: { [key: string]: number } = {};
           sentimentCounts = interaction.count;
           this.newArray.push(sentimentCounts);

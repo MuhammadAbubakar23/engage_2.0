@@ -684,6 +684,10 @@
                     aria-label="PlayStore"></i>
                 </td>
                 <td style="width: 300px;">
+                  <span *ngIf="isverifiedAccount==true" style="color: blue;">
+                    <i class="fa-solid fa-badge-check"></i>
+                  </span>
+                  &nbsp; 
                   <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
                     <a
                       (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings)">

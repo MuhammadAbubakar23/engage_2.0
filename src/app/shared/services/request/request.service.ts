@@ -38,7 +38,6 @@ export class RequestService {
     if(route ===undefined){
       route ='Skill/GetSkills'
     }
-    debugger
     if(route===undefined){
 
       route='Skill/GetSkills'
@@ -72,7 +71,6 @@ export class RequestService {
       // );
   }
   getFromConsole<T>(route: string, params?: any, routeparams: string = ""): Observable<T> {
-debugger
     console.log(params);
     console.log(this.createCompleteRoute(this.env.paths[route], this.env.consoleBaseUrl));
     return this.http.get<T>(this.createCompleteRoute(this.env.console[route], this.env.consoleBaseUrl, routeparams), { params })

@@ -36,7 +36,7 @@ export class InboxMenuComponent implements OnInit {
   activeChannel: string = '';
   baseUrl: string = '';
   client: string = '';
-  allSkills:any[]=[];
+  allSkills: any[] = [];
   constructor(
     private filterService: FilterService,
     private commonService: CommonDataService,
@@ -49,8 +49,7 @@ export class InboxMenuComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    debugger
-    this.allSkills = this.getSkills.skills
+    this.allSkills = this.getSkills.skills;
     this.baseUrl = window.location.origin;
     if (this.baseUrl == 'https://engage.jazz.com.pk') {
       this.client = 'jazz';
@@ -66,11 +65,10 @@ export class InboxMenuComponent implements OnInit {
       this.client = 'stagging';
     } else if (this.baseUrl == 'https://bzengage.enteract.live') {
       this.client = 'Bazaar';
+    } else if (this.baseUrl == 'https://uiengagerox.enteract.app') {
+      this.client = 'stagging';
     }
-    else if(this.baseUrl=='https://uiengagerox.enteract.app') {
-      this.client='stagging'
-    }
-    
+
     this.activeChannel = this.router.url.split('/')[3];
 
     this.flag = this.router.url.split('/')[2];
@@ -120,7 +118,6 @@ export class InboxMenuComponent implements OnInit {
 
       this.Subscription.add(
         this.updateListService.receiveList().subscribe((res) => {
-          
           res.forEach((platform: any) => {
             this.UnResponded += 1;
             switch (platform.platform) {
@@ -171,7 +168,6 @@ export class InboxMenuComponent implements OnInit {
   platformWiseCount: any[] = [];
 
   getAllChannelsUnrespondedCounts() {
-
     this.commonService
       .GetAllChannelsUnrespondedCount()
       .subscribe((res: any) => {
@@ -319,20 +315,19 @@ export class InboxMenuComponent implements OnInit {
   updatevalue(string: any) {
     this.filterService.addTogglePanel(string);
   }
-  rulesGroupIds:any[]=[];
-  updateWing(rule:any){
-    debugger
-    // if(string == 'defaultSkills'){
-    //   this.sendWing.sendWings(localStorage.getItem('defaultSkills')|| '')
-    // } else {
-    //   this.sendWing.sendWings(string);
-    // }
-    rule.forEach((x:any) => {
-              if(!this.rulesGroupIds.includes(x.groupId)) {
-                this.rulesGroupIds.push(x.groupId)
-              }
-            });
-            
-          this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds)
+  rulesGroupIds: any[] = [];
+  updateWing(rule: any) {
+    if (rule == 'defaultRuleIds') {
+      this.rulesGroupIds = localStorage.getItem('defaultRuleIds')?.split(',') || []
+      this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds);
+    } else {
+      rule.forEach((x: any) => {
+        if (!this.rulesGroupIds.includes(x.groupId)) {
+          this.rulesGroupIds.push(x.groupId);
+        }
+      });
+    }
+
+    this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds);
   }
 }

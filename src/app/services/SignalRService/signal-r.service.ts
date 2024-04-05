@@ -16,6 +16,7 @@ import { UpdateListService } from '../UpdateListService/update-list.service';
 import { UpdateMessagesService } from '../UpdateMessagesService/update-messages.service';
 import { GetNewPostService } from '../GetNewPostService/get-new-post.service';
 import { CompanyidService } from '../companyidService/companyid.service';
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -36,6 +37,8 @@ export class SignalRService {
   public broadcastedData!: any[];
 
   SignalRCommonBaseUrl = environment.SignalRCommonBaseUrl;
+
+  private connectionStateSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
     private storage: StorageService,
@@ -90,21 +93,23 @@ export class SignalRService {
       .build();
     this.hubconnection
       .start()
-      .then(() => console.log('Connection started'))
+      .then(() => {console.log('Connection started');
+      this.connectionStateSubject.next(true);})
       .then(() => this.getConnectionId())
       .catch((err) => console.log('Error while starting connection: ' + err));
+
+      
     // }
   }
-  joinGroup(groupArray: any) {
-    debugger
+  public getConnectionState(): BehaviorSubject<boolean> {
+    return this.connectionStateSubject;
+  }
+  joinGroup(groupName: any) {
     if (this.hubconnection) {
-      groupArray.forEach((groupName:any) => {
         this.hubconnection
         .invoke('JoinGroup', groupName)
         .then(() => console.log(`Joined group ${groupName}`))
-        .catch(err => console.error(`Error while joining group ${groupName}: ${err}`));
-      });
-      
+        .catch(err => console.error(`Error while joining group ${groupName}: ${err}`));      
     } else {
       console.error('SignalR connection not established.');
     }

@@ -86,7 +86,6 @@ export class ConversationComponent implements OnInit {
     private lodeModuleService: ModulesService,
     private removeAssignedQueryService: RemoveAssignedQuerryService,
     private datePipe: DatePipe,
-    private userInfoService: UserInformationService,
     private headerCountService: HeaderCountService,
     private sendCount: ClosePanelService,
     private getWing: GetWingsService,
@@ -270,7 +269,7 @@ export class ConversationComponent implements OnInit {
 
   customersList: any[] = [];
   wings:any;
-
+  isverifiedAccount:boolean=false
   getConversationList() {
     // if (this.currentUrl.split('/')[2] == 'completed') {
     //   this.flag = 'sent';
@@ -398,7 +397,7 @@ export class ConversationComponent implements OnInit {
         toDate: this.toDate,
         user: this.searchForm.value.user,
         pageId: '',
-        plateForm: 'Facebook',
+        plateForm: this.platform,
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: this.searchForm.value.isAttachment,
@@ -433,6 +432,12 @@ export class ConversationComponent implements OnInit {
         res?.List?.forEach((x: any) => {
           if (x.follow_Up_Status !== null) {
             this.sendCount.sendtotalCount(res.TotalCount);
+          }
+          if(x.isVerified==true){
+            this.isverifiedAccount=true
+          }
+          else{
+            this.isverifiedAccount=false
           }
         });
 
