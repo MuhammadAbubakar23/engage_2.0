@@ -22,16 +22,16 @@ export class MonitoringMenuComponent implements OnInit {
   constructor(private chatVisibilityService: ChatVisibilityService, private _botMonitorS: BotMonitoringService) {
     this.activeIdSubscription = this.chatVisibilityService.activeId$.subscribe((active) => {
       if (active) {
-        
+
         console.log("active Id ", active);
         const clickedItem1 = this.activeConversation.find(item => item.from === active.customerPhone && item.completed === active.completed);
         if (clickedItem1) {
-          
+
           clickedItem1.active = false;
         }
         const clickedItem2 = this.completedConversation.find(item => item.from === active.customerPhone && item.completed === active.completed);
         if (clickedItem2) {
-          
+
           clickedItem2.active = false;
         }
 
@@ -57,6 +57,7 @@ export class MonitoringMenuComponent implements OnInit {
         if (existingChatIndex == -1) {
           chat.to = environment.clientNumber
           chat['completed'] = false;
+
           this.defaultActiveConversation.push(chat)
         }
       })
@@ -107,9 +108,9 @@ export class MonitoringMenuComponent implements OnInit {
     this.apiCallInterval1 = interval(20000).subscribe(() => {
       this.getActiveConversation();
     });
-    // this.apiCallInterval2 = interval(1000).subscribe(() => {
-    //   this.getCompletedConversation();
-    // });
+    this.apiCallInterval2 = interval(3000).subscribe(() => {
+      this.getCompletedConversation();
+    });
 
   }
 

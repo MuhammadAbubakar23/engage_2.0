@@ -9,19 +9,19 @@
       </section>
     </div>
   </div>
-  <main class="chatlisting row align-items-start p-3">
+  <main class="">
     <div
       class="page-content-wrapper custom-scroll chatbot-main"
       [ngClass]="{ thirdactive: chats.length === 3 }"
       *ngIf="chats.length > 0"
     >
-      <div class="row align-items-start"> 
+      <div class="chatlisting row align-items-start px-3 pt-3 pb-5">
         <div
           *ngFor="let chat of chats"
+          class="chatitem col"
           [ngClass]="{
-            'col-12': chats.length === 1,
-            'col-md-6': chats.length === 2,
-            'col-md-4': chats.length === 3
+            minimized: chat[0].isMinimized,
+            'mb-5': chat[0].isMinimized
           }"
         >
           <app-bot-chat

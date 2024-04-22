@@ -1,123 +1,115 @@
+<section
+  class="empty col d-flex flex-column justify-content-center h-100 align-items-center gap-3 d-none"
+>
+  <img src="../images/empty.svg" width="300px" alt="" />
+  <p class="m-0 coal">Select the conversation to load the messages</p>
+</section>
+<section class="chatitem col" id="chatitem1">
+  <header class="chat-header">
+    <div class="d-flex align-items-center">
+      <span class="iconButton medium bg-white fw-bold">
+        {{ chat[0].customer.name | initialLetters }}
+      </span>
 
-  <section
-    class="empty col d-flex flex-column justify-content-center h-100 align-items-center gap-3 d-none"
-  >
-    <img src="../images/empty.svg" width="300px" alt="" />
-    <p class="m-0 coal">Select the conversation to load the messages</p>
-  </section>
-  <section
-    class="chatitem col"
-    id="chatitem1"
-    [ngClass]="{ minimized: chat[0].isMinimized, 'mb-5': chat[0].isMinimized }"
-  >
-    <header class="chat-header">
-      <div class="d-flex align-items-center">
-        <span class="iconButton medium bg-white fw-bold">
-          {{ chat[0].customer.name | initialLetters }}
-        </span>
-
-        <div class="ms-3">
-          <h6 class="user-status m-0">
-            {{ chat[0].customer.name || chat[0].customer.phone }}
-            <!-- <i class="fa fa-circle user-status-icon sun" title="away"></i> -->
-          </h6>
-        </div>
-
-        <span
-          class="iconButton medium ms-auto"
-          id="minbutton"
-          (click)="toggleMinimized(chat)"
-        >
-          <i
-            class="fa-light"
-            [ngClass]="{
-              'fa-minus': !chat[0].isMinimized,
-              'fa-expand': chat[0].isMinimized
-            }"
-          ></i>
-        </span>
-        <span (click)="removeScreen()">
-          <i class="fa-light fa-times"></i>
-        </span>
+      <div class="ms-3">
+        <h6 class="user-status m-0">
+          {{ chat[0].customer.name || chat[0].customer.phone }}
+          <!-- <i class="fa fa-circle user-status-icon sun" title="away"></i> -->
+        </h6>
       </div>
-    </header>
-    <div
-      class="query-container chat-message-component"
-      data-scrollbar="true"
-      tabindex="-1"
-      style="overflow: scroll; height: xyz"
-      #scrollMe
-      [scrollTop]="scrollMe.scrollHeight"
-    >
-      <div
-        class="scroll-content"
-        style="transform: translate3d(0px, -100px, 0px)"
+
+      <span
+        class="iconButton medium ms-auto"
+        id="minbutton"
+        (click)="toggleMinimized(chat)"
       >
-        <div class="chatsection">
-          <div class="main-chat">
-            <div class="chat-box-wrap" style="margin-top: 150px">
-              <ng-container *ngFor="let c of chat.slice().reverse()">
-                <!-- let c of chat.slice().reverse() -->
-                <div class="message-wrap agent-message-wrap right">
+        <i
+          class="fa-light"
+          [ngClass]="{
+            'fa-minus': !chat[0].isMinimized,
+            'fa-expand': chat[0].isMinimized
+          }"
+        ></i>
+      </span>
+      <span (click)="removeScreen()">
+        <i class="fa-light fa-times"></i>
+      </span>
+    </div>
+  </header>
+  <div
+    class="query-container chat-message-component"
+    data-scrollbar="true"
+    tabindex="-1"
+    style="overflow: scroll; height: xyz"
+    #scrollMe
+    [scrollTop]="scrollMe.scrollHeight"
+  >
+    <div
+      class="scroll-content"
+      style="transform: translate3d(0px, -100px, 0px)"
+    >
+      <div class="chatsection">
+        <div class="main-chat">
+          <div class="chat-box-wrap" style="margin-top: 150px">
+            <ng-container *ngFor="let c of chat.slice().reverse()">
+              <!-- let c of chat.slice().reverse() -->
+              <div class="message-wrap agent-message-wrap right">
+                <div class="d-flex align-items-center agent-container">
+                  <div class="card w-d-inline messageUpper">
+                    <div class="card-body">
+                      <div class="d-flex msg-user-info">
+                        <div class="d-flex align-items-center w-100">
+                          <h6 class="card-title navy m-0">
+                            {{ c.customer.name || c.customer.phone }}
+                          </h6>
+                          <small class="silver ms-auto">{{
+                            c.createdDate | date : "shortTime"
+                          }}</small>
+                        </div>
+                      </div>
+                      <p class="card-text nignt">
+                        {{ c.message }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ng-container *ngFor="let reply of c.replies">
+                <div class="message-wrap agent-message-wrap left">
                   <div class="d-flex align-items-center agent-container">
                     <div class="card w-d-inline messageUpper">
                       <div class="card-body">
                         <div class="d-flex msg-user-info">
                           <div class="d-flex align-items-center w-100">
                             <h6 class="card-title navy m-0">
-                              {{ c.customer.name || c.customer.phone }}
+                              {{ c.client.name || c.client.phone }}
                             </h6>
                             <small class="silver ms-auto">{{
-                              c.createdDate | date : "shortTime"
+                              reply.createdDate | date : "shortTime"
                             }}</small>
                           </div>
                         </div>
-                        <p class="card-text nignt">
-                          {{ c.message }}
-                        </p>
+                        <!-- <p class="card-text nignt">
+                          {{reply.message}} -->
+
+                        <div *ngFor="let line of reply.message.split('\n')">
+                          <p class="card-text nignt" *ngIf="line.trim() !== ''">
+                            {{ line }}
+                          </p>
+                        </div>
+                        <!-- </p> -->
                       </div>
                     </div>
                   </div>
-                </div>
-                <ng-container *ngFor="let reply of c.replies">
-                  <div class="message-wrap agent-message-wrap left">
-                    <div class="d-flex align-items-center agent-container">
-                      <div class="card w-d-inline messageUpper">
-                        <div class="card-body">
-                          <div class="d-flex msg-user-info">
-                            <div class="d-flex align-items-center w-100">
-                              <h6 class="card-title navy m-0">
-                                {{ c.client.name || c.client.phone }}
-                              </h6>
-                              <small class="silver ms-auto">{{
-                                reply.createdDate | date : "shortTime"
-                              }}</small>
-                            </div>
-                          </div>
-                          <!-- <p class="card-text nignt">
-                          {{reply.message}} -->
-
-                          <div *ngFor="let line of reply.message.split('\n')">
-                            <p
-                              class="card-text nignt"
-                              *ngIf="line.trim() !== ''"
-                            >
-                              {{ line }}
-                            </p>
-                          </div>
-                          <!-- </p> -->
-                        </div>
-                      </div>
-                    </div>
-                  </div></ng-container
-                >
-              </ng-container>
-            </div>
+                </div></ng-container
+              >
+            </ng-container>
           </div>
         </div>
       </div>
     </div>
-    <!-- <footer class="chatfooter">
+  </div>
+  <!-- <footer class="chatfooter">
         <div class="input-group input-group-lg">
           <div class="form-floating">
             <textarea
@@ -160,5 +152,4 @@
           </div>
         </div>
       </footer> -->
-  </section>
-
+</section>
