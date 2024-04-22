@@ -26,7 +26,7 @@ export class SocialRawDataComponent implements OnInit {
   toDate: string = '';
   itemperPage: number = 25;
   totalPages: any;
-
+  currentDate: any;
   downloading = false;
   toastermessage = false;
   AlterMsg: any = '';
@@ -35,14 +35,17 @@ export class SocialRawDataComponent implements OnInit {
     private datePipe: DatePipe,
     private _hS: HeaderService,
     private SpinnerService: NgxSpinnerService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const newObj = {
       title: 'Social Raw Data',
       url: '/analytics/social-raw-data',
     };
+
     this._hS.setHeader(newObj);
+    // this.currentDate = new Date();
+    // this.maxEndDate = this.currentDate.toISOString().split('T')[0];
     const currentDate = new Date();
     const oneDayBeforeCurrentDate = currentDate.setDate(
       currentDate.getDate() - 1
@@ -54,19 +57,51 @@ export class SocialRawDataComponent implements OnInit {
 
     this.GetSocialRawData();
   }
+  getEndDate() {
+    if (this.toDate >= this.fromDate) {
+      this.GetSocialRawData();
+    } else {
+      alert('EndDate is lessthen StartDate');
+      this.toDate = '';
+    }
+  }
+  getStartDate() {
+    this.toDate = '';
+  }
   GetSocialRawData() {
     if (this.toDate == '' && this.fromDate == '') {
-      // let currentDate = new Date();
-      // let prevDate = currentDate.setDate(currentDate.getDate() - 5);
-      // this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
+      let currentDate = new Date();
+      let prevDate = currentDate.setDate(currentDate.getDate() - 5);
+      this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
 
-      // this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
+      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
       this.fromDate = this.maxEndDate;
       this.toDate = this.maxEndDate;
     } else if (this.fromDate != '' && this.toDate != '') {
       this.fromDate = this.fromDate;
       this.toDate = this.fromDate;
     }
+    // to and from date filter 
+
+    // if (this.fromDate == '' && this.toDate == '') {
+    //   const today = this.currentDate;
+    //   this.toDate = this.datePipe.transform(today, 'YYYY-MM-dd') || '';
+
+    //   let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 5);
+    //   this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
+    // } else if (this.fromDate != '' && this.toDate != '') {
+    //   this.fromDate = this.fromDate;
+    //   this.toDate = this.toDate;
+    // }
+    // const startDateObj = new Date(this.fromDate);
+    // const endDateObj = new Date(this.toDate);
+    // const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
+    // const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    // if (diffDays > 30) {
+    //   alert('Select a date range of 30 days or less');
+    //   this.toDate=''
+    //   return;
+    // }
     var obj = {
       fromDate: this.fromDate,
       toDate: this.toDate,

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
+import { ChannelRule, RuleWithCount } from 'src/app/shared/Models/ChannelRule';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
 @Component({
   selector: 'app-rules',
@@ -13,11 +14,12 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
   styleUrls: ['./rules.component.scss']
 })
 export class RulesComponent implements OnInit {
-  tableData = [{ name: '', description: '', rulesJson: '' },];
+  tableData: { name: string, description: string, rulesJson: string, platform: string }[] = [];
   searchText: string = '';
   perPage: number = 15;
   currentPage: number = 1;
   totalCount: any;
+  channelRules: ChannelRule[] = [];
   applySearchFilter() {
     if (this.searchText.trim() !== '') {
       this.refreshtableData()
@@ -36,10 +38,25 @@ export class RulesComponent implements OnInit {
       pageSize: this.perPage
     }
     this.spinnerServerice.show()
+    this.channelRules = [];
+    this.commonService.GetAllFbRules(data).subscribe((response: RuleWithCount) => {
+
+      this.spinnerServerice.hide();
+      this.channelRules.push({
+        platform: "Facebook",
+        rulesWihtCount: response
+      })
+      //  this.tableData = response.Rules.map((item: any) => ({ ...item, platform: 'Facebook' }));
+      this.totalCount = response.TotalCount
+    })
     this.commonService.GetAllRules(data).subscribe(
       (response: any) => {
-        this.spinnerServerice.hide()
-        this.tableData = response.Rules;
+        this.spinnerServerice.hide();
+        this.channelRules.push({
+          platform: "Common",
+          rulesWihtCount: response
+        })
+        // this.tableData = response.Rules.map((item: any) => ({ ...item, platform: 'Common' }));
         this.totalCount = response.TotalCount
 
       },
@@ -73,22 +90,54 @@ export class RulesComponent implements OnInit {
     return row.companyId !== 0;
   }
 
-  deleteTemplate(message: any) {
-
+  deleteTemplate(rule: ChannelRule, platform: string) {
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
-      this.commonService.DeleteRules(message.groupId).subscribe(
-        () => {
-          console.log('message deleted:', message);
-          this.tableData = this.tableData.filter((msg: any) => msg.id !== message.id);
+      const ruleId = platform === 'Facebook' ? rule.rulesWihtCount.Rules[0].id : rule.rulesWihtCount.Rules[0].groupId;
+      const filteredRules = platform === 'Facebook' ? rule.rulesWihtCount.Rules.filter((r: any) => r.id !== ruleId) : rule.rulesWihtCount.Rules.filter((r: any) => r.groupId !== ruleId);
 
-        },
-        (error: any) => {
-          console.error('Error deleting template:', error);
-        }
-      );
+      if (platform === 'Facebook') {
+        this.commonService.DeleteFbRules(ruleId).subscribe(
+          () => {
+            console.log('Facebook rule deleted:', rule);
+            rule.rulesWihtCount.Rules = filteredRules;
+          },
+          (error: any) => {
+            console.error('Error deleting Facebook rule:', error);
+          }
+        );
+      } else if (platform === 'Common') {
+        this.commonService.DeleteRules(ruleId).subscribe(
+          () => {
+            console.log('Common rule deleted:', rule);
+            rule.rulesWihtCount.Rules = filteredRules;
+          },
+          (error: any) => {
+            console.error('Error deleting Common rule:', error);
+          }
+        );
+      }
     }
   }
+  // deleteTemplate(rule: ChannelRule, platform: string) {
+  //   const confirmation = confirm('Are you sure you want to delete this template?');
+  //   if (confirmation) {
+  //     const ruleId = platform === 'Facebook' ? rule.rulesWihtCount.Rules[0].id : rule.rulesWihtCount.Rules[0].groupId;
+  //     const filteredRules = platform === 'Facebook' ? rule.rulesWihtCount.Rules.filter((r: any) => r.id !== ruleId) : rule.rulesWihtCount.Rules.filter((r: any) => r.groupId !== ruleId);
+
+  //     const deleteService = platform === 'Facebook' ? this.commonService.DeleteFbRules(ruleId) : this.commonService.DeleteRules(ruleId);
+
+  //     deleteService.subscribe(
+  //       () => {
+  //         console.log(`${platform} rule deleted:`, rule);
+  //         rule.rulesWihtCount.Rules = filteredRules;
+  //       },
+  //       (error: any) => {
+  //         console.error(`Error deleting ${platform} rule:`, error);
+  //       }
+  //     );
+  //   }
+  // }
   disableTemplate(message: any) {
     console.log('Disabling template:', message);
   }

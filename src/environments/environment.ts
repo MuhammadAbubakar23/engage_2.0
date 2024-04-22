@@ -103,6 +103,8 @@ export const environment = {
   SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
   ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   consoleBaseUrl: 'https://conrox.enteract.app/api/',
+  // // for rule
+  faceRoxBaseUrl:'https://facerox.enteract.app/api/',
   botBaseUrl: 'https://bot-engage.enteract.app/api/',
 
 
@@ -184,8 +186,12 @@ export const environment = {
       deleteSkill: 'Skill/Delete',
       getAllWing: 'Teams/GetAllWing',
       
-
-
+      // service Base rules 
+      getEntitiesRules:'EntityConfig/GetEntities',
+      getEntitiesProperties:'EntityConfig/GetEntitiesProperties',
+      addRule:'RuleBuilder/Add',
+      getFbRule:'RuleBuilder/GetAll',
+      softDeleteFb:'RuleBuilder/Delete',
       // getTagsAll: 'Tags/GetAll',
       getTagsByCompanyId: 'Tags/GetTagsByCompayId',
       updateSkill: 'Skill/Update',
@@ -201,7 +207,7 @@ export const environment = {
       deleteTags: 'Tags/Delete',
       getTagsByComayId: 'Tags/GetTagsByCompayId',
       getAllRules: 'Rules/GetAll',
-      getEntitiesRule: 'Rules/GetEntities',
+    getEntitiesRule: 'Rules/GetEntities',
       getRuleEntityProperties: 'Rules/GetEntitiesProperties/',
       getRuleById: 'Rules/GetById',
       addRules: 'Rules/Add',

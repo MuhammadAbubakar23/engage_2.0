@@ -20,58 +20,74 @@
                                            />
                       
                                         </div> -->
-                                </div>
+                                    <!-- <div class="col-sm-6">
+                        <li class="list-inline-item">
+                            <div class="iconholder">
+                                <input type="date" class="form-control" [(ngModel)]="fromDate" (change)="getStartDate()"
+                                    [max]="maxEndDate" placeholder="Start Date">
                             </div>
                         </li>
-                        <li class="list-inline-item ms-auto">
-                            <button class="btn btn-success" (click)="DownloadSocialRawData()"
-                                [disabled]="downloading">Export as CSV
-                                <div *ngIf="downloading" class="loader"></div>
-                            </button>
-                        </li>
+                </div>
+                <div class="col-sm-6">
+                    <li class="list-inline-item">
+                        <div class="iconholder">
+                            <input type="date" class="form-control" (change)="getEndDate()" [max]="maxEndDate"
+                                [(ngModel)]="toDate" placeholder="End Date">
+                        </div>
+                    </li>
+                </div> -->
 
-                    </ul>
-                </div>
-                <span>
-                    <div class="pagination-bar" style="margin-top:70px; margin-right: 10px;">
-                        <div class="dropdown">
-                            <button class="btn iconHover" type="button" id="dropdownMenuButton1"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <span> {{startingPoint}}-{{endingPoint}} of {{totalCounts}}</span>
-                            </button>
-                        </div>
-                        <span class="iconButton medium iconHover" (click)="perviousPage(pageNumber)">
-                            <i class="fal fa-chevron-left"></i>
-                        </span>
-                        <span class="iconButton medium iconHover" (click)="nextPage(pageNumber)">
-                            <i class="fal fa-chevron-right"></i>
-                        </span>
-                    </div>
-                </span>
-                <div class="card p-3 iceBg tableScroll" style="margin-top: 70px;">
-                    <div class="table-section table-scroll-x perfect-scrollbar" data-scrollbar="true" tabindex="-1"
-                        style="overflow: auto; outline: none">
-                        <div class="scroll-content" style="width: 45vh; white-space: nowrap">
-                            <table class="table table-sm">
-                                <thead class="first_row_sticky">
-                                    <tr>
-                                        <th *ngFor="let column of whatsAppColumns">{{column}}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="region-Raw" *ngFor="let Raw of whatsAppRawData">
-                                        <td *ngFor="let column of whatsAppColumns">
-                                            {{ Raw[column] }}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+            </div>
+        </div>
+        </li>
+        <li class="list-inline-item ms-auto">
+            <button class="btn btn-success" (click)="DownloadSocialRawData()" [disabled]="downloading">Export as CSV
+                <div *ngIf="downloading" class="loader"></div>
+            </button>
+        </li>
+
+        </ul>
+    </div>
+    <span>
+        <div class="pagination-bar" style="margin-top:70px; margin-right: 10px;">
+            <div class="dropdown">
+                <button class="btn iconHover" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <span> {{startingPoint}}-{{endingPoint}} of {{totalCounts}}</span>
+                </button>
+            </div>
+            <span class="iconButton medium iconHover" (click)="perviousPage(pageNumber)">
+                <i class="fal fa-chevron-left"></i>
+            </span>
+            <span class="iconButton medium iconHover" (click)="nextPage(pageNumber)">
+                <i class="fal fa-chevron-right"></i>
+            </span>
+        </div>
+    </span>
+    <div class="card p-3 iceBg tableScroll" style="margin-top: 70px;">
+        <div class="table-section table-scroll-x perfect-scrollbar" data-scrollbar="true" tabindex="-1"
+            style="overflow: auto; outline: none">
+            <div class="scroll-content" style="width: 45vh; white-space: nowrap">
+                <table class="table table-sm">
+                    <thead class="first_row_sticky">
+                        <tr>
+                            <th *ngFor="let column of whatsAppColumns">{{column}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="region-Raw" *ngFor="let Raw of whatsAppRawData">
+                            <td *ngFor="let column of whatsAppColumns">
+                                {{ Raw[column] }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
+</div>
+</div>
 </div>
 
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
