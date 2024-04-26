@@ -18,6 +18,7 @@ import { TagSlugConversionPipe } from './CustomPipes/tag-slug-conversion.pipe';
 import { PairsPipe } from './CustomPipes/pairs.pipe';
 import { InitialLettersPipe } from './CustomPipes/initial-letters.pipe';
 import { BreaklinePipe } from './CustomPipes/replacelineBreaks/breakline.pipe';
+import { GifFilterPipe } from './CustomPipes/gifFilter.pipe';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { BreaklinePipe } from './CustomPipes/replacelineBreaks/breakline.pipe';
     GroupbydatePipe,
     FilterPipe,
     QuickReplySearchFilterPipe,
+    GifFilterPipe,
     SafePipe,
     NavigationBackDirective,
     SplitNameFromUrlPipe,
@@ -51,6 +53,7 @@ import { BreaklinePipe } from './CustomPipes/replacelineBreaks/breakline.pipe';
     GroupbydatePipe,
     FilterPipe,
     QuickReplySearchFilterPipe,
+    GifFilterPipe,
     SafePipe,
     NavigationBackDirective,
     SplitNameFromUrlPipe,

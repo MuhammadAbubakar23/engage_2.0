@@ -62,6 +62,7 @@ declare var toggleEmojis: any;
 })
 export class FacebookComponent implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef;
+  @ViewChild('Gif') Gif!: ElementRef;
   @ViewChild('container') container!: ElementRef;
   @ViewChild('radioInput', { static: false })
   radioInput!: ElementRef<HTMLInputElement>;
@@ -142,7 +143,7 @@ export class FacebookComponent implements OnInit {
   toastermessage = false;
 
   searchText: string = '';
-
+  searchGif:string=''
   PostStatsArray: postStatsDto[] = [];
   CommentStatsDto: any[] = [];
   QuickReplies: any[] = [];
@@ -221,8 +222,10 @@ export class FacebookComponent implements OnInit {
   KEbaseUrl: string = '';
   KEClient: boolean = false;
   fetchedPostType: string = '';
-
+  BaseUrl:any
   ngOnInit(): void {
+    // this.BaseUrl=window.location.origin;
+    // this.ImageName=[ {name: 'gif', lastModified: 1713945235285, lastModifiedDate:" Wed Apr 24 2024 12:53:55 GMT+0500 (Pakistan Standard Time)", webkitRelativePath: '', size: 1202167, }];
     this.fetchedPostType = this.fetchPostType.postType;
     if (this.fetchedPostType == 'FCP') {
       this.fbCmntReply = false;
@@ -410,8 +413,6 @@ export class FacebookComponent implements OnInit {
             this.userInfoService.shareUserInformation(res.List[0].user);
             this.TotalCmntQueryCount = res.TotalQueryCount;
             this.pageName = this.FacebookData[0]?.post.profile.clientAppName;
-            
-            localStorage.setItem('lastQueryId',this.FacebookData[0].comments[0].id)
 
             this.commentsArray = [];
 
@@ -440,12 +441,11 @@ export class FacebookComponent implements OnInit {
                     };
                   }
                 );
-                console.log("groupedComments",item['groupedComments'])
 
-                // item['groupedComments'].forEach((x: any) => {
-                //   const groupdispostion = x.items;
-                //   this.groupAndModifyData(groupdispostion);
-                // });
+                item['groupedComments'].forEach((x: any) => {
+                  const groupdispostion = x.items;
+                  this.groupAndModifyData(groupdispostion);
+                });
               });
             });
 
@@ -614,6 +614,7 @@ export class FacebookComponent implements OnInit {
   spinner2running = false;
   newcomment: any;
   updateCommentsDataListener() {
+    debugger
     if (!this.id) {
       this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
@@ -624,8 +625,8 @@ export class FacebookComponent implements OnInit {
           if (openedContentType == abc.contentType) {
             if (this.id == xyz.user.userId) {
               this.commentDto = {
-                id: abc.id,
-                postId: abc.postId,
+                id: xyz.user.id,
+                postId: xyz.post.postId,
                 commentId: abc.commentId,
                 message: abc.message,
                 contentType: abc.contentType,
@@ -642,8 +643,6 @@ export class FacebookComponent implements OnInit {
                 sentiment: '',
                 tags: [],
               };
-              
-              localStorage.setItem('lastQueryId',this.commentDto.id?.toString()||'')
               this.FacebookData?.forEach((item: any) => {
                 this.postIdArray.push(item.post.postId);
                 this.commentsArray = [];
@@ -1112,8 +1111,7 @@ export class FacebookComponent implements OnInit {
 
             this.messagesArray = [];
             this.groupedMessages = [];
-            
-            localStorage.setItem('lastQueryId',this.FacebookMessages[0].id)
+
             this.FacebookMessages.forEach((item: any) => {
               this.messagesArray.push(item);
               let groupedItems = this.messagesArray.reduce(
@@ -1339,12 +1337,15 @@ export class FacebookComponent implements OnInit {
   isAttachment = false;
 
   onFileChanged() {
+
     Array.from(this.fileInput.nativeElement.files).forEach((file: any) => {
       if (file.size > 4 * 1024 * 1024) {
         this.reloadComponent('Attachments');
       } else if (this.fileInput.nativeElement.files.length > 0) {
         this.isAttachment = true;
-
+        if (this.isAttachment == true) {
+          this.showGifButton = false
+        }
         const filesArray = Array.from(this.fileInput.nativeElement.files);
         filesArray.forEach((attachment: any) => {
           this.ImageArray.push(attachment);
@@ -1352,10 +1353,77 @@ export class FacebookComponent implements OnInit {
         const files = this.ImageArray.map((file: any) => file); // Create a new array with the remaining files
         const newFileList = new DataTransfer();
         files.forEach((file: any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+
         this.ImageName = newFileList.files;
+        console.log('this.Attachment==>', this.ImageName)
       }
     });
   }
+
+  
+
+  addGif(gifUrl: any) {
+this.selectedGifFiles = []
+
+  debugger
+
+    fetch(gifUrl)
+      .then(response => response.blob())
+      .then(blob => {
+        // const originalFileName = gifUrl.src;
+
+        const gifFile = new File([blob], '.gif', { type: 'image/gif' });
+        if (this.selectedGifFiles.length === 0) {
+          // If no GIF present, push the new one
+          this.sendGifAsFormData(gifFile, gifUrl);
+        } else {
+          // If GIF already present, replace it with the new one
+          this.selectedGifFiles = [{ gifFile, gifUrl }];
+          this.newImageName = this.selectedGifFiles;
+          console.log("this.selectedGifFiles ====>", this.ImageName);
+          this.changeDetect.detectChanges();
+        }
+
+          if (this.selectedGifFiles.some(item => item.gifUrl === gifUrl)) {
+        
+        }
+      });
+  }
+  showGifButton: boolean = true
+  showAttachmentButton: boolean = true
+   newImageName:any
+sendSelectedGif:any[]=[]
+  isGifSelected: boolean = false;
+  selectedGifFiles: any[] = [];
+  sendGifAsFormData(gifFile: File, gifUrl: string) {
+    this.sendSelectedGif = []
+    const formData = new FormData();
+
+    this.selectedGifFiles.push({ gifFile, gifUrl });
+    this.newImageName=this.selectedGifFiles
+    this.selectedGifFiles.forEach((x:any)=>{
+      debugger
+      const gifUrl=x.gifUrl.src
+      // this.sendSelectedGif.push(x.gifUrl.src)
+      fetch(gifUrl).then(response=>response.blob()).then(blob=>{
+        const selectGif=new File([blob], 'test.gif',{ type: 'image/gif' });
+        this.sendSelectedGif.push(selectGif)
+        this.ImageName=this.sendSelectedGif
+      })
+
+    })
+    // this.ImageName = this.selectedGifFiles
+    if (this.selectedGifFiles.length > 0) {
+      this.isGifSelected = true;
+
+    }
+    if (this.isGifSelected == true) {
+      this.showAttachmentButton = false
+    }
+    console.log("this.selectedGifFiles ====>", this.ImageName);
+    this.changeDetect.detectChanges();
+  }
+
 
   fbStats() {
     // this.shareFbResService.updateMessage(this.FacebookData);
@@ -1518,7 +1586,7 @@ export class FacebookComponent implements OnInit {
   text: string = '';
 
   submitFacebookReply() {
-    
+debugger
     if (this.commentId == 0) {
       this.reloadComponent('selectComment');
     } else {
@@ -1593,6 +1661,7 @@ export class FacebookComponent implements OnInit {
   }
 
   submitFacebookNewReply() {
+    debugger
     if (this.commentId == 0) {
       this.reloadComponent('selectComment');
     } else {
@@ -1674,7 +1743,14 @@ export class FacebookComponent implements OnInit {
     this.platform = '';
     this.postType = '';
     this.msgId = 0;
-    this.fileInput.nativeElement.value = '';
+    this.isGifSelected = false;
+    this.showAttachmentButton = true;
+    this.newImageName=[]
+    this.isAttachment=false
+    this.showGifButton=true
+    this.selectedGifFiles = []
+    this.ImageName = []
+    this.sendSelectedGif = []
     this.detectChanges();
   }
 
@@ -1962,7 +2038,7 @@ export class FacebookComponent implements OnInit {
     };
     this.commondata
       .CommentRespond(this.commentStatusDto)
-      .subscribe((res: any) => {});
+      .subscribe((res: any) => { });
   }
 
   // queryCompleted(comId: any, type: any) {
@@ -2171,6 +2247,8 @@ export class FacebookComponent implements OnInit {
   }
 
   removeAttachedFile(index: any) {
+    
+
     const filesArray = Array.from(this.ImageName);
     filesArray.splice(index, 1);
     this.ImageArray.splice(index, 1);
@@ -2184,11 +2262,25 @@ export class FacebookComponent implements OnInit {
 
     if (this.ImageName.length == 0) {
       this.isAttachment = false;
+      this.showGifButton = true
     }
+  }
+  removeAttachedFileGif(id:any) {
+    ;
+const index=this.newImageName.findIndex((item:any)=>item.gifUrl.id === id)
+if( index >= -1 ){
+this.newImageName.splice(index,1)
+}
+    this.isGifSelected = false;
+    this.showAttachmentButton = true;
+   
   }
 
   detectChanges(): void {
-    this.ImageName = this.fileInput.nativeElement.files;
+    if (this.fileInput) {
+      this.ImageName = this.fileInput.nativeElement.files;
+    }
+
     this.text = this.textarea.nativeElement.value;
   }
 
@@ -2202,6 +2294,188 @@ export class FacebookComponent implements OnInit {
     { id: 7, emoji: '👌', tile: 'superb' },
     { id: 8, emoji: '👍', tile: 'thumbs up' },
     { id: 9, emoji: '🤩', tile: 'wow' },
+  ];
+
+  Gifs = [
+    {
+      id: 1,
+      name:'Excited_1',
+      src:`${this.KEbaseUrl}${'/assets/images/Gifs/excited_1.gif'}`,
+    },
+    {
+      id: 2,
+      name:'Excited_2',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/excited_2.gif'}`,
+    },
+    {
+      id: 3,
+      name:'Excited_3',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/excited_3.gif'}`,
+    },
+    {
+      id: 4,
+      name:'Excited_4',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/excited_4.gif'}`,
+    },
+    {
+      id: 5,
+      name:'Excited_5',
+      src:`${this.KEbaseUrl}${'/assets/images/Gifs/excited_7.gif'}`,
+    },
+    {
+      id: 6,
+      name:'Excited_6',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/excited_6.gif'}`,
+    },
+    // {
+    //   id: 7,
+    //   name:'Excited_7',
+    //   src: 'https://media.giphy.com/media/ZbUIi5RuPahtCN90OL/giphy.gif?cid=ecf05e47iwajtt9pygv589ngfjsocp5cl0lspqwp039ck556&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+    // },
+   {
+    id :8,
+    name:'thumbsUp_1',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_1.gif'}`
+   },
+   {
+    id:9,
+    name:'thumbsUp_2',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_2.gif'}`
+   },
+   {
+     id:10,
+     name:'thumbsUp_3',
+     src:`${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_3.gif'}`
+   },
+   {
+    id:11,
+    name:'thumbsUp_4',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_4.gif'}`
+   },
+   {
+    id:12,
+    name:'thumbsUp_5',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_5.gif'}`
+   },
+   {
+    id:13,
+    name:'thumbsUp_6',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_6.gif'}`
+   },
+   {
+    id:14,
+    name:'thumbsUp_7',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_7.gif'}`
+   },
+   {
+    id:15,
+    name:'thumbsUp_8',
+   src:`${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_8.gif'}`
+   },
+   {
+    id:16,
+    name:'Appreciate_Thank You_1',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thanks_1.gif'}`
+   },
+   {
+    id:17
+,    name:'Appreciate_Thank You_2',
+     src:`${this.KEbaseUrl}${'/assets/images/Gifs/thanks_2.gif'}`
+   },
+   {
+    id:18,
+    name:'Appreciate_Thank You_3',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thanks_3.gif'}`
+   },
+   {
+    id:19,
+    name:'Appreciate_Thank You_4',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thanks_4.gif'}`
+   },
+   {
+    id:20,
+    name:'Appreciate_Thank You_5',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thanks_5.gif'}`
+   },
+   {
+    id:21,
+    name:'Appreciate_Thank You_6',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thanks_6.gif'}`
+   },
+   {
+    id:22,
+     name:'Appreciate_Thank You_7',
+     src:`${this.KEbaseUrl}${'/assets/images/Gifs/thanks_7.gif'}`
+   },
+   {
+    id:23,
+    name:'cool_1',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_1.gif'}`
+  },
+  {
+    id:24,
+    name:'cool_2',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_2.gif'}`
+  },
+  {
+    id:25,
+    name:'cool_3',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_3.gif'}`  },
+  {
+    id:26,
+    name:'cool_4',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_4.gif'}`
+  },
+  {
+    id:27,
+    name:'cool_5',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_5.gif'}`
+  },
+  {
+    id:28,
+    name:'cool_6',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_6.gif'}`
+  },
+  {
+    id:29,
+    name:'cool_7',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_7.gif'}`
+  },
+  {
+    id:30,
+    name:'cool_8',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_8.gif'}`
+  },
+  {
+    id:31,
+    name:'cool_9',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_9.gif'}`
+  },
+  {
+    id:32,
+    name:'cool_10',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_10.gif'}`
+  },
+  {
+    id:33,
+    name:'cool_11',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_11.gif'}`
+  },
+  {
+    id:34,
+    name:'cool_12',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_12.gif'}`
+  },
+  {
+    id:35,
+    name:'cool_13',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_13.gif'}`
+  },
+  {
+    id:37,
+    name:'cool_14',
+    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_14.gif'}`
+  }
   ];
 
   @ViewChild('textarea')
@@ -2321,6 +2595,7 @@ export class FacebookComponent implements OnInit {
   // }
 
   isImage(attachment: any): boolean {
+
     return attachment?.mediaType?.toLowerCase().startsWith('image');
   }
 
@@ -2452,12 +2727,12 @@ export class FacebookComponent implements OnInit {
     const email = data.originalUserName;
     this.insertAtCaret(
       'https://keportal.enteract.live/survey/customer_satisfaction' +
-        '?channel=' +
-        channel +
-        '&customerId=' +
-        customerId +
-        '&email=' +
-        email
+      '?channel=' +
+      channel +
+      '&customerId=' +
+      customerId +
+      '&email=' +
+      email
     );
   }
 }

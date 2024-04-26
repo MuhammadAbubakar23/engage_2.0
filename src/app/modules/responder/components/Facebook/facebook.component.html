@@ -1351,6 +1351,9 @@
                                                         <img *ngIf="attachment.mediaType == 'animated_image_share'"
                                                             src={{attachment.attachmentUrl}}
                                                             style="width: -webkit-fill-available;">
+                                                        <img *ngIf="attachment.mediaType == 'image/gif'" 
+                                                            src={{attachment.attachmentUrl}} 
+                                                            controls style="width: -webkit-fill-available;">
                                                         <img *ngIf="attachment.mediaType == 'sticker'"
                                                             src={{attachment.attachmentUrl}}
                                                             style="width: -webkit-fill-available;">
@@ -1576,12 +1579,29 @@
                                                                         | date:'h:mm:ss a'}}</small>
                                                                 </p>
                                                             </div>
-                                                            <div class="whatsapp-single-img whatsappImgModalBtn"
-                                                                type="button">
-                                                                <img style="width: 375px;"
-                                                                    src={{msgReply.attachmentUrl}}
-                                                                    class="card-img-top rounded-3">
-                                                            </div>
+                                                            <div *ngFor="let attachment of msgReply.attachments"
+                                                                    style="width:375px;">
+                                                                    <img class="whatsapp-single-img whatsappImgModalBtn"
+                                                                        *ngIf="isImage(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <img *ngIf="attachment.mediaType == 'animated_image_share'"
+                                                                        src={{attachment.attachmentUrl}}
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <img *ngIf="attachment.mediaType == 'sticker'"
+                                                                        src={{attachment.attachmentUrl}}
+                                                                        style="width: -webkit-fill-available;">
+
+
+                                                                    <video *ngIf="isVideo(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;"></video>
+
+                                                                    <audio *ngIf="isAudio(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;"></audio>
+
+                                                                </div>
                                                             <p class="card-textnignt p-0">{{msgReply.message}}</p>
                                                         </div>
                                                         <div class="message-bottom">
@@ -1732,6 +1752,16 @@
             </div>
 
         </div>
+        <div class="attachment-block" [ngClass]="isGifSelected == true?'':'d-none'">
+            <div class="card-body p-3" *ngFor="let image of newImageName; let i = index" style="margin-right: 10px;">
+                <span class="close-icon" (click)="removeAttachedFileGif(image?.gifUrl?.id)"><i class="fas fa-times"></i></span>
+                <img   [src]="image?.gifUrl?.src" alt="" style="max-width: 200px; max-height: 50px;">
+                
+                <h5 class="card-title coal">{{image?.gifUrl?.name | slice:0:20}}</h5>
+                <p>{{image?.gifFile?.size / 1024 | number:'1.2-2'}} kb</p>
+            </div>
+
+        </div>
         <div *ngFor="let facebookdata of FacebookData">
 
             <div *ngFor="let fbcmnts of facebookdata.comments">
@@ -1811,15 +1841,41 @@
                             </ul>
                         </ul>
                     </div>
+                   
+                    <div class="dropup" *ngIf="showGifButton==true">
+                        <button class="iconButton small notification iconHover " id="emojiBox1" data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside" data-bs-original-title="Choose an emoji">
+                            <span class="iconButton small btn mx-2">
+                                <i class="fa-light fa-gif"></i>
+                            </span>
+                        </button>
+                        <ul class="dropdown-menu gif-dropdown medium shadow mt-2 secondDropdownList "
+                            aria-labelledby="dropdownMenuButton2">
+                            <form>
+                                <input class="form-control mb-2" [(ngModel)]="searchGif" placeholder="search">
+                            </form>
+                            <ul class="dropdown-listing">
+                                <li class="dropdown-listing-header">
+                                    <div class="gif-container">
+                                        <!-- Replace the image URLs with your actual GIF URLs -->
+                                        <div class="gif-item" *ngFor="let gif of Gifs | gifFilter : searchGif">
+                                            <img  (click)="addGif(gif)"  [src]="gif.src" alt="" >
+                                         
+                                        </div>
+                                    </div> 
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
 
-                    <div class="upload-btn-wrapper">
+                    <div class="upload-btn-wrapper"  *ngIf="showAttachmentButton==true">
                         <button class="iconButton small notification iconHover channels-attachment-btn">
                             <i class="fal fa-paperclip"></i></button>
                         <input type="file" formControlName="Image" class="form-control uplaoded-box"
                             (change)="onFileChanged()" #fileInput>
                     </div>
                     <button class="iconButton small notification iconHover" data-bs-toggle="tooltip"
-                        data-bs-placement="top" title="" type="submit" data-bs-original-title="Send">
+                        data-bs-placement="top" title="" type="submit" data-bs-original-title="Send" >
                         <i class="fal fa-paper-plane"></i>
                     </button>
                 </div>
@@ -1841,7 +1897,16 @@
                 </div>
 
             </div>
-
+            <div class="attachment-block" [ngClass]="isGifSelected == true?'':'d-none'">
+                <div class="card-body p-3" *ngFor="let image of newImageName; let i = index" style="margin-right: 10px;">
+                    <span class="close-icon" (click)="removeAttachedFileGif(image?.gifUrl?.id)"><i class="fas fa-times"></i></span>
+                    <img   [src]="image?.gifUrl?.src" alt="" style="max-width: 200px; max-height: 50px;">
+                    
+                    <h5 class="card-title coal">{{image?.gifUrl?.name | slice:0:20}}</h5>
+                    <p>{{image?.gifFile?.size / 1024 | number:'1.2-2'}} kb</p>
+                </div>
+    
+            </div>
             <div *ngFor="let msg of FacebookMessages">
                 <div *ngIf="msg.id == msgId">
                     <div [ngClass]="show == true? 'show':''" class="card hideMsg">
@@ -1922,7 +1987,32 @@
                             </ul>
                         </ul>
                     </div>
-                    <div class="upload-btn-wrapper">
+                    <div class="dropup" *ngIf="showGifButton==true">
+                        <button class="iconButton small notification iconHover " id="emojiBox1" data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside" data-bs-original-title="Choose an emoji">
+                            <span class="iconButton small btn mx-2">
+                                <i class="fa-light fa-gif"></i>
+                            </span>
+                        </button>
+                        <ul class="dropdown-menu gif-dropdown medium shadow mt-2 secondDropdownList "
+                            aria-labelledby="dropdownMenuButton2">
+                            <form>
+                                <input class="form-control mb-2" [(ngModel)]="searchGif" placeholder="search">
+                            </form>
+                            <ul class="dropdown-listing">
+                                <li class="dropdown-listing-header">
+                                    <div class="gif-container">
+                                        <!-- Replace the image URLs with your actual GIF URLs -->
+                                        <div class="gif-item" *ngFor="let gif of Gifs | gifFilter : searchGif">
+                                            <img  (click)="addGif(gif)"  [src]="gif.src" alt="" >
+                                         
+                                        </div>
+                                    </div> 
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="upload-btn-wrapper" *ngIf="showAttachmentButton==true">
                         <button class="iconButton small notification iconHover channels-attachment-btn">
                             <i class="fal fa-paperclip"></i></button>
                         <input type="file" formControlName="Image" class="form-control uplaoded-box"
