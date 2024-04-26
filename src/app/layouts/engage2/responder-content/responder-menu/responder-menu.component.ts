@@ -147,7 +147,8 @@ export class ResponderMenuComponent implements OnInit {
   userSpecificAllocatedProfiles: any[] = [];
   getAllocatedProfiles() {
     this.SpinnerService.show();
-    this.commondata.GetAllocatedProfiles(this.wings).subscribe((res: any) => {
+    var skillSlug= localStorage.getItem('skillSlug') || ''
+    this.commondata.GetAllocatedProfiles(this.wings, skillSlug).subscribe((res: any) => {
       this.SpinnerService.hide();
       this.AllocatedProfiles = res;
 
@@ -215,6 +216,7 @@ export class ResponderMenuComponent implements OnInit {
         agentIds: 'string',
         platform: platform,
         wings: this.getWing.wings,
+        skillSlug: localStorage.getItem('skillSlug') || ''
       };
 
       this.commondata.AssignQuerry(this.assignQuerryDto).subscribe(

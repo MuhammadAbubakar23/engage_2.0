@@ -316,7 +316,8 @@ export class InboxMenuComponent implements OnInit {
     this.filterService.addTogglePanel(string);
   }
   rulesGroupIds: any[] = [];
-  updateWing(rule: any) {
+  updateWing(rule: any, skillSlug:any, skillName:string) {
+    
     if (rule == 'defaultRuleIds') {
       this.rulesGroupIds = localStorage.getItem('defaultRuleIds')?.split(',') || []
       this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds);
@@ -329,5 +330,24 @@ export class InboxMenuComponent implements OnInit {
     }
 
     this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds);
+    localStorage.setItem('skillSlug',skillSlug)
+
+    if(skillName.toLowerCase().includes('facebook dm')){
+      localStorage.setItem('contentType','FCP')
+    } else if(skillName.toLowerCase().includes('facebook comment')){
+      localStorage.setItem('contentType','FC')
+    } else if(skillName.toLowerCase().includes('twitter tweet')){
+      localStorage.setItem('contentType','TTR')
+    } else if(skillName.toLowerCase().includes('twitter mention')){
+      localStorage.setItem('contentType','TM')
+    } else if(skillName.toLowerCase().includes('twitter dm')){
+      localStorage.setItem('contentType','TDM')
+    } else if(skillName.toLowerCase().includes('instagram comment')){
+      localStorage.setItem('contentType','IC')
+    } else if(skillName.toLowerCase().includes('instagram dm')){
+      localStorage.setItem('contentType','IM')
+    }  else if(skillName.toLowerCase().includes('linkedin comment')){
+      localStorage.setItem('contentType','LIC')
+    }
   }
 }

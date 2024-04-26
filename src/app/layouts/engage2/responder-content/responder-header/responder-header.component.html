@@ -13,7 +13,7 @@
         </div>
         <!-- <h6 class="avatar-title navy m-0 ms-2">{{userName.split('<')[0]}}</h6> -->
         <h6 class="avatar-title navy m-0 ms-2">{{userInfo?.userName}}
-            <i *ngIf="userInfo.isVerified != null" class="fa-solid fa-badge-check text-primary"></i>
+            <i *ngIf="userInfo.isVerified != false" class="fa-solid fa-badge-check text-primary"></i>
         </h6>
 
         <div class="dropdown w-auto">

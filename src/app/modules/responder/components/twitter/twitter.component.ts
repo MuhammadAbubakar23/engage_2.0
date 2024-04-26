@@ -366,9 +366,9 @@ export class TwitterComponent implements OnInit {
   // }
 
   updateMessagesDataListener(res: any) {
-    
+    const openedContentType = localStorage.getItem('contentType')
     res.forEach((xyz: any) => {
-      if (xyz.contentType == 'TTR') {
+      if (xyz.contentType == 'TTR' && openedContentType == xyz.contentType) {
         if (this.id == xyz.fromId) {
           this.messageDto = {
             id: xyz.id,
@@ -415,7 +415,7 @@ export class TwitterComponent implements OnInit {
             this.totalUnrespondedCmntCountByCustomer + 1;
         }
       }
-      if (xyz.contentType == 'TDM') {
+      if (xyz.contentType == 'TDM' && openedContentType == xyz.contentType) {
         if (this.id == xyz.fromId) {
           this.messageDto = {
             id: xyz.id,
@@ -462,7 +462,7 @@ export class TwitterComponent implements OnInit {
             this.totalUnrespondedMsgCountByCustomer + 1;
         }
       }
-      if (xyz.contentType == 'TM') {
+      if (xyz.contentType == 'TM' && openedContentType == xyz.contentType) {
         if (this.id == xyz.fromId) {
           this.messageDto = {
             id: xyz.id,
@@ -561,7 +561,7 @@ export class TwitterComponent implements OnInit {
   //           this.userInfoService.shareUserInformation(res.List[0].user);
   //           this.TotalCmntQueryCount = res.TotalQueryCount;
   //           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-  //           // this.pageName = this.TwitterTweets[0]?.post.profile.page_Name;
+  //           // this.pageName = this.TwitterTweets[0]?.post.profile.clientAppName;
 
   //           this.commentsArray = [];
 
@@ -620,7 +620,7 @@ export class TwitterComponent implements OnInit {
   //         this.TotalCmntQueryCount = res.TotalQueryCount;
   //         this.userInfoService.shareUserInformation(res.List[0].user);
   //         this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-  //         // this.pageName = this.TwitterTweets[0]?.post.profile.page_Name;
+  //         // this.pageName = this.TwitterTweets[0]?.post.profile.clientAppName;
 
   //         this.commentsArray = [];
 
@@ -686,7 +686,7 @@ export class TwitterComponent implements OnInit {
   //           // this.headerCountService.shareUnresponedCount(res.TotalCount);
   //           this.TotalCmntQueryCount = res.TotalQueryCount;
   //           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-  //           // this.pageName = this.TwitterTweets[0]?.post.profile.page_Name;
+  //           // this.pageName = this.TwitterTweets[0]?.post.profile.clientAppName;
 
   //           this.commentsArray = [];
 
@@ -766,13 +766,13 @@ export class TwitterComponent implements OnInit {
             }
             
             this.userInfoService.shareUserInformation(res.List.user);
-            this.pageName = res.List?.profile.page_Name;
+            this.pageName = res.List?.profile.clientAppName;
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
             this.TotalCmntQueryCount = res.TotalQueryCount;
 
             this.commentsArray = [];
             this.groupedComments = [];
-
+            localStorage.setItem('lastQueryId',this.TwitterTweets[0].id)
             this.TwitterTweets.forEach((item: any) => {
               this.commentsArray.push(item);
               let groupedItems = this.commentsArray.reduce(
@@ -839,7 +839,7 @@ export class TwitterComponent implements OnInit {
             }
             
             this.userInfoService.shareUserInformation(res.List.user);
-            this.pageName = res.List?.profile.page_Name;
+            this.pageName = res.List?.profile.clientAppName;
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
             this.TotalCmntQueryCount = res.TotalQueryCount;
 
@@ -911,7 +911,7 @@ export class TwitterComponent implements OnInit {
             }
             
             this.userInfoService.shareUserInformation(res.List.user);
-            this.pageName = res.List?.profile.page_Name;
+            this.pageName = res.List?.profile.clientAppName;
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
             this.TotalCmntQueryCount = res.TotalQueryCount;
 
@@ -1002,7 +1002,7 @@ export class TwitterComponent implements OnInit {
             this.userInformation = res.List?.user
             
             this.userInfoService.shareUserInformation(res.List.user);
-            this.pageName = res.List?.profile.page_Name;
+            this.pageName = res.List?.profile.clientAppName;
             this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
             this.TotalMsgQueryCount = res.TotalQueryCount;
 
@@ -1020,7 +1020,7 @@ export class TwitterComponent implements OnInit {
 
             this.messagesArray = [];
             this.groupedMessages = [];
-
+            localStorage.setItem('lastQueryId',this.TwitterMessages[0].id)
             this.TwitterMessages.forEach((item: any) => {
               this.messagesArray.push(item);
               let groupedItems = this.messagesArray.reduce(
@@ -1075,7 +1075,7 @@ export class TwitterComponent implements OnInit {
           this.TwitterMessages = res.List?.dm;
           this.userInfoService.shareUserInformation(res.List.user);
             this.userInformation = res.List?.user
-          this.pageName = res.List?.profile.page_Name;
+          this.pageName = res.List?.profile.clientAppName;
           this.TotalMsgQueryCount = res.TotalQueryCount;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
@@ -1144,7 +1144,7 @@ export class TwitterComponent implements OnInit {
             this.userInfoService.shareUserInformation(res.List.user);
             // this.headerCountService.shareUnresponedCount(res.TotalCount);
             this.userInformation = res.List?.user
-            this.pageName = res.List?.profile.page_Name;
+            this.pageName = res.List?.profile.clientAppName;
             this.TotalMsgQueryCount = res.TotalQueryCount;
             this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
             if (this.TwitterTweets.length == 0 && this.TwitterMentions.length == 0) {
@@ -1232,7 +1232,7 @@ export class TwitterComponent implements OnInit {
 
             this.mentionsArray = [];
             this.groupedMentions = [];
-
+            localStorage.setItem('lastQueryId',this.TwitterMentions[0].id)
             this.TwitterMentions.forEach((item: any) => {
               this.mentionsArray.push(item);
               let groupedItems = this.mentionsArray.reduce(

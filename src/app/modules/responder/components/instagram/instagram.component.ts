@@ -23,7 +23,11 @@ import { InsertSentimentForFeedDto } from 'src/app/shared/Models/InsertSentiment
 import { InsertTagsForFeedDto } from 'src/app/shared/Models/InsertTagsForFeedDto';
 import { InstagramCommentReplyDto } from 'src/app/shared/Models/InstagramCommentReplyDto';
 import { CommonDataService } from 'src/app/shared/services/common/common-data.service';
-import { commentsDto, messagesDto } from 'src/app/shared/Models/concersationDetailDto';
+import {
+  commentsDto,
+  messagesDto,
+  newpostcommentDto,
+} from 'src/app/shared/Models/concersationDetailDto';
 import { Subscription } from 'rxjs';
 import { LikeByAdminDto } from 'src/app/shared/Models/LikeByAdminDto';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
@@ -94,7 +98,7 @@ export class InstagramComponent implements OnInit {
   queryStatus: any;
   searchText: string = '';
 
-  TagsList: any[]=[];
+  TagsList: any[] = [];
   Keywords: any[] = [];
   agentName = localStorage.getItem('agentName');
 
@@ -146,7 +150,7 @@ export class InstagramComponent implements OnInit {
     private el: ElementRef,
     private renderer: Renderer2,
     private getWing: GetWingsService,
-    private getRulesGroupIdsService : RulesGroupIdsService
+    private getRulesGroupIdsService: RulesGroupIdsService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = res;
@@ -169,18 +173,18 @@ export class InstagramComponent implements OnInit {
     textarea.style.height = 'auto';
     textarea.style.height = textarea.scrollHeight + 'px';
   }
-  messagesStatus:any[]=[];
-  Sentiments:any[]=[];
+  messagesStatus: any[] = [];
+  Sentiments: any[] = [];
 
-  KEbaseUrl:string="";
-  KEClient:boolean=false;
+  KEbaseUrl: string = '';
+  KEClient: boolean = false;
 
   ngOnInit(): void {
-    this.KEbaseUrl=window.location.origin
-    if(this.KEbaseUrl=='https://keportal.enteract.live'){
-      this.KEClient=true
+    this.KEbaseUrl = window.location.origin;
+    if (this.KEbaseUrl == 'https://keportal.enteract.live') {
+      this.KEClient = true;
     }
-    
+
     const textarea = this.el.nativeElement as HTMLTextAreaElement;
     this.renderer.addClass(textarea, 'auto-resize');
     this.adjustTextareaHeight(textarea);
@@ -188,29 +192,29 @@ export class InstagramComponent implements OnInit {
     this.flag = this.router.url.split('/')[2];
 
     const menu = this.stor.retrive('Tags', 'O').local;
-      menu.forEach((item:any) => {
-        if(item.name == "Tags"){
-          item.subTags.forEach((singleTagObj:any) => {
-            if(!this.TagsList.includes(singleTagObj)){
-            this.TagsList.push(singleTagObj)
-            }
-          });
-        }
-        if(item.name == "Messages Status"){
-          item.subTags.forEach((messagesStatusObj:any) => {
-            if(!this.messagesStatus.includes(messagesStatusObj)){
-            this.messagesStatus.push(messagesStatusObj)
-            }
-          });
-        }
-        if(item.name == "Sentiments"){
-          item.subTags.forEach((sentimentObj:any) => {
-            if(!this.Sentiments.includes(sentimentObj)){
-            this.Sentiments.push(sentimentObj)
-            }
-          });
-        }
-      });
+    menu.forEach((item: any) => {
+      if (item.name == 'Tags') {
+        item.subTags.forEach((singleTagObj: any) => {
+          if (!this.TagsList.includes(singleTagObj)) {
+            this.TagsList.push(singleTagObj);
+          }
+        });
+      }
+      if (item.name == 'Messages Status') {
+        item.subTags.forEach((messagesStatusObj: any) => {
+          if (!this.messagesStatus.includes(messagesStatusObj)) {
+            this.messagesStatus.push(messagesStatusObj);
+          }
+        });
+      }
+      if (item.name == 'Sentiments') {
+        item.subTags.forEach((sentimentObj: any) => {
+          if (!this.Sentiments.includes(sentimentObj)) {
+            this.Sentiments.push(sentimentObj);
+          }
+        });
+      }
+    });
 
     this.criteria = {
       property: 'createdDate',
@@ -256,18 +260,22 @@ export class InstagramComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        var assignedProfileId = Number(localStorage.getItem('assignedProfile'))
-        if (this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up') {
-          if(res.contentCount.profileId == assignedProfileId){
-          if (res.contentCount.contentType == 'IC') {
-            this.totalUnrespondedCmntCountByCustomer =
-              res.contentCount.unrespondedCount;
+        var assignedProfileId = Number(localStorage.getItem('assignedProfile'));
+        if (
+          this.flag == 'focused' ||
+          this.flag == 'assigned_to_me' ||
+          this.flag == 'follow_up'
+        ) {
+          if (res.contentCount.profileId == assignedProfileId) {
+            if (res.contentCount.contentType == 'IC') {
+              this.totalUnrespondedCmntCountByCustomer =
+                res.contentCount.unrespondedCount;
+            }
+            if (res.contentCount.contentType == 'IM') {
+              this.totalUnrespondedMsgCountByCustomer =
+                res.contentCount.unrespondedCount;
+            }
           }
-          if (res.contentCount.contentType == 'IM') {
-            this.totalUnrespondedMsgCountByCustomer =
-              res.contentCount.unrespondedCount;
-          }
-        }
         }
       });
     this.Subscription = this.queryStatusService
@@ -289,70 +297,187 @@ export class InstagramComponent implements OnInit {
   }
 
   commentDto = new commentsDto();
-
+  InstanewCmntReply = false;
+  NewPostCmntReply = true;
   updatedComments: any;
   updatedMessages: any;
   messageDto = new messagesDto();
+  newpostcommentDto = new newpostcommentDto();
+  newPostComment: any[] = [];
+  postIdArray: any[] = [];
+  InstagramNewpost: any[] = [];
 
   updateCommentsDataListener() {
     if (!this.id) {
       this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
-    this.updatedComments.forEach((xyz: any) => {
-      if (this.id == xyz.userId) {
-        this.commentDto = {
-          id: xyz.id,
-          postId: xyz.postId,
-          commentId: xyz.commentId,
-          message: xyz.message,
-          contentType: xyz.contentType,
-          userName: xyz.userName || xyz.userId,
-          queryStatus: xyz.queryStatus,
-          createdDate: xyz.createdDate,
-          fromUserProfilePic: xyz.profilePic,
-          body: xyz.body,
-          to: xyz.toId,
-          cc: xyz.cc,
-          bcc: xyz.bcc,
-          attachments: xyz.mediaAttachments,
-          replies: [],
-          sentiment: '',
-          tags: [],
-        };
+    const openedContentType = localStorage.getItem('contentType');
+    this.updatedComments?.forEach((xyz: any) => {
+      xyz.comments.forEach((abc: any) => {
+        if (openedContentType == abc.contentType) {
+          if (this.id == xyz.user.userId) {
+            this.commentDto = {
+              id: xyz.user.id,
+              postId: xyz.post.postId,
+              commentId: abc.commentId,
+              message: abc.message,
+              contentType: abc.contentType,
+              userName: abc.userName || abc.userId,
+              queryStatus: abc.queryStatus,
+              createdDate: abc.createdDate,
+              fromUserProfilePic: abc.profilePic,
+              body: abc.body,
+              to: abc.toId,
+              cc: abc.cc,
+              bcc: abc.bcc,
+              attachments: abc.mediaAttachments,
+              replies: [],
+              sentiment: '',
+              tags: [],
+            };
 
-        this.InstagramData.forEach((item: any) => {
-          this.commentsArray = [];
-          if (item.post.postId == xyz.postId) {
-            item.comments.push(this.commentDto);
-            item.comments.forEach((cmnt: any) => {
-              this.commentsArray.push(cmnt);
-            });
+            // this.InstagramData.forEach((item: any) => {
+            //   this.commentsArray = [];
+            //   if (item.post.postId == xyz.postId) {
+            //     item.comments.push(this.commentDto);
+            //     item.comments.forEach((cmnt: any) => {
+            //       this.commentsArray.push(cmnt);
+            //     });
 
-            let groupedItems = this.commentsArray.reduce(
-              (acc: any, item: any) => {
-                const date = item.createdDate?.split('T')[0];
-                if (!acc[date]) {
-                  acc[date] = [];
-                }
-                acc[date].push(item);
-                return acc;
-              },
-              {}
-            );
+            //     let groupedItems = this.commentsArray.reduce(
+            //       (acc: any, item: any) => {
+            //         const date = item.createdDate?.split('T')[0];
+            //         if (!acc[date]) {
+            //           acc[date] = [];
+            //         }
+            //         acc[date].push(item);
+            //         return acc;
+            //       },
+            //       {}
+            //     );
 
-            item['groupedComments'] = Object.keys(groupedItems).map(
-              (createdDate) => {
-                return {
-                  createdDate,
-                  items: groupedItems[createdDate],
-                };
+            //     item['groupedComments'] = Object.keys(groupedItems).map(
+            //       (createdDate) => {
+            //         return {
+            //           createdDate,
+            //           items: groupedItems[createdDate],
+            //         };
+            //       }
+            //     );
+            //   }
+            // });
+
+            this.InstagramData?.forEach((item: any) => {
+              this.postIdArray.push(item.post.postId);
+              this.commentsArray = [];
+              // this.newPostComment= [];
+
+              if (this.postIdArray.includes(xyz.post.postId)) {
+                item.comments.push(this.commentDto);
+                item.comments.forEach((cmnt: any) => {
+                  this.commentsArray.push(cmnt);
+                });
+
+                let groupedItems = this.commentsArray.reduce(
+                  (acc: any, item: any) => {
+                    const date = item.createdDate?.split('T')[0];
+                    if (!acc[date]) {
+                      acc[date] = [];
+                    }
+                    acc[date].push(item);
+                    return acc;
+                  },
+                  {}
+                );
+
+                item['groupedComments'] = Object.keys(groupedItems).map(
+                  (createdDate) => {
+                    return {
+                      createdDate,
+                      items: groupedItems[createdDate],
+                    };
+                  }
+                );
               }
-            );
+              // for new post
+              else {
+                if (!this.postIdArray.includes(xyz.post.postId)) {
+                  this.InstagramNewpost?.forEach((x: any) => {
+                    x.comments.forEach((z: any) => {
+                      this.newpostcommentDto = {
+                        id: z.id,
+                        postId: x.post.postId,
+                        commentId: z.commentId,
+                        message: z.message,
+                        contentType: z.contentType,
+                        userName: z.userName || z.userId,
+                        queryStatus: z.queryStatus,
+                        createdDate: z.createdDate,
+                        fromUserProfilePic: z.profilePic,
+                        body: z.body,
+                        to: z.toId,
+                        cc: z.cc,
+                        bcc: z.bcc,
+                        attachments: z.mediaAttachments,
+                        replies: [],
+                        sentiment: '',
+                        tags: z.tags,
+                      };
+                    });
+                    if (
+                      !this.newPostComment.find(
+                        (comment) => comment.post.postId === x.post.postId
+                      )
+                    ) {
+                      this.newPostComment.push(x);
+                    }
+                    this.InstanewCmntReply = true;
+                    this.newPostComment.forEach((item: any) => {
+                      this.commentsArray = [];
+                      if (item.post.postId == x.post.postId) {
+                        if (
+                          !item.comments.find(
+                            (cmnt: any) => cmnt.id === this.newpostcommentDto.id
+                          )
+                        ) {
+                          item.comments.push(this.newpostcommentDto);
+                        }
+                        item.comments.forEach((cmnt: any) => {
+                          if (!this.commentsArray.includes(cmnt.id)) {
+                            this.commentsArray.push(cmnt);
+                          }
+                        });
+                        let groupedItems = this.commentsArray.reduce(
+                          (acc: any, item: any) => {
+                            const date = item.createdDate?.split('T')[0];
+                            if (!acc[date]) {
+                              acc[date] = [];
+                            }
+                            acc[date].push(item);
+                            return acc;
+                          },
+                          {}
+                        );
+
+                        item['groupedComments'] = Object.keys(groupedItems).map(
+                          (createdDate) => {
+                            return {
+                              createdDate,
+                              items: groupedItems[createdDate],
+                            };
+                          }
+                        );
+                      }
+                    });
+                  });
+                }
+              }
+            });
+            this.totalUnrespondedCmntCountByCustomer =
+              this.totalUnrespondedCmntCountByCustomer + 1;
           }
-        });
-        this.totalUnrespondedCmntCountByCustomer =
-          this.totalUnrespondedCmntCountByCustomer + 1;
-      }
+        }
+      });
     });
     this.changeDetect.detectChanges();
   }
@@ -361,49 +486,57 @@ export class InstagramComponent implements OnInit {
     if (!this.id) {
       this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
+    const openedContentType = localStorage.getItem('contentType');
     this.updatedMessages.forEach((xyz: any) => {
-      if (this.id == xyz.fromId) {
-        this.messageDto = {
-          id: xyz.id,
-          contentType: xyz.contentType,
-          queryStatus: xyz.queryStatus,
-          createdDate: xyz.createdDate,
-          attachments: xyz.attachments,
-          replies: [],
-          sentiment: '',
-          tags: [],
-          msgId: xyz.msgId,
-          fromId: xyz.fromId,
-          fromName: xyz.fromName,
-          fromProfilePic: xyz.fromProfilePic,
-          toId: xyz.toId,
-          toName: xyz.toName,
-          msgText: xyz.msgText,
-          agentId: '',
-          customerSocailProfileId: 0,
-          profileId: xyz.profileId,
-          profilePageId: xyz.profilePageId,
-        };
-        this.InstagramMessages.unshift(this.messageDto);
-        this.messagesArray.unshift(this.messageDto);
-
-        let groupedItems = this.messagesArray.reduce((acc: any, item: any) => {
-          const date = item.createdDate?.split('T')[0];
-          if (!acc[date]) {
-            acc[date] = [];
-          }
-          acc[date].push(item);
-          return acc;
-        }, {});
-
-        this.groupedMessages = Object.keys(groupedItems).map((createdDate) => {
-          return {
-            createdDate,
-            items: groupedItems[createdDate],
+      if (openedContentType == xyz.contentType) {
+        if (this.id == xyz.fromId) {
+          this.messageDto = {
+            id: xyz.id,
+            contentType: xyz.contentType,
+            queryStatus: xyz.queryStatus,
+            createdDate: xyz.createdDate,
+            attachments: xyz.attachments,
+            replies: [],
+            sentiment: '',
+            tags: [],
+            msgId: xyz.msgId,
+            fromId: xyz.fromId,
+            fromName: xyz.fromName,
+            fromProfilePic: xyz.fromProfilePic,
+            toId: xyz.toId,
+            toName: xyz.toName,
+            msgText: xyz.msgText,
+            agentId: '',
+            customerSocailProfileId: 0,
+            profileId: xyz.profileId,
+            profilePageId: xyz.profilePageId,
           };
-        }); 
-        this.totalUnrespondedMsgCountByCustomer =
-          this.totalUnrespondedMsgCountByCustomer + 1;
+          this.InstagramMessages.unshift(this.messageDto);
+          this.messagesArray.unshift(this.messageDto);
+
+          let groupedItems = this.messagesArray.reduce(
+            (acc: any, item: any) => {
+              const date = item.createdDate?.split('T')[0];
+              if (!acc[date]) {
+                acc[date] = [];
+              }
+              acc[date].push(item);
+              return acc;
+            },
+            {}
+          );
+
+          this.groupedMessages = Object.keys(groupedItems).map(
+            (createdDate) => {
+              return {
+                createdDate,
+                items: groupedItems[createdDate],
+              };
+            }
+          );
+          this.totalUnrespondedMsgCountByCustomer =
+            this.totalUnrespondedMsgCountByCustomer + 1;
+        }
       }
     });
     this.changeDetect.detectChanges();
@@ -422,7 +555,7 @@ export class InstagramComponent implements OnInit {
         pageId: '',
         plateForm: 'Instagram',
         pageNumber: this.pageNumber,
-        hasBlueTick:false,
+        hasBlueTick: false,
         pageSize: this.pageSize,
         isAttachment: false,
         queryType: this.queryType,
@@ -440,53 +573,53 @@ export class InstagramComponent implements OnInit {
         .GetChannelConversationDetail(this.filterDto)
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
-          this.SpinnerService.hide();
-          this.spinner1running = false;
-          this.InstagramData = res.List;
-          this.instagramBusinessAccountId = res.List[0]?.post.profile?.instagramBusinessAccountId;
-          this.userInformation = res.List[0].user;
-          this.userInfoService.shareUserInformation(res.List[0].user);
-          this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-          this.TotalCmntQueryCount = res.TotalQueryCount;
-          this.pageName = this.InstagramData[0]?.post.profile.page_Name;
+            this.SpinnerService.hide();
+            this.spinner1running = false;
+            this.InstagramData = res.List;
+            this.instagramBusinessAccountId =
+              res.List[0]?.post.profile?.instagramBusinessAccountId;
+            this.userInformation = res.List[0].user;
+            this.userInfoService.shareUserInformation(res.List[0].user);
+            this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+            this.TotalCmntQueryCount = res.TotalQueryCount;
+            this.pageName = this.InstagramData[0]?.post.profile.clientAppName;
 
-          
-          if(this.InstagramData?.length != 0){
-            this.instaCmntReply = true;
-            this.instaMsgReply = false;
-          }
+            if (this.InstagramData?.length != 0) {
+              this.instaCmntReply = true;
+              this.instaMsgReply = false;
+            }
 
-          this.commentsArray = [];
-
-          this.InstagramData.forEach((item: any) => {
             this.commentsArray = [];
-            item.comments.forEach((cmnt: any) => {
-              this.commentsArray.push(cmnt);
-            });
-            let groupedItems = this.commentsArray.reduce(
-              (acc: any, item: any) => {
-                const date = item.createdDate?.split('T')[0];
-                if (!acc[date]) {
-                  acc[date] = [];
+            localStorage.setItem('lastQueryId',this.InstagramData[0].comments[0].id)
+            this.InstagramData.forEach((item: any) => {
+              this.commentsArray = [];
+              item.comments.forEach((cmnt: any) => {
+                this.commentsArray.push(cmnt);
+              });
+              let groupedItems = this.commentsArray.reduce(
+                (acc: any, item: any) => {
+                  const date = item.createdDate?.split('T')[0];
+                  if (!acc[date]) {
+                    acc[date] = [];
+                  }
+                  acc[date].push(item);
+                  return acc;
+                },
+                {}
+              );
+
+              item['groupedComments'] = Object.keys(groupedItems).map(
+                (createdDate) => {
+                  return {
+                    createdDate,
+                    items: groupedItems[createdDate],
+                  };
                 }
-                acc[date].push(item);
-                return acc;
-              },
-              {}
-            );
+              );
+            });
 
-            item['groupedComments'] = Object.keys(groupedItems).map(
-              (createdDate) => {
-                return {
-                  createdDate,
-                  items: groupedItems[createdDate],
-                };
-              }
-            );
-          });
-
-          // this.instaStats();
-        }
+            // this.instaStats();
+          }
         });
     } else if (this.slaId != null || undefined) {
       localStorage.setItem('storeOpenedId', this.slaId);
@@ -500,7 +633,7 @@ export class InstagramComponent implements OnInit {
         pageSize: 0,
         isAttachment: false,
         queryType: this.queryType,
-        hasBlueTick:false,
+        hasBlueTick: false,
         text: '',
         userName: '',
         notInclude: '',
@@ -513,90 +646,18 @@ export class InstagramComponent implements OnInit {
       this.SpinnerService.show();
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         if (Object.keys(res).length > 0) {
-        this.SpinnerService.hide();
-        this.spinner1running = false;
-        this.InstagramData = res.List;
-        this.instagramBusinessAccountId = res.List[0]?.post.profile?.instagramBusinessAccountId;
-        this.userInformation = res.List[0].user;
-        this.userInfoService.shareUserInformation(res.List[0].user);
-        this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-        this.TotalCmntQueryCount = res.TotalQueryCount;
-        this.pageName = this.InstagramData[0]?.post.profile.page_Name;
-
-        if(this.InstagramData?.length != 0){
-          this.instaCmntReply = true;
-          this.instaMsgReply = false;
-        }
-
-        this.commentsArray = [];
-
-        this.InstagramData.forEach((item: any) => {
-          this.commentsArray = [];
-          item.comments.forEach((cmnt: any) => {
-            this.commentsArray.push(cmnt);
-          });
-          let groupedItems = this.commentsArray.reduce(
-            (acc: any, item: any) => {
-              const date = item.createdDate?.split('T')[0];
-              if (!acc[date]) {
-                acc[date] = [];
-              }
-              acc[date].push(item);
-              return acc;
-            },
-            {}
-          );
-
-          item['groupedComments'] = Object.keys(groupedItems).map(
-            (createdDate) => {
-              return {
-                createdDate,
-                items: groupedItems[createdDate],
-              };
-            }
-          );
-        });
-
-        // this.instaStats();
-    }
-  });
-    } else {
-      this.filterDto = {
-        // fromDate: new Date(),
-        // toDate: new Date(),
-        user: localStorage.getItem('storeOpenedId') || '{}',
-        pageId: '',
-        plateForm: localStorage.getItem('parent') || '{}',
-        pageNumber: this.pageNumber,
-        pageSize: this.pageSize,
-        isAttachment: false,
-        queryType: this.queryType,
-        hasBlueTick:false,
-        text: '',
-        userName: '',
-        notInclude: '',
-        include: '',
-        flag: this.flag,
-        wings: this.getWing.wings,
-        groupId: this.getRulesGroupIdsService.rulesGroupIds,
-      };
-      this.spinner1running = true;
-      this.SpinnerService.show();
-      this.commondata
-        .GetChannelConversationDetail(this.filterDto)
-        .subscribe((res: any) => {
-          if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.spinner1running = false;
           this.InstagramData = res.List;
-          this.instagramBusinessAccountId = res.List[0]?.post.profile?.instagramBusinessAccountId;
+          this.instagramBusinessAccountId =
+            res.List[0]?.post.profile?.instagramBusinessAccountId;
           this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
-          this.pageName = this.InstagramData[0]?.post.profile.page_Name;
+          this.pageName = this.InstagramData[0]?.post.profile.clientAppName;
 
-          if(this.InstagramData?.length != 0){
+          if (this.InstagramData?.length != 0) {
             this.instaCmntReply = true;
             this.instaMsgReply = false;
           }
@@ -631,8 +692,82 @@ export class InstagramComponent implements OnInit {
           });
 
           // this.instaStats();
-    }
-  });
+        }
+      });
+    } else {
+      this.filterDto = {
+        // fromDate: new Date(),
+        // toDate: new Date(),
+        user: localStorage.getItem('storeOpenedId') || '{}',
+        pageId: '',
+        plateForm: localStorage.getItem('parent') || '{}',
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize,
+        isAttachment: false,
+        queryType: this.queryType,
+        hasBlueTick: false,
+        text: '',
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
+      };
+      this.spinner1running = true;
+      this.SpinnerService.show();
+      this.commondata
+        .GetChannelConversationDetail(this.filterDto)
+        .subscribe((res: any) => {
+          if (Object.keys(res).length > 0) {
+            this.SpinnerService.hide();
+            this.spinner1running = false;
+            this.InstagramData = res.List;
+            this.instagramBusinessAccountId =
+              res.List[0]?.post.profile?.instagramBusinessAccountId;
+            this.userInformation = res.List[0].user;
+            this.userInfoService.shareUserInformation(res.List[0].user);
+            this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
+            this.TotalCmntQueryCount = res.TotalQueryCount;
+            this.pageName = this.InstagramData[0]?.post.profile.clientAppName;
+
+            if (this.InstagramData?.length != 0) {
+              this.instaCmntReply = true;
+              this.instaMsgReply = false;
+            }
+
+            this.commentsArray = [];
+
+            this.InstagramData.forEach((item: any) => {
+              this.commentsArray = [];
+              item.comments.forEach((cmnt: any) => {
+                this.commentsArray.push(cmnt);
+              });
+              let groupedItems = this.commentsArray.reduce(
+                (acc: any, item: any) => {
+                  const date = item.createdDate?.split('T')[0];
+                  if (!acc[date]) {
+                    acc[date] = [];
+                  }
+                  acc[date].push(item);
+                  return acc;
+                },
+                {}
+              );
+
+              item['groupedComments'] = Object.keys(groupedItems).map(
+                (createdDate) => {
+                  return {
+                    createdDate,
+                    items: groupedItems[createdDate],
+                  };
+                }
+              );
+            });
+
+            // this.instaStats();
+          }
+        });
     }
   }
 
@@ -646,7 +781,9 @@ export class InstagramComponent implements OnInit {
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
     responseByName: new FormControl(this.ReplyDto.responseByName),
-    instagramBusinessAccountId: new FormControl(this.ReplyDto.instagramBusinessAccountId),
+    instagramBusinessAccountId: new FormControl(
+      this.ReplyDto.instagramBusinessAccountId
+    ),
     groupId: new FormControl(this.ReplyDto.groupId),
   });
 
@@ -712,7 +849,7 @@ export class InstagramComponent implements OnInit {
         userProfileId: this.userProfileId,
         responseByName: this.pageName,
         instagramBusinessAccountId: this.instagramBusinessAccountId,
-        groupId: this.getRulesGroupIdsService.rulesGroupIds
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       });
 
       formData.append(
@@ -752,14 +889,14 @@ export class InstagramComponent implements OnInit {
 
   commentStatus(comId: number = 0, type: string = '') {
     this.commentStatusDto = {
-      id : comId,
-      type : type,
-      plateForm : 'Instagram',
-      profileId : Number(localStorage.getItem('profileId')),
+      id: comId,
+      type: type,
+      plateForm: 'Instagram',
+      profileId: Number(localStorage.getItem('profileId')),
       wings: this.getWing.wings,
       groupId: this.getRulesGroupIdsService.rulesGroupIds,
-    }
-    
+    };
+
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {});
@@ -813,38 +950,10 @@ export class InstagramComponent implements OnInit {
     this.insertTagsForFeedDto.type = 'Tag';
     this.insertTagsForFeedDto.platform = 'Instagram';
 
-      this.InstagramData?.forEach((abc: any) => {
-        abc.comments.forEach((comment: any) => {
-          if (comment.id == comId) {
-            if (comment.tags.length == 0) {
-              this.commondata
-                .InsertTag(this.insertTagsForFeedDto)
-                .subscribe((res: any) => {
-                  this.reloadComponent('ApplyTag');
-                  this.activeTag = true;
-                  this.checkTag = true;
-                });
-            } else if (comment.tags.length > 0) {
-              const value = comment.tags.find((x: any) => x.name == tagName);
-              if (value != null || value != undefined) {
-                this.removeTagFromFeed(comId, tagName);
-              } else {
-                this.commondata
-                  .InsertTag(this.insertTagsForFeedDto)
-                  .subscribe((res: any) => {
-                    this.reloadComponent('ApplyTag');
-                    this.activeTag = true;
-                    this.checkTag = true;
-                  });
-              }
-            }
-          }
-        });
-      });
-
-      this.InstagramMessages?.forEach((msg: any) => {
-        if (msg.id == comId) {
-          if (msg.tags.length == 0) {
+    this.InstagramData?.forEach((abc: any) => {
+      abc.comments.forEach((comment: any) => {
+        if (comment.id == comId) {
+          if (comment.tags.length == 0) {
             this.commondata
               .InsertTag(this.insertTagsForFeedDto)
               .subscribe((res: any) => {
@@ -852,8 +961,8 @@ export class InstagramComponent implements OnInit {
                 this.activeTag = true;
                 this.checkTag = true;
               });
-          } else if (msg.tags.length > 0) {
-            const value = msg.tags.find((x: any) => x.name == tagName);
+          } else if (comment.tags.length > 0) {
+            const value = comment.tags.find((x: any) => x.name == tagName);
             if (value != null || value != undefined) {
               this.removeTagFromFeed(comId, tagName);
             } else {
@@ -868,24 +977,55 @@ export class InstagramComponent implements OnInit {
           }
         }
       });
+    });
+
+    this.InstagramMessages?.forEach((msg: any) => {
+      if (msg.id == comId) {
+        if (msg.tags.length == 0) {
+          this.commondata
+            .InsertTag(this.insertTagsForFeedDto)
+            .subscribe((res: any) => {
+              this.reloadComponent('ApplyTag');
+              this.activeTag = true;
+              this.checkTag = true;
+            });
+        } else if (msg.tags.length > 0) {
+          const value = msg.tags.find((x: any) => x.name == tagName);
+          if (value != null || value != undefined) {
+            this.removeTagFromFeed(comId, tagName);
+          } else {
+            this.commondata
+              .InsertTag(this.insertTagsForFeedDto)
+              .subscribe((res: any) => {
+                this.reloadComponent('ApplyTag');
+                this.activeTag = true;
+                this.checkTag = true;
+              });
+          }
+        }
+      }
+    });
   }
 
   removeTagFromFeed(feedId: number, tagName: any) {
-    if ( this.flag == 'focused' || this.flag == 'assigned_to_me' || this.flag == 'follow_up'
+    if (
+      this.flag == 'focused' ||
+      this.flag == 'assigned_to_me' ||
+      this.flag == 'follow_up'
     ) {
-        this.insertTagsForFeedDto.tagName = tagName;
-        this.insertTagsForFeedDto.feedId = feedId;
-        this.insertTagsForFeedDto.type = 'Tag';
-        this.insertTagsForFeedDto.platform = 'Instagram';
+      this.insertTagsForFeedDto.tagName = tagName;
+      this.insertTagsForFeedDto.feedId = feedId;
+      this.insertTagsForFeedDto.type = 'Tag';
+      this.insertTagsForFeedDto.platform = 'Instagram';
 
-        this.commondata
-          .RemoveTag(this.insertTagsForFeedDto)
-          .subscribe((res: any) => {
-            this.reloadComponent('RemoveTag');
+      this.commondata
+        .RemoveTag(this.insertTagsForFeedDto)
+        .subscribe((res: any) => {
+          this.reloadComponent('RemoveTag');
 
-            this.activeTag = false;
-            this.checkTag = false;
-          });
+          this.activeTag = false;
+          this.checkTag = false;
+        });
     }
   }
 
@@ -907,17 +1047,18 @@ export class InstagramComponent implements OnInit {
     }
   }
 
-
   insertSentimentForFeed(comId: number, sentimenName: any) {
     this.insertTagsForFeedDto.feedId = comId;
     this.insertTagsForFeedDto.tagName = sentimenName;
     this.insertTagsForFeedDto.type = 'Sentiment';
     this.insertTagsForFeedDto.platform = 'Instagram';
 
-    this.commondata.InsertSentiment(this.insertTagsForFeedDto).subscribe((res: any) => {
+    this.commondata
+      .InsertSentiment(this.insertTagsForFeedDto)
+      .subscribe((res: any) => {
         this.reloadComponent('Sentiment');
       });
-}
+  }
 
   sendQuickReply(value: any) {
     var abc = this.QuickReplies.find((res: any) => res.value == value);
@@ -967,7 +1108,6 @@ export class InstagramComponent implements OnInit {
   }
 
   reloadComponent(type: any) {
-    
     if (type == 'multipleFilesCantAttach') {
       this.AlterMsg = "Multiple Files can't be attached at the same time";
       this.toastermessage = true;
@@ -1057,7 +1197,6 @@ export class InstagramComponent implements OnInit {
     this.isAttachment = false;
     this.fileInput.nativeElement.value = '';
     this.detectChanges();
-    
   }
   markAsComplete = false;
   markAsCompleteExpanded(comId: any) {
@@ -1114,39 +1253,41 @@ export class InstagramComponent implements OnInit {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
           if (singleCmnt.id == this.addTags.feedId) {
-            if(this.addTags.type == 'Tag'){
-            if (singleCmnt.tags.length == 0) {
-              singleCmnt.tags.push(this.addTags);
-            } else if (singleCmnt.tags.length > 0) {
-              const tag = singleCmnt.tags.find(
-                (x: any) => x.name == this.addTags.name
-              );
-              if (tag != null || tag != undefined) {
-                const index = singleCmnt.tags.indexOf(tag);
-                if (index !== -1) {
-                  singleCmnt.tags.splice(index, 1);
-                }
-              } else {
-                if (!singleCmnt.tags.includes(this.addTags)) {
-                  singleCmnt.tags.push(this.addTags);
+            if (this.addTags.type == 'Tag') {
+              if (singleCmnt.tags.length == 0) {
+                singleCmnt.tags.push(this.addTags);
+              } else if (singleCmnt.tags.length > 0) {
+                const tag = singleCmnt.tags.find(
+                  (x: any) => x.name == this.addTags.name
+                );
+                if (tag != null || tag != undefined) {
+                  const index = singleCmnt.tags.indexOf(tag);
+                  if (index !== -1) {
+                    singleCmnt.tags.splice(index, 1);
+                  }
+                } else {
+                  if (!singleCmnt.tags.includes(this.addTags)) {
+                    singleCmnt.tags.push(this.addTags);
+                  }
                 }
               }
             }
-          }
-          if(this.addTags.type == 'Sentiment'){
-            singleCmnt.sentiment = this.addTags;
-          }
+            if (this.addTags.type == 'Sentiment') {
+              singleCmnt.sentiment = this.addTags;
+            }
           }
         });
       });
     });
     this.InstagramMessages?.forEach((msg: any) => {
       if (msg.id == this.addTags.feedId) {
-        if(this.addTags.type == 'Tag'){
+        if (this.addTags.type == 'Tag') {
           if (msg.tags.length == 0) {
             msg.tags.push(this.addTags);
           } else if (msg.tags.length > 0) {
-            const tag = msg.tags.find((x: any) => x.name == this.addTags.tagName);
+            const tag = msg.tags.find(
+              (x: any) => x.name == this.addTags.tagName
+            );
             if (tag != null || tag != undefined) {
               const index = msg.tags.indexOf(tag);
               if (index !== -1) {
@@ -1157,14 +1298,14 @@ export class InstagramComponent implements OnInit {
             }
           }
         }
-        if(this.addTags.type == 'Sentiment'){
+        if (this.addTags.type == 'Sentiment') {
           msg.sentiment = this.addTags;
         }
       }
     });
-  this.changeDetect.detectChanges();
-}
-removeTagDataListener() {
+    this.changeDetect.detectChanges();
+  }
+  removeTagDataListener() {
     this.InstagramData?.forEach((post: any) => {
       post.groupedComments.forEach((cmnt: any) => {
         cmnt.items.forEach((singleCmnt: any) => {
@@ -1189,8 +1330,8 @@ removeTagDataListener() {
         }
       }
     });
-  this.changeDetect.detectChanges();
-}
+    this.changeDetect.detectChanges();
+  }
 
   updateQueryStatusDataListener() {
     if (this.InstagramData) {
@@ -1214,7 +1355,6 @@ removeTagDataListener() {
     }
 
     this.changeDetect.detectChanges();
-    
   }
 
   replyDataListener() {
@@ -1291,8 +1431,8 @@ removeTagDataListener() {
   totalMessages: number = 0;
   msgId: number = 0;
   msgText: any = '';
-  userInformation:any;
-  instagramBusinessAccountId:string='';
+  userInformation: any;
+  instagramBusinessAccountId: string = '';
 
   instagramCommentReply() {
     this.instaCmntReply = true;
@@ -1316,7 +1456,7 @@ removeTagDataListener() {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        hasBlueTick:false,
+        hasBlueTick: false,
         queryType: this.queryType,
         text: '',
         userName: '',
@@ -1332,53 +1472,54 @@ removeTagDataListener() {
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
-          this.SpinnerService.hide();
-          this.InstagramMessages = res.List?.dm;
-          this.userInformation = res.List.user;
-          this.instagramBusinessAccountId = res.List?.profile?.instagramBusinessAccountId;
-          this.userInfoService.shareUserInformation(res.List.user);
-          this.TotalMsgQueryCount = res.TotalQueryCount;
-          this.pageName = this.InstagramMessages[0]?.toName;
-          this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+            this.SpinnerService.hide();
+            this.InstagramMessages = res.List?.dm;
+            this.userInformation = res.List.user;
+            this.instagramBusinessAccountId =
+              res.List?.profile?.instagramBusinessAccountId;
+            this.userInfoService.shareUserInformation(res.List.user);
+            this.TotalMsgQueryCount = res.TotalQueryCount;
+            this.pageName = this.InstagramMessages[0]?.toName;
+            this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
-          if (
-            !this.InstagramData ||
-            this.InstagramData == undefined ||
-            this.InstagramData?.length == 0
-          ) {
-            this.instaCmntReply = false;
-            this.instaMsgReply = true;
-          }
+            if (
+              !this.InstagramData ||
+              this.InstagramData == undefined ||
+              this.InstagramData?.length == 0
+            ) {
+              this.instaCmntReply = false;
+              this.instaMsgReply = true;
+            }
 
-          this.messagesArray = [];
-          this.groupedMessages = [];
+            this.messagesArray = [];
+            this.groupedMessages = [];
+            localStorage.setItem('lastQueryId',this.InstagramMessages[0].id)
+            this.InstagramMessages.forEach((item: any) => {
+              this.messagesArray.push(item);
+              let groupedItems = this.messagesArray.reduce(
+                (acc: any, item: any) => {
+                  const date = item.createdDate?.split('T')[0];
+                  if (!acc[date]) {
+                    acc[date] = [];
+                  }
+                  acc[date].push(item);
+                  return acc;
+                },
+                {}
+              );
 
-          this.InstagramMessages.forEach((item: any) => {
-            this.messagesArray.push(item);
-            let groupedItems = this.messagesArray.reduce(
-              (acc: any, item: any) => {
-                const date = item.createdDate?.split('T')[0];
-                if (!acc[date]) {
-                  acc[date] = [];
+              this.groupedMessages = Object.keys(groupedItems).map(
+                (createdDate) => {
+                  return {
+                    createdDate,
+                    items: groupedItems[createdDate],
+                  };
                 }
-                acc[date].push(item);
-                return acc;
-              },
-              {}
-            );
-
-            this.groupedMessages = Object.keys(groupedItems).map(
-              (createdDate) => {
-                return {
-                  createdDate,
-                  items: groupedItems[createdDate],
-                };
-              }
-            );
-            // // console.log('Messages ==>', this.groupedMessages);
-          });
-    }
-  });
+              );
+              // // console.log('Messages ==>', this.groupedMessages);
+            });
+          }
+        });
     } else if (this.slaId != null || undefined) {
       this.filterDto = {
         // fromDate: new Date(),
@@ -1391,7 +1532,7 @@ removeTagDataListener() {
         isAttachment: false,
         queryType: this.queryType,
         text: '',
-        hasBlueTick:false,
+        hasBlueTick: false,
         userName: '',
         notInclude: '',
         include: '',
@@ -1403,91 +1544,17 @@ removeTagDataListener() {
       this.SpinnerService.show();
       this.commondata.GetSlaDM(this.filterDto).subscribe((res: any) => {
         if (Object.keys(res).length > 0) {
-        this.SpinnerService.hide();
-        this.InstagramMessages = res.List?.dm;
-        this.userInformation = res.List.user;
-          this.instagramBusinessAccountId = res.List?.profile?.instagramBusinessAccountId;
-        this.userInfoService.shareUserInformation(res.List.user);
-        this.TotalMsgQueryCount = res.TotalQueryCount;
-        this.pageName = this.InstagramMessages[0].toName;
-        this.totalMessages = res.TotalCount;
-
-        this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
-        if (
-          !this.InstagramData ||
-          this.InstagramData == undefined ||
-          this.InstagramData?.length == 0
-        ) {
-          this.instaCmntReply = false;
-          this.instaMsgReply = true;
-        }
-
-        this.messagesArray = [];
-        this.groupedMessages = [];
-
-        this.InstagramMessages.forEach((item: any) => {
-          this.messagesArray.push(item);
-          let groupedItems = this.messagesArray.reduce(
-            (acc: any, item: any) => {
-              const date = item.createdDate?.split('T')[0];
-              if (!acc[date]) {
-                acc[date] = [];
-              }
-              acc[date].push(item);
-              return acc;
-            },
-            {}
-          );
-
-          this.groupedMessages = Object.keys(groupedItems).map(
-            (createdDate) => {
-              return {
-                createdDate,
-                items: groupedItems[createdDate],
-              };
-            }
-          );
-          // // console.log('Messages ==>', this.groupedMessages);
-        });
-     }
-     });
-    } else {
-      this.filterDto = {
-        // fromDate: new Date(),
-        // toDate: new Date(),
-        user: localStorage.getItem('storeOpenedId') || '{}',
-        pageId: '',
-        plateForm: localStorage.getItem('parent') || '{}',
-        pageNumber: this.pageNumber,
-        pageSize: this.pageSize,
-        isAttachment: false,
-        queryType: this.queryType,
-        hasBlueTick:false,
-        text: '',
-        userName: '',
-        notInclude: '',
-        include: '',
-        flag: this.flag,
-        wings: this.getWing.wings,
-        groupId: this.getRulesGroupIdsService.rulesGroupIds,
-      };
-
-      this.SpinnerService.show();
-      this.commondata
-        .GetChannelMessageDetail(this.filterDto)
-        .subscribe((res: any) => {
-          if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
           this.InstagramMessages = res.List?.dm;
           this.userInformation = res.List.user;
-          this.instagramBusinessAccountId = res.List?.profile?.instagramBusinessAccountId;
+          this.instagramBusinessAccountId =
+            res.List?.profile?.instagramBusinessAccountId;
           this.userInfoService.shareUserInformation(res.List.user);
+          this.TotalMsgQueryCount = res.TotalQueryCount;
           this.pageName = this.InstagramMessages[0].toName;
           this.totalMessages = res.TotalCount;
-          this.TotalMsgQueryCount = res.TotalQueryCount;
 
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
-
           if (
             !this.InstagramData ||
             this.InstagramData == undefined ||
@@ -1524,8 +1591,84 @@ removeTagDataListener() {
             );
             // // console.log('Messages ==>', this.groupedMessages);
           });
-    }
-  });
+        }
+      });
+    } else {
+      this.filterDto = {
+        // fromDate: new Date(),
+        // toDate: new Date(),
+        user: localStorage.getItem('storeOpenedId') || '{}',
+        pageId: '',
+        plateForm: localStorage.getItem('parent') || '{}',
+        pageNumber: this.pageNumber,
+        pageSize: this.pageSize,
+        isAttachment: false,
+        queryType: this.queryType,
+        hasBlueTick: false,
+        text: '',
+        userName: '',
+        notInclude: '',
+        include: '',
+        flag: this.flag,
+        wings: this.getWing.wings,
+        groupId: this.getRulesGroupIdsService.rulesGroupIds,
+      };
+
+      this.SpinnerService.show();
+      this.commondata
+        .GetChannelMessageDetail(this.filterDto)
+        .subscribe((res: any) => {
+          if (Object.keys(res).length > 0) {
+            this.SpinnerService.hide();
+            this.InstagramMessages = res.List?.dm;
+            this.userInformation = res.List.user;
+            this.instagramBusinessAccountId =
+              res.List?.profile?.instagramBusinessAccountId;
+            this.userInfoService.shareUserInformation(res.List.user);
+            this.pageName = this.InstagramMessages[0].toName;
+            this.totalMessages = res.TotalCount;
+            this.TotalMsgQueryCount = res.TotalQueryCount;
+
+            this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+
+            if (
+              !this.InstagramData ||
+              this.InstagramData == undefined ||
+              this.InstagramData?.length == 0
+            ) {
+              this.instaCmntReply = false;
+              this.instaMsgReply = true;
+            }
+
+            this.messagesArray = [];
+            this.groupedMessages = [];
+
+            this.InstagramMessages.forEach((item: any) => {
+              this.messagesArray.push(item);
+              let groupedItems = this.messagesArray.reduce(
+                (acc: any, item: any) => {
+                  const date = item.createdDate?.split('T')[0];
+                  if (!acc[date]) {
+                    acc[date] = [];
+                  }
+                  acc[date].push(item);
+                  return acc;
+                },
+                {}
+              );
+
+              this.groupedMessages = Object.keys(groupedItems).map(
+                (createdDate) => {
+                  return {
+                    createdDate,
+                    items: groupedItems[createdDate],
+                  };
+                }
+              );
+              // // console.log('Messages ==>', this.groupedMessages);
+            });
+          }
+        });
     }
   }
 
@@ -1555,7 +1698,9 @@ removeTagDataListener() {
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
     responseByName: new FormControl(this.ReplyDto.responseByName),
-    instagramBusinessAccountId: new FormControl(this.ReplyDto.instagramBusinessAccountId),
+    instagramBusinessAccountId: new FormControl(
+      this.ReplyDto.instagramBusinessAccountId
+    ),
     groupId: new FormControl(this.ReplyDto.groupId),
   });
 
@@ -1669,7 +1814,9 @@ removeTagDataListener() {
     const customerId = localStorage.getItem('storeOpenedId');
     const channel = localStorage.getItem('parent');
     this.insertAtCaret(
-      'https://keportal.enteract.live/survey/customer_satisfaction' + '?channel=' + channel +
+      'https://keportal.enteract.live/survey/customer_satisfaction' +
+        '?channel=' +
+        channel +
         '&customerId=' +
         customerId +
         ' '
@@ -1677,30 +1824,28 @@ removeTagDataListener() {
   }
   isAttachment = false;
   onFileChanged() {
-    if(this.ImageArray.length >= 1){
+    if (this.ImageArray.length >= 1) {
       this.reloadComponent('multipleFilesCantAttach');
     } else {
-      Array.from(this.fileInput.nativeElement.files).forEach((file:any) => {
-        if(file.size > 4 * 1024 * 1024){
+      Array.from(this.fileInput.nativeElement.files).forEach((file: any) => {
+        if (file.size > 4 * 1024 * 1024) {
           this.reloadComponent('Attachments');
         } else if (this.fileInput.nativeElement.files.length > 0) {
-        this.isAttachment = true;
-  
-        const filesArray = Array.from(this.fileInput.nativeElement.files);
-        filesArray.forEach((attachment: any) => {
-          this.ImageArray.push(attachment);
-        });
-        const files = this.ImageArray.map((file: any) => file); // Create a new array with the remaining files
-        const newFileList = new DataTransfer();
-        files.forEach((file: any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
-        this.ImageName = newFileList.files;
-      }
+          this.isAttachment = true;
+
+          const filesArray = Array.from(this.fileInput.nativeElement.files);
+          filesArray.forEach((attachment: any) => {
+            this.ImageArray.push(attachment);
+          });
+          const files = this.ImageArray.map((file: any) => file); // Create a new array with the remaining files
+          const newFileList = new DataTransfer();
+          files.forEach((file: any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
+          this.ImageName = newFileList.files;
+        }
       });
     }
-    
   }
   removeAttachedFile(index: any) {
-    
     const filesArray = Array.from(this.ImageName);
     filesArray.splice(index, 1);
     this.ImageArray.splice(index, 1);

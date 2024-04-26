@@ -95,14 +95,14 @@
                                             <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
                                                 style="overflow: auto; height: 400px;">
                                                 <div class="scroll-content">
-                                                    <li *ngFor="let option of totalAgents | filter:searchText">
+                                                    <li *ngFor="let agent of totalAgents | filter:searchText">
                                                         <a class="dropdown-item d-flex align-items-center">
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
-                                                                    [id]="option.id" [(ngModel)]="option.isSelected"
-                                                                    (change)="GetStatsInteractionReport()">
-                                                                <label class="form-check-label" [for]="option.id">{{
-                                                                    option.name }}</label>
+                                                                    [id]="agent.id" [(ngModel)]="agent.isSelected"
+                                                                    (change)="selectedAgents()">
+                                                                <label class="form-check-label" [for]="agent.id">{{
+                                                                    agent.name }}</label>
                                                             </div>
                                                         </a>
                                                     </li>
@@ -117,6 +117,11 @@
                                         </ul>
                                     </div>
                                 </li>
+                                <li class="list-inline-item">
+                                    <button type="button" (click)="GetStatsInteractionReport()"
+                                        class="btn btn-success ms-2 px-4">Search</button>
+                                </li>
+
                                 <li class="list-inline-item ms-auto">
                                     <div class="dropdown">
                                         <button class="btn btn-primary" type="button" data-bs-toggle="dropdown"
@@ -487,7 +492,7 @@
                                 <div class="col-md-6">
                                     <div class="graphcontainer align-items-end">
 
-                                 
+
                                         <div id="piechart" style="height: 400px; width: 900px;"></div>
 
                                     </div>

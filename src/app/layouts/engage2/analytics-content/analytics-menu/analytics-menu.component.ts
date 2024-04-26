@@ -77,75 +77,75 @@ export class AnalyticsMenuComponent implements OnInit {
     if (this.channelname == 'local') {
   
       
-        //  this.analyticeReport = [
-        //   // { name: 'Report Listing', link: '/analytics/reports' },
-        //   // { name: 'Dashboard Designer', link: '/analytics/dashbaord-designer' },
-        //   // { name: 'DB Settings', link: ' /analytics/db-settings' },
-        //   // { name: 'Dashboard', link: '/analytics/dashboard' },
-        //   // { name: 'Live Monitoring', link: '/analytics/live-monitoring' },
+         this.analyticeReport = [
+          // { name: 'Report Listing', link: '/analytics/reports' },
+          // { name: 'Dashboard Designer', link: '/analytics/dashbaord-designer' },
+          // { name: 'DB Settings', link: ' /analytics/db-settings' },
+          // { name: 'Dashboard', link: '/analytics/dashboard' },
+          // { name: 'Live Monitoring', link: '/analytics/live-monitoring' },
          
-        //   { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
-        //   { name: 'BOT Interactions', link: '/analytics/handled-bot' },
-        //   { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
-        //   { name: 'Unique Interactions', link: '/analytics/unique-customers' },
-        //   { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
-        //   {
-        //     name: 'Inbound/Outbound Report',
-        //     link: '/analytics/inbound-outbound-report',
-        //   },
-        //   {
-        //     name: 'Agent Performance Report',
-        //     link: '/analytics/performance-report',
-        //   },
-        //   { name: 'Shift Report', link: '/analytics/shift-report' },
-        //   { name: 'Query Tag Report', link: '/analytics/querytag-report' },
-        //   { name: 'Tag Report', link: '/analytics/tag-report' },
+          { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
+          { name: 'BOT Interactions', link: '/analytics/handled-bot' },
+          { name: 'Live Agent Interactions', link: '/analytics/route-to-agent' },
+          { name: 'Unique Interactions', link: '/analytics/unique-customers' },
+          { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
+          {
+            name: 'Inbound/Outbound Report',
+            link: '/analytics/inbound-outbound-report',
+          },
+          {
+            name: 'Agent Performance Report',
+            link: '/analytics/performance-report',
+          },
+          { name: 'Shift Report', link: '/analytics/shift-report' },
+          { name: 'Query Tag Report', link: '/analytics/querytag-report' },
+          { name: 'Tag Report', link: '/analytics/tag-report' },
   
-        //   { name: 'Facebook Report', link: '/analytics/facebook-report' },
-        //   { name: 'Twitter Report', link: '/analytics/twitter-report' },
-        //   { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
-        //   { name: 'Instagram Report', link: '/analytics/instagram-report' },
-        //   { name: 'interaction Report', link: '/analytics/interaction-report' },
-        // ];
+          { name: 'Facebook Report', link: '/analytics/facebook-report' },
+          { name: 'Twitter Report', link: '/analytics/twitter-report' },
+          { name: 'LinkedIn Report', link: '/analytics/linkedin-report' },
+          { name: 'Instagram Report', link: '/analytics/instagram-report' },
+          { name: 'interaction Report', link: '/analytics/interaction-report' },
+        ];
       
-        if (this.showOnlySocialRawDataReport.includes(this.restrictedAgent)) {
-          this.analyticeReport = [
-            { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
-          ];
-        }
-        else if(this.showOnlyRawDataReport.includes(this.restrictedAgent)){
-           this.analyticeReport=[
-            { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
-            { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
-            { name: 'BOT Interactions', link: '/analytics/handled-bot' },
-            {
-              name: 'Live Agent Interactions',
-              link: '/analytics/route-to-agent',
-            },
-           ]
-        }
-         else {
-          this.analyticeReport = [
-            { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
-            { name: 'Interaction Report', link: '/analytics/interaction-report' },
-            { name: 'BOT Interactions', link: '/analytics/handled-bot' },
-            {
-              name: 'Live Agent Interactions',
-              link: '/analytics/route-to-agent',
-            },
-            { name: 'Unique Interactions', link: '/analytics/unique-customers' },
-            { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
-            {
-              name: 'Inbound/Outbound Report',
-              link: '/analytics/inbound-outbound-report',
-            },
-            {
-              name: 'Agent Performance Report',
-              link: '/analytics/performance-report',
-            },
-            { name: 'Shift Report', link: '/analytics/shift-report' },
-          ];
-        }
+        // if (this.showOnlySocialRawDataReport.includes(this.restrictedAgent)) {
+        //   this.analyticeReport = [
+        //     { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
+        //   ];
+        // }
+        // else if(this.showOnlyRawDataReport.includes(this.restrictedAgent)){
+        //    this.analyticeReport=[
+        //     { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
+        //     { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
+        //     { name: 'BOT Interactions', link: '/analytics/handled-bot' },
+        //     {
+        //       name: 'Live Agent Interactions',
+        //       link: '/analytics/route-to-agent',
+        //     },
+        //    ]
+        // }
+        //  else {
+        //   this.analyticeReport = [
+        //     { name: 'WhatsApp Raw Data', link: '/analytics/whatsapp-report' },
+        //     { name: 'Interaction Report', link: '/analytics/interaction-report' },
+        //     { name: 'BOT Interactions', link: '/analytics/handled-bot' },
+        //     {
+        //       name: 'Live Agent Interactions',
+        //       link: '/analytics/route-to-agent',
+        //     },
+        //     { name: 'Unique Interactions', link: '/analytics/unique-customers' },
+        //     { name: 'Social Raw Data', link: '/analytics/social-raw-data' },
+        //     {
+        //       name: 'Inbound/Outbound Report',
+        //       link: '/analytics/inbound-outbound-report',
+        //     },
+        //     {
+        //       name: 'Agent Performance Report',
+        //       link: '/analytics/performance-report',
+        //     },
+        //     { name: 'Shift Report', link: '/analytics/shift-report' },
+        //   ];
+        // }
     }
      else if (this.channelname == 'stagging') {
       if(this.showOnlyRawDataReport.includes(this.restrictedAgent)){

@@ -77,3 +77,23 @@
   min-height: 40px;
   overflow: auto; 
 }
+
+.gif-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid */
+  gap: 10px;
+  overflow: hidden;
+}
+
+/* Style for individual gif items */
+.gif-item {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.gif-item img {
+  width: 100%;
+  height: auto;
+}

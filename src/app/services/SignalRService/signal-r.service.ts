@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import * as signalR from '@microsoft/signalr';
 import { IHttpConnectionOptions } from '@microsoft/signalr';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
@@ -14,7 +13,6 @@ import { UnRespondedCountService } from '../UnRepondedCountService/un-responded-
 import { UpdateCommentsService } from '../UpdateCommentsService/update-comments.service';
 import { UpdateListService } from '../UpdateListService/update-list.service';
 import { UpdateMessagesService } from '../UpdateMessagesService/update-messages.service';
-import { GetNewPostService } from '../GetNewPostService/get-new-post.service';
 import { CompanyidService } from '../companyidService/companyid.service';
 import { BehaviorSubject } from 'rxjs';
 @Injectable({
@@ -26,6 +24,9 @@ export class SignalRService {
   removeTags: any;
   UnrespondedCount: any;
   reply: any;
+  temporaryListObject: any;
+  temporaryCommentObject: any;
+  temporaryDMObject: any;
 
   token = localStorage.getItem('token');
   signalRStatus = localStorage.getItem('signalRStatus');
@@ -38,7 +39,8 @@ export class SignalRService {
 
   SignalRCommonBaseUrl = environment.SignalRCommonBaseUrl;
 
-  private connectionStateSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private connectionStateSubject: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
 
   constructor(
     private storage: StorageService,
@@ -52,7 +54,7 @@ export class SignalRService {
     private queryStatusService: QueryStatusService,
     private removeAssignedQueryService: RemoveAssignedQuerryService,
     private applySentimentService: ApplySentimentService,
-    private comanyidService: CompanyidService,
+    private comanyidService: CompanyidService
   ) {
     this.baseUrl = window.location.origin;
     if (this.baseUrl == 'https://keportal.enteract.live') {
@@ -87,85 +89,141 @@ export class SignalRService {
     };
 
     this.hubconnection = new signalR.HubConnectionBuilder()
-      .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
+      .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub')
       .withAutomaticReconnect()
       .configureLogging(signalR.LogLevel.Information)
       .build();
+
     this.hubconnection
       .start()
-      .then(() => {console.log('Connection started');
-      this.connectionStateSubject.next(true);})
+      .then(() => {
+        console.log('Connection started');
+        this.connectionStateSubject.next(true);
+      })
       .then(() => this.getConnectionId())
       .catch((err) => console.log('Error while starting connection: ' + err));
 
-      
     // }
+
+    // Handle reconnection
+    this.hubconnection.onreconnected(() => {
+      
+      console.log("SignalR reconnected, rejoining group");
+      // this.connectionStateSubject.next(true)
+      this.storeLocally?.forEach((x:any)=>{
+        this.joinGroup(x);
+      })
+    });
   }
+  
   public getConnectionState(): BehaviorSubject<boolean> {
     return this.connectionStateSubject;
   }
+  storeLocally:any[]=[];
   joinGroup(groupName: any) {
+    
     if (this.hubconnection) {
-        this.hubconnection
+      this.hubconnection
         .invoke('JoinGroup', groupName)
         .then(() => console.log(`Joined group ${groupName}`))
-        .catch(err => console.error(`Error while joining group ${groupName}: ${err}`));      
+        .catch((err) =>
+          console.error(`Error while joining group ${groupName}: ${err}`)
+        );
     } else {
       console.error('SignalR connection not established.');
+    }
+    if(!this.storeLocally.includes(groupName)){
+      this.storeLocally.push(groupName)
+      console.log('groyupsArray',this.storeLocally)
     }
   }
 
   reConnect() {
-      // // this.flag = this.router.url.split('/')[1];
-      // // if(this.flag == 'all-inboxes'){
-      // let team = this.storage.retrive("nocompass", "O").local;
-      // const options: IHttpConnectionOptions = {
-      //   accessTokenFactory: () => {
-      //     return 'Bearer ' + localStorage.getItem('token');
-      //   },
-      //   headers: { "X-Super-Team": JSON.stringify(this.companyId) }
-      //   // headers: { "X-Super-Team": JSON.stringify(team.id) }
-      // };
-      // this.hubconnection = new signalR.HubConnectionBuilder()
-      //   .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
-      //   .withAutomaticReconnect()
-      //   .configureLogging(signalR.LogLevel.Information)
-      //   .build();
-      // this.hubconnection
-      //   .start()
-      //   .then(() => console.log('Connection started'))
-      //   .then(() => this.getConnectionId())
-      //   .catch((err) => console.log('Error while starting connection: ' + err));
-      // // }
+    // // this.flag = this.router.url.split('/')[1];
+    // // if(this.flag == 'all-inboxes'){
+    // let team = this.storage.retrive("nocompass", "O").local;
+    // const options: IHttpConnectionOptions = {
+    //   accessTokenFactory: () => {
+    //     return 'Bearer ' + localStorage.getItem('token');
+    //   },
+    //   headers: { "X-Super-Team": JSON.stringify(this.companyId) }
+    //   // headers: { "X-Super-Team": JSON.stringify(team.id) }
+    // };
+    // this.hubconnection = new signalR.HubConnectionBuilder()
+    //   .withUrl(this.SignalRCommonBaseUrl + 'ConnectionHub', options)
+    //   .withAutomaticReconnect()
+    //   .configureLogging(signalR.LogLevel.Information)
+    //   .build();
+    // this.hubconnection
+    //   .start()
+    //   .then(() => console.log('Connection started'))
+    //   .then(() => this.getConnectionId())
+    //   .catch((err) => console.log('Error while starting connection: ' + err));
+    // // }
   }
 
   public updateListAndDetailDataListener = () => {
-    this.hubconnection.on('SendData', (data) => {
+    
+    this.hubconnection?.on('SendData', (data) => {
       if (
         data.conversationQueues != null &&
         data.conversationQueues.length > 0
       ) {
-        this.updateListService.sendList(data.conversationQueues);
+        data.conversationQueues.forEach((x: any) => {
+          if (this.temporaryListObject) {
+            const newTemporaryListObject = { ...this.temporaryListObject };
+            const newListObject = { ...x };
+            delete newTemporaryListObject['unrespondedCount'];
+            delete newListObject['unrespondedCount'];
+            if (
+              JSON.stringify(newTemporaryListObject) !==
+              JSON.stringify(newListObject)
+            ) {
+              this.temporaryListObject = x;
+              this.updateListService.sendList(data.conversationQueues);
+            }
+          } else {
+            this.temporaryListObject = x;
+            this.updateListService.sendList(data.conversationQueues);
+          }
+        });
       }
       if (data.signalRConversations != null) {
         this.updateCommentsService.sendComment(data.signalRConversations);
       }
       if (data.signalRDMConversations != null) {
-        this.updateMessagesService.sendMessage(data.signalRDMConversations);
+        data.signalRDMConversations.forEach((x: any) => {
+          if (this.temporaryDMObject) {
+            if (JSON.stringify(this.temporaryDMObject) !== JSON.stringify(x)) {
+              this.temporaryDMObject = x;
+              this.updateMessagesService.sendMessage(
+                data.signalRDMConversations
+              );
+            }
+          } else {
+            this.temporaryDMObject = x;
+            this.updateMessagesService.sendMessage(data.signalRDMConversations);
+          }
+        });
       }
       if (data.signalRPostConversations != null) {
-        this.updateCommentsService.sendComment(data.signalRPostConversations);
+        data.signalRPostConversations.forEach((x: any) => {
+          if (this.temporaryCommentObject) {
+            if (
+              JSON.stringify(this.temporaryCommentObject) !== JSON.stringify(x)
+            ) {
+              this.temporaryCommentObject = x;
+              this.updateCommentsService.sendComment(data.signalRPostConversations);
+            }
+          } else {
+            this.temporaryCommentObject = x;
+            this.updateCommentsService.sendComment(data.signalRPostConversations);
+          }
+        });
       }
     });
   };
-  // for new post
-  // public updatePostList=()=>{
-  //   this.hubconnection?.on('PostData',(data)=>{
-  //
-  //     // this.getnewPostService.sendnewPost(data)
 
-  //   })
-  // }
   public addTagDataListener = () => {
     this.hubconnection?.on('ApplyTags', (addTags) => {
       this.addTagService.sendTags(addTags);

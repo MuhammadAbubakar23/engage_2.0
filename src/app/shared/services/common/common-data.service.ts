@@ -432,8 +432,8 @@ export class CommonDataService {
     });
   }
 
-  GetAllocatedProfiles(params:string) {
-    return this.http.get(this.CommonBaseUrl + this.getAllocatedProfiles + '?Wings='+params);
+  GetAllocatedProfiles(wing:string,skillSlug:string) {
+    return this.http.get(this.CommonBaseUrl + this.getAllocatedProfiles + '?Wings='+wing+'&SkillSlug='+skillSlug);
   }
 
   // CreateMessageTemplate(body: any) {
@@ -555,10 +555,7 @@ export class CommonDataService {
     return this.http.post(this.consoleBaseUrl + this.addProfile, addProfile);
   }
   AttachFacebookPage(body: any) {
-    return this.http.post(
-      this.FacebookBaseUrl + this.attachFacebookPage,
-      body
-    );
+    return this.http.post(this.FacebookBaseUrl + this.attachFacebookPage, body);
   }
 
   SignOut() {

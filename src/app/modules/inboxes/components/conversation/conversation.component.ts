@@ -130,8 +130,8 @@ export class ConversationComponent implements OnInit {
 
     if (this.currentUrl.split('/')[2] == 'assigned_to_me') {
       this.SpinnerService.show();
-
-      this.commondata.GetAllocatedProfiles(this.wings).subscribe(
+      var skillSlug = localStorage.getItem('skillSlug') || ''
+      this.commondata.GetAllocatedProfiles(this.wings, skillSlug).subscribe(
         (res: any) => {
           this.SpinnerService.hide();
           this.ConversationList = res;
@@ -278,7 +278,34 @@ export class ConversationComponent implements OnInit {
     
     
     this.flag = this.currentUrl.split('/')[2];
-    this.platform = this.currentUrl.split('/')[3];
+    // this.platform = this.currentUrl.split('/')[3];
+    
+    if(this.currentUrl.toLowerCase().includes('facebook')){
+      this.platform = 'Facebook'
+    } else if(this.currentUrl.toLowerCase().includes('instagram')){
+      this.platform = 'Instagram'
+    } else if(this.currentUrl.toLowerCase().includes('twitter')){
+      this.platform = 'Twitter'
+    } else if(this.currentUrl.toLowerCase().includes('linkedin')){
+      this.platform = 'LinkedIn'
+    } else if(this.currentUrl.toLowerCase().includes('youtube')){
+      this.platform = 'Youtube'
+    } else if(this.currentUrl.toLowerCase().includes('whatsapp')){
+      this.platform = 'WhatsApp'
+    } else if(this.currentUrl.toLowerCase().includes('sms')){
+      this.platform = 'SMS'
+    } else if(this.currentUrl.toLowerCase().includes('webchat')){
+      this.platform = 'WebChat'
+    } else if(this.currentUrl.toLowerCase().includes('gmail')){
+      this.platform = 'Gmail'
+    } else if(this.currentUrl.toLowerCase().includes('outlook')){
+      this.platform = 'Outlook'
+    } else if(this.currentUrl.toLowerCase().includes('playstore')){
+      this.platform = 'PlayStore'
+    } else if(this.currentUrl.toLowerCase().includes('all')){
+      this.platform = "all"
+    }
+    
     // }
 
     if (this.searchForm.value.dateWithin == '1 day') {
@@ -369,10 +396,22 @@ export class ConversationComponent implements OnInit {
       this.toDate == undefined &&
       (this.flag == 'completed' || this.flag == 'sent')
     ) {
-      this.fromDate =
-        this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T00:00:00.000Z';
+      // 1 day
+      // this.fromDate =
+      //   this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T00:00:00.000Z';
+      // this.toDate =
+      //   this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+
+      // 30 days
+      let currentDate = new Date();
+      let prevDate = currentDate.setDate(currentDate.getDate() - 30);
+      const fromDate =
+        this.datePipe.transform(prevDate, 'YYYY-MM-dd') + 'T00:00:00.000Z';
+      this.fromDate = fromDate;
+
       this.toDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
+
     }
     // else if ((this.searchForm.value.fromDate != null && this.searchForm.value.toDate != null) && (this.fromDate != undefined && this.toDate != undefined) && (this.flag == 'completed' || this.flag == 'sent')) {
     //   this.fromDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T00:00:00.000Z';
@@ -430,9 +469,9 @@ export class ConversationComponent implements OnInit {
         // for followTotalCounts
 
         res?.List?.forEach((x: any) => {
-          if (x.follow_Up_Status !== null) {
-            this.sendCount.sendtotalCount(res.TotalCount);
-          }
+          // if (x.follow_Up_Status !== null) {
+          //   this.sendCount.sendtotalCount(res.TotalCount);
+          // }
           if(x.isVerified==true){
             this.isverifiedAccount=true
           }
@@ -646,24 +685,27 @@ export class ConversationComponent implements OnInit {
     }
   }
   updateConversationList(newMsg: any) {
-    const index = this.ConversationList.findIndex(
-      (obj: any) => obj.user === newMsg.user
-    );
-    this.listingDto = newMsg;
-    if (index >= 0) {
-      const main = this.ConversationList[index];
-      this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-      this.ConversationList[index] = this.listingDto;
-    } else {
-      this.ConversationList.unshift(this.listingDto);
-      if (this.ConversationList.length > this.pageSize) {
-        this.ConversationList.pop();
-        this.TotalUnresponded++;
-      } else if (this.ConversationList.length <= this.pageSize) {
-        this.TotalUnresponded++;
-        this.from++;
+    
+    var openedContentType = localStorage.getItem('contentType')
+    if(openedContentType == newMsg.postType){
+      const index = this.ConversationList.findIndex((obj: any) => obj.user === newMsg.user && obj.postType === newMsg.postType);
+      this.listingDto = newMsg;
+      if (index >= 0) {
+        const main = this.ConversationList[index];
+        this.listingDto.unrespondedCount = main.unrespondedCount + 1;
+        this.ConversationList[index] = this.listingDto;
+      } else {
+        this.ConversationList.unshift(this.listingDto);
+        if (this.ConversationList.length > this.pageSize) {
+          this.ConversationList.pop();
+          this.TotalUnresponded++;
+        } else if (this.ConversationList.length <= this.pageSize) {
+          this.TotalUnresponded++;
+          this.from++;
+        }
       }
     }
+    
   }
 
   groupItemsByDate() {
@@ -764,7 +806,8 @@ export class ConversationComponent implements OnInit {
         profileId: profileId,
         agentIds: 'string',
         platform: platform,
-        wings: wing
+        wings: wing,
+        skillSlug: localStorage.getItem('skillSlug') || ''
       };
       this.SpinnerService.show();
       this.commondata.AssignQuerry(this.assignQuerryDto).subscribe(
@@ -1189,6 +1232,8 @@ export class ConversationComponent implements OnInit {
         tagName: tagName,
         type: type,
         platform: query.platform,
+        wings: this.getWing.wings,
+        skillSlug: localStorage.getItem('skillSlug')
       };
       this.itemsToBeUpdated.push(obj);
     });
@@ -1210,6 +1255,7 @@ export class ConversationComponent implements OnInit {
         tagName: tagName,
         type: type,
         platform: query.platform,
+        wings: this.getWing.wings,
       };
       this.itemsToBeUpdated.push(obj);
     });

@@ -433,7 +433,7 @@ export class PlaystoreComponent implements OnInit {
             this.PlayStoreReviews = res.List?.dm;
             this.userInformation = res.List?.user;
             this.userInfoService.shareUserInformation(res.List.user);
-            this.appName = res.List?.profile.page_Name;
+            this.appName = res.List?.profile.clientAppName;
             this.totalUnrespondedReviewCountByCustomer = res.TotalCount;
             this.TotalMsgQueryCount = res.TotalQueryCount;
 
@@ -496,7 +496,7 @@ export class PlaystoreComponent implements OnInit {
           this.PlayStoreReviews = res.List?.dm;
           this.userInformation = res.List?.user;
           this.userInfoService.shareUserInformation(res.List.user);
-          this.appName = res.List?.profile.page_Name;
+          this.appName = res.List?.profile.clientAppName;
           this.TotalMsgQueryCount = res.TotalQueryCount;
           this.totalUnrespondedReviewCountByCustomer = res.TotalCount;
 
@@ -558,7 +558,7 @@ export class PlaystoreComponent implements OnInit {
             this.PlayStoreReviews = res.List?.dm;
             this.userInformation = res.List?.user;
             this.userInfoService.shareUserInformation(res.List.user);
-            this.appName = res.List?.profile.page_Name;
+            this.appName = res.List?.profile.clientAppName;
             this.TotalMsgQueryCount = res.TotalQueryCount;
             this.totalUnrespondedReviewCountByCustomer = res.TotalCount;
 

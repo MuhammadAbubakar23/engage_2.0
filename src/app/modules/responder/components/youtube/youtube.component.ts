@@ -314,7 +314,7 @@ export class YoutubeComponent implements OnInit {
             this.YoutubeData = res.List;
             this.userInformation = res.List[0].user;
             this.userInfoService.shareUserInformation(res.List[0].user);
-            this.pageName = this.YoutubeData[0]?.post.profile.page_Name;
+            this.pageName = this.YoutubeData[0]?.post.profile.clientAppName;
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
             this.TotalCmntQueryCount = res.TotalQueryCount;
 
@@ -395,7 +395,7 @@ export class YoutubeComponent implements OnInit {
           this.YoutubeData = res.List;
           this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
-          this.pageName = this.YoutubeData[0]?.post.profile.page_Name;
+          this.pageName = this.YoutubeData[0]?.post.profile.clientAppName;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
 
@@ -462,7 +462,7 @@ export class YoutubeComponent implements OnInit {
           this.YoutubeData = res.List;
           this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
-          this.pageName = this.YoutubeData[0]?.post.profile.page_Name;
+          this.pageName = this.YoutubeData[0]?.post.profile.clientAppName;
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
 

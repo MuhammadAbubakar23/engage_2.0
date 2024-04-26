@@ -121,8 +121,8 @@ export class CreateSkillsComponent implements OnInit {
     const data = {
       search: '',
       sorting: '',
-      pageNumber: 0,
-      pageSize: 0
+      pageNumber: 1,
+      pageSize: 100
     }
 
     this.commondata.GetAllRules(data).subscribe((res: any) => {

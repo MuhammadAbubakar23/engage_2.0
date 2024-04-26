@@ -177,7 +177,8 @@ export class SlaComponent implements OnInit {
      profileId: profileId,
      agentIds: 'string',
      platform: platform,
-     wings: ''
+     wings: '',
+     skillSlug: localStorage.getItem('skillSlug') || ''
    };
 
    this.commondata.AssignQuerry(this.assignQuerryDto).subscribe((res:any) =>{

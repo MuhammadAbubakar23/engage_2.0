@@ -22,8 +22,8 @@ export const environment = {
   title: 'abc',
   clientNumber: '923112744502',
   InstaBaseUrl: 'https://insta.360scrm.com/api/',
-  // FbBaseUrl: 'https://face.360scrm.com/api/',
-  FbBaseUrl: 'https://nextsparklypen70.conveyor.cloud/api/',
+  FbBaseUrl: 'https://goodsagepencil74.conveyor.cloud/api/',
+  // FbBaseUrl: 'https://nextsparklypen70.conveyor.cloud/api/',
   YoutubeBaseUrl: 'https://tube.360scrm.com/api/',
   TwitterBaseUrl: 'https://tweet.360scrm.com/api/',
   EmailBaseUrl: 'https://mail.360scrm.com/api/',
@@ -31,7 +31,6 @@ export const environment = {
   // WhatsappBaseUrl: 'https://whats.360scrm.com/api/',
   WhatsappBaseUrl: 'https://waservice.enteract.live/api/',
   WebChatBaseUrl: 'https://chat.360scrm.com/api/',
-
 
   KelisteningBaseUrl: 'https://listen.enteract.live/backend/api/',
   KemediaBaseUrl: 'https://kemedia.360scrm.com/api/',
@@ -49,7 +48,6 @@ export const environment = {
   // LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
   // botBaseUrl:'',
 
-
   // For Jazz
   // IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
   // CommonBaseUrl: 'https://common.jazz.com.pk:8080/api/',
@@ -59,7 +57,7 @@ export const environment = {
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
   // LinkedInBaseUrl:'',
-  
+
   // For Total Parco
   // IdentityBaseUrl: 'https://tt_identity.enteract.live/api/',
   // CommonBaseUrl: 'https://ttcommon.enteract.live/api/',
@@ -67,6 +65,7 @@ export const environment = {
   // consoleBaseUrl: '',
   // ServiceBaseUrl: '',
   //  ProfileBaseUrl: '',
+  //  botBaseUrl:'',
 
   // old Tppl
   // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api/',
@@ -82,7 +81,6 @@ export const environment = {
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
   // ProfileBaseUrl: '',
 
-
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
   // CommonBaseUrl: 'https://bzcommon.enteract.live/api/',
@@ -92,7 +90,7 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-  //   LinkedInBaseUrl:'',
+    // LinkedInBaseUrl:'',
 
   // For Jazz Rox
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
@@ -102,7 +100,7 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-  //  LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
+  // LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
 
   //for statging / Internal :companyId 650
   IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
@@ -112,14 +110,14 @@ export const environment = {
   ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   consoleBaseUrl: 'https://conrox.enteract.app/api/',
   botBaseUrl: 'https://bot-engage.enteract.app/api/',
-  LinkedInBaseUrl:'',
-  
+  LinkedInBaseUrl: '',
+
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
   // for testing purpose
   // consoleBaseUrl: 'http://10.111.11.93:45455/api/',
-  //  consoleBaseUrl: '',
+  // consoleBaseUrl: '',
 
   links: {
     identity: {
@@ -150,7 +148,7 @@ export const environment = {
       GetUserById: 'Users/GetById/',
       // For console skill setup
       channels: 'Console/Properties/Channel/Tree/0',
-      consoleChannls:'Channels/GetChannelsTree',
+      consoleChannls: 'Channels/GetChannelsTree',
       routing: 'Console/Properties/routing/Tree/0',
       deleteRoles: 'Permissions/Delete',
       ////// Later Align in Console/////

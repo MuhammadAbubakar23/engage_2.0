@@ -516,7 +516,7 @@ export class ChannelComponent implements OnInit {
             this.userInfoService.shareUserInformation(res.List[0].user);
             this.TotalCmntQueryCount = res.TotalQueryCount;
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-            // this.pageName = this.ChannelCommentsOrTweets[0]?.post.profile.page_Name;
+            // this.pageName = this.ChannelCommentsOrTweets[0]?.post.profile.clientAppName;
 
             this.commentsArray = [];
 
@@ -578,7 +578,7 @@ export class ChannelComponent implements OnInit {
           this.TotalCmntQueryCount = res.TotalQueryCount;
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-          // this.pageName = this.ChannelCommentsOrTweets[0]?.post.profile.page_Name;
+          // this.pageName = this.ChannelCommentsOrTweets[0]?.post.profile.clientAppName;
 
           this.commentsArray = [];
 
@@ -648,7 +648,7 @@ export class ChannelComponent implements OnInit {
             // this.headerCountService.shareUnresponedCount(res.TotalCount);
             this.TotalCmntQueryCount = res.TotalQueryCount;
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
-            // this.pageName = this.ChannelCommentsOrTweets[0]?.post.profile.page_Name;
+            // this.pageName = this.ChannelCommentsOrTweets[0]?.post.profile.clientAppName;
 
             this.commentsArray = [];
 
@@ -720,7 +720,7 @@ export class ChannelComponent implements OnInit {
             this.userInfo = res.List?.user;
 
             this.userInfoService.shareUserInformation(res.List.user);
-            // this.pageName = res.List?.profile.page_Name;
+            // this.pageName = res.List?.profile.clientAppName;
             this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
             this.TotalMsgQueryCount = res.TotalQueryCount;
 
@@ -796,7 +796,7 @@ export class ChannelComponent implements OnInit {
           this.ChannelMessages = res.List?.dm;
           this.userInfoService.shareUserInformation(res.List.user);
           this.userInfo = res.List?.user;
-          // this.pageName = res.List?.profile.page_Name;
+          // this.pageName = res.List?.profile.clientAppName;
           this.TotalMsgQueryCount = res.TotalQueryCount;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 
@@ -868,7 +868,7 @@ export class ChannelComponent implements OnInit {
             this.userInfoService.shareUserInformation(res.List.user);
             // this.headerCountService.shareUnresponedCount(res.TotalCount);
             this.userInfo = res.List?.user;
-            // this.pageName = res.List?.profile.page_Name;
+            // this.pageName = res.List?.profile.clientAppName;
             this.TotalMsgQueryCount = res.TotalQueryCount;
             this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
 

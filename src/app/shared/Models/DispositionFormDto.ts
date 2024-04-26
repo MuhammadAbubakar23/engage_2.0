@@ -14,4 +14,5 @@ export class DispositionFormDto {
     plateFrom: string = '';
     userId: number = 0;
     companyId:number = 0;
+    LastQueryId:number=0;
   }

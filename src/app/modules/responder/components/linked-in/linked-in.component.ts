@@ -377,7 +377,7 @@ export class LinkedInComponent implements OnInit {
           this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.TotalCmntQueryCount = res.TotalQueryCount;
-          this.pageName = this.LinkedInData[0].post.profile.page_Name;
+          this.pageName = this.LinkedInData[0].post.profile.clientAppName;
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
 
@@ -434,7 +434,7 @@ export class LinkedInComponent implements OnInit {
       this.commondata.GetSlaDetail(this.filterDto).subscribe((res: any) => {
         if (Object.keys(res).length > 0) {
         this.LinkedInData = res.List;
-        this.pageName = this.LinkedInData[0].post.profile.page_Name;
+        this.pageName = this.LinkedInData[0].post.profile.clientAppName;
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.userInformation = res.List[0].user;
@@ -491,14 +491,14 @@ export class LinkedInComponent implements OnInit {
       };
       this.commondata.GetChannelConversationDetail(this.filterDto).subscribe((res: any) => {
         this.LinkedInData = res.List;
-        this.pageName = this.LinkedInData[0].post.profile.page_Name;
+        this.pageName = this.LinkedInData[0].post.profile.clientAppName;
 
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.TotalCmntQueryCount = res.TotalQueryCount;
           this.commentsArray = []
-
+          localStorage.setItem('lastQueryId',this.LinkedInData[0].comments[0].id)
           this.LinkedInData.forEach((item:any) => {
             this.commentsArray = []
             item.comments.forEach((cmnt:any) => {

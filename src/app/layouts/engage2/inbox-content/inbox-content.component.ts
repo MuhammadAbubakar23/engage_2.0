@@ -68,6 +68,7 @@ export class InboxContentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    
     const currentUrl = this.router.url;
 
     if (currentUrl.includes('responder')) {

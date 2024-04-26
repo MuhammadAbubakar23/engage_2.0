@@ -75,10 +75,10 @@ export class InteractionReportComponent implements OnInit {
   preAveragePercentage: number = 0;
   totalInteractionCount: any = 0;
   CSATGraph: any;
-  baseUrl:any;
+  baseUrl: any;
   searchText: string = '';
   totalAgents = [{ id: '', name: '', isSelected: false }];
-  totalAgentsEmail=[{ email: '', name: '', isSelected: false }];
+  totalAgentsEmail = [{ email: '', name: '', isSelected: false }];
   AgentIds: any[] = [];
   selectedTagBy: string = '';
   constructor(
@@ -87,11 +87,11 @@ export class InteractionReportComponent implements OnInit {
     private SpinnerService: NgxSpinnerService,
     private cdr: ChangeDetectorRef,
     private datePipe: DatePipe
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.baseUrl=window.location.pathname.split('/')
-    console.log(this.baseUrl)
+    this.baseUrl = window.location.pathname.split('/');
+    console.log(this.baseUrl);
 
     const newObj = {
       title: 'Interaction Report',
@@ -155,33 +155,33 @@ export class InteractionReportComponent implements OnInit {
       return (value / 1000000000).toFixed(1) + ' B';
     }
   }
-  averageArray:any[]=[]
+  averageArray: any[] = [];
   calculateAverageTime(agentPerformance: any[], field: string) {
     let totalSeconds = 0;
     for (const agent of agentPerformance) {
-      
-      if(agent.averageTime !=="00:00:00" && agent.maximumTime !=="00:00:00"){
+      if (
+        agent.averageTime !== '00:00:00' &&
+        agent.maximumTime !== '00:00:00'
+      ) {
         totalSeconds += this.timeToSeconds(agent[field]);
-       
       }
 
-      agentPerformance =agentPerformance.filter((item:any)=>{
-       
-          return item.averageTime !=="00:00:00" && item.maximumTime !=="00:00:00"
-        
-      })
+      agentPerformance = agentPerformance.filter((item: any) => {
+        return (
+          item.averageTime !== '00:00:00' && item.maximumTime !== '00:00:00'
+        );
+      });
     }
     const averageSeconds = totalSeconds / agentPerformance.length;
     return this.secondsToTime(averageSeconds);
   }
-  
+
   timeToSeconds(timeStr: string): number {
     const [hours, minutes, seconds] = timeStr.split(':').map(Number);
     return hours * 3600 + minutes * 60 + seconds;
   }
 
   secondsToTime(seconds: number): string {
-    
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = Math.floor(seconds % 60);
@@ -194,7 +194,6 @@ export class InteractionReportComponent implements OnInit {
     return num < 10 ? '0' + num : num.toString();
   }
   convertTimeToSeconds(timeString: any) {
-    
     let [hours, minutes, seconds] = timeString.split(':').map(Number);
     return hours * 3600 + minutes * 60 + seconds;
   }
@@ -212,7 +211,7 @@ export class InteractionReportComponent implements OnInit {
     } else {
       this.selectedChannel = channel;
     }
-    this.GetStatsInteractionReport();
+    // this.GetStatsInteractionReport();
   }
   mouseClickReset() {
     this.searchText = '';
@@ -221,7 +220,7 @@ export class InteractionReportComponent implements OnInit {
     this.commonData.GetUserList().subscribe(
       (response: any) => {
         this.totalAgents = response;
-        this.totalAgentsEmail=response
+        this.totalAgentsEmail = response;
         this.totalAgents.forEach((x: any) => {
           this.AgentIds.push(x.id);
         });
@@ -233,11 +232,11 @@ export class InteractionReportComponent implements OnInit {
     );
   }
 
-  GetStatsInteractionReport() {
-    let selectedTagByArray = this.totalAgents
-      .filter((item) => item.isSelected)
-      .map((item) => item.id);
+  selectedAgents() {
+    let selectedTagByArray = this.totalAgents.filter((item) => item.isSelected).map((item) => item.id);
     this.selectedTagBy = selectedTagByArray.toString();
+  }
+  GetStatsInteractionReport() {
     if (this.startDate == '' && this.endDate == '') {
       const today = new Date();
       const endDateTime = new Date(today);
@@ -285,12 +284,12 @@ export class InteractionReportComponent implements OnInit {
     this.averageResponseData = 0;
     this.preAveragePercentage = 0;
     this.PreviousTotalInteractionCount = 0;
-    this.finalAverage = 0
-    this.finalAverageMinimum = 0
-    this.finalAverageMaximum = 0
-    this.avgMinCaterTime = 0
-    this.avgMaxCaterTime = 0
-    this.avgResponseTimeSum = 0
+    this.finalAverage = 0;
+    this.finalAverageMinimum = 0;
+    this.finalAverageMaximum = 0;
+    this.avgMinCaterTime = 0;
+    this.avgMaxCaterTime = 0;
+    this.avgResponseTimeSum = 0;
     this.averageResponseRateSum = 0;
     this.totalInteractionCount = 0;
     this.sentimentDataPoints = [];
@@ -299,19 +298,16 @@ export class InteractionReportComponent implements OnInit {
     this.channelCountsArray = [];
     this.allDates = [];
     this.newArray = [];
-    
+
     this.commonData.GetInteractionReport(formData).subscribe((res: any) => {
-      
       this.SpinnerService.hide();
       this.getAllCSATData();
 
       this.interactionStats = res;
       this.data = res.agentPerformance;
 
-      
-      
       this.socialMediaData = res.plateFormWiseInteraction;
-      
+
       this.socialMediaData.forEach((x: any) => {
         this.inProgressCount += x.unRespondedCount;
         this.assignToMeCount += x.assignTomeCount;
@@ -384,14 +380,14 @@ export class InteractionReportComponent implements OnInit {
         this.avgResponseTimeSum = Math.abs(
           ((LastfinalAverageInSeconds - finalAverageInSeconds) /
             finalAverageInSeconds) *
-          100
+            100
         );
       }
       if (finalAverageInSeconds <= LastfinalAverageInSeconds) {
         this.avgResponseTimeSum = Math.abs(
           ((finalAverageInSeconds - LastfinalAverageInSeconds) /
             LastfinalAverageInSeconds) *
-          100
+            100
         );
       }
 
@@ -454,7 +450,7 @@ export class InteractionReportComponent implements OnInit {
       // this.interactionData.forEach((platform: any) => {
       //   this._legend.push(platform.plateForm);
       //   const platformName = platform.plateForm;
-      //   this.newArray = []; 
+      //   this.newArray = [];
       //   platform.dateWiseInteraction.forEach((interaction: any) => {
       //     const date = this.datePipe.transform(interaction.date, 'dd/MMM');
       //     if (!this.allDates.includes(date)) {
@@ -529,18 +525,18 @@ export class InteractionReportComponent implements OnInit {
   }
   resetEndDate() {
     if (this.endDate >= this.startDate) {
-      this.GetStatsInteractionReport();
+      // this.GetStatsInteractionReport();
     } else {
-      alert('EndDate is lessthen StartDate');
+      alert('EndDate is less then StartDate');
       this.endDate = '';
     }
   }
-  selectedTagByEmail:any
+  selectedTagByEmail: any;
   getAllCSATData() {
     let selectedTagByArray = this.totalAgentsEmail
-    .filter((item) => item.isSelected)
-    .map((item) => item.email);
-  this.selectedTagByEmail = selectedTagByArray.toString();
+      .filter((item) => item.isSelected)
+      .map((item) => item.email);
+    this.selectedTagByEmail = selectedTagByArray.toString();
     let obj = {
       fromDate: this.startDate,
       toDate: this.endDate,
@@ -550,34 +546,35 @@ export class InteractionReportComponent implements OnInit {
     this.csatArray = [];
     this.SpinnerService.show();
     this.cdr.detectChanges();
-    this.commonData.GetCSATReport(obj).subscribe((res: any) => {
-      this.SpinnerService.hide();
-      this.CSATobj = res;
-      if (
-        !this.csatArray.includes({
-          name:
-            'Very Satisfied' &&
-            'Unsatisfied' &&
-            'Satisfied' &&
-            'Not Satisfied' &&
-            'Neutral',
-        })
-      ) {
-        this.csatArray.push(
-          { value: this.CSATobj.verSatisfiedCount, name: 'Very Satisfied' },
-          { value: this.CSATobj.unsatisfiedCount, name: 'Unsatisfied' },
-          { value: this.CSATobj.satisfiedCount, name: 'Satisfied' },
-          { value: this.CSATobj.notSatisfiedCount, name: 'Not Satisfied' },
-          { value: this.CSATobj.neutralCount, name: 'Neutral' }
-        );
-      }
+    this.commonData.GetCSATReport(obj).subscribe(
+      (res: any) => {
+        this.SpinnerService.hide();
+        this.CSATobj = res;
+        if (
+          !this.csatArray.includes({
+            name:
+              'Very Satisfied' &&
+              'Unsatisfied' &&
+              'Satisfied' &&
+              'Not Satisfied' &&
+              'Neutral',
+          })
+        ) {
+          this.csatArray.push(
+            { value: this.CSATobj.verSatisfiedCount, name: 'Very Satisfied' },
+            { value: this.CSATobj.unsatisfiedCount, name: 'Unsatisfied' },
+            { value: this.CSATobj.satisfiedCount, name: 'Satisfied' },
+            { value: this.CSATobj.notSatisfiedCount, name: 'Not Satisfied' },
+            { value: this.CSATobj.neutralCount, name: 'Neutral' }
+          );
+        }
 
-      this.getCSATGraph();
-    },
-    
-    error=>{
-      this.SpinnerService.hide()
-    }
+        this.getCSATGraph();
+      },
+
+      (error) => {
+        this.SpinnerService.hide();
+      }
     );
   }
   interactionByDate() {
@@ -646,10 +643,10 @@ export class InteractionReportComponent implements OnInit {
             show: true,
             fontSize: 14,
             position: 'top', // Display label on top of each point
-            formatter: function(params:any) {
+            formatter: function (params: any) {
               return params.name + ': ' + params.value; // Display both name and value
-            }
-          }
+            },
+          },
           // emphasis: {
           //   itemStyle: {
           //     shadowBlur: 10,

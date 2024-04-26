@@ -341,6 +341,7 @@ export class ResponderHeaderComponent implements OnInit {
       agentIds: 'string',
       platform: platform,
       wings: this.wings,
+      skillSlug: localStorage.getItem('skillSlug') || ''
     };
 
     if (this.assignQuerryDto != null) {
@@ -878,7 +879,8 @@ export class ResponderHeaderComponent implements OnInit {
       } else {
         var body= {
           "profileId": Number(ProfileId),
-          "wings": this.wings
+          "wings": this.wings,
+          "skillSlug": localStorage.getItem('skillSlug') || ''
         };
         this.commondata.RemoveAssignedQuery(body).subscribe((res: any) => {
           this.location.back();
@@ -939,6 +941,7 @@ export class ResponderHeaderComponent implements OnInit {
       profileId: this.customerProfileId,
       platform: platform,
       wings: this.wings,
+      skillSlug: localStorage.getItem('skillSlug') || ''
     };
   }
   assignToAnotherAgent() {

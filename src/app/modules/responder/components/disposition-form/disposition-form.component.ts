@@ -107,6 +107,7 @@ export class DispositionFormComponent implements OnInit {
           plateFrom: this.platform ||'{}',
           userId: this.agentId,
           companyId: this.companyId,
+          LastQueryId: Number(localStorage.getItem('lastQueryId'))
         }
     };
     const customerNumber=localStorage.getItem('storeOpenedId')

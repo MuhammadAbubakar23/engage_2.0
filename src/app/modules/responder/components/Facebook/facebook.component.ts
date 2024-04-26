@@ -327,13 +327,13 @@ export class FacebookComponent implements OnInit {
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
       .subscribe((res) => {
-        var assignedProfileId = Number(localStorage.getItem('assignedProfile'))
+        var assignedProfileId = Number(localStorage.getItem('assignedProfile'));
         if (
           this.flag == 'focused' ||
           this.flag == 'assigned_to_me' ||
           this.flag == 'follow_up'
         ) {
-          if(res.contentCount.profileId == assignedProfileId){
+          if (res.contentCount.profileId == assignedProfileId) {
             if (res.contentCount.contentType == 'FC') {
               this.totalUnrespondedCmntCountByCustomer =
                 res.contentCount.unrespondedCount;
@@ -343,7 +343,6 @@ export class FacebookComponent implements OnInit {
                 res.contentCount.unrespondedCount;
             }
           }
-          
         }
       });
 
@@ -405,12 +404,14 @@ export class FacebookComponent implements OnInit {
             // this.fbCmntReply = true;
             this.ConverstationDetailDto = res;
             this.FacebookData = this.ConverstationDetailDto.List;
-            
-            console.log('Facebook Data===.?',this.FacebookData)
+
+            console.log('Facebook Data===.?', this.FacebookData);
             this.userInformation = res.List[0].user;
             this.userInfoService.shareUserInformation(res.List[0].user);
             this.TotalCmntQueryCount = res.TotalQueryCount;
-            this.pageName = this.FacebookData[0]?.post.profile.page_Name;
+            this.pageName = this.FacebookData[0]?.post.profile.clientAppName;
+            
+            localStorage.setItem('lastQueryId',this.FacebookData[0].comments[0].id)
 
             this.commentsArray = [];
 
@@ -439,12 +440,12 @@ export class FacebookComponent implements OnInit {
                     };
                   }
                 );
-               
-                item['groupedComments'].forEach((x:any)=>{
-                  
-                  const groupdispostion= x.items
-                  this.groupAndModifyData(groupdispostion)
-                })
+                console.log("groupedComments",item['groupedComments'])
+
+                // item['groupedComments'].forEach((x: any) => {
+                //   const groupdispostion = x.items;
+                //   this.groupAndModifyData(groupdispostion);
+                // });
               });
             });
 
@@ -483,7 +484,7 @@ export class FacebookComponent implements OnInit {
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalComments = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
-          this.pageName = this.FacebookData[0].post.profile.page_Name;
+          this.pageName = this.FacebookData[0].post.profile.clientAppName;
           this.commentsArray = [];
 
           this.FacebookData?.forEach((item: any) => {
@@ -509,15 +510,13 @@ export class FacebookComponent implements OnInit {
                     items: groupedItems[createdDate],
                   };
                 }
-                
               );
 
               // console.log('groupedComments ====>' , item['groupedComments'])
-              item['groupedComments'].forEach((x:any)=>{
-                
-                const groupdispostion= x.items
-                this.groupAndModifyData(groupdispostion)
-              })
+              item['groupedComments'].forEach((x: any) => {
+                const groupdispostion = x.items;
+                this.groupAndModifyData(groupdispostion);
+              });
             });
           });
 
@@ -535,7 +534,7 @@ export class FacebookComponent implements OnInit {
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
         isAttachment: false,
-        hasBlueTick:false,
+        hasBlueTick: false,
         queryType: this.queryType,
         text: '',
         flag: this.flag,
@@ -561,7 +560,7 @@ export class FacebookComponent implements OnInit {
             this.userInfoService.shareUserInformation(res.List[0].user);
             this.totalComments = res.TotalCount;
             this.TotalCmntQueryCount = res.TotalQueryCount;
-            this.pageName = this.FacebookData[0]?.post.profile.page_Name;
+            this.pageName = this.FacebookData[0]?.post.profile.clientAppName;
             this.commentsArray = [];
 
             this.FacebookData?.forEach((item: any) => {
@@ -589,11 +588,10 @@ export class FacebookComponent implements OnInit {
                     };
                   }
                 );
-                item['groupedComments'].forEach((x:any)=>{
-                  
-                  const groupdispostion= x.items
-                  this.groupAndModifyData(groupdispostion)
-                })
+                item['groupedComments'].forEach((x: any) => {
+                  const groupdispostion = x.items;
+                  this.groupAndModifyData(groupdispostion);
+                });
               });
             });
 
@@ -610,8 +608,8 @@ export class FacebookComponent implements OnInit {
 
   updatedComments: any;
   updatedMessages: any;
-  newPostComment: any[] = []
-  postIdArray:any[]=[]
+  newPostComment: any[] = [];
+  postIdArray: any[] = [];
   spinner1running = false;
   spinner2running = false;
   newcomment: any;
@@ -619,71 +617,70 @@ export class FacebookComponent implements OnInit {
     if (!this.id) {
       this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
+    const openedContentType = localStorage.getItem('contentType');
     if (this.updatedComments.length > 0) {
       this.updatedComments?.forEach((xyz: any) => {
         xyz.comments.forEach((abc: any) => {
-          if (this.id == xyz.user.userId) {
-            this.commentDto = {
-              id: xyz.user.id,
-              postId: xyz.post.postId,
-              commentId: abc.commentId,
-              message: abc.message,
-              contentType: abc.contentType,
-              userName: abc.userName || abc.userId,
-              queryStatus: abc.queryStatus,
-              createdDate: abc.createdDate,
-              fromUserProfilePic: abc.profilePic,
-              body: abc.body,
-              to: abc.toId,
-              cc: abc.cc,
-              bcc: abc.bcc,
-              attachments: abc.mediaAttachments,
-              replies: [],
-              sentiment: '',
-              tags: [],
-            };
-            this.FacebookData?.forEach((item: any) => {
-              this.postIdArray.push(item.post.postId)
-              this.commentsArray = [];
-              // this.newPostComment= [];
+          if (openedContentType == abc.contentType) {
+            if (this.id == xyz.user.userId) {
+              this.commentDto = {
+                id: abc.id,
+                postId: abc.postId,
+                commentId: abc.commentId,
+                message: abc.message,
+                contentType: abc.contentType,
+                userName: abc.userName || abc.userId,
+                queryStatus: abc.queryStatus,
+                createdDate: abc.createdDate,
+                fromUserProfilePic: abc.profilePic,
+                body: abc.body,
+                to: abc.toId,
+                cc: abc.cc,
+                bcc: abc.bcc,
+                attachments: abc.mediaAttachments,
+                replies: [],
+                sentiment: '',
+                tags: [],
+              };
               
-              if (this.postIdArray.includes(xyz.post.postId)) {
+              localStorage.setItem('lastQueryId',this.commentDto.id?.toString()||'')
+              this.FacebookData?.forEach((item: any) => {
+                this.postIdArray.push(item.post.postId);
+                this.commentsArray = [];
+                // this.newPostComment= [];
 
-                item.comments.push(this.commentDto);
-                item.comments.forEach((cmnt: any) => {
-                  this.commentsArray.push(cmnt);
-                });
+                if (this.postIdArray.includes(xyz.post.postId)) {
+                  item.comments.push(this.commentDto);
+                  item.comments.forEach((cmnt: any) => {
+                    this.commentsArray.push(cmnt);
+                  });
 
-                let groupedItems = this.commentsArray.reduce(
-                  (acc: any, item: any) => {
-                    const date = item.createdDate?.split('T')[0];
-                    if (!acc[date]) {
-                      acc[date] = [];
+                  let groupedItems = this.commentsArray.reduce(
+                    (acc: any, item: any) => {
+                      const date = item.createdDate?.split('T')[0];
+                      if (!acc[date]) {
+                        acc[date] = [];
+                      }
+                      acc[date].push(item);
+                      return acc;
+                    },
+                    {}
+                  );
+
+                  item['groupedComments'] = Object.keys(groupedItems).map(
+                    (createdDate) => {
+                      return {
+                        createdDate,
+                        items: groupedItems[createdDate],
+                      };
                     }
-                    acc[date].push(item);
-                    return acc;
-                  },
-                  {}
-                );
-
-                item['groupedComments'] = Object.keys(groupedItems).map(
-                  (createdDate) => {
-                    return {
-                      createdDate,
-                      items: groupedItems[createdDate],
-                    };
-                  }
-                );
-              }
-              // for new post
-              else {
-                
-                if ( !this.postIdArray.includes(xyz.post.postId)) {
-                  
-                  this.FacebookNewpost.forEach((x: any) => {
-       
+                  );
+                }
+                // for new post
+                else {
+                  if (!this.postIdArray.includes(xyz.post.postId)) {
+                    this.FacebookNewpost.forEach((x: any) => {
                       x.comments.forEach((z: any) => {
-
                         this.newpostcommentDto = {
                           id: z.id,
                           postId: x.post.postId,
@@ -703,15 +700,24 @@ export class FacebookComponent implements OnInit {
                           sentiment: '',
                           tags: z.tags,
                         };
-                      })
-                      if (!this.newPostComment.find(comment => comment.post.postId === x.post.postId)) {
+                      });
+                      if (
+                        !this.newPostComment.find(
+                          (comment) => comment.post.postId === x.post.postId
+                        )
+                      ) {
                         this.newPostComment.push(x);
                       }
-                      this.fbnewCmntReply = true
+                      this.fbnewCmntReply = true;
                       this.newPostComment.forEach((item: any) => {
                         this.commentsArray = [];
                         if (item.post.postId == x.post.postId) {
-                          if (!item.comments.find((cmnt: any) => cmnt.id === this.newpostcommentDto.id)) {
+                          if (
+                            !item.comments.find(
+                              (cmnt: any) =>
+                                cmnt.id === this.newpostcommentDto.id
+                            )
+                          ) {
                             item.comments.push(this.newpostcommentDto);
                           }
                           item.comments.forEach((cmnt: any) => {
@@ -730,26 +736,24 @@ export class FacebookComponent implements OnInit {
                             },
                             {}
                           );
-  
-                          item['groupedComments'] = Object.keys(groupedItems).map(
-                            (createdDate) => {
-                              return {
-                                createdDate,
-                                items: groupedItems[createdDate],
-                              };
-                            }
-                          );
-                        }
-                      })
-                 
-                    }
-                  );
 
+                          item['groupedComments'] = Object.keys(
+                            groupedItems
+                          ).map((createdDate) => {
+                            return {
+                              createdDate,
+                              items: groupedItems[createdDate],
+                            };
+                          });
+                        }
+                      });
+                    });
+                  }
                 }
-              }
-            });
-            this.totalUnrespondedCmntCountByCustomer =
-              this.totalUnrespondedCmntCountByCustomer + 1;
+              });
+              this.totalUnrespondedCmntCountByCustomer =
+                this.totalUnrespondedCmntCountByCustomer + 1;
+            }
           }
         });
       });
@@ -762,49 +766,57 @@ export class FacebookComponent implements OnInit {
     if (!this.id) {
       this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
+    const openedContentType = localStorage.getItem('contentType');
     this.updatedMessages.forEach((xyz: any) => {
-      if (this.id == xyz.fromId) {
-        this.messageDto = {
-          id: xyz.id,
-          contentType: xyz.contentType,
-          queryStatus: xyz.queryStatus,
-          createdDate: xyz.createdDate,
-          attachments: xyz.attachments,
-          replies: [],
-          sentiment: '',
-          tags: [],
-          msgId: xyz.msgId,
-          fromId: xyz.fromId,
-          fromName: xyz.fromName,
-          fromProfilePic: xyz.fromProfilePic,
-          toId: xyz.toId,
-          toName: xyz.toName,
-          msgText: xyz.msgText,
-          agentId: '',
-          customerSocailProfileId: 0,
-          profileId: xyz.profileId,
-          profilePageId: xyz.profilePageId,
-        };
-        this.FacebookMessages.unshift(this.messageDto);
-        this.messagesArray.unshift(this.messageDto);
-
-        let groupedItems = this.messagesArray.reduce((acc: any, item: any) => {
-          const date = item.createdDate?.split('T')[0];
-          if (!acc[date]) {
-            acc[date] = [];
-          }
-          acc[date].push(item);
-          return acc;
-        }, {});
-
-        this.groupedMessages = Object.keys(groupedItems).map((createdDate) => {
-          return {
-            createdDate,
-            items: groupedItems[createdDate],
+      if (openedContentType == xyz.contentType) {
+        if (this.id == xyz.fromId) {
+          this.messageDto = {
+            id: xyz.id,
+            contentType: xyz.contentType,
+            queryStatus: xyz.queryStatus,
+            createdDate: xyz.createdDate,
+            attachments: xyz.attachments,
+            replies: [],
+            sentiment: '',
+            tags: [],
+            msgId: xyz.msgId,
+            fromId: xyz.fromId,
+            fromName: xyz.fromName,
+            fromProfilePic: xyz.fromProfilePic,
+            toId: xyz.toId,
+            toName: xyz.toName,
+            msgText: xyz.msgText,
+            agentId: '',
+            customerSocailProfileId: 0,
+            profileId: xyz.profileId,
+            profilePageId: xyz.profilePageId,
           };
-        });
-        this.totalUnrespondedMsgCountByCustomer =
-          this.totalUnrespondedMsgCountByCustomer + 1;
+          this.FacebookMessages.unshift(this.messageDto);
+          this.messagesArray.unshift(this.messageDto);
+
+          let groupedItems = this.messagesArray.reduce(
+            (acc: any, item: any) => {
+              const date = item.createdDate?.split('T')[0];
+              if (!acc[date]) {
+                acc[date] = [];
+              }
+              acc[date].push(item);
+              return acc;
+            },
+            {}
+          );
+
+          this.groupedMessages = Object.keys(groupedItems).map(
+            (createdDate) => {
+              return {
+                createdDate,
+                items: groupedItems[createdDate],
+              };
+            }
+          );
+          this.totalUnrespondedMsgCountByCustomer =
+            this.totalUnrespondedMsgCountByCustomer + 1;
+        }
       }
     });
     this.changeDetect.detectChanges();
@@ -983,7 +995,6 @@ export class FacebookComponent implements OnInit {
   }
 
   updateBulkQueryStatusDataListener() {
-    
     this.queryStatus.forEach((querry: any) => {
       if (querry.feedType == 'FC') {
         this.FacebookData?.forEach((post: any) => {
@@ -1063,7 +1074,7 @@ export class FacebookComponent implements OnInit {
         plateForm: 'Facebook',
         pageNumber: this.pageNumber,
         pageSize: this.pageSize,
-        hasBlueTick:false,
+        hasBlueTick: false,
         isAttachment: false,
         queryType: this.queryType,
         text: '',
@@ -1081,12 +1092,12 @@ export class FacebookComponent implements OnInit {
         .GetChannelMessageDetail(this.filterDto)
         .subscribe((res: any) => {
           if (Object.keys(res).length > 0) {
-             this.FacebookMessages = this.groupAndModifyData(res.List?.dm);
+            this.FacebookMessages = this.groupAndModifyData(res.List?.dm);
             // this.FacebookMessages=res.List.dm
             this.userInformation = res.List.user;
             this.profileInformation = res.List.profile;
             this.userInfoService.shareUserInformation(res.List.user);
-            this.pageName = res.List?.profile.page_Name;
+            this.pageName = res.List?.profile.clientAppName;
             this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
             this.TotalMsgQueryCount = res.TotalQueryCount;
 
@@ -1101,7 +1112,8 @@ export class FacebookComponent implements OnInit {
 
             this.messagesArray = [];
             this.groupedMessages = [];
-
+            
+            localStorage.setItem('lastQueryId',this.FacebookMessages[0].id)
             this.FacebookMessages.forEach((item: any) => {
               this.messagesArray.push(item);
               let groupedItems = this.messagesArray.reduce(
@@ -1156,12 +1168,12 @@ export class FacebookComponent implements OnInit {
       this.commondata.GetSlaDM(this.filterDto).subscribe((res: any) => {
         if (Object.keys(res).length > 0) {
           this.SpinnerService.hide();
-           this.FacebookMessages = this.groupAndModifyData(res.List?.dm);
+          this.FacebookMessages = this.groupAndModifyData(res.List?.dm);
           // this.FacebookMessages=res.List.dm
           this.userInformation = res.List.user;
           this.profileInformation = res.List.profile;
           this.userInfoService.shareUserInformation(res.List.user);
-          this.pageName = res.List?.profile.page_Name;
+          this.pageName = res.List?.profile.clientAppName;
           this.totalMessages = res.TotalCount;
           this.TotalMsgQueryCount = res.TotalQueryCount;
           this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
@@ -1236,7 +1248,7 @@ export class FacebookComponent implements OnInit {
             this.userInformation = res.List.user;
             this.profileInformation = res.List.profile;
             this.userInfoService.shareUserInformation(res.List.user);
-            this.pageName = res.List?.profile.page_Name;
+            this.pageName = res.List?.profile.clientAppName;
             this.totalMessages = res.TotalCount;
             this.TotalMsgQueryCount = res.TotalQueryCount;
             this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
@@ -1285,10 +1297,10 @@ export class FacebookComponent implements OnInit {
 
   groupAndModifyData(data: any[]) {
     // console.log('dispostion data ==>',data)
-    
+
     // Step 1: Group the data based on disposition.createdDate
     const groupedData: { [key: string]: any[] } = {};
-    data.forEach(item => {
+    data.forEach((item) => {
       const createdDate = item?.dispositions?.createdDate;
       if (!groupedData[createdDate]) {
         groupedData[createdDate] = [];
@@ -1506,6 +1518,7 @@ export class FacebookComponent implements OnInit {
   text: string = '';
 
   submitFacebookReply() {
+    
     if (this.commentId == 0) {
       this.reloadComponent('selectComment');
     } else {
@@ -2436,17 +2449,15 @@ export class FacebookComponent implements OnInit {
     const customerId = localStorage.getItem('storeOpenedId');
     const channel = localStorage.getItem('parent');
     let data = this.stor.retrive('main', 'O').local;
-      const email =data.originalUserName
+    const email = data.originalUserName;
     this.insertAtCaret(
       'https://keportal.enteract.live/survey/customer_satisfaction' +
-      '?channel=' +
-      channel +
-      '&customerId=' +
-      customerId+
-      '&email='+
-      email
-
-
+        '?channel=' +
+        channel +
+        '&customerId=' +
+        customerId +
+        '&email=' +
+        email
     );
   }
 }
