@@ -106,7 +106,9 @@ export const environment = {
   // // for rule
   faceRoxBaseUrl:'https://facerox.enteract.app/api/',
   botBaseUrl: 'https://bot-engage.enteract.app/api/',
-
+  botMoniteringBaseUrl:'http://3.1.47.150:5000/',
+  flowBot:'https://flowbot.enteract.app/',
+  intentBot:'https://intentBot.enteract.app/',
 
 
 
@@ -233,6 +235,12 @@ export const environment = {
       reasons: 'Order/GetMainReasons/',
       GetTicketStatuses: 'Order/GetTicketStatuses',
       subReasons: 'Order/GetSubReasons/',
+    },
+    bot:{
+      getAllChatBot:'bots/get_all',
+      addBot:'bots/create',
+      getbyid:'bots/get',
+      generateAugment:'generative/augment'
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',

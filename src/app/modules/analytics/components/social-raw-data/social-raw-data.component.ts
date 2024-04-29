@@ -44,16 +44,16 @@ export class SocialRawDataComponent implements OnInit {
     };
 
     this._hS.setHeader(newObj);
-    // this.currentDate = new Date();
-    // this.maxEndDate = this.currentDate.toISOString().split('T')[0];
-    const currentDate = new Date();
-    const oneDayBeforeCurrentDate = currentDate.setDate(
-      currentDate.getDate() - 1
-    );
-    this.maxEndDate = this.datePipe.transform(
-      oneDayBeforeCurrentDate,
-      'YYYY-MM-dd'
-    );
+    this.currentDate = new Date();
+    this.maxEndDate = this.currentDate.toISOString().split('T')[0];
+    // const currentDate = new Date();
+    // const oneDayBeforeCurrentDate = currentDate.setDate(
+    //   currentDate.getDate() - 1
+    // );
+    // this.maxEndDate = this.datePipe.transform(
+    //   oneDayBeforeCurrentDate,
+    //   'YYYY-MM-dd'
+    // );
 
     this.GetSocialRawData();
   }
@@ -69,30 +69,30 @@ export class SocialRawDataComponent implements OnInit {
     this.toDate = '';
   }
   GetSocialRawData() {
-    if (this.toDate == '' && this.fromDate == '') {
-      let currentDate = new Date();
-      let prevDate = currentDate.setDate(currentDate.getDate() - 5);
-      this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
-
-      this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
-      this.fromDate = this.maxEndDate;
-      this.toDate = this.maxEndDate;
-    } else if (this.fromDate != '' && this.toDate != '') {
-      this.fromDate = this.fromDate;
-      this.toDate = this.fromDate;
-    }
-    // to and from date filter 
-
-    // if (this.fromDate == '' && this.toDate == '') {
-    //   const today = this.currentDate;
-    //   this.toDate = this.datePipe.transform(today, 'YYYY-MM-dd') || '';
-
-    //   let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 5);
+    // if (this.toDate == '' && this.fromDate == '') {
+    //   let currentDate = new Date();
+    //   let prevDate = currentDate.setDate(currentDate.getDate() - 5);
     //   this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
+
+    //   this.toDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') || '';
+    //   this.fromDate = this.maxEndDate;
+    //   this.toDate = this.maxEndDate;
     // } else if (this.fromDate != '' && this.toDate != '') {
     //   this.fromDate = this.fromDate;
-    //   this.toDate = this.toDate;
+    //   this.toDate = this.fromDate;
     // }
+    // to and from date filter 
+
+    if (this.fromDate == '' && this.toDate == '') {
+      const today = this.currentDate;
+      this.toDate = this.datePipe.transform(today, 'YYYY-MM-dd') || '';
+
+      let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 5);
+      this.fromDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
+    } else if (this.fromDate != '' && this.toDate != '') {
+      this.fromDate = this.fromDate;
+      this.toDate = this.toDate;
+    }
     // const startDateObj = new Date(this.fromDate);
     // const endDateObj = new Date(this.toDate);
     // const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());

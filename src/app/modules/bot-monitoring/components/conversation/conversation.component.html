@@ -1,0 +1,165 @@
+<div class="content-box-wrapper d-flex w-100">
+    <div class="middle-content d-flex">
+
+        <div class="page-content-wrapper custom-scroll chatbot-main">
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="stories-tab-pane" role="tabpanel"
+                    aria-labelledby="stories-tab" tabindex="0">
+                    <div class="p-4">
+                        <div class="filter-toolbar mb-3 d-flex align-items-center justify-content-between mt-1">
+                            <ul class="list-inline pt-3 pb-1 m-0 d-flex align-items-center">
+                                <li class="list-inline-item">
+                                    <div class="icon-input">
+                                        <i class="fa-light fa-magnifying-glass"></i>
+                                        <input class="form-control" placeholder="Search.. ">
+                                    </div>
+                                </li>
+                                <li class="list-inline-item">
+                                    <input type="checkbox" class="btn-check" id="q&amp;a" autocomplete="off">
+                                    <label class="btn toggle-check-btn fw-bold" for="q&amp;a">
+                                        Q&amp;A</label>
+                                </li>
+                                <li class="list-inline-item">
+                                    <input type="checkbox" class="btn-check" id="rule" autocomplete="off">
+                                    <label class="btn toggle-check-btn fw-bold" for="rule">
+                                        Rule</label>
+                                </li>
+                                <li class="list-inline-item">
+                                    <input type="checkbox" class="btn-check" id="multiflow" autocomplete="off">
+                                    <label class="btn toggle-check-btn fw-bold" for="multiflow">
+                                        Multiflow</label>
+                                </li>
+                            </ul>
+
+                            <div class="text-end">
+                                <button class="btn btn-success me-2 dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Add New
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                            data-bs-target="#select-template">Add Story</a></li>
+                                    <li><a class="dropdown-item" href="#">Add Form</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row align-items-start">
+                            <div class="col-md-3">
+                                <div class="card zoom-in chatbotcard">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <span class="iconButton medium skyTransBg night mb-3">
+                                                <i class="fa-light fa-bezier-curve"></i>
+                                            </span>
+                                            <ul class="list-inline ms-auto">
+                                                <li class="list-inline-item" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" data-bs-title="Edit ">
+                                                    <span class="iconButton small iconHover">
+                                                        <i class="fa-light fa-edit"></i>
+                                                    </span>
+                                                </li>
+
+                                                <li class="list-inline-item" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" data-bs-title="Delete ">
+                                                    <span class="iconButton small iconHover">
+                                                        <i class="fa-light fa-trash radical"></i>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h6 class="m-0">Greet</h6>
+                                            <p class="coal">Custome</p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center justify-content-between mt-1">
+                                            <p class="m-0">Interactions : <span
+                                                    class="badge rounded-pill bg-primary">3</span></p>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch"
+                                                    id="flexSwitchCheckDefault">
+                                                <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card zoom-in chatbotcard">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <span class="iconButton medium skyTransBg night mb-3">
+                                                <i class="fa-light fa-bezier-curve"></i>
+                                            </span>
+                                            <ul class="list-inline ms-auto">
+                                                <li class="list-inline-item" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" data-bs-title="Edit ">
+                                                    <span class="iconButton small iconHover">
+                                                        <i class="fa-light fa-edit"></i>
+                                                    </span>
+                                                </li>
+
+                                                <li class="list-inline-item" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" data-bs-title="Delete ">
+                                                    <span class="iconButton small iconHover">
+                                                        <i class="fa-light fa-trash radical"></i>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h6 class="m-0">Greet</h6>
+                                            <p class="coal">Custome</p>
+                                        </div>
+
+                                        <div class="d-flex align-items-center justify-content-between mt-1">
+                                            <p class="m-0">Interactions : <span
+                                                    class="badge rounded-pill bg-primary">3</span></p>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" role="switch"
+                                                    id="flexSwitchCheckDefault2">
+                                                <label class="form-check-label" for="flexSwitchCheckDefault2"></label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card zoom-in chatbotcard addchatcard">
+                                    <div class="card-body">
+                                        <a href="#0" data-bs-toggle="modal" data-bs-target="#select-template"
+                                            class="sky d-flex flex-column align-items-center">
+                                            <i class="fa-light fa-plus"></i>
+                                            <span>Add New Story</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="forms-tab-pane" role="tabpanel" aria-labelledby="forms-tab" tabindex="0">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card zoom-in chatbotcard addchatcard">
+                                <div class="card-body">
+                                    <a href="#0" class="sky d-flex flex-column align-items-center">
+                                        <i class="fa-light fa-plus"></i>
+                                        <span>Add New Form</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

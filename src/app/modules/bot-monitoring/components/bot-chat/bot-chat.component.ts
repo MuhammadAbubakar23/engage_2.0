@@ -27,9 +27,9 @@ export class BotChatComponent implements OnInit {
     this.chatVisibilityService.removeActiveId({ 'customerPhone': this.chat[0].customer.phone, 'completed': this.chat[0].completed });
   }
   toggleMinimized(clickedItem: any): void {
-    clickedItem[0].isMinimized = !clickedItem[0].isMinimized;
-    debugger
-    this.minimizeToggle.emit(clickedItem);
+    
+    clickedItem[0]['isMinimized'] = !clickedItem[0].isMinimized;
+    this.minimizeToggle.emit(clickedItem)
   }
   // toggleChatVisibility(clickedItem: any) {
   //   console.log("ActiveConversation", this.activeConversation)
