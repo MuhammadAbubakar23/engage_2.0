@@ -144,7 +144,7 @@ export class BotMonitoringMenusComponent implements OnInit {
   }
 
   toggleChatVisibility(clickedItem: any) {
-debugger
+
     clickedItem.active = !clickedItem.active;
     this.chatVisibilityService.notifyNewChatId(clickedItem);
   }

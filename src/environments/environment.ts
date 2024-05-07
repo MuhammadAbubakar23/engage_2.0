@@ -240,7 +240,14 @@ export const environment = {
       getAllChatBot:'bots/get_all',
       addBot:'bots/create',
       getbyid:'bots/get',
-      generateAugment:'generative/augment'
+      generateAugment:'generative/augment',
+      addIntend:'intents/create',
+      getIntents:'intents/get',
+      getReponse:'responses/get',
+      addResponse:'responses/create',
+      intentDelete:'intents/delete',
+      responseDelete:'responses/delete',
+      deleteChatBot:'bots/deactivate'
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',

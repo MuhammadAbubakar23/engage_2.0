@@ -1,19 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'filter'
+  name: 'responsefilter'
 })
-export class FilterPipe implements PipeTransform {
+export class ResponsefilterPipe implements PipeTransform {
 
 
   transform(items: any, searchText: string): any[] {
-    debugger
+    
     if(!items) return [];
     if(!searchText) return items;
 
     searchText = searchText.toLowerCase();
-    return items.filter((x:any)=>x.name.toLowerCase().includes(searchText));
+    return items.filter((x:any)=>x.utterance.toLowerCase().includes(searchText));
     
   }
-  
+
 }

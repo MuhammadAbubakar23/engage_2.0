@@ -18,6 +18,8 @@ import { TagSlugConversionPipe } from './CustomPipes/tag-slug-conversion.pipe';
 import { PairsPipe } from './CustomPipes/pairs.pipe';
 import { InitialLettersPipe } from './CustomPipes/initial-letters.pipe';
 import { BreaklinePipe } from './CustomPipes/replacelineBreaks/breakline.pipe';
+import { ChatBotIntentFilterPipe } from './CustomPipes/charBotIntentSearchFilter/chat-bot-intent-filter.pipe';
+import { ResponsefilterPipe } from './CustomPipes/charBotIntentSearchFilter/responsefilter.pipe';
 
 
 @NgModule({
@@ -34,7 +36,9 @@ import { BreaklinePipe } from './CustomPipes/replacelineBreaks/breakline.pipe';
     TagSlugConversionPipe,
     PairsPipe,
     InitialLettersPipe,
-    BreaklinePipe
+    BreaklinePipe,
+    ChatBotIntentFilterPipe,
+    ResponsefilterPipe
     // TableResponsiveComponent
 
   ],
@@ -52,6 +56,8 @@ import { BreaklinePipe } from './CustomPipes/replacelineBreaks/breakline.pipe';
     FilterPipe,
     QuickReplySearchFilterPipe,
     SafePipe,
+    ChatBotIntentFilterPipe,
+    ResponsefilterPipe,
     NavigationBackDirective,
     SplitNameFromUrlPipe,
     GetFileTypeFromUrlPipe,

@@ -7,7 +7,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, F
 import { RouterModule } from '@angular/router';
 import { HeaderService } from 'src/app/services/HeaderService/header.service';
 import { environment } from 'src/environments/environment';
-
+import { ChatbotIdService } from 'src/app/services/chatBot_idService/chatbot-id.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-chat-bot',
   templateUrl: './chat-bot.component.html',
@@ -16,24 +17,24 @@ import { environment } from 'src/environments/environment';
   imports: [CommonModule, SharedModule, ReactiveFormsModule, RouterModule, FormsModule,],
 })
 export class ChatBotComponent implements OnInit {
-  chatbots: any[] = [
-    { bot_id: 1, name: 'Hi-Hello', progress: 25, owned: true },
-    { bot_id: 2, name: 'Hi-Hello', progress: 25, owned: true },
-  ]
-
+  chatbots: any[] = []
   chatbotForm: FormGroup;
-
-  constructor(private _botService: BotMonitoringService, private formBuilder: FormBuilder, private headerService: HeaderService) {
+  BotId: any
+  constructor(private _botService: BotMonitoringService,
+    private chatBotIdS: ChatbotIdService,
+    private route: Router,
+    private formBuilder: FormBuilder, private headerService: HeaderService) {
     this.chatbotForm = new FormGroup({
       name: new FormControl(''),
       timeout: new FormControl(''),
       botType: new FormControl('')
     });
   }
-
+  saveBotId(botId: any) {
+    localStorage.setItem('bot_id', botId);
+  }
   ngOnInit(): void {
     this.getChatBotList();
-    // this.initializeForm();
   }
 
   getChatBotList() {
@@ -43,13 +44,8 @@ export class ChatBotComponent implements OnInit {
     })
   }
   updatevalue(string: any) {
-
-    this.headerService.updateMessage(string);
-
+    this.headerService.updateMessage(string)
   }
-  // initializeForm(): void {
-
-  // }
   viewChatbotDetails(botId: number): void {
     this._botService.GetBotDetailsById(botId).subscribe((res: any) => {
       console.log('Chatbot Details: ', res);
@@ -57,9 +53,21 @@ export class ChatBotComponent implements OnInit {
       console.error('Error fetching chatbot details: ', error);
     });
   }
-  saveChatbot(): void {
-    
+  DeleteChat(botId: any) {
     debugger
+    const confirmation = confirm('Are you sure you want to delete this template?');
+    if (confirmation) {
+      const obj = new FormData();
+      obj.append('bot_id', botId);
+      this._botService.DeleteChatBot(botId).subscribe((res: any) => {
+        console.log(res);
+        this.chatbots = this.chatbots.filter((item: any) => item.bot_id !== botId);
+      }, (error: any) => {
+        console.error('Error deleting chatbot:', error);
+      });
+    }
+  }
+  saveChatbot(): void {
     if (this.chatbotForm.valid) {
       const formData = new FormData();
       formData.append('name', this.chatbotForm.value.name);
@@ -71,9 +79,6 @@ export class ChatBotComponent implements OnInit {
         case 'Flow Bot':
           endpoint = environment.flowBot;
           break;
-        // case 'Q/A Bot':
-        //     endpoint = environment.qaBot;
-        //     break;
         case 'Intent Bot':
           endpoint = environment.intentBot;
           break;
@@ -82,9 +87,15 @@ export class ChatBotComponent implements OnInit {
       }
 
       this._botService.Addbot(formData).subscribe((res: any) => {
-        window.location.reload();
-        console.log('Form Data:', formData);
-        console.log('Response:', res);
+        const newChatbot = {
+          bot_id: res.bot_id,
+          name: this.chatbotForm.value.name,
+          progress: 0,
+          owned: true
+        };
+        this.chatbots.push(newChatbot);
+        this.chatbotForm.reset();
+        console.log('New Chatbot Added:', newChatbot);
       }, (error: any) => {
         console.error('Error:', error);
       });
@@ -93,4 +104,9 @@ export class ChatBotComponent implements OnInit {
     }
   }
 
+  shareValue(value: any) {
+    localStorage.setItem('bot_id', value.bot_id)
+    this.chatBotIdS.setOption(value.bot_id)
+    this.route.navigateByUrl('/bot-monitoring/components')
+  }
 }

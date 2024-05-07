@@ -147,7 +147,7 @@ export class BotMoniteringChatComponent implements OnInit {
 
 
   onMinimizeToggle(minimizeItem: any) {
-    debugger
+    
     console.log("minimize toggle", minimizeItem, this.chats);
   }
   ngOnDestroy(): void {
