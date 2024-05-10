@@ -75,9 +75,6 @@
                             </query-builder>
                             <br />
                             <div>
-                              <!-- <textarea readonly class="output" style="height: 400px">{{
-                                query | json 
-                              }}</textarea > -->
                             </div>
                             <div>
 
@@ -102,9 +99,7 @@
               <div class="col-md-4">
                 <div class="f-icon-txt-wrapper d-flex align-items-center">
                   <button class="iconButton medium iconHover" id="deleteModalBtn">
-                    <!-- <i class="fal fa-redo-alt silver"></i> -->
                   </button>
-                  <!-- <p class="f-icon-txt coal ms-1 m-0">Reset to default</p> -->
                 </div>
               </div>
               <div class="col-md-8 justify-content-end d-flex">
@@ -125,3 +120,181 @@
     </div>
   </div>
 </div>
+<!-- <div class="content-box-wrapper d-flex w-100">
+  <div class="middle-content d-flex">
+
+    <div class="agent-page-main-content">
+      <div class="preferences console-body-wrapper footerheight" data-scrollbar="true" tabindex="-1"
+        style="overflow: auto; outline: none;">
+        <div class="scroll-content">
+          <div class="wider-container pt-3">
+
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <h5 class="m-0">Move based on sender</h5>
+              <div class="form-check form-switch">
+                <label class="form-check-label" for="flexSwitchCheckChecked">Rule is active</label>
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked="">
+              </div>
+            </div>
+            <div class="mb-2">
+              <input placeholder="Enter a name for this rule" class="form-control" name="">
+            </div>
+            <div class="mb-2">
+              <input placeholder="Description" class="form-control" name="">
+            </div>
+            <hr>
+            <div class="border rounded p-3 mb-3">
+              <div class="d-flex align-items-center g-3">
+                <span class="iconButton medium iconHover me-3">
+                  <i class="fa-light fa-user"></i>
+                </span>
+
+                <span class="mx-3 coal">Select Service</span>
+                <select name="" class="form-select w-50">
+                  <option value="">Facebook</option>
+                  <option value="">Instagram</option>
+                  <option value="">Twitter</option>
+
+                </select>
+              </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <h5 class="m-0"> When</h5>
+              <a class="sky">More Options</a>
+            </div>
+            <div class="mb-2">
+              <select name="" class="form-select">
+                <option value="">Inbound message is received</option>
+              </select>
+            </div>
+
+            <hr>
+            <div class="border rounded p-3 mb-3">
+              <div class="d-flex align-items-center g-3">
+                <span class="iconButton medium iconHover me-3">
+                  <i class="fa-light fa-inbox"></i>
+                </span>
+
+                <span class="mx-3 coal">Conversation is in</span>
+                <select name="" class="form-select w-50">
+                  <option value="">Select an inbox</option>
+                </select>
+              </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <h5 class="m-0"> if.</h5>
+              <a data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample"
+                class="sky" (click)="addMore()"><i class="fa-light fa-plus"></i> Add More</a>
+            </div>
+
+            <div *ngFor="let card of cards; let i = index" class="card mb-3">
+              <div class="card-body">
+                <div class="row align-items-center mb-3 mx-2">
+                  <span class="iconButton medium iconHover bg-light me-3 col-1">
+                    <i class="fa-light fa-user"></i>
+                  </span>
+                  <select name="" class="form-select col">
+                    <option value="">From</option>
+                  </select>
+                  <span class="mx-4 coal col-1">field</span>
+                  <select name="" class="form-select col">
+                    <option value="">Contains</option>
+                  </select>
+                </div>
+                <div class="mb-2">
+                  <input type="email" placeholder="Email Address" class="form-control" name="">
+                </div>
+              </div>
+            <h6 class="text-center mb-2 coal">AND</h6>
+
+              <button *ngIf="i > 0" (click)="removeCard(i)" class="btn btn-danger btn-sm">Cancel</button>
+            </div>
+
+
+            <hr>
+
+            <div class="addpanel collapse" id="collapseExample">
+              <h6 class="text-center mb-2 coal">AND</h6>
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row align-items-center mb-3 mx-2">
+                    <span class="iconButton medium iconHover bg-light me-3 col-1">
+                      <i class="fa-light fa-user"></i>
+                    </span>
+                    <select name="" class="form-select col">
+                      <option value="">From</option>
+                    </select>
+                    <span class="mx-4 coal col-1">field</span>
+                    <select name="" class="form-select col">
+                      <option value="">Contains</option>
+                    </select>
+                  </div>
+                  <div class="mb-2">
+                    <input type="email" placeholder="Email Address" class="form-control" name="">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <h5>Then.</h5>
+              <a class="sky"><i class="fa-light fa-plus"></i> Add More</a>
+            </div>
+
+            <div class="border rounded p-3 mb-3">
+              <div class="row align-items-center mx-2">
+                <span class="iconButton medium iconHover me-1 col-1">
+                  <i class="fa-light fa-arrow-right"></i>
+                </span>
+
+                <span class="me-3 coal col-2"> Move to</span>
+                <select name="" class="form-select col">
+                  <option value="">Select inbox</option>
+                </select>
+                <span class="mx-3 coal col-1"> and</span>
+                <select name="" class="form-select col">
+                  <option value="">Restrict Participants </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+              <label class="form-check-label" for="flexCheckDefault">
+                Stop processing other rules
+              </label>
+            </div>
+          </div>
+        </div>
+   
+      </div>
+      <footer class="footer">
+        <div class="ps-3 pe-3">
+          <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+            <div class="row w-100">
+              <div class="col-md-4">
+
+                <div class="f-icon-txt-wrapper d-flex align-items-center">
+                  <button class="iconButton medium iconHover" id="deleteModalBtn">
+                    <i class="fal fa-redo-alt silver"></i>
+                  </button>
+                  <p class="f-icon-txt coal ms-1 m-0">Reset to default</p>
+                </div>
+              </div>
+              <div class="col-md-8 justify-content-end d-flex">
+                <div class="buttons-wrap d-flex">
+                  <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4" data-bs-toggle="modal"
+                    data-bs-target=""> Cancel </button>
+                  <button type="button" class="btn btn-success ms-e f-saveBtn btn-large d-none"></button>
+                  <button type="button" class="btn skyBg ms-2 px-4 btn-medium saveBtn" data-bs-toggle="modal"
+                    data-bs-target="">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+</div> -->

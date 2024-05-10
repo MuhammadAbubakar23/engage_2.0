@@ -26,6 +26,7 @@ export class CommonDataService {
   KescrmBaseUrl = environment.KescrmBaseUrl
   WhatsappBaseUrl = environment.WhatsappBaseUrl
   faceRoxBaseUrl=environment.faceRoxBaseUrl
+  autoresponderbaseurl = environment.autoresponderbaseurl
   // KelisteningBaseUrl =environment.KelisteningBaseUrl;
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
@@ -194,6 +195,9 @@ export class CommonDataService {
   getChannels = environment.links.identity.channels;
   consoleChannel= environment.links.identity.consoleChannls
   deleteRoles = environment.links.identity.deleteRoles;
+  getautoResponedFB = environment.links.console.getautoResponedFB
+  addFbResponed =environment.links.console.addFbResponed
+  getCompanyPages = environment.links.console.getCompanyPages
 
   // teams
   // getAllTeams= environment.links.console.getAllTeams
@@ -335,7 +339,18 @@ export class CommonDataService {
       null
     );
   }
+// auto responder apis  
+getAutoRespondFB(body: any) {
+  const url = this.autoresponderbaseurl + this.getautoResponedFB + '?nativeIdentifier=' + body;
+  return this.http.post(url, null); 
+}
+AddFbResponed( body: any) {
+    return this.http.post(this.autoresponderbaseurl + this.addFbResponed , body);
+  }
+  GetCompanyPages(){
+    return this.http.get(this.autoresponderbaseurl + this.getCompanyPages);
 
+  }
   GetFbCommentStats(pageId: any, commentId: any) {
     return this.http.post(
       this.CommonBaseUrl +
@@ -642,11 +657,11 @@ export class CommonDataService {
     return this.http.get(this.consoleBaseUrl + this.getEntitiesRule);
   }
   GetEntitiesRules() {
-    return this.http.get(this.faceRoxBaseUrl + this.getEntitiesRules);
+    return this.http.get(this.autoresponderbaseurl + this.getEntitiesRules);
   }
   GetRuleEntitiesProperties(entity: string) {
     return this.http.get(
-      `${this.faceRoxBaseUrl}${this.getEntitiesProperties}?tableName=${entity}`
+      `${this.autoresponderbaseurl}${this.getEntitiesProperties}?tableName=${entity}`
     );
   }
   GetRuleEntityProperties(entity: string) {

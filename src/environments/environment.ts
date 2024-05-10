@@ -104,12 +104,12 @@ export const environment = {
   ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   consoleBaseUrl: 'https://conrox.enteract.app/api/',
   // // for rule
-  faceRoxBaseUrl:'https://facerox.enteract.app/api/',
+  faceRoxBaseUrl: 'https://facerox.enteract.app/api/',
   botBaseUrl: 'https://bot-engage.enteract.app/api/',
-  botMoniteringBaseUrl:'http://3.1.47.150:5000/',
-  flowBot:'https://flowbot.enteract.app/',
-  intentBot:'https://intentBot.enteract.app/',
-
+  botMoniteringBaseUrl: 'http://3.1.47.150:5000/',
+  flowBot: 'https://flowbot.enteract.app/',
+  intentBot: 'https://intentBot.enteract.app/',
+  autoresponderbaseurl: 'https://d387-203-135-1-210.ngrok-free.app/api/',
 
 
 
@@ -150,7 +150,7 @@ export const environment = {
       GetUserById: 'Users/GetById/',
       // For console skill setup
       channels: 'Console/Properties/Channel/Tree/0',
-      consoleChannls:'Channels/GetChannelsTree',
+      consoleChannls: 'Channels/GetChannelsTree',
       routing: 'Console/Properties/routing/Tree/0',
       deleteRoles: 'Permissions/Delete',
       ////// Later Align in Console/////
@@ -187,13 +187,13 @@ export const environment = {
       addSkill: 'Skill/Add',
       deleteSkill: 'Skill/Delete',
       getAllWing: 'Teams/GetAllWing',
-      
+
       // service Base rules 
-      getEntitiesRules:'EntityConfig/GetEntities',
-      getEntitiesProperties:'EntityConfig/GetEntitiesProperties',
-      addRule:'RuleBuilder/Add',
-      getFbRule:'RuleBuilder/GetAll',
-      softDeleteFb:'RuleBuilder/Delete',
+      getEntitiesRules: 'EntityConfigs/GetEntities',
+      getEntitiesProperties: 'EntityConfig/GetEntitiesProperties',
+      addRule: 'RuleBuilder/Add',
+      getFbRule: 'RuleBuilder/GetAll',
+      softDeleteFb: 'RuleBuilder/Delete',
       // getTagsAll: 'Tags/GetAll',
       getTagsByCompanyId: 'Tags/GetTagsByCompayId',
       updateSkill: 'Skill/Update',
@@ -209,7 +209,7 @@ export const environment = {
       deleteTags: 'Tags/Delete',
       getTagsByComayId: 'Tags/GetTagsByCompayId',
       getAllRules: 'Rules/GetAll',
-    getEntitiesRule: 'Rules/GetEntities',
+      getEntitiesRule: 'Rules/GetEntities',
       getRuleEntityProperties: 'Rules/GetEntitiesProperties/',
       getRuleById: 'Rules/GetById',
       addRules: 'Rules/Add',
@@ -222,9 +222,12 @@ export const environment = {
       addTeam: 'Teams/Add',
       updateTeam: 'Teams/Update',
       deleteTeam: 'Teams/Delete',
-      teamGetById:'Teams/FetchTeamById',
-      getTeamType:'Teams/GetTypes',
-      deleteMultipleTeams: 'Teams/DeleteMultiple'
+      teamGetById: 'Teams/FetchTeamById',
+      getTeamType: 'Teams/GetTypes',
+      deleteMultipleTeams: 'Teams/DeleteMultiple',
+      getautoResponedFB:'Configurations/GetCompanyTemplates',
+      addFbResponed:'Configurations/CreateTemplate',
+      getCompanyPages:'ProfileManagement/GetCompanyPages'
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',
@@ -236,18 +239,18 @@ export const environment = {
       GetTicketStatuses: 'Order/GetTicketStatuses',
       subReasons: 'Order/GetSubReasons/',
     },
-    bot:{
-      getAllChatBot:'bots/get_all',
-      addBot:'bots/create',
-      getbyid:'bots/get',
-      generateAugment:'generative/augment',
-      addIntend:'intents/create',
-      getIntents:'intents/get',
-      getReponse:'responses/get',
-      addResponse:'responses/create',
-      intentDelete:'intents/delete',
-      responseDelete:'responses/delete',
-      deleteChatBot:'bots/deactivate'
+    bot: {
+      getAllChatBot: 'bots/get_all',
+      addBot: 'bots/create',
+      getbyid: 'bots/get',
+      generateAugment: 'generative/augment',
+      addIntend: 'intents/create',
+      getIntents: 'intents/get',
+      getReponse: 'responses/get',
+      addResponse: 'responses/create',
+      intentDelete: 'intents/delete',
+      responseDelete: 'responses/delete',
+      deleteChatBot: 'bots/deactivate'
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',
@@ -300,7 +303,7 @@ export const environment = {
       hideUnhideMessage: 'Publisher/HideQuery',
       dispositionTags: 'Keyword/GetAllDisposition',
       removeAssignedQuery: 'Query/RemoveAssignQuery',
-      sessionClose:'Whatsapp/TerminateSupportSession',
+      sessionClose: 'Whatsapp/TerminateSupportSession',
       //Reports
       routeToAgents: 'Report/GetWhatsAppRouteToAgentReport',
       routeToAgentsCsv: 'Report/GetWhatsAppRouteAgentReportCSV',

@@ -81,6 +81,15 @@ export class AddRulesComponent implements OnInit {
     });
 
   }
+  cards: any[] = [];
+  addMore() {
+    this.cards.push({});
+  }
+  removeCard(index: number) {
+    if (index > 0) {
+      this.cards.splice(index, 1);
+    }
+  }
   processRules(rules: any[]) {
     rules?.forEach((rule: any) => {
       if (rule.rules) {
@@ -111,6 +120,7 @@ export class AddRulesComponent implements OnInit {
     //   this.entities = this.entities.filter(entity => entity === "DataOfChannels");
     // });
     // this.ruleId = this._route.snapshot.paramMap.get('id');
+    this.addMore();
   }
 
   services: string[] = ['Facebook', 'Instagram', 'Twitter', 'WhatsApp', 'DataOfChannels', 'Outlook'];
@@ -248,7 +258,7 @@ export class AddRulesComponent implements OnInit {
 
   }
   onClick() {
-    
+
     console.log("this.selectedRuleSet", this.selectedRuleSet)
     const ruleData = {
       "name": this.rulesForm.value['ruleName'],
