@@ -239,7 +239,7 @@ export class YoutubeComponent implements OnInit {
           bcc: xyz.bcc,
           attachments: xyz.mediaAttachments,
           replies: [],
-          sentiment: '',
+          sentiment: xyz.sentiment,
           tags: [],
         }
         this.YoutubeData.forEach((item: any) => {

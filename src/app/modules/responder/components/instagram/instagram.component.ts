@@ -332,7 +332,7 @@ export class InstagramComponent implements OnInit {
               bcc: abc.bcc,
               attachments: abc.mediaAttachments,
               replies: [],
-              sentiment: '',
+              sentiment: abc.sentiment,
               tags: [],
             };
 
@@ -576,8 +576,7 @@ export class InstagramComponent implements OnInit {
             this.SpinnerService.hide();
             this.spinner1running = false;
             this.InstagramData = res.List;
-            this.instagramBusinessAccountId =
-              res.List[0]?.post.profile?.instagramBusinessAccountId;
+            this.instagramBusinessAccountId = res.List[0]?.post?.profile?.instagramBusinessAccountId;
             this.userInformation = res.List[0].user;
             this.userInfoService.shareUserInformation(res.List[0].user);
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -650,7 +649,7 @@ export class InstagramComponent implements OnInit {
           this.spinner1running = false;
           this.InstagramData = res.List;
           this.instagramBusinessAccountId =
-            res.List[0]?.post.profile?.instagramBusinessAccountId;
+            res.List[0]?.post?.profile?.instagramBusinessAccountId;
           this.userInformation = res.List[0].user;
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -724,7 +723,7 @@ export class InstagramComponent implements OnInit {
             this.spinner1running = false;
             this.InstagramData = res.List;
             this.instagramBusinessAccountId =
-              res.List[0]?.post.profile?.instagramBusinessAccountId;
+              res.List[0]?.post?.profile?.instagramBusinessAccountId;
             this.userInformation = res.List[0].user;
             this.userInfoService.shareUserInformation(res.List[0].user);
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
@@ -1475,8 +1474,7 @@ export class InstagramComponent implements OnInit {
             this.SpinnerService.hide();
             this.InstagramMessages = res.List?.dm;
             this.userInformation = res.List.user;
-            this.instagramBusinessAccountId =
-              res.List?.profile?.instagramBusinessAccountId;
+            this.instagramBusinessAccountId = res.List?.profile?.instagramBusinessAccountId;
             this.userInfoService.shareUserInformation(res.List.user);
             this.TotalMsgQueryCount = res.TotalQueryCount;
             this.pageName = this.InstagramMessages[0]?.toName;
@@ -1698,9 +1696,7 @@ export class InstagramComponent implements OnInit {
     profilePageId: new UntypedFormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
     responseByName: new FormControl(this.ReplyDto.responseByName),
-    instagramBusinessAccountId: new FormControl(
-      this.ReplyDto.instagramBusinessAccountId
-    ),
+    instagramBusinessAccountId: new FormControl(this.ReplyDto.instagramBusinessAccountId),
     groupId: new FormControl(this.ReplyDto.groupId),
   });
 

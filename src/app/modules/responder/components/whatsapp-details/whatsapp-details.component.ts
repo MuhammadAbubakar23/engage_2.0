@@ -41,6 +41,7 @@ import { CommonDataService } from 'src/app/shared/services/common/common-data.se
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { TicketResponseService } from 'src/app/shared/services/ticketResponse/ticket-response.service';
 import { CompanyidService } from 'src/app/services/companyidService/companyid.service';
+import { isArray } from 'lodash';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 @Component({
@@ -82,8 +83,8 @@ export class WhatsappDetailsComponent implements OnInit {
   totalUnrespondedCmntCountByCustomer: number = 0;
   TagsList: any[] = [];
   getAppliedTagsList: any;
-  QuickReplies: any;
-  QuickRepliesForBazaar: any;
+  // QuickReplies: any;
+  quickRepliesList: any;
   storeComId: any;
   WhatsappMsgId: number = 0;
   agentId: string = '';
@@ -138,7 +139,7 @@ export class WhatsappDetailsComponent implements OnInit {
     private el: ElementRef,
     private renderer: Renderer2,
     private companyidServices: CompanyidService,
-    private getWing: GetWingsService,
+    private getWing : GetWingsService,
     private getRulesGroupIdsService: RulesGroupIdsService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
@@ -161,7 +162,6 @@ export class WhatsappDetailsComponent implements OnInit {
       contentType: new FormControl(this.ReplyDto.contentType),
       userProfileId: new FormControl(this.ReplyDto.userProfileId),
       responseByName: new FormControl(this.ReplyDto.responseByName),
-      groupId: new FormControl(this.ReplyDto.groupId),
     });
   }
   handleTextareaKeyDown(event: KeyboardEvent) {
@@ -225,8 +225,8 @@ export class WhatsappDetailsComponent implements OnInit {
 
     this.getWhatsappData();
     // this.getTagList();
-    this.quickReplyList();
-    this.quickRepliesForBazaar();
+    // this.quickReplyList();
+    this.quickRepliesGeneric();
 
     this.Subscription = this.addTagService.receiveTags().subscribe((res) => {
       this.addTags = res;
@@ -304,32 +304,37 @@ export class WhatsappDetailsComponent implements OnInit {
         if (this.id == xyz.userId) {
           this.commentDto = {
             id: xyz.id,
-            postId: xyz.postId,
-            commentId: xyz.commentId,
-            message: xyz.message,
-            contentType: xyz.contentType,
-            userName: xyz.userName || xyz.userId,
-            queryStatus: xyz.queryStatus,
-            createdDate: xyz.createdDate,
-            fromUserProfilePic: xyz.profilePic,
-            body: xyz.body,
-            to: xyz.toId,
-            cc: xyz.cc,
-            bcc: xyz.bcc,
-            attachments: xyz.mediaAttachments,
-            replies: [],
-            sentiment: '',
-            tags: [],
-            // fromId: xyz.fromId,
-            // fromName: xyz.fromName,
-            // fromProfilePic: xyz.fromProfilePic,
-            // toId: xyz.toId,
-            // toName: xyz.toName,
-            // msgText: xyz.msgText,
-            // agentId: xyz.agentId,
-            // customerSocailProfileId: xyz.agentId,
-            // profileId: xyz.profileId,
-            // profilePageId: xyz.profilePageId,
+                wings: xyz.wings,
+                postId: xyz.post.postId,
+                commentId: xyz.commentId,
+                message: xyz.message,
+                contentType: xyz.contentType,
+                userName: xyz.userName || xyz.userId,
+                queryStatus: xyz.queryStatus,
+                createdDate: xyz.createdDate,
+                insertionDate: xyz.insertionDate,
+                ticketId: xyz.ticketId,
+                fromUserProfilePic: xyz.fromUserProfilePic,
+                body: xyz.body,
+                sentimentValue: xyz.sentimentValue,
+                language: xyz.language,
+                isHide: xyz.isHide,
+                isLikedByAdmin: xyz.isLikedByAdmin,
+                channelId: xyz.channelId,
+                conversationId: xyz.conversationId,
+                attachmentUrl: xyz.attachmentUrl,
+                attachmentType: xyz.attachmentType,
+                sendTo: xyz.sendTo,
+                unrespondedCount: xyz.unrespondedCount,
+                attachments: xyz.attachments,
+                replies: xyz.replies,
+                sentiment: xyz.sentiment,
+                tags: xyz.tags,
+                to: xyz.to,
+                cc: xyz.cc,
+                bcc: xyz.bcc,
+                dispositions: xyz.dispositions,
+                signalRGroupName: xyz.signalRGroupName,
           };
           this.WhatsappData[0].comments.push(this.commentDto);
           this.commentsArray.push(this.commentDto);
@@ -400,6 +405,7 @@ export class WhatsappDetailsComponent implements OnInit {
             this.userInfoService.shareUserInformation(res.List[0].user);
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
             this.TotalCmntQueryCount = res.TotalQueryCount;
+            localStorage.setItem('lastQueryId',this.WhatsappData[0].id)
 
             this.WhatsappData?.forEach((msg: any) => {
               this.senderId = msg.comments[0].sendTo;
@@ -465,6 +471,7 @@ export class WhatsappDetailsComponent implements OnInit {
           this.userInfoService.shareUserInformation(res.List[0].user);
           this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
           this.TotalCmntQueryCount = res.TotalQueryCount;
+          localStorage.setItem('lastQueryId',this.WhatsappData[0].id)
 
           this.commentsArray = [];
           this.WhatsappData.forEach((item: any) => {
@@ -528,6 +535,7 @@ export class WhatsappDetailsComponent implements OnInit {
             this.userInfoService.shareUserInformation(res.List[0].user);
             this.totalUnrespondedCmntCountByCustomer = res.TotalCount;
             this.TotalCmntQueryCount = res.TotalQueryCount;
+            localStorage.setItem('lastQueryId',this.WhatsappData[0].id)
 
             this.commentsArray = [];
             this.WhatsappData.forEach((item: any) => {
@@ -600,8 +608,8 @@ export class WhatsappDetailsComponent implements OnInit {
     this.commondata.GetTagsList().subscribe((res: any) => {
       this.TagsList = res;
       this.TagsList.forEach((xyz: any) => {
-        xyz.keywordList.forEach((abc: any) => {
-          this.Keywords.push(abc);
+        xyz.keywordList.forEach((xyz: any) => {
+          this.Keywords.push(xyz);
         });
       });
     });
@@ -613,8 +621,8 @@ export class WhatsappDetailsComponent implements OnInit {
     this.insertTagsForFeedDto.type = 'Tag';
     this.insertTagsForFeedDto.platform = 'WhatsApp';
 
-    this.WhatsappData?.forEach((abc: any) => {
-      abc.comments.forEach((comment: any) => {
+    this.WhatsappData?.forEach((xyz: any) => {
+      xyz.comments.forEach((comment: any) => {
         if (comment.id == comId) {
           if (comment.tags.length == 0) {
             this.commondata
@@ -779,286 +787,96 @@ export class WhatsappDetailsComponent implements OnInit {
       });
   }
 
-  // abc :any;
   textWithHtmlTags: any;
-  sendQuickReply(value: any) {
-    var abc = this.QuickReplies.find((res: any) => res.value == value);
-    this.text = abc?.text + ' ';
-    this.insertAtCaret(this.text);
-  }
-  sendQuickReplyForBazaar(value: any) {
-    this.QuickRepliesForBazaar.forEach((abc: any) => {
-      abc.subReply.forEach((xyz: any) => {
-        var msg = xyz.subReply.find((res: any) => res.id == value);
-        if (msg != undefined) {
-          this.text = msg?.text + ' ';
+  sendQuickReplyGeneric(value: any) {
+      this.quickRepliesList.forEach((x: any) => {
+        if(x.subReply === null && x.id === value){
+          this.text = x?.text + ' ';
           this.insertAtCaret(this.text);
+        } else if(x.subReply){
+          this.nthLevel(x.subReply, value)
         }
+        
       });
-    });
   }
-
-  sendHardCodedQuickReply(value: any) {
-    let counter = 1;
-    var abc = { id: 0, text: '' };
-    this.QuickRepliesHardCoded.forEach((qr: any) => {
-      abc = qr.Message.find((msg: any) => msg.id == value);
-      if (abc != undefined) {
-        this.textWithHtmlTags = abc?.text + ' ';
-        this.text = abc?.text
-          .replace(/<\/p>/g, '\n') // Replace </p> with line breaks
-          .replace(/<\/ul>/g, '\n') // Replace </ul> with line breaks
-          .replace(/<\/ol>/g, '\n') // Replace </ol> with line breaks
-          .replace(/<\/li>/g, '\n') // Replace </li> with line breaks and bullets
-          .replace(/<li[^>]*>/g, () => {
-            // Replace <ol> opening tags with numbers
-            return '\n' + counter++ + '. ';
-          })
-          .replace(/<ul[^>]*>/g, '\n') // Remove <ul> opening tags
-          .replace(/<\/[ou]l>/g, '') // Remove </ul> and </ol> closing tags
-          .replace(/<\/?[^>]+(>|$)/g, ''); // Remove other HTML tags
+  nthLevel(replies: any[], value: any) {
+    replies.forEach((reply: any) => {
+      if (reply.subReply === null && reply.id === value) {
+        this.text = reply.text + ' ';
+        this.insertAtCaret(this.text);
+      } else if (reply.subReply) {
+        this.nthLevel(reply.subReply, value);
       }
     });
-    this.insertAtCaret(this.text);
-  }
+}
 
-  quickRepliesForBazaar() {
-    this.commondata.QuickReplyListForBazaarOnly().subscribe((res: any) => {
-      this.QuickRepliesForBazaar = res;
-    });
-  }
-
-  quickReplyList() {
+  quickRepliesGeneric() {
     this.commondata.QuickReplyList().subscribe((res: any) => {
-      this.QuickReplies = res;
+      this.quickRepliesList = res;
     });
   }
 
-  QuickRepliesHardCoded = [
-    {
-      value: 1,
-      text: 'Auto Response/Privacy acknowledgement',
-      Message: [
-        {
-          id: 100,
-          text: '<p>Dear Consumer, Welcome to Morinaga Pakistan. One of our representatives will be in touch with you soon.</p><p>Before proceeding, please confirm that you have read the Privacy Policy and accept the use of your personal data by Morinaga.</p>',
-        },
-      ],
-    },
-    {
-      value: 2,
-      text: 'Opening Greeting',
-      Message: [
-        {
-          id: 101,
-          text: 'Hello, Thank you for reaching out to us. How may I help you?',
-        },
-      ],
-    },
-    {
-      value: 3,
-      text: 'Help/Assist',
-      Message: [
-        {
-          id: 102,
-          text: "I'm here to assist you with any questions or issues you may have",
-        },
-      ],
-    },
-    {
-      value: 4,
-      text: 'Elaboration Concerns',
-      Message: [
-        {
-          id: 103,
-          text: 'Great question! Could you please elaborate a bit more for me to understand better?',
-        },
-        {
-          id: 104,
-          text: '<p>Could you please share your details?</p><p>Leave the rest to me.</p>',
-        },
-        {
-          id: 105,
-          text: "Please share your Phone number and I'll have this looked into.",
-        },
-        {
-          id: 106,
-          text: 'Please share your complaint number, so I can check your status.',
-        },
-      ],
-    },
-    {
-      value: 5,
-      text: 'Apologies',
-      Message: [
-        {
-          id: 107,
-          text: "We're sorry for the inconvenience, we assure you that we'll have this looked into immediately!",
-        },
-        {
-          id: 108,
-          text: 'We apologize for the inconvenience. To keep our customers satisfied, Morinaga Pakistan offers its best services, since we care a lot for our Consumer/Retailers. This time we are unable to fulfill your expectations, for which we feel so bad. Please give us another chance to make your experience better.',
-        },
-      ],
-    },
-    {
-      value: 6,
-      text: 'Ending Greeting',
-      Message: [
-        {
-          id: 109,
-          text: "Sincerely, thank you for your time and consideration. If you need any further assistance, please don't hesitate to contact us.",
-        },
-        {
-          id: 110,
-          text: 'Best regards, Fahad. If you have any more questions or require additional help, feel free to reach out at any time',
-        },
-      ],
-    },
-    {
-      value: 7,
-      text: 'Due Response/Idle Time',
-      Message: [
-        {
-          id: 111,
-          text: ' I  haven’t received any response from your end, if you are still available then please respond to us so we can proceed further.',
-        },
-      ],
-    },
-    {
-      value: 8,
-      text: 'Idle Ending  Greeting ',
-      Message: [
-        {
-          id: 112,
-          text: ' With apologies, haven’t received any response from your end. Still if you have any query, response us back, we are here for you. Our operational timings are 10:00 am to 06:00 pm ',
-        },
-      ],
-    },
-    {
-      value: 9,
-      text: 'Further questions',
-      Message: [
-        {
-          id: 113,
-          text: ' Feel free to share any further concerns, I d be glad to assist',
-        },
-      ],
-    },
-    {
-      value: 10,
-      text: 'Hold (1st attempt) ',
-      Message: [
-        {
-          id: 114,
-          text: 'Would you mind if I put you on hold for some time so that I can work on your request?',
-        },
-      ],
-    },
-    {
-      value: 11,
-      text: 'Hold (2nd attempt)',
-      Message: [
-        {
-          id: 115,
-          text: 'Can I please request you to hold for some more time as I am still working on your request to provide you with an appropriate answer?',
-        },
-      ],
-    },
-    {
-      value: 12,
-      text: ' Resuming from Hold',
-      Message: [
-        {
-          id: 116,
-          text: ' Thank you for waiting (and then representative will continue with the resolution).',
-        },
-      ],
-    },
-    {
-      value: 13,
-      text: 'Thank',
-      Message: [
-        {
-          id: 117,
-          text: 'Thank you for contacting us, it was great talking to you. Wish you an amazing day.',
-        },
-      ],
-    },
-    {
-      value: 14,
-      text: 'Take care',
-      Message: [
-        {
-          id: 118,
-          text: 'Thanks for being an awesome consumer and it was nice talking to you. Have an awesome day!',
-        },
-      ],
-    },
-    {
-      value: 15,
-      text: 'Complainant Acknowledgement for Call/Chat',
-      Message: [
-        {
-          id: 119,
-          text: 'We regret any inconvenience caused. Would you prefer to register your complaint via chat or by making a phone call?',
-        },
-      ],
-    },
-    {
-      value: 16,
-      text: 'Complaint Details',
-      Message: [
-        {
-          id: 120,
-          text: '<p>Dear customer/retailer/consumer,<br> To proceed with your complaint, we kindly request the following details:</p><br><ol><li>Name of the complainant</li><li>Phone number</li><li>Alternate number (if any)</li><li>Complete address</li><li>City</li><li>Batch number of the product</li><li>Manufacturing date</li><li>Expiry date</li></ol><br><p>Providing us with the above information will assist us in addressing your complaint effectively and ensuring a prompt resolution.</p>',
-        },
-      ],
-    },
-    {
-      value: 17,
-      text: 'Complaint Registration',
-      Message: [
-        {
-          id: 121,
-          text: '<p>We have successfully registered your complaint. Your complaint number is (Complaint Number). Please be informed that the estimated turnaround time for resolving your complaint is 40 days.</p><p>If you have any further questions or need updates regarding your complaint, feel free to reach out to us..</p>',
-        },
-      ],
-    },
-    {
-      value: 18,
-      text: 'Complain Status In Progress',
-      Message: [
-        {
-          id: 122,
-          text: 'We would like to update you that your complaint is currently in progress, and our team is actively working on resolving it. Please stay in touch with us, as we anticipate reaching a resolution soon. Your patience throughout this process is highly appreciated',
-        },
-      ],
-    },
-    {
-      value: 19,
-      text: 'Complain Status In Closed',
-      Message: [
-        {
-          id: 123,
-          text: '<p>We would like to inform you that your complaint has been closed. The resolution provided for your complaint is as follows:</p><p>(Type the resolution as per the closed complaint)</p>',
-        },
-      ],
-    },
-    {
-      value: 20,
-      text: 'Contact Us Again',
-      Message: [
-        {
-          id: 124,
-          text: 'Dear customer you may call us Monday to Saturday between 10:00 am to 06:00pm on our toll free number 0800- 68874 or you can also connect with us on Wahtsapp (0800- 68874).',
-        },
-      ],
-    },
-    // {value:21, text:'', Message: [{id:125,text:""}]},
-    // {value:22, text:'', Message: [{id:126,text:""}]},
-    // {value:23, text:'', Message: [{id:127,text:""}]},
-  ];
+  // quickReplyList() {
+  //   this.commondata.QuickReplyList().subscribe((res: any) => {
+  //     this.QuickReplies = res;
+  //   });
+  // }
+
+  // oneTierQuickReply = [
+  //   {
+  //     id: 2,
+  //     companyId: 654,
+  //     parentId: 1,
+  //     baseId: 1,
+  //     text: 'Opening',
+  //     subReply: [
+  //       {
+  //         id: 11,
+  //         companyId: 654,
+  //         parentId: 2,
+  //         baseId: 1,
+  //         text: 'Generic Account Changes Responses',
+  //         subReply: [
+  //           {
+  //             id: 87,
+  //             companyId: 654,
+  //             parentId: 11,
+  //             baseId: 1,
+  //             text: 'Salam, Bazaar Rahbar se xyz baat kar raha hoon. Main aap ki kya rehnumayi kar sakta / sakti hoon?',
+  //             subReply: [
+  //               {
+  //                 id: 877,
+  //                 companyId: 654,
+  //                 parentId: 11,
+  //                 baseId: 1,
+  //                 text: '4th Tier',
+  //                 subReply: [
+  //                   {
+  //                     id: 878,
+  //                     companyId: 654,
+  //                     parentId: 11,
+  //                     baseId: 1,
+  //                     text: '5th Tier',
+  //                     subReply: [
+  //                       {
+  //                         id: 879,
+  //                         companyId: 654,
+  //                         parentId: 11,
+  //                         baseId: 1,
+  //                         text: '6th Tier',
+  //                         subReply: null,
+  //                       },
+  //                     ],
+  //                   },
+  //                 ],
+  //               },
+  //             ],
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   }
+  // ]
 
   activeDropdown: number | null = null;
   openQuickReplyDropdown(index: any) {
@@ -1070,35 +888,28 @@ export class WhatsappDetailsComponent implements OnInit {
   }
 
   whatsappStatus(comId: any, type: string) {
-    this.commentStatusDto = {
-      id: comId,
-      type: type,
-      plateForm: 'WhatsApp',
-      profileId: Number(localStorage.getItem('profileId')),
-      wings: this.getWing.wings,
-      groupId: this.getRulesGroupIdsService.rulesGroupIds,
-    };
+    this.commentStatusDto.id = comId;
+    this.commentStatusDto.type = type;
+    this.commentStatusDto.plateForm = 'WhatsApp';
+    this.commentStatusDto.profileId = Number(localStorage.getItem('profileId'));
+    // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
     this.commondata
       .CommentRespond(this.commentStatusDto)
       .subscribe((res: any) => {
         this.querryCompleted = true;
       });
   }
-  // queryCompleted(comId: any) {
-  //   this.commentStatusDto = {
-  //     id: comId,
-  //     type: 'WM',
-  //     plateForm: 'WhatsApp',
-  //     profileId: Number(localStorage.getItem('profileId')),
-  //     wings: this.getWing.wings,
-  //     groupId: this.getRulesGroupIdsService.rulesGroupIds,
-  //   };
-  //   this.commondata
-  //     .QueryCompleted(this.commentStatusDto)
-  //     .subscribe((res: any) => {
-  //       this.querryCompleted = true;
-  //     });
-  // }
+  queryCompleted(comId: any) {
+    this.commentStatusDto.id = comId;
+    this.commentStatusDto.type = 'WM';
+    this.commentStatusDto.plateForm = 'WhatsApp';
+    // this.commentStatusDto.userId = Number(localStorage.getItem('agentId'));
+    this.commondata
+      .QueryCompleted(this.commentStatusDto)
+      .subscribe((res: any) => {
+        this.querryCompleted = true;
+      });
+  }
   userProfileId = 0;
 
   SendWhatsappInformation(comId: any) {
@@ -1153,7 +964,6 @@ export class WhatsappDetailsComponent implements OnInit {
         profileId: this.profileId,
         userProfileId: this.userProfileId,
         responseByName: this.senderId,
-        groupId: this.getRulesGroupIdsService.rulesGroupIds,
       });
 
       formData.append(
@@ -1239,8 +1049,8 @@ export class WhatsappDetailsComponent implements OnInit {
 
   markAsComplete = false;
   markAsCompleteExpanded(comId: any) {
-    this.WhatsappData.forEach((abc: any) => {
-      abc.comments.forEach((comment: any) => {
+    this.WhatsappData.forEach((xyz: any) => {
+      xyz.comments.forEach((comment: any) => {
         if (comment.id == comId) {
           this.markAsComplete = !this.markAsComplete;
         }
@@ -1558,8 +1368,8 @@ export class WhatsappDetailsComponent implements OnInit {
 
   //   this.changeDetect.detectChanges();
   // }
-  activeOuterDropdown: number | null = null;
-  activeInnerDropdown: number | null = null;
+  // activeOuterDropdown: number | null = null;
+  // activeInnerDropdown: number | null = null;
 
   // Function to open the outer dropdown
   // openQuickReplyDropdown(index: number): void {
@@ -1567,17 +1377,46 @@ export class WhatsappDetailsComponent implements OnInit {
   // }
 
   // Function to open the inner dropdown
-  openInnerQuickReplyDropdown(outerIndex: number, innerIndex: number): void {
-    this.activeInnerDropdown =
-      this.activeOuterDropdown === outerIndex &&
-      this.activeInnerDropdown === innerIndex
-        ? null
-        : innerIndex;
-  }
+  // openInnerQuickReplyDropdown(outerIndex: number, innerIndex: number): void {
+  //   this.activeInnerDropdown =
+  //     this.activeOuterDropdown === outerIndex &&
+  //     this.activeInnerDropdown === innerIndex
+  //       ? null
+  //       : innerIndex;
+  // }
 
   // Function to handle clicking on radio button (you can modify it as per your requirements)
   // sendHardCodedQuickReply(msgId: string): void {
   //   // Add your logic here
   //   console.log('Radio button clicked:', msgId);
   // }
+
+  threeTierArchitecture(outerIndex: number, innerIndex: number, message: any) {
+    if (message.subReply && isArray(message.subReply)) {
+      // this.openInnerQuickReplyDropdown(outerIndex, innerIndex);
+    } else {
+      this.sendQuickReplyGeneric(message.id);
+    }
+  }
+
+  // activeDropdown: number = 0; // Initialize to null
+  activeInnerDropdown: { parentIndex: number | null, childIndex: number | null } = { parentIndex: null, childIndex: null }; // Initialize to null
+
+    toggleCollapse(index: number) {
+        this.activeDropdown = (this.activeDropdown === index) ? null : index;
+    }
+
+    toggleInnerCollapse(parentIndex: number, childIndex: number) {
+        this.activeInnerDropdown = (this.activeInnerDropdown.parentIndex === parentIndex && this.activeInnerDropdown.childIndex === childIndex) ?
+            { parentIndex: null, childIndex: null } : { parentIndex, childIndex };
+    }
+
+    isDropdownActive(index: number): boolean {
+        return this.activeDropdown === index;
+    }
+
+    isInnerDropdownActive(parentIndex: number, childIndex: number): boolean {
+        return this.activeInnerDropdown.parentIndex === parentIndex && this.activeInnerDropdown.childIndex === childIndex;
+    }
+
 }

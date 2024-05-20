@@ -111,10 +111,38 @@ export class LoginComponent implements OnInit {
 
           this.commonService.UserLogin().subscribe(() => {});
 
-          this.sendSkillIdsService.sendSkillIds(
-            res?.loginResponse?.loginResponse?.skills
-          );
+          this.sendSkillIdsService.sendSkillIds(res?.loginResponse?.loginResponse?.skills);
+          localStorage.setItem('skills',res?.loginResponse?.loginResponse?.skills)
 
+          this.commonService.GetSkills(res?.loginResponse?.loginResponse?.skills).subscribe((skillNames: any) => {
+            
+            this.sendSkills.sendSkills(skillNames);
+            localStorage.setItem('skillSlug', skillNames[0]?.skilSlug)
+            res?.loginResponse?.loginResponse?.roles.forEach((role:any) => {
+            var companyId = role.id;
+            if (!this.rulesGroupIds.includes(skillNames[0].rules[0].groupId)) {
+              this.rulesGroupIds.push(skillNames[0].rules[0].groupId);
+            }
+            this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds);
+            skillNames.forEach((skill: any) => {
+              var groupName = skill.skillName + '_' + companyId;
+
+              this.signalRService.getConnectionState().subscribe((connected) => {
+                  if (connected) {
+                    this.signalRService.joinGroup(groupName);
+                  }
+                });
+              var wingName = skill.wing;
+              if (!this.uniqueWings.includes(wingName)) {
+                this.uniqueWings.push(wingName);
+              }
+              this.sendWings.sendWings(this.uniqueWings.toString());
+              });
+            });
+            
+            localStorage.setItem('defaultRuleIds', this.rulesGroupIds.toString());            
+            localStorage.setItem('defaultSkills', this.uniqueWings.toString());
+          });
           this.router.navigateByUrl('all-inboxes/focused/all');
           this.spinnerService.hide();
 
@@ -142,48 +170,9 @@ export class LoginComponent implements OnInit {
           this.spinnerService.hide();
         }
 
-        this.commonService
-          .GetSkills(res?.loginResponse?.loginResponse?.skills)
-          .subscribe((skillNames: any) => {
-            
-            this.sendSkills.sendSkills(skillNames);
-            localStorage.setItem('skillSlug', skillNames[0]?.skilSlug)
-            res?.loginResponse?.loginResponse?.roles.forEach((role:any) => {
-            var companyId = role.id;
-            // var companyId = 658;
-            if (!this.rulesGroupIds.includes(skillNames[0].rules[0].groupId)) {
-              this.rulesGroupIds.push(skillNames[0].rules[0].groupId);
-            }
-            skillNames.forEach((skill: any) => {
-              var groupName = skill.skillName + '_' + companyId;
-
-              this.signalRService
-                .getConnectionState()
-                .subscribe((connected) => {
-                  if (connected) {
-                    this.signalRService.joinGroup(groupName);
-                  }
-                });
-              var wingName = skill.wing;
-              if (!this.uniqueWings.includes(wingName)) {
-                this.uniqueWings.push(wingName);
-              }
-              
-              // skill.rules.forEach((rule: any) => {
-                // if (!this.rulesGroupIds.includes(skill.rules[0].groupId)) {
-                //   this.rulesGroupIds.push(skill.rules[0].groupId);
-                // }
-              });
-            });
-            this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds);
-            localStorage.setItem(
-              'defaultRuleIds',
-              this.rulesGroupIds.toString()
-            );
-            this.sendWings.sendWings(this.uniqueWings.toString());
-            localStorage.setItem('defaultSkills', this.uniqueWings.toString());
+        
             // });
-          });
+        
       },
       (error: any) => {
         this.spinnerService.hide();

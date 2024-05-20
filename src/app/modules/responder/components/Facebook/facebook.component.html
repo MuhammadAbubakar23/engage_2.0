@@ -48,15 +48,17 @@
                 <!-- for new Post -->
 
                 <li class="nav-item" role="presentation" *ngIf="newPostComment.length > 0">
-                    <button (click)="facebookNewpostComentReply()" class="nav-link active h-100" id="fb-Newpost-tab"
+                    <button (click)="facebookNewpostComentReply()" class="nav-link h-100" [class.active]="activeNewPost == true" id="fb-Newpost-tab"
                         data-bs-toggle="tab" data-bs-target="#fb-Newpost" type="button" role="tab"
                         aria-controls="fb-Newpost" aria-selected="true">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
                                 <i class="fal fa-comments-alt ice"></i>
                             </span>
-                            New Post
-                            <span class="badge rounded-pill bg-light text-dark ms-3"></span>
+                            Comment on New Post
+                            <span class="badge rounded-pill bg-light text-dark ms-3" *ngIf="totalUnrespondedNewPostCmntCountByCustomer > 0">
+                                {{totalUnrespondedNewPostCmntCountByCustomer}}
+                            </span>
                         </div>
                     </button>
                 </li>
@@ -267,7 +269,7 @@
                                                         <!-- For Sentiment Pills -->
                                                         <div class="tags" *ngIf="fbcmnts.sentiment">
                                                             <span
-                                                                class="badge rounded-pills tag tag1 selected">{{fbcmnts.sentiment?.name
+                                                                class="badge rounded-pills tag tag1 selected">{{fbcmnts.sentimentValue
                                                                 | tagSlugConversion}}</span>
                                                         </div>
                                                         <!-- For Sentiment Pills -->
@@ -916,7 +918,7 @@
                                                         <!-- For Sentiment Pills -->
                                                         <div class="tags" *ngIf="fbcmnts.sentiment">
                                                             <span
-                                                                class="badge rounded-pills tag tag1 selected">{{fbcmnts.sentiment?.name
+                                                                class="badge rounded-pills tag tag1 selected">{{fbcmnts.sentimentValue
                                                                 | tagSlugConversion}}</span>
                                                         </div>
                                                         <!-- For Sentiment Pills -->
@@ -1377,7 +1379,7 @@
                                                     <!-- For Sentiment Pills -->
                                                     <div class="tags" *ngIf="fbmsgs.sentiment">
                                                         <span
-                                                            class="badge rounded-pill tag tag1 selected">{{fbmsgs.sentiment?.name
+                                                            class="badge rounded-pill tag tag1 selected">{{fbmsgs.sentimentValue
                                                             | tagSlugConversion}}</span>
                                                     </div>
                                                     <!-- For Sentiment Pills -->

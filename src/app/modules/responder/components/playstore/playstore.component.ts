@@ -20,7 +20,6 @@ import { UserInformationService } from 'src/app/services/userInformationService/
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
 import { CommentStatusDto } from 'src/app/shared/Models/CommentStatusDto';
 import { postStatsDto, conversationDetailDto, listDto, commentsDto, messagesDto } from 'src/app/shared/Models/concersationDetailDto';
-import { FacebookMessageReplyDto } from 'src/app/shared/Models/FacebookMessageReplyDto';
 import { FiltersDto } from 'src/app/shared/Models/FiltersDto';
 import { InsertSentimentForFeedDto } from 'src/app/shared/Models/InsertSentimentForFeedDto';
 import { InsertTagsForFeedDto } from 'src/app/shared/Models/InsertTagsForFeedDto';
@@ -84,7 +83,6 @@ export class PlaystoreComponent implements OnInit {
   agentName = localStorage.getItem('agentName');
 
   ReplyDto = new ReplyDto();
-  facebookMessageReplyDto = new FacebookMessageReplyDto();
   PostStatsDto = new postStatsDto();
   ConverstationDetailDto = new conversationDetailDto();
   insertSentimentForFeedDto = new InsertSentimentForFeedDto();

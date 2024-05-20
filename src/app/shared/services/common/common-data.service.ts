@@ -210,19 +210,19 @@ export class CommonDataService {
 
     localStorage.setItem('activeChannel', this.activeChannel)
   }
+  gethttpOptions() {
+    let headers_object = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer " + localStorage.getItem('token')
+    });
+
+    let httpOptions = {
+      headers: headers_object
+    };
+    return httpOptions
+  }
  UserLogin(){
-
- const token =localStorage.getItem('token')
-
-  let headers_object = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': "Bearer " + localStorage.getItem('token')
-  });
-
-  let httpOptions = {
-    headers: headers_object
-  };
-
+  let httpOptions = this.gethttpOptions();
   return this.http.get(this.CommonBaseUrl+this.userlogin,httpOptions)
  }
   GetTagsList() {
@@ -555,7 +555,8 @@ export class CommonDataService {
     return this.http.post(this.consoleBaseUrl + this.addProfile, addProfile);
   }
   AttachFacebookPage(body: any) {
-    return this.http.post(this.FacebookBaseUrl + this.attachFacebookPage, body);
+    let httpOptions = this.gethttpOptions();
+    return this.http.post(this.FacebookBaseUrl + this.attachFacebookPage, body, httpOptions);
   }
 
   SignOut() {

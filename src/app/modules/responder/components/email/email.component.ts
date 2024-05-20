@@ -252,7 +252,7 @@ export class EmailComponent implements OnInit {
           bcc: xyz.bcc,
           attachments: xyz.mediaAttachments,
           replies: [],
-          sentiment: '',
+          sentiment: xyz.sentiment,
           tags: [],
         };
         this.Emails?.forEach((item: any) => {

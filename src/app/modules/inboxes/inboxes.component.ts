@@ -1,4 +1,10 @@
-import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { RightNavService } from 'src/app/services/RightNavService/RightNav.service';
@@ -29,66 +35,35 @@ import { SignalRService } from 'src/app/services/SignalRService/signal-r.service
 @Component({
   selector: 'app-inboxes',
   templateUrl: './inboxes.component.html',
-  styleUrls: ['./inboxes.component.scss']
+  styleUrls: ['./inboxes.component.scss'],
 })
 export class InboxesComponent implements OnInit {
   componentRef: any;
-  @ViewChild('container', { read: ViewContainerRef,  }) target!: ViewContainerRef;
-  @ViewChild('rightcontainer', { read: ViewContainerRef,}) rightcontainer!: ViewContainerRef;
+  @ViewChild('container', { read: ViewContainerRef }) target!: ViewContainerRef;
+  @ViewChild('rightcontainer', { read: ViewContainerRef })
+  rightcontainer!: ViewContainerRef;
 
   componentName!: any;
   childComponentName!: any;
   public subscription!: Subscription;
   panelToggled: any;
-  showPanel=false;
+  showPanel = false;
 
   constructor(
     private resolver: ComponentFactoryResolver,
     private route: ActivatedRoute,
     private sharedService: SharedService,
     private rightNavService: RightNavService,
-    private closePanelService: ClosePanelService,
-    private toggleService : ToggleService,
-    private commonService : CommonDataService,
-    private sendSkills : SkillsService,
-    private sendWings : GetWingsService,
-    private signalRService : SignalRService
-
+    private toggleService: ToggleService
   ) {}
-groupArray:any[]=[];
-uniqueWings:any[]=[];
+  groupArray: any[] = [];
+  uniqueWings: any[] = [];
   ngOnInit(): void {
-    // this.commonService.GetSkills([1,2,3,4,5,6,7,8,9]).subscribe((skillNames:any)=>{
-    //   this.sendSkills.sendSkills(skillNames);
-    //   // res?.loginResponse?.loginResponse?.roles.forEach((role:any) => {
-    //     // var companyId = role.id;
-    //     var companyId = 658;
-    //     skillNames.forEach((skill:any) => {
-    //       var groupName = skill.skillName+'_'+companyId;
-    //       // this.signalRService.joinGroup(groupName);
-    //       if(!this.groupArray.includes(groupName)) {
-            
-    //         this.groupArray.push(groupName)
-    //       }
-    //       var wingName = skill.wing
-    //       if(!this.uniqueWings.includes(wingName)) {
-            
-    //         this.uniqueWings.push(wingName)
-    //       }
-          
-    //     });
-    //     this.sendWings.sendWings(this.uniqueWings.toString())
-    //     localStorage.setItem('defaultSkills', this.uniqueWings.toString())
-    //   // });
-    //   // resolve(this.groupArray);
-    //   this.signalRService.joinGroup(this.groupArray)
-    // },
-    // (error)=>{
-    //   // reject(error);
-    // })
-
     this.route.params.subscribe((routeParams) => {
-      if(routeParams['flag'] != undefined && routeParams['flag'] != "undefined"){
+      if (
+        routeParams['flag'] != undefined &&
+        routeParams['flag'] != 'undefined'
+      ) {
         this.componentName = routeParams['flag'];
       }
       this.childComponentName = routeParams['ticket'];
@@ -98,7 +73,7 @@ uniqueWings:any[]=[];
       if (this.childComponentName != null) {
         this.childComponentName = localStorage.getItem('child');
       }
-      if(this.componentName != undefined){
+      if (this.componentName != undefined) {
         localStorage.setItem('parent', this.componentName);
       }
 
@@ -107,26 +82,29 @@ uniqueWings:any[]=[];
       this.target?.clear();
       this.rightcontainer?.clear();
       this.loadComponent(this.componentName, '');
-      if ( this.childComponentName != '' && this.childComponentName != undefined) {
-         this.showPanel = true
+      if (
+        this.childComponentName != '' &&
+        this.childComponentName != undefined
+      ) {
+        this.showPanel = true;
         this.loadComponent('', this.childComponentName);
       }
     });
 
-    this.subscription = this.toggleService.getTogglePanel().subscribe(msg3 => {
-
-      if(msg3){
-        this.rightcontainer?.clear();
-        localStorage.setItem('child', msg3)
-        this.showPanel = true
-        this.loadComponent('',msg3)
-      }
-      else {
-        this.showPanel = false;
-        this.rightcontainer?.clear();
-        localStorage.setItem('child', '')
-      }
-    });
+    this.subscription = this.toggleService
+      .getTogglePanel()
+      .subscribe((msg3) => {
+        if (msg3) {
+          this.rightcontainer?.clear();
+          localStorage.setItem('child', msg3);
+          this.showPanel = true;
+          this.loadComponent('', msg3);
+        } else {
+          this.showPanel = false;
+          this.rightcontainer?.clear();
+          localStorage.setItem('child', '');
+        }
+      });
   }
 
   ngAfterViewInit() {
@@ -139,24 +117,15 @@ uniqueWings:any[]=[];
       this.loadComponent('', this.childComponentName);
     }
   }
-  // createInboxComponent(side:any, msg:any, comp:any) {
-  //   this.target.clear();
-  //   this.rightcontainer.clear();
-  //   const factory = this.resolver.resolveComponentFactory(comp);
-  //   this.componentRef = (side == "Left")?this.target.createComponent(factory):this.rightcontainer.createComponent(factory);
-  //   this.componentRef.instance.message = msg;
-  // }
-  // destroyInboxComponent() {
-  //     this.componentRef.destroy();
-  // }
-
 
   loadComponent(leftSideName: string, rightSideName: string) {
     let componentFactory = null;
 
     switch (leftSideName || rightSideName) {
       case 'sent':
-        componentFactory = this.resolver.resolveComponentFactory(ConversationComponent);
+        componentFactory = this.resolver.resolveComponentFactory(
+          ConversationComponent
+        );
         this.target?.createComponent(componentFactory);
         break;
       case 'sla':
@@ -164,8 +133,8 @@ uniqueWings:any[]=[];
         this.target?.createComponent(componentFactory);
         break;
       case 'ticket':
-
-        componentFactory = this.resolver.resolveComponentFactory(TicketsComponent);
+        componentFactory =
+          this.resolver.resolveComponentFactory(TicketsComponent);
         this.rightcontainer?.createComponent(componentFactory);
         break;
 
@@ -213,7 +182,7 @@ uniqueWings:any[]=[];
       case 'phone-dialer':
         componentFactory =
           this.resolver.resolveComponentFactory(WebPhoneComponent);
-          this.rightcontainer?.createComponent(componentFactory);
+        this.rightcontainer?.createComponent(componentFactory);
         break;
       case 'documents':
         componentFactory =
@@ -240,5 +209,4 @@ uniqueWings:any[]=[];
         break;
     }
   }
-
 }

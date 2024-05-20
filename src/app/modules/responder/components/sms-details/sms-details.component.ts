@@ -259,7 +259,7 @@ export class SmsDetailsComponent implements OnInit {
           bcc: xyz.bcc,
           attachments: xyz.mediaAttachments,
           replies: [],
-          sentiment: '',
+          sentiment: xyz.sentiment,
           tags: [],
         };
         this.SmsData[0].comments.push(this.commentDto);

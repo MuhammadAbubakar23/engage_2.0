@@ -7,7 +7,7 @@ export class GifFilterPipe implements PipeTransform {
 
 
   transform(items: any, searchGif: string): any[] {
-    debugger
+    
     if(!items) return [];
     if(!searchGif) return items;
 

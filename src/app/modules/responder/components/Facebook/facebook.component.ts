@@ -27,7 +27,6 @@ import {
   postStatsDto,
 } from 'src/app/shared/Models/concersationDetailDto';
 import { ReplyDto } from 'src/app/shared/Models/ReplyDto';
-import { FacebookMessageReplyDto } from 'src/app/shared/Models/FacebookMessageReplyDto';
 import { FiltersDto } from 'src/app/shared/Models/FiltersDto';
 import { InsertSentimentForFeedDto } from 'src/app/shared/Models/InsertSentimentForFeedDto';
 import { InsertTagsForFeedDto } from 'src/app/shared/Models/InsertTagsForFeedDto';
@@ -98,6 +97,7 @@ export class FacebookComponent implements OnInit {
   ImageName: any;
   ImageArray: any[] = [];
   totalUnrespondedCmntCountByCustomer: number = 0;
+  totalUnrespondedNewPostCmntCountByCustomer: number = 0;
   postIdForStats: any;
   pageIdForStats: any;
   totalPostReactionsCount: number = 0;
@@ -118,7 +118,6 @@ export class FacebookComponent implements OnInit {
   agentName = localStorage.getItem('agentName');
 
   ReplyDto = new ReplyDto();
-  facebookMessageReplyDto = new FacebookMessageReplyDto();
   PostStatsDto = new postStatsDto();
   ConverstationDetailDto = new conversationDetailDto();
   insertSentimentForFeedDto = new InsertSentimentForFeedDto();
@@ -143,7 +142,7 @@ export class FacebookComponent implements OnInit {
   toastermessage = false;
 
   searchText: string = '';
-  searchGif:string=''
+  searchGif: string = '';
   PostStatsArray: postStatsDto[] = [];
   CommentStatsDto: any[] = [];
   QuickReplies: any[] = [];
@@ -222,7 +221,7 @@ export class FacebookComponent implements OnInit {
   KEbaseUrl: string = '';
   KEClient: boolean = false;
   fetchedPostType: string = '';
-  BaseUrl:any
+  BaseUrl: any;
   ngOnInit(): void {
     // this.BaseUrl=window.location.origin;
     // this.ImageName=[ {name: 'gif', lastModified: 1713945235285, lastModifiedDate:" Wed Apr 24 2024 12:53:55 GMT+0500 (Pakistan Standard Time)", webkitRelativePath: '', size: 1202167, }];
@@ -287,10 +286,12 @@ export class FacebookComponent implements OnInit {
     this.Subscription = this.addTagService.receiveTags().subscribe((res) => {
       this.addTags = res;
       this.addTagDataListener();
+      console.log("add Tag", res);
     });
     this.Subscription = this.removeTagService.receiveTags().subscribe((res) => {
       this.removeTags = res;
       this.removeTagDataListener();
+      console.log("remove Tag", res);
     });
     this.Subscription = this.updateCommentsService
       .receiveComment()
@@ -298,6 +299,7 @@ export class FacebookComponent implements OnInit {
         this.updatedComments = res;
         this.FacebookNewpost = res;
         this.updateCommentsDataListener();
+        console.log("new cmnt", res);
       });
     this.Subscription = this.updateMessagesService
       .receiveMessage()
@@ -309,23 +311,27 @@ export class FacebookComponent implements OnInit {
         ) {
           this.updatedMessages = res;
           this.updateMessagesDataListener();
+          console.log("new msg", res);
         }
       });
     this.Subscription = this.replyService.receiveReply().subscribe((res) => {
       this.newReply = res;
       this.replyDataListener();
+      console.log("reply", res);
     });
     this.Subscription = this.queryStatusService
       .receiveQueryStatus()
       .subscribe((res) => {
         this.queryStatus = res;
         this.updateQueryStatusDataListener();
+        console.log("query status", res);
       });
     this.Subscription = this.queryStatusService
       .bulkReceiveQueryStatus()
       .subscribe((res) => {
         this.queryStatus = res;
         this.updateBulkQueryStatusDataListener();
+        console.log("bulk update", res);
       });
     this.Subscription = this.unrespondedCountService
       .getUnRespondedCount()
@@ -413,7 +419,10 @@ export class FacebookComponent implements OnInit {
             this.userInfoService.shareUserInformation(res.List[0].user);
             this.TotalCmntQueryCount = res.TotalQueryCount;
             this.pageName = this.FacebookData[0]?.post.profile.clientAppName;
-
+            localStorage.setItem(
+              'lastQueryId',
+              this.FacebookData[0].comments[0].id
+            );
             this.commentsArray = [];
 
             this.FacebookData?.forEach((item: any) => {
@@ -561,6 +570,10 @@ export class FacebookComponent implements OnInit {
             this.totalComments = res.TotalCount;
             this.TotalCmntQueryCount = res.TotalQueryCount;
             this.pageName = this.FacebookData[0]?.post.profile.clientAppName;
+            localStorage.setItem(
+              'lastQueryId',
+              this.FacebookData[0].comments[0].id
+            );
             this.commentsArray = [];
 
             this.FacebookData?.forEach((item: any) => {
@@ -614,7 +627,6 @@ export class FacebookComponent implements OnInit {
   spinner2running = false;
   newcomment: any;
   updateCommentsDataListener() {
-    debugger
     if (!this.id) {
       this.id = localStorage.getItem('storeOpenedId') || '{}';
     }
@@ -625,7 +637,8 @@ export class FacebookComponent implements OnInit {
           if (openedContentType == abc.contentType) {
             if (this.id == xyz.user.userId) {
               this.commentDto = {
-                id: xyz.user.id,
+                id: abc.id,
+                wings: abc.wings,
                 postId: xyz.post.postId,
                 commentId: abc.commentId,
                 message: abc.message,
@@ -633,18 +646,34 @@ export class FacebookComponent implements OnInit {
                 userName: abc.userName || abc.userId,
                 queryStatus: abc.queryStatus,
                 createdDate: abc.createdDate,
-                fromUserProfilePic: abc.profilePic,
+                insertionDate: abc.insertionDate,
+                ticketId: abc.ticketId,
+                fromUserProfilePic: abc.fromUserProfilePic,
                 body: abc.body,
-                to: abc.toId,
+                sentimentValue: abc.sentimentValue,
+                language: abc.language,
+                isHide: abc.isHide,
+                isLikedByAdmin: abc.isLikedByAdmin,
+                channelId: abc.channelId,
+                conversationId: abc.conversationId,
+                attachmentUrl: abc.attachmentUrl,
+                attachmentType: abc.attachmentType,
+                sendTo: abc.sendTo,
+                unrespondedCount: abc.unrespondedCount,
+                attachments: abc.attachments,
+                replies: abc.replies,
+                sentiment: abc.sentiment,
+                tags: abc.tags,
+                to: abc.to,
                 cc: abc.cc,
                 bcc: abc.bcc,
-                attachments: abc.mediaAttachments,
-                replies: [],
-                sentiment: '',
-                tags: [],
+                dispositions: abc.dispositions,
+                signalRGroupName: abc.signalRGroupName,
               };
               this.FacebookData?.forEach((item: any) => {
-                this.postIdArray.push(item.post.postId);
+                if (!this.postIdArray.includes(item.post.postId)) {
+                  this.postIdArray.push(item.post.postId);
+                }
                 this.commentsArray = [];
                 // this.newPostComment= [];
 
@@ -680,8 +709,9 @@ export class FacebookComponent implements OnInit {
                   if (!this.postIdArray.includes(xyz.post.postId)) {
                     this.FacebookNewpost.forEach((x: any) => {
                       x.comments.forEach((z: any) => {
-                        this.newpostcommentDto = {
+                        this.commentDto = {
                           id: z.id,
+                          wings: z.wings,
                           postId: x.post.postId,
                           commentId: z.commentId,
                           message: z.message,
@@ -689,15 +719,29 @@ export class FacebookComponent implements OnInit {
                           userName: z.userName || z.userId,
                           queryStatus: z.queryStatus,
                           createdDate: z.createdDate,
-                          fromUserProfilePic: z.profilePic,
+                          insertionDate: z.insertionDate,
+                          ticketId: z.ticketId,
+                          fromUserProfilePic: z.fromUserProfilePic,
                           body: z.body,
-                          to: z.toId,
+                          sentimentValue: z.sentimentValue,
+                          language: z.language,
+                          isHide: z.isHide,
+                          isLikedByAdmin: z.isLikedByAdmin,
+                          channelId: z.channelId,
+                          conversationId: z.conversationId,
+                          attachmentUrl: z.attachmentUrl,
+                          attachmentType: z.attachmentType,
+                          sendTo: z.sendTo,
+                          unrespondedCount: z.unrespondedCount,
+                          attachments: z.attachments,
+                          replies: z.replies,
+                          sentiment: z.sentiment,
+                          tags: z.tags,
+                          to: z.to,
                           cc: z.cc,
                           bcc: z.bcc,
-                          attachments: z.mediaAttachments,
-                          replies: [],
-                          sentiment: '',
-                          tags: z.tags,
+                          dispositions: z.dispositions,
+                          signalRGroupName: z.signalRGroupName,
                         };
                       });
                       if (
@@ -707,7 +751,7 @@ export class FacebookComponent implements OnInit {
                       ) {
                         this.newPostComment.push(x);
                       }
-                      this.fbnewCmntReply = true;
+                      // this.fbnewCmntReply = true;
                       this.newPostComment.forEach((item: any) => {
                         this.commentsArray = [];
                         if (item.post.postId == x.post.postId) {
@@ -750,11 +794,11 @@ export class FacebookComponent implements OnInit {
                   }
                 }
               });
-              this.totalUnrespondedCmntCountByCustomer =
-                this.totalUnrespondedCmntCountByCustomer + 1;
             }
           }
         });
+        this.totalUnrespondedCmntCountByCustomer =
+          this.totalUnrespondedCmntCountByCustomer + 1;
       });
     }
 
@@ -1099,6 +1143,7 @@ export class FacebookComponent implements OnInit {
             this.pageName = res.List?.profile.clientAppName;
             this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
             this.TotalMsgQueryCount = res.TotalQueryCount;
+            localStorage.setItem('lastQueryId', this.FacebookMessages[0].id);
 
             if (
               !this.FacebookData ||
@@ -1250,6 +1295,7 @@ export class FacebookComponent implements OnInit {
             this.totalMessages = res.TotalCount;
             this.TotalMsgQueryCount = res.TotalQueryCount;
             this.totalUnrespondedMsgCountByCustomer = res.TotalCount;
+            localStorage.setItem('lastQueryId', this.FacebookMessages[0].id);
 
             if (
               !this.FacebookData ||
@@ -1337,14 +1383,13 @@ export class FacebookComponent implements OnInit {
   isAttachment = false;
 
   onFileChanged() {
-
     Array.from(this.fileInput.nativeElement.files).forEach((file: any) => {
       if (file.size > 4 * 1024 * 1024) {
         this.reloadComponent('Attachments');
       } else if (this.fileInput.nativeElement.files.length > 0) {
         this.isAttachment = true;
         if (this.isAttachment == true) {
-          this.showGifButton = false
+          this.showGifButton = false;
         }
         const filesArray = Array.from(this.fileInput.nativeElement.files);
         filesArray.forEach((attachment: any) => {
@@ -1355,21 +1400,17 @@ export class FacebookComponent implements OnInit {
         files.forEach((file: any) => newFileList.items.add(file)); // Add the files to a new DataTransfer object
 
         this.ImageName = newFileList.files;
-        console.log('this.Attachment==>', this.ImageName)
+        console.log('this.Attachment==>', this.ImageName);
       }
     });
   }
 
-  
-
   addGif(gifUrl: any) {
-this.selectedGifFiles = []
-
-  debugger
+    this.selectedGifFiles = [];
 
     fetch(gifUrl)
-      .then(response => response.blob())
-      .then(blob => {
+      .then((response) => response.blob())
+      .then((blob) => {
         // const originalFileName = gifUrl.src;
 
         const gifFile = new File([blob], '.gif', { type: 'image/gif' });
@@ -1380,50 +1421,47 @@ this.selectedGifFiles = []
           // If GIF already present, replace it with the new one
           this.selectedGifFiles = [{ gifFile, gifUrl }];
           this.newImageName = this.selectedGifFiles;
-          console.log("this.selectedGifFiles ====>", this.ImageName);
+          console.log('this.selectedGifFiles ====>', this.ImageName);
           this.changeDetect.detectChanges();
         }
 
-          if (this.selectedGifFiles.some(item => item.gifUrl === gifUrl)) {
-        
+        if (this.selectedGifFiles.some((item) => item.gifUrl === gifUrl)) {
         }
       });
   }
-  showGifButton: boolean = true
-  showAttachmentButton: boolean = true
-   newImageName:any
-sendSelectedGif:any[]=[]
+  showGifButton: boolean = true;
+  showAttachmentButton: boolean = true;
+  newImageName: any;
+  sendSelectedGif: any[] = [];
   isGifSelected: boolean = false;
   selectedGifFiles: any[] = [];
   sendGifAsFormData(gifFile: File, gifUrl: string) {
-    this.sendSelectedGif = []
+    this.sendSelectedGif = [];
     const formData = new FormData();
 
     this.selectedGifFiles.push({ gifFile, gifUrl });
-    this.newImageName=this.selectedGifFiles
-    this.selectedGifFiles.forEach((x:any)=>{
-      debugger
-      const gifUrl=x.gifUrl.src
+    this.newImageName = this.selectedGifFiles;
+    this.selectedGifFiles.forEach((x: any) => {
+      const gifUrl = x.gifUrl.src;
       // this.sendSelectedGif.push(x.gifUrl.src)
-      fetch(gifUrl).then(response=>response.blob()).then(blob=>{
-        const selectGif=new File([blob], 'test.gif',{ type: 'image/gif' });
-        this.sendSelectedGif.push(selectGif)
-        this.ImageName=this.sendSelectedGif
-      })
-
-    })
+      fetch(gifUrl)
+        .then((response) => response.blob())
+        .then((blob) => {
+          const selectGif = new File([blob], 'test.gif', { type: 'image/gif' });
+          this.sendSelectedGif.push(selectGif);
+          this.ImageName = this.sendSelectedGif;
+        });
+    });
     // this.ImageName = this.selectedGifFiles
     if (this.selectedGifFiles.length > 0) {
       this.isGifSelected = true;
-
     }
     if (this.isGifSelected == true) {
-      this.showAttachmentButton = false
+      this.showAttachmentButton = false;
     }
-    console.log("this.selectedGifFiles ====>", this.ImageName);
+    console.log('this.selectedGifFiles ====>', this.ImageName);
     this.changeDetect.detectChanges();
   }
-
 
   fbStats() {
     // this.shareFbResService.updateMessage(this.FacebookData);
@@ -1586,7 +1624,6 @@ sendSelectedGif:any[]=[]
   text: string = '';
 
   submitFacebookReply() {
-debugger
     if (this.commentId == 0) {
       this.reloadComponent('selectComment');
     } else {
@@ -1661,7 +1698,6 @@ debugger
   }
 
   submitFacebookNewReply() {
-    debugger
     if (this.commentId == 0) {
       this.reloadComponent('selectComment');
     } else {
@@ -1745,12 +1781,12 @@ debugger
     this.msgId = 0;
     this.isGifSelected = false;
     this.showAttachmentButton = true;
-    this.newImageName=[]
-    this.isAttachment=false
-    this.showGifButton=true
-    this.selectedGifFiles = []
-    this.ImageName = []
-    this.sendSelectedGif = []
+    this.newImageName = [];
+    this.isAttachment = false;
+    this.showGifButton = true;
+    this.selectedGifFiles = [];
+    this.ImageName = [];
+    this.sendSelectedGif = [];
     this.detectChanges();
   }
 
@@ -2038,7 +2074,7 @@ debugger
     };
     this.commondata
       .CommentRespond(this.commentStatusDto)
-      .subscribe((res: any) => { });
+      .subscribe((res: any) => {});
   }
 
   // queryCompleted(comId: any, type: any) {
@@ -2230,25 +2266,27 @@ debugger
   }
 
   facebookCommentReply() {
+    this.activeNewPost = false;
     this.fbCmntReply = true;
     this.fbMsgReply = false;
     this.fbnewCmntReply = false;
   }
 
   facebookMessageReply() {
+    this.activeNewPost = false;
     this.fbCmntReply = false;
     this.fbMsgReply = true;
     this.fbnewCmntReply = false;
   }
+  activeNewPost: boolean = false;
   facebookNewpostComentReply() {
+    this.activeNewPost = true;
     this.fbCmntReply = false;
     this.fbMsgReply = false;
     this.fbnewCmntReply = true;
   }
 
   removeAttachedFile(index: any) {
-    
-
     const filesArray = Array.from(this.ImageName);
     filesArray.splice(index, 1);
     this.ImageArray.splice(index, 1);
@@ -2262,18 +2300,18 @@ debugger
 
     if (this.ImageName.length == 0) {
       this.isAttachment = false;
-      this.showGifButton = true
+      this.showGifButton = true;
     }
   }
-  removeAttachedFileGif(id:any) {
-    ;
-const index=this.newImageName.findIndex((item:any)=>item.gifUrl.id === id)
-if( index >= -1 ){
-this.newImageName.splice(index,1)
-}
+  removeAttachedFileGif(id: any) {
+    const index = this.newImageName.findIndex(
+      (item: any) => item.gifUrl.id === id
+    );
+    if (index >= -1) {
+      this.newImageName.splice(index, 1);
+    }
     this.isGifSelected = false;
     this.showAttachmentButton = true;
-   
   }
 
   detectChanges(): void {
@@ -2299,32 +2337,32 @@ this.newImageName.splice(index,1)
   Gifs = [
     {
       id: 1,
-      name:'Excited_1',
-      src:`${this.KEbaseUrl}${'/assets/images/Gifs/excited_1.gif'}`,
+      name: 'Excited_1',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/excited_1.gif'}`,
     },
     {
       id: 2,
-      name:'Excited_2',
+      name: 'Excited_2',
       src: `${this.KEbaseUrl}${'/assets/images/Gifs/excited_2.gif'}`,
     },
     {
       id: 3,
-      name:'Excited_3',
+      name: 'Excited_3',
       src: `${this.KEbaseUrl}${'/assets/images/Gifs/excited_3.gif'}`,
     },
     {
       id: 4,
-      name:'Excited_4',
+      name: 'Excited_4',
       src: `${this.KEbaseUrl}${'/assets/images/Gifs/excited_4.gif'}`,
     },
     {
       id: 5,
-      name:'Excited_5',
-      src:`${this.KEbaseUrl}${'/assets/images/Gifs/excited_7.gif'}`,
+      name: 'Excited_5',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/excited_7.gif'}`,
     },
     {
       id: 6,
-      name:'Excited_6',
+      name: 'Excited_6',
       src: `${this.KEbaseUrl}${'/assets/images/Gifs/excited_6.gif'}`,
     },
     // {
@@ -2332,150 +2370,151 @@ this.newImageName.splice(index,1)
     //   name:'Excited_7',
     //   src: 'https://media.giphy.com/media/ZbUIi5RuPahtCN90OL/giphy.gif?cid=ecf05e47iwajtt9pygv589ngfjsocp5cl0lspqwp039ck556&ep=v1_gifs_search&rid=giphy.gif&ct=g',
     // },
-   {
-    id :8,
-    name:'thumbsUp_1',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_1.gif'}`
-   },
-   {
-    id:9,
-    name:'thumbsUp_2',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_2.gif'}`
-   },
-   {
-     id:10,
-     name:'thumbsUp_3',
-     src:`${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_3.gif'}`
-   },
-   {
-    id:11,
-    name:'thumbsUp_4',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_4.gif'}`
-   },
-   {
-    id:12,
-    name:'thumbsUp_5',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_5.gif'}`
-   },
-   {
-    id:13,
-    name:'thumbsUp_6',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_6.gif'}`
-   },
-   {
-    id:14,
-    name:'thumbsUp_7',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_7.gif'}`
-   },
-   {
-    id:15,
-    name:'thumbsUp_8',
-   src:`${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_8.gif'}`
-   },
-   {
-    id:16,
-    name:'Appreciate_Thank You_1',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thanks_1.gif'}`
-   },
-   {
-    id:17
-,    name:'Appreciate_Thank You_2',
-     src:`${this.KEbaseUrl}${'/assets/images/Gifs/thanks_2.gif'}`
-   },
-   {
-    id:18,
-    name:'Appreciate_Thank You_3',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thanks_3.gif'}`
-   },
-   {
-    id:19,
-    name:'Appreciate_Thank You_4',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thanks_4.gif'}`
-   },
-   {
-    id:20,
-    name:'Appreciate_Thank You_5',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thanks_5.gif'}`
-   },
-   {
-    id:21,
-    name:'Appreciate_Thank You_6',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/thanks_6.gif'}`
-   },
-   {
-    id:22,
-     name:'Appreciate_Thank You_7',
-     src:`${this.KEbaseUrl}${'/assets/images/Gifs/thanks_7.gif'}`
-   },
-   {
-    id:23,
-    name:'cool_1',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_1.gif'}`
-  },
-  {
-    id:24,
-    name:'cool_2',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_2.gif'}`
-  },
-  {
-    id:25,
-    name:'cool_3',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_3.gif'}`  },
-  {
-    id:26,
-    name:'cool_4',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_4.gif'}`
-  },
-  {
-    id:27,
-    name:'cool_5',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_5.gif'}`
-  },
-  {
-    id:28,
-    name:'cool_6',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_6.gif'}`
-  },
-  {
-    id:29,
-    name:'cool_7',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_7.gif'}`
-  },
-  {
-    id:30,
-    name:'cool_8',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_8.gif'}`
-  },
-  {
-    id:31,
-    name:'cool_9',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_9.gif'}`
-  },
-  {
-    id:32,
-    name:'cool_10',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_10.gif'}`
-  },
-  {
-    id:33,
-    name:'cool_11',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_11.gif'}`
-  },
-  {
-    id:34,
-    name:'cool_12',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_12.gif'}`
-  },
-  {
-    id:35,
-    name:'cool_13',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_13.gif'}`
-  },
-  {
-    id:37,
-    name:'cool_14',
-    src:`${this.KEbaseUrl}${'/assets/images/Gifs/cool_14.gif'}`
-  }
+    {
+      id: 8,
+      name: 'thumbsUp_1',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_1.gif'}`,
+    },
+    {
+      id: 9,
+      name: 'thumbsUp_2',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_2.gif'}`,
+    },
+    {
+      id: 10,
+      name: 'thumbsUp_3',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_3.gif'}`,
+    },
+    {
+      id: 11,
+      name: 'thumbsUp_4',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_4.gif'}`,
+    },
+    {
+      id: 12,
+      name: 'thumbsUp_5',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_5.gif'}`,
+    },
+    {
+      id: 13,
+      name: 'thumbsUp_6',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_6.gif'}`,
+    },
+    {
+      id: 14,
+      name: 'thumbsUp_7',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_7.gif'}`,
+    },
+    {
+      id: 15,
+      name: 'thumbsUp_8',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/thumbsUp_8.gif'}`,
+    },
+    {
+      id: 16,
+      name: 'Appreciate_Thank You_1',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/thanks_1.gif'}`,
+    },
+    {
+      id: 17,
+      name: 'Appreciate_Thank You_2',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/thanks_2.gif'}`,
+    },
+    {
+      id: 18,
+      name: 'Appreciate_Thank You_3',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/thanks_3.gif'}`,
+    },
+    {
+      id: 19,
+      name: 'Appreciate_Thank You_4',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/thanks_4.gif'}`,
+    },
+    {
+      id: 20,
+      name: 'Appreciate_Thank You_5',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/thanks_5.gif'}`,
+    },
+    {
+      id: 21,
+      name: 'Appreciate_Thank You_6',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/thanks_6.gif'}`,
+    },
+    {
+      id: 22,
+      name: 'Appreciate_Thank You_7',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/thanks_7.gif'}`,
+    },
+    {
+      id: 23,
+      name: 'cool_1',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/cool_1.gif'}`,
+    },
+    {
+      id: 24,
+      name: 'cool_2',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/cool_2.gif'}`,
+    },
+    {
+      id: 25,
+      name: 'cool_3',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/cool_3.gif'}`,
+    },
+    {
+      id: 26,
+      name: 'cool_4',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/cool_4.gif'}`,
+    },
+    {
+      id: 27,
+      name: 'cool_5',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/cool_5.gif'}`,
+    },
+    {
+      id: 28,
+      name: 'cool_6',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/cool_6.gif'}`,
+    },
+    {
+      id: 29,
+      name: 'cool_7',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/cool_7.gif'}`,
+    },
+    {
+      id: 30,
+      name: 'cool_8',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/cool_8.gif'}`,
+    },
+    {
+      id: 31,
+      name: 'cool_9',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/cool_9.gif'}`,
+    },
+    {
+      id: 32,
+      name: 'cool_10',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/cool_10.gif'}`,
+    },
+    {
+      id: 33,
+      name: 'cool_11',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/cool_11.gif'}`,
+    },
+    {
+      id: 34,
+      name: 'cool_12',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/cool_12.gif'}`,
+    },
+    {
+      id: 35,
+      name: 'cool_13',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/cool_13.gif'}`,
+    },
+    {
+      id: 37,
+      name: 'cool_14',
+      src: `${this.KEbaseUrl}${'/assets/images/Gifs/cool_14.gif'}`,
+    },
   ];
 
   @ViewChild('textarea')
@@ -2595,7 +2634,6 @@ this.newImageName.splice(index,1)
   // }
 
   isImage(attachment: any): boolean {
-
     return attachment?.mediaType?.toLowerCase().startsWith('image');
   }
 
@@ -2727,12 +2765,12 @@ this.newImageName.splice(index,1)
     const email = data.originalUserName;
     this.insertAtCaret(
       'https://keportal.enteract.live/survey/customer_satisfaction' +
-      '?channel=' +
-      channel +
-      '&customerId=' +
-      customerId +
-      '&email=' +
-      email
+        '?channel=' +
+        channel +
+        '&customerId=' +
+        customerId +
+        '&email=' +
+        email
     );
   }
 }

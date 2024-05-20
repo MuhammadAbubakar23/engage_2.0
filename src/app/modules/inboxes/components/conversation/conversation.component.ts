@@ -118,6 +118,7 @@ export class ConversationComponent implements OnInit {
   FlagForAssignToMe: string = '';
 
   ngOnInit(): void {
+    
     this.wings = this.getWing.wings;
     const date_fillter = localStorage.getItem('datefillter');
     if (date_fillter) {
@@ -168,7 +169,11 @@ export class ConversationComponent implements OnInit {
         }
       );
     } else {
-      this.getConversationList();
+      this.SpinnerService.show();
+      setTimeout(() => {        
+        this.getConversationList();
+      }, 2000);
+      
     }
 
     Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(
@@ -271,6 +276,7 @@ export class ConversationComponent implements OnInit {
   wings:any;
   isverifiedAccount:boolean=false
   getConversationList() {
+    
     // if (this.currentUrl.split('/')[2] == 'completed') {
     //   this.flag = 'sent';
     //   this.platform = this.currentUrl.split('/')[3];
@@ -455,6 +461,7 @@ export class ConversationComponent implements OnInit {
     this.SpinnerService.show();
     this.changeDetect.detectChanges();
     // localStorage.setItem('datefillter',JSON.stringify(this.filterDto))
+    console.log("filter dto", this.filterDto)
     this.commondata.GetConversationList(this.filterDto).subscribe(
       (res: any) => {
         
@@ -796,6 +803,7 @@ export class ConversationComponent implements OnInit {
     profileId: any,
     wing:any
   ) {
+    debugger
     localStorage.setItem('previousUrl', this.currentUrl);
     if (
       this.currentUrl.split('/')[2] == 'focused' ||

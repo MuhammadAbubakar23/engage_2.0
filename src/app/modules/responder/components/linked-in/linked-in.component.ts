@@ -300,7 +300,7 @@ export class LinkedInComponent implements OnInit {
               bcc: xyz.bcc,
               attachments: xyz.mediaAttachments,
               replies: [],
-              sentiment: '',
+              sentiment: xyz.sentiment,
               tags: [],
             }
             this.LinkedInData.forEach((item: any) => {
@@ -880,7 +880,7 @@ detectChanges(): void {
       profileId : profileId,
       userFromId : userId
     }
-    this.commondata.LikedByAdmin(this.likeByAdminDto).subscribe((res: any) => {
+    this.commondata.LikedByAdmin(this.likeByAdminDto).subscribe(() => {
       if (isLiked == true) {
         this.reloadComponent('Like');
       }

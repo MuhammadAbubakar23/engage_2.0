@@ -69,25 +69,70 @@ export class repliesDto {}
 
 export class tagsDto {}
 
+// export class commentsDto {
+//   id?: number = 0;
+//   postId?: string = '';
+//   commentId?: string = '';
+//   message?: string = '';
+//   contentType?: string = '';
+//   userName?: string = '';
+//   queryStatus?: string = '';
+//   createdDate?: string = '';
+//   fromUserProfilePic?: string = '';
+//   body?: string = '';
+//   to?: string = '';
+//   cc?: string = '';
+//   bcc?: string = '';
+//   isLikedByAdmin?: boolean = false;
+//   attachments?: string = '';
+//   replies?: repliesDto = [];
+//   sentiment?: string = '';
+//   tags?: tagsDto = [];
+// }
+
 export class commentsDto {
-  id?: number = 0;
-  postId?: string = '';
-  commentId?: string = '';
-  message?: string = '';
-  contentType?: string = '';
-  userName?: string = '';
-  queryStatus?: string = '';
-  createdDate?: string = '';
-  fromUserProfilePic?: string = '';
-  body?: string = '';
-  to?: string = '';
-  cc?: string = '';
-  bcc?: string = '';
-  isLikedByAdmin?: boolean = false;
-  attachments?: string = '';
-  replies?: repliesDto = [];
-  sentiment?: string = '';
-  tags?: tagsDto = [];
+  id?: number=0;
+  wings?: string="";
+  postId?: string="";
+  commentId?: string="";
+  message?: string="";
+  contentType?: string="";
+  userName?: string="";
+  queryStatus?: string="";
+  createdDate?: string="";
+  insertionDate?: string="";
+  ticketId?: number=0;
+  fromUserProfilePic?: string="";
+  body?: string="";
+  sentimentValue?: string="";
+  language?: string="";
+  isHide?: boolean=false;
+  isLikedByAdmin?: boolean=false;
+  channelId?: any
+  conversationId?: any
+  attachmentUrl?: any
+  attachmentType?: any
+  sendTo?: string="";
+  unrespondedCount?: number=0;
+  attachments?: any[]=[]
+  replies?: any[]=[]
+  sentiment?: Sentiment = new Sentiment();
+  tags?: any[]=[]
+  to?: string="";
+  cc?: string="";
+  bcc?: string="";
+  dispositions?: any
+  signalRGroupName?: any
+}
+
+export class Sentiment {
+  platform: string="";
+  name: string="";
+  type: string="";
+  feedId: number=0;
+  createdBy: any
+  createdByName: any
+  wings: string="";
 }
 
 export class messagesDto {
