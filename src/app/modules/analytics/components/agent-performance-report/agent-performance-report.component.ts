@@ -123,6 +123,7 @@ export class AgentPerformanceReportComponent implements OnInit {
       .subscribe((response: any) => {
 
         this.totalAgents = response;
+        this.totalAgentsEmail = response;
         this.totalAgents.forEach((x:any)=>{
         
           this.AgentIds.push(x.id)
@@ -206,6 +207,7 @@ export class AgentPerformanceReportComponent implements OnInit {
       let singleChanenelArray = this.channelOptions.filter((item: any) => item.isSelected).map((item: any) => item.name);
       this.AllChannels = singleChanenelArray.toString();
     }
+    debugger
     let selectedTagByArray = this.totalAgents.filter(item => item.isSelected).map(item => item.id);
     this.selectedTagBy = selectedTagByArray.toString();
     if (this.startDate == "" && this.endDate == "") {
@@ -422,7 +424,7 @@ export class AgentPerformanceReportComponent implements OnInit {
 
   }
   totalAgents = [{ id: '', name: '', isSelected: false }];
-
+  totalAgentsEmail = [{ email: '', name: '', isSelected: false }];
   // channelOptions = [
 
   //   { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
@@ -549,13 +551,17 @@ export class AgentPerformanceReportComponent implements OnInit {
     })
   }
   fillterdata:any[]=[]
+  selectedTagByEmail:any
   getAllCSATData() {
-
+    let selectedTagByArray = this.totalAgentsEmail
+    .filter((item) => item.isSelected)
+    .map((item) => item.email);
+  this.selectedTagByEmail = selectedTagByArray.toString();
     let obj = {
       "fromDate": this.startDate,
       "toDate": this.endDate,
-      "agents":this.selectedTagBy,
-      "plateForm": "string"
+      "agents":this.selectedTagByEmail,
+      "plateForm": this.AllChannels
     }
     this.csatArray = []
     this.fillterdata=[]

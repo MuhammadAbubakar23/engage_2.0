@@ -79,6 +79,8 @@ export class InteractionReportComponent implements OnInit {
   searchText: string = '';
   totalAgents = [{ id: '', name: '', isSelected: false }];
   totalAgentsEmail = [{ email: '', name: '', isSelected: false }];
+  activeChannel:any
+
   AgentIds: any[] = [];
   selectedTagBy: string = '';
   constructor(
@@ -90,9 +92,10 @@ export class InteractionReportComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.activeChannel=window.location.origin
     this.baseUrl = window.location.pathname.split('/');
     console.log(this.baseUrl);
-
+   
     const newObj = {
       title: 'Interaction Report',
       url: '/analytics/interaction-report',
@@ -105,24 +108,28 @@ export class InteractionReportComponent implements OnInit {
     this.GetStatsInteractionReport();
     this.makeChartResponsive();
     this.getListUser();
+    this.GetAllChannels()
     // charts
-    // this.interactionByDate()
+   
     // this.pieChart()
   }
 
-  platformIconMapping: any = {
-    Facebook: 'fa-brands fa-facebook fs-4 navy',
-    Twitter: 'fa-brands fa-twitter fs-4 sky',
-    Instagram: 'fa-brands fa-instagram fs-4 berry',
-    LinkedIn: 'fa-brands fa-linkedin fs-4 linkedinTxt',
-    Email: 'fa-light fa-envelope  fs-4 berry',
-    Youtube: 'fa-brands fa-youtube fs-4 radical',
-    SMS: 'fa-message-sms fs-4 cherry ',
-    WebChat: 'fa-light fa-messages fs-4 webchatcolor',
-    WhatsApp: 'fab fa-whatsapp fs-4 mint',
-    PlayStore: 'fa-brands fa-google-play fs-4 googleplaycolor',
-    OfficeEmail: 'fa-light fa-envelope  fs-4 navy ',
-  };
+   platformIconMapping :any= {
+      Facebook: 'fa-brands fa-facebook fs-4 navy',
+      Twitter: 'fa-brands fa-twitter fs-4 sky',
+      Instagram: 'fa-brands fa-instagram fs-4 berry',
+      LinkedIn: 'fa-brands fa-linkedin fs-4 linkedinTxt',
+      Email: 'fa-light fa-envelope  fs-4 berry',
+      Youtube: 'fa-brands fa-youtube fs-4 radical',
+      SMS: 'fa-message-sms fs-4 cherry ',
+      WebChat: 'fa-light fa-messages fs-4 webchatcolor',
+      WhatsApp: 'fab fa-whatsapp fs-4 mint',
+      PlayStore: 'fa-brands fa-google-play fs-4 googleplaycolor',
+      OfficeEmail: 'fa-light fa-envelope  fs-4 navy ',
+    };
+  
+
+  
   formatFirstResponseTime(timeString: string): string {
     if (!timeString) {
       return '';
@@ -204,14 +211,20 @@ export class InteractionReportComponent implements OnInit {
       this.totalAgentsCount = res.length;
     });
   }
-  selectedChannel: any;
-  toggleChannelSelection(channel: string) {
-    if (this.selectedChannel === channel) {
-      this.selectedChannel = null;
-    } else {
-      this.selectedChannel = channel;
+  selectedChannel: any[]=[];
+  toggleChannelSelection(channel:any) {
+    
+    const index = this.selectedChannel.findIndex((x:any)=>x == channel.name)
+    if(index != -1){
+      this.selectedChannel.splice(index,1)
     }
-    // this.GetStatsInteractionReport();
+    else{
+
+      this.selectedChannel.push(channel.name)
+
+    }   
+    console.log('this.selectedChannel==>',this.selectedChannel)
+ 
   }
   mouseClickReset() {
     this.searchText = '';
@@ -264,7 +277,7 @@ export class InteractionReportComponent implements OnInit {
       fromDate: this.startDate,
       toDate: this.endDate,
       agents: this.selectedTagBy,
-      channels: this.selectedChannel || '',
+      channels: this.selectedChannel.toString() || '',
     };
     console.log('data form===>', formData);
     this.SpinnerService.show();
@@ -424,7 +437,11 @@ export class InteractionReportComponent implements OnInit {
 
       // this.finalAverageFirstResponse = this.calculateAverageTime(this.interactionStats.agentPerformance, 'firstResponseTime');
       console.log('interaction data ==>', this.data);
+      this.newArray = []; 
       this.interactionData = res.dateWiseInteraction;
+      this.sentimentDataPoints = [];
+      this._legend = [];
+      this.allDates = [];
       this.interactionData.forEach((platform: any) => {
         this._legend.push(platform.plateForm);
         const platformName = platform.plateForm;
@@ -444,8 +461,9 @@ export class InteractionReportComponent implements OnInit {
           type: 'line',
           data: this.newArray, // Use newArray for each platform
         });
+       
       });
-
+      this.interactionByDate();
       // this.interactionData = res.dateWiseInteraction;
       // this.interactionData.forEach((platform: any) => {
       //   this._legend.push(platform.plateForm);
@@ -492,7 +510,7 @@ export class InteractionReportComponent implements OnInit {
         this.interactionStats.sentimentData.find(
           (data: any) => data.name === 'neutral'
         )?.count || 0;
-      this.interactionByDate();
+  
     });
     this.getAgentsTeamList();
   }
@@ -578,6 +596,7 @@ export class InteractionReportComponent implements OnInit {
     );
   }
   interactionByDate() {
+    debugger
     var chartDom = document.getElementById('interactions');
     this.interactionchart = echarts.init(chartDom);
     var option;
@@ -616,7 +635,8 @@ export class InteractionReportComponent implements OnInit {
       series: this.sentimentDataPoints,
     };
 
-    option && this.interactionchart.setOption(option);
+    option && this.interactionchart.setOption(option,true);
+
   }
 
   getCSATGraph() {
@@ -659,76 +679,137 @@ export class InteractionReportComponent implements OnInit {
 
     option && this.CSATGraph.setOption(option);
   }
+  channelOptions:any
+  GetAllChannels(){
+    if(this.activeChannel=='http://localhost:4200'){
+     this. channelOptions = [
+        // { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+        {
+          id: '11',
+          name: 'Twitter',
+          icon: 'fa-brands fa-twitter sky pe-2',
+          isSelected: false,
+        },
+        {
+          id: '12',
+          name: 'Instagram',
+          icon: 'fa-brands fa-instagram pe-2 berry',
+          isSelected: false,
+        },
+        {
+          id: '13',
+          name: 'LinkedIn',
+          icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2',
+          isSelected: false,
+        },
+        {
+          id: '14',
+          name: 'Facebook',
+          icon: 'fab fa-facebook navytext pe-2 radical',
+          isSelected: false,
+        },
+        {
+          id: '15',
+          name: 'YouTube',
+          icon: 'fa-brands fa-youtube pe-2',
+          isSelected: false,
+        },
+        {
+          id: '16',
+          name: 'SMS',
+          icon: 'fa-solid fa-comment-alt pe-2 cherry',
+          isSelected: false,
+        },
+        {
+          id: '17',
+          name: 'WhatsApp',
+          icon: 'fa-brands fa-whatsapp pe-2 mint',
+          isSelected: false,
+        },
+        {
+          id: '18',
+          name: 'Email',
+          icon: 'fa-solid fa-envelope pe-2',
+          isSelected: false,
+        },
+        {
+          id: '19',
+          name: 'OfficeEmail',
+          icon: 'fa-solid fa-envelope pe-2',
+          isSelected: false,
+        },
+        {
+          id: '20',
+          name: 'WebChat',
+          icon: 'fa-solid fa-comment-dots pe-2 webchatcolor',
+          isSelected: false,
+        },
+        {
+          id: '21',
+          name: 'PlayStore',
+          icon: '  fa-brands fa-google-play  googleplaycolor pe-2',
+          isSelected: false,
+        },
+      ];
+    }
+    if(this.activeChannel=='https://keportal.enteract.live'){
+      this. channelOptions = [
+        // { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
+        {
+          id: '1',
+          name: 'Twitter',
+          icon: 'fa-brands fa-twitter sky pe-2',
+          isSelected: false,
+        },
+        {
+          id: '2',
+          name: 'Instagram',
+          icon: 'fa-brands fa-instagram pe-2 berry',
+          isSelected: false,
+        },
+        {
+          id: '3',
+          name: 'LinkedIn',
+          icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2',
+          isSelected: false,
+        },
+        {
+          id: '4',
+          name: 'Facebook',
+          icon: 'fab fa-facebook navytext pe-2 radical',
+          isSelected: false,
+        },
+      ];
+    }
 
-  channelOptions = [
-    // { id: '11', name: 'Select All Channels', icon: '', isSelected: false },
-    {
-      id: '11',
-      name: 'Twitter',
-      icon: 'fa-brands fa-twitter sky pe-2',
-      isSelected: false,
-    },
-    {
-      id: '12',
-      name: 'Instagram',
-      icon: 'fa-brands fa-instagram pe-2 berry',
-      isSelected: false,
-    },
-    {
-      id: '13',
-      name: 'LinkedIn',
-      icon: 'fa-brands fa-linkedin-in linkedinTxt pe-2',
-      isSelected: false,
-    },
-    {
-      id: '14',
-      name: 'Facebook',
-      icon: 'fab fa-facebook navytext pe-2 radical',
-      isSelected: false,
-    },
-    {
-      id: '15',
-      name: 'YouTube',
-      icon: 'fa-brands fa-youtube pe-2',
-      isSelected: false,
-    },
-    {
-      id: '16',
-      name: 'SMS',
-      icon: 'fa-solid fa-comment-alt pe-2 cherry',
-      isSelected: false,
-    },
-    {
-      id: '17',
-      name: 'WhatsApp',
-      icon: 'fa-brands fa-whatsapp pe-2 mint',
-      isSelected: false,
-    },
-    {
-      id: '18',
-      name: 'Email',
-      icon: 'fa-solid fa-envelope pe-2',
-      isSelected: false,
-    },
-    {
-      id: '19',
-      name: 'OfficeEmail',
-      icon: 'fa-solid fa-envelope pe-2',
-      isSelected: false,
-    },
-    {
-      id: '20',
-      name: 'WebChat',
-      icon: 'fa-solid fa-comment-dots pe-2 webchatcolor',
-      isSelected: false,
-    },
-    {
-      id: '21',
-      name: 'PlayStore',
-      icon: '  fa-brands fa-google-play  googleplaycolor pe-2',
-      isSelected: false,
-    },
-  ];
+    if(this.activeChannel=='https://bzengage.enteract.live'){
+            this.channelOptions=[
+              {
+                id: '1',
+                name: 'WhatsApp',
+                icon: 'fa-brands fa-whatsapp pe-2 mint',
+                isSelected: false,
+              },
+              {
+                id: '2',
+                name: 'Email',
+                icon: 'fa-solid fa-envelope pe-2',
+                isSelected: false,
+              },
+            ]
+    }
+    if(this.activeChannel=='https://tpplui.enteract.live' ||this.activeChannel=='https://waengage.enteract.live'){
+      this.channelOptions=[
+        {
+          id: '1',
+          name: 'WhatsApp',
+          icon: 'fa-brands fa-whatsapp pe-2 mint',
+          isSelected: false,
+        },
+      ]
+    }
+  }
+ 
   isDownloading: boolean = false;
 
   downloadPdf() {
