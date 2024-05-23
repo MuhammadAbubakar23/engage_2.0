@@ -2,15 +2,6 @@ import { Component, ComponentFactoryResolver, EventEmitter, OnInit, Output, View
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { EmailComponent } from './components/email/email.component';
-import { FacebookComponent } from './components/Facebook/facebook.component';
-import { InstagramComponent } from './components/instagram/instagram.component';
-import { LinkedInComponent } from './components/linked-in/linked-in.component';
-import { PhoneComponent } from './components/phone/phone.component';
-import { SmsDetailsComponent } from './components/sms-details/sms-details.component';
-import { TwitterComponent } from './components/twitter/twitter.component';
-import { WebChatComponent } from './components/web-chat/web-chat.component';
-import { WhatsappDetailsComponent } from './components/whatsapp-details/whatsapp-details.component';
-import { YoutubeComponent } from './components/youtube/youtube.component';
 import { RightNavService } from '../../services/RightNavService/RightNav.service';
 import { SharedService } from '../../services/SharedService/shared.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
@@ -31,7 +22,7 @@ import { ResponderHistoryComponent } from './right-sidebar-components/responder-
 import { ResponderProfileComponent } from './right-sidebar-components/responder-profile/responder-profile.component';
 import { DispositionFormComponent } from './components/disposition-form/disposition-form.component';
 import { WebPhoneComponent } from '../web-phone/web-phone.component';
-import { PlaystoreComponent } from './components/playstore/playstore.component';
+import { ChannelComponent } from './components/responderChannelData/channel.component';
 
 
 @Component({
@@ -170,7 +161,7 @@ export class ResponderComponent implements OnInit {
         this.showPanel = false;
         localStorage.setItem('child', '')
         componentFactory =
-          this.resolver.resolveComponentFactory(FacebookComponent);
+          this.resolver.resolveComponentFactory(ChannelComponent);
            this.target?.createComponent(componentFactory);
 
           // componentRef.instance.someEvent.subscribe((data:any)=>{
@@ -182,7 +173,7 @@ export class ResponderComponent implements OnInit {
         this.showPanel = false;
         localStorage.setItem('child', '')
         componentFactory =
-          this.resolver.resolveComponentFactory(InstagramComponent);
+          this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
         
         break;
@@ -190,7 +181,7 @@ export class ResponderComponent implements OnInit {
         this.showPanel = false;
         localStorage.setItem('child', '')
         componentFactory =
-          this.resolver.resolveComponentFactory(PlaystoreComponent);
+          this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
         
         break;
@@ -198,7 +189,7 @@ export class ResponderComponent implements OnInit {
         this.showPanel = false;
         localStorage.setItem('child', '')
         componentFactory =
-          this.resolver.resolveComponentFactory(TwitterComponent);
+          this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'Email':
@@ -212,35 +203,35 @@ export class ResponderComponent implements OnInit {
         this.showPanel = false;
         localStorage.setItem('child', '')
         componentFactory =
-          this.resolver.resolveComponentFactory(YoutubeComponent);
+          this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'Phone':
         this.showPanel = false;
         localStorage.setItem('child', '')
         componentFactory =
-          this.resolver.resolveComponentFactory(PhoneComponent);
+          this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'SMS':
         this.showPanel = false;
         localStorage.setItem('child', '')
         componentFactory =
-          this.resolver.resolveComponentFactory(SmsDetailsComponent);
+          this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'Webchat':
         this.showPanel = false;
         localStorage.setItem('child', '')
         componentFactory =
-          this.resolver.resolveComponentFactory(WebChatComponent);
+          this.resolver.resolveComponentFactory(ChannelComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'WhatsApp':
         this.showPanel = false;
         localStorage.setItem('child', '')
         componentFactory = this.resolver.resolveComponentFactory(
-          WhatsappDetailsComponent
+          ChannelComponent
         );
         this.target?.createComponent(componentFactory);
         break;
@@ -248,7 +239,7 @@ export class ResponderComponent implements OnInit {
         this.showPanel = false;
         localStorage.setItem('child', '')
         componentFactory = this.resolver.resolveComponentFactory(
-          LinkedInComponent
+          ChannelComponent
         );
         this.target?.createComponent(componentFactory);
         break;
@@ -342,7 +333,7 @@ export class ResponderComponent implements OnInit {
         break;
       default:
         componentFactory = this.resolver.resolveComponentFactory(
-          FacebookComponent
+          ChannelComponent
         );
         this.target?.createComponent(componentFactory);
         break;
