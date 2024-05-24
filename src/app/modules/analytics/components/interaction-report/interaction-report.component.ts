@@ -549,6 +549,7 @@ export class InteractionReportComponent implements OnInit {
       this.endDate = '';
     }
   }
+  fillterdata:any[]=[]
   selectedTagByEmail: any;
   getAllCSATData() {
     let selectedTagByArray = this.totalAgentsEmail
@@ -559,9 +560,10 @@ export class InteractionReportComponent implements OnInit {
       fromDate: this.startDate,
       toDate: this.endDate,
       agents: this.selectedTagByEmail,
-      plateForm: 'string',
+      plateForm: this.selectedChannel.toString() || '',
     };
     this.csatArray = [];
+    this.fillterdata=[]
     this.SpinnerService.show();
     this.cdr.detectChanges();
     this.commonData.GetCSATReport(obj).subscribe(
@@ -585,6 +587,7 @@ export class InteractionReportComponent implements OnInit {
             { value: this.CSATobj.notSatisfiedCount, name: 'Not Satisfied' },
             { value: this.CSATobj.neutralCount, name: 'Neutral' }
           );
+          this. fillterdata= this.csatArray.filter((item:any)=>item.value!==0)
         }
 
         this.getCSATGraph();
@@ -658,7 +661,7 @@ export class InteractionReportComponent implements OnInit {
           name: 'CUSTOMER SATISFACTION',
           type: 'pie',
           radius: '60%',
-          data: this.csatArray,
+          data: this.fillterdata,
           label: {
             show: true,
             fontSize: 14,
