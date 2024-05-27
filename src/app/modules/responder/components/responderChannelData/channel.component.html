@@ -115,7 +115,7 @@
                                             </div>
                                             <div class="post-img-wrap whatsappImgModalBtn" type="button"
                                                 style="width:375px;" *ngFor="let attachment of post.post.attachments">
-                                                <img *ngIf="attachment.mediaType == 'photo'"
+                                                <img *ngIf="attachment.mediaType == 'photo' "
                                                     src={{attachment.attachmentUrl}}
                                                     style="width: -webkit-fill-available;">
                                                 <video *ngIf="attachment.mediaType == 'video'" width="375px" controls>
@@ -201,7 +201,7 @@
                                                     <div class="post-img-wrap whatsappImgModalBtn" type="button"
                                                         style="width:375px;"
                                                         *ngFor="let attachment of cmnt.attachments">
-                                                        <img *ngIf="attachment.mediaType == 'photo'"
+                                                        <img *ngIf="attachment.mediaType == 'photo'  || attachment.mediaType=='image'"
                                                             src={{attachment.attachmentUrl}}
                                                             style="width: -webkit-fill-available;">
                                                         <img *ngIf="attachment.mediaType == 'animated_image_share'"
