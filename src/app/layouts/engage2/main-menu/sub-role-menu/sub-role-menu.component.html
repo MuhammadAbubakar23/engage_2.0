@@ -148,6 +148,12 @@
                         Quick Response
                     </a>
                 </li>
+                <li class="list-group-item list-group-item-action d-flex align-items-center">
+                    <a (click)="updatevalue('auto-responder')" [routerLink]="['/console/templates/auto-responder']" class="d-flex align-items-center">
+                        <i class="fal fa-chevron-right pe-2"></i>
+                        Auto Responder
+                    </a>
+                </li>
             </ul>
             <li class="list-group-item list-group-item-action">
                 <a (click)="updatevalue('business-hours')" [routerLink]="['/console/business-hours']"

@@ -1,0 +1,98 @@
+<div class="add-templates console-body-wrapper" data-scrollbar="true" tabindex="-1"
+    style="overflow-y:auto; outline: none;">
+    <div class="scroll-content">
+        <form [formGroup]="messageForm" (ngSubmit)="saveForm()">
+            <div class="wider-container pt-3">
+                <div class="floating-item mb-3">
+                    <div class="floating-wrap form-floating">
+                        <input type="text" class="form-control" id="name" placeholder="Template Name"
+                            formControlName="name"
+                            [class.is-invalid]="messageForm.get('name')?.invalid && (messageForm.get('name')?.dirty || messageForm.get('name')?.touched)"
+                            [class.is-valid]="messageForm.get('name')?.valid && (messageForm.get('name')?.dirty || messageForm.get('name')?.touched)">
+                        <label for="name" class="coal">Template Name</label>
+                        <div class="invalid-feedback" *ngIf="messageForm.get('name')?.errors?.['required']">
+                            Template name is required.</div>
+                        <div class="invalid-feedback" *ngIf="messageForm.get('name')?.errors?.['pattern']">Only
+                            alphabets and spaces are allowed.</div>
+                    </div>
+                </div>
+                <div class="form-floating mb-4">
+                    <label for="channelSelect">Works with selects</label>
+                    <select class="form-select" id="channelSelect" aria-label="Floating label select example"
+                        (change)="onChangeChannel($event)">
+                        <option selected disabled>Select Channels</option>
+                        <option *ngFor="let channel of channels" [value]="channel.id">{{ channel.name }}</option>
+                    </select>
+
+                </div>
+
+                <div class="form-floating mb-4">
+                    <label for="pageSelect">Works with selects</label>
+                    <select class="form-select" id="pageSelect" aria-label="Floating label select example"
+                        (change)="onPageSelect()">
+                        <option selected disabled>Company Pages</option>
+                        <option *ngFor="let page of companyPages" [value]="page.id">{{ page.name }}</option>
+                    </select>
+                </div>
+                <div class="form-floating mb-4" *ngIf="showEntitiesDropdown">
+                    <label for="pageSelect">Works with selects</label>
+                    <select class="form-select" id="pageSelect" aria-label="Floating label select example"
+                        (change)="onEntitySelect($event)">
+                        <option disabled selected>Select Entities</option>
+                        <option *ngFor="let option of entities">{{ option }}</option>
+                    </select>
+                </div>
+                <!-- <div class="floating-item mb-4">
+                    <div class="floating-wrap form-floating mb-3">
+                        <input class="form-control" id="subject" placeholder="Subject" formControlName="subject"
+                            [class.is-invalid]="messageForm.get('subject')?.invalid && (messageForm.get('subject')?.dirty || messageForm.get('subject')?.touched)"
+                            [class.is-valid]="messageForm.get('subject')?.valid && (messageForm.get('subject')?.dirty || messageForm.get('subject')?.touched)">
+                        <label for="subject" class="coal">Subject</label>
+                        <div class="invalid-feedback" *ngIf="messageForm.get('subject')?.errors?.['required']">Subject
+                            is required.</div>
+                    </div>
+                </div> -->
+                <div class="floating-item mb-4">
+                    <div class="floating-wrap form-floating mb-3">
+                        <input class="form-control" id="floatingSubject" placeholder="Subject"
+                            [value]="templateVariables" readonly>
+                        <label for="floatingSubject" class="coal">Template Variables</label>
+                    </div>
+                </div>
+                <p>Email Template</p>
+                <div class="text-area-section pb-5">
+                    <ckeditor   [(ngModel)]="editorContent" formControlName="template_Message"></ckeditor>
+                    <div class="invalid-feedback"
+                        *ngIf="messageForm.get('template_Message')?.invalid && (messageForm.get('template_Message')?.dirty || messageForm.get('template_Message')?.touched)">
+                        Message is required.</div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="ps-3 pe-3">
+                    <div class="icon-buttons-wrapper d-flex justify-content-between pt-3 pb-4">
+                        <div class="row w-100">
+                            <div class="col-md-4">
+
+                                <div class="f-icon-txt-wrapper d-flex align-items-center">
+                                    <button class="iconButton medium iconHover" id="deleteModalBtn">
+                                        <!-- <i class="fal fa-trash radical"></i> -->
+                                    </button>
+                                    <!-- <p class="f-icon-txt radical ms-1 m-0">Delete Message</p> -->
+                                </div>
+
+                            </div>
+                            <div class="col-md-8 justify-content-end d-flex">
+                                <div class="buttons-wrap d-flex">
+                                    <button type="button" class="btn btn-outline-secondary btn-medium me-2 px-4"
+                                        (click)="cancelForm()">Cancel</button>
+                                    <button type="submit" class="btn skyBg ms-2 px-4 btn-medium saveBtn"
+                                        data-bs-target="">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </form>
+    </div>
+</div>

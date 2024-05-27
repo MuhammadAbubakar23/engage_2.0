@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { RuleWithCount } from '../../Models/ChannelRule';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,8 @@ export class CommonDataService {
   KemediaBaseUrl = environment.KemediaBaseUrl;
   KescrmBaseUrl = environment.KescrmBaseUrl;
   WhatsappBaseUrl = environment.WhatsappBaseUrl
+  faceRoxBaseUrl=environment.faceRoxBaseUrl
+  autoresponderbaseurl = environment.autoresponderbaseurl
   // KelisteningBaseUrl =environment.KelisteningBaseUrl;
   tagsList = environment.links.common.TagsList;
   insertTags = environment.links.common.InsertTags;
@@ -182,11 +185,19 @@ export class CommonDataService {
   addRules = environment.links.console.addRules;
   updateRules = environment.links.console.updateRules;
   getEntitiesRule = environment.links.console.getEntitiesRule;
+  getEntitiesRules = environment.links.console.getEntitiesRules
+  addRule= environment.links.console.addRule
+  getFbRule = environment.links.console.getFbRule
+  softDeleteFb = environment.links.console.softDeleteFb
+  getEntitiesProperties = environment.links.console.getEntitiesProperties
   getRuleEntityProperties = environment.links.console.getRuleEntityProperties;
 
   getChannels = environment.links.identity.channels;
   consoleChannel= environment.links.identity.consoleChannls
   deleteRoles = environment.links.identity.deleteRoles;
+  getautoResponedFB = environment.links.console.getautoResponedFB
+  addFbResponed =environment.links.console.addFbResponed
+  getCompanyPages = environment.links.console.getCompanyPages
 
   // teams
   // getAllTeams= environment.links.console.getAllTeams
@@ -328,7 +339,18 @@ export class CommonDataService {
       null
     );
   }
+// auto responder apis  
+getAutoRespondFB(body: any) {
+  const url = this.autoresponderbaseurl + this.getautoResponedFB + '?nativeIdentifier=' + body;
+  return this.http.post(url, null); 
+}
+AddFbResponed( body: any) {
+    return this.http.post(this.autoresponderbaseurl + this.addFbResponed , body);
+  }
+  GetCompanyPages(){
+    return this.http.get(this.autoresponderbaseurl + this.getCompanyPages);
 
+  }
   GetFbCommentStats(pageId: any, commentId: any) {
     return this.http.post(
       this.CommonBaseUrl +
@@ -598,12 +620,19 @@ export class CommonDataService {
   GetAllRules(body: any) {
     return this.http.post(this.consoleBaseUrl + this.getAllRules, body);
   }
+  GetAllFbRules(body: any) {
+    return this.http.post<RuleWithCount>(this.faceRoxBaseUrl + this.getFbRule, body);
+  }
+  
   GetRuleById(ruleId: string) {
     return this.http.get(`${this.consoleBaseUrl + this.getRuleById}?id=${ruleId} `)
       ;
   }
   AddRules(addrule: any) {
     return this.http.post(this.consoleBaseUrl + this.addRules, addrule);
+  }
+  AddFBRule(addrule: any) {
+    return this.http.post(this.faceRoxBaseUrl + this.addRule, addrule);
   }
   UpdateRules(rule: any) {
     const url = `${this.consoleBaseUrl}${this.updateRules}`;
@@ -613,8 +642,20 @@ export class CommonDataService {
     const url = `${this.consoleBaseUrl}${this.deleteRules}?Id=${delRules}`;
     return this.http.get(url);
   }
+  DeleteFbRules(delRules: any) {
+    const url = `${this.faceRoxBaseUrl}${this.softDeleteFb}?Id=${delRules}`;
+    return this.http.get(url);
+  }
   GetEntitiesRule() {
     return this.http.get(this.consoleBaseUrl + this.getEntitiesRule);
+  }
+  GetEntitiesRules() {
+    return this.http.get(this.autoresponderbaseurl + this.getEntitiesRules);
+  }
+  GetRuleEntitiesProperties(entity: string) {
+    return this.http.get(
+      `${this.autoresponderbaseurl}${this.getEntitiesProperties}?tableName=${entity}`
+    );
   }
   GetRuleEntityProperties(entity: string) {
     return this.http.get(

@@ -7,7 +7,7 @@ export class FilterPipe implements PipeTransform {
 
 
   transform(items: any, searchText: string): any[] {
-    
+    debugger
     if(!items) return [];
     if(!searchText) return items;
 

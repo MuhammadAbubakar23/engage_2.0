@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MonitoringMenuComponent } from './monitoring-menu.component';
+import { ChatBotHeaderComponent } from './chat-bot-header.component';
 
-describe('MonitoringMenuComponent', () => {
-  let component: MonitoringMenuComponent;
-  let fixture: ComponentFixture<MonitoringMenuComponent>;
+describe('ChatBotHeaderComponent', () => {
+  let component: ChatBotHeaderComponent;
+  let fixture: ComponentFixture<ChatBotHeaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MonitoringMenuComponent ]
+      declarations: [ ChatBotHeaderComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MonitoringMenuComponent);
+    fixture = TestBed.createComponent(ChatBotHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -125,6 +125,16 @@ const routes: Routes = [
         path: 'add-rules/:id',
         loadComponent: () => import('./components/rules/add-rules/add-rules.component').then(c => c.AddRulesComponent)
 
+      }, {
+        path: 'templates/auto-responder',
+        loadComponent: () => import('./components/templates/auto-responder/auto-responder.component').then(c => c.AutoResponderComponent)
+
+      },
+
+      {
+        path: 'templates/add-auto-responder/:id',
+        loadComponent: () => import('./components/templates/auto-responder/create-auto-responder/create-auto-responder.component').then(c => c.CreateAutoResponderComponent)
+
       },
       {
         path: 'add-rules',

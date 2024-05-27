@@ -47,7 +47,6 @@ import { BulkUploadComponent } from './components/sentiment-analysis/bulk-upload
 import { CreateSentimentComponent } from './components/sentiment-analysis/create-sentiment/create-sentiment.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
-
 @NgModule({
   declarations: [
     ConsoleComponent,

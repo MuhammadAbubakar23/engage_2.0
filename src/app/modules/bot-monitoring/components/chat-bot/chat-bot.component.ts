@@ -1,0 +1,112 @@
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { BotService } from 'src/app/modules/console/services/bot.service';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { BotMonitoringService } from '../../services/bot-monitoring.service';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, FormControl, FormControlName } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { HeaderService } from 'src/app/services/HeaderService/header.service';
+import { environment } from 'src/environments/environment';
+import { ChatbotIdService } from 'src/app/services/chatBot_idService/chatbot-id.service';
+import { Router } from '@angular/router';
+@Component({
+  selector: 'app-chat-bot',
+  templateUrl: './chat-bot.component.html',
+  styleUrls: ['./chat-bot.component.scss'],
+  standalone: true,
+  imports: [CommonModule, SharedModule, ReactiveFormsModule, RouterModule, FormsModule,],
+})
+export class ChatBotComponent implements OnInit {
+  chatbots: any[] = []
+  chatbotForm: FormGroup;
+  BotId: any
+  constructor(private _botService: BotMonitoringService,
+    private chatBotIdS: ChatbotIdService,
+    private route: Router,
+    private formBuilder: FormBuilder, private headerService: HeaderService) {
+    this.chatbotForm = new FormGroup({
+      name: new FormControl(''),
+      timeout: new FormControl(''),
+      botType: new FormControl('')
+    });
+  }
+  saveBotId(botId: any) {
+    localStorage.setItem('bot_id', botId);
+  }
+  ngOnInit(): void {
+    this.getChatBotList();
+  }
+
+  getChatBotList() {
+    this._botService.GetAllChatBot().subscribe((res: any) => {
+      this.chatbots = res
+      console.log("Bot=====>", this.chatbots)
+    })
+  }
+  updatevalue(string: any) {
+    this.headerService.updateMessage(string)
+  }
+  viewChatbotDetails(botId: number): void {
+    this._botService.GetBotDetailsById(botId).subscribe((res: any) => {
+      console.log('Chatbot Details: ', res);
+    }, (error: any) => {
+      console.error('Error fetching chatbot details: ', error);
+    });
+  }
+  DeleteChat(botId: any) {
+    debugger
+    const confirmation = confirm('Are you sure you want to delete this template?');
+    if (confirmation) {
+      const obj = new FormData();
+      obj.append('bot_id', botId);
+      this._botService.DeleteChatBot(botId).subscribe((res: any) => {
+        console.log(res);
+        this.chatbots = this.chatbots.filter((item: any) => item.bot_id !== botId);
+      }, (error: any) => {
+        console.error('Error deleting chatbot:', error);
+      });
+    }
+  }
+  saveChatbot(): void {
+    if (this.chatbotForm.valid) {
+      const formData = new FormData();
+      formData.append('name', this.chatbotForm.value.name);
+      formData.append('timeout', this.chatbotForm.value.timeout);
+      formData.append('botType', this.chatbotForm.value.botType);
+
+      let endpoint = '';
+      switch (this.chatbotForm.value.botType) {
+        case 'Flow Bot':
+          endpoint = environment.flowBot;
+          break;
+        case 'Intent Bot':
+          endpoint = environment.intentBot;
+          break;
+        default:
+          break;
+      }
+
+      this._botService.Addbot(formData).subscribe((res: any) => {
+        const newChatbot = {
+          bot_id: res.bot_id,
+          name: this.chatbotForm.value.name,
+          progress: 0,
+          owned: true
+        };
+        this.chatbots.push(newChatbot);
+        this.chatbotForm.reset();
+        console.log('New Chatbot Added:', newChatbot);
+      }, (error: any) => {
+        console.error('Error:', error);
+      });
+    } else {
+      console.log('Form is invalid!');
+    }
+  }
+
+  shareValue(value: any) {
+    localStorage.setItem('bot_id', value.bot_id)
+    this.chatBotIdS.setOption(value.bot_id)
+    this.route.navigateByUrl('/bot-monitoring/components')
+  }
+}
