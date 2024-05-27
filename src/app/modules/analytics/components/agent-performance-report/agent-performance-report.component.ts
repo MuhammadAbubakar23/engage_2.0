@@ -294,7 +294,7 @@ export class AgentPerformanceReportComponent implements OnInit {
             },
             series: [
               {
-                name: this.selectedChannelLabel,
+                name: 'Comments',
                 data: this.Agent_data.map(item => item.y),
                 type: 'line',
                 itemStyle: {
