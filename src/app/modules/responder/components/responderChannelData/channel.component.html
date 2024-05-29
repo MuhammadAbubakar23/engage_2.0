@@ -1,5 +1,4 @@
 <div class="tab-content " id="myTabContent">
-
     <div class="tab-pane fade show active socila-channels-tab position-relative" id="channel" role="tabpanel"
         aria-labelledby="channel-tab">
         <div *ngIf="spinner1running">
@@ -15,7 +14,7 @@
                     /{{pageName}}</div>
             </div>
             <ul class="nav nav-tabs ms-3 h-100" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation" *ngIf="Comments"> 
+                <li class="nav-item" role="presentation" *ngIf="Comments">
                     <button class="nav-link h-100" (click)="activeTab('Cmnt')" [class.active]="activeTabValue == 'Cmnt'"
                         id="comment-tab" data-bs-toggle="tab" data-bs-target="#comment" type="button" role="tab"
                         aria-controls="comment" aria-selected="true">
@@ -29,9 +28,9 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link h-100" [class.active]="activeTabValue == 'TTR'" (click)="activeTab('TTR')" id="twitter-tweets-tab"
-                        data-bs-toggle="tab" data-bs-target="#twitter-tweets" type="button" role="tab"
-                        aria-controls="twitter-tweets" aria-selected="true" *ngIf="TwitterTweets.length > 0">
+                    <button class="nav-link h-100" [class.active]="activeTabValue == 'TTR'" (click)="activeTab('TTR')"
+                        id="twitter-tweets-tab" data-bs-toggle="tab" data-bs-target="#twitter-tweets" type="button"
+                        role="tab" aria-controls="twitter-tweets" aria-selected="true" *ngIf="TwitterTweets.length > 0">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
                                 <i class="fal fa-comments-alt ice"></i>
@@ -43,11 +42,10 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link h-100"
-                    [class.active]="activeTabValue == 'TM'"
-                    (click)="activeTab('TM')" id="twitter-mention-tab" data-bs-toggle="tab"
-                        data-bs-target="#twitter-mention" type="button" role="tab" aria-controls="twitter-mention"
-                        aria-selected="false" tabindex="-1" *ngIf="TwitterMentions.length > 0">
+                    <button class="nav-link h-100" [class.active]="activeTabValue == 'TM'" (click)="activeTab('TM')"
+                        id="twitter-mention-tab" data-bs-toggle="tab" data-bs-target="#twitter-mention" type="button"
+                        role="tab" aria-controls="twitter-mention" aria-selected="false" tabindex="-1"
+                        *ngIf="TwitterMentions.length > 0">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
                                 <i class="fab fa-facebook-messenger ice"></i>
@@ -59,9 +57,9 @@
                     </button>
                 </li>
                 <li class="nav-item" role="presentation" *ngIf="messageOrDM.length > 0">
-                    <button class="nav-link h-100" (click)="activeTab('DM')" [class.active]="activeTabValue == 'DM'" id="msg-tab"
-                        data-bs-toggle="tab" data-bs-target="#msg" type="button" role="tab" aria-controls="msg"
-                        aria-selected="false">
+                    <button class="nav-link h-100" (click)="activeTab('DM')" [class.active]="activeTabValue == 'DM'"
+                        id="msg-tab" data-bs-toggle="tab" data-bs-target="#msg" type="button" role="tab"
+                        aria-controls="msg" aria-selected="false">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
                                 <i class="fab fa-facebook-messenger ice"></i>
@@ -69,12 +67,12 @@
                             Messages
                             <span class="badge rounded-pill bg-light text-dark ms-3"
                                 *ngIf="totalUnrespondedMsgCountByCustomer > 0">{{totalUnrespondedMsgCountByCustomer}}</span>
-
                         </div>
                     </button>
                 </li>
                 <li class="nav-item" role="presentation" *ngIf="newPostComment.length > 0">
-                    <button class="nav-link active h-100" (click)="activeTab('CmntOnNewPost')" [class.active]="activeTabValue == 'CmntOnNewPost'" id="newPost-tab" data-bs-toggle="tab"
+                    <button class="nav-link active h-100" (click)="activeTab('CmntOnNewPost')"
+                        [class.active]="activeTabValue == 'CmntOnNewPost'" id="newPost-tab" data-bs-toggle="tab"
                         data-bs-target="#newPost" type="button" role="tab" aria-controls="newPost" aria-selected="true">
                         <div class="chat-tab-title d-flex align-items-center">
                             <span class="iconButton medium btn">
@@ -88,7 +86,6 @@
             </ul>
         </div>
         <!-- For new Post Only -->
-
         <div *ngIf="activeTabValue == 'CmntOnNewPost'" class="chat-body" data-scrollbar="true" tabindex="-1"
             style="overflow-y: auto; outline: none;" infinite-scroll [scrollWindow]="false"
             [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5" [infiniteScrollThrottle]="10">
@@ -104,71 +101,69 @@
                                             <div class="card-header bg-white msg-user-info p-0 border-0">
                                                 <div class="d-flex align-items-center">
                                                     <p class="card-text">
-                                                        <small class="silver">{{post.post.createdDate |
+                                                        <small class="silver">{{post?.post?.createdDate |
                                                             date:'EEEE, MMMM d, y, h:mm a'}}</small>
-                                                        <a *ngIf="post.post.redirectUrl != null"
-                                                            href={{post.post.redirectUrl}} target="_blank">
+                                                        <a *ngIf="post?.post?.redirectUrl != null"
+                                                            href={{post?.post?.redirectUrl}} target="_blank">
                                                             <span><i
                                                                     class="fa-regular ms-1 coal fa-arrow-up-right-from-square"></i></span></a>
                                                     </p>
                                                 </div>
                                             </div>
                                             <div class="post-img-wrap whatsappImgModalBtn" type="button"
-                                                style="width:375px;" *ngFor="let attachment of post.post.attachments">
-                                                <img *ngIf="attachment.mediaType == 'photo'"
-                                                    src={{attachment.attachmentUrl}}
+                                                style="width:375px;" *ngFor="let attachment of post?.post?.attachments">
+                                                <img *ngIf="((attachment?.mediaType | lowercase) == 'photo') || ((attachment?.mediaType | lowercase) == 'image')"
+                                                    src={{attachment?.attachmentUrl}}
                                                     style="width: -webkit-fill-available;">
-                                                <video *ngIf="attachment.mediaType == 'video'" width="375px" controls>
-                                                    <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                <video *ngIf="attachment?.mediaType == 'video'" width="375px" controls>
+                                                    <source src={{attachment?.attachmentUrl}} type="video/mp4"
                                                         style="width: -webkit-fill-available;">
                                                 </video>
-                                                <video *ngIf="attachment.mediaType == 'video_inline'" width="375px"
+                                                <video *ngIf="attachment?.mediaType == 'video_inline'" width="375px"
                                                     controls>
-                                                    <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                    <source src={{attachment?.attachmentUrl}} type="video/mp4"
                                                         style="width: -webkit-fill-available;">
                                                 </video>
                                             </div>
                                             <div class="card-body bg-light">
-
                                                 <p class="card-text nignt mb-0">
-                                                    {{post.post.caption}}
-                                                </p>
-
-
+                                                    {{post?.post?.caption}}
+                                                </p><br>
+                                                <p class="card-text nignt mb-0" *ngIf="post?.post?.description != null">
+                                                    <b>Description: </b> {{post?.post?.description}}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div *ngFor="let group of post.groupedComments | sort:criteria">
+                            <div *ngFor="let group of post?.groupedComments | sort:criteria">
                                 <div class="date-wrap">
-                                    <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}}</p>
+                                    <p class="date">{{group?.createdDate | date:'EEEE, MMMM d, y'}}</p>
                                 </div>
-                                <ng-container *ngFor="let cmnt of group.items | sort:criteria">
+                                <ng-container *ngFor="let cmnt of group?.items | sort:criteria">
                                     <div class="message-wrap agent-message-wrap right"
-                                        *ngIf="post.post.postId == cmnt.postId">
+                                        *ngIf="post?.post?.postId == cmnt?.postId">
                                         <div class="application-wrap d-flex align-items-center mb-1"
-                                            *ngIf="cmnt.ticketId != null">
+                                            *ngIf="cmnt?.ticketId != null">
                                             <p class="m-0 silver me-2 ms-1">Application ID
                                             </p>
-                                            <p class="app-no navy m-0 me-2">{{cmnt.ticketId}}</p>
+                                            <p class="app-no navy m-0 me-2">{{cmnt?.ticketId}}</p>
                                         </div>
                                         <div class="d-flex align-items-center agent-container">
                                             <div class="card w-d-inline messageUpper">
                                                 <div class="card-body shadow-sm" style="min-width: 400px;"
-                                                    [ngClass]="cmnt.queryStatus == 'Unresponded'?'unread-msg':''">
+                                                    [ngClass]="cmnt?.queryStatus == 'Unresponded'?'unread-msg':''">
                                                     <div class="d-flex msg-user-info">
                                                         <div class="d-flex align-items-center">
                                                             <h6 class="card-title navy m-0">
-                                                                {{cmnt.userName}}</h6>
-
+                                                                {{cmnt?.userName}}</h6>
                                                             <p class="card-text ms-3">
-                                                                <small class="silver">{{cmnt.createdDate |
+                                                                <small class="silver">{{cmnt?.createdDate |
                                                                     date:'h:mm:ss a'}}</small>
                                                             </p>
                                                             <button class="starbtn iconButton iconHover small btn"
-                                                                *ngIf="cmnt.starred == true"
-                                                                [ngClass]="cmnt.starred?'active':''">
+                                                                *ngIf="cmnt?.starred == true"
+                                                                [ngClass]="cmnt?.starred?'active':''">
                                                                 <i class="fal fa-star charcoal"></i>
                                                                 <i class="fas fa-star sun"></i>
                                                             </button>
@@ -177,70 +172,96 @@
                                                             <button class="btn coal p-0 ps-3" type="button"
                                                                 id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                 aria-expanded="false">
-                                                                {{cmnt.queryStatus}}
+                                                                {{cmnt?.queryStatus}}
                                                                 <i class="far fa-chevron-down ms-2"
-                                                                    *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && cmnt.queryStatus == 'Unresponded'"></i>
+                                                                    *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && cmnt?.queryStatus == 'Unresponded'"></i>
                                                             </button>
                                                             <ul class="dropdown-menu custom-dropdown"
                                                                 aria-labelledby="dropdownMenuButton1"
-                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && cmnt.queryStatus == 'Unresponded'">
+                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && cmnt?.queryStatus == 'Unresponded'">
                                                                 <li>
                                                                     <a class="dropdown-item"
-                                                                        (click)="commentStatus(cmnt.id, cmnt.contentType)">Read</a>
+                                                                        (click)="commentStatus(cmnt?.id, cmnt?.contentType)">Read</a>
                                                                     <a class="dropdown-item"
-                                                                        *ngIf="cmnt.isHide == false"
-                                                                        (click)="hideMessage(cmnt.id, true, post.platform)">Hide
+                                                                        *ngIf="cmnt?.isHide == false"
+                                                                        (click)="hideMessage(cmnt?.id, true, post?.platform)">Hide
                                                                         Message</a>
-                                                                    <a class="dropdown-item" *ngIf="cmnt.isHide == true"
-                                                                        (click)="hideMessage(cmnt.id, false, post.platform)">Unhide
+                                                                    <a class="dropdown-item"
+                                                                        *ngIf="cmnt?.isHide == true"
+                                                                        (click)="hideMessage(cmnt?.id, false, post?.platform)">Unhide
                                                                         Message</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="post-img-wrap whatsappImgModalBtn" type="button"
-                                                        style="width:375px;"
-                                                        *ngFor="let attachment of cmnt.attachments">
-                                                        <img *ngIf="attachment.mediaType == 'photo'"
-                                                            src={{attachment.attachmentUrl}}
-                                                            style="width: -webkit-fill-available;">
-                                                        <img *ngIf="attachment.mediaType == 'animated_image_share'"
-                                                            src={{attachment.attachmentUrl}}
-                                                            style="width: -webkit-fill-available;">
-                                                        <img *ngIf="attachment.mediaType == 'sticker'"
-                                                            src={{attachment.attachmentUrl}}
-                                                            style="width: -webkit-fill-available;">
-                                                        <video *ngIf="attachment.mediaType == 'video'" width="375px"
-                                                            controls>
-                                                            <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                    <div *ngFor="let attachment of cmnt?.attachments"
+                                                            style="width: 375px;">
+                                                            <img class="whatsapp-single-img whatsappImgModalBtn"
+                                                                *ngIf="isImage(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls
                                                                 style="width: -webkit-fill-available;">
-                                                        </video>
-                                                    </div>
-                                                    <p class="card-text nignt">{{cmnt.message}}</p>
-                                                    <div class="tags" *ngFor="let tag of cmnt.tags">
+                                                            <img *ngIf="attachment.contentType == 'animated_image_share'"
+                                                                src={{attachment.attachmentUrl}}
+                                                                style="width: -webkit-fill-available;">
+                                                            <img *ngIf="attachment.contentType == 'sticker'"
+                                                                src={{attachment.attachmentUrl}}
+                                                                style="width: -webkit-fill-available;">
+                                                            <video class="video" *ngIf="isVideo(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls
+                                                                style="width: -webkit-fill-available;"></video>
+                                                            <audio class="audio" *ngIf="isAudio(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls
+                                                                style="width: -webkit-fill-available;"></audio>
+                                                            <a *ngIf="isOther(attachment)"
+                                                                [href]="attachment.attachmentUrl" target="_blank">
+                                                                <div
+                                                                    class="card-body pdf-body bg-light align-items-center row">
+                                                                    <i *ngIf="(attachment.attachmentUrl | getFileTypeFromUrl) == 'pdf'"
+                                                                        class="fas fa-file-pdf iconButton file-icon radical col-1"></i>
+                                                                    <i *ngIf="((attachment.attachmentUrl | getFileTypeFromUrl) == 'document') || ((attachment.attachmentUrl | getFileTypeFromUrl) == 'docx')"
+                                                                        class="fas fa-file-word iconButton file-icon sky col-1"></i>
+                                                                    <i *ngIf="((attachment.attachmentUrl | getFileTypeFromUrl) == 'sheet') || ((attachment.attachmentUrl | getFileTypeFromUrl) == 'xlsx')"
+                                                                        class="fas fa-file-excel iconButton file-icon excelGreen col-1"></i>
+                                                                    <i *ngIf="(attachment.attachmentUrl | getFileTypeFromUrl) == 'csv'"
+                                                                        class="fas fa-file-csv iconButton file-icon excelGreen col-1"></i>
+                                                                    <i *ngIf="(attachment.attachmentUrl | getFileTypeFromUrl) != 'csv' &&  
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'sheet' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'xlsx' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'document' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'docx' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'pdf'"
+                                                                        class="fas fa-file-lines iconButton file-icon col-1">
+                                                                    </i>
+                                                                    <p class="card-text ms-3 col-10">{{
+                                                                        attachment.attachmentUrl | splitNameFromUrl }}
+                                                                    </p>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    <p class="card-text nignt">{{cmnt?.message}}</p>
+                                                    <div class="tags" *ngFor="let tag of cmnt?.tags">
                                                         <span class="badge rounded-pill tag tag1 selected"
-                                                            (click)="removeTagFromFeed(tag.feedId, tag.name, post.platform)">{{tag.name
+                                                            (click)="removeTagFromFeed(tag.feedId, tag.name, post?.platform)">{{tag.name
                                                             | tagSlugConversion}}</span>
                                                     </div>
                                                     <!-- For Sentiment Pills -->
-                                                    <div class="tags" *ngIf="cmnt.sentiment">
+                                                    <div class="tags" *ngIf="cmnt?.sentiment">
                                                         <span
-                                                            class="badge rounded-pills tag tag1 selected">{{cmnt.sentiment?.name
+                                                            class="badge rounded-pills tag tag1 selected">{{cmnt?.sentiment?.name
                                                             | tagSlugConversion}}</span>
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                 </div>
-
                                                 <div class="message-bottom"
                                                     *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
                                                     <div class="row">
                                                         <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                             <div class="message-actionlist d-flex align-items-center">
                                                                 <div class="box"
-                                                                    *ngIf="showLikeBtnTo.includes(post.platform | lowercase)">
+                                                                    *ngIf="showLikeBtnTo.includes(post?.platform | lowercase)">
                                                                     <a class="message-actionItem coal likebht p-0 label-reactions"
-                                                                        (click)="likeByAdmin(cmnt.id, cmnt.isLikedByAdmin, post.platform, post.post?.profile.page_Id, post.post?.profile.profile_Id, post.user?.userId)"
-                                                                        [class.active]="cmnt.isLikedByAdmin == true">
+                                                                        (click)="likeByAdmin(cmnt?.id, cmnt?.isLikedByAdmin, post?.platform, post?.post?.profile.page_Id, post?.post?.profile.profile_Id, post?.user?.userId)"
+                                                                        [class.active]="cmnt?.isLikedByAdmin == true">
                                                                         <span class="iconButton small btn">
                                                                             <i class="fal fa-thumbs-up coal"></i>
                                                                             <i class="fas fa-thumbs-up"></i>
@@ -249,7 +270,7 @@
                                                                     </a>
                                                                 </div>
                                                                 <a class="message-actionItem replyBtn coal"
-                                                                    (click)="SendnewCommentInformation(cmnt.id)">
+                                                                    (click)="SendnewCommentInformation(cmnt?.id)">
                                                                     <span class="iconButton small btn">
                                                                         <i class="fal fa-reply coal"></i>
                                                                     </span>
@@ -281,7 +302,6 @@
                                                                                     class="list-group list-group-flush dropend">
                                                                                     <a data-bs-toggle="dropdown"
                                                                                         class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
-
                                                                                         <div class="w-100 list-txt">
                                                                                             <div
                                                                                                 class="d-flex w-100 justify-content-between">
@@ -291,7 +311,6 @@
                                                                                                 </h6>
                                                                                             </div>
                                                                                         </div>
-
                                                                                     </a>
                                                                                     <ul class="dropdown-menu shadow">
                                                                                         <form class="custom-searchbar">
@@ -316,7 +335,7 @@
                                                                                                 <div
                                                                                                     class="list-group list-group-flush">
                                                                                                     <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                        (click)="insertTagsForFeed(cmnt.id, keyword.slug, post.platform)"
+                                                                                                        (click)="insertTagsForFeed(cmnt?.id, keyword.slug, post?.platform)"
                                                                                                         [ngClass]="activeTag==true?'active':''"
                                                                                                         *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                         <div
@@ -373,7 +392,7 @@
                                                                                     <div class="list-group list-group-flush"
                                                                                         *ngFor="let sentiment of Sentiments">
                                                                                         <a class="list-group-item d-flex level1Btn "
-                                                                                            (click)="insertSentimentForFeed(cmnt.id, sentiment.slug, post.platform)">
+                                                                                            (click)="insertSentimentForFeed(cmnt?.id, sentiment.slug, post?.platform)">
                                                                                             <div class="list-down-icon">
                                                                                                 <span
                                                                                                     class="btn iconButton iconHover medium"
@@ -390,9 +409,8 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                             <small>
-                                                                                                <!-- <i [class.fa-check-circle]="cmnt.sentiment.text == sentiment.name" class="fal sky"></i> -->
+                                                                                                <!-- <i [class.fa-check-circle]="cmnt?.sentiment.text == sentiment.name" class="fal sky"></i> -->
                                                                                             </small>
-
                                                                                         </a>
                                                                                     </div>
                                                                                 </div>
@@ -406,13 +424,13 @@
                                                 </div>
                                             </div>
                                             <!-- <ng-container >
-                                            <span *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'" class="complaintBtn" (click)="toggle('ticket', cmnt.id)"
+                                            <span *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'" class="complaintBtn" (click)="toggle('ticket', cmnt?.id)"
                                             type="button">
                                             <i class="fal fa-plus-circle sky"></i>
                                         </span>
                                         </ng-container> -->
                                         </div>
-                                        <div *ngFor="let reply of cmnt.replies | sort:criteria">
+                                        <div *ngFor="let reply of cmnt?.replies | sort:criteria">
                                             <!-- <div class="date-wrap">
                                                                     <p class="date">{{reply.createdDate | date:'EEEE, MMMM d, y'}}</p>
                                                                 </div> -->
@@ -428,30 +446,50 @@
                                                                         | date:'h:mm:ss a'}}</small>
                                                                 </p>
                                                             </div>
-
                                                             <div *ngFor="let attachment of reply.attachments"
-                                                                style="width:375px;">
-                                                                <img class="whatsapp-single-img whatsappImgModalBtn"
-                                                                    *ngIf="isImage(attachment)"
-                                                                    src={{attachment.attachmentUrl}} controls
-                                                                    style="width: -webkit-fill-available;">
-                                                                <img *ngIf="attachment.mediaType == 'animated_image_share'"
-                                                                    src={{attachment.attachmentUrl}}
-                                                                    style="width: -webkit-fill-available;">
-                                                                <img *ngIf="attachment.mediaType == 'sticker'"
-                                                                    src={{attachment.attachmentUrl}}
-                                                                    style="width: -webkit-fill-available;">
-
-
-                                                                <video *ngIf="isVideo(attachment)"
-                                                                    src={{attachment.attachmentUrl}} controls
-                                                                    style="width: -webkit-fill-available;"></video>
-
-                                                                <audio *ngIf="isAudio(attachment)"
-                                                                    src={{attachment.attachmentUrl}} controls
-                                                                    style="width: -webkit-fill-available;"></audio>
-
-                                                            </div>
+                                                                    style="width: 375px;">
+                                                                    <img class="whatsapp-single-img whatsappImgModalBtn"
+                                                                        *ngIf="isImage(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <img *ngIf="attachment.contentType == 'animated_image_share'"
+                                                                        src={{attachment.attachmentUrl}}
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <img *ngIf="attachment.contentType == 'sticker'"
+                                                                        src={{attachment.attachmentUrl}}
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <video class="video" *ngIf="isVideo(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;"></video>
+                                                                    <audio class="audio" *ngIf="isAudio(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;"></audio>
+                                                                    <a *ngIf="isOther(attachment)"
+                                                                        [href]="attachment.attachmentUrl"
+                                                                        target="_blank">
+                                                                        <div
+                                                                            class="card-body pdf-body bg-light align-items-center row">
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'pdf'"
+                                                                                class="fas fa-file-pdf iconButton file-icon radical col-1"></i>
+                                                                            <i *ngIf="((attachment.name | getFileTypeFromUrl) == 'document') || ((attachment.name | getFileTypeFromUrl) == 'docx')"
+                                                                                class="fas fa-file-word iconButton file-icon sky  col-1"></i>
+                                                                            <i *ngIf="((attachment.name | getFileTypeFromUrl) == 'sheet') || ((attachment.name | getFileTypeFromUrl) == 'xlsx')"
+                                                                                class="fas fa-file-excel iconButton file-icon excelGreen  col-1"></i>
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'csv'"
+                                                                                class="fas fa-file-csv iconButton file-icon excelGreen  col-1"></i>
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) != 'csv' &&  
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'sheet' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'xlsx' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'document' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'docx' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'pdf'"
+                                                                                class="fas fa-file-lines iconButton file-icon  col-1">
+                                                                            </i>
+                                                                            <p class="card-text ms-3 col-10">{{
+                                                                                attachment.name}}</p>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
                                                             <p class="card-textnignt p-0">{{reply.message}}</p>
                                                         </div>
                                                         <div class="message-bottom">
@@ -465,18 +503,14 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </ng-container>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -491,54 +525,52 @@
                         aria-labelledby="comment-tab">
                         <div class="chat-box-wrap" *ngFor="let post of Comments">
                             <hr>
-                            <div class="message-wrap agent-message-wrap right">
+                            <div class="message-wrap agent-message-wrap right" *ngIf="post.post !== null">
                                 <div class="d-flex align-items-center agent-container">
                                     <div class="card chennels-post">
                                         <div class="card-body">
                                             <div class="card-header bg-white msg-user-info p-0 border-0">
                                                 <div class="d-flex align-items-center">
                                                     <p class="card-text">
-                                                        <small class="silver">{{post.post.createdDate |
+                                                        <small class="silver">{{post?.post?.createdDate |
                                                             date:'EEEE, MMMM d, y, h:mm a'}}</small>
-                                                        <a *ngIf="post.post.redirectUrl != null"
-                                                            href={{post.post.redirectUrl}} target="_blank">
+                                                        <a *ngIf="post?.post?.redirectUrl != null"
+                                                            href={{post?.post?.redirectUrl}} target="_blank">
                                                             <span><i
                                                                     class="fa-regular ms-1 coal fa-arrow-up-right-from-square"></i></span></a>
                                                     </p>
                                                 </div>
                                             </div>
-
                                             <div class="post-img-wrap whatsappImgModalBtn" type="button"
-                                                style="width:375px;" *ngFor="let attachment of post.post.attachments">
-                                                <img *ngIf="attachment.mediaType == 'photo' || attachment.mediaType == 'image'"
-                                                    src={{attachment.attachmentUrl}}
+                                                style="width:375px;" *ngFor="let attachment of post?.post?.attachments">
+                                                <img *ngIf="((attachment?.mediaType | lowercase) == 'photo') || ((attachment?.mediaType | lowercase) == 'image')"
+                                                    src={{attachment?.attachmentUrl}}
                                                     style="width: -webkit-fill-available;">
-                                                <video *ngIf="isVideo(attachment)" src={{attachment.attachmentUrl}}
+                                                <video *ngIf="isVideo(attachment)" src={{attachment?.attachmentUrl}}
                                                     controls style="width: -webkit-fill-available;"></video>
-                                                <img *ngIf="attachment.mediaType == 'lead_gen'"
-                                                    src={{attachment.attachmentUrl}}
+                                                <img *ngIf="attachment?.mediaType == 'lead_gen'"
+                                                    src={{attachment?.attachmentUrl}}
                                                     style="width: -webkit-fill-available;">
                                             </div>
                                             <div class="card-body bg-light">
-
                                                 <p class="card-text nignt mb-0">
-                                                    {{post.post.caption}}
-                                                </p>
-
-
+                                                    {{post?.post?.caption}}
+                                                </p><br>
+                                                <p class="card-text nignt mb-0"
+                                                    *ngIf="post?.post?.description != null"><b>Description: </b>
+                                                    {{post?.post?.description}}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div *ngFor="let group of post.groupedComments | sort:criteria">
+                            <div *ngFor="let group of post?.groupedComments | sort:criteria">
                                 <div class="date-wrap">
-                                    <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}}</p>
+                                    <p class="date">{{group?.createdDate | date:'EEEE, MMMM d, y'}}</p>
                                 </div>
-
-                                <ng-container *ngFor="let cmnt of group.items | sort:criteria">
+                                <ng-container *ngFor="let cmnt of group?.items | sort:criteria">
                                     <!-- for dispositions  -->
-                                    <ng-container *ngIf="cmnt.dispositions != null">
+                                    <ng-container *ngIf="cmnt?.dispositions != null">
                                         <div class="accordion email-accordion" id="accordionExample"
                                             style="display:block">
                                             <div class="accordion-item email-wrap marked-wrap mt-3">
@@ -553,20 +585,22 @@
                                                             <div class="card-header-top">
                                                                 <div class="d-block">
                                                                     <h6 class="mb-1 night">
-                                                                        Marked as {{cmnt.dispositions.dispositionName
+                                                                        Marked as {{cmnt?.dispositions?.dispositionName
                                                                         | uppercase}}
                                                                     </h6>
                                                                     <small class="night">
                                                                         <span>by: <h6 class="d-inline fw-bold charcoal">
-                                                                                {{cmnt.dispositions.userName}} </h6>
+                                                                                {{cmnt?.dispositions?.userName}} </h6>
                                                                         </span>
                                                                     </small>
                                                                 </div>
-                                                                <small class="silver full-date">{{cmnt.dispositions.createdDate | date:'MMMM dd, yyyy, h:mm a'}}</small>
+                                                                <small
+                                                                    class="silver full-date">{{cmnt?.dispositions?.createdDate
+                                                                    | date:'MMMM dd, yyyy, h:mm a'}}</small>
                                                             </div>
                                                             <div class="msg-snippet show-text">
                                                                 <p class="mb-1 coal">
-                                                                    {{cmnt.dispositions.description}} </p>
+                                                                    {{cmnt?.dispositions?.description}} </p>
                                                             </div>
                                                         </div>
                                                     </button>
@@ -576,29 +610,28 @@
                                     </ng-container>
                                     <!-- for dispositions -->
                                     <div class="message-wrap agent-message-wrap right"
-                                        *ngIf="post.post.postId == cmnt.postId">
+                                        *ngIf="(post?.post?.postId == cmnt?.postId) || (fetchedPostType == 'WM')">
                                         <div class="application-wrap d-flex align-items-center mb-1"
-                                            *ngIf="cmnt.ticketId != null">
+                                            *ngIf="cmnt?.ticketId != null">
                                             <p class="m-0 silver me-2 ms-1">Application ID
                                             </p>
-                                            <p class="app-no navy m-0 me-2">{{cmnt.ticketId}}</p>
+                                            <p class="app-no navy m-0 me-2">{{cmnt?.ticketId}}</p>
                                         </div>
                                         <div class="d-flex align-items-center agent-container">
                                             <div class="card w-d-inline messageUpper">
                                                 <div class="card-body shadow-sm" style="min-width: 400px;"
-                                                    [ngClass]="cmnt.queryStatus == 'Unresponded'?'unread-msg':''">
+                                                    [ngClass]="cmnt?.queryStatus == 'Unresponded'?'unread-msg':''">
                                                     <div class="d-flex msg-user-info">
                                                         <div class="d-flex align-items-center">
                                                             <h6 class="card-title navy m-0">
-                                                                {{cmnt.userName}}</h6>
-
+                                                                {{cmnt?.userName}}</h6>
                                                             <p class="card-text ms-3">
-                                                                <small class="silver">{{cmnt.createdDate |
+                                                                <small class="silver">{{cmnt?.createdDate |
                                                                     date:'h:mm:ss a'}}</small>
                                                             </p>
                                                             <button class="starbtn iconButton iconHover small btn"
-                                                                *ngIf="cmnt.starred == true"
-                                                                [ngClass]="cmnt.starred?'active':''">
+                                                                *ngIf="cmnt?.starred == true"
+                                                                [ngClass]="cmnt?.starred?'active':''">
                                                                 <i class="fal fa-star charcoal"></i>
                                                                 <i class="fas fa-star sun"></i>
                                                             </button>
@@ -607,75 +640,99 @@
                                                             <button class="btn coal p-0 ps-3" type="button"
                                                                 id="dropdownMenuButton1" data-bs-toggle="dropdown"
                                                                 aria-expanded="false">
-                                                                {{cmnt.queryStatus}}
+                                                                {{cmnt?.queryStatus}}
                                                                 <i class="far fa-chevron-down ms-2"
-                                                                    *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && cmnt.queryStatus == 'Unresponded'"></i>
+                                                                    *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && cmnt?.queryStatus == 'Unresponded'"></i>
                                                             </button>
                                                             <ul class="dropdown-menu custom-dropdown"
                                                                 aria-labelledby="dropdownMenuButton1"
-                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && cmnt.queryStatus == 'Unresponded'">
+                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && cmnt?.queryStatus == 'Unresponded'">
                                                                 <li>
                                                                     <a class="dropdown-item"
-                                                                        (click)="commentStatus(cmnt.id, cmnt.contentType)">Read</a>
+                                                                        (click)="commentStatus(cmnt?.id, cmnt?.contentType)">Read</a>
                                                                     <ng-container
-                                                                        *ngIf="showHideBtnTo.includes(post.platform | lowercase)">
+                                                                        *ngIf="showHideBtnTo.includes(post?.platform | lowercase)">
                                                                         <a class="dropdown-item"
-                                                                            *ngIf="cmnt.isHide == false"
-                                                                            (click)="hideMessage(cmnt.id, true, post.platform)">Hide
+                                                                            *ngIf="cmnt?.isHide == false"
+                                                                            (click)="hideMessage(cmnt?.id, true, post?.platform)">Hide
                                                                             Message</a>
                                                                         <a class="dropdown-item"
-                                                                            *ngIf="cmnt.isHide == true"
-                                                                            (click)="hideMessage(cmnt.id, false, post.platform)">Unhide
+                                                                            *ngIf="cmnt?.isHide == true"
+                                                                            (click)="hideMessage(cmnt?.id, false, post?.platform)">Unhide
                                                                             Message</a>
                                                                     </ng-container>
-
                                                                 </li>
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="post-img-wrap whatsappImgModalBtn" type="button"
-                                                        style="width:375px;"
-                                                        *ngFor="let attachment of cmnt.attachments">
-                                                        <img *ngIf="attachment.mediaType == 'photo'"
-                                                            src={{attachment.attachmentUrl}}
-                                                            style="width: -webkit-fill-available;">
-                                                        <img *ngIf="attachment.mediaType == 'animated_image_share'"
-                                                            src={{attachment.attachmentUrl}}
-                                                            style="width: -webkit-fill-available;">
-                                                        <img *ngIf="attachment.mediaType == 'sticker'"
-                                                            src={{attachment.attachmentUrl}}
-                                                            style="width: -webkit-fill-available;">
-                                                        <video *ngIf="attachment.mediaType == 'video'" width="375px"
-                                                            controls>
-                                                            <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                    <div *ngFor="let attachment of cmnt?.attachments"
+                                                            style="width: 375px;">
+                                                            <img class="whatsapp-single-img whatsappImgModalBtn"
+                                                                *ngIf="isImage(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls
                                                                 style="width: -webkit-fill-available;">
-                                                        </video>
-                                                    </div>
-                                                    <p class="card-text nignt">{{cmnt.message}}</p>
-                                                    <div class="tags" *ngFor="let tag of cmnt.tags">
+                                                            <img *ngIf="attachment.contentType == 'animated_image_share'"
+                                                                src={{attachment.attachmentUrl}}
+                                                                style="width: -webkit-fill-available;">
+                                                            <img *ngIf="attachment.contentType == 'sticker'"
+                                                                src={{attachment.attachmentUrl}}
+                                                                style="width: -webkit-fill-available;">
+                                                            <video class="video" *ngIf="isVideo(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls
+                                                                style="width: -webkit-fill-available;"></video>
+                                                            <audio class="audio" *ngIf="isAudio(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls
+                                                                style="width: -webkit-fill-available;"></audio>
+                                                            <a *ngIf="isOther(attachment)"
+                                                                [href]="attachment.attachmentUrl" target="_blank">
+                                                                <div
+                                                                    class="card-body pdf-body bg-light align-items-center row">
+                                                                    <i *ngIf="(attachment.attachmentUrl | getFileTypeFromUrl) == 'pdf'"
+                                                                        class="fas fa-file-pdf iconButton file-icon radical col-1"></i>
+                                                                    <i *ngIf="((attachment.attachmentUrl | getFileTypeFromUrl) == 'document') || ((attachment.attachmentUrl | getFileTypeFromUrl) == 'docx')"
+                                                                        class="fas fa-file-word iconButton file-icon sky col-1"></i>
+                                                                    <i *ngIf="((attachment.attachmentUrl | getFileTypeFromUrl) == 'sheet') || ((attachment.attachmentUrl | getFileTypeFromUrl) == 'xlsx')"
+                                                                        class="fas fa-file-excel iconButton file-icon excelGreen col-1"></i>
+                                                                    <i *ngIf="(attachment.attachmentUrl | getFileTypeFromUrl) == 'csv'"
+                                                                        class="fas fa-file-csv iconButton file-icon excelGreen col-1"></i>
+                                                                    <i *ngIf="(attachment.attachmentUrl | getFileTypeFromUrl) != 'csv' &&  
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'sheet' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'xlsx' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'document' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'docx' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'pdf'"
+                                                                        class="fas fa-file-lines iconButton file-icon col-1">
+                                                                    </i>
+                                                                    <p class="card-text ms-3 col-10">{{
+                                                                        attachment.attachmentUrl | splitNameFromUrl }}
+                                                                    </p>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    <p class="card-text nignt">{{cmnt?.message}}</p>
+                                                    <div class="tags" *ngFor="let tag of cmnt?.tags">
                                                         <span class="badge rounded-pill tag tag1 selected"
-                                                            (click)="removeTagFromFeed(tag.feedId, tag.name, post.platform)">{{tag.name
+                                                            (click)="removeTagFromFeed(tag.feedId, tag.name, post?.platform)">{{tag.name
                                                             | tagSlugConversion}}</span>
                                                     </div>
                                                     <!-- For Sentiment Pills -->
-                                                    <div class="tags" *ngIf="cmnt.sentiment">
+                                                    <div class="tags" *ngIf="cmnt?.sentiment">
                                                         <span
-                                                            class="badge rounded-pills tag tag1 selected">{{cmnt.sentiment?.name
+                                                            class="badge rounded-pills tag tag1 selected">{{cmnt?.sentiment?.name
                                                             | tagSlugConversion}}</span>
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                 </div>
-
                                                 <div class="message-bottom"
                                                     *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
                                                     <div class="row">
                                                         <div class="col-lg-10 ps-4 d-flex align-items-center">
                                                             <div class="message-actionlist d-flex align-items-center">
                                                                 <div class="box"
-                                                                    *ngIf="showLikeBtnTo.includes(post.platform | lowercase)">
+                                                                    *ngIf="showLikeBtnTo.includes(post?.platform | lowercase)">
                                                                     <a class="message-actionItem coal likebht p-0 label-reactions"
-                                                                        (click)="likeByAdmin(cmnt.id, cmnt.isLikedByAdmin, post.platform, post.post?.profile.page_Id, post.post?.profile.profile_Id, post.user?.userId)"
-                                                                        [class.active]="cmnt.isLikedByAdmin == true">
+                                                                        (click)="likeByAdmin(cmnt?.id, cmnt?.isLikedByAdmin, post?.platform, post?.post?.profile.page_Id, post?.post?.profile.profile_Id, post?.user?.userId)"
+                                                                        [class.active]="cmnt?.isLikedByAdmin == true">
                                                                         <span class="iconButton small btn">
                                                                             <i class="fal fa-thumbs-up coal"></i>
                                                                             <i class="fas fa-thumbs-up"></i>
@@ -684,7 +741,7 @@
                                                                     </a>
                                                                 </div>
                                                                 <a class="message-actionItem replyBtn coal"
-                                                                    (click)="SendCommentInformation(cmnt.id)">
+                                                                    (click)="SendCommentInformation(cmnt?.id)">
                                                                     <span class="iconButton small btn">
                                                                         <i class="fal fa-reply coal"></i>
                                                                     </span>
@@ -716,7 +773,6 @@
                                                                                     class="list-group list-group-flush dropend">
                                                                                     <a data-bs-toggle="dropdown"
                                                                                         class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
-
                                                                                         <div class="w-100 list-txt">
                                                                                             <div
                                                                                                 class="d-flex w-100 justify-content-between">
@@ -726,7 +782,6 @@
                                                                                                 </h6>
                                                                                             </div>
                                                                                         </div>
-
                                                                                     </a>
                                                                                     <ul class="dropdown-menu shadow">
                                                                                         <form class="custom-searchbar">
@@ -751,7 +806,7 @@
                                                                                                 <div
                                                                                                     class="list-group list-group-flush">
                                                                                                     <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                        (click)="insertTagsForFeed(cmnt.id, keyword.slug, post.platform)"
+                                                                                                        (click)="insertTagsForFeed(cmnt?.id, keyword.slug, post?.platform)"
                                                                                                         [ngClass]="activeTag==true?'active':''"
                                                                                                         *ngFor="let keyword of tag.subTags | filter: searchText">
                                                                                                         <div
@@ -808,7 +863,7 @@
                                                                                     <div class="list-group list-group-flush"
                                                                                         *ngFor="let sentiment of Sentiments">
                                                                                         <a class="list-group-item d-flex level1Btn "
-                                                                                            (click)="insertSentimentForFeed(cmnt.id, sentiment.slug, post.platform)">
+                                                                                            (click)="insertSentimentForFeed(cmnt?.id, sentiment.slug, post?.platform)">
                                                                                             <div class="list-down-icon">
                                                                                                 <span
                                                                                                     class="btn iconButton iconHover medium"
@@ -825,9 +880,8 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                             <small>
-                                                                                                <!-- <i [class.fa-check-circle]="cmnt.sentiment.text == sentiment.name" class="fal sky"></i> -->
+                                                                                                <!-- <i [class.fa-check-circle]="cmnt?.sentiment.text == sentiment.name" class="fal sky"></i> -->
                                                                                             </small>
-
                                                                                         </a>
                                                                                     </div>
                                                                                 </div>
@@ -872,13 +926,13 @@
                                                 </div>
                                             </div>
                                             <!-- <ng-container >
-                                                <span *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'" class="complaintBtn" (click)="toggle('ticket', cmnt.id)"
+                                                <span *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'" class="complaintBtn" (click)="toggle('ticket', cmnt?.id)"
                                                 type="button">
                                                 <i class="fal fa-plus-circle sky"></i>
                                             </span>
                                             </ng-container> -->
                                         </div>
-                                        <div *ngFor="let reply of cmnt.replies | sort:criteria">
+                                        <div *ngFor="let reply of cmnt?.replies | sort:criteria">
                                             <!-- <div class="date-wrap">
                                                                         <p class="date">{{reply.createdDate | date:'EEEE, MMMM d, y'}}</p>
                                                                     </div> -->
@@ -894,30 +948,50 @@
                                                                         | date:'h:mm:ss a'}}</small>
                                                                 </p>
                                                             </div>
-
                                                             <div *ngFor="let attachment of reply.attachments"
-                                                                style="width:375px;">
-                                                                <img class="whatsapp-single-img whatsappImgModalBtn"
-                                                                    *ngIf="isImage(attachment)"
-                                                                    src={{attachment.attachmentUrl}} controls
-                                                                    style="width: -webkit-fill-available;">
-                                                                <img *ngIf="attachment.mediaType == 'animated_image_share'"
-                                                                    src={{attachment.attachmentUrl}}
-                                                                    style="width: -webkit-fill-available;">
-                                                                <img *ngIf="attachment.mediaType == 'sticker'"
-                                                                    src={{attachment.attachmentUrl}}
-                                                                    style="width: -webkit-fill-available;">
-
-
-                                                                <video *ngIf="isVideo(attachment)"
-                                                                    src={{attachment.attachmentUrl}} controls
-                                                                    style="width: -webkit-fill-available;"></video>
-
-                                                                <audio *ngIf="isAudio(attachment)"
-                                                                    src={{attachment.attachmentUrl}} controls
-                                                                    style="width: -webkit-fill-available;"></audio>
-
-                                                            </div>
+                                                                    style="width: 375px;">
+                                                                    <img class="whatsapp-single-img whatsappImgModalBtn"
+                                                                        *ngIf="isImage(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <img *ngIf="attachment.contentType == 'animated_image_share'"
+                                                                        src={{attachment.attachmentUrl}}
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <img *ngIf="attachment.contentType == 'sticker'"
+                                                                        src={{attachment.attachmentUrl}}
+                                                                        style="width: -webkit-fill-available;">
+                                                                    <video class="video" *ngIf="isVideo(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;"></video>
+                                                                    <audio class="audio" *ngIf="isAudio(attachment)"
+                                                                        src={{attachment.attachmentUrl}} controls
+                                                                        style="width: -webkit-fill-available;"></audio>
+                                                                    <a *ngIf="isOther(attachment)"
+                                                                        [href]="attachment.attachmentUrl"
+                                                                        target="_blank">
+                                                                        <div
+                                                                            class="card-body pdf-body bg-light align-items-center row">
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'pdf'"
+                                                                                class="fas fa-file-pdf iconButton file-icon radical col-1"></i>
+                                                                            <i *ngIf="((attachment.name | getFileTypeFromUrl) == 'document') || ((attachment.name | getFileTypeFromUrl) == 'docx')"
+                                                                                class="fas fa-file-word iconButton file-icon sky  col-1"></i>
+                                                                            <i *ngIf="((attachment.name | getFileTypeFromUrl) == 'sheet') || ((attachment.name | getFileTypeFromUrl) == 'xlsx')"
+                                                                                class="fas fa-file-excel iconButton file-icon excelGreen  col-1"></i>
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) == 'csv'"
+                                                                                class="fas fa-file-csv iconButton file-icon excelGreen  col-1"></i>
+                                                                            <i *ngIf="(attachment.name | getFileTypeFromUrl) != 'csv' &&  
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'sheet' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'xlsx' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'document' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'docx' &&
+                                                                                          (attachment.name | getFileTypeFromUrl) != 'pdf'"
+                                                                                class="fas fa-file-lines iconButton file-icon  col-1">
+                                                                            </i>
+                                                                            <p class="card-text ms-3 col-10">{{
+                                                                                attachment.name}}</p>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
                                                             <p class="card-textnignt p-0">{{reply.message}}</p>
                                                         </div>
                                                         <div class="message-bottom">
@@ -931,342 +1005,415 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </ng-container>
                                 <!-- <hr> -->
                             </div>
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-        <div *ngIf="activeTabValue == 'DM'" class="chat-body" data-scrollbar="true" tabindex="-1" style="overflow: auto; outline: none;"
-            infinite-scroll [scrollWindow]="false" [infiniteScrollDistance]="0.4" [infiniteScrollUpDistance]="0.5"
-            [infiniteScrollThrottle]="10" (scrolled)="onScrollMessages()">
+        <div *ngIf="activeTabValue == 'DM'" class="chat-body" data-scrollbar="true" tabindex="-1"
+            style="overflow: auto; outline: none;" infinite-scroll [scrollWindow]="false" [infiniteScrollDistance]="0.4"
+            [infiniteScrollUpDistance]="0.5" [infiniteScrollThrottle]="10" (scrolled)="onScrollMessages()">
             <div class="scroll-content">
                 <div class="tab-content m-4" id="myTabContent">
-                    <div *ngIf="messageOrDM.length > 0" class="tab-pane fade show active" id="msg" role="tabpanel"
-                        aria-labelledby="msg-tab">
+                    <div *ngIf="messageOrDM" class="tab-pane fade show active" id="fb-msg" role="tabpanel"
+                        aria-labelledby="fb-msg-tab">
                         <div class="chat-box-wrap" *ngFor="let group of groupedMessages | sort:criteria">
-
                             <div class="date-wrap">
                                 <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}}</p>
                             </div>
-                            <ng-container *ngFor="let tdm of group.items | sort:criteria">
-                                <ng-container>
-                                    <div class="message-wrap agent-message-wrap right">
-                                        <div class="application-wrap d-flex align-items-center mb-1"
-                                            *ngIf="tdm.ticketId != null">
-                                            <p class="m-0 silver me-2 ms-1">Application ID
-                                            </p>
-                                            <p class="app-no navy m-0 me-2">{{tdm.ticketId}}</p>
-                                        </div>
-                                        <div class="d-flex align-items-center agent-container">
-                                            <div class="card w-d-inline messageUpper">
-                                                <div class="card-body shadow-sm" style="min-width: 400px;"
-                                                    [ngClass]="tdm.queryStatus == 'Unresponded'?'unread-msg':''">
-
-                                                    <div class="d-flex msg-user-info">
-                                                        <div class="d-flex align-items-center">
-                                                            <h6 class="card-title navy m-0">
-                                                                {{tdm.fromName}}</h6>
-
-                                                            <p class="card-text ms-3">
-                                                                <small class="silver">{{tdm.createdDate |
-                                                                    date:'h:mm:ss a'}}</small>
-                                                            </p>
-                                                            <a *ngIf="tdm.redirectUrl != null" href={{tdm.redirectUrl}}
-                                                                target="_blank"> <span><i
-                                                                        class="fa-regular ms-1 coal fa-arrow-up-right-from-square"></i></span></a>
-                                                            <button class="starbtn iconButton iconHover small btn"
-                                                                *ngIf="tdm.starred == true"
-                                                                [ngClass]="tdm.starred?'active':''">
-                                                                <i class="fal fa-star charcoal"></i>
-                                                                <i class="fas fa-star sun"></i>
-                                                            </button>
-                                                        </div>
-                                                        <div class="dropdown w-auto">
-                                                            <button class="btn coal p-0 ps-3" type="button"
-                                                                id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                                aria-expanded="false">
-                                                                {{tdm.queryStatus}}
-                                                                <i class="far fa-chevron-down ms-2"
-                                                                    *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && tdm.queryStatus == 'Unresponded'"></i>
-                                                            </button>
-                                                            <ul class="dropdown-menu custom-dropdown"
-                                                                aria-labelledby="dropdownMenuButton1"
-                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && tdm.queryStatus == 'Unresponded'">
-                                                                <li>
-                                                                    <!-- From Tags Api -->
-                                                                    <!-- <ng-container *ngFor="let status of messagesStatus">
-                                                                    <a class="dropdown-item" *ngIf="tdm.queryStatus != 'Responded'" (click)="commentStatus(tdm.id, 'PSR')">{{status.name}}</a>
-                                                                    </ng-container> -->
-                                                                    <a class="dropdown-item"
-                                                                        (click)="commentStatus(tdm.id, 'TDM')">Read</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+                            <ng-container *ngFor="let msgs of group.items | sort:criteria">
+                                <ng-container *ngIf="msgs.dispositions != null">
+                                    <div class="accordion email-accordion" id="accordionExample" style="display:block">
+                                        <div class="accordion-item email-wrap marked-wrap mt-3">
+                                            <div [ngClass]="markAsComplete == true?'open':'collaps-wrap'"
+                                                class="accordion-header" id="emailwrap7">
+                                                <button [ngClass]="markAsComplete == true?'':'collapsed'"
+                                                    class="accordion-button" type="button">
+                                                    <div class="avatar large coal">
+                                                        <i class="fal fa-check-double"></i>
                                                     </div>
-                                                    <div *ngFor="let attachment of tdm.attachments"
-                                                        style="width: 375px;">
-                                                        <img *ngIf="attachment.contentType == 'photo'"
-                                                            src={{attachment.attachmentUrl}}
-                                                            style="width: -webkit-fill-available;">
-                                                        <img *ngIf="attachment.contentType == 'animated_image_share'"
-                                                            src={{attachment.attachmentUrl}}
-                                                            style="width: -webkit-fill-available;">
-                                                        <img *ngIf="attachment.contentType == 'sticker'"
-                                                            src={{attachment.attachmentUrl}}
-                                                            style="width: -webkit-fill-available;">
-
-
-                                                        <video *ngIf="attachment.contentType == 'video'" width="375px"
-                                                            controls>
-                                                            <source src={{attachment.attachmentUrl}} type="video/mp4"
-                                                                style="width: -webkit-fill-available;">
-                                                        </video>
-                                                        <video *ngIf="attachment.contentType == 'animated_gif'"
-                                                            width="375px" controls>
-                                                            <source src={{attachment.attachmentUrl}} type="video/mp4"
-                                                                style="width: -webkit-fill-available;">
-                                                        </video>
-                                                        <!-- <audio *ngIf="isAudio(attachment)"
-                                                            src={{attachment.attachmentUrl}} controls
-                                                            style="width: -webkit-fill-available;"></audio> -->
-                                                    </div>
-                                                    <p class="card-text nignt">{{tdm.msgText}}</p>
-                                                    <div class="tags" *ngFor="let tag of tdm.tags">
-                                                        <span class="badge rounded-pill tag tag1 selected"
-                                                            (click)="removeTagFromFeed(tag.feedId, tag.name, 'TDM')">{{tag.name
-                                                            | tagSlugConversion}}</span>
-
-                                                    </div>
-                                                    <!-- For Sentiment Pills -->
-                                                    <div class="tags" *ngIf="tdm.sentiment">
-                                                        <span
-                                                            class="badge rounded-pill tag tag1 selected">{{tdm.sentiment?.name
-                                                            | tagSlugConversion}}</span>
-                                                    </div>
-                                                    <!-- For Sentiment Pills -->
-                                                </div>
-                                                <div class="message-bottom"
-                                                    *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
-                                                    <div class="row">
-                                                        <div class="col-lg-10 ps-4 d-flex align-items-center">
-                                                            <div class="message-actionlist d-flex align-items-center">
-                                                                <a class="message-actionItem replyBtn coal"
-                                                                    (click)="SendMessageInformation(tdm.id)">
-                                                                    <span class="iconButton small btn">
-                                                                        <i class="fal fa-reply coal"></i>
+                                                    <div class="card-header-content p-0">
+                                                        <div class="card-header-top">
+                                                            <div class="d-block">
+                                                                <h6 class="mb-1 night">
+                                                                    Marked as {{msgs?.dispositions?.dispositionName |
+                                                                    uppercase}}
+                                                                </h6>
+                                                                <small class="night">
+                                                                    <span>by: <h6 class="d-inline fw-bold charcoal">
+                                                                            {{msgs?.dispositions?.userName}} </h6>
                                                                     </span>
-                                                                    Reply
-                                                                </a>
-                                                                <div class="dropdown w-auto">
-                                                                    <button class="iconButton medium"
-                                                                        id="dropdownMenuButton1"
-                                                                        data-bs-toggle="dropdown"
-                                                                        data-bs-auto-close="outside">
-                                                                        <span class="iconButton small btn mx-2">
-                                                                            <i class="fal fa-tag coal"></i>
-                                                                        </span>
-                                                                        Tag
-                                                                    </button>
-                                                                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                        aria-labelledby="dropdownMenuButton2">
-                                                                        <ul class="dropdown-listing">
-                                                                            <li class="dropdown-listing-header">
-                                                                                <div class="head-section">
-                                                                                    <div class="left">
-                                                                                        <h6>Tags
-                                                                                        </h6>
-                                                                                    </div>
+                                                                    <!-- <span>Complaint Id <a class="sky">FP-325687</a>
+                                                                    </span> -->
+                                                                </small>
+                                                            </div>
+                                                            <small class="silver full-date">{{
+                                                                msgs?.dispositions?.createdDate | date:'MMMM dd, yyyy, h:mm a'}}</small>
+                                                        </div>
+                                                        <div class="msg-snippet show-text">
+                                                            <!-- <p class="mb-1 coal" data-maxlength="240">
+                                                                {{msgs.msgText.length < 80 ? msgs.msgText:
+                                                                    (msgs.msgText | slice:0:80) +'...'}} </p> -->
+                                                            <p class="mb-1 coal">
+                                                                {{msgs?.dispositions?.description}} </p>
+                                                        </div>
+                                                        <!-- <div class="marked-info">
+                                                            <p class="card-text mb-0 coal">
+                                                                <small>First Response: <span class="night"> July
+                                                                        7, 2021, 2:30 PM (4
+                                                                        days
+                                                                        ago)</span></small>
+                                                            </p>
+                                                            <p class="card-text mb-0 coal">
+                                                                <small>Last Response: <span class="night"> July
+                                                                        14, 2021, 9:30 AM (6
+                                                                        days
+                                                                        ago)</span></small>
+                                                            </p>
+                                                        </div> -->
+                                                    </div>
+                                                </button>
+                                                <div class="top-right">
+                                                    <div class="expanded-card-header-actions icons-list">
+                                                        <!-- <small class="silver ms-2 me-2">{{ TodayDate
+                                                            | date:'MMMM dd, yyyy, h:mm a'}}</small> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-collapse collapse"
+                                                [ngClass]="markAsComplete == true?'show':''">
+                                                <div class="accordion-body">
+                                                    <p>
+                                                        {{msgs.msgText}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <div class="message-wrap agent-message-wrap right">
+                                    <div class="application-wrap d-flex align-items-center mb-1"
+                                        *ngIf="msgs.ticketId != null">
+                                        <p class="m-0 silver me-2 ms-1">Application ID
+                                        </p>
+                                        <p class="app-no navy m-0 me-2">{{msgs.ticketId}}</p>
+                                    </div>
+                                    <div class="d-flex align-items-center agent-container">
+                                        <div class="card w-d-inline messageUpper">
+                                            <div class="card-body shadow-sm" style="min-width: 400px;"
+                                                [ngClass]="msgs.queryStatus == 'Unresponded'?'unread-msg':''">
+                                                <div class="d-flex msg-user-info">
+                                                    <div class="d-flex align-items-center">
+                                                        <h6 class="card-title navy m-0">
+                                                            {{msgs.fromName}}</h6>
+                                                        <p class="card-text ms-3">
+                                                            <small class="silver">{{msgs.createdDate |
+                                                                date:'h:mm:ss a'}}</small>
+                                                        </p>
+                                                        <button class="starbtn iconButton iconHover small btn"
+                                                            *ngIf="msgs.starred == true"
+                                                            [ngClass]="msgs.starred?'active':''">
+                                                            <i class="fal fa-star charcoal"></i>
+                                                            <i class="fas fa-star sun"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="dropdown w-auto">
+                                                        <button class="btn coal p-0 ps-3" type="button"
+                                                            id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                            {{msgs.queryStatus}}
+                                                            <i class="far fa-chevron-down ms-2"
+                                                                *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && msgs.queryStatus == 'Unresponded'"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu custom-dropdown"
+                                                            aria-labelledby="dropdownMenuButton1"
+                                                            *ngIf="(flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up') && msgs.queryStatus == 'Unresponded'">
+                                                            <li>
+                                                                <a class="dropdown-item"
+                                                                    (click)="commentStatus(msgs.id, msgs.contentType)">Read</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div *ngFor="let attachment of msgs?.attachments"
+                                                            style="width: 375px;">
+                                                            <img class="whatsapp-single-img whatsappImgModalBtn"
+                                                                *ngIf="isImage(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls
+                                                                style="width: -webkit-fill-available;">
+                                                            <img *ngIf="attachment.contentType == 'animated_image_share'"
+                                                                src={{attachment.attachmentUrl}}
+                                                                style="width: -webkit-fill-available;">
+                                                            <img *ngIf="attachment.contentType == 'sticker'"
+                                                                src={{attachment.attachmentUrl}}
+                                                                style="width: -webkit-fill-available;">
+                                                            <video class="video" *ngIf="isVideo(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls
+                                                                style="width: -webkit-fill-available;"></video>
+                                                            <audio class="audio" *ngIf="isAudio(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls
+                                                                style="width: -webkit-fill-available;"></audio>
+                                                            <a *ngIf="isOther(attachment)"
+                                                                [href]="attachment.attachmentUrl" target="_blank">
+                                                                <div
+                                                                    class="card-body pdf-body bg-light align-items-center row">
+                                                                    <i *ngIf="(attachment.attachmentUrl | getFileTypeFromUrl) == 'pdf'"
+                                                                        class="fas fa-file-pdf iconButton file-icon radical col-1"></i>
+                                                                    <i *ngIf="((attachment.attachmentUrl | getFileTypeFromUrl) == 'document') || ((attachment.attachmentUrl | getFileTypeFromUrl) == 'docx')"
+                                                                        class="fas fa-file-word iconButton file-icon sky col-1"></i>
+                                                                    <i *ngIf="((attachment.attachmentUrl | getFileTypeFromUrl) == 'sheet') || ((attachment.attachmentUrl | getFileTypeFromUrl) == 'xlsx')"
+                                                                        class="fas fa-file-excel iconButton file-icon excelGreen col-1"></i>
+                                                                    <i *ngIf="(attachment.attachmentUrl | getFileTypeFromUrl) == 'csv'"
+                                                                        class="fas fa-file-csv iconButton file-icon excelGreen col-1"></i>
+                                                                    <i *ngIf="(attachment.attachmentUrl | getFileTypeFromUrl) != 'csv' &&  
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'sheet' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'xlsx' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'document' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'docx' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'pdf'"
+                                                                        class="fas fa-file-lines iconButton file-icon col-1">
+                                                                    </i>
+                                                                    <p class="card-text ms-3 col-10">{{
+                                                                        attachment.attachmentUrl | splitNameFromUrl }}
+                                                                    </p>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                <p class="card-text nignt">{{msgs.msgText}}</p>
+                                                <div class="tags" *ngFor="let tag of msgs.tags">
+                                                    <span class="badge rounded-pill tag tag1 selected"
+                                                        (click)="removeTagFromFeed(tag.feedId, tag.name, platform)">{{tag.name
+                                                        | tagSlugConversion}}</span>
+                                                </div>
+                                                <!-- For Sentiment Pills -->
+                                                <div class="tags" *ngIf="msgs.sentiment">
+                                                    <span
+                                                        class="badge rounded-pill tag tag1 selected">{{msgs.sentiment?.name
+                                                        | tagSlugConversion}}</span>
+                                                </div>
+                                                <!-- For Sentiment Pills -->
+                                            </div>
+                                            <div class="message-bottom"
+                                                *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
+                                                <div class="row">
+                                                    <div class="col-lg-10 ps-4 d-flex align-items-center">
+                                                        <div class="message-actionlist d-flex align-items-center">
+                                                            <a class="message-actionItem replyBtn coal"
+                                                                (click)="SendMessageInformation(msgs.id)">
+                                                                <span class="iconButton small btn">
+                                                                    <i class="fal fa-reply coal"></i>
+                                                                </span>
+                                                                Reply
+                                                            </a>
+                                                            <div class="dropdown w-auto">
+                                                                <button class="iconButton medium"
+                                                                    id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                                    data-bs-auto-close="outside">
+                                                                    <span class="iconButton small btn mx-2">
+                                                                        <i class="fal fa-tag coal"></i>
+                                                                    </span>
+                                                                    Tag
+                                                                </button>
+                                                                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                                    aria-labelledby="dropdownMenuButton2">
+                                                                    <ul class="dropdown-listing">
+                                                                        <li class="dropdown-listing-header">
+                                                                            <div class="head-section">
+                                                                                <div class="left">
+                                                                                    <h6>Tags
+                                                                                    </h6>
                                                                                 </div>
-                                                                            </li>
-                                                                            <li class="dropend">
-                                                                                <div *ngFor="let tag of TagsList"
-                                                                                    class="list-group list-group-flush dropend">
-                                                                                    <a data-bs-toggle="dropdown"
-                                                                                        class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
-
+                                                                            </div>
+                                                                        </li>
+                                                                        <li class="dropend">
+                                                                            <div *ngFor="let tag of TagsList"
+                                                                                class="list-group list-group-flush dropend">
+                                                                                <a data-bs-toggle="dropdown"
+                                                                                    class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
+                                                                                    <div class="w-100 list-txt">
+                                                                                        <div
+                                                                                            class="d-flex w-100 justify-content-between">
+                                                                                            <h6 class="mb-1 darkblue">
+                                                                                                {{tag.name}}
+                                                                                            </h6>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </a>
+                                                                                <ul class="dropdown-menu shadow">
+                                                                                    <form class="custom-searchbar">
+                                                                                        <input
+                                                                                            class="form-control rounded-pill shadow-sm"
+                                                                                            [(ngModel)]="searchText"
+                                                                                            placeholder="Search"
+                                                                                            aria-label="Search">
+                                                                                        <span class="btn searchbar-btn"
+                                                                                            type="submit">
+                                                                                            <i
+                                                                                                class="fal fa-search silver"></i>
+                                                                                        </span>
+                                                                                    </form>
+                                                                                    <li class="list-body small-list"
+                                                                                        data-scrollbar="true"
+                                                                                        tabindex="-1"
+                                                                                        style="overflow-y: auto; outline: none;">
+                                                                                        <div class="scroll-content"
+                                                                                            style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
+                                                                                            <div
+                                                                                                class="list-group list-group-flush">
+                                                                                                <a class="list-group-item d-flex level1Btn dropdown-item"
+                                                                                                    (click)="insertTagsForFeed(msgs.id, keyword.slug, platform)"
+                                                                                                    [ngClass]="activeTag==true?'active':''"
+                                                                                                    *ngFor="let keyword of tag.subTags | filter: searchText">
+                                                                                                    <div
+                                                                                                        class="list-down-icon">
+                                                                                                        <span
+                                                                                                            class="btn iconButton iconHover medium">
+                                                                                                            <i
+                                                                                                                class="fal fa-tag coal"></i>
+                                                                                                        </span>
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                        class="w-100 list-txt">
+                                                                                                        <div
+                                                                                                            class="d-flex w-100 justify-content-between">
+                                                                                                            <h6
+                                                                                                                class="mb-1 darkblue">
+                                                                                                                {{keyword.name}}
+                                                                                                            </h6>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <small
+                                                                                                        *ngIf="keyword.id == tag.id">
+                                                                                                        <i [ngClass]="checkTag==true?'fa-check-circle':''"
+                                                                                                            class="fal sky"></i>
+                                                                                                    </small>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="dropdown w-auto">
+                                                                <button class="iconButton medium show"
+                                                                    id="sentimentButton" data-bs-toggle="dropdown"
+                                                                    aria-expanded="true" style="margin-left:43px">
+                                                                    <span class="iconButton small btn mx-2">
+                                                                        <i class="fal fa-smile"></i>
+                                                                    </span>
+                                                                    Sentiment
+                                                                </button>
+                                                                <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
+                                                                    aria-labelledby="dropdownMenuButton2"
+                                                                    style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 42px);"
+                                                                    data-popper-placement="bottom-start">
+                                                                    <ul class="dropdown-listing">
+                                                                        <li class="list-body small-list"
+                                                                            data-scrollbar="true" tabindex="-1"
+                                                                            style="overflow: auto; outline: none;">
+                                                                            <div class="scroll-content">
+                                                                                <div class="list-group list-group-flush"
+                                                                                    *ngFor="let sentiment of Sentiments">
+                                                                                    <a class="list-group-item d-flex level1Btn "
+                                                                                        (click)="insertSentimentForFeed(msgs.id, sentiment.slug, platform)">
+                                                                                        <div class="list-down-icon">
+                                                                                            <span
+                                                                                                class="btn iconButton iconHover medium"
+                                                                                                [innerHTML]="sentiment.icon">
+                                                                                            </span>
+                                                                                        </div>
                                                                                         <div class="w-100 list-txt">
                                                                                             <div
                                                                                                 class="d-flex w-100 justify-content-between">
                                                                                                 <h6
                                                                                                     class="mb-1 darkblue">
-                                                                                                    {{tag.name}}
+                                                                                                    {{sentiment.name}}
                                                                                                 </h6>
                                                                                             </div>
                                                                                         </div>
-
                                                                                     </a>
-                                                                                    <ul class="dropdown-menu shadow">
-                                                                                        <form class="custom-searchbar">
-                                                                                            <input
-                                                                                                class="form-control rounded-pill shadow-sm"
-                                                                                                [(ngModel)]="searchText"
-                                                                                                placeholder="Search"
-                                                                                                aria-label="Search">
-                                                                                            <span
-                                                                                                class="btn searchbar-btn"
-                                                                                                type="submit">
-                                                                                                <i
-                                                                                                    class="fal fa-search silver"></i>
-                                                                                            </span>
-                                                                                        </form>
-                                                                                        <li class="list-body small-list"
-                                                                                            data-scrollbar="true"
-                                                                                            tabindex="-1"
-                                                                                            style="overflow-y: auto; outline: none;">
-                                                                                            <div class="scroll-content"
-                                                                                                style="max-height: 500px;transform: translate3d(0px, 0px, 0px);">
-                                                                                                <div
-                                                                                                    class="list-group list-group-flush">
-                                                                                                    <a class="list-group-item d-flex level1Btn dropdown-item"
-                                                                                                        (click)="insertTagsForFeed(tdm.id, keyword.slug, 'TDM')"
-                                                                                                        [ngClass]="activeTag==true?'active':''"
-                                                                                                        *ngFor="let keyword of tag.subTags | filter: searchText">
-                                                                                                        <div
-                                                                                                            class="list-down-icon">
-                                                                                                            <span
-                                                                                                                class="btn iconButton iconHover medium">
-                                                                                                                <i
-                                                                                                                    class="fal fa-tag coal"></i>
-                                                                                                            </span>
-                                                                                                        </div>
-                                                                                                        <div
-                                                                                                            class="w-100 list-txt">
-                                                                                                            <div
-                                                                                                                class="d-flex w-100 justify-content-between">
-                                                                                                                <h6
-                                                                                                                    class="mb-1 darkblue">
-                                                                                                                    {{keyword.name}}
-                                                                                                                </h6>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                        <small
-                                                                                                            *ngIf="keyword.id == tag.id">
-                                                                                                            <i [ngClass]="checkTag==true?'fa-check-circle':''"
-                                                                                                                class="fal sky"></i>
-                                                                                                        </small>
-                                                                                                    </a>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </li>
-                                                                                    </ul>
                                                                                 </div>
-                                                                            </li>
-                                                                        </ul>
+                                                                            </div>
+                                                                        </li>
                                                                     </ul>
-                                                                </div>
-                                                                <div class="dropdown w-auto">
-                                                                    <button class="iconButton medium show"
-                                                                        id="sentimentButton" data-bs-toggle="dropdown"
-                                                                        aria-expanded="true" style="margin-left:43px">
-                                                                        <span class="iconButton small btn mx-2">
-                                                                            <i class="fal fa-smile"></i>
-                                                                        </span>
-                                                                        Sentiment
-                                                                    </button>
-                                                                    <ul class="dropdown-menu custom-dropdown medium shadow mt-2 secondDropdownList"
-                                                                        aria-labelledby="dropdownMenuButton2"
-                                                                        style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 42px);"
-                                                                        data-popper-placement="bottom-start">
-                                                                        <ul class="dropdown-listing">
-                                                                            <li class="list-body small-list"
-                                                                                data-scrollbar="true" tabindex="-1"
-                                                                                style="overflow: auto; outline: none;">
-                                                                                <div class="scroll-content">
-                                                                                    <div class="list-group list-group-flush"
-                                                                                        *ngFor="let sentiment of Sentiments">
-                                                                                        <a class="list-group-item d-flex level1Btn "
-                                                                                            (click)="insertSentimentForFeed(tdm.id, sentiment.slug, 'TDM')">
-                                                                                            <div class="list-down-icon">
-                                                                                                <span
-                                                                                                    class="btn iconButton iconHover medium"
-                                                                                                    [innerHTML]="sentiment.icon"></span>
-                                                                                            </div>
-                                                                                            <div class="w-100 list-txt">
-                                                                                                <div
-                                                                                                    class="d-flex w-100 justify-content-between">
-                                                                                                    <h6
-                                                                                                        class="mb-1 darkblue">
-                                                                                                        {{sentiment.name}}
-                                                                                                    </h6>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </a>
-
-
-                                                                                    </div>
-                                                                                </div>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </ul>
-                                                                </div>
+                                                                </ul>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <!-- Facebook message reactions div -->
+                                                    <!-- <div
+                                                                class="col-lg-2 pe-4 d-flex align-items-center justify-content-end">
+                                                                <div class="reactionsWrap d-flex align-items-center">
+                                                                    <div class="reactImg happy emoji">
+                                                                        <img class="me-1"
+                                                                            src="../../../../assets/images/wow-emoji.svg" alt="...">
+                                                                    </div>
+                                                                    <div class="reactImg sad emoji">
+                                                                        <img class="me-1"
+                                                                            src="../../../../assets/images/haha-emoji.svg"
+                                                                            alt="...">
+                                                                    </div>
+                                                                    <p class="m-0 coal ps-2">34
+                                                                    </p>
+                                                                </div>
+                                                            </div> -->
                                                 </div>
                                             </div>
-                                            <!-- <span *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'" class="complaintBtn" (click)="toggle('ticket', tdm.id)"
+                                        </div>
+                                        <!-- <span *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'" class="complaintBtn" (click)="toggle('ticket', msgs.id)"
                                                 type="button">
                                                 <i class="fal fa-plus-circle sky"></i>
                                             </span> -->
-                                        </div>
-                                        <div *ngFor="let msgReply of tdm.replies | sort:criteria">
-                                            <!-- <div class="date-wrap">
+                                    </div>
+                                    <div *ngFor="let msgReply of msgs.replies | sort:criteria">
+                                        <!-- <div class="date-wrap">
                                                     <p class="date">{{msgReply.createdDate | date:'EEEE, MMMM d, y'}}</p>
                                                 </div> -->
-                                            <div class="message-wrap agent-message-wrap left">
-                                                <div class="agent-container">
-                                                    <div class="card card-txt ms-auto">
-                                                        <div class="card-body shadow-sm">
-                                                            <div class="d-flex align-items-center mb-2">
-                                                                <h6 class="card-title m-0">
-                                                                    {{pageName}}</h6>
-                                                                <p class="card-text ms-3">
-                                                                    <small class="silver">{{msgReply.createdDate
-                                                                        | date:'h:mm:ss a'}}</small>
-                                                                </p>
-                                                            </div>
-                                                            <div class="whatsapp-single-img whatsappImgModalBtn"
-                                                                type="button">
-                                                                <img style="width: 375px;"
-                                                                    src={{msgReply.attachmentUrl}}
-                                                                    class="card-img-top rounded-3">
-                                                            </div>
-                                                            <p class="card-textnignt p-0">{{msgReply.message}}</p>
+                                        <div class="message-wrap agent-message-wrap left">
+                                            <div class="agent-container">
+                                                <div class="card card-txt ms-auto">
+                                                    <div class="card-body shadow-sm">
+                                                        <div class="d-flex align-items-center mb-2">
+                                                            <h6 class="card-title m-0">
+                                                                {{msgReply.responseByName}}</h6>
+                                                            <p class="card-text ms-3">
+                                                                <small class="silver">{{msgReply.createdDate
+                                                                    | date:'h:mm:ss a'}}</small>
+                                                            </p>
                                                         </div>
-                                                        <div class="message-bottom">
-                                                            <div class="row">
-                                                                <div class="col-lg-12 ps-4 d-flex align-items-center">
-                                                                    <div class="commentWrap">
-                                                                        Commented on by
-                                                                        <a class="fw-bold">{{msgReply.replyByName}}</a>
-                                                                    </div>
+                                                        <div class="whatsapp-single-img whatsappImgModalBtn"
+                                                            type="button">
+                                                            <img style="width: 375px;" src={{msgReply.attachmentUrl}}
+                                                                class="card-img-top rounded-3">
+                                                        </div>
+                                                        <p class="card-textnignt p-0">{{msgReply.message}}</p>
+                                                    </div>
+                                                    <div class="message-bottom">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 ps-4 d-flex align-items-center">
+                                                                <div class="commentWrap">
+                                                                    Commented on by
+                                                                    <a class="fw-bold">{{msgReply.replyByName}}</a>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                </ng-container>
-
+                                </div>
                             </ng-container>
-
-
                         </div>
                     </div>
                 </div>
@@ -1280,11 +1427,10 @@
                     <div *ngIf="TwitterMentions.length > 0" class="tab-pane fade show active" id="twitter-mention"
                         role="tabpanel" aria-labelledby="twitter-mention-tab">
                         <div class="chat-box-wrap" *ngFor="let group of groupedMentions | sort:criteria">
-
                             <div class="date-wrap">
-                                <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}}</p>
+                                <p class="date">{{group?.createdDate | date:'EEEE, MMMM d, y'}}</p>
                             </div>
-                            <ng-container *ngFor="let tm of group.items | sort:criteria">
+                            <ng-container *ngFor="let tm of group?.items | sort:criteria">
                                 <ng-container>
                                     <div class="message-wrap agent-message-wrap right">
                                         <div class="application-wrap d-flex align-items-center mb-1"
@@ -1297,12 +1443,10 @@
                                             <div class="card w-d-inline messageUpper">
                                                 <div class="card-body shadow-sm" style="min-width: 400px;"
                                                     [ngClass]="tm.queryStatus == 'Unresponded'?'unread-msg':''">
-
                                                     <div class="d-flex msg-user-info">
                                                         <div class="d-flex align-items-center">
                                                             <h6 class="card-title navy m-0">
                                                                 {{tm.fromName}}</h6>
-
                                                             <p class="card-text ms-3">
                                                                 <small class="silver">{{tm.createdDate |
                                                                     date:'h:mm:ss a'}}</small>
@@ -1339,39 +1483,55 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div *ngFor="let attachment of tm.attachments"
-                                                        style="width: 375px;">
-                                                        <img *ngIf="attachment.contentType == 'photo'"
-                                                            src={{attachment.attachmentUrl}}
-                                                            style="width: -webkit-fill-available;">
-                                                        <img *ngIf="attachment.contentType == 'animated_image_share'"
-                                                            src={{attachment.attachmentUrl}}
-                                                            style="width: -webkit-fill-available;">
-                                                        <img *ngIf="attachment.contentType == 'sticker'"
-                                                            src={{attachment.attachmentUrl}}
-                                                            style="width: -webkit-fill-available;">
-
-
-                                                        <video *ngIf="attachment.contentType == 'video'" width="375px"
-                                                            controls>
-                                                            <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                    <div *ngFor="let attachment of tm?.attachments"
+                                                            style="width: 375px;">
+                                                            <img class="whatsapp-single-img whatsappImgModalBtn"
+                                                                *ngIf="isImage(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls
                                                                 style="width: -webkit-fill-available;">
-                                                        </video>
-                                                        <video *ngIf="attachment.contentType == 'animated_gif'"
-                                                            width="375px" controls>
-                                                            <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                            <img *ngIf="attachment.contentType == 'animated_image_share'"
+                                                                src={{attachment.attachmentUrl}}
                                                                 style="width: -webkit-fill-available;">
-                                                        </video>
-                                                        <!-- <audio *ngIf="isAudio(attachment)"
-                                                            src={{attachment.attachmentUrl}} controls
-                                                            style="width: -webkit-fill-available;"></audio> -->
-                                                    </div>
+                                                            <img *ngIf="attachment.contentType == 'sticker'"
+                                                                src={{attachment.attachmentUrl}}
+                                                                style="width: -webkit-fill-available;">
+                                                            <video class="video" *ngIf="isVideo(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls
+                                                                style="width: -webkit-fill-available;"></video>
+                                                            <audio class="audio" *ngIf="isAudio(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls
+                                                                style="width: -webkit-fill-available;"></audio>
+                                                            <a *ngIf="isOther(attachment)"
+                                                                [href]="attachment.attachmentUrl" target="_blank">
+                                                                <div
+                                                                    class="card-body pdf-body bg-light align-items-center row">
+                                                                    <i *ngIf="(attachment.attachmentUrl | getFileTypeFromUrl) == 'pdf'"
+                                                                        class="fas fa-file-pdf iconButton file-icon radical col-1"></i>
+                                                                    <i *ngIf="((attachment.attachmentUrl | getFileTypeFromUrl) == 'document') || ((attachment.attachmentUrl | getFileTypeFromUrl) == 'docx')"
+                                                                        class="fas fa-file-word iconButton file-icon sky col-1"></i>
+                                                                    <i *ngIf="((attachment.attachmentUrl | getFileTypeFromUrl) == 'sheet') || ((attachment.attachmentUrl | getFileTypeFromUrl) == 'xlsx')"
+                                                                        class="fas fa-file-excel iconButton file-icon excelGreen col-1"></i>
+                                                                    <i *ngIf="(attachment.attachmentUrl | getFileTypeFromUrl) == 'csv'"
+                                                                        class="fas fa-file-csv iconButton file-icon excelGreen col-1"></i>
+                                                                    <i *ngIf="(attachment.attachmentUrl | getFileTypeFromUrl) != 'csv' &&  
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'sheet' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'xlsx' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'document' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'docx' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'pdf'"
+                                                                        class="fas fa-file-lines iconButton file-icon col-1">
+                                                                    </i>
+                                                                    <p class="card-text ms-3 col-10">{{
+                                                                        attachment.attachmentUrl | splitNameFromUrl }}
+                                                                    </p>
+                                                                </div>
+                                                            </a>
+                                                        </div>
                                                     <p class="card-text nignt">{{tm.msgText}}</p>
                                                     <div class="tags" *ngFor="let tag of tm.tags">
                                                         <span class="badge rounded-pill tag tag1 selected"
                                                             (click)="removeTagFromFeed(tag.feedId, tag.name, 'TM')">{{tag.name
                                                             | tagSlugConversion}}</span>
-
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                     <div class="tags" *ngIf="tm.sentiment">
@@ -1419,7 +1579,6 @@
                                                                                     class="list-group list-group-flush dropend">
                                                                                     <a data-bs-toggle="dropdown"
                                                                                         class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
-
                                                                                         <div class="w-100 list-txt">
                                                                                             <div
                                                                                                 class="d-flex w-100 justify-content-between">
@@ -1429,7 +1588,6 @@
                                                                                                 </h6>
                                                                                             </div>
                                                                                         </div>
-
                                                                                     </a>
                                                                                     <ul class="dropdown-menu shadow">
                                                                                         <form class="custom-searchbar">
@@ -1527,8 +1685,6 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                         </a>
-
-
                                                                                     </div>
                                                                                 </div>
                                                                             </li>
@@ -1580,17 +1736,12 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </ng-container>
-
                             </ng-container>
-
-
                         </div>
                     </div>
                 </div>
@@ -1604,11 +1755,10 @@
                     <div class="tab-pane fade show active" id="twitter-tweets" role="tabpanel"
                         aria-labelledby="twitter-tweets-tab" *ngIf="TwitterTweets.length > 0">
                         <div class="chat-box-wrap" *ngFor="let group of groupedTweets | sort:criteria">
-
                             <div class="date-wrap">
-                                <p class="date">{{group.createdDate | date:'EEEE, MMMM d, y'}}</p>
+                                <p class="date">{{group?.createdDate | date:'EEEE, MMMM d, y'}}</p>
                             </div>
-                            <ng-container *ngFor="let ttr of group.items | sort:criteria">
+                            <ng-container *ngFor="let ttr of group?.items | sort:criteria">
                                 <ng-container *ngIf="ttr.queryStatus != 'QueryCompleted'">
                                     <div class="message-wrap agent-message-wrap right">
                                         <div class="application-wrap d-flex align-items-center mb-1"
@@ -1621,17 +1771,17 @@
                                             <div class="card w-d-inline messageUpper">
                                                 <div class="card-body shadow-sm" style="min-width: 400px;"
                                                     [ngClass]="ttr.queryStatus == 'Unresponded'?'unread-msg':''">
-
                                                     <div class="d-flex msg-user-info">
                                                         <div class="d-flex align-items-center">
                                                             <h6 class="card-title navy m-0">
                                                                 {{ttr.fromName}}</h6>
-
                                                             <p class="card-text ms-3">
                                                                 <small class="silver">{{ttr.createdDate |
                                                                     date:'h:mm:ss a'}}</small>
                                                             </p>
-                                                            <a *ngIf="ttr.redirectUrl != null" href={{ttr.redirectUrl}} target="_blank"> <span><i class="fa-regular ms-1 coal fa-arrow-up-right-from-square"></i></span></a>
+                                                            <a *ngIf="ttr.redirectUrl != null" href={{ttr.redirectUrl}}
+                                                                target="_blank"> <span><i
+                                                                        class="fa-regular ms-1 coal fa-arrow-up-right-from-square"></i></span></a>
                                                             <button class="starbtn iconButton iconHover small btn"
                                                                 *ngIf="ttr.starred == true"
                                                                 [ngClass]="ttr.starred?'active':''">
@@ -1661,43 +1811,61 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div *ngFor="let attachment of ttr.attachments"
-                                                        style="width: 375px;">
-                                                        <img *ngIf="attachment.contentType == 'photo'"
-                                                    src={{attachment.attachmentUrl}}
-                                                    style="width: -webkit-fill-available;">
-                                                        <img *ngIf="attachment.contentType == 'animated_image_share'"
-                                                            src={{attachment.attachmentUrl}}
-                                                            style="width: -webkit-fill-available;">
-                                                        <img *ngIf="attachment.contentType == 'sticker'"
-                                                            src={{attachment.attachmentUrl}}
-                                                            style="width: -webkit-fill-available;">
-
-
-                                                            <video *ngIf="attachment.contentType == 'video'" width="375px"
-                                                            controls>
-                                                            <source src={{attachment.attachmentUrl}} type="video/mp4"
+                                                    <div *ngFor="let attachment of ttr?.attachments"
+                                                            style="width: 375px;">
+                                                            <img class="whatsapp-single-img whatsappImgModalBtn"
+                                                                *ngIf="isImage(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls
                                                                 style="width: -webkit-fill-available;">
-                                                        </video>
-                                                        <video *ngIf="attachment.contentType == 'animated_gif'" width="375px"
-                                                        controls>
-                                                        <source src={{attachment.attachmentUrl}} type="video/mp4"
-                                                            style="width: -webkit-fill-available;">
-                                                    </video>
-                                                        <!-- <audio *ngIf="isAudio(attachment)"
-                                                            src={{attachment.attachmentUrl}} controls
-                                                            style="width: -webkit-fill-available;"></audio> -->
-                                                    </div>
+                                                            <img *ngIf="attachment.contentType == 'animated_image_share'"
+                                                                src={{attachment.attachmentUrl}}
+                                                                style="width: -webkit-fill-available;">
+                                                            <img *ngIf="attachment.contentType == 'sticker'"
+                                                                src={{attachment.attachmentUrl}}
+                                                                style="width: -webkit-fill-available;">
+                                                            <video class="video" *ngIf="isVideo(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls
+                                                                style="width: -webkit-fill-available;"></video>
+                                                            <audio class="audio" *ngIf="isAudio(attachment)"
+                                                                src={{attachment.attachmentUrl}} controls
+                                                                style="width: -webkit-fill-available;"></audio>
+                                                            <a *ngIf="isOther(attachment)"
+                                                                [href]="attachment.attachmentUrl" target="_blank">
+                                                                <div
+                                                                    class="card-body pdf-body bg-light align-items-center row">
+                                                                    <i *ngIf="(attachment.attachmentUrl | getFileTypeFromUrl) == 'pdf'"
+                                                                        class="fas fa-file-pdf iconButton file-icon radical col-1"></i>
+                                                                    <i *ngIf="((attachment.attachmentUrl | getFileTypeFromUrl) == 'document') || ((attachment.attachmentUrl | getFileTypeFromUrl) == 'docx')"
+                                                                        class="fas fa-file-word iconButton file-icon sky col-1"></i>
+                                                                    <i *ngIf="((attachment.attachmentUrl | getFileTypeFromUrl) == 'sheet') || ((attachment.attachmentUrl | getFileTypeFromUrl) == 'xlsx')"
+                                                                        class="fas fa-file-excel iconButton file-icon excelGreen col-1"></i>
+                                                                    <i *ngIf="(attachment.attachmentUrl | getFileTypeFromUrl) == 'csv'"
+                                                                        class="fas fa-file-csv iconButton file-icon excelGreen col-1"></i>
+                                                                    <i *ngIf="(attachment.attachmentUrl | getFileTypeFromUrl) != 'csv' &&  
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'sheet' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'xlsx' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'document' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'docx' &&
+                                                                              (attachment.attachmentUrl | getFileTypeFromUrl) != 'pdf'"
+                                                                        class="fas fa-file-lines iconButton file-icon col-1">
+                                                                    </i>
+                                                                    <p class="card-text ms-3 col-10">{{
+                                                                        attachment.attachmentUrl | splitNameFromUrl }}
+                                                                    </p>
+                                                                </div>
+                                                            </a>
+                                                        </div>
                                                     <p class="card-text nignt">{{ttr.msgText}}</p>
                                                     <div class="tags" *ngFor="let tag of ttr.tags">
                                                         <span class="badge rounded-pill tag tag1 selected"
-                                                            (click)="removeTagFromFeed(tag.feedId, tag.name, 'TTR')">{{tag.name | tagSlugConversion}}</span>
-
+                                                            (click)="removeTagFromFeed(tag.feedId, tag.name, 'TTR')">{{tag.name
+                                                            | tagSlugConversion}}</span>
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                     <div class="tags" *ngIf="ttr.sentiment">
                                                         <span
-                                                            class="badge rounded-pill tag tag1 selected">{{ttr.sentiment?.name | tagSlugConversion}}</span>
+                                                            class="badge rounded-pill tag tag1 selected">{{ttr.sentiment?.name
+                                                            | tagSlugConversion}}</span>
                                                     </div>
                                                     <!-- For Sentiment Pills -->
                                                 </div>
@@ -1739,7 +1907,6 @@
                                                                                     class="list-group list-group-flush dropend">
                                                                                     <a data-bs-toggle="dropdown"
                                                                                         class="list-group-item d-flex level1Btn dropdown-item dropdown-toggle">
-
                                                                                         <div class="w-100 list-txt">
                                                                                             <div
                                                                                                 class="d-flex w-100 justify-content-between">
@@ -1749,7 +1916,6 @@
                                                                                                 </h6>
                                                                                             </div>
                                                                                         </div>
-
                                                                                     </a>
                                                                                     <ul class="dropdown-menu shadow">
                                                                                         <form class="custom-searchbar">
@@ -1847,7 +2013,6 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                         </a>
-
                                                                                     </div>
                                                                                 </div>
                                                                             </li>
@@ -1899,23 +2064,17 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </ng-container>
-
                             </ng-container>
-
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 <ng-container *ngIf="flag == 'focused' || flag == 'assigned_to_me' || flag == 'follow_up'">
@@ -1928,7 +2087,6 @@
                 <h5 class="card-title coal">{{image.name | slice:0:20}}</h5>
                 <p>{{image.size / 1024 | number:'1.2-2'}} kb</p>
             </div>
-
         </div>
         <!-- gif display -->
         <div class="attachment-block" [ngClass]="isGifSelected == true?'':'d-none'">
@@ -1936,11 +2094,9 @@
                 <span class="close-icon" (click)="removeAttachedFileGif(image?.gifUrl?.id)"><i
                         class="fas fa-times"></i></span>
                 <img [src]="image?.gifUrl?.src" alt="" style="max-width: 200px; max-height: 50px;">
-
                 <h5 class="card-title coal">{{image?.gifUrl?.name | slice:0:20}}</h5>
                 <p>{{image?.gifFile?.size / 1024 | number:'1.2-2'}} kb</p>
             </div>
-
         </div>
         <!-- mentioned message -->
         <div [ngClass]="show == true? 'show':''" class="card hideMsg">
@@ -1948,7 +2104,6 @@
                 <div class="card-text">
                     <span class="fw-bold navy">{{mentionedCommentOrMessageId}} </span>
                     <p>{{mentionedCommentOrMessage}}</p>
-
                 </div>
                 <button class="iconButton small closeMsgBtn" data-bs-toggle="tooltip" data-bs-placement="top"
                     id="searchbtn" data-bs-original-title="Close" (click)="closeMentionedReply()">
@@ -1956,7 +2111,7 @@
                 </button>
             </div>
         </div>
-        <form [formGroup]="replyForm" (submit)="submitReply()">
+        <form [formGroup]="replyForm" (ngSubmit)="submitReply()">
             <div class="input-group input-group-lg">
                 <div class="icons-list align-items-md-center d-flex pe-2">
                     <!-- quick reply button -->
@@ -2012,8 +2167,7 @@
                 <div class="form-floating textarea-field">
                     <textarea formControlName="text" class="form-control auto" rows="1" id="text"
                         style="border-radius: 20px;" (keydown)="handleTextareaKeyDown($event)"
-                        placeholder="Write a message here" [(ngModel)]="text" #textarea></textarea>
-
+                        placeholder="Write a message here" #textarea></textarea>
                 </div>
                 <div class="icons-list align-items-md-center d-flex ps-2">
                     <!-- emoji -->
@@ -2059,7 +2213,6 @@
                                         <!-- Replace the image URLs with your actual GIF URLs -->
                                         <div class="gif-item" *ngFor="let gif of Gifs | gifFilter : searchGif">
                                             <img (click)="addGif(gif)" [src]="gif.src" alt="">
-
                                         </div>
                                     </div>
                                 </li>
@@ -2071,7 +2224,7 @@
                         *ngIf="showAttachmentButton==true && showAttachmentBtnTo.includes(fetchedPostType)">
                         <button class="iconButton small notification iconHover channels-attachment-btn">
                             <i class="fal fa-paperclip"></i></button>
-                        <input type="file" formControlName="Image" class="form-control uplaoded-box"
+                        <input type="file" class="form-control uplaoded-box"
                             (change)="onFileChanged()" #fileInput>
                     </div>
                     <!-- send button -->
@@ -2080,12 +2233,10 @@
                         <i class="fal fa-paper-plane"></i>
                     </button>
                 </div>
-
             </div>
         </form>
     </div>
 </ng-container>
-
 <div class="humanAgentTagsWrapper">
     <div class="offcanvas offcanvas-end" tabindex="-1" id="humanAgentTags" aria-labelledby="humanAgentTagsLabel"
         style="visibility: visible;" aria-modal="true" role="dialog">
@@ -2097,7 +2248,6 @@
                 aria-label="Close"><i class="fal fa-times"></i></button>
         </div>
         <div class="offcanvas-body">
-
             <form class="custom-searchbar">
                 <input class="form-control me-2 rounded-pill shadow-sm" placeholder="Search" aria-label="Search">
                 <span class="btn searchbar-btn" type="submit">
@@ -2107,7 +2257,6 @@
             <div class="list-group-section quick-response" id="accordionExample">
                 <div class="collapse-toggle-card">
                     <div class="list-group list-group-flush">
-
                         <div class="collapse-wrap mx-3" id="qr-ques1" *ngFor="let hat of HumanAgentTags">
                             <div class="list-group list-group-flush mb-4 ms-4 ps-1"
                                 (click)="sendHumanAgentTag(hat.value)">
@@ -2117,32 +2266,26 @@
                                     <label class="form-check-label" for={{hat.value}}>{{hat.text}}
                                     </label>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
-
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
             <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
             <div class="toast-btn d-flex align-items-center">
-
                 <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
                     (click)="closeToaster()"><i class="fal fa-times"></i></button>
-
             </div>
         </div>
     </div>
 </div>
-
 <div class="quickResWrapper">
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel"
         style="visibility: visible;" aria-modal="true" role="dialog">
@@ -2154,7 +2297,6 @@
                 (click)="closeQuickResponseSidebar()"><i class="fal fa-times"></i></button>
         </div>
         <div class="offcanvas-body">
-
             <form class="custom-searchbar">
                 <input class="form-control me-2 rounded-pill shadow-sm" placeholder="Search" aria-label="Search"
                     [(ngModel)]="quickReplySearchText">
@@ -2200,7 +2342,6 @@
                             </div>
                         </ng-template>
                     </div>
-
                     <ng-template #recursiveTemplate let-reply let-parentId="parentId" let-parentIndex="parentIndex">
                         <ng-container *ngFor="let child of reply; let j = index">
                             <ng-container *ngIf="!child.subReply; else nestedTemplate">
@@ -2238,7 +2379,6 @@
                             </ng-template>
                         </ng-container>
                     </ng-template>
-
                 </div>
             </div>
         </div>
@@ -2254,5 +2394,3 @@
         style="cursor: pointer; font-size: 17px;">👌</span><span
         style="cursor: pointer; font-size: 17px;">👍</span><span style="cursor: pointer; font-size: 17px;">🤩</span>
 </div>
-
-

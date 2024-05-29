@@ -84,7 +84,6 @@
                                                     </form>
                                                 </li>
                                             </span>
-
                                             <div class="dd-scroll" data-scrollbar="true" tabindex="-1"
                                                 style="overflow: auto; height: auto;">
                                                 <div class="scroll-content">
@@ -121,26 +120,20 @@
                                     </div>
                                 </li>
                             </ng-container>
-
                             <li class="list-inline-item ms-auto">
                                 <div class="btn-group buttonfilter" role="group"
                                     aria-label="Basic radio toggle button group">
-
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio2" #radioInput10
                                         autocomplete="off" (click)="date_pagination(10)">
                                     <label class="btn btn-outline-secondary" for="btnradio2">10</label>
-
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio3" #radioInput20
                                         autocomplete="off" (click)="date_pagination(20)">
                                     <label class="btn btn-outline-secondary" for="btnradio3">20</label>
-
                                     <input type="radio" class="btn-check" name="btnradio" id="btnradio4" #radioInput30
                                         autocomplete="off" (click)="date_pagination(30)">
                                     <label class="btn btn-outline-secondary" for="btnradio4">30</label>
-
                                 </div>
                             </li>
-
                         </ul>
                     </div>
                     <div class="row align-items-start h-auto mb-4">
@@ -159,7 +152,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <ng-container *ngIf="isChannelShow!=='morinaga'  &&  isChannelShow!=='ttpl' ">
                             <div class="col-lg-4 col-md-6">
                                 <div class="card dashboard-card">
@@ -179,10 +171,6 @@
                                 </div>
                             </div>
                         </ng-container>
-
-
-
-
                         <div class="col-lg-4 col-md-6">
                             <div class="card dashboard-card">
                                 <div class="card-body">
@@ -196,24 +184,12 @@
                                         <label title="Agent Interaction">
                                             <h2> {{agent_performance_report?.messageCount}}</h2>
                                         </label>
-
-
-
-
-
-
-
-
-
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
-
                         <ng-container>
                             <span *ngIf="isChannelShow!=='morinaga' && isChannelShow!=='ttpl'">
                                 <div class="col-12">
@@ -230,39 +206,29 @@
                                                 <!-- <div #main style="height: 350px; width: 100%;"></div> -->
                                             </div>
                                         </ng-container>
-
                                     </div>
                                 </div>
                             </span>
-
                         </ng-container>
                         <!-- <div class="col-12">
-                       
                             <div class="card iceBg p-4 rounded mb-5">
                                 <h5 class="section-heading mb-4 p-0">{{ selectedChannelLabel }}</h5>
                                 <div class="graphcontainer align-items-end">
                                     <div #main style="height: 350px; width: 100%;"></div>
                                 </div>
                             </div>
-                     
-                            
                         </div> -->
                         <!-- <ng-container *ngIf="isChannelShow=='local'";>
                             <div class="col-12">
-                       
                                 <div class="card iceBg p-4 rounded mb-5">
                                     <h5 class="section-heading mb-4 p-0">{{ selectedChannelLabel }}</h5>
                                     <div class="graphcontainer align-items-end">
                                         <div #main style="height: 350px; width: 100%;"></div>
                                     </div>
                                 </div>
-                         
-                                
                             </div>
-                     
                         </ng-container> -->
                     </div>
-
                     <div class="row">
                         <div class="col-12">
                             <div class="card iceBg p-4 rounded mb-5">
@@ -272,13 +238,11 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <span
                         *ngIf="this.activeChannel == 'https://keportal.enteract.live'|| this.activeChannel=='http://localhost:4200'">
                         <div class="card iceBg p-4 rounded mb-5">
                             <h5 class="section-heading mb-4 p-0">CUSTOMER SATISFACTION RATINGS </h5>
-
                             <div class="row justify-content-between">
                                 <div class="col-md-6">
                                     <div class="graphcontainer align-items-end">
@@ -316,11 +280,8 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </span>
-
                     <div class="card iceBg p-4 rounded mb-5">
                         <div class="row">
                             <div class="col-6">
@@ -355,7 +316,6 @@
                                 <thead class="fixed_first_row">
                                     <tr>
                                         <th>Agent</th>
-
                                         <th *ngIf="isChannelShow!=='morinaga' && isChannelShow!=='ttpl'">{{
                                             selectedChannelLabel === 'Twitter' ?
                                             'Tweets' : 'Comments' }}</th>
@@ -376,7 +336,6 @@
                                         <td>{{ agent.averageTime }}</td>
                                         <td>{{ agent.minimumTime }}</td>
                                         <td>{{ agent.maximumTime }}</td>
-
                                     </tr>
                                     <tr class="bg-light">
                                         <td><strong>Total</strong> </td>
@@ -390,9 +349,7 @@
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
-
                     <div>
                     </div>
                 </div>
@@ -400,17 +357,14 @@
         </div>
     </div>
 </div>
-
 <div class="position-fixed toast-bar border-0 shadow-sm rounded navyBg" style="z-index: 60">
     <div [ngClass]="toastermessage == true ? 'show' : 'hide'" class="toast border-0 p-2 h-100 navyBg fade" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="d-flex border-0 justify-content-between align-items-center w-100 h-100">
             <p class="toast-line-para ice m-0">{{AlterMsg}}</p>
             <div class="toast-btn d-flex align-items-center">
-
                 <button type="button" class="btn m-0 ms-2" aria-label="Close" data-bs-dismiss="toast"
                     (click)="closeToaster()"><i class="fal fa-times"></i></button>
-
             </div>
         </div>
     </div>
