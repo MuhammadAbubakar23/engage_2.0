@@ -316,17 +316,17 @@ export class InboxMenuComponent implements OnInit {
     this.filterService.addTogglePanel(string);
   }
   rulesGroupIds: any[] = [];
-  updateWing(rule: any, skillSlug:any, skillName:string) {
-    
-    if (rule == 'defaultRuleIds') {
-      this.rulesGroupIds = localStorage.getItem('defaultRuleIds')?.split(',') || []
+  updateWing(skillId: any, skillSlug:any, skillName:string) {
+    this.rulesGroupIds = [];
+    debugger
+    if (skillId == 'default') {
+      this.rulesGroupIds = []
       this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds);
     } else {
-      rule.forEach((x: any) => {
-        if (!this.rulesGroupIds.includes(x.groupId)) {
-          this.rulesGroupIds.push(x.groupId);
+        if (!this.rulesGroupIds.includes(skillId)) {
+          this.rulesGroupIds.push(skillId);
         }
-      });
+      
     }
 
     this.sendRulesGroupIdsService.sendRulesGroupIds(this.rulesGroupIds);

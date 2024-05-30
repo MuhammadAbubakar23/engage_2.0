@@ -12,7 +12,6 @@ import { SharedService } from 'src/app/services/SharedService/shared.service';
 import { ToggleService } from 'src/app/services/ToggleService/Toggle.service';
 import { WebPhoneComponent } from '../web-phone/web-phone.component';
 import { ConversationComponent } from './components/conversation/conversation.component';
-import { SlaComponent } from './components/SLA/sla.component';
 import { ComplaintTicketPanelComponent } from './right-sidebar-components/complaint-ticket-panel/complaint-ticket-panel/complaint-ticket-panel.component';
 import { ContactsComponent } from './right-sidebar-components/contacts/contacts.component';
 import { CreateNewComponent } from './right-sidebar-components/create-new/create-new.component';
@@ -126,10 +125,6 @@ export class InboxesComponent implements OnInit {
         componentFactory = this.resolver.resolveComponentFactory(
           ConversationComponent
         );
-        this.target?.createComponent(componentFactory);
-        break;
-      case 'sla':
-        componentFactory = this.resolver.resolveComponentFactory(SlaComponent);
         this.target?.createComponent(componentFactory);
         break;
       case 'ticket':

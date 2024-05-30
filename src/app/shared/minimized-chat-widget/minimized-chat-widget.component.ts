@@ -19,6 +19,7 @@ import { CreateTicketService } from 'src/app/services/CreateTicketService/create
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
+import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
 
 @Component({
   selector: 'app-minimized-chat-widget',
@@ -83,7 +84,8 @@ export class MinimizedChatWidgetComponent implements OnInit {
     private createTicketService: CreateTicketService,
     private getQueryTypeService : GetQueryTypeService,
     private getWing: GetWingsService,
-    private getRulesGroupIdsService : RulesGroupIdsService
+    private getRulesGroupIdsService : RulesGroupIdsService,
+    private getSkillId:SkillIdsService
     
   ) {}
 
@@ -122,7 +124,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
       include: '',
       flag: '',
       wings: this.getWing.wings,
-        groupId: this.getRulesGroupIdsService.rulesGroupIds,
+      skills: [this.getSkillId.getSkillIds()],
     };
     this.SpinnerService.show();
     this.commondata
@@ -158,7 +160,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
         include: '',
         flag: '',
         wings: this.getWing.wings,
-        groupId: this.getRulesGroupIdsService.rulesGroupIds,
+        skills: [this.getSkillId.getSkillIds()],
       };
       this.SpinnerService.show();
       this.commondata

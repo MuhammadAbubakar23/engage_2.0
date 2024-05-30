@@ -7,7 +7,7 @@
     <ul class="list-group list-group-flush" id="inboxes-list" data-scrollbar="true" tabindex="-1"
       style="overflow-y: auto; outline: none;">
       <div class="scroll-content">
-        <!-- <a [routerLink]="['/all-inboxes/'+flag+'/all']" (click)="updateWing('defaultRuleIds', '')" class="all-inboxes-menu list-group-item list-group-item-action"
+        <a [routerLink]="['/all-inboxes/'+flag+'/all']" (click)="updateWing('default', '','all')" class="all-inboxes-menu list-group-item list-group-item-action"
           [class.active]="activeChannel == 'all'" value="all-conversation">
           <div class="iconButton medium skyBg">
             <i class="far fa-inbox"></i>
@@ -16,10 +16,10 @@
             <div class="black-text">All Conversations </div>
           </div>
           <span class="badge twltte-bg rounded-pill" *ngIf="UnResponded > 0">{{UnResponded}}</span>
-        </a> -->
+        </a>
 
 
-        <a *ngFor="let channel of allSkills" (click)="updateWing(channel.rules, channel.skilSlug, channel.skillName)" [routerLink]="['/all-inboxes/'+flag+'/'+channel.skillName]"
+        <a *ngFor="let channel of allSkills" (click)="updateWing(channel.skillID, channel.skilSlug, channel.skillName)" [routerLink]="['/all-inboxes/'+flag+'/'+channel.skillID]"
             class="all-inboxes-menu list-group-item list-group-item-action">
             <div [ngClass]="channel.color" [innerHTML]="channel.icon">
             </div>

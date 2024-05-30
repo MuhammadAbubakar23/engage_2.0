@@ -19,6 +19,7 @@ import { QueryStatusService } from 'src/app/services/queryStatusService/query-st
 import { RemoveTagService } from 'src/app/services/RemoveTagService/remove-tag.service';
 import { ReplyService } from 'src/app/services/replyService/reply.service';
 import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
+import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
 import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
@@ -105,7 +106,8 @@ export class EmailComponent implements OnInit {
     private stor : StorageService,
     private userInfoService: UserInformationService,
     private getWing: GetWingsService,
-    private getRulesGroupIdsService : RulesGroupIdsService
+    private getRulesGroupIdsService : RulesGroupIdsService,
+    private getSkillId:SkillIdsService
   ) {
     // this.Subscription = this.fetchId.getAutoAssignedId().subscribe((res) => {
     //   this.id = null;
@@ -403,7 +405,7 @@ export class EmailComponent implements OnInit {
         include: "",
         flag: this.flag,
         wings: this.getWing.wings,
-        groupId: this.getRulesGroupIdsService.rulesGroupIds,
+        skills: [this.getSkillId.getSkillIds()],
       };
 
       this.SpinnerService.show();
@@ -548,7 +550,7 @@ export class EmailComponent implements OnInit {
         include: "",
         flag: this.flag,
         wings: this.getWing.wings,
-        groupId: this.getRulesGroupIdsService.rulesGroupIds,
+        skills: [this.getSkillId.getSkillIds()],
       };
 
       this.SpinnerService.show();
@@ -686,7 +688,7 @@ export class EmailComponent implements OnInit {
         include: "",
         flag: this.flag,
         wings: this.getWing.wings,
-        groupId: this.getRulesGroupIdsService.rulesGroupIds,
+        skills: [this.getSkillId.getSkillIds()],
       };
 
       this.SpinnerService.show();

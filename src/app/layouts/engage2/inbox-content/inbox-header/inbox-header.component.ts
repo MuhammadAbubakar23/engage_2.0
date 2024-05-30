@@ -46,7 +46,7 @@ export class InboxHeaderComponent implements OnInit {
           });
         }
       });
-      this.getFollowUpCount();
+      // this.getFollowUpCount();
     }
   
     getFollowUpCount(){
@@ -99,7 +99,7 @@ export class InboxHeaderComponent implements OnInit {
       include: '',
       flag: '',
       wings:'',
-      groupId:[]
+      skills:[]
     };
     this.commonService.GetConversationList(this.filterDto).subscribe((res:any)=>{
       

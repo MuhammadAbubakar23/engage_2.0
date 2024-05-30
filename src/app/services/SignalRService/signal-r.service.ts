@@ -30,7 +30,7 @@ export class SignalRService {
 
   token = localStorage.getItem('token');
   signalRStatus = localStorage.getItem('signalRStatus');
-  companyId: number = 651;
+  companyId: number = 658;
   baseUrl: string = '';
 
   public hubconnection!: signalR.HubConnection;
@@ -291,9 +291,13 @@ export class SignalRService {
   };
 
   public getConnectionId = () => {
-    this.hubconnection.invoke('GetConnectionId').then((data) => {
+    let obj={
+      'Bearer': localStorage.getItem('token') ,
+      'companyId':this.companyId
+    }
+    this.hubconnection.invoke('GetConnectionId',obj).then((data) => {
       this.connectionId = data;
-      localStorage.setItem('signalRConnectionId', this.connectionId);
+      localStorage.setItem('signalRConnectionId', this.connectionId)
     });
   };
 }
