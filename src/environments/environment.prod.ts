@@ -22,7 +22,7 @@ export const environment = {
   title: 'abc',
   clientNumber: '923112744502',
   InstaBaseUrl: 'https://insta.360scrm.com/api/',
-  FbBaseUrl: 'https://face.360scrm.com/api/',
+  FbBaseUrl: 'https://firstyellowmouse47.conveyor.cloud/api/',
   // FbBaseUrl: 'https://nextsparklypen70.conveyor.cloud/api/',
   YoutubeBaseUrl: 'https://tube.360scrm.com/api/',
   TwitterBaseUrl: 'https://tweet.360scrm.com/api/',
@@ -65,6 +65,7 @@ export const environment = {
   // consoleBaseUrl: '',
   // ServiceBaseUrl: '',
   //  ProfileBaseUrl: '',
+  //  botBaseUrl:'',
 
   // old Tppl
   // IdentityBaseUrl: 'https://tpplidp.360scrm.com/api/',
@@ -79,6 +80,8 @@ export const environment = {
   // ServiceBaseUrl: 'https://waservice.enteract.live/api/',
   // consoleBaseUrl: 'https://waconsole.enteract.live/api/',
   // ProfileBaseUrl: '',
+  // botBaseUrl: '',
+  // LinkedInBaseUrl:'',
 
   // For Bazaar
   // IdentityBaseUrl: 'https://bzidentity.enteract.live/api/',
@@ -89,7 +92,7 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-  //   LinkedInBaseUrl:'',
+    // LinkedInBaseUrl:'',
 
   // For Jazz Rox
   // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
@@ -101,7 +104,7 @@ export const environment = {
   // botBaseUrl: 'https://bot-engage.enteract.app/api/',
   // LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
 
-  // for statging / Internal :companyId 650
+  //for statging / Internal :companyId 650
   // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
   // CommonBaseUrl: 'https://comrox.enteract.app/api/',
   // ServiceBaseUrl: '',
@@ -116,7 +119,7 @@ export const environment = {
   JomoAccessToken: '407ecdb2308d5cc24e9f5d24a779e4a3151357bb',
   // for testing purpose
   // consoleBaseUrl: 'http://10.111.11.93:45455/api/',
-  //  consoleBaseUrl: '',
+  // consoleBaseUrl: '',
 
   links: {
     identity: {
@@ -238,7 +241,7 @@ export const environment = {
       MarkAsComplete: 'Social/MarkAsCompleted',
       SaveAsCompleted: 'Social/SaveAsCompleted',
       LikedByAdmin: 'Social/LikeByAdmin',
-      QuickReplyList: 'Social/GetQuickReplyList',
+       QuickReplyList: 'Social/GetQuickReplyList',
       AssignQuerry: 'Query/AssignQuery',
       AgentsTeamList: 'Query/GetActiveAgent',
       AssignToAnotherAgent: 'Query/QueryAssignMultiUser',

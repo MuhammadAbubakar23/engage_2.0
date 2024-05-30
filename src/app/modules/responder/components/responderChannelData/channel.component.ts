@@ -2266,7 +2266,13 @@ export class ChannelComponent implements OnInit {
   isAudio(attachment: any): boolean {
     return attachment?.mediaType?.toLowerCase().startsWith('audio');
   }
-
+  isOther(attachment: any): boolean {
+    return (
+      !this.isImage(attachment) &&
+      !this.isVideo(attachment) &&
+      !this.isAudio(attachment)
+    );
+  }
   hideMessage(queryId: number, status: boolean, platform: string) {
     var obj = {
       platform: platform,
