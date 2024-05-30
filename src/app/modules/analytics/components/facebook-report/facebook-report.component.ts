@@ -81,7 +81,6 @@ export class FacebookReportComponent implements OnInit {
   isShowReactionsGraph: boolean = false
   isShowHowViwedGraph: boolean = false
   isShowReachabiltyGraph: boolean = false
-
   numberofPagelikes: any;
   numberofpageUnlikes: any;
   netDeffernce: any;
@@ -125,7 +124,6 @@ export class FacebookReportComponent implements OnInit {
   LTPL: any;
   LTPC: any;
   LTPS: any;
-
   LtotalSumAudienceEngagement: any;
   totalSumOfAudience: any;
   constructor(
@@ -134,7 +132,6 @@ export class FacebookReportComponent implements OnInit {
     private datePipe: DatePipe,
     private commandataSerivecs: CommonDataService
   ) { }
-
   ngOnInit(): void {
     const newObj = {
       title: 'Facebook Report',
@@ -143,7 +140,6 @@ export class FacebookReportComponent implements OnInit {
     this.headerServices.setHeader(newObj);
     this.currentDate = new Date();
     this.maxEndDate = this.currentDate.toISOString().split('T')[0];
-
     this.getAllfeacebookData();
     this.getTopFiveCustomers();
     // this.getDamiChart()
@@ -159,11 +155,9 @@ export class FacebookReportComponent implements OnInit {
     if (this.startDate == '' && this.enddate == '') {
       const today = this.currentDate;
       this.enddate = this.datePipe.transform(today, 'YYYY-MM-dd') || '';
-
       let prevDate = this.currentDate.setDate(this.currentDate.getDate() - 7);
       this.startDate = this.datePipe.transform(prevDate, 'YYYY-MM-dd') || '';
     } else if (this.startDate != '' && this.enddate != '') {
-
       const startDateObj = new Date(this.startDate);
       const endDateObj = new Date(this.enddate);
       const timeDiff = Math.abs(endDateObj.getTime() - startDateObj.getTime());
@@ -173,7 +167,6 @@ export class FacebookReportComponent implements OnInit {
         return;
       }
     }
-
     let data = {
       pageId: '622038187854126',
       from: this.startDate,
@@ -224,20 +217,16 @@ export class FacebookReportComponent implements OnInit {
     this.spinerServices.show();
     this.commandataSerivecs.Getfacebookreport(data).subscribe((res: any) => {
       this.spinerServices.hide();
-
       this.faecbookresponce = res;
-
       // stats percentage count
       this.lastTotalPageLikes = this.faecbookresponce.lastTotalPageLikes;
       this.totalPageLikes = this.faecbookresponce.totalPageLikes;
       this.SumBehaivor = this.lastTotalPageLikes + this.totalPageLikes;
       this.countPercentage = (this.totalPageLikes / this.SumBehaivor) * 100;
       this.RoundOFF = Math.floor(this.countPercentage);
-
       // publish percentage
       this.tppP = this.faecbookresponce.totalPublishedPagePosts;
       this.ltpPP = this.faecbookresponce.lastTotalPublishedPagePosts;
-
       this.totalPublishSum = this.tppP + this.ltpPP;
       this.publishPercentage = (this.tppP / this.totalPublishSum) * 100;
       // PagePost
@@ -257,7 +246,6 @@ export class FacebookReportComponent implements OnInit {
         this.LtotalSumAudienceEngagement + this.totalSumAudienceEngagement;
       this.audiencePercentage =
         (this.totalSumAudienceEngagement / this.totalSumOfAudience) * 100;
-
       this.totalEngagementMessage =
         res?.agentReplies?.totalMessagesAndRepliesCount;
       //  SlA replies
@@ -265,17 +253,15 @@ export class FacebookReportComponent implements OnInit {
       this.repliesAfter = this.faecbookresponce.replyAfterTime;
       this.totalCateredWorkload = this.faecbookresponce.totalCateredWorkload;
       // totalEnagement
-      this.totallikes = res.totalPostLikes;
+      this.totallikes = res.totalPageLikes;
       this.totalComments = res.totalPostComments;
       this.totalShares = res.totalPostShares;
-
       this.totalengagement =
         this.totallikes +
         this.totalComments +
         this.totalShares +
         this.totalEngagementMessage;
       // net differnce of page likes and unlike
-
       this.numberofPagelikes = res.totalPageLikes;
       this.numberofpageUnlikes = res.totalPageUnLikes;
       if (this.numberofPagelikes > this.numberofpageUnlikes) {
@@ -291,7 +277,6 @@ export class FacebookReportComponent implements OnInit {
         }
         this.audineceEngagementTotallikes.push(x.activityCount);
       });
-
       //  adudience Engagement comments
       this.audienceEngagementComments = res.postCommentSpan;
       this.audienceEngagementComments?.forEach((x: any) => {
@@ -364,7 +349,6 @@ export class FacebookReportComponent implements OnInit {
       // agentMessageData
       this.agentMessages = res.agentReplies;
       this.agentMessagesData = res.agentReplies;
-
       this.totalMessageAndrepliesCount =
         this.agentMessagesData.totalMessagesAndRepliesCount;
       this.totalMessagePostCommentsAndreplies =
@@ -378,11 +362,8 @@ export class FacebookReportComponent implements OnInit {
           this.publishedPegePostSpanDates.push(x.dateValue.split('T')[0]);
         }
         // date sorting 
-   
         this.publishedPegePostSpanCounts.push(x.activityCount);
       });
-      
-
       this.publishedUserPostSpan = res.publishedUserPostSpan;
       this.publishedUserPostSpan?.forEach((x: any) => {
         this.userPerPost += x.activityCount;
@@ -422,9 +403,7 @@ export class FacebookReportComponent implements OnInit {
         ((this.totalfemaleCount / this.totalmaleandfemalCount) * 100).toFixed(2)
       );
       // RecentPost
-
       this.recentPosts = res.recentPosts;
-
       // aduience Growth
       this.pagelikeSpan = res.pageLikeSpan;
       this.pageunlikeSpan = res.pageUnlikeSpan;
@@ -444,13 +423,12 @@ export class FacebookReportComponent implements OnInit {
         this.isShowAudienceGraph = true
       }
       this.getChartAudienceGrowth();
-      this.getChartAudienceEngagement();
+      // this.getChartAudienceEngagement();
       this.getTotalPeopleChart();
       this.getReactionGraph();
       this.getPageReachablityChart();
       this.getPublishinBehaviorChart();
-      this.getExternalSourcesChart();
-
+      // this.getExternalSourcesChart();
       this.makeChartResponsive();
     });
     this.getTopFiveCustomers()
@@ -459,7 +437,6 @@ export class FacebookReportComponent implements OnInit {
     const widthPercentage = this.malepersentage + '%';
     return { width: widthPercentage };
   }
-
   getFemaleProgressBarStyle() {
     const widthPercentage = this.femalepersentage + '%';
     return { width: widthPercentage };
@@ -470,7 +447,6 @@ export class FacebookReportComponent implements OnInit {
       var chartDom = document.getElementById('pagereachablity');
       this.pageReachabilityGraph = echarts.init(chartDom);
       var option;
-
       option = {
         color: ['#fc1c72'],
         tooltip: {
@@ -514,15 +490,12 @@ export class FacebookReportComponent implements OnInit {
           {
             name: 'Page  Reach',
             type: 'line',
-
             data: this.pageReachSpanCounts,
           },
         ],
       };
-
       option && this.pageReachabilityGraph.setOption(option);
     }
-
   }
   reactionGraph: any;
   getReactionGraph() {
@@ -530,7 +503,6 @@ export class FacebookReportComponent implements OnInit {
       var chartDom = document.getElementById('reaction');
       this.reactionGraph = echarts.init(chartDom);
       var option;
-
       option = {
         tooltip: {
           trigger: 'axis',
@@ -634,7 +606,6 @@ export class FacebookReportComponent implements OnInit {
           },
         ],
       };
-
       option && this.reactionGraph.setOption(option);
     }
   }
@@ -643,7 +614,6 @@ export class FacebookReportComponent implements OnInit {
     var chartDom = document.getElementById('totalpeople');
     this.totalPeopleGraph = echarts.init(chartDom);
     var option;
-
     option = {
       tooltip: {
         trigger: 'axis',
@@ -693,17 +663,14 @@ export class FacebookReportComponent implements OnInit {
         },
       ],
     };
-
     option && this.totalPeopleGraph.setOption(option);
   }
   externalResourceGraph: any;
   getExternalSourcesChart() {
     type EChartsOption = echarts.EChartsOption;
-
     var chartDom = document.getElementById('externalsources')!;
     this.externalResourceGraph = echarts.init(chartDom);
     var option: EChartsOption;
-
     option = {
       color: ['#8063B5', '#ffa800', '#0095ff'],
       tooltip: {
@@ -715,7 +682,6 @@ export class FacebookReportComponent implements OnInit {
       },
       series: [
         {
-          // name: this.externalRefernalsName,
           type: 'pie',
           radius: ['40%', '70%'],
           avoidLabelOverlap: false,
@@ -733,7 +699,6 @@ export class FacebookReportComponent implements OnInit {
         },
       ],
     };
-
     option && this.externalResourceGraph.setOption(option);
   }
   publishinBehaviourGraph: any;
@@ -742,7 +707,6 @@ export class FacebookReportComponent implements OnInit {
       var chartDom = document.getElementById('publishin');
       this.publishinBehaviourGraph = echarts.init(chartDom);
       var option;
-
       option = {
         color: ['#6441a5 ', '#e7edf1'],
         legend: {
@@ -795,164 +759,155 @@ export class FacebookReportComponent implements OnInit {
           },
         ],
       };
-
       option && this.publishinBehaviourGraph.setOption(option);
     }
   }
   audienceEngagementGraph: any;
-  getChartAudienceEngagement() {
-    type EChartsOption = echarts.EChartsOption;
-
-    var chartDom = document.getElementById('engagement');
-    this.audienceEngagementGraph = echarts.init(chartDom);
-    var option: EChartsOption;
-    option = {
-      color: ['#7354AE', '#FA0060', '#00D3A2'],
-
-      tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'cross',
-          label: {
-            backgroundColor: '#6a7985',
-          },
-        },
-      },
-      legend: {
-        data: ['Likes', 'Comments', 'Shares'],
-        icon: 'circle',
-        bottom: 0,
-      },
-      toolbox: {
-        feature: {
-          saveAsImage: {},
-        },
-      },
-      grid: {
-        left: '10%',
-        right: '4%',
-        bottom: '13%',
-        containLabel: true,
-      },
-      xAxis: [
-        {
-          type: 'category',
-          data: this.publishedPegePostSpanDates.sort((a,b) =>  new Date(b).getTime() - new Date(a).getTime()).reverse(),
-          axisLabel: {
-            rotate: 45,
-          },
-        },
-      ],
-      yAxis: [
-        {
-          type: 'value',
-          nameLocation: 'middle',
-          name: 'Total Number of Audience Engagement',
-          nameTextStyle: {
-            fontSize: 12,
-            color: 'grey',
-            lineHeight: 80,
-          },
-        },
-      ],
-      series: [
-        {
-          name: 'Likes',
-          type: 'line',
-
-          smooth: true,
-          lineStyle: {
-            width: 0,
-          },
-          showSymbol: false,
-          areaStyle: {
-            opacity: 0.8,
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              {
-                offset: 0,
-                color: '#6E4EAC',
-              },
-              {
-                offset: 1,
-                color: '#8E75BE',
-              },
-            ]),
-          },
-          emphasis: {
-            focus: 'series',
-          },
-          data: this.audineceEngagementTotallikes,
-        },
-        {
-          name: 'Comments',
-          type: 'line',
-
-          smooth: true,
-          lineStyle: {
-            width: 0,
-          },
-          showSymbol: false,
-          areaStyle: {
-            opacity: 0.8,
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              {
-                offset: 0,
-                color: '#FA0060',
-              },
-              {
-                offset: 1,
-                color: '#F05396',
-              },
-            ]),
-          },
-          emphasis: {
-            focus: 'series',
-          },
-          data: this.audienceEngagementTotlaComments,
-        },
-        {
-          name: 'Shares',
-          type: 'line',
-
-          smooth: true,
-          lineStyle: {
-            width: 0,
-          },
-          showSymbol: false,
-          areaStyle: {
-            opacity: 0.8,
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              {
-                offset: 0,
-                color: '#00D3A2',
-              },
-              {
-                offset: 1,
-                color: '#5ECFB9',
-              },
-            ]),
-          },
-          emphasis: {
-            focus: 'series',
-          },
-          data: this.audienceEngagmentTotalShare,
-        },
-      ],
-    };
-
-    option && this.audienceEngagementGraph.setOption(option);
-  }
+  // getChartAudienceEngagement() {
+  //   type EChartsOption = echarts.EChartsOption;
+  //   var chartDom = document.getElementById('engagement');
+  //   this.audienceEngagementGraph = echarts.init(chartDom);
+  //   var option: EChartsOption;
+  //   option = {
+  //     color: ['#7354AE', '#FA0060', '#00D3A2'],
+  //     tooltip: {
+  //       trigger: 'axis',
+  //       axisPointer: {
+  //         type: 'cross',
+  //         label: {
+  //           backgroundColor: '#6a7985',
+  //         },
+  //       },
+  //     },
+  //     legend: {
+  //       data: ['Likes', 'Comments', 'Shares'],
+  //       icon: 'circle',
+  //       bottom: 0,
+  //     },
+  //     toolbox: {
+  //       feature: {
+  //         saveAsImage: {},
+  //       },
+  //     },
+  //     grid: {
+  //       left: '10%',
+  //       right: '4%',
+  //       bottom: '13%',
+  //       containLabel: true,
+  //     },
+  //     xAxis: [
+  //       {
+  //         type: 'category',
+  //         data: this.publishedPegePostSpanDates.sort((a,b) =>  new Date(b).getTime() - new Date(a).getTime()).reverse(),
+  //         axisLabel: {
+  //           rotate: 45,
+  //         },
+  //       },
+  //     ],
+  //     yAxis: [
+  //       {
+  //         type: 'value',
+  //         nameLocation: 'middle',
+  //         name: 'Total Number of Audience Engagement',
+  //         nameTextStyle: {
+  //           fontSize: 12,
+  //           color: 'grey',
+  //           lineHeight: 80,
+  //         },
+  //       },
+  //     ],
+  //     series: [
+  //       {
+  //         name: 'Likes',
+  //         type: 'line',
+  //         smooth: true,
+  //         lineStyle: {
+  //           width: 0,
+  //         },
+  //         showSymbol: false,
+  //         areaStyle: {
+  //           opacity: 0.8,
+  //           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+  //             {
+  //               offset: 0,
+  //               color: '#6E4EAC',
+  //             },
+  //             {
+  //               offset: 1,
+  //               color: '#8E75BE',
+  //             },
+  //           ]),
+  //         },
+  //         emphasis: {
+  //           focus: 'series',
+  //         },
+  //         data: this.audineceEngagementTotallikes,
+  //       },
+  //       {
+  //         name: 'Comments',
+  //         type: 'line',
+  //         smooth: true,
+  //         lineStyle: {
+  //           width: 0,
+  //         },
+  //         showSymbol: false,
+  //         areaStyle: {
+  //           opacity: 0.8,
+  //           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+  //             {
+  //               offset: 0,
+  //               color: '#FA0060',
+  //             },
+  //             {
+  //               offset: 1,
+  //               color: '#F05396',
+  //             },
+  //           ]),
+  //         },
+  //         emphasis: {
+  //           focus: 'series',
+  //         },
+  //         data: this.audienceEngagementTotlaComments,
+  //       },
+  //       {
+  //         name: 'Shares',
+  //         type: 'line',
+  //         smooth: true,
+  //         lineStyle: {
+  //           width: 0,
+  //         },
+  //         showSymbol: false,
+  //         areaStyle: {
+  //           opacity: 0.8,
+  //           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+  //             {
+  //               offset: 0,
+  //               color: '#00D3A2',
+  //             },
+  //             {
+  //               offset: 1,
+  //               color: '#5ECFB9',
+  //             },
+  //           ]),
+  //         },
+  //         emphasis: {
+  //           focus: 'series',
+  //         },
+  //         data: this.audienceEngagmentTotalShare,
+  //       },
+  //     ],
+  //   };
+  //   option && this.audienceEngagementGraph.setOption(option);
+  // }
   audienceGrowthGraph: any;
   getChartAudienceGrowth() {
     if (this.isShowAudienceGraph == false) {
       type EChartsOption = echarts.EChartsOption;
-
       var chartDom = document.getElementById('growth');
       this.audienceGrowthGraph = echarts.init(chartDom);
       var option: EChartsOption;
       option = {
         color: ['#7354AE', '#FA0060'],
-
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -1004,7 +959,6 @@ export class FacebookReportComponent implements OnInit {
           {
             name: 'likes',
             type: 'line',
-
             smooth: true,
             lineStyle: {
               width: 0,
@@ -1031,7 +985,6 @@ export class FacebookReportComponent implements OnInit {
           {
             name: 'Unlikes',
             type: 'line',
-
             smooth: true,
             lineStyle: {
               width: 0,
@@ -1057,77 +1010,7 @@ export class FacebookReportComponent implements OnInit {
           },
         ],
       };
-
       option && this.audienceGrowthGraph.setOption(option);
-      // option = {
-      //   color: ['#b09ed1', '#ee438d'],
-      //   tooltip: {
-      //     trigger: 'axis',
-      //     axisPointer: {
-      //       type: 'cross',
-      //       label: {
-      //         backgroundColor: '#6a7985',
-      //       },
-      //     },
-      //   },
-      //   legend: {
-      //     data: ['likes', 'Unlikes'],
-      //     icon:'circle',
-      //     bottom:0
-      //   },
-      //   toolbox: {
-      //     feature: {
-      //       // magicType: { show: true, type: ['line', 'bar'] },
-      //       saveAsImage: {},
-      //     },
-      //   },
-      //   grid: {
-      //     left: '3%',
-      //     right: '4%',
-      //     bottom: '10%',
-      //     containLabel: true,
-      //   },
-      //   xAxis: [
-      //     {
-      //       type: 'category',
-      //       boundaryGap: false,
-      //       data: this.audiencelikesdate,
-      //       axisLabel: {
-      //         rotate:45,
-
-      //       }
-      //     },
-      //   ],
-      //   yAxis: [
-      //     {
-      //       type: 'value',
-      //     },
-      //   ],
-      //   series: [
-      //     {
-      //       name: 'likes',
-      //       type: 'line',
-
-      //       areaStyle: {},
-      //       emphasis: {
-      //         focus: 'series',
-      //       },
-      //       data: this.audiencelikesCounts,
-      //     },
-      //     {
-      //       name: 'Unlikes',
-      //       type: 'line',
-
-      //       areaStyle: {},
-      //       emphasis: {
-      //         focus: 'series'
-      //       },
-      //       data: this.audienceunlikesCount,
-      //     },
-      //   ],
-      // };
-
-      // option && myChart.setOption(option);
     }
   }
   getTopFiveCustomers() {
@@ -1151,9 +1034,7 @@ export class FacebookReportComponent implements OnInit {
   resetEndDate() {
     if (this.enddate >= this.startDate) {
       this.getAllfeacebookData();
-
       if (this.radioInput5 !== undefined) {
-        
         this.radioInput5.nativeElement.checked = false;
       }
       if(this.radioInput10!==undefined){
@@ -1167,7 +1048,6 @@ export class FacebookReportComponent implements OnInit {
       this.enddate = '';
     }
   }
-
   makeChartResponsive() {
     window.addEventListener('resize', () => {
       if (this.reactionGraph) {
