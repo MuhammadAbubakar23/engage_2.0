@@ -39,14 +39,14 @@ export const environment = {
   // ProfilerBaseUrl:'https://profiler.enteract.app/api/',
 
   // For KE
-  IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
-  CommonBaseUrl: 'https://comservices.enteract.live/api/',
-  SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
-  ProfileBaseUrl: 'https://profiler.enteract.live/api/',
-  ServiceBaseUrl: '',
-  consoleBaseUrl: 'https://console.enteract.live/api/',
-  LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
-  botBaseUrl:'',
+  // IdentityBaseUrl: 'https://idtservice.enteract.live/api/',
+  // CommonBaseUrl: 'https://comservices.enteract.live/api/',
+  // SignalRCommonBaseUrl: 'https://comservices.enteract.live/',
+  // ProfileBaseUrl: 'https://profiler.enteract.live/api/',
+  // ServiceBaseUrl: '',
+  // consoleBaseUrl: 'https://console.enteract.live/api/',
+  // LinkedInBaseUrl:'https://linkdservice.enteract.live/api/',
+  // botBaseUrl:'',
 
   // For Jazz
   // IdentityBaseUrl: 'https://identity.jazz.com.pk:8082/api/',
@@ -105,14 +105,14 @@ export const environment = {
   // LinkedInBaseUrl: 'https://linked.360scrm.com/api/',
 
   //for statging / Internal :companyId 650
-  // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
-  // CommonBaseUrl: 'https://comrox.enteract.app/api/',
-  // ServiceBaseUrl: '',
-  // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
-  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  // consoleBaseUrl: 'https://conrox.enteract.app/api/',
-  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
-  // LinkedInBaseUrl: '',
+  IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
+  CommonBaseUrl: 'https://f1f8-203-135-1-210.ngrok-free.app/api/',
+  ServiceBaseUrl: '',
+  SignalRCommonBaseUrl: 'https://f1f8-203-135-1-210.ngrok-free.app/',
+  ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  consoleBaseUrl: 'https://conrox.enteract.app/api/',
+  botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  LinkedInBaseUrl: '',
 
   CCMSURL: 'https://haccms.ibex.co/jomo/api/',
 

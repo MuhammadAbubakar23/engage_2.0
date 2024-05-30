@@ -47,6 +47,7 @@ import {
   DMData,
   ManipulatedDMDto,
 } from 'src/app/shared/Models/ManipulatedDMDto';
+import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
 
 @Component({
   selector: 'app-channel',
@@ -442,7 +443,8 @@ export class ChannelComponent implements OnInit {
     private renderer: Renderer2,
     private fetchPostType: FetchPostTypeService,
     private getWing: GetWingsService,
-    private getRulesGroupIdsService: RulesGroupIdsService
+    private getRulesGroupIdsService: RulesGroupIdsService,
+    private getSkillId:SkillIdsService
   ) {}
 
   ngOnInit(): void {
@@ -583,7 +585,7 @@ export class ChannelComponent implements OnInit {
       this.updateTicketId(res);
     });
   }
-
+  skillIdArray:number[]=[];
   async fetchData() {
     const channelFeatures = [
       {
@@ -652,6 +654,7 @@ export class ChannelComponent implements OnInit {
     const channelWithFeature = channelFeatures.find(
       (x) => x.platform === this.fetchId.platform
     );
+    
     if (channelWithFeature != null) {
       this.filterDto = {
         // fromDate: new Date(),
@@ -670,7 +673,7 @@ export class ChannelComponent implements OnInit {
         notInclude: '',
         include: '',
         wings: this.getWing.wings,
-        groupId: this.getRulesGroupIdsService.rulesGroupIds,
+        skills: [this.getSkillId.getSkillIds()],
       };
       for (const x of channelWithFeature.featureSet) {
         if (x.queryType === 'comment') {

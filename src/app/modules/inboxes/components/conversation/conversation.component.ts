@@ -21,6 +21,8 @@ import { HeaderCountService } from 'src/app/services/headerCountService/header-c
 import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
+import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
@@ -89,7 +91,10 @@ export class ConversationComponent implements OnInit {
     private headerCountService: HeaderCountService,
     private sendCount: ClosePanelService,
     private getWing: GetWingsService,
-    private getRulesGroupIdsService : RulesGroupIdsService
+    private getRulesGroupIdsService : RulesGroupIdsService,
+    private storage: StorageService,
+    private sendSkillId:SkillIdsService,
+    private getSkillId:SkillIdsService
   ) {
     this.criteria = {
       property: 'createdDate',
@@ -275,6 +280,7 @@ export class ConversationComponent implements OnInit {
   customersList: any[] = [];
   wings:any;
   isverifiedAccount:boolean=false
+  skillId:any;
   getConversationList() {
     
     // if (this.currentUrl.split('/')[2] == 'completed') {
@@ -284,7 +290,7 @@ export class ConversationComponent implements OnInit {
     
     
     this.flag = this.currentUrl.split('/')[2];
-    // this.platform = this.currentUrl.split('/')[3];
+    this.skillId = this.currentUrl.split('/')[3];
     
     if(this.currentUrl.toLowerCase().includes('facebook')){
       this.platform = 'Facebook'
@@ -454,7 +460,7 @@ export class ConversationComponent implements OnInit {
         hasBlueTick: this.searchForm.value.hasBlueTick,
         flag: this.flag,
         wings: this.wings,
-        groupId:this.getRulesGroupIdsService.rulesGroupIds
+        skills: this.getRulesGroupIdsService.rulesGroupIds,
       };
     }
 
@@ -572,7 +578,7 @@ export class ConversationComponent implements OnInit {
       notInclude: '',
       flag: '',
       wings:'',
-      groupId:[]
+      skills:[]
     };
     this.commondata.GetCustomers(this.filterDto).subscribe((res: any) => {
       this.customersList = res;
@@ -691,29 +697,85 @@ export class ConversationComponent implements OnInit {
       }
     }
   }
+  // updateConversationList(newMsg: any) {
+    
+  //   let data = this.storage.retrive('skills', 'O').local;
+
+  //   let rules = data.find((x:any)=> x.rules.includes(newMsg.skillSlug))
+  //   let skillId = rules.skillID
+  //   newMsg.skillId = skillId
+
+  //     const abc = this.ConversationList.find((obj: any) => obj.user === newMsg.user && obj.skillId === newMsg.skillId);
+  //     this.listingDto = newMsg;
+  //     if (abc) {
+  //       abc.message=newMsg.message;
+  //       abc.createdDate=newMsg.createdDate;
+  //       abc.unrespondedCount++;
+  //     }
+  //      else {
+  //       if(this.skillId == 'all'){
+  //         this.ConversationList.unshift(this.listingDto);
+  //         if (this.ConversationList.length > this.pageSize) {
+  //           this.ConversationList.pop();
+  //           this.TotalUnresponded++;
+  //         } else if (this.ConversationList.length <= this.pageSize) {
+  //           this.TotalUnresponded++;
+  //           this.from++;
+  //         }
+  //       }
+  //       else if(this.skillId == newMsg.skillId){
+  //         this.ConversationList.unshift(this.listingDto);
+  //         if (this.ConversationList.length > this.pageSize) {
+  //           this.ConversationList.pop();
+  //           this.TotalUnresponded++;
+  //         } else if (this.ConversationList.length <= this.pageSize) {
+  //           this.TotalUnresponded++;
+  //           this.from++;
+  //         }
+  //       } 
+        
+  //     }  
+  // }
+
+  //optimized code
   updateConversationList(newMsg: any) {
+    // Retrieve data from storage
+    let data = this.storage.retrive('skills', 'O').local;
+
+    // Find the rule that includes the new message skill slug
+    let rule = data.find((x: any) => x.rules.includes(newMsg.skillSlug));
     
-    var openedContentType = localStorage.getItem('contentType')
-    if(openedContentType == newMsg.postType){
-      const index = this.ConversationList.findIndex((obj: any) => obj.user === newMsg.user && obj.postType === newMsg.postType);
-      this.listingDto = newMsg;
-      if (index >= 0) {
-        const main = this.ConversationList[index];
-        this.listingDto.unrespondedCount = main.unrespondedCount + 1;
-        this.ConversationList[index] = this.listingDto;
-      } else {
-        this.ConversationList.unshift(this.listingDto);
-        if (this.ConversationList.length > this.pageSize) {
-          this.ConversationList.pop();
-          this.TotalUnresponded++;
-        } else if (this.ConversationList.length <= this.pageSize) {
-          this.TotalUnresponded++;
-          this.from++;
+    if (rule) {
+        let skillId = rule.skillID;
+        newMsg.skillId = skillId;
+
+        // Find existing conversation in the list
+        const existingConversation = this.ConversationList.find(
+            (obj: any) => obj.user === newMsg.user && obj.skillId === newMsg.skillId
+        );
+
+        if (existingConversation) {
+            // Update existing conversation
+            existingConversation.message = newMsg.message;
+            existingConversation.createdDate = newMsg.createdDate;
+            existingConversation.unrespondedCount++;
+        } else {
+            // Check skillId conditions and add new conversation to the list
+            if (this.skillId === 'all' || this.skillId === newMsg.skillId) {
+                this.ConversationList.unshift(newMsg);
+
+                if (this.ConversationList.length > this.pageSize) {
+                    this.ConversationList.pop();
+                }
+
+                this.TotalUnresponded++;
+                this.from++;
+            }
         }
-      }
+    } else {
+        console.error('No rule found for the given skill slug.');
     }
-    
-  }
+}
 
   groupItemsByDate() {
     return this.ConversationList.reduce((acc: any, item: any) => {
@@ -801,7 +863,8 @@ export class ConversationComponent implements OnInit {
     profilePic: any,
     platform: any,
     profileId: any,
-    wing:any
+    wing:any,
+    skillId:any
   ) {
     debugger
     localStorage.setItem('previousUrl', this.currentUrl);
@@ -838,6 +901,7 @@ export class ConversationComponent implements OnInit {
           // this.headerService.updateMessage(string);
           // this.leftsidebar.updateMessage(leftExpandedMenu);
           this.fetchId.setPlatform(platform);
+          this.sendSkillId.sendSkillIds(skillId);
           this.getWing.sendWings(wing)
           this.fetchId.setOption(id);
           // this.fetchId.setIds(id, userId, postType);
@@ -865,6 +929,7 @@ export class ConversationComponent implements OnInit {
       this.SpinnerService.show();
       this.headerCountService.shareUnresponedCount(count);
       this.fetchId.setPlatform(platform);
+      this.sendSkillId.sendSkillIds(skillId);
       this.getWing.sendWings(wing)
       this.fetchId.setOption(id);
       this.fetchposttype.sendPostType(postType);
@@ -877,6 +942,7 @@ export class ConversationComponent implements OnInit {
       this.SpinnerService.show();
       this.headerCountService.shareUnresponedCount(count);
       this.fetchId.setPlatform(platform);
+      this.sendSkillId.sendSkillIds(skillId);
       this.getWing.sendWings(wing)
       this.fetchId.setOption(id);
       this.fetchposttype.sendPostType(postType);
