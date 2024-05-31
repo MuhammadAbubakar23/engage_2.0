@@ -26,7 +26,7 @@ export class SkillsComponent implements OnInit {
   endingPoint: any;
   startingPoint: any;
   TotalCount: any = [];
-  itemsPerPage = 7;
+  itemsPerPage = 10;
   itemperpage: any = 7;
   isSelectedDepartment: any = '';
   toastermessage: boolean = false
