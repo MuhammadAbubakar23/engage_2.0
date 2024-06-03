@@ -192,7 +192,6 @@ export class AgentPerformanceReportComponent implements OnInit {
       let singleChanenelArray = this.channelOptions.filter((item: any) => item.isSelected).map((item: any) => item.name);
       this.AllChannels = singleChanenelArray.toString();
     }
-    debugger
     let selectedTagByArray = this.totalAgents.filter(item => item.isSelected).map(item => item.id);
     this.selectedTagBy = selectedTagByArray.toString();
     if (this.startDate == "" && this.endDate == "") {

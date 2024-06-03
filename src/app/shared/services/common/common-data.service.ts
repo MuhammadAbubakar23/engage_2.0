@@ -54,7 +54,6 @@ export class CommonDataService {
   twitterTweetStats = environment.links.common.TwitterTweetStats;
   linkedInPostStats = environment.links.common.LinkedInPostStats;
   menu = environment.links.common.Menu;
-  queryCompleted = environment.links.common.queryCompleted;
   profileDetails = environment.links.common.profileDetails;
   updateProfile = environment.links.common.updateProfile;
   reason_types = environment.links.CCMS.reason_types;
@@ -257,10 +256,6 @@ export class CommonDataService {
     return this.http.post(this.CommonBaseUrl + this.commentRespond, form);
   }
 
-  QueryCompleted(form: any) {
-    return this.http.post(this.CommonBaseUrl + this.queryCompleted, form);
-  }
-
   LikedByAdmin(form: any) {
     return this.http.post(this.CommonBaseUrl + this.likedByAdmin, form);
   }
@@ -408,10 +403,10 @@ export class CommonDataService {
     return this.http.post(this.CommonBaseUrl + this.createTicket, form);
   }
 
-  GetAllChannelsUnrespondedCount() {
+  GetAllChannelsUnrespondedCount(body:any) {
 
-    return this.http.get(
-      this.CommonBaseUrl + this.allChannelsUnrespondedCounts
+    return this.http.post(
+      this.CommonBaseUrl + this.allChannelsUnrespondedCounts, body
     );
   }
 

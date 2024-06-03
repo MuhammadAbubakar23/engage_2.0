@@ -128,9 +128,8 @@
 
       li {
         &.active {
-          // border: 1px solid $powder;
-          background-color: #f8f9fa;
-          // border-radius: 5px;
+          background-color: rgb(240, 237, 237);
+           border-color:#1DA1F3;
 
           &::after {
             content: normal;

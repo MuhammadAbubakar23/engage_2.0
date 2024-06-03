@@ -15,7 +15,7 @@ export class FiltersDto {
   flag:String="";
   wings:String="";
   hasBlueTick:boolean=false;
-  skills:number[]=[];
+  skills:string[]=[];
   }
 
 export class FiltersDtolocal {
@@ -35,5 +35,5 @@ export class FiltersDtolocal {
   include: String = "";
   flag: String = "";
   wings: String = "";
-  skills:number[]=[];
+  skills:string[]=[];
 }

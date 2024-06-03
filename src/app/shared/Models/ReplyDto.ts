@@ -13,5 +13,5 @@ export class ReplyDto {
   userProfileId: number = 0;
   responseByName: string = "";
   instagramBusinessAccountId?: string = "";
-  groupId:any[]=[];
+  connectionId:string="";
 }

@@ -18,8 +18,8 @@ import { LikeByAdminDto } from '../Models/LikeByAdminDto';
 import { CreateTicketService } from 'src/app/services/CreateTicketService/create-ticket.service';
 import { GetQueryTypeService } from 'src/app/services/GetQueryTypeService/get-query-type.service';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
-import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
-import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
+import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
+import { ConnectionIdService } from 'src/app/services/connectionId/connection-id.service';
 
 @Component({
   selector: 'app-minimized-chat-widget',
@@ -84,8 +84,8 @@ export class MinimizedChatWidgetComponent implements OnInit {
     private createTicketService: CreateTicketService,
     private getQueryTypeService : GetQueryTypeService,
     private getWing: GetWingsService,
-    private getRulesGroupIdsService : RulesGroupIdsService,
-    private getSkillId:SkillIdsService
+    private getSkillSlug:SkillslugService,
+    private getConnectionId:ConnectionIdService
     
   ) {}
 
@@ -124,7 +124,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
       include: '',
       flag: '',
       wings: this.getWing.wings,
-      skills: [this.getSkillId.getSkillIds()],
+      skills: this.getSkillSlug.getSkillSlug(),
     };
     this.SpinnerService.show();
     this.commondata
@@ -160,7 +160,7 @@ export class MinimizedChatWidgetComponent implements OnInit {
         include: '',
         flag: '',
         wings: this.getWing.wings,
-        skills: [this.getSkillId.getSkillIds()],
+        skills: this.getSkillSlug.getSkillSlug(),
       };
       this.SpinnerService.show();
       this.commondata
@@ -448,7 +448,8 @@ export class MinimizedChatWidgetComponent implements OnInit {
       plateForm: 'Facebook',
       profileId: Number(localStorage.getItem('profileId')),
       wings: this.getWing.wings,
-      groupId: this.getRulesGroupIdsService.rulesGroupIds,
+      skillSlug: this.getSkillSlug.skillSlug[0],
+      connectionId: this.getConnectionId.connectionId
     };
     this.commondata.CommentRespond(this.commentStatusDto).subscribe(
       (res: any) => {

@@ -1759,7 +1759,6 @@
                                 <p class="date">{{group?.createdDate | date:'EEEE, MMMM d, y'}}</p>
                             </div>
                             <ng-container *ngFor="let ttr of group?.items | sort:criteria">
-                                <ng-container *ngIf="ttr.queryStatus != 'QueryCompleted'">
                                     <div class="message-wrap agent-message-wrap right">
                                         <div class="application-wrap d-flex align-items-center mb-1"
                                             *ngIf="ttr.ticketId != null">
@@ -2068,7 +2067,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </ng-container>
                             </ng-container>
                         </div>
                     </div>

@@ -261,7 +261,6 @@ export const environment = {
       TwitterTweetStats: 'Channel/GetTwitterTweetStat',
       LinkedInPostStats: 'Channel/GetLinkedInPostStats',
       Menu: 'Menu/',
-      queryCompleted: 'Social/QueryCompleted',
       profileDetails: 'Customer/GetCustomerById',
       updateProfile: 'Customer/UpdateCustomer',
       createTicket: 'Tickets/CreateTicket',

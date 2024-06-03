@@ -654,7 +654,7 @@
               query.slaFlag == 'unread'?'unread':'']">
                 <td *ngIf="flag != 'sent'" style="width: 40px;">
                   <input [checked]="query.isChecked" value="{{query.id}}"
-                    (change)="isAllSelected($event, i, query.platform, query.profileId, group.createdDate)"
+                    (change)="isAllSelected($event, i, query.platform, query.profileId, group.createdDate, query.skillSlug)"
                     class="form-check-input me-1" type="checkbox" aria-label="..."
                     [disabled]="FlagForAssignToMe == 'assigned_to_me'">
                 </td>
@@ -687,7 +687,7 @@
                    
                   <span class="emailer-name" aria-label="..." data-bs-toggle="tooltip" data-bs-placement="bottom">
                     <a
-                      (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings, query.skillId)">
+                      (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings, query.skillId, query.skillSlug)">
                       <span>{{query?.userName?.split('<')[0] || query.user}} 
                         &nbsp;
                         <i *ngIf="query.isVerified == true" class="fa-solid fa-badge-check text-primary"></i>
@@ -700,7 +700,7 @@
                 </td>
                 <td>
                   <div class="maintext"
-                    (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings, query.skillId)">
+                    (click)="updatevalue(query.unrespondedCount, query.user, query.postType, query.userName, query.profilePic, query.platform, query.profileId, query.wings, query.skillId, query.skillSlug)">
                     {{query.message < 110 ? query.message: (query.message | slice:0:110) +'...'}} </div>
                 </td>
                 <td class="px-1">

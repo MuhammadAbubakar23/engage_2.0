@@ -16,13 +16,12 @@ import { ModulesService } from 'src/app/shared/services/module-service/modules.s
 import { RemoveAssignedQuerryService } from 'src/app/services/RemoveAssignedQuery/remove-assigned-querry.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { UserInformationService } from 'src/app/services/userInformationService/user-information.service';
 import { HeaderCountService } from 'src/app/services/headerCountService/header-count.service';
-import { ClosePanelService } from 'src/app/services/ClosePanelServices/close-panel.service';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
-import { RulesGroupIdsService } from 'src/app/services/RulesGroupIds/rules-group-ids.service';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
+import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
+import { InsertTagInProfileFeedDto } from 'src/app/shared/Models/InsertTagaInProfileFeedDto';
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
@@ -89,12 +88,11 @@ export class ConversationComponent implements OnInit {
     private removeAssignedQueryService: RemoveAssignedQuerryService,
     private datePipe: DatePipe,
     private headerCountService: HeaderCountService,
-    private sendCount: ClosePanelService,
     private getWing: GetWingsService,
-    private getRulesGroupIdsService : RulesGroupIdsService,
     private storage: StorageService,
-    private sendSkillId:SkillIdsService,
-    private getSkillId:SkillIdsService
+    private sendSkillId: SkillIdsService,
+    private sendSkillSlug: SkillslugService,
+    private getSkillSlug: SkillslugService
   ) {
     this.criteria = {
       property: 'createdDate',
@@ -123,7 +121,6 @@ export class ConversationComponent implements OnInit {
   FlagForAssignToMe: string = '';
 
   ngOnInit(): void {
-    
     this.wings = this.getWing.wings;
     const date_fillter = localStorage.getItem('datefillter');
     if (date_fillter) {
@@ -136,49 +133,49 @@ export class ConversationComponent implements OnInit {
 
     if (this.currentUrl.split('/')[2] == 'assigned_to_me') {
       this.SpinnerService.show();
-      var skillSlug = localStorage.getItem('skillSlug') || ''
-      this.commondata.GetAllocatedProfiles(this.wings, skillSlug).subscribe(
-        (res: any) => {
-          this.SpinnerService.hide();
-          this.ConversationList = res;
-          this.TotalUnresponded = this.ConversationList.length;
-          this.to = 1;
-          this.from = this.ConversationList.length;
-          let groupedItems = this.ConversationList.reduce(
-            (acc: any, item: any) => {
-              const date = item.createdDate?.split('T')[0];
-              if (!acc[date]) {
-                acc[date] = [];
-              }
-              acc[date].push(item);
-              return acc;
-            },
-            {}
-          );
+      this.commondata
+        .GetAllocatedProfiles(this.wings, this.skillSlug)
+        .subscribe(
+          (res: any) => {
+            this.SpinnerService.hide();
+            this.ConversationList = res;
+            this.TotalUnresponded = this.ConversationList.length;
+            this.to = 1;
+            this.from = this.ConversationList.length;
+            let groupedItems = this.ConversationList.reduce(
+              (acc: any, item: any) => {
+                const date = item.createdDate?.split('T')[0];
+                if (!acc[date]) {
+                  acc[date] = [];
+                }
+                acc[date].push(item);
+                return acc;
+              },
+              {}
+            );
 
-          this.groupByDateList = Object.keys(groupedItems).map(
-            (createdDate) => {
-              return {
-                createdDate,
-                items: groupedItems[createdDate],
-              };
+            this.groupByDateList = Object.keys(groupedItems).map(
+              (createdDate) => {
+                return {
+                  createdDate,
+                  items: groupedItems[createdDate],
+                };
+              }
+            );
+          },
+          (error) => {
+            this.SpinnerService.hide();
+            if (error.status == 401) {
+              alert('Unauthorized, Please login again');
             }
-          );
-        },
-        (error) => {
-          this.SpinnerService.hide();
-          if (error.status == 401) {
-            alert('Unauthorized, Please login again');
+            // this.reloadComponent('')
           }
-          // this.reloadComponent('')
-        }
-      );
+        );
     } else {
       this.SpinnerService.show();
-      setTimeout(() => {        
+      setTimeout(() => {
         this.getConversationList();
       }, 2000);
-      
     }
 
     Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]')).forEach(
@@ -265,59 +262,48 @@ export class ConversationComponent implements OnInit {
   totalPageNumbers: any;
   filter: any;
 
-  getPlatform() {
-    // this.subscription = this.filterService.getTogglePanel().subscribe((res) => {
-    //   this.platform = res;
-    //   this.pageNumber = 1;
-    //   this.getConversationList();
-    // });
-  }
-
   to: number = 0;
   from: number = 0;
   flag: string = '';
 
   customersList: any[] = [];
-  wings:any;
-  isverifiedAccount:boolean=false
-  skillId:any;
+  wings: any;
+  isverifiedAccount: boolean = false;
+  skillSlugUrl: any;
+  skillSlug = this.getSkillSlug.skillSlug;
   getConversationList() {
-    
-    // if (this.currentUrl.split('/')[2] == 'completed') {
-    //   this.flag = 'sent';
-    //   this.platform = this.currentUrl.split('/')[3];
-    // } else {
-    
-    
     this.flag = this.currentUrl.split('/')[2];
-    this.skillId = this.currentUrl.split('/')[3];
-    
-    if(this.currentUrl.toLowerCase().includes('facebook')){
-      this.platform = 'Facebook'
-    } else if(this.currentUrl.toLowerCase().includes('instagram')){
-      this.platform = 'Instagram'
-    } else if(this.currentUrl.toLowerCase().includes('twitter')){
-      this.platform = 'Twitter'
-    } else if(this.currentUrl.toLowerCase().includes('linkedin')){
-      this.platform = 'LinkedIn'
-    } else if(this.currentUrl.toLowerCase().includes('youtube')){
-      this.platform = 'Youtube'
-    } else if(this.currentUrl.toLowerCase().includes('whatsapp')){
-      this.platform = 'WhatsApp'
-    } else if(this.currentUrl.toLowerCase().includes('sms')){
-      this.platform = 'SMS'
-    } else if(this.currentUrl.toLowerCase().includes('webchat')){
-      this.platform = 'WebChat'
-    } else if(this.currentUrl.toLowerCase().includes('gmail')){
-      this.platform = 'Gmail'
-    } else if(this.currentUrl.toLowerCase().includes('outlook')){
-      this.platform = 'Outlook'
-    } else if(this.currentUrl.toLowerCase().includes('playstore')){
-      this.platform = 'PlayStore'
-    } else if(this.currentUrl.toLowerCase().includes('all')){
-      this.platform = "all"
+    this.skillSlugUrl = this.currentUrl.split('/')[3];
+    if (this.skillSlugUrl === 'all') {
+      this.skillSlug = [];
     }
-    
+
+    if (this.currentUrl.toLowerCase().includes('facebook')) {
+      this.platform = 'Facebook';
+    } else if (this.currentUrl.toLowerCase().includes('instagram')) {
+      this.platform = 'Instagram';
+    } else if (this.currentUrl.toLowerCase().includes('twitter')) {
+      this.platform = 'Twitter';
+    } else if (this.currentUrl.toLowerCase().includes('linkedin')) {
+      this.platform = 'LinkedIn';
+    } else if (this.currentUrl.toLowerCase().includes('youtube')) {
+      this.platform = 'Youtube';
+    } else if (this.currentUrl.toLowerCase().includes('whatsapp')) {
+      this.platform = 'WhatsApp';
+    } else if (this.currentUrl.toLowerCase().includes('sms')) {
+      this.platform = 'SMS';
+    } else if (this.currentUrl.toLowerCase().includes('webchat')) {
+      this.platform = 'WebChat';
+    } else if (this.currentUrl.toLowerCase().includes('gmail')) {
+      this.platform = 'Gmail';
+    } else if (this.currentUrl.toLowerCase().includes('outlook')) {
+      this.platform = 'Outlook';
+    } else if (this.currentUrl.toLowerCase().includes('playstore')) {
+      this.platform = 'PlayStore';
+    } else if (this.currentUrl.toLowerCase().includes('all')) {
+      this.platform = 'all';
+    }
+
     // }
 
     if (this.searchForm.value.dateWithin == '1 day') {
@@ -423,7 +409,6 @@ export class ConversationComponent implements OnInit {
 
       this.toDate =
         this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T23:59:59.999Z';
-
     }
     // else if ((this.searchForm.value.fromDate != null && this.searchForm.value.toDate != null) && (this.fromDate != undefined && this.toDate != undefined) && (this.flag == 'completed' || this.flag == 'sent')) {
     //   this.fromDate = this.datePipe.transform(new Date(), 'YYYY-MM-dd') + 'T00:00:00.000Z';
@@ -442,7 +427,6 @@ export class ConversationComponent implements OnInit {
     if (this.filterDtolocal.fromDate != undefined) {
       this.filterDto = this.filterDtolocal;
     } else {
-      
       this.filterDto = {
         fromDate: this.fromDate,
         toDate: this.toDate,
@@ -460,17 +444,16 @@ export class ConversationComponent implements OnInit {
         hasBlueTick: this.searchForm.value.hasBlueTick,
         flag: this.flag,
         wings: this.wings,
-        skills: this.getRulesGroupIdsService.rulesGroupIds,
+        skills: this.skillSlug,
       };
     }
 
     this.SpinnerService.show();
     this.changeDetect.detectChanges();
     // localStorage.setItem('datefillter',JSON.stringify(this.filterDto))
-    console.log("filter dto", this.filterDto)
+    console.log('filter dto', this.filterDto);
     this.commondata.GetConversationList(this.filterDto).subscribe(
       (res: any) => {
-        
         if (Object.keys(res).length === 0) {
           this.groupByDateList = [];
           this.to = 0;
@@ -485,11 +468,10 @@ export class ConversationComponent implements OnInit {
           // if (x.follow_Up_Status !== null) {
           //   this.sendCount.sendtotalCount(res.TotalCount);
           // }
-          if(x.isVerified==true){
-            this.isverifiedAccount=true
-          }
-          else{
-            this.isverifiedAccount=false
+          if (x.isVerified == true) {
+            this.isverifiedAccount = true;
+          } else {
+            this.isverifiedAccount = false;
           }
         });
 
@@ -551,8 +533,8 @@ export class ConversationComponent implements OnInit {
           this.router.navigateByUrl('/login');
           this.SpinnerService.hide();
         } else {
-           this.SpinnerService.hide();
-           alert(error.error.message)
+          this.SpinnerService.hide();
+          alert(error.error.message);
         }
       }
     );
@@ -577,8 +559,8 @@ export class ConversationComponent implements OnInit {
       userName: this.searchUser,
       notInclude: '',
       flag: '',
-      wings:'',
-      skills:[]
+      wings: '',
+      skills: [],
     };
     this.commondata.GetCustomers(this.filterDto).subscribe((res: any) => {
       this.customersList = res;
@@ -697,85 +679,44 @@ export class ConversationComponent implements OnInit {
       }
     }
   }
-  // updateConversationList(newMsg: any) {
-    
-  //   let data = this.storage.retrive('skills', 'O').local;
-
-  //   let rules = data.find((x:any)=> x.rules.includes(newMsg.skillSlug))
-  //   let skillId = rules.skillID
-  //   newMsg.skillId = skillId
-
-  //     const abc = this.ConversationList.find((obj: any) => obj.user === newMsg.user && obj.skillId === newMsg.skillId);
-  //     this.listingDto = newMsg;
-  //     if (abc) {
-  //       abc.message=newMsg.message;
-  //       abc.createdDate=newMsg.createdDate;
-  //       abc.unrespondedCount++;
-  //     }
-  //      else {
-  //       if(this.skillId == 'all'){
-  //         this.ConversationList.unshift(this.listingDto);
-  //         if (this.ConversationList.length > this.pageSize) {
-  //           this.ConversationList.pop();
-  //           this.TotalUnresponded++;
-  //         } else if (this.ConversationList.length <= this.pageSize) {
-  //           this.TotalUnresponded++;
-  //           this.from++;
-  //         }
-  //       }
-  //       else if(this.skillId == newMsg.skillId){
-  //         this.ConversationList.unshift(this.listingDto);
-  //         if (this.ConversationList.length > this.pageSize) {
-  //           this.ConversationList.pop();
-  //           this.TotalUnresponded++;
-  //         } else if (this.ConversationList.length <= this.pageSize) {
-  //           this.TotalUnresponded++;
-  //           this.from++;
-  //         }
-  //       } 
-        
-  //     }  
-  // }
-
-  //optimized code
   updateConversationList(newMsg: any) {
     // Retrieve data from storage
     let data = this.storage.retrive('skills', 'O').local;
 
     // Find the rule that includes the new message skill slug
-    let rule = data.find((x: any) => x.rules.includes(newMsg.skillSlug));
-    
+    let rule = data.find((x: any) => x.rules.includes(newMsg.rule));
+
     if (rule) {
-        let skillId = rule.skillID;
-        newMsg.skillId = skillId;
+      newMsg.skillSlug = rule.skilSlug;
 
-        // Find existing conversation in the list
-        const existingConversation = this.ConversationList.find(
-            (obj: any) => obj.user === newMsg.user && obj.skillId === newMsg.skillId
-        );
+      // Find existing conversation in the list
+      const existingConversation = this.ConversationList.find(
+        (obj: any) =>
+          obj.user === newMsg.user && obj.skillSlug === newMsg.skillSlug
+      );
 
-        if (existingConversation) {
-            // Update existing conversation
-            existingConversation.message = newMsg.message;
-            existingConversation.createdDate = newMsg.createdDate;
-            existingConversation.unrespondedCount++;
-        } else {
-            // Check skillId conditions and add new conversation to the list
-            if (this.skillId === 'all' || this.skillId === newMsg.skillId) {
-                this.ConversationList.unshift(newMsg);
+      if (existingConversation) {
+        // Update existing conversation
+        existingConversation.message = newMsg.message;
+        existingConversation.createdDate = newMsg.createdDate;
+        existingConversation.unrespondedCount++;
+      } else {
+        // Check skillSlug conditions and add new conversation to the list
+        if (this.skillSlug === 'all' || this.skillSlug === newMsg.skillSlug) {
+          this.ConversationList.unshift(newMsg);
 
-                if (this.ConversationList.length > this.pageSize) {
-                    this.ConversationList.pop();
-                }
+          if (this.ConversationList.length > this.pageSize) {
+            this.ConversationList.pop();
+          }
 
-                this.TotalUnresponded++;
-                this.from++;
-            }
+          this.TotalUnresponded++;
+          this.from++;
         }
+      }
     } else {
-        console.error('No rule found for the given skill slug.');
+      console.error('No rule found for the given skill slug.');
     }
-}
+  }
 
   groupItemsByDate() {
     return this.ConversationList.reduce((acc: any, item: any) => {
@@ -807,9 +748,7 @@ export class ConversationComponent implements OnInit {
   removeAssignedQueryListener(res: any) {
     if (this.currentUrl.split('/')[2] == 'focused') {
       this.groupByDateList.forEach((group) => {
-        const index = group.items.findIndex(
-          (x: any) => x.profileId == res.profileId
-        );
+        const index = group.items.findIndex((x: any) => x.profileId == res.profileId && x.skillSlug == res.skillSlug);
         if (index !== -1) {
           group.items.splice(index, 1);
           this.TotalUnresponded = this.TotalUnresponded - 1;
@@ -863,11 +802,12 @@ export class ConversationComponent implements OnInit {
     profilePic: any,
     platform: any,
     profileId: any,
-    wing:any,
-    skillId:any
+    wing: any,
+    skillId: any,
+    skillSlug: string
   ) {
-    debugger
     localStorage.setItem('previousUrl', this.currentUrl);
+    this.sendSkillSlug.sendSkillSlug([skillSlug]);
     if (
       this.currentUrl.split('/')[2] == 'focused' ||
       this.currentUrl.split('/')[2] == 'follow_up'
@@ -878,33 +818,19 @@ export class ConversationComponent implements OnInit {
         agentIds: 'string',
         platform: platform,
         wings: wing,
-        skillSlug: localStorage.getItem('skillSlug') || ''
+        skillSlug: skillSlug,
       };
       this.SpinnerService.show();
       this.commondata.AssignQuerry(this.assignQuerryDto).subscribe(
         (res: any) => {
           this.SpinnerService.hide();
-          // var userInfo = {
-          //   unrespondedCount: count,
-          //   userId: id,
-          //   postType: postType,
-          //   userName: userName,
-          //   profilePic: profilePic,
-          //   platform: platform,
-          //   profileId: profileId,
-          // };
-
-          // this.userInfoService.shareUserInformation(userInfo);
           this.headerCountService.shareUnresponedCount(count);
           this.reloadComponent('queryallocated');
 
-          // this.headerService.updateMessage(string);
-          // this.leftsidebar.updateMessage(leftExpandedMenu);
           this.fetchId.setPlatform(platform);
           this.sendSkillId.sendSkillIds(skillId);
-          this.getWing.sendWings(wing)
+          this.getWing.sendWings(wing);
           this.fetchId.setOption(id);
-          // this.fetchId.setIds(id, userId, postType);
 
           this.fetchposttype.sendPostType(postType);
           localStorage.setItem('profileId', profileId);
@@ -930,7 +856,7 @@ export class ConversationComponent implements OnInit {
       this.headerCountService.shareUnresponedCount(count);
       this.fetchId.setPlatform(platform);
       this.sendSkillId.sendSkillIds(skillId);
-      this.getWing.sendWings(wing)
+      this.getWing.sendWings(wing);
       this.fetchId.setOption(id);
       this.fetchposttype.sendPostType(postType);
       localStorage.setItem('profileId', profileId);
@@ -943,7 +869,7 @@ export class ConversationComponent implements OnInit {
       this.headerCountService.shareUnresponedCount(count);
       this.fetchId.setPlatform(platform);
       this.sendSkillId.sendSkillIds(skillId);
-      this.getWing.sendWings(wing)
+      this.getWing.sendWings(wing);
       this.fetchId.setOption(id);
       this.fetchposttype.sendPostType(postType);
       localStorage.setItem('profileId', profileId);
@@ -1115,20 +1041,19 @@ export class ConversationComponent implements OnInit {
         group.items.forEach((d: any) => {
           var abc = this.Ids.find((x) => x.profileId == d.profileId);
           if (abc == undefined) {
-            this.Ids.push({ profileId: d.profileId, platform: d.platform });
+            this.Ids.push({
+              profileId: d.profileId,
+              platform: d.platform,
+              skillSlug: d.skillSlug,
+            });
           }
-          // if (!this.Ids.includes(item.profileId)) {
-          //   this.Ids.push({ profileId: d.profileId, platform: d.platform });
-          // }
         });
-        //  // // console.log(this.Ids);
+        console.log(this.Ids);
         this.isChecked = true;
         this.isCheckedAll = true;
       } else {
         group.items.forEach((d: any) => {
           for (var i = 0; i <= this.Ids.length; i++) {
-            // var abc = this.Ids.find((x) => x.profileId == d.profileId);
-            // this.Ids.splice(abc, 1);
             var indexOfQuery = this.Ids.findIndex(
               (x) => x.profileId == d.profileId
             );
@@ -1137,7 +1062,6 @@ export class ConversationComponent implements OnInit {
             }
           }
         });
-        //  // // console.log(this.Ids);
         this.isChecked = false;
         this.isCheckedAll = false;
       }
@@ -1149,11 +1073,16 @@ export class ConversationComponent implements OnInit {
     index: any,
     platform: any,
     profileId: any,
-    date: any
+    date: any,
+    skillSlug: string
   ) {
     // let id = Number(evt.target.value);
     if (index >= 0 && evt.target.checked == true) {
-      this.Ids.push({ profileId: profileId, platform: platform });
+      this.Ids.push({
+        profileId: profileId,
+        platform: platform,
+        skillSlug: skillSlug,
+      });
     }
     if (evt.target.checked == false) {
       var indexOfQuery = this.Ids.findIndex((x) => x.profileId == profileId);
@@ -1259,7 +1188,6 @@ export class ConversationComponent implements OnInit {
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        // console.log(res);
       });
   }
 
@@ -1298,18 +1226,19 @@ export class ConversationComponent implements OnInit {
   }
 
   itemsToBeUpdated: any[] = [];
+  insertTagInProfileFeedDto = new InsertTagInProfileFeedDto();
 
   InsertTagInProfile(tagName: string, type: string) {
     this.Ids.forEach((query: any) => {
-      var obj = {
+      this.insertTagInProfileFeedDto = {
         feedId: query.profileId,
         tagName: tagName,
         type: type,
         platform: query.platform,
         wings: this.getWing.wings,
-        skillSlug: localStorage.getItem('skillSlug')
+        skillSlug: query.skillSlug,
       };
-      this.itemsToBeUpdated.push(obj);
+      this.itemsToBeUpdated.push(this.insertTagInProfileFeedDto);
     });
     this.commondata
       .InsertTagInProfile(this.itemsToBeUpdated)
@@ -1324,14 +1253,15 @@ export class ConversationComponent implements OnInit {
 
   RemoveTagInProfile(tagName: string, type: string) {
     this.Ids.forEach((query: any) => {
-      var obj = {
+      this.insertTagInProfileFeedDto = {
         feedId: query.profileId,
         tagName: tagName,
         type: type,
         platform: query.platform,
         wings: this.getWing.wings,
+        skillSlug: query.skillSlug,
       };
-      this.itemsToBeUpdated.push(obj);
+      this.itemsToBeUpdated.push(this.insertTagInProfileFeedDto);
     });
     this.commondata
       .RemoveTagInProfile(this.itemsToBeUpdated)
@@ -1343,251 +1273,4 @@ export class ConversationComponent implements OnInit {
         }
       });
   }
-
-  // Delete() {
-  //   this.Ids.forEach((id: any) => {
-  //     // var obj = {
-  //     //   channel: '',
-  //     //   flag: 'trash',
-  //     //   status: true,
-  //     //   messageId: 0,
-  //     //   profileId: id,
-  //     // };
-  //     var obj = {
-  //       feedId: id,
-  //       tagName: 'Trash',
-  //       type: 'Tag',
-  //       platform: true,
-  //     };
-  //     this.itemsToBeUpdated.push(obj);
-  //   });
-  //   this.commondata
-  //     .UpdateStatus(this.itemsToBeUpdated)
-  //     .subscribe((res: any) => {
-  //       if (res.message === 'Status Updated Successfully') {
-  //         this.itemsToBeUpdated = [];
-  //         this.reloadComponent('delete');
-  //         this.Reload();
-  //       }
-  //     });
-  // }
-
-  // UndoDelete() {
-  //   this.Ids.forEach((id: any) => {
-  //     var obj = {
-  //       channel: '',
-  //       flag: 'trash',
-  //       status: false,
-  //       messageId: 0,
-  //       profileId: id,
-  //     };
-  //     this.itemsToBeUpdated.push(obj);
-  //   });
-  //   this.commondata
-  //     .UpdateStatus(this.itemsToBeUpdated)
-  //     .subscribe((res: any) => {
-  //       if (res.message === 'Status Updated Successfully') {
-  //         this.itemsToBeUpdated = [];
-  //         this.reloadComponent('undoDelete');
-  //         this.Reload();
-  //       }
-  //     });
-  // }
-
-  // Archive() {
-  //   this.Ids.forEach((id: any) => {
-  //     var obj = {
-  //       channel: '',
-  //       flag: 'archived',
-  //       status: true,
-  //       messageId: 0,
-  //       profileId: id,
-  //     };
-  //     this.itemsToBeUpdated.push(obj);
-  //   });
-  //   this.commondata
-  //     .UpdateStatus(this.itemsToBeUpdated)
-  //     .subscribe((res: any) => {
-  //       if (res.message === 'Status Updated Successfully') {
-  //         this.itemsToBeUpdated = [];
-  //         this.reloadComponent('archive');
-  //         this.Reload();
-  //       }
-  //     });
-  // }
-  // Unarchive() {
-  //   this.Ids.forEach((id: any) => {
-  //     var obj = {
-  //       channel: '',
-  //       flag: 'archived',
-  //       status: false,
-  //       messageId: 0,
-  //       profileId: id,
-  //     };
-  //     this.itemsToBeUpdated.push(obj);
-  //   });
-  //   this.commondata
-  //     .UpdateStatus(this.itemsToBeUpdated)
-  //     .subscribe((res: any) => {
-  //       if (res.message === 'Status Updated Successfully') {
-  //         this.itemsToBeUpdated = [];
-  //         this.reloadComponent('unarchive');
-  //         this.Reload();
-  //       }
-  //     });
-  // }
-
-  // Snooze() {
-  //   this.Ids.forEach((id: any) => {
-  //     var obj = {
-  //       channel: '',
-  //       flag: 'snoozed',
-  //       status: true,
-  //       messageId: 0,
-  //       profileId: id,
-  //     };
-  //     this.itemsToBeUpdated.push(obj);
-  //   });
-  //   this.commondata
-  //     .UpdateStatus(this.itemsToBeUpdated)
-  //     .subscribe((res: any) => {
-  //       if (res.message === 'Status Updated Successfully') {
-  //         this.itemsToBeUpdated = [];
-  //         this.reloadComponent('snooze');
-  //         this.Reload();
-  //       }
-  //     });
-  // }
-
-  // RemoveSnooze() {
-  //   this.Ids.forEach((id: any) => {
-  //     var obj = {
-  //       channel: '',
-  //       flag: 'snoozed',
-  //       status: false,
-  //       messageId: 0,
-  //       profileId: id,
-  //     };
-  //     this.itemsToBeUpdated.push(obj);
-  //   });
-  //   this.commondata
-  //     .UpdateStatus(this.itemsToBeUpdated)
-  //     .subscribe((res: any) => {
-  //       if (res.message === 'Status Updated Successfully') {
-  //         this.itemsToBeUpdated = [];
-  //         this.reloadComponent('removeSnooze');
-  //         this.Reload();
-  //       }
-  //     });
-  // }
-
-  // Spam() {
-  //   this.Ids.forEach((id: any) => {
-  //     var obj = {
-  //       channel: '',
-  //       flag: 'spam',
-  //       status: true,
-  //       messageId: 0,
-  //       profileId: id,
-  //     };
-  //     this.itemsToBeUpdated.push(obj);
-  //   });
-  //   this.commondata
-  //     .UpdateStatus(this.itemsToBeUpdated)
-  //     .subscribe((res: any) => {
-  //       if (res.message === 'Status Updated Successfully') {
-  //         this.itemsToBeUpdated = [];
-  //         this.reloadComponent('spam');
-  //         this.Reload();
-  //       }
-  //     });
-  // }
-
-  // RemoveSpam() {
-  //   this.Ids.forEach((id: any) => {
-  //     var obj = {
-  //       channel: '',
-  //       flag: 'spam',
-  //       status: false,
-  //       messageId: 0,
-  //       profileId: id,
-  //     };
-  //     this.itemsToBeUpdated.push(obj);
-  //   });
-  //   this.commondata
-  //     .UpdateStatus(this.itemsToBeUpdated)
-  //     .subscribe((res: any) => {
-  //       if (res.message === 'Status Updated Successfully') {
-  //         this.itemsToBeUpdated = [];
-  //         this.reloadComponent('removeSpam');
-  //         this.Reload();
-  //       }
-  //     });
-  // }
-
-  // Starred() {
-  //   this.Ids.forEach((id: any) => {
-  //     var obj = {
-  //       channel: '',
-  //       flag: 'starred',
-  //       status: true,
-  //       messageId: 0,
-  //       profileId: id,
-  //     };
-  //     this.itemsToBeUpdated.push(obj);
-  //   });
-  //   this.commondata
-  //     .UpdateStatus(this.itemsToBeUpdated)
-  //     .subscribe((res: any) => {
-  //       if (res.message === 'Status Updated Successfully') {
-  //         this.itemsToBeUpdated = [];
-  //         this.reloadComponent('starred');
-  //         this.Reload();
-  //       }
-  //     });
-  // }
-
-  // RemoveStarred() {
-  //   this.Ids.forEach((id: any) => {
-  //     var obj = {
-  //       channel: '',
-  //       flag: 'starred',
-  //       status: false,
-  //       messageId: 0,
-  //       profileId: id,
-  //     };
-  //     this.itemsToBeUpdated.push(obj);
-  //   });
-  //   this.commondata
-  //     .UpdateStatus(this.itemsToBeUpdated)
-  //     .subscribe((res: any) => {
-  //       if (res.message === 'Status Updated Successfully') {
-  //         this.itemsToBeUpdated = [];
-  //         this.reloadComponent('RemoveStarred');
-  //         this.Reload();
-  //       }
-  //     });
-  // }
-
-  // Unblock() {
-  //   this.Ids.forEach((id: any) => {
-  //     var obj = {
-  //       channel: '',
-  //       flag: 'blacklist',
-  //       status: false,
-  //       messageId: 0,
-  //       profileId: id,
-  //     };
-  //     this.itemsToBeUpdated.push(obj);
-  //   });
-  //   this.commondata
-  //     .UpdateStatus(this.itemsToBeUpdated)
-  //     .subscribe((res: any) => {
-  //       if (res.message === 'Status Updated Successfully') {
-  //         this.itemsToBeUpdated = [];
-  //         this.reloadComponent('unblock');
-  //         this.Reload();
-  //       }
-  //     });
-  // }
 }

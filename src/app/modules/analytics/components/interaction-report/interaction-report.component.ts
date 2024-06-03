@@ -599,7 +599,6 @@ export class InteractionReportComponent implements OnInit {
     );
   }
   interactionByDate() {
-    debugger
     var chartDom = document.getElementById('interactions');
     this.interactionchart = echarts.init(chartDom);
     var option;

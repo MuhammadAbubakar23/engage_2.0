@@ -48,6 +48,8 @@ import {
   ManipulatedDMDto,
 } from 'src/app/shared/Models/ManipulatedDMDto';
 import { SkillIdsService } from 'src/app/services/sendSkillIds/skill-ids.service';
+import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
+import { ConnectionIdService } from 'src/app/services/connectionId/connection-id.service';
 
 @Component({
   selector: 'app-channel',
@@ -412,7 +414,6 @@ export class ChannelComponent implements OnInit {
   quickReplySearchText: string = '';
 
   teamPermissions: any;
-  currentUrl: string = '';
   messagesStatus: any[] = [];
   Sentiments: any[] = [];
 
@@ -435,7 +436,6 @@ export class ChannelComponent implements OnInit {
     private queryStatusService: QueryStatusService,
     private createTicketService: CreateTicketService,
     private ticketResponseService: TicketResponseService,
-    private getQueryTypeService: GetQueryTypeService,
     private router: Router,
     private stor: StorageService,
     private userInfoService: UserInformationService,
@@ -443,11 +443,12 @@ export class ChannelComponent implements OnInit {
     private renderer: Renderer2,
     private fetchPostType: FetchPostTypeService,
     private getWing: GetWingsService,
-    private getRulesGroupIdsService: RulesGroupIdsService,
-    private getSkillId:SkillIdsService
+    private getSkillSlug:SkillslugService,
+    private getConnectionId:ConnectionIdService
   ) {}
 
   ngOnInit(): void {
+    this.flag = this.router.url.split('/')[2];
     this.getClassOfHeaderBackground(this.fetchId.platform);
     this.baseUrl = window.location.origin;
     if (this.baseUrl == 'https://keportal.enteract.live') {
@@ -477,7 +478,6 @@ export class ChannelComponent implements OnInit {
     this.adjustTextareaHeight(textarea);
 
     this.teamPermissions = this.stor.retrive('permissionteam', 'O').local;
-    this.currentUrl = this.router.url;
 
     const menu = this.stor.retrive('Tags', 'O').local;
     menu.forEach((item: any) => {
@@ -673,7 +673,7 @@ export class ChannelComponent implements OnInit {
         notInclude: '',
         include: '',
         wings: this.getWing.wings,
-        skills: [this.getSkillId.getSkillIds()],
+        skills: this.getSkillSlug.getSkillSlug(),
       };
       for (const x of channelWithFeature.featureSet) {
         if (x.queryType === 'comment') {
@@ -726,8 +726,6 @@ export class ChannelComponent implements OnInit {
   }
 
   getComments(filter: FiltersDto) {
-    this.flag = this.currentUrl.split('/')[2];
-
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
 
@@ -1260,8 +1258,6 @@ export class ChannelComponent implements OnInit {
   }
 
   async getMessages(filter: FiltersDto) {
-    this.flag = this.currentUrl.split('/')[2];
-
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
 
@@ -1324,8 +1320,6 @@ export class ChannelComponent implements OnInit {
     }
   }
   async getMentions(filter: FiltersDto) {
-    this.flag = this.currentUrl.split('/')[2];
-
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
 
@@ -1396,8 +1390,6 @@ export class ChannelComponent implements OnInit {
     }
   }
   async getTweets(filter: FiltersDto) {
-    this.flag = this.currentUrl.split('/')[2];
-
     if (this.id != null || undefined) {
       localStorage.setItem('storeOpenedId', this.id);
 
@@ -1637,10 +1629,8 @@ export class ChannelComponent implements OnInit {
     profilePageId: new FormControl(this.ReplyDto.profilePageId),
     userProfileId: new FormControl(this.ReplyDto.userProfileId),
     responseByName: new FormControl(this.ReplyDto.responseByName),
-    instagramBusinessAccountId: new FormControl(
-      this.ReplyDto.instagramBusinessAccountId
-    ),
-    groupId: new FormControl(this.ReplyDto.groupId),
+    instagramBusinessAccountId: new FormControl(this.ReplyDto.instagramBusinessAccountId),
+    connectionId: new FormControl(this.ReplyDto.connectionId),
   });
 
   SendCommentInformation(comId: any) {
@@ -1743,7 +1733,7 @@ export class ChannelComponent implements OnInit {
         userProfileId: this.userProfileId,
         responseByName: this.pageName,
         instagramBusinessAccountId: this.instagramBusinessAccountId,
-        groupId: this.getRulesGroupIdsService.rulesGroupIds,
+        connectionId: this.getConnectionId.connectionId
       });
 
       formData.append('CommentReply', JSON.stringify(this.replyForm.value));
@@ -1841,6 +1831,7 @@ export class ChannelComponent implements OnInit {
       type: 'Tag',
       platform: platform,
       wings: this.getWing.wings,
+      connectionId: this.getConnectionId.connectionId
     };
 
     this.Comments?.forEach((abc: any) => {
@@ -1945,6 +1936,7 @@ export class ChannelComponent implements OnInit {
         type: 'Tag',
         platform: platform,
         wings: this.getWing.wings,
+        connectionId: this.getConnectionId.connectionId
       };
 
       this.commondata
@@ -1965,6 +1957,7 @@ export class ChannelComponent implements OnInit {
       type: 'Sentiment',
       platform: platform,
       wings: this.getWing.wings,
+      connectionId: this.getConnectionId.connectionId
     };
 
     this.commondata
@@ -1981,7 +1974,8 @@ export class ChannelComponent implements OnInit {
       plateForm: this.fetchId.platform,
       profileId: Number(localStorage.getItem('profileId')),
       wings: this.getWing.wings,
-      groupId: this.getRulesGroupIdsService.rulesGroupIds,
+      skillSlug: this.getSkillSlug.skillSlug[0],
+      connectionId: this.getConnectionId.connectionId
     };
     this.commondata.CommentRespond(this.commentStatusDto).subscribe(() => {});
   }

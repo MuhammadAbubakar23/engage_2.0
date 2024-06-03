@@ -12,6 +12,7 @@ import { FetchIdService } from 'src/app/services/FetchId/fetch-id.service';
 import { GetWingsService } from 'src/app/services/GetWings/get-wings.service';
 import { QueryStatusService } from 'src/app/services/queryStatusService/query-status.service';
 import { SignalRService } from 'src/app/services/SignalRService/signal-r.service';
+import { SkillslugService } from 'src/app/services/skillSlug/skillslug.service';
 import { UnRespondedCountService } from 'src/app/services/UnRepondedCountService/un-responded-count.service';
 import { UpdateCommentsService } from 'src/app/services/UpdateCommentsService/update-comments.service';
 import { SortCriteria } from 'src/app/shared/CustomPipes/sorting.pipe';
@@ -216,7 +217,7 @@ export class ResponderMenuComponent implements OnInit {
         agentIds: 'string',
         platform: platform,
         wings: this.getWing.wings,
-        skillSlug: localStorage.getItem('skillSlug') || ''
+        skillSlug: ""
       };
 
       this.commondata.AssignQuerry(this.assignQuerryDto).subscribe(

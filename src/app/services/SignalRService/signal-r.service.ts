@@ -15,6 +15,7 @@ import { UpdateListService } from '../UpdateListService/update-list.service';
 import { UpdateMessagesService } from '../UpdateMessagesService/update-messages.service';
 import { CompanyidService } from '../companyidService/companyid.service';
 import { BehaviorSubject } from 'rxjs';
+import { ConnectionIdService } from '../connectionId/connection-id.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -54,7 +55,8 @@ export class SignalRService {
     private queryStatusService: QueryStatusService,
     private removeAssignedQueryService: RemoveAssignedQuerryService,
     private applySentimentService: ApplySentimentService,
-    private comanyidService: CompanyidService
+    private comanyidService: CompanyidService,
+    private sendConnectionId : ConnectionIdService
   ) {
     this.baseUrl = window.location.origin;
     if (this.baseUrl == 'https://keportal.enteract.live') {
@@ -109,6 +111,7 @@ export class SignalRService {
     this.hubconnection.onreconnected(() => {
       
       console.log("SignalR reconnected, rejoining group");
+      this.getConnectionId()
       // this.connectionStateSubject.next(true)
       this.storeLocally?.forEach((x:any)=>{
         this.joinGroup(x);
@@ -298,6 +301,7 @@ export class SignalRService {
     this.hubconnection.invoke('GetConnectionId',obj).then((data) => {
       this.connectionId = data;
       localStorage.setItem('signalRConnectionId', this.connectionId)
+      this.sendConnectionId.sendConnectionId(this.connectionId)
     });
   };
 }
