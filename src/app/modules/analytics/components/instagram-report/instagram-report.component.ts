@@ -70,7 +70,7 @@ export class InstagramReportComponent implements OnInit {
   ngOnInit(): void {
     const newObj = {
       title: 'Instagram Report',
-      url: '/analytics/inbound-outbound-report',
+      url: '/analytics/instagram-report',
     };
     this._hS.setHeader(newObj);
     const currentDate = new Date();
