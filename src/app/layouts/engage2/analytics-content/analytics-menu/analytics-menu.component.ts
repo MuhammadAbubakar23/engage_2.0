@@ -98,7 +98,7 @@ export class AnalyticsMenuComponent implements OnInit {
             link: '/analytics/performance-report',
           },
           { name: 'Shift Report', link: '/analytics/shift-report' },
-          { name: 'Query Tag Report', link: '/analytics/querytag-report' },
+          // { name: 'Query Tag Report', link: '/analytics/querytag-report' },
           { name: 'Tag Report', link: '/analytics/tag-report' },
   
           { name: 'Facebook Report', link: '/analytics/facebook-report' },
@@ -176,7 +176,7 @@ export class AnalyticsMenuComponent implements OnInit {
             link: '/analytics/performance-report',
           },
           { name: 'Shift Report', link: '/analytics/shift-report' },
-          { name: 'Query Tag Report', link: '/analytics/querytag-report' },
+          // { name: 'Query Tag Report', link: '/analytics/querytag-report' },
           { name: 'Tag Report', link: '/analytics/tag-report' },
   
           { name: 'Facebook Report', link: '/analytics/facebook-report' },

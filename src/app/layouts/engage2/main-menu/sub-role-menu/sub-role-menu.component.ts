@@ -15,6 +15,7 @@ import { loadMenusList } from '../../menu-state/menu.actions';
 import { MenuModel } from '../../menu-state/menu.model';
 import { getEmarging, getEmargingEqual, getEmargingNotEqual, getMenusLoading } from '../../menu-state/menu.selectors';
 import { MenuState } from '../../menu-state/menu.state';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'sub-role-menu',
@@ -34,7 +35,7 @@ export class SubRoleMenuComponent implements OnInit {
   EmargeType$?:string;
   EmargeParent$?:number=400;//470
   EmargeShow$?:boolean=true;
-  
+  activeChannels:any
   anymenus$ :any;
   menus$ :any;
 
@@ -50,6 +51,7 @@ export class SubRoleMenuComponent implements OnInit {
     private treegen: TreeGenService<MenuModel>, 
     private headerService: HeaderService, 
     private storage:StorageService, 
+    private cdr:ChangeDetectorRef,
     private router: Router) {
     
     let _self = this;
@@ -148,6 +150,8 @@ export class SubRoleMenuComponent implements OnInit {
   }
   
   updatevalue(string:any){    
+    this.activeChannels=this.router.url.split('/')[2]
+    this.cdr.detectChanges()
     this.headerService.updateMessage(string);
   }
 }
