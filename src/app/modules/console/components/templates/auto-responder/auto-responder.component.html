@@ -75,9 +75,9 @@
                                                         <div class="form-check form-switch">
                                                             <input class="form-check-input" type="checkbox"
                                                                 role="switch" id="flexSwitchCheckChecked{{row?.id}}"
-                                                                [checked]="row?.status"
-                                                                (change)="toggleStatus(row)">
-                                                            <label class="form-check-label" for="flexSwitchCheckChecked{{row?.uniqueId}}"></label>
+                                                                [checked]="row?.status" (change)="toggleStatus(row)">
+                                                            <label class="form-check-label"
+                                                                for="flexSwitchCheckChecked{{row?.uniqueId}}"></label>
                                                         </div>
                                                     </td>
                                                     <td>
@@ -89,7 +89,8 @@
                                                             </button>
                                                             <ul class="dropdown-menu fade">
                                                                 <li>
-                                                                    <a class="dropdown-item delete-dd" (click)="deleteTemplate(row)">
+                                                                    <a class="dropdown-item delete-dd"
+                                                                        (click)="deleteTemplate(row)">
                                                                         <i class="fal fa-trash me-2"></i> Delete
                                                                     </a>
                                                                 </li>

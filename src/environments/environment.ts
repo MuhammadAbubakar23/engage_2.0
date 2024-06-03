@@ -85,16 +85,23 @@ export const environment = {
   // TwoFABaseUrl: 'https://bzidentity.enteract.live/api/',
   //  botBaseUrl: 'https://bot-engage.enteract.app/api/',
   // // For Testing
+  // IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
+  // // IdentityBaseUrl:'https://rep.enteract.app/api/',
+  // // TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
+  // CommonBaseUrl: 'https://common-engage.enteract.app/api/',
+  // ServiceBaseUrl: '',
+  // SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
+
+  // testing uiengage company id 657
   IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
-  // IdentityBaseUrl:'https://rep.enteract.app/api/',
-  // TestingIdentityBaseUrl: 'https://rep.enteract.app/api/',
   CommonBaseUrl: 'https://common-engage.enteract.app/api/',
   ServiceBaseUrl: '',
   SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
   ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   consoleBaseUrl: 'https://console-engage.enteract.app/api/',
-
-
+  botBaseUrl: 'https://bot-engage.enteract.app/api/',
 
   //for statging / Internal :companyId 650
   // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
@@ -105,11 +112,11 @@ export const environment = {
   // consoleBaseUrl: 'https://conrox.enteract.app/api/',
   // // for rule
   faceRoxBaseUrl: 'https://smallreddart56.conveyor.cloud/api/',
-  botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
   botMoniteringBaseUrl: 'http://3.1.47.150:5000/',
   flowBot: 'https://flowbot.enteract.app/',
   intentBot: 'https://intentBot.enteract.app/',
-  autoresponderbaseurl: 'https://lastgoldski16.conveyor.cloud/api/',
+  autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
 
 
 
@@ -229,15 +236,15 @@ export const environment = {
       addFbResponed: 'Configurations/CreateTemplate',
       getCompanyPages: 'ProfileManagement/GetCompanyPages',
       getActions: 'Configurations/GetAllAction',
-      getPlatform:'ServicesStructure/GetServices',
-      getConsoleEntities:'ServicesStructure/GetEntities',
-      getConsoleEntityProperties:'ServicesStructure/GetEntitiesProperties',
-      getRuleType:'Tags/GetSupreamTags',
-      getRuleTag:'Tags/GetTagsBySupreamId',
-      getServicetree:'ServicesStructure/GetServiceTree',
-      getTemplateStatus:"Configurations/TemplateStatusToggler",
-      deleteTemplate:'Configurations/DeleteTemplate',
-      getRuleStatus:'RuleConfigs/UpdateRuleStatus'
+      getPlatform: 'ServicesStructure/GetServices',
+      getConsoleEntities: 'ServicesStructure/GetEntities',
+      getConsoleEntityProperties: 'ServicesStructure/GetEntitiesProperties',
+      getRuleType: 'Tags/GetSupreamTags',
+      getRuleTag: 'Tags/GetTagsBySupreamId',
+      getServicetree: 'ServicesStructure/GetServiceTree',
+      getTemplateStatus: "Configurations/TemplateStatusToggler",
+      deleteTemplate: 'Configurations/DeleteTemplate',
+      getRuleStatus: 'RuleConfigs/UpdateRuleStatus'
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',
@@ -261,7 +268,7 @@ export const environment = {
       intentDelete: 'intents/delete',
       responseDelete: 'responses/delete',
       deleteChatBot: 'bots/deactivate',
-      createRule:'rules/create'
+      createRule: 'rules/create'
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',

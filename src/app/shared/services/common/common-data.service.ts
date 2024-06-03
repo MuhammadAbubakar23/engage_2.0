@@ -662,7 +662,7 @@ AddFbResponed( body: any) {
     return this.http.get(url);
   }
   DeleteFbRules(delRules: any) {
-    const url = `${this.faceRoxBaseUrl}${this.softDeleteFb}?Id=${delRules}`;
+    const url = `${this.autoresponderbaseurl}${this.softDeleteFb}?Id=${delRules}`;
     return this.http.get(url);
   }
   GetEntitiesRule() {

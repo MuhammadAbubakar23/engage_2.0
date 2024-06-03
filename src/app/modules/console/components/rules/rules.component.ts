@@ -45,7 +45,7 @@ export class RulesComponent implements OnInit {
   }
   onChannelChange(event: any) {
     const selectedChannelId = event.target.value;
-    this.selectedChannel = this.channels.find(channel => channel.id == selectedChannelId)?.name || 'Engage';
+    this.selectedChannel = this.channels.find(channel => channel.id == selectedChannelId)?.name || 'Exchange-email';
     this.refreshtableData();
   }
 
@@ -94,11 +94,11 @@ export class RulesComponent implements OnInit {
         }
       );
     } else {
-      this.commonService.GetAllRules(data).subscribe(
+      this.commonService.GetAllFbRules(data).subscribe(
         (response: any) => {
           this.spinnerServerice.hide();
           this.channelRules.push({
-            platform: "Engage",
+            platform: "Exchange-email",
             rulesWihtCount: response
           });
           this.totalCount = response.TotalCount;
@@ -149,15 +149,20 @@ export class RulesComponent implements OnInit {
   }
 
   deleteTemplate(rule: ChannelRule, platform: string) {
+    debugger
     const confirmation = confirm('Are you sure you want to delete this template?');
     if (confirmation) {
-      const ruleId = platform === 'Facebook' ? rule.rulesWihtCount.Rules[0].id : rule.rulesWihtCount.Rules[0].groupId;
-      const filteredRules = platform === 'Facebook' ? rule.rulesWihtCount.Rules.filter((r: any) => r.id !== ruleId) : rule.rulesWihtCount.Rules.filter((r: any) => r.groupId !== ruleId);
-
-      if (platform === 'Facebook') {
+      const ruleId = platform === 'Exchange-email' ? (rule.rulesWihtCount.Rules[0] ? rule.rulesWihtCount.Rules[0].id : null) : (rule.rulesWihtCount.Rules[0] ? rule.rulesWihtCount.Rules[0].groupId : null);
+      if (!ruleId) {
+        console.error('Rule ID is undefined.');
+        return;
+      }
+      const filteredRules = platform === 'Exchange-email' ? rule.rulesWihtCount.Rules.filter((r: any) => r.id !== ruleId) : rule.rulesWihtCount.Rules.filter((r: any) => r.groupId !== ruleId);
+  
+      if (platform === 'Exchange-email') {
         this.commonService.DeleteFbRules(ruleId).subscribe(
           () => {
-            console.log('Facebook rule deleted:', rule);
+            console.log('GetAllFbRules rule deleted:', rule);
             rule.rulesWihtCount.Rules = filteredRules;
           },
           (error: any) => {
@@ -177,6 +182,7 @@ export class RulesComponent implements OnInit {
       }
     }
   }
+  
   disableTemplate(message: any) {
     console.log('Disabling template:', message);
   }

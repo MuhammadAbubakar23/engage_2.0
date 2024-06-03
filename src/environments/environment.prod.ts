@@ -94,18 +94,29 @@ export const environment = {
   // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
   // consoleBaseUrl: 'https://console-engage.enteract.app/api/',
 
-
-
-  //for statging / Internal :companyId 650
-  IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
-  CommonBaseUrl: 'https://comrox.enteract.app/api/',
+  // testing uiengage company id 657
+  IdentityBaseUrl: 'https://identity-engage.enteract.app/api/',
+  CommonBaseUrl: 'https://common-engage.enteract.app/api/',
   ServiceBaseUrl: '',
-  SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
+  SignalRCommonBaseUrl: 'https://common-engage.enteract.app/',
   ProfileBaseUrl: 'https://profiler.enteract.app/api/',
-  consoleBaseUrl: 'https://conrox.enteract.app/api/',
+  consoleBaseUrl: 'https://console-engage.enteract.app/api/',
   botBaseUrl: 'https://bot-engage.enteract.app/api/',
 
-
+  //for statging / Internal :companyId 650
+  // IdentityBaseUrl: 'https://idtrox.enteract.app/api/',
+  // CommonBaseUrl: 'https://comrox.enteract.app/api/',
+  // ServiceBaseUrl: '',
+  // SignalRCommonBaseUrl: 'https://comrox.enteract.app/',
+  // ProfileBaseUrl: 'https://profiler.enteract.app/api/',
+  // consoleBaseUrl: 'https://conrox.enteract.app/api/',
+  // // for rule
+  faceRoxBaseUrl: 'https://smallreddart56.conveyor.cloud/api/',
+  // botBaseUrl: 'https://bot-engage.enteract.app/api/',
+  botMoniteringBaseUrl: 'http://3.1.47.150:5000/',
+  flowBot: 'https://flowbot.enteract.app/',
+  intentBot: 'https://intentBot.enteract.app/',
+  autoresponderbaseurl: 'https://officemail.360scrm.com/api/',
 
 
 
@@ -146,6 +157,7 @@ export const environment = {
       GetUserById: 'Users/GetById/',
       // For console skill setup
       channels: 'Console/Properties/Channel/Tree/0',
+      consoleChannls: 'Channels/GetChannelsTree',
       routing: 'Console/Properties/routing/Tree/0',
       deleteRoles: 'Permissions/Delete',
       ////// Later Align in Console/////
@@ -183,7 +195,12 @@ export const environment = {
       deleteSkill: 'Skill/Delete',
       getAllWing: 'Teams/GetAllWing',
 
-
+      // service Base rules 
+      getEntitiesRules: 'EntityConfigs/GetEntities',
+      getEntitiesProperties: 'EntityConfigs/GetEntitiesProperties',
+      addRule: 'RuleConfigs/Add',
+      getFbRule: 'RuleConfigs/GetAll',
+      softDeleteFb: 'RuleConfigs/Delete',
       // getTagsAll: 'Tags/GetAll',
       getTagsByCompanyId: 'Tags/GetTagsByCompayId',
       updateSkill: 'Skill/Update',
@@ -212,9 +229,22 @@ export const environment = {
       addTeam: 'Teams/Add',
       updateTeam: 'Teams/Update',
       deleteTeam: 'Teams/Delete',
-      teamGetById:'Teams/FetchTeamById',
-      getTeamType:'Teams/GetTypes',
-      deleteMultipleTeams: 'Teams/DeleteMultiple'
+      teamGetById: 'Teams/FetchTeamById',
+      getTeamType: 'Teams/GetTypes',
+      deleteMultipleTeams: 'Teams/DeleteMultiple',
+      getautoResponedFB: 'Configurations/GetCompanyTemplates',
+      addFbResponed: 'Configurations/CreateTemplate',
+      getCompanyPages: 'ProfileManagement/GetCompanyPages',
+      getActions: 'Configurations/GetAllAction',
+      getPlatform: 'ServicesStructure/GetServices',
+      getConsoleEntities: 'ServicesStructure/GetEntities',
+      getConsoleEntityProperties: 'ServicesStructure/GetEntitiesProperties',
+      getRuleType: 'Tags/GetSupreamTags',
+      getRuleTag: 'Tags/GetTagsBySupreamId',
+      getServicetree: 'ServicesStructure/GetServiceTree',
+      getTemplateStatus: "Configurations/TemplateStatusToggler",
+      deleteTemplate: 'Configurations/DeleteTemplate',
+      getRuleStatus: 'RuleConfigs/UpdateRuleStatus'
     },
     service: {
       addSurvey: 'Whatsapp/AddSurvey',
@@ -225,6 +255,20 @@ export const environment = {
       reasons: 'Order/GetMainReasons/',
       GetTicketStatuses: 'Order/GetTicketStatuses',
       subReasons: 'Order/GetSubReasons/',
+    },
+    bot: {
+      getAllChatBot: 'bots/get_all',
+      addBot: 'bots/create',
+      getbyid: 'bots/get',
+      generateAugment: 'generative/augment',
+      addIntend: 'intents/create',
+      getIntents: 'intents/get',
+      getReponse: 'responses/get',
+      addResponse: 'responses/create',
+      intentDelete: 'intents/delete',
+      responseDelete: 'responses/delete',
+      deleteChatBot: 'bots/deactivate',
+      createRule: 'rules/create'
     },
     common: {
       userlogin: 'SignalRConnector/UserLogin',
@@ -277,7 +321,7 @@ export const environment = {
       hideUnhideMessage: 'Publisher/HideQuery',
       dispositionTags: 'Keyword/GetAllDisposition',
       removeAssignedQuery: 'Query/RemoveAssignQuery',
-      sessionClose:'Whatsapp/TerminateSupportSession',
+      sessionClose: 'Whatsapp/TerminateSupportSession',
       //Reports
       routeToAgents: 'Report/GetWhatsAppRouteToAgentReport',
       routeToAgentsCsv: 'Report/GetWhatsAppRouteAgentReportCSV',
@@ -371,7 +415,6 @@ export const environment = {
     },
   },
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
